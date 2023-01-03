@@ -1,45 +1,51 @@
-import { Component } from 'react';
+import { Component } from "react";
 import {
-  NoSsr, IconButton, Card, CardContent, CardHeader,
-  Tooltip, LinearProgress, Box
-} from '@mui/material';
-import moment from 'moment';
-import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
-import WarningIcon from '@mui/icons-material/Warning';
-import CachedIcon from '@mui/icons-material/Cached';
-import dataFetch from '../lib/data-fetch';
-import { CommonData } from '../lib/commonDS';
-import GrafanaCustomGaugeChart from '../components/Grafana/GrafanaCustomGaugeChart';
-import bb, { area, line } from 'billboard.js';
+  NoSsr,
+  IconButton,
+  Card,
+  CardContent,
+  CardHeader,
+  Tooltip,
+  LinearProgress,
+  Box,
+} from "@mui/material";
+import moment from "moment";
+import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
+import WarningIcon from "@mui/icons-material/Warning";
+import CachedIcon from "@mui/icons-material/Cached";
+import dataFetch from "../lib/data-fetch";
+import { CommonData } from "../lib/commonDS";
+import GrafanaCustomGaugeChart from "../components/Grafana/GrafanaCustomGaugeChart";
+import bb, { area, line } from "billboard.js";
 
 const grafanaDateRangeToDate = (dt, startDate) => {
   const dto = new Date();
   switch (dt) {
-    case 'now-2d':
+    case "now-2d":
       dto.setDate(dto.getDate() - 2);
       break;
-    case 'now-7d':
+    case "now-7d":
       dto.setDate(dto.getDate() - 7);
       break;
-    case 'now-30d':
+    case "now-30d":
       dto.setDate(dto.getDate() - 30);
       break;
-    case 'now-90d':
+    case "now-90d":
       dto.setDate(dto.getDate() - 90);
       break;
-    case 'now-6M':
+    case "now-6M":
       dto.setMonth(dto.getMonth() - 6);
       break;
-    case 'now-1y':
+    case "now-1y":
       dto.setFullYear(dto.getFullYear() - 1);
       break;
-    case 'now-2y':
+    case "now-2y":
       dto.setFullYear(dto.getFullYear() - 2);
       break;
-    case 'now-5y':
+    case "now-5y":
       dto.setFullYear(dto.getFullYear() - 5);
       break;
-    case 'now-1d/d':
+    case "now-1d/d":
       dto.setDate(dto.getDate() - 1);
       if (startDate) {
         dto.setHours(0);
@@ -53,7 +59,7 @@ const grafanaDateRangeToDate = (dt, startDate) => {
         dto.setMilliseconds(999);
       }
       break;
-    case 'now-2d/d':
+    case "now-2d/d":
       dto.setDate(dto.getDate() - 2);
       if (startDate) {
         dto.setHours(0);
@@ -67,7 +73,7 @@ const grafanaDateRangeToDate = (dt, startDate) => {
         dto.setMilliseconds(999);
       }
       break;
-    case 'now-7d/d':
+    case "now-7d/d":
       dto.setDate(dto.getDate() - 7);
       if (startDate) {
         dto.setHours(0);
@@ -81,8 +87,8 @@ const grafanaDateRangeToDate = (dt, startDate) => {
         dto.setMilliseconds(999);
       }
       break;
-    case 'now-1w/w':
-      dto.setDate(dto.getDate() - 6 - (dto.getDay() + 8) % 7);
+    case "now-1w/w":
+      dto.setDate(dto.getDate() - 6 - ((dto.getDay() + 8) % 7));
       if (startDate) {
         dto.setHours(0);
         dto.setMinutes(0);
@@ -96,7 +102,7 @@ const grafanaDateRangeToDate = (dt, startDate) => {
         dto.setMilliseconds(999);
       }
       break;
-    case 'now-1M/M':
+    case "now-1M/M":
       dto.setMonth(dto.getMonth() - 1);
       if (startDate) {
         dto.setDate(1);
@@ -113,7 +119,7 @@ const grafanaDateRangeToDate = (dt, startDate) => {
         dto.setMilliseconds(999);
       }
       break;
-    case 'now-1y/y':
+    case "now-1y/y":
       dto.setFullYear(dto.getFullYear() - 1);
       if (startDate) {
         dto.setMonth(0);
@@ -131,8 +137,8 @@ const grafanaDateRangeToDate = (dt, startDate) => {
         dto.setMilliseconds(999);
       }
       break;
-    case 'now/d':
-      dto.setDate(dto.getDate() - 6 - (dto.getDay() + 8) % 7);
+    case "now/d":
+      dto.setDate(dto.getDate() - 6 - ((dto.getDay() + 8) % 7));
       if (startDate) {
         dto.setHours(0);
         dto.setMinutes(0);
@@ -145,10 +151,10 @@ const grafanaDateRangeToDate = (dt, startDate) => {
         dto.setMilliseconds(999);
       }
       break;
-    case 'now':
+    case "now":
       break;
-    case 'now/w':
-      dto.setDate(dto.getDate() - (dto.getDay() + 7) % 7);
+    case "now/w":
+      dto.setDate(dto.getDate() - ((dto.getDay() + 7) % 7));
       if (startDate) {
         dto.setHours(0);
         dto.setMinutes(0);
@@ -162,7 +168,7 @@ const grafanaDateRangeToDate = (dt, startDate) => {
         dto.setMilliseconds(999);
       }
       break;
-    case 'now/M':
+    case "now/M":
       if (startDate) {
         dto.setDate(1);
         dto.setHours(0);
@@ -178,7 +184,7 @@ const grafanaDateRangeToDate = (dt, startDate) => {
         dto.setMilliseconds(999);
       }
       break;
-    case 'now/y':
+    case "now/y":
       if (startDate) {
         dto.setMonth(0);
         dto.setDate(1);
@@ -195,28 +201,28 @@ const grafanaDateRangeToDate = (dt, startDate) => {
         dto.setMilliseconds(999);
       }
       break;
-    case 'now-5m':
+    case "now-5m":
       dto.setMinutes(dto.getMinutes() - 5);
       break;
-    case 'now-15m':
+    case "now-15m":
       dto.setMinutes(dto.getMinutes() - 15);
       break;
-    case 'now-30m':
+    case "now-30m":
       dto.setMinutes(dto.getMinutes() - 30);
       break;
-    case 'now-1h':
+    case "now-1h":
       dto.setHours(dto.getHours() - 1);
       break;
-    case 'now-3h':
+    case "now-3h":
       dto.setHours(dto.getHours() - 3);
       break;
-    case 'now-6h':
+    case "now-6h":
       dto.setHours(dto.getHours() - 6);
       break;
-    case 'now-12h':
+    case "now-12h":
       dto.setHours(dto.getHours() - 12);
       break;
-    case 'now-24h':
+    case "now-24h":
       dto.setHours(dto.getHours() - 24);
       break;
     default:
@@ -230,17 +236,20 @@ class GrafanaCustomChart extends Component {
     super(props);
     this.chartRef = null;
     this.chart = null;
-    this.timeFormat = 'MM/DD/YYYY HH:mm:ss';
-    this.bbTimeFormat = '%Y-%m-%d %h:%M:%S %p';
-    this.panelType = '';
+    this.timeFormat = "MM/DD/YYYY HH:mm:ss";
+    this.bbTimeFormat = "%Y-%m-%d %h:%M:%S %p";
+    this.panelType = "";
     switch (props.panel.type) {
-      case 'graph':
+      case "graph":
         this.panelType = props.panel.type;
         break;
-      case 'singlestat':
-        this.panelType = props.panel.type === 'singlestat' && props.panel.sparkline && props.panel.sparkline.show === true
-          ? 'sparkline'
-          : 'gauge';
+      case "singlestat":
+        this.panelType =
+          props.panel.type === "singlestat" &&
+          props.panel.sparkline &&
+          props.panel.sparkline.show === true
+            ? "sparkline"
+            : "gauge";
         // this.panelType = props.panel.type ==='singlestat' && props.panel.sparkline ? 'sparkline':'gauge';
         break;
     }
@@ -250,7 +259,7 @@ class GrafanaCustomChart extends Component {
       xAxis: [],
       sparkline: !!sparkline,
       chartData: [],
-      error: '',
+      error: "",
       errorCount: 0,
     };
   }
@@ -268,7 +277,7 @@ class GrafanaCustomChart extends Component {
         self.datasetIndex[`${ind}_0`] = ind;
       });
     }
-    if (typeof self.interval !== 'undefined') {
+    if (typeof self.interval !== "undefined") {
       clearInterval(self.interval);
     }
     if (liveTail) {
@@ -277,10 +286,10 @@ class GrafanaCustomChart extends Component {
       }, self.computeRefreshInterval(refresh) * 1000);
     }
     self.collectChartData();
-  }
+  };
 
   getOrCreateIndex(datasetInd) {
-    if (typeof this.datasetIndex[datasetInd] !== 'undefined') {
+    if (typeof this.datasetIndex[datasetInd] !== "undefined") {
       return this.datasetIndex[datasetInd];
     }
     let max = 0;
@@ -301,7 +310,7 @@ class GrafanaCustomChart extends Component {
         self.getData(ind, target, chartInst);
       });
     }
-  }
+  };
 
   computeStep = (start, end) => {
     let step = 10;
@@ -312,90 +321,122 @@ class GrafanaCustomChart extends Component {
     const month = 30 * days; // approx.
     const year = 12 * month; // approx.
 
-    if (diff <= 10 * min) { // 10 mins
+    if (diff <= 10 * min) {
+      // 10 mins
       step = 5;
-    } else if (diff <= 30 * min) { // 30 mins
+    } else if (diff <= 30 * min) {
+      // 30 mins
       step = 10;
-    } else if (diff > 30 * min && diff <= 1 * hrs) { // 60 mins/1hr
+    } else if (diff > 30 * min && diff <= 1 * hrs) {
+      // 60 mins/1hr
       step = 20;
-    } else if (diff > 1 * hrs && diff <= 3 * hrs) { // 3 hrs
+    } else if (diff > 1 * hrs && diff <= 3 * hrs) {
+      // 3 hrs
       step = 1 * min;
-    } else if (diff > 3 * hrs && diff <= 6 * hrs) { // 6 hrs
+    } else if (diff > 3 * hrs && diff <= 6 * hrs) {
+      // 6 hrs
       step = 2 * min;
-    } else if (diff > 6 * hrs && diff <= 1 * days) { // 24 hrs/1 day
+    } else if (diff > 6 * hrs && diff <= 1 * days) {
+      // 24 hrs/1 day
       step = 8 * min;
-    } else if (diff > 1 * days && diff <= 2 * days) { // 2 days
+    } else if (diff > 1 * days && diff <= 2 * days) {
+      // 2 days
       step = 16 * min;
-    } else if (diff > 2 * days && diff <= 4 * days) { // 4 days
+    } else if (diff > 2 * days && diff <= 4 * days) {
+      // 4 days
       step = 32 * min;
-    } else if (diff > 4 * days && diff <= 7 * days) { // 7 days
+    } else if (diff > 4 * days && diff <= 7 * days) {
+      // 7 days
       step = 56 * min;
-    } else if (diff > 7 * days && diff <= 15 * days) { // 15 days
+    } else if (diff > 7 * days && diff <= 15 * days) {
+      // 15 days
       step = 2 * hrs;
-    } else if (diff > 15 * days && diff <= 1 * month) { // 30 days/1 month
+    } else if (diff > 15 * days && diff <= 1 * month) {
+      // 30 days/1 month
       step = 4 * hrs;
-    } else if (diff > 1 * month && diff <= 3 * month) { // 3 months
+    } else if (diff > 1 * month && diff <= 3 * month) {
+      // 3 months
       step = 12 * hrs;
-    } else if (diff > 3 * month && diff <= 6 * month) { // 6 months
+    } else if (diff > 3 * month && diff <= 6 * month) {
+      // 6 months
       step = 1 * days;
-    } else if (diff > 6 * month && diff <= 1 * year) { // 1 year/12 months
+    } else if (diff > 6 * month && diff <= 1 * year) {
+      // 1 year/12 months
       step = 2 * days;
-    } else if (diff > 1 * year && diff <= 2 * year) { // 2 years
+    } else if (diff > 1 * year && diff <= 2 * year) {
+      // 2 years
       step = 4 * days;
-    } else if (diff > 2 * year && diff <= 5 * year) { // 5 years
+    } else if (diff > 2 * year && diff <= 5 * year) {
+      // 5 years
       step = 10 * days;
     } else {
       step = 30 * days;
     }
     return step;
-  }
+  };
 
   getData = async (ind, target) => {
     const {
-      prometheusURL, grafanaURL, grafanaAPIKey, panel, from, to, templateVars, testUUID, panelData,
+      prometheusURL,
+      grafanaURL,
+      grafanaAPIKey,
+      panel,
+      from,
+      to,
+      templateVars,
+      testUUID,
+      panelData,
     } = this.props;
     const { chartData } = this.state;
     let { xAxis } = this.state;
 
-    let queryRangeURL = '';
-    let endpointURL = '';
-    let endpointAPIKey = '';
-    if (prometheusURL && prometheusURL !== '') {
+    let queryRangeURL = "";
+    let endpointURL = "";
+    let endpointAPIKey = "";
+    if (prometheusURL && prometheusURL !== "") {
       endpointURL = prometheusURL;
-      queryRangeURL = '/grafana-ds/query-range';
-    } else if (grafanaURL && grafanaURL !== '') {
+      queryRangeURL = "/grafana-ds/query-range";
+    } else if (grafanaURL && grafanaURL !== "") {
       endpointURL = grafanaURL;
       endpointAPIKey = grafanaAPIKey;
-      queryRangeURL = '/grafana-ds/query-range';
+      queryRangeURL = "/grafana-ds/query-range";
     }
     const self = this;
     let { expr } = target;
     if (templateVars && templateVars !== null && templateVars.length > 0) {
       templateVars.forEach((tv) => {
-        const tvrs = tv.split('=');
+        const tvrs = tv.split("=");
         if (tvrs.length == 2) {
-          expr = expr.replace(new RegExp(`$${tvrs[0]}`.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), tvrs[1]); //eslint-disable-line
+          expr = expr.replace(
+            new RegExp(
+              `$${tvrs[0]}`.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"),
+              "g"
+            ),
+            tvrs[1]
+          ); //eslint-disable-line
         }
       });
     }
     const start = Math.round(grafanaDateRangeToDate(from).getTime() / 1000);
     const end = Math.round(grafanaDateRangeToDate(to).getTime() / 1000);
-    let queryParams = `ds=${panel.datasource}&query=${encodeURIComponent(expr)}&start=${start}&end=${end}&step=${self.computeStep(start, end)}`;
-    if (testUUID && testUUID.trim() !== '') {
+    let queryParams = `ds=${panel.datasource}&query=${encodeURIComponent(
+      expr
+    )}&start=${start}&end=${end}&step=${self.computeStep(start, end)}`;
+    if (testUUID && testUUID.trim() !== "") {
       queryParams += `&uuid=${encodeURIComponent(testUUID)}`; // static_chart=true ?
     }
 
     const processReceivedData = (result) => {
       //   self.props.updateProgress({ showProgress : false });
 
-      if (typeof result == 'undefined' || result?.status != "success") {
-        return
+      if (typeof result == "undefined" || result?.status != "success") {
+        return;
       }
 
-      if (typeof result !== 'undefined') {
+      if (typeof result !== "undefined") {
         const fullData = self.transformDataForChart(result);
         if (fullData.length === 0) {
-          return
+          return;
         }
 
         fullData.forEach(({ metric, data }, di) => {
@@ -403,18 +444,22 @@ class GrafanaCustomChart extends Component {
           const newData = [];
 
           // if (typeof cd.labels[datasetInd] === 'undefined' || typeof cd.datasets[datasetInd] === 'undefined'){
-          let legend = typeof target.legendFormat !== undefined ? target.legendFormat
-            : '';
-          if (legend === '') {
-            legend = Object.keys(metric).length > 0 ? JSON.stringify(metric)
-              : '';
+          let legend =
+            typeof target.legendFormat !== undefined ? target.legendFormat : "";
+          if (legend === "") {
+            legend =
+              Object.keys(metric).length > 0 ? JSON.stringify(metric) : "";
           } else {
             Object.keys(metric).forEach((metricKey) => {
-              legend = legend.replace(`{{${metricKey}}}`, metric[metricKey])
+              legend = legend
+                .replace(`{{${metricKey}}}`, metric[metricKey])
                 .replace(`{{ ${metricKey} }}`, metric[metricKey]);
             });
-            legend = legend.replace('{{ ', '').replace('{{', '')
-              .replace(' }}', '').replace('}}', '');
+            legend = legend
+              .replace("{{ ", "")
+              .replace("{{", "")
+              .replace(" }}", "")
+              .replace("}}", "");
           }
 
           // bb does NOT like labels which start with a number
@@ -425,7 +470,7 @@ class GrafanaCustomChart extends Component {
           //   legend = 'NO VALUE';
           // }
           newData.push(legend);
-          xAxis = ['x'];
+          xAxis = ["x"];
           // }
           data.forEach(({ x, y }) => {
             newData.push(y);
@@ -434,7 +479,7 @@ class GrafanaCustomChart extends Component {
           chartData[datasetInd] = newData;
         });
         let groups = [];
-        if (typeof panel.stack !== 'undefined' && panel.stack) {
+        if (typeof panel.stack !== "undefined" && panel.stack) {
           const panelGroups = [];
           chartData.forEach((y) => {
             if (y.length > 0) {
@@ -443,33 +488,53 @@ class GrafanaCustomChart extends Component {
           });
           groups = [panelGroups];
         }
-        let chartDataFiltered = chartData.filter((element) => element !== undefined);
+        let chartDataFiltered = chartData.filter(
+          (element) => element !== undefined
+        );
         if (self.chart && self.chart !== null) {
-          self.chart.load({ columns: [xAxis, ...chartDataFiltered], });
+          self.chart.load({ columns: [xAxis, ...chartDataFiltered] });
         } else {
           self.createOptions(xAxis, chartDataFiltered, groups);
         }
-        self.state.error && self.setState({
-          xAxis, chartData, error: '', errorCount: 0,
-        });
+        self.state.error &&
+          self.setState({
+            xAxis,
+            chartData,
+            error: "",
+            errorCount: 0,
+          });
       }
     };
 
     if (panelData && panelData[expr]) {
       processReceivedData(panelData[expr]);
     } else {
-      queryParams += `&url=${encodeURIComponent(endpointURL)}&api-key=${encodeURIComponent(endpointAPIKey)}`
-      dataFetch(`${CommonData.apiEndPoint}${queryRangeURL}?${queryParams}`, {
-        method: 'GET',
-        credentials: 'include',
-      }, processReceivedData, self.handleError);
+      queryParams += `&url=${encodeURIComponent(
+        endpointURL
+      )}&api-key=${encodeURIComponent(endpointAPIKey)}`;
+      dataFetch(
+        `${CommonData.apiEndPoint}${queryRangeURL}?${queryParams}`,
+        {
+          method: "GET",
+          credentials: "include",
+        },
+        processReceivedData,
+        self.handleError
+      );
       // processReceivedData(queryRangeData);
     }
-  }
+  };
 
   transformDataForChart(data) {
-    if (data && data.status === 'success' && data.data && data.data.resultType && data.data.resultType === 'matrix'
-      && data.data.result && data.data.result.length > 0) {
+    if (
+      data &&
+      data.status === "success" &&
+      data.data &&
+      data.data.resultType &&
+      data.data.resultType === "matrix" &&
+      data.data.result &&
+      data.data.result.length > 0
+    ) {
       const fullData = [];
       data.data.result.forEach((r) => {
         const localData = r.values.map((arr) => {
@@ -496,7 +561,14 @@ class GrafanaCustomChart extends Component {
       if (domain.length === 2) {
         const min = domain[0];
         const max = domain[1];
-        self.props.updateDateRange(`${min.getTime().toString()}`, min, `${max.getTime().toString()}`, max, false, self.props.refresh);
+        self.props.updateDateRange(
+          `${min.getTime().toString()}`,
+          min,
+          `${max.getTime().toString()}`,
+          max,
+          false,
+          self.props.refresh
+        );
       }
     };
   }
@@ -510,10 +582,10 @@ class GrafanaCustomChart extends Component {
     const self = this;
 
     // const showAxis = panel.type ==='singlestat' && panel.sparkline && panel.sparkline.show === true?false:true;
-    const showAxis = !(panel.type === 'singlestat' && panel.sparkline);
+    const showAxis = !(panel.type === "singlestat" && panel.sparkline);
 
     const xAxes = {
-      type: 'timeseries',
+      type: "timeseries",
       // type : 'category',
       show: showAxis && !this.state.sparkline,
       tick: {
@@ -529,17 +601,17 @@ class GrafanaCustomChart extends Component {
       // }
     };
 
-    const yAxes = { show: showAxis && !this.state.sparkline, };
+    const yAxes = { show: showAxis && !this.state.sparkline };
     if (panel.yaxes) {
       panel.yaxes.forEach((ya) => {
-        if (typeof ya.label !== 'undefined' && ya.label !== null) {
+        if (typeof ya.label !== "undefined" && ya.label !== null) {
           yAxes.label = {
             text: ya.label,
-            position: 'outer-middle',
+            position: "outer-middle",
           };
         }
-        if (ya.format.toLowerCase().startsWith('percent')) {
-          const mulFactor = ya.format.toLowerCase() === 'percentunit' ? 100 : 1;
+        if (ya.format.toLowerCase().startsWith("percent")) {
+          const mulFactor = ya.format.toLowerCase() === "percentunit" ? 100 : 1;
           yAxes.tick = {
             format(d) {
               const tk = (d * mulFactor).toFixed(2);
@@ -559,14 +631,14 @@ class GrafanaCustomChart extends Component {
       // }
     };
 
-    const linked = this.state.sparkline ? (false)
-      : (
-        !inDialog ? { name: board && board.title ? board.title : '', }
-          : false
-      );
+    const linked = this.state.sparkline
+      ? false
+      : !inDialog
+      ? { name: board && board.title ? board.title : "" }
+      : false;
 
     let shouldDisplayLegend = Object.keys(this.datasetIndex).length <= 10;
-    if (panel.type !== 'graph') {
+    if (panel.type !== "graph") {
       shouldDisplayLegend = false;
     }
     if (self.chartRef && self.chartRef !== null) {
@@ -575,20 +647,18 @@ class GrafanaCustomChart extends Component {
         //   console.log(JSON.stringify(args));
         // },
         bindto: self.chartRef,
-        size: this.state.sparkline ? (
-          {
-            // width: 150,
-            height: 50,
-          }
-        ) : null,
+        size: this.state.sparkline
+          ? {
+              // width: 150,
+              height: 50,
+            }
+          : null,
         data: {
-          x: 'x',
+          x: "x",
           xFormat: self.bbTimeFormat,
           columns: [xAxis, ...chartData],
           groups,
-          type: this.state.sparkline
-            ? line()
-            : area(),
+          type: this.state.sparkline ? line() : area(),
         },
         axis: {
           x: xAxes,
@@ -596,16 +666,15 @@ class GrafanaCustomChart extends Component {
         },
         zoom: {
           enabled: true,
-          type: 'drag',
+          type: "drag",
           onzoomend: self.updateDateRange(),
         },
         grid,
-        legend: { show: shouldDisplayLegend && !this.state.sparkline, },
-
+        legend: { show: shouldDisplayLegend && !this.state.sparkline },
 
         point: {
           r: 0,
-          focus: { expand: { r: 5, }, },
+          focus: { expand: { r: 5 } },
         },
         tooltip: {
           show: showAxis,
@@ -617,33 +686,46 @@ class GrafanaCustomChart extends Component {
             },
           },
         },
-        area: { linearGradient: true, },
+        area: { linearGradient: true },
       };
 
-      if (self.panelType === 'sparkline' && panel.sparkline && panel.sparkline.lineColor && panel.sparkline.fillColor) {
+      if (
+        self.panelType === "sparkline" &&
+        panel.sparkline &&
+        panel.sparkline.lineColor &&
+        panel.sparkline.fillColor
+      ) {
         // cd.datasets[datasetInd].borderColor = panel.sparkline.lineColor;
         // cd.datasets[datasetInd].backgroundColor = panel.sparkline.fillColor;
 
-        const dataLength = chartConfig.data.columns && Array.isArray(chartConfig.data.columns) && chartConfig.data.columns.length > 1 ? chartConfig.data.columns[1].length
-          : 0; // 0 is for x axis
+        const dataLength =
+          chartConfig.data.columns &&
+          Array.isArray(chartConfig.data.columns) &&
+          chartConfig.data.columns.length > 1
+            ? chartConfig.data.columns[1].length
+            : 0; // 0 is for x axis
         if (dataLength > 0) {
-          if (typeof chartConfig.data.colors === 'undefined') {
+          if (typeof chartConfig.data.colors === "undefined") {
             chartConfig.data.colors = {};
           }
-          chartConfig.data.colors[chartConfig.data.columns[1][0]] = panel.sparkline.lineColor;
+          chartConfig.data.colors[chartConfig.data.columns[1][0]] =
+            panel.sparkline.lineColor;
 
           if (dataLength > 1) {
-            let content = '';
-            if (panel.format.toLowerCase().startsWith('percent')) {
-              const mulFactor = panel.format.toLowerCase() === 'percentunit'
-                ? 100
-                : 1;
+            let content = "";
+            if (panel.format.toLowerCase().startsWith("percent")) {
+              const mulFactor =
+                panel.format.toLowerCase() === "percentunit" ? 100 : 1;
               if (!isNaN(chartConfig.data.columns[1][dataLength - 1])) {
-                const tk = (chartConfig.data.columns[1][dataLength - 1] * mulFactor).toFixed(2);
+                const tk = (
+                  chartConfig.data.columns[1][dataLength - 1] * mulFactor
+                ).toFixed(2);
                 content = `${tk}%`;
               }
             } else {
-              content = `${chartConfig.data.columns[1][dataLength - 1]} ${panel.format}`;
+              content = `${chartConfig.data.columns[1][dataLength - 1]} ${
+                panel.format
+              }`;
             }
             chartConfig.title = {
               text: `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n${content}`, // for sparkline, we want to print the value as title
@@ -652,9 +734,7 @@ class GrafanaCustomChart extends Component {
         }
 
         chartConfig.color = {
-          pattern: [
-            panel.sparkline.fillColor,
-          ],
+          pattern: [panel.sparkline.fillColor],
         };
       }
 
@@ -663,7 +743,7 @@ class GrafanaCustomChart extends Component {
   }
 
   componentWillUnmount() {
-    if (typeof this.interval !== 'undefined') {
+    if (typeof this.interval !== "undefined") {
       clearInterval(this.interval);
     }
   }
@@ -674,39 +754,41 @@ class GrafanaCustomChart extends Component {
     const dur = refresh.substring(l - 1, l);
     refresh = refresh.substring(0, l - 1);
     let val = parseInt(refresh);
-    if (dur === 'd') {
+    if (dur === "d") {
       val *= 24;
     }
-    if (dur === 'h') {
+    if (dur === "h") {
       val *= 60;
     }
-    if (dur === 'm') {
+    if (dur === "m") {
       val *= 60;
     }
-    if (dur === 's') {
+    if (dur === "s") {
       return val;
     }
     return 30; //fallback
-  }
+  };
 
   handleError = (error) => {
     const self = this;
     // this.props.updateProgress({ showProgress : false });
     if (error) {
       this.setState({
-        error: error.message && error.message !== '' ? error.message
-          : (error !== '' ? error
-            : ''), errorCount: self.state.errorCount + 1
+        error:
+          error.message && error.message !== ""
+            ? error.message
+            : error !== ""
+            ? error
+            : "",
+        errorCount: self.state.errorCount + 1,
       });
     }
-  }
+  };
 
   render() {
-
-    const {
-      board, panel, inDialog, handleChartDialogOpen, panelData,
-    } = this.props;
-    const { error, errorCount, chartData, } = this.state;
+    const { board, panel, inDialog, handleChartDialogOpen, panelData } =
+      this.props;
+    const { error, errorCount, chartData } = this.state;
     const self = this;
 
     let loadingBar;
@@ -715,13 +797,16 @@ class GrafanaCustomChart extends Component {
     if (error) {
       self.createOptions([], [], []); // add empty data to charts
       loadingBar = (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: "100%" }}>
           <LinearProgress />
         </Box>
       );
     }
 
-    if (errorCount > 3 * panel.targets.length && typeof self.interval !== 'undefined') {
+    if (
+      errorCount > 3 * panel.targets.length &&
+      typeof self.interval !== "undefined"
+    ) {
       clearInterval(self.interval); // clearing the interval to prevent further calls to get chart data
       loadingBar = null;
       reloadButton = (
@@ -751,18 +836,14 @@ class GrafanaCustomChart extends Component {
     );
 
     let mainChart;
-    if (this.panelType === 'gauge') {
+    if (this.panelType === "gauge") {
       mainChart = (
-        <GrafanaCustomGaugeChart
-          data={chartData}
-          panel={panel}
-          error={error}
-        />
+        <GrafanaCustomGaugeChart data={chartData} panel={panel} error={error} />
       );
     } else {
       mainChart = (
         <div>
-          <div ref={(ch) => self.chartRef = ch} />
+          <div ref={(ch) => (self.chartRef = ch)} />
         </div>
       );
     }
@@ -774,23 +855,24 @@ class GrafanaCustomChart extends Component {
             <CardHeader
               disableTypography
               avatar={
-                error &&
-                <Tooltip title="There was an error communicating with the server" placement="top">
-                  <WarningIcon />
-                </Tooltip>
+                error && (
+                  <Tooltip
+                    title="There was an error communicating with the server"
+                    placement="top"
+                  >
+                    <WarningIcon />
+                  </Tooltip>
+                )
               }
               title={panel.title}
               action={iconComponent}
             />
           )}
-          <CardContent>
-            {mainChart}
-          </CardContent>
+          <CardContent>{mainChart}</CardContent>
         </Card>
       </NoSsr>
     );
   }
 }
-
 
 export default GrafanaCustomChart;
