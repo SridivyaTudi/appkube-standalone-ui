@@ -201,10 +201,17 @@ class GrafanaCharts extends Component {
           ...propsData,
           panel,
         };
-        var layouti = { x: (index * 4) % 12, y: 0, w: 4, h: 3 };
+        var layouti = {
+          x: (index * 4) % 12,
+          y: 0,
+          w: 4,
+          h: 10,
+          minH: 10,
+          minW: 4,
+        };
         layout.push(layouti);
         retData.push(
-          <div key={index} data-grid={layout[index]}>
+          <div key={index} data-grid={layout[index]} style={{ aspectRatio: 1 / 1}}>
             <GrafanaCustomChart {...data} />
           </div>
         );
@@ -212,7 +219,7 @@ class GrafanaCharts extends Component {
       });
     }
     return (
-      <GridLayout className="layout" cols={12}>
+      <GridLayout className="layout" cols={12} rowHeight={20} lockAspectRatio={true}>
         {retData}
       </GridLayout>
     );
