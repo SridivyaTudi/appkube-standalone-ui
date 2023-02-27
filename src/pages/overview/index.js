@@ -3,7 +3,7 @@ import Applications from './applications';
 import SlaCentral from './slaCentral';
 import DevSecOpsCentral from './devSecOpsCentral';
 
-class Dashboard extends Component {
+class Overview extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -23,4 +23,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default Overview;
