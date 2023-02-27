@@ -4,6 +4,7 @@ import Sidebar from './components/sidebar';
 import Header from './components/header';
 import Breadcrumbs from './components/breadcrumbs';
 import Overview from './pages/overview';
+import Environments from './assetmanager/pages/environments';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Breadcrumbs />
             <Routes>
               <Route path="/" element={<Overview />} />
+              <Route path="/assetmanager/pages/environments" element={<Environments />} />
             </Routes>
           </div>
         </div>
