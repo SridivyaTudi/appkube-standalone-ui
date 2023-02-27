@@ -1,18 +1,80 @@
 import React, { Component } from 'react';
+import { Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement,
+} from 'chart.js';
 import Cloud from '../../assets/img/cloud.svg';
 import Azure from '../../assets/img/azure.svg';
 import GCP from '../../assets/img/gcp.svg';
 import AWS from '../../assets/img/aws.svg';
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement);
+
 
 class Applications extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      totalSpend: {
+        data: {
+          labels: ['', '', '', '', ''],
+          datasets: [
+            {
+              fill: false,
+              borderColor: 'rgba(225, 5, 5, 1)',
+              cubicInterpolationMode: 'monotone',
+              pointRadius: 0,
+              data: [20, 40, 30, 60],
+            },
+          ],
+        },
+        lineOptions: {
+          plugins: {
+            legend: {
+              display: false,
+              labels: {
+                usePointStyle: true,
+              },
+            },
+            tooltips: {
+              enabled: false,
+            },
+          },
+          scales: {
+            x: {
+              display: false,
+              grid: {
+                display: false,
+              },
+              ticks: {
+                display: false,
+              },
+            },
+            y: {
+              display: false,
+              grid: {
+                display: false,
+              },
+              ticks: {
+                display: false,
+              },
+            },
+          },
+        },
+      },
+    };
   }
 
   render() {
     const {} = this.props;
-    const {} = this.state;
+    const { totalSpend } = this.state;
 
     return (
       <div className="overview-container">
@@ -24,11 +86,14 @@ class Applications extends Component {
                   <div className="row">
                     <div className="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                       <div className="dashboard-spent">
-                        <div class="dashboard-spent-left">
+                        <div className="dashboard-spent-left">
                           <label>Total Spend</label>
                           <strong>$6,71,456</strong>
                         </div>
                         <div className="dashboard-spent-right">
+                          {totalSpend && (
+                            <Line data={totalSpend.data} options={totalSpend.lineOptions} />
+                          )}
                           <span>+4 from last week</span>
                         </div>
                       </div>
@@ -132,77 +197,77 @@ class Applications extends Component {
                   </div>
                 </div>
                 <div className="col-xl-3 col-lg-4 col-md-12 col-sm-12">
-                  <div class="cloud-wise-spend">
-                    <div class="heading">
+                  <div className="cloud-wise-spend">
+                    <div className="heading">
                       <label>Cloud wise spend</label>
-                      <i class="fa fa-ellipsis-v"></i>
+                      <i className="fa fa-ellipsis-v"></i>
                     </div>
-                    <div class="contents">
-                      <div class="content">
-                        <div class="icon">
+                    <div className="contents">
+                      <div className="content">
+                        <div className="icon">
                           <img alt="OTHER" src={Cloud} />
                         </div>
-                        <div class="progress-content">
-                          <div class="text">
-                            <span class="name">OTHER</span>
-                            <span class="value">50250.92</span>
-                            <span class="diff up">
-                              <i class="fa fa-caret-up"></i>8.27%
+                        <div className="progress-content">
+                          <div className="text">
+                            <span className="name">OTHER</span>
+                            <span className="value">50250.92</span>
+                            <span className="diff up">
+                              <i className="fa fa-caret-up"></i>8.27%
                             </span>
                           </div>
-                          <div class="progress">
-                            <span class="other" style={{ width: '8.26772%' }}></span>
+                          <div className="progress">
+                            <span className="other" style={{ width: '8.26772%' }}></span>
                           </div>
                         </div>
                       </div>
-                      <div class="content">
-                        <div class="icon">
+                      <div className="content">
+                        <div className="icon">
                           <img alt="AZURE" src={Azure} />
                         </div>
-                        <div class="progress-content">
-                          <div class="text">
-                            <span class="name">AZURE</span>
-                            <span class="value">50391.94</span>
-                            <span class="diff up">
-                              <i class="fa fa-caret-up"></i>2.47%
+                        <div className="progress-content">
+                          <div className="text">
+                            <span className="name">AZURE</span>
+                            <span className="value">50391.94</span>
+                            <span className="diff up">
+                              <i className="fa fa-caret-up"></i>2.47%
                             </span>
                           </div>
-                          <div class="progress">
-                            <span class="azure" style={{ width: '2.4655%' }}></span>
+                          <div className="progress">
+                            <span className="azure" style={{ width: '2.4655%' }}></span>
                           </div>
                         </div>
                       </div>
-                      <div class="content">
-                        <div class="icon">
+                      <div className="content">
+                        <div className="icon">
                           <img alt="GCP" src={GCP} />
                         </div>
-                        <div class="progress-content">
-                          <div class="text">
-                            <span class="name">GCP</span>
-                            <span class="value">50353.89</span>
-                            <span class="diff up">
-                              <i class="fa fa-caret-up"></i>12.81%
+                        <div className="progress-content">
+                          <div className="text">
+                            <span className="name">GCP</span>
+                            <span className="value">50353.89</span>
+                            <span className="diff up">
+                              <i className="fa fa-caret-up"></i>12.81%
                             </span>
                           </div>
-                          <div class="progress">
-                            <span class="gcp" style={{ width: '12.8107%' }}></span>
+                          <div className="progress">
+                            <span className="gcp" style={{ width: '12.8107%' }}></span>
                           </div>
                         </div>
                       </div>
-                      <div class="content">
-                        <div class="icon">
+                      <div className="content">
+                        <div className="icon">
                           <img alt="AWS" src={AWS} />
                         </div>
-                        <div class="progress-content">
-                          <div class="text">
-                            <span class="name"></span>
-                            <span class="value">50240.62</span>
-                            <span class="diff up">
-                              <i class="fa fa-caret-up"></i>14.13%
+                        <div className="progress-content">
+                          <div className="text">
+                            <span className="name"></span>
+                            <span className="value">50240.62</span>
+                            <span className="diff up">
+                              <i className="fa fa-caret-up"></i>14.13%
                             </span>
                           </div>
-                          <div class="progress">
-                            <span class="aws" style={{ width: '14.1335%' }}></span>
+                          <div className="progress">
+                            <span className="aws" style={{ width: '14.1335%' }}></span>
                           </div>
                         </div>
                       </div>
