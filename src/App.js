@@ -1,8 +1,9 @@
 // import GrafanaComponent from './base/GrafanaCharts';
+import { Scrollbars } from 'react-custom-scrollbars';
 import Sidebar from './components/sidebar';
 import Header from './components/header';
 import Breadcrumbs from './components/breadcrumbs';
-import Dashboard from './pages/dashboard';
+import Overview from './pages/overview';
 function App() {
   return (
     <div className="App">
@@ -12,7 +13,7 @@ function App() {
         <Header />
         <div className="scroll-canvas--dashboard monitor-main-body">
           <Breadcrumbs />
-          <Dashboard />
+          <Overview />
         </div>
       </div>
     </div>
