@@ -33,7 +33,7 @@
 
 // COMPONENTS
 // @import '../app/features/dashboard/components/AddPanelWidget/AddPanelWidget';
-// @import 'components/scrollbar';
+@import 'components/scrollbar';
 // @import 'components/buttons';
 // @import 'components/navs';
 // @import 'components/tabs';
@@ -109,7 +109,7 @@
 @import 'pages/overview';
 // @import 'pages/customdashboardlist';
 // @import 'pages/team';
-// @import 'pages/analytics';
+@import 'pages/analytics';
 // @import 'pages/custommanagedashboard';
 // @import 'pages/taskmanager';
 // @import 'pages/importdashboard';

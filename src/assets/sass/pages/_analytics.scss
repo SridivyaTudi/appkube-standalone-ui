@@ -873,7 +873,7 @@
   overflow-x: scroll;
 }
 
-@media only screen and (min-width: 1201px) and(max-width: 1242px) {
+@media only screen and (min-width: 1201px), only screen and (max-width: 1242px) {
   .sort-checkbox {
     padding: 0 6px !important;
 
@@ -883,14 +883,14 @@
   }
 }
 
-@media only screen and (min-width: 1024px) and(max-width: 1200px) {
+@media only screen and (min-width: 1024px), only screen and (max-width: 1200px) {
   .search-control-group,
   .sort-select-menu {
     margin-bottom: 10px;
   }
 }
 
-@media only screen and (min-width: 768px) and(max-width: 1023px) {
+@media only screen and (min-width: 768px), only screen and (max-width: 1023px) {
   .search-control-group,
   .sort-select-menu,
   .sort-checkbox {
