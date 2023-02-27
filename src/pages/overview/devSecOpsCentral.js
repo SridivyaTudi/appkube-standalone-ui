@@ -169,7 +169,6 @@ class DevSecOpsCentral extends Component {
   };
 
   renderTable = (data, tableKey) => {
-    debugger;
     let retData = [];
     let listJSX = [];
     let tabsJSX = [];
@@ -214,7 +213,6 @@ class DevSecOpsCentral extends Component {
   };
 
   render() {
-    const {} = this.props;
     const { centralTable } = this.state;
 
     return (

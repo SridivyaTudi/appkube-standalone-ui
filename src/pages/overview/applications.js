@@ -72,6 +72,16 @@ class Applications extends Component {
     };
   }
 
+  componentDidMount = () => {
+    fetch('http://34.199.12.114:5057/api/analytics/cloud-wise-spend')
+    .then(response => response.json())
+    .then(
+      (result) => {
+        console.log(result);
+      }
+    )
+  }
+
   render() {
     const {} = this.props;
     const { totalSpend } = this.state;

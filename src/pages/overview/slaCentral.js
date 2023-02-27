@@ -62,8 +62,6 @@ class SlaCentral extends Component {
   };
 
   render() {
-    const {} = this.props;
-
     return (
       <div className="overview-container">
         <div className="applications-container">
