@@ -8,7 +8,7 @@ import Environments from './assetmanager/pages/environments';
 
 function App() {
   return (
-    <div className="App">
+    <div className="grafana-app">
       {/* <GrafanaComponent /> */}
       <BrowserRouter>
         <div className="main-view">

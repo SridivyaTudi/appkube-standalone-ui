@@ -66,6 +66,11 @@ html {
 html {
   font-size: $font-size-base;
   height: 100%;
+  -ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  line-height: 1.5;
+  font-kerning: normal;
 }
 
 // This is specified in runtime Emotion GlobalStyles but we need them for the Grafana loading styles
@@ -78,6 +83,9 @@ body {
   height: 100%;
   width: 100%;
   position: absolute;
+  margin: 0;
+  margin-bottom: 0.45em;
+  letter-spacing: 0.01071em;
 }
 
 //
