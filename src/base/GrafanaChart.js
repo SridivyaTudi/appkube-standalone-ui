@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import {
   NoSsr,
   IconButton,
@@ -15,8 +15,18 @@ import WarningIcon from "@mui/icons-material/Warning";
 import CachedIcon from "@mui/icons-material/Cached";
 import dataFetch from "../lib/data-fetch";
 import { CommonData } from "../lib/commonDS";
-import GrafanaCustomGaugeChart from "../components/Grafana/GrafanaCustomGaugeChart";
-import bb, { area, line } from "billboard.js";
+// import GrafanaCustomGaugeChart from "../components/Grafana/GrafanaCustomGaugeChart";
+import { Line } from "react-chartjs-2";
+import zoomPlugin from "chartjs-plugin-zoom";
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Legend,
+} from "chart.js";
 
 const grafanaDateRangeToDate = (dt, startDate) => {
   const dto = new Date();
@@ -234,49 +244,30 @@ const grafanaDateRangeToDate = (dt, startDate) => {
 class GrafanaCustomChart extends Component {
   constructor(props) {
     super(props);
-    this.chartRef = null;
-    this.chart = null;
     this.timeFormat = "MM/DD/YYYY HH:mm:ss";
-    this.bbTimeFormat = "%Y-%m-%d %h:%M:%S %p";
-    this.panelType = "";
-    switch (props.panel.type) {
-      case "graph":
-        this.panelType = props.panel.type;
-        break;
-      case "singlestat":
-        this.panelType =
-          props.panel.type === "singlestat" &&
-          props.panel.sparkline &&
-          props.panel.sparkline.show === true
-            ? "sparkline"
-            : "gauge";
-        // this.panelType = props.panel.type ==='singlestat' && props.panel.sparkline ? 'sparkline':'gauge';
-        break;
-    }
-    const { sparkline } = props;
-    this.datasetIndex = {};
     this.state = {
-      xAxis: [],
-      sparkline: !!sparkline,
-      chartData: [],
       error: "",
       errorCount: 0,
+      chartContent: [],
+      chartOptions: {},
     };
   }
 
   componentDidMount() {
     this.configChartData();
+    ChartJS.register(
+      CategoryScale,
+      LinearScale,
+      PointElement,
+      LineElement,
+      Legend,
+      zoomPlugin
+    );
   }
 
   configChartData = () => {
-    const { panel, refresh, liveTail } = this.props;
+    const { refresh, liveTail } = this.props;
     const self = this;
-
-    if (panel.targets) {
-      panel.targets.forEach((target, ind) => {
-        self.datasetIndex[`${ind}_0`] = ind;
-      });
-    }
     if (typeof self.interval !== "undefined") {
       clearInterval(self.interval);
     }
@@ -287,20 +278,6 @@ class GrafanaCustomChart extends Component {
     }
     self.collectChartData();
   };
-
-  getOrCreateIndex(datasetInd) {
-    if (typeof this.datasetIndex[datasetInd] !== "undefined") {
-      return this.datasetIndex[datasetInd];
-    }
-    let max = 0;
-    Object.keys(this.datasetIndex).forEach((i) => {
-      if (this.datasetIndex[i] > max) {
-        max = this.datasetIndex[i];
-      }
-    });
-    this.datasetIndex[datasetInd] = max + 1;
-    return max + 1;
-  }
 
   collectChartData = (chartInst) => {
     const { panel } = this.props;
@@ -387,8 +364,6 @@ class GrafanaCustomChart extends Component {
       testUUID,
       panelData,
     } = this.props;
-    const { chartData } = this.state;
-    let { xAxis } = this.state;
 
     let queryRangeURL = "";
     let endpointURL = "";
@@ -439,67 +414,10 @@ class GrafanaCustomChart extends Component {
           return;
         }
 
-        fullData.forEach(({ metric, data }, di) => {
-          const datasetInd = self.getOrCreateIndex(`${ind}_${di}`);
-          const newData = [];
+        self.createOptions(fullData);
 
-          // if (typeof cd.labels[datasetInd] === 'undefined' || typeof cd.datasets[datasetInd] === 'undefined'){
-          let legend =
-            typeof target.legendFormat !== undefined ? target.legendFormat : "";
-          if (legend === "") {
-            legend =
-              Object.keys(metric).length > 0 ? JSON.stringify(metric) : "";
-          } else {
-            Object.keys(metric).forEach((metricKey) => {
-              legend = legend
-                .replace(`{{${metricKey}}}`, metric[metricKey])
-                .replace(`{{ ${metricKey} }}`, metric[metricKey]);
-            });
-            legend = legend
-              .replace("{{ ", "")
-              .replace("{{", "")
-              .replace(" }}", "")
-              .replace("}}", "");
-          }
-
-          // bb does NOT like labels which start with a number
-          if (!isNaN(legend.charAt(0))) {
-            legend = ` ${legend}`;
-          }
-          // if(legend.trim() === ''){
-          //   legend = 'NO VALUE';
-          // }
-          newData.push(legend);
-          xAxis = ["x"];
-          // }
-          data.forEach(({ x, y }) => {
-            newData.push(y);
-            xAxis.push(new Date(x));
-          });
-          chartData[datasetInd] = newData;
-        });
-        let groups = [];
-        if (typeof panel.stack !== "undefined" && panel.stack) {
-          const panelGroups = [];
-          chartData.forEach((y) => {
-            if (y.length > 0) {
-              panelGroups.push(y[0]); // just the label
-            }
-          });
-          groups = [panelGroups];
-        }
-        let chartDataFiltered = chartData.filter(
-          (element) => element !== undefined
-        );
-        if (self.chart && self.chart !== null) {
-          self.chart.load({ columns: [xAxis, ...chartDataFiltered] });
-        } else {
-          self.createOptions(xAxis, chartDataFiltered, groups);
-        }
         self.state.error &&
           self.setState({
-            xAxis,
-            chartData,
             error: "",
             errorCount: 0,
           });
@@ -573,172 +491,42 @@ class GrafanaCustomChart extends Component {
     };
   }
 
-  // createOptions() {
-  //   const {panel, from, to, panelData} = this.props;
-  //   const fromDate = grafanaDateRangeToDate(from);
-  //   const toDate = grafanaDateRangeToDate(to);
-  createOptions(xAxis, chartData, groups) {
-    const { panel, board, inDialog } = this.props;
-    const self = this;
-
-    // const showAxis = panel.type ==='singlestat' && panel.sparkline && panel.sparkline.show === true?false:true;
-    const showAxis = !(panel.type === "singlestat" && panel.sparkline);
-
-    const xAxes = {
-      type: "timeseries",
-      // type : 'category',
-      show: showAxis && !this.state.sparkline,
-      tick: {
-        // format: self.c3TimeFormat,
-        // fit: true,
-        fit: false,
-        count: 5,
-        // centered: true
-      },
-      // label: {
-      //   text: "X Label",
-      //   position: "outer-center"
-      // }
-    };
-
-    const yAxes = { show: showAxis && !this.state.sparkline };
-    if (panel.yaxes) {
-      panel.yaxes.forEach((ya) => {
-        if (typeof ya.label !== "undefined" && ya.label !== null) {
-          yAxes.label = {
-            text: ya.label,
-            position: "outer-middle",
-          };
-        }
-        if (ya.format.toLowerCase().startsWith("percent")) {
-          const mulFactor = ya.format.toLowerCase() === "percentunit" ? 100 : 1;
-          yAxes.tick = {
-            format(d) {
-              const tk = (d * mulFactor).toFixed(2);
-              return `${tk}%`;
+  createOptions(fullData = [{ data: [] }]) {
+    if (fullData[0]?.data.length > 0) {
+      this.setState({
+        chartContent: {
+          datasets: [
+            {
+              data: fullData[0].data.map((e) => {
+                return {
+                  ...e,
+                  x: e.x.split(" ")[1],
+                };
+              }),
+              borderColor: "rgb(75, 192, 192)",
             },
-          };
-        }
-      });
-    }
-
-    const grid = {
-      // x: {
-      //     show: showAxis,
-      // },
-      // y: {
-      //     show: showAxis,
-      // }
-    };
-
-    const linked = this.state.sparkline
-      ? false
-      : !inDialog
-      ? { name: board && board.title ? board.title : "" }
-      : false;
-
-    let shouldDisplayLegend = Object.keys(this.datasetIndex).length <= 10;
-    if (panel.type !== "graph") {
-      shouldDisplayLegend = false;
-    }
-    if (self.chartRef && self.chartRef !== null) {
-      const chartConfig = {
-        // oninit: function(args){
-        //   console.log(JSON.stringify(args));
-        // },
-        bindto: self.chartRef,
-        size: this.state.sparkline
-          ? {
-              // width: 150,
-              height: 50,
-            }
-          : null,
-        data: {
-          x: "x",
-          xFormat: self.bbTimeFormat,
-          columns: [xAxis, ...chartData],
-          groups,
-          type: this.state.sparkline ? line() : area(),
+          ],
         },
-        axis: {
-          x: xAxes,
-          y: yAxes,
-        },
-        zoom: {
-          enabled: true,
-          type: "drag",
-          onzoomend: self.updateDateRange(),
-        },
-        grid,
-        legend: { show: shouldDisplayLegend && !this.state.sparkline },
-
-        point: {
-          r: 0,
-          focus: { expand: { r: 5 } },
-        },
-        tooltip: {
-          show: showAxis,
-          linked,
-          format: {
-            title(x) {
-              // return d3.timeFormat(self.bbTimeFormat)(x);
-              return moment(x).format(self.timeFormat);
+        chartOptions: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "bottom",
+            },
+            zoom: {
+              zoom: {
+                wheel: {
+                  enabled: true,
+                },
+                pinch: {
+                  enabled: true,
+                },
+                mode: "y",
+              },
             },
           },
         },
-        area: { linearGradient: true },
-      };
-
-      if (
-        self.panelType === "sparkline" &&
-        panel.sparkline &&
-        panel.sparkline.lineColor &&
-        panel.sparkline.fillColor
-      ) {
-        // cd.datasets[datasetInd].borderColor = panel.sparkline.lineColor;
-        // cd.datasets[datasetInd].backgroundColor = panel.sparkline.fillColor;
-
-        const dataLength =
-          chartConfig.data.columns &&
-          Array.isArray(chartConfig.data.columns) &&
-          chartConfig.data.columns.length > 1
-            ? chartConfig.data.columns[1].length
-            : 0; // 0 is for x axis
-        if (dataLength > 0) {
-          if (typeof chartConfig.data.colors === "undefined") {
-            chartConfig.data.colors = {};
-          }
-          chartConfig.data.colors[chartConfig.data.columns[1][0]] =
-            panel.sparkline.lineColor;
-
-          if (dataLength > 1) {
-            let content = "";
-            if (panel.format.toLowerCase().startsWith("percent")) {
-              const mulFactor =
-                panel.format.toLowerCase() === "percentunit" ? 100 : 1;
-              if (!isNaN(chartConfig.data.columns[1][dataLength - 1])) {
-                const tk = (
-                  chartConfig.data.columns[1][dataLength - 1] * mulFactor
-                ).toFixed(2);
-                content = `${tk}%`;
-              }
-            } else {
-              content = `${chartConfig.data.columns[1][dataLength - 1]} ${
-                panel.format
-              }`;
-            }
-            chartConfig.title = {
-              text: `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n${content}`, // for sparkline, we want to print the value as title
-            };
-          }
-        }
-
-        chartConfig.color = {
-          pattern: [panel.sparkline.fillColor],
-        };
-      }
-
-      self.chart = bb.generate(chartConfig);
+      });
     }
   }
 
@@ -788,7 +576,7 @@ class GrafanaCustomChart extends Component {
   render() {
     const { board, panel, inDialog, handleChartDialogOpen, panelData } =
       this.props;
-    const { error, errorCount, chartData } = this.state;
+    const { error, errorCount, chartContent, chartOptions } = this.state;
     const self = this;
 
     let loadingBar;
@@ -835,22 +623,10 @@ class GrafanaCustomChart extends Component {
       </div>
     );
 
-    let mainChart;
-    if (this.panelType === "gauge") {
-      mainChart = (
-        <GrafanaCustomGaugeChart data={chartData} panel={panel} error={error} />
-      );
-    } else {
-      mainChart = (
-        <div>
-          <div ref={(ch) => (self.chartRef = ch)} />
-        </div>
-      );
-    }
     return (
-      <NoSsr>
+      <NoSsr style={{ height: "inherit" }}>
         {loadingBar}
-        <Card>
+        <Card style={{ height: "inherit" }}>
           {!inDialog && (
             <CardHeader
               disableTypography
@@ -868,7 +644,13 @@ class GrafanaCustomChart extends Component {
               action={iconComponent}
             />
           )}
-          <CardContent>{mainChart}</CardContent>
+          <CardContent style={{ height: "100%" }}>
+            <div style={{ height: "100%", widht: "100%" }}>
+              {chartContent.datasets && chartContent.datasets.length > 0 ? (
+                <Line options={chartOptions} data={chartContent} />
+              ) : null}
+            </div>
+          </CardContent>
         </Card>
       </NoSsr>
     );

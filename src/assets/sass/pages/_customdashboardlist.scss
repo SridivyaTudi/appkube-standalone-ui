@@ -1,0 +1,139 @@
+.dashboard-list-container {
+  margin-top: 0px;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  padding: 1rem;
+
+  .aside-container {
+    width: 20%;
+    transition: width 0.5s;
+    padding: 0px !important;
+    text-align: center;
+    margin-top: 0;
+    border-right: 1px solid #ddd;
+
+    .dashboard-nav-item {
+      opacity: 1;
+      transition: opacity 0.5s;
+      padding: 15px;
+
+      .tab-title {
+        font-size: 15px;
+      }
+    }
+
+    .active {
+      background-color: #3697ef;
+      color: white;
+    }
+
+    .collapse-button {
+      width: 50px;
+      z-index: 111;
+      text-align: left;
+      margin-top: 4px;
+    }
+  }
+
+  .collapsed {
+    width: 0px;
+
+    .dashboard-nav-item {
+      opacity: 0;
+    }
+  }
+
+  .monitor-main-body {
+    margin-left: 0px !important;
+  }
+}
+
+.nav-tabs {
+  padding-left: 0px !important;
+
+  > li {
+    margin-bottom: -1px;
+    float: left;
+
+    > a {
+      line-height: 1.5;
+      border: 0px solid transparent;
+      position: relative;
+      margin: 0 10px;
+      left: 15px;
+      padding: 10px;
+    }
+  }
+}
+
+.monitor-main-body {
+  .nav-tabs {
+    border-bottom: 1px solid #767980;
+    padding-left: 10px;
+    margin: 0 0 10px 0;
+  }
+
+  .nav-link {
+    color: $gray-1;
+
+    &.active {
+      border-bottom: 2px solid $dashboard-nav-link-active-border-color;
+      color: $dashboard-nav-link-active-text-color;
+      border-left: 0;
+      border-right: 0;
+      border-top: 0;
+      padding: 10px;
+      margin: 0 10px;
+
+      &:hover {
+        border-bottom: 2px solid $dashboard-nav-link-active-border-color;
+      }
+    }
+  }
+}
+
+.theme-dark {
+  .monitor-main-body {
+    .nav-link {
+      color: $gray-6;
+    }
+  }
+}
+
+.dashboard-settings__content {
+  padding: 0;
+  width: 80%;
+  .dashboard-content {
+    padding: 15px;
+  }
+}
+
+.dashboard-list-container {
+  .aside-container {
+    &.collapsed {
+      width: 42px;
+      background-color: transparent;
+    }
+
+    .collapse-button {
+      margin-top: 0;
+      padding: 8px 15px;
+      width: 100%;
+      background-color: $dashboard-aside-collapse-button-background-color;
+    }
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar {
+    //padding-left: 0;
+    margin-left: 0;
+    height: 52px;
+  }
+}
