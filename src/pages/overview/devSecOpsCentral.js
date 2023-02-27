@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 const mappingData = {
   devcentral: 'DEV Central',
@@ -45,67 +46,67 @@ const mappingData = {
 const dummyData = {
   devcentral: {
     volume: {
-      product: "+56",
-      services: "-21",
-      release: "-35",
-      useCase: "+40",
-      bugs: "+45",
-      workFlow: "-32",
-      documentation: "-10",
-      automationTest: "+12",
+      product: '+56',
+      services: '-21',
+      release: '-35',
+      useCase: '+40',
+      bugs: '+45',
+      workFlow: '-32',
+      documentation: '-10',
+      automationTest: '+12',
     },
     velocity: {
-      scheduleDeviation: "+56",
-      releaseTime: "-21",
-      bugFixing: "+40",
-      useCaseDelivery: "+45",
-      bugs: "+45",
-      workFlowGeneration: "-32",
-      documentation: "-10",
-      automationTest: "+12",
+      scheduleDeviation: '+56',
+      releaseTime: '-21',
+      bugFixing: '+40',
+      useCaseDelivery: '+45',
+      bugs: '+45',
+      workFlowGeneration: '-32',
+      documentation: '-10',
+      automationTest: '+12',
     },
     reliability: {
-      postReleaseDefects: "+56",
-      usageStats: "-21",
+      postReleaseDefects: '+56',
+      usageStats: '-21',
     },
   },
   seccentral: {
     infra: {
-      account: "+56",
-      vpc: "-21",
-      cluster: "-35",
-      managedServices: "+40",
+      account: '+56',
+      vpc: '-21',
+      cluster: '-35',
+      managedServices: '+40',
     },
     app: {
-      container: "+56",
-      code: "-21",
+      container: '+56',
+      code: '-21',
     },
     data: {
-      accessControl: "+56",
-      governance: "-21",
-      transitAndStore: "-35",
+      accessControl: '+56',
+      governance: '-21',
+      transitAndStore: '-35',
     },
   },
   opscentral: {
     volume: {
-      newCloudProvisioning: "+56",
-      newProduct: "-21",
-      serviceOnboarding: "-35",
-      newAutomation: "+40",
-      alertResolved: "+45",
+      newCloudProvisioning: '+56',
+      newProduct: '-21',
+      serviceOnboarding: '-35',
+      newAutomation: '+40',
+      alertResolved: '+45',
     },
     velocity: {
-      scheduleDeviation: "+56",
-      releaseTime: "-21",
-      bugFixing: "-35",
-      usecaseDelivery: "+40",
-      bugs: "+45",
-      workFlowGeneration: "-32",
-      documentation: "-10",
-      automationTest: "+12",
+      scheduleDeviation: '+56',
+      releaseTime: '-21',
+      bugFixing: '-35',
+      usecaseDelivery: '+40',
+      bugs: '+45',
+      workFlowGeneration: '-32',
+      documentation: '-10',
+      automationTest: '+12',
     },
     reliability: {
-      rateofReopenTickets: "+56",
+      rateofReopenTickets: '+56',
     },
   },
 };
@@ -116,9 +117,9 @@ class DevSecOpsCentral extends Component {
     super(props);
     this.state = {
       activeTabs: {
-        devcentral: "volume",
-        seccentral: "infra",
-        opscentral: "volume",
+        devcentral: 'volume',
+        seccentral: 'infra',
+        opscentral: 'volume',
       },
       centralTable: {},
     };
@@ -146,7 +147,7 @@ class DevSecOpsCentral extends Component {
         value = val[Object.keys(val)[i]];
         if (value) {
           retData.push(
-            <div className="report-box">
+            <div className="report-box" key={uuidv4()}>
               <strong>{this.mapping[key]}</strong>
               <div className="report">
                 {value * 1 > 0 ? (
@@ -180,34 +181,29 @@ class DevSecOpsCentral extends Component {
         let rows = data[tab];
         tabsJSX.push(
           <li
-            className={activeTabs[tableKey] === tab ? "active" : ""}
+            className={activeTabs[tableKey] === tab ? 'active' : ''}
             onClick={() => this.handleTabToggle(tableKey, tab)}
+            key={uuidv4()}
           >
             {this.mapping[tab]}
           </li>
         );
         {
           activeTabs[tableKey] === tab &&
-            listJSX.push(
-              <div className="reports-boxes active">
-                {this.renderRows(rows)}
-              </div>
-            );
+            listJSX.push(<div key={uuidv4()} className="reports-boxes active">{this.renderRows(rows)}</div>);
         }
       }
     }
     retData.push(
-      <>
-        <div className="collapse-expand">
-          <div className="heading">
-            <h3>{this.mapping[tableKey]}</h3>
-          </div>
-          <div className="contents">
-            <ul className="tabs">{tabsJSX}</ul>
-            {listJSX}
-          </div>
+      <div className="collapse-expand" key={uuidv4()}>
+        <div className="heading">
+          <h3>{this.mapping[tableKey]}</h3>
         </div>
-      </>
+        <div className="contents">
+          <ul className="tabs">{tabsJSX}</ul>
+          {listJSX}
+        </div>
+      </div>
     );
     return retData;
   };
@@ -234,9 +230,9 @@ class DevSecOpsCentral extends Component {
             </div>
           </div>
           <div className="main-collapse-expand">
-            {this.renderTable(centralTable.devcentral, "devcentral")}
-            {this.renderTable(centralTable.seccentral, "seccentral")}
-            {this.renderTable(centralTable.opscentral, "opscentral")}
+            {this.renderTable(centralTable.devcentral, 'devcentral')}
+            {this.renderTable(centralTable.seccentral, 'seccentral')}
+            {this.renderTable(centralTable.opscentral, 'opscentral')}
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
 class SlaCentral extends Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class SlaCentral extends Component {
       products.forEach((product, index) => {
         const productData = slaData[product];
         tableHTML.push(
-          <tr key={`${index}-sla-central`}>
+          <tr key={uuidv4()}>
             <td className="products"> {product} </td>
             <td className={this.handletableColor(productData.Performance)}>
               {productData.Performance}%

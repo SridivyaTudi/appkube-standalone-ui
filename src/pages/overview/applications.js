@@ -15,6 +15,8 @@ import Cloud from "../../assets/img/cloud.svg";
 import Azure from "../../assets/img/azure.svg";
 import GCP from "../../assets/img/gcp.svg";
 import AWS from "../../assets/img/aws.svg";
+import { v4 as uuidv4 } from 'uuid';
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -113,7 +115,7 @@ class Applications extends Component {
       clouds.forEach((cloud, index) => {
         const cloudData = data[cloud];
         retData.push(
-          <div className="content" key={index}>
+          <div className="content" key={uuidv4()}>
             <div className="icon">
               <img alt={cloud} src={images[cloud.toLowerCase()]} />
             </div>
