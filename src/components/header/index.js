@@ -1,15 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      showSearch: false,
+    };
   }
 
-  render() {
-    const {} = this.props;
-    const {} = this.state;
+  onClickSearchBox = (e) => {
+    this.setState({
+      showSearch: true,
+    });
+  };
 
+  onClickBackdrop = () => {
+    this.setState({
+      showSearch: false,
+    });
+  };
+
+  render() {
+    const { showSearch } = this.state;
     return (
       <div className="top-nav-bar">
         <div className="logo-container">
@@ -21,9 +33,28 @@ class Header extends Component {
               type="text"
               placeholder="Search resources, services, and docs"
               className="gf-form-input search-box"
+              onClick={this.onClickSearchBox}
             />
             <i className="gf-form-input-icon fa fa-search"></i>
           </label>
+          {showSearch && (
+            <React.Fragment>
+              <div className="search-menu">
+                <ul>
+                  <li>
+                    <i className="fa fa-search"></i>
+                    <a href="/plugins/xformation-alertmanager-ui-plugin/page/searchalert">
+                      Monitor alerts
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div
+                className="search-backdrop"
+                onClick={this.onClickBackdrop}
+              ></div>
+            </React.Fragment>
+          )}
         </div>
         <div className="icon-container">
           <a href="/dashboards" className="icon" title="Dashboards">
