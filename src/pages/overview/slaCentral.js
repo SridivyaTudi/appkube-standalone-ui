@@ -1,15 +1,68 @@
-import React, { Component } from 'react';
-
+import React, { Component } from "react";
 
 class SlaCentral extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      slaData: undefined,
+      dataLoaded: false,
+    };
   }
+
+  componentDidMount = () => {
+    fetch("http://34.199.12.114:5057/api/analytics/sla-central")
+      .then((response) => response.json())
+      .then((result) => {
+        this.setState({ slaData: result });
+      });
+  };
+
+  handletableColor = (number) => {
+    let color = "";
+    if (number > 98) {
+      color = "green";
+    } else if (number > 75 && number < 90) {
+      color = "orange";
+    } else {
+      color = "red";
+    }
+    return color;
+  };
+
+  showTableData = () => {
+    const { slaData } = this.state;
+    let tableHTML = [];
+    if (slaData) {
+      let products = Object.keys(slaData);
+      products.forEach((product, index) => {
+        const productData = slaData[product];
+        tableHTML.push(
+          <tr key={`${index}-sla-central`}>
+            <td className="products"> {product} </td>
+            <td className={this.handletableColor(productData.Performance)}>
+              {productData.Performance}%
+            </td>
+            <td className={this.handletableColor(productData.Availability)}>
+              {productData.Availability}%
+            </td>
+            <td className={this.handletableColor(productData.Reliability)}>
+              {productData.Reliability}%
+            </td>
+            <td className={this.handletableColor(productData.Security)}>
+              {productData.Security}%
+            </td>
+            <td className={this.handletableColor(productData["End Usage"])}>
+              {productData["End Usage"]}%
+            </td>
+          </tr>
+        );
+      });
+      return tableHTML;
+    }
+  };
 
   render() {
     const {} = this.props;
-    const {} = this.state;
 
     return (
       <div className="overview-container">
@@ -31,103 +84,17 @@ class SlaCentral extends Component {
                       <th> End Usage </th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td className="products"> HRMS </td>
-                      <td className="green"> 99.05% </td>
-                      <td className="green"> 99.00% </td>
-                      <td className="green"> 99.00% </td>
-                      <td className="green"> 99.07% </td>
-                      <td className="green"> 99.01% </td>
-                    </tr>
-                    <tr>
-                      <td className="products"> TRAVEL </td>
-                      <td className="green"> 99.04% </td>
-                      <td className="green"> 98.97% </td>
-                      <td className="green"> 98.97% </td>
-                      <td className="green"> 98.91% </td>
-                      <td className="green"> 98.97% </td>
-                    </tr>
-                    <tr>
-                      <td className="products"> LMS </td>
-                      <td className="green"> 98.96% </td>
-                      <td className="green"> 98.99% </td>
-                      <td className="green"> 98.99% </td>
-                      <td className="green"> 99.09% </td>
-                      <td className="green"> 99.02% </td>
-                    </tr>
-                    <tr>
-                      <td className="products"> INVENTORY </td>
-                      <td className="green"> 99.03% </td>
-                      <td className="green"> 99.00% </td>
-                      <td className="green"> 99.02% </td>
-                      <td className="green"> 98.96% </td>
-                      <td className="green"> 99.04% </td>
-                    </tr>
-                    <tr>
-                      <td className="products"> MONITORING </td>
-                      <td className="green"> 98.94% </td>
-                      <td className="green"> 99.05% </td>
-                      <td className="green"> 99.03% </td>
-                      <td className="green"> 99.01% </td>
-                      <td className="green"> 99.02% </td>
-                    </tr>
-                    <tr>
-                      <td className="products"> TestCentral </td>
-                      <td className="green"> 98.96% </td>
-                      <td className="green"> 98.94% </td>
-                      <td className="green"> 98.99% </td>
-                      <td className="green"> 99.02% </td>
-                      <td className="green"> 99.04% </td>
-                    </tr>
-                    <tr>
-                      <td className="products"> EMS </td>
-                      <td className="green"> 99.07% </td>
-                      <td className="green"> 99.00% </td>
-                      <td className="green"> 98.98% </td>
-                      <td className="green"> 99.00% </td>
-                      <td className="green"> 98.96% </td>
-                    </tr>
-                    <tr>
-                      <td className="products"> PROCUREMENT </td>
-                      <td className="green"> 99.11% </td>
-                      <td className="green"> 99.02% </td>
-                      <td className="green"> 98.98% </td>
-                      <td className="green"> 99.04% </td>
-                      <td className="green"> 98.99% </td>
-                    </tr>
-                    <tr>
-                      <td className="products"> SALES </td>
-                      <td className="green"> 98.97% </td>
-                      <td className="green"> 98.95% </td>
-                      <td className="green"> 99.03% </td>
-                      <td className="green"> 99.00% </td>
-                      <td className="green"> 99.07% </td>
-                    </tr>
-                    <tr>
-                      <td className="products"> INTERNAL AUDIT </td>
-                      <td className="green"> 98.89% </td>
-                      <td className="green"> 99.02% </td>
-                      <td className="green"> 99.06% </td>
-                      <td className="green"> 98.91% </td>
-                      <td className="green"> 98.97% </td>
-                    </tr>
-                    <tr>
-                      <td className="products"> DIGITAL AUCTION </td>
-                      <td className="green"> 99.00% </td>
-                      <td className="green"> 99.08% </td>
-                      <td className="green"> 98.93% </td>
-                      <td className="green"> 98.98% </td>
-                      <td className="green"> 98.99% </td>
-                    </tr>
-                  </tbody>
+                  <tbody>{this.showTableData()}</tbody>
                 </table>
               </div>
               <div className="metrics-performance">
                 <div className="performance-box green">
                   <span>❯</span>98%
                 </div>
-                <div className="performance-box" style={{ marginright: 2, paddingLeft: 0}}>
+                <div
+                  className="performance-box"
+                  style={{ marginright: 2, paddingLeft: 0 }}
+                >
                   75%<span>❯</span>
                 </div>
                 <div className="performance-box orange">
