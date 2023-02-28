@@ -4,6 +4,7 @@ import Jobs from '../../../assets/img/jobs.png';
 import ProductWiseServices from '../../components/ProductWiseServices';
 import { RestService } from '../_service/RestService';
 import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import { Doughnut, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import _ from 'lodash';
@@ -11,6 +12,11 @@ import _ from 'lodash';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 class DepartmentWiseProducts extends Component {
+  colorMapping = {
+    75: '#5dbc73',
+    50: '#ef8f00',
+    25: '#e34120',
+  };
   constructor(props) {
     super(props);
     this.state = {
