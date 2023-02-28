@@ -74,7 +74,7 @@ class Wizard extends Component {
         </div>
         <div className="wizard-step-component-container">
           {this.createStepContainer()}
-          <div className="d-block text-right  next">
+          <div className="d-flex justify-content-end align-items-center ">
             {currentStep < steps.length - 1 && (
               <button
                 onClick={(e) => this.onClickStepButton(currentStep - 1)}

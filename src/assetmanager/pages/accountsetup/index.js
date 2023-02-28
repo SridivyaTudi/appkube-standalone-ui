@@ -6,8 +6,7 @@ import  PreparePolicy  from './PreparePolicy';
 import  CreateRole  from './CreateRole';
 import  Ou  from './Ou';
 import  Review  from './Review';
-// import { RestService } from '../_service/RestService';q
-// import { PLUGIN_BASE_URL } from '../../constants';
+
 
 class AccountSetup extends Component {
     steps;
