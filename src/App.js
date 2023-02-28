@@ -4,9 +4,10 @@ import Sidebar from './components/sidebar';
 import Header from './components/header';
 import Breadcrumbs from './components/breadcrumbs';
 import Overview from './pages/overview';
-import Environments from './Assetmanager/Pages/Environments';
+import Environments from './assetmanager/pages/environments';
 import { CustomSideMenu } from './components/header/CustomSideMenu';
 import DepartmentWiseProducts from './assetmanager/pages/departmentWiseProducts';
+import AccountSetup from './assetmanager/pages/accountsetup';
 
 function App() {
   return (
