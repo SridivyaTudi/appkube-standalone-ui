@@ -4,7 +4,8 @@ import Sidebar from './components/sidebar';
 import Header from './components/header';
 import Breadcrumbs from './components/breadcrumbs';
 import Overview from './pages/overview';
-import Environments from './assetmanager/pages/environments';
+import Environments from './Assetmanager/Pages/Environments';
+import { CustomSideMenu } from './components/header/CustomSideMenu';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       {/* <GrafanaComponent /> */}
       <BrowserRouter>
         <div className="main-view">
-          <Sidebar />
+          {/* <Sidebar /> */}
+          <CustomSideMenu/>
           <Header />
           <div className="scroll-canvas--dashboard monitor-main-body">
             <Breadcrumbs />
