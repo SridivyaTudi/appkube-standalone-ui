@@ -1,12 +1,14 @@
 import React, { PureComponent } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
-import { Link } from "react-router-dom";
-import Overview from "../../pages/overview";
+import { NavLink } from "react-router-dom";
 
 export class CustomSideMenu extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      currentActiveLink: -1,
+      subMenuHTML: "",
+    };
   }
 
   mainMenu = [
@@ -291,6 +293,29 @@ export class CustomSideMenu extends PureComponent {
     },
   ];
 
+  createSubmenu = (index) => {
+    let subMenuHTML = (
+      <div className="menu_state_4">
+        <div className="sub-menu active-sub-menu">
+          <div className="open-menu">
+            <ul>
+              {this.mainMenu[index].subMenu.map((item) => {
+                return (
+                  <li>
+                    <NavLink className="menu-item" to={item.link}>
+                      <div className="menu-item-text">{item.text}</div>
+                    </NavLink>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+    this.setState({ subMenuHTML: subMenuHTML });
+  };
+
   render() {
     return (
       <div className="sidemenu">
@@ -298,62 +323,46 @@ export class CustomSideMenu extends PureComponent {
           <Scrollbars style={{ width: "100%", height: "100%" }}>
             <div className="main-menu">
               <ul>
-                {this.mainMenu.map((item) => {
-                  console.log(item);
+                {this.mainMenu.map((item, index) => {
                   return (
                     <li className="item" title={item.text}>
-                      <Link className="menu-item" to={item.link}>
+                      <NavLink
+                        onClick={(isActive) => {
+                          if (isActive && item.subMenu) {
+                            this.createSubmenu(index);
+                          } else {
+                            this.setState({ subMenuHTML: "" });
+                          }
+                        }}
+                        className="menu-item"
+                        to={item.link}
+                      >
                         <div
                           className={`menu-item-image ${item.cssClass}`}
                         ></div>
                         <div className="menu-item-text">{item.text}</div>
-                        {item.subMenu &&
-                          item.subMenu.map((item) => {
-                            return (
-                              <Link className="menu-item" to={item.link}>
-                                <div
-                                  className={`menu-item-image ${item.cssClass}`}
-                                ></div>
-                                <div className="menu-item-text">
-                                  {item.text}
-                                </div>
-                              </Link>
-                            );
-                          })}
-                      </Link>
+                      </NavLink>
                     </li>
                   );
                 })}
               </ul>
               <ul>
                 {this.extra.map((item) => {
-                  console.log(item);
                   return (
                     <li className="item" title={item.text}>
-                      <Link className="menu-item" to={item.link}>
+                      <NavLink className="menu-item" to={item.link}>
                         <div
                           className={`menu-item-image ${item.cssClass}`}
                         ></div>
                         <div className="menu-item-text">{item.text}</div>
-                        {item.subMenu
-                          ? item.subMenu.map((item) => {
-                              <Link className="menu-item" to={item.link}>
-                                <div
-                                  className={`menu-item-image ${item.cssClass}`}
-                                ></div>
-                                <div className="menu-item-text">
-                                  {item.text}
-                                </div>
-                              </Link>;
-                            })
-                          : null}
-                      </Link>
+                      </NavLink>
                     </li>
                   );
                 })}
               </ul>
             </div>
           </Scrollbars>
+          {this.state.subMenuHTML}
         </div>
       </div>
     );
