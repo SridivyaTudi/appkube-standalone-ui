@@ -6,6 +6,7 @@ import Breadcrumbs from './components/breadcrumbs';
 import Overview from './pages/overview';
 import Environments from './Assetmanager/Pages/Environments';
 import { CustomSideMenu } from './components/header/CustomSideMenu';
+import DepartmentWiseProducts from './assetmanager/pages/departmentWiseProducts';
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Overview />} />
               <Route path="/assetmanager/pages/environments" element={<Environments />} />
+              <Route path="/assetmanager/pages/accountsetup" element={<AccountSetup />} />
+              <Route path="/assetmanager/pages/department-wise-products" element={<DepartmentWiseProducts />} />
             </Routes>
           </div>
         </div>

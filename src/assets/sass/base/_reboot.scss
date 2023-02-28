@@ -210,6 +210,10 @@ img {
 // * http://v4-alpha.getbootstrap.com/content/reboot/#click-delay-optimization-for-touch
 // * http://caniuse.com/#feat=css-touch-action
 // * http://patrickhlauke.github.io/touch/tests/results/#suppressing-300ms-delay
+a{
+  cursor: pointer;
+  color: rgba(36, 41, 46, 1);
+}
 
 a,
 area,
