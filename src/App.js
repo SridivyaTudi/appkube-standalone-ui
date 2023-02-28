@@ -8,6 +8,7 @@ import Environments from './assetmanager/pages/environments';
 import { CustomSideMenu } from './components/header/CustomSideMenu';
 import DepartmentWiseProducts from './assetmanager/pages/departmentWiseProducts';
 import AccountSetup from './assetmanager/pages/accountsetup';
+import AmazonServices from './assetmanager/pages/amazonservices';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/assetmanager/pages/environments" element={<Environments />} />
               <Route path="/assetmanager/pages/accountsetup" element={<AccountSetup />} />
               <Route path="/assetmanager/pages/department-wise-products" element={<DepartmentWiseProducts />} />
+              <Route path="/assetmanager/pages/amazonservices" element={<AmazonServices />} />
             </Routes>
           </div>
         </div>
