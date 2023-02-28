@@ -6,6 +6,7 @@ import Breadcrumbs from './components/breadcrumbs';
 import Overview from './pages/overview';
 import Environments from './assetmanager/pages/environments';
 import AccountSetup from './assetmanager/pages/accountsetup';
+import DepartmentWiseProducts from './assetmanager/pages/departmentWiseProducts';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/" element={<Overview />} />
               <Route path="/assetmanager/pages/environments" element={<Environments />} />
               <Route path="/assetmanager/pages/accountsetup" element={<AccountSetup />} />
+              <Route path="/assetmanager/pages/department-wise-products" element={<DepartmentWiseProducts />} />
             </Routes>
           </div>
         </div>
