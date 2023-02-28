@@ -137,7 +137,7 @@ class AccountSetup extends Component {
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-12">
                                 <div className="float-right common-right-btn ">
-                                    <Link className="asset-white-button min-width-inherit">
+                                    <Link to={`/assetmanager/pages/environments`} className="asset-white-button min-width-inherit">
                                         <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;
                                         Back
                                     </Link>
