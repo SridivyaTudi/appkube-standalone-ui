@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './assets/sass/style.scss';
-import './assets/sass/grafana.light.scss';
+import './assets/sass/standalone.light.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

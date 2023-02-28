@@ -11,7 +11,7 @@ import AccountSetup from './assetmanager/pages/accountsetup';
 
 function App() {
   return (
-    <div className="grafana-app">
+    <div className="standalone-app">
       {/* <GrafanaComponent /> */}
       <BrowserRouter>
         <div className="main-view">
