@@ -326,6 +326,24 @@ class Environments extends Component {
                                             </div>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                            <Link>
+                                                AZURE (786262340)
+                                            </Link>
+                                        </td>
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>227</td>
+                                        <td>332</td>
+                                        <td>
+                                            <div className="d-block text-center action-edit">
+                                                <button className="asset-white-button min-width-inherit m-r-0" >
+                                                    <i className="fa fa-ellipsis-h"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

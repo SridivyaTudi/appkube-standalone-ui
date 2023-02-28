@@ -5,6 +5,7 @@ import Header from './components/header';
 import Breadcrumbs from './components/breadcrumbs';
 import Overview from './pages/overview';
 import Environments from './assetmanager/pages/environments';
+import AccountSetup from './assetmanager/pages/accountsetup';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Overview />} />
               <Route path="/assetmanager/pages/environments" element={<Environments />} />
+              <Route path="/assetmanager/pages/accountsetup" element={<AccountSetup />} />
             </Routes>
           </div>
         </div>
