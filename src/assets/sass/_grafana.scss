@@ -10,14 +10,15 @@
 @import 'mixins/drop_element';
 
 // BASE
+@import 'https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@0ac23ca/css/all.css';
+@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css';
 @import 'base/normalize';
 @import 'base/reboot';
 @import 'base/type';
-// @import 'base/forms';
+@import 'base/forms';
 @import 'base/grid';
-// @import 'base/fonts';
-// @import 'base/code';
-// @import 'base/icons';
+@import 'base/code';
+@import 'base/icons';
 
 // UTILS
 // @import 'utils/utils';
@@ -90,8 +91,6 @@
 
 // LOAD @grafana/ui components
 // @import '@grafana/ui/src/index';
-@import 'https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@0ac23ca/css/all.css';
-@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css';
 
 // PAGES
 // @import 'pages/login';
