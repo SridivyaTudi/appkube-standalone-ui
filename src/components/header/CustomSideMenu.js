@@ -295,9 +295,11 @@ export class CustomSideMenu extends PureComponent {
   ];
 
   getPinnedMenuText = (isActive, index, text) => {
-    if (index < 1) {
+    if (index < 1 && isActive) {
+      this.setState({ sideMenuPinnedText: text });
+    } else if (index < 1) {
       this.setState({ sideMenuPinnedText: "" });
-    } else if (isActive) {
+    } else {
       this.setState({ sideMenuPinnedText: text });
     }
   };
@@ -342,7 +344,6 @@ export class CustomSideMenu extends PureComponent {
   };
 
   render() {
-    const { sideMenuPinned } = this.state;
     return (
       <div className="sidemenu">
         <div className="menu-item-container">
@@ -403,26 +404,30 @@ export class CustomSideMenu extends PureComponent {
           >
             <div className="sub-menu active-sub-menu">
               {this.state.subMenuHTML}
-              <div
-                class="close-menu"
-                onClick={() => {
-                  this.setState({ sideMenuPinned: !this.state.sideMenuPinned });
-                }}
-              >
-                <div class="side-menu-toggle">
-                  <i
-                    class="fa fa-thumb-tack"
-                    style={{ transform: "rotate(-90deg)" }}
-                  ></i>
+              {this.state.subMenuHTML ? (
+                <div
+                  class="close-menu"
+                  onClick={() => {
+                    this.setState({
+                      sideMenuPinned: !this.state.sideMenuPinned,
+                    });
+                  }}
+                >
+                  <div class="side-menu-toggle">
+                    <i
+                      class="fa fa-thumb-tack"
+                      style={{ transform: "rotate(-90deg)" }}
+                    ></i>
+                  </div>
+                  <ul>
+                    <li>
+                      <div class="menu-item-text">
+                        {this.state.sideMenuPinnedText}
+                      </div>
+                    </li>
+                  </ul>
                 </div>
-                <ul>
-                  <li>
-                    <div class="menu-item-text">
-                      {this.state.sideMenuPinnedText}
-                    </div>
-                  </li>
-                </ul>
-              </div>
+              ) : null}
             </div>
           </div>
         </div>
