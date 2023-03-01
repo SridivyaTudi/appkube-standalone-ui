@@ -6,8 +6,9 @@ export class CustomSideMenu extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      currentActiveLink: -1,
       subMenuHTML: "",
+      sideMenuPinned: false,
+      sideMenuPinnedText: "",
     };
   }
 
@@ -293,30 +294,55 @@ export class CustomSideMenu extends PureComponent {
     },
   ];
 
+  getPinnedMenuText = (isActive, index, text) => {
+    if (index < 1) {
+      this.setState({ sideMenuPinnedText: "" });
+    } else if (isActive) {
+      this.setState({ sideMenuPinnedText: text });
+    }
+  };
+
   createSubmenu = (index) => {
-    let subMenuHTML = (
-      <div className="menu_state_4">
-        <div className="sub-menu active-sub-menu">
-          <div className="open-menu">
-            <ul>
-              {this.mainMenu[index].subMenu.map((item) => {
-                return (
-                  <li>
-                    <NavLink className="menu-item" to={item.link}>
-                      <div className="menu-item-text">{item.text}</div>
-                    </NavLink>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+    let HTML = (
+      <div className="open-menu">
+        <div
+          className="side-menu-toggle text-right"
+          onClick={() => {
+            this.setState({ sideMenuPinned: !this.state.sideMenuPinned });
+          }}
+        >
+          <i
+            className="fa fa-thumb-tack"
+            style={{ transform: "rotate(0deg)" }}
+          ></i>
         </div>
+        <ul>
+          {this.mainMenu[index].subMenu.map((item, index) => {
+            if (index < 1) {
+              this.setState({ sideMenuPinnedText: item.text });
+            }
+            return (
+              <li>
+                <NavLink
+                  onClick={(isActive) => {
+                    this.getPinnedMenuText(isActive, index, item.text);
+                  }}
+                  className="menu-item"
+                  to={item.link}
+                >
+                  <div className="menu-item-text">{item.text}</div>
+                </NavLink>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     );
-    this.setState({ subMenuHTML: subMenuHTML });
+    this.setState({ subMenuHTML: HTML });
   };
 
   render() {
+    const { sideMenuPinned } = this.state;
     return (
       <div className="sidemenu">
         <div className="menu-item-container">
@@ -347,10 +373,20 @@ export class CustomSideMenu extends PureComponent {
                 })}
               </ul>
               <ul>
-                {this.extra.map((item) => {
+                {this.extra.map((item, index) => {
                   return (
                     <li className="item" title={item.text}>
-                      <NavLink className="menu-item" to={item.link}>
+                      <NavLink
+                        onClick={(isActive) => {
+                          if (isActive && item.subMenu) {
+                            this.createSubmenu(index);
+                          } else {
+                            this.setState({ subMenuHTML: "" });
+                          }
+                        }}
+                        className="menu-item"
+                        to={item.link}
+                      >
                         <div
                           className={`menu-item-image ${item.cssClass}`}
                         ></div>
@@ -362,7 +398,33 @@ export class CustomSideMenu extends PureComponent {
               </ul>
             </div>
           </Scrollbars>
-          {this.state.subMenuHTML}
+          <div
+            className={`menu_state_${this.state.sideMenuPinned ? "8" : "4"}`}
+          >
+            <div className="sub-menu active-sub-menu">
+              {this.state.subMenuHTML}
+              <div
+                class="close-menu"
+                onClick={() => {
+                  this.setState({ sideMenuPinned: !this.state.sideMenuPinned });
+                }}
+              >
+                <div class="side-menu-toggle">
+                  <i
+                    class="fa fa-thumb-tack"
+                    style={{ transform: "rotate(-90deg)" }}
+                  ></i>
+                </div>
+                <ul>
+                  <li>
+                    <div class="menu-item-text">
+                      {this.state.sideMenuPinnedText}
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
