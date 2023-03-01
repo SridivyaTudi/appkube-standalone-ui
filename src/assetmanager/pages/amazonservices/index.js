@@ -244,7 +244,7 @@ export class AmazonServices extends Component {
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-12">
                                 <div className="float-right common-right-btn">
-                                    <Link className="asset-white-button min-width-inherit m-r-0">
+                                    <Link to={`/assetmanager/pages/environments`} className="asset-white-button min-width-inherit m-r-0">
                                         <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
                                     </Link>
                                 </div>

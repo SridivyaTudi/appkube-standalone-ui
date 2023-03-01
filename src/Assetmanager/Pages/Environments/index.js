@@ -171,7 +171,7 @@ class Environments extends Component {
                                                 >
                                                     <ul>
                                                         <li>
-                                                            <Link>
+                                                            <Link to={`/assetmanager/pages/accountsetup`}>
                                                                 <span>
                                                                     <img src={Aws} alt="" />
                                                                 </span>
@@ -179,7 +179,7 @@ class Environments extends Component {
                                                             </Link>
                                                         </li>
                                                         <li>
-                                                            <Link>
+                                                            <Link to={`/assetmanager/pages/accountsetup`}>
                                                                 <span>
                                                                     <img src={Aws} alt="" />
                                                                 </span>
@@ -224,7 +224,7 @@ class Environments extends Component {
                                                 >
                                                     <ul>
                                                         <li>
-                                                            <Link >
+                                                            <Link to={`/assetmanager/pages/accountsetup`}>
                                                                 <span>
                                                                     <img src={Aws} alt="" />
                                                                 </span>
@@ -232,7 +232,7 @@ class Environments extends Component {
                                                             </Link>
                                                         </li>
                                                         <li>
-                                                            <Link >
+                                                            <Link to={`/assetmanager/pages/accountsetup`}>
                                                                 <span>
                                                                     <img src={Microsoftazure} alt="" />
                                                                 </span>
@@ -240,7 +240,7 @@ class Environments extends Component {
                                                             </Link>
                                                         </li>
                                                         <li>
-                                                            <Link >
+                                                            <Link to={`/assetmanager/pages/accountsetup`}>
                                                                 <span>
                                                                     <img src={GoogleCloud} alt="" />
                                                                 </span>
@@ -248,7 +248,7 @@ class Environments extends Component {
                                                             </Link>
                                                         </li>
                                                         <li>
-                                                            <Link >
+                                                            <Link to={`/assetmanager/pages/accountsetup`}>
                                                                 <span>
                                                                     <img src={Kubernetes} alt="" />
                                                                 </span>
@@ -310,7 +310,7 @@ class Environments extends Component {
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <Link>
+                                            <Link to={`/assetmanager/pages/amazonservices`}>
                                                 AZURE (786262340)
                                             </Link>
                                         </td>
@@ -328,7 +328,7 @@ class Environments extends Component {
                                     </tr>
                                     <tr>
                                         <td>
-                                            <Link>
+                                            <Link to={`/assetmanager/pages/amazonservices`}>
                                                 AZURE (786262340)
                                             </Link>
                                         </td>
