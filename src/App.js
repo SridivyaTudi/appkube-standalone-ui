@@ -10,6 +10,7 @@ import DepartmentWiseProducts from './assetmanager/pages/departmentWiseProducts'
 import AccountSetup from './assetmanager/pages/accountsetup';
 import AmazonServices from './assetmanager/pages/amazonservices';
 import AddDatasourceProduct  from './assetmanager/pages/addDatasource/addDatasourceProduct';
+import ProductWiseServicesSla from './assetmanager/pages/productWiseServicesSla';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               <Route path="/assetmanager/pages/department-wise-products" element={<DepartmentWiseProducts />} />
               <Route path="/assetmanager/pages/amazonservices" element={<AmazonServices />} />
               <Route path="/assetmanager/pages/adddatasource/add-data-source-product" element={<AddDatasourceProduct />} />
+              <Route path="/assetmanager/pages/product-wise-services-sla" element={<ProductWiseServicesSla />} />
             </Routes>
           </div>
         </div>
