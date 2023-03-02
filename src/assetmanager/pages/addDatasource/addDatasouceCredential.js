@@ -1,30 +1,30 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Modal, ModalBody, ModalHeader } from 'reactstrap';
+import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import Microsoftazure from "../../../assets/img/assetmanager/microsoftazure.png";
 
 class AddDatasouceCredential extends Component {
-    constructor(props) {
-		super(props);
-		this.state = {
-			addCredForm: false,
-			
-		};
-	}
-    addDataSourceCred = () => {
-		this.setState({
-			addCredForm: true,
-			addcredpopup: false
-		});
-	};
-    toggle = () => {
-		const { addcredpopup } = this.state;
-		this.setState({
-			addcredpopup: !addcredpopup
-		});
-	};
+  constructor(props) {
+    super(props);
+    this.state = {
+      addCredForm: false,
+      credentialData: {},
+    };
+  }
+  addDataSourceCred = () => {
+    this.setState({
+      addCredForm: true,
+      addcredpopup: false,
+    });
+  };
+  toggle = () => {
+    const { addcredpopup } = this.state;
+    this.setState({
+      addcredpopup: !addcredpopup,
+    });
+  };
   render() {
-    const {addcredpopup, addCredForm} = this.state;
+    const { addcredpopup, addCredForm, credentialData } = this.state;
     return (
       <div className="add-data-source-container">
         <div className="add-data-source-page-container">
@@ -100,10 +100,12 @@ class AddDatasouceCredential extends Component {
                         </div>
                       </div>
                       <div className="source-massage-content">
-                        <span>
-                          Please click on the button to add credential using
-                          vault
-                        </span>
+                        {!addCredForm && (
+                          <span>
+                            Please click on the button to add credential using
+                            vault
+                          </span>
+                        )}
                         {!addCredForm && (
                           <button
                             className="asset-blue-button"
@@ -111,6 +113,55 @@ class AddDatasouceCredential extends Component {
                           >
                             Add Credential
                           </button>
+                        )}
+                        {addCredForm && (
+                          <div className="environgment-details">
+                            <h5>Connection Detail</h5>
+                            <div className="form-group description-content">
+                              <label htmlFor="description">vault Key Id</label>
+                              <input
+                                type="text"
+                                className="input-group-text"
+                                name="accesskey"
+                                value={credentialData.vaultId}
+                                readOnly
+                                onChange={this.onChangeDataSource}
+                              />
+                            </div>
+                            {/* <div className="form-group description-content">
+                                    <label htmlFor="description">Secret Key Id</label>
+                                    <input
+                                        type="password"
+                                        className="input-group-text"
+                                        name="secretkey"
+                                        value={credentialData.secretKey}
+                                        readOnly
+                                        placeholder="configured"
+                                        onChange={this.onChangeDataSource}
+                                    />
+                                </div> */}
+                          </div>
+                        )}
+                        {addCredForm && (
+                          <React.Fragment>
+                            <button
+                              className="asset-blue-button"
+                              onClick={this.toggle}
+                            >
+                              Back
+                            </button>
+                            <Link to={`/assetmanager/pages/add-data-source/exploreDataSourceDetail`}>
+                              <button className="asset-blue-button">
+                                Explore
+                              </button>
+                            </Link>
+                            <button
+                              className="asset-blue-button"
+                              onClick={this.editDataSource}
+                            >
+                              Save &#38; Test
+                            </button>
+                          </React.Fragment>
                         )}
                       </div>
                     </div>
@@ -138,7 +189,7 @@ class AddDatasouceCredential extends Component {
               <div className="heading">
                 <p>
                   Showing Credentials for Account &#8758;
-                   <span>AZURE (null)</span>
+                  <span>AZURE (null)</span>
                 </p>
               </div>
             </div>

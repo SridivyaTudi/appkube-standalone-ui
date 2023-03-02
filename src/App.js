@@ -13,6 +13,8 @@ import AddDatasourceProduct  from './assetmanager/pages/addDatasource/addDatasou
 import ProductWiseServicesSla from './assetmanager/pages/productWiseServicesSla';
 import AddDatasource  from './assetmanager/pages/addDatasource';
 import AddDatasouceCredential  from './assetmanager/pages/addDatasource/addDatasouceCredential';
+import ExploreDataSourceDetail  from './assetmanager/pages/addDatasource/exploreDataSourceDetail';
+
 
 function App() {
   return (
@@ -35,7 +37,7 @@ function App() {
               <Route path="/assetmanager/pages/product-wise-services-sla" element={<ProductWiseServicesSla />} />
               <Route path="/assetmanager/pages/add-data-source" element={<AddDatasource />} />
               <Route path="/assetmanager/pages/add-data-source/addDatasouceCredential" element={<AddDatasouceCredential />} />
-              
+              <Route path="/assetmanager/pages/add-data-source/exploreDataSourceDetail" element={<ExploreDataSourceDetail />} />
             </Routes>
           </div>
         </div>
