@@ -11,6 +11,10 @@ import AccountSetup from './assetmanager/pages/accountsetup';
 import AmazonServices from './assetmanager/pages/amazonservices';
 import AddDatasourceProduct  from './assetmanager/pages/addDatasource/addDatasourceProduct';
 import ProductWiseServicesSla from './assetmanager/pages/productWiseServicesSla';
+import AddDatasource  from './assetmanager/pages/addDatasource';
+import AddDatasouceCredential  from './assetmanager/pages/addDatasource/addDatasouceCredential';
+import ExploreDataSourceDetail  from './assetmanager/pages/addDatasource/exploreDataSourceDetail';
+
 
 function App() {
   return (
@@ -29,8 +33,11 @@ function App() {
               <Route path="/assetmanager/pages/accountsetup" element={<AccountSetup />} />
               <Route path="/assetmanager/pages/department-wise-products" element={<DepartmentWiseProducts />} />
               <Route path="/assetmanager/pages/amazonservices" element={<AmazonServices />} />
-              <Route path="/assetmanager/pages/adddatasource/add-data-source-product" element={<AddDatasourceProduct />} />
+              <Route path="/assetmanager/pages/add-data-source/add-data-source-product" element={<AddDatasourceProduct />} />
               <Route path="/assetmanager/pages/product-wise-services-sla" element={<ProductWiseServicesSla />} />
+              <Route path="/assetmanager/pages/add-data-source" element={<AddDatasource />} />
+              <Route path="/assetmanager/pages/add-data-source/addDatasouceCredential" element={<AddDatasouceCredential />} />
+              <Route path="/assetmanager/pages/add-data-source/exploreDataSourceDetail" element={<ExploreDataSourceDetail />} />
             </Routes>
           </div>
         </div>

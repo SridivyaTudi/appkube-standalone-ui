@@ -52,9 +52,9 @@ class AddDatasource extends Component {
                   </div>
                   <div className="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-12">
                     <div className="back-btn">
-                      <a type="button" className="asset-blue-button" href="/assetmanager/pages/adddatasource/addDatasouceCredential">
+                      <Link type="button" className="asset-blue-button" to="/assetmanager/pages/add-data-source">
                         Add input
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
