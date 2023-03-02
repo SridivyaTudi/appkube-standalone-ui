@@ -21,14 +21,14 @@ export class CustomSideMenu extends PureComponent {
       childName: "overview",
     },
     {
-      link: "/a/xformation-assetmanager-ui-plugin/environments",
+      link: "/assetmanager/pages/environments",
       text: "Assets",
       cssClass: "assets",
       childName: "assets",
       isImplemented: true,
       subMenu: [
         {
-          link: "/a/xformation-assetmanager-ui-plugin/environments",
+          link: "/assetmanager/pages/environments",
           text: "Environments",
           childName: "assets",
           isImplemented: true,
@@ -50,7 +50,7 @@ export class CustomSideMenu extends PureComponent {
           ],
         },
         {
-          link: "/a/xformation-assetmanager-ui-plugin/department-wise-products",
+          link: "/assetmanager/pages/department-wise-products",
           text: "Department Wise Products",
           childName: "assets",
           isImplemented: true,
@@ -294,6 +294,17 @@ export class CustomSideMenu extends PureComponent {
     },
   ];
 
+  sideBarMenuActiveMargin = () => {
+    let element = document.querySelector(".standalone-app");
+    if (element.classList.contains("menu_state_8")) {
+      element.classList.remove("menu_state_8");
+      element.classList.add("menu_state_4");
+    } else if (element.classList.contains("menu_state_4")) {
+      element.classList.remove("menu_state_4");
+      element.classList.add("menu_state_8");
+    }
+  };
+
   getPinnedMenuText = (isActive, index, text) => {
     if (index < 1 && isActive) {
       this.setState({ sideMenuPinnedText: text });
@@ -311,6 +322,7 @@ export class CustomSideMenu extends PureComponent {
           className="side-menu-toggle text-right"
           onClick={() => {
             this.setState({ sideMenuPinned: !this.state.sideMenuPinned });
+            this.sideBarMenuActiveMargin();
           }}
         >
           <i
@@ -355,9 +367,21 @@ export class CustomSideMenu extends PureComponent {
                     <li className="item" title={item.text}>
                       <NavLink
                         onClick={(isActive) => {
+                          let element =
+                            document.querySelector(".standalone-app");
                           if (isActive && item.subMenu) {
+                            if (
+                              !element.classList.contains("menu_state_8") &&
+                              !element.classList.contains("menu_state_4")
+                            ) {
+                              element.classList.add("menu_state_4");
+                            }
                             this.createSubmenu(index);
                           } else {
+                            element.classList.remove(
+                              "menu_state_8",
+                              "menu_state_4"
+                            );
                             this.setState({ subMenuHTML: "" });
                           }
                         }}
@@ -399,36 +423,34 @@ export class CustomSideMenu extends PureComponent {
               </ul>
             </div>
           </Scrollbars>
-          <div
-            className={`menu_state_${this.state.sideMenuPinned ? "8" : "4"}`}
-          >
-            <div className="sub-menu active-sub-menu">
-              {this.state.subMenuHTML}
-              {this.state.subMenuHTML ? (
-                <div
-                  class="close-menu"
-                  onClick={() => {
-                    this.setState({
-                      sideMenuPinned: !this.state.sideMenuPinned,
-                    });
-                  }}
-                >
-                  <div class="side-menu-toggle">
-                    <i
-                      class="fa fa-thumb-tack"
-                      style={{ transform: "rotate(-90deg)" }}
-                    ></i>
-                  </div>
-                  <ul>
-                    <li>
-                      <div class="menu-item-text">
-                        {this.state.sideMenuPinnedText}
-                      </div>
-                    </li>
-                  </ul>
+          <div className="sub-menu active-sub-menu">
+            {this.state.subMenuHTML}
+            {this.state.subMenuHTML ? (
+              <div
+                className="close-menu"
+                onClick={() => {
+                  this.setState({ sideMenuPinned: !this.state.sideMenuPinned });
+                  this.sideBarMenuActiveMargin();
+                }}
+                onMouseEnter={() => {
+                  this.sideBarMenuActiveMargin();
+                }}
+              >
+                <div className="side-menu-toggle">
+                  <i
+                    className="fa fa-thumb-tack"
+                    style={{ transform: "rotate(-90deg)" }}
+                  ></i>
                 </div>
-              ) : null}
-            </div>
+                <ul>
+                  <li>
+                    <div className="menu-item-text">
+                      {this.state.sideMenuPinnedText}
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
