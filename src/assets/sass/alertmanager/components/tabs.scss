@@ -1,0 +1,31 @@
+.nav-tabs {
+  border-bottom: 0px;
+  padding-left: 0px;
+}
+
+.nav-link {
+  margin: 0px;
+
+  &.active {
+    border-bottom: 4px solid #1486c7;
+    color: #1486c7;
+    margin: 10px;
+  }
+}
+
+.nav-tabs > li > a {
+  padding: 10px;
+  color: black;
+
+  &.active:hover {
+    border-bottom: 4px solid #1486c7;
+  }
+
+  &:hover {
+    border-bottom: 0px;
+  }
+}
+
+.vertical-tab-container .nav-item {
+  float: none;
+}

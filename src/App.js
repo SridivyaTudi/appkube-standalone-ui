@@ -15,7 +15,7 @@ import AddDatasource  from './assetmanager/pages/addDatasource';
 import AddDatasouceCredential  from './assetmanager/pages/addDatasource/addDatasouceCredential';
 import ExploreDataSourceDetail  from './assetmanager/pages/addDatasource/exploreDataSourceDetail';
 import Catalog from './perfmanager/pages/catalog';
-
+import MonitorAlerts from './alertmanager/pages/monitorAlerts';
 
 function App() {
   return (
@@ -40,6 +40,7 @@ function App() {
               <Route path="/assetmanager/pages/add-data-source/addDatasouceCredential" element={<AddDatasouceCredential />} />
               <Route path="/assetmanager/pages/add-data-source/exploreDataSourceDetail" element={<ExploreDataSourceDetail />} />
               <Route path="/perfmanager/pages/catalog" element={<Catalog/>}/>
+              <Route path="/alertmanager/monitor-alerts" element={<MonitorAlerts />} />
             </Routes>
           </div>
         </div>

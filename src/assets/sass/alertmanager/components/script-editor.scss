@@ -1,0 +1,112 @@
+/*********************************** Script Editor Buttons *********************************/
+
+.script-editor {
+  padding-right: 20px;
+}
+
+.script-editor-btn {
+  text-align: right;
+  width: auto;
+  .alert-white-button {
+    background-color: #dde4e9;
+    color: #8392a7;
+    min-width: auto;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover {
+      background-color: #3b7cff;
+      color: #ffffff;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .script-editor-btn {
+    text-align: left;
+    float: left;
+
+    .alert-white-button {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+/*********************************** Script Search *********************************/
+
+.script-search {
+  display: inline-block;
+  width: 63%;
+  margin-right: 10px;
+
+  .input-group-text {
+    background-color: #ffffff;
+    border: 1px solid #8392a7;
+    text-align: left;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 300;
+    color: #2662f0;
+  }
+}
+
+.script-search-btn {
+  display: inline-block;
+  width: auto;
+  margin-right: 10px;
+
+  .alert-white-button {
+    background-color: #dde4e9;
+    color: #8392a7;
+    min-width: auto;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover {
+      background-color: #3b7cff;
+      color: #ffffff;
+    }
+  }
+}
+
+.script-select {
+  display: inline-block;
+  width: 19.5%;
+
+  select {
+    width: 100%;
+    background-color: #efefef;
+    border: none;
+    color: #414d55;
+    font-size: 14px;
+    font-weight: 300;
+    border-radius: 4px;
+    padding: 2px 10px;
+  }
+}
+
+@media (max-width: 992px) {
+  .script-search {
+    width: 100%;
+    padding-bottom: 15px;
+  }
+
+  .script-select {
+    width: 40%;
+  }
+}
+
+/*********************************** Script Editor Code *********************************/
+
+.validate-bottom-text {
+  display: block;
+  font-size: 11px;
+  line-height: 16px;
+  color: #3b4859;
+  font-weight: 300;
+  margin-top: 25px;
+}
