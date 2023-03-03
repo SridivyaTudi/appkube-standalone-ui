@@ -9,6 +9,7 @@ export class CustomSideMenu extends PureComponent {
       subMenuHTML: "",
       sideMenuPinned: false,
       sideMenuPinnedText: "",
+      currentActiveLinkIndex: -1,
     };
   }
 
@@ -64,19 +65,19 @@ export class CustomSideMenu extends PureComponent {
           ],
         },
         {
-          link: "/a/xformation-assetmanager-ui-plugin/product-wise-services-sla",
+          link: "/assetmanager/pages/product-wise-services-sla",
           text: "Product Wise Services SLA",
           childName: "assets",
           isImplemented: true,
         },
         {
-          link: "/a/xformation-assetmanager-ui-plugin/add-data-source-product",
+          link: "/assetmanager/pages/add-data-source/add-data-source-product",
           text: "All Inputs",
           childName: "assets",
           isImplemented: true,
           subMenu: [
             {
-              link: "/a/xformation-assetmanager-ui-plugin/add-data-source",
+              link: "/assetmanager/pages/add-data-source",
               text: "All Inputs",
               childName: "assets",
               isImplemented: true,
@@ -112,14 +113,14 @@ export class CustomSideMenu extends PureComponent {
       ],
     },
     {
-      link: "/a/xformation-perfmanager-ui-plugin/catalog",
+      link: "/perfmanager/pages/catalog",
       text: "App Catalogue",
       cssClass: "app-catalogue",
       childName: "app-catalogue",
       isImplemented: true,
       subMenu: [
         {
-          link: "/a/xformation-perfmanager-ui-plugin/catalog",
+          link: "/perfmanager/pages/catalog",
           text: "View And Search Catalogue",
           childName: "app-catalogue",
           isImplemented: true,
@@ -294,6 +295,34 @@ export class CustomSideMenu extends PureComponent {
     },
   ];
 
+  componentDidMount = () => {
+    this.getCurrentActiveLink();
+  };
+
+  getCurrentActiveLink = () => {
+    let location = window.location.pathname;
+    let element = document.querySelector(".standalone-app");
+    if (location !== "/") {
+      this.mainMenu.map((item, index) => {
+        let currentActiveMenuIndex = index;
+        if (item.subMenu) {
+          item.subMenu.map((item) => {
+            if (location === item.link) {
+              this.createSubmenu(currentActiveMenuIndex);
+              this.setState({
+                sideMenuPinnedText: item.text,
+                currentActiveLinkIndex: currentActiveMenuIndex,
+              });
+              element.classList.add("menu_state_4");
+            }
+          });
+        } else {
+          this.setState({ currentActiveMenuIndex: -1 });
+        }
+      });
+    }
+  };
+
   sideBarMenuActiveMargin = () => {
     let element = document.querySelector(".standalone-app");
     if (element.classList.contains("menu_state_8")) {
@@ -352,7 +381,7 @@ export class CustomSideMenu extends PureComponent {
         </ul>
       </div>
     );
-    this.setState({ subMenuHTML: HTML });
+    this.setState({ subMenuHTML: HTML, currentActiveLinkIndex: index });
   };
 
   render() {
@@ -382,10 +411,17 @@ export class CustomSideMenu extends PureComponent {
                               "menu_state_8",
                               "menu_state_4"
                             );
-                            this.setState({ subMenuHTML: "" });
+                            this.setState({
+                              subMenuHTML: "",
+                              currentActiveLinkIndex: -1,
+                            });
                           }
                         }}
-                        className="menu-item"
+                        className={`menu-item ${
+                          index === this.state.currentActiveLinkIndex
+                            ? "active"
+                            : ""
+                        }`}
                         to={item.link}
                       >
                         <div
@@ -403,13 +439,32 @@ export class CustomSideMenu extends PureComponent {
                     <li className="item" title={item.text}>
                       <NavLink
                         onClick={(isActive) => {
+                          let element =
+                            document.querySelector(".standalone-app");
                           if (isActive && item.subMenu) {
+                            if (
+                              !element.classList.contains("menu_state_8") &&
+                              !element.classList.contains("menu_state_4")
+                            ) {
+                              element.classList.add("menu_state_4");
+                            }
                             this.createSubmenu(index);
                           } else {
-                            this.setState({ subMenuHTML: "" });
+                            element.classList.remove(
+                              "menu_state_8",
+                              "menu_state_4"
+                            );
+                            this.setState({
+                              subMenuHTML: "",
+                              currentActiveLinkIndex: -1,
+                            });
                           }
                         }}
-                        className="menu-item"
+                        className={`menu-item ${
+                          index === this.state.currentActiveLinkIndex
+                            ? "active"
+                            : ""
+                        }`}
                         to={item.link}
                       >
                         <div
