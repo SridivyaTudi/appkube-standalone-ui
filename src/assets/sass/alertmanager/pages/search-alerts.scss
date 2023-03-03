@@ -1,0 +1,43 @@
+.searchalert-container{
+  .filters-box{
+    border:1px solid $alert-container-border-color;
+    padding: 0;
+    .heading{
+      border:none;
+      background-color: $alert-container-border-color;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 15px;
+      padding-right: 15px;
+      margin-bottom: 15px;
+    }
+    .filters-btn{
+      padding-bottom: 15px;
+      padding-left: 15px;
+      text-align: left;
+    }
+    .filterbox{
+      padding-left: 15px;
+      padding-right: 15px;
+      .box{
+        border-bottom: none;
+        padding-bottom: 0px;
+        margin-bottom: 15px;
+        label{
+          display: block;
+          padding-bottom: 3px;
+        }
+        .min-box{
+          display: block;
+          margin-right: 0;
+          width: 100%;
+        }
+        .mix-box{
+          display: block;
+          margin-right: 0;
+          width: 100%;
+        }
+      }
+    }
+  } 
+}

@@ -1,0 +1,53 @@
+.create-rule-container .data-block {
+  padding: 0px 30px;
+}
+
+.select-resource-container {
+  .main-header {
+    padding-bottom: 7px;
+    font-size: 18px;
+    border-bottom: 1px dashed #a2c0d4;
+  }
+
+  .resource-table {
+    width: 250px;
+
+    td {
+      padding: 10px;
+    }
+  }
+}
+
+.create-rule-container {
+  .create-rule-header-container {
+    color: $filter-container-label-text-color;
+    border-bottom: 1px solid #fafafa;
+    margin-right: 15px;
+
+    .create-rule-header-text {
+      display: inline-block;
+      top: -10px;
+      position: relative;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    .create-rule-header-image {
+      color: $filter-container-label-text-color;
+      display: inline-block;
+      font-size: 40px;
+    }
+  }
+
+  .create-rule-header-content {
+    color: $filter-container-label-text-color;
+    margin-right: 15px;
+    margin-bottom: 20px;
+
+    div {
+      text-align: left;
+      margin-left: 35px;
+      margin-top: 15px;
+    }
+  }
+}
