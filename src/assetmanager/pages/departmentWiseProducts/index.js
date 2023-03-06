@@ -557,7 +557,7 @@ class DepartmentWiseProducts extends Component {
         const endcodedDName = department.name.replace('&', ';amp;');
         return (
           <div className="department-box" key={index}>
-            <Link to={`/department-wise-charts?department=${endcodedDName}`} className="heading">
+            <Link to={`/assetmanager/pages/department-wise-charts?department=${endcodedDName}`} className="heading">
               {department.name}
             </Link>
             <div className="contents">
@@ -682,7 +682,7 @@ class DepartmentWiseProducts extends Component {
                       )}
                     </div>
                     <div className="view-details-link">
-                      <Link to={`/product-wise-cost`}>
+                      <Link to={`/assetmanager/pages/product-wise-cost`}>
                         View details <i className="fa fa-chevron-down" />
                       </Link>
                     </div>

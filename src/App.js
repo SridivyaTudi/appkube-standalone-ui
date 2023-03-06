@@ -7,6 +7,8 @@ import Overview from './pages/overview';
 import Environments from './assetmanager/pages/environments';
 import { CustomSideMenu } from './components/header/CustomSideMenu';
 import DepartmentWiseProducts from './assetmanager/pages/departmentWiseProducts';
+import ProductWiseCost from './assetmanager/pages/departmentWiseProducts/ProductWiseCost';
+import DepartmentWiseCharts from './assetmanager/pages/departmentWiseProducts/departmentChart';
 import AccountSetup from './assetmanager/pages/accountsetup';
 import AmazonServices from './assetmanager/pages/amazonservices';
 import AddDatasourceProduct  from './assetmanager/pages/addDatasource/addDatasourceProduct';
@@ -35,6 +37,8 @@ function App() {
               <Route path="/assetmanager/pages/environments" element={<Environments />} />
               <Route path="/assetmanager/pages/accountsetup" element={<AccountSetup />} />
               <Route path="/assetmanager/pages/department-wise-products" element={<DepartmentWiseProducts />} />
+              <Route path="/assetmanager/pages/product-wise-cost" element={<ProductWiseCost />} />
+              <Route path="/assetmanager/pages/department-wise-charts" element={<DepartmentWiseCharts />} />
               <Route path="/assetmanager/pages/amazonservices" element={<AmazonServices />} />
               <Route path="/assetmanager/pages/add-data-source/add-data-source-product" element={<AddDatasourceProduct />} />
               <Route path="/assetmanager/pages/product-wise-services-sla" element={<ProductWiseServicesSla />} />
