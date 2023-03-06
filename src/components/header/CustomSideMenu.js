@@ -35,13 +35,13 @@ export class CustomSideMenu extends PureComponent {
           isImplemented: true,
           subMenu: [
             {
-              link: "/a/xformation-assetmanager-ui-plugin/amazon-services",
+              link: "/assetmanager/pages/amazon-services",
               text: "Amazon Services",
               childName: "assets",
               isImplemented: true,
               subMenu: [
                 {
-                  link: "/a/xformation-assetmanager-ui-plugin/storage-details",
+                  link: "/assetmanager/pages/storage-details",
                   text: "Storage Details",
                   childName: "assets",
                   isImplemented: true,
@@ -57,7 +57,7 @@ export class CustomSideMenu extends PureComponent {
           isImplemented: true,
           subMenu: [
             {
-              link: "/a/xformation-assetmanager-ui-plugin/department-wise-charts",
+              link: "/assetmanager/pages//department-wise-charts",
               text: "Department Wise Charts",
               childName: "assets",
               isImplemented: true,
@@ -83,7 +83,7 @@ export class CustomSideMenu extends PureComponent {
               isImplemented: true,
             },
             {
-              link: "/a/xformation-assetmanager-ui-plugin/add-datasource-credential",
+              link: "/assetmanager/pages//add-datasource-credential",
               text: "All Inputs",
               childName: "assets",
               isImplemented: true,
@@ -126,7 +126,7 @@ export class CustomSideMenu extends PureComponent {
           isImplemented: true,
         },
         {
-          link: "/a/xformation-perfmanager-ui-plugin/library",
+          link: "/perfmanager/pages/library",
           text: "Library",
           isImplemented: true,
           childName: "metrics-library",
@@ -144,14 +144,14 @@ export class CustomSideMenu extends PureComponent {
       ],
     },
     {
-      link: "/a/xformation-alertmanager-ui-plugin/monitor-alerts",
+      link: "/perfmanager/pages/monitor-alerts",
       text: "Alerts",
       cssClass: "alerts",
       isImplemented: true,
       childName: "alerts",
       subMenu: [
         {
-          link: "/a/xformation-alertmanager-ui-plugin/monitor-alerts",
+          link: "/perfmanager/pages/monitor-alerts",
           text: "Dashboard",
           isImplemented: true,
           childName: "alert-manager-dashboard",
