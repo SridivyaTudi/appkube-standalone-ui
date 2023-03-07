@@ -20,7 +20,7 @@ export class TopMenu extends Component {
       <div className="row">
         <div className="col-lg-12 col-md-12 col-sm-12">
           <div className="float-right common-right-btn">
-            <Link to={`/managedashboard`} className="white-button m-r-0">
+            <Link to={`/perfmanager/pages/managedashboard`} className="white-button m-r-0">
               <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
             </Link>
           </div>

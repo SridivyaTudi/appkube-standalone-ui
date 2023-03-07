@@ -79,7 +79,7 @@ class AddDatasource extends Component {
                   <h5>aws</h5>
                 </div>
                 <div className="source-inner-box">
-                  <Link to={`/assetmanager/pages/add-data-source/addDatasouceCredential`}>
+                  <Link to={`/assetmanager/pages/add-datasource-credential`}>
                     <div className="source-box">
                       <div className="images">
                         <img
@@ -96,7 +96,7 @@ class AddDatasource extends Component {
                       </div>
                     </div>
                   </Link>
-                  <Link to={`/assetmanager/pages/add-data-source/addDatasouceCredential`}>
+                  <Link to={`/assetmanager/pages/add-datasource-credential`}>
                     <div className="source-box">
                       <div className="images">
                         <img
@@ -113,7 +113,7 @@ class AddDatasource extends Component {
                       </div>
                     </div>
                   </Link>
-                  <Link to={`/assetmanager/pages/add-data-source/addDatasouceCredential`}>
+                  <Link to={`/assetmanager/pages/add-datasource-credential`}>
                     <div className="source-box">
                       <div className="images">
                         <img
@@ -130,7 +130,7 @@ class AddDatasource extends Component {
                       </div>
                     </div>
                   </Link>
-                  <Link to={`/assetmanager/pages/add-data-source/addDatasouceCredential`}>
+                  <Link to={`/assetmanager/pages/add-datasource-credential`}>
                     <div className="source-box">
                       <div className="images">
                         <img
@@ -155,7 +155,7 @@ class AddDatasource extends Component {
                   <h5>azure</h5>
                 </div>
                 <div className="source-inner-box">
-                  <Link to={`/assetmanager/pages/add-data-source/addDatasouceCredential`}>
+                  <Link to={`/assetmanager/pages/add-datasource-credential`}>
                     <div className="source-box">
                       <div className="images">
                         <img
@@ -172,7 +172,7 @@ class AddDatasource extends Component {
                       </div>
                     </div>
                   </Link>
-                  <Link to={`/assetmanager/pages/add-data-source/addDatasouceCredential`}>
+                  <Link to={`/assetmanager/pages/add-datasource-credential`}>
                     <div className="source-box">
                       <div className="images">
                         <img
@@ -189,7 +189,7 @@ class AddDatasource extends Component {
                       </div>
                     </div>
                   </Link>
-                  <Link to={`/assetmanager/pages/add-data-source/addDatasouceCredential`}>
+                  <Link to={`/assetmanager/pages/add-datasource-credential`}>
                     <div className="source-box">
                       <div className="images">
                         <img
@@ -206,7 +206,7 @@ class AddDatasource extends Component {
                       </div>
                     </div>
                   </Link>
-                  <Link to={`/assetmanager/pages/add-data-source/addDatasouceCredential`}>
+                  <Link to={`/assetmanager/pages/add-datasource-credential`}>
                     <div className="source-box">
                       <div className="images">
                         <img

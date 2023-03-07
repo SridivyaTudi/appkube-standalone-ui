@@ -71,7 +71,7 @@ export class CustomSideMenu extends PureComponent {
           isImplemented: true,
         },
         {
-          link: "/assetmanager/pages/add-data-source/add-data-source-product",
+          link: "/assetmanager/pages/add-data-source-product",
           text: "All Inputs",
           childName: "assets",
           isImplemented: true,

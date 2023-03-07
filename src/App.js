@@ -11,14 +11,17 @@ import ProductWiseCost from './assetmanager/pages/departmentWiseProducts/Product
 import DepartmentWiseCharts from './assetmanager/pages/departmentWiseProducts/departmentChart';
 import AccountSetup from './assetmanager/pages/accountsetup';
 import AmazonServices from './assetmanager/pages/amazonservices';
-import AddDatasourceProduct  from './assetmanager/pages/addDatasource/addDatasourceProduct';
+import AddDatasourceProduct from './assetmanager/pages/addDatasource/addDatasourceProduct';
 import ProductWiseServicesSla from './assetmanager/pages/productWiseServicesSla';
-import AddDatasource  from './assetmanager/pages/addDatasource';
-import AddDatasouceCredential  from './assetmanager/pages/addDatasource/addDatasouceCredential';
-import ExploreDataSourceDetail  from './assetmanager/pages/addDatasource/exploreDataSourceDetail';
-import Catalog from './perfmanager/pages/catalog';
-import Library from './perfmanager/pages/library';
+import AddDatasource from './assetmanager/pages/addDatasource';
+import AddDatasouceCredential from './assetmanager/pages/addDatasource/addDatasouceCredential';
+import ExploreDataSourceDetail from './assetmanager/pages/addDatasource/exploreDataSourceDetail';
 import Dashboard from './perfmanager/pages/dashboard';
+import Catalog from './perfmanager/pages/catalog';
+import Collection from './perfmanager/pages/collection';
+import Library from './perfmanager/pages/library';
+import CollectionView from './perfmanager/pages/collectionView';
+import CatalougeManagement from './perfmanager/pages/catalogueManagement';
 import MonitorAlerts from './alertmanager/pages/monitorAlerts';
 
 function App() {
@@ -28,7 +31,7 @@ function App() {
       <BrowserRouter>
         <div className="main-view">
           {/* <Sidebar /> */}
-          <CustomSideMenu/>
+          <CustomSideMenu />
           <Header />
           <div className="scroll-canvas--dashboard monitor-main-body">
             <Breadcrumbs />
@@ -40,14 +43,17 @@ function App() {
               <Route path="/assetmanager/pages/product-wise-cost" element={<ProductWiseCost />} />
               <Route path="/assetmanager/pages/department-wise-charts" element={<DepartmentWiseCharts />} />
               <Route path="/assetmanager/pages/amazonservices" element={<AmazonServices />} />
-              <Route path="/assetmanager/pages/add-data-source/add-data-source-product" element={<AddDatasourceProduct />} />
+              <Route path="/assetmanager/pages/add-data-source-product" element={<AddDatasourceProduct />} />
               <Route path="/assetmanager/pages/product-wise-services-sla" element={<ProductWiseServicesSla />} />
               <Route path="/assetmanager/pages/add-data-source" element={<AddDatasource />} />
-              <Route path="/assetmanager/pages/add-data-source/addDatasouceCredential" element={<AddDatasouceCredential />} />
-              <Route path="/assetmanager/pages/add-data-source/exploreDataSourceDetail" element={<ExploreDataSourceDetail />} />
-              <Route path="/perfmanager/pages/catalog" element={<Catalog/>}/>
-              <Route path="/perfmanager/pages/dashboard" element={<Dashboard/>}/>
-              <Route path="/perfmanager/pages/library" element={<Library/>}/>
+              <Route path="/assetmanager/pages/add-datasource-credential" element={<AddDatasouceCredential />} />
+              <Route path="/assetmanager/pages/explore-datasource" element={<ExploreDataSourceDetail />} />
+              <Route path="/perfmanager/pages/managedashboard" element={<Dashboard />} />
+              <Route path="/perfmanager/pages/catalog" element={<Catalog />} />
+              <Route path="/perfmanager/pages/collection" element={<Collection />} />
+              <Route path="/perfmanager/pages/library" element={<Library />} />
+              <Route path="/perfmanager/pages/collectionview" element={<CollectionView />} />
+              <Route path="/perfmanager/pages/cataloguemanagement" element={<CatalougeManagement />} />
               <Route path="/alertmanager/monitor-alerts" element={<MonitorAlerts />} />
             </Routes>
           </div>

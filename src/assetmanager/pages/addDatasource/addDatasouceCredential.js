@@ -150,7 +150,7 @@ class AddDatasouceCredential extends Component {
                             >
                               Back
                             </button>
-                            <Link to={`/assetmanager/pages/add-data-source/exploreDataSourceDetail`}>
+                            <Link to={`/assetmanager/pages/explore-datasource`}>
                               <button className="asset-blue-button">
                                 Explore
                               </button>
