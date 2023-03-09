@@ -144,20 +144,20 @@ export class CustomSideMenu extends PureComponent {
       ],
     },
     {
-      link: "/perfmanager/pages/monitor-alerts",
+      link: "/alertmanager/pages/monitor-alerts",
       text: "Alerts",
       cssClass: "alerts",
       isImplemented: true,
       childName: "alerts",
       subMenu: [
         {
-          link: "/perfmanager/pages/monitor-alerts",
+          link: "/alertmanager/pages/monitor-alerts",
           text: "Dashboard",
           isImplemented: true,
           childName: "alert-manager-dashboard",
         },
         {
-          link: "/a/xformation-alertmanager-ui-plugin/alert-rule-builder",
+          link: "/alertmanager/pages/alert-rule-builder",
           text: "New Alert Rule",
           isImplemented: true,
           childName: "new-alert-rule",
@@ -169,13 +169,13 @@ export class CustomSideMenu extends PureComponent {
           childName: "all-alert-rule",
         },
         {
-          link: "/a/xformation-alertmanager-ui-plugin/manage-alert-rule",
+          link: "/alertmanager/pages/manage-alert-rule",
           text: "Manage Alert Rule",
           isImplemented: true,
           childName: "new-alert-rule",
         },
         {
-          link: "/a/xformation-alertmanager-ui-plugin/manageworkflow",
+          link: "/alertmanager/pages/manageworkflow",
           text: "Manage Workflows",
           childName: "new-alert-rule",
         },
