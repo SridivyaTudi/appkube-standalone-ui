@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { configFun } from "../../config";
+// import { configFun } from "../../config";
 import { images } from "../../img";
 // import { RestService } from "../_service/RestService";
 // import *as dateFormat from "dateformat";
@@ -18,7 +18,7 @@ class AmazonServices extends React.Component {
   breadCrumbs;
   dateFormat;
   steps;
-  config;
+  // config;
   constructor(props) {
     super(props);
     this.state = {
@@ -66,10 +66,10 @@ class AmazonServices extends React.Component {
         component: <Inputs {...props} />,
       },
     ];
-    this.config = configFun(
-      props.meta.jsonData.apiUrl,
-      props.meta.jsonData.mainProductUrl
-    );
+    // this.config = configFun(
+    //   props.meta.jsonData.apiUrl,
+    //   props.meta.jsonData.mainProductUrl
+    // );
   }
 
   submitPage = () => {};

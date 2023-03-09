@@ -54,14 +54,10 @@ class DiscoveredAssets extends React.Component {
       treeData: [],
       totalData: {},
     };
-    // this.config = configFun(
-    //   props.meta.jsonData.apiUrl,
-    //   props.meta.jsonData.mainProductUrl
-    // );
   }
 
   componentDidMount() {
-    const queryPrm = new URLSearchParams(this.props.location.search);
+    const queryPrm = new URLSearchParams(document.location.search);
     const accountId = queryPrm.get("accountId");
     const cloudName = queryPrm.get("cloudName");
     this.getServicesData(accountId);
@@ -74,7 +70,7 @@ class DiscoveredAssets extends React.Component {
   getServicesData = async (accountId) => {
     try {
       await RestService.getData(
-        `${this.config.GET_ACCOUNT_SERVICES_DATA}?accountId=${accountId}`,
+        `http://34.199.12.114:5057/api/account-services/search?accountId=${accountId}`,
         null,
         null
       ).then((response) => {
@@ -689,9 +685,9 @@ class DiscoveredAssets extends React.Component {
             >
               <Link
                 onClick={(e) => this.onClickDirectService(e, service)}
-                to={`/assetmanager/pages/amazonservices/storage-details?accountId=${accountId}&cloudName=${cloudName}`}
+                to={`/assetmanager/pages/storage-details?accountId=${accountId}&cloudName=${cloudName}`}
               >
-                {service.name}
+                {service.name}{" "}
                 {service.serviceType === "Data"
                   ? `(${service.dbType})`
                   : `(${service.appType})`}
