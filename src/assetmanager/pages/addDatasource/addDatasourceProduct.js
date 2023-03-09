@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AWS from "../../../assets/img/assetmanager/aws.png";
 import SourceImg1 from "../../../assets/img/assetmanager/source-img1.png";
-import Microsoftazure from'../../../assets/img/assetmanager/microsoftazure.png';
+import Microsoftazure from "../../../assets/img/assetmanager/microsoftazure.png";
 
-class AddDatasource extends Component {
+class AddDataSourceProduct extends Component {
   render() {
     return (
       <div className="add-data-source-container">
@@ -52,7 +52,11 @@ class AddDatasource extends Component {
                   </div>
                   <div className="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-12">
                     <div className="back-btn">
-                      <Link type="button" className="asset-blue-button" to="/assetmanager/pages/add-data-source">
+                      <Link
+                        type="button"
+                        className="asset-blue-button"
+                        to="/assetmanager/pages/add-data-source"
+                      >
                         Add input
                       </Link>
                     </div>
@@ -183,4 +187,4 @@ class AddDatasource extends Component {
   }
 }
 
-export default AddDatasource;
+export default AddDataSourceProduct;
