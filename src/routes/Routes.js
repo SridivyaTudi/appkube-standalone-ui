@@ -8,11 +8,13 @@ import Collection from '../perfmanager/pages/collection';
 import Library from '../perfmanager/pages/library';
 import CollectionView from '../perfmanager/pages/collectionView';
 import CatalogueManagement from '../perfmanager/pages/catalogueManagement';
+
 //***** Assetmanager *****//
-import AccountSetup from '../assetmanager/pages/accountsetup';
-// import Kubernetes from '../assetmanager/pages/kubernetes';
-import AmazonServices from '../assetmanager/pages/amazonservices';
 import Environments from '../assetmanager/pages/environments';
+import AmazonServices from '../assetmanager/pages/amazonservices';
+import Kubernetes from '../assetmanager/pages/kubernetes';
+import StorageDetails from '../assetmanager/pages/StorageDetails';
+import AccountSetup from '../assetmanager/pages/accountsetup';
 import DepartmentWiseProducts from '../assetmanager/pages/departmentWiseProducts';
 import DepartmentWiseCharts from '../assetmanager/pages/departmentWiseProducts/departmentChart';
 import ProductWiseCost from '../assetmanager/pages/departmentWiseProducts/ProductWiseCost';
@@ -21,7 +23,8 @@ import AddDatasource from '../assetmanager/pages/addDatasource';
 import AddDatasouceCredential from '../assetmanager/pages/addDatasource/addDatasouceCredential';
 import ExploreDataSourceDetail from '../assetmanager/pages/addDatasource/exploreDataSourceDetail';
 import AddDataSourceProduct from '../assetmanager/pages/addDatasource/addDatasourceProduct';
-import StorageDetails from '../assetmanager/pages/StorageDetails';
+import AddDatasourceInputs from '../assetmanager/pages/addDatasource/addDatasourceInputs';
+
 //***** Alertmanager *****//
 import MonitorAlerts from '../alertmanager/pages/monitorAlerts';
 import AlertRuleBuilder from '../alertmanager/pages/alertRuleBuilder';
@@ -44,20 +47,23 @@ export const AllRoutes = () => {
       <Route path="/perfmanager/pages/library" element={<Library />} />
       <Route path="/perfmanager/pages/collectionview" element={<CollectionView />} />
       <Route path="/perfmanager/pages/cataloguemanagement" element={<CatalogueManagement />} />
+
       {/***** Assetmanager *****/}
       <Route path="/assetmanager/pages/environments" element={<Environments />} />
-      <Route path="/assetmanager/pages/accountsetup" element={<AccountSetup />} />
-      {/* <Route path="/assetmanager/pages/kubernetes" element={<Kubernetes />} /> */}
-      <Route path="/assetmanager/pages/department-wise-products" element={<DepartmentWiseProducts />} />
-      <Route path="/assetmanager/pages/product-wise-cost" element={<ProductWiseCost />} />
-      <Route path="/assetmanager/pages/department-wise-charts" element={<DepartmentWiseCharts />} />
       <Route path="/assetmanager/pages/amazonservices" element={<AmazonServices />} />
-      <Route path="/assetmanager/pages/add-data-source-product" element={<AddDataSourceProduct />} />
+      <Route path="/assetmanager/pages/kubernetes" element={<Kubernetes />} />
+      <Route path="/assetmanager/pages/storage-details" element={<StorageDetails />} />
+      <Route path="/assetmanager/pages/accountsetup" element={<AccountSetup />} />
+      <Route path="/assetmanager/pages/department-wise-products" element={<DepartmentWiseProducts />} />
+      <Route path="/assetmanager/pages/department-wise-charts" element={<DepartmentWiseCharts />} />
+      <Route path="/assetmanager/pages/product-wise-cost" element={<ProductWiseCost />} />
       <Route path="/assetmanager/pages/product-wise-services-sla" element={<ProductWiseServicesSla />} />
       <Route path="/assetmanager/pages/add-data-source" element={<AddDatasource />} />
       <Route path="/assetmanager/pages/add-datasource-credential" element={<AddDatasouceCredential />} />
       <Route path="/assetmanager/pages/explore-datasource" element={<ExploreDataSourceDetail />} />
-      <Route path="/assetmanager/pages/storage-details" element={<StorageDetails />} />
+      <Route path="/assetmanager/pages/add-data-source-product" element={<AddDataSourceProduct />} />
+      <Route path="/assetmanager/pages/add-data-source-inputs" element={<AddDatasourceInputs />} />
+      
       {/***** Alertmanager *****/}
       <Route path="/alertmanager/pages/monitor-alerts" element={<MonitorAlerts />} />
       <Route path="/alertmanager/pages/alert-rule-builder" element={<AlertRuleBuilder />} />
