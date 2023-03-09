@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
-import Icon from '../../../assets/img/assetmanager/icon.png';
-// import { images } from '../../img';
+import * as React from "react";
+import { images } from "../../img";
 // import { Link } from 'react-router-dom';
 // import { PLUGIN_BASE_URL } from '../../constants';
 
-class ServicesPerformance extends Component {
+class ServicesPerformance extends React.Component {
   tagNameServiceMapping = {
-    App: 'App Services',
-    Network: 'Network Services',
-    Data: 'Data Services',
-    Other: 'Other Services',
+    App: "App Services",
+    Network: "Network Services",
+    Data: "Data Services",
+    Other: "Other Services",
   };
   constructor(props) {
     super(props);
@@ -18,9 +17,9 @@ class ServicesPerformance extends Component {
       productToggle: { index: 0, isOpened: false },
       viewMapping: this.props.hostingType,
       mappingOptions: [
-        { key: 'CloudManaged', name: 'Cloud Managed' },
-        { key: 'Cluster', name: 'Cluster' },
-        { key: 'ViewAll', name: 'View All' },
+        { key: "CloudManaged", name: "Cloud Managed" },
+        { key: "Cluster", name: "Cluster" },
+        { key: "ViewAll", name: "View All" },
       ],
     };
   }
@@ -39,16 +38,31 @@ class ServicesPerformance extends Component {
   toggleCategories = (environmentIndex, categoryIndex) => {
     const { product } = this.state;
     if (
-      product.deploymentEnvironmentList[environmentIndex].serviceCategoryList[categoryIndex].serviceNameList &&
-      product.deploymentEnvironmentList[environmentIndex].serviceCategoryList[categoryIndex].serviceNameList.length > 0
+      product.deploymentEnvironmentList[environmentIndex].serviceCategoryList[
+        categoryIndex
+      ].serviceNameList &&
+      product.deploymentEnvironmentList[environmentIndex].serviceCategoryList[
+        categoryIndex
+      ].serviceNameList.length > 0
     ) {
-      for (let j = 0; j < product.deploymentEnvironmentList[environmentIndex].serviceCategoryList.length; j++) {
+      for (
+        let j = 0;
+        j <
+        product.deploymentEnvironmentList[environmentIndex].serviceCategoryList
+          .length;
+        j++
+      ) {
         if (j !== categoryIndex) {
-          product.deploymentEnvironmentList[environmentIndex].serviceCategoryList[j].isOpen = false;
+          product.deploymentEnvironmentList[
+            environmentIndex
+          ].serviceCategoryList[j].isOpen = false;
         }
       }
-      product.deploymentEnvironmentList[environmentIndex].serviceCategoryList[categoryIndex].isOpen = !product
-        .deploymentEnvironmentList[environmentIndex].serviceCategoryList[categoryIndex].isOpen;
+      product.deploymentEnvironmentList[environmentIndex].serviceCategoryList[
+        categoryIndex
+      ].isOpen =
+        !product.deploymentEnvironmentList[environmentIndex]
+          .serviceCategoryList[categoryIndex].isOpen;
       this.setState({
         product,
       });
@@ -71,14 +85,20 @@ class ServicesPerformance extends Component {
       product.deploymentEnvironmentList[k].serviceCategoryList &&
       product.deploymentEnvironmentList[k].serviceCategoryList.length > 0
     ) {
-      for (let i = 0; i < product.deploymentEnvironmentList[k].serviceCategoryList.length; i++) {
+      for (
+        let i = 0;
+        i < product.deploymentEnvironmentList[k].serviceCategoryList.length;
+        i++
+      ) {
         if (i !== l) {
-          product.deploymentEnvironmentList[k].serviceCategoryList[i].menuOpen = false;
+          product.deploymentEnvironmentList[k].serviceCategoryList[
+            i
+          ].menuOpen = false;
         }
       }
     }
-    product.deploymentEnvironmentList[k].serviceCategoryList[l].menuOpen = !product.deploymentEnvironmentList[k]
-      .serviceCategoryList[l].menuOpen;
+    product.deploymentEnvironmentList[k].serviceCategoryList[l].menuOpen =
+      !product.deploymentEnvironmentList[k].serviceCategoryList[l].menuOpen;
     this.setState({
       product,
     });
@@ -86,21 +106,27 @@ class ServicesPerformance extends Component {
 
   renderStages = (deploymentEnvironmentList) => {
     const { filters } = this.props;
-    const environmentFilters = filters['Environments'];
+    const environmentFilters = filters["Environments"];
     if (deploymentEnvironmentList) {
-      return deploymentEnvironmentList.map((environment, environmentIndex) => {
-        if (!environmentFilters || (environmentFilters && environmentFilters.indexOf(environment.name) !== -1)) {
-          return (
-            <li
-              onClick={() => this.toggleEnvironmentView(environmentIndex)}
-              className={environment.isOpen == true ? 'active' : ''}
-            >
-              {environment.name}
-            </li>
-          );
+      return deploymentEnvironmentList.map(
+        (environment, environmentIndex) => {
+          if (
+            !environmentFilters ||
+            (environmentFilters &&
+              environmentFilters.indexOf(environment.name) !== -1)
+          ) {
+            return (
+              <li
+                onClick={() => this.toggleEnvironmentView(environmentIndex)}
+                className={environment.isOpen == true ? "active" : ""}
+              >
+                {environment.name}
+              </li>
+            );
+          }
+          return <></>;
         }
-        return <></>;
-      });
+      );
     }
     return null;
   };
@@ -108,7 +134,7 @@ class ServicesPerformance extends Component {
   renderCategories = (categories, environmentIndex) => {
     let retData = [];
     if (categories) {
-      // return categories.map((category, categoryIndex: number) => {
+      // return categories.map((category, categoryIndex) => {
       for (let h = 0; h < categories.length; h++) {
         let category = categories[h];
         let categoryIndex = h;
@@ -133,26 +159,54 @@ class ServicesPerformance extends Component {
                 <div className="icon">
                   <div className="gauge">
                     <div className="gauge__container">
-                      <img src={Icon} alt="" />
+                      <img src={images.Icon} alt="" />
                       <div className="gauge__center"></div>
                       <div
                         className="gauge__needle"
                         style={{
-                          transform: `rotate(${parseInt(category.overallScore, 10) / 200 + 0.5}turn)`,
+                          transform: `rotate(${
+                            parseInt(category.overallScore, 10) / 200 + 0.5
+                          }turn)`,
                         }}
                       ></div>
                     </div>
                   </div>
                 </div>
               )}
-              <div className={category.isOpen === true ? 'heading full' : 'heading'}>
-                <span onClick={() => this.toggleCategories(environmentIndex, categoryIndex)}>{category.name}</span>
+              <div
+                className={
+                  category.isOpen === true ? "heading full" : "heading"
+                }
+              >
+                <span
+                  onClick={() =>
+                    this.toggleCategories(environmentIndex, categoryIndex)
+                  }
+                >
+                  {category.name}
+                </span>
                 <div className="icon">
-                  <div className="fa-icon" onClick={() => this.toggleCategories(environmentIndex, categoryIndex)}>
-                    <i className={category.isOpen === true ? 'fa fa-chevron-up' : 'fa fa-chevron-down'}></i>
+                  <div
+                    className="fa-icon"
+                    onClick={() =>
+                      this.toggleCategories(environmentIndex, categoryIndex)
+                    }
+                  >
+                    <i
+                      className={
+                        category.isOpen === true
+                          ? "fa fa-chevron-up"
+                          : "fa fa-chevron-down"
+                      }
+                    ></i>
                   </div>
                   <div className="edit">
-                    <div className="bars" onClick={() => this.onClickMenu(environmentIndex, categoryIndex)}>
+                    <div
+                      className="bars"
+                      onClick={() =>
+                        this.onClickMenu(environmentIndex, categoryIndex)
+                      }
+                    >
                       <span></span>
                       <span></span>
                       <span></span>
@@ -161,13 +215,19 @@ class ServicesPerformance extends Component {
                       <>
                         <div
                           className="open-create-menu-close"
-                          onClick={() => this.onClickMenu(environmentIndex, categoryIndex)}
+                          onClick={() =>
+                            this.onClickMenu(environmentIndex, categoryIndex)
+                          }
                         >
-                          {' '}
+                          {" "}
                         </div>
                         <div
                           className="text-center open-create-menu"
-                          style={{ right: '5px', top: '30px', backgroundColor: '#ffffff' }}
+                          style={{
+                            right: "5px",
+                            top: "30px",
+                            backgroundColor: "#ffffff",
+                          }}
                         >
                           <a href="#"> Add Firewall </a>
                           <a href="#"> Remove Firewall </a>
@@ -177,23 +237,34 @@ class ServicesPerformance extends Component {
                   </div>
                 </div>
               </div>
-              {category.isOpen === true && category.serviceNameList && category.serviceNameList.length > 0 && (
-                <div className="content-table">
-                  <div className="table">
-                    <div className="thead">
-                      <div className="th">Name</div>
-                      <div className="th">Performance</div>
-                      <div className="th">Availability</div>
-                      <div className="th">Security</div>
-                      <div className="th">Compliance</div>
-                      <div className="th">End Usage</div>
-                    </div>
-                    <div style={{ maxHeight: '400px', overflowX: 'hidden', overflowY: 'auto' }}>
-                      {this.renderServiceName(category.serviceNameList, [environmentIndex, categoryIndex])}
+              {category.isOpen === true &&
+                category.serviceNameList &&
+                category.serviceNameList.length > 0 && (
+                  <div className="content-table">
+                    <div className="table">
+                      <div className="thead">
+                        <div className="th">Name</div>
+                        <div className="th">Performance</div>
+                        <div className="th">Availability</div>
+                        <div className="th">Security</div>
+                        <div className="th">Compliance</div>
+                        <div className="th">End Usage</div>
+                      </div>
+                      <div
+                        style={{
+                          maxHeight: "400px",
+                          overflowX: "hidden",
+                          overflowY: "auto",
+                        }}
+                      >
+                        {this.renderServiceName(category.serviceNameList, [
+                          environmentIndex,
+                          categoryIndex,
+                        ])}
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
             </li>
           </>
         );
@@ -300,14 +371,32 @@ class ServicesPerformance extends Component {
           displayType.push(tag.tagName);
         }
       }
-      if (displayType.indexOf('Unlinked') === -1) {
+      if (displayType.indexOf("Unlinked") === -1) {
         retData.push(
           <div className="table performance-table">
             <div className="tbody">
-              <div className="tbody" onClick={() => this.openTagServices(indexArr, index)}>
-                <div className="td" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-                  <strong style={{ marginRight: '15px' }}>{serviceName.name}</strong>
-                  <i className={serviceName.isOpen === true ? 'fa fa-chevron-up' : 'fa fa-chevron-down'}></i>
+              <div
+                className="tbody"
+                onClick={() => this.openTagServices(indexArr, index)}
+              >
+                <div
+                  className="td"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <strong style={{ marginRight: "15px" }}>
+                    {serviceName.name}
+                  </strong>
+                  <i
+                    className={
+                      serviceName.isOpen === true
+                        ? "fa fa-chevron-up"
+                        : "fa fa-chevron-down"
+                    }
+                  ></i>
                 </div>
               </div>
               {serviceName.tagList && serviceName.tagList.length > 0 ? (
@@ -321,7 +410,13 @@ class ServicesPerformance extends Component {
                   <div className="td title">
                     <strong>
                       {serviceName.name}
-                      <i className={serviceName.isOpen == true ? 'fa fa-chevron-up' : 'fa fa-chevron-down'}></i>
+                      <i
+                        className={
+                          serviceName.isOpen == true
+                            ? "fa fa-chevron-up"
+                            : "fa fa-chevron-down"
+                        }
+                      ></i>
                     </strong>
                   </div>
                 </div>
@@ -337,7 +432,7 @@ class ServicesPerformance extends Component {
   };
 
   onClickDirectService = (e, service) => {
-    let serviceData = localStorage.getItem('added-services');
+    let serviceData = localStorage.getItem("added-services");
     if (serviceData) {
       serviceData = JSON.parse(serviceData);
     } else {
@@ -370,14 +465,14 @@ class ServicesPerformance extends Component {
       associatedProduct: service.associatedProduct,
       asscociatedEnv: service.associatedEnv,
     });
-    localStorage.setItem('added-services', JSON.stringify(serviceData));
+    localStorage.setItem("added-services", JSON.stringify(serviceData));
   };
 
   renderTags = (tagList) => {
     // const { accountId, cloudName } = this.props;
     const { viewMapping } = this.state;
     const retData = [];
-    const renderIndex = ['App', 'Data', 'Network', 'Other'];
+    const renderIndex = ["App", "Data", "Network", "Other"];
     renderIndex.forEach((renderTag) => {
       tagList.forEach((tag, i) => {
         if (tag.tagName === renderTag) {
@@ -389,21 +484,39 @@ class ServicesPerformance extends Component {
               {tag.serviceList &&
                 tag.serviceList.map((service, i) => {
                   const { slaJson } = service;
-                  const availability = slaJson ? slaJson.availability : { sla: 0 };
+                  const availability = slaJson
+                    ? slaJson.availability
+                    : { sla: 0 };
                   const compliance = slaJson ? slaJson.compliance : { sla: 0 };
                   const endusage = slaJson ? slaJson.endusage : { sla: 0 };
-                  const performance = slaJson ? slaJson.performance : { sla: 0 };
+                  const performance = slaJson
+                    ? slaJson.performance
+                    : { sla: 0 };
                   const security = slaJson ? slaJson.security : { sla: 0 };
-                  if (service.hostingType === this.props.hostingType || viewMapping === 'ViewAll') {
+                  if (
+                    service.hostingType === this.props.hostingType ||
+                    viewMapping === "ViewAll"
+                  ) {
                     return (
                       <div className="tbody">
-                        <div className="td" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-                          <span style={{ paddingLeft: '45px' }}>{service.name}</span>
+                        <div
+                          className="td"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            cursor: "pointer",
+                          }}
+                        >
+                          <span style={{ paddingLeft: "45px" }}>
+                            {service.name}
+                          </span>
                         </div>
                         <div className="td">
                           <div
                             title={performance.sla.toFixed(2)}
-                            className={`progress-circle ${this.getPerformanceClass(performance.sla.toFixed(2))}`}
+                            className={`progress-circle ${this.getPerformanceClass(
+                              performance.sla.toFixed(2)
+                            )}`}
                           >
                             <i className="fa fa-check-circle"></i>
                           </div>
@@ -411,7 +524,9 @@ class ServicesPerformance extends Component {
                         <div className="td">
                           <div
                             title={availability.sla.toFixed(2)}
-                            className={`progress-circle ${this.getPerformanceClass(availability.sla.toFixed(2))}`}
+                            className={`progress-circle ${this.getPerformanceClass(
+                              availability.sla.toFixed(2)
+                            )}`}
                           >
                             <i className="fa fa-check-circle"></i>
                           </div>
@@ -419,7 +534,9 @@ class ServicesPerformance extends Component {
                         <div className="td">
                           <div
                             title={security.sla.toFixed(2)}
-                            className={`progress-circle ${this.getPerformanceClass(security.sla.toFixed(2))}`}
+                            className={`progress-circle ${this.getPerformanceClass(
+                              security.sla.toFixed(2)
+                            )}`}
                           >
                             <i className="fa fa-check-circle"></i>
                           </div>
@@ -427,7 +544,9 @@ class ServicesPerformance extends Component {
                         <div className="td">
                           <div
                             title={compliance.sla.toFixed(2)}
-                            className={`progress-circle ${this.getPerformanceClass(compliance.sla.toFixed(2))}`}
+                            className={`progress-circle ${this.getPerformanceClass(
+                              compliance.sla.toFixed(2)
+                            )}`}
                           >
                             <i className="fa fa-check-circle"></i>
                           </div>
@@ -435,7 +554,9 @@ class ServicesPerformance extends Component {
                         <div className="td">
                           <div
                             title={endusage.sla.toFixed(2)}
-                            className={`progress-circle ${this.getPerformanceClass(endusage.sla.toFixed(2))}`}
+                            className={`progress-circle ${this.getPerformanceClass(
+                              endusage.sla.toFixed(2)
+                            )}`}
                           >
                             <i className="fa fa-check-circle"></i>
                           </div>
@@ -468,13 +589,22 @@ class ServicesPerformance extends Component {
           if (service.hostingType === this.props.hostingType) {
             servicesJSX.push(
               <div className="tbody">
-                <div className="td" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-                  <span style={{ paddingLeft: '0px' }}>{service.name}</span>
+                <div
+                  className="td"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <span style={{ paddingLeft: "0px" }}>{service.name}</span>
                 </div>
                 <div className="td">
                   <div
                     title={performance.sla.toFixed(2)}
-                    className={`progress-circle ${this.getPerformanceClass(performance.sla.toFixed(2))}`}
+                    className={`progress-circle ${this.getPerformanceClass(
+                      performance.sla.toFixed(2)
+                    )}`}
                   >
                     <i className="fa fa-check-circle"></i>
                   </div>
@@ -482,7 +612,9 @@ class ServicesPerformance extends Component {
                 <div className="td">
                   <div
                     title={availability.sla.toFixed(2)}
-                    className={`progress-circle ${this.getPerformanceClass(availability.sla.toFixed(2))}`}
+                    className={`progress-circle ${this.getPerformanceClass(
+                      availability.sla.toFixed(2)
+                    )}`}
                   >
                     <i className="fa fa-check-circle"></i>
                   </div>
@@ -490,7 +622,9 @@ class ServicesPerformance extends Component {
                 <div className="td">
                   <div
                     title={security.sla.toFixed(2)}
-                    className={`progress-circle ${this.getPerformanceClass(security.sla.toFixed(2))}`}
+                    className={`progress-circle ${this.getPerformanceClass(
+                      security.sla.toFixed(2)
+                    )}`}
                   >
                     <i className="fa fa-check-circle"></i>
                   </div>
@@ -498,7 +632,9 @@ class ServicesPerformance extends Component {
                 <div className="td">
                   <div
                     title={compliance.sla.toFixed(2)}
-                    className={`progress-circle ${this.getPerformanceClass(compliance.sla.toFixed(2))}`}
+                    className={`progress-circle ${this.getPerformanceClass(
+                      compliance.sla.toFixed(2)
+                    )}`}
                   >
                     <i className="fa fa-check-circle"></i>
                   </div>
@@ -506,7 +642,9 @@ class ServicesPerformance extends Component {
                 <div className="td">
                   <div
                     title={endusage.sla.toFixed(2)}
-                    className={`progress-circle ${this.getPerformanceClass(endusage.sla.toFixed(2))}`}
+                    className={`progress-circle ${this.getPerformanceClass(
+                      endusage.sla.toFixed(2)
+                    )}`}
                   >
                     <i className="fa fa-check-circle"></i>
                   </div>
@@ -523,22 +661,28 @@ class ServicesPerformance extends Component {
   openTagServices = (parentIndex, currentIndex) => {
     const { product } = this.state;
     if (
-      product.deploymentEnvironmentList[parentIndex[0]].serviceCategoryList[parentIndex[1]].serviceNameList &&
-      product.deploymentEnvironmentList[parentIndex[0]].serviceCategoryList[parentIndex[1]].serviceNameList.length > 0
+      product.deploymentEnvironmentList[parentIndex[0]].serviceCategoryList[
+        parentIndex[1]
+      ].serviceNameList &&
+      product.deploymentEnvironmentList[parentIndex[0]].serviceCategoryList[
+        parentIndex[1]
+      ].serviceNameList.length > 0
     ) {
       if (
-        product.deploymentEnvironmentList[parentIndex[0]].serviceCategoryList[parentIndex[1]].serviceNameList[
-          currentIndex
-        ].isOpen
+        product.deploymentEnvironmentList[parentIndex[0]].serviceCategoryList[
+          parentIndex[1]
+        ].serviceNameList[currentIndex].isOpen
       ) {
-        product.deploymentEnvironmentList[parentIndex[0]].serviceCategoryList[parentIndex[1]].serviceNameList[
-          currentIndex
-        ].isOpen = !product.deploymentEnvironmentList[parentIndex[0]].serviceCategoryList[parentIndex[1]]
-          .serviceNameList[currentIndex].isOpen;
+        product.deploymentEnvironmentList[parentIndex[0]].serviceCategoryList[
+          parentIndex[1]
+        ].serviceNameList[currentIndex].isOpen =
+          !product.deploymentEnvironmentList[parentIndex[0]]
+            .serviceCategoryList[parentIndex[1]].serviceNameList[currentIndex]
+            .isOpen;
       } else {
-        product.deploymentEnvironmentList[parentIndex[0]].serviceCategoryList[parentIndex[1]].serviceNameList[
-          currentIndex
-        ].isOpen = true;
+        product.deploymentEnvironmentList[parentIndex[0]].serviceCategoryList[
+          parentIndex[1]
+        ].serviceNameList[currentIndex].isOpen = true;
       }
     }
     this.setState({
@@ -548,13 +692,13 @@ class ServicesPerformance extends Component {
 
   getPerformanceClass = (score) => {
     if (score >= 75) {
-      return 'green';
+      return "green";
     } else if (score >= 50) {
-      return 'orange';
+      return "orange";
     } else if (score >= 25) {
-      return 'yellow';
+      return "yellow";
     } else {
-      return 'red';
+      return "red";
     }
   };
 
@@ -567,7 +711,12 @@ class ServicesPerformance extends Component {
             <h3>Deployment environments</h3>
             <div className="buttons">
               {/* <h3 style={{ paddingRight: '10px' }}>{viewMapping}</h3> */}
-              <select name="viewMapping" id="options" value={viewMapping} onChange={this.handleView}>
+              <select
+                name="viewMapping"
+                id="options"
+                value={viewMapping}
+                onChange={this.handleView}
+              >
                 <option value="CloudManaged">Cloud Managed</option>
                 <option value="Cluster">Cluster</option>
                 <option value="ViewAll">View All</option>
@@ -586,18 +735,25 @@ class ServicesPerformance extends Component {
                 <ul>{this.renderStages(product.deploymentEnvironmentList)}</ul>
               </div>
               {product.deploymentEnvironmentList &&
-                product.deploymentEnvironmentList.map((environment, environmentIndex) => {
-                  // && environment.hostingShow == true
-                  if (environment.isOpen == true) {
-                    return (
-                      <div className="tabs-content">
-                        <ul>{this.renderCategories(environment.serviceCategoryList, environmentIndex)}</ul>
-                      </div>
-                    );
-                  } else {
-                    return null;
+                product.deploymentEnvironmentList.map(
+                  (environment, environmentIndex) => {
+                    // && environment.hostingShow == true
+                    if (environment.isOpen == true) {
+                      return (
+                        <div className="tabs-content">
+                          <ul>
+                            {this.renderCategories(
+                              environment.serviceCategoryList,
+                              environmentIndex
+                            )}
+                          </ul>
+                        </div>
+                      );
+                    } else {
+                      return null;
+                    }
                   }
-                })}
+                )}
             </div>
             {/* {product.deploymentEnvironmentList && product.deploymentEnvironmentList.map((environment, index) => {
               if (environment.isOpen == true && environment.hostingShow == false) {

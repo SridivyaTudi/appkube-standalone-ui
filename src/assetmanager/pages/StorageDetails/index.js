@@ -253,7 +253,7 @@ class StorageDetails extends React.Component {
               <div className="col-lg-3 col-md-3 col-sm-12">
                 <div className="float-right common-right-btn">
                   <Link
-                    to={`${"#"}/amazon-services?accountId=${accountId}&cloudName=${cloudName}`}
+                    to={`/assetmanager/pages/amazonservices?accountId=${accountId}&cloudName=${cloudName}`}
                     className="asset-white-button min-width-inherit m-r-0"
                   >
                     <i className="fa fa-arrow-circle-left" />

@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import * as React from "react";
 // import { Link } from 'react-router-dom';
 // import { images } from '../../img';
 // import { PLUGIN_BASE_URL } from '../../constants';
-import SelectCloudFilter from '../SelectCloudFilter';
-import ServicesPerformance from './ServicesPerformance';
-import { v4 } from 'uuid';
+import SelectCloudFilter from "../SelectCloudFilter";
+import ServicesPerformance from "./ServicesPerformance";
+import { v4 } from "uuid";
 
-// const ViewMapping: any = {
+// const ViewMapping = {
 //   BUSINESS_VIEW: "0",
 //   CLOUD_VIEW: "1"
 // };
 
-class ProductWiseServices extends Component {
+class ProductWiseServices extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,7 +20,7 @@ class ProductWiseServices extends Component {
       productComponent: [],
       product: [],
       isDataLoaded: false,
-      hostingType: 'Cluster',
+      hostingType: "Cluster",
       filters: {},
     };
   }
@@ -56,7 +56,7 @@ class ProductWiseServices extends Component {
   displayProductServices = () => {
     const { product, hostingType, filters } = this.state;
     let retData = [];
-    const productFilter = filters['Products'];
+    const productFilter = filters["Products"];
     if (product && product.length > 0) {
       for (let i = 0; i < product.length; i++) {
         let row = product[i];
@@ -67,24 +67,51 @@ class ProductWiseServices extends Component {
               row.productList.map((viewData, index) => {
                 const val = viewData;
                 let serviceByType = {};
-                if (!productFilter || (productFilter && productFilter.indexOf(viewData.name) !== -1)) {
+                if (
+                  !productFilter ||
+                  (productFilter && productFilter.indexOf(viewData.name) !== -1)
+                ) {
                   let productServiceList = [];
                   if (val && val.deploymentEnvironmentList) {
-                    for (let b = 0; b < val.deploymentEnvironmentList.length; b++) {
-                      productServiceList.push(val.deploymentEnvironmentList[b].name);
+                    for (
+                      let b = 0;
+                      b < val.deploymentEnvironmentList.length;
+                      b++
+                    ) {
+                      productServiceList.push(
+                        val.deploymentEnvironmentList[b].name
+                      );
                       let environment = val.deploymentEnvironmentList[b];
-                      if (environment.serviceCategoryList && environment.serviceCategoryList.length > 0) {
-                        for (let a = 0; a < environment.serviceCategoryList.length; a++) {
-                          const serviceCategory = environment.serviceCategoryList[a];
-                          if (serviceCategory.serviceNameList && serviceCategory.serviceNameList.length > 0) {
-                            for (let n = 0; n < serviceCategory.serviceNameList.length; n++) {
-                              let serviceName = serviceCategory.serviceNameList[n];
+                      if (
+                        environment.serviceCategoryList &&
+                        environment.serviceCategoryList.length > 0
+                      ) {
+                        for (
+                          let a = 0;
+                          a < environment.serviceCategoryList.length;
+                          a++
+                        ) {
+                          const serviceCategory =
+                            environment.serviceCategoryList[a];
+                          if (
+                            serviceCategory.serviceNameList &&
+                            serviceCategory.serviceNameList.length > 0
+                          ) {
+                            for (
+                              let n = 0;
+                              n < serviceCategory.serviceNameList.length;
+                              n++
+                            ) {
+                              let serviceName =
+                                serviceCategory.serviceNameList[n];
                               if (serviceName.tagList) {
                                 serviceName.tagList.map((subServices) => {
-                                  serviceByType[subServices.tagName] = serviceByType[subServices.tagName] || 0;
-                                  serviceByType[subServices.tagName] += subServices.serviceList
-                                    ? subServices.serviceList.length
-                                    : 0;
+                                  serviceByType[subServices.tagName] =
+                                    serviceByType[subServices.tagName] || 0;
+                                  serviceByType[subServices.tagName] +=
+                                    subServices.serviceList
+                                      ? subServices.serviceList.length
+                                      : 0;
                                 }, 0);
                               }
                             }
@@ -95,17 +122,35 @@ class ProductWiseServices extends Component {
                   }
                   return (
                     <div className="tbody" key={index}>
-                      <div className="name" onClick={() => this.openProduct(i, index)}>
+                      <div
+                        className="name"
+                        onClick={() => this.openProduct(i, index)}
+                      >
                         <span>{val.name}</span>
-                        <i className={val.isOpen == true ? 'fa fa-chevron-up' : 'fa fa-chevron-down'} />
+                        <i
+                          className={
+                            val.isOpen == true
+                              ? "fa fa-chevron-up"
+                              : "fa fa-chevron-down"
+                          }
+                        />
                       </div>
                       <div className="cloud-environment"></div>
-                      <div className="app-services">{serviceByType['App'] || 0}</div>
-                      <div className="data-services">{serviceByType['Data'] || 0}</div>
-                      <div className="product-environment">{productServiceList.join()}</div>
+                      <div className="app-services">
+                        {serviceByType["App"] || 0}
+                      </div>
+                      <div className="data-services">
+                        {serviceByType["Data"] || 0}
+                      </div>
+                      <div className="product-environment">
+                        {productServiceList.join()}
+                      </div>
                       <div className="edit">
                         {/* onClick={() => this.onClickMenu(defaultView, i)} */}
-                        <button className="edit-btn" onClick={() => this.onClickMenu(i, index)}>
+                        <button
+                          className="edit-btn"
+                          onClick={() => this.onClickMenu(i, index)}
+                        >
                           <span></span>
                           <span></span>
                           <span></span>
@@ -126,7 +171,9 @@ class ProductWiseServices extends Component {
                       </div>
                       {val.isOpen == true && (
                         <ServicesPerformance
-                          handleChangeViewOfProduct={this.handleChangeViewOfProduct}
+                          handleChangeViewOfProduct={
+                            this.handleChangeViewOfProduct
+                          }
                           product={val}
                           hostingType={hostingType}
                           filters={filters}
@@ -177,8 +224,11 @@ class ProductWiseServices extends Component {
   render() {
     return (
       <div className="common-container department-fliters-container">
-        <div className="selects-container" style={{ marginBottom: '20px' }}>
-          <SelectCloudFilter filterJsonData={this.props.displayJsonData} onChangeFilter={this.onChangeFilter} />
+        <div className="selects-container" style={{ marginBottom: "20px" }}>
+          <SelectCloudFilter
+            filterJsonData={this.props.displayJsonData}
+            onChangeFilter={this.onChangeFilter}
+          />
         </div>
         <div className="data-table">
           <div className="thead">

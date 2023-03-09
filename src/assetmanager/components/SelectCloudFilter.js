@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import * as React from "react";
 // import { v4 } from 'uuid';
 
-class SelectCloudFilter extends Component {
+class SelectCloudFilter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
