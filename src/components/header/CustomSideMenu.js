@@ -163,7 +163,7 @@ export class CustomSideMenu extends PureComponent {
           childName: "new-alert-rule",
         },
         {
-          link: "/alerting/list",
+          link: "/alertmanager/pages/alerting/list",
           text: "All Alert Rules",
           isImplemented: true,
           childName: "all-alert-rule",

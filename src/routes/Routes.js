@@ -22,6 +22,14 @@ import ExploreDataSourceDetail from '../assetmanager/pages/addDatasource/explore
 import AddDataSourceProduct from '../assetmanager/pages/addDatasource/addDatasourceProduct';
 //***** Alertmanager *****//
 import MonitorAlerts from '../alertmanager/pages/monitorAlerts';
+import AlertRuleBuilder from '../alertmanager/pages/alertRuleBuilder';
+import ManageAlertRule from '../alertmanager/pages/manageAlertRule';
+import AllAlerts from '../alertmanager/pages/allAlerts';
+import Rules from '../alertmanager/pages/rules';
+import CreateRule from '../alertmanager/pages/createRule';
+import AllTickets from '../alertmanager/pages/allTickets';
+import ScriptEditor from '../alertmanager/pages/scriptEditor';
+import SearchAlert from '../alertmanager/pages/searchAlert';
 
 export const AllRoutes = () => {
   return (
@@ -48,6 +56,14 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/explore-datasource" element={<ExploreDataSourceDetail />} />
       {/***** Alertmanager *****/}
       <Route path="/alertmanager/pages/monitor-alerts" element={<MonitorAlerts />} />
+      <Route path="/alertmanager/pages/alert-rule-builder" element={<AlertRuleBuilder />} />
+      <Route path="/alertmanager/pages/manage-alert-rule" element={<ManageAlertRule />} />
+      <Route path="/alertmanager/pages/all-alerts" element={<AllAlerts />} />
+      <Route path="/alertmanager/pages/rules" element={<Rules />} />
+      <Route path="/alertmanager/pages/create-rule" element={<CreateRule />} />
+      <Route path="/alertmanager/pages/all-tickets" element={<AllTickets />} />
+      <Route path="/alertmanager/pages/script-editor" element={<ScriptEditor />} />
+      <Route path="/alertmanager/pages/search-alert" element={<SearchAlert />} />
     </Routes>
   );
 };
