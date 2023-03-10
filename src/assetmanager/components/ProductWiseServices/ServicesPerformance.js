@@ -108,25 +108,23 @@ class ServicesPerformance extends React.Component {
     const { filters } = this.props;
     const environmentFilters = filters["Environments"];
     if (deploymentEnvironmentList) {
-      return deploymentEnvironmentList.map(
-        (environment, environmentIndex) => {
-          if (
-            !environmentFilters ||
-            (environmentFilters &&
-              environmentFilters.indexOf(environment.name) !== -1)
-          ) {
-            return (
-              <li
-                onClick={() => this.toggleEnvironmentView(environmentIndex)}
-                className={environment.isOpen == true ? "active" : ""}
-              >
-                {environment.name}
-              </li>
-            );
-          }
-          return <></>;
+      return deploymentEnvironmentList.map((environment, environmentIndex) => {
+        if (
+          !environmentFilters ||
+          (environmentFilters &&
+            environmentFilters.indexOf(environment.name) !== -1)
+        ) {
+          return (
+            <li
+              onClick={() => this.toggleEnvironmentView(environmentIndex)}
+              className={environment.isOpen == true ? "active" : ""}
+            >
+              {environment.name}
+            </li>
+          );
         }
-      );
+        return <></>;
+      });
     }
     return null;
   };

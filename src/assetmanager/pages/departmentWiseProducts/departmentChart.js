@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-// import { PLUGIN_BASE_URL } from '../../constants';
-import { RestService } from '../_service/RestService';
-// import { configFun } from '../../config';
-import { CommonService } from '../_common/common';
-import { Bar } from 'react-chartjs-2';
+import * as React from "react";
+import { Link } from "react-router-dom";
+import { RestService } from "../_service/RestService";
+import { configFun } from "../../config";
+import { CommonService } from "../_common/common";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -15,10 +14,20 @@ import {
   Legend,
   PointElement,
   LineElement,
-} from 'chart.js';
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement);
+} from "chart.js";
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement
+);
 
-class DepartmentWiseCharts extends Component {
+class DepartmentWiseCharts extends React.Component {
+  breadCrumbs;
   config;
   constructor(props) {
     super(props);
@@ -38,13 +47,12 @@ class DepartmentWiseCharts extends Component {
         ],
       },
       barOptions: {
-        // indexAxis: 'y' as const,
-        indexAxis: 'y',
+        indexAxis: "y",
         plugins: {
           scales: {
             y: {
               ticks: {
-                fontColor: 'black',
+                fontColor: "black",
                 stepSize: 10,
                 beginAtZero: true,
               },
@@ -54,7 +62,7 @@ class DepartmentWiseCharts extends Component {
             },
             x: {
               ticks: {
-                fontColor: 'black',
+                fontColor: "black",
                 display: false,
                 stepSize: 10,
               },
@@ -68,9 +76,9 @@ class DepartmentWiseCharts extends Component {
           },
           title: {
             display: false,
-            text: 'Total Cost: $6,71,246',
-            position: 'bottom',
-            color: '#202020',
+            text: "Total Cost: $6,71,246",
+            position: "bottom",
+            color: "#202020",
             font: {
               size: 18,
             },
@@ -79,12 +87,24 @@ class DepartmentWiseCharts extends Component {
         },
       },
     };
-
-    // this.config = configFun(props.meta.jsonData.apiUrl, props.meta.jsonData.mainProductUrl);
+    this.breadCrumbs = [
+      {
+        label: "Home",
+        route: `/`,
+      },
+      {
+        label: "Assets | Environments",
+        isCurrentPage: true,
+      },
+    ];
+    this.config = configFun(
+      props.meta.jsonData.apiUrl,
+      props.meta.jsonData.mainProductUrl
+    );
   }
 
   async componentDidMount() {
-    let departmentList = await localStorage.getItem('departmentData');
+    let departmentList = await localStorage.getItem("departmentData");
     let department;
     if (departmentList) {
       department = JSON.parse(departmentList);
@@ -99,7 +119,11 @@ class DepartmentWiseCharts extends Component {
 
   getDepartmentData = async () => {
     try {
-      await RestService.getData(`${this.config.GET_PRODUCT_DATA}`, null, null).then((response) => {
+      await RestService.getData(
+        `http://34.199.12.114:5057/api/department-wise-analytics/get-data`,
+        null,
+        null
+      ).then((response) => {
         console.log(response);
         this.setState({
           departmentWiseData: response,
@@ -107,13 +131,16 @@ class DepartmentWiseCharts extends Component {
         this.handleGraphValue(response.organization.departmentList);
       });
     } catch (err) {
-      console.log('Loading accounts failed. Error: ', err);
+      console.log("Loading accounts failed. Error: ", err);
     }
   };
 
   handleGraphValue = (departmentWiseData) => {
-    let departmentName = CommonService.getParameterByName('department', window.location.href);
-    departmentName = departmentName ? departmentName.replace(';amp;', '&') : '';
+    let departmentName = CommonService.getParameterByName(
+      "department",
+      window.location.href
+    );
+    departmentName = departmentName ? departmentName.replace(";amp;", "&") : "";
     let { humanResources } = this.state;
     let data = [];
     let labels = [];
@@ -121,7 +148,10 @@ class DepartmentWiseCharts extends Component {
     if (departmentWiseData && departmentWiseData.length > 0) {
       for (let i = 0; i < departmentWiseData.length; i++) {
         let department = departmentWiseData[i];
-        if (department.productList && (!departmentName || departmentName === department.name)) {
+        if (
+          department.productList &&
+          (!departmentName || departmentName === department.name)
+        ) {
           for (let j = 0; j < department.productList.length; j++) {
             let count = 0;
             let product = department.productList[j];
@@ -163,8 +193,8 @@ class DepartmentWiseCharts extends Component {
   };
 
   getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
+    var letters = "0123456789ABCDEF";
+    var color = "#";
     for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
@@ -173,8 +203,13 @@ class DepartmentWiseCharts extends Component {
 
   render() {
     const { barOptions, humanResources } = this.state;
-    let departmentName = CommonService.getParameterByName('department', window.location.href);
-    departmentName = departmentName ? departmentName.replace(';amp;', '&') : 'All Departments';
+    let departmentName = CommonService.getParameterByName(
+      "department",
+      window.location.href
+    );
+    departmentName = departmentName
+      ? departmentName.replace(";amp;", "&")
+      : "All Departments";
     return (
       <div className="asset-container">
         <div className="department-wise-container">
@@ -187,10 +222,11 @@ class DepartmentWiseCharts extends Component {
                 <div className="col-lg-6 col-md-6 col-sm-12">
                   <div className="float-right common-right-btn">
                     <Link
-                      to={`/assetmanager/pages/department-wise-products`}
+                      to={`${"#"}/department-wise-products`}
                       className="asset-white-button min-width-inherit"
                     >
-                      <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
+                      <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;
+                      Back
                     </Link>
                   </div>
                 </div>
@@ -203,14 +239,19 @@ class DepartmentWiseCharts extends Component {
                     <div className="heading">{departmentName}</div>
                     {humanResources.total && (
                       <div className="total-cost-text cost">
-                        <strong>${humanResources.total}</strong> - 40% off the total cost
+                        <strong>${humanResources.total}</strong> - 40% off the
+                        total cost
                       </div>
                     )}
                     <div className="chart">
                       {humanResources.datasets &&
                       humanResources.datasets[0].data.length > 0 &&
                       humanResources.labels.length > 0 ? (
-                        <Bar data={humanResources} options={barOptions} height={70} />
+                        <Bar
+                          data={humanResources}
+                          options={barOptions}
+                          height={70}
+                        />
                       ) : (
                         <div className="chart-spinner">
                           <i className="fa fa-spinner fa-spin"></i> Loading...
@@ -227,4 +268,5 @@ class DepartmentWiseCharts extends Component {
     );
   }
 }
+
 export default DepartmentWiseCharts;

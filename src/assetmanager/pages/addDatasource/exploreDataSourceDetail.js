@@ -132,7 +132,7 @@ export class ExploreDataSourceDetail extends Component {
                                       >
                                         <i className="fas fa-bars" />
                                       </button>
-                                      {this.state.showMenu == true && (
+                                      {this.state.showMenu === true && (
                                         <div className="menu-list">
                                           <ul>
                                             <li>

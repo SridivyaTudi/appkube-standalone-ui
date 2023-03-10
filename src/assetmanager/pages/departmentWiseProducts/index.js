@@ -1,21 +1,22 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import Jobs from '../../../assets/img/jobs.png';
-import ProductWiseServices from '../../components/ProductWiseServices';
-import { RestService } from '../_service/RestService';
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-import { Doughnut, Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import _ from 'lodash';
+import * as React from "react";
+import { Link } from "react-router-dom";
+import { images } from "../../img";
+import { RestService } from "../_service/RestService";
+import ProductWiseServices from "../../components/ProductWiseServices";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import { Doughnut, Pie } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import _ from "lodash";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-class DepartmentWiseProducts extends Component {
+class DepartmentWiseProducts extends React.Component {
+  breadCrumbs;
   colorMapping = {
-    75: '#5dbc73',
-    50: '#ef8f00',
-    25: '#e34120',
+    75: "#5dbc73",
+    50: "#ef8f00",
+    25: "#e34120",
   };
   constructor(props) {
     super(props);
@@ -58,18 +59,18 @@ class DepartmentWiseProducts extends Component {
           legend: {
             labels: {
               usePointStyle: true,
-              pointStyle: 'circle',
+              pointStyle: "circle",
             },
             display: false,
-            position: 'bottom',
+            position: "bottom",
             responsive: true,
-            align: 'middle',
+            align: "middle",
           },
           title: {
             display: true,
-            text: '',
-            position: 'bottom',
-            color: '#202020',
+            text: "",
+            position: "bottom",
+            color: "#202020",
             font: {
               size: 18,
             },
@@ -81,18 +82,18 @@ class DepartmentWiseProducts extends Component {
           legend: {
             labels: {
               usePointStyle: true,
-              pointStyle: 'circle',
+              pointStyle: "circle",
             },
             display: false,
-            position: 'bottom',
+            position: "bottom",
             responsive: true,
-            align: 'middle',
+            align: "middle",
           },
           title: {
             display: true,
-            text: 'Total Cost: $6,71,246',
-            position: 'bottom',
-            color: '#202020',
+            text: "Total Cost: $6,71,246",
+            position: "bottom",
+            color: "#202020",
             font: {
               size: 18,
             },
@@ -104,18 +105,18 @@ class DepartmentWiseProducts extends Component {
           legend: {
             labels: {
               usePointStyle: true,
-              pointStyle: 'circle',
+              pointStyle: "circle",
             },
             display: false,
-            position: 'bottom',
+            position: "bottom",
             responsive: true,
-            align: 'middle',
+            align: "middle",
           },
           title: {
             display: true,
-            text: 'Total Cost: $6,71,246',
-            position: 'bottom',
-            color: '#202020',
+            text: "Total Cost: $6,71,246",
+            position: "bottom",
+            color: "#202020",
             font: {
               size: 18,
             },
@@ -124,31 +125,41 @@ class DepartmentWiseProducts extends Component {
       },
       displayJsonData: [
         {
-          name: 'Products',
-          key: 'products',
+          name: "Products",
+          key: "products",
           id: 22,
           filter: [],
         },
         {
-          name: 'Environments',
-          key: 'environments',
+          name: "Environments",
+          key: "environments",
           id: 29,
           filter: [],
         },
         {
-          name: 'App Services',
-          key: 'app-services',
+          name: "App Services",
+          key: "app-services",
           id: 31,
           filter: [],
         },
         {
-          name: 'Data Services',
-          key: 'data-services',
+          name: "Data Services",
+          key: "data-services",
           id: 40,
           filter: [],
         },
       ],
     };
+    this.breadCrumbs = [
+      {
+        label: "Home",
+        route: `/`,
+      },
+      {
+        label: "Assets | Environments",
+        isCurrentPage: true,
+      },
+    ];
   }
 
   componentDidMount() {
@@ -158,23 +169,38 @@ class DepartmentWiseProducts extends Component {
 
   getDepartmentData = async () => {
     try {
-      await RestService.getData(`${this.config.GET_PRODUCT_DATA}`, null, null).then((response) => {
-        this.manipulateDepartmentWiseProductData(_.cloneDeep(response.organization.departmentList));
+      await RestService.getData(
+        `http://34.199.12.114:5057/api/department-wise-analytics/get-data`,
+        null,
+        null
+      ).then((response) => {
+        this.manipulateDepartmentWiseProductData(
+          _.cloneDeep(response.organization.departmentList)
+        );
         this.getFilterData(_.cloneDeep(response.organization.departmentList));
         this.setState({
           departmentWiseData: response.organization.departmentList,
         });
-        localStorage.setItem('departmentData', JSON.stringify(response));
+        localStorage.setItem("departmentData", JSON.stringify(response));
         let { graphData } = this.state;
-        graphData = this.setProductGraphData(response.organization.departmentList, graphData);
-        graphData = this.setProductionOthers(response.organization.departmentList, graphData);
-        graphData = this.setServiceCostData(response.organization.departmentList, graphData);
+        graphData = this.setProductGraphData(
+          response.organization.departmentList,
+          graphData
+        );
+        graphData = this.setProductionOthers(
+          response.organization.departmentList,
+          graphData
+        );
+        graphData = this.setServiceCostData(
+          response.organization.departmentList,
+          graphData
+        );
         this.setState({
           graphData,
         });
       });
     } catch (err) {
-      console.log('Loading accounts failed. Error: ', err);
+      console.log("Loading accounts failed. Error: ", err);
     }
   };
 
@@ -191,7 +217,10 @@ class DepartmentWiseProducts extends Component {
       const department = departmentList[i];
       const productList = department.productList;
       productList.forEach((product) => {
-        if (product.deploymentEnvironmentList && product.deploymentEnvironmentList.length > 0) {
+        if (
+          product.deploymentEnvironmentList &&
+          product.deploymentEnvironmentList.length > 0
+        ) {
           product.deploymentEnvironmentList[0].isOpen = true;
         }
         const environments = product.deploymentEnvironmentList;
@@ -214,21 +243,36 @@ class DepartmentWiseProducts extends Component {
                           serviceList.forEach((service) => {
                             let avg = 0;
                             if (service.slaJson) {
-                              const { availability, compliance, endusage, performance, security } = service.slaJson;
+                              const {
+                                availability,
+                                compliance,
+                                endusage,
+                                performance,
+                                security,
+                              } = service.slaJson;
                               avg =
-                                (availability.sla + compliance.sla + performance.sla + security.sla + endusage.sla) / 5;
+                                (availability.sla +
+                                  compliance.sla +
+                                  performance.sla +
+                                  security.sla +
+                                  endusage.sla) /
+                                5;
                             }
                             overAllTagScore += avg;
                           });
-                          overAllTagScore = overAllTagScore / serviceList.length;
+                          overAllTagScore =
+                            overAllTagScore / serviceList.length;
                           overAllServiceNameScore += overAllTagScore;
                         }
                       });
-                      overAllServiceNameScore = overAllServiceNameScore / tagList.length;
-                      serviceCategoryScore = serviceCategoryScore + overAllServiceNameScore;
+                      overAllServiceNameScore =
+                        overAllServiceNameScore / tagList.length;
+                      serviceCategoryScore =
+                        serviceCategoryScore + overAllServiceNameScore;
                     }
                   });
-                  serviceCategoryScore = serviceCategoryScore / serviceNameList.length;
+                  serviceCategoryScore =
+                    serviceCategoryScore / serviceNameList.length;
                 }
                 category.overallScore = serviceCategoryScore;
               });
@@ -258,33 +302,79 @@ class DepartmentWiseProducts extends Component {
               product.push(department.productList[j].name);
             }
             let products = department.productList[j];
-            if (products.deploymentEnvironmentList && products.deploymentEnvironmentList.length > 0) {
-              for (let k = 0; k < products.deploymentEnvironmentList.length; k++) {
+            if (
+              products.deploymentEnvironmentList &&
+              products.deploymentEnvironmentList.length > 0
+            ) {
+              for (
+                let k = 0;
+                k < products.deploymentEnvironmentList.length;
+                k++
+              ) {
                 let environments = products.deploymentEnvironmentList[k];
                 if (environent.indexOf(environments.name) === -1) {
                   environent.push(environments.name);
                 }
-                if (environments.serviceCategoryList && environments.serviceCategoryList.length > 0) {
-                  for (let l = 0; l < environments.serviceCategoryList.length; l++) {
+                if (
+                  environments.serviceCategoryList &&
+                  environments.serviceCategoryList.length > 0
+                ) {
+                  for (
+                    let l = 0;
+                    l < environments.serviceCategoryList.length;
+                    l++
+                  ) {
                     let category = environments.serviceCategoryList[l];
-                    if (category.serviceNameList && category.serviceNameList.length > 0) {
-                      for (let n = 0; n < category.serviceNameList.length; n++) {
+                    if (
+                      category.serviceNameList &&
+                      category.serviceNameList.length > 0
+                    ) {
+                      for (
+                        let n = 0;
+                        n < category.serviceNameList.length;
+                        n++
+                      ) {
                         let setviceList = category.serviceNameList[n];
-                        if (setviceList.tagList && setviceList.tagList.length > 0) {
+                        if (
+                          setviceList.tagList &&
+                          setviceList.tagList.length > 0
+                        ) {
                           for (let p = 0; p < setviceList.tagList.length; p++) {
                             let tagName = setviceList.tagList[p];
-                            if (tagName.tagName === 'Data') {
-                              if (tagName.serviceList && tagName.serviceList.length > 0) {
-                                for (let q = 0; q < tagName.serviceList.length; q++) {
-                                  if (dataList.indexOf(tagName.serviceList[q].name) === -1) {
+                            if (tagName.tagName === "Data") {
+                              if (
+                                tagName.serviceList &&
+                                tagName.serviceList.length > 0
+                              ) {
+                                for (
+                                  let q = 0;
+                                  q < tagName.serviceList.length;
+                                  q++
+                                ) {
+                                  if (
+                                    dataList.indexOf(
+                                      tagName.serviceList[q].name
+                                    ) === -1
+                                  ) {
                                     dataList.push(tagName.serviceList[q].name);
                                   }
                                 }
                               }
-                            } else if (tagName.tagName === 'App') {
-                              if (tagName.serviceList && tagName.serviceList.length > 0) {
-                                for (let q = 0; q < tagName.serviceList.length; q++) {
-                                  if (appList.indexOf(tagName.serviceList[q].name) === -1) {
+                            } else if (tagName.tagName === "App") {
+                              if (
+                                tagName.serviceList &&
+                                tagName.serviceList.length > 0
+                              ) {
+                                for (
+                                  let q = 0;
+                                  q < tagName.serviceList.length;
+                                  q++
+                                ) {
+                                  if (
+                                    appList.indexOf(
+                                      tagName.serviceList[q].name
+                                    ) === -1
+                                  ) {
                                     appList.push(tagName.serviceList[q].name);
                                   }
                                 }
@@ -304,28 +394,44 @@ class DepartmentWiseProducts extends Component {
     }
     if (displayJsonData && displayJsonData.length > 0) {
       for (let d = 0; d < displayJsonData.length; d++) {
-        if (displayJsonData[d].key === 'products') {
+        if (displayJsonData[d].key === "products") {
           if (product && product.length > 0) {
             for (let h = 0; h < product.length; h++) {
-              displayJsonData[d].filter.push({ label: product[h], value: product[h], id: h });
+              displayJsonData[d].filter.push({
+                label: product[h],
+                value: product[h],
+                id: h,
+              });
             }
           }
-        } else if (displayJsonData[d].key === 'environments') {
+        } else if (displayJsonData[d].key === "environments") {
           if (environent && environent.length > 0) {
             for (let m = 0; m < environent.length; m++) {
-              displayJsonData[d].filter.push({ label: environent[m], value: environent[m], id: m + 9 });
+              displayJsonData[d].filter.push({
+                label: environent[m],
+                value: environent[m],
+                id: m + 9,
+              });
             }
           }
-        } else if (displayJsonData[d].key === 'app-services') {
+        } else if (displayJsonData[d].key === "app-services") {
           if (appList && appList.length > 0) {
             for (let g = 0; g < appList.length; g++) {
-              displayJsonData[d].filter.push({ label: appList[g], value: appList[g], id: g + 80 });
+              displayJsonData[d].filter.push({
+                label: appList[g],
+                value: appList[g],
+                id: g + 80,
+              });
             }
           }
-        } else if (displayJsonData[d].key === 'data-services') {
+        } else if (displayJsonData[d].key === "data-services") {
           if (dataList && dataList.length > 0) {
             for (let s = 0; s < dataList.length; s++) {
-              displayJsonData[d].filter.push({ label: dataList[s], value: dataList[s], id: s + 100 });
+              displayJsonData[d].filter.push({
+                label: dataList[s],
+                value: dataList[s],
+                id: s + 100,
+              });
             }
           }
         }
@@ -360,7 +466,8 @@ class DepartmentWiseProducts extends Component {
                           serviceName.tagList.map((tag) => {
                             if (tag.serviceList) {
                               tag.serviceList.map((service) => {
-                                totalProductCost += service.serviceBilling.amount;
+                                totalProductCost +=
+                                  service.serviceBilling.amount;
                               });
                             }
                           });
@@ -380,9 +487,13 @@ class DepartmentWiseProducts extends Component {
     graphData.productWiseCostData.labels = labels;
     graphData.productWiseCostData.datasets[0].data = totalCostList;
     for (let i = 0; i < totalCostList.length; i++) {
-      graphData.productWiseCostData.datasets[0].backgroundColor.push(this.getRandomColor());
+      graphData.productWiseCostData.datasets[0].backgroundColor.push(
+        this.getRandomColor()
+      );
     }
-    productWiseCostOptions.plugins.title.text = `Total Cost: $${totalCost.toFixed(2)}`;
+    productWiseCostOptions.plugins.title.text = `Total Cost: $${totalCost.toFixed(
+      2
+    )}`;
     this.setState({
       productWiseCostOptions,
     });
@@ -392,7 +503,7 @@ class DepartmentWiseProducts extends Component {
   setProductionOthers = (departmentWiseData, graphData) => {
     let { productionvsOthersOptions } = this.state;
     let totalProductionCost = 0;
-    const labels = ['Production', 'Others'];
+    const labels = ["Production", "Others"];
     let totalOtherCost = 0;
     if (departmentWiseData && departmentWiseData.length > 0) {
       for (let i = 0; i < departmentWiseData.length; i++) {
@@ -409,10 +520,12 @@ class DepartmentWiseProducts extends Component {
                           serviceName.tagList.map((tag) => {
                             if (tag.serviceList) {
                               tag.serviceList.map((service) => {
-                                if (environment.name === 'PROD') {
-                                  totalProductionCost += service.serviceBilling.amount;
+                                if (environment.name === "PROD") {
+                                  totalProductionCost +=
+                                    service.serviceBilling.amount;
                                 } else {
-                                  totalOtherCost += service.serviceBilling.amount;
+                                  totalOtherCost +=
+                                    service.serviceBilling.amount;
                                 }
                               });
                             }
@@ -433,11 +546,13 @@ class DepartmentWiseProducts extends Component {
       graphData.productionvsOthersData.labels = labels;
       graphData.productionvsOthersData.datasets[0].data = data;
       for (let i = 0; i < data.length; i++) {
-        graphData.productionvsOthersData.datasets[0].backgroundColor.push(this.getRandomColor());
+        graphData.productionvsOthersData.datasets[0].backgroundColor.push(
+          this.getRandomColor()
+        );
       }
-      productionvsOthersOptions.plugins.title.text = `Total Cost: $${(totalProductionCost + totalOtherCost).toFixed(
-        2
-      )}`;
+      productionvsOthersOptions.plugins.title.text = `Total Cost: $${(
+        totalProductionCost + totalOtherCost
+      ).toFixed(2)}`;
       this.setState({
         productionvsOthersOptions,
       });
@@ -458,23 +573,51 @@ class DepartmentWiseProducts extends Component {
           for (let j = 0; j < department.productList.length; j++) {
             let product = department.productList[j];
             if (product.deploymentEnvironmentList) {
-              for (let k = 0; k < product.deploymentEnvironmentList.length; k++) {
+              for (
+                let k = 0;
+                k < product.deploymentEnvironmentList.length;
+                k++
+              ) {
                 let environment = product.deploymentEnvironmentList[k];
-                if (environment.serviceCategoryList && environment.serviceCategoryList.length > 0) {
-                  for (let l = 0; l < environment.serviceCategoryList.length; l++) {
+                if (
+                  environment.serviceCategoryList &&
+                  environment.serviceCategoryList.length > 0
+                ) {
+                  for (
+                    let l = 0;
+                    l < environment.serviceCategoryList.length;
+                    l++
+                  ) {
                     if (
                       environment.serviceCategoryList[l].serviceNameList &&
-                      environment.serviceCategoryList[l].serviceNameList.length > 0
+                      environment.serviceCategoryList[l].serviceNameList
+                        .length > 0
                     ) {
-                      for (let n = 0; n < environment.serviceCategoryList[l].serviceNameList.length; n++) {
-                        let serviceNameList = environment.serviceCategoryList[l].serviceNameList[n];
-                        if (serviceNameList.tagList && serviceNameList.tagList.length > 0) {
-                          for (let m = 0; m < serviceNameList.tagList.length; m++) {
+                      for (
+                        let n = 0;
+                        n <
+                        environment.serviceCategoryList[l].serviceNameList
+                          .length;
+                        n++
+                      ) {
+                        let serviceNameList =
+                          environment.serviceCategoryList[l].serviceNameList[n];
+                        if (
+                          serviceNameList.tagList &&
+                          serviceNameList.tagList.length > 0
+                        ) {
+                          for (
+                            let m = 0;
+                            m < serviceNameList.tagList.length;
+                            m++
+                          ) {
                             let tag = serviceNameList.tagList[m];
                             if (tag && tag.serviceList) {
                               tag.serviceList.map((service) => {
-                                serviceByType[tag.tagName] = serviceByType[tag.tagName] || 0;
-                                serviceByType[tag.tagName] += service.serviceBilling.amount;
+                                serviceByType[tag.tagName] =
+                                  serviceByType[tag.tagName] || 0;
+                                serviceByType[tag.tagName] +=
+                                  service.serviceBilling.amount;
                               });
                             }
                           }
@@ -497,9 +640,13 @@ class DepartmentWiseProducts extends Component {
     graphData.serviceWiseCoastData.labels = labels;
     graphData.serviceWiseCoastData.datasets[0].data = data;
     for (let i = 0; i < data.length; i++) {
-      graphData.serviceWiseCoastData.datasets[0].backgroundColor.push(this.getRandomColor());
+      graphData.serviceWiseCoastData.datasets[0].backgroundColor.push(
+        this.getRandomColor()
+      );
     }
-    serviceWiseCoastOptions.plugins.title.text = `Total Cost: $${totalCount.toFixed(2)}`;
+    serviceWiseCoastOptions.plugins.title.text = `Total Cost: $${totalCount.toFixed(
+      2
+    )}`;
     this.setState({
       serviceWiseCoastOptions,
     });
@@ -517,20 +664,38 @@ class DepartmentWiseProducts extends Component {
             let product = department.productList[i];
             for (let b = 0; b < product.deploymentEnvironmentList.length; b++) {
               let environment = product.deploymentEnvironmentList[b];
-              if (environment.serviceCategoryList && environment.serviceCategoryList.length > 0) {
-                for (let a = 0; a < environment.serviceCategoryList.length; a++) {
+              if (
+                environment.serviceCategoryList &&
+                environment.serviceCategoryList.length > 0
+              ) {
+                for (
+                  let a = 0;
+                  a < environment.serviceCategoryList.length;
+                  a++
+                ) {
                   const serviceCategory = environment.serviceCategoryList[a];
-                  if (serviceCategory.serviceNameList && serviceCategory.serviceNameList.length > 0) {
-                    for (let n = 0; n < serviceCategory.serviceNameList.length; n++) {
+                  if (
+                    serviceCategory.serviceNameList &&
+                    serviceCategory.serviceNameList.length > 0
+                  ) {
+                    for (
+                      let n = 0;
+                      n < serviceCategory.serviceNameList.length;
+                      n++
+                    ) {
                       let serviceName = serviceCategory.serviceNameList[n];
                       if (serviceName.tagList) {
                         serviceName.tagList.map((tag) => {
-                          serviceByType[tag.tagName] = serviceByType[tag.tagName] || 0;
-                          serviceByType[tag.tagName] += tag.serviceList ? tag.serviceList.length : 0;
+                          serviceByType[tag.tagName] =
+                            serviceByType[tag.tagName] || 0;
+                          serviceByType[tag.tagName] += tag.serviceList
+                            ? tag.serviceList.length
+                            : 0;
                           if (tag && tag.serviceList) {
                             tag.serviceList.map((service) => {
-                              if (environment.name === 'PROD') {
-                                productionTotal += service.serviceBilling.amount;
+                              if (environment.name === "PROD") {
+                                productionTotal +=
+                                  service.serviceBilling.amount;
                               } else {
                                 othersTotal += service.serviceBilling.amount;
                               }
@@ -545,8 +710,11 @@ class DepartmentWiseProducts extends Component {
             }
           }
         }
-        const percentage = this.calculatePercentage(productionTotal, productionTotal + othersTotal);
-        let color = '';
+        const percentage = this.calculatePercentage(
+          productionTotal,
+          productionTotal + othersTotal
+        );
+        let color = "";
         if (percentage >= 75) {
           color = this.colorMapping[75];
         } else if (percentage >= 50) {
@@ -554,10 +722,13 @@ class DepartmentWiseProducts extends Component {
         } else {
           color = this.colorMapping[25];
         }
-        const endcodedDName = department.name.replace('&', ';amp;');
+        const endcodedDName = department.name.replace("&", ";amp;");
         return (
           <div className="department-box" key={index}>
-            <Link to={`/assetmanager/pages/department-wise-charts?department=${endcodedDName}`} className="heading">
+            <Link
+              to={`${"#"}/department-wise-charts?department=${endcodedDName}`}
+              className="heading"
+            >
               {department.name}
             </Link>
             <div className="contents">
@@ -568,19 +739,19 @@ class DepartmentWiseProducts extends Component {
                 </li>
                 <li>
                   <label>No. of App Services</label>
-                  <span>{serviceByType['App'] || 0}</span>
+                  <span>{serviceByType["App"] || 0}</span>
                 </li>
                 <li>
                   <label>No. of Data Services</label>
-                  <span>{serviceByType['Data'] || 0}</span>
+                  <span>{serviceByType["Data"] || 0}</span>
                 </li>
                 <li>
                   <label>No. of Network Services</label>
-                  <span>{serviceByType['Network'] || 0}</span>
+                  <span>{serviceByType["Network"] || 0}</span>
                 </li>
                 <li>
                   <label>No. of Other Services</label>
-                  <span>{serviceByType['Other'] || 0}</span>
+                  <span>{serviceByType["Other"] || 0}</span>
                 </li>
               </ul>
               <div className="production-heading">
@@ -594,16 +765,16 @@ class DepartmentWiseProducts extends Component {
                   strokeWidth={20}
                   styles={{
                     trail: {
-                      stroke: '#F6EEFF',
+                      stroke: "#F6EEFF",
                     },
                     path: {
                       stroke: color,
-                      strokeLinecap: 'butt',
+                      strokeLinecap: "butt",
                     },
                     text: {
-                      fontSize: '10px',
-                      fontWeight: 'bold',
-                      fill: '#000',
+                      fontSize: "10px",
+                      fontWeight: "bold",
+                      fill: "#000",
                     },
                   }}
                 />
@@ -625,8 +796,8 @@ class DepartmentWiseProducts extends Component {
   };
 
   getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
+    var letters = "0123456789ABCDEF";
+    var color = "#";
     for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
@@ -654,8 +825,15 @@ class DepartmentWiseProducts extends Component {
                 </div>
                 <div className="col-lg-3 col-md-4 col-sm-6">
                   <div className="float-right common-right-btn">
-                    <Link to={`/assetmanager/pages/environments`} className="asset-white-button min-width-inherit">
-                      <img src={Jobs} alt="" style={{ maxWidth: '20px' }} />
+                    <Link
+                      to={`${"#"}/environments`}
+                      className="asset-white-button min-width-inherit"
+                    >
+                      <img
+                        src={images.Jobs}
+                        alt=""
+                        style={{ maxWidth: "20px" }}
+                      />
                     </Link>
                   </div>
                 </div>
@@ -672,9 +850,13 @@ class DepartmentWiseProducts extends Component {
                     </div>
                     <div className="chart">
                       {graphData.productWiseCostData &&
-                      graphData.productWiseCostData.datasets[0].data.length > 0 &&
+                      graphData.productWiseCostData.datasets[0].data.length >
+                        0 &&
                       graphData.productWiseCostData.labels.length > 0 ? (
-                        <Doughnut data={graphData.productWiseCostData} options={productWiseCostOptions} />
+                        <Doughnut
+                          data={graphData.productWiseCostData}
+                          options={productWiseCostOptions}
+                        />
                       ) : (
                         <div className="chart-spinner">
                           <i className="fa fa-spinner fa-spin" /> Loading...
@@ -682,7 +864,7 @@ class DepartmentWiseProducts extends Component {
                       )}
                     </div>
                     <div className="view-details-link">
-                      <Link to={`/assetmanager/pages/product-wise-cost`}>
+                      <Link to={`${"#"}/product-wise-cost`}>
                         View details <i className="fa fa-chevron-down" />
                       </Link>
                     </div>
@@ -697,9 +879,13 @@ class DepartmentWiseProducts extends Component {
                     </div>
                     <div className="chart">
                       {graphData.productionvsOthersData &&
-                      graphData.productionvsOthersData.datasets[0].data.length > 0 &&
+                      graphData.productionvsOthersData.datasets[0].data.length >
+                        0 &&
                       graphData.productionvsOthersData.labels.length > 0 ? (
-                        <Pie data={graphData.productionvsOthersData} options={productionvsOthersOptions} />
+                        <Pie
+                          data={graphData.productionvsOthersData}
+                          options={productionvsOthersOptions}
+                        />
                       ) : (
                         <div className="chart-spinner">
                           <i className="fa fa-spinner fa-spin" /> Loading...
@@ -717,9 +903,13 @@ class DepartmentWiseProducts extends Component {
                     </div>
                     <div className="chart">
                       {graphData.serviceWiseCoastData &&
-                      graphData.serviceWiseCoastData.datasets[0].data.length > 0 &&
+                      graphData.serviceWiseCoastData.datasets[0].data.length >
+                        0 &&
                       graphData.serviceWiseCoastData.labels.length > 0 ? (
-                        <Pie data={graphData.serviceWiseCoastData} options={serviceWiseCoastOptions} />
+                        <Pie
+                          data={graphData.serviceWiseCoastData}
+                          options={serviceWiseCoastOptions}
+                        />
                       ) : (
                         <div className="chart-spinner">
                           <i className="fa fa-spinner fa-spin" /> Loading...
@@ -736,13 +926,22 @@ class DepartmentWiseProducts extends Component {
               </div>
             </div>
             <div className="department-wise-boxs">
-              <div className="department-wise-inner">{this.renderDepartmentWiseData(departmentWiseData)}</div>
+              <div className="department-wise-inner">
+                {this.renderDepartmentWiseData(departmentWiseData)}
+              </div>
             </div>
           </div>
-          {product && <ProductWiseServices product={product} displayJsonData={displayJsonData} type="department" />}
+          {product && (
+            <ProductWiseServices
+              product={product}
+              displayJsonData={displayJsonData}
+              type="department"
+            />
+          )}
         </div>
       </div>
     );
   }
 }
+
 export default DepartmentWiseProducts;

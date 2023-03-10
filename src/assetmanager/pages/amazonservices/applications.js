@@ -76,7 +76,6 @@ class Applications extends React.Component {
           _.cloneDeep(response.organization.departmentList)
         );
         this.getFilterData(_.cloneDeep(response.organization.departmentList));
-        // localStorage.setItem('applicationData', JSON.stringify(response));
       });
     } catch (err) {
       console.log("Loading accounts failed. Error: ", err);
