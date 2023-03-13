@@ -1,0 +1,123 @@
+.compliance-dashboard-container{
+    .filter-container {
+        .assessments{
+            margin-top: 23px;
+            text-align: right;
+            .settings{
+                position: relative;
+                a{
+                    padding: 5px 10px 4px !important;
+                    min-width: auto;
+                    position: relative;
+                    z-index: 1;
+                }
+                .settings-toggle{
+                    position: absolute;
+                    right: 10px;
+                    top: 35px;
+                    z-index: 1;
+                    background-color: #e6e6e6;
+                    width: 180px;
+                    padding: 5px;
+                    text-align: right;
+                    ul{
+                        padding: 0;
+                        margin: 0;
+                        list-style: none;
+                        li{
+                            font-size: 12px;
+                            line-height: 18px;
+                            color: #3B4859;
+                            font-weight: 500;
+                            display: block;
+                            padding-bottom: 3px;
+                        }
+                    }
+                }
+                
+            }
+            .file-export{
+                position: relative;
+                a{
+                    padding: 5px 10px 4px !important;
+                    min-width: auto;
+                }
+                .file-export-toggle{
+                    position: absolute;
+                    right: 0px;
+                    top: 35px;
+                    z-index: 1;
+                    background-color: #e6e6e6;
+                    width: 230px;
+                    padding: 5px;
+                    text-align: left;
+                    ul{
+                        padding: 0;
+                        margin: 0;
+                        list-style: none;
+                        li{
+                            font-size: 12px;
+                            line-height: 20px;
+                            color: #3B4859;
+                            font-weight: 500;
+                            display: block;
+                            padding-bottom: 3px;
+                            img{
+                                max-width: 20px;
+                                height: auto;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .compliance-main-box{
+        overflow: hidden;
+        box-shadow: 0px 1px 5px #00000029;
+        border-radius: 3px;
+        margin-bottom: 30px;
+        cursor: pointer;
+        .heading{
+            padding: 7px 10px;
+            background-color: $compliance-heading-background-color;
+            box-shadow: 0px 1px 0px #00000029;
+            strong{
+                font-size: 13px;
+                line-height: 20px;
+                color: #3B4859;
+                font-weight: 500;
+            }
+            i{
+                font-size: 18px;
+                line-height: 20px;
+                color: #3B4859;
+                font-weight: 500;
+            }
+        }
+        .compliance-inner{
+            background: #F0F3F7;
+            padding: 30px 0;
+            p{
+                font-size: 14px;
+                line-height: 20px;
+                color: #3B4859;
+                font-weight: 500; 
+                margin-bottom: 7px;
+            }
+            span{
+                font-size: 36px;
+                line-height: 40px;
+                font-weight: 500; 
+            }
+            a{
+                font-size: 13px;
+                line-height: 40px;
+                font-weight: 500; 
+                color: #3B4859;
+            }
+        }
+    }
+}
+

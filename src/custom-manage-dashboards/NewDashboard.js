@@ -1,9 +1,10 @@
-import * as React from 'react';
-import { config } from '../config';
-import { locationService } from '@grafana/runtime';
+import React, {Component} from 'react';
+//import * as React from 'react';
+//import { config } from '../config';
+//import { locationService } from '@grafana/runtime';
 
-class NewDashboard extends React.Component<any, any> {
-  constructor(props: any) {
+class NewDashboard extends Component {
+  constructor(props) {
     super(props);
   }
 
@@ -11,9 +12,9 @@ class NewDashboard extends React.Component<any, any> {
     this.props.closeNewDashboard();
   };
 
-  openNewDashboard = () => {
-    locationService.push('/dashboard/new?orgId=1');
-  };
+  // openNewDashboard = () => {
+  //   locationService.push('/dashboard/new?orgId=1');
+  // };
 
   render() {
     return (
@@ -36,7 +37,7 @@ class NewDashboard extends React.Component<any, any> {
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-sm-12 own-dashboard">
-                <a href={`${config.basePath}/managedashboards/importdashboard`}>
+                <a href={`/managedashboards/importdashboard`}>
                   <span>
                     <img src="/public/img/import-dashboard-image.png" alt="Import Dashboard from Catalog" />
                   </span>

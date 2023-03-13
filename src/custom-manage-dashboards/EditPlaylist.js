@@ -1,8 +1,10 @@
-import * as React from 'react';
+import React, { Component } from 'react';
+//import * as React from 'react';
 import { Button } from 'reactstrap';
-import { config } from '../config';
-import { backendSrv } from 'app/core/services/backend_srv';
-import { getBackendSrv } from '@grafana/runtime';
+//import { config } from '../config';
+//import { backendSrv } from 'app/core/services/backend_srv';
+//import { getBackendSrv } from '@grafana/runtime';
+//import { Component } from 'react';
 
 class EditPlaylists extends Component {
   constructor(props) {
@@ -24,28 +26,28 @@ class EditPlaylists extends Component {
     });
   };
 
-  componentDidMount() {
-    const sendData = {
-      type: 'dash-db',
-      limit: 20,
-      starred: false,
-    };
-    const edit_id = this.props.play_list_data.id;
-    Promise.all([backendSrv.search(sendData), getBackendSrv().get(`api/playlists/${edit_id}`)]).then(
-      ([dashboardListData, playlist]) => {
-        let dashboardList = JSON.parse(JSON.stringify(dashboardListData));
-        let createdPlayList = playlist.items;
-        let retObj = this.mergeData(dashboardList, createdPlayList);
-        createdPlayList = retObj.itemList;
-        dashboardList = retObj.dashboardList;
-        this.setState({
-          dashboardList: dashboardList,
-          duplicatePlayListData: JSON.parse(JSON.stringify(dashboardListData)),
-          createdPlayList,
-        });
-      }
-    );
-  }
+  // componentDidMount() {
+  //   const sendData = {
+  //     type: 'dash-db',
+  //     limit: 20,
+  //     starred: false,
+  //   };
+  //   const edit_id = this.props.play_list_data.id;
+  //   Promise.all([backendSrv.search(sendData), getBackendSrv().get(`api/playlists/${edit_id}`)]).then(
+  //     ([dashboardListData, playlist]) => {
+  //       let dashboardList = JSON.parse(JSON.stringify(dashboardListData));
+  //       let createdPlayList = playlist.items;
+  //       let retObj = this.mergeData(dashboardList, createdPlayList);
+  //       createdPlayList = retObj.itemList;
+  //       dashboardList = retObj.dashboardList;
+  //       this.setState({
+  //         dashboardList: dashboardList,
+  //         duplicatePlayListData: JSON.parse(JSON.stringify(dashboardListData)),
+  //         createdPlayList,
+  //       });
+  //     }
+  //   );
+  // }
 
   mergeData = (dashboardList, itemList) => {
     for (let i = 0; i < itemList.length; i++) {
@@ -224,16 +226,16 @@ class EditPlaylists extends Component {
     for (let i = 0; i < createdPlayList.length; i++) {
       createdPlayList[i].value = createdPlayList[i].id.toString();
     }
-    getBackendSrv()
-      .put(`/api/playlists/${edit_id}`, {
-        interval: Interval,
-        items: createdPlayList,
-        name: playListName,
-        id: edit_id,
-      })
-      .then((result) => {
-        this.onClickCancel();
-      });
+    // getBackendSrv()
+    //   .put(`/api/playlists/${edit_id}`, {
+    //     interval: Interval,
+    //     items: createdPlayList,
+    //     name: playListName,
+    //     id: edit_id,
+    //   })
+    //   .then((result) => {
+    //     this.onClickCancel();
+    //   });
   };
 
   render() {
@@ -344,7 +346,7 @@ class EditPlaylists extends Component {
                 </div>
                 <div className="col-md-6 col-sm-12">
                   <div className="float-right playlist">
-                    <a href={config.PARENT_NAME}>
+                    <a href="">
                       <Button onClick={() => this.backToPlayListPage()} className="dashboard-blue-button m-r-0">
                         Create new playlist
                       </Button>

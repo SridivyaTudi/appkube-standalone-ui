@@ -1,11 +1,12 @@
-import * as React from 'react';
+import React, {Component} from 'react';
+//import * as React from 'react';
 import { Button } from 'reactstrap';
-import { config } from '../config';
-import { backendSrv } from 'app/core/services/backend_srv';
-import { getBackendSrv } from '@grafana/runtime';
+//import { config } from '../config';
+//import { backendSrv } from 'app/core/services/backend_srv';
+//import { getBackendSrv } from '@grafana/runtime';
 
-export class NewPlaylists extends React.Component<any, any> {
-  constructor(props: any) {
+class NewPlaylists extends Component {
+  constructor(props) {
     super(props);
     this.state = {
       playListName: '',
@@ -17,7 +18,7 @@ export class NewPlaylists extends React.Component<any, any> {
     };
   }
 
-  handleStateChange = (e: any) => {
+  handleStateChange = (e) => {
     const { name, value } = e.target;
     this.setState({
       [name]: value,
@@ -33,13 +34,13 @@ export class NewPlaylists extends React.Component<any, any> {
     this.getSearchData(sendData);
   }
 
-  getSearchData = (data: any) => {
-    backendSrv.search(data).then((result: any) => {
-      this.setState({
-        dashboardList: JSON.parse(JSON.stringify(result)),
-        duplicatePlayListData: JSON.parse(JSON.stringify(result)),
-      });
-    });
+  getSearchData = (data) => {
+    // backendSrv.search(data).then((result) => {
+    //   this.setState({
+    //     dashboardList: JSON.parse(JSON.stringify(result)),
+    //     duplicatePlayListData: JSON.parse(JSON.stringify(result)),
+    //   });
+    // });
   };
 
   displayTablePlaylist() {
@@ -70,7 +71,7 @@ export class NewPlaylists extends React.Component<any, any> {
     return retData;
   }
 
-  onPlayListChecked = (e: any, index: any) => {
+  onPlayListChecked = (e, index) => {
     const { dashboardList } = this.state;
     dashboardList[index].isChecked = e.target.checked;
     this.setState({
@@ -114,7 +115,7 @@ export class NewPlaylists extends React.Component<any, any> {
     return newretData;
   }
 
-  addNewPlayList = (index: any) => {
+  addNewPlayList = (index) => {
     const { createdPlayList, dashboardList } = this.state;
     if (dashboardList[index]) {
       createdPlayList.push(dashboardList[index]);
@@ -146,7 +147,7 @@ export class NewPlaylists extends React.Component<any, any> {
     });
   };
 
-  removePlayList = (index: any) => {
+  removePlayList = (index) => {
     const { createdPlayList, dashboardList } = this.state;
     dashboardList.push({
       ...createdPlayList[index],
@@ -174,7 +175,7 @@ export class NewPlaylists extends React.Component<any, any> {
     }
   };
 
-  array_move(arr: any, old_index: any, new_index: any) {
+  array_move(arr, old_index, new_index) {
     if (new_index >= arr.length) {
       var k = new_index - arr.length + 1;
       while (k--) {
@@ -202,11 +203,11 @@ export class NewPlaylists extends React.Component<any, any> {
     for (let i = 0; i < createdPlayList.length; i++) {
       createdPlayList[i].value = createdPlayList[i].id.toString();
     }
-    getBackendSrv()
-      .post('/api/playlists', { interval: Interval, items: createdPlayList, name: playListName })
-      .then((result: any) => {
-        this.onClickCancel();
-      });
+    // getBackendSrv()
+    //   .post('/api/playlists', { interval: Interval, items: createdPlayList, name: playListName })
+    //   .then((result) => {
+    //     this.onClickCancel();
+    //   });
   };
 
   render() {
@@ -317,7 +318,7 @@ export class NewPlaylists extends React.Component<any, any> {
                 </div>
                 <div className="col-md-6 col-sm-12">
                   <div className="float-right playlist">
-                    <a href={config.PARENT_NAME}>
+                    <a href={""}>
                       <Button onClick={() => this.backToPlayListPage()} className="dashboard-blue-button m-r-0">
                         Create new playlist
                       </Button>
@@ -351,3 +352,4 @@ export class NewPlaylists extends React.Component<any, any> {
     );
   }
 }
+export default NewPlaylists;

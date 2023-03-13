@@ -1,17 +1,17 @@
-import * as React from 'react';
+import React, {Component} from 'react';
 import { Collapse } from 'reactstrap';
-import { UnimplementedFeaturePopup } from './components/UnimplementedFeaturePopup';
+//import { UnimplementedFeaturePopup } from './components/UnimplementedFeaturePopup';
 import NewDashboard from './NewDashboard';
-import { Checkbox, getTagColorsFromName } from '@grafana/ui';
-import { backendSrv } from 'app/core/services/backend_srv';
-import { SortPicker } from 'app/core/components/Select/SortPicker';
-import { TagFilter } from 'app/core/components/TagFilter/TagFilter';
-import { FilterInput } from 'app/core/components/FilterInput/FilterInput';
+//import { Checkbox, getTagColorsFromName } from '@grafana/ui';
+//import { backendSrv } from 'app/core/services/backend_srv';
+//import { SortPicker } from 'app/core/components/Select/SortPicker';
+//import { TagFilter } from 'app/core/components/TagFilter/TagFilter';
+//import { FilterInput } from 'app/core/components/FilterInput/FilterInput';
 
-export class ManageTab extends React.Component<any, any> {
-  unimplementedFeatureModalRef: any;
-  tagsPromiseResolve: any;
-  constructor(props: any) {
+class ManageTab extends Component {
+  unimplementedFeatureModalRef;
+  tagsPromiseResolve;
+  constructor(props) {
     super(props);
     this.state = {
       folderArray: [],
@@ -31,7 +31,7 @@ export class ManageTab extends React.Component<any, any> {
     this.getSearchData(sendData);
   }
 
-  onClickUnImplementedFeature = (link: any) => {
+  onClickUnImplementedFeature = (link) => {
     this.unimplementedFeatureModalRef.current.setLink(link);
     this.unimplementedFeatureModalRef.current.toggle();
   };
@@ -42,8 +42,8 @@ export class ManageTab extends React.Component<any, any> {
     });
   };
 
-  manipulateData(result: any) {
-    const retData: any = {};
+  manipulateData(result) {
+    const retData = {};
     let tagList = [];
     for (let i = 0; i < result.length; i++) {
       const dash = result[i];
@@ -75,8 +75,8 @@ export class ManageTab extends React.Component<any, any> {
         }
       }
     }
-    let keys: any = Object.keys(retData);
-    let folders: any = [];
+    let keys = Object.keys(retData);
+    let folders = [];
     for (let i = 0; i < keys.length; i++) {
       folders.push(retData[keys[i]]);
     }
@@ -84,16 +84,16 @@ export class ManageTab extends React.Component<any, any> {
     return folders;
   }
 
-  getSearchData = (data: any) => {
-    backendSrv.search(data).then((result: any) => {
-      const retData = this.manipulateData(result);
-      this.setState({
-        folderArray: JSON.parse(JSON.stringify(retData)),
-      });
-    });
+  getSearchData = (data) => {
+    // backendSrv.search(data).then((result) => {
+    //   const retData = this.manipulateData(result);
+    //   this.setState({
+    //     folderArray: JSON.parse(JSON.stringify(retData)),
+    //   });
+    // });
   };
 
-  onClickChildCheckbox = (parentIndex: any, childIndex: any) => {
+  onClickChildCheckbox = (parentIndex, childIndex) => {
     let countCheckedCheckbox = 0;
     const { folderArray } = this.state;
     if (folderArray) {
@@ -113,7 +113,7 @@ export class ManageTab extends React.Component<any, any> {
     }
   };
 
-  onChangeParentCheckbox = (e: any, index: any) => {
+  onChangeParentCheckbox = (e, index) => {
     const { folderArray } = this.state;
     if (folderArray) {
       const parentCheckbox = folderArray[index];
@@ -128,7 +128,7 @@ export class ManageTab extends React.Component<any, any> {
     }
   };
 
-  onClickOpenSubFolder = (index: any) => {
+  onClickOpenSubFolder = (index) => {
     const { folderArray } = this.state;
     if (folderArray) {
       folderArray[index].openSubFolder = !folderArray[index].openSubFolder;
@@ -138,78 +138,78 @@ export class ManageTab extends React.Component<any, any> {
     }
   };
 
-  renderDashboardTree = () => {
-    const retData = [];
-    const { folderArray } = this.state;
-    console.log(folderArray);
-    if (folderArray) {
-      const length = folderArray.length;
-      let subFolderJSX = [];
-      for (let i = 0; i < length; i++) {
-        const folder = folderArray[i];
-        const subFolders = folder.subData;
-        subFolderJSX = [];
-        for (let j = 0; j < subFolders.length; j++) {
-          const attribute = subFolders[j].tags;
-          const subAttributeFolder = [];
-          if (attribute) {
-            for (let k = 0; k < attribute.length; k++) {
-              const subAtt = attribute[k];
-              const color = getTagColorsFromName(subAtt);
-              subAttributeFolder.push(
-                <div className={`tag`} style={{ backgroundColor: color.color }}>
-                  {subAtt}
-                </div>
-              );
-            }
-          }
-          const subFolder = subFolders[j];
-          subFolderJSX.push(
-            <tr>
-              <td>
-                <input
-                  type="checkbox"
-                  className="checkbox"
-                  checked={subFolder.checkValue}
-                  onClick={() => this.onClickChildCheckbox(i, j)}
-                />
-                <span>{subFolder.title}</span>
-              </td>
-              <td>
-                <div className="d-block text-right">{subAttributeFolder}</div>
-              </td>
-            </tr>
-          );
-        }
-        retData.push(
-          <div>
-            <div className="general-heading">
-              <input
-                type="checkbox"
-                checked={folder.checkValueStatus}
-                onChange={(e) => this.onChangeParentCheckbox(e, i)}
-                className="checkbox"
-              />
-              <span onClick={() => this.onClickOpenSubFolder(i)}>
-                <img src="/public/img/open-folder.png" alt="" />
-              </span>
-              <h4>{folder.title}</h4>
-            </div>
-            <Collapse isOpen={folder.openSubFolder}>
-              <div className="general-logs">
-                <div className="general-logs-inner">
-                  <table className="data-table">{subFolderJSX}</table>
-                </div>
-              </div>
-            </Collapse>
-          </div>
-        );
-      }
-    }
-    return retData;
-  };
+  // renderDashboardTree = () => {
+  //   const retData = [];
+  //   const { folderArray } = this.state;
+  //   console.log(folderArray);
+  //   if (folderArray) {
+  //     const length = folderArray.length;
+  //     let subFolderJSX = [];
+  //     for (let i = 0; i < length; i++) {
+  //       const folder = folderArray[i];
+  //       const subFolders = folder.subData;
+  //       subFolderJSX = [];
+  //       for (let j = 0; j < subFolders.length; j++) {
+  //         const attribute = subFolders[j].tags;
+  //         const subAttributeFolder = [];
+  //         if (attribute) {
+  //           for (let k = 0; k < attribute.length; k++) {
+  //             const subAtt = attribute[k];
+  //             const color = getTagColorsFromName(subAtt);
+  //             subAttributeFolder.push(
+  //               <div className={`tag`} style={{ backgroundColor: color.color }}>
+  //                 {subAtt}
+  //               </div>
+  //             );
+  //           }
+  //         }
+  //         const subFolder = subFolders[j];
+  //         subFolderJSX.push(
+  //           <tr>
+  //             <td>
+  //               <input
+  //                 type="checkbox"
+  //                 className="checkbox"
+  //                 checked={subFolder.checkValue}
+  //                 onClick={() => this.onClickChildCheckbox(i, j)}
+  //               />
+  //               <span>{subFolder.title}</span>
+  //             </td>
+  //             <td>
+  //               <div className="d-block text-right">{subAttributeFolder}</div>
+  //             </td>
+  //           </tr>
+  //         );
+  //       }
+  //       retData.push(
+  //         <div>
+  //           <div className="general-heading">
+  //             <input
+  //               type="checkbox"
+  //               checked={folder.checkValueStatus}
+  //               onChange={(e) => this.onChangeParentCheckbox(e, i)}
+  //               className="checkbox"
+  //             />
+  //             <span onClick={() => this.onClickOpenSubFolder(i)}>
+  //               <img src="/public/img/open-folder.png" alt="" />
+  //             </span>
+  //             <h4>{folder.title}</h4>
+  //           </div>
+  //           <Collapse isOpen={folder.openSubFolder}>
+  //             <div className="general-logs">
+  //               <div className="general-logs-inner">
+  //                 <table className="data-table">{subFolderJSX}</table>
+  //               </div>
+  //             </div>
+  //           </Collapse>
+  //         </div>
+  //       );
+  //     }
+  //   }
+  //   return retData;
+  // };
 
-  onQueryChange = (search: any) => {
+  onQueryChange = (search) => {
     const { isStarred, selectedTags, sortValue } = this.state;
     this.setState({
       searchKey: search,
@@ -223,7 +223,7 @@ export class ManageTab extends React.Component<any, any> {
     this.getSearchData(sendData);
   };
 
-  onTagFilterChange = (tags: any) => {
+  onTagFilterChange = (tags) => {
     const { searchKey, isStarred, sortValue } = this.state;
     this.setState({
       selectedTags: tags,
@@ -237,7 +237,7 @@ export class ManageTab extends React.Component<any, any> {
     this.getSearchData(sendData);
   };
 
-  onSortChange = (sortvalue: any) => {
+  onSortChange = (sortvalue) => {
     const { searchKey, isStarred, selectedTags } = this.state;
     this.setState({
       sortValue: sortvalue.value,
@@ -251,7 +251,7 @@ export class ManageTab extends React.Component<any, any> {
     this.getSearchData(sendData);
   };
 
-  onStarredFilterChange = (e: any) => {
+  onStarredFilterChange = (e) => {
     const { searchKey, selectedTags, sortValue } = this.state;
     this.setState({
       isStarred: e.target.checked,
@@ -265,11 +265,11 @@ export class ManageTab extends React.Component<any, any> {
     this.getSearchData(sendData);
   };
 
-  getTagOptions = () => {
-    return new Promise<any>((resolve, reject) => {
-      this.tagsPromiseResolve = resolve;
-    });
-  };
+  // getTagOptions = () => {
+  //   return new Promise<any>((resolve, reject) => {
+  //     this.tagsPromiseResolve = resolve;
+  //   });
+  // };
 
   render() {
     const { showNewDashboardPopup, isStarred, searchKey, selectedTags, sortValue } = this.state;
@@ -295,28 +295,28 @@ export class ManageTab extends React.Component<any, any> {
               <div className="row" style={{ alignItems: 'center' }}>
                 <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
                   <div className="form-group search-control-group">
-                    <FilterInput
+                    {/* <FilterInput
                       labelClassName="gf-form--has-input-icon"
                       inputClassName="gf-form-input"
                       value={searchKey}
                       onChange={this.onQueryChange}
                       placeholder={'Search dashboards by name'}
-                    />
+                    /> */}
                   </div>
                 </div>
                 <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 tag-filter-container">
-                  <TagFilter
+                  {/* <TagFilter
                     isClearable
                     tags={selectedTags}
                     tagOptions={this.getTagOptions}
                     onChange={this.onTagFilterChange}
-                  />
+                  /> */}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-                  <Checkbox label="Filter by starred" onChange={this.onStarredFilterChange} value={isStarred} />
+                  {/* <Checkbox label="Filter by starred" onChange={this.onStarredFilterChange} value={isStarred} /> */}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 sort-container">
-                  <SortPicker onChange={this.onSortChange} value={sortValue} />
+                  {/* <SortPicker onChange={this.onSortChange} value={sortValue} /> */}
                 </div>
               </div>
             </div>
@@ -328,8 +328,9 @@ export class ManageTab extends React.Component<any, any> {
             <NewDashboard closeNewDashboard={this.toggleNewDashPopup} />
           </div>
         )}
-        <UnimplementedFeaturePopup ref={this.unimplementedFeatureModalRef} />
+        {/* <UnimplementedFeaturePopup ref={this.unimplementedFeatureModalRef} /> */}
       </div>
     );
   }
 }
+export default ManageTab;

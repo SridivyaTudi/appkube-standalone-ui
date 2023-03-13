@@ -103,10 +103,10 @@
 // @import 'old_responsive';
 // @import 'components/view_states';
 @import 'pages/overview';
-// @import 'pages/customdashboardlist';
+@import 'pages/customdashboardlist';
 // @import 'pages/team';
 @import 'pages/analytics';
-// @import 'pages/custommanagedashboard';
+ @import 'pages/custommanagedashboard';
 // @import 'pages/taskmanager';
 // @import 'pages/importdashboard';
 // @import 'pages/opscentral';
@@ -119,3 +119,6 @@
 
 //perfmanager css
 @import 'alertmanager/alertmanager.light';
+
+//Compliance Manager css
+@import 'compliancemanager/compliancemanager.light';
