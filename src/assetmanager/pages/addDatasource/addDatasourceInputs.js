@@ -1,22 +1,34 @@
-import React, { Component } from "react";
-import { Link } from 'react-router-dom';
-// import { configFun } from '../../config';
-import awsLogo from '../../img/aws.png';
-import { CommonService } from '../_common/common';
-// import { SelectCloudFilter } from '../../components/SelectCloudFilter';
-import { RestService } from '../_service/RestService';
+import * as React from "react";
+import { Link } from "react-router-dom";
+import { configFun } from "../../config";
+import { images } from "../../img";
+import { CommonService } from "../_common/common";
+import { RestService } from "../_service/RestService";
 
-class AddDatasourceInputs extends Component {
-//   config;
+class AddDatasourceInputs extends React.Component {
+  breadCrumbs;
+  config;
   constructor(props) {
     super(props);
     this.state = {
-      environment: '',
-      account: '',
+      environment: "",
+      account: "",
       sourceList: {},
     };
-
-    // this.config = configFun(props.meta.jsonData.apiUrl, props.meta.jsonData.mainProductUrl);
+    this.breadCrumbs = [
+      {
+        label: "Home",
+        route: `/`,
+      },
+      {
+        label: "Assets | Environments",
+        isCurrentPage: true,
+      },
+    ];
+    this.config = configFun(
+      props.meta.jsonData.apiUrl,
+      props.meta.jsonData.mainProductUrl
+    );
   }
 
   async componentDidMount() {
@@ -26,7 +38,7 @@ class AddDatasourceInputs extends Component {
   getAccountList = async () => {
     try {
       await RestService.getData(
-        'http://localhost:3000/api/plugins/filter-datasource/key=cloudwatCH,TESTDATA,grafana-azure-monitor-datasource',
+        "http://localhost:3000/api/plugins/filter-datasource/key=cloudwatCH,TESTDATA,grafana-azure-monitor-datasource",
         null,
         null
       ).then((response) => {
@@ -35,10 +47,10 @@ class AddDatasourceInputs extends Component {
         // this.setState({
         // 	accountList: response
         // });
-        console.log('Loading Asstes : ', response);
+        console.log("Loading Asstes : ", response);
       });
     } catch (err) {
-      console.log('Loading Asstes failed. Error: ', err);
+      console.log("Loading Asstes failed. Error: ", err);
     }
   };
 
@@ -60,7 +72,10 @@ class AddDatasourceInputs extends Component {
     let retData = [];
     const { sourceList } = this.state;
     console.log(sourceList);
-    let accountId = CommonService.getParameterByName('accountId', window.location.href);
+    let accountId = CommonService.getParameterByName(
+      "accountId",
+      window.location.href
+    );
     if (sourceList) {
       Object.keys(sourceList).map((source, indexedDB) => {
         retData.push(
@@ -68,9 +83,9 @@ class AddDatasourceInputs extends Component {
             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div className="services-heading">
                 <span>
-                  <img src={awsLogo} alt="" />
+                  <img src={images.awsLogo} alt="" />
                 </span>
-                <h5>{source ? source : 'Others'}</h5>
+                <h5>{source ? source : "Others"}</h5>
               </div>
               <div className="account-specific-content">
                 <span>{source} Account specific input source</span>
@@ -88,16 +103,23 @@ class AddDatasourceInputs extends Component {
                       return (
                         <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
                           <Link
-                            to={`/assetmanager/pages/add-datasource-credential?sourceName=${accountdata.name}&&accountId=${accountId}`}
+                            to={`/add-datasource-credential?sourceName=${accountdata.name}&&accountId=${accountId}`}
                           >
                             <div className="source-box">
                               <div className="images">
-                                <img src={accountdata.typeLogoUrl} height="50px" width="50px" alt="" />
+                                <img
+                                  src={accountdata.typeLogoUrl}
+                                  height="50px"
+                                  width="50px"
+                                  alt=""
+                                />
                               </div>
                               <div className="source-content">
                                 <label>{accountdata.name}</label>
                                 <span>{accountdata.type}</span>
-                                <p>Receive traces and store in local Zipkin DB</p>
+                                <p>
+                                  Receive traces and store in local Zipkin DB
+                                </p>
                               </div>
                             </div>
                           </Link>
@@ -122,7 +144,6 @@ class AddDatasourceInputs extends Component {
   };
 
   render() {
-    // const { environment, account } = this.state;
     return (
       <div className="add-data-source-container">
         <div className="add-data-source-page-container">
@@ -133,12 +154,19 @@ class AddDatasourceInputs extends Component {
                   <div className="right-search-bar">
                     <div className="form-group search-control m-b-0">
                       <i className="fa fa-search" />
-                      <input type="text" className="input-group-text" placeholder="Search" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder="Search"
+                      />
                     </div>
                   </div>
                 </div>
                 <div className="back-btn">
-                  <button type="button" className="btn btn-outline-secondary btn-link">
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary btn-link"
+                  >
                     Cancel
                   </button>
                   {/* <button type="button" className="asset-blue-button">
@@ -146,7 +174,9 @@ class AddDatasourceInputs extends Component {
 									</button> */}
                 </div>
               </div>
-              <div className="specific-input-content">{this.displayDataSource()}</div>
+              <div className="specific-input-content">
+                {this.displayDataSource()}
+              </div>
             </div>
           </div>
         </div>

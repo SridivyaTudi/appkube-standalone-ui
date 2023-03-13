@@ -1,31 +1,48 @@
-import React, { Component } from "react";
-import { images } from '../../img';
+import * as React from "react";
+// import { Link } from 'react-router-dom';
+// import { configFun } from '../../config';
+import { images } from "../../img";
+// import { CommonService } from '../_common/common';
+// import { SelectCloudFilter } from '../../components/SelectCloudFilter';
+// import { RestService } from '../_service/RestService';
+// import { PLUGIN_BASE_URL } from '../../constants';
 
-export class ExploreDataSourceDetail extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			queryName: '',
-			account: '',
-			showMenu: false,
-		};
-		
-	}
-	async componentDidMount() {
-		// await this.getAccountList();
-	}
+class ExploreDataSourceDetail extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      queryName: "",
+      account: "",
+      showMenu: false,
+    };
+    this.breadCrumbs = [
+      {
+        label: "Home",
+        route: `/`,
+      },
+      {
+        label: "Assets | Environments",
+        isCurrentPage: true,
+      },
+    ];
+  }
 
-	handleStateChange = (e) => {
-		const { name, value } = e.target;
-		this.setState({
-			[name]: value
-		});
-	};
-	toggleMenu = () => {
-		this.setState({
-			showMenu: !this.state.showMenu
-		})
-	}
+  async componentDidMount() {
+    // await this.getAccountList();
+  }
+
+  handleStateChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
+  };
+  toggleMenu = () => {
+    this.setState({
+      showMenu: !this.state.showMenu,
+    });
+  };
+
   render() {
     return (
       <div className="add-data-source-container">
@@ -132,7 +149,7 @@ export class ExploreDataSourceDetail extends Component {
                                       >
                                         <i className="fas fa-bars" />
                                       </button>
-                                      {this.state.showMenu === true && (
+                                      {this.state.showMenu == true && (
                                         <div className="menu-list">
                                           <ul>
                                             <li>
