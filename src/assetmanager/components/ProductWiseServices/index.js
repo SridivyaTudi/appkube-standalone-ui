@@ -146,7 +146,6 @@ class ProductWiseServices extends React.Component {
                         {productServiceList.join()}
                       </div>
                       <div className="edit">
-                        {/* onClick={() => this.onClickMenu(defaultView, i)} */}
                         <button
                           className="edit-btn"
                           onClick={() => this.onClickMenu(i, index)}

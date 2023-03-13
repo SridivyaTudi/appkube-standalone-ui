@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import * as React from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import { images } from "../../img";
 
-class ServiceView extends Component {
+export class ServiceView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -324,9 +324,6 @@ class ServiceView extends Component {
                   <h3>{serviceNature}</h3>
                 </div>
                 <div className="col-md-5">
-                  {/* <div className="show-more">
-                                    Show More <i className="fa fa-chevron-down" />
-                                </div> */}
                   <div className="form-group search-control m-b-0">
                     <button className="btn btn-search">
                       <i className="fa fa-search" />
@@ -336,7 +333,9 @@ class ServiceView extends Component {
                       className="input-group-text"
                       placeholder="Search"
                       value={searchKeyword[serviceNature] || ""}
-                      onChange={(e) => this.onChangeSearch(serviceNature, e)}
+                      onChange={(e) =>
+                        this.onChangeSearch(serviceNature, e)
+                      }
                     />
                   </div>
                 </div>
@@ -592,5 +591,3 @@ class ServiceView extends Component {
     );
   }
 }
-
-export default ServiceView;

@@ -127,7 +127,6 @@ class ProductWiseCost extends React.Component {
           productCost: productCost.toFixed(2),
         };
       });
-      // department.productList = newProductList;
     }
     this.setState({
       chartData: data,

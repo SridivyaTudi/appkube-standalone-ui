@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody, ModalHeader } from 'reactstrap';
-import { images } from '../../img';
+import * as React from "react";
+import { Modal, ModalBody, ModalHeader } from "reactstrap";
+import { images } from "../../img";
 
-class TopologyView extends Component {
+export class TopologyView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,23 +30,37 @@ class TopologyView extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.isDataLoaded && JSON.stringify(this.props.data) !== JSON.stringify(prevProps.data)) {
+    if (
+      this.props.isDataLoaded &&
+      JSON.stringify(this.props.data) !== JSON.stringify(prevProps.data)
+    ) {
       this.setState({
         data: this.props.data,
-        searchedService: this.props.searchedService ? this.props.searchedService : "",
+        searchedService: this.props.searchedService
+          ? this.props.searchedService
+          : "",
       });
     }
     if (this.props.searchedService !== prevProps.searchedService) {
       this.setState({
-        searchedService: this.props.searchedService ? this.props.searchedService : "",
+        searchedService: this.props.searchedService
+          ? this.props.searchedService
+          : "",
       });
     }
   }
 
   createModalData = (serviceType, hostingType, serviceNature, serviceName) => {
     const { data } = this.state;
-    if (data && data[serviceType] && data[serviceType][hostingType] && data[serviceType][hostingType][serviceNature] && data[serviceType][hostingType][serviceNature][serviceName]) {
-      const services = data[serviceType][hostingType][serviceNature][serviceName];
+    if (
+      data &&
+      data[serviceType] &&
+      data[serviceType][hostingType] &&
+      data[serviceType][hostingType][serviceNature] &&
+      data[serviceType][hostingType][serviceNature][serviceName]
+    ) {
+      const services =
+        data[serviceType][hostingType][serviceNature][serviceName];
       const modalData = {
         cost: 0,
         performance: 0,
@@ -57,7 +71,7 @@ class TopologyView extends Component {
         appServices: [],
         dataServices: [],
         avg: 0,
-        serviceName
+        serviceName,
       };
       let avgPerformance = 0;
       let avgSecurity = 0;
@@ -65,9 +79,19 @@ class TopologyView extends Component {
       let avgEndUsage = 0;
       let avgCompliance = 0;
       services.map((service) => {
-        const { serviceType, name, serviceNature, associatedManagedCloudServiceLocation, stats, associatedLandingZone, dbType, appType } = service.metadata_json;
+        const {
+          serviceType,
+          name,
+          serviceNature,
+          associatedManagedCloudServiceLocation,
+          stats,
+          associatedLandingZone,
+          dbType,
+          appType,
+        } = service.metadata_json;
         if (service.sla_json) {
-          const { availability, performance, security, compliance, endusage } = service.sla_json;
+          const { availability, performance, security, compliance, endusage } =
+            service.sla_json;
           avgPerformance += performance.sla;
           avgAvailability += availability.sla;
           avgEndUsage += endusage.sla;
@@ -88,20 +112,28 @@ class TopologyView extends Component {
             serviceNature,
             location: associatedManagedCloudServiceLocation,
             account: associatedLandingZone,
-            appType
+            appType,
           });
         }
-        modalData.cost += stats.totalCostSoFar ? parseInt(stats.totalCostSoFar) : 0;
+        modalData.cost += stats.totalCostSoFar
+          ? parseInt(stats.totalCostSoFar)
+          : 0;
       });
       modalData.performance = avgPerformance / services.length;
       modalData.security = avgSecurity / services.length;
       modalData.availability = avgAvailability / services.length;
       modalData.endusage = avgEndUsage / services.length;
       modalData.compliance = avgCompliance / services.length;
-      modalData.avg = (modalData.performance + modalData.security + modalData.availability + modalData.endusage + modalData.compliance) / 5;
+      modalData.avg =
+        (modalData.performance +
+          modalData.security +
+          modalData.availability +
+          modalData.endusage +
+          modalData.compliance) /
+        5;
       console.log(modalData);
       this.setState({
-        modalData
+        modalData,
       });
     }
   };
@@ -114,14 +146,34 @@ class TopologyView extends Component {
   renderServices = (serviceType, hostingType, serviceNature) => {
     const { data, searchedService } = this.state;
     const retData = [];
-    if (data && data[serviceType] && data[serviceType][hostingType] && data[serviceType][hostingType][serviceNature]) {
+    if (
+      data &&
+      data[serviceType] &&
+      data[serviceType][hostingType] &&
+      data[serviceType][hostingType][serviceNature]
+    ) {
       const associatedServices = data[serviceType][hostingType][serviceNature];
       const serviceNames = Object.keys(associatedServices);
       serviceNames.map((serviceName) => {
-        if (searchedService === "" || serviceName.toLowerCase().indexOf(searchedService.toLowerCase()) !== -1) {
+        if (
+          searchedService === "" ||
+          serviceName.toLowerCase().indexOf(searchedService.toLowerCase()) !==
+            -1
+        ) {
           retData.push(
             <li>
-              <a onClick={() => this.onClickService(serviceType, hostingType, serviceNature, serviceName)}>{serviceName}</a>
+              <a
+                onClick={() =>
+                  this.onClickService(
+                    serviceType,
+                    hostingType,
+                    serviceNature,
+                    serviceName
+                  )
+                }
+              >
+                {serviceName}
+              </a>
             </li>
           );
         }
@@ -138,23 +190,28 @@ class TopologyView extends Component {
       services.map((service) => {
         retData.push(
           <div className="row">
-            <div className='col-md-3'>
+            <div className="col-md-3">
               <span>{service.name}</span>
             </div>
-            <div className='col-md-3'>
+            <div className="col-md-3">
               <span>{service.serviceNature}</span>
             </div>
-            <div className='col-md-3'>
+            <div className="col-md-3">
               <span>{service.location}</span>
             </div>
             <div className="col-md-3">
-              {
-                isDataService ?
-                  <span>
-                    <img src={images[service.dbType]} alt="" style={{ maxWidth: '20px', marginRight: '5px' }} /> {service.dbType}
-                  </span> :
-                  <span>{service.appType}</span>
-              }
+              {isDataService ? (
+                <span>
+                  <img
+                    src={images[service.dbType]}
+                    alt=""
+                    style={{ maxWidth: "20px", marginRight: "5px" }}
+                  />{" "}
+                  {service.dbType}
+                </span>
+              ) : (
+                <span>{service.appType}</span>
+              )}
             </div>
           </div>
         );
@@ -165,19 +222,24 @@ class TopologyView extends Component {
 
   getClassBasedOnScore = (score) => {
     if (score >= 75) {
-      return 'green';
+      return "green";
     } else if (score >= 50) {
-      return 'orange';
+      return "orange";
     } else if (score >= 25) {
-      return 'yellow';
+      return "yellow";
     } else {
-      return 'red';
+      return "red";
     }
   };
 
   render() {
     const { modal, modalData } = this.state;
-    const isDataModal = modalData && modalData['dataServices'] && modalData['dataServices'].length > 0 ? true : false;
+    const isDataModal =
+      modalData &&
+      modalData["dataServices"] &&
+      modalData["dataServices"].length > 0
+        ? true
+        : false;
     return (
       <>
         <div className="topology-view-container">
@@ -187,7 +249,11 @@ class TopologyView extends Component {
                 <li>
                   <a href="#" className="">
                     <i className="icon">
-                      <img src={images.MobileApps} alt="" style={{ maxWidth: '24px' }} />
+                      <img
+                        src={images.MobileApps}
+                        alt=""
+                        style={{ maxWidth: "24px" }}
+                      />
                     </i>
                     <span>Mobile apps</span>
                   </a>
@@ -195,7 +261,11 @@ class TopologyView extends Component {
                 <li>
                   <a href="#" className="">
                     <i className="icon">
-                      <img src={images.Applications} alt="" style={{ maxWidth: '24px' }} />
+                      <img
+                        src={images.Applications}
+                        alt=""
+                        style={{ maxWidth: "24px" }}
+                      />
                     </i>
                     <span>Applications</span>
                   </a>
@@ -203,7 +273,11 @@ class TopologyView extends Component {
                 <li>
                   <a href="#" className="">
                     <i className="icon">
-                      <img src={images.Dashboard} alt="" style={{ maxWidth: '24px' }} />
+                      <img
+                        src={images.Dashboard}
+                        alt=""
+                        style={{ maxWidth: "24px" }}
+                      />
                     </i>
                     <span>Dashboard</span>
                   </a>
@@ -211,7 +285,11 @@ class TopologyView extends Component {
                 <li>
                   <a href="#" className="">
                     <i className="icon">
-                      <img src={images.Reports} alt="" style={{ maxWidth: '24px' }} />
+                      <img
+                        src={images.Reports}
+                        alt=""
+                        style={{ maxWidth: "24px" }}
+                      />
                     </i>
                     <span>Reports</span>
                   </a>
@@ -219,7 +297,11 @@ class TopologyView extends Component {
                 <li>
                   <a href="#" className="">
                     <i className="icon">
-                      <img src={images.Query} alt="" style={{ maxWidth: '24px' }} />
+                      <img
+                        src={images.Query}
+                        alt=""
+                        style={{ maxWidth: "24px" }}
+                      />
                     </i>
                     <span>Query</span>
                   </a>
@@ -227,7 +309,11 @@ class TopologyView extends Component {
                 <li>
                   <a href="#" className="">
                     <i className="icon">
-                      <img src={images.Api} alt="" style={{ maxWidth: '24px' }} />
+                      <img
+                        src={images.Api}
+                        alt=""
+                        style={{ maxWidth: "24px" }}
+                      />
                     </i>
                     <span>API</span>
                   </a>
@@ -245,7 +331,9 @@ class TopologyView extends Component {
               </ul>
             </div>
             <div className="app-services">
-              <div className="heading" style={{ background: 'transparent' }}>App Services</div>
+              <div className="heading" style={{ background: "transparent" }}>
+                App Services
+              </div>
               <div className="app-services-container">
                 <div className="services-nav">
                   <ul>
@@ -265,10 +353,18 @@ class TopologyView extends Component {
                     <div className="sub-heading">Cluster</div>
                     <ul className="orchestration-buttons">
                       <li>
-                        <a style={{ color: '#5ca0f0', fontWeight: 'bold' }}>Load Balancer</a>
+                        <a style={{ color: "#5ca0f0", fontWeight: "bold" }}>
+                          Load Balancer
+                        </a>
                       </li>
                       <li>
-                        <a href='http://mesh.synectiks.net/' target="_blank" style={{ color: '#5ca0f0', fontWeight: 'bold' }}>Service Mesh</a>
+                        <a
+                          href="http://mesh.synectiks.net/"
+                          target="_blank"
+                          style={{ color: "#5ca0f0", fontWeight: "bold" }}
+                        >
+                          Service Mesh
+                        </a>
                       </li>
                     </ul>
                     <ul className="business-service-buttons">
@@ -280,8 +376,7 @@ class TopologyView extends Component {
                   </div>
                   <div className="contains">
                     <div className="sub-heading">Server less</div>
-                    <ul className="orchestration-buttons">
-                    </ul>
+                    <ul className="orchestration-buttons"></ul>
                     <ul className="business-service-buttons">
                       {this.renderServices("App", "ServerLess", "Business")}
                     </ul>
@@ -291,8 +386,7 @@ class TopologyView extends Component {
                   </div>
                   <div className="contains">
                     <div className="sub-heading">Cloud Managed</div>
-                    <ul className="orchestration-buttons">
-                    </ul>
+                    <ul className="orchestration-buttons"></ul>
                     <ul className="business-service-buttons">
                       {this.renderServices("App", "CloudManaged", "Business")}
                     </ul>
@@ -304,9 +398,7 @@ class TopologyView extends Component {
               </div>
             </div>
             <div className="data-services-right">
-              <div className="data-heading">
-                Data Services
-              </div>
+              <div className="data-heading">Data Services</div>
               <div className="data-services-buttons">
                 <div className="sub-heading">Clustered</div>
                 <ul className="common-service-buttons">
@@ -324,13 +416,30 @@ class TopologyView extends Component {
             </div>
           </div>
         </div>
-        <Modal isOpen={modal} toggle={this.toggle} className="modal-topology-view">
-          <ModalHeader toggle={this.toggle}>{modalData.serviceName}</ModalHeader>
-          <ModalBody style={{ height: 'calc(80vh - 50px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <Modal
+          isOpen={modal}
+          toggle={this.toggle}
+          className="modal-topology-view"
+        >
+          <ModalHeader toggle={this.toggle}>
+            {modalData.serviceName}
+          </ModalHeader>
+          <ModalBody
+            style={{
+              height: "calc(80vh - 50px)",
+              overflowY: "auto",
+              overflowX: "hidden",
+            }}
+          >
             <div className="cost-score">
               <div className="header">
-                <div className="total-cost-text">Total Cost : ${modalData.cost}</div>
-                <div className="total-cost-text">Quality Score : {modalData.avg ? modalData.avg.toFixed(2) : 0}%</div>
+                <div className="total-cost-text">
+                  Total Cost : ${modalData.cost}
+                </div>
+                <div className="total-cost-text">
+                  Quality Score : {modalData.avg ? modalData.avg.toFixed(2) : 0}
+                  %
+                </div>
               </div>
               <div className="body">
                 <div className="row">
@@ -338,7 +447,17 @@ class TopologyView extends Component {
                     <div className="content">
                       <label>Performance:</label>
                       <p>
-                        {modalData.performance ? modalData.performance.toFixed(2) : 0}% <span className={this.getClassBasedOnScore(modalData.performance ? modalData.performance.toFixed(2) : 0)}></span>
+                        {modalData.performance
+                          ? modalData.performance.toFixed(2)
+                          : 0}
+                        %{" "}
+                        <span
+                          className={this.getClassBasedOnScore(
+                            modalData.performance
+                              ? modalData.performance.toFixed(2)
+                              : 0
+                          )}
+                        ></span>
                       </p>
                     </div>
                   </div>
@@ -346,7 +465,17 @@ class TopologyView extends Component {
                     <div className="content">
                       <label>Availability:</label>
                       <p>
-                        {modalData.availability ? modalData.availability.toFixed(2) : 0}% <span className={this.getClassBasedOnScore(modalData.availability ? modalData.availability.toFixed(2) : 0)}></span>
+                        {modalData.availability
+                          ? modalData.availability.toFixed(2)
+                          : 0}
+                        %{" "}
+                        <span
+                          className={this.getClassBasedOnScore(
+                            modalData.availability
+                              ? modalData.availability.toFixed(2)
+                              : 0
+                          )}
+                        ></span>
                       </p>
                     </div>
                   </div>
@@ -354,7 +483,15 @@ class TopologyView extends Component {
                     <div className="content">
                       <label>Security:</label>
                       <p>
-                        {modalData.security ? modalData.security.toFixed(2) : 0}% <span className={this.getClassBasedOnScore(modalData.security ? modalData.security.toFixed(2) : 0)}></span>
+                        {modalData.security ? modalData.security.toFixed(2) : 0}
+                        %{" "}
+                        <span
+                          className={this.getClassBasedOnScore(
+                            modalData.security
+                              ? modalData.security.toFixed(2)
+                              : 0
+                          )}
+                        ></span>
                       </p>
                     </div>
                   </div>
@@ -364,7 +501,15 @@ class TopologyView extends Component {
                     <div className="content">
                       <label>End Usage:</label>
                       <p>
-                        {modalData.endusage ? modalData.endusage.toFixed(2) : 0}% <span className={this.getClassBasedOnScore(modalData.endusage ? modalData.endusage.toFixed(2) : 0)}></span>
+                        {modalData.endusage ? modalData.endusage.toFixed(2) : 0}
+                        %{" "}
+                        <span
+                          className={this.getClassBasedOnScore(
+                            modalData.endusage
+                              ? modalData.endusage.toFixed(2)
+                              : 0
+                          )}
+                        ></span>
                       </p>
                     </div>
                   </div>
@@ -372,7 +517,17 @@ class TopologyView extends Component {
                     <div className="content">
                       <label>Compliance:</label>
                       <p>
-                        {modalData.compliance ? modalData.compliance.toFixed(2) : 0}% <span className={this.getClassBasedOnScore(modalData.compliance ? modalData.compliance.toFixed(2) : 0)}></span>
+                        {modalData.compliance
+                          ? modalData.compliance.toFixed(2)
+                          : 0}
+                        %{" "}
+                        <span
+                          className={this.getClassBasedOnScore(
+                            modalData.compliance
+                              ? modalData.compliance.toFixed(2)
+                              : 0
+                          )}
+                        ></span>
                       </p>
                     </div>
                   </div>
@@ -385,50 +540,54 @@ class TopologyView extends Component {
                   <div className="col-md-3">
                     <span className="first">Service Type</span>
                   </div>
-                  <div className='col-md-9'>
+                  <div className="col-md-9">
                     <div className="row">
-                      <div className='col-md-3'>
+                      <div className="col-md-3">
                         <span>Services</span>
                       </div>
-                      <div className='col-md-3'>
+                      <div className="col-md-3">
                         <span>Service Nature</span>
                       </div>
-                      <div className='col-md-3'>
+                      <div className="col-md-3">
                         <span>Location</span>
                       </div>
                       <div className="col-md-3">
-                        <span>{isDataModal ? 'DB Type' : 'App Type'}</span>
+                        <span>{isDataModal ? "DB Type" : "App Type"}</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              {
-                modalData['appServices'] && modalData['appServices'].length > 0 ?
-                  <div className="tbody">
-                    <div className="row">
-                      <div className="col-md-3">
-                        <strong>App Services</strong>
-                      </div>
-                      <div className="col-md-9">
-                        {this.renderModalData("appServices", false)}
-                      </div>
+              {modalData["appServices"] &&
+              modalData["appServices"].length > 0 ? (
+                <div className="tbody">
+                  <div className="row">
+                    <div className="col-md-3">
+                      <strong>App Services</strong>
                     </div>
-                  </div> : <></>
-              }
-              {
-                modalData['dataServices'] && modalData['dataServices'].length > 0 ?
-                  <div className="tbody">
-                    <div className="row">
-                      <div className="col-md-3">
-                        <strong>Data Services</strong>
-                      </div>
-                      <div className="col-md-9">
-                        {this.renderModalData("dataServices", true)}
-                      </div>
+                    <div className="col-md-9">
+                      {this.renderModalData("appServices", false)}
                     </div>
-                  </div> : <></>
-              }
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
+              {modalData["dataServices"] &&
+              modalData["dataServices"].length > 0 ? (
+                <div className="tbody">
+                  <div className="row">
+                    <div className="col-md-3">
+                      <strong>Data Services</strong>
+                    </div>
+                    <div className="col-md-9">
+                      {this.renderModalData("dataServices", true)}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
           </ModalBody>
         </Modal>
@@ -436,5 +595,3 @@ class TopologyView extends Component {
     );
   }
 }
-
-export default TopologyView;
