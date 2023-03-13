@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import Playlists from './Playlists';
 import ManageTab from './ManageTab';
+import DashboardIcon from "../assets/img/dashboard-icon.png";
 
 // Services & Utils
 // export interface Props {
@@ -31,7 +32,7 @@ class ManageDashboards extends Component {
           <div className="common-container border-bottom-0">
             <div className="manage-dashboard-heading">
               <div className="heading-icon">
-                <img src="/public/img/dashboard-icon.png" alt="" />
+                <img src={DashboardIcon} alt="" />
               </div>
               <div className="heading-right">
                 <h3>Dashboards</h3>
@@ -67,11 +68,11 @@ class ManageDashboards extends Component {
                 </li>
               </ul>
             </div>
-            <div className="tab-container">
+            {/* <div className="tab-container">
               {activeTab === 0 && <ManageTab />}
               {activeTab === 1 && <Playlists />}
               {activeTab === 2 && <div></div>}
-            </div>
+            </div> */}
           </div>
         </div>
       </React.Fragment>

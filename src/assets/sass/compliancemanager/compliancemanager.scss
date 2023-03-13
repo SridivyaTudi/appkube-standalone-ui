@@ -1,0 +1,18 @@
+@import "custom.scss";
+
+@import "pages/dashboard.scss";
+@import "pages/compliance.exclusions.scss";
+@import "pages/compliance.remediation.scss";
+@import "pages/compliance.rulesets.scss";
+@import "pages/compliance.policy.scss";
+@import "pages/compliance.assessment.history.scss";
+@import "pages/compliance.history.scss";
+@import "pages/gsl.builder.scss";
+@import "pages/api.gateway.scss";
+@import "pages/result.scss";
+@import "pages/clear.history.scss";
+@import "pages/script.scss";
+@import "pages/editor.gsl.builder.scss";
+
+@import "components/modal.scss";
+@import "components/wizard.scss";

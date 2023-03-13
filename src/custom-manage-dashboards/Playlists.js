@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { NewPlaylists } from './NewPlaylist';
-import { EditPlaylists } from './EditPlaylist';
+import React, {Component} from 'react';
+import  NewPlaylists  from './NewPlaylist';
+import  EditPlaylists  from './EditPlaylist';
 import { Button } from 'reactstrap';
-import { getBackendSrv } from '@grafana/runtime';
-import { ConfirmModal } from '@grafana/ui';
+//import { getBackendSrv } from '@grafana/runtime';
+//import { ConfirmModal } from '@grafana/ui';
 
-export class Playlists extends React.Component<any, any> {
-  constructor(props: any) {
+class Playlists extends Component{
+  constructor(props) {
     super(props);
     this.state = {
       openPlaylistComponent: false,
@@ -43,13 +43,13 @@ export class Playlists extends React.Component<any, any> {
   };
 
   getPlayListData = () => {
-    getBackendSrv()
-      .get('/api/playlists')
-      .then((result: any) => {
-        this.setState({
-          playlistItems: result,
-        });
-      });
+    // getBackendSrv()
+    //   .get('/api/playlists')
+    //   .then((result) => {
+    //     this.setState({
+    //       playlistItems: result,
+    //     });
+    //   });
   };
 
   displayPlayList = () => {
@@ -94,18 +94,18 @@ export class Playlists extends React.Component<any, any> {
 
   deletePlaylist = () => {
     const { deleteIndex, visibleModal } = this.state;
-    getBackendSrv()
-      .delete(`/api/playlists/${deleteIndex}`)
-      .then((res: any) => {
-        this.setState({
-          deleteIndex: '',
-          visibleModal: !visibleModal,
-        });
-        this.getPlayListData();
-      });
+    // getBackendSrv()
+    //   .delete(`/api/playlists/${deleteIndex}`)
+    //   .then((res) => {
+    //     this.setState({
+    //       deleteIndex: '',
+    //       visibleModal: !visibleModal,
+    //     });
+    //     this.getPlayListData();
+    //   });
   };
 
-  toggleModal = (index: any) => {
+  toggleModal = (index) => {
     const { visibleModal } = this.state;
     if (index) {
       this.setState({ deleteIndex: index });
@@ -115,7 +115,7 @@ export class Playlists extends React.Component<any, any> {
     });
   };
 
-  openEditPlayList = (items: any) => {
+  openEditPlayList = (items) => {
     const { openEditPlayListComponent } = this.state;
     let playlist = !openEditPlayListComponent;
     this.setState({
@@ -172,15 +172,16 @@ export class Playlists extends React.Component<any, any> {
             <NewPlaylists onClickCancel={this.onClickCancel} />
           </div>
         )}
-        <ConfirmModal
+        {/* <ConfirmModal
           isOpen={visibleModal}
           title="Delete"
           body="Are you sure you want to delete playlist ssss?"
           confirmText="Delete"
           onConfirm={this.deletePlaylist}
           onDismiss={() => this.toggleModal('')}
-        />
+        /> */}
       </div>
     );
   }
 }
+export default Playlists;

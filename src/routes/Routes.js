@@ -37,7 +37,10 @@ import ScriptEditor from '../alertmanager/pages/scriptEditor';
 import SearchAlert from '../alertmanager/pages/searchAlert';
 
 //***** Custom Manage Dashboards *****//
-// import ManageDashboards from '../custom-manage-dashboards';
+import ManageDashboards from '../custom-manage-dashboards';
+
+//***** compliancemanager *****//
+import ComplianDashboard  from '../compliancemanager/pages/dashboard';
 
 export const AllRoutes = () => {
   return (
@@ -79,7 +82,10 @@ export const AllRoutes = () => {
       <Route path="/alertmanager/pages/search-alert" element={<SearchAlert />} />
 
       {/***** Custom Manage Dashboards *****/}
-      {/* <Route path="/managedashboards" element={<ManageDashboards />} /> */}
+      <Route path="/managedashboards" element={<ManageDashboards />} />
+
+      {/***** compliancemanager *****/}
+      <Route path="/compliancemanager/pages/dashboard" element={<ComplianDashboard />} />
     </Routes>
   );
 };
