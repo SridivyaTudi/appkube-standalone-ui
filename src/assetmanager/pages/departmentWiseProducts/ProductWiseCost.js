@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { configFun } from '../../config';
-import { CommonService } from '../_common/common';
-import { Bar, Pie } from 'react-chartjs-2';
-import { RestService } from '../_service/RestService';
-import _ from 'lodash';
+import * as React from "react";
+import { configFun } from "../../config";
+import { CommonService } from "../_common/common";
+import { Bar, Pie } from "react-chartjs-2";
+import { RestService } from "../_service/RestService";
+import _ from "lodash";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,17 +14,27 @@ import {
   Legend,
   PointElement,
   LineElement,
-} from 'chart.js';
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement);
+} from "chart.js";
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement
+);
 
 const stageColors = {
-  PROD: '#52b121',
-  DEV: '#ff9900',
-  TEST: '#d84539',
-  STAGE: '#0089d6',
+  PROD: "#52b121",
+  DEV: "#ff9900",
+  TEST: "#d84539",
+  STAGE: "#0089d6",
 };
 
-class ProductWiseCost extends Component {
+class ProductWiseCost extends React.Component {
+  breadCrumbs;
   config;
   constructor(props) {
     super(props);
@@ -35,15 +45,18 @@ class ProductWiseCost extends Component {
     };
     this.breadCrumbs = [
       {
-        label: 'Home',
+        label: "Home",
         route: `/`,
       },
       {
-        label: 'Assets | Environments',
+        label: "Assets | Environments",
         isCurrentPage: true,
       },
     ];
-    // this.config = configFun(props.meta.jsonData.apiUrl, props.meta.jsonData.mainProductUrl);
+    this.config = configFun(
+      props.meta.jsonData.apiUrl,
+      props.meta.jsonData.mainProductUrl
+    );
   }
 
   componentDidMount() {
@@ -52,11 +65,17 @@ class ProductWiseCost extends Component {
 
   getDepartmentData = async () => {
     try {
-      await RestService.getData(`${this.config.GET_PRODUCT_DATA}`, null, null).then((response) => {
-        this.manipulateDepartmentWiseProductData(_.cloneDeep(response.organization.departmentList));
+      await RestService.getData(
+        `http://34.199.12.114:5057/api/department-wise-analytics/get-data`,
+        null,
+        null
+      ).then((response) => {
+        this.manipulateDepartmentWiseProductData(
+          _.cloneDeep(response.organization.departmentList)
+        );
       });
     } catch (err) {
-      console.log('Loading accounts failed. Error: ', err);
+      console.log("Loading accounts failed. Error: ", err);
     }
   };
 
@@ -73,7 +92,8 @@ class ProductWiseCost extends Component {
         const environments = product.deploymentEnvironmentList;
         if (environments) {
           environments.forEach((environent) => {
-            stageWiseCost[environent.name] = stageWiseCost[environent.name] || 0;
+            stageWiseCost[environent.name] =
+              stageWiseCost[environent.name] || 0;
             const serviceCategoryList = environent.serviceCategoryList;
             if (serviceCategoryList) {
               serviceCategoryList.forEach((category) => {
@@ -87,7 +107,8 @@ class ProductWiseCost extends Component {
                         if (serviceList) {
                           serviceList.forEach((service) => {
                             productCost += service.serviceBilling.amount;
-                            stageWiseCost[environent.name] += service.serviceBilling.amount;
+                            stageWiseCost[environent.name] +=
+                              service.serviceBilling.amount;
                             totalCost += service.serviceBilling.amount;
                           });
                         }
@@ -97,7 +118,8 @@ class ProductWiseCost extends Component {
                 }
               });
             }
-            stageWiseCost[environent.name] = stageWiseCost[environent.name].toFixed(2);
+            stageWiseCost[environent.name] =
+              stageWiseCost[environent.name].toFixed(2);
           });
         }
         data[product.name] = {
@@ -133,12 +155,17 @@ class ProductWiseCost extends Component {
       const testPerc = this.calculatePerc(productCost, stageWiseCost.TEST);
       const stagePerc = this.calculatePerc(productCost, stageWiseCost.STAGE);
       const tempData = {
-        title: 'Human Resource',
+        title: "Human Resource",
         totalCost: productCost,
         costPercentage: `${costPerc}%`,
         labels: [`PROD`, `DEV`, `STAGE`, `TEST`],
         data: [prodPerc, devPerc, stagePerc, testPerc],
-        backgroundColor: [stageColors.PROD, stageColors.DEV, stageColors.STAGE, stageColors.TEST],
+        backgroundColor: [
+          stageColors.PROD,
+          stageColors.DEV,
+          stageColors.STAGE,
+          stageColors.TEST,
+        ],
         productionCost: stageWiseCost.PROD,
         developmentCost: stageWiseCost.DEV,
         stageCost: stageWiseCost.STAGE,
@@ -160,7 +187,8 @@ class ProductWiseCost extends Component {
           <div className="chart-box">
             <h3>{productName}</h3>
             <div className="total-cost-text text-center">
-              <strong>Total Cost : ${productCost}</strong> - {tempData.costPercentage} of the total cost
+              <strong>Total Cost : ${productCost}</strong> -{" "}
+              {tempData.costPercentage} of the total cost
             </div>
             <div className="chart-bar">
               <div className="row">
@@ -174,7 +202,7 @@ class ProductWiseCost extends Component {
                         responsive: true,
                         plugins: {
                           legend: {
-                            position: 'top',
+                            position: "top",
                             display: false,
                           },
                         },
@@ -189,7 +217,7 @@ class ProductWiseCost extends Component {
                         responsive: true,
                         plugins: {
                           legend: {
-                            position: 'top',
+                            position: "top",
                             display: false,
                           },
                         },
@@ -208,25 +236,34 @@ class ProductWiseCost extends Component {
                   <div className="chart-data">
                     <ul className="chart-data-text">
                       <li>
-                        <span style={{ backgroundColor: stageColors.PROD }}></span>
+                        <span
+                          style={{ backgroundColor: stageColors.PROD }}
+                        ></span>
                         <p>
                           Production <strong>${tempData.productionCost}</strong>
                         </p>
                       </li>
                       <li>
-                        <span style={{ backgroundColor: stageColors.DEV }}></span>
+                        <span
+                          style={{ backgroundColor: stageColors.DEV }}
+                        ></span>
                         <p>
-                          Development <strong>${tempData.developmentCost}</strong>
+                          Development{" "}
+                          <strong>${tempData.developmentCost}</strong>
                         </p>
                       </li>
                       <li>
-                        <span style={{ backgroundColor: stageColors.STAGE }}></span>
+                        <span
+                          style={{ backgroundColor: stageColors.STAGE }}
+                        ></span>
                         <p>
                           Stage <strong>${tempData.stageCost}</strong>
                         </p>
                       </li>
                       <li>
-                        <span style={{ backgroundColor: stageColors.TEST }}></span>
+                        <span
+                          style={{ backgroundColor: stageColors.TEST }}
+                        ></span>
                         <p>
                           Test <strong>${tempData.testCost}</strong>
                         </p>
@@ -236,7 +273,9 @@ class ProductWiseCost extends Component {
                 </div>
               </div>
             </div>
-            <div className="last-updated-text">Last Updated: 03/28/2022 17:25</div>
+            <div className="last-updated-text">
+              Last Updated: 03/28/2022 17:25
+            </div>
           </div>
         </div>
       );
@@ -246,29 +285,42 @@ class ProductWiseCost extends Component {
 
   render() {
     const { pieView } = this.state;
-    let departmentName = CommonService.getParameterByName('department', window.location.href);
-    departmentName = departmentName ? departmentName.replace(';amp;', '&') : 'All Departments';
+    let departmentName = CommonService.getParameterByName(
+      "department",
+      window.location.href
+    );
+    departmentName = departmentName
+      ? departmentName.replace(";amp;", "&")
+      : "All Departments";
     return (
       <div className="asset-container">
         <div className="product-wise-cost-container">
           <div className="common-container border-bottom-0">
             <div
               className="services-heading"
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
             >
               Product Wise Cost
               <div className="float-right">
-                <input type="checkbox" onChange={this.handleChartViewToggle} style={{ cursor: 'pointer' }} />
+                <input
+                  type="checkbox"
+                  onChange={this.handleChartViewToggle}
+                  style={{ cursor: "pointer" }}
+                />
                 <span
                   style={{
-                    fontSize: '12px',
-                    fontWeight: '500',
-                    verticalAlign: 'middle',
-                    display: 'inline-block',
-                    paddingLeft: '5px',
+                    fontSize: "12px",
+                    fontWeight: "500",
+                    verticalAlign: "middle",
+                    display: "inline-block",
+                    paddingLeft: "5px",
                   }}
                 >
-                  {pieView ? 'Pie Chart' : 'Bar Graph'}
+                  {pieView ? "Pie Chart" : "Bar Graph"}
                 </span>
               </div>
             </div>
