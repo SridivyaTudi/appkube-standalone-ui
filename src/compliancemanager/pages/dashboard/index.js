@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 //import { Breadcrumbs } from '../../components/Breadcrumbs';
 import settingsIcon from '../../img/settings.png';
 import fileExportIcon from '../../img/file-export.png';
-import  AssessmentPopup  from './assessmentPopup';
-import  AssetssmentPopup  from './assetssmentPopup';
+import  AssessmentPopup  from './AssessmentPopup';
+import  AssetssmentPopup  from './AssetssmentPopup';
 
 class ComplianDashboard extends Component{
   breadCrumbs;

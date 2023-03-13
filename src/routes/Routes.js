@@ -41,6 +41,7 @@ import ManageDashboards from '../custom-manage-dashboards';
 
 //***** compliancemanager *****//
 import ComplianDashboard  from '../compliancemanager/pages/dashboard';
+import ComplianceRulesets from '../compliancemanager/pages/ComplianceRulesets';
 
 export const AllRoutes = () => {
   return (
@@ -86,6 +87,7 @@ export const AllRoutes = () => {
 
       {/***** compliancemanager *****/}
       <Route path="/compliancemanager/pages/dashboard" element={<ComplianDashboard />} />
+      <Route path="/compliancemanager/pages/complianceRulesets" element={<ComplianceRulesets />} />
     </Routes>
   );
 };
