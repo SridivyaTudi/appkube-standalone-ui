@@ -36,6 +36,9 @@ import AllTickets from '../alertmanager/pages/allTickets';
 import ScriptEditor from '../alertmanager/pages/scriptEditor';
 import SearchAlert from '../alertmanager/pages/searchAlert';
 
+//***** Custom Manage Dashboards *****//
+// import ManageDashboards from '../custom-manage-dashboards';
+
 export const AllRoutes = () => {
   return (
     <Routes>
@@ -63,7 +66,7 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/explore-datasource" element={<ExploreDataSourceDetail />} />
       <Route path="/assetmanager/pages/add-data-source-product" element={<AddDataSourceProduct />} />
       <Route path="/assetmanager/pages/add-data-source-inputs" element={<AddDatasourceInputs />} />
-      
+
       {/***** Alertmanager *****/}
       <Route path="/alertmanager/pages/monitor-alerts" element={<MonitorAlerts />} />
       <Route path="/alertmanager/pages/alert-rule-builder" element={<AlertRuleBuilder />} />
@@ -74,6 +77,9 @@ export const AllRoutes = () => {
       <Route path="/alertmanager/pages/all-tickets" element={<AllTickets />} />
       <Route path="/alertmanager/pages/script-editor" element={<ScriptEditor />} />
       <Route path="/alertmanager/pages/search-alert" element={<SearchAlert />} />
+
+      {/***** Custom Manage Dashboards *****/}
+      {/* <Route path="/managedashboards" element={<ManageDashboards />} /> */}
     </Routes>
   );
 };
