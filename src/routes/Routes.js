@@ -46,6 +46,7 @@ import EmsDashboard from '../emsReporting/pages/Dashboard';
 import ComplianDashboard  from '../compliancemanager/pages/dashboard';
 import ComplianceRulesets from '../compliancemanager/pages/ComplianceRulesets';
 import ComplianceRemediation from '../compliancemanager/pages/complianceRemediation';
+import CompliancePolicy from '../compliancemanager/pages/compliancePolicy';
 
 export const AllRoutes = () => {
   return (
@@ -96,6 +97,7 @@ export const AllRoutes = () => {
       <Route path="/compliancemanager/pages/dashboard" element={<ComplianDashboard />} />
       <Route path="/compliancemanager/pages/complianceRulesets" element={<ComplianceRulesets />} />
       <Route path="/compliancemanager/pages/complianceRemediation" element={<ComplianceRemediation />} />
+      <Route path="/compliancemanager/pages/compliancePolicy" element={<CompliancePolicy />} />
     </Routes>
   );
 };
