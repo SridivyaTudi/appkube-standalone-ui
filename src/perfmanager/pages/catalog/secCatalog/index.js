@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import  CompliancePolicies  from './compliancePolicies';
-import  ComplianceRules  from './complianceRules';
-import  ConainerSecurityTemplates  from './conainerSecurityTemplates';
-import  DataSecurityTemplates  from './dataSecurityTemplates';
-import  ComplianceAuditors  from './complianceAuditors';
-import  CodeSecurityTemplates  from './codeSecurityTemplets';
+import React from "react";
+import CompliancePolicies from "./compliancePolicies";
+import ComplianceRules from "./complianceRules";
+import ConainerSecurityTemplates from "./conainerSecurityTemplates";
+import DataSecurityTemplates from "./dataSecurityTemplates";
+import ComplianceAuditors from "./complianceAuditors";
+import CodeSecurityTemplates from "./codeSecurityTemplets";
 
-class SecCatalog extends Component {
+class SecCatalogue extends React.Component {
   tabMapping = [
     {
       name: "Code Security Templates",
@@ -50,17 +50,17 @@ class SecCatalog extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (JSON.stringify(prevProps.data) !== JSON.stringify(this.props.data)) {
-        this.setState({
-            catalogData: this.props.data
-        });
+      this.setState({
+        catalogData: this.props.data,
+      });
     }
-}
+  }
 
-setActiveTab = (activeTab) => {
+  setActiveTab = (activeTab) => {
     this.setState({
-        activeTab
+      activeTab,
     });
-};
+  };
 
   render() {
     const { catalogData, activeTab } = this.state;
@@ -93,4 +93,4 @@ setActiveTab = (activeTab) => {
   }
 }
 
-export default SecCatalog;
+export default SecCatalogue;
