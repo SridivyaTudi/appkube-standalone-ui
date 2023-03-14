@@ -57,6 +57,9 @@ import Result from '../compliancemanager/pages/result';
 import GslBuilder from '../compliancemanager/pages/gslBuilder';
 import EditorGslBuilder from '../compliancemanager/pages/editorGslBuilder';
 
+//***** workflow-engine *****//
+import WorkflowDashboard from '../workflow-engine/pages/dashboard';
+
 export const AllRoutes = () => {
   return (
     <Routes>
@@ -116,6 +119,10 @@ export const AllRoutes = () => {
       <Route path="/compliancemanager/pages/result" element={<Result />} />
       <Route path="/compliancemanager/pages/gslBuilder" element={<GslBuilder />} />
       <Route path="/compliancemanager/pages/editorGslBuilder" element={<EditorGslBuilder />} />
+
+       {/***** workflow-engine *****/}
+       <Route path="/workflow-engine/pages/dashboard" element={<WorkflowDashboard />} />
+
     </Routes>
   );
 };
