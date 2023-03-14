@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 // import "rc-calendar/assets/index.css";
-//import '@y0c/react-datepicker/assets/styles/calendar.scss';
+import '@y0c/react-datepicker/assets/styles/calendar.scss';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { RangeDatePicker } from '@y0c/react-datepicker';

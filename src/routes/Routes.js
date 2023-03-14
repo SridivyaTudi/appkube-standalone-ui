@@ -59,6 +59,7 @@ import EditorGslBuilder from '../compliancemanager/pages/editorGslBuilder';
 
 //***** workflow-engine *****//
 import WorkflowDashboard from '../workflow-engine/pages/dashboard';
+import CreateUsecase from '../workflow-engine/pages/createUsecase';
 
 export const AllRoutes = () => {
   return (
@@ -122,7 +123,7 @@ export const AllRoutes = () => {
 
        {/***** workflow-engine *****/}
        <Route path="/workflow-engine/pages/dashboard" element={<WorkflowDashboard />} />
-
+       <Route path="/workflow-engine/pages/createUsecase" element={<CreateUsecase />} />
     </Routes>
   );
 };

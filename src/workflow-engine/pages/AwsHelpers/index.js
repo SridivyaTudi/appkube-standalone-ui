@@ -1,24 +1,25 @@
-import React, {Component} from 'react';
-import { configFun } from '../../config';
-const AWS = require('aws-sdk');
-const StepFunctions = require('aws-sdk/clients/stepfunctions');
+import React, { Component } from "react";
+//import { configFun } from '../../config';
+//const AWS = require('aws-sdk');
+//const StepFunctions = require('aws-sdk/clients/stepfunctions');
 
 class AwsHelper extends Component {
-  config;
-  credentials;
-  dynamoDB;
-  stepFunctions;
-  lambda;
+  // config;
+  // credentials;
+  // dynamoDB;
+  // stepFunctions;
+  // lambda;
   constructor(props) {
-    this.config = configFun(props.meta.jsonData.accessKey, props.meta.jsonData.secretKey, props.meta.jsonData.region);
-    this.credentials = {
-      region: this.config.REGION,
-      accessKeyId: this.config.ACCESS_KEY_ID,
-      secretAccessKey: this.config.SECRET_KEY,
-    };
-    this.dynamoDB = new AWS.DynamoDB(this.credentials);
-    this.stepFunctions = new StepFunctions(this.credentials);
-    this.lambda = new AWS.Lambda(this.credentials);
+    super(props);
+    // this.config = configFun(props.meta.jsonData.accessKey, props.meta.jsonData.secretKey, props.meta.jsonData.region);
+    // this.credentials = {
+    //   region: this.config.REGION,
+    //   accessKeyId: this.config.ACCESS_KEY_ID,
+    //   secretAccessKey: this.config.SECRET_KEY,
+    // };
+    //this.dynamoDB = new AWS.DynamoDB(this.credentials);
+    //this.stepFunctions = new StepFunctions(this.credentials);
+    //this.lambda = new AWS.Lambda(this.credentials);
   }
 
   gettingMachineDef = (machineArn, onDone, onError) => {
@@ -37,7 +38,7 @@ class AwsHelper extends Component {
   // second table name =usecase_arn
   usecaseInputToDynamoDb(useCaseName, stepInput, onDone) {
     var paramsForDb = {
-      TableName: 'usecase_input',
+      TableName: "usecase_input",
       Item: {
         usecaseName: { S: useCaseName },
         stepInput: { S: stepInput },
@@ -46,46 +47,46 @@ class AwsHelper extends Component {
 
     this.dynamoDB.putItem(paramsForDb, function (err, data) {
       if (err) {
-        console.error('Unable to write data: ', JSON.stringify(err, null, 2));
+        console.error("Unable to write data: ", JSON.stringify(err, null, 2));
       } else {
-        console.log('Put Input succeeded');
-        onDone('Workflow Updated Successfully');
+        console.log("Put Input succeeded");
+        onDone("Workflow Updated Successfully");
       }
     });
   }
 
   getUsecaseInputData(useCaseName, onDone, onError) {
     var pgParams = {
-      FunctionName: 'stepFunction_with_psql_get_input' /* required */,
+      FunctionName: "stepFunction_with_psql_get_input" /* required */,
     };
 
-    this.lambda.invoke(pgParams, function (err, data) {
-      if (err) console.log(err, err.stack);
-      else {
-        // an error occurred
-        onError(err);
-        // console.log("Got usecase inputlist", data.Payload);
+    // this.lambda.invoke(pgParams, function (err, data) {
+    //   if (err) console.log(err, err.stack);
+    //   else {
+    //     // an error occurred
+    //     onError(err);
+    //     // console.log("Got usecase inputlist", data.Payload);
 
-        JSON.parse(data.Payload).forEach((e) => {
-          if (e.usecasename) {
-            let usecase = {
-              stepinput: e.stepinput,
-              usecaseName: e.usecasename,
-            };
-            if (usecase.usecaseName == useCaseName) {
-              onDone(usecase);
-            }
-          } else if (e.usecaseName) {
-            onDone(e);
-          }
-          // if (e.usecasename === useCaseName) {
-          //   onDone(e);
-          //   // ;
-          // }
-          // });
-        }); // successful response
-      }
-    });
+    //     JSON.parse(data.Payload).forEach((e) => {
+    //       if (e.usecasename) {
+    //         let usecase = {
+    //           stepinput: e.stepinput,
+    //           usecaseName: e.usecasename,
+    //         };
+    //         if (usecase.usecaseName == useCaseName) {
+    //           onDone(usecase);
+    //         }
+    //       } else if (e.usecaseName) {
+    //         onDone(e);
+    //       }
+    //       // if (e.usecasename === useCaseName) {
+    //       //   onDone(e);
+    //       //   // ;
+    //       // }
+    //       // });
+    //     }); // successful response
+    //   }
+    // });
   }
 
   // getUsecaseInputData(useCaseName, onDone, onError) {
@@ -124,35 +125,35 @@ class AwsHelper extends Component {
 
   getUsecaseList(onDone, onError) {
     var pgParams = {
-      FunctionName: 'stepFunction_with_psql_get_input' /* required */,
+      FunctionName: "stepFunction_with_psql_get_input" /* required */,
     };
 
-    this.lambda.invoke(pgParams, function (err, data) {
-      if (err) {
-        onError(err);
-        console.log(err, err.stack);
-      } else {
-        // an error occurred
-        onDone(JSON.parse(data.Payload));
-      }
-      // JSON.parse(data.Payload).forEach(e:any => {
-      //     if (e.usecasename === useCaseName) {
-      //         setStepInput(JSON.stringify(e.stepinput));
-      //     }
+    // this.lambda.invoke(pgParams, function (err, data) {
+    //   if (err) {
+    //     onError(err);
+    //     console.log(err, err.stack);
+    //   } else {
+    //     // an error occurred
+    //     onDone(JSON.parse(data.Payload));
+    //   }
+    //   // JSON.parse(data.Payload).forEach(e:any => {
+    //   //     if (e.usecasename === useCaseName) {
+    //   //         setStepInput(JSON.stringify(e.stepinput));
+    //   //     }
 
-      //         if (err) console.log(err, err.stack); // an error occurred
-      //         else {
-      //             console.log("Got usecase inputlist", data.Payload);
-      // console.log(data)
-      //             // JSON.parse(data.Payload).forEach(e:any => {
-      //             //     if (e.usecasename === useCaseName) {
-      //             //         setStepInput(JSON.stringify(e.stepinput));
-      //             //     }
+    //   //         if (err) console.log(err, err.stack); // an error occurred
+    //   //         else {
+    //   //             console.log("Got usecase inputlist", data.Payload);
+    //   // console.log(data)
+    //   //             // JSON.parse(data.Payload).forEach(e:any => {
+    //   //             //     if (e.usecasename === useCaseName) {
+    //   //             //         setStepInput(JSON.stringify(e.stepinput));
+    //   //             //     }
 
-      //             // });
+    //   //             // });
 
-      //         };           // successful response
-    });
+    //   //         };           // successful response
+    // });
   }
 
   //  getUsecaseList( onDone, onError) {
@@ -183,42 +184,49 @@ class AwsHelper extends Component {
     };
 
     var pgParams1 = {
-      FunctionName: 'stepFunction_with_psql_usecase_whole_update' /* required */,
+      FunctionName:
+        "stepFunction_with_psql_usecase_whole_update" /* required */,
       Payload: JSON.stringify(inputForpg),
     };
-    this.lambda.invoke(pgParams1, (err, data) => {
-      if (err) {
-        onError(err);
-      } // an error occurred
-      else {
-        data.message = 'Update Usecase Success';
-        onDone(data);
-      } // successful response
-    });
+    // this.lambda.invoke(pgParams1, (err, data) => {
+    //   if (err) {
+    //     onError(err);
+    //   } // an error occurred
+    //   else {
+    //     data.message = "Update Usecase Success";
+    //     onDone(data);
+    //   } // successful response
+    // });
   }
 
   getExecutionHistory = (executionArn, onDone, onError) => {
-    this.stepFunctions.getExecutionHistory({ executionArn }, function (err, data) {
-      if (err) {
-        console.log(err, err.stack); // an error occurred
-        onError(err);
-      } else {
-        const executedStateArray = [];
-        data.events.forEach((e) => {
-          if (e.type === 'TaskStateEntered' || e.type === 'PassStateEntered') {
-            executedStateArray.push(e.stateEnteredEventDetails.name);
-          }
-        });
-        onDone(executedStateArray);
-      } // successful response
-    });
+    this.stepFunctions.getExecutionHistory(
+      { executionArn },
+      function (err, data) {
+        if (err) {
+          console.log(err, err.stack); // an error occurred
+          onError(err);
+        } else {
+          const executedStateArray = [];
+          data.events.forEach((e) => {
+            if (
+              e.type === "TaskStateEntered" ||
+              e.type === "PassStateEntered"
+            ) {
+              executedStateArray.push(e.stateEnteredEventDetails.name);
+            }
+          });
+          onDone(executedStateArray);
+        } // successful response
+      }
+    );
   };
 
   executeStateMachine(executionData, onDone) {
     // delete params.usecaseName;
     const params = {
       stateMachineArn: executionData.stateMachineArn,
-      input: '[]',
+      input: "[]",
     };
     this.stepFunctions.startExecution(params, (err, data) => {
       if (err) {
@@ -231,9 +239,17 @@ class AwsHelper extends Component {
         // };
       } else {
         // usecaseArnToDynamoDb(data.executionArn);
-        this.usecaseArnToDb(data.executionArn, executionData.usecaseName, () => {
-          this.addJsonOnExecution(executionData.usecaseName, executionData.input, onDone);
-        });
+        this.usecaseArnToDb(
+          data.executionArn,
+          executionData.usecaseName,
+          () => {
+            this.addJsonOnExecution(
+              executionData.usecaseName,
+              executionData.input,
+              onDone
+            );
+          }
+        );
         // const response = {
         // 	statusCode: 200,
         // 	body: JSON.stringify({
@@ -251,18 +267,18 @@ class AwsHelper extends Component {
     };
 
     var pgParams = {
-      FunctionName: 'stepFunction_with_psql' /* required */,
+      FunctionName: "stepFunction_with_psql" /* required */,
       Payload: JSON.stringify(inputForpg),
     };
 
-    this.lambda.invoke(pgParams, function (err, data) {
-      if (err) {
-        console.log(err, err.stack); // an error occurred
-      } else {
-        // console.log('from pg', data); // successful response
-        onDone();
-      }
-    });
+    // this.lambda.invoke(pgParams, function (err, data) {
+    //   if (err) {
+    //     console.log(err, err.stack); // an error occurred
+    //   } else {
+    //     // console.log('from pg', data); // successful response
+    //     onDone();
+    //   }
+    // });
 
     // var pgParams1 = {
 
@@ -278,29 +294,29 @@ class AwsHelper extends Component {
   }
 
   updateStageToDB(params, onError, onDone) {
-    if (params.usecaseName == '') {
-      console.log('Please, give an usecase name');
+    if (params.usecaseName == "") {
+      console.log("Please, give an usecase name");
     } else {
       let inputForpg = {
         stepInput: params.stepinput,
         usecaseName: params.usecaseName,
       };
       var pgParams1 = {
-        FunctionName: 'stepFunction_with_psql_usecase_input' /* required */,
+        FunctionName: "stepFunction_with_psql_usecase_input" /* required */,
         Payload: JSON.stringify(inputForpg),
       };
-      this.lambda.invoke(pgParams1, function (err, data) {
-        if (err) {
-          onError(err);
-          console.error(err, err.stack);
-        }
-        // an error occurred
-        else {
-          data.message = 'Update Usecase Stage Successful';
-          onDone(data);
-          // console.log('from pg', data)
-        } // successful response
-      });
+      // this.lambda.invoke(pgParams1, function (err, data) {
+      //   if (err) {
+      //     onError(err);
+      //     console.error(err, err.stack);
+      //   }
+      //   // an error occurred
+      //   else {
+      //     data.message = "Update Usecase Stage Successful";
+      //     onDone(data);
+      //     // console.log('from pg', data)
+      //   } // successful response
+      // });
 
       // getUsecaseInputData();
     }
@@ -312,19 +328,19 @@ class AwsHelper extends Component {
       usecaseName: usecaseName,
     };
     var pgParams1 = {
-      FunctionName: 'stepFunction_with_psql_usecase_input' /* required */,
+      FunctionName: "stepFunction_with_psql_usecase_input" /* required */,
       Payload: JSON.stringify(inputForpg),
     };
-    this.lambda.invoke(pgParams1, function (err, data) {
-      let message = 'Workflow Created Successfully';
-      if (err) {
-        console.log(err, err.stack); // an error occurred
-      } else {
-        data.message = message;
-        console.log('from pg', data); // successful response
-        onDone(data);
-      }
-    });
+    // this.lambda.invoke(pgParams1, function (err, data) {
+    //   let message = "Workflow Created Successfully";
+    //   if (err) {
+    //     console.log(err, err.stack); // an error occurred
+    //   } else {
+    //     data.message = message;
+    //     console.log("from pg", data); // successful response
+    //     onDone(data);
+    //   }
+    // });
   }
 
   // updateStageToDB(params, onError, onDone) {
