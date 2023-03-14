@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import awsLogo from '../../../assets/img/perfmanager/aws.png';
-import microsoftAzureLogo from '../../../assets/img/perfmanager/microsoftazure.png';
-import gcpLogo from '../../../assets/img/perfmanager/google-cloud.png';
-import KubernetesLogo from '../../../assets/img/perfmanager/kubernetes.png';
-import folderIcon from '../../../assets/img/perfmanager/folder.png';
-import listIcon from '../../../assets/img/perfmanager/list.png';
-import sortIcon from '../../../assets/img/perfmanager/sort.png';
-import tagIcon from '../../../assets/img/perfmanager/tag.png';
-import openFolderIcon from '../../../assets/img/perfmanager/open-folder.png';
-import { Collapse } from 'reactstrap';
-import { TopMenu } from '../catalog/topMenu';
+import React, { Component } from "react";
+import awsLogo from "../../../assets/img/perfmanager/aws.png";
+import microsoftAzureLogo from "../../../assets/img/perfmanager/microsoftazure.png";
+import gcpLogo from "../../../assets/img/perfmanager/google-cloud.png";
+import KubernetesLogo from "../../../assets/img/perfmanager/kubernetes.png";
+import folderIcon from "../../../assets/img/perfmanager/folder.png";
+import listIcon from "../../../assets/img/perfmanager/list.png";
+import sortIcon from "../../../assets/img/perfmanager/sort.png";
+import tagIcon from "../../../assets/img/perfmanager/tag.png";
+import openFolderIcon from "../../../assets/img/perfmanager/open-folder.png";
+import { Collapse } from "reactstrap";
+import TopMenu from "../catalog/topMenu";
 
 class Collection extends Component {
   constructor(props) {
@@ -17,190 +17,190 @@ class Collection extends Component {
     this.state = {
       folderArray: [
         {
-          title: 'General',
+          title: "General",
           openSubFolder: true,
           checkValueStatus: false,
           subData: [
             {
-              tableTitle: 'Amazon CloudWatch Logs',
+              tableTitle: "Amazon CloudWatch Logs",
               checkValue: false,
               attribute: [
                 {
-                  attributeName: 'AWS',
-                  backColorClass: 'aws-bg',
+                  attributeName: "AWS",
+                  backColorClass: "aws-bg",
                 },
                 {
-                  attributeName: 'Amazon',
-                  backColorClass: 'amazon-bg',
+                  attributeName: "Amazon",
+                  backColorClass: "amazon-bg",
                 },
                 {
-                  attributeName: 'Cloud Watch',
-                  backColorClass: 'cloudwatch-bg',
+                  attributeName: "Cloud Watch",
+                  backColorClass: "cloudwatch-bg",
                 },
                 {
-                  attributeName: 'Logs',
-                  backColorClass: 'logs-bg',
+                  attributeName: "Logs",
+                  backColorClass: "logs-bg",
                 },
               ],
             },
             {
-              tableTitle: 'Amazon RDS',
+              tableTitle: "Amazon RDS",
               checkValue: false,
               attribute: [
                 {
-                  attributeName: 'Cloud Watch',
-                  backColorClass: 'cloudwatch-bg',
+                  attributeName: "Cloud Watch",
+                  backColorClass: "cloudwatch-bg",
                 },
                 {
-                  attributeName: 'Monitoringartist',
-                  backColorClass: 'aws-bg',
+                  attributeName: "Monitoringartist",
+                  backColorClass: "aws-bg",
                 },
               ],
             },
             {
-              tableTitle: 'AWS VPN',
+              tableTitle: "AWS VPN",
               checkValue: false,
               attribute: [
                 {
-                  attributeName: 'Cloud Watch',
-                  backColorClass: 'cloudwatch-bg',
+                  attributeName: "Cloud Watch",
+                  backColorClass: "cloudwatch-bg",
                 },
                 {
-                  attributeName: 'Monitoringartist',
-                  backColorClass: 'aws-bg',
+                  attributeName: "Monitoringartist",
+                  backColorClass: "aws-bg",
                 },
               ],
             },
             {
-              tableTitle: 'AWS VPN Dashboard',
+              tableTitle: "AWS VPN Dashboard",
               checkValue: false,
             },
             {
-              tableTitle: 'Cloud Trial',
+              tableTitle: "Cloud Trial",
               checkValue: false,
             },
             {
-              tableTitle: 'Cloud Watch',
+              tableTitle: "Cloud Watch",
               checkValue: false,
             },
           ],
         },
         {
-          title: 'Main',
+          title: "Main",
           openSubFolder: false,
           checkValueStatus: false,
           subData: [
             {
-              tableTitle: 'Amazon CloudWatch Logs',
+              tableTitle: "Amazon CloudWatch Logs",
               checkValue: false,
               attribute: [
                 {
-                  attributeName: 'AWS',
-                  backColorClass: 'aws-bg',
+                  attributeName: "AWS",
+                  backColorClass: "aws-bg",
                 },
                 {
-                  attributeName: 'Amazon',
-                  backColorClass: 'amazon-bg',
+                  attributeName: "Amazon",
+                  backColorClass: "amazon-bg",
                 },
                 {
-                  attributeName: 'Cloud Watch',
-                  backColorClass: 'cloudwatch-bg',
+                  attributeName: "Cloud Watch",
+                  backColorClass: "cloudwatch-bg",
                 },
                 {
-                  attributeName: 'Logs',
-                  backColorClass: 'logs-bg',
+                  attributeName: "Logs",
+                  backColorClass: "logs-bg",
                 },
               ],
             },
             {
-              tableTitle: 'Amazon RDS',
+              tableTitle: "Amazon RDS",
               checkValue: false,
               attribute: [
                 {
-                  attributeName: 'Cloud Watch',
-                  backColorClass: 'cloudwatch-bg',
+                  attributeName: "Cloud Watch",
+                  backColorClass: "cloudwatch-bg",
                 },
                 {
-                  attributeName: 'Monitoringartist',
-                  backColorClass: 'aws-bg',
+                  attributeName: "Monitoringartist",
+                  backColorClass: "aws-bg",
                 },
               ],
             },
             {
-              tableTitle: 'AWS VPN',
+              tableTitle: "AWS VPN",
               checkValue: false,
               attribute: [
                 {
-                  attributeName: 'Cloud Watch',
-                  backColorClass: 'cloudwatch-bg',
+                  attributeName: "Cloud Watch",
+                  backColorClass: "cloudwatch-bg",
                 },
                 {
-                  attributeName: 'Monitoringartist',
-                  backColorClass: 'aws-bg',
+                  attributeName: "Monitoringartist",
+                  backColorClass: "aws-bg",
                 },
               ],
             },
             {
-              tableTitle: 'AWS VPN Dashboard',
+              tableTitle: "AWS VPN Dashboard",
               checkValue: false,
             },
             {
-              tableTitle: 'Cloud Trial',
+              tableTitle: "Cloud Trial",
               checkValue: false,
             },
             {
-              tableTitle: 'Cloud Watch',
+              tableTitle: "Cloud Watch",
               checkValue: false,
             },
           ],
         },
         {
-          title: 'Open',
+          title: "Open",
           openSubFolder: false,
           checkValueStatus: false,
           subData: [
             {
-              tableTitle: 'Amazon CloudWatch Logs',
+              tableTitle: "Amazon CloudWatch Logs",
               checkValue: false,
             },
             {
-              tableTitle: 'Amazon RDS',
+              tableTitle: "Amazon RDS",
               checkValue: false,
               attribute: [
                 {
-                  attributeName: 'Cloud Watch',
-                  backColorClass: 'cloudwatch-bg',
+                  attributeName: "Cloud Watch",
+                  backColorClass: "cloudwatch-bg",
                 },
                 {
-                  attributeName: 'Monitoringartist',
-                  backColorClass: 'aws-bg',
+                  attributeName: "Monitoringartist",
+                  backColorClass: "aws-bg",
                 },
               ],
             },
             {
-              tableTitle: 'AWS VPN',
+              tableTitle: "AWS VPN",
               checkValue: false,
               attribute: [
                 {
-                  attributeName: 'Cloud Watch',
-                  backColorClass: 'cloudwatch-bg',
+                  attributeName: "Cloud Watch",
+                  backColorClass: "cloudwatch-bg",
                 },
                 {
-                  attributeName: 'Monitoringartist',
-                  backColorClass: 'aws-bg',
+                  attributeName: "Monitoringartist",
+                  backColorClass: "aws-bg",
                 },
               ],
             },
             {
-              tableTitle: 'AWS VPN Dashboard',
+              tableTitle: "AWS VPN Dashboard",
               checkValue: false,
             },
             {
-              tableTitle: 'Cloud Trial',
+              tableTitle: "Cloud Trial",
               checkValue: false,
             },
             {
-              tableTitle: 'Cloud Watch',
+              tableTitle: "Cloud Watch",
               checkValue: false,
             },
           ],
@@ -223,7 +223,11 @@ class Collection extends Component {
         if (subFolders[j].attribute) {
           for (let k = 0; k < attribute.length; k++) {
             const subAtt = attribute[k];
-            subAttributeFolder.push(<div className={subAtt.backColorClass}>{subAtt.attributeName}</div>);
+            subAttributeFolder.push(
+              <div className={subAtt.backColorClass}>
+                {subAtt.attributeName}
+              </div>
+            );
           }
         }
         const subFolder = subFolders[j];
@@ -291,7 +295,8 @@ class Collection extends Component {
     let countCheckedCheckbox = 0;
     const { folderArray } = this.state;
     const parentCheckbox = folderArray[parentIndex];
-    parentCheckbox.subData[childIndex].checkValue = !parentCheckbox.subData[childIndex].checkValue;
+    parentCheckbox.subData[childIndex].checkValue =
+      !parentCheckbox.subData[childIndex].checkValue;
     for (let j = 0; j < parentCheckbox.subData.length; j++) {
       if (parentCheckbox.subData[j].checkValue == true) {
         countCheckedCheckbox++;
@@ -440,7 +445,9 @@ class Collection extends Component {
                 </div>
               </div>
             </div>
-            <div className="collection-dashboard-general">{this.openCloseManageDashboardFolder()}</div>
+            <div className="collection-dashboard-general">
+              {this.openCloseManageDashboardFolder()}
+            </div>
           </div>
         </div>
       </div>

@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { config } from '../../config';
-import folderIcon from '../../../assets/img/perfmanager/config-collapse-icon1.png';
-import fileIcon from '../../../assets/img/perfmanager/config-collapse-icon2.png';
-import collapseToggleIcon from '../../../assets/img/perfmanager/config-collapse-icon1.png';
-import { RestService } from '../_service/RestService';
-import { Collapse, UncontrolledPopover, PopoverBody } from 'reactstrap';
-import ConfirmDialog from '../../components/ConfirmDialog';
-import AlertMessage from '../../components/AlertMessage';
-import { TopMenu } from '../catalog/topMenu';
-import Rbac from '../../components/Rbac';
-// import { UnimplementedFeaturePopup } from '../../components/UnimplementedFeaturePopup';
-import ViewDashboardJsonPopup from './viewDashboardJsonPopup';
-import UnimplementedFeaturePopup from '../../components/UnimplementedFeaturePopup';
+import * as React from "react";
+import { Link } from "react-router-dom";
+import { config } from "../../config";
+import folderIcon from "./img/config-collapse-icon1.png";
+import fileIcon from "./img/config-collapse-icon2.png";
+import { RestService } from "../_service/RestService";
+import { Collapse, UncontrolledPopover, PopoverBody } from "reactstrap";
+import collapseToggleIcon from "./img/config-collapse-icon1.png";
+import ConfirmDialog from "../../components/ConfirmDialog";
+import AlertMessage from "../../components/AlertMessage";
+import TopMenu from "./../catalog/topMenu";
+import Rbac from "../../components/Rbac";
+import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
+import ViewDashboardJsonPopup from "./viewDashboardJsonPopup";
 
-class Library extends Component {
+class Library extends React.Component {
+  breadCrumbs;
   unimplementedFeatureModalRef;
   steps;
   viewDashboardJsonPopupRef;
@@ -33,11 +33,23 @@ class Library extends Component {
       object: null,
       isAlertOpen: false,
     };
-
+    this.breadCrumbs = [
+      {
+        label: "Home",
+        route: `/`,
+      },
+      {
+        label: "Manage Dashboard",
+        route: `/managedashboard`,
+      },
+      {
+        label: "Library",
+        isCurrentPage: true,
+      },
+    ];
     this.unimplementedFeatureModalRef = React.createRef();
     this.viewDashboardJsonPopupRef = React.createRef();
   }
-
   onClickUnImplementedFeature = (link) => {
     this.unimplementedFeatureModalRef.current.setLink(link);
     this.unimplementedFeatureModalRef.current.toggle();
@@ -52,15 +64,15 @@ class Library extends Component {
       isApiCalled: true,
     });
     try {
-      await RestService.getData(config.GET_LIBRARY_TREE, null, null).then((response) => {
-        // console.log("response :: ",response);
-        this.setState({
-          libData: response,
-        });
-        // console.log("Library response : ", response);
-      });
+      await fetch(`http://100.64.107.25:5050/api/listLibraryTree`).then(
+        (response) => {
+          this.setState({
+            libData: response,
+          });
+        }
+      );
     } catch (err) {
-      console.log('Loading library failed. Error: ', err);
+      console.log("Loading library failed. Error: ", err);
     }
     this.setState({
       isApiCalled: false,
@@ -79,7 +91,10 @@ class Library extends Component {
         let lib = folder[tab];
         folder = lib.items;
         retData.push(
-          <li className={length - 1 === i ? 'active' : ''} onClick={() => this._onClickTab(i)}>
+          <li
+            className={length - 1 === i ? "active" : ""}
+            onClick={() => this._onClickTab(i)}
+          >
             {lib.name}
           </li>
         );
@@ -112,7 +127,10 @@ class Library extends Component {
         retData.push(
           <tr className="">
             <td className="">
-              <div onClick={() => this._onClickItem(i, item)} className="pointer-label">
+              <div
+                onClick={() => this._onClickItem(i, item)}
+                className="pointer-label"
+              >
                 <input type="checkbox" className="checkbox" />
                 <span className="config-icon">
                   {item.isFolder && <img src={folderIcon} alt="" />}
@@ -126,40 +144,65 @@ class Library extends Component {
             <td>{item.lastModified}</td>
             <td>
               <div className="text-right">
-                <Rbac parentName={config.PARENT_NAME} childName="library-index-tbl-editbtn">
+                <Rbac
+                  parentName={config.PARENT_NAME}
+                  childName="library-index-tbl-editbtn"
+                >
                   <button className="btn btn-link">
                     <i className="fa fa-edit"></i>
                   </button>
                 </Rbac>
                 {item.isFolder && (
-                  <Rbac parentName={config.PARENT_NAME} childName="library-index-tbl-deletebtn">
-                    <button onClick={() => this.removeFolder(item)} className="btn btn-link">
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="library-index-tbl-deletebtn"
+                  >
+                    <button
+                      onClick={() => this.removeFolder(item)}
+                      className="btn btn-link"
+                    >
                       <i className="fa fa-trash"></i>
                     </button>
                   </Rbac>
                 )}
                 {!item.isFolder && (
-                  <Rbac parentName={config.PARENT_NAME} childName="library-index-tbl-deletebtn">
-                    <button onClick={() => this.removeCollector(item)} className="btn btn-link">
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="library-index-tbl-deletebtn"
+                  >
+                    <button
+                      onClick={() => this.removeCollector(item)}
+                      className="btn btn-link"
+                    >
                       <i className="fa fa-trash"></i>
                     </button>
                   </Rbac>
                 )}
-                {item.type == 'catalogue' && (
+                {item.type == "catalogue" && (
                   <>
-                    <button className="btn btn-link" id={`PopoverFocus-${item.id}`}>
+                    <button
+                      className="btn btn-link"
+                      id={`PopoverFocus-${item.id}`}
+                    >
                       <i className="fa fa-ellipsis-h"></i>
                     </button>
-                    <UncontrolledPopover trigger="legacy" placement="bottom" target={`PopoverFocus-${item.id}`}>
+                    <UncontrolledPopover
+                      trigger="legacy"
+                      placement="bottom"
+                      target={`PopoverFocus-${item.id}`}
+                    >
                       <PopoverBody>
-                        <Rbac parentName={config.PARENT_NAME} childName="allalerts-index-alerttbl-createticketbtn">
-                          <Link className=" " to={`/dashboard/import?id=${item.id}&isFolder=false&type=${item.type}`}>
+                        <Rbac
+                          parentName={config.PARENT_NAME}
+                          childName="allalerts-index-alerttbl-createticketbtn"
+                        >
+                          <Link
+                            className=" "
+                            to={`/dashboard/import?id=${item.id}&isFolder=false&type=${item.type}`}
+                          >
                             Import All Dashborads
                           </Link>
                         </Rbac>
-                        {/* <Rbac parentName={config.PARENT_NAME} childName="allalerts-index-alerttbl-silencebtn">
-                                                    <Link className=" " to="#">Silence</Link>
-                                                </Rbac> */}
                       </PopoverBody>
                     </UncontrolledPopover>
                   </>
@@ -172,7 +215,7 @@ class Library extends Component {
     } else {
       retData.push(
         <tr>
-          <td colSpan={5} style={{ textAlign: 'center' }}>
+          <td colSpan={5} style={{ textAlign: "center" }}>
             Your data is loading...
           </td>
         </tr>
@@ -214,33 +257,58 @@ class Library extends Component {
         const dashboard = dashboardList[i];
         retData.push(
           <div className="config-collapse" key={`dashboard-list-${i}`}>
-            <div className="collapse-toggle d-flex" onClick={() => this.openDashboard(i)}>
+            <div
+              className="collapse-toggle d-flex"
+              onClick={() => this.openDashboard(i)}
+            >
               <div className="collapse-Toggle-icon">
                 <img src={collapseToggleIcon} alt="" />
               </div>
               <div className="collapse-Toggle-name">{dashboard.title}</div>
-              <div className="collapse-Toggle-description">{dashboard.description}OK</div>
-              <div className="collapse-Toggle-createdBy">{dashboard.createdBy}</div>
-              <div className="collapse-Toggle-lastModified">{dashboard.lastModified}</div>
+              <div className="collapse-Toggle-description">
+                {dashboard.description}OK
+              </div>
+              <div className="collapse-Toggle-createdBy">
+                {dashboard.createdBy}
+              </div>
+              <div className="collapse-Toggle-lastModified">
+                {dashboard.lastModified}
+              </div>
               <div className="float-right collapse-Toggle-buttons">
-                <button onClick={() => this.viewDashboradJson(dashboard)} className="btn btn-link">
+                <button
+                  onClick={() => this.viewDashboradJson(dashboard)}
+                  className="btn btn-link"
+                >
                   <i className="fa fa-eye"></i>
                 </button>
                 <button className="btn btn-link">
                   <i className="fa fa-edit"></i>
                 </button>
-                <button onClick={() => this.deleteDashboard(dashboard)} className="btn btn-link">
+                <button
+                  onClick={() => this.deleteDashboard(dashboard)}
+                  className="btn btn-link"
+                >
                   <i className="fa fa-trash"></i>
                 </button>
                 {/* <Link to={`/dashboard/import?id=${dashboard.id}&isFolder=false`} className="btn btn-link popover-link" id="PopoverFocus">
                                     <i className="fa fa-ellipsis-h"></i>
                                 </Link> */}
-                <button className="btn btn-link" id={`PopoverFocus-${dashboard.id}`}>
+                <button
+                  className="btn btn-link"
+                  id={`PopoverFocus-${dashboard.id}`}
+                >
                   <i className="fa fa-ellipsis-h"></i>
                 </button>
-                <UncontrolledPopover trigger="legacy" placement="bottom" target={`PopoverFocus-${dashboard.id}`}>
+                <UncontrolledPopover
+                  trigger="legacy"
+                  placement="bottom"
+                  target={`PopoverFocus-${dashboard.id}`}
+                >
                   <PopoverBody>
-                    <Rbac parentName={config.PARENT_NAME} childName="allalerts-index-alerttbl-createticketbtn">
+                    <Rbac
+                      parentName={config.PARENT_NAME}
+                      childName="allalerts-index-alerttbl-createticketbtn"
+                    >
                       <Link
                         className=" "
                         to={`/dashboard/import?id=${dashboard.id}&isFolder=false&type=${dashboard.type}`}
@@ -248,8 +316,17 @@ class Library extends Component {
                         Import Dashborad
                       </Link>
                     </Rbac>
-                    <Rbac parentName={config.PARENT_NAME} childName="allalerts-index-alerttbl-silencebtn">
-                      <Link className=" " onClick={() => this.updateDashbordMonitorFlag(dashboard.id)} to="#">
+                    <Rbac
+                      parentName={config.PARENT_NAME}
+                      childName="allalerts-index-alerttbl-silencebtn"
+                    >
+                      <Link
+                        className=" "
+                        onClick={() =>
+                          this.updateDashbordMonitorFlag(dashboard.id)
+                        }
+                        to="#"
+                      >
                         Select For Monitring
                       </Link>
                     </Rbac>
@@ -268,23 +345,28 @@ class Library extends Component {
     }
     return retData;
   };
-
   updateDashbordMonitorFlag = async (id) => {
-    await fetch(config.UPDATE_DASHBOARD_MONITOR_FLAG_URL + '?id=' + id + '&monitorFlag=yes', {
-      method: 'put',
-    })
+    await fetch(
+      config.UPDATE_DASHBOARD_MONITOR_FLAG_URL +
+        "?id=" +
+        id +
+        "&monitorFlag=yes",
+      {
+        method: "put",
+      }
+    )
       .then((response) => response.json())
       .then((response) => {
-        console.log('response: ', response);
+        console.log("response: ", response);
         if (response != null) {
-          console.log('ok');
+          console.log("ok");
           this.setState({
             severity: config.SEVERITY_SUCCESS,
             message: config.UPDATE_DASHBOARD_MONITOR_FLAG,
             isAlertOpen: true,
           });
         } else {
-          console.log('Not ok');
+          console.log("Not ok");
           this.setState({
             severity: config.SEVERITY_ERROR,
             message: config.SERVER_ERROR_MESSAGE,
@@ -298,7 +380,6 @@ class Library extends Component {
         }, 3000);
       });
   };
-
   openDashboard = (index) => {
     let { dashboardList } = this.state;
     dashboardList[index].open = !dashboardList[index].open;
@@ -308,43 +389,39 @@ class Library extends Component {
   };
 
   deleteDashboard = (dashboard) => {
-    console.log('Dashborad=' + dashboard.id);
+    console.log("Dashborad=" + dashboard.id);
     this.setState({
-      confirmTitleMessage: 'Delete Dashboard',
-      message: 'Are you sure, you want to delete the dashboard?',
+      confirmTitleMessage: "Delete Dashboard",
+      message: "Are you sure, you want to delete the dashboard?",
       isConfirmDialogOpen: true,
-      objectType: 'dashboard',
+      objectType: "dashboard",
       object: dashboard,
     });
   };
-
   viewDashboradJson = (dashboard) => {
-    console.log('Dashborad=' + JSON.stringify(dashboard));
+    console.log("Dashborad=" + JSON.stringify(dashboard));
     this.viewDashboardJsonPopupRef.current.toggle(JSON.stringify(dashboard));
   };
-
   removeCollector = (collector) => {
-    console.log('Parent id : ', collector.parentId);
+    console.log("Parent id : ", collector.parentId);
     this.setState({
-      confirmTitleMessage: 'Remove Collector',
-      message: 'Are you sure, you want to remove the collector?',
+      confirmTitleMessage: "Remove Collector",
+      message: "Are you sure, you want to remove the collector?",
       isConfirmDialogOpen: true,
-      objectType: 'collector',
+      objectType: "collector",
       object: collector,
     });
   };
-
   removeFolder = (folder) => {
-    console.log('library id : ', folder.id);
+    console.log("library id : ", folder.id);
     this.setState({
-      confirmTitleMessage: 'Remove Folder',
-      message: 'Are you sure, you want to Remove Folder?',
+      confirmTitleMessage: "Remove Folder",
+      message: "Are you sure, you want to Remove Folder?",
       isConfirmDialogOpen: true,
-      objectType: 'folder',
+      objectType: "folder",
       object: folder,
     });
   };
-
   handleCloseConfirmDialog = () => {
     this.setState({
       isConfirmDialogOpen: false,
@@ -352,18 +429,25 @@ class Library extends Component {
   };
 
   handleConfirmDelete = (objectType, object) => {
-    console.log('Deleting.... objectType : ' + objectType + ', objectId : ' + object.id);
+    console.log(
+      "Deleting.... objectType : " + objectType + ", objectId : " + object.id
+    );
     let url = null;
-    if (objectType === 'dashboard') {
+    if (objectType === "dashboard") {
       url = config.DELETE_DASHBOARD + `/` + object.id;
     }
-    if (objectType === 'collector') {
-      url = config.REMOVE_COLLECTOR + `?collectorId=` + object.id + `&folderId=` + object.parentId;
-      console.log('url=' + url);
+    if (objectType === "collector") {
+      url =
+        config.REMOVE_COLLECTOR +
+        `?collectorId=` +
+        object.id +
+        `&folderId=` +
+        object.parentId;
+      console.log("url=" + url);
     }
-    if (objectType === 'folder') {
+    if (objectType === "folder") {
       url = config.REMOVE_FOLDER + `/` + object.id;
-      console.log('url=', url);
+      console.log("url=", url);
     }
     this.callDeleteApi(url);
     this.setState({
@@ -374,18 +458,19 @@ class Library extends Component {
   async callDeleteApi(url) {
     await RestService.deleteObject(url)
       .then((response) => {
-        console.log('Delete Response : ', response);
+        console.log("Delete Response : ", response);
         this.setState({
           severity: config.SEVERITY_SUCCESS,
-          message: 'Data deleted successfully',
+          message: "Data deleted successfully",
           isAlertOpen: true,
         });
       })
       .catch((error) => {
-        console.log('Deletion error', error);
+        console.log("Deletion error", error);
         this.setState({
           severity: config.SEVERITY_ERROR,
-          message: 'Data could not be deleted. Please check the service logs for details',
+          message:
+            "Data could not be deleted. Please check the service logs for details",
           isAlertOpen: true,
         });
       });
@@ -427,14 +512,24 @@ class Library extends Component {
               </div>
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="float-right">
-                  <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn">
-                    <a className="blue-button m-r-5 add-folder" onClick={() => this.onClickUnImplementedFeature('')}>
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="library-index-addfolderbtn"
+                  >
+                    <a
+                      className="blue-button m-r-5 add-folder"
+                      onClick={() => this.onClickUnImplementedFeature("")}
+                    >
                       Add Folder
                     </a>
                   </Rbac>
                   <div className="form-group search-control-group">
                     <form>
-                      <input type="text" className="input-group-text" placeholder="Search" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder="Search"
+                      />
                       <button>
                         <i className="fa fa-search"></i>
                       </button>
@@ -486,4 +581,5 @@ class Library extends Component {
     );
   }
 }
+
 export default Library;

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { config } from '../../config';
-import { Collapse } from 'reactstrap';
-import { TopMenu } from '../catalog/topMenu';
-import Rbac from '../../components/Rbac';
-import UnimplementedFeaturePopup from '../../components/UnimplementedFeaturePopup';
+import React, { Component } from "react";
+import { config } from "../../config";
+import { Collapse } from "reactstrap";
+import TopMenu from "../catalog/topMenu";
+import Rbac from "../../components/Rbac";
+import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 
 class CollectionView extends Component {
   unimplementedFeatureModalRef;
@@ -12,48 +12,48 @@ class CollectionView extends Component {
     this.state = {
       collectionArray: [
         {
-          name: 'AWS',
-          type: 'Hosted',
-          messages: '1293',
+          name: "AWS",
+          type: "Hosted",
+          messages: "1293",
           openCollectionStatus: false,
           subCollectionData: [
             {
-              subCollectionName: 'AWS Config',
-              subCollectionType: 'Hosted',
-              subCollectionCategory: 'aws/cloudconfig',
-              subCollectionMessages: '',
+              subCollectionName: "AWS Config",
+              subCollectionType: "Hosted",
+              subCollectionCategory: "aws/cloudconfig",
+              subCollectionMessages: "",
             },
             {
-              subCollectionName: 'Amazon ECS',
-              subCollectionType: 'Hosted',
-              subCollectionCategory: 'aws/ecs',
-              subCollectionMessages: '',
+              subCollectionName: "Amazon ECS",
+              subCollectionType: "Hosted",
+              subCollectionCategory: "aws/ecs",
+              subCollectionMessages: "",
             },
             {
-              subCollectionName: 'AWS Cloud Trail',
-              subCollectionType: 'Hosted',
-              subCollectionCategory: 'AWS Cloud Trail',
-              subCollectionMessages: '',
+              subCollectionName: "AWS Cloud Trail",
+              subCollectionType: "Hosted",
+              subCollectionCategory: "AWS Cloud Trail",
+              subCollectionMessages: "",
             },
           ],
         },
         {
-          name: 'Admin Linux',
-          type: 'Installed',
-          messages: '71',
+          name: "Admin Linux",
+          type: "Installed",
+          messages: "71",
           openCollectionStatus: false,
           subCollectionData: [
             {
-              subCollectionName: 'AWS Config',
-              subCollectionType: 'Hosted',
-              subCollectionCategory: 'aws/Linux',
-              subCollectionMessages: '',
+              subCollectionName: "AWS Config",
+              subCollectionType: "Hosted",
+              subCollectionCategory: "aws/Linux",
+              subCollectionMessages: "",
             },
           ],
         },
       ],
     };
-    
+
     this.unimplementedFeatureModalRef = React.createRef();
   }
   onClickUnImplementedFeature = (link) => {
@@ -72,27 +72,54 @@ class CollectionView extends Component {
         const collectionsubData = subCollections[j];
         subCollectionJSX.push(
           <div className="tbody">
-            <div className="tbody-td first">{collectionsubData.subCollectionName}</div>
-            <div className="tbody-td">{collectionsubData.subCollectionType}</div>
+            <div className="tbody-td first">
+              {collectionsubData.subCollectionName}
+            </div>
+            <div className="tbody-td">
+              {collectionsubData.subCollectionType}
+            </div>
             <div className="tbody-td">
               <div className="status-icon"></div>
             </div>
-            <div className="tbody-td">{collectionsubData.subCollectionCategory}</div>
-            <div className="tbody-td">{collectionsubData.subCollectionMessages}</div>
+            <div className="tbody-td">
+              {collectionsubData.subCollectionCategory}
+            </div>
+            <div className="tbody-td">
+              {collectionsubData.subCollectionMessages}
+            </div>
             <div className="tbody-td">
               <div className="d-flex">
-                <div className="enabled" onClick={() => this.onClickUnImplementedFeature('')}></div>
-                <Rbac parentName={config.PARENT_NAME} childName="collectionview-index-collectiontbl-edtbtn">
-                  <button className="btn btn-link" onClick={() => this.onClickUnImplementedFeature('')}>
+                <div
+                  className="enabled"
+                  onClick={() => this.onClickUnImplementedFeature("")}
+                ></div>
+                <Rbac
+                  parentName={config.PARENT_NAME}
+                  childName="collectionview-index-collectiontbl-edtbtn"
+                >
+                  <button
+                    className="btn btn-link"
+                    onClick={() => this.onClickUnImplementedFeature("")}
+                  >
                     <i className="fa fa-edit"></i>
                   </button>
                 </Rbac>
-                <Rbac parentName={config.PARENT_NAME} childName="collectionview-index-collectiontbl-deletebtn">
-                  <button className="btn btn-link" onClick={() => this.onClickUnImplementedFeature('')}>
+                <Rbac
+                  parentName={config.PARENT_NAME}
+                  childName="collectionview-index-collectiontbl-deletebtn"
+                >
+                  <button
+                    className="btn btn-link"
+                    onClick={() => this.onClickUnImplementedFeature("")}
+                  >
                     <i className="fa fa-trash"></i>
                   </button>
                 </Rbac>
-                <button className="btn btn-link" id="PopoverFocus" onClick={() => this.onClickUnImplementedFeature('')}>
+                <button
+                  className="btn btn-link"
+                  id="PopoverFocus"
+                  onClick={() => this.onClickUnImplementedFeature("")}
+                >
                   <i className="fa fa-ellipsis-h"></i>
                 </button>
               </div>
@@ -105,10 +132,16 @@ class CollectionView extends Component {
           <div className="tbody-inner">
             <div className="tbody-td">
               {collection.openCollectionStatus == false && (
-                <div onClick={() => this.opensubCollection(i)} className="caret-right"></div>
+                <div
+                  onClick={() => this.opensubCollection(i)}
+                  className="caret-right"
+                ></div>
               )}
               {collection.openCollectionStatus == true && (
-                <div onClick={() => this.opensubCollection(i)} className="caret-down"></div>
+                <div
+                  onClick={() => this.opensubCollection(i)}
+                  className="caret-down"
+                ></div>
               )}
               {collection.name} <b>({subCollections.length})</b>
             </div>
@@ -120,26 +153,47 @@ class CollectionView extends Component {
             <div className="tbody-td">{collection.messages}</div>
             <div className="tbody-td">
               <div className="d-flex">
-                <Rbac parentName={config.PARENT_NAME} childName="collectionview-index-collectiontbl-plusbtn">
-                  <button className="btn btn-link" onClick={() => this.onClickUnImplementedFeature('')}>
+                <Rbac
+                  parentName={config.PARENT_NAME}
+                  childName="collectionview-index-collectiontbl-plusbtn"
+                >
+                  <button
+                    className="btn btn-link"
+                    onClick={() => this.onClickUnImplementedFeature("")}
+                  >
                     <i className="fa fa-plus"></i>
                   </button>
                 </Rbac>
-                <Rbac parentName={config.PARENT_NAME} childName="collectionview-index-collectiontbl-edtbtn">
-                  <button className="btn btn-link" onClick={() => this.onClickUnImplementedFeature('')}>
+                <Rbac
+                  parentName={config.PARENT_NAME}
+                  childName="collectionview-index-collectiontbl-edtbtn"
+                >
+                  <button
+                    className="btn btn-link"
+                    onClick={() => this.onClickUnImplementedFeature("")}
+                  >
                     <i className="fa fa-edit"></i>
                   </button>
                 </Rbac>
-                <Rbac parentName={config.PARENT_NAME} childName="collectionview-index-collectiontbl-edtbtn">
-                  <button className="btn btn-link" onClick={() => this.onClickUnImplementedFeature('')}>
+                <Rbac
+                  parentName={config.PARENT_NAME}
+                  childName="collectionview-index-collectiontbl-edtbtn"
+                >
+                  <button
+                    className="btn btn-link"
+                    onClick={() => this.onClickUnImplementedFeature("")}
+                  >
                     <i className="fa fa-trash"></i>
                   </button>
                 </Rbac>
-                <Rbac parentName={config.PARENT_NAME} childName="collectionview-index-collectiontbl-ellipsisbtn">
+                <Rbac
+                  parentName={config.PARENT_NAME}
+                  childName="collectionview-index-collectiontbl-ellipsisbtn"
+                >
                   <button
                     className="btn btn-link"
                     id="PopoverFocus"
-                    onClick={() => this.onClickUnImplementedFeature('')}
+                    onClick={() => this.onClickUnImplementedFeature("")}
                   >
                     <i className="fa fa-ellipsis-h"></i>
                   </button>
@@ -147,7 +201,9 @@ class CollectionView extends Component {
               </div>
             </div>
           </div>
-          <Collapse isOpen={collection.openCollectionStatus}>{subCollectionJSX}</Collapse>
+          <Collapse isOpen={collection.openCollectionStatus}>
+            {subCollectionJSX}
+          </Collapse>
         </div>
       );
     }
@@ -158,7 +214,8 @@ class CollectionView extends Component {
     const { collectionArray } = this.state;
     for (let i = 0; i < collectionArray.length; i++) {
       if (i == index) {
-        collectionArray[i].openCollectionStatus = !collectionArray[i].openCollectionStatus;
+        collectionArray[i].openCollectionStatus =
+          !collectionArray[i].openCollectionStatus;
       }
     }
     this.setState({
@@ -189,7 +246,11 @@ class CollectionView extends Component {
                   </div>
                   <div className="form-group search-control-group">
                     <form>
-                      <input type="text" className="input-group-text" placeholder="Search" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder="Search"
+                      />
                       <button>
                         <i className="fa fa-search"></i>
                       </button>
