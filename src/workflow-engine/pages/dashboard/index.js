@@ -715,7 +715,7 @@ class WorkflowDashboard extends Component{
 														In Progress
 													</li>
 												</ul>
-											</div>
+											</div>z
 										</div>
 									</div>
 									<div className="project-list-content">

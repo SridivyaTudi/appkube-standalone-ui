@@ -26,14 +26,14 @@ class AwsHelper extends Component {
     const params = {
       stateMachineArn: machineArn,
     };
-    this.stepFunctions.describeStateMachine(params, function (err, data) {
-      if (err) {
-        console.log(err, err.stack); // an error occurred
-        onError(err);
-      } else {
-        onDone(JSON.parse(data.definition).States);
-      }
-    });
+    // this.stepFunctions.describeStateMachine(params, function (err, data) {
+    //   if (err) {
+    //     console.log(err, err.stack); // an error occurred
+    //     onError(err);
+    //   } else {
+    //     onDone(JSON.parse(data.definition).States);
+    //   }
+    // });
   };
   // second table name =usecase_arn
   usecaseInputToDynamoDb(useCaseName, stepInput, onDone) {

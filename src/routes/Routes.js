@@ -60,6 +60,11 @@ import EditorGslBuilder from '../compliancemanager/pages/editorGslBuilder';
 //***** workflow-engine *****//
 import WorkflowDashboard from '../workflow-engine/pages/dashboard';
 import CreateUsecase from '../workflow-engine/pages/createUsecase';
+import MatrixView from '../workflow-engine/pages/matrixView';
+import ProcurementDetail from '../workflow-engine/pages/procurement';
+import ProjectOverView from '../workflow-engine/pages/projectOverView';
+import ProjectWise from '../workflow-engine/pages/projectWise';
+import ResourceWiseViewAllTasks from '../workflow-engine/pages/resourceWiseViewAllTasks';
 
 //***** Logmanager *****//
 import LogDashboard from '../logmanager/pages/dashboard';
@@ -132,6 +137,11 @@ export const AllRoutes = () => {
       {/***** workflow-engine *****/}
       <Route path="/workflow-engine/pages/dashboard" element={<WorkflowDashboard />} />
       <Route path="/workflow-engine/pages/createUsecase" element={<CreateUsecase />} />
+      <Route path="/workflow-engine/pages/matrixView" element={<MatrixView />} />
+      <Route path="/workflow-engine/pages/procurement" element={<ProcurementDetail />} />
+      <Route path="/workflow-engine/pages/projectOverView" element={<ProjectOverView />} />
+      <Route path="/workflow-engine/pages/projectWise" element={<ProjectWise />} />
+      <Route path="/workflow-engine/pages/resourceWiseViewAllTasks" element={<ResourceWiseViewAllTasks />} />
 
       {/***** Logmanager *****/}
       <Route path="/logmanager/pages/dashboard" element={<LogDashboard />} />
