@@ -75,6 +75,12 @@ import Input from '../logmanager/pages/input';
 import ServicedeskDashboard from '../servicedesk/pages/dashboard';
 import Tickets from '../servicedesk/pages/tickets';
 import AllContacts from '../servicedesk/pages/allContacts';
+import OpenTickets from '../servicedesk/pages/openTickets';
+import AllCompanies from '../servicedesk/pages/allCompanies';
+import TicketsDetails from '../servicedesk/pages/ticketsDetails';
+import Reports from '../servicedesk/pages/reports';
+import ReportHelpdesh from '../servicedesk/pages/reportHelpdesh';
+import Charts from '../servicedesk/pages/charts';
 
 export const AllRoutes = () => {
   return (
@@ -154,6 +160,12 @@ export const AllRoutes = () => {
        <Route path="/servicedesk/pages/dashboard" element={<ServicedeskDashboard />} />
        <Route path="/servicedesk/pages/tickets" element={<Tickets />} />
        <Route path="/servicedesk/pages/allContacts" element={<AllContacts />} />
+       <Route path="/servicedesk/pages/openTickets" element={<OpenTickets />} />
+       <Route path="/servicedesk/pages/allCompanies" element={<AllCompanies />} />
+       <Route path="/servicedesk/pages/ticketsDetails" element={<TicketsDetails />} />
+       <Route path="/servicedesk/pages/reports" element={<Reports />} />
+       <Route path="/servicedesk/pages/reportHelpdesh" element={<ReportHelpdesh />} />
+       <Route path="/servicedesk/pages/charts" element={<Charts />} />
     </Routes>
   );
 };
