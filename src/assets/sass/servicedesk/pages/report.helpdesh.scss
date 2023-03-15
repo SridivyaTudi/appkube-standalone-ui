@@ -1,0 +1,91 @@
+.desk-depth-container{
+    .heading{
+        h2{
+            font-size: 18px;
+            line-height: 24px;
+            color: $desk-depth-text-color;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        span {
+            font-size: 13px;
+            line-height: 16px;
+            color: #a9b9c6;
+            font-weight: 400;
+        }
+    }
+    .filters-buttons{
+        .blue-button{
+            margin-right: 15px;
+            margin-bottom: 0;
+        }
+        .white-button{
+            padding: 0px!important;
+            font-size: 28px;
+            line-height: 34px;
+            vertical-align: top;
+            margin-right: 15px;
+            margin-bottom: 0;
+            background-color: transparent!important;
+            border: none!important;
+            &:hover{
+                background-color: transparent!important;
+            }
+            i{
+                color: $desk-depth-text-color!important;
+            }
+        }
+    }
+    .desk-box{
+        background-color: #f0f3f7;
+        box-shadow: 0px 1px 5px #00000029;
+        border-radius: 5px;
+        margin-bottom: 30px;
+        a{
+            padding: 10px;
+            padding-bottom: 20px;
+            min-height: 160px;
+        }
+        .icon{
+            font-size: 16px;
+            color: #323c47;
+            .white-button{
+                padding: 0px!important;
+                font-size: 16px;
+                line-height: 20px;
+                vertical-align: top;
+                margin-right: 0;
+                margin-bottom: 0;
+                background-color: transparent!important;
+                &:hover{
+                    background-color: transparent!important;
+                }
+                i{
+                    color: #323c47!important;
+                }
+            }
+        }
+        .number{
+            font-size: 24px;
+            line-height: 28px;
+            font-weight: 600;
+            color: #3b4859;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+        .text{
+            font-size: 20px;
+            line-height: 28px;
+            font-weight: 400;
+            color: #3b4859;
+        }
+    }
+}
+
+@media (max-width: 767px){
+    .desk-depth-container{
+        .filters-buttons{
+            text-align: left;
+        }
+    }
+}

@@ -10,7 +10,7 @@ import downloadIcon from '../../img/download-icon.png';
 // import overviewMenu6 from '../../img/projectoverview/overview-menu6.png';
 // import overviewMenu7 from '../../img/projectoverview/overview-menu7.png';
 import { Link } from 'react-router-dom';
-import  AwsHelper  from '../AwsHelpers';
+import  AwsHelper  from '../awsHelpers';
 //import { getLocationSrv } from '@grafana/runtime';
 //import AlertMessage from '../../components/AlertMessage';
 //import { UsersList, ActorList } from '../../commonDS';

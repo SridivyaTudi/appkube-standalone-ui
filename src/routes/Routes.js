@@ -66,6 +66,9 @@ import LogDashboard from '../logmanager/pages/dashboard';
 import ContentsPacks from '../logmanager/pages/contentsPacks';
 import Input from '../logmanager/pages/input';
 
+//***** Servicedesk *****//
+import ServicedeskDashboard from '../servicedesk/pages/dashboard';
+
 export const AllRoutes = () => {
   return (
     <Routes>
@@ -134,6 +137,9 @@ export const AllRoutes = () => {
       <Route path="/logmanager/pages/dashboard" element={<LogDashboard />} />
       <Route path="/logmanager/pages/contentspacks" element={<ContentsPacks />} />
       <Route path="/logmanager/pages/input" element={<Input />} />
+
+       {/***** Servicedesk *****/}
+       <Route path="/servicedesk/pages/dashboard" element={<ServicedeskDashboard />} />
     </Routes>
   );
 };
