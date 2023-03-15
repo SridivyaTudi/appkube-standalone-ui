@@ -43,7 +43,7 @@ import ManageDashboards from '../custom-manage-dashboards';
 import EmsDashboard from '../emsReporting/pages/Dashboard';
 
 //***** compliancemanager *****//
-import ComplianDashboard  from '../compliancemanager/pages/dashboard';
+import ComplianDashboard from '../compliancemanager/pages/dashboard';
 import ComplianceRulesets from '../compliancemanager/pages/ComplianceRulesets';
 import ComplianceRemediation from '../compliancemanager/pages/complianceRemediation';
 import CompliancePolicy from '../compliancemanager/pages/compliancePolicy';
@@ -60,6 +60,11 @@ import EditorGslBuilder from '../compliancemanager/pages/editorGslBuilder';
 //***** workflow-engine *****//
 import WorkflowDashboard from '../workflow-engine/pages/dashboard';
 import CreateUsecase from '../workflow-engine/pages/createUsecase';
+
+//***** Logmanager *****//
+import LogDashboard from '../logmanager/pages/dashboard';
+import ContentsPacks from '../logmanager/pages/contentsPacks';
+import Input from '../logmanager/pages/input';
 
 export const AllRoutes = () => {
   return (
@@ -121,9 +126,14 @@ export const AllRoutes = () => {
       <Route path="/compliancemanager/pages/gslBuilder" element={<GslBuilder />} />
       <Route path="/compliancemanager/pages/editorGslBuilder" element={<EditorGslBuilder />} />
 
-       {/***** workflow-engine *****/}
-       <Route path="/workflow-engine/pages/dashboard" element={<WorkflowDashboard />} />
-       <Route path="/workflow-engine/pages/createUsecase" element={<CreateUsecase />} />
+      {/***** workflow-engine *****/}
+      <Route path="/workflow-engine/pages/dashboard" element={<WorkflowDashboard />} />
+      <Route path="/workflow-engine/pages/createUsecase" element={<CreateUsecase />} />
+
+      {/***** Logmanager *****/}
+      <Route path="/logmanager/pages/dashboard" element={<LogDashboard />} />
+      <Route path="/logmanager/pages/contentspacks" element={<ContentsPacks />} />
+      <Route path="/logmanager/pages/input" element={<Input />} />
     </Routes>
   );
 };

@@ -1,0 +1,128 @@
+.streams-text{
+    h3{
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 20px;
+        margin-bottom: 3px;
+    }
+    p{
+        font-size: 12px;
+        line-height: 18px;
+        margin-bottom: 0;
+        font-weight: 400;
+    }
+}
+
+.search-control {
+    position: relative;
+    margin-bottom: 0;
+    margin-right: 15px;
+    .input-group-text {
+        max-width: 100%;
+        text-align: left;
+        padding-right: 15px;
+        padding-left: 30px;
+        width: 100%;
+        border: 1px solid #ced4da;
+        background-color: #ffffff;
+        border-radius: 3px;
+        padding-top: 0.399rem;
+    }
+    button {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        width: 34px;
+        height: 34px;
+    }
+}
+
+.table-container{
+    border: 1px solid #f5f6f5;
+    padding: 5px 5px 10px;
+    display: grid;
+    .table-container-inner{
+        overflow-x: scroll;
+        width: 100%;
+        background-color: #ffffff;
+        .table {
+            white-space: nowrap;
+            width: 1200px;
+            tr{
+                &:nth-child(odd){
+                    td{
+                        background-color: #f8f9fb;
+                    }
+                }
+                td{
+                    &:first-child{
+                        margin-right: 5px;
+                    }
+                    &:last-child{
+                        margin-left: 5px;
+                    }
+                    padding: 5px 10px;
+                    color: #323C47;
+                    font-size: 11px;
+                    line-height: 20px;
+                    font-weight: 400;
+                    h4{
+                        font-size: 14px;
+                        font-weight: 600;
+                        line-height: 18px;
+                        color: #3b7cff;
+                        margin-bottom: 5px;
+                        cursor: pointer;
+                    }
+                    p{
+                        margin-bottom: 3px;
+                    }
+                    a{
+                        color: #3b7cff;
+                    }
+                    .blue-button{
+                        font-size: 12px;
+                    }
+                    .table-btns{
+                        position: relative;
+                    }
+                    .btn-link{
+                        color: #3b7cff;
+                        padding: 0 7px;
+                        font-size: 18px; 
+                    }
+                }
+            }
+            .inner-table{
+                tr{
+                    &:nth-child(odd){
+                        td{
+                            background-color: transparent;
+                        }
+                    } 
+                    td{
+                        width: 50%;
+                    } 
+                }
+            }
+        }
+    }
+    
+}
+
+@media (max-width: 1200px){
+    .back-btn{
+        float: none;
+    }
+    .search-control{
+        margin-bottom: 10px;
+    }
+    .new-stream-btn{
+        float: none;
+        display: inline-block;
+    }
+}
