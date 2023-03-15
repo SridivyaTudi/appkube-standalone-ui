@@ -7,7 +7,7 @@ import "simplebar/dist/simplebar.min.css";
 import { Link } from "react-router-dom";
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
-import AwsHelper from "../AwsHelpers";
+import AwsHelper from "../awsHelpers";
 
 class OverView extends Component {
   createStreamRef;

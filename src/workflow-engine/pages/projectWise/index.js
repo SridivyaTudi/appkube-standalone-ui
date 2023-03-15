@@ -6,7 +6,7 @@ import 'react-circular-progressbar/dist/styles.css';
 // import SimpleBar from 'simplebar-react';
 import { Link } from 'react-router-dom';
 import 'simplebar/dist/simplebar.min.css';
-import  AwsHelper  from '../AwsHelpers';
+import  AwsHelper  from '../awsHelpers';
 
 // const stepsData = {
 // 	'requirement': {},

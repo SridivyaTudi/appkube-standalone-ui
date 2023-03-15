@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import downloadIcon from '../../img/download-icon.png';
 import WorkFlow from '../../components/workFlowCommonComponent'
 import ErrorBoundary from '../../components/errorBoundary/index'
-import  AwsHelper  from '../AwsHelpers';
+import  AwsHelper  from '../awsHelpers';
 import AssetOverViewReusableComp from '../../components/assetOverViewCommonComponent';
 
 class ProjectOverView extends Component {
