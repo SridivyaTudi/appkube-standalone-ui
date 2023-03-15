@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
-//import * as React from 'react';
-import './table.css';
+import React from "react";
+import "./table.css";
 
 const sortEnum = {
   NONE: 0,
@@ -8,7 +7,7 @@ const sortEnum = {
   DESCENDING: 2,
 };
 
-class Table extends Component {
+class Table extends React.Component {
   paginationRef;
   constructor(props) {
     super(props);
@@ -18,11 +17,11 @@ class Table extends Component {
       perPageLimit: this.props.perPageLimit,
       noOfRecordPerPage: this.props.perPageLimit,
       columns: this.props.valueFromData.columns,
-      totalPages: '',
+      totalPages: "",
       currentPage: 0,
-      searchKey: '',
+      searchKey: "",
       sortType: sortEnum.NONE,
-      sortKey: '',
+      sortKey: "",
       isAllChecked: false,
       visibleCheckbox: this.props.visiblecheckboxStatus,
       showSelect: false,
@@ -31,13 +30,17 @@ class Table extends Component {
   }
 
   tableBodyData() {
-    const { displayData, perPageLimit, currentPage, columns, visibleCheckbox } = this.state;
+    const { displayData, perPageLimit, currentPage, columns, visibleCheckbox } =
+      this.state;
     const retData = [];
     const length = displayData.length;
     const cLength = columns.length;
     if (length > 0) {
       for (let i = 0; i < length; i++) {
-        if (i >= currentPage * perPageLimit && i <= currentPage * perPageLimit + (perPageLimit - 1)) {
+        if (
+          i >= currentPage * perPageLimit &&
+          i <= currentPage * perPageLimit + (perPageLimit - 1)
+        ) {
           const tdJSX = [];
           if (visibleCheckbox === true) {
             tdJSX.push(
@@ -70,7 +73,10 @@ class Table extends Component {
             }
           }
           retData.push(
-            <tr className={`${displayData[i].checkStatus ? 'checked-row' : ''}`} key={i}>
+            <tr
+              className={`${displayData[i].checkStatus ? "checked-row" : ""}`}
+              key={i}
+            >
               {tdJSX}
             </tr>
           );
@@ -79,7 +85,7 @@ class Table extends Component {
     } else {
       retData.push(
         <tr>
-          <td colSpan={cLength} style={{ textAlign: 'center' }}>
+          <td colSpan={cLength} style={{ textAlign: "center" }}>
             There is no data
           </td>
         </tr>
@@ -93,18 +99,21 @@ class Table extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (JSON.stringify(prevProps.valueFromData) !== JSON.stringify(this.props.valueFromData)) {
+    if (
+      JSON.stringify(prevProps.valueFromData) !==
+      JSON.stringify(this.props.valueFromData)
+    ) {
       this.setState({
         data: this.props.valueFromData.data,
         displayData: this.props.valueFromData.data,
         perPageLimit: this.props.perPageLimit,
         noOfRecordPerPage: this.props.perPageLimit,
         columns: this.props.valueFromData.columns,
-        totalPages: '',
+        totalPages: "",
         currentPage: 0,
-        searchKey: '',
+        searchKey: "",
         sortType: sortEnum.NONE,
-        sortKey: '',
+        sortKey: "",
         isAllChecked: false,
         visibleCheckbox: this.props.visiblecheckboxStatus,
         showSelect: false,
@@ -122,25 +131,31 @@ class Table extends Component {
   }
 
   tableHeader() {
-    const { sortType, sortKey, columns, visibleCheckbox, displayData } = this.state;
+    const { sortType, sortKey, columns, visibleCheckbox, displayData } =
+      this.state;
     const length = columns.length;
     const retData = [];
     if (visibleCheckbox === true && displayData.length > 0) {
       retData.push(
         <th>
-          <input type="checkbox" checked={this.state.isAllChecked} onChange={this.checkAllBoxes} className="checkbox" />
+          <input
+            type="checkbox"
+            checked={this.state.isAllChecked}
+            onChange={this.checkAllBoxes}
+            className="checkbox"
+          />
         </th>
       );
     }
     for (let i = 0; i < length; i++) {
       const item = columns[i];
-      let icon = 'sort-none';
+      let icon = "sort-none";
       let onClickSortType = sortEnum.ASCENDING;
       if (sortType === sortEnum.ASCENDING && sortKey === item.key) {
-        icon = 'sort-ascending';
+        icon = "sort-ascending";
         onClickSortType = sortEnum.DESCENDING;
       } else if (sortType === sortEnum.DESCENDING && sortKey === item.key) {
-        icon = 'sort-descending';
+        icon = "sort-descending";
         onClickSortType = sortEnum.ASCENDING;
       }
       if (!item.isRemoved) {
@@ -205,9 +220,11 @@ class Table extends Component {
         rows.push(
           <li className="page-item" key={i}>
             <a
-              className={currentPage === i ? 'page-link active' : 'page-link deactive'}
+              className={
+                currentPage === i ? "page-link active" : "page-link deactive"
+              }
               href="#"
-              onClick={(e) => this.navigatePage('btn-click', e, i)}
+              onClick={(e) => this.navigatePage("btn-click", e, i)}
             >
               {i + 1}
             </a>
@@ -219,9 +236,11 @@ class Table extends Component {
       <div className="pagination">
         <div className="page-item previous">
           <a
-            className={currentPage === 0 ? 'page-link desable' : 'page-link enable'}
+            className={
+              currentPage === 0 ? "page-link desable" : "page-link enable"
+            }
             href="#"
-            onClick={(e) => this.navigatePage('pre', e, '')}
+            onClick={(e) => this.navigatePage("pre", e, "")}
           >
             Previous
           </a>
@@ -230,9 +249,13 @@ class Table extends Component {
         {/* <li><a href="#">......</a></li> */}
         <div className="page-item next">
           <a
-            className={currentPage === this.state.totalPages - 1 ? 'page-link desable' : 'page-link enable'}
+            className={
+              currentPage === this.state.totalPages - 1
+                ? "page-link desable"
+                : "page-link enable"
+            }
             href="#"
-            onClick={(e) => this.navigatePage('next', e, '')}
+            onClick={(e) => this.navigatePage("next", e, "")}
           >
             Next
           </a>
@@ -245,17 +268,17 @@ class Table extends Component {
     let { totalPages, currentPage } = this.state;
     e.preventDefault();
     switch (target) {
-      case 'pre':
+      case "pre":
         if (currentPage !== 0) {
           currentPage = currentPage - 1;
         }
         break;
-      case 'next':
+      case "next":
         if (currentPage !== totalPages - 1) {
           currentPage = currentPage + 1;
         }
         break;
-      case 'btn-click':
+      case "btn-click":
         currentPage = i;
         break;
     }
@@ -282,7 +305,7 @@ class Table extends Component {
     const totalData = displayData.length;
     let totalPages = 1;
     let perPageLimit = totalData;
-    if (e.target.value !== 'all') {
+    if (e.target.value !== "all") {
       totalPages = Math.ceil(totalData / e.target.value);
       perPageLimit = e.target.value;
     }
@@ -300,7 +323,7 @@ class Table extends Component {
       searchKey: value,
       currentPage: 0,
       sortType: sortEnum.NONE,
-      sortKey: '',
+      sortKey: "",
     });
     const { data, columns } = this.state;
     var queryResult = [];
@@ -312,7 +335,10 @@ class Table extends Component {
           for (let j = 0; j < columns.length; j++) {
             let colData = columns[j].key;
             if (row[colData]) {
-              if (row[colData].toLowerCase().indexOf(value) !== -1 || row[colData].indexOf(value) !== -1) {
+              if (
+                row[colData].toLowerCase().indexOf(value) !== -1 ||
+                row[colData].indexOf(value) !== -1
+              ) {
                 queryResult.push(data[i]);
                 break;
               }
@@ -378,7 +404,12 @@ class Table extends Component {
         const item = columns[i];
         retData.push(
           <label className="option" htmlFor={item.key}>
-            <input id={item.key} checked={!item.isRemoved} type="checkbox" onChange={(e) => this.handleChecked(e, i)} />
+            <input
+              id={item.key}
+              checked={!item.isRemoved}
+              type="checkbox"
+              onChange={(e) => this.handleChecked(e, i)}
+            />
             {item.label}
           </label>
         );
@@ -411,12 +442,16 @@ class Table extends Component {
       endIndex = displayData.length;
     }
     if (showingLine) {
-      showingLine = showingLine.replace('%start%', startIndex);
-      showingLine = showingLine.replace('%end%', endIndex);
-      showingLine = showingLine.replace('%total%', displayData.length);
+      showingLine = showingLine.replace("%start%", startIndex);
+      showingLine = showingLine.replace("%end%", endIndex);
+      showingLine = showingLine.replace("%total%", displayData.length);
     }
     return (
-      <div className={`${tableClasses.parentClass} custom-table ${dark ? 'dark' : ''}`}>
+      <div
+        className={`${tableClasses.parentClass} custom-table ${
+          dark ? "dark" : ""
+        }`}
+      >
         <div className="toolbar">
           <div className="showing">{showingLine}</div>
           <div className="showby">
@@ -427,10 +462,16 @@ class Table extends Component {
             <span>entries per page</span>
           </div>
           <div className="multiselect">
-            <div className="form-control select-label" onClick={this.toggleColumnSelect}>
+            <div
+              className="form-control select-label"
+              onClick={this.toggleColumnSelect}
+            >
               Select columns <i className="arrow down"></i>
             </div>
-            <div style={{ display: showSelect ? '' : 'none' }} className="border options">
+            <div
+              style={{ display: showSelect ? "" : "none" }}
+              className="border options"
+            >
               {this.renderColumns()}
             </div>
           </div>
@@ -455,7 +496,9 @@ class Table extends Component {
             <tbody>{this.tableBodyData()}</tbody>
           </table>
         </div>
-        <div className="d-block width-100 pt-3 text-right">{this.peginationOfTable()}</div>
+        <div className="d-block width-100 pt-3 text-right">
+          {this.peginationOfTable()}
+        </div>
       </div>
     );
   }

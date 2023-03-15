@@ -1,22 +1,21 @@
-import React, {Component} from 'react';
-//import * as React from 'react';
+import React from "react";
 
-class Accounts extends Component{
+class Accounts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchKey: '',
+      searchKey: "",
       AccountsData: [
         {
-          title: 'Accounts',
+          title: "Accounts",
           checkValueStatus: false,
           subData: [
             {
-              title: 'AWS (67121322432)',
+              title: "AWS (67121322432)",
               checkStatus: true,
             },
             {
-              title: 'AWS (2324354555)',
+              title: "AWS (2324354555)",
               checkStatus: false,
             },
           ],
@@ -24,16 +23,16 @@ class Accounts extends Component{
       ],
       duplicateAccountData: [
         {
-          title: 'Accounts',
+          title: "Accounts",
           checkValueStatus: false,
           subData: [
             {
-              title: 'AWS (67121322432)',
-              checkValueStatus: 'false',
+              title: "AWS (67121322432)",
+              checkValueStatus: "false",
             },
             {
-              title: 'AWS (2324354555)',
-              checkValueStatus: 'false',
+              title: "AWS (2324354555)",
+              checkValueStatus: "false",
             },
           ],
         },
@@ -57,7 +56,7 @@ class Accounts extends Component{
                 checked={data.checkStatus}
                 onClick={() => this.onClickChildCheckbox(i, j)}
                 className="checkbox"
-              />{' '}
+              />{" "}
               {data.title}
             </div>
           </li>
@@ -74,7 +73,7 @@ class Accounts extends Component{
                 onChange={(e) => {
                   this.onChangeParentCheckbox(e, i);
                 }}
-              />{' '}
+              />{" "}
               {responseData.title}
             </div>
           </h5>
@@ -102,7 +101,8 @@ class Accounts extends Component{
     let countCheckedCheckbox = 0;
     const { AccountsData } = this.state;
     const parentCheckbox = AccountsData[parentIndex];
-    parentCheckbox.subData[childIndex].checkStatus = !parentCheckbox.subData[childIndex].checkStatus;
+    parentCheckbox.subData[childIndex].checkStatus =
+      !parentCheckbox.subData[childIndex].checkStatus;
     for (let j = 0; j < parentCheckbox.subData.length; j++) {
       if (parentCheckbox.subData[j].checkStatus == true) {
         countCheckedCheckbox++;
@@ -132,13 +132,26 @@ class Accounts extends Component{
       let data = duplicateAccountData[i];
       for (let j = 0; j < data.subData.length; j++) {
         let subData = data.subData[j];
-        if (subData.title.indexOf(value) !== -1 || value === '') {
-          Result.push({ title: subData.title, checkStatus: subData.checkStatus });
-        } else if (subData.title.toLowerCase().indexOf(value) !== -1 || value === '') {
-          Result.push({ title: subData.title, checkStatus: subData.checkStatus });
+        if (subData.title.indexOf(value) !== -1 || value === "") {
+          Result.push({
+            title: subData.title,
+            checkStatus: subData.checkStatus,
+          });
+        } else if (
+          subData.title.toLowerCase().indexOf(value) !== -1 ||
+          value === ""
+        ) {
+          Result.push({
+            title: subData.title,
+            checkStatus: subData.checkStatus,
+          });
         }
       }
-      searchResult.push({ title: data.title, checkValueStatus: data.checkValueStatus, subData: Result });
+      searchResult.push({
+        title: data.title,
+        checkValueStatus: data.checkValueStatus,
+        subData: Result,
+      });
     }
     this.setState({
       AccountsData: searchResult,
@@ -167,7 +180,9 @@ class Accounts extends Component{
             </div>
           </div>
         </div>
-        <div className="compliance-account-box">{this.displaAaccountsData()}</div>
+        <div className="compliance-account-box">
+          {this.displaAaccountsData()}
+        </div>
       </div>
     );
   }

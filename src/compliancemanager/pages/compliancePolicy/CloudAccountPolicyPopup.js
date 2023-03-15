@@ -1,12 +1,11 @@
-//import * as React from 'react';
-import React, {Component} from 'react';
-import  Accounts  from './Accounts';
-import  Rulesets  from './Rulesets';
-import  Notification  from './Notification';
-import  Wizard  from './Wizard';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import React from "react";
+import Accounts from "./Accounts";
+import Rulesets from "./Rulesets";
+import Notification from "./Notification";
+import Wizard from "./Wizard";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
-class CloudAccountPolicyPopup extends Component {
+class CloudAccountPolicyPopup extends React.Component {
   steps;
   constructor(props) {
     super(props);
@@ -15,15 +14,15 @@ class CloudAccountPolicyPopup extends Component {
     };
     this.steps = [
       {
-        name: 'Accounts',
+        name: "Accounts",
         component: <Accounts />,
       },
       {
-        name: 'Rulesets',
+        name: "Rulesets",
         component: <Rulesets />,
       },
       {
-        name: 'Notification',
+        name: "Notification",
         component: <Notification />,
       },
     ];
@@ -38,13 +37,24 @@ class CloudAccountPolicyPopup extends Component {
   render() {
     const { modal } = this.state;
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="modal-container assessments-modal-container">
+      <Modal
+        isOpen={modal}
+        toggle={this.toggle}
+        className="modal-container assessments-modal-container"
+      >
         <ModalHeader toggle={this.toggle}>Create New Policy</ModalHeader>
-        <ModalBody style={{ height: 'calc(75vh - 110px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(75vh - 110px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <Wizard steps={this.steps} />
         </ModalBody>
       </Modal>
     );
   }
 }
+
 export default CloudAccountPolicyPopup;

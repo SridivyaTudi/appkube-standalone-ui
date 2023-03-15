@@ -1,30 +1,29 @@
-import React, {Component} from "react";
-//import * as React from 'react';
+import React from "react";
 
-class Notification extends Component {
+class Notification extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchKey: '',
+      searchKey: "",
       NotificationData: [
         {
-          title: 'Notification',
+          title: "Notification",
           checkValueStatus: false,
           subData: [
             {
-              title: 'Notification 1',
+              title: "Notification 1",
               checkStatus: false,
             },
             {
-              title: 'Notification 2',
+              title: "Notification 2",
               checkStatus: false,
             },
             {
-              title: 'Notification 3',
+              title: "Notification 3",
               checkStatus: false,
             },
             {
-              title: 'Notification 4',
+              title: "Notification 4",
               checkStatus: false,
             },
           ],
@@ -32,23 +31,23 @@ class Notification extends Component {
       ],
       duplicateNotificationData: [
         {
-          title: 'Notification',
+          title: "Notification",
           checkValueStatus: false,
           subData: [
             {
-              title: 'Notification 1',
+              title: "Notification 1",
               checkStatus: false,
             },
             {
-              title: 'Notification 2',
+              title: "Notification 2",
               checkStatus: false,
             },
             {
-              title: 'Notification 3',
+              title: "Notification 3",
               checkStatus: false,
             },
             {
-              title: 'Notification 4',
+              title: "Notification 4",
               checkStatus: false,
             },
           ],
@@ -90,7 +89,7 @@ class Notification extends Component {
                 onChange={(e) => {
                   this.onChangeParentCheckbox(e, i);
                 }}
-              />{' '}
+              />{" "}
               {responseData.title}
             </div>
           </h5>
@@ -118,7 +117,8 @@ class Notification extends Component {
     let countCheckedCheckbox = 0;
     const { NotificationData } = this.state;
     const parentCheckbox = NotificationData[parentIndex];
-    parentCheckbox.subData[childIndex].checkStatus = !parentCheckbox.subData[childIndex].checkStatus;
+    parentCheckbox.subData[childIndex].checkStatus =
+      !parentCheckbox.subData[childIndex].checkStatus;
     for (let j = 0; j < parentCheckbox.subData.length; j++) {
       if (parentCheckbox.subData[j].checkStatus == true) {
         countCheckedCheckbox++;
@@ -148,13 +148,26 @@ class Notification extends Component {
       let data = duplicateNotificationData[i];
       for (let j = 0; j < data.subData.length; j++) {
         let subData = data.subData[j];
-        if (subData.title.indexOf(value) !== -1 || value === '') {
-          Result.push({ title: subData.title, checkStatus: subData.checkStatus });
-        } else if (subData.title.toLowerCase().indexOf(value) !== -1 || value === '') {
-          Result.push({ title: subData.title, checkStatus: subData.checkStatus });
+        if (subData.title.indexOf(value) !== -1 || value === "") {
+          Result.push({
+            title: subData.title,
+            checkStatus: subData.checkStatus,
+          });
+        } else if (
+          subData.title.toLowerCase().indexOf(value) !== -1 ||
+          value === ""
+        ) {
+          Result.push({
+            title: subData.title,
+            checkStatus: subData.checkStatus,
+          });
         }
       }
-      searchResult.push({ title: data.title, checkValueStatus: data.checkValueStatus, subData: Result });
+      searchResult.push({
+        title: data.title,
+        checkValueStatus: data.checkValueStatus,
+        subData: Result,
+      });
     }
     this.setState({
       NotificationData: searchResult,
@@ -183,7 +196,9 @@ class Notification extends Component {
             </div>
           </div>
         </div>
-        <div className="compliance-account-box">{this.displaNotificationsData()}</div>
+        <div className="compliance-account-box">
+          {this.displaNotificationsData()}
+        </div>
         {/* <div className="d-block text-center next">
                     <button className="blue-button m-r-0 m-b-0">Save</button>
                 </div> */}
@@ -191,4 +206,5 @@ class Notification extends Component {
     );
   }
 }
+
 export default Notification;

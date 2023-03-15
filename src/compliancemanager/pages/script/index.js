@@ -1,49 +1,29 @@
-import React, {Component} from 'react';
-//import * as React from 'react';
-//import { Breadcrumbs } from '../../components/Breadcrumbs';
-import awsLogo from '../../img/amazon-logo.png';
-import microsoftAzureLogo from '../../img/microsoftazure.png';
-import gcpLogo from '../../img/google-cloud.png';
-import KubernetesLogo from '../../img/kubernetes.png';
-import ApiGateway from '../../img/ApiGateway.png';
-import ApplicationLoadBalancer from '../../img/ApplicationLoadBalancer.png';
-import CloudFront from '../../img/CloudFront.png';
-import CustomerGateway from '../../img/CustomerGateway.png';
-import ELB from '../../img/ELB.png';
-import AutoScalingGroup from '../../img/AutoScalingGroup.png';
-import ECSCluster from '../../img/ECSCluster.png';
-import lamServeCertificate from '../../img/lamServeCertificate.png';
-import CloudWatchEventsRule from '../../img/CloudWatchEventsRule.png';
-import Organization from '../../img/Organization.png';
-import Route53Domain from '../../img/Route53Domain.png';
-//import { PLUGIN_BASE_URL } from '../../constants';
+import React from "react";
+import awsLogo from "../../img/amazon-logo.png";
+import microsoftAzureLogo from "../../img/microsoftazure.png";
+import gcpLogo from "../../img/google-cloud.png";
+import KubernetesLogo from "../../img/kubernetes.png";
+import ApiGateway from "../../img/ApiGateway.png";
+import ApplicationLoadBalancer from "../../img/ApplicationLoadBalancer.png";
+import CloudFront from "../../img/CloudFront.png";
+import CustomerGateway from "../../img/CustomerGateway.png";
+import ELB from "../../img/ELB.png";
+import AutoScalingGroup from "../../img/AutoScalingGroup.png";
+import ECSCluster from "../../img/ECSCluster.png";
+import lamServeCertificate from "../../img/lamServeCertificate.png";
+import CloudWatchEventsRule from "../../img/CloudWatchEventsRule.png";
+import Organization from "../../img/Organization.png";
+import Route53Domain from "../../img/Route53Domain.png";
 
-class Script extends Component {
-  breadCrumbs;
-
+class Script extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.breadCrumbs = [
-      {
-        label: 'Home',
-        route: `/`,
-      },
-      {
-        label: 'Compliance | Dashboard',
-        route: `/dashboard`,
-      },
-      {
-        label: 'Script',
-        isCurrentPage: true,
-      },
-    ];
   }
 
   render() {
     return (
       <div className="compliance-dashboard-container">
-        {/* <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="COMPLIANCE | DASHBOARD" /> */}
         <div className="compliancemanager-page-container script-page-container">
           <div className="common-container">
             <div className="gsl-editor-logos">
@@ -243,7 +223,12 @@ class Script extends Component {
                   <div className="context-preview">
                     <div className="d-block form-group filter-search-control">
                       <form>
-                        <input type="text" className="input-group-text" placeholder="Search" value="" />
+                        <input
+                          type="text"
+                          className="input-group-text"
+                          placeholder="Search"
+                          value=""
+                        />
                         <button>
                           <i className="fa fa-search"></i>
                         </button>
@@ -255,7 +240,8 @@ class Script extends Component {
                           apiKeySource:<span>string</span>
                         </li>
                         <li>
-                          <i className="fa fa-caret-down"></i> binaryMediaTypes:Array <a>[1]</a>
+                          <i className="fa fa-caret-down"></i>
+                          binaryMediaTypes:Array <a>[1]</a>
                           <ul>
                             <li>
                               <i className="fa fa-caret-right"></i> O:Object
@@ -269,7 +255,8 @@ class Script extends Component {
                           description:<span>string</span>
                         </li>
                         <li>
-                          <i className="fa fa-caret-right"></i> endpointConfiguration:Object
+                          <i className="fa fa-caret-right"></i>
+                          endpointConfiguration:Object
                         </li>
                         <li>
                           minimumCompressionSize:<span>string</span>

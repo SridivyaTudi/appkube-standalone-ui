@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
-//import * as React from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React from "react";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-class DeleteRemediationPopup extends Component{
+class DeleteRemediationPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,12 +18,16 @@ class DeleteRemediationPopup extends Component{
   render() {
     const state = this.state;
     return (
-      <Modal isOpen={state.modal} toggle={this.toggle} className="modal-container assessments-modal-container">
+      <Modal
+        isOpen={state.modal}
+        toggle={this.toggle}
+        className="modal-container assessments-modal-container"
+      >
         <ModalHeader toggle={this.toggle}>Delete Remediation</ModalHeader>
-        <ModalBody style={{ overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
           <p>
-            You are about to delete Remediation for cloud account '*' and ruleset 'AWS CIS Foundations v. 1.0.0', are
-            you sure?
+            You are about to delete Remediation for cloud account '*' and
+            ruleset 'AWS CIS Foundations v. 1.0.0', are you sure?
           </p>
         </ModalBody>
         <ModalFooter>
@@ -36,4 +39,5 @@ class DeleteRemediationPopup extends Component{
     );
   }
 }
+
 export default DeleteRemediationPopup;

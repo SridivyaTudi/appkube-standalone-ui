@@ -10,9 +10,9 @@
   background: #fff;
 }
 
-/* .loadingBG {
-  background: #fff url(/img/loader.gif) no-repeat right center;
-} */
+.loadingBG {
+  background: #fff;
+}
 
 .maxHeight {
   text-align: left;

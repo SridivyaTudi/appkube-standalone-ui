@@ -1,161 +1,143 @@
-import React, {Component} from 'react';
-//import * as React from 'react';
-//import { Breadcrumbs } from '../../components/Breadcrumbs';
-import amazonLogo from '../../img/amazon-logo.png';
-import AddOrganizationalUnitPolicyPopup  from './AddOrganizationalUnitPolicyPopup';
-import CloudAccountPolicyPopup from './CloudAccountPolicyPopup';
-//import { PLUGIN_BASE_URL } from '../../constants';
+import React from "react";
+import amazonLogo from "../../img/amazon-logo.png";
+import AddOrganizationalUnitPolicyPopup from "./AddOrganizationalUnitPolicyPopup";
+import CloudAccountPolicyPopup from "./CloudAccountPolicyPopup";
 
-class CompliancePolicy extends Component {
-  breadCrumbs;
+class CompliancePolicy extends React.Component {
   cloudAccountPolicyRef;
   addOrganizationalUnitPolicyRef;
   constructor(props) {
     super(props);
     this.state = {
-      searchKey: '',
-      totalPages: '',
+      searchKey: "",
+      totalPages: "",
       currentPage: 0,
       perPageLimit: 3,
       policyData: [
         {
-          mainTitle: 'AWS CCPA Framework',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CCPA Framework",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CIS Foundations',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CIS Foundations",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CloudGuard',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CloudGuard",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CIS Foundations',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CIS Foundations",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CCPA Framework',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CCPA Framework",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CloudGuard',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CloudGuard",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CloudGuard',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CloudGuard",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CIS Foundations',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CIS Foundations",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CCPA Framework',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CCPA Framework",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CCPA Framework',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CCPA Framework",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CloudGuard',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CloudGuard",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CIS Foundations',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CIS Foundations",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
       ],
       duplicatepolicyData: [
         {
-          mainTitle: 'AWS CCPA Framework',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CCPA Framework",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CIS Foundations',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CIS Foundations",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CloudGuard',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CloudGuard",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CIS Foundations',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CIS Foundations",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CCPA Framework',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CCPA Framework",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CloudGuard',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CloudGuard",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CloudGuard',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CloudGuard",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CIS Foundations',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CIS Foundations",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CCPA Framework',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CCPA Framework",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CCPA Framework',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CCPA Framework",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CloudGuard',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CloudGuard",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
         {
-          mainTitle: 'AWS CIS Foundations',
-          title1: 'Organizational Units / Cloud Accounts',
-          title2: 'Notifications',
+          mainTitle: "AWS CIS Foundations",
+          title1: "Organizational Units / Cloud Accounts",
+          title2: "Notifications",
         },
       ],
     };
-    this.breadCrumbs = [
-      {
-        label: 'Home',
-        route: `/`,
-      },
-      {
-        label: 'Compliance | Dashboard',
-        route: `/dashboard`,
-      },
-      {
-        label: 'Compliance Policy',
-        isCurrentPage: true,
-      },
-    ];
     this.cloudAccountPolicyRef = React.createRef();
     this.addOrganizationalUnitPolicyRef = React.createRef();
   }
@@ -178,7 +160,10 @@ class CompliancePolicy extends Component {
     const length = policyData.length;
     if (length > 0) {
       for (let i = 0; i < length; i++) {
-        if (i >= currentPage * perPageLimit && i <= currentPage * perPageLimit + (perPageLimit - 1)) {
+        if (
+          i >= currentPage * perPageLimit &&
+          i <= currentPage * perPageLimit + (perPageLimit - 1)
+        ) {
           const data = policyData[i];
           retData.push(
             <div className="d-block width-100 framework-box">
@@ -214,7 +199,9 @@ class CompliancePolicy extends Component {
         }
       }
     } else {
-      retData.push(<div className="d-block width-100 there-no-data">There is no data</div>);
+      retData.push(
+        <div className="d-block width-100 there-no-data">There is no data</div>
+      );
     }
 
     return retData;
@@ -228,9 +215,15 @@ class CompliancePolicy extends Component {
     const { duplicatepolicyData } = this.state;
     var searchResult = [];
     for (let i = 0; i < duplicatepolicyData.length; i++) {
-      if (duplicatepolicyData[i].mainTitle.indexOf(value) !== -1 || value === '') {
+      if (
+        duplicatepolicyData[i].mainTitle.indexOf(value) !== -1 ||
+        value === ""
+      ) {
         searchResult.push(duplicatepolicyData[i]);
-      } else if (duplicatepolicyData[i].mainTitle.toLowerCase().indexOf(value) !== -1 || value === '') {
+      } else if (
+        duplicatepolicyData[i].mainTitle.toLowerCase().indexOf(value) !== -1 ||
+        value === ""
+      ) {
         searchResult.push(duplicatepolicyData[i]);
       }
     }
@@ -249,9 +242,9 @@ class CompliancePolicy extends Component {
       rows.push(
         <li className="" key={i}>
           <a
-            className={currentPage === i ? 'active' : 'deactive'}
+            className={currentPage === i ? "active" : "deactive"}
             href="#"
-            onClick={(e) => this.navigatePage('btn-click', e, i)}
+            onClick={(e) => this.navigatePage("btn-click", e, i)}
           >
             {i + 1}
           </a>
@@ -262,9 +255,9 @@ class CompliancePolicy extends Component {
       <ul>
         <li className="previous">
           <a
-            className={currentPage === 0 ? 'desable' : 'enable'}
+            className={currentPage === 0 ? "desable" : "enable"}
             href="#"
-            onClick={(e) => this.navigatePage('pre', e, '')}
+            onClick={(e) => this.navigatePage("pre", e, "")}
           >
             Previous
           </a>
@@ -272,9 +265,11 @@ class CompliancePolicy extends Component {
         {rows}
         <li className="next">
           <a
-            className={currentPage === this.state.totalPages - 1 ? 'desable' : 'enable'}
+            className={
+              currentPage === this.state.totalPages - 1 ? "desable" : "enable"
+            }
             href="#"
-            onClick={(e) => this.navigatePage('next', e, '')}
+            onClick={(e) => this.navigatePage("next", e, "")}
           >
             Next
           </a>
@@ -287,21 +282,21 @@ class CompliancePolicy extends Component {
     const { totalPages, currentPage } = this.state;
     e.preventDefault();
     switch (target) {
-      case 'pre':
+      case "pre":
         if (currentPage !== 0) {
           this.setState({
             currentPage: currentPage - 1,
           });
         }
         break;
-      case 'next':
+      case "next":
         if (currentPage !== totalPages - 1) {
           this.setState({
             currentPage: currentPage + 1,
           });
         }
         break;
-      case 'btn-click':
+      case "btn-click":
         this.setState({
           currentPage: i,
         });
@@ -320,7 +315,6 @@ class CompliancePolicy extends Component {
     const { perPageLimit, policyData } = this.state;
     return (
       <div className="compliance-policy-container">
-        {/* <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="COMPLIANCE | COMPLIANCE POLICY" /> */}
         <div className="compliancemanager-page-container">
           <div className="common-container filter-container">
             <div className="form-group filter-control-group">
@@ -394,7 +388,9 @@ class CompliancePolicy extends Component {
               </select>
             </div>
             <div className="form-group filter-control-group clear-filters">
-              <button className="blue-button m-r-0 m-b-0 clear-btn">Clear All Filters</button>
+              <button className="blue-button m-r-0 m-b-0 clear-btn">
+                Clear All Filters
+              </button>
             </div>
           </div>
           <div className="common-container">
@@ -406,10 +402,16 @@ class CompliancePolicy extends Component {
                   </h3>
                 </div>
                 <div className="d-inline-block width-50 text-right heading-right">
-                  <a onClick={this.onClickCloudAccountPolicy} className="blue-button">
+                  <a
+                    onClick={this.onClickCloudAccountPolicy}
+                    className="blue-button"
+                  >
                     Add Cloud Account Policy
                   </a>
-                  <a onClick={this.onClickAddOrganizationalUnitPolicy} className="blue-button m-r-0">
+                  <a
+                    onClick={this.onClickAddOrganizationalUnitPolicy}
+                    className="blue-button m-r-0"
+                  >
                     Add Organizational Unit Policy
                   </a>
                 </div>
@@ -434,18 +436,25 @@ class CompliancePolicy extends Component {
                 </div>
               </div>
 
-              <div className="d-block width-100">{this.displaypolicyData()}</div>
+              <div className="d-block width-100">
+                {this.displaypolicyData()}
+              </div>
 
               {policyData.length > 0 && (
-                <div className="d-block width-100 text-right pagination">{this.peginationOfBox()}</div>
+                <div className="d-block width-100 text-right pagination">
+                  {this.peginationOfBox()}
+                </div>
               )}
             </div>
           </div>
         </div>
         <CloudAccountPolicyPopup ref={this.cloudAccountPolicyRef} />
-        <AddOrganizationalUnitPolicyPopup ref={this.addOrganizationalUnitPolicyRef} />
+        <AddOrganizationalUnitPolicyPopup
+          ref={this.addOrganizationalUnitPolicyRef}
+        />
       </div>
     );
   }
 }
+
 export default CompliancePolicy;
