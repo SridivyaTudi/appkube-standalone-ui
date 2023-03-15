@@ -73,6 +73,8 @@ import Input from '../logmanager/pages/input';
 
 //***** Servicedesk *****//
 import ServicedeskDashboard from '../servicedesk/pages/dashboard';
+import Tickets from '../servicedesk/pages/tickets';
+import AllContacts from '../servicedesk/pages/allContacts';
 
 export const AllRoutes = () => {
   return (
@@ -150,6 +152,8 @@ export const AllRoutes = () => {
 
        {/***** Servicedesk *****/}
        <Route path="/servicedesk/pages/dashboard" element={<ServicedeskDashboard />} />
+       <Route path="/servicedesk/pages/tickets" element={<Tickets />} />
+       <Route path="/servicedesk/pages/allContacts" element={<AllContacts />} />
     </Routes>
   );
 };
