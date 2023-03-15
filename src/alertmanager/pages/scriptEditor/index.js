@@ -1,15 +1,10 @@
-import React, { Component } from 'react';
-// import { Controlled as CodeMirror } from 'react-codemirror2';
-// import 'codemirror/lib/codemirror.css';
-
-// require('codemirror/mode/javascript/javascript');
-// require('codemirror/theme/material.css');
+import React, { Component } from "react";
 
 class ScriptEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      codeEditorValue: '',
+      codeEditorValue: "",
     };
   }
 
@@ -26,7 +21,9 @@ class ScriptEditor extends Component {
                 <div className="float-right script-editor-btn">
                   <button className="alert-white-button">Editor</button>
                   <button className="alert-white-button">Editor+ Logs</button>
-                  <button className="alert-white-button">Save New Script</button>
+                  <button className="alert-white-button">
+                    Save New Script
+                  </button>
                   <button className="alert-white-button">Exit</button>
                 </div>
               </div>
@@ -34,7 +31,11 @@ class ScriptEditor extends Component {
           </div>
           <div className="common-container border-bottom-0 p-t-20 script-editor">
             <div className="script-search">
-              <input type="text" className="input-group-text" placeholder="ID your Script" />
+              <input
+                type="text"
+                className="input-group-text"
+                placeholder="ID your Script"
+              />
             </div>
             <div className="script-search-btn">
               <button className="alert-white-button">Stream</button>
@@ -49,18 +50,10 @@ class ScriptEditor extends Component {
             </div>
           </div>
           <div className="common-container border-bottom-0 p-t-20 script-editor">
-            {/* <CodeMirror
-              value={this.state.codeEditorValue}
-              options={{
-                mode: 'javascript',
-                lineNumbers: true,
-                theme: 'material',
-              }}
-              onBeforeChange={(editor, data, value) => {
-                this.setState({ codeEditorValue: value });
-              }}
-            /> */}
-            <div className="validate-bottom-text"> &gt; You have unsaved changes, save to validate TICKscript</div>
+            <div className="validate-bottom-text">
+              {" "}
+              &gt; You have unsaved changes, save to validate TICKscript
+            </div>
           </div>
         </div>
       </div>

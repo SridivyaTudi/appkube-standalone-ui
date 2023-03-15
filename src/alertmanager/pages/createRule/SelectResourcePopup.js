@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import * as React from "react";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
-export class SelectResourcePopup extends Component {
+class SelectResourcePopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,19 +18,33 @@ export class SelectResourcePopup extends Component {
   render() {
     const state = this.state;
     return (
-      <Modal isOpen={state.modal} toggle={this.toggle} className="modal-container alert-modal-container">
+      <Modal
+        isOpen={state.modal}
+        toggle={this.toggle}
+        className="modal-container alert-modal-container"
+      >
         <ModalHeader toggle={this.toggle}>Select Resource</ModalHeader>
-        <ModalBody style={{ height: 'calc(100vh - 210px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(100vh - 210px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="select-resource-container">
             <div className="italic-label p-t-1 primary-color-label">
-              No condition defined, click on 'Add' to select a signal and define its logic
+              No condition defined, click on 'Add' to select a signal and define
+              its logic
             </div>
             <div className="form-row m-t-1">
               <div className="form-group filter-control-group col-md-6 col-sm-12">
                 <label htmlFor="resourcetype" className="primary-color-label">
                   Filter by resource type
                 </label>
-                <select className="form-control primary-select-box" id="resourcetype">
+                <select
+                  className="form-control primary-select-box"
+                  id="resourcetype"
+                >
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -42,7 +56,10 @@ export class SelectResourcePopup extends Component {
                 <label htmlFor="location" className="primary-color-label">
                   Filter by location
                 </label>
-                <select className="form-control primary-select-box" id="location">
+                <select
+                  className="form-control primary-select-box"
+                  id="location"
+                >
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -57,7 +74,12 @@ export class SelectResourcePopup extends Component {
                       <i className="fa fa-search"></i>
                     </div>
                   </div>
-                  <input type="text" className="form-control" id="inlineFormInputGroup" placeholder="filter alerts" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="inlineFormInputGroup"
+                    placeholder="filter alerts"
+                  />
                 </div>
               </div>
             </div>
@@ -71,7 +93,10 @@ export class SelectResourcePopup extends Component {
                         <input type="checkbox" />
                       </td>
                       <td className="primary-color-label">
-                        <select className="form-control primary-select-box" id="location">
+                        <select
+                          className="form-control primary-select-box"
+                          id="location"
+                        >
                           <option>1</option>
                           <option>2</option>
                           <option>3</option>
@@ -91,7 +116,9 @@ export class SelectResourcePopup extends Component {
               </div>
             </div>
             <div className="m-t-3 m-b-2 border-bottom-dashed p-b-2">
-              <div className="italic-label primary-color-label">Selection Preview</div>
+              <div className="italic-label primary-color-label">
+                Selection Preview
+              </div>
               <div className="primary-color-label">Prod_DB_SYN14</div>
             </div>
             <div>
@@ -103,3 +130,5 @@ export class SelectResourcePopup extends Component {
     );
   }
 }
+
+export default SelectResourcePopup;

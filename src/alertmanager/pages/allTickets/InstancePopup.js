@@ -1,7 +1,16 @@
-import React, { Component } from 'react';
-import { Modal, ModalHeader, ModalBody, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import * as React from "react";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+} from "reactstrap";
 
-export class InstancePopup extends Component {
+class InstancePopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,13 +34,25 @@ export class InstancePopup extends Component {
   render() {
     const state = this.state;
     return (
-      <Modal isOpen={state.modal} toggle={this.toggle} className="modal-container alert-modal-container">
-        <ModalHeader toggle={this.toggle}>#144 - Instance ID: I-3545frds489</ModalHeader>
-        <ModalBody style={{ height: 'calc(100vh - 210px)', overflowY: 'auto', overflowX: 'hidden' }}>
+      <Modal
+        isOpen={state.modal}
+        toggle={this.toggle}
+        className="modal-container alert-modal-container"
+      >
+        <ModalHeader toggle={this.toggle}>
+          #144 - Instance ID: I-3545frds489
+        </ModalHeader>
+        <ModalBody
+          style={{
+            height: "calc(100vh - 210px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <Nav tabs>
             <NavItem>
               <NavLink
-                className={`${state.activeTab === 0 ? 'active' : ''}`}
+                className={`${state.activeTab === 0 ? "active" : ""}`}
                 onClick={() => {
                   this.setActiveTab(0);
                 }}
@@ -41,7 +62,7 @@ export class InstancePopup extends Component {
             </NavItem>
             <NavItem>
               <NavLink
-                className={`${state.activeTab === 1 ? 'active' : ''}`}
+                className={`${state.activeTab === 1 ? "active" : ""}`}
                 onClick={() => {
                   this.setActiveTab(1);
                 }}
@@ -62,11 +83,17 @@ export class InstancePopup extends Component {
                   <div className="col-sm-6 gray-label">Unassigned</div>
                 </div>
                 <div className="row m-b-1">
-                  <div className="col-sm-3 bold-label gray-label">Last updated at</div>
-                  <div className="col-sm-6 gray-label">01/04/2020, 13:38:00</div>
+                  <div className="col-sm-3 bold-label gray-label">
+                    Last updated at
+                  </div>
+                  <div className="col-sm-6 gray-label">
+                    01/04/2020, 13:38:00
+                  </div>
                 </div>
                 <div className="row m-b-1">
-                  <div className="col-sm-3 bold-label gray-label">Description</div>
+                  <div className="col-sm-3 bold-label gray-label">
+                    Description
+                  </div>
                   <div className="col-sm-6 gray-label">
                     AWS EC2 Instance stopped
                     <br />
@@ -76,7 +103,9 @@ export class InstancePopup extends Component {
                 <div className="row m-b-1">
                   <div className="col-sm-3 bold-label gray-label">Severity</div>
                   <div className="col-sm-6 gray-label">
-                    <div className="severity-critical bold-label colored-label">Critical</div>
+                    <div className="severity-critical bold-label colored-label">
+                      Critical
+                    </div>
                   </div>
                 </div>
                 <div className="row m-b-1">
@@ -91,7 +120,9 @@ export class InstancePopup extends Component {
             </TabPane>
             <TabPane tabId={1}></TabPane>
             <div>
-              <button className="btn btn-secondary m-l-2 m-t-2">Close Ticket</button>
+              <button className="btn btn-secondary m-l-2 m-t-2">
+                Close Ticket
+              </button>
             </div>
           </TabContent>
         </ModalBody>
@@ -99,3 +130,5 @@ export class InstancePopup extends Component {
     );
   }
 }
+
+export default InstancePopup;

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './UnimplementedFeaturePopup.css';
-// import { PLUGIN_BASE_URL } from '../constants';
 
 class UnimplementedFeaturePopup extends Component {
     constructor(props) {

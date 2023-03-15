@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { config } from '../../config';
-import { RestService } from '../_service/RestService';
-import { Link } from 'react-router-dom';
-import { UncontrolledPopover, PopoverBody } from 'reactstrap';
-import { EditAlertPopup } from '../allAlerts/EditAlertPopup';
-import ConfirmDialog from '../../components/ConfirmDialog';
-import AlertMessage from '../../components/AlertMessage';
-import Table from '../../components/table';
-import Rbac from '../../components/Rbac';
+import React, { Component } from "react";
+import { config } from "../../config";
+import { RestService } from "../_service/RestService";
+import { Link } from "react-router-dom";
+import { UncontrolledPopover, PopoverBody } from "reactstrap";
+import EditAlertPopup from "../allAlerts/EditAlertPopup";
+import ConfirmDialog from "../../components/ConfirmDialog";
+import AlertMessage from "../../components/AlertMessage";
+import Table from "../../components/table";
+import Rbac from "../../components/Rbac";
 
 class SearchAlert extends Component {
   editAlertRef;
@@ -31,21 +31,21 @@ class SearchAlert extends Component {
       objectId: null,
       object: null,
       message: null,
-      severity: '',
+      severity: "",
       isAlertOpen: false,
       alertData: [],
       modal: false,
-      resourceGroup: '',
-      resource: '',
-      monitorService: '',
-      alertType: '',
-      alertState: '',
+      resourceGroup: "",
+      resource: "",
+      monitorService: "",
+      alertType: "",
+      alertState: "",
       filterCheckbox: false,
       isApiCalled: false,
       columns: [
         {
-          label: 'Name',
-          key: 'name',
+          label: "Name",
+          key: "name",
           renderCallback: (value) => {
             return (
               <td>
@@ -56,23 +56,23 @@ class SearchAlert extends Component {
           isCaseInsensitive: true,
         },
         {
-          label: 'Severity',
-          key: 'severity',
+          label: "Severity",
+          key: "severity",
           renderCallback: (value) => {
-            let strClass = '';
+            let strClass = "";
             if (value) {
               value = value.toLowerCase();
             }
-            if (value === 'high') {
-              strClass = 'severity-high';
-            } else if (value === 'low') {
-              strClass = 'severity-low';
-            } else if (value === 'urgent') {
-              strClass = 'severity-urgent';
-            } else if (value === 'critical') {
-              strClass = 'severity-critical';
-            } else if (value === 'medium') {
-              strClass = 'severity-medium';
+            if (value === "high") {
+              strClass = "severity-high";
+            } else if (value === "low") {
+              strClass = "severity-low";
+            } else if (value === "urgent") {
+              strClass = "severity-urgent";
+            } else if (value === "critical") {
+              strClass = "severity-critical";
+            } else if (value === "medium") {
+              strClass = "severity-medium";
             }
             return (
               <td>
@@ -83,74 +83,99 @@ class SearchAlert extends Component {
           isCaseInsensitive: true,
         },
         {
-          label: 'Monitor Condition',
-          key: 'monitorcondition',
+          label: "Monitor Condition",
+          key: "monitorcondition",
           isCaseInsensitive: true,
         },
         {
-          label: 'Alert State',
-          key: 'alertState',
+          label: "Alert State",
+          key: "alertState",
           isCaseInsensitive: true,
         },
         {
-          label: 'Affected Resource',
-          key: 'affectedresource',
+          label: "Affected Resource",
+          key: "affectedresource",
           isCaseInsensitive: true,
         },
         {
-          label: 'Monitor Service',
-          key: 'monitorservice',
+          label: "Monitor Service",
+          key: "monitorservice",
           isCaseInsensitive: true,
         },
         {
-          label: 'Signal Type',
-          key: 'signaltype',
+          label: "Signal Type",
+          key: "signaltype",
           isCaseInsensitive: true,
         },
         {
-          label: 'Fired Time',
-          key: 'firedtime',
+          label: "Fired Time",
+          key: "firedtime",
           isCaseInsensitive: true,
         },
         {
-          label: 'Subscription',
-          key: 'brcsubscription',
+          label: "Subscription",
+          key: "brcsubscription",
           isCaseInsensitive: true,
         },
         {
-          label: 'Suppression State',
-          key: 'suppressionstate',
+          label: "Suppression State",
+          key: "suppressionstate",
           isCaseInsensitive: true,
         },
         {
-          label: 'Resources',
-          key: 'resources',
+          label: "Resources",
+          key: "resources",
           isCaseInsensitive: true,
         },
         {
-          label: 'Action',
-          key: 'action',
+          label: "Action",
+          key: "action",
           renderCallback: (value, alert) => {
             return (
               <td>
                 <div className="d-inline-block">
-                  <Rbac parentName={config.PARENT_NAME} childName="searchalert-index-alertstbl-editbtn">
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="searchalert-index-alertstbl-editbtn"
+                  >
                     <button className="btn btn-link">
-                      <i onClick={(e) => this.onClickEditAlert(e, alert)} className="fa fa-edit"></i>
+                      <i
+                        onClick={(e) => this.onClickEditAlert(e, alert)}
+                        className="fa fa-edit"
+                      ></i>
                     </button>
                   </Rbac>
-                  <Rbac parentName={config.PARENT_NAME} childName="searchalert-index-alertstbl-deletebtn">
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="searchalert-index-alertstbl-deletebtn"
+                  >
                     <button className="btn btn-link">
-                      <i onClick={(e) => this.onClickDeleteAlert(e, alert)} className="fa fa-trash"></i>
+                      <i
+                        onClick={(e) => this.onClickDeleteAlert(e, alert)}
+                        className="fa fa-trash"
+                      ></i>
                     </button>
                   </Rbac>
-                  <button className="btn btn-link" id={`PopoverFocus-${alert.guid}`}>
+                  <button
+                    className="btn btn-link"
+                    id={`PopoverFocus-${alert.guid}`}
+                  >
                     <i className="fa fa-ellipsis-h"></i>
                   </button>
-                  <UncontrolledPopover trigger="legacy" placement="bottom" target={`PopoverFocus-${alert.guid}`}>
+                  <UncontrolledPopover
+                    trigger="legacy"
+                    placement="bottom"
+                    target={`PopoverFocus-${alert.guid}`}
+                  >
                     <PopoverBody>
-                      <Rbac parentName={config.PARENT_NAME} childName="searchalert-index-alertstbl-startec2btn">
-                        <Link className=" " to={`/alertmanager/pages/all-tickets`}>
+                      <Rbac
+                        parentName={config.PARENT_NAME}
+                        childName="searchalert-index-alertstbl-startec2btn"
+                      >
+                        <Link
+                          className=" "
+                          to={`/alertmanager/pages/all-tickets`}
+                        >
                           Create Ticket
                         </Link>
                       </Rbac>
@@ -174,112 +199,112 @@ class SearchAlert extends Component {
     };
     this.resourceGroup = [
       {
-        label: 'Compute',
-        value: 'compute',
+        label: "Compute",
+        value: "compute",
       },
       {
-        label: 'Jobs',
-        value: 'jobs',
+        label: "Jobs",
+        value: "jobs",
       },
       {
-        label: 'Network',
-        value: 'network',
+        label: "Network",
+        value: "network",
       },
     ];
     this.resources = {
       Compute: [
         {
-          label: 'Node',
-          value: 'node',
+          label: "Node",
+          value: "node",
         },
         {
-          label: 'Database',
-          value: 'database',
+          label: "Database",
+          value: "database",
         },
         {
-          label: 'Storage',
-          value: 'storage',
+          label: "Storage",
+          value: "storage",
         },
         {
-          label: 'App',
-          value: 'app',
+          label: "App",
+          value: "app",
         },
       ],
       Jobs: [
         {
-          label: 'SHELL JOBS',
-          value: 'shell jobs',
+          label: "SHELL JOBS",
+          value: "shell jobs",
         },
         {
-          label: 'ETL JOBS',
-          value: 'etl jobs',
+          label: "ETL JOBS",
+          value: "etl jobs",
         },
       ],
       Network: [
         {
-          label: 'VPC',
-          value: 'vpc',
+          label: "VPC",
+          value: "vpc",
         },
         {
-          label: 'VPN',
-          value: 'vpn',
+          label: "VPN",
+          value: "vpn",
         },
       ],
     };
     this.monitoringServices = [
       {
-        label: 'Native AWS',
-        value: 'native aws',
+        label: "Native AWS",
+        value: "native aws",
       },
       {
-        label: 'Native AZURE',
-        value: 'native azure',
+        label: "Native AZURE",
+        value: "native azure",
       },
     ];
     this.alertTypes = [
       {
-        label: 'Metrics',
-        value: 'metrics',
+        label: "Metrics",
+        value: "metrics",
       },
       {
-        label: 'Logs',
-        value: 'logs',
+        label: "Logs",
+        value: "logs",
       },
     ];
     this.severity = [
       {
-        label: 'Urgent',
-        value: 'urgent',
+        label: "Urgent",
+        value: "urgent",
       },
       {
-        label: 'Critical',
-        value: 'critical',
+        label: "Critical",
+        value: "critical",
       },
       {
-        label: 'High',
-        value: 'high',
+        label: "High",
+        value: "high",
       },
       {
-        label: 'Medium',
-        value: 'medium',
+        label: "Medium",
+        value: "medium",
       },
       {
-        label: 'Low',
-        value: 'low',
+        label: "Low",
+        value: "low",
       },
     ];
     this.alertStates = [
       {
-        label: 'New',
-        value: 'new',
+        label: "New",
+        value: "new",
       },
       {
-        label: 'InProgress',
-        value: 'inprogress',
+        label: "InProgress",
+        value: "inprogress",
       },
       {
-        label: 'Closed',
-        value: 'closed',
+        label: "Closed",
+        value: "closed",
       },
     ];
     this.editAlertRef = React.createRef();
@@ -298,35 +323,40 @@ class SearchAlert extends Component {
       this.setState({
         isApiCalled: false,
       });
-      console.log('SearchAlert page. Loading alert data from elastic failed. Error: ', err);
+      console.log(
+        "SearchAlert page. Loading alert data from elastic failed. Error: ",
+        err
+      );
     }
   }
 
   fetchData = () => {
-    RestService.getData(config.GET_ALL_ALERT_FROM_ELASTIC, null, null).then((response) => {
-      //     let ary = [];
-      //     for (let i = 0; i < response.length; i++) {
-      //         let j = JSON.parse(response[i]);
-      //         ary.push(j);
-      //     }
-      this.setState({
-        alertData: response,
-      });
-      this.setState({
-        isApiCalled: false,
-      });
-      console.log('Alerts: ', response);
-    });
+    RestService.getData(config.GET_ALL_ALERT_FROM_ELASTIC, null, null).then(
+      (response) => {
+        //     let ary = [];
+        //     for (let i = 0; i < response.length; i++) {
+        //         let j = JSON.parse(response[i]);
+        //         ary.push(j);
+        //     }
+        this.setState({
+          alertData: response,
+        });
+        this.setState({
+          isApiCalled: false,
+        });
+        console.log("Alerts: ", response);
+      }
+    );
   };
 
   clearAllFilters = () => {
     this.setState({
-      resourceGroup: '',
-      resource: '',
-      monitorService: '',
-      alertType: '',
-      severity: '',
-      alertState: '',
+      resourceGroup: "",
+      resource: "",
+      monitorService: "",
+      alertType: "",
+      severity: "",
+      alertState: "",
       filterCheckbox: true,
     });
   };
@@ -348,12 +378,12 @@ class SearchAlert extends Component {
   };
 
   onClickDeleteAlert = (e, alert) => {
-    console.log('Alert : ' + alert);
+    console.log("Alert : " + alert);
     this.setState({
-      confirmTitleMessage: 'Delete Alert',
-      message: 'Are you sure, you want to delete the alert?',
+      confirmTitleMessage: "Delete Alert",
+      message: "Are you sure, you want to delete the alert?",
       isConfirmDialogOpen: true,
-      objectType: 'alert',
+      objectType: "alert",
       object: alert,
     });
   };
@@ -363,78 +393,24 @@ class SearchAlert extends Component {
     });
   };
   handleConfirmDelete = (objectType, object) => {
-    console.log('Deleting alert. Alert object : ', object);
+    console.log("Deleting alert. Alert object : ", object);
     let url = config.DELETE_ALERT + `/` + object.guid;
     this.callDeleteApi(url);
-    console.log('Alert data is ', this.state.alertData);
+    console.log("Alert data is ", this.state.alertData);
     this.setState({
       isConfirmDialogOpen: false,
     });
   };
-  // async callDeleteApi(url) {
-  //     await RestService.deleteObject(url).then((response) => {
-  //         console.log("Delete Response : ", response);
-  //         response=eval(response);
-  //        let ary = [];
-  //         for (let i = 0; i < response.length; i++) {
-  //             let j = JSON.parse(response[i]);
-  //             ary.push(j);
-  //         }
-  //         console.log("Array is=",ary)
-  //         this.setState({
-  //              alertData: ary,
-  //             severity: config.SEVERITY_SUCCESS,
-  //             message: 'Alert deleted successfully',
-  //             isAlertOpen: true,
-  //         });
-
-  //     }).catch(error => {
-  //         console.log('Deletion error', error);
-  //         this.setState({
-  //             severity: config.SEVERITY_ERROR,
-  //             message: 'Alert could not be deleted. Please check the service logs for details',
-  //             isAlertOpen: true,
-  //         });
-  //     });
-  // }
 
   async callDeleteApi(url) {
     await RestService.deleteObject(url).then((response) => {
-      console.log('Delete alert response: ', response);
+      console.log("Delete alert response: ", response);
     });
     this.setState({
       severity: config.SEVERITY_SUCCESS,
-      message: 'Alert deleted successfully',
+      message: "Alert deleted successfully",
       isAlertOpen: true,
     });
-
-    // await RestService.deleteObject(url).then((response) => {
-    //     console.log("AllAlert : Delete Response : ", response);
-    // response=eval(response);
-    /*  let ary = [];
-           for (let i = 0; i < response.length; i++) {
-               let j = JSON.parse(response[i]);
-               ary.push(j);
-           }
-           console.log("Array is=",ary)
-            */
-    //alertData: ary,
-    // this.setState({
-    //     severity: config.SEVERITY_SUCCESS,
-    //     message: 'Alert deleted successfully',
-    //     isAlertOpen: true,
-    // });
-
-    //this.refreshData();
-
-    // }).catch(error => {
-    //     console.log('Deletion error', error);
-    //     this.setState({
-    //         severity: config.SEVERITY_ERROR,
-    //         message: 'Alert could not be deleted. Please check the service logs for details',
-    //         isAlertOpen: true,
-    //     });
-    // });
   }
 
   createSelectbox = (data) => {
@@ -454,25 +430,33 @@ class SearchAlert extends Component {
       [name]: value,
       filterCheckbox: false,
     });
-    if (name === 'resourceGroup') {
+    if (name === "resourceGroup") {
       this.setState({
-        resource: '',
+        resource: "",
       });
     }
   };
 
   refreshData() {
-    console.log('Refreshed.....');
+    console.log("Refreshed.....");
     try {
       this.fetchData();
     } catch (err) {
-      console.log('Alert data refresh failed. Error: ', err);
+      console.log("Alert data refresh failed. Error: ", err);
     }
   }
 
   applyFilters = () => {
     const retData = [];
-    const { alertData, resourceGroup, resource, monitorService, alertType, severity, alertState } = this.state;
+    const {
+      alertData,
+      resourceGroup,
+      resource,
+      monitorService,
+      alertType,
+      severity,
+      alertState,
+    } = this.state;
     if (alertData && alertData.length > 0) {
       const length = alertData.length;
       for (let i = 0; i < length; i++) {
@@ -481,7 +465,7 @@ class SearchAlert extends Component {
         const lowerCaseKeys = alertKeys.map((key) => key.toLocaleLowerCase());
         let isMatched = true;
         if (resourceGroup) {
-          let index = lowerCaseKeys.indexOf('resourcegroup');
+          let index = lowerCaseKeys.indexOf("resourcegroup");
           if (index !== -1) {
             let key = alertKeys[index];
             let data = alert[key];
@@ -495,7 +479,7 @@ class SearchAlert extends Component {
           }
         }
         if (isMatched && resource) {
-          let index = lowerCaseKeys.indexOf('resources');
+          let index = lowerCaseKeys.indexOf("resources");
           if (index !== -1) {
             let key = alertKeys[index];
             let data = alert[key];
@@ -509,7 +493,7 @@ class SearchAlert extends Component {
           }
         }
         if (isMatched && monitorService) {
-          let index = lowerCaseKeys.indexOf('monitorservice');
+          let index = lowerCaseKeys.indexOf("monitorservice");
           if (index !== -1) {
             let key = alertKeys[index];
             let data = alert[key];
@@ -523,7 +507,7 @@ class SearchAlert extends Component {
           }
         }
         if (isMatched && alertType) {
-          let index = lowerCaseKeys.indexOf('signaltype');
+          let index = lowerCaseKeys.indexOf("signaltype");
           if (index !== -1) {
             let key = alertKeys[index];
             let data = alert[key];
@@ -537,7 +521,7 @@ class SearchAlert extends Component {
           }
         }
         if (isMatched && severity) {
-          let index = lowerCaseKeys.indexOf('severity');
+          let index = lowerCaseKeys.indexOf("severity");
           if (index !== -1) {
             let key = alertKeys[index];
             let data = alert[key];
@@ -551,7 +535,7 @@ class SearchAlert extends Component {
           }
         }
         if (isMatched && alertState) {
-          let index = lowerCaseKeys.indexOf('alertstate');
+          let index = lowerCaseKeys.indexOf("alertstate");
           if (index !== -1) {
             let key = alertKeys[index];
             let data = alert[key];
@@ -615,7 +599,10 @@ class SearchAlert extends Component {
                     <label>Filters</label>
                   </div>
                   <div className="filters-btn">
-                    <button className="btn btn-secondary" onClick={this.clearAllFilters}>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={this.clearAllFilters}
+                    >
                       Clear All Filters
                     </button>
                     {/* <button className="btn btn-secondary apply-btn" onClick={this.onClickApply} disabled={state.isApiCalled}>Apply</button> */}
@@ -648,7 +635,9 @@ class SearchAlert extends Component {
                             onChange={this.handleStateChange}
                           >
                             <option value="">Select Resources</option>
-                            {this.createSelectbox(this.resources[resourceGroup])}
+                            {this.createSelectbox(
+                              this.resources[resourceGroup]
+                            )}
                           </select>
                         </div>
                       </div>
@@ -711,7 +700,9 @@ class SearchAlert extends Component {
                             value={alertState}
                             onChange={this.handleStateChange}
                           >
-                            <option value="Select Alert State">Select Alert State</option>
+                            <option value="Select Alert State">
+                              Select Alert State
+                            </option>
                             {this.createSelectbox(this.alertStates)}
                           </select>
                         </div>
@@ -731,9 +722,9 @@ class SearchAlert extends Component {
                     perPageLimit={this.perPageLimit}
                     visiblecheckboxStatus={this.checkboxValue}
                     tableClasses={{
-                      table: 'alert-data-tabel',
-                      tableParent: 'alerts-data-tabel',
-                      parentClass: 'all-alert-data-table',
+                      table: "alert-data-tabel",
+                      tableParent: "alerts-data-tabel",
+                      parentClass: "all-alert-data-table",
                     }}
                     searchKey="name"
                     showingLine="Showing %start% to %end% of %total%"

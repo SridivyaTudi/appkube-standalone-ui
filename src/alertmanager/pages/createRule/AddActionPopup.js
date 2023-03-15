@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import * as React from "react";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
-export class AddActionPopup extends Component {
+class AddActionPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,13 +18,27 @@ export class AddActionPopup extends Component {
   render() {
     const state = this.state;
     return (
-      <Modal isOpen={state.modal} toggle={this.toggle} className="modal-container alert-modal-container">
-        <ModalHeader toggle={this.toggle}>Select an action group to attach to this alert rule</ModalHeader>
-        <ModalBody style={{ height: 'calc(100vh - 210px)', overflowY: 'auto', overflowX: 'hidden' }}>
+      <Modal
+        isOpen={state.modal}
+        toggle={this.toggle}
+        className="modal-container alert-modal-container"
+      >
+        <ModalHeader toggle={this.toggle}>
+          Select an action group to attach to this alert rule
+        </ModalHeader>
+        <ModalBody
+          style={{
+            height: "calc(100vh - 210px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="select-resource-container">
             <div className="italic-label gray-label">
-              For metric and log alerts, action groups selected must be in the alert rule's subscription. For activity
-              log alerts, action groups can be selected from subscriptions other than the alert rule's subscription.
+              For metric and log alerts, action groups selected must be in the
+              alert rule's subscription. For activity log alerts, action groups
+              can be selected from subscriptions other than the alert rule's
+              subscription.
             </div>
             <div className="form-row m-t-1">
               <div className="form-group filter-control-group col-md-12 col-sm-12">
@@ -34,7 +48,12 @@ export class AddActionPopup extends Component {
                       <i className="fa fa-search"></i>
                     </div>
                   </div>
-                  <input type="text" className="form-control" id="inlineFormInputGroup" placeholder="filter alerts" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="inlineFormInputGroup"
+                    placeholder="filter alerts"
+                  />
                 </div>
               </div>
             </div>
@@ -43,7 +62,9 @@ export class AddActionPopup extends Component {
                 <table className="alert-data-table m-t-1">
                   <tbody>
                     <tr>
-                      <th className="bold-label gray-label">Action group name</th>
+                      <th className="bold-label gray-label">
+                        Action group name
+                      </th>
                       <th className="gray-label bold-label">Contain action</th>
                     </tr>
                     <tr className="gray-label">
@@ -71,3 +92,5 @@ export class AddActionPopup extends Component {
     );
   }
 }
+
+export default AddActionPopup;

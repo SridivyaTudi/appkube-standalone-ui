@@ -1,8 +1,18 @@
-import React, { Component } from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
-import { Tcp, Exec, Post, Log, StackDefault, Alerta, Email, Hipchat, Kafka } from './AlertHandleComponents';
+import React from "react";
+import { TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
+import {
+  Tcp,
+  Exec,
+  Post,
+  Log,
+  StackDefault,
+  Alerta,
+  Email,
+  Hipchat,
+  Kafka,
+} from "./AlertHandleComponents";
 
-export class AlertHandler extends Component {
+class AlertHandler extends React.Component {
   tabComponentsList;
   constructor(props) {
     super(props);
@@ -16,11 +26,11 @@ export class AlertHandler extends Component {
       exec: <Exec />,
       post: <Post />,
       log: <Log />,
-      'stack(default)': <StackDefault />,
+      "stack(default)": <StackDefault />,
       alerta: <Alerta />,
       email: <Email />,
       hipChat: <Hipchat />,
-      'Kafka(localhost)': <Kafka />,
+      "Kafka(localhost)": <Kafka />,
     };
   }
 
@@ -56,7 +66,7 @@ export class AlertHandler extends Component {
       retData.push(
         <NavItem>
           <NavLink
-            className={`${activeTab == i ? 'side-active' : ''}`}
+            className={`${activeTab == i ? "side-active" : ""}`}
             onClick={() => {
               this.toggleTab(i);
             }}
@@ -93,8 +103,14 @@ export class AlertHandler extends Component {
             <div className="condition-header">
               <div className="send-alert-text">Send this alert to:</div>
               <div className="greater-select">
-                <select className="form-control" id="rousourceGroup" onChange={this.handleAlertSelection}>
-                  <option value="Add another Handler">Add another Handler</option>
+                <select
+                  className="form-control"
+                  id="rousourceGroup"
+                  onChange={this.handleAlertSelection}
+                >
+                  <option value="Add another Handler">
+                    Add another Handler
+                  </option>
                   <option value="post">post</option>
                   <option value="tcp">tcp</option>
                   <option value="exec">exec</option>
@@ -115,7 +131,9 @@ export class AlertHandler extends Component {
                   </div>
                 </div>
                 <div className="col-lg-9 col-md-9 col-sm-6 alert-description">
-                  <TabContent activeTab={activeTab}>{this.createTabPanes(tabComponents)}</TabContent>
+                  <TabContent activeTab={activeTab}>
+                    {this.createTabPanes(tabComponents)}
+                  </TabContent>
                 </div>
               </section>
             </div>
@@ -125,3 +143,5 @@ export class AlertHandler extends Component {
     );
   }
 }
+
+export default AlertHandler;

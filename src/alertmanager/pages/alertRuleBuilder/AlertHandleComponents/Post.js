@@ -1,14 +1,22 @@
-import React, { Component } from 'react';
+import React from "react";
 
-export class Post extends Component {
+export class Post extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <span className="alert-handler-span">Parameters for this Alert Handler</span>
+        <span className="alert-handler-span">
+          Parameters for this Alert Handler
+        </span>
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12 alert-handler-datainput">
-            <label className="alert-handler-label">HTTP endpoint for POST request</label>
-            <input type="text" className="form-control" placeholder="ex:http://example.com/api/alert" />
+            <label className="alert-handler-label">
+              HTTP endpoint for POST request
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="ex:http://example.com/api/alert"
+            />
           </div>
         </div>
         <div className="row">
@@ -25,3 +33,4 @@ export class Post extends Component {
     );
   }
 }
+

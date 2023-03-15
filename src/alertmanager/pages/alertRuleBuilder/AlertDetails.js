@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
+import React from "react";
 
-export class AlertDetails extends Component {
+class AlertDetails extends React.Component {
   render() {
     return (
       <div className="alert-details">
         <div className="alert-details-name">
           <label>Name this Alert Rule</label>
-          <input type="text" placeholder="Untitled Rule" className="input-group-text" />
+          <input
+            type="text"
+            placeholder="Untitled Rule"
+            className="input-group-text"
+          />
         </div>
         <div className="alert-details-description">
           <label>Description</label>
@@ -16,3 +20,5 @@ export class AlertDetails extends Component {
     );
   }
 }
+
+export default AlertDetails;

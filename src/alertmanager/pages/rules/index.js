@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { config } from '../../config';
-import Table from '../../components/table';
-import Rbac from '../../components/Rbac';
-import UnimplementedFeaturePopup from '../../components/UnimplementedFeaturePopup';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { config } from "../../config";
+import Table from "../../components/table";
+import Rbac from "../../components/Rbac";
+import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 
 class Rules extends Component {
   ruleData;
@@ -16,45 +16,57 @@ class Rules extends Component {
     this.tableValue = {
       columns: [
         {
-          label: 'Name',
-          key: 'name',
+          label: "Name",
+          key: "name",
         },
         {
-          label: 'Condition',
-          key: 'condition',
+          label: "Condition",
+          key: "condition",
         },
         {
-          label: 'Status',
-          key: 'status',
+          label: "Status",
+          key: "status",
           renderCallback: (value) => {
-            let strClass = 'isEnabled';
+            let strClass = "isEnabled";
             return (
               <td>
                 <div className="enabled-disabled-container">
-                  <div className={`${strClass ? 'enabled' : 'disabled'}`}></div>
+                  <div className={`${strClass ? "enabled" : "disabled"}`}></div>
                 </div>
               </td>
             );
           },
         },
         {
-          label: 'Target resource',
-          key: 'targetResource',
+          label: "Target resource",
+          key: "targetResource",
         },
         {
-          label: 'Action',
-          key: 'action',
+          label: "Action",
+          key: "action",
           renderCallback: () => {
             return (
               <td>
                 <div className="d-inline-block">
-                  <Rbac parentName={config.PARENT_NAME} childName="rules-index-editbtn">
-                    <button className="btn btn-link" onClick={() => this.onClickUnImplementedFeature('')}>
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="rules-index-editbtn"
+                  >
+                    <button
+                      className="btn btn-link"
+                      onClick={() => this.onClickUnImplementedFeature("")}
+                    >
                       <i className="fa fa-edit"></i>
                     </button>
                   </Rbac>
-                  <Rbac parentName={config.PARENT_NAME} childName="rules-index-deletebtn">
-                    <button className="btn btn-link" onClick={() => this.onClickUnImplementedFeature('')}>
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="rules-index-deletebtn"
+                  >
+                    <button
+                      className="btn btn-link"
+                      onClick={() => this.onClickUnImplementedFeature("")}
+                    >
                       <i className="fa fa-trash"></i>
                     </button>
                   </Rbac>
@@ -66,31 +78,31 @@ class Rules extends Component {
       ],
       data: [
         {
-          name: 'Percentage CPU',
-          condition: 'Percentage CPU greater or equal to 0',
+          name: "Percentage CPU",
+          condition: "Percentage CPU greater or equal to 0",
           isEnabled: false,
-          targetResource: 'kub-master-146783',
+          targetResource: "kub-master-146783",
           checkStatus: false,
         },
         {
-          name: 'Disk Write Bytes',
-          condition: 'Disk Write Bytes alert is greater than 10GB',
+          name: "Disk Write Bytes",
+          condition: "Disk Write Bytes alert is greater than 10GB",
           isEnabled: true,
-          targetResource: 'Metrics',
+          targetResource: "Metrics",
           checkStatus: false,
         },
         {
-          name: 'Network Out',
-          condition: 'Network Out GreaterThan 3333',
+          name: "Network Out",
+          condition: "Network Out GreaterThan 3333",
           isEnabled: true,
-          targetResource: 'Ser08-Test-11',
+          targetResource: "Ser08-Test-11",
           checkStatus: false,
         },
         {
-          name: 'Network In',
-          condition: 'Network In GreatThan 3333',
+          name: "Network In",
+          condition: "Network In GreatThan 3333",
           isEnabled: false,
-          targetResource: 'Ser08-Test-11',
+          targetResource: "Ser08-Test-11",
           checkStatus: false,
         },
       ],
@@ -121,17 +133,29 @@ class Rules extends Component {
           <div className="common-container">
             <div className="row">
               <div className="col-md-9 col-sm-12">
-                <Rbac parentName={config.PARENT_NAME} childName="rules-index-newalertrulebtn">
-                  <Link to={`/alertmanager/pages/manage-alert-rule`} className="alert-white-button">
+                <Rbac
+                  parentName={config.PARENT_NAME}
+                  childName="rules-index-newalertrulebtn"
+                >
+                  <Link
+                    to={`/alertmanager/pages/manage-alert-rule`}
+                    className="alert-white-button"
+                  >
                     <i className="fa fa-plus"></i>&nbsp;&nbsp; New Alert Rule
                   </Link>
                 </Rbac>
-                <a className="alert-white-button" onClick={() => this.onClickUnImplementedFeature('')}>
+                <a
+                  className="alert-white-button"
+                  onClick={() => this.onClickUnImplementedFeature("")}
+                >
                   <i className="fa fa-refresh"></i>&nbsp;&nbsp; Refresh
                 </a>
               </div>
               <div className="col-md-3 col-sm-12">
-                <Link to={`/alertmanager/pages/manage-alert-rule`} className="alert-white-button float-right">
+                <Link
+                  to={`/alertmanager/pages/manage-alert-rule`}
+                  className="alert-white-button float-right"
+                >
                   <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
                 </Link>
               </div>
@@ -171,9 +195,9 @@ class Rules extends Component {
               perPageLimit={this.perPageLimit}
               visiblecheckboxStatus={this.checkboxValue}
               tableClasses={{
-                table: 'alert-data-tabel',
-                tableParent: 'alerts-data-tabel',
-                parentClass: 'all-alert-data-table',
+                table: "alert-data-tabel",
+                tableParent: "alerts-data-tabel",
+                parentClass: "all-alert-data-table",
               }}
               searchKey="name"
               showingLine="Showing %start% to %end% of %total%"

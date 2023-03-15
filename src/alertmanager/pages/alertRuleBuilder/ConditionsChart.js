@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,10 +9,19 @@ import {
   Legend,
   PointElement,
   LineElement,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+} from "chart.js";
+import { Line } from "react-chartjs-2";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement
+);
 
 const options = {
   responsive: true,
@@ -30,11 +39,11 @@ const options = {
 };
 
 const lineChart = {
-  labels: ['', '05:18', '05:20', '05:22', '05:24', '05:26', '05:28', ''],
+  labels: ["", "05:18", "05:20", "05:22", "05:24", "05:26", "05:28", ""],
   datasets: [],
 };
 
-export class ConditionsChart extends Component {
+class ConditionsChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -42,7 +51,7 @@ export class ConditionsChart extends Component {
 
   render() {
     return (
-      <div style={{ width: '100%', height: '100%' }}>
+      <div style={{ width: "100%", height: "100%" }}>
         <div className="chart-select-menu">
           <label>Send Data from</label>
           <div className="select-menu">
@@ -65,3 +74,5 @@ export class ConditionsChart extends Component {
     );
   }
 }
+
+export default ConditionsChart;

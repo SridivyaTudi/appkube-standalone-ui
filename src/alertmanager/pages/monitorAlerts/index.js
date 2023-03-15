@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { config } from '../../config';
-import CurrentAvrageWaitResponceTimeChart from './CurrentAvrageWaitResponceTimeChart';
-import CurrentAvrageWaitTimeChart from './CurrentAvrageWaitTimeChart';
-import AlertVolumeByStatusChart from './AlertVolumeByStatusChart';
-import AlertVolumeChart from './AlertVolumeChart';
-import { RestService } from '../_service/RestService';
-import UnimplementedFeaturePopup from '../../components/UnimplementedFeaturePopup';
+import * as React from "react";
+import { Link } from "react-router-dom";
+import CurrentAvrageWaitResponceTimeChart from "./CurrentAvrageWaitResponceTimeChart";
+import CurrentAvrageWaitTimeChart from "./CurrentAvrageWaitTimeChart";
+import AlertVolumeByStatusChart from "./AlertVolumeByStatusChart";
+import AlertVolumeChart from "./AlertVolumeChart";
+import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 
-class MonitorAlerts extends Component {
+class MonitorAlerts extends React.Component {
+  breadCrumbs;
   unimplementedFeatureModalRef;
   constructor(props) {
     super(props);
@@ -33,11 +32,17 @@ class MonitorAlerts extends Component {
         <tr>
           <td>{topAlerts.name}</td>
           <td>
-            {topAlerts.severity === 'high' && <div className="high">High</div>}
-            {topAlerts.severity === 'low' && <div className="low">Low</div>}
-            {topAlerts.severity === 'medium' && <div className="medium">Medium</div>}
-            {topAlerts.severity === 'critical' && <div className="medium">Critical</div>}
-            {topAlerts.severity === 'urgent' && <div className="medium">Urgent</div>}
+            {topAlerts.severity === "high" && <div className="high">High</div>}
+            {topAlerts.severity === "low" && <div className="low">Low</div>}
+            {topAlerts.severity === "medium" && (
+              <div className="medium">Medium</div>
+            )}
+            {topAlerts.severity === "critical" && (
+              <div className="medium">Critical</div>
+            )}
+            {topAlerts.severity === "urgent" && (
+              <div className="medium">Urgent</div>
+            )}
           </td>
           <td>{topAlerts.time} mins</td>
         </tr>
@@ -47,51 +52,58 @@ class MonitorAlerts extends Component {
   };
 
   componentDidMount() {
-    console.log('Randam Id For Page :  ', Math.floor(Math.random() * 1000000));
+    console.log("Randam Id For Page :  ", Math.floor(Math.random() * 1000000));
     try {
       this.fetchData();
     } catch (err) {
-      console.log('MonitorAlert page. Loading total alerts from elastic failed. Error: ', err);
+      console.log(
+        "MonitorAlert page. Loading total alerts from elastic failed. Error: ",
+        err
+      );
     }
     try {
       this.fetchDatatopAlertToday();
     } catch (err) {
-      console.log('failed to load top alert today ', err);
+      console.log("failed to load top alert today ", err);
     }
 
     try {
       this.fetchTeamMatricsData();
     } catch (err) {
-      console.log('failed to load Team Matrics Data ', err);
+      console.log("failed to load Team Matrics Data ", err);
     }
     try {
       this.fetchAvgRespTimeData();
     } catch (err) {
-      console.log('Avg Response time data load fail ', err);
+      console.log("Avg Response time data load fail ", err);
     }
     try {
       this.fetchAvgWaitTimeData();
     } catch (err) {
-      console.log('Avg Wait time data load fail ', err);
+      console.log("Avg Wait time data load fail ", err);
     }
   }
   fetchAvgRespTimeData = () => {
-    RestService.getData(config.GET_AVG_RESP_TIME_DATA, null, null).then((response) => {
+    fetch(
+      `http://34.199.12.114:5055/api/getAvgResponseTimeGraphDataFromDb`
+    ).then((response) => {
       this.setState({
         avgRespTimeData: response,
         dailyAvgRespTime: response.lineDataSetList[0],
       });
-      console.log('Avg Resp Time Data :::::: ', response);
+      console.log("Avg Resp Time Data :::::: ", response);
     });
   };
   fetchAvgWaitTimeData = () => {
-    RestService.getData(config.GET_AVG_WAIT_TIME_DATA, null, null).then((response) => {
-      this.setState({
-        avgWaitTimeData: response,
-        dailyAvgWaitTime: response.lineDataSetList[0],
-      });
-      console.log('Avg Resp Time Data :::::: ', response);
-    });
+    fetch(`http://34.199.12.114:5055/api/getWaitTimeGraphDataFromDb`).then(
+      (response) => {
+        this.setState({
+          avgWaitTimeData: response,
+          dailyAvgWaitTime: response.lineDataSetList[0],
+        });
+        console.log("Avg Resp Time Data :::::: ", response);
+      }
+    );
   };
   createOptionForAvgRespTime = () => {
     const { avgRespTimeData } = this.state;
@@ -126,28 +138,32 @@ class MonitorAlerts extends Component {
     });
   };
   fetchDatatopAlertToday = () => {
-    RestService.getData(config.TOP_ALERT_TODAY, null, null).then((response) => {
+    fetch(`http://34.199.12.114:5055/api/topAlertToday`).then((response) => {
       this.setState({
         topAlertsTodayData: response,
       });
-      console.log('top alert data :::::: ', response);
+      console.log("top alert data :::::: ", response);
     });
   };
   fetchTeamMatricsData = () => {
-    RestService.getData(config.GET_TEAM_MATRICS_DATA_URL, null, null).then((response) => {
-      this.setState({
-        teamMetricsData: response,
-      });
-      console.log('Team Matrics data :::::: ', response);
-    });
+    fetch(`http://34.199.12.114:7100/api/getTeamMatricsData`).then(
+      (response) => {
+        this.setState({
+          teamMetricsData: response,
+        });
+        console.log("Team Matrics data :::::: ", response);
+      }
+    );
   };
 
   fetchData = () => {
-    RestService.getData(config.TOTAL_ALERTS + '?type=alert&index=alert', null, null).then((response) => {
+    fetch(
+      "http://34.199.12.114:8092/search/totalRecords?type=alert&index=alert"
+    ).then((response) => {
       this.setState({
         totalAlerts: response,
       });
-      console.log('Total alert data :::::: ', response);
+      console.log("Total alert data :::::: ", response);
     });
   };
 
@@ -178,20 +194,23 @@ class MonitorAlerts extends Component {
       <div className="monitor-alerts-container">
         <div className="alert-page-container">
           <div className="common-container">
-            <a className="alert-blue-button" onClick={() => this.onClickUnImplementedFeature('')}>
+            <a
+              className="alert-blue-button"
+              onClick={() => this.onClickUnImplementedFeature("")}
+            >
               <i className="fa fa-refresh"></i>&nbsp;&nbsp; Refresh
             </a>
           </div>
           <div className="alert-data-container row common-container">
             <div className="alert-data-block col-lg-3 col-md-6 col-sm-12">
-              <Link to={`/all-alerts`}>
+              <Link to={`/alertmanager/pages/all-alerts`}>
                 <div className="alert-data-label">Total alerts</div>
                 <div className="alert-data">{totalAlerts}</div>
                 <div className="alert-data-meta">&nbsp;</div>
               </Link>
             </div>
             <div className="alert-data-block col-lg-3 col-md-6 col-sm-12">
-              <a onClick={() => this.onClickUnImplementedFeature('/alertmanager/pages/rules')}>
+              <a onClick={() => this.onClickUnImplementedFeature("/rules")}>
                 <div className="alert-data-label">Total alert rules</div>
                 <div className="alert-data">0</div>
                 <div className="alert-data-meta">Enabled 0</div>
@@ -242,11 +261,16 @@ class MonitorAlerts extends Component {
                 </div>
                 <div className="current-bottom row">
                   <div className="col-sm-8">
-                    <select name="avgWaitTimeSelectBox" onChange={(e) => this.onSelectAvgWaitDate(e)}>
+                    <select
+                      name="avgWaitTimeSelectBox"
+                      onChange={(e) => this.onSelectAvgWaitDate(e)}
+                    >
                       {this.createOptionForAvgWaitTime()}
                     </select>
                   </div>
-                  <div className="col-sm-4 minutes-text">{dailyAvgWaitTime} hours</div>
+                  <div className="col-sm-4 minutes-text">
+                    {dailyAvgWaitTime} hours
+                  </div>
                 </div>
               </div>
             </div>
@@ -255,7 +279,10 @@ class MonitorAlerts extends Component {
                 <div className="label">
                   Alert Volume <i className="fa fa-cog"></i>
                 </div>
-                <div className="current-time-chart row" style={{ margin: '0px' }}>
+                <div
+                  className="current-time-chart row"
+                  style={{ margin: "0px" }}
+                >
                   <AlertVolumeChart />
                 </div>
               </div>
@@ -265,7 +292,10 @@ class MonitorAlerts extends Component {
                 <div className="label">
                   Alert Volume By Status <i className="fa fa-cog"></i>
                 </div>
-                <div className="current-time-chart row" style={{ margin: '0px' }}>
+                <div
+                  className="current-time-chart row"
+                  style={{ margin: "0px" }}
+                >
                   <AlertVolumeByStatusChart />
                 </div>
               </div>
@@ -284,11 +314,16 @@ class MonitorAlerts extends Component {
                 </div>
                 <div className="current-bottom row">
                   <div className="col-sm-8">
-                    <select name="avgRespTimeSelectBox" onChange={(e) => this.onSelectAvgRespDate(e)}>
+                    <select
+                      name="avgRespTimeSelectBox"
+                      onChange={(e) => this.onSelectAvgRespDate(e)}
+                    >
                       {this.createOptionForAvgRespTime()}
                     </select>
                   </div>
-                  <div className="col-sm-4 minutes-text">{dailyAvgRespTime} hours</div>
+                  <div className="col-sm-4 minutes-text">
+                    {dailyAvgRespTime} hours
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from "react";
 
-export class Wizard extends Component {
+class Wizard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +12,10 @@ export class Wizard extends Component {
     this.setState({
       currentStep: activeStep,
     });
-    this.props.onChangeStep(activeStep, activeStep === this.props.steps.length - 1);
+    this.props.onChangeStep(
+      activeStep,
+      activeStep === this.props.steps.length - 1
+    );
   };
 
   createStepLine = () => {
@@ -24,7 +27,13 @@ export class Wizard extends Component {
       for (let i = 0; i < totalSteps; i++) {
         const step = steps[i];
         retData.push(
-          <div className={`wizard-step-button ${currentStep === i ? 'active' : ''}`}>{step.name}</div>
+          <div
+            className={`wizard-step-button ${
+              currentStep === i ? "active" : ""
+            }`}
+          >
+            {step.name}
+          </div>
         );
       }
     }
@@ -64,7 +73,13 @@ export class Wizard extends Component {
       for (let i = 0; i < totalSteps; i++) {
         const step = steps[i];
         retData.push(
-          <div className={`wizard-step-component ${currentStep === i ? '' : 'd-none'}`}>{step.component}</div>
+          <div
+            className={`wizard-step-component ${
+              currentStep === i ? "" : "d-none"
+            }`}
+          >
+            {step.component}
+          </div>
         );
       }
     }
@@ -74,9 +89,15 @@ export class Wizard extends Component {
   render() {
     return (
       <div>
-        <div className="wizard-step-line-container">{this.createStepLine()}</div>
-        <div className="wizard-step-component-container">{this.createStepContainer()}</div>
+        <div className="wizard-step-line-container">
+          {this.createStepLine()}
+        </div>
+        <div className="wizard-step-component-container">
+          {this.createStepContainer()}
+        </div>
       </div>
     );
   }
 }
+
+export default Wizard;

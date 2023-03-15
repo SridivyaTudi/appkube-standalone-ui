@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
-import { Line } from 'react-chartjs-2';
+import * as React from "react";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Line } from "react-chartjs-2";
 
 const options = {
   responsive: true,
@@ -14,7 +14,7 @@ const options = {
           stepSize: 20,
           suggestedMin: 0,
           callback: function (value, index, values) {
-            return value + '%';
+            return value + "%";
           },
         },
       },
@@ -22,15 +22,24 @@ const options = {
   },
 };
 
-export class AddConditionPopup extends Component {
+class AddConditionPopup extends React.Component {
   dummyData = {
-    label: '',
-    backgroundColor: '#21AFC3',
-    borderColor: '#21AFC3',
+    label: "",
+    backgroundColor: "#21AFC3",
+    borderColor: "#21AFC3",
     fill: false,
     data: [80, 81, 84, 82, 79, 76, 78, 80],
   };
-  labels = ['5:00 PM', '5:30 PM', '6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM', '8:00 PM', '8:30 PM'];
+  labels = [
+    "5:00 PM",
+    "5:30 PM",
+    "6:00 PM",
+    "6:30 PM",
+    "7:00 PM",
+    "7:30 PM",
+    "8:00 PM",
+    "8:30 PM",
+  ];
 
   constructor(props) {
     super(props);
@@ -56,21 +65,35 @@ export class AddConditionPopup extends Component {
   render() {
     const state = this.state;
     return (
-      <Modal isOpen={state.modal} toggle={this.toggle} className="modal-container alert-modal-container">
+      <Modal
+        isOpen={state.modal}
+        toggle={this.toggle}
+        className="modal-container alert-modal-container"
+      >
         <ModalHeader toggle={this.toggle}>Configure signal logic</ModalHeader>
-        <ModalBody style={{ height: 'calc(100vh - 210px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(100vh - 210px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           {!state.isDefineLogic && (
             <React.Fragment>
               <div className="select-resource-container">
                 <div className="italic-label p-t-1 primary-color-label">
-                  Choose a signal below and configure the logic on the next screen to define the alert condition
+                  Choose a signal below and configure the logic on the next
+                  screen to define the alert condition
                 </div>
                 <div className="form-row m-t-1">
                   <div className="form-group filter-control-group col-md-6 col-sm-12">
                     <label htmlFor="signalType" className="primary-color-label">
                       Signal Type
                     </label>
-                    <select className="form-control primary-select-box" id="signalType">
+                    <select
+                      className="form-control primary-select-box"
+                      id="signalType"
+                    >
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -82,7 +105,10 @@ export class AddConditionPopup extends Component {
                     <label htmlFor="services" className="primary-color-label">
                       Monitor Services
                     </label>
-                    <select className="form-control primary-select-box" id="services">
+                    <select
+                      className="form-control primary-select-box"
+                      id="services"
+                    >
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -108,7 +134,9 @@ export class AddConditionPopup extends Component {
                 </div>
                 <div className="row data-block m-t-2 m-b-3 p-b-2 border-bottom-dashed">
                   <div className="col-sm-12">
-                    <div className="primary-color-label">Displaying 1-5 signals out of 10</div>
+                    <div className="primary-color-label">
+                      Displaying 1-5 signals out of 10
+                    </div>
                     <table className="alert-data-table m-t-1">
                       <tbody>
                         <tr className="alert-data-table-header">
@@ -118,7 +146,10 @@ export class AddConditionPopup extends Component {
                         </tr>
                         <tr className="">
                           <td className="">
-                            <div className="pointer-label" onClick={(e) => this.toggleDefineLogic(true)}>
+                            <div
+                              className="pointer-label"
+                              onClick={(e) => this.toggleDefineLogic(true)}
+                            >
                               Percentage CPU
                             </div>
                           </td>
@@ -158,14 +189,18 @@ export class AddConditionPopup extends Component {
           {state.isDefineLogic && (
             <React.Fragment>
               <div className="italic-label p-t-1 primary-color-label">
-                Define the logic for triggering an alert. Use the chart to view trends in the data.
+                Define the logic for triggering an alert. Use the chart to view
+                trends in the data.
               </div>
               <div className="form-row p-t-2">
                 <div className="form-group filter-control-group col-md-4 col-sm-12">
                   <label htmlFor="signal-type" className="primary-color-label">
                     Signal Type
                   </label>
-                  <select className="form-control primary-select-box" id="signal-type">
+                  <select
+                    className="form-control primary-select-box"
+                    id="signal-type"
+                  >
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -174,10 +209,16 @@ export class AddConditionPopup extends Component {
                   </select>
                 </div>
                 <div className="form-group filter-control-group col-md-4 col-sm-12">
-                  <label htmlFor="monitor-service" className="primary-color-label">
+                  <label
+                    htmlFor="monitor-service"
+                    className="primary-color-label"
+                  >
                     Monitor Service
                   </label>
-                  <select className="form-control primary-select-box" id="monitor-service">
+                  <select
+                    className="form-control primary-select-box"
+                    id="monitor-service"
+                  >
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -186,24 +227,40 @@ export class AddConditionPopup extends Component {
                   </select>
                 </div>
               </div>
-              <Line data={{ labels: this.labels, datasets: [this.dummyData] }} options={options} height={320} />
+              <Line
+                data={{ labels: this.labels, datasets: [this.dummyData] }}
+                options={options}
+                height={320}
+              />
               <div className="row m-t-3">
                 <div className="col-sm-12">
-                  <div style={{ display: 'table-row' }}>
-                    <div style={{ display: 'table-cell' }}>
-                      <div className="gray-label bold-label">Percentage CPU</div>
-                      <div className="colored-label bold-label">Prod_DB_SYN14</div>
+                  <div style={{ display: "table-row" }}>
+                    <div style={{ display: "table-cell" }}>
+                      <div className="gray-label bold-label">
+                        Percentage CPU
+                      </div>
+                      <div className="colored-label bold-label">
+                        Prod_DB_SYN14
+                      </div>
                     </div>
                     <div
                       className="gray-label bold-label"
-                      style={{ display: 'table-cell', fontSize: '30px', verticalAlign: 'middle', paddingLeft: '15px' }}
+                      style={{
+                        display: "table-cell",
+                        fontSize: "30px",
+                        verticalAlign: "middle",
+                        paddingLeft: "15px",
+                      }}
                     >
                       82%
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="primary-color-label m-t-1" style={{ fontSize: '20px' }}>
+              <div
+                className="primary-color-label m-t-1"
+                style={{ fontSize: "20px" }}
+              >
                 Alert Logic
               </div>
               <div className="primary-color-label">Threshold</div>
@@ -212,7 +269,10 @@ export class AddConditionPopup extends Component {
                   <label htmlFor="operator" className="primary-color-label">
                     Operator
                   </label>
-                  <select className="form-control primary-select-box" id="operator">
+                  <select
+                    className="form-control primary-select-box"
+                    id="operator"
+                  >
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -224,7 +284,10 @@ export class AddConditionPopup extends Component {
                   <label htmlFor="aggregation" className="primary-color-label">
                     Aggregation Type
                   </label>
-                  <select className="form-control primary-select-box" id="aggregation">
+                  <select
+                    className="form-control primary-select-box"
+                    id="aggregation"
+                  >
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -236,7 +299,10 @@ export class AddConditionPopup extends Component {
                   <label htmlFor="threshold" className="primary-color-label">
                     Threshold value
                   </label>
-                  <select className="form-control primary-select-box" id="threshold">
+                  <select
+                    className="form-control primary-select-box"
+                    id="threshold"
+                  >
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -247,7 +313,9 @@ export class AddConditionPopup extends Component {
               </div>
               <div className="m-t-1 m-b-1">
                 <div className="primary-color-label">Condition preview</div>
-                <div className="italic-label primary-color-label">Whenever the CPU percentage is greater than 5%</div>
+                <div className="italic-label primary-color-label">
+                  Whenever the CPU percentage is greater than 5%
+                </div>
               </div>
               <div className="primary-color-label">Evaluated base on</div>
               <div className="form-row">
@@ -255,7 +323,10 @@ export class AddConditionPopup extends Component {
                   <label htmlFor="granularity" className="primary-color-label">
                     Aggregation granularity
                   </label>
-                  <select className="form-control primary-select-box" id="granularity">
+                  <select
+                    className="form-control primary-select-box"
+                    id="granularity"
+                  >
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -267,7 +338,10 @@ export class AddConditionPopup extends Component {
                   <label htmlFor="evaluation" className="primary-color-label">
                     Frequency of evaluation
                   </label>
-                  <select className="form-control primary-select-box" id="evaluation">
+                  <select
+                    className="form-control primary-select-box"
+                    id="evaluation"
+                  >
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -278,7 +352,10 @@ export class AddConditionPopup extends Component {
               </div>
               <div className="m-t-2">
                 <button className="alert-blue-button m-r-1">Done</button>
-                <button className="alert-blue-button m-r-1" onClick={(e) => this.toggleDefineLogic(false)}>
+                <button
+                  className="alert-blue-button m-r-1"
+                  onClick={(e) => this.toggleDefineLogic(false)}
+                >
                   Back
                 </button>
               </div>
@@ -289,3 +366,5 @@ export class AddConditionPopup extends Component {
     );
   }
 }
+
+export default AddConditionPopup;

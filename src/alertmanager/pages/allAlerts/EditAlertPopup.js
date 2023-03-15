@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
-import { RestService } from '../_service/RestService';
-import { config } from '../../config';
-import AlertMessage from '../../components/AlertMessage';
+import * as React from "react";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import { RestService } from "../_service/RestService";
+import { config } from "../../config";
+import AlertMessage from "../../components/AlertMessage";
 
-export class EditAlertPopup extends Component {
+class EditAlertPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +14,7 @@ export class EditAlertPopup extends Component {
       severity: null,
       guid: null,
       id: null,
-      alertState: '',
+      alertState: "",
     };
 
     this.updateAlert = this.updateAlert.bind(this);
@@ -23,10 +23,10 @@ export class EditAlertPopup extends Component {
   }
 
   toggle = (selectedAlert) => {
-    let alertState = '';
+    let alertState = "";
     const keys = Object.keys(selectedAlert);
     const lowerCaseKeys = keys.map((key) => key); //key.toLowerCase()
-    const index = lowerCaseKeys.indexOf('alertState');
+    const index = lowerCaseKeys.indexOf("alertState");
     if (index !== -1) {
       const key = keys[index];
       if (selectedAlert[key]) {
@@ -45,7 +45,7 @@ export class EditAlertPopup extends Component {
     this.setState({
       modal: !this.state.modal,
       alertId: null,
-      alertState: '',
+      alertState: "",
       id: null,
     });
   };
@@ -65,11 +65,11 @@ export class EditAlertPopup extends Component {
 
   async updateAlert() {
     const { guid, alertState } = this.state;
-    if (alertState === '') {
-      console.log('Please select alert state');
+    if (alertState === "") {
+      console.log("Please select alert state");
       this.setState({
         severity: config.SEVERITY_ERROR,
-        message: 'Please select alert state',
+        message: "Please select alert state",
         isAlertOpen: true,
       });
       return;
@@ -78,9 +78,9 @@ export class EditAlertPopup extends Component {
       guid: guid,
       alertState: alertState,
     };
-    console.log('Alert being update : ', obj);
+    console.log("Alert being update : ", obj);
     await RestService.add(config.UPDATE_ALERT, obj).then((response) => {
-      console.log('update alert response: ', response);
+      console.log("update alert response: ", response);
       if (response.length > 0) {
         // let ary = [];
         // for (let i = 0; i < response.length; i++) {
@@ -119,13 +119,24 @@ export class EditAlertPopup extends Component {
           msg={state.message}
         ></AlertMessage>
         <ModalHeader toggle={this.closeModel}>Update Alert</ModalHeader>
-        <ModalBody style={{ height: 'calc(100vh - 210px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(100vh - 210px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="select-resource-container">
             <div className="italic-label gray-label m-b-1"> </div>
             <div className="form-row m-t-1">
               <div className="form-group filter-control-group col-sm-3">
                 <label htmlFor="selectAlertState">Select Alert State</label>
-                <select className="form-control" name="alertState" value={state.alertState} onChange={this.onChange}>
+                <select
+                  className="form-control"
+                  name="alertState"
+                  value={state.alertState}
+                  onChange={this.onChange}
+                >
                   <option key="" value="">
                     Select Alert State
                   </option>
@@ -142,7 +153,10 @@ export class EditAlertPopup extends Component {
               </div>
             </div>
             <div>
-              <button className="btn btn-secondary m-r-2" onClick={this.updateAlert}>
+              <button
+                className="btn btn-secondary m-r-2"
+                onClick={this.updateAlert}
+              >
                 Update
               </button>
               <button className="btn btn-warning" onClick={this.closeModel}>
@@ -155,3 +169,5 @@ export class EditAlertPopup extends Component {
     );
   }
 }
+
+export default EditAlertPopup;

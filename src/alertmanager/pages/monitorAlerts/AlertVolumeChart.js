@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,12 +9,21 @@ import {
   Legend,
   PointElement,
   LineElement,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import { RestService } from '../_service/RestService';
-import { config } from '../../config';
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+import { RestService } from "../_service/RestService";
+import { config } from "../../config";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement
+);
 
 const options = {
   responsive: true,
@@ -33,8 +42,8 @@ const options = {
         ticks: {
           callback: function (value, index, values) {
             if (value) {
-              let str = value.split('-', 3);
-              let newData = str[1] + '-' + str[2];
+              let str = value.split("-", 3);
+              let newData = str[1] + "-" + str[2];
               return newData;
             }
             return null;
@@ -45,31 +54,31 @@ const options = {
   },
   legend: {
     display: false,
-    position: 'bottom',
+    position: "bottom",
   },
 };
 
 const lineChart = {
-  labels: ['', '', '', '', '', ''],
+  labels: ["", "", "", "", "", ""],
   datasets: [
     {
-      label: 'New',
+      label: "New",
       lineTension: 0.1,
       fill: false,
-      borderColor: 'rgba(252, 203, 80, 1)',
+      borderColor: "rgba(252, 203, 80, 1)",
       data: [],
     },
     {
-      label: 'Resolved 75',
+      label: "Resolved 75",
       lineTension: 0.1,
       fill: false,
-      borderColor: 'rgba(73, 183, 234, 1)',
+      borderColor: "rgba(73, 183, 234, 1)",
       data: [],
     },
   ],
 };
 
-class AlertVolumeChart extends Component {
+class AlertVolumeChart extends React.Component {
   chart;
   constructor(props) {
     super(props);
@@ -88,32 +97,34 @@ class AlertVolumeChart extends Component {
     try {
       this.fetchData();
     } catch (err) {
-      console.log('Alert Volume data load failed. Error: ', err);
+      console.log("Alert Volume data load failed. Error: ", err);
     }
   }
   fetchData = () => {
-    RestService.getData(config.GET_ALERT_VOLUME_DATA, null, null).then((response) => {
-      this.setState({
-        datasets: [
-          {
-            label: 'New',
-            lineTension: 0.1,
-            fill: false,
-            borderColor: 'rgba(252, 203, 80, 1)',
-            data: response.newAlertList,
-          },
-          {
-            label: 'Resolved',
-            lineTension: 0.1,
-            fill: false,
-            borderColor: 'rgba(73, 183, 234, 1)',
-            data: response.closedAlertList,
-          },
-        ],
-        labels: response.daysList,
-      });
-      console.log('Total alert data :::::: ', response);
-    });
+    fetch(`http://34.199.12.114:5055/api/getAlertVolumeData`).then(
+      (response) => {
+        this.setState({
+          datasets: [
+            {
+              label: "New",
+              lineTension: 0.1,
+              fill: false,
+              borderColor: "rgba(252, 203, 80, 1)",
+              data: response.newAlertList,
+            },
+            {
+              label: "Resolved",
+              lineTension: 0.1,
+              fill: false,
+              borderColor: "rgba(73, 183, 234, 1)",
+              data: response.closedAlertList,
+            },
+          ],
+          labels: response.daysList,
+        });
+        console.log("Total alert data :::::: ", response);
+      }
+    );
   };
   createLegend = () => {
     const text = [];
@@ -123,7 +134,10 @@ class AlertVolumeChart extends Component {
         text.push(
           <li>
             <div className="chart-legend">
-              <span className="legend-background" style={{ backgroundColor: legends[i].fillStyle }}></span>
+              <span
+                className="legend-background"
+                style={{ backgroundColor: legends[i].fillStyle }}
+              ></span>
               <span className="legend-label">{legends[i].text}</span>
             </div>
           </li>
@@ -135,8 +149,15 @@ class AlertVolumeChart extends Component {
 
   render() {
     return (
-      <div className="row" style={{ width: '100%', height: '100%', marginLeft: '0px' }}>
-        <Line ref={(ref) => (this.chart = ref)} data={lineChart} options={options} />
+      <div
+        className="row"
+        style={{ width: "100%", height: "100%", marginLeft: "0px" }}
+      >
+        <Line
+          ref={(ref) => (this.chart = ref)}
+          data={lineChart}
+          options={options}
+        />
         <div className="legend-container">
           <ul className="custom-chart-legends">{this.createLegend()}</ul>
         </div>

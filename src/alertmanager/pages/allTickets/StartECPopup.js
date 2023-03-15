@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody } from 'reactstrap';
+import * as React from "react";
+import { Modal, ModalBody } from "reactstrap";
 
-export class StartECPopup extends Component {
+class StartECPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,27 +23,43 @@ export class StartECPopup extends Component {
   render() {
     const state = this.state;
     return (
-      <Modal isOpen={state.modal} toggle={this.toggle} className="modal-container alert-modal-container">
+      <Modal
+        isOpen={state.modal}
+        toggle={this.toggle}
+        className="modal-container alert-modal-container"
+      >
         <button className="close-btn" onClick={this.handleClose}>
           X
         </button>
-        <ModalBody style={{ height: 'calc(100vh - 210px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(100vh - 210px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="d-block width-100 contact-popup-container select-resource-container">
             <div className="d-block width-100 p-b-20 heading">
               <h4 className="d-block">Start EC2</h4>
               <span className="d-block">
-                This Job executes start EC2 action whenever a CloudWatch Events alert with "Instance Stopped" message is
-                received
+                This Job executes start EC2 action whenever a CloudWatch Events
+                alert with "Instance Stopped" message is received
               </span>
             </div>
 
             <div className="form-group form-check">
-              <input type="checkbox" className="form-check-input" id="enablejob" />
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="enablejob"
+              />
               <label className="form-check-label" htmlFor="enablejob">
                 Enable Job
               </label>
             </div>
-            <div className="bold-label gray-label">If following conditions are met</div>
+            <div className="bold-label gray-label">
+              If following conditions are met
+            </div>
             <select className="form-control col-sm-9 m-t-1">
               <option>Default select</option>
             </select>
@@ -117,11 +133,25 @@ export class StartECPopup extends Component {
             <div className="bold-label gray-label">Then</div>
             <div className="gray-label m-b-2">
               Execute an action
-              <select className="form-control" style={{ width: '200px', display: 'inline-block', margin: '0px 10px' }}>
+              <select
+                className="form-control"
+                style={{
+                  width: "200px",
+                  display: "inline-block",
+                  margin: "0px 10px",
+                }}
+              >
                 <option>Start EC2 Instance</option>
               </select>
               Automatically
-              <select className="form-control" style={{ width: '200px', display: 'inline-block', margin: '0px 10px' }}>
+              <select
+                className="form-control"
+                style={{
+                  width: "200px",
+                  display: "inline-block",
+                  margin: "0px 10px",
+                }}
+              >
                 <option value="">20 min</option>
               </select>
               after alert is created.
@@ -138,3 +168,5 @@ export class StartECPopup extends Component {
     );
   }
 }
+
+export default StartECPopup;

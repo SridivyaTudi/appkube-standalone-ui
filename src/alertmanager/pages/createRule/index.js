@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { SelectResourcePopup } from './SelectResourcePopup';
-import { AddConditionPopup } from './AddConditionPopup';
-import { AddActionPopup } from './AddActionPopup';
+import * as React from "react";
+import SelectResourcePopup from "./SelectResourcePopup";
+import AddConditionPopup from "./AddConditionPopup";
+import AddActionPopup from "./AddActionPopup";
 
-class CreateRule extends Component {
+class CreateRule extends React.Component {
   selectResourceModalRef;
   addConditionRef;
   addActionRef;
@@ -56,14 +56,19 @@ class CreateRule extends Component {
                     <i className="fa fa-desktop"></i>
                   </div>
                   <div className="create-rule-header-text">
-                    <span style={{ color: 'red', marginRight: '10px' }}>*</span>
+                    <span style={{ color: "red", marginRight: "10px" }}>*</span>
                     <span>SELECT RESOURCES</span>
                   </div>
                 </div>
                 <div className="create-rule-header-content">
-                  <div className="italic-label">Select the target(s) you wish to monitor</div>
+                  <div className="italic-label">
+                    Select the target(s) you wish to monitor
+                  </div>
                   <div>
-                    <button className="alert-blue-button" onClick={this.onClickSelectResource}>
+                    <button
+                      className="alert-blue-button"
+                      onClick={this.onClickSelectResource}
+                    >
                       Select Resource
                     </button>
                   </div>
@@ -75,16 +80,20 @@ class CreateRule extends Component {
                     <i className="fa fa-file-o"></i>
                   </div>
                   <div className="create-rule-header-text">
-                    <span style={{ color: 'red', marginRight: '10px' }}>*</span>
+                    <span style={{ color: "red", marginRight: "10px" }}>*</span>
                     <span>CONDITION</span>
                   </div>
                 </div>
                 <div className="create-rule-header-content">
                   <div className="italic-label">
-                    No condition is selected. Click on 'Add' to select a signal and define its logic.
+                    No condition is selected. Click on 'Add' to select a signal
+                    and define its logic.
                   </div>
                   <div>
-                    <button className="alert-blue-button" onClick={this.onClickAddCondition}>
+                    <button
+                      className="alert-blue-button"
+                      onClick={this.onClickAddCondition}
+                    >
                       Add Condition
                     </button>
                   </div>
@@ -131,10 +140,15 @@ class CreateRule extends Component {
                     <label htmlFor="description" className="">
                       Description
                     </label>
-                    <textarea className="form-control" id="description"></textarea>
+                    <textarea
+                      className="form-control"
+                      id="description"
+                    ></textarea>
                   </div>
                   <div className="m-t-1">
-                    <button className="alert-gray-button m-r-2">Save &amp; enable</button>
+                    <button className="alert-gray-button m-r-2">
+                      Save &amp; enable
+                    </button>
                     <button className="alert-gray-button">Save</button>
                   </div>
                 </div>
@@ -152,4 +166,5 @@ class CreateRule extends Component {
     );
   }
 }
+
 export default CreateRule;

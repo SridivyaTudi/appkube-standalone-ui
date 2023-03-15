@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { ConditionsChart } from './ConditionsChart';
+import React from "react";
+import ConditionsChart from "./ConditionsChart";
 
-export class Conditions extends Component {
+class Conditions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,19 +18,19 @@ export class Conditions extends Component {
   }
 
   onChangeAlertType = (alertType) => {
-    if (alertType === 'Threshold') {
+    if (alertType === "Threshold") {
       this.setState({
         displayThresoldData: true,
         displayRelativeData: true,
         displayDadmanData: false,
       });
-    } else if (alertType === 'Relative') {
+    } else if (alertType === "Relative") {
       this.setState({
         displayThresoldData: false,
         displayRelativeData: true,
         displayDadmanData: false,
       });
-    } else if (alertType === 'Availability') {
+    } else if (alertType === "Availability") {
       this.setState({
         displayThresoldData: false,
         displayRelativeData: false,
@@ -43,7 +43,8 @@ export class Conditions extends Component {
     let thresoldData = (
       <div className="condition-header">
         <div className="send-alert-text">
-          Send Alert where <span className="time-series-text">Select a Time-Series</span> is
+          Send Alert where{" "}
+          <span className="time-series-text">Select a Time-Series</span> is
         </div>
         <div className="greater-select">
           <select>
@@ -126,7 +127,8 @@ export class Conditions extends Component {
   }
 
   render() {
-    const { displayThresoldData, displayRelativeData, displayDadmanData } = this.state;
+    const { displayThresoldData, displayRelativeData, displayDadmanData } =
+      this.state;
     return (
       <div className="alert-details">
         <div className="alert-details-name">
@@ -144,3 +146,5 @@ export class Conditions extends Component {
     );
   }
 }
+
+export default Conditions;

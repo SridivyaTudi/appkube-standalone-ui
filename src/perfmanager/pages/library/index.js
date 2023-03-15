@@ -8,13 +8,12 @@ import { Collapse, UncontrolledPopover, PopoverBody } from "reactstrap";
 import collapseToggleIcon from "./img/config-collapse-icon1.png";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import AlertMessage from "../../components/AlertMessage";
-import TopMenu from "./../catalog/topMenu";
+import  TopMenu  from "./../catalog/topMenu";
 import Rbac from "../../components/Rbac";
 import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 import ViewDashboardJsonPopup from "./viewDashboardJsonPopup";
 
 class Library extends React.Component {
-  breadCrumbs;
   unimplementedFeatureModalRef;
   steps;
   viewDashboardJsonPopupRef;
@@ -33,20 +32,6 @@ class Library extends React.Component {
       object: null,
       isAlertOpen: false,
     };
-    this.breadCrumbs = [
-      {
-        label: "Home",
-        route: `/`,
-      },
-      {
-        label: "Manage Dashboard",
-        route: `/managedashboard`,
-      },
-      {
-        label: "Library",
-        isCurrentPage: true,
-      },
-    ];
     this.unimplementedFeatureModalRef = React.createRef();
     this.viewDashboardJsonPopupRef = React.createRef();
   }
@@ -64,7 +49,7 @@ class Library extends React.Component {
       isApiCalled: true,
     });
     try {
-      await fetch(`http://100.64.107.25:5050/api/listLibraryTree`).then(
+      await RestService.getData(config.GET_LIBRARY_TREE, null, null).then(
         (response) => {
           this.setState({
             libData: response,

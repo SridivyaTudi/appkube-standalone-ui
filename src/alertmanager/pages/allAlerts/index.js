@@ -1,17 +1,23 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, UncontrolledPopover, PopoverBody } from 'reactstrap';
-import { config } from '../../config';
-import { PopupContent } from './PopupContent';
-import { EditAlertPopup } from './EditAlertPopup';
-import { RestService } from '../_service/RestService';
-import AlertMessage from '../../components/AlertMessage';
-import ConfirmDialog from '../../components/ConfirmDialog';
-import Table from '../../components/table';
-import DateTimeRangePicker from '@wojtekmaj/react-datetimerange-picker';
-import Rbac from '../../components/Rbac';
+import * as React from "react";
+import { Link } from "react-router-dom";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  UncontrolledPopover,
+  PopoverBody,
+} from "reactstrap";
+import { config } from "../../config";
+import PopupContent from "./PopupContent";
+import EditAlertPopup from "./EditAlertPopup";
+import { RestService } from "../_service/RestService";
+import AlertMessage from "../../components/AlertMessage";
+import ConfirmDialog from "../../components/ConfirmDialog";
+import Table from "./../../components/table";
+import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
+import Rbac from "./../../components/Rbac";
 
-class AllAlerts extends Component {
+class AllAlerts extends React.Component {
   editAlertRef;
   resourceGroup;
   resources;
@@ -31,28 +37,31 @@ class AllAlerts extends Component {
       objectId: null,
       object: null,
       message: null,
-      severity: '',
+      severity: "",
       isAlertOpen: false,
       alertData: [],
       modal: false,
-      resourceGroup: '',
-      resource: '',
-      monitorService: '',
-      alertType: '',
-      alertState: '',
+      resourceGroup: "",
+      resource: "",
+      monitorService: "",
+      alertType: "",
+      alertState: "",
       filterCheckbox: false,
-      alertName: '',
-      client_url: '',
+      alertName: "",
+      client_url: "",
       alertObjAry: null,
       alertObject: {},
       columns: [
         {
-          label: 'Name',
-          key: 'name',
+          label: "Name",
+          key: "name",
           renderCallback: (value, alert) => {
             return (
               <td>
-                <div className="pointer-label" onClick={() => this.toggleModal(value, alert)}>
+                <div
+                  className="pointer-label"
+                  onClick={() => this.toggleModal(value, alert)}
+                >
                   {value}
                 </div>
               </td>
@@ -61,23 +70,23 @@ class AllAlerts extends Component {
           isCaseInsensitive: true,
         },
         {
-          label: 'Severity',
-          key: 'severity',
+          label: "Severity",
+          key: "severity",
           renderCallback: (value) => {
-            let strClass = '';
+            let strClass = "";
             if (value) {
               value = value.toLowerCase();
             }
-            if (value === 'high') {
-              strClass = 'severity-high';
-            } else if (value === 'low') {
-              strClass = 'severity-low';
-            } else if (value === 'urgent') {
-              strClass = 'severity-urgent';
-            } else if (value === 'critical') {
-              strClass = 'severity-critical';
-            } else if (value === 'medium') {
-              strClass = 'severity-medium';
+            if (value === "high") {
+              strClass = "severity-high";
+            } else if (value === "low") {
+              strClass = "severity-low";
+            } else if (value === "urgent") {
+              strClass = "severity-urgent";
+            } else if (value === "critical") {
+              strClass = "severity-critical";
+            } else if (value === "medium") {
+              strClass = "severity-medium";
             }
             return (
               <td>
@@ -88,81 +97,111 @@ class AllAlerts extends Component {
           isCaseInsensitive: true,
         },
         {
-          label: 'Monitor Condition',
-          key: 'monitorcondition',
+          label: "Monitor Condition",
+          key: "monitorcondition",
           isCaseInsensitive: true,
         },
         {
-          label: 'Alert State',
-          key: 'alertState',
+          label: "Alert State",
+          key: "alertState",
           isCaseInsensitive: false,
         },
         {
-          label: 'Affected Resource',
-          key: 'affectedresource',
+          label: "Affected Resource",
+          key: "affectedresource",
           isCaseInsensitive: true,
         },
         {
-          label: 'Monitor Service',
-          key: 'monitorservice',
+          label: "Monitor Service",
+          key: "monitorservice",
           isCaseInsensitive: true,
         },
         {
-          label: 'Signal Type',
-          key: 'signaltype',
+          label: "Signal Type",
+          key: "signaltype",
           isCaseInsensitive: true,
         },
         {
-          label: 'Fired Time',
-          key: 'firedtime',
+          label: "Fired Time",
+          key: "firedtime",
           isCaseInsensitive: true,
         },
         {
-          label: 'Subscription',
-          key: 'brcsubscription',
+          label: "Subscription",
+          key: "brcsubscription",
           isCaseInsensitive: true,
         },
         {
-          label: 'Suppression State',
-          key: 'suppressionstate',
+          label: "Suppression State",
+          key: "suppressionstate",
           isCaseInsensitive: true,
         },
         {
-          label: 'Resources',
-          key: 'resources',
+          label: "Resources",
+          key: "resources",
           isCaseInsensitive: true,
         },
         {
-          label: 'Action',
-          key: 'action',
+          label: "Action",
+          key: "action",
           renderCallback: (value, alert) => {
             return (
               <td>
                 <div className="d-inline-block">
-                  <Rbac parentName={config.PARENT_NAME} childName="allalerts-index-alerttbl-editbtn">
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="allalerts-index-alerttbl-editbtn"
+                  >
                     <button className="btn btn-link">
-                      <i onClick={(e) => this.onClickEditAlert(e, alert)} className="fa fa-edit"></i>
+                      <i
+                        onClick={(e) => this.onClickEditAlert(e, alert)}
+                        className="fa fa-edit"
+                      ></i>
                     </button>
                   </Rbac>
-                  <Rbac parentName={config.PARENT_NAME} childName="allalerts-index-alerttbl-deletebtn">
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="allalerts-index-alerttbl-deletebtn"
+                  >
                     <button className="btn btn-link">
-                      <i onClick={(e) => this.onClickDeleteAlert(e, alert)} className="fa fa-trash"></i>
+                      <i
+                        onClick={(e) => this.onClickDeleteAlert(e, alert)}
+                        className="fa fa-trash"
+                      ></i>
                     </button>
                   </Rbac>
-                  <button className="btn btn-link" id={`PopoverFocus-${alert.guid}`}>
+                  <button
+                    className="btn btn-link"
+                    id={`PopoverFocus-${alert.guid}`}
+                  >
                     <i className="fa fa-ellipsis-h"></i>
                   </button>
-                  <UncontrolledPopover trigger="legacy" placement="bottom" target={`PopoverFocus-${alert.guid}`}>
+                  <UncontrolledPopover
+                    trigger="legacy"
+                    placement="bottom"
+                    target={`PopoverFocus-${alert.guid}`}
+                  >
                     <PopoverBody>
-                      <Rbac parentName={config.PARENT_NAME} childName="allalerts-index-alerttbl-createticketbtn">
+                      <Rbac
+                        parentName={config.PARENT_NAME}
+                        childName="allalerts-index-alerttbl-createticketbtn"
+                      >
                         <Link
                           className=" "
-                          to={`/alertmanager/pages/all-tickets?guid=` + alert.guid + '&alertName=' + alert.name}
+                          to={
+                            `/all-tickets?guid=` +
+                            alert.guid +
+                            "&alertName=" +
+                            alert.name
+                          }
                         >
                           Create Ticket
                         </Link>
                       </Rbac>
-                      <Rbac parentName={config.PARENT_NAME} childName="allalerts-index-alerttbl-silencebtn">
+                      <Rbac
+                        parentName={config.PARENT_NAME}
+                        childName="allalerts-index-alerttbl-silencebtn"
+                      >
                         <Link className=" " to="#">
                           Silence
                         </Link>
@@ -179,112 +218,112 @@ class AllAlerts extends Component {
     };
     this.resourceGroup = [
       {
-        label: 'Compute',
-        value: 'compute',
+        label: "Compute",
+        value: "compute",
       },
       {
-        label: 'Jobs',
-        value: 'jobs',
+        label: "Jobs",
+        value: "jobs",
       },
       {
-        label: 'Network',
-        value: 'network',
+        label: "Network",
+        value: "network",
       },
     ];
     this.resources = {
       compute: [
         {
-          label: 'Node',
-          value: 'node',
+          label: "Node",
+          value: "node",
         },
         {
-          label: 'Database',
-          value: 'database',
+          label: "Database",
+          value: "database",
         },
         {
-          label: 'Storage',
-          value: 'storage',
+          label: "Storage",
+          value: "storage",
         },
         {
-          label: 'App',
-          value: 'app',
+          label: "App",
+          value: "app",
         },
       ],
       jobs: [
         {
-          label: 'SHELL JOBS',
-          value: 'shell jobs',
+          label: "SHELL JOBS",
+          value: "shell jobs",
         },
         {
-          label: 'ETL JOBS',
-          value: 'etl jobs',
+          label: "ETL JOBS",
+          value: "etl jobs",
         },
       ],
       network: [
         {
-          label: 'VPC',
-          value: 'vpc',
+          label: "VPC",
+          value: "vpc",
         },
         {
-          label: 'VPN',
-          value: 'vpn',
+          label: "VPN",
+          value: "vpn",
         },
       ],
     };
     this.monitoringServices = [
       {
-        label: 'Native AWS',
-        value: 'native aws',
+        label: "Native AWS",
+        value: "native aws",
       },
       {
-        label: 'Native AZURE',
-        value: 'native azure',
+        label: "Native AZURE",
+        value: "native azure",
       },
     ];
     this.alertTypes = [
       {
-        label: 'Metrics',
-        value: 'metrics',
+        label: "Metrics",
+        value: "metrics",
       },
       {
-        label: 'Logs',
-        value: 'logs',
+        label: "Logs",
+        value: "logs",
       },
     ];
     this.severity = [
       {
-        label: 'Urgent',
-        value: 'urgent',
+        label: "Urgent",
+        value: "urgent",
       },
       {
-        label: 'Critical',
-        value: 'critical',
+        label: "Critical",
+        value: "critical",
       },
       {
-        label: 'High',
-        value: 'high',
+        label: "High",
+        value: "high",
       },
       {
-        label: 'Medium',
-        value: 'medium',
+        label: "Medium",
+        value: "medium",
       },
       {
-        label: 'Low',
-        value: 'low',
+        label: "Low",
+        value: "low",
       },
     ];
     this.alertStates = [
       {
-        label: 'New',
-        value: 'New',
+        label: "New",
+        value: "New",
       },
       {
-        label: 'InProgress',
-        value: 'InProgress',
+        label: "InProgress",
+        value: "InProgress",
       },
       {
-        label: 'Closed',
-        value: 'Closed',
+        label: "Closed",
+        value: "Closed",
       },
     ];
     this.editAlertRef = React.createRef();
@@ -305,7 +344,7 @@ class AllAlerts extends Component {
     try {
       this.fetchData();
     } catch (err) {
-      console.log('Alert data refresh failed. Error: ', err);
+      console.log("Alert data refresh failed. Error: ", err);
     }
   };
 
@@ -313,22 +352,22 @@ class AllAlerts extends Component {
     try {
       this.fetchData();
     } catch (err) {
-      console.log('AllAlert page. Loading alert data from elastic failed. Error: ', err);
+      console.log(
+        "AllAlert page. Loading alert data from elastic failed. Error: ",
+        err
+      );
     }
   }
 
   fetchData = () => {
-    RestService.getData(config.GET_ALL_ALERT_FROM_ELASTIC, null, null).then((response) => {
-      // let ary = [];
-      // for (let i = 0; i < response.length; i++) {
-      //     let j = JSON.parse(response[i]);
-      //     ary.push(j);
-      // }
-      console.log('alert data : ', response);
-      this.setState({
-        alertData: response,
-      });
-    });
+    RestService.getData(config.GET_ALL_ALERT_FROM_ELASTIC, null, null).then(
+      (response) => {
+        console.log("alert data : ", response);
+        this.setState({
+          alertData: response,
+        });
+      }
+    );
   };
   toggle = () => {
     this.setState({
@@ -353,9 +392,9 @@ class AllAlerts extends Component {
       [name]: value,
       filterCheckbox: true,
     });
-    if (name === 'resourceGroup') {
+    if (name === "resourceGroup") {
       this.setState({
-        resource: '',
+        resource: "",
       });
     }
   };
@@ -380,7 +419,7 @@ class AllAlerts extends Component {
         const lowerCaseKeys = alertKeys.map((key) => key.toLocaleLowerCase());
         let isMatched = true;
         if (resourceGroup) {
-          let index = lowerCaseKeys.indexOf('resourcegroup');
+          let index = lowerCaseKeys.indexOf("resourcegroup");
           if (index !== -1) {
             let key = alertKeys[index];
             let data = alert[key];
@@ -394,7 +433,7 @@ class AllAlerts extends Component {
           }
         }
         if (isMatched && resource) {
-          let index = lowerCaseKeys.indexOf('resources');
+          let index = lowerCaseKeys.indexOf("resources");
           if (index !== -1) {
             let key = alertKeys[index];
             let data = alert[key];
@@ -408,7 +447,7 @@ class AllAlerts extends Component {
           }
         }
         if (isMatched && monitorService) {
-          let index = lowerCaseKeys.indexOf('monitorservice');
+          let index = lowerCaseKeys.indexOf("monitorservice");
           if (index !== -1) {
             let key = alertKeys[index];
             let data = alert[key];
@@ -422,7 +461,7 @@ class AllAlerts extends Component {
           }
         }
         if (isMatched && alertType) {
-          let index = lowerCaseKeys.indexOf('signaltype');
+          let index = lowerCaseKeys.indexOf("signaltype");
           if (index !== -1) {
             let key = alertKeys[index];
             let data = alert[key];
@@ -436,7 +475,7 @@ class AllAlerts extends Component {
           }
         }
         if (isMatched && severity) {
-          let index = lowerCaseKeys.indexOf('severity');
+          let index = lowerCaseKeys.indexOf("severity");
           if (index !== -1) {
             let key = alertKeys[index];
             let data = alert[key];
@@ -450,12 +489,12 @@ class AllAlerts extends Component {
           }
         }
         if (isMatched && alertState) {
-          let index = lowerCaseKeys.indexOf('alertstate');
+          let index = lowerCaseKeys.indexOf("alertstate");
           if (index !== -1) {
             let key = alertKeys[index];
             let data = alert[key];
             if (data) {
-              isMatched = alertState === data; //.toLowerCase();
+              isMatched = alertState === data;
             } else {
               isMatched = false;
             }
@@ -464,11 +503,11 @@ class AllAlerts extends Component {
           }
         }
         if (isMatched && dateRange && dateRange.length > 1) {
-          let index = lowerCaseKeys.indexOf('firedtime');
+          let index = lowerCaseKeys.indexOf("firedtime");
           if (index !== -1) {
             let key = alertKeys[index];
             let data = alert[key];
-            let firedTime = data.split(',')[1];
+            let firedTime = data.split(",")[1];
             if (firedTime) {
               firedTime = firedTime.trim();
               firedTime = parseInt(firedTime, 10);
@@ -492,12 +531,12 @@ class AllAlerts extends Component {
   };
 
   onClickEditAlert = (e, selectedAlert) => {
-    console.log('Opening edit alert box. alert : ', selectedAlert);
+    console.log("Opening edit alert box. alert : ", selectedAlert);
     this.editAlertRef.current.toggle(selectedAlert);
   };
 
   updateAlertList = (alertList) => {
-    console.log('Updated alert list :::: ', alertList);
+    console.log("Updated alert list :::: ", alertList);
     this.setState({
       alertData: alertList,
     });
@@ -505,16 +544,16 @@ class AllAlerts extends Component {
 
   clearAllFilters = () => {
     this.setState({
-      resourceGroup: '',
-      resource: '',
-      monitorService: '',
-      alertType: '',
-      severity: '',
-      alertState: '',
-      currentTime: 'Last 6 hours',
+      resourceGroup: "",
+      resource: "",
+      monitorService: "",
+      alertType: "",
+      severity: "",
+      alertState: "",
+      currentTime: "Last 6 hours",
       filterCheckbox: false,
-      fromTime: 'now-6h',
-      toTime: 'now',
+      fromTime: "now-6h",
+      toTime: "now",
     });
   };
 
@@ -532,58 +571,19 @@ class AllAlerts extends Component {
           alertData: response,
         });
       } catch (e) {
-        console.log('Some error in deleting alert data');
+        console.log("Some error in deleting alert data");
         this.setState({
           severity: config.SEVERITY_ERROR,
-          message: 'Alert could not be deleted. Please check the service logs for details',
+          message:
+            "Alert could not be deleted. Please check the service logs for details",
           isAlertOpen: true,
         });
       }
     });
-    // let res = this.callDeleteApi(url);
-
-    // res.then((result) => {
-    //     try {
-    //         this.setState({
-    //             alertData: result
-    //         });
-    //         // let r = JSON.parse(result);
-    //         // if (result.length > 0) {
-    //         //     // console.log("Updating alert list : ", r);
-    //         //     // let ary = [];
-    //         //     // for (let i = 0; i < r.length; i++) {
-    //         //     //     let j = JSON.parse(r[i]);
-    //         //     //     ary.push(j);
-    //         //     // }
-    //         //     this.setState({
-    //         //         alertData: result
-    //         //     });
-    //         // } else {
-    //         //     this.setState({
-    //         //         alertData: []
-    //         //     });
-    //         // }
-    //     } catch (e) {
-    //         console.log("Some error in deleting alert data");
-    //         this.setState({
-    //             severity: config.SEVERITY_ERROR,
-    //             message: 'Alert could not be deleted. Please check the service logs for details',
-    //             isAlertOpen: true,
-    //         });
-    //     }
-    // })
 
     this.setState({
       isConfirmDialogOpen: false,
     });
-
-    // setTimeout(
-    //     () => this.setState({
-    //         severity: config.SEVERITY_SUCCESS,
-    //         message: 'Alert deleted successfully',
-    //         isAlertOpen: true,
-    //     }), 2000
-    // )
   };
 
   async callDeleteApi(url) {
@@ -600,15 +600,15 @@ class AllAlerts extends Component {
     });
   };
   showData = () => {
-    console.log('State Data=', this.state.alertData);
+    console.log("State Data=", this.state.alertData);
   };
   onClickDeleteAlert = (e, alert) => {
-    console.log('Alert : ' + alert);
+    console.log("Alert : " + alert);
     this.setState({
-      confirmTitleMessage: 'Delete Alert',
-      message: 'Are you sure, you want to delete the alert?',
+      confirmTitleMessage: "Delete Alert",
+      message: "Are you sure, you want to delete the alert?",
       isConfirmDialogOpen: true,
-      objectType: 'alert',
+      objectType: "alert",
       object: alert,
     });
   };
@@ -659,13 +659,19 @@ class AllAlerts extends Component {
 
         <div className="alert-page-container">
           <div className="common-container">
-            <Link to={`/alertmanager/pages/manage-alert-rule`} className="alert-white-button">
+            <Link
+              to={`/alertmanager/pages/manage-alert-rule`}
+              className="alert-white-button"
+            >
               <i className="fa fa-plus"></i>&nbsp;&nbsp; New Alert Rule
             </Link>
             <a className="alert-white-button" onClick={this.refreshData}>
               <i className="fa fa-refresh"></i>&nbsp;&nbsp; Refresh
             </a>
-            <Link to={`/alertmanager/pages/manage-alert-rule`} className="alert-white-button float-right">
+            <Link
+              to={`/alertmanager/pages/monitor-alerts`}
+              className="alert-white-button float-right"
+            >
               <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
             </Link>
           </div>
@@ -690,20 +696,16 @@ class AllAlerts extends Component {
                 Resources&nbsp;&nbsp;&nbsp;
                 <i className="fa fa-info-circle"></i>
               </label>
-              <select className="form-control" name="resource" value={resource} onChange={this.handleStateChange}>
+              <select
+                className="form-control"
+                name="resource"
+                value={resource}
+                onChange={this.handleStateChange}
+              >
                 <option value="">Select Resources</option>
                 {this.createSelectbox(this.resources[resourceGroup])}
               </select>
             </div>
-
-            {/* <TimeRange /> */}
-            {/* <div className="col-lg-2 col-md-3 col-sm-12">
-                            <DateTimeRangePicker
-                                onChange={this.onChange}
-                                value={value}
-                            />
-                            <TimeRange />
-                        </div> */}
             <div className="form-group filter-control-group">
               <label htmlFor="monitorservices">
                 Monitor services&nbsp;&nbsp;&nbsp;
@@ -724,7 +726,12 @@ class AllAlerts extends Component {
                 Alert Type&nbsp;&nbsp;&nbsp;
                 <i className="fa fa-info-circle"></i>
               </label>
-              <select className="form-control" name="alertType" value={alertType} onChange={this.handleStateChange}>
+              <select
+                className="form-control"
+                name="alertType"
+                value={alertType}
+                onChange={this.handleStateChange}
+              >
                 <option value="">Select Alert Type</option>
                 {this.createSelectbox(this.alertTypes)}
               </select>
@@ -734,7 +741,12 @@ class AllAlerts extends Component {
                 Severity&nbsp;&nbsp;&nbsp;
                 <i className="fa fa-info-circle"></i>
               </label>
-              <select className="form-control" name="severity" value={severity} onChange={this.handleStateChange}>
+              <select
+                className="form-control"
+                name="severity"
+                value={severity}
+                onChange={this.handleStateChange}
+              >
                 <option value="">Select Severity</option>
                 {this.createSelectbox(this.severity)}
               </select>
@@ -744,7 +756,12 @@ class AllAlerts extends Component {
                 Alert state&nbsp;&nbsp;&nbsp;
                 <i className="fa fa-info-circle"></i>
               </label>
-              <select className="form-control" name="alertState" value={alertState} onChange={this.handleStateChange}>
+              <select
+                className="form-control"
+                name="alertState"
+                value={alertState}
+                onChange={this.handleStateChange}
+              >
                 <option value="Select Alert State">Select Alert State</option>
                 {this.createSelectbox(this.alertStates)}
               </select>
@@ -754,7 +771,11 @@ class AllAlerts extends Component {
                 Time Range&nbsp;&nbsp;&nbsp;
                 <i className="fa fa-info-circle"></i>
               </label>
-              <DateTimeRangePicker onChange={this.onChange} value={dateRange} rangeDivider="to" />
+              <DateTimeRangePicker
+                onChange={this.onChange}
+                value={dateRange}
+                rangeDivider="to"
+              />
             </div>
             <div className="form-group filter-control-group archive">
               <label htmlFor="archive">
@@ -772,7 +793,10 @@ class AllAlerts extends Component {
                   name="clearAllFilter"
                   onChange={this.clearAllFilters}
                 />
-                <button className="alert-blue-button m-r-0 m-b-0 clear-btn" onChange={this.clearAllFilters}>
+                <button
+                  className="alert-blue-button m-r-0 m-b-0 clear-btn"
+                  onChange={this.clearAllFilters}
+                >
                   Clear All Filters
                 </button>
               </div>
@@ -787,9 +811,9 @@ class AllAlerts extends Component {
               perPageLimit={6}
               visiblecheckboxStatus={true}
               tableClasses={{
-                table: 'alert-data-tabel',
-                tableParent: 'alerts-data-tabel',
-                parentClass: 'all-alert-data-table',
+                table: "alert-data-tabel",
+                tableParent: "alerts-data-tabel",
+                parentClass: "all-alert-data-table",
               }}
               searchKey="name"
               showingLine="Showing %start% to %end% of %total%"
@@ -803,21 +827,23 @@ class AllAlerts extends Component {
           modalClassName="alert-modal-container"
         >
           <ModalHeader toggle={this.toggle}>{this.state.alertName}</ModalHeader>
-          <ModalBody style={{ height: 'calc(100vh - 210px)', overflowY: 'auto', overflowX: 'hidden' }}>
+          <ModalBody
+            style={{
+              height: "calc(100vh - 210px)",
+              overflowY: "auto",
+              overflowX: "hidden",
+            }}
+          >
             <PopupContent alert={alertObject} />
           </ModalBody>
         </Modal>
-        {/* {alertTable.isDataPresent &&
-                     <UncontrolledPopover trigger="legacy" placement="bottom" target="PopoverFocus">
-                         <PopoverBody>
-                             <Link className=" " to={`${PLUGIN_BASE_URL}/alltickets`}>Create Ticket</Link>
-                             <Link className=" " to="">Silence</Link>
-                         </PopoverBody>
-                     </UncontrolledPopover>
-                 } */}
-        <EditAlertPopup onSaveUpdate={this.updateAlertList} ref={this.editAlertRef} />
+        <EditAlertPopup
+          onSaveUpdate={this.updateAlertList}
+          ref={this.editAlertRef}
+        />
       </div>
     );
   }
 }
+
 export default AllAlerts;

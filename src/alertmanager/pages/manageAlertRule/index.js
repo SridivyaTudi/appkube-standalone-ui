@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { config } from '../../config';
-import Table from '../../components/table';
-import Rbac from '../../components/Rbac';
-import UnimplementedFeaturePopup from '../../components/UnimplementedFeaturePopup';
+import * as React from "react";
+import { Link } from "react-router-dom";
+import { config } from "../../config";
+import Table from "./../../components/table";
+import Rbac from "./../../components/Rbac";
+import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 
-class ManageAlertRule extends Component {
+class ManageAlertRule extends React.Component {
   alertsRulesData;
   alertsScriptsData;
   tableValue;
@@ -18,36 +18,48 @@ class ManageAlertRule extends Component {
     this.tableValue = {
       columns: [
         {
-          label: 'Name',
-          key: 'name',
+          label: "Name",
+          key: "name",
         },
         {
-          label: 'Rule Type',
-          key: 'ruleType',
+          label: "Rule Type",
+          key: "ruleType",
         },
         {
-          label: 'Message',
-          key: 'message',
+          label: "Message",
+          key: "message",
         },
         {
-          label: 'Alert Handlers',
-          key: 'alertHandlers',
+          label: "Alert Handlers",
+          key: "alertHandlers",
         },
         {
-          label: 'Action',
-          key: 'action',
+          label: "Action",
+          key: "action",
           renderCallback: () => {
             return (
               <td>
                 <div className="d-inline-block">
                   <div className="enabled"></div>
-                  <Rbac parentName={config.PARENT_NAME} childName="managealertrule-index-ruletbl-editbtn">
-                    <button className="btn btn-link" onClick={() => this.onClickUnImplementedFeature('')}>
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="managealertrule-index-ruletbl-editbtn"
+                  >
+                    <button
+                      className="btn btn-link"
+                      onClick={() => this.onClickUnImplementedFeature("")}
+                    >
                       <i className="fa fa-edit"></i>
                     </button>
                   </Rbac>
-                  <Rbac parentName={config.PARENT_NAME} childName="managealertrule-index-ruletbl-deletebtn">
-                    <button className="btn btn-link" onClick={() => this.onClickUnImplementedFeature('')}>
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="managealertrule-index-ruletbl-deletebtn"
+                  >
+                    <button
+                      className="btn btn-link"
+                      onClick={() => this.onClickUnImplementedFeature("")}
+                    >
                       <i className="fa fa-trash"></i>
                     </button>
                   </Rbac>
@@ -59,50 +71,62 @@ class ManageAlertRule extends Component {
       ],
       data: [
         {
-          name: 'CPU Percentage',
-          ruleType: 'Threshold',
-          message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
-          alertHandlers: 'Slack (default)',
+          name: "CPU Percentage",
+          ruleType: "Threshold",
+          message: "{{.ID}} {{.Name}} {{.TaskName}} {{….",
+          alertHandlers: "Slack (default)",
         },
         {
-          name: 'Disk Read Bytes	',
-          ruleType: 'Threshold',
-          message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
-          alertHandlers: 'Slack (default)',
+          name: "Disk Read Bytes	",
+          ruleType: "Threshold",
+          message: "{{.ID}} {{.Name}} {{.TaskName}} {{….",
+          alertHandlers: "Slack (default)",
         },
         {
-          name: 'Disk Write Bytes	',
-          ruleType: 'Threshold',
-          message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
-          alertHandlers: 'Slack (default)',
+          name: "Disk Write Bytes	",
+          ruleType: "Threshold",
+          message: "{{.ID}} {{.Name}} {{.TaskName}} {{….",
+          alertHandlers: "Slack (default)",
         },
       ],
     };
     this.scriptValue = {
       columns: [
         {
-          label: 'Name',
-          key: 'name',
+          label: "Name",
+          key: "name",
         },
         {
-          label: 'Type',
-          key: 'type',
+          label: "Type",
+          key: "type",
         },
         {
-          label: 'Action',
-          key: 'action',
+          label: "Action",
+          key: "action",
           renderCallback: () => {
             return (
               <td>
                 <div className="d-inline-block">
                   <div className="enabled"></div>
-                  <Rbac parentName={config.PARENT_NAME} childName="managealertrule-index-scripttbl-editbtn">
-                    <button className="btn btn-link" onClick={() => this.onClickUnImplementedFeature('')}>
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="managealertrule-index-scripttbl-editbtn"
+                  >
+                    <button
+                      className="btn btn-link"
+                      onClick={() => this.onClickUnImplementedFeature("")}
+                    >
                       <i className="fa fa-edit"></i>
                     </button>
                   </Rbac>
-                  <Rbac parentName={config.PARENT_NAME} childName="managealertrule-index-scripttbl-deletebtn">
-                    <button className="btn btn-link" onClick={() => this.onClickUnImplementedFeature('')}>
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="managealertrule-index-scripttbl-deletebtn"
+                  >
+                    <button
+                      className="btn btn-link"
+                      onClick={() => this.onClickUnImplementedFeature("")}
+                    >
                       <i className="fa fa-trash"></i>
                     </button>
                   </Rbac>
@@ -114,50 +138,23 @@ class ManageAlertRule extends Component {
       ],
       data: [
         {
-          name: 'CPU Percentage',
-          type: 'Slack (default)',
+          name: "CPU Percentage",
+          type: "Slack (default)",
         },
         {
-          name: 'Disk Read Bytes	',
-          type: 'Slack (default)',
+          name: "Disk Read Bytes	",
+          type: "Slack (default)",
         },
         {
-          name: 'Disk Write Bytes	',
-          type: 'Slack (default)',
+          name: "Disk Write Bytes	",
+          type: "Slack (default)",
         },
       ],
     };
     this.perPageLimit = 3;
     this.checkboxValue = true;
     this.state = {};
-
     this.unimplementedFeatureModalRef = React.createRef();
-    // this.alertsRulesData = [{
-    //     name: 'CPU Percentage',
-    //     ruleType: 'Threshold',
-    //     message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
-    //     alertHandlers: 'Slack (default)'
-    // }, {
-    //     name: 'Disk Read Bytes	',
-    //     ruleType: 'Threshold',
-    //     message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
-    //     alertHandlers: 'Slack (default)'
-    // }, {
-    //     name: 'Disk Write Bytes	',
-    //     ruleType: 'Threshold',
-    //     message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
-    //     alertHandlers: 'Slack (default)'
-    // }];
-    // this.alertsScriptsData = [{
-    //     name: 'CPU Percentage',
-    //     type: 'Slack (default)',
-    // }, {
-    //     name: 'Disk Read Bytes	',
-    //     type: 'Slack (default)',
-    // }, {
-    //     name: 'Disk Write Bytes	',
-    //     type: 'Slack (default)',
-    // }];
   }
   onClickUnImplementedFeature = (link) => {
     this.unimplementedFeatureModalRef.current.setLink(link);
@@ -245,36 +242,39 @@ class ManageAlertRule extends Component {
               <div className="col-md-6 col-sm-12">
                 <button
                   className="alert-gray-button kpi-btn active"
-                  onClick={() => this.onClickUnImplementedFeature('')}
+                  onClick={() => this.onClickUnImplementedFeature("")}
                 >
                   KPI
                 </button>
-                <button className="alert-gray-button log-btn" onClick={() => this.onClickUnImplementedFeature('')}>
+                <button
+                  className="alert-gray-button log-btn"
+                  onClick={() => this.onClickUnImplementedFeature("")}
+                >
                   Log
                 </button>
               </div>
               <div className="col-md-6 col-sm-12">
                 <div className="float-right common-right-btn">
-                  <Link to={`/alertmanager/pages/monitor-alerts`} className="alert-white-button min-width-inherit">
+                  <Link
+                    to={`/alertmanager/pages/monitor-alerts`}
+                    className="alert-white-button min-width-inherit"
+                  >
                     <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
                   </Link>
                 </div>
               </div>
             </div>
           </div>
-          <div className="common-container">
+          <div className="common-container manage-container">
             <div className="row">
               <div className="col-lg-8 col-md-12 col-sm-12 manage-rules-search">
                 <div className="manage-rules-search-text">3 Alert Rules</div>
-                {/* <div className="manage-rules-search-box">
-                                    <form>
-                                        <input type="text" className="input-group-text" placeholder="Search Rule" />
-                                        <button><i className="fa fa-search"></i></button>
-                                    </form>
-                                </div> */}
               </div>
               <div className="col-lg-4 col-md-12 col-sm-12 manage-rules-btn">
-                <Rbac parentName={config.PARENT_NAME} childName="managealertrule-index-createalertrulebtn">
+                <Rbac
+                  parentName={config.PARENT_NAME}
+                  childName="managealertrule-index-createalertrulebtn"
+                >
                   <div className="float-right common-right-btn">
                     <Link
                       to={`/alertmanager/pages/alert-rule-builder`}
@@ -292,9 +292,9 @@ class ManageAlertRule extends Component {
                 perPageLimit={this.perPageLimit}
                 visiblecheckboxStatus={this.checkboxValue}
                 tableClasses={{
-                  table: 'alert-data-tabel',
-                  tableParent: 'alerts-data-tabel',
-                  parentClass: 'all-alert-data-table',
+                  table: "alert-data-tabel",
+                  tableParent: "alerts-data-tabel",
+                  parentClass: "all-alert-data-table",
                 }}
                 searchKey="name"
                 showingLine="Showing %start% to %end% of %total%"
@@ -306,17 +306,17 @@ class ManageAlertRule extends Component {
             <div className="row">
               <div className="col-lg-8 col-md-12 col-sm-12 manage-rules-search">
                 <div className="manage-rules-search-text">3 Scripts</div>
-                {/* <div className="manage-rules-search-box">
-                                    <form>
-                                        <input type="text" className="input-group-text" placeholder="Search Script" />
-                                        <button><i className="fa fa-search"></i></button>
-                                    </form>
-                                </div> */}
               </div>
               <div className="col-lg-4 col-md-12 col-sm-12 manage-rules-btn">
                 <div className="float-right common-right-btn">
-                  <Rbac parentName={config.PARENT_NAME} childName="managealertrule-index-writescriptbtn">
-                    <Link to={`/alertmanager/pages/script-editor`} className="alert-blue-button m-r-0 create-rule-btn">
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="managealertrule-index-writescriptbtn"
+                  >
+                    <Link
+                      to={`/alertmanager/pages/script-editor`}
+                      className="alert-blue-button m-r-0 create-rule-btn"
+                    >
                       Write Script
                     </Link>
                   </Rbac>
@@ -329,9 +329,9 @@ class ManageAlertRule extends Component {
                 perPageLimit={this.perPageLimit}
                 visiblecheckboxStatus={this.checkboxValue}
                 tableClasses={{
-                  table: 'alert-data-tabel',
-                  tableParent: 'alerts-data-tabel',
-                  parentClass: 'all-alert-data-table',
+                  table: "alert-data-tabel",
+                  tableParent: "alerts-data-tabel",
+                  parentClass: "all-alert-data-table",
                 }}
                 searchKey="name"
                 showingLine="Showing %start% to %end% of %total%"
@@ -345,4 +345,5 @@ class ManageAlertRule extends Component {
     );
   }
 }
+
 export default ManageAlertRule;
