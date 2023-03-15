@@ -68,11 +68,11 @@ class ManageDashboards extends Component {
                 </li>
               </ul>
             </div>
-            {/* <div className="tab-container">
+            <div className="tab-container">
               {activeTab === 0 && <ManageTab />}
               {activeTab === 1 && <Playlists />}
               {activeTab === 2 && <div></div>}
-            </div> */}
+            </div>
           </div>
         </div>
       </React.Fragment>

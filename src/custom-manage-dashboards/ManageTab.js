@@ -31,10 +31,10 @@ class ManageTab extends Component {
     this.getSearchData(sendData);
   }
 
-  onClickUnImplementedFeature = (link) => {
-    this.unimplementedFeatureModalRef.current.setLink(link);
-    this.unimplementedFeatureModalRef.current.toggle();
-  };
+  // onClickUnImplementedFeature = (link) => {
+  //   this.unimplementedFeatureModalRef.current.setLink(link);
+  //   this.unimplementedFeatureModalRef.current.toggle();
+  // };
 
   toggleNewDashPopup = () => {
     this.setState({
@@ -320,7 +320,9 @@ class ManageTab extends Component {
                 </div>
               </div>
             </div>
-            <div className="manage-dashboard-general">{this.renderDashboardTree()}</div>
+            <div className="manage-dashboard-general">
+              {/* {this.renderDashboardTree()} */}
+              </div>
           </>
         )}
         {showNewDashboardPopup && (
