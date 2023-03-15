@@ -1,7 +1,6 @@
-import React, {Component} from "react";
-//import * as React from 'react';
+import React from "react";
 
-export class Wizard extends Component {
+class Wizard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +24,9 @@ export class Wizard extends Component {
         const step = steps[i];
         retData.push(
           <div
-            className={`wizard-step-button ${currentStep === i ? 'active' : ''}`}
+            className={`wizard-step-button ${
+              currentStep === i ? "active" : ""
+            }`}
             onClick={(e) => this.onClickStepButton(i)}
           >
             {step.name}
@@ -45,7 +46,13 @@ export class Wizard extends Component {
       for (let i = 0; i < totalSteps; i++) {
         const step = steps[i];
         retData.push(
-          <div className={`wizard-step-component ${currentStep === i ? '' : 'd-none'}`}>{step.component}</div>
+          <div
+            className={`wizard-step-component ${
+              currentStep === i ? "" : "d-none"
+            }`}
+          >
+            {step.component}
+          </div>
         );
       }
     }
@@ -57,20 +64,28 @@ export class Wizard extends Component {
     const { steps } = this.props;
     return (
       <div>
-        <div className="wizard-step-line-container">{this.createStepLine()}</div>
+        <div className="wizard-step-line-container">
+          {this.createStepLine()}
+        </div>
         <div className="wizard-step-component-container">
           {this.createStepContainer()}
           <div className="d-block text-center next">
             {currentStep < steps.length - 1 && (
-              <button onClick={(e) => this.onClickStepButton(currentStep + 1)} className="blue-button m-r-0 m-b-0">
+              <button
+                onClick={(e) => this.onClickStepButton(currentStep + 1)}
+                className="blue-button m-r-0 m-b-0"
+              >
                 Next
               </button>
             )}
-            {currentStep >= steps.length - 1 && <button className="blue-button m-r-0 m-b-0">Next</button>}
+            {currentStep >= steps.length - 1 && (
+              <button className="blue-button m-r-0 m-b-0">Next</button>
+            )}
           </div>
         </div>
       </div>
     );
   }
 }
+
 export default Wizard;

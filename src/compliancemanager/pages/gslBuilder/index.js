@@ -1,68 +1,49 @@
-import React, {Component} from 'react';
-//import * as React from 'react';
-import { Link } from 'react-router-dom';
-//import { config } from '../../config';
-//import { PLUGIN_BASE_URL } from '../../constants';
-//import { Breadcrumbs } from '../../components/Breadcrumbs';
-//import { images } from '../../img';
-//import Utils from '../../utils';
+import * as React from "react";
+import { Link } from "react-router-dom";
+import { config } from "../../config";
+import { images } from "../../img";
+import Utils from "../../utils";
 
-const entBaseClsPkg = 'com.synectiks.cms.entities.';
+const entBaseClsPkg = "com.synectiks.cms.entities.";
 
-class GslBuilder extends Component {
-  breadCrumbs;
-
+class GslBuilder extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       cldByGroup: [],
     };
-    this.breadCrumbs = [
-      {
-        label: 'Home',
-        route: `/`,
-      },
-      {
-        label: 'Compliance | Dashboard',
-        route: `/dashboard`,
-      },
-      {
-        label: 'Gsl Builder',
-        isCurrentPage: true,
-      },
-    ];
   }
 
-  // componentDidMount() {
-  //   //let url: String = config.LIST_ALL_CLD_GRP;
-  //   if (this.state.cldName) {
-  //     url += '?cloudName=' + this.state.cldName;
-  //   }
-  //   console.log('url: ' + url);
-  //   Utils.getReq(url).then((response) => {
-  //     this.setState({
-  //       cldByGroup: response.data,
-  //     });
-  //     this.getCloudNames(response.data);
-  //   });
-  // }
+  componentDidMount() {
+    let url = config.LIST_ALL_CLD_GRP;
+    if (this.state.cldName) {
+      url += "?cloudName=" + this.state.cldName;
+    }
+    console.log("url: " + url);
+    Utils.getReq(url).then((response) => {
+      this.setState({
+        cldByGroup: response.data,
+      });
+      this.getCloudNames(response.data);
+    });
+  }
 
-  // getCloudNames = (cldByGroup) => {
-  //   // const cld: Array<string> = [];
-  //   if (cldByGroup) {
-  //     cldByGroup.map((item) => {
-  //       if (cld.indexOf(item.cloudName) < 0) {
-  //         cld.push(item.cloudName);
-  //       }
-  //     });
-  //   }
-  //   console.log('unique clouds', cld);
-  //   if (cld.length > 0) {
-  //     this.setState({
-  //       clds: cld,
-  //     });
-  //   }
-  // };
+  getCloudNames = (cldByGroup) => {
+    const cld = [];
+    if (cldByGroup) {
+      cldByGroup.map((item) => {
+        if (cld.indexOf(item.cloudName) < 0) {
+          cld.push(item.cloudName);
+        }
+      });
+    }
+    console.log("unique clouds", cld);
+    if (cld.length > 0) {
+      this.setState({
+        clds: cld,
+      });
+    }
+  };
 
   cloudSelection = (e) => {
     const sel = e.target.value;
@@ -82,9 +63,9 @@ class GslBuilder extends Component {
     if (!cldByGroup) {
       return;
     }
-    let retData;
+    let retData = [];
     cldByGroup.map((item) => {
-      let grp;
+      let grp = "";
       if (selCloud === item.cloudName) {
         if (item.groupName != grp) {
           grp = item.groupName;
@@ -101,16 +82,18 @@ class GslBuilder extends Component {
   };
 
   getGroupEntities = (grp) => {
-    let retData;
+    let retData = [];
     this.state.cldByGroup.map((item) => {
       if (this.state.selCloud === item.cloudName && item.groupName != grp) {
         retData.push(
           <li>
-            <Link to={`/editorgslbuilder?cls=`}>
+            <Link
+              to={`/compliancemanager/pages/editorgslbuilder?cls=${item.entity}`}
+            >
               <span>
-                {/* <img src={images.ApiGateway} alt="" /> */}
+                <img src={images.ApiGateway} alt="" />
               </span>
-              <p>{item.entity.replace(entBaseClsPkg, '')}</p>
+              <p>{item.entity.replace(entBaseClsPkg, "")}</p>
             </Link>
           </li>
         );
@@ -120,12 +103,17 @@ class GslBuilder extends Component {
   };
 
   displayclds = () => {
-    let retcldsData;
+    let retcldsData = [];
     this.state.clds.map((cld) => {
       retcldsData.push(
         <li>
-          <input type="radio" name="clouds" id={cld} value={cld} onChange={this.cloudSelection} />
-          {/* <span><img src={images.awsLogo} alt="" /></span> */}
+          <input
+            type="radio"
+            name="clouds"
+            id={cld}
+            value={cld}
+            onChange={this.cloudSelection}
+          />
           <label htmlFor={cld}>{cld}</label>
         </li>
       );
@@ -137,28 +125,17 @@ class GslBuilder extends Component {
     const { cldByGroup } = this.state;
     return (
       <div className="compliance-dashboard-container">
-        {/* <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="COMPLIANCE | DASHBOARD" /> */}
         <div className="compliancemanager-page-container gslbuilder-page-container">
           <div className="common-container">
             <div className="gsl-editor-logos">
               <h3>GSL Editor</h3>
               <ul>{this.state.clds != undefined && this.displayclds()}</ul>
             </div>
-            {/* <div className="gsl-editor-radio">
-                            <ul>
-                                <li>
-                                    <input type="radio" id="Wizard" name="selector" checked />
-                                    <label htmlFor="Wizard">Wizard</label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="Script" name="selector" />
-                                    <label htmlFor="Script">Script</label>
-                                </li>
-                            </ul>
-                        </div> */}
             <div className="gsl-editor-items">
               <h3>Select the context from the items below</h3>
-              <div className="item-content">{cldByGroup.length > 0 && this.getGroupBody()}</div>
+              <div className="item-content">
+                {cldByGroup.length > 0 && this.getGroupBody()}
+              </div>
             </div>
           </div>
         </div>
@@ -166,4 +143,5 @@ class GslBuilder extends Component {
     );
   }
 }
+
 export default GslBuilder;

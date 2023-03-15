@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-//import * as React from 'react';
-//import { Breadcrumbs } from '../Breadcrumbs';
 import headerIcon from '../../img/header-icon.png';
 import resourcesUserImg from '../../img/resources-user-img.png';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
@@ -8,7 +6,7 @@ import 'react-circular-progressbar/dist/styles.css';
 // import SimpleBar from 'simplebar-react';
 import { Link } from 'react-router-dom';
 import 'simplebar/dist/simplebar.min.css';
-import  AwsHelper  from '../awsHelpers';
+import  AwsHelper  from '../AwsHelpers';
 
 // const stepsData = {
 // 	'requirement': {},
@@ -17,7 +15,6 @@ import  AwsHelper  from '../awsHelpers';
 // };
 
 class ProjectWise extends Component {
-	breadCrumbs;
 	createStreamRef;
 	newStreamRef;
 	manageOutputRef;
@@ -39,16 +36,6 @@ class ProjectWise extends Component {
 			machineArn: 'arn:aws:states:us-east-1:657907747545:stateMachine:send-to-pre-state',
 			steps: [],
 		};
-		this.breadCrumbs = [
-			{
-				label: 'Home',
-				route: `/`
-			},
-			{
-				label: 'Kubernetes | Overview',
-				isCurrentPage: true
-			}
-		];
 		this.awsHelper = new AwsHelper({ meta: props.meta });
 	}
 
@@ -139,7 +126,6 @@ class ProjectWise extends Component {
 		const { useCaseList, searchKey } = this.state;
 		return (
 			<div className="owrkflow-project-wise-container">
-				{/* <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="WORKFLOW MANAGEMENT" /> */}
 				<div className="project-wise-page-container">
 					<div className="project-wise-page-heading">
 						<div className="row">

@@ -1,11 +1,10 @@
 
 import React, {Component} from 'react';
-//import * as React from 'react';
 import { Link } from 'react-router-dom';
 import downloadIcon from '../../img/download-icon.png';
 import WorkFlow from '../../components/workFlowCommonComponent'
 import ErrorBoundary from '../../components/errorBoundary/index'
-import  AwsHelper  from '../awsHelpers';
+import  AwsHelper  from '../AwsHelpers';
 import AssetOverViewReusableComp from '../../components/assetOverViewCommonComponent';
 
 class ProjectOverView extends Component {

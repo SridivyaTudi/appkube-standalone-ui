@@ -1,22 +1,18 @@
-import React, {Component} from 'react';
-//import * as React from 'react';
-//import { Breadcrumbs } from '../../components/Breadcrumbs';
-import Tree from '../../components/Tree';
-import DiscardPopup from '../../components/DiscardPopup';
-import ApiKeySourcePopup from './../../components/ApiKeySourcePopup';
-//import { PLUGIN_BASE_URL } from '../../constants';
-import { dummyData } from './dummyData';
-import { propertiesDummy } from './properties';
+import React from "react";
+import Tree from "../../components/Tree";
+import DiscardPopup from "../../components/DiscardPopup";
+import ApiKeySourcePopup from "./../../components/ApiKeySourcePopup";
+import { dummyData } from "./dummyData";
+import { propertiesDummy } from "./properties";
 
-class EditorGslBuilder extends Component {
-  breadCrumbs;
+class EditorGslBuilder extends React.Component {
   discardPopupRef;
   addValuePopupRef;
-  
+
   constructor(props) {
     super(props);
     this.state = {
-      searchKey: '',
+      searchKey: "",
       operators: [],
       functions: [],
       properties: [],
@@ -24,168 +20,154 @@ class EditorGslBuilder extends Component {
       query: [],
       treeData: [
         {
-          name: 'apiKeySource:',
-          type: 'string',
+          name: "apiKeySource:",
+          type: "string",
         },
         {
-          name: 'binaryMediaTypes:',
-          type: 'Array',
-          length: '[1]',
+          name: "binaryMediaTypes:",
+          type: "Array",
+          length: "[1]",
           isOpened: false,
           subData: [
             {
-              name: 'O:',
-              type: 'object',
+              name: "O:",
+              type: "object",
               isOpened: false,
-              subData: [{ name: 'xyz:', type: 'string' }],
+              subData: [{ name: "xyz:", type: "string" }],
             },
-            { name: 'CreatedDate:', type: 'int' },
-            { name: 'description:', type: 'string' },
+            { name: "CreatedDate:", type: "int" },
+            { name: "description:", type: "string" },
           ],
         },
         {
-          name: 'endPointConfiguration:',
-          type: 'object',
+          name: "endPointConfiguration:",
+          type: "object",
           isOpened: false,
           subData: [],
         },
-        { name: 'MinimumCompretionSize:', type: 'string' },
+        { name: "MinimumCompretionSize:", type: "string" },
         {
-          name: 'policy:',
-          type: 'object',
+          name: "policy:",
+          type: "object",
           subData: [
-            { name: 'CreatedDate:', type: 'int' },
-            { name: 'description:', type: 'string' },
+            { name: "CreatedDate:", type: "int" },
+            { name: "description:", type: "string" },
           ],
           isOpened: false,
         },
-        { name: 'Version:', type: 'String' },
+        { name: "Version:", type: "String" },
         {
-          name: 'resources:',
-          type: 'Array',
-          length: '[1]',
+          name: "resources:",
+          type: "Array",
+          length: "[1]",
           isOpened: false,
           subData: [
             {
-              name: 'O:',
-              type: 'object',
+              name: "O:",
+              type: "object",
               isOpened: false,
-              subData: [{ name: 'abc:', type: 'string' }],
+              subData: [{ name: "abc:", type: "string" }],
             },
-            { name: 'CreatedDate:', type: 'int' },
-            { name: 'description:', type: 'string' },
+            { name: "CreatedDate:", type: "int" },
+            { name: "description:", type: "string" },
           ],
         },
         {
-          name: 'Authorizers:',
-          type: 'Array',
-          length: '[1]',
+          name: "Authorizers:",
+          type: "Array",
+          length: "[1]",
           subData: [],
           isOpened: false,
         },
         {
-          name: 'VPC:',
-          type: 'object',
+          name: "VPC:",
+          type: "object",
           subData: [],
           isOpened: false,
         },
-        { name: 'id:', type: 'String' },
-        { name: 'Types:', type: 'String' },
-        { name: 'Name:', type: 'String' },
-        { name: 'Dome9id:', type: 'String' },
-        { name: 'AccountNumber:', type: 'String' },
-        { name: 'Region:', type: 'String' },
+        { name: "id:", type: "String" },
+        { name: "Types:", type: "String" },
+        { name: "Name:", type: "String" },
+        { name: "Dome9id:", type: "String" },
+        { name: "AccountNumber:", type: "String" },
+        { name: "Region:", type: "String" },
       ],
       treeDuplicateData: [
         {
-          name: 'apiKeySource:',
-          type: 'string',
+          name: "apiKeySource:",
+          type: "string",
         },
         {
-          name: 'binaryMediaTypes:',
-          type: 'Array',
-          length: '[1]',
+          name: "binaryMediaTypes:",
+          type: "Array",
+          length: "[1]",
           isOpened: false,
           subData: [
             {
-              name: 'O:',
-              type: 'object',
+              name: "O:",
+              type: "object",
               isOpened: false,
-              subData: [{ name: 'xyz:', type: 'string' }],
+              subData: [{ name: "xyz:", type: "string" }],
             },
-            { name: 'CreatedDate:', type: 'int' },
-            { name: 'description:', type: 'string' },
+            { name: "CreatedDate:", type: "int" },
+            { name: "description:", type: "string" },
           ],
         },
         {
-          name: 'endPointConfiguration:',
-          type: 'object',
+          name: "endPointConfiguration:",
+          type: "object",
           isOpened: false,
           subData: [],
         },
-        { name: 'MinimumCompretionSize:', type: 'string' },
+        { name: "MinimumCompretionSize:", type: "string" },
         {
-          name: 'policy:',
-          type: 'object',
+          name: "policy:",
+          type: "object",
           subData: [
-            { name: 'CreatedDate:', type: 'int' },
-            { name: 'description:', type: 'string' },
+            { name: "CreatedDate:", type: "int" },
+            { name: "description:", type: "string" },
           ],
           isOpened: false,
         },
-        { name: 'Version:', type: 'String' },
+        { name: "Version:", type: "String" },
         {
-          name: 'resources:',
-          type: 'Array',
-          length: '[1]',
+          name: "resources:",
+          type: "Array",
+          length: "[1]",
           isOpened: false,
           subData: [
             {
-              name: 'O:',
-              type: 'object',
+              name: "O:",
+              type: "object",
               isOpened: false,
-              subData: [{ name: 'abc:', type: 'string' }],
+              subData: [{ name: "abc:", type: "string" }],
             },
-            { name: 'CreatedDate:', type: 'int' },
-            { name: 'description:', type: 'string' },
+            { name: "CreatedDate:", type: "int" },
+            { name: "description:", type: "string" },
           ],
         },
         {
-          name: 'Authorizers:',
-          type: 'Array',
-          length: '[1]',
+          name: "Authorizers:",
+          type: "Array",
+          length: "[1]",
           subData: [],
           isOpened: false,
         },
         {
-          name: 'VPC:',
-          type: 'object',
+          name: "VPC:",
+          type: "object",
           subData: [],
           isOpened: false,
         },
-        { name: 'id:', type: 'String' },
-        { name: 'Types:', type: 'String' },
-        { name: 'Name:', type: 'String' },
-        { name: 'Dome9id:', type: 'String' },
-        { name: 'AccountNumber:', type: 'String' },
-        { name: 'Region:', type: 'String' },
+        { name: "id:", type: "String" },
+        { name: "Types:", type: "String" },
+        { name: "Name:", type: "String" },
+        { name: "Dome9id:", type: "String" },
+        { name: "AccountNumber:", type: "String" },
+        { name: "Region:", type: "String" },
       ],
       mouseOverIndex: -1,
     };
-    this.breadCrumbs = [
-      {
-        label: 'Home',
-        route: `/`,
-      },
-      {
-        label: 'Compliance | Dashboard',
-        route: `/dashboard`,
-      },
-      {
-        label: 'Editor Gsl Builder',
-        isCurrentPage: true,
-      },
-    ];
     this.discardPopupRef = React.createRef();
     this.addValuePopupRef = React.createRef();
   }
@@ -198,11 +180,11 @@ class EditorGslBuilder extends Component {
       keywords: dummyData.KEYWORD,
       properties: propertiesDummy.properties,
     });
-    let getParamByName = this.getParameterByName('cls', window.location.href);
+    let getParamByName = this.getParameterByName("cls", window.location.href);
     if (getParamByName) {
       const { query } = this.state;
       query.push({
-        type: 'root',
+        type: "root",
         value: getParamByName,
       });
       this.setState({
@@ -212,12 +194,12 @@ class EditorGslBuilder extends Component {
   }
 
   getParameterByName = (name, url) => {
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
       results = regex.exec(url);
     if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    if (!results[2]) return "";
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
   };
 
   onSearchChange = (e) => {
@@ -228,9 +210,12 @@ class EditorGslBuilder extends Component {
     const { treeDuplicateData } = this.state;
     var searchResult = [];
     for (let i = 0; i < treeDuplicateData.length; i++) {
-      if (treeDuplicateData[i].name.indexOf(value) !== -1 || value === '') {
+      if (treeDuplicateData[i].name.indexOf(value) !== -1 || value === "") {
         searchResult.push(treeDuplicateData[i]);
-      } else if (treeDuplicateData[i].name.toLowerCase().indexOf(value) !== -1 || value === '') {
+      } else if (
+        treeDuplicateData[i].name.toLowerCase().indexOf(value) !== -1 ||
+        value === ""
+      ) {
         searchResult.push(treeDuplicateData[i]);
       }
     }
@@ -268,7 +253,7 @@ class EditorGslBuilder extends Component {
   addPropertyToEditor = (item, value) => {
     const { query } = this.state;
     const data = {
-      type: 'PROPERTIES',
+      type: "PROPERTIES",
       value: value,
       item,
     };
@@ -293,18 +278,19 @@ class EditorGslBuilder extends Component {
   addSourceKey = (operator, value) => {
     const { query } = this.state;
     let lastQueryValue = query[query.length - 1].value;
-    query[query.length - 1].value = lastQueryValue + ' ' + operator.value + ' ' + value;
+    query[query.length - 1].value =
+      lastQueryValue + " " + operator.value + " " + value;
     this.setState({
       query,
     });
-    this.addValuePopupRef.current.toggle({ value: '' }, { value: '' });
+    this.addValuePopupRef.current.toggle({ value: "" }, { value: "" });
   };
 
   onClickDeleteItem = (item, index) => {
     const { query } = this.state;
-    let text = '';
+    let text = "";
     for (let i = index; i < query.length; i++) {
-      text = text + query[i].value + ' ';
+      text = text + query[i].value + " ";
     }
     this.discardPopupRef.current.toggle(index, text);
   };
@@ -329,7 +315,7 @@ class EditorGslBuilder extends Component {
         <span
           onClick={() => this.addOperatorToEditor(row)}
           dangerouslySetInnerHTML={{ __html: row.key }}
-          title={row.hint ? row.hint : ''}
+          title={row.hint ? row.hint : ""}
         ></span>
       );
     }
@@ -345,7 +331,7 @@ class EditorGslBuilder extends Component {
         <span
           onClick={() => this.addFunctionToEditor(row)}
           dangerouslySetInnerHTML={{ __html: row.key }}
-          title={row.hint ? row.hint : ''}
+          title={row.hint ? row.hint : ""}
         ></span>
       );
     }
@@ -361,7 +347,7 @@ class EditorGslBuilder extends Component {
         <span
           onClick={() => this.addKeywordToEditor(row)}
           dangerouslySetInnerHTML={{ __html: row.key }}
-          title={row.hint ? row.hint : ''}
+          title={row.hint ? row.hint : ""}
         ></span>
       );
     }
@@ -375,7 +361,10 @@ class EditorGslBuilder extends Component {
       let row = properties[i];
       let key = Object.keys(row);
       retData.push(
-        <span onClick={() => this.addPropertyToEditor(row, key[0])} dangerouslySetInnerHTML={{ __html: key[0] }}></span>
+        <span
+          onClick={() => this.addPropertyToEditor(row, key[0])}
+          dangerouslySetInnerHTML={{ __html: key[0] }}
+        ></span>
       );
     }
     return retData;
@@ -398,11 +387,11 @@ class EditorGslBuilder extends Component {
     let retData = [];
     for (let i = 0; i < query.length; i++) {
       let row = query[i];
-      let color = '';
-      let textDecoration = '';
+      let color = "";
+      let textDecoration = "";
       if (mouseOverIndex <= i && mouseOverIndex !== -1) {
-        color = '#f93d3d';
-        textDecoration = 'line-through';
+        color = "#f93d3d";
+        textDecoration = "line-through";
       }
       retData.push(
         <div
@@ -412,7 +401,9 @@ class EditorGslBuilder extends Component {
           onMouseEnter={() => this.onMouseEnterEditor(i)}
           onMouseLeave={() => this.onMouseLeaveEditor()}
         >
-          <button style={{ visibility: mouseOverIndex === i ? 'visible' : 'hidden' }}>
+          <button
+            style={{ visibility: mouseOverIndex === i ? "visible" : "hidden" }}
+          >
             <i className="fa fa-trash"></i>
           </button>
           <p dangerouslySetInnerHTML={{ __html: row.value }}></p>
@@ -425,7 +416,6 @@ class EditorGslBuilder extends Component {
   render() {
     return (
       <div className="compliance-dashboard-container">
-        {/* <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="COMPLIANCE | DASHBOARD" /> */}
         <div className="compliancemanager-page-container editorgslbuilder-page-container">
           <div className="common-container">
             <div className="gsl-editor-logos">
@@ -546,8 +536,14 @@ class EditorGslBuilder extends Component {
             </div>
           </div>
         </div>
-        <DiscardPopup ref={this.discardPopupRef} onRemoveEntity={this.onClickConfirmRemoveEntity} />
-        <ApiKeySourcePopup ref={this.addValuePopupRef} addApikeySourceFunction={this.addSourceKey} />
+        <DiscardPopup
+          ref={this.discardPopupRef}
+          onRemoveEntity={this.onClickConfirmRemoveEntity}
+        />
+        <ApiKeySourcePopup
+          ref={this.addValuePopupRef}
+          addApikeySourceFunction={this.addSourceKey}
+        />
       </div>
     );
   }

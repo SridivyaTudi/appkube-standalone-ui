@@ -1,30 +1,29 @@
-import React, {Component} from "react";
-//import * as React from 'react';
+import React from "react";
 
-export class Rulesets extends Component {
+class Rulesets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchKey: '',
+      searchKey: "",
       ruleSetData: [
         {
-          title: 'Ruleset',
+          title: "Ruleset",
           checkValueStatus: false,
           subData: [
             {
-              title: 'AWS CCPA Framework',
+              title: "AWS CCPA Framework",
               checkStatus: false,
             },
             {
-              title: 'AWS CIS Foundation',
+              title: "AWS CIS Foundation",
               checkStatus: false,
             },
             {
-              title: 'AWS CloudGuard Best Practice',
+              title: "AWS CloudGuard Best Practice",
               checkStatus: false,
             },
             {
-              title: 'AWS CloudGuard ChecklUp',
+              title: "AWS CloudGuard ChecklUp",
               checkStatus: false,
             },
           ],
@@ -32,23 +31,23 @@ export class Rulesets extends Component {
       ],
       duplicateruleSetData: [
         {
-          title: 'Ruleset',
+          title: "Ruleset",
           checkValueStatus: false,
           subData: [
             {
-              title: 'AWS CCPA Framework',
+              title: "AWS CCPA Framework",
               checkStatus: false,
             },
             {
-              title: 'AWS CIS Foundation',
+              title: "AWS CIS Foundation",
               checkStatus: false,
             },
             {
-              title: 'AWS CloudGuard Best Practice',
+              title: "AWS CloudGuard Best Practice",
               checkStatus: false,
             },
             {
-              title: 'AWS CloudGuard ChecklUp',
+              title: "AWS CloudGuard ChecklUp",
               checkStatus: false,
             },
           ],
@@ -90,7 +89,7 @@ export class Rulesets extends Component {
                 onChange={(e) => {
                   this.onChangeParentCheckbox(e, i);
                 }}
-              />{' '}
+              />{" "}
               {responseData.title}
             </div>
           </h5>
@@ -118,7 +117,8 @@ export class Rulesets extends Component {
     let countCheckedCheckbox = 0;
     const { ruleSetData } = this.state;
     const parentCheckbox = ruleSetData[parentIndex];
-    parentCheckbox.subData[childIndex].checkStatus = !parentCheckbox.subData[childIndex].checkStatus;
+    parentCheckbox.subData[childIndex].checkStatus =
+      !parentCheckbox.subData[childIndex].checkStatus;
     for (let j = 0; j < parentCheckbox.subData.length; j++) {
       if (parentCheckbox.subData[j].checkStatus == true) {
         countCheckedCheckbox++;
@@ -148,13 +148,26 @@ export class Rulesets extends Component {
       let data = duplicateruleSetData[i];
       for (let j = 0; j < data.subData.length; j++) {
         let subData = data.subData[j];
-        if (subData.title.indexOf(value) !== -1 || value === '') {
-          Result.push({ title: subData.title, checkStatus: subData.checkStatus });
-        } else if (subData.title.toLowerCase().indexOf(value) !== -1 || value === '') {
-          Result.push({ title: subData.title, checkStatus: subData.checkStatus });
+        if (subData.title.indexOf(value) !== -1 || value === "") {
+          Result.push({
+            title: subData.title,
+            checkStatus: subData.checkStatus,
+          });
+        } else if (
+          subData.title.toLowerCase().indexOf(value) !== -1 ||
+          value === ""
+        ) {
+          Result.push({
+            title: subData.title,
+            checkStatus: subData.checkStatus,
+          });
         }
       }
-      searchResult.push({ title: data.title, checkValueStatus: data.checkValueStatus, subData: Result });
+      searchResult.push({
+        title: data.title,
+        checkValueStatus: data.checkValueStatus,
+        subData: Result,
+      });
     }
     this.setState({
       ruleSetData: searchResult,
@@ -191,4 +204,5 @@ export class Rulesets extends Component {
     );
   }
 }
+
 export default Rulesets;

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import settingsIcon from "../../img/settings.png";
 import fileExportIcon from "../../img/file-export.png";
 import AssessmentPopup from "./AssessmentPopup";
 import AssetssmentPopup from "./AssetssmentPopup";
 
-class ComplianDashboard extends Component {
+class Dashboard extends React.Component {
   assessmentRef;
   assetssmentRef;
   constructor(props) {
@@ -277,4 +277,4 @@ class ComplianDashboard extends Component {
   }
 }
 
-export default ComplianDashboard;
+export default Dashboard;

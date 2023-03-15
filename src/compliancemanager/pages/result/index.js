@@ -1,38 +1,18 @@
-import React, {Component} from 'react';
-//import * as React from 'react';
-//import { Breadcrumbs } from '../../components/Breadcrumbs';
-import awsLogo from '../../img/amazon-logo.png';
-import microsoftAzureLogo from '../../img/microsoftazure.png';
-import gcpLogo from '../../img/google-cloud.png';
-import KubernetesLogo from '../../img/kubernetes.png';
-//import { PLUGIN_BASE_URL } from '../../constants';
+import React from "react";
+import awsLogo from "../../img/amazon-logo.png";
+import microsoftAzureLogo from "../../img/microsoftazure.png";
+import gcpLogo from "../../img/google-cloud.png";
+import KubernetesLogo from "../../img/kubernetes.png";
 
-class Result extends Component{
-  breadCrumbs;
-
+class Result extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.breadCrumbs = [
-      {
-        label: 'Home',
-        route: `/`,
-      },
-      {
-        label: 'Compliance | Dashboard',
-        route: `/dashboard`,
-      },
-      {
-        label: 'Result',
-        isCurrentPage: true,
-      },
-    ];
   }
 
   render() {
     return (
       <div className="compliance-dashboard-container">
-        {/* <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="COMPLIANCE | DASHBOARD" /> */}
         <div className="compliancemanager-page-container result-page-container">
           <div className="common-container">
             <div className="gsl-editor-logos">
@@ -122,7 +102,10 @@ class Result extends Component{
                   </div>
                   <div className="col-md-3 col-sm-6">
                     <div className="form-group filter-control-group">
-                      <a href="#" className="blue-button m-r-0 m-b-0 runtest-button">
+                      <a
+                        href="#"
+                        className="blue-button m-r-0 m-b-0 runtest-button"
+                      >
                         <i className="fa fa-play-circle"></i> RUN TEST
                       </a>
                     </div>
@@ -141,7 +124,10 @@ class Result extends Component{
                   <div className="result-details">
                     <div className="result-details-code-main">
                       <div className="result-details-code">
-                        <p>ApiGateway should have (apiKaySource='20' ) and region isPrivate()</p>
+                        <p>
+                          ApiGateway should have (apiKaySource='20' ) and region
+                          isPrivate()
+                        </p>
                         <span>AWS/All Regions</span>
                       </div>
                       <div className="edit-button">
@@ -182,7 +168,10 @@ class Result extends Component{
                       <div className="col-md-10 col-sm-12">
                         <div className="histoty-text">
                           <div className="time">10:00 PM</div>
-                          <div className="text">ApiGateway should have (apiKaySource='20' ) and region isPrivate()</div>
+                          <div className="text">
+                            ApiGateway should have (apiKaySource='20' ) and
+                            region isPrivate()
+                          </div>
                         </div>
                       </div>
                       <div className="col-md-1 col-sm-12">
@@ -202,7 +191,10 @@ class Result extends Component{
                       <div className="col-md-10 col-sm-12">
                         <div className="histoty-text">
                           <div className="time">10:00 PM</div>
-                          <div className="text">ApiGateway should have (apiKaySource='20' ) and region isPrivate()</div>
+                          <div className="text">
+                            ApiGateway should have (apiKaySource='20' ) and
+                            region isPrivate()
+                          </div>
                         </div>
                       </div>
                       <div className="col-md-1 col-sm-12">
@@ -222,7 +214,10 @@ class Result extends Component{
                       <div className="col-md-10 col-sm-12">
                         <div className="histoty-text">
                           <div className="time">10:00 PM</div>
-                          <div className="text">ApiGateway should have (apiKaySource='20' ) and region isPrivate()</div>
+                          <div className="text">
+                            ApiGateway should have (apiKaySource='20' ) and
+                            region isPrivate()
+                          </div>
                         </div>
                       </div>
                       <div className="col-md-1 col-sm-12">
@@ -242,7 +237,10 @@ class Result extends Component{
                       <div className="col-md-10 col-sm-12">
                         <div className="histoty-text">
                           <div className="time">10:00 PM</div>
-                          <div className="text">ApiGateway should have (apiKaySource='20' ) and region isPrivate()</div>
+                          <div className="text">
+                            ApiGateway should have (apiKaySource='20' ) and
+                            region isPrivate()
+                          </div>
                         </div>
                       </div>
                       <div className="col-md-1 col-sm-12">
@@ -260,7 +258,12 @@ class Result extends Component{
                   <div className="context-preview">
                     <div className="d-block form-group filter-search-control">
                       <form>
-                        <input type="text" className="input-group-text" placeholder="Search" value="" />
+                        <input
+                          type="text"
+                          className="input-group-text"
+                          placeholder="Search"
+                          value=""
+                        />
                         <button>
                           <i className="fa fa-search"></i>
                         </button>
@@ -272,7 +275,8 @@ class Result extends Component{
                           apiKeySource:<span>string</span>
                         </li>
                         <li>
-                          <i className="fa fa-caret-down"></i> binaryMediaTypes:Array <a href="#">[1]</a>
+                          <i className="fa fa-caret-down"></i>
+                          binaryMediaTypes:Array <a href="#">[1]</a>
                           <ul>
                             <li>
                               <i className="fa fa-caret-right"></i> O:Object
@@ -286,7 +290,8 @@ class Result extends Component{
                           description:<span>string</span>
                         </li>
                         <li>
-                          <i className="fa fa-caret-right"></i> endpointConfiguration:Object
+                          <i className="fa fa-caret-right"></i>
+                          endpointConfiguration:Object
                         </li>
                         <li>
                           minimumCompressionSize:<span>string</span>

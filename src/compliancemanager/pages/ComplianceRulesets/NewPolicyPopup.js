@@ -1,13 +1,11 @@
-import React, {Component} from 'react';
-//import * as React from 'react';
-//import { config } from '../../config';
-//import Utils from '../../utils';
+import * as React from "react";
+import { config } from "../../config";
+import Utils from "../../utils";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+const entBaseClsPkg = "com.synectiks.cms.entities.";
 
-const entBaseClsPkg = 'com.synectiks.cms.entities.';
-
-class NewPolicyPopup extends Component{
+class NewPolicyPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,7 +44,9 @@ class NewPolicyPopup extends Component{
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (JSON.stringify(prevProps.entities) !== JSON.stringify(this.props.entities)) {
+    if (
+      JSON.stringify(prevProps.entities) !== JSON.stringify(this.props.entities)
+    ) {
       this.setState({
         entities: this.props.entities,
       });
@@ -65,7 +65,7 @@ class NewPolicyPopup extends Component{
     if (val) {
       data[id] = val;
     } else {
-      data[id] = '';
+      data[id] = "";
     }
     this.setState({
       reqObj: data,
@@ -96,28 +96,28 @@ class NewPolicyPopup extends Component{
   };
 
   submit = () => {
-    // const data = this.state.reqObj;
-    // if (Utils.isNullEmpty(data.name)) {
-    //   alert('Name is mandatory.');
-    //   return;
-    // }
-    // if (Utils.isNullEmpty(data.entity)) {
-    //   alert('Entity is mandatory.');
-    //   return;
-    // }
-    // if (this.state.selRules) {
-    //   data.rules = this.state.selRules;
-    // } else {
-    //   alert('Rules are mandatory.');
-    //   return;
-    // }
-    // alert('Payload: ' + JSON.stringify(data));
-    // Utils.postReq(config.POST_POLICY, data, this.responseHandler);
+    const data = this.state.reqObj;
+    if (Utils.isNullEmpty(data.name)) {
+      alert("Name is mandatory.");
+      return;
+    }
+    if (Utils.isNullEmpty(data.entity)) {
+      alert("Entity is mandatory.");
+      return;
+    }
+    if (this.state.selRules) {
+      data.rules = this.state.selRules;
+    } else {
+      alert("Rules are mandatory.");
+      return;
+    }
+    alert("Payload: " + JSON.stringify(data));
+    Utils.postReq(config.POST_POLICY, data, this.responseHandler);
   };
 
   responseHandler = (res, err) => {
     if (res) {
-      alert('Rule saved successfully by id: ' + res.data.id);
+      alert("Rule saved successfully by id: " + res.data.id);
     } else {
       alert(err);
     }
@@ -126,9 +126,19 @@ class NewPolicyPopup extends Component{
   render() {
     const state = this.state;
     return (
-      <Modal isOpen={state.modal} toggle={this.toggle} className="modal-container assessments-modal-container">
+      <Modal
+        isOpen={state.modal}
+        toggle={this.toggle}
+        className="modal-container assessments-modal-container"
+      >
         <ModalHeader toggle={this.toggle}>Create New Ruleset</ModalHeader>
-        <ModalBody style={{ height: 'calc(75vh - 110px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(75vh - 110px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="form-group">
             <label htmlFor="name" className="d-block">
               Name*
@@ -163,7 +173,7 @@ class NewPolicyPopup extends Component{
               defaultChecked={this.state.searchable}
               onChange={this.onChkChange}
               className="input-group-text d-block"
-              style={{ width: 'auto' }}
+              style={{ width: "auto" }}
             />
           </div>
           <div className="form-group">
@@ -171,13 +181,18 @@ class NewPolicyPopup extends Component{
               Entity*&nbsp;&nbsp;&nbsp;
               <i className="fa fa-info-circle"></i>
             </label>
-            <select className="form-control d-block" id="entity" onChange={this.onChange} value={this.state.entity}>
+            <select
+              className="form-control d-block"
+              id="entity"
+              onChange={this.onChange}
+              value={this.state.entity}
+            >
               <option value="" selected>
                 Select Entity
               </option>
               {this.state.entities.map((item) => (
                 <option key={item} value={item}>
-                  {item.replace(entBaseClsPkg, '')}
+                  {item.replace(entBaseClsPkg, "")}
                 </option>
               ))}
             </select>

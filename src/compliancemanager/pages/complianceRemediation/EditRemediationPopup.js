@@ -1,8 +1,7 @@
-import React, { Component } from "react";
-//import * as React from 'react';
+import React from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-class EditRemediationPopup extends Component {
+class EditRemediationPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -191,4 +190,5 @@ class EditRemediationPopup extends Component {
     );
   }
 }
+
 export default EditRemediationPopup;

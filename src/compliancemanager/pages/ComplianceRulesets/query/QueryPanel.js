@@ -1,8 +1,7 @@
-import React, { Component } from "react";
-//import * as React from 'react';
+import * as React from "react";
 import QryUtils from "./QryUtils";
-//import Utils from '../../../utils';
-//import { config } from "../../../config";
+import Utils from "../../../utils";
+import { config } from "../../../config";
 import "./QueryPanel.css";
 
 /**
@@ -11,7 +10,7 @@ import "./QueryPanel.css";
  * isTranslate="true".
  * You can set id="xyz" if you would like to add multiple components in same page.
  */
-class QueryPanel extends Component {
+class QueryPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,17 +50,21 @@ class QueryPanel extends Component {
       elsQry: "Searching ...",
     });
     console.log(process.env);
-    // Utils.postReq(config.SUGGEST_URL, 'query=' + val + '&cls=' + this.state.selEntity, (response, err) => {
-    //   if (err) {
-    //     this.setState({
-    //       elsQry: 'Request Failed with ' + err,
-    //     });
-    //     return;
-    //   } else {
-    //     console.log('Res: ', response.data);
-    //     this.setSuggestions(response.data);
-    //   }
-    // });
+    Utils.postReq(
+      config.SUGGEST_URL,
+      "query=" + val + "&cls=" + this.state.selEntity,
+      (response, err) => {
+        if (err) {
+          this.setState({
+            elsQry: "Request Failed with " + err,
+          });
+          return;
+        } else {
+          console.log("Res: ", response.data);
+          this.setSuggestions(response.data);
+        }
+      }
+    );
   }
 
   execute(query) {
@@ -71,31 +74,31 @@ class QueryPanel extends Component {
       "&cls=" +
       this.state.selEntity +
       "&pageNo=0&pageSize=10&notOnlyIds=true";
-    // Utils.postReq(config.ELS_QUERY, params, (response, err) => {
-    //   if (err) {
-    //     this.setState({
-    //       elsQry: "Request Failed with " + err,
-    //     });
-    //     return;
-    //   } else {
-    //     if (this.props.resHandler) {
-    //       this.props.resHandler(response);
-    //     } else {
-    //       var pretty = JSON.stringify(response.data, undefined, 4);
-    //       console.log("Res: ", pretty);
-    //       var rec = 0;
-    //       var resTable = "";
-    //       if (response.data && response.data.hits) {
-    //         rec = response.data.hits.total;
-    //       }
-    //       resTable = QryUtils.getResultTable(rec, response.data);
-    //       this.setState({
-    //         elsQry: "Found " + rec + " matches.",
-    //         resTbl: resTable,
-    //       });
-    //     }
-    //   }
-    // });
+    Utils.postReq(config.ELS_QUERY, params, (response, err) => {
+      if (err) {
+        this.setState({
+          elsQry: "Request Failed with " + err,
+        });
+        return;
+      } else {
+        if (this.props.resHandler) {
+          this.props.resHandler(response);
+        } else {
+          var pretty = JSON.stringify(response.data, undefined, 4);
+          console.log("Res: ", pretty);
+          var rec = 0;
+          var resTable = "";
+          if (response.data && response.data.hits) {
+            rec = response.data.hits.total;
+          }
+          resTable = QryUtils.getResultTable(rec, response.data);
+          this.setState({
+            elsQry: "Found " + rec + " matches.",
+            resTbl: resTable,
+          });
+        }
+      }
+    });
   }
 
   setSuggestions(data) {

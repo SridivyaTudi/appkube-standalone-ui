@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
-//import * as React from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React from "react";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-class CreateRemediationPopup extends Component {
+class CreateRemediationPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,9 +42,19 @@ class CreateRemediationPopup extends Component {
   render() {
     const state = this.state;
     return (
-      <Modal isOpen={state.modal} toggle={this.toggle} className="modal-container assessments-modal-container">
+      <Modal
+        isOpen={state.modal}
+        toggle={this.toggle}
+        className="modal-container assessments-modal-container"
+      >
         <ModalHeader toggle={this.toggle}>Create New Remediation</ModalHeader>
-        <ModalBody style={{ height: 'calc(74vh - 110px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(74vh - 110px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="form-group">
             <label htmlFor="rulesetGroup" className="d-block">
               Ruleset&nbsp;&nbsp;&nbsp;
@@ -68,7 +77,7 @@ class CreateRemediationPopup extends Component {
                 this.onChangeOpenRuleData(e);
               }}
               checked={this.state.Rule}
-            />{' '}
+            />{" "}
             Excluded by Rule
             {this.state.Rule == true && (
               <div className="d-block select-rule">
@@ -78,7 +87,9 @@ class CreateRemediationPopup extends Component {
                   <option>CloudTrail must enable log file validation</option>
                   <option>Enforce password policy</option>
                   <option>Ensure CloudTrail is enable in all regions</option>
-                  <option>Credential reports was generated in the last 24 hours</option>
+                  <option>
+                    Credential reports was generated in the last 24 hours
+                  </option>
                 </select>
               </div>
             )}
@@ -91,7 +102,7 @@ class CreateRemediationPopup extends Component {
               }}
               className="checkbox"
               checked={this.state.cloudAccount}
-            />{' '}
+            />{" "}
             Excluded by Cloud Account
             {this.state.cloudAccount == true && (
               <div className="d-block select-rule">
@@ -112,7 +123,7 @@ class CreateRemediationPopup extends Component {
                 this.onChangeOpenEntityData(e);
               }}
               checked={this.state.Entity}
-            />{' '}
+            />{" "}
             Excluded by Entity
             {this.state.Entity == true && (
               <div className="d-block select-rule">
@@ -124,7 +135,11 @@ class CreateRemediationPopup extends Component {
                     <label htmlFor="rulesetGroup" className="d-block">
                       Entity Name
                     </label>
-                    <input type="text" className="input-group-text d-block" placeholder="" />
+                    <input
+                      type="text"
+                      className="input-group-text d-block"
+                      placeholder=""
+                    />
                   </div>
                 </div>
                 <div className="d-inline-block width-50">
@@ -135,7 +150,11 @@ class CreateRemediationPopup extends Component {
                     <label htmlFor="rulesetGroup" className="d-block">
                       Entity ID
                     </label>
-                    <input type="text" className="input-group-text d-block" placeholder="" />
+                    <input
+                      type="text"
+                      className="input-group-text d-block"
+                      placeholder=""
+                    />
                   </div>
                 </div>
               </div>
@@ -171,4 +190,5 @@ class CreateRemediationPopup extends Component {
     );
   }
 }
+
 export default CreateRemediationPopup;
