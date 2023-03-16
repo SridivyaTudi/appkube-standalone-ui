@@ -107,16 +107,16 @@ li.groupChildEle {
   padding-left: 30px;
 }
 .icon_cancel_circled:before {
-  content: '\e800';
+  content: "\e800";
 }
 .icon_cancel:before {
-  content: '\e801';
+  content: "\e801";
 }
 .icon_cancel_circled2:before {
-  content: '\e802';
+  content: "\e802";
 }
 .icon_window_close:before {
-  content: '\f2d3';
+  content: "\f2d3";
 }
 .icon_down_dir {
   position: absolute;
@@ -125,5 +125,5 @@ li.groupChildEle {
   transform: translateY(-50%);
 }
 .icon_down_dir:before {
-  content: '\e803';
+  content: "\e803";
 }

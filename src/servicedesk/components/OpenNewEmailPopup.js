@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody } from 'reactstrap';
-import CustomTextbox from './CustomTextbox';
-import Customselectbox from './Customselectbox';
-import CustomTextareabox from './CustomTextareabox';
-import Multiselect from './Multiselect/multiselects/multiselect.component';
-import { config } from '../config';
-import { RestService } from '../pages/_service/RestService';
-import AlertMessage from './AlertMessage';
-// import axios from 'axios';
+import React from "react";
+import { Modal, ModalBody } from "reactstrap";
+import CustomTextbox from "./CustomTextbox";
+import Customselectbox from "./Customselectbox";
+import CustomTextareabox from "./CustomTextareabox";
+import Multiselect from "./Multiselect/multiselects/multiselect.component";
+import { config } from "../config";
+import { RestService } from "../pages/_service/RestService";
+import AlertMessage from "./AlertMessage";
+import axios from "axios";
 
 class MySelectObj {
   id;
@@ -17,7 +17,7 @@ class MySelectObj {
     this.name = name;
   }
 }
-class OpenNewEmailPopup extends Component {
+class OpenNewEmailPopup extends React.Component {
   steps;
   constructor(props) {
     super(props);
@@ -26,28 +26,28 @@ class OpenNewEmailPopup extends Component {
       message: null,
       severity: null,
       modal: false,
-      from: '',
-      to: '',
-      subject: '',
-      description: '',
-      priority: '',
-      status: '',
-      tags: '',
+      from: "",
+      to: "",
+      subject: "",
+      description: "",
+      priority: "",
+      status: "",
+      tags: "",
       isSubmitted: false,
       option: [
-        { name: 'abc@a.com', value: 'abc@a.com' },
-        { name: 'xyz@x.com', value: 'xyz@x.com' },
-        { name: 'abc@d.com', value: 'abc@d.com' },
-        { name: 'xyz@y.com', value: 'xyz@y.com' },
-        { name: 'adc@a.com', value: 'adc@a.com' },
-        { name: 'xpz@x.com', value: 'xpz@x.com' },
+        { name: "abc@a.com", value: "abc@a.com" },
+        { name: "xyz@x.com", value: "xyz@x.com" },
+        { name: "abc@d.com", value: "abc@d.com" },
+        { name: "xyz@y.com", value: "xyz@y.com" },
+        { name: "adc@a.com", value: "adc@a.com" },
+        { name: "xpz@x.com", value: "xpz@x.com" },
       ],
       toOptions: [
-        { name: 'dipti@gmail.com', value: 'dipti@gmail.com' },
-        { name: 'shatish@gmail.com', value: 'shatish@gmail.com' },
-        { name: 'jasmin@gmail.com', value: 'jasmin@gmail.com' },
-        { name: 'sunil@gmail.com', value: 'sunil@gmail.com' },
-        { name: 'infotech@tech.com', value: 'infotech@tech.com' },
+        { name: "dipti@gmail.com", value: "dipti@gmail.com" },
+        { name: "shatish@gmail.com", value: "shatish@gmail.com" },
+        { name: "jasmin@gmail.com", value: "jasmin@gmail.com" },
+        { name: "sunil@gmail.com", value: "sunil@gmail.com" },
+        { name: "infotech@tech.com", value: "infotech@tech.com" },
       ],
       toEmails: [],
       fromEmails: [],
@@ -58,21 +58,23 @@ class OpenNewEmailPopup extends Component {
   }
   async componentDidMount() {
     try {
-      await RestService.getData(config.GET_ALL_TICKET_URL, null, null).then((response) => {
-        let ary = [];
-        let obj = new MySelectObj('', 'Select Ticket');
-        ary.push(obj);
-        for (let i = 0; i < response.length; i++) {
-          obj = new MySelectObj(response[i].id, response[i].subject);
+      await RestService.getData(config.GET_ALL_TICKET_URL, null, null).then(
+        (response) => {
+          let ary = [];
+          let obj = new MySelectObj("", "Select Ticket");
           ary.push(obj);
+          for (let i = 0; i < response.length; i++) {
+            obj = new MySelectObj(response[i].id, response[i].subject);
+            ary.push(obj);
+          }
+          this.setState({
+            ticketListObj: ary,
+            orgTicketList: response,
+          });
         }
-        this.setState({
-          ticketListObj: ary,
-          orgTicketList: response,
-        });
-      });
+      );
     } catch (err) {
-      console.log('Loading company data failed. Error: ', err);
+      console.log("Loading company data failed. Error: ", err);
     }
   }
   toggle = () => {
@@ -104,7 +106,16 @@ class OpenNewEmailPopup extends Component {
       errorData.status.isValid &&
       errorData.tags.isValid
     ) {
-      const { fromEmails, toEmails, subject, description, priority, status, tags, ticketId } = this.state;
+      const {
+        fromEmails,
+        toEmails,
+        subject,
+        description,
+        priority,
+        status,
+        tags,
+        ticketId,
+      } = this.state;
       // console.log("From Email before : ",fromEmails);
       // console.log("TO Email before: ",toEmails);
       let from = [];
@@ -120,66 +131,66 @@ class OpenNewEmailPopup extends Component {
       }
       // console.log("TO Email after: ",to);
 
-      let priorityValue = '';
+      let priorityValue = "";
       if (priority == 0) {
-        priorityValue = 'Low';
+        priorityValue = "Low";
       } else if (priority == 1) {
-        priorityValue = 'Medium';
+        priorityValue = "Medium";
       } else if (priority == 2) {
-        priorityValue = 'High';
+        priorityValue = "High";
       }
       let statusValue;
       if (status == 0) {
-        statusValue = 'Closed';
+        statusValue = "Closed";
       } else {
-        statusValue = 'Open';
+        statusValue = "Open";
       }
-    //   const data = {
-    //     from: from.toString(),
-    //     to: to.toString(),
-    //     subject: subject,
-    //     description: description,
-    //     priority: priorityValue,
-    //     status: statusValue,
-    //     tags: tags,
-    //   };
+      //   const data = {
+      //     from: from.toString(),
+      //     to: to.toString(),
+      //     subject: subject,
+      //     description: description,
+      //     priority: priorityValue,
+      //     status: statusValue,
+      //     tags: tags,
+      //   };
       let formData = new FormData();
-      formData.append('from', from.toString());
-      formData.append('to', to.toString());
-      formData.append('subject', subject);
-      formData.append('description', description);
-      formData.append('priority', priorityValue);
-      formData.append('status', statusValue);
-      formData.append('tags', tags);
-      formData.append('ticketId', ticketId);
-      console.log('Email Object ', formData);
+      formData.append("from", from.toString());
+      formData.append("to", to.toString());
+      formData.append("subject", subject);
+      formData.append("description", description);
+      formData.append("priority", priorityValue);
+      formData.append("status", statusValue);
+      formData.append("tags", tags);
+      formData.append("ticketId", ticketId);
+      console.log("Email Object ", formData);
 
-      // axios
-      //   .post(config.SEND_EMAIL_URL, formData, {})
-      //   .then((response) => {
-      //     if (response.data != null) {
-      //       this.setState({
-      //         severity: config.SEVERITY_SUCCESS,
-      //         message: config.SEND_EMAIL_SUCCESS,
-      //         isAlertOpen: true,
-      //       });
-      //     } else {
-      //       this.setState({
-      //         severity: config.SEVERITY_ERROR,
-      //         message: config.SEND_EMAIL_ERROR,
-      //         isAlertOpen: true,
-      //       });
-      //     }
-      //     console.log('response data', response.data);
-      //   })
-      //   .catch((err) => console.log(err));
+      axios
+        .post(config.SEND_EMAIL_URL, formData, {})
+        .then((response) => {
+          if (response.data != null) {
+            this.setState({
+              severity: config.SEVERITY_SUCCESS,
+              message: config.SEND_EMAIL_SUCCESS,
+              isAlertOpen: true,
+            });
+          } else {
+            this.setState({
+              severity: config.SEVERITY_ERROR,
+              message: config.SEND_EMAIL_ERROR,
+              isAlertOpen: true,
+            });
+          }
+          console.log("response data", response.data);
+        })
+        .catch((err) => console.log(err));
     }
   };
 
   validate = (isSubmitted) => {
     const validObj = {
       isValid: true,
-      message: '',
+      message: "",
     };
     const retData = {
       from: validObj,
@@ -194,53 +205,62 @@ class OpenNewEmailPopup extends Component {
       toEmails: validObj,
     };
     if (isSubmitted) {
-      const { subject, description, priority, status, tags, ticketId, fromEmails, toEmails } = this.state;
+      const {
+        subject,
+        description,
+        priority,
+        status,
+        tags,
+        ticketId,
+        fromEmails,
+        toEmails,
+      } = this.state;
       if (!ticketId) {
         retData.ticketId = {
           isValid: false,
-          message: 'Please select ticket',
+          message: "Please select ticket",
         };
       }
       if (fromEmails.length == 0) {
         retData.fromEmails = {
           isValid: false,
-          message: 'Email Sender name is required',
+          message: "Email Sender name is required",
         };
       }
       if (toEmails.length == 0) {
         retData.toEmails = {
           isValid: false,
-          message: 'Email Forworder name is required',
+          message: "Email Forworder name is required",
         };
       }
       if (!subject) {
         retData.subject = {
           isValid: false,
-          message: 'Subject is required',
+          message: "Subject is required",
         };
       }
       if (!description) {
         retData.description = {
           isValid: false,
-          message: 'Description is required',
+          message: "Description is required",
         };
       }
       if (!priority) {
         retData.priority = {
           isValid: false,
-          message: 'Priority is required',
+          message: "Priority is required",
         };
       }
       if (!status) {
         retData.status = {
           isValid: false,
-          message: 'Status is required',
+          message: "Status is required",
         };
       }
       if (!tags) {
         retData.tags = {
           isValid: false,
-          message: 'Tags is required',
+          message: "Tags is required",
         };
       }
     }
@@ -254,11 +274,11 @@ class OpenNewEmailPopup extends Component {
     });
   };
   onChangeEmail = (selectedValues, type) => {
-    if (type === 'from') {
+    if (type === "from") {
       this.setState({
         fromEmails: selectedValues,
       });
-    } else if (type === 'to') {
+    } else if (type === "to") {
       this.setState({
         toEmails: selectedValues,
       });
@@ -290,7 +310,11 @@ class OpenNewEmailPopup extends Component {
     const errorData = this.validate(isSubmitted);
     const state = this.state;
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="modal-container servicdesk-modal-container">
+      <Modal
+        isOpen={modal}
+        toggle={this.toggle}
+        className="modal-container servicdesk-modal-container"
+      >
         <AlertMessage
           handleCloseAlert={this.handleCloseAlert}
           open={state.isAlertOpen}
@@ -300,13 +324,20 @@ class OpenNewEmailPopup extends Component {
         <button className="close-btn" onClick={this.handleClose}>
           X
         </button>
-        <ModalBody style={{ height: 'calc(75vh - 50px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(75vh - 50px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="d-block width-100 contact-popup-container new-ticket-container">
             <div className="d-block p-b-20 heading">
               <div className="d-block width-100">
                 <h4 className="d-block">Send an Email</h4>
                 <span className="d-block">
-                  When you hit send, the Contact will receive an email and a Ticket will be associated with Them
+                  When you hit send, the Contact will receive an email and a
+                  Ticket will be associated with Them
                 </span>
               </div>
             </div>
@@ -317,13 +348,19 @@ class OpenNewEmailPopup extends Component {
                   <Multiselect
                     placeholder="RK Fabrication Company (support@ramkaumr1578.maxamis.com)"
                     options={this.state.option}
-                    onSelect={(selectedValues, item) => this.onChangeEmail(selectedValues, 'from')}
-                    onRemove={(selectedValues, item) => this.onChangeEmail(selectedValues, 'from')}
+                    onSelect={(selectedValues, item) =>
+                      this.onChangeEmail(selectedValues, "from")
+                    }
+                    onRemove={(selectedValues, item) =>
+                      this.onChangeEmail(selectedValues, "from")
+                    }
                     closeIcon="close"
                     displayValue="name"
                     getAdHocItem={this.getAdHocItem}
                   />
-                  <span style={{ color: 'red' }}>{errorData.fromEmails.message}</span>
+                  <span style={{ color: "red" }}>
+                    {errorData.fromEmails.message}
+                  </span>
                 </div>
               </div>
             </div>
@@ -340,7 +377,9 @@ class OpenNewEmailPopup extends Component {
                     displayValue="name"
                     getAdHocItem={this.getAdHocItem}
                   /> */}
-                  <span style={{ color: 'red' }}>{errorData.toEmails.message}</span>
+                  <span style={{ color: "red" }}>
+                    {errorData.toEmails.message}
+                  </span>
                 </div>
               </div>
             </div>
@@ -418,10 +457,10 @@ class OpenNewEmailPopup extends Component {
                     name="priority"
                     value={priority}
                     arrayData={[
-                      { id: -1, name: 'Select priority' },
-                      { id: 0, name: 'Low' },
-                      { id: 1, name: 'Medium' },
-                      { id: 0, name: 'High' },
+                      { id: -1, name: "Select priority" },
+                      { id: 0, name: "Low" },
+                      { id: 1, name: "Medium" },
+                      { id: 0, name: "High" },
                     ]}
                     onChange={this.handleStateChange}
                     isValid={errorData.priority.isValid}
@@ -440,9 +479,9 @@ class OpenNewEmailPopup extends Component {
                     name="status"
                     value={status}
                     arrayData={[
-                      { id: -1, name: 'Select Status' },
-                      { id: 0, name: 'Closed' },
-                      { id: 1, name: 'open' },
+                      { id: -1, name: "Select Status" },
+                      { id: 0, name: "Closed" },
+                      { id: 1, name: "open" },
                     ]}
                     onChange={this.handleStateChange}
                     isValid={errorData.status.isValid}
@@ -485,4 +524,5 @@ class OpenNewEmailPopup extends Component {
     );
   }
 }
+
 export default OpenNewEmailPopup;

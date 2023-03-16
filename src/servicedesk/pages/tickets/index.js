@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,16 +9,25 @@ import {
   Legend,
   PointElement,
   LineElement,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-import { config } from '../../config';
-import Table from '../../components/table';
-import { RestService } from '../_service/RestService';
-import CreateButtonComponent from '../commanComponents/CreateButtonComponent';
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { config } from "../../config";
+import Table from "./../../components/table";
+import { RestService } from "../_service/RestService";
+import CreateButtonComponent from "../commanComponents/CreateButtonComponent";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement
+);
 
-class Tickets extends Component {
+class Tickets extends React.Component {
   tableValue;
   perPageLimit;
   checkboxValue;
@@ -26,16 +35,16 @@ class Tickets extends Component {
     maintainAspectRatio: false,
     legend: {
       display: false,
-      position: 'right',
+      position: "right",
     },
     scales: {
       yAxes: [
         {
           gridLines: {
-            color: '#fff',
+            color: "#fff",
           },
           ticks: {
-            fontColor: '#fff',
+            fontColor: "#fff",
             fontSize: 12,
           },
         },
@@ -43,10 +52,10 @@ class Tickets extends Component {
       xAxes: [
         {
           gridLines: {
-            color: '#fff',
+            color: "#fff",
           },
           ticks: {
-            fontColor: 'rgba(169, 185, 198, 1)',
+            fontColor: "rgba(169, 185, 198, 1)",
             fontSize: 12,
           },
         },
@@ -58,28 +67,28 @@ class Tickets extends Component {
     this.tableValue = {
       columns: [
         {
-          label: 'ID',
-          key: 'index',
+          label: "ID",
+          key: "index",
         },
         {
-          label: 'Requester Name',
-          key: 'requesterName',
+          label: "Requester Name",
+          key: "requesterName",
         },
         {
-          label: 'Subjects',
-          key: 'subject',
+          label: "Subjects",
+          key: "subject",
         },
         {
-          label: 'Status',
-          key: 'status',
+          label: "Status",
+          key: "status",
           renderCallback: (value) => {
-            let strClass = '';
-            if (value === 'Open') {
-              strClass = 'yellow-green';
-            } else if (value === 'Closed') {
-              strClass = 'red';
-            } else if (value === 'Pending') {
-              strClass = 'orange';
+            let strClass = "";
+            if (value === "Open") {
+              strClass = "yellow-green";
+            } else if (value === "Closed") {
+              strClass = "red";
+            } else if (value === "Pending") {
+              strClass = "orange";
             }
             return (
               <td>
@@ -89,121 +98,121 @@ class Tickets extends Component {
           },
         },
         {
-          label: 'Priority',
-          key: 'priority',
+          label: "Priority",
+          key: "priority",
         },
         {
-          label: 'Assignee',
-          key: 'assignee',
+          label: "Assignee",
+          key: "assignee",
         },
         {
-          label: 'Create Date',
-          key: 'createDate',
+          label: "Create Date",
+          key: "createDate",
         },
         {
-          label: 'Agents',
-          key: 'agents',
+          label: "Agents",
+          key: "agents",
         },
         {
-          label: 'Groups',
-          key: 'groups',
+          label: "Groups",
+          key: "groups",
         },
       ],
       data: [
         {
-          index: '#27',
-          requesterName: 'Rodney Artichoke',
-          subject: 'I need help with aading a New Contact....',
-          status: 'Open',
-          priority: 'Low',
-          assignee: 'Fergus Douchebag',
-          createDate: '10 July 2020',
-          agents: 'Jacob Jones',
-          groups: 'Billings',
+          index: "#27",
+          requesterName: "Rodney Artichoke",
+          subject: "I need help with aading a New Contact....",
+          status: "Open",
+          priority: "Low",
+          assignee: "Fergus Douchebag",
+          createDate: "10 July 2020",
+          agents: "Jacob Jones",
+          groups: "Billings",
           checkStatus: false,
         },
         {
-          index: '#39',
-          requesterName: 'Chaplain Mondover',
-          subject: 'I need help with aading a New Contact data to be pre...',
-          status: 'Closed',
-          priority: 'Medium',
-          assignee: 'Bodrum Salvador',
-          createDate: '12 July 2020',
-          agents: 'Jacob Jones',
-          groups: 'Billings',
+          index: "#39",
+          requesterName: "Chaplain Mondover",
+          subject: "I need help with aading a New Contact data to be pre...",
+          status: "Closed",
+          priority: "Medium",
+          assignee: "Bodrum Salvador",
+          createDate: "12 July 2020",
+          agents: "Jacob Jones",
+          groups: "Billings",
           checkStatus: false,
         },
         {
-          index: '#47',
-          requesterName: 'Rodney Artichoke',
-          subject: 'Mobile Campaign',
-          status: 'Pending',
-          priority: 'Low',
-          assignee: 'Inverness McKenzie',
-          createDate: '15 July 2020',
-          agents: 'Jacob Jones',
-          groups: 'Billings',
+          index: "#47",
+          requesterName: "Rodney Artichoke",
+          subject: "Mobile Campaign",
+          status: "Pending",
+          priority: "Low",
+          assignee: "Inverness McKenzie",
+          createDate: "15 July 2020",
+          agents: "Jacob Jones",
+          groups: "Billings",
           checkStatus: false,
         },
         {
-          index: '#52',
-          requesterName: 'Inverness McKenzie',
-          subject: 'Service related announcements',
-          status: 'Open',
-          priority: 'Hign',
-          assignee: 'Abraham Pigeon',
-          createDate: '16 July 2020',
-          agents: 'Jacob Jones',
-          groups: 'Billings',
+          index: "#52",
+          requesterName: "Inverness McKenzie",
+          subject: "Service related announcements",
+          status: "Open",
+          priority: "Hign",
+          assignee: "Abraham Pigeon",
+          createDate: "16 July 2020",
+          agents: "Jacob Jones",
+          groups: "Billings",
           checkStatus: false,
         },
         {
-          index: '#87',
-          requesterName: 'Douglas Lyphe',
-          subject: 'I need help with aading a New Contact....',
-          status: 'Closed',
-          priority: 'Low',
-          assignee: 'Fergus Douchebag',
-          createDate: '19 July 2020',
-          agents: 'Jacob Jones',
-          groups: 'Billings',
+          index: "#87",
+          requesterName: "Douglas Lyphe",
+          subject: "I need help with aading a New Contact....",
+          status: "Closed",
+          priority: "Low",
+          assignee: "Fergus Douchebag",
+          createDate: "19 July 2020",
+          agents: "Jacob Jones",
+          groups: "Billings",
           checkStatus: false,
         },
         {
-          index: '#92',
-          requesterName: 'Theodore Handle',
-          subject: 'Adding a payment methods',
-          status: 'Pending',
-          priority: 'Low',
-          assignee: 'Jarvis Pepperspray',
-          createDate: '22 July 2020',
-          agents: 'Jacob Jones',
-          groups: 'Billings',
+          index: "#92",
+          requesterName: "Theodore Handle",
+          subject: "Adding a payment methods",
+          status: "Pending",
+          priority: "Low",
+          assignee: "Jarvis Pepperspray",
+          createDate: "22 July 2020",
+          agents: "Jacob Jones",
+          groups: "Billings",
           checkStatus: false,
         },
         {
-          index: '#27',
-          requesterName: 'Rodney Artichoke',
-          subject: 'I need help with aading a New Contact....',
-          status: 'Open',
-          priority: 'Low',
-          assignee: 'Fergus Douchebag',
-          createDate: '10 July 2020',
-          agents: 'Jacob Jones',
-          groups: 'Billings',
+          index: "#27",
+          requesterName: "Rodney Artichoke",
+          subject: "I need help with aading a New Contact....",
+          status: "Open",
+          priority: "Low",
+          assignee: "Fergus Douchebag",
+          createDate: "10 July 2020",
+          agents: "Jacob Jones",
+          groups: "Billings",
           checkStatus: false,
         },
         {
-          index: '#27',
-          requesterName: 'Rodney Artichoke',
-          subject: 'I need help with aading a New Contact....',
-          status: 'Open',
-          priority: 'Low',
-          assignee: 'Fergus Douchebag',
-          createDate: '10 July 2020',
-          agents: 'Jacob Jones',
-          groups: 'Billings',
+          index: "#27",
+          requesterName: "Rodney Artichoke",
+          subject: "I need help with aading a New Contact....",
+          status: "Open",
+          priority: "Low",
+          assignee: "Fergus Douchebag",
+          createDate: "10 July 2020",
+          agents: "Jacob Jones",
+          groups: "Billings",
           checkStatus: false,
         },
       ],
@@ -222,32 +231,32 @@ class Tickets extends Component {
         labels: [],
         datasets: [
           {
-            type: 'bar',
-            label: '',
-            backgroundColor: 'rgba(222, 233, 249, 1)',
-            borderColor: 'rgba(222, 233, 249, 1)',
+            type: "bar",
+            label: "",
+            backgroundColor: "rgba(222, 233, 249, 1)",
+            borderColor: "rgba(222, 233, 249, 1)",
             borderWidth: 1,
-            hoverBackgroundColor: 'rgba(222, 233, 249, 1)',
-            hoverBorderColor: 'rgba(222, 233, 249, 1)',
+            hoverBackgroundColor: "rgba(222, 233, 249, 1)",
+            hoverBorderColor: "rgba(222, 233, 249, 1)",
             data: [],
           },
           {
-            label: '',
-            backgroundColor: '#fff',
+            label: "",
+            backgroundColor: "#fff",
             data: [],
-            type: 'line',
+            type: "line",
             pointRadius: 4,
             // pointBackgroundColor: 'rgba(67, 138, 251, 1)',
             pointBackgroundColor: function (context) {
               var index = context.dataIndex;
               var value = context.dataset.data[index];
               return value < 20
-                ? '#438AFB' // draw negative values in red
+                ? "#438AFB" // draw negative values in red
                 : value > 20 && value <= 30
-                ? '#FB7CA4' // else, alternate values in blue and green
-                : '#FBB48B';
+                ? "#FB7CA4" // else, alternate values in blue and green
+                : "#FBB48B";
             },
-            borderColor: '#fff',
+            borderColor: "#fff",
           },
         ],
       },
@@ -256,21 +265,33 @@ class Tickets extends Component {
   async componentDidMount() {
     // this.calculateTotalPages(this.state.TicketsData);
     try {
-      await RestService.getData(config.GET_REPORT_QUICK_STAT_URL, null, null).then((response) => {
+      await RestService.getData(
+        config.GET_REPORT_QUICK_STAT_URL,
+        null,
+        null
+      ).then((response) => {
         this.setState({
           quickStat: response,
         });
       });
     } catch (err) {
-      console.log('Loading quick stat data failed. Error: ', err);
+      console.log("Loading quick stat data failed. Error: ", err);
     }
     try {
-      await RestService.getData(config.GET_GRAPH_STAT_DATA_URL, null, null).then((response) => {
+      await RestService.getData(
+        config.GET_GRAPH_STAT_DATA_URL,
+        null,
+        null
+      ).then((response) => {
         const { barChartData } = this.state;
         let data1 = [
           ...barChartData.datasets.slice(0, 0),
-          Object.assign({}, barChartData.datasets[0], { data: response.numberOfTicketsList }),
-          Object.assign({}, barChartData.datasets[1], { data: response.numberOfTicketsList }),
+          Object.assign({}, barChartData.datasets[0], {
+            data: response.numberOfTicketsList,
+          }),
+          Object.assign({}, barChartData.datasets[1], {
+            data: response.numberOfTicketsList,
+          }),
           ...barChartData.datasets[0].data.slice(0 + 1),
           ...barChartData.datasets[0].data.slice(1 + 1),
         ];
@@ -283,7 +304,7 @@ class Tickets extends Component {
         });
       });
     } catch (err) {
-      console.log('Loading Bar stat data failed. Error: ', err);
+      console.log("Loading Bar stat data failed. Error: ", err);
     }
   }
 
@@ -295,163 +316,85 @@ class Tickets extends Component {
   };
   barChartData = {
     labels: [
-      '01',
-      '02',
-      '03',
-      '04',
-      '05',
-      '06',
-      '07',
-      '08',
-      '09',
-      '10',
-      '11',
-      '12',
-      '13',
-      '14',
-      '15',
-      '16',
-      '17',
-      '18',
-      '19',
-      '20',
-      '21',
-      '22',
-      '23',
-      '24',
-      '25',
-      '26',
-      '27',
-      '28',
-      '29',
-      '30',
-      '31',
-      '01',
-      '02',
-      '03',
-      '04',
-      '05',
-      '06',
-      '07',
-      '08',
-      '09',
-      '10',
-      '11',
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31",
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
     ],
     datasets: [
       {
-        type: 'bar',
-        label: '',
-        backgroundColor: 'rgba(222, 233, 249, 1)',
-        borderColor: 'rgba(222, 233, 249, 1)',
+        type: "bar",
+        label: "",
+        backgroundColor: "rgba(222, 233, 249, 1)",
+        borderColor: "rgba(222, 233, 249, 1)",
         borderWidth: 1,
-        hoverBackgroundColor: 'rgba(222, 233, 249, 1)',
-        hoverBorderColor: 'rgba(222, 233, 249, 1)',
+        hoverBackgroundColor: "rgba(222, 233, 249, 1)",
+        hoverBorderColor: "rgba(222, 233, 249, 1)",
         data: [
-          5,
-          10,
-          12,
-          15,
-          20,
-          4,
-          10,
-          13,
-          17,
-          16,
-          20,
-          22,
-          13,
-          17,
-          15,
-          14,
-          16,
-          18,
-          16,
-          17,
-          12,
-          22,
-          23,
-          21,
-          5,
-          10,
-          12,
-          15,
-          20,
-          4,
-          10,
-          13,
-          17,
-          16,
-          20,
-          22,
-          13,
-          17,
-          15,
-          14,
-          20,
-          30,
+          5, 10, 12, 15, 20, 4, 10, 13, 17, 16, 20, 22, 13, 17, 15, 14, 16, 18,
+          16, 17, 12, 22, 23, 21, 5, 10, 12, 15, 20, 4, 10, 13, 17, 16, 20, 22,
+          13, 17, 15, 14, 20, 30,
         ],
       },
       {
-        label: '',
-        backgroundColor: '#fff',
+        label: "",
+        backgroundColor: "#fff",
         data: [
-          5,
-          10,
-          12,
-          15,
-          20,
-          4,
-          10,
-          13,
-          17,
-          16,
-          20,
-          22,
-          13,
-          17,
-          15,
-          14,
-          16,
-          18,
-          16,
-          17,
-          12,
-          22,
-          23,
-          21,
-          5,
-          10,
-          12,
-          15,
-          20,
-          4,
-          10,
-          13,
-          17,
-          16,
-          20,
-          22,
-          13,
-          17,
-          15,
-          14,
-          20,
-          30,
+          5, 10, 12, 15, 20, 4, 10, 13, 17, 16, 20, 22, 13, 17, 15, 14, 16, 18,
+          16, 17, 12, 22, 23, 21, 5, 10, 12, 15, 20, 4, 10, 13, 17, 16, 20, 22,
+          13, 17, 15, 14, 20, 30,
         ],
-        type: 'line',
+        type: "line",
         pointRadius: 4,
         // pointBackgroundColor: 'rgba(67, 138, 251, 1)',
         pointBackgroundColor: function (context) {
           var index = context.dataIndex;
           var value = context.dataset.data[index];
           return value < 20
-            ? '#438AFB' // draw negative values in red
+            ? "#438AFB" // draw negative values in red
             : value > 20 && value <= 30
-            ? '#FB7CA4' // else, alternate values in blue and green
-            : '#FBB48B';
+            ? "#FB7CA4" // else, alternate values in blue and green
+            : "#FBB48B";
         },
-        borderColor: '#fff',
+        borderColor: "#fff",
       },
     ],
   };
@@ -485,22 +428,30 @@ class Tickets extends Component {
             <div className="row">
               <div className="col-lg-3 col-md-4 col-sm-12">
                 <div className="d-inline-block tickets-number-box">
-                  <h3 className="d-block m-b-5 red">{quickStat.totalTickets}</h3>
+                  <h3 className="d-block m-b-5 red">
+                    {quickStat.totalTickets}
+                  </h3>
                   <span className="d-block">Total No.of Tickets</span>
                 </div>
               </div>
               <div className="col-lg-7 col-md-8 col-sm-12">
                 <div className="d-block w-100 text-right">
                   <div className="d-inline-block tickets-number-box">
-                    <h3 className="d-block m-b-5 blue">{quickStat.opentTicketsPercentage}%</h3>
+                    <h3 className="d-block m-b-5 blue">
+                      {quickStat.opentTicketsPercentage}%
+                    </h3>
                     <span className="d-block">Open Tickets</span>
                   </div>
                   <div className="d-inline-block tickets-number-box">
-                    <h3 className="d-block m-b-5 orange">{quickStat.unresolvedTicketsPercentage}%</h3>
+                    <h3 className="d-block m-b-5 orange">
+                      {quickStat.unresolvedTicketsPercentage}%
+                    </h3>
                     <span className="d-block">Unresolved Tickets</span>
                   </div>
                   <div className="d-inline-block tickets-number-box">
-                    <h3 className="d-block m-b-5 red">{quickStat.closedTicktsPercentage}%</h3>
+                    <h3 className="d-block m-b-5 red">
+                      {quickStat.closedTicktsPercentage}%
+                    </h3>
                     <span className="d-block">Closed Tickets</span>
                   </div>
                 </div>
@@ -674,7 +625,10 @@ class Tickets extends Component {
               </div>
               <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
                 <div className="p-t-20 form-group">
-                  <a href="#" className="blue-button m-r-0 m-b-0 apply-filters-button">
+                  <a
+                    href="#"
+                    className="blue-button m-r-0 m-b-0 apply-filters-button"
+                  >
                     Apply Filters
                   </a>
                 </div>
@@ -685,16 +639,18 @@ class Tickets extends Component {
             <div className="all-support-ticket-tabel">
               <div className="d-block p-b-10 heading">
                 <h2 className="d-block m-b-0">All Support Tickets</h2>
-                <span className="d-block">List of ticket opened by Customer</span>
+                <span className="d-block">
+                  List of ticket opened by Customer
+                </span>
               </div>
               <Table
                 valueFromData={this.tableValue}
                 perPageLimit={this.perPageLimit}
                 visiblecheckboxStatus={this.checkboxValue}
                 tableClasses={{
-                  table: 'ticket-tabel',
-                  tableParent: 'd-block p-t-5 tickets-tabel',
-                  parentClass: 'all-support-ticket-tabel',
+                  table: "ticket-tabel",
+                  tableParent: "d-block p-t-5 tickets-tabel",
+                  parentClass: "all-support-ticket-tabel",
                 }}
                 searchKey="subject"
                 showingLine="Showing %start% to %end% of %total% Tickets"
@@ -707,4 +663,5 @@ class Tickets extends Component {
     );
   }
 }
+
 export default Tickets;

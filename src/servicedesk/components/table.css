@@ -192,7 +192,7 @@
   appearance: none;
   transition: all 0.25s ease-out;
   display: inline-block;
-  content: '';
+  content: "";
 }
 
 .custom-table .toolbar .filter-search-control button::after {
@@ -206,7 +206,7 @@
   transition: all 0.25s ease-out;
   width: 24px;
   height: 24px;
-  content: '';
+  content: "";
 }
 
 .custom-table .toolbar .filter-search-control button span {
@@ -239,7 +239,7 @@
 
 .custom-table .sort-icon.sort-none:before {
   display: block;
-  content: '';
+  content: "";
   width: 0;
   height: 0;
   border-style: solid;
@@ -250,7 +250,7 @@
 
 .custom-table .sort-icon.sort-none:after {
   display: block;
-  content: '';
+  content: "";
   width: 0;
   height: 0;
   border-style: solid;
@@ -261,7 +261,7 @@
 
 .custom-table .sort-icon.sort-descending:after {
   display: block;
-  content: '';
+  content: "";
   width: 0;
   height: 0;
   border-style: solid;
@@ -272,7 +272,7 @@
 
 .custom-table .sort-icon.sort-ascending:before {
   display: block;
-  content: '';
+  content: "";
   width: 0;
   height: 0;
   border-style: solid;
@@ -411,7 +411,7 @@
   top: -4px;
   width: 16px;
   height: 16px;
-  content: '';
+  content: "";
   border: 1px solid #004fac;
   border-radius: 50%;
 }

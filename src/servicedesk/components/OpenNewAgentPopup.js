@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody } from 'reactstrap';
-import CustomTextbox from './CustomTextbox';
-import Customselectbox from './Customselectbox';
-import CustomTextareabox from './CustomTextareabox';
-import { config } from '../config';
-import { RestService } from '../pages/_service/RestService';
-import AlertMessage from './AlertMessage';
-// import axios from 'axios';
-
+import React from "react";
+import { Modal, ModalBody } from "reactstrap";
+import CustomTextbox from "./CustomTextbox";
+import Customselectbox from "./Customselectbox";
+import { config } from "../config";
+import { RestService } from "../pages/_service/RestService";
+import AlertMessage from "./AlertMessage";
+import axios from "axios";
+import CustomTextareabox from "./CustomTextareabox";
 
 class MySelectObj {
   id;
@@ -17,33 +16,33 @@ class MySelectObj {
     this.name = name;
   }
 }
-class OpenNewAgentPopup extends Component {
+class OpenNewAgentPopup extends React.Component {
   steps;
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
-      fullName: '',
-      title: '',
-      email: '',
-      alternateEmail: '',
-      workPhone: '',
-      mobilePhone: '',
-      twitter: '',
-      uniqueExternalId: '',
+      fullName: "",
+      title: "",
+      email: "",
+      alternateEmail: "",
+      workPhone: "",
+      mobilePhone: "",
+      twitter: "",
+      uniqueExternalId: "",
       companyId: null,
       isSubmitted: false,
       companyList: [],
       companyLogo: null,
       companyLogoUrl: null,
-      companyName: '',
-      description: '',
-      notes: '',
-      domain: '',
-      healthScore: '',
-      accountTier: '',
-      renewalDate: '',
-      industry: '',
+      companyName: "",
+      description: "",
+      notes: "",
+      domain: "",
+      healthScore: "",
+      accountTier: "",
+      renewalDate: "",
+      industry: "",
       orgCompanyList: [],
       oldCompanyFlag: true,
       newCompanyFlag: false,
@@ -52,27 +51,29 @@ class OpenNewAgentPopup extends Component {
       isAlertOpen: false,
       message: null,
       severity: null,
-      agentDescription: '',
-      address: '',
+      agentDescription: "",
+      address: "",
     };
   }
   async componentDidMount() {
     try {
-      await RestService.getData(config.GET_ALL_COMPANIES_URL, null, null).then((response) => {
-        let ary = [];
-        let obj = new MySelectObj('', 'Select Company');
-        ary.push(obj);
-        for (let i = 0; i < response.length; i++) {
-          obj = new MySelectObj(response[i].id, response[i].companyName);
+      await RestService.getData(config.GET_ALL_COMPANIES_URL, null, null).then(
+        (response) => {
+          let ary = [];
+          let obj = new MySelectObj("", "Select Company");
           ary.push(obj);
+          for (let i = 0; i < response.length; i++) {
+            obj = new MySelectObj(response[i].id, response[i].companyName);
+            ary.push(obj);
+          }
+          this.setState({
+            companyList: ary,
+            orgCompanyList: response,
+          });
         }
-        this.setState({
-          companyList: ary,
-          orgCompanyList: response,
-        });
-      });
+      );
     } catch (err) {
-      console.log('Loading company data failed. Error: ', err);
+      console.log("Loading company data failed. Error: ", err);
     }
   }
   toggle = () => {
@@ -93,7 +94,7 @@ class OpenNewAgentPopup extends Component {
       isSubmitted: true,
     });
     const errorData = this.validate(true);
-    console.log('Error Data : ', errorData);
+    console.log("Error Data : ", errorData);
     if (
       errorData.companyLogo.isValid &&
       errorData.contactPhoto.isValid &&
@@ -161,63 +162,63 @@ class OpenNewAgentPopup extends Component {
       };
       console.log(sendData);
       let formData = new FormData();
-      formData.append('contactPhoto', contactPhoto);
-      formData.append('fullName', fullName);
-      formData.append('title', title);
-      formData.append('primaryEmail', email);
-      formData.append('alternateEmail', alternateEmail);
-      formData.append('workPhone', workPhone);
-      formData.append('healthScore', healthScore);
-      formData.append('mobilePhone', mobilePhone);
-      formData.append('twitterHandle', twitter);
-      formData.append('uniqueExternalId', uniqueExternalId);
-      formData.append('agentDescription', agentDescription);
-      formData.append('address', address);
+      formData.append("contactPhoto", contactPhoto);
+      formData.append("fullName", fullName);
+      formData.append("title", title);
+      formData.append("primaryEmail", email);
+      formData.append("alternateEmail", alternateEmail);
+      formData.append("workPhone", workPhone);
+      formData.append("healthScore", healthScore);
+      formData.append("mobilePhone", mobilePhone);
+      formData.append("twitterHandle", twitter);
+      formData.append("uniqueExternalId", uniqueExternalId);
+      formData.append("agentDescription", agentDescription);
+      formData.append("address", address);
       if (oldCompanyFlag) {
-        formData.append('companyId', companyId);
+        formData.append("companyId", companyId);
       }
       if (newCompanyFlag) {
-        formData.append('companyId', '-1');
+        formData.append("companyId", "-1");
       }
-      formData.append('logo', companyLogo);
-      formData.append('companyName', companyName);
-      formData.append('description', description);
-      formData.append('notes', notes);
-      formData.append('domain', domain);
-      formData.append('healthScore', healthScore);
-      formData.append('accountTier', accountTier);
-      formData.append('renewalDate', renewalDate);
-      formData.append('industry', industry);
-      // axios
-      //   .post(config.ADD_AGENT_URL, formData, {
-      //     headers: {
-      //       'content-type': 'multipart/form-data',
-      //     },
-      //   })
-      //   .then((response) => {
-      //     if (response.data != null) {
-      //       this.setState({
-      //         severity: config.SEVERITY_SUCCESS,
-      //         message: config.AGENT_ADDED_SUCCESS,
-      //         isAlertOpen: true,
-      //       });
-      //     } else {
-      //       this.setState({
-      //         severity: config.SEVERITY_ERROR,
-      //         message: config.AGENT_ADDED_ERROR,
-      //         isAlertOpen: true,
-      //       });
-      //     }
-      //     console.log('response data', response.data);
-      //   })
-      //   .catch((err) => console.log(err));
+      formData.append("logo", companyLogo);
+      formData.append("companyName", companyName);
+      formData.append("description", description);
+      formData.append("notes", notes);
+      formData.append("domain", domain);
+      formData.append("healthScore", healthScore);
+      formData.append("accountTier", accountTier);
+      formData.append("renewalDate", renewalDate);
+      formData.append("industry", industry);
+      axios
+        .post(config.ADD_AGENT_URL, formData, {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          if (response.data != null) {
+            this.setState({
+              severity: config.SEVERITY_SUCCESS,
+              message: config.AGENT_ADDED_SUCCESS,
+              isAlertOpen: true,
+            });
+          } else {
+            this.setState({
+              severity: config.SEVERITY_ERROR,
+              message: config.AGENT_ADDED_ERROR,
+              isAlertOpen: true,
+            });
+          }
+          console.log("response data", response.data);
+        })
+        .catch((err) => console.log(err));
     }
   };
 
   validate = (isSubmitted) => {
     const validObj = {
       isValid: true,
-      message: '',
+      message: "",
     };
     const retData = {
       fullName: validObj,
@@ -266,44 +267,44 @@ class OpenNewAgentPopup extends Component {
       if (!contactPhoto) {
         retData.contactPhoto = {
           isValid: false,
-          message: 'Photo is required',
+          message: "Photo is required",
         };
       }
       if (!fullName) {
         retData.fullName = {
           isValid: false,
-          message: 'full Name is required',
+          message: "full Name is required",
         };
       }
       if (!title) {
         retData.title = {
           isValid: false,
-          message: 'Title is required',
+          message: "Title is required",
         };
       }
       if (!agentDescription) {
         retData.agentDescription = {
           isValid: false,
-          message: 'Description is required',
+          message: "Description is required",
         };
       }
       if (!address) {
         retData.address = {
           isValid: false,
-          message: 'Description is required',
+          message: "Description is required",
         };
       }
       if (!email) {
         retData.email = {
           isValid: false,
-          message: 'Email is mandatory*',
+          message: "Email is mandatory*",
         };
       }
       if (oldCompanyFlag) {
         if (!companyId) {
           retData.companyId = {
             isValid: false,
-            message: 'companyId name is required',
+            message: "companyId name is required",
           };
         }
       }
@@ -312,7 +313,7 @@ class OpenNewAgentPopup extends Component {
         if (!companyLogo) {
           retData.companyLogo = {
             isValid: false,
-            message: 'Company Logo is required',
+            message: "Company Logo is required",
           };
         }
       }
@@ -320,49 +321,49 @@ class OpenNewAgentPopup extends Component {
       if (!companyName) {
         retData.companyName = {
           isValid: false,
-          message: 'Company Name is required',
+          message: "Company Name is required",
         };
       }
       if (!description) {
         retData.description = {
           isValid: false,
-          message: 'Description is required',
+          message: "Description is required",
         };
       }
       if (!notes) {
         retData.notes = {
           isValid: false,
-          message: 'Notes is required',
+          message: "Notes is required",
         };
       }
       if (!domain) {
         retData.domain = {
           isValid: false,
-          message: 'Domain is required',
+          message: "Domain is required",
         };
       }
       if (!healthScore) {
         retData.healthScore = {
           isValid: false,
-          message: 'Health Care is required',
+          message: "Health Care is required",
         };
       }
       if (!accountTier) {
         retData.accountTier = {
           isValid: false,
-          message: 'Account Tier Name is required',
+          message: "Account Tier Name is required",
         };
       }
       if (!renewalDate) {
         retData.renewalDate = {
           isValid: false,
-          message: 'Renewal Date is required',
+          message: "Renewal Date is required",
         };
       }
       if (!industry) {
         retData.industry = {
           isValid: false,
-          message: 'Industry Name is required',
+          message: "Industry Name is required",
         };
       }
     }
@@ -381,7 +382,7 @@ class OpenNewAgentPopup extends Component {
     this.setState({
       [name]: value,
     });
-    console.log('company org list : ', orgCompanyList);
+    console.log("company org list : ", orgCompanyList);
     for (let i = 0; i < orgCompanyList.length; i++) {
       let obj = orgCompanyList[i];
       if (parseInt(value) === obj.id) {
@@ -407,7 +408,7 @@ class OpenNewAgentPopup extends Component {
   };
   handleImageChange = (e) => {
     this.setState({
-      [e.target.name + 'Url']: URL.createObjectURL(e.target.files[0]),
+      [e.target.name + "Url"]: URL.createObjectURL(e.target.files[0]),
     });
     this.setState({
       [e.target.name]: e.target.files[0],
@@ -450,7 +451,11 @@ class OpenNewAgentPopup extends Component {
     const state = this.state;
     const errorData = this.validate(isSubmitted);
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="modal-container servicdesk-modal-container">
+      <Modal
+        isOpen={modal}
+        toggle={this.toggle}
+        className="modal-container servicdesk-modal-container"
+      >
         <AlertMessage
           handleCloseAlert={this.handleCloseAlert}
           open={state.isAlertOpen}
@@ -460,7 +465,13 @@ class OpenNewAgentPopup extends Component {
         <button className="close-btn" onClick={this.handleClose}>
           X
         </button>
-        <ModalBody style={{ height: 'calc(75vh - 50px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(75vh - 50px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="d-block width-100 contact-popup-container">
             <div className="d-block p-b-20 heading">
               <div className="d-block width-100">
@@ -468,8 +479,9 @@ class OpenNewAgentPopup extends Component {
                   <i className="fa fa-user"></i> New Agent
                 </h4>
                 <span className="d-block">
-                  When someone reaches out to you, they become a agent in your account. You can create companies and
-                  associate agents with them. <a href="#">Learn more.</a>
+                  When someone reaches out to you, they become a agent in your
+                  account. You can create companies and associate agents with
+                  them. <a href="#">Learn more.</a>
                 </span>
               </div>
             </div>
@@ -486,8 +498,13 @@ class OpenNewAgentPopup extends Component {
                   className="contactPhoto"
                   onChange={this.handleImageChange}
                 />
-                <p className="d-block">An image of the person, it's best if it has the same length and height</p>
-                <span style={{ color: 'red' }}>{errorData.contactPhoto.message}</span>
+                <p className="d-block">
+                  An image of the person, it's best if it has the same length
+                  and height
+                </p>
+                <span style={{ color: "red" }}>
+                  {errorData.contactPhoto.message}
+                </span>
                 <img src={contactPhotoUrl} alt="" width="100" height="100" />
               </div>
             </div>
@@ -582,7 +599,9 @@ class OpenNewAgentPopup extends Component {
                       value={email}
                       onChange={this.handleStateChange}
                     />
-                    <span style={{ color: 'red' }}>{errorData.email.message}</span>
+                    <span style={{ color: "red" }}>
+                      {errorData.email.message}
+                    </span>
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-12">
@@ -685,7 +704,10 @@ class OpenNewAgentPopup extends Component {
                         message={errorData.companyId.message}
                       />
                       <div className="d-block text-right p-t-5">
-                        <button className="add-conatct" onClick={this.addNewCompany}>
+                        <button
+                          className="add-conatct"
+                          onClick={this.addNewCompany}
+                        >
                           Add a Company
                         </button>
                       </div>
@@ -846,8 +868,9 @@ class OpenNewAgentPopup extends Component {
                     <i className="fa fa-building"></i> New Company
                   </h4>
                   <span className="d-block">
-                    When someone reaches out to you, they become a contact in your account. You can create companies and
-                    associate contacts with them. <a href="#">Learn more.</a>
+                    When someone reaches out to you, they become a contact in
+                    your account. You can create companies and associate
+                    contacts with them. <a href="#">Learn more.</a>
                   </span>
                 </div>
                 <div className="d-block width-100 p-t-10 p-b-10 upload-photo">
@@ -863,8 +886,13 @@ class OpenNewAgentPopup extends Component {
                       className="contactPhoto"
                       onChange={this.handleImageChange}
                     />
-                    <p className="d-block">An image of the person, it's best if it has the same length and height</p>
-                    <span style={{ color: 'red' }}>{errorData.companyLogo.message}</span>
+                    <p className="d-block">
+                      An image of the person, it's best if it has the same
+                      length and height
+                    </p>
+                    <span style={{ color: "red" }}>
+                      {errorData.companyLogo.message}
+                    </span>
                     <img src={companyLogoUrl} alt="" width="100" height="100" />
                   </div>
                 </div>
@@ -1033,4 +1061,5 @@ class OpenNewAgentPopup extends Component {
     );
   }
 }
+
 export default OpenNewAgentPopup;

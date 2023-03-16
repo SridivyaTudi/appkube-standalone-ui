@@ -1,11 +1,10 @@
-import React, {Component} from 'react'; 
-//import * as React from 'react';
-//import { Breadcrumbs } from '../../components/Breadcrumbs';
-import Table from '../../components/table';
-import  CreateButtonComponent  from '../commanComponents/CreateButtonComponent';
-import { RestService } from '../_service/RestService';
-import { config } from '../../config';
-import  UnimplementedFeaturePopup  from '../../components/UnimplementedFeaturePopup';
+import React from "react";
+import Table from "./../../components/table";
+import CreateButtonComponent from "../commanComponents/CreateButtonComponent";
+import { RestService } from "../_service/RestService";
+import { config } from "../../config";
+import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
+
 class MySelectObj {
   id;
   name;
@@ -14,113 +13,99 @@ class MySelectObj {
     this.name = name;
   }
 }
-class OpenTickets extends Component {
+
+class OpenTickets extends React.Component {
   unimplementedFeatureModalRef;
-  breadCrumbs;
   perPageLimit;
   tableValue;
   checkboxValue;
   constructor(props) {
     super(props);
     this.perPageLimit = 6;
-    // (this.checkboxValue = false),
-      (this.state = {
-        allAgents: [],
-        allContacts: [],
-        allCompanies: [],
-        agentNameList: [],
-        contactNameList: [],
-        companyNameList: [],
-        agent: '',
-        created: '',
-        dueBy: '',
-        status: '',
-        priority: '',
-        type: '',
-        tags: '',
-        company: '',
-        contact: '',
-        filterCheckbox: false,
+    this.checkboxValue = false;
+    this.state = {
+      allAgents: [],
+      allContacts: [],
+      allCompanies: [],
+      agentNameList: [],
+      contactNameList: [],
+      companyNameList: [],
+      agent: "",
+      created: "",
+      dueBy: "",
+      status: "",
+      priority: "",
+      type: "",
+      tags: "",
+      company: "",
+      contact: "",
+      filterCheckbox: false,
 
-        page_type: '',
-        openCreateMenu: false,
-        columns: [
-          {
-            label: 'ID',
-            key: 'id',
+      page_type: "",
+      openCreateMenu: false,
+      columns: [
+        {
+          label: "ID",
+          key: "id",
+        },
+        {
+          label: "Requester Name",
+          key: "requesterName",
+        },
+        {
+          label: "Subjects",
+          key: "subject",
+        },
+        {
+          label: "Status",
+          key: "status",
+          renderCallback: (value) => {
+            let strClass = "";
+            if (value === "Open") {
+              strClass = "yellow-green";
+            } else if (value === "Closed") {
+              strClass = "red";
+            } else if (value === "Pending") {
+              strClass = "orange";
+            }
+            return (
+              <td>
+                <span className={strClass}>{value}</span>
+              </td>
+            );
           },
-          {
-            label: 'Requester Name',
-            key: 'requesterName',
-          },
-          {
-            label: 'Subjects',
-            key: 'subject',
-          },
-          {
-            label: 'Status',
-            key: 'status',
-            renderCallback: (value) => {
-              let strClass = '';
-              if (value === 'Open') {
-                strClass = 'yellow-green';
-              } else if (value === 'Closed') {
-                strClass = 'red';
-              } else if (value === 'Pending') {
-                strClass = 'orange';
-              }
-              return (
-                <td>
-                  <span className={strClass}>{value}</span>
-                </td>
-              );
-            },
-          },
-          {
-            label: 'Priority',
-            key: 'priority',
-          },
-          {
-            label: 'Assignee',
-            key: 'assignedToName',
-          },
-          {
-            label: 'Type',
-            key: 'type',
-          },
-          {
-            label: 'Tags',
-            key: 'tags',
-          },
-          {
-            label: 'Requester Company',
-            key: 'requesterCompany',
-          },
-          {
-            label: 'Create Date',
-            key: 'createDate',
-          },
-          {
-            label: 'Expected Date Of Complection',
-            key: 'expectedDateOfCompletion',
-          },
-        ],
-        ticketDataList: [],
-      });
-    this.breadCrumbs = [
-      {
-        label: 'Home',
-        route: `/`,
-      },
-      {
-        label: 'Tickets | Dashboard',
-        route: `${config.basePath}/dashboard`,
-      },
-      {
-        label: 'Open Tickets',
-        isCurrentPage: true,
-      },
-    ];
+        },
+        {
+          label: "Priority",
+          key: "priority",
+        },
+        {
+          label: "Assignee",
+          key: "assignedToName",
+        },
+        {
+          label: "Type",
+          key: "type",
+        },
+        {
+          label: "Tags",
+          key: "tags",
+        },
+        {
+          label: "Requester Company",
+          key: "requesterCompany",
+        },
+        {
+          label: "Create Date",
+          key: "createDate",
+        },
+        {
+          label: "Expected Date Of Complection",
+          key: "expectedDateOfCompletion",
+        },
+      ],
+      ticketDataList: [],
+    };
   }
   onClickUnImplementedFeature = (link) => {
     this.unimplementedFeatureModalRef.current.setLink(link);
@@ -129,71 +114,82 @@ class OpenTickets extends Component {
   async componentDidMount() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const pageType = urlParams.get('type');
+    const pageType = urlParams.get("type");
     this.setState({
       page_type: pageType,
     });
     try {
-      await RestService.getData(config.GET_ALL_TICKET_FOR_TABLE_URL + '?pageType=' + pageType, null, null).then(
+      await RestService.getData(
+        config.GET_ALL_TICKET_FOR_TABLE_URL + "?pageType=" + pageType,
+        null,
+        null
+      ).then((response) => {
+        this.setState({
+          ticketDataList: response,
+        });
+      });
+    } catch (err) {
+      console.log("Loading ticket data failed. Error: ", err);
+    }
+    try {
+      await RestService.getData(config.GET_ALL_AGENT_URL, null, null).then(
         (response) => {
+          let ary = [];
+          // let obj = new MySelectObj("", "Select Agent");
+          // ary.push(obj);
+          for (let i = 0; i < response.length; i++) {
+            let obj = new MySelectObj(response[i].id, response[i].name);
+            ary.push(obj);
+          }
           this.setState({
-            ticketDataList: response,
+            agentNameList: ary,
+            allAgents: response,
           });
         }
       );
     } catch (err) {
-      console.log('Loading ticket data failed. Error: ', err);
+      console.log("Loading agent data failed. Error: ", err);
     }
     try {
-      await RestService.getData(config.GET_ALL_AGENT_URL, null, null).then((response) => {
-        let ary = [];
-        // let obj = new MySelectObj("", "Select Agent");
-        // ary.push(obj);
-        for (let i = 0; i < response.length; i++) {
-          let obj = new MySelectObj(response[i].id, response[i].name);
-          ary.push(obj);
+      await RestService.getData(config.GET_ALL_CONTACT_URL, null, null).then(
+        (response) => {
+          let contactNameAry = [];
+          // let obj = new MySelectObj('', 'Select Contact');
+          let contactNameObj = new MySelectObj("", "Select Contact");
+          for (let i = 0; i < response.length; i++) {
+            // obj = new MySelectObj(response[i].id, response[i].userName + ' => ' + response[i].primaryEmail);
+            contactNameObj = new MySelectObj(
+              response[i].id,
+              response[i].userName
+            );
+            contactNameAry.push(contactNameObj);
+          }
+          this.setState({
+            allContacts: response,
+            contactNameList: contactNameAry,
+          });
         }
-        this.setState({
-          agentNameList: ary,
-          allAgents: response,
-        });
-      });
+      );
     } catch (err) {
-      console.log('Loading agent data failed. Error: ', err);
+      console.log("Loading contact data failed. Error: ", err);
     }
     try {
-      await RestService.getData(config.GET_ALL_CONTACT_URL, null, null).then((response) => {
-        let contactNameAry = [];
-        // let obj = new MySelectObj('', 'Select Contact');
-        let contactNameObj = new MySelectObj('', 'Select Contact');
-        for (let i = 0; i < response.length; i++) {
-          // obj = new MySelectObj(response[i].id, response[i].userName + ' => ' + response[i].primaryEmail);
-          contactNameObj = new MySelectObj(response[i].id, response[i].userName);
-          contactNameAry.push(contactNameObj);
+      await RestService.getData(config.GET_ALL_COMPANIES_URL, null, null).then(
+        (response) => {
+          let ary = [];
+          let obj = new MySelectObj("", "Select Company");
+          for (let i = 0; i < response.length; i++) {
+            obj = new MySelectObj(response[i].id, response[i].companyName);
+            ary.push(obj);
+          }
+          this.setState({
+            companyNameList: ary,
+            allCompanies: response,
+          });
         }
-        this.setState({
-          allContacts: response,
-          contactNameList: contactNameAry,
-        });
-      });
+      );
     } catch (err) {
-      console.log('Loading contact data failed. Error: ', err);
-    }
-    try {
-      await RestService.getData(config.GET_ALL_COMPANIES_URL, null, null).then((response) => {
-        let ary = [];
-        let obj = new MySelectObj('', 'Select Company');
-        for (let i = 0; i < response.length; i++) {
-          obj = new MySelectObj(response[i].id, response[i].companyName);
-          ary.push(obj);
-        }
-        this.setState({
-          companyNameList: ary,
-          allCompanies: response,
-        });
-      });
-    } catch (err) {
-      console.log('Loading company data failed. Error: ', err);
+      console.log("Loading company data failed. Error: ", err);
     }
   }
   createSelectboxOptions = (data) => {
@@ -225,7 +221,18 @@ class OpenTickets extends Component {
     });
   };
   applyFilters = () => {
-    const { ticketDataList, agent, created, dueBy, status, priority, type, tags, company, contact } = this.state;
+    const {
+      ticketDataList,
+      agent,
+      created,
+      dueBy,
+      status,
+      priority,
+      type,
+      tags,
+      company,
+      contact,
+    } = this.state;
     const retData = [];
     if (ticketDataList && ticketDataList.length > 0) {
       const length = ticketDataList.length;
@@ -235,7 +242,7 @@ class OpenTickets extends Component {
         const lowerCaseKeys = ticketKeys.map((key) => key.toLocaleLowerCase());
         let isMatched = true;
         if (agent) {
-          let index = lowerCaseKeys.indexOf('assignedtoname');
+          let index = lowerCaseKeys.indexOf("assignedtoname");
           if (index !== -1) {
             let key = ticketKeys[index];
             let data = ticket[key];
@@ -251,7 +258,7 @@ class OpenTickets extends Component {
         if (isMatched && created) {
         }
         if (isMatched && dueBy) {
-          let index = lowerCaseKeys.indexOf('expecteddateofcompletion');
+          let index = lowerCaseKeys.indexOf("expecteddateofcompletion");
           if (index !== -1) {
             let key = ticketKeys[index];
             let data = ticket[key];
@@ -264,19 +271,19 @@ class OpenTickets extends Component {
               var month;
               var year;
               if (dd < 10) {
-                day = '0' + dd.toString();
+                day = "0" + dd.toString();
               }
 
               if (mm < 10) {
-                month = '0' + mm.toString();
+                month = "0" + mm.toString();
               }
-              var todayDate = year + '-' + month + '-' + day;
+              var todayDate = year + "-" + month + "-" + day;
 
-              if (dueBy == 'overdue') {
+              if (dueBy == "overdue") {
                 isMatched = todayDate > data;
-              } else if (dueBy == 'today') {
+              } else if (dueBy == "today") {
                 isMatched = todayDate == data;
-              } else if (dueBy == 'tomorrow') {
+              } else if (dueBy == "tomorrow") {
                 var tomorrow = new Date(today);
                 tomorrow.setDate(tomorrow.getDate() + 1);
                 dd = tomorrow.getDate();
@@ -285,13 +292,14 @@ class OpenTickets extends Component {
                 var tomorrowDay;
                 var tomorrowMonth;
                 if (dd < 10) {
-                  tomorrowDay = '0' + dd.toString();
+                  tomorrowDay = "0" + dd.toString();
                 }
 
                 if (mm < 10) {
-                  tomorrowMonth = '0' + mm.toString();
+                  tomorrowMonth = "0" + mm.toString();
                 }
-                var tomorrowDate = year + '-' + tomorrowMonth + '-' + tomorrowDay;
+                var tomorrowDate =
+                  year + "-" + tomorrowMonth + "-" + tomorrowDay;
                 isMatched = tomorrowDate == data;
               }
             } else {
@@ -302,7 +310,7 @@ class OpenTickets extends Component {
           }
         }
         if (isMatched && status) {
-          let index = lowerCaseKeys.indexOf('status');
+          let index = lowerCaseKeys.indexOf("status");
           if (index !== -1) {
             let key = ticketKeys[index];
             let data = ticket[key];
@@ -316,7 +324,7 @@ class OpenTickets extends Component {
           }
         }
         if (isMatched && priority) {
-          let index = lowerCaseKeys.indexOf('priority');
+          let index = lowerCaseKeys.indexOf("priority");
           if (index !== -1) {
             let key = ticketKeys[index];
             let data = ticket[key];
@@ -330,7 +338,7 @@ class OpenTickets extends Component {
           }
         }
         if (isMatched && type) {
-          let index = lowerCaseKeys.indexOf('type');
+          let index = lowerCaseKeys.indexOf("type");
           if (index !== -1) {
             let key = ticketKeys[index];
             let data = ticket[key];
@@ -344,7 +352,7 @@ class OpenTickets extends Component {
           }
         }
         if (isMatched && tags) {
-          let index = lowerCaseKeys.indexOf('tags');
+          let index = lowerCaseKeys.indexOf("tags");
           if (index !== -1) {
             let key = ticketKeys[index];
             let data = ticket[key];
@@ -358,8 +366,8 @@ class OpenTickets extends Component {
           }
         }
         if (isMatched && company) {
-          let index = lowerCaseKeys.indexOf('requestercompany');
-          console.log('index', index);
+          let index = lowerCaseKeys.indexOf("requestercompany");
+          console.log("index", index);
           if (index !== -1) {
             let key = ticketKeys[index];
             let data = ticket[key];
@@ -373,7 +381,7 @@ class OpenTickets extends Component {
           }
         }
         if (isMatched && contact) {
-          let index = lowerCaseKeys.indexOf('requestername');
+          let index = lowerCaseKeys.indexOf("requestername");
           if (index !== -1) {
             let key = ticketKeys[index];
             let data = ticket[key];
@@ -395,15 +403,15 @@ class OpenTickets extends Component {
   };
   clearAllFilters = () => {
     this.setState({
-      agent: '',
-      created: '',
-      dueBy: '',
-      status: '',
-      priority: '',
-      type: '',
-      tags: '',
-      company: '',
-      contact: '',
+      agent: "",
+      created: "",
+      dueBy: "",
+      status: "",
+      priority: "",
+      type: "",
+      tags: "",
+      company: "",
+      contact: "",
       filterCheckbox: false,
     });
   };
@@ -435,7 +443,6 @@ class OpenTickets extends Component {
     const tableData = this.applyFilters();
     return (
       <div className="servicedesk-dashboard-container">
-        {/* <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="TICKETING TOOL" /> */}
         <div className="servicedesk-page-container">
           <div className="common-container">
             <div className="row">
@@ -444,9 +451,7 @@ class OpenTickets extends Component {
                   <h1>{page_type}</h1>
                 </div>
               </div>
-              {/* create component */}
               <CreateButtonComponent />
-              {/* create component */}
             </div>
           </div>
           <div className="common-container border-bottom-0 filter-container">
@@ -484,7 +489,6 @@ class OpenTickets extends Component {
                     <option value="overdue">Overdue</option>
                     <option value="today">Today</option>
                     <option value="tomorrow">Tomorrow</option>
-                    {/* <option value="next8hours">Next 8 Hours</option> */}
                   </select>
                 </div>
               </div>
@@ -531,7 +535,13 @@ class OpenTickets extends Component {
               <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
                 <div className="form-group filter-control-group">
                   <label htmlFor="Type">Type</label>
-                  <select className="form-control" id="Type" name="type" value={type} onChange={this.handleStateChange}>
+                  <select
+                    className="form-control"
+                    id="Type"
+                    name="type"
+                    value={type}
+                    onChange={this.handleStateChange}
+                  >
                     <option value="" selected>
                       Select Type
                     </option>
@@ -544,7 +554,13 @@ class OpenTickets extends Component {
               <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
                 <div className="form-group filter-control-group">
                   <label htmlFor="Tags">Tags</label>
-                  <select className="form-control" id="Tags" name="tags" value={tags} onChange={this.handleStateChange}>
+                  <select
+                    className="form-control"
+                    id="Tags"
+                    name="tags"
+                    value={tags}
+                    onChange={this.handleStateChange}
+                  >
                     <option value="" selected>
                       Select Tags
                     </option>
@@ -604,13 +620,6 @@ class OpenTickets extends Component {
                   </label>
                 </div>
               )}
-              {/* <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
-                                <div className="p-t-20 form-group">
-                                    <a href="#" className="blue-button m-r-0 m-b-0 apply-filters-button">
-                                        Apply Filters
-                                    </a>
-                                </div>
-                            </div> */}
             </div>
           </div>
           <div className="common-container border-bottom-0">
@@ -620,9 +629,9 @@ class OpenTickets extends Component {
                 perPageLimit={this.perPageLimit}
                 visiblecheckboxStatus={this.checkboxValue}
                 tableClasses={{
-                  table: 'open-ticket-tabel',
-                  tableParent: 'd-block p-t-5 open-tickets-tabel',
-                  parentClass: 'all-open-ticket-tabel',
+                  table: "open-ticket-tabel",
+                  tableParent: "d-block p-t-5 open-tickets-tabel",
+                  parentClass: "all-open-ticket-tabel",
                 }}
                 searchKey="subject"
                 showingLine="Showing %start% to %end% of %total% Tickets"

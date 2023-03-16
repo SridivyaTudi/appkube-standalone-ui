@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import CreateButtonComponent from '../commanComponents/CreateButtonComponent';
-import Table from '../../components/table';
-import { RestService } from '../_service/RestService';
-import { config } from '../../config';
+import React from "react";
+import CreateButtonComponent from "../commanComponents/CreateButtonComponent";
+import Table from "./../../components/table";
+import { RestService } from "../_service/RestService";
+import { config } from "../../config";
 
-class AllContacts extends Component {
+class AllContacts extends React.Component {
   perPageLimit;
   checkboxValue;
   constructor(props) {
@@ -13,10 +13,10 @@ class AllContacts extends Component {
       openCreateMenu: false,
       columns: [
         {
-          label: 'Photo',
-          key: 'photo',
+          label: "Photo",
+          key: "photo",
           renderCallback: (value) => {
-            let strClass = 'image';
+            let strClass = "image";
             return (
               <td>
                 <span className={strClass}></span>
@@ -27,32 +27,32 @@ class AllContacts extends Component {
         },
 
         {
-          label: 'Title',
-          key: 'title',
+          label: "Title",
+          key: "title",
         },
         {
-          label: 'Contact',
-          key: 'name',
+          label: "Contact",
+          key: "name",
         },
         {
-          label: 'Company',
-          key: 'company',
+          label: "Company",
+          key: "company",
         },
         {
-          label: 'Email Address',
-          key: 'primaryEmail',
+          label: "Email Address",
+          key: "primaryEmail",
         },
         {
-          label: 'Work Phone',
-          key: 'workPhone',
+          label: "Work Phone",
+          key: "workPhone",
         },
         {
-          label: 'External Unique Id',
-          key: 'uniqueExternalId',
+          label: "External Unique Id",
+          key: "uniqueExternalId",
         },
         {
-          label: 'Twitter',
-          key: 'twitterHandle',
+          label: "Twitter",
+          key: "twitterHandle",
         },
       ],
       contactData: [],
@@ -62,14 +62,18 @@ class AllContacts extends Component {
   }
   async componentDidMount() {
     try {
-      await RestService.getData(config.GET_CONTACT_WITH_COMPANY_NAME, null, null).then((response) => {
+      await RestService.getData(
+        config.GET_CONTACT_WITH_COMPANY_NAME,
+        null,
+        null
+      ).then((response) => {
         this.setState({
           contactData: response,
         });
-        console.log('contact Data : ', response);
+        console.log("contact Data : ", response);
       });
     } catch (err) {
-      console.log('Loading contact data failed. Error: ', err);
+      console.log("Loading contact data failed. Error: ", err);
     }
   }
 
@@ -110,9 +114,9 @@ class AllContacts extends Component {
               perPageLimit={this.perPageLimit}
               visiblecheckboxStatus={this.checkboxValue}
               tableClasses={{
-                table: 'contact-tabel',
-                tableParent: 'd-block p-t-5 contacts-tabel',
-                parentClass: 'd-block p-t-20 all-contacts-tabel',
+                table: "contact-tabel",
+                tableParent: "d-block p-t-5 contacts-tabel",
+                parentClass: "d-block p-t-20 all-contacts-tabel",
               }}
               searchKey="contact"
               showingLine="Showing %start% to %end% of %total% Contacts"
@@ -124,4 +128,5 @@ class AllContacts extends Component {
     );
   }
 }
+
 export default AllContacts;

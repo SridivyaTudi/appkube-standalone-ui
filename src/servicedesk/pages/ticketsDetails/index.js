@@ -1,19 +1,15 @@
-import React, {Component} from 'react';
-//import * as React from 'react';
-//import { Breadcrumbs } from '../../components/Breadcrumbs';
-import  OpenNewContactPopup  from '../../components/OpenNewContactPopup';
-import  OpenNewCompanyPopup  from '../../components/OpenNewCompanyPopup';
-import  OpenNewEmailPopup  from '../../components/OpenNewEmailPopup';
-import  OpenNewTicketPopup  from '../../components/OpenNewTicketPopup';
-import  OpenNewAgentPopup  from '../../components/OpenNewAgentPopup';
-import  OpenClosePopup  from '../../components/OpenClosePopup';
-import  OpenDeletePopup  from '../../components/OpenDeletePopup';
-import  OpenMergePopup  from '../../components/OpenMergePopup';
-import { config } from '../../config';
-import Rbac from '../Rbac/Rbac';
+import React from "react";
+import OpenNewContactPopup from "../../components/OpenNewContactPopup";
+import OpenNewCompanyPopup from "../../components/OpenNewCompanyPopup";
+import OpenNewEmailPopup from "../../components/OpenNewEmailPopup";
+import OpenNewTicketPopup from "../../components/OpenNewTicketPopup";
+import OpenNewAgentPopup from "../../components/OpenNewAgentPopup";
+import OpenClosePopup from "../../components/OpenClosePopup";
+import OpenDeletePopup from "../../components/OpenDeletePopup";
+import OpenMergePopup from "../../components/OpenMergePopup";
+import Rbac from "../Rbac/Rbac";
 
-class TicketsDetails extends Component {
-  breadCrumbs;
+class TicketsDetails extends React.Component {
   openNewContactRef;
   openNewCompanyRef;
   openNewEmailRef;
@@ -24,20 +20,6 @@ class TicketsDetails extends Component {
   openMergeRef;
   constructor(props) {
     super(props);
-    this.breadCrumbs = [
-      {
-        label: 'Home',
-        route: `/`,
-      },
-      {
-        label: 'Tickets | Dashboard',
-        route: `${config.basePath}/dashboard`,
-      },
-      {
-        label: 'Ticket Details',
-        isCurrentPage: true,
-      },
-    ];
     this.state = {
       openCreateMenu: false,
       openPropertiesForm: false,
@@ -141,7 +123,6 @@ class TicketsDetails extends Component {
     } = this.state;
     return (
       <div className="servicedesk-dashboard-container">
-        {/* <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="TICKETING TOOL" /> */}
         <div className="servicedesk-page-container">
           <div className="common-container">
             <div className="row">
@@ -162,7 +143,10 @@ class TicketsDetails extends Component {
                 </Rbac>
                 {openCreateMenu == true && (
                   <div>
-                    <div className="open-full-screen" onClick={this.onClickOpenSubLink}></div>
+                    <div
+                      className="open-full-screen"
+                      onClick={this.onClickOpenSubLink}
+                    ></div>
                     <div className="text-center open-create-menu">
                       <Rbac childName="CreateTicket-TicketPlugin">
                         <a onClick={this.onClickOpenNewTicket}>Ticket</a>
@@ -191,22 +175,40 @@ class TicketsDetails extends Component {
                 <i className="fa fa-ellipsis-v"></i>
               </button>
               <div className="group-buttons">
-                <button className="blue-button" onClick={this.onClickOpenReplyPopup}>
+                <button
+                  className="blue-button"
+                  onClick={this.onClickOpenReplyPopup}
+                >
                   Reply
                 </button>
-                <button className="blue-button" onClick={this.onClickOpenAddNotePopup}>
+                <button
+                  className="blue-button"
+                  onClick={this.onClickOpenAddNotePopup}
+                >
                   Add Note
                 </button>
-                <button className="blue-button" onClick={this.onClickOpenForwardPopup}>
+                <button
+                  className="blue-button"
+                  onClick={this.onClickOpenForwardPopup}
+                >
                   Forward
                 </button>
-                <button className="blue-button" onClick={this.onClickOpenClosePopup}>
+                <button
+                  className="blue-button"
+                  onClick={this.onClickOpenClosePopup}
+                >
                   Close
                 </button>
-                <button className="blue-button" onClick={this.onClickOpenMergePopup}>
+                <button
+                  className="blue-button"
+                  onClick={this.onClickOpenMergePopup}
+                >
                   Merge
                 </button>
-                <button className="blue-button" onClick={this.onClickOpenDeletePopup}>
+                <button
+                  className="blue-button"
+                  onClick={this.onClickOpenDeletePopup}
+                >
                   Detele
                 </button>
                 <button className="blue-button">Log Time</button>
@@ -214,7 +216,10 @@ class TicketsDetails extends Component {
                 <button className="blue-button">Print</button>
               </div>
               <div className="float-right properties-box">
-                <button className="blue-button m-r-0" onClick={this.onClickOpenProperties}>
+                <button
+                  className="blue-button m-r-0"
+                  onClick={this.onClickOpenProperties}
+                >
                   Properties
                 </button>
                 {openPropertiesForm == true && (
@@ -252,7 +257,9 @@ class TicketsDetails extends Component {
                       </select>
                     </div>
                     <div className="form-group text-center">
-                      <button className="blue-button m-r-0 m-b-0">Update</button>
+                      <button className="blue-button m-r-0 m-b-0">
+                        Update
+                      </button>
                     </div>
                   </div>
                 )}
@@ -278,10 +285,16 @@ class TicketsDetails extends Component {
                       </div>
                     </div>
                     <div className="form-group">
-                      <button className="blue-button m-b-0" onClick={this.onClickOpenAddNotePopup}>
+                      <button
+                        className="blue-button m-b-0"
+                        onClick={this.onClickOpenAddNotePopup}
+                      >
                         Save
                       </button>
-                      <button className="white-button m-b-0" onClick={this.onClickOpenAddNotePopup}>
+                      <button
+                        className="white-button m-b-0"
+                        onClick={this.onClickOpenAddNotePopup}
+                      >
                         Discard draft
                       </button>
                     </div>
@@ -314,7 +327,10 @@ class TicketsDetails extends Component {
                         <div className="ticket-detail-head">
                           <div className="row">
                             <div className="col-lg-7 col-sm-12">
-                              <div className="head-image" onClick={this.onClickOpencontactDetails}></div>
+                              <div
+                                className="head-image"
+                                onClick={this.onClickOpencontactDetails}
+                              ></div>
 
                               {openContactDetailsPopup == true && (
                                 <div className="contact-details-popup">
@@ -325,7 +341,9 @@ class TicketsDetails extends Component {
                                   <div className="contact-details">
                                     <div className="contact-profile">
                                       <div className="profile-image"></div>
-                                      <div className="profile-name">Ingredia Nutrisha</div>
+                                      <div className="profile-name">
+                                        Ingredia Nutrisha
+                                      </div>
                                     </div>
                                     <div className="contact-detail">
                                       <span>Email ID</span>
@@ -346,15 +364,20 @@ class TicketsDetails extends Component {
                               )}
                               <div className="head-text">
                                 <p>
-                                  <strong>Need to cange my shipping Address</strong>
+                                  <strong>
+                                    Need to cange my shipping Address
+                                  </strong>
                                 </p>
                                 <p>
-                                  <span>Ingredia Nutrisha</span> reported in Issue
+                                  <span>Ingredia Nutrisha</span> reported in
+                                  Issue
                                 </p>
                               </div>
                             </div>
                             <div className="col-lg-5 col-sm-12 text-right head-right-text">
-                              <div className="head-time-text">a day ago ( Wed 08 2018 at 08:15AM )</div>
+                              <div className="head-time-text">
+                                a day ago ( Wed 08 2018 at 08:15AM )
+                              </div>
                               <button className="white-button">
                                 <i className="fa fa-ellipsis-v"></i>
                               </button>
@@ -364,8 +387,10 @@ class TicketsDetails extends Component {
                         <div className="ticket-detail-text-box">
                           <strong>Hi,</strong>
                           <p>
-                            I have to leave the city for a week and I’m afraid nobody will be there to collect my order
-                            (#248) when it arrives. Is there a way me I can change my shopping address?
+                            I have to leave the city for a week and I’m afraid
+                            nobody will be there to collect my order (#248) when
+                            it arrives. Is there a way me I can change my
+                            shopping address?
                           </p>
                           <span>Thanks.</span>
                         </div>
@@ -380,12 +405,15 @@ class TicketsDetails extends Component {
                                   <strong>Customer Service</strong>
                                 </p>
                                 <p>
-                                  Replied to <a href="#">nutrisha.21@maxamis.com</a>
+                                  Replied to{" "}
+                                  <a href="#">nutrisha.21@maxamis.com</a>
                                 </p>
                               </div>
                             </div>
                             <div className="col-lg-5 col-sm-12 text-right head-right-text">
-                              <div className="head-time-text">a day ago ( Wed 08 2018 at 08:15AM )</div>
+                              <div className="head-time-text">
+                                a day ago ( Wed 08 2018 at 08:15AM )
+                              </div>
                               <button className="white-button">
                                 <i className="fa fa-ellipsis-v"></i>
                               </button>
@@ -395,18 +423,27 @@ class TicketsDetails extends Component {
                         <div className="ticket-detail-text-box">
                           <strong>Hi Ingredia,</strong>
                           <p>
-                            You can change your shipping address as long as your order has not been dispatched for
-                            delivary.
+                            You can change your shipping address as long as your
+                            order has not been dispatched for delivary.
                             <br />
-                            Follow these steps to change the details of your order -
+                            Follow these steps to change the details of your
+                            order -
                           </p>
                           <ul>
                             <li>01. Go to my Orders.</li>
-                            <li>02. Click on the edit details icon for order which you’d like update.</li>
-                            <li>03. Update the required and click save changes.</li>
+                            <li>
+                              02. Click on the edit details icon for order which
+                              you’d like update.
+                            </li>
+                            <li>
+                              03. Update the required and click save changes.
+                            </li>
                             <li>04. Click done after you’ve finished.</li>
                           </ul>
-                          <p>I hope this wes helpful. If you have further doubts, feel free to reach out to me.</p>
+                          <p>
+                            I hope this wes helpful. If you have further doubts,
+                            feel free to reach out to me.
+                          </p>
                           <span>Nutrisha.</span>
                         </div>
                       </div>
@@ -417,12 +454,15 @@ class TicketsDetails extends Component {
                               <div className="head-image"></div>
                               <div className="head-text">
                                 <p>
-                                  <strong>Ingredia Nutrisha</strong> Replied to <a href="#">nutrisha.21@maxamis.com</a>
+                                  <strong>Ingredia Nutrisha</strong> Replied to{" "}
+                                  <a href="#">nutrisha.21@maxamis.com</a>
                                 </p>
                               </div>
                             </div>
                             <div className="col-lg-5 col-sm-12 text-right head-right-text">
-                              <div className="head-time-text">a day ago ( Wed 08 2018 at 08:15AM )</div>
+                              <div className="head-time-text">
+                                a day ago ( Wed 08 2018 at 08:15AM )
+                              </div>
                               <button className="white-button">
                                 <i className="fa fa-ellipsis-v"></i>
                               </button>
@@ -448,10 +488,16 @@ class TicketsDetails extends Component {
                       </div>
                     </div>
                     <div className="form-group">
-                      <button className="blue-button m-b-0" onClick={this.onClickOpenReplyPopup}>
+                      <button
+                        className="blue-button m-b-0"
+                        onClick={this.onClickOpenReplyPopup}
+                      >
                         Save
                       </button>
-                      <button className="white-button m-b-0" onClick={this.onClickOpenReplyPopup}>
+                      <button
+                        className="white-button m-b-0"
+                        onClick={this.onClickOpenReplyPopup}
+                      >
                         Discard draft
                       </button>
                     </div>
@@ -476,7 +522,8 @@ class TicketsDetails extends Component {
                       <a href="#">Bcc</a>
                     </div>
                     <div className="subject-text">
-                      <strong>Subject:</strong> Need to change my shipping Address
+                      <strong>Subject:</strong> Need to change my shipping
+                      Address
                     </div>
                     <div className="reply-ticket-detail-box">
                       <div className="forwarded-message">
@@ -497,7 +544,10 @@ class TicketsDetails extends Component {
                         <div className="ticket-detail-head">
                           <div className="row">
                             <div className="col-lg-7 col-sm-12">
-                              <div className="head-image" onClick={this.onClickOpencontactDetails}></div>
+                              <div
+                                className="head-image"
+                                onClick={this.onClickOpencontactDetails}
+                              ></div>
 
                               {openContactDetailsPopup == true && (
                                 <div className="contact-details-popup">
@@ -508,7 +558,9 @@ class TicketsDetails extends Component {
                                   <div className="contact-details">
                                     <div className="contact-profile">
                                       <div className="profile-image"></div>
-                                      <div className="profile-name">Ingredia Nutrisha</div>
+                                      <div className="profile-name">
+                                        Ingredia Nutrisha
+                                      </div>
                                     </div>
                                     <div className="contact-detail">
                                       <span>Email ID</span>
@@ -529,15 +581,20 @@ class TicketsDetails extends Component {
                               )}
                               <div className="head-text">
                                 <p>
-                                  <strong>Need to cange my shipping Address</strong>
+                                  <strong>
+                                    Need to cange my shipping Address
+                                  </strong>
                                 </p>
                                 <p>
-                                  <span>Ingredia Nutrisha</span> reported in Issue
+                                  <span>Ingredia Nutrisha</span> reported in
+                                  Issue
                                 </p>
                               </div>
                             </div>
                             <div className="col-lg-5 col-sm-12 text-right head-right-text">
-                              <div className="head-time-text">a day ago ( Wed 08 2018 at 08:15AM )</div>
+                              <div className="head-time-text">
+                                a day ago ( Wed 08 2018 at 08:15AM )
+                              </div>
                               <button className="white-button">
                                 <i className="fa fa-ellipsis-v"></i>
                               </button>
@@ -547,8 +604,10 @@ class TicketsDetails extends Component {
                         <div className="ticket-detail-text-box">
                           <strong>Hi,</strong>
                           <p>
-                            I have to leave the city for a week and I’m afraid nobody will be there to collect my order
-                            (#248) when it arrives. Is there a way me I can change my shopping address?
+                            I have to leave the city for a week and I’m afraid
+                            nobody will be there to collect my order (#248) when
+                            it arrives. Is there a way me I can change my
+                            shopping address?
                           </p>
                           <span>Thanks.</span>
                         </div>
@@ -567,10 +626,16 @@ class TicketsDetails extends Component {
                       </div>
                     </div>
                     <div className="form-group">
-                      <button className="blue-button m-b-0" onClick={this.onClickOpenForwardPopup}>
+                      <button
+                        className="blue-button m-b-0"
+                        onClick={this.onClickOpenForwardPopup}
+                      >
                         Save
                       </button>
-                      <button className="white-button m-b-0" onClick={this.onClickOpenForwardPopup}>
+                      <button
+                        className="white-button m-b-0"
+                        onClick={this.onClickOpenForwardPopup}
+                      >
                         Discard draft
                       </button>
                     </div>
@@ -584,7 +649,10 @@ class TicketsDetails extends Component {
               <div className="ticket-detail-head">
                 <div className="row">
                   <div className="col-lg-7 col-sm-12">
-                    <div className="head-image" onClick={this.onClickOpencontactDetails}></div>
+                    <div
+                      className="head-image"
+                      onClick={this.onClickOpencontactDetails}
+                    ></div>
 
                     {openContactDetailsPopup == true && (
                       <div className="contact-details-popup">
@@ -595,7 +663,9 @@ class TicketsDetails extends Component {
                         <div className="contact-details">
                           <div className="contact-profile">
                             <div className="profile-image"></div>
-                            <div className="profile-name">Ingredia Nutrisha</div>
+                            <div className="profile-name">
+                              Ingredia Nutrisha
+                            </div>
                           </div>
                           <div className="contact-detail">
                             <span>Email ID</span>
@@ -624,7 +694,9 @@ class TicketsDetails extends Component {
                     </div>
                   </div>
                   <div className="col-lg-5 col-sm-12 text-right head-right-text">
-                    <div className="head-time-text">a day ago ( Wed 08 2018 at 08:15AM )</div>
+                    <div className="head-time-text">
+                      a day ago ( Wed 08 2018 at 08:15AM )
+                    </div>
                     <button className="white-button">
                       <i className="fa fa-ellipsis-v"></i>
                     </button>
@@ -634,8 +706,9 @@ class TicketsDetails extends Component {
               <div className="ticket-detail-text-box">
                 <strong>Hi,</strong>
                 <p>
-                  I have to leave the city for a week and I’m afraid nobody will be there to collect my order (#248)
-                  when it arrives. Is there a way me I can change my shopping address?
+                  I have to leave the city for a week and I’m afraid nobody will
+                  be there to collect my order (#248) when it arrives. Is there
+                  a way me I can change my shopping address?
                 </p>
                 <span>Thanks.</span>
               </div>
@@ -655,7 +728,9 @@ class TicketsDetails extends Component {
                     </div>
                   </div>
                   <div className="col-lg-5 col-sm-12 text-right head-right-text">
-                    <div className="head-time-text">a day ago ( Wed 08 2018 at 08:15AM )</div>
+                    <div className="head-time-text">
+                      a day ago ( Wed 08 2018 at 08:15AM )
+                    </div>
                     <button className="white-button">
                       <i className="fa fa-ellipsis-v"></i>
                     </button>
@@ -665,17 +740,24 @@ class TicketsDetails extends Component {
               <div className="ticket-detail-text-box">
                 <strong>Hi Ingredia,</strong>
                 <p>
-                  You can change your shipping address as long as your order has not been dispatched for delivary.
+                  You can change your shipping address as long as your order has
+                  not been dispatched for delivary.
                   <br />
                   Follow these steps to change the details of your order -
                 </p>
                 <ul>
                   <li>01. Go to my Orders.</li>
-                  <li>02. Click on the edit details icon for order which you’d like update.</li>
+                  <li>
+                    02. Click on the edit details icon for order which you’d
+                    like update.
+                  </li>
                   <li>03. Update the required and click save changes.</li>
                   <li>04. Click done after you’ve finished.</li>
                 </ul>
-                <p>I hope this wes helpful. If you have further doubts, feel free to reach out to me.</p>
+                <p>
+                  I hope this wes helpful. If you have further doubts, feel free
+                  to reach out to me.
+                </p>
                 <span>Nutrisha.</span>
               </div>
             </div>
@@ -686,12 +768,15 @@ class TicketsDetails extends Component {
                     <div className="head-image"></div>
                     <div className="head-text">
                       <p>
-                        <strong>Ingredia Nutrisha</strong> Replied to <a href="#">nutrisha.21@maxamis.com</a>
+                        <strong>Ingredia Nutrisha</strong> Replied to{" "}
+                        <a href="#">nutrisha.21@maxamis.com</a>
                       </p>
                     </div>
                   </div>
                   <div className="col-lg-5 col-sm-12 text-right head-right-text">
-                    <div className="head-time-text">a day ago ( Wed 08 2018 at 08:15AM )</div>
+                    <div className="head-time-text">
+                      a day ago ( Wed 08 2018 at 08:15AM )
+                    </div>
                     <button className="white-button">
                       <i className="fa fa-ellipsis-v"></i>
                     </button>
@@ -711,13 +796,16 @@ class TicketsDetails extends Component {
                     <div className="head-image"></div>
                     <div className="head-text">
                       <p>
-                        <strong>Ingredia Nutrisha</strong> Replied this Conversation
+                        <strong>Ingredia Nutrisha</strong> Replied this
+                        Conversation
                       </p>
                       <p>Survey response for Default survey to Anne Richard</p>
                     </div>
                   </div>
                   <div className="col-lg-5 col-sm-12 text-right head-right-text">
-                    <div className="head-time-text">a day ago ( Wed 08 2018 at 08:15AM )</div>
+                    <div className="head-time-text">
+                      a day ago ( Wed 08 2018 at 08:15AM )
+                    </div>
                     <button className="white-button">
                       <i className="fa fa-ellipsis-v"></i>
                     </button>
@@ -725,7 +813,10 @@ class TicketsDetails extends Component {
                 </div>
               </div>
               <div className="ticket-detail-text-box">
-                <p>How would you rate your overall satification for the resolution provided by the agent?</p>
+                <p>
+                  How would you rate your overall satification for the
+                  resolution provided by the agent?
+                </p>
                 <span>Extremely Satisfied.</span>
               </div>
             </div>
@@ -736,7 +827,8 @@ class TicketsDetails extends Component {
                     <div className="head-image"></div>
                     <div className="head-text">
                       <p>
-                        From: <strong>RK Fabrication</strong> (support@rkfabrication1574.com)
+                        From: <strong>RK Fabrication</strong>{" "}
+                        (support@rkfabrication1574.com)
                       </p>
                       <p>
                         To: <span>nutrisha.21@maxamis.com</span>
@@ -748,8 +840,9 @@ class TicketsDetails extends Component {
               <div className="ticket-detail-text-box">
                 <strong>Hi,</strong>
                 <p>
-                  I have to leave the city for a week and I’m afraid nobody will be there to collect my order (#248)
-                  when it arrives. Is there a way me I can change my shopping address?
+                  I have to leave the city for a week and I’m afraid nobody will
+                  be there to collect my order (#248) when it arrives. Is there
+                  a way me I can change my shopping address?
                 </p>
                 <span>Thanks.</span>
               </div>

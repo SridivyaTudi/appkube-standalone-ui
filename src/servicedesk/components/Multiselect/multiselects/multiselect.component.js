@@ -1,33 +1,33 @@
-import React, { Component } from 'react';
-import './multiselect.component.css';
-import '../assets/closeicon/css/fontello.css';
+import React from "react";
+import "./multiselect.component.css";
+import "../assets/closeicon/css/fontello.css";
 
 const closeIconTypes = {
-  circle: 'icon_cancel_circled',
-  circle2: 'icon_cancel_circled2',
-  close: 'icon_window_close',
-  cancel: 'icon_cancel',
+  circle: "icon_cancel_circled",
+  circle2: "icon_cancel_circled2",
+  close: "icon_window_close",
+  cancel: "icon_cancel",
 };
 
-class Multiselect extends Component {
-  static defaultProps = {
+class Multiselect extends React.Component {
+  defaultProps = {
     options: [],
     disablePreSelectedValues: false,
     selectedValues: [],
     isObject: true,
-    displayValue: 'model',
+    displayValue: "model",
     showCheckbox: false,
     selectionLimit: -1,
-    placeholder: 'Select',
-    groupBy: '',
+    placeholder: "Select",
+    groupBy: "",
     style: {},
-    emptyRecordMsg: 'No Options Available',
+    emptyRecordMsg: "No Options Available",
     onSelect: () => {},
     onRemove: () => {},
-    closeIcon: 'circle2',
+    closeIcon: "circle2",
     singleSelect: false,
     caseSensitiveSearch: false,
-    id: '',
+    id: "",
     closeOnSelect: true,
     avoidHighlightFirstOption: false,
     hidePlaceholder: false,
@@ -38,7 +38,7 @@ class Multiselect extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: '',
+      inputValue: "",
       options: props.options,
       filteredOptions: props.options,
       unfilteredOptions: props.options,
@@ -48,23 +48,27 @@ class Multiselect extends Component {
       highlightOption: props.avoidHighlightFirstOption ? -1 : 0,
       showCheckbox: props.showCheckbox,
       groupedObject: [],
-      closeIconType: closeIconTypes[props.closeIcon] || closeIconTypes['circle'],
+      closeIconType:
+        closeIconTypes[props.closeIcon] || closeIconTypes["circle"],
     };
     this.searchWrapper = React.createRef();
     this.searchBox = React.createRef();
     this.onChange = this.onChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
-    this.renderMultiselectContainer = this.renderMultiselectContainer.bind(this);
+    this.renderMultiselectContainer =
+      this.renderMultiselectContainer.bind(this);
     this.renderSelectedList = this.renderSelectedList.bind(this);
     this.onRemoveSelectedItem = this.onRemoveSelectedItem.bind(this);
     this.toggelOptionList = this.toggelOptionList.bind(this);
     this.onArrowKeyNavigation = this.onArrowKeyNavigation.bind(this);
     this.onSelectItem = this.onSelectItem.bind(this);
     this.filterOptionsByInput = this.filterOptionsByInput.bind(this);
-    this.removeSelectedValuesFromOptions = this.removeSelectedValuesFromOptions.bind(this);
+    this.removeSelectedValuesFromOptions =
+      this.removeSelectedValuesFromOptions.bind(this);
     this.isSelectedValue = this.isSelectedValue.bind(this);
     this.fadeOutSelection = this.fadeOutSelection.bind(this);
-    this.isDisablePreSelectedValues = this.isDisablePreSelectedValues.bind(this);
+    this.isDisablePreSelectedValues =
+      this.isDisablePreSelectedValues.bind(this);
     this.renderGroupByOptions = this.renderGroupByOptions.bind(this);
     this.renderNormalOption = this.renderNormalOption.bind(this);
     this.listenerCallback = this.listenerCallback.bind(this);
@@ -107,18 +111,25 @@ class Multiselect extends Component {
 
   componentDidMount() {
     this.initialSetValue();
-    this.searchWrapper.current.addEventListener('click', this.listenerCallback);
+    this.searchWrapper.current.addEventListener("click", this.listenerCallback);
   }
 
   componentDidUpdate(prevProps) {
     const { options, selectedValues } = this.props;
-    const { options: prevOptions, selectedValues: prevSelectedvalues } = prevProps;
+    const { options: prevOptions, selectedValues: prevSelectedvalues } =
+      prevProps;
     if (JSON.stringify(prevOptions) !== JSON.stringify(options)) {
-      this.setState({ options, filteredOptions: options, unfilteredOptions: options }, this.initialSetValue);
+      this.setState(
+        { options, filteredOptions: options, unfilteredOptions: options },
+        this.initialSetValue
+      );
     }
     if (JSON.stringify(prevSelectedvalues) !== JSON.stringify(selectedValues)) {
       this.setState(
-        { selectedValues: Object.assign([], selectedValues), preSelectedValues: Object.assign([], selectedValues) },
+        {
+          selectedValues: Object.assign([], selectedValues),
+          preSelectedValues: Object.assign([], selectedValues),
+        },
         this.initialSetValue
       );
     }
@@ -129,7 +140,10 @@ class Multiselect extends Component {
   }
 
   componentWillUnmount() {
-    this.searchWrapper.current.removeEventListener('click', this.listenerCallback);
+    this.searchWrapper.current.removeEventListener(
+      "click",
+      this.listenerCallback
+    );
   }
 
   // Skipcheck flag - value will be true when the func called from on deselect anything.
@@ -144,23 +158,35 @@ class Multiselect extends Component {
     }
     if (isObject) {
       let optionList = unfilteredOptions.filter((item) => {
-        return selectedValues.findIndex((v) => v[displayValue] === item[displayValue]) === -1 ? true : false;
+        return selectedValues.findIndex(
+          (v) => v[displayValue] === item[displayValue]
+        ) === -1
+          ? true
+          : false;
       });
       if (groupBy) {
         this.groupByOptions(optionList);
       }
-      this.setState({ options: optionList, filteredOptions: optionList }, this.filterOptionsByInput);
+      this.setState(
+        { options: optionList, filteredOptions: optionList },
+        this.filterOptionsByInput
+      );
       return;
     }
-    let optionList = unfilteredOptions.filter((item) => selectedValues.indexOf(item) === -1);
+    let optionList = unfilteredOptions.filter(
+      (item) => selectedValues.indexOf(item) === -1
+    );
 
-    this.setState({ options: optionList, filteredOptions: optionList }, this.filterOptionsByInput);
+    this.setState(
+      { options: optionList, filteredOptions: optionList },
+      this.filterOptionsByInput
+    );
   }
 
   groupByOptions(options) {
     const { groupBy } = this.props;
     const groupedObject = options.reduce(function (r, a) {
-      const key = a[groupBy] || 'Others';
+      const key = a[groupBy] || "Others";
       r[key] = r[key] || [];
       r[key].push(a);
       return r;
@@ -170,7 +196,10 @@ class Multiselect extends Component {
   }
 
   onChange(event) {
-    this.setState({ inputValue: event.target.value }, this.filterOptionsByInput);
+    this.setState(
+      { inputValue: event.target.value },
+      this.filterOptionsByInput
+    );
   }
 
   onKeyPress(event) {
@@ -183,7 +212,9 @@ class Multiselect extends Component {
     let { options, filteredOptions, inputValue } = this.state;
     const { isObject, displayValue } = this.props;
     if (isObject) {
-      options = filteredOptions.filter((i) => this.matchValues(i[displayValue], inputValue));
+      options = filteredOptions.filter((i) =>
+        this.matchValues(i[displayValue], inputValue)
+      );
     } else {
       options = filteredOptions.filter((i) => this.matchValues(i, inputValue));
     }
@@ -199,12 +230,18 @@ class Multiselect extends Component {
   }
 
   onArrowKeyNavigation(e) {
-    const { options, highlightOption, toggleOptionsList, inputValue, selectedValues } = this.state;
+    const {
+      options,
+      highlightOption,
+      toggleOptionsList,
+      inputValue,
+      selectedValues,
+    } = this.state;
     if (e.keyCode === 8 && !inputValue && selectedValues.length) {
       this.onRemoveSelectedItem(selectedValues.length - 1);
     }
     if (!options.length) {
-      if (e.key === 'Enter') {
+      if (e.key === "Enter") {
         //This is to enter option that is not available in option
         if (this.props.getAdHocItem) {
           const item = this.props.getAdHocItem(e.target.value);
@@ -229,7 +266,7 @@ class Multiselect extends Component {
       } else {
         this.setState({ highlightOption: 0 });
       }
-    } else if (e.key === 'Enter' && options.length && toggleOptionsList) {
+    } else if (e.key === "Enter" && options.length && toggleOptionsList) {
       if (highlightOption === -1) {
         return;
       }
@@ -248,7 +285,9 @@ class Multiselect extends Component {
     let { selectedValues, index = 0, isObject } = this.state;
     const { onRemove, showCheckbox, displayValue } = this.props;
     if (isObject) {
-      index = selectedValues.findIndex((i) => i[displayValue] === item[displayValue]);
+      index = selectedValues.findIndex(
+        (i) => i[displayValue] === item[displayValue]
+      );
     } else {
       index = selectedValues.indexOf(item);
     }
@@ -265,7 +304,7 @@ class Multiselect extends Component {
     const { selectedValues } = this.state;
     const { selectionLimit, onSelect, singleSelect, showCheckbox } = this.props;
     this.setState({
-      inputValue: '',
+      inputValue: "",
     });
     if (singleSelect) {
       this.onSingleSelect(item);
@@ -301,7 +340,10 @@ class Multiselect extends Component {
     const { isObject, displayValue } = this.props;
     const { selectedValues } = this.state;
     if (isObject) {
-      return selectedValues.filter((i) => i[displayValue] === item[displayValue]).length > 0;
+      return (
+        selectedValues.filter((i) => i[displayValue] === item[displayValue])
+          .length > 0
+      );
     }
     return selectedValues.filter((i) => i === item).length > 0;
   }
@@ -310,9 +352,9 @@ class Multiselect extends Component {
     const { groupBy, style, emptyRecordMsg } = this.props;
     const { options } = this.state;
     return (
-      <ul className={`optionContainer`} style={style['optionContainer']}>
+      <ul className={`optionContainer`} style={style["optionContainer"]}>
         {options.length === 0 && (
-          <span style={style['notFound']} className={`notFound`}>
+          <span style={style["notFound"]} className={`notFound`}>
             {emptyRecordMsg}
           </span>
         )}
@@ -322,25 +364,38 @@ class Multiselect extends Component {
   }
 
   renderGroupByOptions() {
-    const { isObject = false, displayValue, showCheckbox, style, singleSelect } = this.props;
+    const {
+      isObject = false,
+      displayValue,
+      showCheckbox,
+      style,
+      singleSelect,
+    } = this.props;
     const { groupedObject } = this.state;
     return Object.keys(groupedObject).map((obj) => {
       return (
         <React.Fragment key={obj}>
-          <li className="groupHeading" style={style['groupHeading']}>
+          <li className="groupHeading" style={style["groupHeading"]}>
             {obj}
           </li>
           {groupedObject[obj].map((option, i) => (
             <li
               key={`option${i}`}
-              style={style['option']}
-              className={`groupChildEle ${this.fadeOutSelection(option)} && disableSelection option`}
+              style={style["option"]}
+              className={`groupChildEle ${this.fadeOutSelection(
+                option
+              )} && disableSelection option`}
               onClick={() => this.onSelectItem(option)}
             >
               {showCheckbox && !singleSelect && (
-                <input type="checkbox" className="checkbox" readOnly checked={this.isSelectedValue(option)} />
+                <input
+                  type="checkbox"
+                  className="checkbox"
+                  readOnly
+                  checked={this.isSelectedValue(option)}
+                />
               )}
-              {isObject ? option[displayValue] : (option || '').toString()}
+              {isObject ? option[displayValue] : (option || "").toString()}
             </li>
           ))}
         </React.Fragment>
@@ -349,21 +404,32 @@ class Multiselect extends Component {
   }
 
   renderNormalOption() {
-    const { isObject = false, displayValue, showCheckbox, style, singleSelect } = this.props;
+    const {
+      isObject = false,
+      displayValue,
+      showCheckbox,
+      style,
+      singleSelect,
+    } = this.props;
     const { highlightOption } = this.state;
     return this.state.options.map((option, i) => (
       <li
         key={`option${i}`}
-        style={style['option']}
-        className={`${highlightOption === i ? `highlightOption highlight` : ''} ${
-          this.fadeOutSelection(option) && 'disableSelection'
-        } option`}
+        style={style["option"]}
+        className={`${
+          highlightOption === i ? `highlightOption highlight` : ""
+        } ${this.fadeOutSelection(option) && "disableSelection"} option`}
         onClick={() => this.onSelectItem(option)}
       >
         {showCheckbox && !singleSelect && (
-          <input type="checkbox" readOnly className={`checkbox checkbox`} checked={this.isSelectedValue(option)} />
+          <input
+            type="checkbox"
+            readOnly
+            className={`checkbox checkbox`}
+            checked={this.isSelectedValue(option)}
+          />
         )}
-        {isObject ? option[displayValue] : (option || '').toString()}
+        {isObject ? option[displayValue] : (option || "").toString()}
       </li>
     ));
   }
@@ -373,13 +439,13 @@ class Multiselect extends Component {
     const { selectedValues } = this.state;
     return selectedValues.map((value, index) => (
       <span
-        className={`chip ${singleSelect && 'singleChip'} ${
-          this.isDisablePreSelectedValues(value) && 'disableSelection'
+        className={`chip ${singleSelect && "singleChip"} ${
+          this.isDisablePreSelectedValues(value) && "disableSelection"
         }`}
         key={index}
-        style={style['chips']}
+        style={style["chips"]}
       >
-        {!isObject ? (value || '').toString() : value[displayValue]}
+        {!isObject ? (value || "").toString() : value[displayValue]}
         <i
           // className={`icon_cancel ${ms[closeIconType]} ${ms.closeIcon}`}
           className="icon_cancel"
@@ -396,7 +462,10 @@ class Multiselect extends Component {
       return false;
     }
     if (isObject) {
-      return preSelectedValues.filter((i) => i[displayValue] === value[displayValue]).length > 0;
+      return (
+        preSelectedValues.filter((i) => i[displayValue] === value[displayValue])
+          .length > 0
+      );
     }
     return preSelectedValues.filter((i) => i === value).length > 0;
   }
@@ -436,17 +505,20 @@ class Multiselect extends Component {
 
   renderMultiselectContainer() {
     const { inputValue, toggleOptionsList, selectedValues } = this.state;
-    const { placeholder, style, singleSelect, id, hidePlaceholder, disable } = this.props;
+    const { placeholder, style, singleSelect, id, hidePlaceholder, disable } =
+      this.props;
     return (
       <div
-        className={`multiSelectContainer ${disable ? `disable_ms disable_ms` : ''}`}
-        id={id || 'multiselectContainerReact'}
-        style={style['multiselectContainer']}
+        className={`multiSelectContainer ${
+          disable ? `disable_ms disable_ms` : ""
+        }`}
+        id={id || "multiselectContainerReact"}
+        style={style["multiselectContainer"]}
       >
         <div
-          className={`searchWrapper ${singleSelect ? 'singleSelect' : ''}`}
+          className={`searchWrapper ${singleSelect ? "singleSelect" : ""}`}
           ref={this.searchWrapper}
-          style={style['searchBox']}
+          style={style["searchBox"]}
           onClick={singleSelect ? this.toggelOptionList : () => {}}
         >
           {this.renderSelectedList()}
@@ -454,23 +526,28 @@ class Multiselect extends Component {
             type="text"
             ref={this.searchBox}
             className="searchBox"
-            id={`${id || 'search'}_input`}
+            id={`${id || "search"}_input`}
             onChange={this.onChange}
             value={inputValue}
             onFocus={this.toggelOptionList}
             onBlur={() => setTimeout(this.toggelOptionList, 200)}
             placeholder={
-              (singleSelect && selectedValues.length) || (hidePlaceholder && selectedValues.length) ? '' : placeholder
+              (singleSelect && selectedValues.length) ||
+              (hidePlaceholder && selectedValues.length)
+                ? ""
+                : placeholder
             }
             onKeyDown={this.onArrowKeyNavigation}
-            style={style['inputField']}
+            style={style["inputField"]}
             autoComplete="off"
             disabled={singleSelect || disable}
           />
           {singleSelect && <i className={`icon_cancel icon_down_dir`} />}
         </div>
         <div
-          className={`optionListContainer optionListContainer ${toggleOptionsList ? 'displayBlock' : 'displayNone'}`}
+          className={`optionListContainer optionListContainer ${
+            toggleOptionsList ? "displayBlock" : "displayNone"
+          }`}
         >
           {this.renderOptionList()}
         </div>
@@ -482,4 +559,5 @@ class Multiselect extends Component {
     return this.renderMultiselectContainer();
   }
 }
+
 export default Multiselect;
