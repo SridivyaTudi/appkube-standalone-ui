@@ -20,7 +20,11 @@ class PreviewDashboard extends Component {
     const state = this.state;
     return (
       <Modal isOpen={state.modal} toggle={this.toggle} className="modal-container perfmanager-modal-container">
-        <ModalHeader toggle={this.toggle}>AWS Config App Dashboards- Preview</ModalHeader>
+        <ModalHeader>AWS Config App Dashboards- Preview
+        <button type="button" className="close" aria-label="Close"onClick={this.toggle}>
+            <span aria-hidden="true">×</span>
+        </button>
+        </ModalHeader>
         <ModalBody style={{ height: 'calc(90vh - 150px)', overflowY: 'auto', overflowX: 'hidden' }}>
           {/* <img src={previewDashboardimage} alt="Open Folder" /> */}
           <iframe

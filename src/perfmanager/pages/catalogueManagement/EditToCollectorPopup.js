@@ -174,7 +174,7 @@ class EditToCollectorPopup extends Component {
           severity={state.severity}
           msg={state.message}
         ></AlertMessage>
-        <ModalHeader toggle={this.closeModel}>Update Catalog </ModalHeader>
+        <ModalHeader toggle={this.closeModel}>Update Catalog</ModalHeader>
         <ModalBody style={{ height: 'calc(48vh - 0px)', overflowY: 'auto', overflowX: 'hidden' }}>
           <div className="catalog-form-group">
             <div className="form-group">
