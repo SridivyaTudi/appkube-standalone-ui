@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { config } from '../../config';
-import CreateStreamPopup from '../dashboard/createStreamPopup';
-import NewStreamRulePopup from '../dashboard/newStreamRulePopup';
-import SetOutputPopup from '../dashboard/setOutputParameter';
-import AllEventsPopup from '../dashboard/allEventPopup';
-import TopMenu from '../dashboard/topMenu';
+import React from "react";
+import { config } from "../../config";
+import CreateStreamPopup from "./../dashboard/createStreamPopup";
+import NewStreamRulePopup from "./../dashboard/newStreamRulePopup";
+import SetOutputPopup from "./../dashboard/setOutputParameter";
+import AllEventsPopup from "./../dashboard/allEventPopup";
+import TopMenu from "./../dashboard/topMenu";
 
 let indexSetMap = new Map();
-indexSetMap.set('5fb950ef6439c846ee76f455', 'Default index set');
-indexSetMap.set('5fb95bb004a35d1e34e9baa6', 'GrayLog Events');
-indexSetMap.set('5fb95bb004a35d1e34e9baa8', 'GrayLog System Event');
+indexSetMap.set("5fb950ef6439c846ee76f455", "Default index set");
+indexSetMap.set("5fb95bb004a35d1e34e9baa6", "GrayLog Events");
+indexSetMap.set("5fb95bb004a35d1e34e9baa8", "GrayLog System Event");
 
-class Input extends Component {
+class Input extends React.Component {
   createStreamRef;
   newStreamRef;
   manageOutputRef;
@@ -53,37 +53,37 @@ class Input extends Component {
     });
   };
   async componentDidMount() {
-    console.log('componentDidMountMethod called');
+    console.log("componentDidMountMethod called");
     var myHeaders = new Headers();
-    myHeaders.append('X-Requested-By', 'XMLHttpRequest');
+    myHeaders.append("X-Requested-By", "XMLHttpRequest");
     /** for local **/
     // myHeaders.append("Authorization", "Basic YWRtaW46YWRtaW4=");
     /** for local **/
 
     /** for 25 box **/
-    myHeaders.append('Authorization', 'Basic YWRtaW46cGFzc3dvcmQ=');
+    myHeaders.append("Authorization", "Basic YWRtaW46cGFzc3dvcmQ=");
     /** for 25 box **/
-    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append("Content-Type", "application/json");
     var requestOptions = {
-      method: 'GET',
+      method: "GET",
       headers: myHeaders,
-      redirect: 'follow',
+      redirect: "follow",
     };
 
     await fetch(config.STREAM, requestOptions)
       .then((response) => response.text())
       .then((result) => {
         var streams = JSON.parse(result).streams;
-        console.log('sreams : ', streams);
+        console.log("sreams : ", streams);
         streams.forEach((item) => {
           item.index_set_id = indexSetMap.get(item.index_set_id);
         });
-        console.log('stream after change', streams);
+        console.log("stream after change", streams);
         this.setState({
           streamTableData: streams,
         });
       })
-      .catch((error) => console.log('error', error));
+      .catch((error) => console.log("error", error));
   }
 
   displayTableOfStream = () => {
@@ -102,17 +102,20 @@ class Input extends Component {
               <tr>
                 <td>
                   <p>{rowData.description}</p>
-                  <p>
-                    {rowData.rules}&nbsp;&nbsp;
-                    {/* <a href="#">{rowData.descriptionLink}</a> */}
-                  </p>
+                  <p>{rowData.rules}&nbsp;&nbsp;</p>
                 </td>
                 <td>
                   <div className="d-inline-block">
-                    <button className="blue-button m-b-0" onClick={this.openNewStreamPopup}>
+                    <button
+                      className="blue-button m-b-0"
+                      onClick={this.openNewStreamPopup}
+                    >
                       Manage Rules
                     </button>
-                    <button className="blue-button m-b-0" onClick={this.OpenManageOutputPopup}>
+                    <button
+                      className="blue-button m-b-0"
+                      onClick={this.OpenManageOutputPopup}
+                    >
                       Manage Output
                     </button>
                     <button className="blue-button m-b-0">Manage Alerts</button>
@@ -127,7 +130,10 @@ class Input extends Component {
                     <button className="btn btn-link">
                       <i className="fa fa-trash"></i>
                     </button>
-                    <button className="btn btn-link" onClick={() => this.onClickOpenSubLink(i)}>
+                    <button
+                      className="btn btn-link"
+                      onClick={() => this.onClickOpenSubLink(i)}
+                    >
                       <i className="fa fa-ellipsis-h"></i>
                     </button>
                     {rowData.actionStatus == true && (
@@ -160,8 +166,9 @@ class Input extends Component {
             <div className="streams-text">
               <h3>STREAMS</h3>
               <p>
-                You can route incoming messeges into streams by applying rules against them. Messages matching the rules
-                of a stream are routed it. A message can also be routed into multiple streams
+                You can route incoming messeges into streams by applying rules
+                against them. Messages matching the rules of a stream are routed
+                it. A message can also be routed into multiple streams
               </p>
             </div>
           </div>
@@ -177,7 +184,10 @@ class Input extends Component {
               <button className="blue-button m-b-0">Reset</button>
             </div>
             <div className="float-right new-stream-btn">
-              <button className="blue-button m-b-0 m-r-0" onClick={this.onClickOpenCreateStreamPopup}>
+              <button
+                className="blue-button m-b-0 m-r-0"
+                onClick={this.onClickOpenCreateStreamPopup}
+              >
                 New Stream
               </button>
             </div>

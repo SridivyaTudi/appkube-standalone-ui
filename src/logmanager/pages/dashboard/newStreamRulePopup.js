@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody, ModalHeader } from 'reactstrap';
+import React from "react";
+import { Modal, ModalBody, ModalHeader } from "reactstrap";
 
-class NewStreamRulePopup extends Component {
+class NewStreamRulePopup extends React.Component {
   steps;
   constructor(props) {
     super(props);
@@ -24,15 +24,30 @@ class NewStreamRulePopup extends Component {
   render() {
     const { modal } = this.state;
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="modal-container logmanager-modal-container">
+      <Modal
+        isOpen={modal}
+        toggle={this.toggle}
+        className="modal-container logmanager-modal-container"
+      >
         <ModalHeader toggle={this.toggle}>New Stream Rule</ModalHeader>
-        <ModalBody style={{ height: 'calc(60vh - 50px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(60vh - 50px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="d-block width-100 stream-popup-container">
             <div className="row">
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="field">Field</label>
-                  <input type="text" id="field" name="field" className="input-group-text" />
+                  <input
+                    type="text"
+                    id="field"
+                    name="field"
+                    className="input-group-text"
+                  />
                 </div>
               </div>
             </div>
@@ -42,7 +57,9 @@ class NewStreamRulePopup extends Component {
                   <label htmlFor="type">Type</label>
                   <select className="input-group-text">
                     <option value="match exactly">Match Exactly</option>
-                    <option value="match regular expression">Match regular expression</option>
+                    <option value="match regular expression">
+                      Match regular expression
+                    </option>
                     <option value="greaterthan">Grater than</option>
                     <option value="smallerthan">Smaller than</option>
                     <option value="field presence">Field Presence</option>
@@ -56,14 +73,23 @@ class NewStreamRulePopup extends Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="value">Value</label>
-                  <input type="text" id="value" name="value" className="input-group-text" />
+                  <input
+                    type="text"
+                    id="value"
+                    name="value"
+                    className="input-group-text"
+                  />
                 </div>
               </div>
             </div>
             <div className="row">
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-check p-b-15">
-                  <input type="checkbox" className="form-check-input" id="Inverted" />
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id="Inverted"
+                  />
                   <label className="form-check-label" htmlFor="Inverted">
                     Inverted
                   </label>

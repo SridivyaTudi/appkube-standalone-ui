@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody, ModalHeader } from 'reactstrap';
+import React from "react";
+import { Modal, ModalBody, ModalHeader } from "reactstrap";
 
-class SetOutputPopup extends Component {
+class SetOutputPopup extends React.Component {
   steps;
   constructor(props) {
     super(props);
@@ -23,11 +23,21 @@ class SetOutputPopup extends Component {
   render() {
     const { modal } = this.state;
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="modal-container logmanager-modal-container">
+      <Modal
+        isOpen={modal}
+        toggle={this.toggle}
+        className="modal-container logmanager-modal-container"
+      >
         <ModalHeader toggle={this.toggle}>
           All Events | <span>Manage Output</span>
         </ModalHeader>
-        <ModalBody style={{ height: 'calc(60vh - 50px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(60vh - 50px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="d-block width-100 stream-popup-container">
             <div className="popup-parameters-container">
               <span>Set your output Parameters here</span>
@@ -43,7 +53,9 @@ class SetOutputPopup extends Component {
                         </select>
                       </div>
                       <div className="col-lg-5 col-md-5 col-sm-5 p-l-0 p-r-0">
-                        <button className="blue-button m-r-0 m-b-0">Lunch New Output</button>
+                        <button className="blue-button m-r-0 m-b-0">
+                          Lunch New Output
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -58,7 +70,9 @@ class SetOutputPopup extends Component {
                         </select>
                       </div>
                       <div className="col-lg-5 col-md-5 col-sm-5 p-l-0 p-r-0">
-                        <button className="blue-button m-r-0 m-b-0">Assign existing output</button>
+                        <button className="blue-button m-r-0 m-b-0">
+                          Assign existing output
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -87,5 +101,5 @@ class SetOutputPopup extends Component {
     );
   }
 }
-export default SetOutputPopup;
 
+export default SetOutputPopup;
