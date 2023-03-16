@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody, ModalHeader } from 'reactstrap';
-import { config } from '../../config';
-import { CommonService } from '../_common/common';
-import AlertMessage from './../../components/AlertMessage';
+import React from "react";
+import { Modal, ModalBody, ModalHeader } from "reactstrap";
+import { config } from "../../config";
+import { CommonService } from "../_common/common";
+import AlertMessage from "./../../components/AlertMessage";
 let nodeIdMap = new Map();
 
-class LaunchTcpInputPopup extends Component {
+class LaunchTcpInputPopup extends React.Component {
   steps;
   constructor(props) {
     super(props);
@@ -17,20 +17,20 @@ class LaunchTcpInputPopup extends Component {
       isSubmitted: false,
       removeMatches: false,
       global: false,
-      node: '',
-      title: '',
-      bindAddress: '0.0.0.0',
+      node: "",
+      title: "",
+      bindAddress: "0.0.0.0",
       port: 5044,
       reciveBufferSize: 1048576,
       noOfWorkerthreads: 4,
-      tlsCertFile: '',
-      tlsPrivateKeyFile: '',
-      enableTls: '',
-      tlsKeyPassword: '',
-      tlsClientAuthentication: '',
-      tlsClientAuthTrustedCerts: '',
+      tlsCertFile: "",
+      tlsPrivateKeyFile: "",
+      enableTls: "",
+      tlsKeyPassword: "",
+      tlsClientAuthentication: "",
+      tlsClientAuthTrustedCerts: "",
       tcpKeepAlive: false,
-      overrideSource: '',
+      overrideSource: "",
       nullFrameDelimiter: false,
       forceRDns: false,
       allowOverridingDate: true,
@@ -48,14 +48,15 @@ class LaunchTcpInputPopup extends Component {
       .then((response) => response.text())
       .then((result) => {
         var clusterNodes = JSON.parse(result);
-        console.log('cluster nodes ::  : ', clusterNodes);
+        console.log("cluster nodes ::  : ", clusterNodes);
         for (let node in clusterNodes) {
-          var uiNameForNode = node.split('-')[0] + ' / ' + clusterNodes[node].hostname;
+          var uiNameForNode =
+            node.split("-")[0] + " / " + clusterNodes[node].hostname;
           nodeIdMap.set(node, uiNameForNode);
         }
-        console.log('node id map :: ', nodeIdMap);
+        console.log("node id map :: ", nodeIdMap);
       })
-      .catch((error) => console.log('error', error));
+      .catch((error) => console.log("error", error));
   };
   createNodeOptions = () => {
     let retData = [];
@@ -73,8 +74,8 @@ class LaunchTcpInputPopup extends Component {
   checkboxChange = (e) => {
     let isState = e.target.checked;
     let name = e.target.name;
-    console.log('state : ', isState);
-    console.log('Name : ', name);
+    console.log("state : ", isState);
+    console.log("Name : ", name);
     this.setState({
       [name]: isState,
     });
@@ -140,19 +141,19 @@ class LaunchTcpInputPopup extends Component {
       };
       var data = {
         title: title,
-        type: 'org.graylog2.inputs.syslog.tcp.SyslogTCPInput',
+        type: "org.graylog2.inputs.syslog.tcp.SyslogTCPInput",
         global: global,
         configuration: configurations,
         node: node,
       };
       var raw = JSON.stringify(data);
 
-      console.log('Data : ', raw);
+      console.log("Data : ", raw);
       var requestOptions = CommonService.requestOptionsForPostRequest(raw);
       fetch(config.TCP_INPUT_STREAM, requestOptions)
         .then((response) => response.text())
         .then((result) => {
-          console.log('result :', result);
+          console.log("result :", result);
           if (result != null) {
             this.setState({
               severity: config.SEVERITY_SUCCESS,
@@ -173,14 +174,14 @@ class LaunchTcpInputPopup extends Component {
             message: config.TCP_INPUT_ADDED_ERROR,
             isAlertOpen: true,
           });
-          console.log('error', error);
+          console.log("error", error);
         });
     }
   };
   validate = (isSubmitted) => {
     const validObj = {
       isValid: true,
-      message: '',
+      message: "",
     };
     const retData = {
       node: validObj,
@@ -192,14 +193,14 @@ class LaunchTcpInputPopup extends Component {
         if (!node) {
           retData.title = {
             isValid: false,
-            message: 'Please  select node',
+            message: "Please  select node",
           };
         }
       }
       if (!title) {
         retData.title = {
           isValid: false,
-          message: 'Please enter title',
+          message: "Please enter title",
         };
       }
     }
@@ -239,20 +240,38 @@ class LaunchTcpInputPopup extends Component {
     const errorData = this.validate(isSubmitted);
     const state = this.state;
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="modal-container logmanager-modal-container">
+      <Modal
+        isOpen={modal}
+        toggle={this.toggle}
+        className="modal-container logmanager-modal-container"
+      >
         <AlertMessage
           handleCloseAlert={this.handleCloseAlert}
           open={state.isAlertOpen}
           severity={state.severity}
           msg={state.message}
         ></AlertMessage>
-        <ModalHeader toggle={this.toggle}>Launch new Beats (deprecated) input</ModalHeader>
-        <ModalBody style={{ height: 'calc(60vh - 50px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalHeader toggle={this.toggle}>
+          Launch new Beats (deprecated) input
+        </ModalHeader>
+        <ModalBody
+          style={{
+            height: "calc(60vh - 50px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="d-block width-100 stream-popup-container">
             <div className="row">
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
-                  <input type="checkbox" id="global" name="global" value={global} onChange={this.checkboxChange} />{' '}
+                  <input
+                    type="checkbox"
+                    id="global"
+                    name="global"
+                    value={global}
+                    onChange={this.checkboxChange}
+                  />{" "}
                   Global
                   <span>Should this input start on all nodes</span>
                 </div>
@@ -263,11 +282,18 @@ class LaunchTcpInputPopup extends Component {
                 <div className="col-lg-12 col-md-12 col-sm-12">
                   <div className="form-group">
                     <label htmlFor="description">Node</label>
-                    <select className="input-group-text" name="node" value={node} onChange={this.onStateChange}>
+                    <select
+                      className="input-group-text"
+                      name="node"
+                      value={node}
+                      onChange={this.onStateChange}
+                    >
                       <option>Select Node</option>
                       {this.createNodeOptions()}
                     </select>
-                    <span style={{ color: 'red' }}>{errorData?.node.message}</span>
+                    <span style={{ color: "red" }}>
+                      {errorData?.node.message}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -286,8 +312,12 @@ class LaunchTcpInputPopup extends Component {
                     className="input-group-text"
                     placeholder="A description name of stream"
                   />
-                  <span>Select a name of your new input that describes it.</span>
-                  <span style={{ color: 'red' }}>{errorData?.title.message}</span>
+                  <span>
+                    Select a name of your new input that describes it.
+                  </span>
+                  <span style={{ color: "red" }}>
+                    {errorData?.title.message}
+                  </span>
                 </div>
               </div>
             </div>
@@ -304,7 +334,9 @@ class LaunchTcpInputPopup extends Component {
                     className="input-group-text"
                     placeholder="A description name of stream"
                   />
-                  <span>Address to listen on. For example 0.0.0.0 or 127.0.0.1</span>
+                  <span>
+                    Address to listen on. For example 0.0.0.0 or 127.0.0.1
+                  </span>
                 </div>
               </div>
             </div>
@@ -340,7 +372,10 @@ class LaunchTcpInputPopup extends Component {
                     className="input-group-text"
                     placeholder="A description name of stream"
                   />
-                  <span>The size in bytes of the reciveBufferSize of nework connections to this input.</span>
+                  <span>
+                    The size in bytes of the reciveBufferSize of nework
+                    connections to this input.
+                  </span>
                 </div>
               </div>
             </div>
@@ -360,7 +395,8 @@ class LaunchTcpInputPopup extends Component {
                     placeholder="A description name of stream"
                   />
                   <span>
-                    Number of worker threads processing network connections network connections for this input.
+                    Number of worker threads processing network connections
+                    network connections for this input.
                   </span>
                 </div>
               </div>
@@ -388,7 +424,7 @@ class LaunchTcpInputPopup extends Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="title">
-                    {' '}
+                    {" "}
                     TLS private key file &nbsp;<sub>(optional)</sub>
                   </label>
                   <input
@@ -413,7 +449,7 @@ class LaunchTcpInputPopup extends Component {
                     name="enableTls"
                     value={enableTls}
                     onChange={this.checkboxChange}
-                  />{' '}
+                  />{" "}
                   Enable TLS
                   <span>Accept TLS connections</span>
                 </div>
@@ -423,7 +459,7 @@ class LaunchTcpInputPopup extends Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="title">
-                    {' '}
+                    {" "}
                     TLS key password &nbsp;<sub>(optional)</sub>
                   </label>
                   <input
@@ -456,7 +492,10 @@ class LaunchTcpInputPopup extends Component {
                     <option value="optional">optional</option>
                     <option value="required">required</option>
                   </select>
-                  <span>Whether client need to authentication themselves in TLS connections</span>
+                  <span>
+                    Whether client need to authentication themselves in TLS
+                    connections
+                  </span>
                 </div>
               </div>
             </div>
@@ -464,7 +503,7 @@ class LaunchTcpInputPopup extends Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="title">
-                    {' '}
+                    {" "}
                     TLS Client Auth Trusted Certs &nbsp;<sub>(optional)</sub>
                   </label>
                   <input
@@ -476,7 +515,9 @@ class LaunchTcpInputPopup extends Component {
                     className="input-group-text"
                     placeholder="A description name of stream"
                   />
-                  <span>TLS Client Auth Trusted Certs (File or Directory).</span>
+                  <span>
+                    TLS Client Auth Trusted Certs (File or Directory).
+                  </span>
                 </div>
               </div>
             </div>
@@ -489,7 +530,7 @@ class LaunchTcpInputPopup extends Component {
                     onChange={this.checkboxChange}
                     value={tcpKeepAlive}
                     id="RemoveMessages"
-                  />{' '}
+                  />{" "}
                   &nbsp;TCP keepalive
                   <span>Enable TCP keep alive packets</span>
                 </div>
@@ -504,9 +545,12 @@ class LaunchTcpInputPopup extends Component {
                     onChange={this.checkboxChange}
                     value={nullFrameDelimiter}
                     id="nullFramedelimiter"
-                  />{' '}
+                  />{" "}
                   &nbsp;Null frame delimiter?
-                  <span>Use null byte as frame delimiter? Otherwise newline delimiter is used.</span>
+                  <span>
+                    Use null byte as frame delimiter? Otherwise newline
+                    delimiter is used.
+                  </span>
                 </div>
               </div>
             </div>
@@ -514,7 +558,7 @@ class LaunchTcpInputPopup extends Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="title">
-                    {' '}
+                    {" "}
                     Override Source &nbsp;<sub>(optional)</sub>
                   </label>
                   <input
@@ -526,7 +570,9 @@ class LaunchTcpInputPopup extends Component {
                     className="input-group-text"
                     placeholder="A description name of stream"
                   />
-                  <span>TLS Client Auth Trusted Certs (File or Directory).</span>
+                  <span>
+                    TLS Client Auth Trusted Certs (File or Directory).
+                  </span>
                 </div>
               </div>
             </div>
@@ -539,11 +585,12 @@ class LaunchTcpInputPopup extends Component {
                     onChange={this.checkboxChange}
                     value={forceRDns}
                     id="forceRDns"
-                  />{' '}
+                  />{" "}
                   &nbsp;Force rDNS?
                   <span>
-                    Force rDNS resolution of hostname? Use if hostname cannot be parsed. (Be careful if you are sending
-                    DNS logs into this input because it can cause a feedback loop.).
+                    Force rDNS resolution of hostname? Use if hostname cannot be
+                    parsed. (Be careful if you are sending DNS logs into this
+                    input because it can cause a feedback loop.).
                   </span>
                 </div>
               </div>
@@ -557,9 +604,12 @@ class LaunchTcpInputPopup extends Component {
                     onChange={this.checkboxChange}
                     value={allowOverridingDate}
                     id="allowOverridingDate"
-                  />{' '}
+                  />{" "}
                   &nbsp;Allow overriding date?
-                  <span>Allow to override with current date if date could not be parsed?.</span>
+                  <span>
+                    Allow to override with current date if date could not be
+                    parsed?.
+                  </span>
                 </div>
               </div>
             </div>
@@ -572,9 +622,11 @@ class LaunchTcpInputPopup extends Component {
                     onChange={this.checkboxChange}
                     value={storeFullMessage}
                     id="storeFullMessage"
-                  />{' '}
+                  />{" "}
                   &nbsp;Store full message?
-                  <span>Store the full original syslog message as full_message?</span>
+                  <span>
+                    Store the full original syslog message as full_message?
+                  </span>
                 </div>
               </div>
             </div>
@@ -587,9 +639,12 @@ class LaunchTcpInputPopup extends Component {
                     onChange={this.checkboxChange}
                     value={expandStructuredData}
                     id="expandStructuredData"
-                  />{' '}
+                  />{" "}
                   &nbsp;Expand structured data?
-                  <span>Expand structured data elements by prefixing attributes with their SD-ID?</span>
+                  <span>
+                    Expand structured data elements by prefixing attributes with
+                    their SD-ID?
+                  </span>
                 </div>
               </div>
             </div>
@@ -611,4 +666,5 @@ class LaunchTcpInputPopup extends Component {
     );
   }
 }
+
 export default LaunchTcpInputPopup;

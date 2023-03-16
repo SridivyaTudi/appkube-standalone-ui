@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody, ModalHeader } from 'reactstrap';
-import { config } from '../../config';
-import AlertMessage from '../../components/AlertMessage';
+import React from "react";
+import { Modal, ModalBody, ModalHeader } from "reactstrap";
+import { config } from "../../config";
+import AlertMessage from "../../components/AlertMessage";
 
-class ContentPacksPopup extends Component {
+class ContentPacksPopup extends React.Component {
   steps;
   constructor(props) {
     super(props);
@@ -15,20 +15,20 @@ class ContentPacksPopup extends Component {
       isSubmitted: false,
       removeMatches: false,
       global: false,
-      node: 'bfae0af3-0a33-4df4-bad1-8c5e952ed6a4',
-      title: '',
-      bindAddress: '0.0.0.0',
+      node: "bfae0af3-0a33-4df4-bad1-8c5e952ed6a4",
+      title: "",
+      bindAddress: "0.0.0.0",
       port: 5044,
       reciveBufferSize: 1048576,
       noOfWorkerthreads: 4,
-      tlsCertFile: '',
-      tlsPrivateKeyFile: '',
-      enableTls: '',
-      tlsKeyPassword: '',
-      tlsClientAuthentication: '',
-      tlsClientAuthTrustedCerts: '',
+      tlsCertFile: "",
+      tlsPrivateKeyFile: "",
+      enableTls: "",
+      tlsKeyPassword: "",
+      tlsClientAuthentication: "",
+      tlsClientAuthTrustedCerts: "",
       tcpKeepAlive: false,
-      overrideSource: '',
+      overrideSource: "",
       nullFrameDelimiter: false,
       forceRDns: false,
       allowOverridingDate: true,
@@ -46,8 +46,8 @@ class ContentPacksPopup extends Component {
   checkboxChange = (e) => {
     let isState = e.target.checked;
     let name = e.target.name;
-    console.log('state : ', isState);
-    console.log('Name : ', name);
+    console.log("state : ", isState);
+    console.log("Name : ", name);
     this.setState({
       [name]: isState,
     });
@@ -91,15 +91,15 @@ class ContentPacksPopup extends Component {
         expandStructuredData,
       } = this.state;
       var myHeaders = new Headers();
-      myHeaders.append('X-Requested-By', 'XMLHttpRequest');
+      myHeaders.append("X-Requested-By", "XMLHttpRequest");
       /** for local **/
       // myHeaders.append("Authorization", "Basic YWRtaW46YWRtaW4=");
       /** for local **/
 
       /** for 25 box **/
-      myHeaders.append('Authorization', 'Basic YWRtaW46cGFzc3dvcmQ=');
+      myHeaders.append("Authorization", "Basic YWRtaW46cGFzc3dvcmQ=");
       /** for 25 box **/
-      myHeaders.append('Content-Type', 'application/json');
+      myHeaders.append("Content-Type", "application/json");
       // myHeaders.append("Access-Control-Allow-Origin", "*");
       var configurations = {
         bind_address: bindAddress,
@@ -123,24 +123,24 @@ class ContentPacksPopup extends Component {
       };
       var data = {
         title: title,
-        type: 'org.graylog2.inputs.syslog.tcp.SyslogTCPInput',
+        type: "org.graylog2.inputs.syslog.tcp.SyslogTCPInput",
         global: global,
         configuration: configurations,
-        node: 'bfae0af3-0a33-4df4-bad1-8c5e952ed6a4',
+        node: "bfae0af3-0a33-4df4-bad1-8c5e952ed6a4",
       };
       var raw = JSON.stringify(data);
-      console.log('Data : ', raw);
+      console.log("Data : ", raw);
       var requestOptions = {
-        method: 'POST',
+        method: "POST",
         headers: myHeaders,
         body: raw,
-        redirect: 'follow',
+        redirect: "follow",
       };
 
       fetch(config.TCP_INPUT_STREAM, requestOptions)
         .then((response) => response.text())
         .then((result) => {
-          console.log('result :', result);
+          console.log("result :", result);
           if (result != null) {
             this.setState({
               severity: config.SEVERITY_SUCCESS,
@@ -161,14 +161,14 @@ class ContentPacksPopup extends Component {
             message: config.TCP_INPUT_ADDED_ERROR,
             isAlertOpen: true,
           });
-          console.log('error', error);
+          console.log("error", error);
         });
     }
   };
   validate = (isSubmitted) => {
     const validObj = {
       isValid: true,
-      message: '',
+      message: "",
     };
     const retData = {
       node: validObj,
@@ -180,14 +180,14 @@ class ContentPacksPopup extends Component {
         if (!node) {
           retData.title = {
             isValid: false,
-            message: 'Please  select node',
+            message: "Please  select node",
           };
         }
       }
       if (!title) {
         retData.title = {
           isValid: false,
-          message: 'Please enter title',
+          message: "Please enter title",
         };
       }
     }
@@ -225,7 +225,11 @@ class ContentPacksPopup extends Component {
     const errorData = this.validate(isSubmitted);
     const state = this.state;
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="modal-container logmanager-modal-container">
+      <Modal
+        isOpen={modal}
+        toggle={this.toggle}
+        className="modal-container logmanager-modal-container"
+      >
         <AlertMessage
           handleCloseAlert={this.handleCloseAlert}
           open={state.isAlertOpen}
@@ -233,7 +237,13 @@ class ContentPacksPopup extends Component {
           msg={state.message}
         ></AlertMessage>
         <ModalHeader toggle={this.toggle}>General Information</ModalHeader>
-        <ModalBody style={{ height: 'calc(60vh - 50px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(60vh - 50px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="d-block width-100 stream-popup-container">
             <div className="row">
               <div className="col-lg-12 col-md-12 col-sm-12">
@@ -247,8 +257,12 @@ class ContentPacksPopup extends Component {
                     onChange={this.onStateChange}
                     className="input-group-text"
                   />
-                  <span>Required. Give a descriptive name for this content pack.</span>
-                  <span style={{ color: 'red' }}>{errorData?.title.message}</span>
+                  <span>
+                    Required. Give a descriptive name for this content pack.
+                  </span>
+                  <span style={{ color: "red" }}>
+                    {errorData?.title.message}
+                  </span>
                 </div>
               </div>
             </div>
@@ -301,7 +315,10 @@ class ContentPacksPopup extends Component {
                     className="input-group-text"
                     placeholder="A description name of stream"
                   />
-                  <span>The size in bytes of the reciveBufferSize of nework connections to this input.</span>
+                  <span>
+                    The size in bytes of the reciveBufferSize of nework
+                    connections to this input.
+                  </span>
                 </div>
               </div>
             </div>
@@ -321,7 +338,8 @@ class ContentPacksPopup extends Component {
                     placeholder="A description name of stream"
                   />
                   <span>
-                    Number of worker threads processing network connections network connections for this input.
+                    Number of worker threads processing network connections
+                    network connections for this input.
                   </span>
                 </div>
               </div>
@@ -349,7 +367,7 @@ class ContentPacksPopup extends Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="title">
-                    {' '}
+                    {" "}
                     TLS private key file &nbsp;<sub>(optional)</sub>
                   </label>
                   <input
@@ -374,7 +392,7 @@ class ContentPacksPopup extends Component {
                     name="enableTls"
                     value={enableTls}
                     onChange={this.checkboxChange}
-                  />{' '}
+                  />{" "}
                   Enable TLS
                   <span>Accept TLS connections</span>
                 </div>
@@ -384,7 +402,7 @@ class ContentPacksPopup extends Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="title">
-                    {' '}
+                    {" "}
                     TLS key password &nbsp;<sub>(optional)</sub>
                   </label>
                   <input
@@ -417,7 +435,10 @@ class ContentPacksPopup extends Component {
                     <option value="optional">optional</option>
                     <option value="required">required</option>
                   </select>
-                  <span>Whether client need to authentication themselves in TLS connections</span>
+                  <span>
+                    Whether client need to authentication themselves in TLS
+                    connections
+                  </span>
                 </div>
               </div>
             </div>
@@ -425,7 +446,7 @@ class ContentPacksPopup extends Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="title">
-                    {' '}
+                    {" "}
                     TLS Client Auth Trusted Certs &nbsp;<sub>(optional)</sub>
                   </label>
                   <input
@@ -437,7 +458,9 @@ class ContentPacksPopup extends Component {
                     className="input-group-text"
                     placeholder="A description name of stream"
                   />
-                  <span>TLS Client Auth Trusted Certs (File or Directory).</span>
+                  <span>
+                    TLS Client Auth Trusted Certs (File or Directory).
+                  </span>
                 </div>
               </div>
             </div>
@@ -450,7 +473,7 @@ class ContentPacksPopup extends Component {
                     onChange={this.checkboxChange}
                     value={tcpKeepAlive}
                     id="RemoveMessages"
-                  />{' '}
+                  />{" "}
                   &nbsp;TCP keepalive
                   <span>Enable TCP keep alive packets</span>
                 </div>
@@ -465,9 +488,12 @@ class ContentPacksPopup extends Component {
                     onChange={this.checkboxChange}
                     value={nullFrameDelimiter}
                     id="nullFramedelimiter"
-                  />{' '}
+                  />{" "}
                   &nbsp;Null frame delimiter?
-                  <span>Use null byte as frame delimiter? Otherwise newline delimiter is used.</span>
+                  <span>
+                    Use null byte as frame delimiter? Otherwise newline
+                    delimiter is used.
+                  </span>
                 </div>
               </div>
             </div>
@@ -475,7 +501,7 @@ class ContentPacksPopup extends Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="title">
-                    {' '}
+                    {" "}
                     Override Source &nbsp;<sub>(optional)</sub>
                   </label>
                   <input
@@ -487,7 +513,9 @@ class ContentPacksPopup extends Component {
                     className="input-group-text"
                     placeholder="A description name of stream"
                   />
-                  <span>TLS Client Auth Trusted Certs (File or Directory).</span>
+                  <span>
+                    TLS Client Auth Trusted Certs (File or Directory).
+                  </span>
                 </div>
               </div>
             </div>
@@ -500,11 +528,12 @@ class ContentPacksPopup extends Component {
                     onChange={this.checkboxChange}
                     value={forceRDns}
                     id="forceRDns"
-                  />{' '}
+                  />{" "}
                   &nbsp;Force rDNS?
                   <span>
-                    Force rDNS resolution of hostname? Use if hostname cannot be parsed. (Be careful if you are sending
-                    DNS logs into this input because it can cause a feedback loop.).
+                    Force rDNS resolution of hostname? Use if hostname cannot be
+                    parsed. (Be careful if you are sending DNS logs into this
+                    input because it can cause a feedback loop.).
                   </span>
                 </div>
               </div>
@@ -518,9 +547,12 @@ class ContentPacksPopup extends Component {
                     onChange={this.checkboxChange}
                     value={allowOverridingDate}
                     id="allowOverridingDate"
-                  />{' '}
+                  />{" "}
                   &nbsp;Allow overriding date?
-                  <span>Allow to override with current date if date could not be parsed?.</span>
+                  <span>
+                    Allow to override with current date if date could not be
+                    parsed?.
+                  </span>
                 </div>
               </div>
             </div>
@@ -533,9 +565,11 @@ class ContentPacksPopup extends Component {
                     onChange={this.checkboxChange}
                     value={storeFullMessage}
                     id="storeFullMessage"
-                  />{' '}
+                  />{" "}
                   &nbsp;Store full message?
-                  <span>Store the full original syslog message as full_message?</span>
+                  <span>
+                    Store the full original syslog message as full_message?
+                  </span>
                 </div>
               </div>
             </div>
@@ -548,9 +582,12 @@ class ContentPacksPopup extends Component {
                     onChange={this.checkboxChange}
                     value={expandStructuredData}
                     id="expandStructuredData"
-                  />{' '}
+                  />{" "}
                   &nbsp;Expand structured data?
-                  <span>Expand structured data elements by prefixing attributes with their SD-ID?</span>
+                  <span>
+                    Expand structured data elements by prefixing attributes with
+                    their SD-ID?
+                  </span>
                 </div>
               </div>
             </div>
@@ -572,4 +609,5 @@ class ContentPacksPopup extends Component {
     );
   }
 }
+
 export default ContentPacksPopup;

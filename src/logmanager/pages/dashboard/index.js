@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { config } from '../../config';
-import { CommonService } from '../_common/common';
-import CreateStreamPopup from './createStreamPopup';
-import NewStreamRulePopup from './newStreamRulePopup';
-import SetOutputPopup from './setOutputParameter';
-import AllEventsPopup from './allEventPopup';
-import TopMenu from './topMenu';
+import React from "react";
+import { config } from "../../config";
+import { CommonService } from "../_common/common";
+import CreateStreamPopup from "./createStreamPopup";
+import NewStreamRulePopup from "./newStreamRulePopup";
+import SetOutputPopup from "./setOutputParameter";
+import AllEventsPopup from "./allEventPopup";
+import TopMenu from "./topMenu";
 
 let indexSetMap = new Map();
-class LogDashboard extends Component {
+class Dashboard extends React.Component {
   createStreamRef;
   newStreamRef;
   manageOutputRef;
@@ -52,7 +52,7 @@ class LogDashboard extends Component {
     });
   };
   async componentDidMount() {
-    console.log('componentDidMountMethod called');
+    console.log("componentDidMountMethod called");
     this.getIndexSets();
     this.getStreams();
     this.getTcpInputStream();
@@ -70,7 +70,7 @@ class LogDashboard extends Component {
           indexSets: indexSets,
         });
       })
-      .catch((error) => console.log('error', error));
+      .catch((error) => console.log("error", error));
   };
   getStreams = async () => {
     var requestOptions = await CommonService.requestOptionsForGetRequest();
@@ -85,20 +85,20 @@ class LogDashboard extends Component {
           streamTableData: streams,
         });
       })
-      .catch((error) => console.log('error', error));
+      .catch((error) => console.log("error", error));
   };
   getTcpInputStream = async () => {
     var requestOptions = await CommonService.requestOptionsForGetRequest();
     await fetch(config.TCP_INPUT_STREAM, requestOptions)
       .then((response) => response.text())
       .then((result) => {
-        console.log('Json ', JSON.parse(result));
+        console.log("Json ", JSON.parse(result));
         var inputs = JSON.parse(result).inputs;
         this.setState({
           tcpInputs: inputs,
         });
       })
-      .catch((error) => console.log('error', error));
+      .catch((error) => console.log("error", error));
   };
 
   rulesTableForStream = (rules) => {
@@ -154,10 +154,16 @@ class LogDashboard extends Component {
                 </td>
                 <td>
                   <div className="d-inline-block">
-                    <button className="blue-button m-b-0" onClick={this.openNewStreamPopup}>
+                    <button
+                      className="blue-button m-b-0"
+                      onClick={this.openNewStreamPopup}
+                    >
                       Manage Rules
                     </button>
-                    <button className="blue-button m-b-0" onClick={this.OpenManageOutputPopup}>
+                    <button
+                      className="blue-button m-b-0"
+                      onClick={this.OpenManageOutputPopup}
+                    >
                       Manage Output
                     </button>
                     <button className="blue-button m-b-0">Manage Alerts</button>
@@ -172,7 +178,10 @@ class LogDashboard extends Component {
                     <button className="btn btn-link">
                       <i className="fa fa-trash"></i>
                     </button>
-                    <button className="btn btn-link" onClick={() => this.onClickOpenSubLink(i)}>
+                    <button
+                      className="btn btn-link"
+                      onClick={() => this.onClickOpenSubLink(i)}
+                    >
                       <i className="fa fa-ellipsis-h"></i>
                     </button>
                     {rowData.actionStatus == true && (
@@ -205,7 +214,7 @@ class LogDashboard extends Component {
         <tr>
           <td>
             <h4 onClick={this.OpenAllEventsPopup}>{rowData.title}</h4>
-            <span>Name: &nbsp;&nbsp;{rowData['name']}</span>
+            <span>Name: &nbsp;&nbsp;{rowData["name"]}</span>
           </td>
           <td>
             <table className="inner-table">
@@ -219,10 +228,16 @@ class LogDashboard extends Component {
                 </td>
                 <td>
                   <div className="d-inline-block">
-                    <button className="blue-button m-b-0" onClick={this.openNewStreamPopup}>
+                    <button
+                      className="blue-button m-b-0"
+                      onClick={this.openNewStreamPopup}
+                    >
                       Manage Rules
                     </button>
-                    <button className="blue-button m-b-0" onClick={this.OpenManageOutputPopup}>
+                    <button
+                      className="blue-button m-b-0"
+                      onClick={this.OpenManageOutputPopup}
+                    >
                       Manage Output
                     </button>
                     <button className="blue-button m-b-0">Manage Alerts</button>
@@ -237,7 +252,10 @@ class LogDashboard extends Component {
                     <button className="btn btn-link">
                       <i className="fa fa-trash"></i>
                     </button>
-                    <button className="btn btn-link" onClick={() => this.onClickOpenSubLink(i)}>
+                    <button
+                      className="btn btn-link"
+                      onClick={() => this.onClickOpenSubLink(i)}
+                    >
                       <i className="fa fa-ellipsis-h"></i>
                     </button>
                     {rowData.actionStatus == true && (
@@ -269,8 +287,9 @@ class LogDashboard extends Component {
             <div className="streams-text">
               <h3>STREAMS</h3>
               <p>
-                You can route incoming messeges into streams by applying rules against them. Messages matching the rules
-                of a stream are routed it. A message can also be routed into multiple streams
+                You can route incoming messeges into streams by applying rules
+                against them. Messages matching the rules of a stream are routed
+                it. A message can also be routed into multiple streams
               </p>
             </div>
           </div>
@@ -286,7 +305,10 @@ class LogDashboard extends Component {
               <button className="blue-button m-b-0">Reset</button>
             </div>
             <div className="float-right new-stream-btn">
-              <button className="blue-button m-b-0 m-r-0" onClick={this.onClickOpenCreateStreamPopup}>
+              <button
+                className="blue-button m-b-0 m-r-0"
+                onClick={this.onClickOpenCreateStreamPopup}
+              >
                 New Stream
               </button>
             </div>
@@ -315,4 +337,4 @@ class LogDashboard extends Component {
   }
 }
 
-export default LogDashboard;
+export default Dashboard;

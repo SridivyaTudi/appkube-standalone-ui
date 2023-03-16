@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody, ModalHeader } from 'reactstrap';
-import { config } from '../../config';
-import { CommonService } from '../_common/common';
-import AlertMessage from './../../components/AlertMessage';
+import React from "react";
+import { Modal, ModalBody, ModalHeader } from "reactstrap";
+import { config } from "../../config";
+import { CommonService } from "../_common/common";
+import AlertMessage from "./../../components/AlertMessage";
 let indexSetMap = new Map();
 
-class CreateStreamPopup extends Component {
+class CreateStreamPopup extends React.Component {
   steps;
   constructor(props) {
     super(props);
@@ -14,9 +14,9 @@ class CreateStreamPopup extends Component {
       message: null,
       severity: null,
       modal: false,
-      title: '',
-      description: '',
-      indexSet: '',
+      title: "",
+      description: "",
+      indexSet: "",
       isSubmitted: false,
       removeMatches: false,
     };
@@ -30,7 +30,7 @@ class CreateStreamPopup extends Component {
       .then((response) => response.text())
       .then((result) => {
         var indexSets = JSON.parse(result).index_sets;
-        console.log('index Sets : ', indexSets);
+        console.log("index Sets : ", indexSets);
         indexSets.forEach((element) => {
           indexSetMap.set(element.id, element.title);
         });
@@ -38,7 +38,7 @@ class CreateStreamPopup extends Component {
           indexSets: indexSets,
         });
       })
-      .catch((error) => console.log('error', error));
+      .catch((error) => console.log("error", error));
   };
   createIndexSetOptions = () => {
     let retData = [];
@@ -55,7 +55,7 @@ class CreateStreamPopup extends Component {
   };
   removeMatchesCheckboxChange = (e) => {
     let isState = e.target.checked;
-    console.log('state : ', isState);
+    console.log("state : ", isState);
     if (isState) {
       this.setState({ removeMatches: true });
     } else {
@@ -78,7 +78,11 @@ class CreateStreamPopup extends Component {
       isSubmitted: true,
     });
     const errorData = this.validate(true);
-    if (errorData?.title.isValid && errorData.description.isValid && errorData.indexSet.isValid) {
+    if (
+      errorData?.title.isValid &&
+      errorData.description.isValid &&
+      errorData.indexSet.isValid
+    ) {
       const { title, description, indexSet, removeMatches } = this.state;
 
       var raw = JSON.stringify({
@@ -87,12 +91,12 @@ class CreateStreamPopup extends Component {
         index_set_id: indexSet,
         remove_matches_from_default_stream: removeMatches,
       });
-      console.log('Data : ', raw);
+      console.log("Data : ", raw);
       var requestOptions = CommonService.requestOptionsForPostRequest(raw);
       fetch(config.STREAM, requestOptions)
         .then((response) => response.text())
         .then((result) => {
-          console.log('result :', result);
+          console.log("result :", result);
           if (result != null) {
             this.setState({
               severity: config.SEVERITY_SUCCESS,
@@ -113,14 +117,14 @@ class CreateStreamPopup extends Component {
             message: config.STREAM_CREATED_ERROR,
             isAlertOpen: true,
           });
-          console.log('error', error);
+          console.log("error", error);
         });
     }
   };
   validate = (isSubmitted) => {
     const validObj = {
       isValid: true,
-      message: '',
+      message: "",
     };
     const retData = {
       title: validObj,
@@ -132,19 +136,19 @@ class CreateStreamPopup extends Component {
       if (!title) {
         retData.title = {
           isValid: false,
-          message: 'Please enter title',
+          message: "Please enter title",
         };
       }
       if (!description) {
         retData.description = {
           isValid: false,
-          message: 'Please enter description',
+          message: "Please enter description",
         };
       }
       if (!indexSet) {
         retData.indexSet = {
           isValid: false,
-          message: 'Please select indexset',
+          message: "Please select indexset",
         };
       }
     }
@@ -160,7 +164,11 @@ class CreateStreamPopup extends Component {
     const errorData = this.validate(isSubmitted);
     const state = this.state;
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="modal-container logmanager-modal-container">
+      <Modal
+        isOpen={modal}
+        toggle={this.toggle}
+        className="modal-container logmanager-modal-container"
+      >
         <AlertMessage
           handleCloseAlert={this.handleCloseAlert}
           open={state.isAlertOpen}
@@ -168,7 +176,13 @@ class CreateStreamPopup extends Component {
           msg={state.message}
         ></AlertMessage>
         <ModalHeader toggle={this.toggle}>Creating Stream</ModalHeader>
-        <ModalBody style={{ height: 'calc(60vh - 50px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(60vh - 50px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="d-block width-100 stream-popup-container">
             <div className="row">
               <div className="col-lg-12 col-md-12 col-sm-12">
@@ -183,7 +197,9 @@ class CreateStreamPopup extends Component {
                     className="input-group-text"
                     placeholder="A description name of stream"
                   />
-                  <span style={{ color: 'red' }}>{errorData?.title.message}</span>
+                  <span style={{ color: "red" }}>
+                    {errorData?.title.message}
+                  </span>
                 </div>
               </div>
             </div>
@@ -200,7 +216,9 @@ class CreateStreamPopup extends Component {
                     className="input-group-text"
                     placeholder="What kind of messages are routed to this Stream"
                   />
-                  <span style={{ color: 'red' }}>{errorData?.description.message}</span>
+                  <span style={{ color: "red" }}>
+                    {errorData?.description.message}
+                  </span>
                 </div>
               </div>
             </div>
@@ -208,7 +226,12 @@ class CreateStreamPopup extends Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="index">IndexSet</label>
-                  <select className="input-group-text" name="indexSet" value={indexSet} onChange={this.onStateChange}>
+                  <select
+                    className="input-group-text"
+                    name="indexSet"
+                    value={indexSet}
+                    onChange={this.onStateChange}
+                  >
                     <option>Select index set</option>
                     {/* for local */}
                     {/* <option value="5fb950ef6439c846ee76f455">Default index set</option>
@@ -220,8 +243,13 @@ class CreateStreamPopup extends Component {
                                         <option value="5fd8a53fcf9fac75f0199727">GrayLog System Event</option> */}
                     {this.createIndexSetOptions()}
                   </select>
-                  <span style={{ color: 'red' }}>{errorData?.indexSet.message}</span>
-                  <span>messages that match this stream will be Written to the configured index set</span>
+                  <span style={{ color: "red" }}>
+                    {errorData?.indexSet.message}
+                  </span>
+                  <span>
+                    messages that match this stream will be Written to the
+                    configured index set
+                  </span>
                 </div>
               </div>
             </div>

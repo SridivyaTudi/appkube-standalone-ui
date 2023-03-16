@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import LaunchTcpInputPopup from './launchTcpInputPopup';
-import ContentPacksPopup from './contentPacksPopup';
+import React from "react";
+import { Link } from "react-router-dom";
+import LaunchTcpInputPopup from "./launchTcpInputPopup";
+import ContentPacksPopup from "./contentPacksPopup";
 
-class TopMenu extends Component {
+class TopMenu extends React.Component {
   launchTcpInputRef;
   contentPackPopupRef;
   constructor(props) {
@@ -34,7 +34,10 @@ class TopMenu extends Component {
           <button className="blue-button">
             <i className="fa fa-cog"></i>&nbsp;&nbsp; Dashboard
           </button>
-          <button className="blue-button" onClick={this.onClickOpenTcpInputPopup}>
+          <button
+            className="blue-button"
+            onClick={this.onClickOpenTcpInputPopup}
+          >
             <i className="fa fa-cog"></i>&nbsp;&nbsp; Input
           </button>
           <button className="blue-button">
@@ -53,4 +56,5 @@ class TopMenu extends Component {
     );
   }
 }
+
 export default TopMenu;
