@@ -97,10 +97,6 @@ class DepartmentWiseCharts extends React.Component {
         isCurrentPage: true,
       },
     ];
-    this.config = configFun(
-      props.meta.jsonData.apiUrl,
-      props.meta.jsonData.mainProductUrl
-    );
   }
 
   async componentDidMount() {
@@ -124,7 +120,6 @@ class DepartmentWiseCharts extends React.Component {
         null,
         null
       ).then((response) => {
-        console.log(response);
         this.setState({
           departmentWiseData: response,
         });
@@ -222,7 +217,7 @@ class DepartmentWiseCharts extends React.Component {
                 <div className="col-lg-6 col-md-6 col-sm-12">
                   <div className="float-right common-right-btn">
                     <Link
-                      to={`${"#"}/department-wise-products`}
+                      to={`/assetmanager/pages/department-wise-products`}
                       className="asset-white-button min-width-inherit"
                     >
                       <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;

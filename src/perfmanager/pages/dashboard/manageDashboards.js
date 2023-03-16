@@ -1,31 +1,37 @@
-import React, { Component } from 'react';
-import tagIcon from '../../../assets/img/perfmanager/tag.png';
-import folderIcon from '../../../assets/img/perfmanager/folder.png';
-import listIcon from '../../../assets/img/perfmanager/list.png';
-import sortIcon from '../../../assets/img/perfmanager/sort.png';
-import openFolderIcon from '../../../assets/img/perfmanager/open-folder.png';
-import { Collapse } from 'reactstrap';
-import { RestService } from '../_service/RestService';
-import { config } from '../../config';
-// import { getTagColorsFromName } from '../_utilities';
+import * as React from "react";
+import tagIcon from "../../img/tag.png";
+import folderIcon from "../../img/folder.png";
+import listIcon from "../../img/list.png";
+import sortIcon from "../../img/sort.png";
+import openFolderIcon from "../../img/open-folder.png";
+import { Collapse } from "reactstrap";
+import { RestService } from "../_service/RestService";
+import { config } from "../../config";
+import { getTagColorsFromName } from "../_utilities";
+import data from "./data.json";
 
-class ManageDashboards extends Component {
+class ManageDashboards extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      folderArray: [],
+      folderArray: []
     };
   }
 
   componentDidMount() {
-    RestService.getDashboardList(config.DASHBOARD_LIST_API).then((response) => {
-      console.log(response);
-      const retData = this.manipulateData(response);
+    // RestService.getDashboardList(config.DASHBOARD_LIST_API).then((response) => {
+    //   console.log(response);
+    //   const retData = this.manipulateData(response);
+    //   const folderArray = this.convertObjectToArray(retData);
+    //   this.setState({
+    //     folderArray,
+    //   });
+    // });
+    const retData = this.manipulateData(data);
       const folderArray = this.convertObjectToArray(retData);
       this.setState({
         folderArray,
       });
-    });
   }
 
   convertObjectToArray(object) {
@@ -41,7 +47,7 @@ class ManageDashboards extends Component {
     const retData = {};
     for (let i = 0; i < result.length; i++) {
       const dash = result[i];
-      if (dash.type === 'dash-db') {
+      if (dash.type === "dash-db") {
         retData[dash.folderId] = retData[dash.folderId] || {
           subData: [],
           openSubFolder: false,
@@ -50,10 +56,10 @@ class ManageDashboards extends Component {
         };
         retData[dash.folderId].title = dash.folderTitle;
         const tags = dash.tags.map((tag) => {
-        //   const color = getTagColorsFromName(tag);
+          const color = getTagColorsFromName(tag);
           return {
             name: tag,
-            // color,
+            color,
           };
         });
         retData[dash.folderId].subData.push({
@@ -71,7 +77,8 @@ class ManageDashboards extends Component {
     let countCheckedCheckbox = 0;
     const { folderArray } = this.state;
     const parentCheckbox = folderArray[parentIndex];
-    parentCheckbox.subData[childIndex].checkValue = !parentCheckbox.subData[childIndex].checkValue;
+    parentCheckbox.subData[childIndex].checkValue =
+      !parentCheckbox.subData[childIndex].checkValue;
     for (let j = 0; j < parentCheckbox.subData.length; j++) {
       if (parentCheckbox.subData[j].checkValue == true) {
         countCheckedCheckbox++;
@@ -187,7 +194,11 @@ class ManageDashboards extends Component {
             <div className="col-lg-4 col-md-12 col-sm-12">
               <div className="form-group search-control-group">
                 <form>
-                  <input type="text" className="input-group-text" placeholder="Search dashboards by name" />
+                  <input
+                    type="text"
+                    className="input-group-text"
+                    placeholder="Search dashboards by name"
+                  />
                   <button>
                     <i className="fa fa-search"></i>
                   </button>
@@ -254,7 +265,9 @@ class ManageDashboards extends Component {
             </div>
           </div>
         </div>
-        <div className="manage-dashboard-general">{this.openCloseManageDashboardFolder()}</div>
+        <div className="manage-dashboard-general">
+          {this.openCloseManageDashboardFolder()}
+        </div>
       </div>
     );
   }

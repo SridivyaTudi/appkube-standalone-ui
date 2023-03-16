@@ -726,7 +726,7 @@ class DepartmentWiseProducts extends React.Component {
         return (
           <div className="department-box" key={index}>
             <Link
-              to={`${"#"}/department-wise-charts?department=${endcodedDName}`}
+              to={`/assetmanager/pages/department-wise-charts?department=${endcodedDName}`}
               className="heading"
             >
               {department.name}
