@@ -69,6 +69,7 @@
                     padding: 0;
                     border: 1px solid #a9b9c6;
                     margin-right: 0px;
+                    text-align: left;
 
                     .input-group-text {
                         background: none;
@@ -780,7 +781,7 @@
                             // width: calc(100% - 102px);
                             justify-content: center;
                             align-items: center;
-                            flex-wrap: wrap;
+                            // flex-wrap: wrap;
 
                             .user-name {
                                 width: 140px;
@@ -868,6 +869,7 @@
                 overflow: hidden;
                 overflow-x: auto;
                 padding-top: 30px;
+               
 
                 table {
                     width: 100%;
@@ -925,7 +927,9 @@
                             &:nth-child(5) {
                                 text-align: center;
                             }
-
+                            .oprate-progress{
+                                color: #ffa000;
+                            }
                             .progress {
                                 color: #ffa000;
                             }
