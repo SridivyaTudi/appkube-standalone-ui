@@ -65,14 +65,22 @@
   padding-right: 20px;
 }
 
-.unimplemented-modal-container .modal-content .modal-body .form-group .form-control {
+.unimplemented-modal-container
+  .modal-content
+  .modal-body
+  .form-group
+  .form-control {
   background-color: #f0f3f7 !important;
   border: none !important;
   font-size: 13px;
   height: 36px;
 }
 
-.unimplemented-modal-container .modal-content .modal-body .form-group .input-group-text {
+.unimplemented-modal-container
+  .modal-content
+  .modal-body
+  .form-group
+  .input-group-text {
   background-color: #ffffff;
   border: 1px solid #8392a7;
   border-radius: 4px;
@@ -85,7 +93,11 @@
   text-align: left;
 }
 
-.unimplemented-modal-container .modal-content .modal-body .form-group .checkbox {
+.unimplemented-modal-container
+  .modal-content
+  .modal-body
+  .form-group
+  .checkbox {
   display: inline-block;
   margin-right: 5px;
   vertical-align: middle;
@@ -93,20 +105,36 @@
   margin-top: -4px;
 }
 
-.unimplemented-modal-container .modal-content .modal-body .form-group textarea.form-control {
+.unimplemented-modal-container
+  .modal-content
+  .modal-body
+  .form-group
+  textarea.form-control {
   height: 120px;
 }
 
-.unimplemented-modal-container .modal-content .modal-body .form-group .select-rule {
+.unimplemented-modal-container
+  .modal-content
+  .modal-body
+  .form-group
+  .select-rule {
   margin-top: 10px;
   margin-left: 30px;
 }
 
-.unimplemented-modal-container .modal-content .modal-body .form-group .d-inline-block {
+.unimplemented-modal-container
+  .modal-content
+  .modal-body
+  .form-group
+  .d-inline-block {
   display: inline-block;
 }
 
-.unimplemented-modal-container .modal-content .modal-body .form-group .width-auto {
+.unimplemented-modal-container
+  .modal-content
+  .modal-body
+  .form-group
+  .width-auto {
   width: auto;
 }
 

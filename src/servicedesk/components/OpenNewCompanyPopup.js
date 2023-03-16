@@ -1,25 +1,25 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody } from 'reactstrap';
-import CustomTextbox from './CustomTextbox';
-// import axios from 'axios';
-// import { config } from '../config';
-import AlertMessage from './AlertMessage';
+import React from "react";
+import { Modal, ModalBody } from "reactstrap";
+import CustomTextbox from "./CustomTextbox";
+import axios from "axios";
+import { config } from "../config";
+import AlertMessage from "./AlertMessage";
 
-class OpenNewCompanyPopup extends Component {
+class OpenNewCompanyPopup extends React.Component {
   steps;
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
       companyLogo: null,
-      companyName: '',
-      description: '',
-      notes: '',
-      domain: '',
-      healthScore: '',
-      accountTier: '',
-      renewalDate: '',
-      industry: '',
+      companyName: "",
+      description: "",
+      notes: "",
+      domain: "",
+      healthScore: "",
+      accountTier: "",
+      renewalDate: "",
+      industry: "",
       isSubmitted: false,
       isAlertOpen: false,
       message: null,
@@ -78,15 +78,15 @@ class OpenNewCompanyPopup extends Component {
       console.log(sendData);
 
       let formData = new FormData();
-      formData.append('logo', companyLogo);
-      formData.append('companyName', companyName);
-      formData.append('description', description);
-      formData.append('notes', notes);
-      formData.append('domain', domain);
-      formData.append('healthScore', healthScore);
-      formData.append('accountTier', accountTier);
-      formData.append('renewalDate', renewalDate);
-      formData.append('industry', industry);
+      formData.append("logo", companyLogo);
+      formData.append("companyName", companyName);
+      formData.append("description", description);
+      formData.append("notes", notes);
+      formData.append("domain", domain);
+      formData.append("healthScore", healthScore);
+      formData.append("accountTier", accountTier);
+      formData.append("renewalDate", renewalDate);
+      formData.append("industry", industry);
       // const data = {
       //     "logo": companyLogo,
       //     "companyName": companyName,
@@ -98,36 +98,36 @@ class OpenNewCompanyPopup extends Component {
       //     "renewalDate": renewalDate,
       //     "industry": industry,
       // }
-      // axios
-      //   .post(config.ADD_COMPANY_URL, formData, {
-      //     headers: {
-      //       'content-type': 'multipart/form-data',
-      //     },
-      //   })
-      //   .then((response) => {
-      //     if (response.data != null) {
-      //       this.setState({
-      //         severity: config.SEVERITY_SUCCESS,
-      //         message: config.COMPANY_ADDED_SUCCESS,
-      //         isAlertOpen: true,
-      //       });
-      //     } else {
-      //       this.setState({
-      //         severity: config.SEVERITY_ERROR,
-      //         message: config.COMPANY_ADDED_ERROR,
-      //         isAlertOpen: true,
-      //       });
-      //     }
-      //     console.log('response data', response.data);
-      //   })
-      //   .catch((err) => console.log(err));
+      axios
+        .post(config.ADD_COMPANY_URL, formData, {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          if (response.data != null) {
+            this.setState({
+              severity: config.SEVERITY_SUCCESS,
+              message: config.COMPANY_ADDED_SUCCESS,
+              isAlertOpen: true,
+            });
+          } else {
+            this.setState({
+              severity: config.SEVERITY_ERROR,
+              message: config.COMPANY_ADDED_ERROR,
+              isAlertOpen: true,
+            });
+          }
+          console.log("response data", response.data);
+        })
+        .catch((err) => console.log(err));
     }
   };
 
   validate = (isSubmitted) => {
     const validObj = {
       isValid: true,
-      message: '',
+      message: "",
     };
     const retData = {
       companyName: validObj,
@@ -141,7 +141,16 @@ class OpenNewCompanyPopup extends Component {
       companyLogo: validObj,
     };
     if (isSubmitted) {
-      const { companyName, description, notes, domain, healthScore, accountTier, renewalDate, industry } = this.state;
+      const {
+        companyName,
+        description,
+        notes,
+        domain,
+        healthScore,
+        accountTier,
+        renewalDate,
+        industry,
+      } = this.state;
       // if (!companyLogo) {
       //     retData.companyLogo = {
       //         isValid: false,
@@ -151,49 +160,49 @@ class OpenNewCompanyPopup extends Component {
       if (!companyName) {
         retData.companyName = {
           isValid: false,
-          message: 'Company Name is required',
+          message: "Company Name is required",
         };
       }
       if (!description) {
         retData.description = {
           isValid: false,
-          message: 'Description is required',
+          message: "Description is required",
         };
       }
       if (!notes) {
         retData.notes = {
           isValid: false,
-          message: 'Notes is required',
+          message: "Notes is required",
         };
       }
       if (!domain) {
         retData.domain = {
           isValid: false,
-          message: 'domain is required',
+          message: "domain is required",
         };
       }
       if (!healthScore) {
         retData.healthScore = {
           isValid: false,
-          message: 'Health Care is required',
+          message: "Health Care is required",
         };
       }
       if (!accountTier) {
         retData.accountTier = {
           isValid: false,
-          message: 'Account Tier Name is required',
+          message: "Account Tier Name is required",
         };
       }
       if (!renewalDate) {
         retData.renewalDate = {
           isValid: false,
-          message: 'Renewal Date is required',
+          message: "Renewal Date is required",
         };
       }
       if (!industry) {
         retData.industry = {
           isValid: false,
-          message: 'Industry Name is required',
+          message: "Industry Name is required",
         };
       }
     }
@@ -207,7 +216,7 @@ class OpenNewCompanyPopup extends Component {
     });
   };
   handleImageChange = (e) => {
-    console.log('file=', e.target.files[0]);
+    console.log("file=", e.target.files[0]);
     this.setState({
       companyLogo: URL.createObjectURL(e.target.files[0]),
     });
@@ -235,7 +244,11 @@ class OpenNewCompanyPopup extends Component {
     const errorData = this.validate(isSubmitted);
     const state = this.state;
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="modal-container servicdesk-modal-container">
+      <Modal
+        isOpen={modal}
+        toggle={this.toggle}
+        className="modal-container servicdesk-modal-container"
+      >
         <AlertMessage
           handleCloseAlert={this.handleCloseAlert}
           open={state.isAlertOpen}
@@ -245,7 +258,13 @@ class OpenNewCompanyPopup extends Component {
         <button className="close-btn" onClick={this.handleClose}>
           X
         </button>
-        <ModalBody style={{ height: 'calc(75vh - 50px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(75vh - 50px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="d-block width-100 contact-popup-container">
             <div className="d-block p-b-20 heading">
               <div className="d-block width-100">
@@ -253,8 +272,9 @@ class OpenNewCompanyPopup extends Component {
                   <i className="fa fa-building"></i> New Company
                 </h4>
                 <span className="d-block">
-                  When someone reaches out to you, they become a contact in your account. You can create companies and
-                  associate contacts with them. <a href="#">Learn more.</a>
+                  When someone reaches out to you, they become a contact in your
+                  account. You can create companies and associate contacts with
+                  them. <a href="#">Learn more.</a>
                 </span>
               </div>
             </div>
@@ -271,8 +291,13 @@ class OpenNewCompanyPopup extends Component {
                   className="companyLogo"
                   onChange={this.handleImageChange}
                 />
-                <p className="d-block">An image of the person, it's best if it has the same length and height</p>
-                <span style={{ color: 'red' }}>{errorData.companyLogo.message}</span>
+                <p className="d-block">
+                  An image of the person, it's best if it has the same length
+                  and height
+                </p>
+                <span style={{ color: "red" }}>
+                  {errorData.companyLogo.message}
+                </span>
                 <img src={companyLogo} />
               </div>
             </div>
@@ -439,4 +464,5 @@ class OpenNewCompanyPopup extends Component {
     );
   }
 }
+
 export default OpenNewCompanyPopup;

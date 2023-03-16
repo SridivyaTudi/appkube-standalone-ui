@@ -1,23 +1,19 @@
-import React, {Component} from 'react';
-//import * as React from 'react';
-//import { Breadcrumbs } from '../../components/Breadcrumbs';
-import { Link } from 'react-router-dom';
-import { config } from '../../config';
-//import { Bar } from 'react-chartjs-2';
+import React from "react";
+import { Link } from "react-router-dom";
+import { config } from "../../config";
 
-class Charts extends Component {
-  breadCrumbs;
+class Charts extends React.Component {
   barChartOptions = {
     maintainAspectRatio: false,
     legend: {
       display: false,
-      position: 'right',
+      position: "right",
     },
     scales: {
       yAxes: [
         {
           ticks: {
-            fontColor: 'rgba(169, 185, 198, 1)',
+            fontColor: "rgba(169, 185, 198, 1)",
             fontSize: 12,
             beginAtZero: true,
             min: 0,
@@ -28,10 +24,10 @@ class Charts extends Component {
       xAxes: [
         {
           gridLines: {
-            color: 'rgba(240, 243, 247, 1)',
+            color: "rgba(240, 243, 247, 1)",
           },
           ticks: {
-            fontColor: 'rgba(169, 185, 198, 1)',
+            fontColor: "rgba(169, 185, 198, 1)",
             fontSize: 12,
           },
         },
@@ -41,81 +37,67 @@ class Charts extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.breadCrumbs = [
-      {
-        label: 'Home',
-        route: `/`,
-      },
-      {
-        label: 'Tickets | Dashboard',
-        route: `${config.basePath}/dashboard`,
-      },
-      {
-        label: 'Reports',
-        isCurrentPage: true,
-      },
-    ];
   }
 
   barChart1Data = {
-    labels: ['Email', 'Widget', 'Chat'],
+    labels: ["Email", "Widget", "Chat"],
     datasets: [
       {
-        type: 'bar',
-        label: '',
-        backgroundColor: 'rgba(31, 120, 180, 1)',
-        borderColor: 'rgba(31, 120, 180, 1)',
+        type: "bar",
+        label: "",
+        backgroundColor: "rgba(31, 120, 180, 1)",
+        borderColor: "rgba(31, 120, 180, 1)",
         borderWidth: 1,
-        hoverBackgroundColor: 'rgba(31, 120, 180, 1)',
-        hoverBorderColor: 'rgba(31, 120, 180, 1)',
+        hoverBackgroundColor: "rgba(31, 120, 180, 1)",
+        hoverBorderColor: "rgba(31, 120, 180, 1)",
         data: [100, 380, 200],
       },
     ],
   };
 
   barChart2Data = {
-    labels: ['Low', 'Medium', 'High'],
+    labels: ["Low", "Medium", "High"],
     datasets: [
       {
-        type: 'bar',
-        label: '',
-        backgroundColor: 'rgba(31, 120, 180, 1)',
-        borderColor: 'rgba(31, 120, 180, 1)',
+        type: "bar",
+        label: "",
+        backgroundColor: "rgba(31, 120, 180, 1)",
+        borderColor: "rgba(31, 120, 180, 1)",
         borderWidth: 1,
-        hoverBackgroundColor: 'rgba(31, 120, 180, 1)',
-        hoverBorderColor: 'rgba(31, 120, 180, 1)',
+        hoverBackgroundColor: "rgba(31, 120, 180, 1)",
+        hoverBorderColor: "rgba(31, 120, 180, 1)",
         data: [280, 180, 350],
       },
     ],
   };
 
   barChart3Data = {
-    labels: ['Open', 'Inprogress', 'Closed'],
+    labels: ["Open", "Inprogress", "Closed"],
     datasets: [
       {
-        type: 'bar',
-        label: '',
-        backgroundColor: 'rgba(31, 120, 180, 1)',
-        borderColor: 'rgba(31, 120, 180, 1)',
+        type: "bar",
+        label: "",
+        backgroundColor: "rgba(31, 120, 180, 1)",
+        borderColor: "rgba(31, 120, 180, 1)",
         borderWidth: 1,
-        hoverBackgroundColor: 'rgba(31, 120, 180, 1)',
-        hoverBorderColor: 'rgba(31, 120, 180, 1)',
+        hoverBackgroundColor: "rgba(31, 120, 180, 1)",
+        hoverBorderColor: "rgba(31, 120, 180, 1)",
         data: [390, 270, 200],
       },
     ],
   };
 
   barChart4Data = {
-    labels: ['Question', 'Issue'],
+    labels: ["Question", "Issue"],
     datasets: [
       {
-        type: 'bar',
-        label: '',
-        backgroundColor: 'rgba(31, 120, 180, 1)',
-        borderColor: 'rgba(31, 120, 180, 1)',
+        type: "bar",
+        label: "",
+        backgroundColor: "rgba(31, 120, 180, 1)",
+        borderColor: "rgba(31, 120, 180, 1)",
         borderWidth: 1,
-        hoverBackgroundColor: 'rgba(31, 120, 180, 1)',
-        hoverBorderColor: 'rgba(31, 120, 180, 1)',
+        hoverBackgroundColor: "rgba(31, 120, 180, 1)",
+        hoverBorderColor: "rgba(31, 120, 180, 1)",
         data: [320, 150],
       },
     ],
@@ -124,7 +106,6 @@ class Charts extends Component {
   render() {
     return (
       <div className="servicedesk-dashboard-container">
-        {/* <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="TICKETING TOOL" /> */}
         <div className="servicedesk-page-container">
           <div className="common-container">
             <div className="row">
@@ -183,4 +164,5 @@ class Charts extends Component {
     );
   }
 }
+
 export default Charts;

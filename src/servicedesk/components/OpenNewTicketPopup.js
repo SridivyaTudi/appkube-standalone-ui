@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody } from 'reactstrap';
-import CustomTextbox from './CustomTextbox';
-import Customselectbox from './Customselectbox';
-import CustomTextareabox from './CustomTextareabox';
-import { config } from '../config';
-// import axios from 'axios';
-import { RestService } from '../pages/_service/RestService';
-import AlertMessage from './AlertMessage';
+import React from "react";
+import { Modal, ModalBody } from "reactstrap";
+import CustomTextbox from "./CustomTextbox";
+import Customselectbox from "./Customselectbox";
+import CustomTextareabox from "./CustomTextareabox";
+import { config } from "../config";
+import axios from "axios";
+import { RestService } from "../pages/_service/RestService";
+import AlertMessage from "./AlertMessage";
 
 class MySelectObj {
   id;
@@ -17,7 +17,7 @@ class MySelectObj {
   }
 }
 
-class OpenNewTicketPopup extends Component {
+class OpenNewTicketPopup extends React.Component {
   steps;
   constructor(props) {
     super(props);
@@ -26,77 +26,88 @@ class OpenNewTicketPopup extends Component {
       message: null,
       severity: null,
       modal: false,
-      requesterContact: '',
-      subject: '',
+      requesterContact: "",
+      subject: "",
       type: 0,
-      subjectText: '',
+      subjectText: "",
       priority: 0,
-      priorityValue: 'Low',
-      assignValue: '',
-      typeValue: 'A',
-      description: '',
-      tags: '',
+      priorityValue: "Low",
+      assignValue: "",
+      typeValue: "A",
+      description: "",
+      tags: "",
       isSubmitted: false,
-      contacts: [{ index: '', value: '' }],
+      contacts: [{ index: "", value: "" }],
       totalContact: 1,
       contactNameAndEmailList: [],
       allContacts: [],
       primaryEmailList: [],
-      assignType: '',
-      assignedContact: '',
+      assignType: "",
+      assignedContact: "",
       AgentNameList: [],
       allAgents: [],
-      assignedAgent: '',
+      assignedAgent: "",
     };
   }
 
   async componentDidMount() {
     try {
-      await RestService.getData(config.GET_ALL_CONTACT_URL, null, null).then((response) => {
-        let ary = [];
-        let primaryEmailAry = [];
-        let obj = new MySelectObj('', 'Select Contact');
-        let primaryEmailObj = new MySelectObj('', 'Select Contact');
-        primaryEmailAry.push(primaryEmailObj);
-        ary.push(obj);
-        for (let i = 0; i < response.length; i++) {
-          obj = new MySelectObj(response[i].id, response[i].primaryEmail);
-          primaryEmailObj = new MySelectObj(response[i].id, response[i].primaryEmail);
-          ary.push(obj);
+      await RestService.getData(config.GET_ALL_CONTACT_URL, null, null).then(
+        (response) => {
+          let ary = [];
+          let primaryEmailAry = [];
+          let obj = new MySelectObj("", "Select Contact");
+          let primaryEmailObj = new MySelectObj("", "Select Contact");
           primaryEmailAry.push(primaryEmailObj);
+          ary.push(obj);
+          for (let i = 0; i < response.length; i++) {
+            obj = new MySelectObj(response[i].id, response[i].primaryEmail);
+            primaryEmailObj = new MySelectObj(
+              response[i].id,
+              response[i].primaryEmail
+            );
+            ary.push(obj);
+            primaryEmailAry.push(primaryEmailObj);
+          }
+          this.setState({
+            contactNameAndEmailList: ary,
+            allContacts: response,
+            primaryEmailList: primaryEmailAry,
+          });
         }
-        this.setState({
-          contactNameAndEmailList: ary,
-          allContacts: response,
-          primaryEmailList: primaryEmailAry,
-        });
-      });
+      );
     } catch (err) {
-      console.log('Loading company data failed. Error: ', err);
+      console.log("Loading company data failed. Error: ", err);
     }
 
     try {
-      await RestService.getData(config.GET_ALL_AGENT_URL, null, null).then((response) => {
-        let ary = [];
-        let obj = new MySelectObj('', 'Select Agent');
-        ary.push(obj);
-        for (let i = 0; i < response.length; i++) {
-          obj = new MySelectObj(response[i].id, response[i].name);
+      await RestService.getData(config.GET_ALL_AGENT_URL, null, null).then(
+        (response) => {
+          let ary = [];
+          let obj = new MySelectObj("", "Select Agent");
           ary.push(obj);
+          for (let i = 0; i < response.length; i++) {
+            obj = new MySelectObj(response[i].id, response[i].name);
+            ary.push(obj);
+          }
+          this.setState({
+            AgentNameList: ary,
+            allAgents: response,
+          });
         }
-        this.setState({
-          AgentNameList: ary,
-          allAgents: response,
-        });
-      });
+      );
     } catch (err) {
-      console.log('Loading company data failed. Error: ', err);
+      console.log("Loading company data failed. Error: ", err);
     }
   }
 
   fetchData = () => {
-    RestService.getData(config.SERVICEDESK_API_URL + '/api/contacts', null, null).then((response) => {
-      console.log('contact list : ', response);
+    RestService.getData(
+      config.SERVICEDESK_API_URL + "/api/contacts",
+      null,
+      null
+    ).then((response) => {
+      console.log("contact list : ", response);
       let obj = null;
       // for(respone){
       //     obj = MyObj(re.id, re.compy);
@@ -146,9 +157,9 @@ class OpenNewTicketPopup extends Component {
         assignedContact,
       } = this.state;
       let assignedToId;
-      if (assignType == 'contact') {
+      if (assignType == "contact") {
         assignedToId = assignedContact;
-      } else if (assignType == 'agent') {
+      } else if (assignType == "agent") {
         assignedToId = assignedAgent;
       }
       let associatedEntityName;
@@ -157,12 +168,12 @@ class OpenNewTicketPopup extends Component {
       let createdOn;
       let alertState;
       if (this.props.guid == undefined) {
-        associatedEntityName = '';
+        associatedEntityName = "";
         associatedEntityId = null;
         createdOn = 0;
         alertState = null;
       } else {
-        associatedEntityName = 'alert';
+        associatedEntityName = "alert";
         associatedEntityId = this.props.guid;
         alertName = this.props.alertName;
         createdOn = this.props.createdOn;
@@ -170,52 +181,52 @@ class OpenNewTicketPopup extends Component {
       }
 
       let formData = new FormData();
-      formData.append('type', typeValue);
-      formData.append('subject', subjectText);
-      formData.append('priority', priorityValue);
-      formData.append('description', description);
-      formData.append('tag', tags);
-      formData.append('assignedToUserType', assignType);
-      formData.append('requesterUserType', 'contact');
-      formData.append('requesterId', requesterContact);
-      formData.append('assignedToId', assignedToId);
-      formData.append('associatedEntityName', associatedEntityName);
-      formData.append('associatedEntityId', associatedEntityId);
-      formData.append('alertName', alertName);
-      formData.append('createdOn', createdOn);
-      formData.append('alertState', alertState);
+      formData.append("type", typeValue);
+      formData.append("subject", subjectText);
+      formData.append("priority", priorityValue);
+      formData.append("description", description);
+      formData.append("tag", tags);
+      formData.append("assignedToUserType", assignType);
+      formData.append("requesterUserType", "contact");
+      formData.append("requesterId", requesterContact);
+      formData.append("assignedToId", assignedToId);
+      formData.append("associatedEntityName", associatedEntityName);
+      formData.append("associatedEntityId", associatedEntityId);
+      formData.append("alertName", alertName);
+      formData.append("createdOn", createdOn);
+      formData.append("alertState", alertState);
 
-      console.log('Ticket object  : ', formData);
-      // axios
-      //   .post(config.ADD_TICKET_URL, formData, {})
-      //   .then((response) => {
-      //     if (response.data != null) {
-      //       this.setState({
-      //         severity: config.SEVERITY_SUCCESS,
-      //         message: config.ADD_TICKET_SUCCESS,
-      //         isAlertOpen: true,
-      //       });
-      //       if (this.props.refreshParm) {
-      //         let refreshMethod = this.props.refreshParm;
-      //         refreshMethod();
-      //       }
-      //     } else {
-      //       this.setState({
-      //         severity: config.SEVERITY_ERROR,
-      //         message: config.ADD_TICKET_ERROR,
-      //         isAlertOpen: true,
-      //       });
-      //     }
-      //     console.log('response data', response.data);
-      //   })
-      //   .catch((err) => console.log(err));
+      console.log("Ticket object  : ", formData);
+      axios
+        .post(config.ADD_TICKET_URL, formData, {})
+        .then((response) => {
+          if (response.data != null) {
+            this.setState({
+              severity: config.SEVERITY_SUCCESS,
+              message: config.ADD_TICKET_SUCCESS,
+              isAlertOpen: true,
+            });
+            if (this.props.refreshParm) {
+              let refreshMethod = this.props.refreshParm;
+              refreshMethod();
+            }
+          } else {
+            this.setState({
+              severity: config.SEVERITY_ERROR,
+              message: config.ADD_TICKET_ERROR,
+              isAlertOpen: true,
+            });
+          }
+          console.log("response data", response.data);
+        })
+        .catch((err) => console.log(err));
     }
   };
 
   validate = (isSubmitted) => {
     const validObj = {
       isValid: true,
-      message: '',
+      message: "",
     };
     const retData = {
       subject: validObj,
@@ -242,46 +253,46 @@ class OpenNewTicketPopup extends Component {
       if (!requesterContact) {
         retData.requesterContact = {
           isValid: false,
-          message: 'Contact is required',
+          message: "Contact is required",
         };
       }
-      if (assignType == 'contact') {
+      if (assignType == "contact") {
         if (!assignedContact) {
           retData.assignedContact = {
             isValid: false,
-            message: 'Please select assign type',
+            message: "Please select assign type",
           };
         }
-      } else if (assignType == 'agent') {
+      } else if (assignType == "agent") {
         if (!assignedAgent) {
           retData.assignedAgent = {
             isValid: false,
-            message: 'Agent is required',
+            message: "Agent is required",
           };
         }
       }
       if (!subjectText) {
         retData.subjectText = {
           isValid: false,
-          message: 'Subject Detail required',
+          message: "Subject Detail required",
         };
       }
       if (!assignType) {
         retData.assignType = {
           isValid: false,
-          message: 'Please select contact or agent',
+          message: "Please select contact or agent",
         };
       }
       if (!description) {
         retData.description = {
           isValid: false,
-          message: 'Description is required',
+          message: "Description is required",
         };
       }
       if (!tags) {
         retData.tags = {
           isValid: false,
-          message: 'Tag is required',
+          message: "Tag is required",
         };
       }
     }
@@ -296,16 +307,16 @@ class OpenNewTicketPopup extends Component {
     for (let i = 0; i < length; i++) {
       retData.push({
         isValid: true,
-        message: '',
+        message: "",
       });
     }
     if (isSubmitted) {
       if (length > 0) {
         for (let i = 0; i < length; i++) {
-          if (contacts[i].value == '') {
+          if (contacts[i].value == "") {
             retData[i] = {
               isValid: false,
-              message: 'Contact Name is required',
+              message: "Contact Name is required",
             };
           }
         }
@@ -321,7 +332,7 @@ class OpenNewTicketPopup extends Component {
   handleStateChange = (e) => {
     const { name, value, id } = e.target;
     let data = [];
-    if (name == 'contact') {
+    if (name == "contact") {
       for (let i = 0; i < this.state.contacts.length; i++) {
         if (id == i) {
           data.push({ index: i, value: value });
@@ -344,7 +355,7 @@ class OpenNewTicketPopup extends Component {
 
   addContact = () => {
     let optionArray = this.state.contacts;
-    optionArray.push({ index: '', value: '' });
+    optionArray.push({ index: "", value: "" });
     this.setState({
       contacts: optionArray,
     });
@@ -366,9 +377,9 @@ class OpenNewTicketPopup extends Component {
           name="requesterContact"
           value={contacts[i].value}
           arrayData={[
-            { id: 0, name: 'ABC' },
-            { id: 1, name: 'DEF' },
-            { id: 2, name: 'GHI' },
+            { id: 0, name: "ABC" },
+            { id: 1, name: "DEF" },
+            { id: 2, name: "GHI" },
           ]}
           onChange={this.handleStateChange}
           isValid={error.isValid}
@@ -383,27 +394,27 @@ class OpenNewTicketPopup extends Component {
     this.setState({
       [name]: value,
     });
-    if (name == 'type') {
+    if (name == "type") {
       let type;
       if (value == 0) {
-        type = 'A';
+        type = "A";
       } else if (value == 1) {
-        type = 'B';
+        type = "B";
       } else if (value == 2) {
-        type = 'C';
+        type = "C";
       }
       this.setState({
         typeValue: type,
       });
     }
-    if (name == 'priority') {
+    if (name == "priority") {
       let priority;
       if (value == 0) {
-        priority = 'Low';
+        priority = "Low";
       } else if (value == 1) {
-        priority = 'Medium';
+        priority = "Medium";
       } else if (value == 2) {
-        priority = 'High';
+        priority = "High";
       }
       this.setState({
         priorityValue: priority,
@@ -434,7 +445,11 @@ class OpenNewTicketPopup extends Component {
     const errorData = this.validate(isSubmitted);
     const state = this.state;
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="modal-container servicdesk-modal-container">
+      <Modal
+        isOpen={modal}
+        toggle={this.toggle}
+        className="modal-container servicdesk-modal-container"
+      >
         <AlertMessage
           handleCloseAlert={this.handleCloseAlert}
           open={state.isAlertOpen}
@@ -444,12 +459,20 @@ class OpenNewTicketPopup extends Component {
         <button className="close-btn" onClick={this.handleClose}>
           X
         </button>
-        <ModalBody style={{ height: 'calc(75vh - 50px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(75vh - 50px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="d-block width-100 contact-popup-container new-ticket-container">
             <div className="d-block p-b-20 heading">
               <div className="d-block width-100">
                 <h4 className="d-block">New Ticket</h4>
-                <span className="d-block">The Contact will receive an Email about this Ticket</span>
+                <span className="d-block">
+                  The Contact will receive an Email about this Ticket
+                </span>
               </div>
             </div>
             <div className="row">
@@ -512,9 +535,9 @@ class OpenNewTicketPopup extends Component {
                     name="type"
                     value={type}
                     arrayData={[
-                      { id: 0, name: 'A' },
-                      { id: 1, name: 'B' },
-                      { id: 2, name: 'C' },
+                      { id: 0, name: "A" },
+                      { id: 1, name: "B" },
+                      { id: 2, name: "C" },
                     ]}
                     onChange={this.handleSelectBox}
                     isValid={errorData.type.isValid}
@@ -536,9 +559,9 @@ class OpenNewTicketPopup extends Component {
                     name="priority"
                     value={priority}
                     arrayData={[
-                      { id: 0, name: 'Low' },
-                      { id: 1, name: 'Medium' },
-                      { id: 2, name: 'High' },
+                      { id: 0, name: "Low" },
+                      { id: 1, name: "Medium" },
+                      { id: 2, name: "High" },
                     ]}
                     onChange={this.handleSelectBox}
                     isValid={errorData.priority.isValid}
@@ -561,7 +584,7 @@ class OpenNewTicketPopup extends Component {
                     <label className="form-check-label" htmlFor="Contact">
                       Contact
                     </label>
-                    {assignType == 'contact' && (
+                    {assignType == "contact" && (
                       <div>
                         <label htmlFor="assign">Assign to Contacts*</label>
                         <Customselectbox
@@ -590,7 +613,7 @@ class OpenNewTicketPopup extends Component {
                     <label className="form-check-label" htmlFor="Agent">
                       Agent
                     </label>
-                    {assignType == 'agent' && (
+                    {assignType == "agent" && (
                       <div>
                         <label htmlFor="assign">Assign to Agent*</label>
                         <Customselectbox
@@ -608,7 +631,9 @@ class OpenNewTicketPopup extends Component {
                       </div>
                     )}
                   </div>
-                  <span style={{ color: 'red' }}>{errorData.assignType.message}</span>
+                  <span style={{ color: "red" }}>
+                    {errorData.assignType.message}
+                  </span>
                 </div>
               </div>
             </div>
@@ -671,4 +696,5 @@ class OpenNewTicketPopup extends Component {
     );
   }
 }
+
 export default OpenNewTicketPopup;

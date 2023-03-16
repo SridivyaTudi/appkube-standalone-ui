@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody } from 'reactstrap';
+import React from "react";
+import { Modal, ModalBody } from "reactstrap";
 
-class OpenMergePopup extends Component {
+class OpenMergePopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,11 +22,21 @@ class OpenMergePopup extends Component {
   render() {
     const { modal } = this.state;
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="modal-container servicdesk-modal-container">
+      <Modal
+        isOpen={modal}
+        toggle={this.toggle}
+        className="modal-container servicdesk-modal-container"
+      >
         <button className="close-btn" onClick={this.handleClose}>
           X
         </button>
-        <ModalBody style={{ height: 'calc(65vh - 20px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(65vh - 20px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="ticket-details-popup-container">
             <div className="d-block p-b-20 heading">
               <div className="d-block width-100">
@@ -35,7 +45,8 @@ class OpenMergePopup extends Component {
             </div>
             <div className="merge-ticket-container">
               <div className="d-block ticket-heading">
-                1 ticket selected, secondary ticket will be added to primary ticket.
+                1 ticket selected, secondary ticket will be added to primary
+                ticket.
               </div>
               <div className="d-block ticket-box">
                 <div className="row">
@@ -71,7 +82,12 @@ class OpenMergePopup extends Component {
                   </div>
                   <div className="col-lg-3 col-md-3 col-sm-3">
                     <div className="form-check">
-                      <input type="radio" name="MakePrimary" value="MakePrimary" className="form-check-input" />
+                      <input
+                        type="radio"
+                        name="MakePrimary"
+                        value="MakePrimary"
+                        className="form-check-input"
+                      />
                       <label className="form-check-label" htmlFor="MakePrimary">
                         Make Primary
                       </label>
@@ -83,7 +99,11 @@ class OpenMergePopup extends Component {
                 <div className="row">
                   <div className="col-lg-9 col-md-9 col-sm-9">
                     <div className="form-group">
-                      <input type="text" placeholder="Search contact's tickets" className="input-group-text" />
+                      <input
+                        type="text"
+                        placeholder="Search contact's tickets"
+                        className="input-group-text"
+                      />
                     </div>
                   </div>
                   <div className="col-lg-3 col-md-3 col-sm-3">
@@ -131,7 +151,12 @@ class OpenMergePopup extends Component {
                   </div>
                   <div className="col-lg-3 col-md-3 col-sm-3">
                     <div className="form-check">
-                      <input type="radio" name="MakePrimary" value="MakePrimary" className="form-check-input" />
+                      <input
+                        type="radio"
+                        name="MakePrimary"
+                        value="MakePrimary"
+                        className="form-check-input"
+                      />
                       <label className="form-check-label" htmlFor="MakePrimary">
                         Make Primary
                       </label>
@@ -144,7 +169,11 @@ class OpenMergePopup extends Component {
                 <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6">
                     <div className="d-block form-check recipient">
-                      <input type="checkbox" className="form-check-input" id="recipient" />
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id="recipient"
+                      />
                       <label className="form-check-label" htmlFor="recipient">
                         CC to Secondary ticket recipient.
                       </label>
@@ -152,7 +181,10 @@ class OpenMergePopup extends Component {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6">
                     <div className="d-block text-right">
-                      <button className="white-button cancel" onClick={this.handleClose}>
+                      <button
+                        className="white-button cancel"
+                        onClick={this.handleClose}
+                      >
                         Cancel
                       </button>
                       <button className="blue-button m-r-0">Continue</button>
@@ -167,4 +199,5 @@ class OpenMergePopup extends Component {
     );
   }
 }
+
 export default OpenMergePopup;

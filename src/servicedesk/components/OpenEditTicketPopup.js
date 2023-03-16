@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody } from 'reactstrap';
-import CustomTextbox from './CustomTextbox';
-import Customselectbox from './Customselectbox';
-import CustomTextareabox from './CustomTextareabox';
-import { config } from '../config';
-// import axios from 'axios';
-import { RestService } from '../pages/_service/RestService';
-import AlertMessage from './AlertMessage';
+import React from "react";
+import { Modal, ModalBody } from "reactstrap";
+import CustomTextbox from "./CustomTextbox";
+import Customselectbox from "./Customselectbox";
+import CustomTextareabox from "./CustomTextareabox";
+import { config } from "../config";
+import axios from "axios";
+import { RestService } from "../pages/_service/RestService";
+import AlertMessage from "./AlertMessage";
+
 class MySelectObj {
   id;
   name;
@@ -16,7 +17,7 @@ class MySelectObj {
   }
 }
 
-class OpenEditTicketPopup extends Component {
+class OpenEditTicketPopup extends React.Component {
   steps;
   constructor(props) {
     super(props);
@@ -26,75 +27,86 @@ class OpenEditTicketPopup extends Component {
       severity: null,
       modal: false,
       ticketId: null,
-      requesterContact: '',
-      subject: '',
-      type: '',
-      subjectText: '',
-      priority: '',
-      assignValue: '',
-      description: '',
-      tags: '',
+      requesterContact: "",
+      subject: "",
+      type: "",
+      subjectText: "",
+      priority: "",
+      assignValue: "",
+      description: "",
+      tags: "",
       isSubmitted: false,
-      contacts: [{ index: '', value: '' }],
+      contacts: [{ index: "", value: "" }],
       totalContact: 1,
       contactNameAndEmailList: [],
       allContacts: [],
       primaryEmailList: [],
-      assignType: '',
-      assignedContact: '',
+      assignType: "",
+      assignedContact: "",
       AgentNameList: [],
       allAgents: [],
-      assignedAgent: '',
+      assignedAgent: "",
     };
   }
 
   async componentDidMount() {
     try {
-      await RestService.getData(config.GET_ALL_CONTACT_URL, null, null).then((response) => {
-        let ary = [];
-        let primaryEmailAry = [];
-        let obj = new MySelectObj('', 'Select Contact');
-        let primaryEmailObj = new MySelectObj('', 'Select Contact');
-        primaryEmailAry.push(primaryEmailObj);
-        ary.push(obj);
-        for (let i = 0; i < response.length; i++) {
-          obj = new MySelectObj(response[i].id, response[i].primaryEmail);
-          primaryEmailObj = new MySelectObj(response[i].id, response[i].primaryEmail);
-          ary.push(obj);
+      await RestService.getData(config.GET_ALL_CONTACT_URL, null, null).then(
+        (response) => {
+          let ary = [];
+          let primaryEmailAry = [];
+          let obj = new MySelectObj("", "Select Contact");
+          let primaryEmailObj = new MySelectObj("", "Select Contact");
           primaryEmailAry.push(primaryEmailObj);
+          ary.push(obj);
+          for (let i = 0; i < response.length; i++) {
+            obj = new MySelectObj(response[i].id, response[i].primaryEmail);
+            primaryEmailObj = new MySelectObj(
+              response[i].id,
+              response[i].primaryEmail
+            );
+            ary.push(obj);
+            primaryEmailAry.push(primaryEmailObj);
+          }
+          this.setState({
+            contactNameAndEmailList: ary,
+            allContacts: response,
+            primaryEmailList: primaryEmailAry,
+          });
         }
-        this.setState({
-          contactNameAndEmailList: ary,
-          allContacts: response,
-          primaryEmailList: primaryEmailAry,
-        });
-      });
+      );
     } catch (err) {
-      console.log('Loading company data failed. Error: ', err);
+      console.log("Loading company data failed. Error: ", err);
     }
 
     try {
-      await RestService.getData(config.GET_ALL_AGENT_URL, null, null).then((response) => {
-        let ary = [];
-        let obj = new MySelectObj('', 'Select Agent');
-        ary.push(obj);
-        for (let i = 0; i < response.length; i++) {
-          obj = new MySelectObj(response[i].id, response[i].name);
+      await RestService.getData(config.GET_ALL_AGENT_URL, null, null).then(
+        (response) => {
+          let ary = [];
+          let obj = new MySelectObj("", "Select Agent");
           ary.push(obj);
+          for (let i = 0; i < response.length; i++) {
+            obj = new MySelectObj(response[i].id, response[i].name);
+            ary.push(obj);
+          }
+          this.setState({
+            AgentNameList: ary,
+            allAgents: response,
+          });
         }
-        this.setState({
-          AgentNameList: ary,
-          allAgents: response,
-        });
-      });
+      );
     } catch (err) {
-      console.log('Loading company data failed. Error: ', err);
+      console.log("Loading company data failed. Error: ", err);
     }
   }
 
   fetchData = () => {
-    RestService.getData(config.SERVICEDESK_API_URL + '/api/contacts', null, null).then((response) => {
-      console.log('contact list : ', response);
+    RestService.getData(
+      config.SERVICEDESK_API_URL + "/api/contacts",
+      null,
+      null
+    ).then((response) => {
+      console.log("contact list : ", response);
       let obj = null;
       // for(respone){
       //     obj = MyObj(re.id, re.compy);
@@ -108,24 +120,32 @@ class OpenEditTicketPopup extends Component {
   getTicketByID = async (id) => {
     let res;
     try {
-      await RestService.getData(config.GET_TICKET_BY_ID + '/' + id, null, null).then((response) => {
-        console.log('response', response);
+      await RestService.getData(
+        config.GET_TICKET_BY_ID + "/" + id,
+        null,
+        null
+      ).then((response) => {
+        console.log("response", response);
         res = response;
       });
     } catch (err) {
-      console.log('Loading Ticket data failed. Error: ', err);
+      console.log("Loading Ticket data failed. Error: ", err);
     }
     return res;
   };
 
   toggle = async (selectedTicket) => {
-    console.log('Selected Ticket :::: ', selectedTicket);
+    console.log("Selected Ticket :::: ", selectedTicket);
     this.setState({
       modal: !this.state.modal,
     });
     try {
-      await RestService.getData(config.GET_TICKET_BY_ID + '/' + selectedTicket.id, null, null).then((response) => {
-        console.log('response', response);
+      await RestService.getData(
+        config.GET_TICKET_BY_ID + "/" + selectedTicket.id,
+        null,
+        null
+      ).then((response) => {
+        console.log("response", response);
 
         this.setState({
           ticketId: response.id,
@@ -137,18 +157,18 @@ class OpenEditTicketPopup extends Component {
           tags: response.tag,
           description: response.description,
         });
-        if (response.assignedToUserType.toLowerCase() == 'contact') {
+        if (response.assignedToUserType.toLowerCase() == "contact") {
           this.setState({
             assignedContact: response.assignedToId,
           });
-        } else if (response.assignedToUserType.toLowerCase() == 'agent') {
+        } else if (response.assignedToUserType.toLowerCase() == "agent") {
           this.setState({
             assignedAgent: response.assignedToId,
           });
         }
       });
     } catch (err) {
-      console.log('Loading Ticket data failed. Error: ', err);
+      console.log("Loading Ticket data failed. Error: ", err);
     }
     this.setState({
       ticketId: selectedTicket.id,
@@ -189,19 +209,19 @@ class OpenEditTicketPopup extends Component {
         assignedContact,
       } = this.state;
       let assignedToId;
-      if (assignType == 'contact') {
+      if (assignType == "contact") {
         assignedToId = assignedContact;
-      } else if (assignType == 'agent') {
+      } else if (assignType == "agent") {
         assignedToId = assignedAgent;
       }
       let associatedEntityName;
       let associatedEntityId;
       let alertName;
       if (this.props.guid == undefined) {
-        associatedEntityName = '';
+        associatedEntityName = "";
         associatedEntityId = null;
       } else {
-        associatedEntityName = 'alert';
+        associatedEntityName = "alert";
         associatedEntityId = this.props.guid;
         alertName = this.props.alertName;
       }
@@ -213,7 +233,7 @@ class OpenEditTicketPopup extends Component {
         description: description,
         tag: tags,
         assignedToUserType: assignType,
-        requesterUserType: 'contact',
+        requesterUserType: "contact",
         requesterId: requesterContact,
         assignedToId: assignedToId,
         associatedEntityName: associatedEntityName,
@@ -222,48 +242,48 @@ class OpenEditTicketPopup extends Component {
       };
 
       let formData = new FormData();
-      formData.append('id', ticketId);
-      formData.append('type', type);
-      formData.append('subject', subjectText);
-      formData.append('priority', priority);
-      formData.append('description', description);
-      formData.append('tag', tags);
-      formData.append('assignedToUserType', assignType);
-      formData.append('requesterUserType', 'contact');
-      formData.append('requesterId', requesterContact);
-      formData.append('assignedToId', assignedToId);
-      formData.append('associatedEntityName', associatedEntityName);
-      formData.append('associatedEntityId', associatedEntityId);
-      formData.append('alertName', alertName);
+      formData.append("id", ticketId);
+      formData.append("type", type);
+      formData.append("subject", subjectText);
+      formData.append("priority", priority);
+      formData.append("description", description);
+      formData.append("tag", tags);
+      formData.append("assignedToUserType", assignType);
+      formData.append("requesterUserType", "contact");
+      formData.append("requesterId", requesterContact);
+      formData.append("assignedToId", assignedToId);
+      formData.append("associatedEntityName", associatedEntityName);
+      formData.append("associatedEntityId", associatedEntityId);
+      formData.append("alertName", alertName);
 
-      console.log('Send Data : ', data);
-      // axios
-      //   .post(config.UPDATE_TICKET_URL, formData, {})
-      //   .then((response) => {
-      //     console.log('after updated res :: ', response);
-      //     if (response.data != null) {
-      //       this.props.onSaveUpdate(response.data);
-      //       this.setState({
-      //         severity: config.SEVERITY_SUCCESS,
-      //         message: config.UPDATE_TICKET_SUCCESS,
-      //         isAlertOpen: true,
-      //       });
-      //     } else {
-      //       this.setState({
-      //         severity: config.SEVERITY_ERROR,
-      //         message: config.ADD_TICKET_ERROR,
-      //         isAlertOpen: true,
-      //       });
-      //     }
-      //   })
-      //   .catch((err) => console.log(err));
+      console.log("Send Data : ", data);
+      axios
+        .post(config.UPDATE_TICKET_URL, formData, {})
+        .then((response) => {
+          console.log("after updated res :: ", response);
+          if (response.data != null) {
+            this.props.onSaveUpdate(response.data);
+            this.setState({
+              severity: config.SEVERITY_SUCCESS,
+              message: config.UPDATE_TICKET_SUCCESS,
+              isAlertOpen: true,
+            });
+          } else {
+            this.setState({
+              severity: config.SEVERITY_ERROR,
+              message: config.ADD_TICKET_ERROR,
+              isAlertOpen: true,
+            });
+          }
+        })
+        .catch((err) => console.log(err));
     }
   };
 
   validate = (isSubmitted) => {
     const validObj = {
       isValid: true,
-      message: '',
+      message: "",
     };
     const retData = {
       subject: validObj,
@@ -292,21 +312,21 @@ class OpenEditTicketPopup extends Component {
       if (!requesterContact) {
         retData.requesterContact = {
           isValid: false,
-          message: 'Contact is required',
+          message: "Contact is required",
         };
       }
-      if (assignType == 'contact') {
+      if (assignType == "contact") {
         if (!assignedContact) {
           retData.assignedContact = {
             isValid: false,
-            message: 'Please select assign type',
+            message: "Please select assign type",
           };
         }
-      } else if (assignType == 'agent') {
+      } else if (assignType == "agent") {
         if (!assignedAgent) {
           retData.assignedAgent = {
             isValid: false,
-            message: 'Agent is required',
+            message: "Agent is required",
           };
         }
       }
@@ -319,37 +339,37 @@ class OpenEditTicketPopup extends Component {
       if (!type) {
         retData.type = {
           isValid: false,
-          message: 'Type is required',
+          message: "Type is required",
         };
       }
       if (!subjectText) {
         retData.subjectText = {
           isValid: false,
-          message: 'Subject Detail required',
+          message: "Subject Detail required",
         };
       }
       if (!priority) {
         retData.priority = {
           isValid: false,
-          message: 'Priority is required',
+          message: "Priority is required",
         };
       }
       if (!assignType) {
         retData.assignType = {
           isValid: false,
-          message: 'Please select contact or agent',
+          message: "Please select contact or agent",
         };
       }
       if (!description) {
         retData.description = {
           isValid: false,
-          message: 'Description is required',
+          message: "Description is required",
         };
       }
       if (!tags) {
         retData.tags = {
           isValid: false,
-          message: 'Tag is required',
+          message: "Tag is required",
         };
       }
     }
@@ -364,16 +384,16 @@ class OpenEditTicketPopup extends Component {
     for (let i = 0; i < length; i++) {
       retData.push({
         isValid: true,
-        message: '',
+        message: "",
       });
     }
     if (isSubmitted) {
       if (length > 0) {
         for (let i = 0; i < length; i++) {
-          if (contacts[i].value == '') {
+          if (contacts[i].value == "") {
             retData[i] = {
               isValid: false,
-              message: 'Contact Name is required',
+              message: "Contact Name is required",
             };
           }
         }
@@ -389,7 +409,7 @@ class OpenEditTicketPopup extends Component {
   handleStateChange = (e) => {
     const { name, value, id } = e.target;
     let data = [];
-    if (name == 'contact') {
+    if (name == "contact") {
       for (let i = 0; i < this.state.contacts.length; i++) {
         if (id == i) {
           data.push({ index: i, value: value });
@@ -412,7 +432,7 @@ class OpenEditTicketPopup extends Component {
 
   addContact = () => {
     let optionArray = this.state.contacts;
-    optionArray.push({ index: '', value: '' });
+    optionArray.push({ index: "", value: "" });
     this.setState({
       contacts: optionArray,
     });
@@ -434,9 +454,9 @@ class OpenEditTicketPopup extends Component {
           name="requesterContact"
           value={contacts[i].value}
           arrayData={[
-            { id: 0, name: 'ABC' },
-            { id: 1, name: 'DEF' },
-            { id: 2, name: 'GHI' },
+            { id: 0, name: "ABC" },
+            { id: 1, name: "DEF" },
+            { id: 2, name: "GHI" },
           ]}
           onChange={this.handleStateChange}
           isValid={error.isValid}
@@ -476,7 +496,11 @@ class OpenEditTicketPopup extends Component {
     const errorData = this.validate(isSubmitted);
     const state = this.state;
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="modal-container servicdesk-modal-container">
+      <Modal
+        isOpen={modal}
+        toggle={this.toggle}
+        className="modal-container servicdesk-modal-container"
+      >
         <AlertMessage
           handleCloseAlert={this.handleCloseAlert}
           open={state.isAlertOpen}
@@ -486,12 +510,20 @@ class OpenEditTicketPopup extends Component {
         <button className="close-btn" onClick={this.handleClose}>
           X
         </button>
-        <ModalBody style={{ height: 'calc(75vh - 50px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(75vh - 50px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="d-block width-100 contact-popup-container new-ticket-container">
             <div className="d-block p-b-20 heading">
               <div className="d-block width-100">
                 <h4 className="d-block">New Ticket</h4>
-                <span className="d-block">The Contact will receive an Email about this Ticket</span>
+                <span className="d-block">
+                  The Contact will receive an Email about this Ticket
+                </span>
               </div>
             </div>
             <div className="row">
@@ -554,9 +586,9 @@ class OpenEditTicketPopup extends Component {
                     name="type"
                     value={type}
                     arrayData={[
-                      { id: 'A', name: 'A' },
-                      { id: 'B', name: 'B' },
-                      { id: 'C', name: 'C' },
+                      { id: "A", name: "A" },
+                      { id: "B", name: "B" },
+                      { id: "C", name: "C" },
                     ]}
                     onChange={this.handleSelectBox}
                     isValid={errorData.type.isValid}
@@ -578,9 +610,9 @@ class OpenEditTicketPopup extends Component {
                     name="priority"
                     value={priority}
                     arrayData={[
-                      { id: 'Low', name: 'Low' },
-                      { id: 'High', name: 'High' },
-                      { id: 'Medium', name: 'Medium' },
+                      { id: "Low", name: "Low" },
+                      { id: "High", name: "High" },
+                      { id: "Medium", name: "Medium" },
                     ]}
                     onChange={this.handleSelectBox}
                     isValid={errorData.priority.isValid}
@@ -593,7 +625,7 @@ class OpenEditTicketPopup extends Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <div className="d-inline-block form-check create-author">
-                    {assignType == 'contact' ? (
+                    {assignType == "contact" ? (
                       <input
                         type="radio"
                         checked
@@ -615,9 +647,11 @@ class OpenEditTicketPopup extends Component {
                       Contact
                     </label>
                     {/* <input type="radio" name="assignType"  value="contact" className="form-check-input contact_radio_button" onChange={this.handleStateChange} /><label className="form-check-label" htmlFor="Contact">Contact</label> */}
-                    {assignType == 'contact' && (
+                    {assignType == "contact" && (
                       <div>
-                        <label htmlFor="assign">Assign to Contacts*{assignedContact}</label>
+                        <label htmlFor="assign">
+                          Assign to Contacts*{assignedContact}
+                        </label>
                         <Customselectbox
                           containerClass="form-group-inner"
                           inputClass="form-control"
@@ -634,7 +668,7 @@ class OpenEditTicketPopup extends Component {
                     )}
                   </div>
                   <div className="d-inline-block form-check create-author">
-                    {assignType == 'agent' ? (
+                    {assignType == "agent" ? (
                       <input
                         type="radio"
                         checked
@@ -655,7 +689,7 @@ class OpenEditTicketPopup extends Component {
                     <label className="form-check-label" htmlFor="Agent">
                       Agent
                     </label>
-                    {assignType == 'agent' && (
+                    {assignType == "agent" && (
                       <div>
                         <label htmlFor="assign">Assign to Agent*</label>
                         <Customselectbox
@@ -673,7 +707,9 @@ class OpenEditTicketPopup extends Component {
                       </div>
                     )}
                   </div>
-                  <span style={{ color: 'red' }}>{errorData.assignType.message}</span>
+                  <span style={{ color: "red" }}>
+                    {errorData.assignType.message}
+                  </span>
                 </div>
               </div>
             </div>
@@ -736,4 +772,5 @@ class OpenEditTicketPopup extends Component {
     );
   }
 }
+
 export default OpenEditTicketPopup;

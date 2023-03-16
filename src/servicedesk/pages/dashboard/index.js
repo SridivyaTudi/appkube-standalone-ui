@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { config } from '../../config';
-import ticketIconImage1 from '../../../assets/img/servicedesk/img/ticket-icon-img1.png';
-import { Line } from 'react-chartjs-2';
-import Table from './../../components/table';
-import { RestService } from '../_service/RestService';
-import Rbac from '../Rbac/Rbac';
-import CreateButtonComponent from '../commanComponents/CreateButtonComponent';
-import DatePicker from 'react-date-picker';
-import 'react-datepicker/dist/react-datepicker.css';
-import OpenEditTicketPopup from '../../components/OpenEditTicketPopup';
+import React from "react";
+import { Link } from "react-router-dom";
+import { config } from "../../config";
+import ticketIconImage1 from "../../img/ticket-icon-img1.png";
+import { Line } from "react-chartjs-2";
+import Table from "./../../components/table";
+import { RestService } from "../_service/RestService";
+import Rbac from "../Rbac/Rbac";
+import CreateButtonComponent from "../commanComponents/CreateButtonComponent";
+import DatePicker from "react-date-picker";
+import "react-datepicker/dist/react-datepicker.css";
+import OpenEditTicketPopup from "../../components/OpenEditTicketPopup";
 
-class ServicedeskDashboard extends Component {
+class Dashboard extends React.Component {
   tableValue;
   perPageLimit;
   checkboxValue;
@@ -24,7 +24,7 @@ class ServicedeskDashboard extends Component {
       yAxes: [
         {
           gridLines: {
-            color: 'rgba(240, 243, 247, 1)',
+            color: "rgba(240, 243, 247, 1)",
           },
           ticks: {
             stepSize: 10,
@@ -35,7 +35,7 @@ class ServicedeskDashboard extends Component {
       xAxes: [
         {
           gridLines: {
-            color: 'rgba(240, 243, 247, 1)',
+            color: "rgba(240, 243, 247, 1)",
           },
           ticks: {
             stepSize: 10,
@@ -46,21 +46,21 @@ class ServicedeskDashboard extends Component {
     },
     legend: {
       display: false,
-      position: 'bottom',
+      position: "bottom",
     },
   };
   constructor(props) {
     super(props);
     const res = async () => {
-      const res = await fetch(config.SERVICEDESK_API_URL + '/api/tickets', {
-        method: 'get',
+      const res = await fetch(config.SERVICEDESK_API_URL + "/api/tickets", {
+        method: "get",
       }).then((response) => response.json());
       return res;
     };
 
     this.openEditTicketRef = React.createRef();
 
-    console.log('data in constructor', res());
+    console.log("data in constructor", res());
     this.perPageLimit = 2;
     this.checkboxValue = false;
     this.state = {
@@ -69,10 +69,10 @@ class ServicedeskDashboard extends Component {
         labels: [],
         datasets: [
           {
-            label: 'Hours',
+            label: "Hours",
             lineTension: 0.4,
             fill: false,
-            borderColor: 'rgba(0, 170, 240, 1)',
+            borderColor: "rgba(0, 170, 240, 1)",
             data: [],
           },
         ],
@@ -80,28 +80,28 @@ class ServicedeskDashboard extends Component {
       openCreateMenu: false,
       columns: [
         {
-          label: 'ID',
-          key: 'id',
+          label: "ID",
+          key: "id",
         },
         {
-          label: 'Requester Name',
-          key: 'requesterName',
+          label: "Requester Name",
+          key: "requesterName",
         },
         {
-          label: 'Subjects',
-          key: 'subject',
+          label: "Subjects",
+          key: "subject",
         },
         {
-          label: 'Status',
-          key: 'status',
+          label: "Status",
+          key: "status",
           renderCallback: (value) => {
-            let strClass = '';
-            if (value === 'Open') {
-              strClass = 'yellow-green';
-            } else if (value === 'Closed') {
-              strClass = 'red';
-            } else if (value === 'Pending') {
-              strClass = 'orange';
+            let strClass = "";
+            if (value === "Open") {
+              strClass = "yellow-green";
+            } else if (value === "Closed") {
+              strClass = "red";
+            } else if (value === "Pending") {
+              strClass = "orange";
             }
             return (
               <td>
@@ -111,31 +111,40 @@ class ServicedeskDashboard extends Component {
           },
         },
         {
-          label: 'Priority',
-          key: 'priority',
+          label: "Priority",
+          key: "priority",
         },
         {
-          label: 'Assignee',
-          key: 'assignedToName',
+          label: "Assignee",
+          key: "assignedToName",
         },
         {
-          label: 'Create Date',
-          key: 'createDate',
+          label: "Create Date",
+          key: "createDate",
         },
         {
-          label: 'Action',
-          key: 'action',
+          label: "Action",
+          key: "action",
           renderCallback: (value, ticketObj) => {
             return (
               <td>
                 <div className="d-inline-block">
-                  <Rbac parentName={config.PARENT_NAME} childName="dashborad-index-tickettbl-editbtn">
-                    <button className="btn btn-link" onClick={(e) => this.onClickOpenEditTicket(e, ticketObj)}>
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="dashborad-index-tickettbl-editbtn"
+                  >
+                    <button
+                      className="btn btn-link"
+                      onClick={(e) => this.onClickOpenEditTicket(e, ticketObj)}
+                    >
                       {/* <i onClick={e => this.onClickEditAlert(e, alert)} className="fa fa-edit"></i> */}
                       <i className="fa fa-edit"></i>
                     </button>
                   </Rbac>
-                  <Rbac parentName={config.PARENT_NAME} childName="dashborad-index-tickettbl-deletebtn">
+                  <Rbac
+                    parentName={config.PARENT_NAME}
+                    childName="dashborad-index-tickettbl-deletebtn"
+                  >
                     <button className="btn btn-link">
                       {/* <i onClick={e => this.onClickDeleteAlert(e, alert)} className="fa fa-trash"></i> */}
                       <i className="fa fa-trash"></i>
@@ -152,24 +161,24 @@ class ServicedeskDashboard extends Component {
       ticketingData: [],
       performerAgentsData: [
         {
-          agentName: 'Spruce Springclean',
-          ticket: '89',
-          responseRate: '91',
+          agentName: "Spruce Springclean",
+          ticket: "89",
+          responseRate: "91",
         },
         {
-          agentName: 'Archibald Northbottom',
-          ticket: '75',
-          responseRate: '85',
+          agentName: "Archibald Northbottom",
+          ticket: "75",
+          responseRate: "85",
         },
         {
-          agentName: 'Rodney Artichoke',
-          ticket: '60',
-          responseRate: '70',
+          agentName: "Rodney Artichoke",
+          ticket: "60",
+          responseRate: "70",
         },
         {
-          agentName: 'Gustav Purpleson',
-          ticket: '53',
-          responseRate: '63',
+          agentName: "Gustav Purpleson",
+          ticket: "53",
+          responseRate: "63",
         },
       ],
       selectedDate: new Date(),
@@ -178,37 +187,40 @@ class ServicedeskDashboard extends Component {
   LineChartData = {
     responsive: true,
     labels: [
-      '01',
-      '02',
-      '03',
-      '04',
-      '05',
-      '06',
-      '07',
-      '08',
-      '09',
-      '10',
-      '11',
-      '12',
-      '13',
-      '14',
-      '15',
-      '16',
-      '17',
-      '18',
-      '19',
-      '20',
-      '21',
-      '22',
-      '23',
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
     ],
     datasets: [
       {
-        label: 'Hours',
+        label: "Hours",
         lineTension: 0.4,
         fill: false,
-        borderColor: 'rgba(0, 170, 240, 1)',
-        data: [10, 25, 15, 9, 30, 34, 35, 35, 15, 10, 25, 30, 40, 46, 49, 33, 40, 42, 33, 35, 48, 50],
+        borderColor: "rgba(0, 170, 240, 1)",
+        data: [
+          10, 25, 15, 9, 30, 34, 35, 35, 15, 10, 25, 30, 40, 46, 49, 33, 40, 42,
+          33, 35, 48, 50,
+        ],
       },
     ],
   };
@@ -221,7 +233,9 @@ class ServicedeskDashboard extends Component {
       retData.push(
         <div className="col-xl-5 col-lg-4 col-md-6 col-sm-12">
           <div className="d-block text-center ticketing-box">
-            <Link to={`${config.basePath}/opentickets?type=${data.ticketingname}`}>
+            <Link
+              to={`${config.basePath}/opentickets?type=${data.ticketingname}`}
+            >
               <div className="image">
                 <img src={ticketIconImage1} alt="" />
               </div>
@@ -239,38 +253,56 @@ class ServicedeskDashboard extends Component {
   };
   async componentDidMount() {
     try {
-      await RestService.getData(config.GET_ALL_TICKET_FOR_TABLE_URL + '?pageType=all', null, null).then((response) => {
+      await RestService.getData(
+        config.GET_ALL_TICKET_FOR_TABLE_URL + "?pageType=all",
+        null,
+        null
+      ).then((response) => {
         this.setState({
           ticketDataList: response,
         });
       });
     } catch (err) {
-      console.log('Loading ticket data failed. Error: ', err);
+      console.log("Loading ticket data failed. Error: ", err);
     }
     try {
-      await RestService.getData(config.GET_ALL_TICKETING_DATA_URL, null, null).then((response) => {
+      await RestService.getData(
+        config.GET_ALL_TICKETING_DATA_URL,
+        null,
+        null
+      ).then((response) => {
         this.setState({
           ticketingData: response,
         });
       });
     } catch (err) {
-      console.log('Loading ticketing data failed. Error: ', err);
+      console.log("Loading ticketing data failed. Error: ", err);
     }
     try {
-      await RestService.getData(config.GET_TOP_PERFORMER_DATA_URL, null, null).then((response) => {
+      await RestService.getData(
+        config.GET_TOP_PERFORMER_DATA_URL,
+        null,
+        null
+      ).then((response) => {
         this.setState({
           performerAgentsData: response,
         });
       });
     } catch (err) {
-      console.log('Loading top performer data failed. Error: ', err);
+      console.log("Loading top performer data failed. Error: ", err);
     }
     try {
-      await RestService.getData(config.GET_TODAYS_TICKETS__TREDNDS_DATA_URL, null, null).then((response) => {
+      await RestService.getData(
+        config.GET_TODAYS_TICKETS__TREDNDS_DATA_URL,
+        null,
+        null
+      ).then((response) => {
         const { LineChartData } = this.state;
         let dataSets = [
           ...LineChartData.datasets.slice(0, 0),
-          Object.assign({}, LineChartData.datasets[0], { data: response.numberOfTicketsList }),
+          Object.assign({}, LineChartData.datasets[0], {
+            data: response.numberOfTicketsList,
+          }),
         ];
         this.setState({
           LineChartData: {
@@ -281,7 +313,7 @@ class ServicedeskDashboard extends Component {
         });
       });
     } catch (err) {
-      console.log('Loading Bar stat data failed. Error: ', err);
+      console.log("Loading Bar stat data failed. Error: ", err);
     }
   }
   onClickOpenSubLink = () => {
@@ -291,7 +323,7 @@ class ServicedeskDashboard extends Component {
     });
   };
   updateTicketList = (ticketList) => {
-    console.log('Updated ticket list :::: ', ticketList);
+    console.log("Updated ticket list :::: ", ticketList);
     this.setState({
       ticketDataList: ticketList,
     });
@@ -326,7 +358,7 @@ class ServicedeskDashboard extends Component {
     if (selectedDate) {
       return selectedDate.toDateString();
     }
-    return '';
+    return "";
   };
   isLightTheme() {
     const w = window;
@@ -365,7 +397,9 @@ class ServicedeskDashboard extends Component {
                     <div className="col-lg-5 col-md-12 col-sm-12">
                       <div className="d-block heading">
                         <h3 className="d-block mb-0">Today's Ticket Trends</h3>
-                        <span className="d-block mb-0">{this.getSelectedDateStr()}</span>
+                        <span className="d-block mb-0">
+                          {this.getSelectedDateStr()}
+                        </span>
                       </div>
                     </div>
                     <div className="col-lg-7 col-md-12 col-sm-12 text-right">
@@ -380,14 +414,27 @@ class ServicedeskDashboard extends Component {
                                                 </div>
                                             </div> */}
                       <div className="d-inline-block v-a-top calendar-box">
-                        <DatePicker onChange={this.setDate} value={selectedDate} format="dd-MM-y" clearIcon={null} />
+                        <DatePicker
+                          onChange={this.setDate}
+                          value={selectedDate}
+                          format="dd-MM-y"
+                          clearIcon={null}
+                        />
                       </div>
                     </div>
                   </div>
                   <div className="d-block p-t-20 width-100 ticket-graphs">
-                    <div className="d-block width-100" style={{ height: '100%' }}>
-                      <Line data={LineChartData} options={this.lineChartOptions} />
-                      <div className="d-block text-center p-t-5 hours-text">Hours</div>
+                    <div
+                      className="d-block width-100"
+                      style={{ height: "100%" }}
+                    >
+                      <Line
+                        data={LineChartData}
+                        options={this.lineChartOptions}
+                      />
+                      <div className="d-block text-center p-t-5 hours-text">
+                        Hours
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -415,16 +462,18 @@ class ServicedeskDashboard extends Component {
                 <h2 className="d-block m-b-0">
                   <Link to={`${config.basePath}/tickets`}>All Tickets</Link>
                 </h2>
-                <span className="d-block">List of ticket opened by Customer</span>
+                <span className="d-block">
+                  List of ticket opened by Customer
+                </span>
               </div>
               <Table
                 valueFromData={{ columns: columns, data: ticketDataList }}
                 perPageLimit={this.perPageLimit}
                 visiblecheckboxStatus={this.checkboxValue}
                 tableClasses={{
-                  table: 'ticket-tabel',
-                  tableParent: 'd-block p-t-5 tickets-tabel',
-                  parentClass: 'all-support-ticket-tabel',
+                  table: "ticket-tabel",
+                  tableParent: "d-block p-t-5 tickets-tabel",
+                  parentClass: "all-support-ticket-tabel",
                 }}
                 searchKey="requesterName"
                 showingLine="Showing %start% to %end% of %total% Tickets"
@@ -433,10 +482,13 @@ class ServicedeskDashboard extends Component {
             </div>
           </div>
         </div>
-        <OpenEditTicketPopup onSaveUpdate={this.updateTicketList} ref={this.openEditTicketRef} />
+        <OpenEditTicketPopup
+          onSaveUpdate={this.updateTicketList}
+          ref={this.openEditTicketRef}
+        />
       </div>
     );
   }
 }
 
-export default ServicedeskDashboard;
+export default Dashboard;

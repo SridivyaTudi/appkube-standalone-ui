@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody } from 'reactstrap';
-import Customselectbox from './Customselectbox';
-import CustomTextbox from './CustomTextbox';
+import React from "react";
+import { Modal, ModalBody } from "reactstrap";
+import Customselectbox from "./Customselectbox";
+import CustomTextbox from "./CustomTextbox";
 
-class OpenNewScheduleReports extends Component {
+class OpenNewScheduleReports extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
-      generateReport: '',
-      day: '',
-      time: '',
-      email: '',
-      subject: '',
-      description: '',
+      generateReport: "",
+      day: "",
+      time: "",
+      email: "",
+      subject: "",
+      description: "",
       isSubmitted: false,
     };
   }
@@ -50,7 +50,8 @@ class OpenNewScheduleReports extends Component {
       errorData.subject.isValid &&
       errorData.description.isValid
     ) {
-      const { generateReport, day, time, email, subject, description } = this.state;
+      const { generateReport, day, time, email, subject, description } =
+        this.state;
 
       const sendData = {
         generateReport,
@@ -67,7 +68,7 @@ class OpenNewScheduleReports extends Component {
   validate = (isSubmitted) => {
     const validObj = {
       isValid: true,
-      message: '',
+      message: "",
     };
     const retData = {
       generateReport: validObj,
@@ -78,41 +79,42 @@ class OpenNewScheduleReports extends Component {
       description: validObj,
     };
     if (isSubmitted) {
-      const { generateReport, day, time, email, subject, description } = this.state;
+      const { generateReport, day, time, email, subject, description } =
+        this.state;
       if (!generateReport) {
         retData.generateReport = {
           isValid: false,
-          message: 'Generate Report Name is required',
+          message: "Generate Report Name is required",
         };
       }
       if (!day) {
         retData.day = {
           isValid: false,
-          message: 'Day is required',
+          message: "Day is required",
         };
       }
       if (!time) {
         retData.time = {
           isValid: false,
-          message: 'Time is required',
+          message: "Time is required",
         };
       }
       if (!email) {
         retData.email = {
           isValid: false,
-          message: 'Email is required',
+          message: "Email is required",
         };
       }
       if (!subject) {
         retData.subject = {
           isValid: false,
-          message: 'Subject is required',
+          message: "Subject is required",
         };
       }
       if (!description) {
         retData.description = {
           isValid: false,
-          message: 'Description is required',
+          message: "Description is required",
         };
       }
     }
@@ -120,14 +122,33 @@ class OpenNewScheduleReports extends Component {
   };
 
   render() {
-    const { modal, generateReport, day, time, email, subject, description, isSubmitted } = this.state;
+    const {
+      modal,
+      generateReport,
+      day,
+      time,
+      email,
+      subject,
+      description,
+      isSubmitted,
+    } = this.state;
     const errorData = this.validate(isSubmitted);
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="modal-container servicdesk-modal-container">
+      <Modal
+        isOpen={modal}
+        toggle={this.toggle}
+        className="modal-container servicdesk-modal-container"
+      >
         <button className="close-btn" onClick={this.handleClose}>
           X
         </button>
-        <ModalBody style={{ height: 'calc(75vh - 50px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(75vh - 50px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="d-block width-100 contact-popup-container new-ticket-container">
             <div className="d-block p-b-20 heading">
               <div className="d-block width-100">
@@ -146,7 +167,7 @@ class OpenNewScheduleReports extends Component {
                     id="generateReport"
                     name="generateReport"
                     value={generateReport}
-                    arrayData={{ 0: 'Daily', 1: 'Weekly', 2: 'Month' }}
+                    arrayData={{ 0: "Daily", 1: "Weekly", 2: "Month" }}
                     onChange={this.handleStateChange}
                     isValid={errorData.generateReport.isValid}
                     message={errorData.generateReport.message}
@@ -163,7 +184,15 @@ class OpenNewScheduleReports extends Component {
                     id="day"
                     name="day"
                     value={day}
-                    arrayData={{ 0: '1st', 1: '2nd', 2: '3rd', 3: '4th', 4: '5th', 5: '6th', 6: 'Last day' }}
+                    arrayData={{
+                      0: "1st",
+                      1: "2nd",
+                      2: "3rd",
+                      3: "4th",
+                      4: "5th",
+                      5: "6th",
+                      6: "Last day",
+                    }}
                     onChange={this.handleStateChange}
                     isValid={errorData.day.isValid}
                     message={errorData.day.message}
@@ -180,7 +209,14 @@ class OpenNewScheduleReports extends Component {
                     id="time"
                     name="time"
                     value={time}
-                    arrayData={{ 0: '01:00', 1: '02:00', 2: '03:00', 3: '04:00', 4: '05:00', 5: '06:00' }}
+                    arrayData={{
+                      0: "01:00",
+                      1: "02:00",
+                      2: "03:00",
+                      3: "04:00",
+                      4: "05:00",
+                      5: "06:00",
+                    }}
                     onChange={this.handleStateChange}
                     isValid={errorData.time.isValid}
                     message={errorData.time.message}
@@ -264,4 +300,5 @@ class OpenNewScheduleReports extends Component {
     );
   }
 }
+
 export default OpenNewScheduleReports;
