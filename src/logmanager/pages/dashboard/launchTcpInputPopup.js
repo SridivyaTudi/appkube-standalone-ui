@@ -251,8 +251,11 @@ class LaunchTcpInputPopup extends React.Component {
           severity={state.severity}
           msg={state.message}
         ></AlertMessage>
-        <ModalHeader toggle={this.toggle}>
+        <ModalHeader>
           Launch new Beats (deprecated) input
+          <button type="button" className="close" aria-label="Close" onClick={this.toggle}>
+              <span aria-hidden="true">×</span>
+          </button>
         </ModalHeader>
         <ModalBody
           style={{

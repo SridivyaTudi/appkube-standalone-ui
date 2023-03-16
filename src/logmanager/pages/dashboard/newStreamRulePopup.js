@@ -29,7 +29,11 @@ class NewStreamRulePopup extends React.Component {
         toggle={this.toggle}
         className="modal-container logmanager-modal-container"
       >
-        <ModalHeader toggle={this.toggle}>New Stream Rule</ModalHeader>
+        <ModalHeader>New Stream Rule
+          <button type="button" className="close" aria-label="Close" onClick={this.toggle}>
+              <span aria-hidden="true">×</span>
+          </button>
+        </ModalHeader>
         <ModalBody
           style={{
             height: "calc(60vh - 50px)",

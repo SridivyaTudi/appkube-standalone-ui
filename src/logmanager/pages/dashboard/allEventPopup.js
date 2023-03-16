@@ -36,8 +36,11 @@ class AllEventsPopup extends React.Component {
         toggle={this.toggle}
         className="modal-container logmanager-modal-container"
       >
-        <ModalHeader toggle={this.toggle}>
+        <ModalHeader>
           All Events | <span>Manage Rules</span>
+          <button type="button" className="close" aria-label="Close" onClick={this.toggle}>
+              <span aria-hidden="true">×</span>
+          </button>
         </ModalHeader>
         <ModalBody
           style={{

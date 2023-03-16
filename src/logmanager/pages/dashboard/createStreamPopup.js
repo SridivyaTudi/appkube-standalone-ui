@@ -175,7 +175,11 @@ class CreateStreamPopup extends React.Component {
           severity={state.severity}
           msg={state.message}
         ></AlertMessage>
-        <ModalHeader toggle={this.toggle}>Creating Stream</ModalHeader>
+        <ModalHeader>Creating Stream
+        <button type="button" className="close" aria-label="Close" onClick={this.toggle}>
+          <span aria-hidden="true">×</span>
+        </button>
+        </ModalHeader>
         <ModalBody
           style={{
             height: "calc(60vh - 50px)",
