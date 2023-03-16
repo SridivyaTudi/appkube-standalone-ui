@@ -39,7 +39,17 @@ class EditExclusionPopup extends React.Component {
         toggle={this.toggle}
         className="modal-container assessments-modal-container"
       >
-        <ModalHeader toggle={this.toggle}>Create New Exclusion</ModalHeader>
+        <ModalHeader>
+          Create New Exclusion
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </ModalHeader>
         <ModalBody
           style={{
             height: "calc(74vh - 110px)",

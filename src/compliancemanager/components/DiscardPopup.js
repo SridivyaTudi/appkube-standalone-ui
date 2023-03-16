@@ -33,11 +33,19 @@ class DiscardPopup extends React.Component {
     return (
       <Modal
         isOpen={modal}
-        toggle={() => this.toggle(-1, "")}
+        // toggle={() => this.toggle(-1, "")}
         className="modal-container assessments-modal-container"
       >
-        <ModalHeader toggle={() => this.toggle(-1, "")}>
+        <ModalHeader >
           Discard Changes
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
         </ModalHeader>
         <ModalBody
           style={{

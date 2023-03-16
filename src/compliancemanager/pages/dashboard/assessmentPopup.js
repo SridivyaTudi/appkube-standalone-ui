@@ -24,7 +24,17 @@ class AssessmentPopup extends React.Component {
         toggle={this.toggle}
         className="modal-container assessments-modal-container"
       >
-        <ModalHeader toggle={this.toggle}>Run Assessments</ModalHeader>
+        <ModalHeader>
+          Run Assessments
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </ModalHeader>
         <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
           <p>
             You are about to run all displayed assessments. This could take a

@@ -131,7 +131,17 @@ class NewPolicyPopup extends React.Component {
         toggle={this.toggle}
         className="modal-container assessments-modal-container"
       >
-        <ModalHeader toggle={this.toggle}>Create New Ruleset</ModalHeader>
+        <ModalHeader className="d-flex justify-content-space-between align-items-center ">
+          Create New Ruleset
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </ModalHeader>
         <ModalBody
           style={{
             height: "calc(75vh - 110px)",

@@ -23,7 +23,17 @@ class DeleteRemediationPopup extends React.Component {
         toggle={this.toggle}
         className="modal-container assessments-modal-container"
       >
-        <ModalHeader toggle={this.toggle}>Delete Remediation</ModalHeader>
+        <ModalHeader>
+          Delete Remediation
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </ModalHeader>
         <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
           <p>
             You are about to delete Remediation for cloud account '*' and

@@ -23,7 +23,17 @@ class DeleteExclusionPopup extends React.Component {
         toggle={this.toggle}
         className="modal-container assessments-modal-container"
       >
-        <ModalHeader toggle={this.toggle}>Delete Exclusion</ModalHeader>
+        <ModalHeader>
+          Delete Exclusion
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </ModalHeader>
         <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
           <p>
             You are about to delete Exclusion for cloud account '*' and ruleset
