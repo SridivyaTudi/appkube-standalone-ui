@@ -1,8 +1,8 @@
 import React from "react";
 import settingsIcon from "../../img/settings.png";
 import fileExportIcon from "../../img/file-export.png";
-import AssessmentPopup from "./AssessmentPopup";
-import AssetssmentPopup from "./AssetssmentPopup";
+import AssessmentPopup from "./assessmentPopup";
+import AssetssmentPopup from "./assetssmentPopup";
 
 class Dashboard extends React.Component {
   assessmentRef;

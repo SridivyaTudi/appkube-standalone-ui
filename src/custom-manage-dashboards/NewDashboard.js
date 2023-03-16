@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import CreateDashboardImage from"../custom-manage-dashboards/img/create-dashboard-image.png";
+import ImportDashboardImage from"../custom-manage-dashboards/img/import-dashboard-image.png";
 //import * as React from 'react';
 //import { config } from '../config';
 //import { locationService } from '@grafana/runtime';
@@ -31,7 +33,7 @@ class NewDashboard extends Component {
               <div className="col-lg-6 col-md-6 col-sm-12 own-dashboard">
                 <div className="d-inline-block" style={{ cursor: 'pointer' }} onClick={this.openNewDashboard}>
                   <span>
-                    <img src="/public/img/create-dashboard-image.png" alt="Create your own dashboard" />
+                    <img src={CreateDashboardImage} alt="Create your own dashboard" />
                   </span>
                   <label>Create your own dashboard</label>
                 </div>
@@ -39,7 +41,7 @@ class NewDashboard extends Component {
               <div className="col-lg-6 col-md-6 col-sm-12 own-dashboard">
                 <a href={`/managedashboards/importdashboard`}>
                   <span>
-                    <img src="/public/img/import-dashboard-image.png" alt="Import Dashboard from Catalog" />
+                    <img src={ImportDashboardImage} alt="Import Dashboard from Catalog" />
                   </span>
                   <label>Import Dashboard from Catalog</label>
                 </a>

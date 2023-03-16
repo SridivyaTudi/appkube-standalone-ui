@@ -8,7 +8,7 @@ import headerIcon from '../../img/header-icon.png';
 import 'react-circular-progressbar/dist/styles.css';
 import 'simplebar/dist/simplebar.min.css';
 import { Link } from 'react-router-dom';
-import  AwsHelper  from '../AwsHelpers';
+import  AwsHelper  from '../awsHelpers';
 import AlertMessage from '../../components/AlertMessage';
 
 
