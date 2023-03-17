@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Overview from '../pages/overview';
+
 //***** Perfmanager *****//
 import Dashboard from '../perfmanager/pages/dashboard';
 import Catalog from '../perfmanager/pages/catalog';
@@ -81,6 +82,10 @@ import TicketsDetails from '../servicedesk/pages/ticketsDetails';
 import Reports from '../servicedesk/pages/reports';
 import ReportHelpdesh from '../servicedesk/pages/reportHelpdesh';
 import Charts from '../servicedesk/pages/charts';
+
+//***** AppkubeCloudDatasource *****//
+import DashboardPanelMetricBuilder from "../appkubeCloudDatasource/pages/dashboardPanelMetricBuilder"
+
 
 export const AllRoutes = () => {
   return (
@@ -166,6 +171,9 @@ export const AllRoutes = () => {
        <Route path="/servicedesk/pages/reports" element={<Reports />} />
        <Route path="/servicedesk/pages/reportHelpdesh" element={<ReportHelpdesh />} />
        <Route path="/servicedesk/pages/charts" element={<Charts />} />
+
+       {/***** AppkubeCloudDatasource *****/}
+       <Route path="/appkubeCloudDatasource/pages/dashboardPanelMetricBuilder" element={<DashboardPanelMetricBuilder />} />
     </Routes>
   );
 };
