@@ -4,8 +4,6 @@ import AddOrganizationalUnitPolicyPopup from "./AddOrganizationalUnitPolicyPopup
 import CloudAccountPolicyPopup from "./CloudAccountPolicyPopup";
 
 class CompliancePolicy extends React.Component {
-  cloudAccountPolicyRef;
-  addOrganizationalUnitPolicyRef;
   constructor(props) {
     super(props);
     this.state = {
@@ -307,6 +305,7 @@ class CompliancePolicy extends React.Component {
   onClickCloudAccountPolicy = (e) => {
     this.cloudAccountPolicyRef.current.toggle();
   };
+  
   onClickAddOrganizationalUnitPolicy = (e) => {
     this.addOrganizationalUnitPolicyRef.current.toggle();
   };

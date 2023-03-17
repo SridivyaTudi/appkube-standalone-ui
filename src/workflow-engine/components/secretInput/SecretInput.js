@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
-//import * as React from 'react';
-import { Input, HorizontalGroup, Button } from '@grafana/ui';
+import React from "react";
+import { Input, HorizontalGroup, Button } from "@grafana/ui";
 
 // type  = React.Component<typeof Input> & {
 //   /** Defines if the password is already set or not. (It is needed as in some cases the backend doesn't send back the actual password) */
@@ -24,4 +23,4 @@ export const SecretInput = ({ isConfigured, onReset, ...props }) => {
 
   return <Input {...props} type="password" />;
 };
-export default  SecretInput;
+export default SecretInput;

@@ -1,7 +1,6 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { RestService } from "../_service/RestService";
-import { configFun } from "../../config";
 import { CommonService } from "../_common/common";
 import { Bar } from "react-chartjs-2";
 import {
@@ -27,8 +26,6 @@ ChartJS.register(
 );
 
 class DepartmentWiseCharts extends React.Component {
-  breadCrumbs;
-  config;
   constructor(props) {
     super(props);
     this.state = {
@@ -87,16 +84,6 @@ class DepartmentWiseCharts extends React.Component {
         },
       },
     };
-    this.breadCrumbs = [
-      {
-        label: "Home",
-        route: `/`,
-      },
-      {
-        label: "Assets | Environments",
-        isCurrentPage: true,
-      },
-    ];
   }
 
   async componentDidMount() {
@@ -139,7 +126,6 @@ class DepartmentWiseCharts extends React.Component {
     let { humanResources } = this.state;
     let data = [];
     let labels = [];
-    // let totalCount = 0;
     if (departmentWiseData && departmentWiseData.length > 0) {
       for (let i = 0; i < departmentWiseData.length; i++) {
         let department = departmentWiseData[i];

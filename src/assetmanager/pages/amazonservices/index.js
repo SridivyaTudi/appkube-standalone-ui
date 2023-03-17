@@ -1,9 +1,6 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-// import { configFun } from "../../config";
 import { images } from "../../img";
-// import { RestService } from "../_service/RestService";
-// import *as dateFormat from "dateformat";
 import Wizard from "./wizard";
 import DiscoveredAssets from "./discoveredassets";
 import Applications from "./applications";
@@ -12,13 +9,8 @@ import ThreatAndSecurityEvents from "./threatandsecurityevents";
 import CompliancePolicies from "./compliancepolicies";
 import Alerts from "./alerts";
 import Inputs from "./inputs";
-// import { PLUGIN_BASE_URL } from '../../constants';
 
 class AmazonServices extends React.Component {
-  breadCrumbs;
-  dateFormat;
-  steps;
-  // config;
   constructor(props) {
     super(props);
     this.state = {
@@ -26,16 +18,6 @@ class AmazonServices extends React.Component {
       displaygetEnvironmentData: null,
       cloudAssets: [],
     };
-    this.breadCrumbs = [
-      {
-        label: "Home",
-        route: `/`,
-      },
-      {
-        label: "Assets | Environments",
-        isCurrentPage: true,
-      },
-    ];
     this.steps = [
       {
         name: "Discovered Assets",
@@ -66,10 +48,6 @@ class AmazonServices extends React.Component {
         component: <Inputs {...props} />,
       },
     ];
-    // this.config = configFun(
-    //   props.meta.jsonData.apiUrl,
-    //   props.meta.jsonData.mainProductUrl
-    // );
   }
 
   submitPage = () => {};
@@ -89,7 +67,6 @@ class AmazonServices extends React.Component {
 
     let row = displaygetEnvironmentData;
     if (row.cloudType.toLowerCase() === "AWS".toLowerCase()) {
-      //   row.date = dateFormat(row.createdOn)
       const { display_detail } = this.state;
       retData.push(
         <div>

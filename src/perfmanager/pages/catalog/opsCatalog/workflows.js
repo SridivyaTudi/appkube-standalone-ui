@@ -43,9 +43,7 @@ class Workflows extends React.Component {
           <div className="row">
             <div className="col-md-6 col-sm-12">
               <div className="template-box">
-                <div className="heading">
-                  Landing Zone
-                </div>
+                <div className="heading">Landing Zone</div>
                 <div className="sub-text">
                   Create Landing Zone with DevSecOps best practice in AWS
                 </div>
@@ -57,9 +55,7 @@ class Workflows extends React.Component {
             </div>
             <div className="col-md-6 col-sm-12">
               <div className="template-box">
-                <div className="heading">
-                  Landing Zone
-                </div>
+                <div className="heading">Landing Zone</div>
                 <div className="sub-text">
                   Create Landing Zone with DevSecOps best practice in AWS
                 </div>
@@ -71,9 +67,7 @@ class Workflows extends React.Component {
             </div>
             <div className="col-md-6 col-sm-12">
               <div className="template-box">
-                <div className="heading">
-                  Landing Zone
-                </div>
+                <div className="heading">Landing Zone</div>
                 <div className="sub-text">
                   Create Landing Zone with DevSecOps best practice in AWS
                 </div>
@@ -85,9 +79,7 @@ class Workflows extends React.Component {
             </div>
             <div className="col-md-6 col-sm-12">
               <div className="template-box">
-                <div className="heading">
-                  Landing Zone
-                </div>
+                <div className="heading">Landing Zone</div>
                 <div className="sub-text">
                   Create Landing Zone with DevSecOps best practice in AWS
                 </div>
@@ -99,9 +91,7 @@ class Workflows extends React.Component {
             </div>
             <div className="col-md-6 col-sm-12">
               <div className="template-box">
-                <div className="heading">
-                  Landing Zone
-                </div>
+                <div className="heading">Landing Zone</div>
                 <div className="sub-text">
                   Create Landing Zone with DevSecOps best practice in AWS
                 </div>

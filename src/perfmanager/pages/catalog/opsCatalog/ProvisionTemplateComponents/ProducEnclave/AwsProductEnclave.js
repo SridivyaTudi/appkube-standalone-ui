@@ -1,4 +1,5 @@
 import React from "react";
+
 class AwsProductEnclave extends React.Component {
   constructor(props) {
     super(props);
@@ -96,7 +97,6 @@ class AwsProductEnclave extends React.Component {
       }
     }
     retData.isValid = isValid;
-    console.log(retData);
     return retData;
   };
 
@@ -250,7 +250,6 @@ class AwsProductEnclave extends React.Component {
         isSubmitted,
       } = this.state;
       const errorData = this.validate(isSubmitted);
-      // console.log(errorData)
       return (
         <div className="catalogue-right-container">
           <button

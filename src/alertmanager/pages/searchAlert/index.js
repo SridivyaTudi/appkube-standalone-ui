@@ -10,16 +10,6 @@ import Table from "../../components/table";
 import Rbac from "../../components/Rbac";
 
 class SearchAlert extends Component {
-  editAlertRef;
-  resourceGroup;
-  resources;
-  monitoringServices;
-  alertTypes;
-  severity;
-  alertStates;
-  tableValue;
-  perPageLimit;
-  checkboxValue;
   constructor(props) {
     super(props);
     this.perPageLimit = 2;
@@ -333,11 +323,6 @@ class SearchAlert extends Component {
   fetchData = () => {
     RestService.getData(config.GET_ALL_ALERT_FROM_ELASTIC, null, null).then(
       (response) => {
-        //     let ary = [];
-        //     for (let i = 0; i < response.length; i++) {
-        //         let j = JSON.parse(response[i]);
-        //         ary.push(j);
-        //     }
         this.setState({
           alertData: response,
         });
@@ -605,7 +590,6 @@ class SearchAlert extends Component {
                     >
                       Clear All Filters
                     </button>
-                    {/* <button className="btn btn-secondary apply-btn" onClick={this.onClickApply} disabled={state.isApiCalled}>Apply</button> */}
                   </div>
                   <div className="filterbox">
                     <div className="box">

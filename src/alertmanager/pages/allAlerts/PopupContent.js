@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { RestService } from "../_service/RestService";
 import { config } from "../../config";
 
@@ -20,6 +20,7 @@ class PopupContent extends React.Component {
       activeTab,
     });
   };
+  
   async componentDidMount() {
     let guid = this.state.guid;
     try {

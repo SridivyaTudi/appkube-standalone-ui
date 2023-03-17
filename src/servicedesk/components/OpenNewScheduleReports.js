@@ -23,6 +23,7 @@ class OpenNewScheduleReports extends React.Component {
       modal: !this.state.modal,
     });
   };
+
   handleClose = () => {
     this.setState({
       modal: false,

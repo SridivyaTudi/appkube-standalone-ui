@@ -97,7 +97,6 @@ class AzureProductEnclave extends React.Component {
       }
     }
     retData.isValid = isValid;
-    console.log(retData);
     return retData;
   };
 
@@ -251,7 +250,6 @@ class AzureProductEnclave extends React.Component {
         isSubmitted,
       } = this.state;
       const errorData = this.validate(isSubmitted);
-      // console.log(errorData)
       return (
         <div className="catalogue-right-container">
           <button
@@ -262,7 +260,6 @@ class AzureProductEnclave extends React.Component {
           </button>
           <div className="contents">
             <strong>
-              {" "}
               Create new Product Enclave with DevSecOps practice in Azure
             </strong>
             <h3>Product Enclave</h3>

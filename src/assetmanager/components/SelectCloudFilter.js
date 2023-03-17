@@ -1,5 +1,4 @@
-import * as React from "react";
-// import { v4 } from 'uuid';
+import React from "react";
 
 class SelectCloudFilter extends React.Component {
   constructor(props) {

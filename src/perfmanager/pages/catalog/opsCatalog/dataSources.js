@@ -5,7 +5,6 @@ import PreviewDashboardPopup from "./PreviewDashboardPopup";
 import Filter from "./../filter";
 
 class DataSources extends React.Component {
-  previewDashboardPopupRef;
   backupUrl =
     "https://image.shutterstock.com/image-vector/set-colourful-business-charts-diagram-260nw-1388414240.jpg";
   constructor(props) {
@@ -34,6 +33,7 @@ class DataSources extends React.Component {
     };
     this.previewDashboardPopupRef = React.createRef();
   }
+  
   componentDidMount() {
     this.createFilterJson();
   }
@@ -78,6 +78,7 @@ class DataSources extends React.Component {
       filterData,
     });
   };
+
   componentDidUpdate(prevProps, prevState) {
     if (JSON.stringify(prevProps.data) !== JSON.stringify(this.props.data)) {
       this.setState({
@@ -250,6 +251,7 @@ class DataSources extends React.Component {
   dashboardsView = (type) => {
     this.setState({ view: type });
   };
+
   filterValues = (e) => {
     const { value } = e.target;
     let duplicatdashboards = JSON.parse(JSON.stringify(this.props.data)) || [];
@@ -271,6 +273,7 @@ class DataSources extends React.Component {
       }
     }
   };
+
   onChangeFilter = (filters) => {
     this.setState({
       selectedFilter: filters,
@@ -301,6 +304,7 @@ class DataSources extends React.Component {
       isassociatedApplicationLocation && isassociatedCloud && isassociatedCreds
     );
   };
+  
   formFields = () => {
     const { view, dashboards } = this.state;
     return (

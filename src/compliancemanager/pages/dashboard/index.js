@@ -5,8 +5,6 @@ import AssessmentPopup from "./assessmentPopup";
 import AssetssmentPopup from "./assetssmentPopup";
 
 class Dashboard extends React.Component {
-  assessmentRef;
-  assetssmentRef;
   constructor(props) {
     super(props);
     this.state = {

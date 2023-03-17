@@ -1,5 +1,4 @@
 import React from "react";
-import { configFun } from "../../config";
 import { CommonService } from "../_common/common";
 import { Bar, Pie } from "react-chartjs-2";
 import { RestService } from "../_service/RestService";
@@ -34,8 +33,6 @@ const stageColors = {
 };
 
 class ProductWiseCost extends React.Component {
-  breadCrumbs;
-  config;
   constructor(props) {
     super(props);
     this.state = {

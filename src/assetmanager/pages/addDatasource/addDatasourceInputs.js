@@ -5,8 +5,6 @@ import { CommonService } from "../_common/common";
 import { RestService } from "../_service/RestService";
 
 class AddDatasourceInputs extends React.Component {
-  breadCrumbs;
-  config;
   constructor(props) {
     super(props);
     this.state = {
@@ -29,9 +27,6 @@ class AddDatasourceInputs extends React.Component {
       ).then((response) => {
         console.log(response);
         this.manipulateData(response);
-        // this.setState({
-        // 	accountList: response
-        // });
         console.log("Loading Asstes : ", response);
       });
     } catch (err) {
@@ -40,7 +35,6 @@ class AddDatasourceInputs extends React.Component {
   };
 
   manipulateData = (data) => {
-    // let datasource = [];
     let dataobj = {};
     if (data && data.length > 0) {
       for (let i = 0; i < data.length; i++) {
@@ -77,7 +71,6 @@ class AddDatasourceInputs extends React.Component {
                 <div className="specific-heading">
                   <p>
                     Account &#8758;
-                    {/* <span>{accountdata.uid}</span> */}
                   </p>
                 </div>
               </div>

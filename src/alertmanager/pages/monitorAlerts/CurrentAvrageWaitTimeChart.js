@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -93,7 +93,6 @@ class CurrentAvrageWaitTimeChart extends React.Component {
               borderColor: "rgba(255,255,255,0.5)",
               data: response.lineDataSetList,
               borderWidth: 2,
-              // Changes this dataset to become a line
               type: "line",
             },
           ],

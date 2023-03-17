@@ -9,10 +9,6 @@ import TopMenu from "./topMenu";
 
 let indexSetMap = new Map();
 class Dashboard extends React.Component {
-  createStreamRef;
-  newStreamRef;
-  manageOutputRef;
-  allEventRef;
   constructor(props) {
     super(props);
     this.state = {
@@ -30,15 +26,19 @@ class Dashboard extends React.Component {
   onClickOpenCreateStreamPopup = (e) => {
     this.createStreamRef.current.toggle();
   };
+
   openNewStreamPopup = (e) => {
     this.newStreamRef.current.toggle();
   };
+
   OpenManageOutputPopup = (a) => {
     this.manageOutputRef.current.toggle();
   };
+
   OpenAllEventsPopup = (a) => {
     this.allEventRef.current.toggle();
   };
+
   onClickOpenSubLink = (index) => {
     const { streamTableData } = this.state;
     for (let i = 0; i < streamTableData.length; i++) {
@@ -51,12 +51,14 @@ class Dashboard extends React.Component {
       streamTableData,
     });
   };
+
   async componentDidMount() {
     console.log("componentDidMountMethod called");
     this.getIndexSets();
     this.getStreams();
     this.getTcpInputStream();
   }
+
   getIndexSets = async () => {
     var requestOptions = await CommonService.requestOptionsForGetRequest();
     await fetch(config.GET_INDEX_SETS, requestOptions)
@@ -72,6 +74,7 @@ class Dashboard extends React.Component {
       })
       .catch((error) => console.log("error", error));
   };
+
   getStreams = async () => {
     var requestOptions = await CommonService.requestOptionsForGetRequest();
     await fetch(config.STREAM, requestOptions)
@@ -87,6 +90,7 @@ class Dashboard extends React.Component {
       })
       .catch((error) => console.log("error", error));
   };
+
   getTcpInputStream = async () => {
     var requestOptions = await CommonService.requestOptionsForGetRequest();
     await fetch(config.TCP_INPUT_STREAM, requestOptions)
@@ -130,9 +134,9 @@ class Dashboard extends React.Component {
       return null;
     }
   };
+
   displayTableOfStream = () => {
     const { streamTableData } = this.state;
-
     let retData = [];
     for (let i = 0; i < streamTableData.length; i++) {
       let rowData = streamTableData[i];
@@ -204,12 +208,12 @@ class Dashboard extends React.Component {
     }
     return retData;
   };
+
   displayTableOfTcpInputs = () => {
     const { tcpInputs } = this.state;
     let retData = [];
     for (let i = 0; i < tcpInputs.length; i++) {
       let rowData = tcpInputs[i];
-
       retData.push(
         <tr>
           <td>
@@ -278,6 +282,7 @@ class Dashboard extends React.Component {
     }
     return retData;
   };
+  
   render() {
     return (
       <div className="logmanager-dashboard-container">

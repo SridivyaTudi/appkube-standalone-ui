@@ -1,7 +1,5 @@
 import * as _ from "lodash";
 
-//const INDX = "@INDX#";
-
 export default class QryUtils {
   static getJsonKeys(ent) {
     const obj = ent;

@@ -1,22 +1,12 @@
-import * as React from "react";
-// import { Link } from 'react-router-dom';
-// import { images } from '../../img';
-// import { PLUGIN_BASE_URL } from '../../constants';
+import React from "react";
 import SelectCloudFilter from "../SelectCloudFilter";
 import ServicesPerformance from "./ServicesPerformance";
 import { v4 } from "uuid";
-
-// const ViewMapping = {
-//   BUSINESS_VIEW: "0",
-//   CLOUD_VIEW: "1"
-// };
 
 class ProductWiseServices extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // showRecentFilter: false,
-      // showAddNewFilter: false,
       productComponent: [],
       product: [],
       isDataLoaded: false,

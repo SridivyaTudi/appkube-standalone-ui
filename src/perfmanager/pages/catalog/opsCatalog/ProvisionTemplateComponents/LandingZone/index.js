@@ -1,4 +1,3 @@
-export * from './AwsLandingZone';
-export * from './AzureLandingZone';
-export * from './GoogleLandingZone';
-
+export * from "./AwsLandingZone";
+export * from "./AzureLandingZone";
+export * from "./GoogleLandingZone";

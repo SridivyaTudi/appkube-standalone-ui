@@ -65,7 +65,6 @@ class Reports extends React.Component {
               </div>
             </div>
             <div className="col-lg-3 col-sm-12 p-l-0">
-              {/* <div className="d-block text-right insight-heading-right-text red">27%</div> */}
               <div className="d-block text-right insight-heading-right-text">
                 {row.TicketsPersentage}
               </div>

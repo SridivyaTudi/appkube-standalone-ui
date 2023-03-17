@@ -10,11 +10,13 @@ class OpenDeletePopup extends React.Component {
       openSuccessfullyHide: true,
     };
   }
+
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
     });
   };
+  
   handleClose = () => {
     this.setState({
       modal: false,

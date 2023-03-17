@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 class Wizard extends React.Component {
   constructor(props) {
@@ -69,7 +69,6 @@ class Wizard extends React.Component {
   render() {
     const { currentStep } = this.state;
     const { steps, isDisabled } = this.props;
-    // console.log(isDisabled);
     return (
       <div className="wizard-container">
         <div className="wizard-step-line-container">
@@ -85,9 +84,6 @@ class Wizard extends React.Component {
             >
               Previous
             </button>
-            {/* {currentStep >= steps.length + 1 && (
-              <button className="blue-button m-b-0">Previous</button>
-            )} */}
             {currentStep < steps.length - 1 && (
               <button
                 onClick={(e) => this.onClickStepButton(currentStep + 1)}

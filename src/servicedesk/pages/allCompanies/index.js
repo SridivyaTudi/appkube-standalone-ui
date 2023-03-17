@@ -6,7 +6,6 @@ import { RestService } from "../_service/RestService";
 import CreateButtonComponent from "../commanComponents/CreateButtonComponent";
 
 class AllCompanies extends React.Component {
-  tableValue;
   constructor(props) {
     super(props);
     this.state = {

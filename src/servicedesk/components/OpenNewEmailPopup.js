@@ -17,8 +17,8 @@ class MySelectObj {
     this.name = name;
   }
 }
+
 class OpenNewEmailPopup extends React.Component {
-  steps;
   constructor(props) {
     super(props);
     this.state = {
@@ -56,6 +56,7 @@ class OpenNewEmailPopup extends React.Component {
       orgTicketList: [],
     };
   }
+
   async componentDidMount() {
     try {
       await RestService.getData(config.GET_ALL_TICKET_URL, null, null).then(
@@ -77,11 +78,13 @@ class OpenNewEmailPopup extends React.Component {
       console.log("Loading company data failed. Error: ", err);
     }
   }
+
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
     });
   };
+
   handleClose = () => {
     this.setState({
       modal: false,
@@ -94,9 +97,6 @@ class OpenNewEmailPopup extends React.Component {
       isSubmitted: true,
     });
     const errorData = this.validate(true);
-    // console.log("From emails length : ", this.state.fromEmails.length);
-    // console.log("From To emails length : ", this.state.toEmails.length);
-    // console.log("error : ", errorData);
     if (
       errorData.fromEmails.isValid &&
       errorData.toEmails.isValid &&
@@ -116,20 +116,16 @@ class OpenNewEmailPopup extends React.Component {
         tags,
         ticketId,
       } = this.state;
-      // console.log("From Email before : ",fromEmails);
-      // console.log("TO Email before: ",toEmails);
       let from = [];
       let i;
       for (i in fromEmails) {
         from.push(fromEmails[i].value);
       }
-      // console.log("From Email: after ",from);
       let to = [];
       let j;
       for (j in toEmails) {
         to.push(toEmails[j].value);
       }
-      // console.log("TO Email after: ",to);
 
       let priorityValue = "";
       if (priority == 0) {
@@ -145,15 +141,6 @@ class OpenNewEmailPopup extends React.Component {
       } else {
         statusValue = "Open";
       }
-      //   const data = {
-      //     from: from.toString(),
-      //     to: to.toString(),
-      //     subject: subject,
-      //     description: description,
-      //     priority: priorityValue,
-      //     status: statusValue,
-      //     tags: tags,
-      //   };
       let formData = new FormData();
       formData.append("from", from.toString());
       formData.append("to", to.toString());
@@ -303,7 +290,6 @@ class OpenNewEmailPopup extends React.Component {
       status,
       tags,
       isSubmitted,
-      //toEmails,
       ticketId,
       ticketListObj,
     } = this.state;

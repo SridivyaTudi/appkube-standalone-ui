@@ -103,9 +103,7 @@ class AllContacts extends React.Component {
                   <h1>All Contacts</h1>
                 </div>
               </div>
-              {/* create component */}
               <CreateButtonComponent />
-              {/* create component */}
             </div>
           </div>
           <div className="common-container border-bottom-0 p-t-0">

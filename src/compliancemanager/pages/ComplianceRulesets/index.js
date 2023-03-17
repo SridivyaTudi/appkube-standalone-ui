@@ -9,11 +9,6 @@ import { config } from "../../config";
 import Utils from "../../utils";
 
 class ComplianceRulesets extends React.Component {
-  rulesetRef;
-  policyRef;
-  assessmentRef;
-  remediationRef;
-  exclusionRef;
   constructor(props) {
     super(props);
     this.state = {

@@ -6,9 +6,6 @@ import { dummyData } from "./dummyData";
 import { propertiesDummy } from "./properties";
 
 class EditorGslBuilder extends React.Component {
-  discardPopupRef;
-  addValuePopupRef;
-
   constructor(props) {
     super(props);
     this.state = {
@@ -173,7 +170,6 @@ class EditorGslBuilder extends React.Component {
   }
 
   componentDidMount() {
-    // make an api call here
     this.setState({
       operators: dummyData.OPERATOR,
       functions: dummyData.FUNCTION,
@@ -297,7 +293,6 @@ class EditorGslBuilder extends React.Component {
 
   addOperatorToEditor = (item) => {
     const { query } = this.state;
-    //console.log(query);
     const data = {
       type: item.type,
       value: item.key,

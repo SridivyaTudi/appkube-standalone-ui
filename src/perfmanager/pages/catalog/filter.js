@@ -14,6 +14,7 @@ class Filter extends Component {
       showTagFilter: false,
     };
   }
+
   clearAllTagFilter = (index) => {
     const { filterData } = this.state;
     for (let k = 0; k < filterData[index].filter.length; k++) {
@@ -54,6 +55,7 @@ class Filter extends Component {
       filterData,
     });
   };
+
   handleCheckboxChange = (filterIndex, index) => {
     let { filterData } = this.state;
     filterData[filterIndex].filter[index].isChecked =
@@ -61,6 +63,7 @@ class Filter extends Component {
     this.setState({ filterData });
     this.onChangeFilters(filterData);
   };
+
   onChangeFilters = (filterData) => {
     const retData = {};
     if (filterData && filterData.length > 0) {
@@ -79,6 +82,7 @@ class Filter extends Component {
       this.props.onChangeFilter(retData);
     }
   };
+
   renderFilters = () => {
     const { filterData } = this.state;
     if (filterData && filterData.length > 0) {
@@ -113,6 +117,7 @@ class Filter extends Component {
     }
     return <>No filter data available</>;
   };
+  
   render() {
     const { searchString } = this.state;
     return (

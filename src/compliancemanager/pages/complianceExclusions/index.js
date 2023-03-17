@@ -5,11 +5,6 @@ import fileExportIcon from "../../img/file-export.png";
 import Table from "../../components/Table";
 
 class ComplianceExclusions extends React.Component {
-  deleteExclusionRef;
-  editExclusionRef;
-  tableValue;
-  perPageLimit;
-  checkboxValue;
   constructor(props) {
     super(props);
     this.tableValue = {

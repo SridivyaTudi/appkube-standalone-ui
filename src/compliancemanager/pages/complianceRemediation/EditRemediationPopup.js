@@ -87,7 +87,7 @@ class EditRemediationPopup extends React.Component {
                 this.onChangeOpenRuleData(e);
               }}
               checked={this.state.Rule}
-            />{" "}
+            />
             Excluded by Rule
             {this.state.Rule == true && (
               <div className="d-block select-rule">
@@ -112,7 +112,7 @@ class EditRemediationPopup extends React.Component {
               }}
               className="checkbox"
               checked={this.state.cloudAccount}
-            />{" "}
+            />
             Excluded by Cloud Account
             {this.state.cloudAccount == true && (
               <div className="d-block select-rule">
@@ -133,7 +133,7 @@ class EditRemediationPopup extends React.Component {
                 this.onChangeOpenEntityData(e);
               }}
               checked={this.state.Entity}
-            />{" "}
+            />
             Excluded by Entity
             {this.state.Entity == true && (
               <div className="d-block select-rule">

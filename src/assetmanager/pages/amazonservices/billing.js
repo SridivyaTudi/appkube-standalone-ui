@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
 class Billing extends Component {
   render() {
     return (
       <div className="displayed-here">
-          <p>Billing details will be displayed here</p>
+        <p>Billing details will be displayed here</p>
       </div>
-    )
+    );
   }
 }
 

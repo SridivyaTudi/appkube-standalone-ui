@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Wizard extends Component {
   constructor(props) {
@@ -30,8 +30,9 @@ class Wizard extends Component {
         const step = steps[i];
         retData.push(
           <div
-            className={`wizard-step-button ${currentStep === i ? "active" : ""
-              }`}
+            className={`wizard-step-button ${
+              currentStep === i ? "active" : ""
+            }`}
             onClick={(e) => this.onClickStepButton(i)}
           >
             {step.name}
@@ -52,8 +53,9 @@ class Wizard extends Component {
         const step = steps[i];
         retData.push(
           <div
-            className={`wizard-step-component ${currentStep === i ? "" : "d-none"
-              }`}
+            className={`wizard-step-component ${
+              currentStep === i ? "" : "d-none"
+            }`}
           >
             {step.component()}
           </div>

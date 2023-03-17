@@ -8,7 +8,6 @@ const sortEnum = {
 };
 
 class Table extends Component {
-  paginationRef;
   constructor(props) {
     super(props);
     this.state = {
@@ -433,7 +432,6 @@ class Table extends Component {
 
   render() {
     const { displayData, perPageLimit, currentPage, showSelect } = this.state;
-    // let { tableClasses, showingLine, dark } = this.props;
     let { tableClasses, showingLine } = this.props;
     let startIndex = perPageLimit * currentPage + 1;
     let endIndex = perPageLimit * (currentPage + 1);
@@ -446,7 +444,6 @@ class Table extends Component {
       showingLine = showingLine.replace("%total%", displayData.length);
     }
     return (
-      // <div className={`${tableClasses.parentClass} custom-table ${dark ? 'dark' : ''}`}>
       <div className={`${tableClasses.parentClass} custom-table`}>
         <div className="toolbar">
           <div className="showing">{showingLine}</div>

@@ -17,7 +17,6 @@ class MySelectObj {
   }
 }
 class OpenNewAgentPopup extends React.Component {
-  steps;
   constructor(props) {
     super(props);
     this.state = {
@@ -55,6 +54,7 @@ class OpenNewAgentPopup extends React.Component {
       address: "",
     };
   }
+
   async componentDidMount() {
     try {
       await RestService.getData(config.GET_ALL_COMPANIES_URL, null, null).then(
@@ -76,6 +76,7 @@ class OpenNewAgentPopup extends React.Component {
       console.log("Loading company data failed. Error: ", err);
     }
   }
+
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
@@ -376,6 +377,7 @@ class OpenNewAgentPopup extends React.Component {
       [name]: value,
     });
   };
+
   handleSelectBox = (e) => {
     const { orgCompanyList } = this.state;
     const { name, value } = e.target;
@@ -400,12 +402,14 @@ class OpenNewAgentPopup extends React.Component {
       }
     }
   };
+
   addNewCompany = () => {
     this.setState({
       oldCompanyFlag: false,
       newCompanyFlag: true,
     });
   };
+
   handleImageChange = (e) => {
     this.setState({
       [e.target.name + "Url"]: URL.createObjectURL(e.target.files[0]),
@@ -414,11 +418,13 @@ class OpenNewAgentPopup extends React.Component {
       [e.target.name]: e.target.files[0],
     });
   };
+
   handleCloseAlert = (e) => {
     this.setState({
       isAlertOpen: false,
     });
   };
+  
   render() {
     const {
       modal,

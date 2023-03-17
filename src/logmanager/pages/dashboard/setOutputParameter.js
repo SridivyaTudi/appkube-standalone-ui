@@ -2,18 +2,19 @@ import React from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
 
 class SetOutputPopup extends React.Component {
-  steps;
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
     };
   }
+
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
     });
   };
+  
   handleClose = () => {
     this.setState({
       modal: false,

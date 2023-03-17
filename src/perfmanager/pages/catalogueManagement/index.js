@@ -1,40 +1,32 @@
-import React, { Component } from 'react';
-import { config } from '../../config';
-import { Collapse } from 'reactstrap';
-import categoryImage from '../../../assets/img/perfmanager/category-image1.png';
-import collapseToggleIcon from '../../../assets/img/perfmanager/config-collapse-icon1.png';
-import AddLibraryPopup from './AddLibraryPopup';
-import AddDashboardToCollectorPopup from './AddDashboardToCollectorPopup';
-import EditToCollectorPopup from './EditToCollectorPopup';
-import PreviewDashboard from './PreviewDashboard';
-import AddCatalog from './AddCatalog';
-import { RestService } from '../_service/RestService';
-import Rbac from '../../components/Rbac';
-// import { TopMenu } from './TopMenu';
-
+import React, { Component } from "react";
+import { config } from "../../config";
+import { Collapse } from "reactstrap";
+import categoryImage from "../../../assets/img/perfmanager/category-image1.png";
+import collapseToggleIcon from "../../../assets/img/perfmanager/config-collapse-icon1.png";
+import AddLibraryPopup from "./AddLibraryPopup";
+import AddDashboardToCollectorPopup from "./AddDashboardToCollectorPopup";
+import EditToCollectorPopup from "./EditToCollectorPopup";
+import PreviewDashboard from "./PreviewDashboard";
+import AddCatalog from "./AddCatalog";
+import { RestService } from "../_service/RestService";
+import Rbac from "../../components/Rbac";
 
 class CatalogueManagement extends Component {
-  addlibraryRef;
-  addDashboardToCollectorRef;
-  editToCollectorRef;
-  addCatalogRef;
-  previewdashboardRef;
   constructor(props) {
     super(props);
     this.state = {
       isApiCalled: false,
-      searchKey: '',
-      currentOpenIndex: '',
+      searchKey: "",
+      currentOpenIndex: "",
       currentCatalogDisplayData: [],
       catalogs: [],
       filterByCatalogTypeFlag: false,
       displayCatalogData: [],
-      catalogType: '',
-      selectedCatalogName: '',
-      selectedCatalogDescription: '',
+      catalogType: "",
+      selectedCatalogName: "",
+      selectedCatalogDescription: "",
       selectedCatalogId: null,
     };
-    
     this.addlibraryRef = React.createRef();
     this.addDashboardToCollectorRef = React.createRef();
     this.editToCollectorRef = React.createRef();
@@ -50,12 +42,14 @@ class CatalogueManagement extends Component {
       isApiCalled: true,
     });
     try {
-      await RestService.getData(config.GET_ALL_COLLECTOR, null, null).then((response) => {
-        this.setState({
-          catalogs: response,
-          displayCatalogData: response,
-        });
-      });
+      await RestService.getData(config.GET_ALL_COLLECTOR, null, null).then(
+        (response) => {
+          this.setState({
+            catalogs: response,
+            displayCatalogData: response,
+          });
+        }
+      );
     } catch (err) {}
     this.setState({
       isApiCalled: false,
@@ -67,9 +61,12 @@ class CatalogueManagement extends Component {
 
   _displayCatalogBox() {
     const catalogBox = this.state.displayCatalogData.map((val, key) => {
-      console.log('data all :: ', val);
+      console.log("data all :: ", val);
       return (
-        <div className="category-box" onClick={() => this.openCatalogDetail(key, val)}>
+        <div
+          className="category-box"
+          onClick={() => this.openCatalogDetail(key, val)}
+        >
           <div className="row">
             <div className="col-lg-3 col-md-3 col-sm-12 p-r-0">
               <div className="category-image confit-image">
@@ -78,20 +75,37 @@ class CatalogueManagement extends Component {
             </div>
 
             <div className="col-lg-9 col-md-9 col-sm-12">
-              <a style={{ float: 'right' }} onClick={(e) => this.onClickaEditToCollector(e, val)}>
+              <a
+                style={{ float: "right" }}
+                onClick={(e) => this.onClickaEditToCollector(e, val)}
+              >
                 <i className="fa fa-edit"></i>
               </a>
-              <a style={{ float: 'right', marginRight: '9px' }}>
+              <a style={{ float: "right", marginRight: "9px" }}>
                 <i className="fa fa-refresh"></i>
               </a>
               <div className="category-name">{val.catalogName}</div>
               <div className="category-name">{val.type}</div>
 
               <div className="category-add-link">
-                <a onClick={(e) => this.onClickaAddDashboardToCollector(e, val.catalogName, val.id)}>
+                <a
+                  onClick={(e) =>
+                    this.onClickaAddDashboardToCollector(
+                      e,
+                      val.catalogName,
+                      val.id
+                    )
+                  }
+                >
                   Add Dashboard To Catalog
                 </a>
-                <a onClick={(e) => this.onClickAddLibrary(e, val.catalogName, val.id)}>Add Catalog To library</a>
+                <a
+                  onClick={(e) =>
+                    this.onClickAddLibrary(e, val.catalogName, val.id)
+                  }
+                >
+                  Add Catalog To library
+                </a>
                 <a onClick={this.onClickPreviewDashboard}>Preview Dashboard</a>
               </div>
             </div>
@@ -103,10 +117,10 @@ class CatalogueManagement extends Component {
   }
 
   openCatalogDetail(key, val) {
-    console.log('data get :: ', val);
+    console.log("data get :: ", val);
     let displaycataloddescriptionData = [];
 
-    if (val.catalog_detail != '' && val.catalog_detail) {
+    if (val.catalog_detail != "" && val.catalog_detail) {
       for (let i = 0; i < val.catalog_detail.length; i++) {
         if (val.catalog_detail[i].open == true) {
           val.catalog_detail[i].open = false;
@@ -123,10 +137,10 @@ class CatalogueManagement extends Component {
       });
     } else {
       this.setState({
-        currentOpenIndex: '',
-        currentCatalogDisplayData: '',
-        selectedCatalogName: '',
-        selectedCatalogDescription: '',
+        currentOpenIndex: "",
+        currentCatalogDisplayData: "",
+        selectedCatalogName: "",
+        selectedCatalogDescription: "",
         selectedCatalogId: null,
       });
     }
@@ -137,7 +151,8 @@ class CatalogueManagement extends Component {
 
     for (let i = 0; i < this.state.currentCatalogDisplayData.length; i++) {
       if (i === val) {
-        this.state.currentCatalogDisplayData[i].open = !this.state.currentCatalogDisplayData[i].open;
+        this.state.currentCatalogDisplayData[i].open =
+          !this.state.currentCatalogDisplayData[i].open;
       } else {
         this.state.currentCatalogDisplayData[i].open = false;
       }
@@ -156,7 +171,10 @@ class CatalogueManagement extends Component {
       return (
         <div className="config-collapse" key={key}>
           <p>Hello</p>
-          <div className="collapse-toggle " onClick={() => this.openCatalogDescription(key)}>
+          <div
+            className="collapse-toggle "
+            onClick={() => this.openCatalogDescription(key)}
+          >
             <span>
               <img src={collapseToggleIcon} alt="" />
             </span>
@@ -182,7 +200,7 @@ class CatalogueManagement extends Component {
     const { catalogs } = this.state;
     var searchResult = [];
     for (let i = 0; i < catalogs.length; i++) {
-      if (catalogs[i].catalogName.indexOf(value) !== -1 || value === '') {
+      if (catalogs[i].catalogName.indexOf(value) !== -1 || value === "") {
         searchResult.push(catalogs[i]);
       }
     }
@@ -194,9 +212,18 @@ class CatalogueManagement extends Component {
   onClickAddLibrary = (e, selectedCatalogName, selectedCatalogId) => {
     this.addlibraryRef.current.toggle(selectedCatalogName, selectedCatalogId);
   };
-  onClickaAddDashboardToCollector = (e, selectedCatalogName, selectedCatalogId) => {
-    this.addDashboardToCollectorRef.current.toggle(selectedCatalogName, selectedCatalogId);
+
+  onClickaAddDashboardToCollector = (
+    e,
+    selectedCatalogName,
+    selectedCatalogId
+  ) => {
+    this.addDashboardToCollectorRef.current.toggle(
+      selectedCatalogName,
+      selectedCatalogId
+    );
   };
+
   onClickaEditToCollector = (e, selectedCagtalog) => {
     this.editToCollectorRef.current.toggle(selectedCagtalog);
   };
@@ -204,27 +231,28 @@ class CatalogueManagement extends Component {
   onClickPreviewDashboard = (e) => {
     this.previewdashboardRef.current.toggle();
   };
+
   onClickCreateCatalog = () => {
-    //this.addCatalogRef.current.toggle();
     this.previewdashboardRef.current.toggle();
   };
+
   onClickFilterByCatalogType = (e) => {
     const { catalogs } = this.state;
     const catalogType = e.target.value;
-    console.log('Selected Catalog type :: ', catalogType);
+    console.log("Selected Catalog type :: ", catalogType);
     this.setState({
       catalogType: catalogType,
     });
-
-    if (!(catalogType == '') && !(catalogType == 'ALL')) {
-      console.log('before filter :: ', catalogs);
+    
+    if (!(catalogType == "") && !(catalogType == "ALL")) {
+      console.log("before filter :: ", catalogs);
       let displayCatalogData = catalogs.filter((d) => d.type === catalogType);
-      console.log('after filter :: ', displayCatalogData);
-      console.log('I am in');
+      console.log("after filter :: ", displayCatalogData);
+      console.log("I am in");
       this.setState({
         displayCatalogData: displayCatalogData,
       });
-    } else if (catalogType == 'ALL') {
+    } else if (catalogType == "ALL") {
       this.setState({
         displayCatalogData: catalogs,
       });
@@ -236,9 +264,7 @@ class CatalogueManagement extends Component {
     return (
       <div className="perfmanager-dashboard-container">
         <div className="perfmanager-page-container">
-          <div className="common-container">
-            {/* <TopMenu /> */}
-          </div>
+          <div className="common-container">{/* <TopMenu /> */}</div>
           <div className="common-container">
             <div className="catalog-app-text">
               <h3>Catalogue</h3>
@@ -247,9 +273,12 @@ class CatalogueManagement extends Component {
           </div>
           <div className="common-container">
             <div className="text-left">
-              <Rbac parentName={config.PARENT_NAME} childName="commancomponent-createbuttoncomponent-createbtn">
+              <Rbac
+                parentName={config.PARENT_NAME}
+                childName="commancomponent-createbuttoncomponent-createbtn"
+              >
                 <a
-                  style={{ float: 'left' }}
+                  style={{ float: "left" }}
                   onClick={this.onClickCreateCatalog}
                   className="blue-button m-r-0 min-width-inherit width-auto create-btn"
                 >
@@ -291,10 +320,12 @@ class CatalogueManagement extends Component {
           <div className="common-container border-bottom-0">
             <div className="row">
               <div className="col-xl-9 col-lg-12 col-md-12 col-sm-12">
-                <div className="categories-boxes">{this._displayCatalogBox()}</div>
+                <div className="categories-boxes">
+                  {this._displayCatalogBox()}
+                </div>
               </div>
               <div className="col-xl-3 col-lg-12 col-md-12 col-sm-12 p-l-0">
-                {this.state.currentOpenIndex !== '' && (
+                {this.state.currentOpenIndex !== "" && (
                   <div className="right-config-box">
                     <div className="config-heading">
                       <h5>{this.state.selectedCatalogName}</h5>
@@ -302,7 +333,11 @@ class CatalogueManagement extends Component {
                       <div className="category-add-link float-right">
                         <a
                           onClick={(e) =>
-                            this.onClickAddLibrary(e, this.state.selectedCatalogName, this.state.selectedCatalogId)
+                            this.onClickAddLibrary(
+                              e,
+                              this.state.selectedCatalogName,
+                              this.state.selectedCatalogId
+                            )
                           }
                         >
                           Add Catalog To library
@@ -325,7 +360,10 @@ class CatalogueManagement extends Component {
         <AddLibraryPopup ref={this.addlibraryRef} />
         <PreviewDashboard ref={this.previewdashboardRef} />
         <AddDashboardToCollectorPopup ref={this.addDashboardToCollectorRef} />
-        <EditToCollectorPopup getCatalogs={this.getCatalogs} ref={this.editToCollectorRef} />
+        <EditToCollectorPopup
+          getCatalogs={this.getCatalogs}
+          ref={this.editToCollectorRef}
+        />
         <AddCatalog
           refreshCatalog={this.refreshCatalog}
           displayCatalogData={state.displayCatalogData}

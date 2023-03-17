@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { config } from "../../config";
 import StartECPopup from "./StartECPopup";
 import InstancePopup from "./InstancePopup";
@@ -8,10 +8,6 @@ import Rbac from "./../../components/Rbac";
 import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 
 class AllTickets extends React.Component {
-  unimplementedFeatureModalRef;
-  startECRef;
-  instanceRef;
-  openNewTicketRef;
   constructor(props) {
     super(props);
     this.openNewTicketRef = React.createRef();
@@ -108,6 +104,7 @@ class AllTickets extends React.Component {
     this.startECRef = React.createRef();
     this.instanceRef = React.createRef();
   }
+
   onClickUnImplementedFeature = (link) => {
     this.unimplementedFeatureModalRef.current.setLink(link);
     this.unimplementedFeatureModalRef.current.toggle();
@@ -116,10 +113,12 @@ class AllTickets extends React.Component {
   async componentDidMount() {
     this.fetchTicketOnAlert();
   }
+
   onRefreshClick = () => {
     console.log("refresh method called");
     this.fetchTicketOnAlert();
   };
+
   fetchTicketOnAlert = async () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -154,6 +153,7 @@ class AllTickets extends React.Component {
     e.preventDefault();
     this.instanceRef.current.toggle();
   };
+
   onClickOpenNewTicket = (e) => {
     console.log("on click event fired");
     this.openNewTicketRef.current.toggle();
@@ -230,7 +230,6 @@ class AllTickets extends React.Component {
           </div>
           <StartECPopup ref={this.startECRef} />
           <InstancePopup ref={this.instanceRef} />
-          {/* <OpenNewTicketPopup guid={state.guid} alertName={state.alertName} ref={this.openNewTicketRef} refreshParm={this.onRefreshClick} /> */}
         </div>
         <UnimplementedFeaturePopup ref={this.unimplementedFeatureModalRef} />
       </div>

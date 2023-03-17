@@ -8,11 +8,6 @@ import OpenNewTicketPopup from "../../components/OpenNewTicketPopup";
 import OpenNewScheduleReports from "../../components/OpenNewScheduleReports";
 
 class ReportHelpdesh extends React.Component {
-  openNewContactRef;
-  openNewCompanyRef;
-  openNewEmailRef;
-  openNewTicketRef;
-  openNewScheduleReportsRef;
   constructor(props) {
     super(props);
     this.state = {

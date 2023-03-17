@@ -4,6 +4,7 @@ class Customselectbox extends React.Component {
   constructor(props) {
     super(props);
   }
+
   onChange = (e) => {
     if (this.props.onChange) {
       this.props.onChange(e);
@@ -19,6 +20,7 @@ class Customselectbox extends React.Component {
     });
     return retData;
   };
+
   render() {
     const {
       containerClass,

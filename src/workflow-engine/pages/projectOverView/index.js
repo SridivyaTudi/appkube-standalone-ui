@@ -7,7 +7,6 @@ import AwsHelper from "../awsHelpers";
 import AssetOverViewReusableComp from "../../components/assetOverViewCommonComponent";
 
 class ProjectOverView extends Component {
-  awsHelper;
   constructor(props) {
     super(props);
     this.state = {
@@ -34,7 +33,6 @@ class ProjectOverView extends Component {
     this.awsHelper = new AwsHelper({ meta: props.meta });
   }
   componentDidMount() {
-    // this.setState({ useCaseName: this.props.match.params.id })
     this.awsHelper.getUsecaseList(
       (useCaseList) => {
         useCaseList.forEach((useCase) => {
@@ -45,7 +43,6 @@ class ProjectOverView extends Component {
                 "arn:aws:states:us-east-1:657907747545:execution:send-to-pre-state:9bc49c92-4016-47a5-8a22-88d353e912ab",
                 (items) => {
                   const useCases = this.state.useCaseList;
-                  // if (useCase.stepinput.S.stages.length>0){
                   useCases.push({
                     ...useCase,
                     steps: items,
@@ -59,7 +56,6 @@ class ProjectOverView extends Component {
                     selectedUseCaseData:
                       useCases[this.state.activeUseCaseIndex],
                   });
-                  // }
                 },
                 (err) => {
                   console.log(err);
@@ -74,7 +70,7 @@ class ProjectOverView extends Component {
     this.awsHelper.gettingMachineDef(
       this.state.machineArn,
       (states) => {
-        // console.log(states);
+        console.log(states);
       },
       (err) => {
         console.log(err);
@@ -102,6 +98,7 @@ class ProjectOverView extends Component {
   //   }
   //   return retData;
   // }
+
   setUseCaseData = (index) => {
     const { useCaseList } = this.state;
 

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Modal, ModalBody } from 'reactstrap';
-import { config } from '../../config';
-import AlertMessage from '../../components/AlertMessage';
+import React, { Component } from "react";
+import { Modal, ModalBody } from "reactstrap";
+import { config } from "../../config";
+import AlertMessage from "../../components/AlertMessage";
 
 class AddCatalog extends Component {
   constructor(props) {
@@ -18,12 +18,12 @@ class AddCatalog extends Component {
       message: null,
       severity: null,
       showSubTypesFlag: false,
-      selectedSubType: '',
+      selectedSubType: "",
       subTypesJson: {
-        AWS: ['VPS', 'VPN', 'RSD'],
-        AZURE: ['X', 'Y', 'Z'],
-        GCP: ['A', 'B', 'C'],
-        Synectiks: ['P', 'Q', 'R'],
+        AWS: ["VPS", "VPN", "RSD"],
+        AZURE: ["X", "Y", "Z"],
+        GCP: ["A", "B", "C"],
+        Synectiks: ["P", "Q", "R"],
       },
     };
 
@@ -57,11 +57,13 @@ class AddCatalog extends Component {
   };
 
   addCatalog = async () => {
-    const { catalogName, catalogType, selectedSubType, catalogDescription } = this.state;
+    const { catalogName, catalogType, selectedSubType, catalogDescription } =
+      this.state;
     if (!catalogName) {
       this.setState({
         severity: config.SEVERITY_ERROR,
-        message: 'Catalog  name is mandatory. Please provide some value for catalog name',
+        message:
+          "Catalog  name is mandatory. Please provide some value for catalog name",
         isAlertOpen: true,
       });
       return;
@@ -69,53 +71,53 @@ class AddCatalog extends Component {
     if (!catalogType) {
       this.setState({
         severity: config.SEVERITY_ERROR,
-        message: 'Please select catalog type',
+        message: "Please select catalog type",
         isAlertOpen: true,
       });
       return;
     }
     console.log(
-      'Cataloge Name = ' +
+      "Cataloge Name = " +
         catalogName +
-        ', Cataloge Type = ' +
+        ", Cataloge Type = " +
         catalogType +
-        ', catalog description = ' +
+        ", catalog description = " +
         catalogDescription
     );
 
     const cd = new FormData();
-    cd.append('name', catalogName);
-    cd.append('type', catalogType);
-    cd.append('description', catalogDescription);
-    console.log('Data is adding :: ', cd);
+    cd.append("name", catalogName);
+    cd.append("type", catalogType);
+    cd.append("description", catalogDescription);
+    console.log("Data is adding :: ", cd);
     await fetch(
       config.ADD_CATALOG +
-        '?name=' +
+        "?name=" +
         catalogName +
-        '&type=' +
+        "&type=" +
         catalogType +
-        '&subType=' +
+        "&subType=" +
         selectedSubType +
-        '&description=' +
+        "&description=" +
         catalogDescription,
       {
-        method: 'post',
+        method: "post",
       }
     )
       .then((response) => response.json())
       .then((response) => {
-        console.log('response: ', response);
+        console.log("response: ", response);
         let refreshCatalog = this.props.refreshCatalog;
         refreshCatalog();
         if (response != null) {
-          console.log('ok');
+          console.log("ok");
           this.setState({
             severity: config.SEVERITY_SUCCESS,
             message: config.ADD_CATALOGUE_SUCCESS_MESSAGE,
             isAlertOpen: true,
           });
         } else {
-          console.log('Not ok');
+          console.log("Not ok");
           this.setState({
             severity: config.SEVERITY_ERROR,
             message: config.SERVER_ERROR_MESSAGE,
@@ -147,12 +149,18 @@ class AddCatalog extends Component {
     });
   };
   showSubTypes = (type) => {
-    let catalogSubTypesJson = JSON.parse(JSON.stringify(config.CATALOG_SUB_TYPES_JSON));
+    let catalogSubTypesJson = JSON.parse(
+      JSON.stringify(config.CATALOG_SUB_TYPES_JSON)
+    );
     let types = catalogSubTypesJson[type];
     var options = [];
     for (let i in types) {
       options.push(
-        <option key={types[i]} onChange={this.onChangeSelectSubTypeBox} value={types[i]}>
+        <option
+          key={types[i]}
+          onChange={this.onChangeSelectSubTypeBox}
+          value={types[i]}
+        >
           {types[i]}
         </option>
       );
@@ -162,15 +170,24 @@ class AddCatalog extends Component {
   render() {
     const state = this.state;
     return (
-      <Modal isOpen={state.modal} toggle={this.closeModel} className="modal-container perfmanager-modal-container">
+      <Modal
+        isOpen={state.modal}
+        toggle={this.closeModel}
+        className="modal-container perfmanager-modal-container"
+      >
         <AlertMessage
           handleCloseAlert={this.handleCloseAlert}
           open={state.isAlertOpen}
           severity={state.severity}
           msg={state.message}
         ></AlertMessage>
-        {/* <ModalHeader toggle={this.closeModel}>{this.state.catalogName} </ModalHeader> */}
-        <ModalBody style={{ height: 'calc(48vh - 0px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(48vh - 0px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="catalog-form-group">
             <div className="form-group">
               <label htmlFor="catalogName">Catalog Name:</label>

@@ -1,15 +1,9 @@
-import * as React from "react";
+import React from "react";
 import QryUtils from "./QryUtils";
 import Utils from "../../../utils";
 import { config } from "../../../config";
 import "./QueryPanel.css";
 
-/**
- * Query panel class to add autocomplete and english translation.
- * If you need translation button and response table visible set
- * isTranslate="true".
- * You can set id="xyz" if you would like to add multiple components in same page.
- */
 class QueryPanel extends React.Component {
   constructor(props) {
     super(props);

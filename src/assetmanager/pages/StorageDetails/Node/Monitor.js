@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Wizard from "./Wizard";
 import VerifyInputs from "./MonitorComponents/VerifyInputs";
 import EnableDashboard from "./MonitorComponents/EnableDashboard";
@@ -15,13 +15,6 @@ const VIEW_TYPE = {
 };
 
 class Monitor extends React.Component {
-  steps;
-  verifyInputsRef;
-  enableDashboardRef;
-  verifyAndSaveRef;
-  previewRef;
-  wizardRef;
-  config;
   constructor(props) {
     super(props);
     this.state = {
@@ -72,10 +65,6 @@ class Monitor extends React.Component {
         ),
       },
     ];
-    // this.config = configFun(
-    //   props.meta.jsonData.apiUrl,
-    //   props.meta.jsonData.mainProductUrl
-    // );
   }
 
   componentDidMount() {
@@ -166,10 +155,6 @@ class Monitor extends React.Component {
     );
     dashbaordJSONArray.forEach((dashboard) => {
       const dataJs = {
-        // title: dashboard.title,
-        // slug: dashboard.slug,
-        // uid: dashboard.uid,
-        // data: dashboard,
         Dashboard: JSON.parse(dashboard.data),
         UserId: 0,
         Overwrite: false,

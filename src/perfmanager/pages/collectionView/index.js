@@ -6,7 +6,6 @@ import Rbac from "../../components/Rbac";
 import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 
 class CollectionView extends Component {
-  unimplementedFeatureModalRef;
   constructor(props) {
     super(props);
     this.state = {

@@ -14,10 +14,6 @@ const LOGOS = {
 };
 
 class DiscoveredAssets extends React.Component {
-  CreateNewOURef;
-  config;
-  nodeMapping = {};
-  clusterMapping = {};
   constructor(props) {
     super(props);
     this.state = {
@@ -250,7 +246,6 @@ class DiscoveredAssets extends React.Component {
       const totalNodes = nodes.length;
       for (let i = 0; i < totalNodes; i++) {
         const node = nodes[i];
-        // const node = nodes[key];
         if (
           (filteredNodes && filteredNodes.indexOf(node.name) !== -1) ||
           !filteredNodes
@@ -326,7 +321,6 @@ class DiscoveredAssets extends React.Component {
   renderClusters = (index, clusters) => {
     const { activeNode, filters } = this.state;
     const filteredClusters = filters["Clusters"];
-    // const keys = Object.keys(clusters);
     const retData = [];
     clusters.forEach((cluster, clusterIndex) => {
       if (
@@ -659,13 +653,7 @@ class DiscoveredAssets extends React.Component {
     );
   };
 
-  renderDirectServices = (
-    envIndex,
-    serviceKey,
-    serviceIndex,
-    appDataKey,
-    appDataServices
-  ) => {
+  renderDirectServices = (appDataServices) => {
     let retData = [];
     const { accountId, cloudName } = this.state;
     if (appDataServices) {

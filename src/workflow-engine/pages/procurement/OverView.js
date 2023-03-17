@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-//import * as React from 'react';
-// import { Breadcrumbs } from '../Breadcrumbs';
 import "react-circular-progressbar/dist/styles.css";
-// import SimpleBar from 'simplebar-react';
 import "simplebar/dist/simplebar.min.css";
 import { Link } from "react-router-dom";
 import SimpleBar from "simplebar-react";
@@ -10,11 +7,6 @@ import "simplebar/dist/simplebar.min.css";
 import AwsHelper from "../awsHelpers";
 
 class OverView extends Component {
-  createStreamRef;
-  newStreamRef;
-  manageOutputRef;
-  allEventRef;
-  awsHelper;
   constructor(props) {
     super(props);
     this.state = {

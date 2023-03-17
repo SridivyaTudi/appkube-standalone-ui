@@ -1,4 +1,5 @@
 import React from "react";
+
 class AwsDocumentManagement extends React.Component {
   constructor(props) {
     super(props);
@@ -166,7 +167,6 @@ class AwsDocumentManagement extends React.Component {
       }
     }
     retData.isValid = isValid;
-    console.log(retData);
     return retData;
   };
 
@@ -400,7 +400,6 @@ class AwsDocumentManagement extends React.Component {
         isSubmitted,
       } = this.state;
       const errorData = this.validate(isSubmitted);
-      // console.log(errorData)
       return (
         <div className="catalogue-right-container">
           <button

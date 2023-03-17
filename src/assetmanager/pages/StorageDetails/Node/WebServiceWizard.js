@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 class WebServiceWizard extends React.Component {
   constructor(props) {
@@ -12,7 +12,6 @@ class WebServiceWizard extends React.Component {
     this.setState({
       currentStep: activeStep,
     });
-    // this.props.submitPage();
   };
 
   createStepLine = () => {

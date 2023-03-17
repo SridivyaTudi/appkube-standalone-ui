@@ -6,7 +6,6 @@ import Filter from "./../filter";
 import { PreviewDashboardPopup } from "./../previewDashboardPopup";
 
 class DataFlow extends React.Component {
-  previewDashboardPopupRef;
   constructor(props) {
     super(props);
     this.state = {

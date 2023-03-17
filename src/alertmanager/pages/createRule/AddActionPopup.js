@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
 class AddActionPopup extends React.Component {

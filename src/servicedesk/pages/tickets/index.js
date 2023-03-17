@@ -28,9 +28,6 @@ ChartJS.register(
 );
 
 class Tickets extends React.Component {
-  tableValue;
-  perPageLimit;
-  checkboxValue;
   barChartOptions = {
     maintainAspectRatio: false,
     legend: {
@@ -246,7 +243,6 @@ class Tickets extends React.Component {
             data: [],
             type: "line",
             pointRadius: 4,
-            // pointBackgroundColor: 'rgba(67, 138, 251, 1)',
             pointBackgroundColor: function (context) {
               var index = context.dataIndex;
               var value = context.dataset.data[index];
@@ -263,7 +259,6 @@ class Tickets extends React.Component {
     };
   }
   async componentDidMount() {
-    // this.calculateTotalPages(this.state.TicketsData);
     try {
       await RestService.getData(
         config.GET_REPORT_QUICK_STAT_URL,
@@ -384,7 +379,6 @@ class Tickets extends React.Component {
         ],
         type: "line",
         pointRadius: 4,
-        // pointBackgroundColor: 'rgba(67, 138, 251, 1)',
         pointBackgroundColor: function (context) {
           var index = context.dataIndex;
           var value = context.dataset.data[index];
@@ -419,9 +413,7 @@ class Tickets extends React.Component {
                   <span>List of ticket opened by Customer</span>
                 </div>
               </div>
-              {/* create component */}
               <CreateButtonComponent />
-              {/* create component */}
             </div>
           </div>
           <div className="common-container border-bottom-0">

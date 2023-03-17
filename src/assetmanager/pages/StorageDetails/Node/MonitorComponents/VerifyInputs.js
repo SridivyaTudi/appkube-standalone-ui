@@ -1,8 +1,7 @@
-import * as React from "react";
+import React from "react";
 import { RestService } from "../../../_service/RestService";
 
 class VerifyInputs extends React.Component {
-  config;
   constructor(props) {
     super(props);
     this.state = {
@@ -13,10 +12,6 @@ class VerifyInputs extends React.Component {
       accountId: "",
       cloudName: "",
     };
-    // this.config = configFun(
-    //   props.meta.jsonData.apiUrl,
-    //   props.meta.jsonData.mainProductUrl
-    // );
   }
 
   componentDidMount() {

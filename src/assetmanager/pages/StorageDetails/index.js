@@ -1,11 +1,10 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Node from "./Node";
 import { CommonService } from "../_common/common";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
 
 class StorageDetails extends React.Component {
-  breadCrumbs;
   constructor(props) {
     let viewId = CommonService.getParameterByName(
       "viewId",
@@ -62,17 +61,6 @@ class StorageDetails extends React.Component {
       activeViewIndex,
       viewId,
     };
-    this.breadCrumbs = [
-      {
-        label: "Home",
-        route: `/`,
-      },
-      {
-        label: "Assets | Environments",
-        isCurrentPage: true,
-      },
-    ];
-    console.log(serviceData);
   }
 
   setActiveTab = (activeTab) => {
@@ -304,7 +292,7 @@ class StorageDetails extends React.Component {
               aria-label="Close"
               onClick={this.openViewModal}
             >
-              <span aria-hidden="true">×</span>
+              <span aria-hidden="true">x</span>
             </button>
           </ModalHeader>
           <ModalBody

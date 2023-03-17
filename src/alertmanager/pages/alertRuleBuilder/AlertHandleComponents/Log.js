@@ -23,4 +23,3 @@ export class Log extends React.Component {
     );
   }
 }
-

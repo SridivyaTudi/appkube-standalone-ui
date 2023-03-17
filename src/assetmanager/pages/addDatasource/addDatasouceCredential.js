@@ -44,8 +44,6 @@ class AddDatasourceCredential extends React.Component {
       null,
       null
     ).then((response) => {
-      // let creadList = JSON.parse(atob(response.secureCreds));
-      // let creadList = JSON.parse(response.credentials);
       if (response.credentials && response.credentials.length > 0) {
         this.setState({
           credentialList: response.credentials,

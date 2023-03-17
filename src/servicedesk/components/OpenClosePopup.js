@@ -10,16 +10,19 @@ class OpenClosePopup extends React.Component {
       modal: false,
     };
   }
+
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
     });
   };
+
   handleClose = () => {
     this.setState({
       modal: false,
     });
   };
+  
   render() {
     const { modal } = this.state;
     return (

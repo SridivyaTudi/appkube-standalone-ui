@@ -13,7 +13,6 @@ import {
 } from "./AlertHandleComponents";
 
 class AlertHandler extends React.Component {
-  tabComponentsList;
   constructor(props) {
     super(props);
     this.state = {

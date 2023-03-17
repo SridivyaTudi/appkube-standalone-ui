@@ -1,7 +1,7 @@
-import * as React from 'react';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+import { makeStyles } from "@material-ui/core/styles";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -9,8 +9,8 @@ function Alert(props) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '300%',
-    '& > * + *': {
+    width: "300%",
+    "& > * + *": {
       marginTop: theme.spacing(2),
     },
   },
@@ -18,16 +18,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AlertMessage(props) {
   const classes = useStyles();
-  const vertical = 'top';
-  const horizontal = 'right';
+  const vertical = "top";
+  const horizontal = "right";
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
     if (props.handleCloseAlert) {
-      console.log('calling handle close');
+      console.log("calling handle close");
       props.handleCloseAlert();
       return;
     }
@@ -36,7 +36,7 @@ export default function AlertMessage(props) {
   return (
     <div className={classes.root}>
       <Snackbar
-        style={{ top: '87px', left: 'auto', right: '24px' }}
+        style={{ top: "87px", left: "auto", right: "24px" }}
         autoHideDuration={6000}
         open={props.open}
         onClose={handleClose}

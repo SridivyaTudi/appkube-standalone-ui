@@ -1,9 +1,8 @@
-import React, {Component} from "react";
-// import "rc-calendar/assets/index.css";
-import '@y0c/react-datepicker/assets/styles/calendar.scss';
-import DateRangeIcon from '@material-ui/icons/DateRange';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { RangeDatePicker } from '@y0c/react-datepicker';
+import React, { Component } from "react";
+import "@y0c/react-datepicker/assets/styles/calendar.scss";
+import DateRangeIcon from "@material-ui/icons/DateRange";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { RangeDatePicker } from "@y0c/react-datepicker";
 
 class DateFormat extends Component {
   render() {
@@ -14,7 +13,10 @@ class DateFormat extends Component {
           <div className="calender-text">
             <p>Change Period</p>
             <span>
-              <RangeDatePicker startPlaceholder="2021-06-01" endPlaceholder="2021-06-10" />
+              <RangeDatePicker
+                startPlaceholder="2021-06-01"
+                endPlaceholder="2021-06-10"
+              />
             </span>
           </div>
           <ArrowDropDownIcon className="calender-arrow" />
@@ -23,4 +25,5 @@ class DateFormat extends Component {
     );
   }
 }
+
 export default DateFormat;

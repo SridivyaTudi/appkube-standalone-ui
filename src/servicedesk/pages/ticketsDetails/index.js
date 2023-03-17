@@ -10,14 +10,6 @@ import OpenMergePopup from "../../components/OpenMergePopup";
 import Rbac from "../Rbac/Rbac";
 
 class TicketsDetails extends React.Component {
-  openNewContactRef;
-  openNewCompanyRef;
-  openNewEmailRef;
-  openNewTicketRef;
-  openNewAgentRef;
-  openCloseRef;
-  openDeleteRef;
-  openMergeRef;
   constructor(props) {
     super(props);
     this.state = {

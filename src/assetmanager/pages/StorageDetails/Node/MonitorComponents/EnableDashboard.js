@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { v4 } from 'uuid';
+import React from "react";
+import { v4 } from "uuid";
 
 class EnableDashboard extends React.Component {
   constructor(props) {
@@ -12,8 +12,8 @@ class EnableDashboard extends React.Component {
   setDashboardData = (data) => {
     this.setState({
       dashboardData: data,
-    })
-  }
+    });
+  };
 
   displayTable = () => {
     const retData = [];
@@ -28,17 +28,9 @@ class EnableDashboard extends React.Component {
               <tbody key={v4()}>
                 <tr>
                   <td>
-                    <input
-                      type="checkbox"
-                      checked={dashboard.isChecked}
-                    />
+                    <input type="checkbox" checked={dashboard.isChecked} />
                   </td>
                   <td>{dashboard.name}</td>
-                  {/* <td>
-                    <a>
-                      <i className="fa fa-eye"></i>
-                    </a>
-                  </td> */}
                 </tr>
               </tbody>
             );

@@ -1,10 +1,9 @@
-import * as React from "react";
+import React from "react";
 import { RestService } from "../../../_service/RestService";
 import { v4 } from "uuid";
 import { CommonService } from "../../../_common/common";
 
 class VerifyAndSave extends React.Component {
-  config;
   constructor(props) {
     super(props);
     this.state = {
@@ -13,10 +12,6 @@ class VerifyAndSave extends React.Component {
       dashboardJSON: [],
       isLoading: false,
     };
-    // this.config = configFun(
-    //   props.meta.jsonData.apiUrl,
-    //   props.meta.jsonData.mainProductUrl
-    // );
   }
 
   setDashboardData = (data) => {
@@ -59,11 +54,6 @@ class VerifyAndSave extends React.Component {
                     <input type="checkbox" checked={dashboard.isChecked} />
                   </td>
                   <td>{dashboard.name}</td>
-                  {/* <td>
-                                        <a>
-                                            <i className="fa fa-eye"></i>
-                                        </a>
-                                    </td> */}
                 </tr>
               </tbody>
             );

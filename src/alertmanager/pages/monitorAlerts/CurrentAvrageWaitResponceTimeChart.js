@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -82,6 +82,7 @@ class CurrentAvrageWaitResponceTimeChart extends React.Component {
       console.log("Avarage response time data load failed. Error: ", err);
     }
   }
+
   fetchData = () => {
     fetch(
       `http://34.199.12.114:5055/api/getAvgResponseTimeGraphDataFromDb`
@@ -95,7 +96,6 @@ class CurrentAvrageWaitResponceTimeChart extends React.Component {
             borderColor: "rgba(255,255,255,0.5)",
             data: response.lineDataSetList,
             borderWidth: 2,
-            // Changes this dataset to become a line
             type: "line",
           },
         ],

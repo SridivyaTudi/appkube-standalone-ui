@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { images } from "../../img";
 
 class ServicesPerformance extends React.Component {
@@ -69,8 +69,6 @@ class ServicesPerformance extends React.Component {
 
   handleView = (e) => {
     const { name, value } = e.target;
-    // let { hostingType } = this.props;
-    // hostingType = value;
     this.setState({
       [name]: value,
     });
@@ -372,7 +370,6 @@ class ServicesPerformance extends React.Component {
   };
 
   renderTags = (tagList) => {
-    // const { accountId, cloudName } = this.props;
     const { viewMapping } = this.state;
     const retData = [];
     const renderIndex = ["App", "Data", "Network", "Other"];

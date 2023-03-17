@@ -56,7 +56,7 @@ class Accounts extends React.Component {
                 checked={data.checkStatus}
                 onClick={() => this.onClickChildCheckbox(i, j)}
                 className="checkbox"
-              />{" "}
+              />
               {data.title}
             </div>
           </li>
@@ -73,7 +73,7 @@ class Accounts extends React.Component {
                 onChange={(e) => {
                   this.onChangeParentCheckbox(e, i);
                 }}
-              />{" "}
+              />
               {responseData.title}
             </div>
           </h5>

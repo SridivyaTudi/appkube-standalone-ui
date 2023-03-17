@@ -5,7 +5,6 @@ import PreviewDashboardPopup from "./PreviewDashboardPopup";
 import Filter from "./../filter";
 
 class CloudDashboards extends React.Component {
-  previewDashboardPopupRef;
   backupUrl =
     "https://image.shutterstock.com/image-vector/set-colourful-business-charts-diagram-260nw-1388414240.jpg";
   constructor(props) {
@@ -256,6 +255,7 @@ class CloudDashboards extends React.Component {
       isElement
     );
   };
+
   filterValues = (e) => {
     const { value } = e.target;
     let duplicatdashboards = JSON.parse(JSON.stringify(this.props.data)) || [];
@@ -277,6 +277,7 @@ class CloudDashboards extends React.Component {
       }
     }
   };
+
   dashboardsView = (type) => {
     this.setState({ view: type });
   };
@@ -338,6 +339,7 @@ class CloudDashboards extends React.Component {
       </div>
     );
   };
+
   render() {
     const { filterData } = this.state;
     return (
@@ -361,4 +363,5 @@ class CloudDashboards extends React.Component {
     );
   }
 }
+
 export default CloudDashboards;

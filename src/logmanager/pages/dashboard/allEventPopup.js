@@ -2,7 +2,6 @@ import React from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
 
 class AllEventsPopup extends React.Component {
-  steps;
   constructor(props) {
     super(props);
     this.state = {
@@ -16,6 +15,7 @@ class AllEventsPopup extends React.Component {
       modal: !this.state.modal,
     });
   };
+  
   handleClose = () => {
     this.setState({
       modal: false,
@@ -38,8 +38,13 @@ class AllEventsPopup extends React.Component {
       >
         <ModalHeader>
           All Events | <span>Manage Rules</span>
-          <button type="button" className="close" aria-label="Close" onClick={this.toggle}>
-              <span aria-hidden="true">×</span>
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <span aria-hidden="true">×</span>
           </button>
         </ModalHeader>
         <ModalBody

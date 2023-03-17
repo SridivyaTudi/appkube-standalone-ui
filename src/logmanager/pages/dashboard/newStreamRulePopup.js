@@ -2,7 +2,6 @@ import React from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
 
 class NewStreamRulePopup extends React.Component {
-  steps;
   constructor(props) {
     super(props);
     this.state = {
@@ -15,6 +14,7 @@ class NewStreamRulePopup extends React.Component {
       modal: !this.state.modal,
     });
   };
+
   handleClose = () => {
     this.setState({
       modal: false,
@@ -29,9 +29,15 @@ class NewStreamRulePopup extends React.Component {
         toggle={this.toggle}
         className="modal-container logmanager-modal-container"
       >
-        <ModalHeader>New Stream Rule
-          <button type="button" className="close" aria-label="Close" onClick={this.toggle}>
-              <span aria-hidden="true">×</span>
+        <ModalHeader>
+          New Stream Rule
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <span aria-hidden="true">x</span>
           </button>
         </ModalHeader>
         <ModalBody

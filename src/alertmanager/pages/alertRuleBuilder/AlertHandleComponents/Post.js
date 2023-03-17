@@ -33,4 +33,3 @@ export class Post extends React.Component {
     );
   }
 }
-

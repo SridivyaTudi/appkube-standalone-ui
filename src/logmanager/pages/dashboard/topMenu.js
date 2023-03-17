@@ -4,20 +4,21 @@ import LaunchTcpInputPopup from "./launchTcpInputPopup";
 import ContentPacksPopup from "./contentPacksPopup";
 
 class TopMenu extends React.Component {
-  launchTcpInputRef;
-  contentPackPopupRef;
   constructor(props) {
     super(props);
     this.state = {};
     this.launchTcpInputRef = React.createRef();
     this.contentPackPopupRef = React.createRef();
   }
+
   onClickOpenTcpInputPopup = (e) => {
     this.launchTcpInputRef.current.toggle();
   };
+
   onClickOpenContentPackPopup = (e) => {
     this.contentPackPopupRef.current.toggle();
   };
+  
   render() {
     return (
       <>

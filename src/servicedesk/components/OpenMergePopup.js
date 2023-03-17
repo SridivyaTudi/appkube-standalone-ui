@@ -8,11 +8,13 @@ class OpenMergePopup extends React.Component {
       modal: false,
     };
   }
+
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
     });
   };
+  
   handleClose = () => {
     this.setState({
       modal: false,

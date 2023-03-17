@@ -167,7 +167,6 @@ class GoogleCommonServiceFIleRepo extends React.Component {
       }
     }
     retData.isValid = isValid;
-    console.log(retData);
     return retData;
   };
 
@@ -401,7 +400,6 @@ class GoogleCommonServiceFIleRepo extends React.Component {
         isSubmitted,
       } = this.state;
       const errorData = this.validate(isSubmitted);
-      // console.log(errorData)
       return (
         <div className="catalogue-right-container">
           <button

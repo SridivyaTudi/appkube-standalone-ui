@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // import { configFun } from '../../config';
 
 class Kubernetes extends Component {
-//   config;
   constructor(props) {
     super(props);
     this.state = {};

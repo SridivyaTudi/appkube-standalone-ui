@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from "react";
 
-class Rbac extends Component {
+class Rbac extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -9,7 +9,10 @@ class Rbac extends Component {
       childName: null,
       parentName: null,
       mapPermissions: {},
-      isExternalSecurityEnabled: localStorage.getItem('external_security_enable') === 'true' ? true : false,
+      isExternalSecurityEnabled:
+        localStorage.getItem("external_security_enable") === "true"
+          ? true
+          : false,
     };
     this.getExternaSecurityStatus = this.getExternaSecurityStatus.bind(this);
   }
@@ -17,48 +20,47 @@ class Rbac extends Component {
     await this.getExternaSecurityStatus();
   }
   async getExternaSecurityStatus() {
-    // await console.log("external security flag : ", this.state.isExternalSecurityEnabled);
     if (this.state.isExternalSecurityEnabled) {
       let uInfo =
-        localStorage.getItem('userInfo') === null ||
-        localStorage.getItem('userInfo') === undefined ||
-        localStorage.getItem('userInfo') === ''
-          ? ''
-          : localStorage.getItem('userInfo');
+        localStorage.getItem("userInfo") === null ||
+        localStorage.getItem("userInfo") === undefined ||
+        localStorage.getItem("userInfo") === ""
+          ? ""
+          : localStorage.getItem("userInfo");
       let userInfo =
-        uInfo !== '' && uInfo !== null && uInfo !== undefined && uInfo !== 'undefined' ? JSON.parse(uInfo) : '';
+        uInfo !== "" &&
+        uInfo !== null &&
+        uInfo !== undefined &&
+        uInfo !== "undefined"
+          ? JSON.parse(uInfo)
+          : "";
       this.setState({
-        mapPermissions: userInfo !== '' ? userInfo.authz.mapPermissions : [],
-        permissions: userInfo !== '' ? userInfo.authz.permissions : [],
+        mapPermissions: userInfo !== "" ? userInfo.authz.mapPermissions : [],
+        permissions: userInfo !== "" ? userInfo.authz.permissions : [],
         childName: this.props.childName,
         parentName: this.props.parentName,
       });
     }
-    // await console.log("permissions : ", this.state.permissions);
   }
 
   include(arr, obj) {
-    // console.log("parents permissions:  ",arr);
     return arr.indexOf(obj) != -1;
   }
   checkParent(mapPermissions, str) {
     return mapPermissions.hasOwnProperty(str);
   }
   render() {
-    const { childName, mapPermissions, parentName, isExternalSecurityEnabled } = this.state;
+    const { childName, mapPermissions, parentName, isExternalSecurityEnabled } =
+      this.state;
     if (!isExternalSecurityEnabled) {
-      // console.log("1. External security disabled. Running with default authentication");
       return this.props.children;
     }
     if (!this.checkParent(mapPermissions, parentName)) {
-      // console.log("2. parent permission not granted. returning null");
       return null;
     }
     if (!this.include(mapPermissions[parentName], childName)) {
-      // console.log("3. permission not granted. returning null");
       return null;
     }
-    // console.log("4. permission granted. returning children");
     return this.props.children;
   }
 }

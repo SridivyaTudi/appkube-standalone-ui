@@ -1,41 +1,50 @@
+import React, { Component } from "react";
 
-import React, {Component} from 'react';
+class CommanCheckList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-class CommanCheckList extends Component{
-constructor(props){
-super(props)
-this.state={}
-}
+  render() {
+    const {
+      usecaseData,
+      activeStage,
+      handleStateChangeCheckList,
+      disabledEditForm,
+    } = this.props;
 
-render(){
-    const { usecaseData, activeStage, handleStateChangeCheckList, disabledEditForm } = this.props;
-    
-    return(
-        <React.Fragment>
-            {usecaseData && usecaseData?.stepinput?.stages[activeStage]?.workflowCheckList?.length>0 ?
- usecaseData.stepinput.stages[activeStage].workflowCheckList.map((row,index)=>
- <React.Fragment key={`${index}checkbox${activeStage}`} >
- <div className="requirement-data">
-        <input
-            type="checkbox"
-            checked={row.checked}
-            readOnly={disabledEditForm}
-            onChange={(e) =>handleStateChangeCheckList(e, index)}
-        />
-        <span>{row.label}</span>
-    </div>
-    </React.Fragment >
-    ):(<React.Fragment
-    ></React.Fragment>)}
-    </React.Fragment>
-
-    )
-}
+    return (
+      <React.Fragment>
+        {usecaseData &&
+        usecaseData?.stepinput?.stages[activeStage]?.workflowCheckList?.length >
+          0 ? (
+          usecaseData.stepinput.stages[activeStage].workflowCheckList.map(
+            (row, index) => (
+              <React.Fragment key={`${index}checkbox${activeStage}`}>
+                <div className="requirement-data">
+                  <input
+                    type="checkbox"
+                    checked={row.checked}
+                    readOnly={disabledEditForm}
+                    onChange={(e) => handleStateChangeCheckList(e, index)}
+                  />
+                  <span>{row.label}</span>
+                </div>
+              </React.Fragment>
+            )
+          )
+        ) : (
+          <React.Fragment></React.Fragment>
+        )}
+      </React.Fragment>
+    );
+  }
 }
 export default CommanCheckList;
 
 // displayCheckList = () => {
-  
+
 //     let retData = [];
 //     if (usecaseData && usecaseData.length > 0) {
 //         const workflowDetail: any = usecaseData[activeStage].workflowCheckList;

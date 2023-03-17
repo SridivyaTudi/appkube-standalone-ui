@@ -6,7 +6,6 @@ import Wizard from "./Wizard";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
 class CloudAccountPolicyPopup extends React.Component {
-  steps;
   constructor(props) {
     super(props);
     this.state = {

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import CurrentAvrageWaitResponceTimeChart from "./CurrentAvrageWaitResponceTimeChart";
 import CurrentAvrageWaitTimeChart from "./CurrentAvrageWaitTimeChart";
@@ -7,8 +7,6 @@ import AlertVolumeChart from "./AlertVolumeChart";
 import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 
 class MonitorAlerts extends React.Component {
-  breadCrumbs;
-  unimplementedFeatureModalRef;
   constructor(props) {
     super(props);
     this.state = {
@@ -83,6 +81,7 @@ class MonitorAlerts extends React.Component {
       console.log("Avg Wait time data load fail ", err);
     }
   }
+
   fetchAvgRespTimeData = () => {
     fetch(
       `http://34.199.12.114:5055/api/getAvgResponseTimeGraphDataFromDb`
@@ -94,6 +93,7 @@ class MonitorAlerts extends React.Component {
       console.log("Avg Resp Time Data :::::: ", response);
     });
   };
+
   fetchAvgWaitTimeData = () => {
     fetch(`http://34.199.12.114:5055/api/getWaitTimeGraphDataFromDb`).then(
       (response) => {
@@ -105,6 +105,7 @@ class MonitorAlerts extends React.Component {
       }
     );
   };
+
   createOptionForAvgRespTime = () => {
     const { avgRespTimeData } = this.state;
     const retData = [];
@@ -114,6 +115,7 @@ class MonitorAlerts extends React.Component {
     }
     return retData;
   };
+
   createOptionForAvgWaitTime = () => {
     const { avgWaitTimeData } = this.state;
     const retData = [];
@@ -123,6 +125,7 @@ class MonitorAlerts extends React.Component {
     }
     return retData;
   };
+
   onSelectAvgRespDate = (e) => {
     const value = e.target.value;
     const { avgRespTimeData } = this.state;
@@ -130,6 +133,7 @@ class MonitorAlerts extends React.Component {
       dailyAvgRespTime: avgRespTimeData.lineDataSetList[value],
     });
   };
+
   onSelectAvgWaitDate = (e) => {
     const value = e.target.value;
     const { avgWaitTimeData } = this.state;
@@ -137,6 +141,7 @@ class MonitorAlerts extends React.Component {
       dailyAvgWaitTime: avgWaitTimeData.lineDataSetList[value],
     });
   };
+
   fetchDatatopAlertToday = () => {
     fetch(`http://34.199.12.114:5055/api/topAlertToday`).then((response) => {
       this.setState({
@@ -145,6 +150,7 @@ class MonitorAlerts extends React.Component {
       console.log("top alert data :::::: ", response);
     });
   };
+
   fetchTeamMatricsData = () => {
     fetch(`http://34.199.12.114:7100/api/getTeamMatricsData`).then(
       (response) => {

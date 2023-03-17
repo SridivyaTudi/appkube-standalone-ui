@@ -1,6 +1,6 @@
 import React from "react";
 
-export  class StackDefault extends React.Component {
+export class StackDefault extends React.Component {
   render() {
     return (
       <React.Fragment>
@@ -55,5 +55,3 @@ export  class StackDefault extends React.Component {
     );
   }
 }
-
-

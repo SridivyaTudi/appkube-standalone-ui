@@ -2,7 +2,6 @@ import React from "react";
 import { config } from "../../config";
 import QueryPanel from "./query/QueryPanel";
 import Utils from "../../utils";
-
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 const entBaseClsPkg = "com.synectiks.cms.entities.";

@@ -55,18 +55,22 @@ class ProvisioningTemplates extends React.Component {
       selectedFilter: {},
     };
   }
+
   componentDidMount() {
     this.createFilterJson();
   }
+
   dashboardsView = (type) => {
     this.setState({ view: type });
   };
+
   showMainView = () => {
     this.setState({
       type: "",
       associatedCloud: "",
     });
   };
+
   createFilterJson = () => {
     let { dashboards, filterData } = this.state;
     const filterKeys = ["associatedCloud", "associatedCreds"];
@@ -103,6 +107,7 @@ class ProvisioningTemplates extends React.Component {
       filterData,
     });
   };
+
   renderDashboards = (dashboards) => {
     let retData = [];
     if (dashboards && dashboards.length > 0) {
@@ -135,9 +140,6 @@ class ProvisioningTemplates extends React.Component {
                   )}
                   {name}
                 </div>
-                {/* <div className="sub-text">
-                                {Type}
-                            </div> */}
                 <div className="text">{description}</div>
               </div>
             </div>
@@ -157,6 +159,7 @@ class ProvisioningTemplates extends React.Component {
     }
     return retData;
   };
+
   hideDashboard = (associatedCreds, associatedCloud) => {
     const { selectedFilter } = this.state;
     const isassociatedCreds =
@@ -169,6 +172,7 @@ class ProvisioningTemplates extends React.Component {
         selectedFilter["associatedCloud"].indexOf(associatedCloud) !== -1);
     return isassociatedCreds && isassociatedCloud;
   };
+
   filterValues = (e) => {
     const { value } = e.target;
     let duplicatdashboards = JSON.parse(JSON.stringify(this.props.data)) || [];
@@ -190,6 +194,7 @@ class ProvisioningTemplates extends React.Component {
       }
     }
   };
+
   formFields = () => {
     const { view, dashboards } = this.state;
     return (
@@ -241,17 +246,20 @@ class ProvisioningTemplates extends React.Component {
       </div>
     );
   };
+
   setActiveView = (type, associatedCloud) => {
     this.setState({
       type,
       associatedCloud,
     });
   };
+
   onChangeFilter = (filters) => {
     this.setState({
       selectedFilter: filters,
     });
   };
+
   render() {
     const { type, associatedCloud, filterData } = this.state;
     let ActiveViewComponent = null;

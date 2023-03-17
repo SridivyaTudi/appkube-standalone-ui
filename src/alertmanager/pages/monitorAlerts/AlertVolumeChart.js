@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -79,7 +79,6 @@ const lineChart = {
 };
 
 class AlertVolumeChart extends React.Component {
-  chart;
   constructor(props) {
     super(props);
     this.state = {
@@ -100,6 +99,7 @@ class AlertVolumeChart extends React.Component {
       console.log("Alert Volume data load failed. Error: ", err);
     }
   }
+
   fetchData = () => {
     fetch(`http://34.199.12.114:5055/api/getAlertVolumeData`).then(
       (response) => {
@@ -126,6 +126,7 @@ class AlertVolumeChart extends React.Component {
       }
     );
   };
+  
   createLegend = () => {
     const text = [];
     const { legends } = this.state;

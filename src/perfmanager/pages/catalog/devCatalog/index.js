@@ -33,7 +33,6 @@ class DevCatalogue extends React.Component {
       component: DataFlow,
     },
   ];
-  previewDashboardPopupRef;
   constructor(props) {
     super(props);
     this.state = {

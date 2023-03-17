@@ -6,7 +6,6 @@ import { config } from "../config";
 import AlertMessage from "./AlertMessage";
 
 class OpenNewCompanyPopup extends React.Component {
-  steps;
   constructor(props) {
     super(props);
     this.state = {
@@ -32,6 +31,7 @@ class OpenNewCompanyPopup extends React.Component {
       modal: !this.state.modal,
     });
   };
+
   handleClose = () => {
     this.setState({
       modal: false,
@@ -87,17 +87,6 @@ class OpenNewCompanyPopup extends React.Component {
       formData.append("accountTier", accountTier);
       formData.append("renewalDate", renewalDate);
       formData.append("industry", industry);
-      // const data = {
-      //     "logo": companyLogo,
-      //     "companyName": companyName,
-      //     "description": description,
-      //     "notes": notes,
-      //     "domain": domain,
-      //     "healthScore": healthScore,
-      //     "accountTier": accountTier,
-      //     "renewalDate": renewalDate,
-      //     "industry": industry,
-      // }
       axios
         .post(config.ADD_COMPANY_URL, formData, {
           headers: {
@@ -151,12 +140,6 @@ class OpenNewCompanyPopup extends React.Component {
         renewalDate,
         industry,
       } = this.state;
-      // if (!companyLogo) {
-      //     retData.companyLogo = {
-      //         isValid: false,
-      //         message: "Company Logo is required"
-      //     };
-      // }
       if (!companyName) {
         retData.companyName = {
           isValid: false,
@@ -215,12 +198,14 @@ class OpenNewCompanyPopup extends React.Component {
       [name]: value,
     });
   };
+
   handleImageChange = (e) => {
     console.log("file=", e.target.files[0]);
     this.setState({
       companyLogo: URL.createObjectURL(e.target.files[0]),
     });
   };
+  
   handleCloseAlert = (e) => {
     this.setState({
       isAlertOpen: false,

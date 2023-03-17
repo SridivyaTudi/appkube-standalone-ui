@@ -12,11 +12,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import OpenEditTicketPopup from "../../components/OpenEditTicketPopup";
 
 class Dashboard extends React.Component {
-  tableValue;
-  perPageLimit;
-  checkboxValue;
-  ticketData;
-  openEditTicketRef;
   lineChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -49,6 +44,7 @@ class Dashboard extends React.Component {
       position: "bottom",
     },
   };
+
   constructor(props) {
     super(props);
     const res = async () => {
@@ -57,9 +53,7 @@ class Dashboard extends React.Component {
       }).then((response) => response.json());
       return res;
     };
-
     this.openEditTicketRef = React.createRef();
-
     console.log("data in constructor", res());
     this.perPageLimit = 2;
     this.checkboxValue = false;
@@ -137,7 +131,6 @@ class Dashboard extends React.Component {
                       className="btn btn-link"
                       onClick={(e) => this.onClickOpenEditTicket(e, ticketObj)}
                     >
-                      {/* <i onClick={e => this.onClickEditAlert(e, alert)} className="fa fa-edit"></i> */}
                       <i className="fa fa-edit"></i>
                     </button>
                   </Rbac>
@@ -146,7 +139,6 @@ class Dashboard extends React.Component {
                     childName="dashborad-index-tickettbl-deletebtn"
                   >
                     <button className="btn btn-link">
-                      {/* <i onClick={e => this.onClickDeleteAlert(e, alert)} className="fa fa-trash"></i> */}
                       <i className="fa fa-trash"></i>
                     </button>
                   </Rbac>
@@ -381,9 +373,7 @@ class Dashboard extends React.Component {
                   <span>Complete Overview of the Tickets</span>
                 </div>
               </div>
-              {/* create component */}
               <CreateButtonComponent />
-              {/* create component */}
             </div>
           </div>
           <div className="common-container border-bottom-0 p-b-0">
@@ -403,16 +393,6 @@ class Dashboard extends React.Component {
                       </div>
                     </div>
                     <div className="col-lg-7 col-md-12 col-sm-12 text-right">
-                      {/* <div className="d-inline-block v-a-top days-box">
-                                                <div className="d-inline-block form-check">
-                                                    <input type="checkbox" className="form-check-input" id="Today" />
-                                                    <label className="form-check-label" htmlFor="Today">Today</label>
-                                                </div>
-                                                <div className="d-inline-block form-check">
-                                                    <input type="checkbox" className="form-check-input" id="Yesterday" />
-                                                    <label className="form-check-label" htmlFor="Yesterday">Yesterday</label>
-                                                </div>
-                                            </div> */}
                       <div className="d-inline-block v-a-top calendar-box">
                         <DatePicker
                           onChange={this.setDate}

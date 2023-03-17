@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
-import { config } from '../../config';
-import AlertMessage from '../../components/AlertMessage';
+import React, { Component } from "react";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import { config } from "../../config";
+import AlertMessage from "../../components/AlertMessage";
 // import axios from 'axios';
 
 class EditToCollectorPopup extends Component {
@@ -9,12 +9,12 @@ class EditToCollectorPopup extends Component {
     super(props);
     this.state = {
       catalogId: null,
-      catalogName: '',
-      type: '',
-      catalogDescription: '',
-      catlogNameRequired: '',
-      catalogTypeRequired: '',
-      catalogDescriptionRequired: '',
+      catalogName: "",
+      type: "",
+      catalogDescription: "",
+      catlogNameRequired: "",
+      catalogTypeRequired: "",
+      catalogDescriptionRequired: "",
       isApiCalled: false,
       modal: false,
       folderArray: [],
@@ -38,7 +38,7 @@ class EditToCollectorPopup extends Component {
   }
 
   toggle = async (selectedCagtalog) => {
-    console.log('Selected  :::: ', selectedCagtalog);
+    console.log("Selected  :::: ", selectedCagtalog);
     this.setState({
       modal: !this.state.modal,
       catalogName: selectedCagtalog.catalogName,
@@ -57,7 +57,7 @@ class EditToCollectorPopup extends Component {
   handleStateChange = (e) => {
     const { name, value, id } = e.target;
     let data = [];
-    if (name == 'name') {
+    if (name == "name") {
       for (let i = 0; i < this.state.catalogName.length; i++) {
         if (id == i) {
           data.push({ index: i, value: value });
@@ -74,45 +74,46 @@ class EditToCollectorPopup extends Component {
       });
     }
   };
+
   onChangeSelectBox = (e) => {
     this.setState({
       type: e.target.value,
     });
   };
+
   handleCloseAlert = (e) => {
     this.setState({
       isAlertOpen: false,
     });
   };
+
   onUpdate = async (event) => {
     event.preventDefault();
     this.setState({
       isSubmitted: true,
     });
-
     const { catalogName, type, catalogDescription, catalogId } = this.state;
-
-    if (catalogName == null || catalogName == '') {
+    if (catalogName == null || catalogName == "") {
       this.setState({
-        catlogNameRequired: 'Please enter catalogName',
+        catlogNameRequired: "Please enter catalogName",
       });
       return;
     } else {
       this.setState({
         catlogNameRequired: null,
       });
-      if (type == null || type == '') {
+      if (type == null || type == "") {
         this.setState({
-          catalogTypeRequired: 'Please select catalogType',
+          catalogTypeRequired: "Please select catalogType",
         });
         return;
       } else {
         this.setState({
           catlogNameRequired: null,
         });
-        if (catalogDescription == null || catalogDescription == '') {
+        if (catalogDescription == null || catalogDescription == "") {
           this.setState({
-            catalogDescriptionRequired: 'Please enter catalogDescription',
+            catalogDescriptionRequired: "Please enter catalogDescription",
           });
           return;
         } else {
@@ -129,11 +130,11 @@ class EditToCollectorPopup extends Component {
       };
 
       let cd = new FormData();
-      cd.append('id', catalogId);
-      cd.append('name', catalogName);
-      cd.append('type', data.type);
-      cd.append('description', catalogDescription);
-      console.log('all data  :::: ', data);
+      cd.append("id", catalogId);
+      cd.append("name", catalogName);
+      cd.append("type", data.type);
+      cd.append("description", catalogDescription);
+      console.log("all data  :::: ", data);
       // axios
       //   .put(config.UPDATE_CATALOG, cd, {})
       //   .then((response) => {
@@ -167,7 +168,11 @@ class EditToCollectorPopup extends Component {
     const state = this.state;
 
     return (
-      <Modal isOpen={state.modal} toggle={this.closeModel} className="modal-container perfmanager-modal-container">
+      <Modal
+        isOpen={state.modal}
+        toggle={this.closeModel}
+        className="modal-container perfmanager-modal-container"
+      >
         <AlertMessage
           handleCloseAlert={this.handleCloseAlert}
           open={state.isAlertOpen}
@@ -175,7 +180,13 @@ class EditToCollectorPopup extends Component {
           msg={state.message}
         ></AlertMessage>
         <ModalHeader toggle={this.closeModel}>Update Catalog</ModalHeader>
-        <ModalBody style={{ height: 'calc(48vh - 0px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalBody
+          style={{
+            height: "calc(48vh - 0px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="catalog-form-group">
             <div className="form-group">
               <label htmlFor="catalogName">Catalog Name:</label>
@@ -189,7 +200,9 @@ class EditToCollectorPopup extends Component {
                 onChange={this.handleStateChange}
                 className="input-group-text"
               />
-              <span style={{ color: 'red' }}>{this.state.catlogNameRequired}</span>
+              <span style={{ color: "red" }}>
+                {this.state.catlogNameRequired}
+              </span>
             </div>
             <div className="form-group">
               <label htmlFor="CatalogType">Catalog Type</label>
@@ -214,7 +227,9 @@ class EditToCollectorPopup extends Component {
                   Synectiks
                 </option>
               </select>
-              <span style={{ color: 'red' }}>{this.state.catalogTypeRequired}</span>
+              <span style={{ color: "red" }}>
+                {this.state.catalogTypeRequired}
+              </span>
             </div>
             <div className="form-group">
               <label htmlFor="catalogDescription">Catalog Description:</label>
@@ -225,10 +240,15 @@ class EditToCollectorPopup extends Component {
                 onChange={this.handleStateChange}
                 value={this.state.catalogDescription}
               ></textarea>
-              <span style={{ color: 'red' }}>{this.state.catalogDescriptionRequired}</span>
+              <span style={{ color: "red" }}>
+                {this.state.catalogDescriptionRequired}
+              </span>
             </div>
             <div>
-              <button className="btn btn-secondary m-r-2" onClick={this.onUpdate}>
+              <button
+                className="btn btn-secondary m-r-2"
+                onClick={this.onUpdate}
+              >
                 Update
               </button>
               <button className="btn btn-warning" onClick={this.closeModel}>
@@ -241,4 +261,5 @@ class EditToCollectorPopup extends Component {
     );
   }
 }
+
 export default EditToCollectorPopup;

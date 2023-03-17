@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { images } from "../../../img";
 import WebServiceWizard from "./WebServiceWizard";
 import Monitor from "./Monitor";
@@ -8,7 +8,6 @@ import { RestService } from "../../_service/RestService";
 // import { PLUGIN_BASE_URL } from './../../../constants';
 
 class Node extends React.Component {
-  config;
   constructor(props) {
     super(props);
     this.state = {
@@ -115,7 +114,6 @@ class Node extends React.Component {
       ).then(
         (response) => {
           const { cloudDashBoards } = response.details.ops;
-          // const dashboardData = this.manipulateCatalogueData(dataSources, cloudDashBoards);
           this.setState({
             cloudDashBoards,
           });
@@ -185,8 +183,6 @@ class Node extends React.Component {
         retData.push(dataSource);
       }
     });
-    // const retData = dataSources.filter((source) => source.isDashboardAdded);
-    // return retData;
     return retData;
   };
 
@@ -234,7 +230,6 @@ class Node extends React.Component {
   render() {
     const { accountId, steps, dashboardData, viewJson, collapseInfo } =
       this.state;
-    // console.log(accountId, serviceData, steps, dashboardData, viewJson, "dashboardData");
     const { serviceData } = this.props;
     return (
       <div className="inner">
@@ -244,7 +239,6 @@ class Node extends React.Component {
               <img src={images.awsLogo} alt="" />
             </span>
             Amazon Web Services
-            {/* {serviceData.name} */}
           </h3>
           <div className="breadcrumbs">
             <ul>

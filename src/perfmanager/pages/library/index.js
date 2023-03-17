@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { config } from "../../config";
 import folderIcon from "./img/config-collapse-icon1.png";
@@ -8,15 +8,12 @@ import { Collapse, UncontrolledPopover, PopoverBody } from "reactstrap";
 import collapseToggleIcon from "./img/config-collapse-icon1.png";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import AlertMessage from "../../components/AlertMessage";
-import  TopMenu  from "./../catalog/topMenu";
+import TopMenu from "./../catalog/topMenu";
 import Rbac from "../../components/Rbac";
 import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 import ViewDashboardJsonPopup from "./viewDashboardJsonPopup";
 
 class Library extends React.Component {
-  unimplementedFeatureModalRef;
-  steps;
-  viewDashboardJsonPopupRef;
   constructor(props) {
     super(props);
     this.state = {
@@ -35,6 +32,7 @@ class Library extends React.Component {
     this.unimplementedFeatureModalRef = React.createRef();
     this.viewDashboardJsonPopupRef = React.createRef();
   }
+
   onClickUnImplementedFeature = (link) => {
     this.unimplementedFeatureModalRef.current.setLink(link);
     this.unimplementedFeatureModalRef.current.toggle();
@@ -106,7 +104,6 @@ class Library extends React.Component {
     const currentItem = this._findChild([...activeTabs], libData);
     if (currentItem) {
       const items = currentItem.items;
-      // console.log("Items :: ", items)
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         retData.push(
@@ -275,9 +272,6 @@ class Library extends React.Component {
                 >
                   <i className="fa fa-trash"></i>
                 </button>
-                {/* <Link to={`/dashboard/import?id=${dashboard.id}&isFolder=false`} className="btn btn-link popover-link" id="PopoverFocus">
-                                    <i className="fa fa-ellipsis-h"></i>
-                                </Link> */}
                 <button
                   className="btn btn-link"
                   id={`PopoverFocus-${dashboard.id}`}
@@ -330,6 +324,7 @@ class Library extends React.Component {
     }
     return retData;
   };
+
   updateDashbordMonitorFlag = async (id) => {
     await fetch(
       config.UPDATE_DASHBOARD_MONITOR_FLAG_URL +
@@ -365,6 +360,7 @@ class Library extends React.Component {
         }, 3000);
       });
   };
+
   openDashboard = (index) => {
     let { dashboardList } = this.state;
     dashboardList[index].open = !dashboardList[index].open;
@@ -383,10 +379,12 @@ class Library extends React.Component {
       object: dashboard,
     });
   };
+
   viewDashboradJson = (dashboard) => {
     console.log("Dashborad=" + JSON.stringify(dashboard));
     this.viewDashboardJsonPopupRef.current.toggle(JSON.stringify(dashboard));
   };
+
   removeCollector = (collector) => {
     console.log("Parent id : ", collector.parentId);
     this.setState({
@@ -397,6 +395,7 @@ class Library extends React.Component {
       object: collector,
     });
   };
+
   removeFolder = (folder) => {
     console.log("library id : ", folder.id);
     this.setState({
@@ -407,6 +406,7 @@ class Library extends React.Component {
       object: folder,
     });
   };
+
   handleCloseConfirmDialog = () => {
     this.setState({
       isConfirmDialogOpen: false,

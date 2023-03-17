@@ -6,7 +6,6 @@ import AlertMessage from "./../../components/AlertMessage";
 let indexSetMap = new Map();
 
 class CreateStreamPopup extends React.Component {
-  steps;
   constructor(props) {
     super(props);
     this.state = {
@@ -21,9 +20,11 @@ class CreateStreamPopup extends React.Component {
       removeMatches: false,
     };
   }
+
   async componentDidMount() {
     this.getIndexSets();
   }
+
   getIndexSets = async () => {
     var requestOptions = await CommonService.requestOptionsForGetRequest();
     await fetch(config.GET_INDEX_SETS, requestOptions)
@@ -40,6 +41,7 @@ class CreateStreamPopup extends React.Component {
       })
       .catch((error) => console.log("error", error));
   };
+
   createIndexSetOptions = () => {
     let retData = [];
     indexSetMap.forEach((value, key) => {
@@ -47,12 +49,14 @@ class CreateStreamPopup extends React.Component {
     });
     return retData;
   };
+
   onStateChange = (e) => {
     const { name, value } = e.target;
     this.setState({
       [name]: value,
     });
   };
+
   removeMatchesCheckboxChange = (e) => {
     let isState = e.target.checked;
     console.log("state : ", isState);
@@ -62,16 +66,19 @@ class CreateStreamPopup extends React.Component {
       this.setState({ removeMatches: false });
     }
   };
+
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
     });
   };
+
   handleClose = () => {
     this.setState({
       modal: false,
     });
   };
+
   saveStream = async (event) => {
     event.preventDefault();
     this.setState({
@@ -96,7 +103,6 @@ class CreateStreamPopup extends React.Component {
       fetch(config.STREAM, requestOptions)
         .then((response) => response.text())
         .then((result) => {
-          console.log("result :", result);
           if (result != null) {
             this.setState({
               severity: config.SEVERITY_SUCCESS,
@@ -117,10 +123,10 @@ class CreateStreamPopup extends React.Component {
             message: config.STREAM_CREATED_ERROR,
             isAlertOpen: true,
           });
-          console.log("error", error);
         });
     }
   };
+
   validate = (isSubmitted) => {
     const validObj = {
       isValid: true,
@@ -175,10 +181,16 @@ class CreateStreamPopup extends React.Component {
           severity={state.severity}
           msg={state.message}
         ></AlertMessage>
-        <ModalHeader>Creating Stream
-        <button type="button" className="close" aria-label="Close" onClick={this.toggle}>
-          <span aria-hidden="true">×</span>
-        </button>
+        <ModalHeader>
+          Creating Stream
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
         </ModalHeader>
         <ModalBody
           style={{
@@ -237,14 +249,6 @@ class CreateStreamPopup extends React.Component {
                     onChange={this.onStateChange}
                   >
                     <option>Select index set</option>
-                    {/* for local */}
-                    {/* <option value="5fb950ef6439c846ee76f455">Default index set</option>
-                                        <option value="5fb95bb004a35d1e34e9baa6">GrayLog Events</option>
-                                        <option value="5fb95bb004a35d1e34e9baa8">GrayLog System Event</option> */}
-                    {/* for server */}
-                    {/* <option value="5fd8a53dcf9fac75f019966e">Default index set</option>
-                                        <option value="5fd8a53fcf9fac75f0199724">GrayLog Events</option>
-                                        <option value="5fd8a53fcf9fac75f0199727">GrayLog System Event</option> */}
                     {this.createIndexSetOptions()}
                   </select>
                   <span style={{ color: "red" }}>

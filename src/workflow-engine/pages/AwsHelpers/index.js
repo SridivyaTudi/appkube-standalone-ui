@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 //import { configFun } from '../../config';
 //const AWS = require('aws-sdk');
 //const StepFunctions = require('aws-sdk/clients/stepfunctions');
 
-class AwsHelper extends Component {
+class AwsHelper extends React.Component {
   // config;
   // credentials;
   // dynamoDB;

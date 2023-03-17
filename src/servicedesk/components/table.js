@@ -246,7 +246,6 @@ class Table extends React.Component {
           </a>
         </div>
         <ul ref={this.paginationRef}>{rows}</ul>
-        {/* <li><a href="#">......</a></li> */}
         <div className="page-item next">
           <a
             className={

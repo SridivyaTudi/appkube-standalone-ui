@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 
 class TopMenu extends Component {
-  unimplementedFeatureModalRef;
   constructor(props) {
     super(props);
     this.state = {};

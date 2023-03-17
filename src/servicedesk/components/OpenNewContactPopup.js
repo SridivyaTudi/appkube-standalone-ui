@@ -17,7 +17,6 @@ class MySelectObj {
 }
 
 class OpenNewContactPopup extends React.Component {
-  steps;
   constructor(props) {
     super(props);
     this.state = {
@@ -75,6 +74,7 @@ class OpenNewContactPopup extends React.Component {
       console.log("Loading company data failed. Error: ", err);
     }
   }
+  
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
@@ -353,6 +353,7 @@ class OpenNewContactPopup extends React.Component {
       [name]: value,
     });
   };
+
   handleSelectBox = (e) => {
     const { orgCompanyList } = this.state;
     const { name, value } = e.target;
@@ -377,12 +378,14 @@ class OpenNewContactPopup extends React.Component {
       }
     }
   };
+
   addNewCompany = () => {
     this.setState({
       oldCompanyFlag: false,
       newCompanyFlag: true,
     });
   };
+
   handleImageChange = (e) => {
     this.setState({
       [e.target.name + "Url"]: URL.createObjectURL(e.target.files[0]),
@@ -397,6 +400,7 @@ class OpenNewContactPopup extends React.Component {
       isAlertOpen: false,
     });
   };
+  
   render() {
     const {
       modal,

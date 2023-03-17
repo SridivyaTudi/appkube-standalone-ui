@@ -1,8 +1,9 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
+
 class FormkiqHelper {
   formkiqClient;
   constructor(formkiqUrl, formkiqUserName, formkiqPassword, cb) {
-    this.formkiqClient = new window.exports.FormkiqClient(formkiqUrl, '', '', {
+    this.formkiqClient = new window.exports.FormkiqClient(formkiqUrl, "", "", {
       onFormSubmitted: (formName) => {},
       onFormCompleted: (formName, response) => {
         cb(response);
@@ -21,4 +22,5 @@ class FormkiqHelper {
     });
   }
 }
+
 export default FormkiqHelper;

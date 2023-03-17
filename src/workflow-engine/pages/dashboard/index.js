@@ -1,24 +1,19 @@
 import React, { Component } from "react";
-//import * as React from 'react';
-//import { Breadcrumbs } from '../Breadcrumbs';
 import rfpImg from "../../img/rfp-img.png";
 import resourcesUserImg1 from "../../img/resources-user-img1.png";
 import resourcesUserImg2 from "../../img/resources-user-img2.png";
 import resourcesUserImg3 from "../../img/resources-user-img3.png";
 import resourcesUserImg4 from "../../img/resources-user-img4.png";
 import resourcesUserImg5 from "../../img/resources-user-img5.png";
-// import resourcesUserImg from '../../img/resources-user-img.png';
 import DateFormat from "./DateFormat";
 import headerIcon from "../../img/header-icon.png";
 import { Doughnut, Bar } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Link } from "react-router-dom";
-//import { StageStatus } from '../../commonDS';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 class WorkflowDashboard extends Component {
-  breadCrumbs;
   constructor(props) {
     super(props);
     this.state = {
@@ -406,16 +401,6 @@ class WorkflowDashboard extends Component {
       activeIndex: 0,
       status: "all",
     };
-    this.breadCrumbs = [
-      {
-        label: "Home",
-        route: `/`,
-      },
-      {
-        label: "Kubernetes | Overview",
-        isCurrentPage: true,
-      },
-    ];
   }
 
   displayResourcesData = () => {
@@ -525,7 +510,6 @@ class WorkflowDashboard extends Component {
   render() {
     return (
       <div className="owrkflow-dashboard-container">
-        {/* <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="WORKFLOW MANAGEMENT" /> */}
         <div className="dashboard-container">
           <div className="fliter-container">
             <div className="row">

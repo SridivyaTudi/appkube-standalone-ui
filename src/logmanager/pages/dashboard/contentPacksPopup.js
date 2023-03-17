@@ -4,7 +4,6 @@ import { config } from "../../config";
 import AlertMessage from "../../components/AlertMessage";
 
 class ContentPacksPopup extends React.Component {
-  steps;
   constructor(props) {
     super(props);
     this.state = {
@@ -43,6 +42,7 @@ class ContentPacksPopup extends React.Component {
       [name]: value,
     });
   };
+
   checkboxChange = (e) => {
     let isState = e.target.checked;
     let name = e.target.name;
@@ -52,16 +52,19 @@ class ContentPacksPopup extends React.Component {
       [name]: isState,
     });
   };
+
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
     });
   };
+
   handleClose = () => {
     this.setState({
       modal: false,
     });
   };
+
   saveStream = async (event) => {
     event.preventDefault();
     this.setState({
@@ -165,6 +168,7 @@ class ContentPacksPopup extends React.Component {
         });
     }
   };
+
   validate = (isSubmitted) => {
     const validObj = {
       isValid: true,
@@ -236,9 +240,15 @@ class ContentPacksPopup extends React.Component {
           severity={state.severity}
           msg={state.message}
         ></AlertMessage>
-        <ModalHeader>General Information
-          <button type="button" className="close" aria-label="Close" onClick={this.toggle}>
-              <span aria-hidden="true">×</span>
+        <ModalHeader>
+          General Information
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <span aria-hidden="true">×</span>
           </button>
         </ModalHeader>
         <ModalBody
@@ -371,7 +381,6 @@ class ContentPacksPopup extends React.Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="title">
-                    {" "}
                     TLS private key file &nbsp;<sub>(optional)</sub>
                   </label>
                   <input
@@ -396,7 +405,7 @@ class ContentPacksPopup extends React.Component {
                     name="enableTls"
                     value={enableTls}
                     onChange={this.checkboxChange}
-                  />{" "}
+                  />
                   Enable TLS
                   <span>Accept TLS connections</span>
                 </div>
@@ -406,7 +415,6 @@ class ContentPacksPopup extends React.Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="title">
-                    {" "}
                     TLS key password &nbsp;<sub>(optional)</sub>
                   </label>
                   <input
@@ -450,7 +458,6 @@ class ContentPacksPopup extends React.Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="title">
-                    {" "}
                     TLS Client Auth Trusted Certs &nbsp;<sub>(optional)</sub>
                   </label>
                   <input
@@ -477,7 +484,7 @@ class ContentPacksPopup extends React.Component {
                     onChange={this.checkboxChange}
                     value={tcpKeepAlive}
                     id="RemoveMessages"
-                  />{" "}
+                  />
                   &nbsp;TCP keepalive
                   <span>Enable TCP keep alive packets</span>
                 </div>
@@ -492,7 +499,7 @@ class ContentPacksPopup extends React.Component {
                     onChange={this.checkboxChange}
                     value={nullFrameDelimiter}
                     id="nullFramedelimiter"
-                  />{" "}
+                  />
                   &nbsp;Null frame delimiter?
                   <span>
                     Use null byte as frame delimiter? Otherwise newline
@@ -505,7 +512,6 @@ class ContentPacksPopup extends React.Component {
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="title">
-                    {" "}
                     Override Source &nbsp;<sub>(optional)</sub>
                   </label>
                   <input
@@ -532,7 +538,7 @@ class ContentPacksPopup extends React.Component {
                     onChange={this.checkboxChange}
                     value={forceRDns}
                     id="forceRDns"
-                  />{" "}
+                  />
                   &nbsp;Force rDNS?
                   <span>
                     Force rDNS resolution of hostname? Use if hostname cannot be
@@ -551,7 +557,7 @@ class ContentPacksPopup extends React.Component {
                     onChange={this.checkboxChange}
                     value={allowOverridingDate}
                     id="allowOverridingDate"
-                  />{" "}
+                  />
                   &nbsp;Allow overriding date?
                   <span>
                     Allow to override with current date if date could not be
@@ -569,7 +575,7 @@ class ContentPacksPopup extends React.Component {
                     onChange={this.checkboxChange}
                     value={storeFullMessage}
                     id="storeFullMessage"
-                  />{" "}
+                  />
                   &nbsp;Store full message?
                   <span>
                     Store the full original syslog message as full_message?
@@ -586,7 +592,7 @@ class ContentPacksPopup extends React.Component {
                     onChange={this.checkboxChange}
                     value={expandStructuredData}
                     id="expandStructuredData"
-                  />{" "}
+                  />
                   &nbsp;Expand structured data?
                   <span>
                     Expand structured data elements by prefixing attributes with

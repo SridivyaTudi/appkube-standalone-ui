@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
-import { Collapse } from 'reactstrap';
-import openFolderIcon from '../../../assets/img/perfmanager/open-folder.png';
-import { RestService } from '../_service/RestService';
-import { config } from '../../config';
-import AlertMessage from '../../components/AlertMessage';
+import React, { Component } from "react";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Collapse } from "reactstrap";
+import openFolderIcon from "../../../assets/img/perfmanager/open-folder.png";
+import { RestService } from "../_service/RestService";
+import { config } from "../../config";
+import AlertMessage from "../../components/AlertMessage";
 
 class AddLibraryPopup extends Component {
   constructor(props) {
@@ -32,16 +32,18 @@ class AddLibraryPopup extends Component {
     this.setState({
       isApiCalled: true,
     });
-    console.log('Add Lib popup');
+    console.log("Add Lib popup");
     try {
-      await RestService.getData(config.GET_FOLDER_TREE, null, null).then((response) => {
-        console.log('Folder Ary::', response);
-        this.setState({
-          folderArray: response,
-        });
-      });
+      await RestService.getData(config.GET_FOLDER_TREE, null, null).then(
+        (response) => {
+          console.log("Folder Ary::", response);
+          this.setState({
+            folderArray: response,
+          });
+        }
+      );
     } catch (err) {
-      console.log('Loading folder tree failed. Error: ', err);
+      console.log("Loading folder tree failed. Error: ", err);
     }
     this.setState({
       isApiCalled: false,
@@ -60,7 +62,7 @@ class AddLibraryPopup extends Component {
 
   closeModel = () => {
     this.setState({
-      catalogName: '',
+      catalogName: "",
       catalogId: null,
       modal: !this.state.modal,
       checkedFolder: [],
@@ -237,18 +239,18 @@ class AddLibraryPopup extends Component {
   async addToLibrary() {
     const { catalogId, checkedFolder, appName, dataSource } = this.state;
     if (checkedFolder.length === 0) {
-      console.log('Please select one folder');
+      console.log("Please select one folder");
       this.setState({
         severity: config.SEVERITY_ERROR,
-        message: 'Please select at least one folder for library location',
+        message: "Please select at least one folder for library location",
         isAlertOpen: true,
       });
       return;
     } else if (checkedFolder.length > 1) {
-      console.log('Only one folder can be selected for library location');
+      console.log("Only one folder can be selected for library location");
       this.setState({
         severity: config.SEVERITY_ERROR,
-        message: 'Only one folder can be selected for library location',
+        message: "Only one folder can be selected for library location",
         isAlertOpen: true,
       });
       return;
@@ -256,7 +258,8 @@ class AddLibraryPopup extends Component {
     if (!appName) {
       this.setState({
         severity: config.SEVERITY_ERROR,
-        message: 'App name is mandatory. Please provide some value for app name',
+        message:
+          "App name is mandatory. Please provide some value for app name",
         isAlertOpen: true,
       });
       return;
@@ -265,31 +268,33 @@ class AddLibraryPopup extends Component {
       collectorId: catalogId,
       folderIdList: checkedFolder,
       appName: appName,
-      dataSource: dataSource === null ? 'AWS' : dataSource,
+      dataSource: dataSource === null ? "AWS" : dataSource,
     };
-    console.log('Object being added to library : ', obj);
-    await RestService.add(config.ADD_COLLECTOR_TO_LIBRARY, obj).then((response) => {
-      console.log('response: ', response);
-      if (response === 'OK') {
-        this.setState({
-          severity: config.SEVERITY_SUCCESS,
-          message: config.ADD_COLLECTOR_TO_LIBRARY_SUCCESS_MESSAGE,
-          isAlertOpen: true,
-        });
-      } else {
-        this.setState({
-          severity: config.SEVERITY_ERROR,
-          message: config.SERVER_ERROR_MESSAGE,
-          isAlertOpen: true,
-        });
+    console.log("Object being added to library : ", obj);
+    await RestService.add(config.ADD_COLLECTOR_TO_LIBRARY, obj).then(
+      (response) => {
+        console.log("response: ", response);
+        if (response === "OK") {
+          this.setState({
+            severity: config.SEVERITY_SUCCESS,
+            message: config.ADD_COLLECTOR_TO_LIBRARY_SUCCESS_MESSAGE,
+            isAlertOpen: true,
+          });
+        } else {
+          this.setState({
+            severity: config.SEVERITY_ERROR,
+            message: config.SERVER_ERROR_MESSAGE,
+            isAlertOpen: true,
+          });
+        }
+        setTimeout(() => {
+          this.setState({
+            isAlertOpen: false,
+            modal: !this.state.modal,
+          });
+        }, 3000);
       }
-      setTimeout(() => {
-        this.setState({
-          isAlertOpen: false,
-          modal: !this.state.modal,
-        });
-      }, 3000);
-    });
+    );
   }
 
   handleCloseAlert = (e) => {
@@ -301,15 +306,27 @@ class AddLibraryPopup extends Component {
   render() {
     const state = this.state;
     return (
-      <Modal isOpen={state.modal} toggle={this.closeModel} className="modal-container perfmanager-modal-container">
+      <Modal
+        isOpen={state.modal}
+        toggle={this.closeModel}
+        className="modal-container perfmanager-modal-container"
+      >
         <AlertMessage
           handleCloseAlert={this.handleCloseAlert}
           open={state.isAlertOpen}
           severity={state.severity}
           msg={state.message}
         ></AlertMessage>
-        <ModalHeader toggle={this.closeModel}>{this.state.catalogName}</ModalHeader>
-        <ModalBody style={{ height: 'calc(75vh - 110px)', overflowY: 'auto', overflowX: 'hidden' }}>
+        <ModalHeader toggle={this.closeModel}>
+          {this.state.catalogName}
+        </ModalHeader>
+        <ModalBody
+          style={{
+            height: "calc(75vh - 110px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="catalog-form-group">
             <div className="form-group">
               <label htmlFor="appName">App Name:</label>
@@ -348,7 +365,9 @@ class AddLibraryPopup extends Component {
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="selectLocationInLibrary">Select location in Library</label>
+              <label htmlFor="selectLocationInLibrary">
+                Select location in Library
+              </label>
               {this.renderTree()}
             </div>
             <div className="form-group text-right">

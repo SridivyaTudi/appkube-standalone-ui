@@ -89,7 +89,7 @@ class Notification extends React.Component {
                 onChange={(e) => {
                   this.onChangeParentCheckbox(e, i);
                 }}
-              />{" "}
+              />
               {responseData.title}
             </div>
           </h5>
@@ -199,9 +199,6 @@ class Notification extends React.Component {
         <div className="compliance-account-box">
           {this.displaNotificationsData()}
         </div>
-        {/* <div className="d-block text-center next">
-                    <button className="blue-button m-r-0 m-b-0">Save</button>
-                </div> */}
       </div>
     );
   }

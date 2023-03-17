@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 
 class Alerts extends Component {
-  CreateNewOURef;
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   render() {
     return (
       <>

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { images } from "../../img";
 import { RestService } from "../_service/RestService";
@@ -12,7 +12,6 @@ import _ from "lodash";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 class DepartmentWiseProducts extends React.Component {
-  breadCrumbs;
   colorMapping = {
     75: "#5dbc73",
     50: "#ef8f00",
@@ -150,16 +149,6 @@ class DepartmentWiseProducts extends React.Component {
         },
       ],
     };
-    this.breadCrumbs = [
-      {
-        label: "Home",
-        route: `/`,
-      },
-      {
-        label: "Assets | Environments",
-        isCurrentPage: true,
-      },
-    ];
   }
 
   componentDidMount() {
@@ -280,7 +269,6 @@ class DepartmentWiseProducts extends React.Component {
           });
         }
       });
-      // department.productList = newProductList;
     }
     this.setState({
       product: departmentList,

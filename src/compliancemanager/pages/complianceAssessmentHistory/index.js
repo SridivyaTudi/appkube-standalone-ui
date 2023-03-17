@@ -3,11 +3,6 @@ import { Link } from "react-router-dom";
 import Table from "../../components/Table";
 
 class ComplianceAssessmentHistory extends React.Component {
-  deleteExclusionRef;
-  editExclusionRef;
-  tableValue;
-  perPageLimit;
-  checkboxValue;
   constructor(props) {
     super(props);
     this.tableValue = {

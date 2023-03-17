@@ -1,6 +1,5 @@
-import * as React from "react";
+import React from "react";
 import { RestService } from "../_service/RestService";
-// import { configFun } from "../../config";
 import ProductWiseServices from "../../components/ProductWiseServices";
 import _ from "lodash";
 
@@ -38,10 +37,6 @@ class Applications extends React.Component {
       accountId: "",
       cloudName: "",
     };
-    // this.config = configFun(
-    //   props.meta.jsonData.apiUrl,
-    //   props.meta.jsonData.mainProductUrl
-    // );
   }
 
   componentDidMount() {
@@ -52,16 +47,6 @@ class Applications extends React.Component {
       accountId,
       cloudName,
     });
-    // let departmentList = localStorage.getItem('applicationData');
-    // let department;
-    // if (departmentList) {
-    //     departmentList = JSON.parse(departmentList);
-    //     if(departmentList[accountId]){
-    //         department = departmentList ? departmentList[accountId] : {};
-    //     this.manipulateDepartmentWiseProductData(_.cloneDeep(department.organization.departmentList));
-    //     this.getFilterData(_.cloneDeep(department.organization.departmentList));
-    //     }
-    // }
     this.getDepartmentData(accountId);
   }
 
@@ -150,7 +135,6 @@ class Applications extends React.Component {
           });
         }
       });
-      // department.productList = newProductList;
     }
     this.setState({
       product: departmentList,

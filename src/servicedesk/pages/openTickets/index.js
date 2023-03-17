@@ -15,10 +15,6 @@ class MySelectObj {
 }
 
 class OpenTickets extends React.Component {
-  unimplementedFeatureModalRef;
-  perPageLimit;
-  tableValue;
-  checkboxValue;
   constructor(props) {
     super(props);
     this.perPageLimit = 6;
@@ -107,10 +103,12 @@ class OpenTickets extends React.Component {
       ticketDataList: [],
     };
   }
+
   onClickUnImplementedFeature = (link) => {
     this.unimplementedFeatureModalRef.current.setLink(link);
     this.unimplementedFeatureModalRef.current.toggle();
   };
+
   async componentDidMount() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -135,8 +133,6 @@ class OpenTickets extends React.Component {
       await RestService.getData(config.GET_ALL_AGENT_URL, null, null).then(
         (response) => {
           let ary = [];
-          // let obj = new MySelectObj("", "Select Agent");
-          // ary.push(obj);
           for (let i = 0; i < response.length; i++) {
             let obj = new MySelectObj(response[i].id, response[i].name);
             ary.push(obj);
@@ -154,10 +150,8 @@ class OpenTickets extends React.Component {
       await RestService.getData(config.GET_ALL_CONTACT_URL, null, null).then(
         (response) => {
           let contactNameAry = [];
-          // let obj = new MySelectObj('', 'Select Contact');
           let contactNameObj = new MySelectObj("", "Select Contact");
           for (let i = 0; i < response.length; i++) {
-            // obj = new MySelectObj(response[i].id, response[i].userName + ' => ' + response[i].primaryEmail);
             contactNameObj = new MySelectObj(
               response[i].id,
               response[i].userName
@@ -192,6 +186,7 @@ class OpenTickets extends React.Component {
       console.log("Loading company data failed. Error: ", err);
     }
   }
+
   createSelectboxOptions = (data) => {
     let retData = [];
     if (data.length > 0) {
@@ -401,6 +396,7 @@ class OpenTickets extends React.Component {
     }
     return retData;
   };
+
   clearAllFilters = () => {
     this.setState({
       agent: "",
@@ -415,6 +411,7 @@ class OpenTickets extends React.Component {
       filterCheckbox: false,
     });
   };
+  
   isLightTheme() {
     const w = window;
     if (w.grafanaBootData && w.grafanaBootData.user) {

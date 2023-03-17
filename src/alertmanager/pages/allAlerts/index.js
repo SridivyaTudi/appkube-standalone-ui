@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
   Modal,
@@ -18,15 +18,6 @@ import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
 import Rbac from "./../../components/Rbac";
 
 class AllAlerts extends React.Component {
-  editAlertRef;
-  resourceGroup;
-  resources;
-  monitoringServices;
-  alertTypes;
-  severity;
-  alertStates;
-  timeRangeRef;
-  tableValue;
   constructor(props) {
     super(props);
     this.state = {

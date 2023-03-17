@@ -14,7 +14,7 @@ class ManageDashboards extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      folderArray: []
+      folderArray: [],
     };
   }
 
@@ -28,10 +28,10 @@ class ManageDashboards extends React.Component {
     //   });
     // });
     const retData = this.manipulateData(data);
-      const folderArray = this.convertObjectToArray(retData);
-      this.setState({
-        folderArray,
-      });
+    const folderArray = this.convertObjectToArray(retData);
+    this.setState({
+      folderArray,
+    });
   }
 
   convertObjectToArray(object) {

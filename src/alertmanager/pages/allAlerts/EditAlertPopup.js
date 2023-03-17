@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import { RestService } from "../_service/RestService";
 import { config } from "../../config";
@@ -25,12 +25,12 @@ class EditAlertPopup extends React.Component {
   toggle = (selectedAlert) => {
     let alertState = "";
     const keys = Object.keys(selectedAlert);
-    const lowerCaseKeys = keys.map((key) => key); //key.toLowerCase()
+    const lowerCaseKeys = keys.map((key) => key);
     const index = lowerCaseKeys.indexOf("alertState");
     if (index !== -1) {
       const key = keys[index];
       if (selectedAlert[key]) {
-        alertState = selectedAlert[key]; //.toLowerCase();
+        alertState = selectedAlert[key];
       }
     }
     this.setState({
@@ -82,11 +82,6 @@ class EditAlertPopup extends React.Component {
     await RestService.add(config.UPDATE_ALERT, obj).then((response) => {
       console.log("update alert response: ", response);
       if (response.length > 0) {
-        // let ary = [];
-        // for (let i = 0; i < response.length; i++) {
-        //     let j = JSON.parse(response[i]);
-        //     ary.push(j);
-        // }
         this.setState({
           severity: config.SEVERITY_SUCCESS,
           message: config.UPDATE_ALERT_SUCCESS_MESSAGE,

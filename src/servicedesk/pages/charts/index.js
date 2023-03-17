@@ -128,9 +128,7 @@ class Charts extends React.Component {
             <div className="charts-boxs">
               <div className="row">
                 <div className="col-lg-6 col-md-6 col-sm-12">
-                  <div className="d-block width-100 chart-box">
-                    {/* <Bar data={this.barChart1Data} options={this.barChartOptions} /> */}
-                  </div>
+                  <div className="d-block width-100 chart-box"></div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-12">
                   <div className="d-block width-100 chart-box">

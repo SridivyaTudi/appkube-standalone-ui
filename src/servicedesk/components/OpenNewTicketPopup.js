@@ -18,7 +18,6 @@ class MySelectObj {
 }
 
 class OpenNewTicketPopup extends React.Component {
-  steps;
   constructor(props) {
     super(props);
     this.state = {
@@ -109,10 +108,6 @@ class OpenNewTicketPopup extends React.Component {
     ).then((response) => {
       console.log("contact list : ", response);
       let obj = null;
-      // for(respone){
-      //     obj = MyObj(re.id, re.compy);
-      //     conatctFullNameList.push(obj);
-      // }
       this.setState({
         conatctFullNameList: obj,
       });
@@ -348,9 +343,6 @@ class OpenNewTicketPopup extends React.Component {
         [name]: value,
       });
     }
-    // this.setState({
-    //     [name]: value
-    // });
   };
 
   addContact = () => {
@@ -492,10 +484,6 @@ class OpenNewTicketPopup extends React.Component {
                     isValid={errorData.requesterContact.isValid}
                     message={errorData.requesterContact.message}
                   />
-                  {/* <div className="d-block text-right p-t-5">
-                                        <button className="add-conatct" onClick={() => this.addContact()}>Add a Conatct</button>
-                                        <button className="add-conatct">Add a Conatct</button> 
-                                    </div>*/}
                 </div>
               </div>
             </div>
@@ -677,10 +665,6 @@ class OpenNewTicketPopup extends React.Component {
             <div className="row">
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="d-block text-right p-t-20 contact-popup-buttons">
-                  {/* <div className="d-inline-block form-check create-author">
-                                        <input type="checkbox" className="form-check-input" id="CreateAuthor" />
-                                        <label className="form-check-label" htmlFor="CreateAuthor">Create Author</label>
-                                    </div> */}
                   <button className="cancel" onClick={this.handleClose}>
                     Cancel
                   </button>

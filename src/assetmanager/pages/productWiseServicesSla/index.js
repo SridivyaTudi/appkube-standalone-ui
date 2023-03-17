@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Bar } from "react-chartjs-2";
 import { TopologyView } from "./TopologyView";
 import { images } from "../../img";
@@ -10,8 +10,6 @@ const enumServiceNature = {
 };
 
 class ProductWiseServicesSla extends React.Component {
-  nodeMapping = {};
-  clusterMapping = {};
   constructor(props) {
     super(props);
     this.state = {
@@ -37,16 +35,6 @@ class ProductWiseServicesSla extends React.Component {
       topologyDataWithAccount: {},
       topologySearchKeyword: "",
     };
-    this.breadCrumbs = [
-      {
-        label: "Home",
-        route: `/`,
-      },
-      {
-        label: "Assets | Environments",
-        isCurrentPage: true,
-      },
-    ];
   }
 
   componentDidMount() {
@@ -388,7 +376,6 @@ class ProductWiseServicesSla extends React.Component {
                     scales: {
                       x: {
                         ticks: {
-                          // maxRotation: 0,
                           maxTicksLimit: 5,
                         },
                       },

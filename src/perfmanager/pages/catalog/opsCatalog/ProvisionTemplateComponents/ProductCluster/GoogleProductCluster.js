@@ -267,7 +267,6 @@ class GoogleProductCluster extends React.Component {
         isSubmitted,
       } = this.state;
       const errorData = this.validate(isSubmitted);
-      // console.log(errorData)
       return (
         <div className="catalogue-right-container">
           <button
@@ -461,4 +460,5 @@ class GoogleProductCluster extends React.Component {
     );
   }
 }
+
 export default GoogleProductCluster;

@@ -45,7 +45,6 @@ class OpsCatalogue extends React.Component {
       component: Workflows,
     },
   ];
-  previewDashboardPopupRef;
 
   constructor(props) {
     super(props);

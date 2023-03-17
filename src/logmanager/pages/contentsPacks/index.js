@@ -12,10 +12,6 @@ indexSetMap.set("5fb95bb004a35d1e34e9baa6", "GrayLog Events");
 indexSetMap.set("5fb95bb004a35d1e34e9baa8", "GrayLog System Event");
 
 class ContentsPacks extends React.Component {
-  createStreamRef;
-  newStreamRef;
-  manageOutputRef;
-  allEventRef;
   constructor(props) {
     super(props);
     this.state = {
@@ -31,15 +27,19 @@ class ContentsPacks extends React.Component {
   onClickOpenCreateStreamPopup = (e) => {
     this.createStreamRef.current.toggle();
   };
+
   openNewStreamPopup = (e) => {
     this.newStreamRef.current.toggle();
   };
+
   OpenManageOutputPopup = (a) => {
     this.manageOutputRef.current.toggle();
   };
+
   OpenAllEventsPopup = (a) => {
     this.allEventRef.current.toggle();
   };
+
   onClickOpenSubLink = (index) => {
     const { streamTableData } = this.state;
     for (let i = 0; i < streamTableData.length; i++) {
@@ -52,6 +52,7 @@ class ContentsPacks extends React.Component {
       streamTableData,
     });
   };
+
   async componentDidMount() {
     console.log("componentDidMountMethod called");
     var myHeaders = new Headers();
@@ -104,7 +105,6 @@ class ContentsPacks extends React.Component {
                   <p>{rowData.description}</p>
                   <p>
                     {rowData.rules}&nbsp;&nbsp;
-                    {/* <a href="#">{rowData.descriptionLink}</a> */}
                   </p>
                 </td>
                 <td>

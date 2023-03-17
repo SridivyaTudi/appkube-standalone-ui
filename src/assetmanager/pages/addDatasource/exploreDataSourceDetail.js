@@ -1,11 +1,5 @@
-import * as React from "react";
-// import { Link } from 'react-router-dom';
-// import { configFun } from '../../config';
+import React from "react";
 import { images } from "../../img";
-// import { CommonService } from '../_common/common';
-// import { SelectCloudFilter } from '../../components/SelectCloudFilter';
-// import { RestService } from '../_service/RestService';
-// import { PLUGIN_BASE_URL } from '../../constants';
 
 class ExploreDataSourceDetail extends React.Component {
   constructor(props) {
@@ -15,20 +9,6 @@ class ExploreDataSourceDetail extends React.Component {
       account: "",
       showMenu: false,
     };
-    this.breadCrumbs = [
-      {
-        label: "Home",
-        route: `/`,
-      },
-      {
-        label: "Assets | Environments",
-        isCurrentPage: true,
-      },
-    ];
-  }
-
-  async componentDidMount() {
-    // await this.getAccountList();
   }
 
   handleStateChange = (e) => {

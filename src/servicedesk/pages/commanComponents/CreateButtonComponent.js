@@ -8,13 +8,6 @@ import OpenNewAgentPopup from "../../components/OpenNewAgentPopup";
 import Rbac from "../Rbac/Rbac";
 
 class CreateButtonComponent extends React.Component {
-  openNewContactRef;
-  openNewCompanyRef;
-  openNewEmailRef;
-  openNewTicketRef;
-  openNewAgentRef;
-  checkboxValue;
-  ticketData;
   constructor(props) {
     super(props);
     this.state = {

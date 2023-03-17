@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-//import * as React from 'react';
-//import { Breadcrumbs } from '../Breadcrumbs';
 import AssetView from "./AssetView";
 import OverView from "./OverView";
 import WorkFlowView from "./WorkFlowView";
@@ -12,12 +10,6 @@ import AwsHelper from "../awsHelpers";
 import AlertMessage from "../../components/AlertMessage";
 
 class ProcurementDetail extends Component {
-  breadCrumbs;
-  stepper;
-  awsHelper;
-  overViewRef;
-  workFlowRef;
-  assetViewRef;
   constructor(props) {
     super(props);
     this.state = {
@@ -28,16 +20,6 @@ class ProcurementDetail extends Component {
       message: "",
       severity: "",
     };
-    this.breadCrumbs = [
-      {
-        label: "Home",
-        route: `/`,
-      },
-      {
-        label: "Kubernetes | Overview",
-        isCurrentPage: true,
-      },
-    ];
     this.awsHelper = new AwsHelper({ meta: props.meta });
     this.overViewRef = React.createRef();
     this.workFlowRef = React.createRef();

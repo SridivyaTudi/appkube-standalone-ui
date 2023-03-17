@@ -4,11 +4,13 @@ class CustomTextareabox extends React.Component {
   constructor(props) {
     super(props);
   }
+
   onChange = (e) => {
     if (this.props.onChange) {
       this.props.onChange(e);
     }
   };
+
   render() {
     const {
       containerClass,

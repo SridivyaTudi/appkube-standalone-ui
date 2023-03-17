@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { config } from "../../config";
 import Utils from "../../utils";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";

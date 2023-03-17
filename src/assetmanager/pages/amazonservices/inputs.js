@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 
 class Inputs extends Component {
-  // CreateNewOURef: any;
-  // config: any;
   constructor(props) {
     super(props);
     this.state = {
       inputList: [],
     };
-    
   }
-  
+
   render() {
     return (
       <>

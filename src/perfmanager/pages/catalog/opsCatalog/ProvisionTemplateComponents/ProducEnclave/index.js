@@ -1,3 +1,3 @@
-export * from './AwsProductEnclave';
-export * from './AzureProductEnclave';
-export * from './GoogleProductEnclave';
+export * from "./AwsProductEnclave";
+export * from "./AzureProductEnclave";
+export * from "./GoogleProductEnclave";

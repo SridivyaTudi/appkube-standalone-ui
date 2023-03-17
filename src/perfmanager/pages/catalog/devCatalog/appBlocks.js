@@ -6,7 +6,6 @@ import Filter from "./../filter";
 import { PreviewDashboardPopup } from "./../previewDashboardPopup";
 
 class AppBlocks extends React.Component {
-  previewDashboardPopupRef;
   constructor(props) {
     super(props);
     this.state = {

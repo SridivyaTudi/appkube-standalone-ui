@@ -6,7 +6,6 @@ import AlertMessage from "./../../components/AlertMessage";
 let nodeIdMap = new Map();
 
 class LaunchTcpInputPopup extends React.Component {
-  steps;
   constructor(props) {
     super(props);
     this.state = {
@@ -38,6 +37,7 @@ class LaunchTcpInputPopup extends React.Component {
       expandStructuredData: false,
     };
   }
+  
   async componentDidMount() {
     this.getAllNodesInCluster();
   }
@@ -58,6 +58,7 @@ class LaunchTcpInputPopup extends React.Component {
       })
       .catch((error) => console.log("error", error));
   };
+
   createNodeOptions = () => {
     let retData = [];
     nodeIdMap.forEach((value, key) => {
@@ -65,12 +66,14 @@ class LaunchTcpInputPopup extends React.Component {
     });
     return retData;
   };
+
   onStateChange = (e) => {
     const { name, value } = e.target;
     this.setState({
       [name]: value,
     });
   };
+
   checkboxChange = (e) => {
     let isState = e.target.checked;
     let name = e.target.name;
@@ -80,16 +83,19 @@ class LaunchTcpInputPopup extends React.Component {
       [name]: isState,
     });
   };
+
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
     });
   };
+
   handleClose = () => {
     this.setState({
       modal: false,
     });
   };
+
   saveStream = async (event) => {
     event.preventDefault();
     this.setState({
@@ -148,7 +154,6 @@ class LaunchTcpInputPopup extends React.Component {
       };
       var raw = JSON.stringify(data);
 
-      console.log("Data : ", raw);
       var requestOptions = CommonService.requestOptionsForPostRequest(raw);
       fetch(config.TCP_INPUT_STREAM, requestOptions)
         .then((response) => response.text())
@@ -178,6 +183,7 @@ class LaunchTcpInputPopup extends React.Component {
         });
     }
   };
+
   validate = (isSubmitted) => {
     const validObj = {
       isValid: true,
@@ -206,6 +212,7 @@ class LaunchTcpInputPopup extends React.Component {
     }
     return retData;
   };
+  
   handleCloseAlert = (e) => {
     this.setState({
       isAlertOpen: false,
@@ -253,8 +260,13 @@ class LaunchTcpInputPopup extends React.Component {
         ></AlertMessage>
         <ModalHeader>
           Launch new Beats (deprecated) input
-          <button type="button" className="close" aria-label="Close" onClick={this.toggle}>
-              <span aria-hidden="true">×</span>
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <span aria-hidden="true">×</span>
           </button>
         </ModalHeader>
         <ModalBody

@@ -26,7 +26,12 @@ class AssetssmentPopup extends React.Component {
       >
         <ModalHeader>
           Run Assessments
-          <button type="button" className="close" aria-label="Close"onClick={this.toggle}>
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
             <span aria-hidden="true">×</span>
           </button>
         </ModalHeader>

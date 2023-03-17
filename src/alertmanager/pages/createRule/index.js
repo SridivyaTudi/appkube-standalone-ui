@@ -1,12 +1,9 @@
-import * as React from "react";
+import React from "react";
 import SelectResourcePopup from "./SelectResourcePopup";
 import AddConditionPopup from "./AddConditionPopup";
 import AddActionPopup from "./AddActionPopup";
 
 class CreateRule extends React.Component {
-  selectResourceModalRef;
-  addConditionRef;
-  addActionRef;
   constructor(props) {
     super(props);
     this.state = {};

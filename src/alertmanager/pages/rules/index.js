@@ -6,11 +6,6 @@ import Rbac from "../../components/Rbac";
 import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 
 class Rules extends Component {
-  ruleData;
-  tableValue;
-  perPageLimit;
-  checkboxValue;
-  unimplementedFeatureModalRef;
   constructor(props) {
     super(props);
     this.tableValue = {

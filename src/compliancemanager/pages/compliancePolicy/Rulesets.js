@@ -89,7 +89,7 @@ class Rulesets extends React.Component {
                 onChange={(e) => {
                   this.onChangeParentCheckbox(e, i);
                 }}
-              />{" "}
+              />
               {responseData.title}
             </div>
           </h5>
@@ -197,9 +197,6 @@ class Rulesets extends React.Component {
           </div>
         </div>
         <div className="compliance-account-box">{this.displaRulesetData()}</div>
-        {/* <div className="d-block text-center next">
-                    <button className="blue-button m-r-0 m-b-0">Next</button>
-                </div> */}
       </div>
     );
   }

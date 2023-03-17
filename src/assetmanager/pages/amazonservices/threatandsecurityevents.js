@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 class ThreatAndSecurityEvents extends Component {
-  CreateNewOURef;
   constructor(props) {
     super(props);
     this.state = {};

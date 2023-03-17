@@ -33,7 +33,6 @@ class DiscardPopup extends React.Component {
     return (
       <Modal
         isOpen={modal}
-        // toggle={() => this.toggle(-1, "")}
         className="modal-container assessments-modal-container"
       >
         <ModalHeader >

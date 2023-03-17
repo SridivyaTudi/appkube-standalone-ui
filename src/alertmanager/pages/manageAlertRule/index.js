@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { config } from "../../config";
 import Table from "./../../components/table";
@@ -6,13 +6,6 @@ import Rbac from "./../../components/Rbac";
 import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 
 class ManageAlertRule extends React.Component {
-  alertsRulesData;
-  alertsScriptsData;
-  tableValue;
-  perPageLimit;
-  checkboxValue;
-  scriptValue;
-  unimplementedFeatureModalRef;
   constructor(props) {
     super(props);
     this.tableValue = {
@@ -156,10 +149,12 @@ class ManageAlertRule extends React.Component {
     this.state = {};
     this.unimplementedFeatureModalRef = React.createRef();
   }
+
   onClickUnImplementedFeature = (link) => {
     this.unimplementedFeatureModalRef.current.setLink(link);
     this.unimplementedFeatureModalRef.current.toggle();
   };
+
   createAlertsRulesTable = () => {
     const retData = [];
     const alertsRules = this.alertsRulesData.length;
@@ -195,6 +190,7 @@ class ManageAlertRule extends React.Component {
     }
     return retData;
   };
+  
   createAlertsScriptsTable = () => {
     const retData = [];
     const alertsScripts = this.alertsScriptsData.length;
