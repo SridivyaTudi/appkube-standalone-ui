@@ -1,14 +1,13 @@
-
-import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
-import downloadIcon from '../../img/download-icon.png';
-import WorkFlow from '../../components/workFlowCommonComponent'
-import ErrorBoundary from '../../components/errorBoundary/index'
-import  AwsHelper  from '../awsHelpers';
-import AssetOverViewReusableComp from '../../components/assetOverViewCommonComponent';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import downloadIcon from "../../img/download-icon.png";
+import WorkFlow from "../../components/workFlowCommonComponent";
+import ErrorBoundary from "../../components/errorBoundary/index";
+import AwsHelper from "../awsHelpers";
+import AssetOverViewReusableComp from "../../components/assetOverViewCommonComponent";
 
 class ProjectOverView extends Component {
-  awsHelper
+  awsHelper;
   constructor(props) {
     super(props);
     this.state = {
@@ -22,50 +21,56 @@ class ProjectOverView extends Component {
       toggleAssetView: false,
       matrixView: false,
       userList: [
-        { name: 'John', id: '1' },
-        { name: 'Smith', id: '2' },
-        { name: 'Rado', id: '3' },
-        { name: 'Smyten', id: '4' },
-        { name: 'Oliver', id: '5' },
-        { name: 'Harry', id: '6' },
-        { name: 'George', id: '7' },
-        { name: 'Jack', id: '8' }
+        { name: "John", id: "1" },
+        { name: "Smith", id: "2" },
+        { name: "Rado", id: "3" },
+        { name: "Smyten", id: "4" },
+        { name: "Oliver", id: "5" },
+        { name: "Harry", id: "6" },
+        { name: "George", id: "7" },
+        { name: "Jack", id: "8" },
       ],
-
     };
     this.awsHelper = new AwsHelper({ meta: props.meta });
   }
   componentDidMount() {
     // this.setState({ useCaseName: this.props.match.params.id })
-    this.awsHelper.getUsecaseList((useCaseList) => {
-      useCaseList.forEach((useCase) => {
-        if (useCase?.stepinput) {
-          useCase.stepinput = useCase.stepinput;
-          if (useCase?.stepinput?.stages?.length > 0) {
-            this.awsHelper.getExecutionHistory(
-              "arn:aws:states:us-east-1:657907747545:execution:send-to-pre-state:9bc49c92-4016-47a5-8a22-88d353e912ab",
-              (items) => {
-                const useCases = this.state.useCaseList;
-                // if (useCase.stepinput.S.stages.length>0){
-                useCases.push({
-                  ...useCase,
-                  steps: items,
-                  executionArn: { S: "arn:aws:states:us-east-1:657907747545:execution:send-to-pre-state:9bc49c92-4016-47a5-8a22-88d353e912ab" }
-                });
-                this.setState({
-                  useCaseList: useCases,
+    this.awsHelper.getUsecaseList(
+      (useCaseList) => {
+        useCaseList.forEach((useCase) => {
+          if (useCase?.stepinput) {
+            useCase.stepinput = useCase.stepinput;
+            if (useCase?.stepinput?.stages?.length > 0) {
+              this.awsHelper.getExecutionHistory(
+                "arn:aws:states:us-east-1:657907747545:execution:send-to-pre-state:9bc49c92-4016-47a5-8a22-88d353e912ab",
+                (items) => {
+                  const useCases = this.state.useCaseList;
+                  // if (useCase.stepinput.S.stages.length>0){
+                  useCases.push({
+                    ...useCase,
+                    steps: items,
+                    executionArn: {
+                      S: "arn:aws:states:us-east-1:657907747545:execution:send-to-pre-state:9bc49c92-4016-47a5-8a22-88d353e912ab",
+                    },
+                  });
+                  this.setState({
+                    useCaseList: useCases,
 
-                  selectedUseCaseData: useCases[this.state.activeUseCaseIndex]
-
-                });
-                // }
-              },
-              (err) => { console.log(err) }
-            );
+                    selectedUseCaseData:
+                      useCases[this.state.activeUseCaseIndex],
+                  });
+                  // }
+                },
+                (err) => {
+                  console.log(err);
+                }
+              );
+            }
           }
-        }
-      });
-    }, () => { });
+        });
+      },
+      () => {}
+    );
     this.awsHelper.gettingMachineDef(
       this.state.machineArn,
       (states) => {
@@ -75,12 +80,11 @@ class ProjectOverView extends Component {
         console.log(err);
       }
     );
-
   }
 
   toggleDisabledNavList = () => {
-    this.setState({ disabledNavList: !this.state.disabledNavList })
-  }
+    this.setState({ disabledNavList: !this.state.disabledNavList });
+  };
 
   // displayUseCaseList = () => {
   //   const { useCaseList, activeUseCaseIndex } = this.state;
@@ -99,42 +103,65 @@ class ProjectOverView extends Component {
   //   return retData;
   // }
   setUseCaseData = (index) => {
-    const { useCaseList } = this.state
+    const { useCaseList } = this.state;
 
-    let data = useCaseList[index]
+    let data = useCaseList[index];
     if (data?.stepinput) {
-      this.setState({ selectedUseCaseData: data, matrixView: false })
+      this.setState({ selectedUseCaseData: data, matrixView: false });
     }
-    this.setState({ activeUseCaseIndex: index, activeStage: 0, matrixView: false })
-
-  }
+    this.setState({
+      activeUseCaseIndex: index,
+      activeStage: 0,
+      matrixView: false,
+    });
+  };
   toggleMatrixView = () => {
-    this.setState({ matrixView: !this.state.matrixView })
-  }
+    this.setState({ matrixView: !this.state.matrixView });
+  };
   render() {
-    const { useCaseList, useCaseStagesLength, activeStage, matrixView, activeUseCaseIndex, toggleAssetView } = this.state;
+    const {
+      useCaseList,
+      useCaseStagesLength,
+      activeStage,
+      matrixView,
+      activeUseCaseIndex,
+      toggleAssetView,
+    } = this.state;
     let AssetOverViewPropsData = {
-      usecasename: useCaseList[activeUseCaseIndex]?.usecasename ? useCaseList[this.state.activeUseCaseIndex].usecasename : '',
-      usecaseStageList: useCaseList[activeUseCaseIndex]?.stepinput?.stages ? useCaseList[this.state.activeUseCaseIndex].stepinput.stages : "",
-      matrixView: matrixView
-    }
+      usecasename: useCaseList[activeUseCaseIndex]?.usecasename
+        ? useCaseList[this.state.activeUseCaseIndex].usecasename
+        : "",
+      usecaseStageList: useCaseList[activeUseCaseIndex]?.stepinput?.stages
+        ? useCaseList[this.state.activeUseCaseIndex].stepinput.stages
+        : "",
+      matrixView: matrixView,
+    };
     return (
       <div className="project-over-view-container">
         <div className="project-over-view-section">
           <div className="fliter-container">
             <div className="row">
               <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                <div className="heading">{!toggleAssetView ? `Procurement Workflow management` : `Asset OverView`}</div>
+                <div className="heading">
+                  {!toggleAssetView
+                    ? `Procurement Workflow management`
+                    : `Asset OverView`}
+                </div>
               </div>
               <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12">
                 <div className="fliter-right-content">
                   <div className="plus-icon col-12">
-                    <Link to="/a/xformation-workflow-engine/create-new-usecase">
+                    <Link to="/workflow-engine/pages/createUsecase">
                       <i className="fa fa-plus" />
                     </Link>
                   </div>
                   <div className="image">
-                    <button className='project-btn' onClick={() => { this.setState({ toggleAssetView: !toggleAssetView }) }}>
+                    <button
+                      className="project-btn"
+                      onClick={() => {
+                        this.setState({ toggleAssetView: !toggleAssetView });
+                      }}
+                    >
                       <img src={downloadIcon} alt="" />
                     </button>
                   </div>
@@ -148,14 +175,19 @@ class ProjectOverView extends Component {
                       </select>
                     </div>
                     <div className="fliter-search-box">
-                      < input
-                        type={'Search for...'}
+                      <input
+                        type={"Search for..."}
                         className="input-group-text"
-                        placeholder={'Search for...'}
+                        placeholder={"Search for..."}
                       />
                     </div>
                   </div>
-                  <Link to={`/a/xformation-workflow-engine/project-wise`} className="btn-primary pro-overview-btn"><i className="fas fa-chevron-left"></i> Back</Link>
+                  <Link
+                    to={`/workflow-engine/pages/projectWise`}
+                    className="btn-primary pro-overview-btn"
+                  >
+                    <i className="fas fa-chevron-left"></i> Back
+                  </Link>
                 </div>
               </div>
             </div>
@@ -163,31 +195,54 @@ class ProjectOverView extends Component {
           <div className="project-over-view-inner-content">
             <div className="project-over-view-left-content">
               <div className="sidebar">
-                <ul>
-                  {/* {this.displayUseCaseList()} */}
-                </ul>
+                <ul>{/* {this.displayUseCaseList()} */}</ul>
               </div>
             </div>
-            {!toggleAssetView ?
-              <ErrorBoundary useCaseStagesLength={useCaseStagesLength} selectedUseCaseData={this.state.selectedUseCaseData} useCaseListLength={useCaseList.length} toggleDisabledNavList={this.toggleDisabledNavList} setUseCaseData={this.setUseCaseData} activeUseCaseIndex={this.state.activeUseCaseIndex}>
-                <WorkFlow activeStage={activeStage} selectedUseCaseData={this.state.selectedUseCaseData} setUseCaseData={this.setUseCaseData} activeUseCaseIndex={this.state.activeUseCaseIndex} editFormData={true} />
+            {!toggleAssetView ? (
+              <ErrorBoundary
+                useCaseStagesLength={useCaseStagesLength}
+                selectedUseCaseData={this.state.selectedUseCaseData}
+                useCaseListLength={useCaseList.length}
+                toggleDisabledNavList={this.toggleDisabledNavList}
+                setUseCaseData={this.setUseCaseData}
+                activeUseCaseIndex={this.state.activeUseCaseIndex}
+              >
+                <WorkFlow
+                  activeStage={activeStage}
+                  selectedUseCaseData={this.state.selectedUseCaseData}
+                  setUseCaseData={this.setUseCaseData}
+                  activeUseCaseIndex={this.state.activeUseCaseIndex}
+                  editFormData={true}
+                />
               </ErrorBoundary>
-              :
+            ) : (
               <div className="project-over-view-inner-content">
                 <div className="project-over-view-right-content">
-                  <div className={`receive-rfq-content ${!matrixView ? "" : "matrix-view-content"}`}>
-                    {!matrixView && <div className="line">
-                      <span className="line1" />
-                      <span className="line2" />
-                      <span className="line3" />
-                    </div>}
-                    {useCaseList[this.state.activeUseCaseIndex]?.stepinput?.stages && <div className="row">
-                      <AssetOverViewReusableComp AssetOverViewPropsData={{ ...AssetOverViewPropsData }} toggleMatrixView={this.toggleMatrixView} />
-                    </div>}
+                  <div
+                    className={`receive-rfq-content ${
+                      !matrixView ? "" : "matrix-view-content"
+                    }`}
+                  >
+                    {!matrixView && (
+                      <div className="line">
+                        <span className="line1" />
+                        <span className="line2" />
+                        <span className="line3" />
+                      </div>
+                    )}
+                    {useCaseList[this.state.activeUseCaseIndex]?.stepinput
+                      ?.stages && (
+                      <div className="row">
+                        <AssetOverViewReusableComp
+                          AssetOverViewPropsData={{ ...AssetOverViewPropsData }}
+                          toggleMatrixView={this.toggleMatrixView}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-            }
+            )}
           </div>
         </div>
       </div>
