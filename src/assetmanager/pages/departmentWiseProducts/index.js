@@ -826,7 +826,7 @@ class DepartmentWiseProducts extends React.Component {
                 <div className="col-lg-3 col-md-4 col-sm-6">
                   <div className="float-right common-right-btn">
                     <Link
-                      to={`${"#"}/environments`}
+                      to={`/assetmanager/pages/environments`}
                       className="asset-white-button min-width-inherit"
                     >
                       <img
@@ -864,7 +864,7 @@ class DepartmentWiseProducts extends React.Component {
                       )}
                     </div>
                     <div className="view-details-link">
-                      <Link to={`${"#"}/product-wise-cost`}>
+                      <Link to={`/assetmanager/pages/product-wise-cost`}>
                         View details <i className="fa fa-chevron-down" />
                       </Link>
                     </div>

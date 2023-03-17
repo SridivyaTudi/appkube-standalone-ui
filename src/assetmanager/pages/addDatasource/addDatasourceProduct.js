@@ -1,11 +1,9 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { images } from "../../img";
 import dummyData from "./DataSourcesDummy.json";
 
 class AddDatasourceProduct extends React.Component {
-  breadCrumbs;
-  config;
   constructor(props) {
     super(props);
     this.state = {
@@ -16,16 +14,6 @@ class AddDatasourceProduct extends React.Component {
       accountList: [],
       searchkey: "",
     };
-    this.breadCrumbs = [
-      {
-        label: "Home",
-        route: `/`,
-      },
-      {
-        label: "Assets | Environments",
-        isCurrentPage: true,
-      },
-    ];
   }
 
   async componentDidMount() {
@@ -34,21 +22,6 @@ class AddDatasourceProduct extends React.Component {
 
   getAccountList = async () => {
     this.manipulateData(dummyData);
-    // try {
-    //   await RestService.getData(
-    //     this.config.GRAFANA_DATASOURCE_API,
-    //     null,
-    //     null
-    //   ).then((response) => {
-    //     // this.setState({
-    //     // 	sourceList: response
-    //     // });
-    //     this.manipulateData(response);
-    //     console.log("Loading Asstes : ", response);
-    //   });
-    // } catch (err) {
-    //   console.log("Loading Asstes failed. Error: ", err);
-    // }
   };
 
   manipulateData = (data) => {
@@ -311,7 +284,7 @@ class AddDatasourceProduct extends React.Component {
                   <div className="col-xl-2 col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <div className="back-btn">
                       <Link
-                        to={`/add-data-source`}
+                        to={`/assetmanager/pages/add-data-source`}
                         type="button"
                         className="asset-blue-button"
                       >

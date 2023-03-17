@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { configFun } from "../../config";
 import { CommonService } from "../_common/common";
 import { Bar, Pie } from "react-chartjs-2";
@@ -43,20 +43,6 @@ class ProductWiseCost extends React.Component {
       chartData: {},
       totalCost: 0,
     };
-    this.breadCrumbs = [
-      {
-        label: "Home",
-        route: `/`,
-      },
-      {
-        label: "Assets | Environments",
-        isCurrentPage: true,
-      },
-    ];
-    this.config = configFun(
-      props.meta.jsonData.apiUrl,
-      props.meta.jsonData.mainProductUrl
-    );
   }
 
   componentDidMount() {

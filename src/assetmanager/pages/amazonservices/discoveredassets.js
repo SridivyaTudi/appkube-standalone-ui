@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { images } from "../../img";
 import { Collapse } from "reactstrap";
 import { RestService } from "../_service/RestService";
@@ -825,7 +825,10 @@ class DiscoveredAssets extends React.Component {
                   <div className="thead">
                     <div className="thead-th organisational-heading">
                       <span>
-                        <img src={LOGOS[cloudName.toLowerCase()]} alt="" />
+                        <img
+                          src={LOGOS[cloudName ? cloudName.toLowerCase() : ""]}
+                          alt=""
+                        />
                       </span>
                       {cloudName}
                     </div>

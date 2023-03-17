@@ -1,9 +1,10 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { RestService } from "../_service/RestService";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import { CommonService } from "../_common/common";
 import AlertMessage from "../../components/AlertMessage";
+import masterDummyData from "./masterDatasourceDummy.json";
 
 class AddDatasourceCredential extends React.Component {
   constructor(props) {
@@ -54,18 +55,20 @@ class AddDatasourceCredential extends React.Component {
   }
 
   getAccountList = async () => {
-    try {
-      await RestService.getData(
-        this.config.GET_MASTER_DATASOURCE,
-        null,
-        null
-      ).then((response) => {
-        this.manipulateData(response);
-        console.log("Loading Asstes : ", response);
-      });
-    } catch (err) {
-      console.log("Loading Asstes failed. Error: ", err);
-    }
+    this.manipulateData(masterDummyData);
+
+    // try {
+    //   await RestService.getData(
+    //     this.config.GET_MASTER_DATASOURCE,
+    //     null,
+    //     null
+    //   ).then((response) => {
+    //     this.manipulateData(response);
+    //     console.log("Loading Asstes : ", response);
+    //   });
+    // } catch (err) {
+    //   console.log("Loading Asstes failed. Error: ", err);
+    // }
   };
 
   getVault = async (vaultId) => {
@@ -306,7 +309,7 @@ class AddDatasourceCredential extends React.Component {
               <div className="right-search-bar">
                 <div className="back-btn">
                   <Link
-                    to={`/add-data-source?accountId=${account}&cloudName=${environment}`}
+                    to={`/assetmanager/pages/add-data-source?accountId=${account}&cloudName=${environment}`}
                     type="button"
                     className="btn btn-link"
                   >

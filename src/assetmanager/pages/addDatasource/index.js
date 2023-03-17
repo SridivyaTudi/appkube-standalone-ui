@@ -1,13 +1,12 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { configFun } from "../../config";
 import { images } from "../../img";
 import { CommonService } from "../_common/common";
-import { RestService } from "../_service/RestService";
 import AlertMessage from "../../components/AlertMessage";
+import masterDummyData from "./masterDatasourceDummy.json";
+import searchData from "./searchData.json";
 
 class AddDatasource extends React.Component {
-  config;
   constructor(props) {
     super(props);
     let accountId = CommonService.getParameterByName(
@@ -35,32 +34,33 @@ class AddDatasource extends React.Component {
 
   componentDidMount = () => {
     this.getMasterDataSource();
-    fetch(
-      `http://34.199.12.114:5057/api/cloud-environment/search?status=active`
-    ).then((response) => {
-      if (response && response.length > 0) {
-        const accounts = [];
-        response.forEach((account) => {
-          accounts.push(account.accountId);
-        });
-        this.setState({
-          accountList: accounts,
-        });
-      }
+    const accounts = [];
+    searchData.forEach((account) => {
+      accounts.push(account.accountId);
     });
+    this.setState({ accountList: accounts });
+    // fetch(
+    //   `http://34.199.12.114:5057/api/cloud-environment/search?status=active`
+    // ).then((response) => {
+    //   const accounts = [];
+    //   response.forEach((account) => {
+    //     accounts.push(account.accountId);
+    //   });
+    //   this.setState({
+    //     accountList: accounts,
+    //   });
+    // });
   };
 
   getMasterDataSource = () => {
-    try {
-      RestService.getData(this.config.GET_MASTER_DATASOURCE, null, null).then(
-        (response) => {
-          this.manipulateData(response);
-          console.log("Loading Asstes : ", response);
-        }
-      );
-    } catch (err) {
-      console.log("Loading Asstes failed. Error: ", err);
-    }
+    this.manipulateData(masterDummyData);
+    // try {
+    //   fetch(`/api/datasources/master-datasources`).then((response) => {
+    //     console.log("Loading Asstes : ", response);
+    //   });
+    // } catch (err) {
+    //   console.log("Loading Asstes failed. Error: ", err);
+    // }
   };
 
   manipulateData = (data) => {
@@ -112,7 +112,7 @@ class AddDatasource extends React.Component {
                         <React.Fragment>
                           {account && environment ? (
                             <Link
-                              to={`/add-datasource-credential?sourceName=${environment}&accountId=${account}&Id=${accountdata.name}`}
+                              to={`/assetmanager/pages/add-datasource-credential?sourceName=${environment}&accountId=${account}&Id=${accountdata.name}`}
                             >
                               <div className="source-box">
                                 <div className="images">
@@ -275,7 +275,7 @@ class AddDatasource extends React.Component {
                 </div>
                 <div className="back-btn">
                   <Link
-                    to="/a/xformation-assetmanager-ui-plugin/environments"
+                    to="/assetmanager/pages/environments"
                     type="button"
                     className="btn btn-link"
                   >
