@@ -1,6 +1,5 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { configFun } from "../../config";
 import { images } from "../../img";
 import { CommonService } from "../_common/common";
 import { RestService } from "../_service/RestService";
@@ -15,20 +14,6 @@ class AddDatasourceInputs extends React.Component {
       account: "",
       sourceList: {},
     };
-    this.breadCrumbs = [
-      {
-        label: "Home",
-        route: `/`,
-      },
-      {
-        label: "Assets | Environments",
-        isCurrentPage: true,
-      },
-    ];
-    this.config = configFun(
-      props.meta.jsonData.apiUrl,
-      props.meta.jsonData.mainProductUrl
-    );
   }
 
   async componentDidMount() {
@@ -169,9 +154,6 @@ class AddDatasourceInputs extends React.Component {
                   >
                     Cancel
                   </button>
-                  {/* <button type="button" className="asset-blue-button">
-										Cancel
-									</button> */}
                 </div>
               </div>
               <div className="specific-input-content">
