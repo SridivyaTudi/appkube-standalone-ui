@@ -5,8 +5,8 @@ import NewDashboard from './NewDashboard';
 //import { Checkbox, getTagColorsFromName } from '@grafana/ui';
 //import { backendSrv } from 'app/core/services/backend_srv';
 //import { SortPicker } from 'app/core/components/Select/SortPicker';
-//import { TagFilter } from 'app/core/components/TagFilter/TagFilter';
-//import { FilterInput } from 'app/core/components/FilterInput/FilterInput';
+import TagFilter from './components/TagFilter';
+import  FilterInput  from './components/FilterInput';
 
 class ManageTab extends Component {
   unimplementedFeatureModalRef;
@@ -295,22 +295,22 @@ class ManageTab extends Component {
               <div className="row" style={{ alignItems: 'center' }}>
                 <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
                   <div className="form-group search-control-group">
-                    {/* <FilterInput
+                    <FilterInput
                       labelClassName="gf-form--has-input-icon"
                       inputClassName="gf-form-input"
                       value={searchKey}
                       onChange={this.onQueryChange}
                       placeholder={'Search dashboards by name'}
-                    /> */}
+                    />
                   </div>
                 </div>
                 <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 tag-filter-container">
-                  {/* <TagFilter
+                  <TagFilter
                     isClearable
                     tags={selectedTags}
                     tagOptions={this.getTagOptions}
                     onChange={this.onTagFilterChange}
-                  /> */}
+                  />
                 </div>
                 <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
                   {/* <Checkbox label="Filter by starred" onChange={this.onStarredFilterChange} value={isStarred} /> */}

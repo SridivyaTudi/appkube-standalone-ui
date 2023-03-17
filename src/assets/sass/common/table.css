@@ -192,7 +192,7 @@
   appearance: none;
   transition: all 0.25s ease-out;
   display: inline-block;
-  content: "";
+  content: '';
 }
 
 .custom-table .toolbar .filter-search-control button::after {
@@ -206,7 +206,7 @@
   transition: all 0.25s ease-out;
   width: 24px;
   height: 24px;
-  content: "";
+  content: '';
 }
 
 .custom-table .toolbar .filter-search-control button span {
@@ -239,7 +239,7 @@
 
 .custom-table .sort-icon.sort-none:before {
   display: block;
-  content: "";
+  content: '';
   width: 0;
   height: 0;
   border-style: solid;
@@ -250,7 +250,7 @@
 
 .custom-table .sort-icon.sort-none:after {
   display: block;
-  content: "";
+  content: '';
   width: 0;
   height: 0;
   border-style: solid;
@@ -261,7 +261,7 @@
 
 .custom-table .sort-icon.sort-descending:after {
   display: block;
-  content: "";
+  content: '';
   width: 0;
   height: 0;
   border-style: solid;
@@ -272,7 +272,7 @@
 
 .custom-table .sort-icon.sort-ascending:before {
   display: block;
-  content: "";
+  content: '';
   width: 0;
   height: 0;
   border-style: solid;
@@ -393,9 +393,9 @@
   vertical-align: middle;
 }
 
-.custom-table.dark .data-table-parent .data-table .btn-link {
+/* .custom-table.dark .data-table-parent .data-table .btn-link {
   color: #ababab !important;
-}
+} */
 .custom-table .data-table-parent .data-table .enabled {
   width: 8px;
   height: 8px;
@@ -411,7 +411,7 @@
   top: -4px;
   width: 16px;
   height: 16px;
-  content: "";
+  content: '';
   border: 1px solid #004fac;
   border-radius: 50%;
 }
@@ -434,14 +434,14 @@
   color: #ffffff;
 }
 
-.custom-table.dark .data-table-parent .data-table th,
+/* .custom-table.dark .data-table-parent .data-table th,
 .custom-table.dark .data-table-parent .data-table td {
   color: #ffffff;
-}
+} */
 
-.custom-table.dark .data-table-parent .data-table tbody tr:nth-child(odd) {
+/* .custom-table.dark .data-table-parent .data-table tbody tr:nth-child(odd) {
   background-color: #333333;
-}
+} */
 .custom-table.dark .data-table-parent .data-table tbody tr.checked-row {
   background-color: #202226 !important;
 }

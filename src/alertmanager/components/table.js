@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./table.css";
+import "../../assets/sass/common/table.css";
 
 const sortEnum = {
   NONE: 0,
