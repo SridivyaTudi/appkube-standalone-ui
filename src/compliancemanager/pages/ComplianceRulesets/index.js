@@ -354,7 +354,7 @@ class ComplianceRulesets extends React.Component {
                 </div>
                 <div className="d-inline-block width-50 text-right"></div>
               </div>
-              <div className="d-block width-100 p-t-15 p-b-20 search-box">
+              <div className="d-block width-100 p-t-15 p-b-20 search-box rulest-search-box">
                 <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6">
                     <div className="d-inline-block form-group search-control-group">
