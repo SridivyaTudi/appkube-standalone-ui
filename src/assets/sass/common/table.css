@@ -446,6 +446,155 @@
   background-color: #202226 !important;
 }
 
+
+
+
+
+
+
+.custom-table .multiselect .form-control.select-label {
+  width: 170px;
+  cursor: pointer;
+}
+
+.custom-table .multiselect .form-control.select-label i {
+  font-size: 10px;
+  margin-top: 5px;
+  margin-right: -5px;
+}
+.custom-table .multiselect {
+  border-left: 1px solid #a9b9c6;
+  padding-left: 15px;
+  margin-left: 15px;
+  position: relative;
+  z-index: 10;
+}
+.custom-table .multiselect .multiselect-bg {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  background-color: transparent;
+}
+
+.custom-table .multiselect .options {
+  position: absolute;
+  /* left: 15px; */
+  top: 33px;
+  z-index: 10;
+  background-color: #ffffff;
+  padding: 15px 15px 10px 15px;
+  width: 250px;
+  box-shadow: 0px 0px 6px -4px #3b4859;
+  border-radius: 3px;
+}
+
+.custom-table .multiselect .options .option {
+  display: block;
+  padding-bottom: 5px;
+  color: #3b4859;
+  font-size: 13px;
+  line-height: 24px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.custom-table .multiselect .options .option input {
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.custom-table .showing {
+  font-size: 13px;
+  line-height: 40px;
+  font-weight: 500;
+}
+
+.custom-table .showby {
+  border-left: 1px solid #a9b9c6;
+  padding-left: 15px;
+  margin-left: 15px;
+}
+
+.custom-table .showby label {
+  font-size: 13px;
+  line-height: 40px;
+  color: #ffffff;
+  font-weight: 500;
+  padding-right: 15px;
+}
+
+.custom-table .showby label {
+  color: #3b4859;
+}
+
+.custom-table .showby .form-control {
+  display: inline-block;
+  width: 75px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.custom-table .showby span {
+  font-size: 13px;
+  line-height: 40px;
+  color: #ffffff;
+  font-weight: 500;
+  padding-left: 15px;
+}
+
+.theme-dark .custom-table .showby span{
+  color: #3b4859;
+}
+
+.theme-light .custom-table .showby span {
+  color: #3b4859;
+}
+
+.custom-table .filter-search-control {
+  position: relative;
+  margin-bottom: 0;
+}
+
+.custom-table .filter-search-control .input-group-text {
+  max-width: 100%;
+  text-align: left;
+  padding-right: 30px;
+  padding-left: 15px;
+  width: 100%;
+  border: 1px solid #ced4da;
+  background-color: #ffffff;
+  border-radius: 3px;
+  padding-top: 0.399rem;
+}
+
+.custom-table .filter-search-control .input-group-text:focus {
+  outline: none;
+}
+
+.custom-table .filter-search-control button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  width: 34px;
+  height: 34px;
+}
+
+.custom-table .filter-search-control button:hover {
+  color: #333333;
+}
+
+
+
+
+
 @media only screen and (max-width: 1200px) and (min-width: 768px) {
   .custom-table .toolbar {
     float: left;

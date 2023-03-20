@@ -15,7 +15,7 @@ class NewDashboard extends Component {
   };
 
   // openNewDashboard = () => {
-  //   locationService.push('/dashboard/new?orgId=1');
+  //   locationService.push('/components/new?orgId=1');
   // };
 
   render() {
