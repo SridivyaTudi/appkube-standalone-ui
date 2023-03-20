@@ -11,11 +11,12 @@ class QueryTab extends React.Component {
     this.state = {
       queryType: "metric",
       metricQueryTypeBuilder: false,
+      queryOptionsShow: false,
     };
   }
 
   render() {
-    const { queryType, metricQueryTypeBuilder } = this.state;
+    const { queryType, metricQueryTypeBuilder, queryOptionsShow } = this.state;
     return (
       <>
         <div className="d-block panel-data-source">
@@ -34,7 +35,14 @@ class QueryTab extends React.Component {
             </button>
           </div>
           <div className="d-inline-block query-options-box">
-            <i class="fa fa-chevron-right"></i>
+            <i
+              class={`fa fa-chevron-${queryOptionsShow ? "down" : "right"}`}
+              onClick={() => {
+                this.setState({
+                  queryOptionsShow: !this.state.queryOptionsShow,
+                });
+              }}
+            ></i>
             <strong>Query options</strong>
             <span>MD = auto =1257</span>
             <span>interval = 15s</span>
@@ -43,7 +51,7 @@ class QueryTab extends React.Component {
             Query inspector
           </div>
         </div>
-        <QueryOptions />
+        {queryOptionsShow && <QueryOptions />}
         <div className="d-block panel-query-inspector">
           <i class="fas fa-chevron-down"></i>
           <strong>A</strong>
