@@ -82,15 +82,23 @@ class DashboardPanelMetricBuilder extends React.Component {
                     </div>
                     <div className="d-block panel-buttons">
                       <button
-                        className="panel-gray-button"
+                        className={
+                          currentTab === "query"
+                            ? "panel-gray-button active"
+                            : "panel-gray-button"
+                        }
                         onClick={() => this.handleTabChange("query")}
                       >
                         <img src={queryIcon} alt="" />
                         Query
-                        <span>1</span>
+                        <span>10</span>
                       </button>
                       <button
-                        className="panel-gray-button"
+                        className={
+                          currentTab === "transformation"
+                            ? "panel-gray-button active"
+                            : "panel-gray-button"
+                        }
                         onClick={() => this.handleTabChange("transformation")}
                       >
                         <img src={transformatioIcon} alt="" />
@@ -98,7 +106,11 @@ class DashboardPanelMetricBuilder extends React.Component {
                         <span>0</span>
                       </button>
                       <button
-                        className="panel-gray-button"
+                        className={
+                          currentTab === "alert"
+                            ? "panel-gray-button active"
+                            : "panel-gray-button"
+                        }
                         onClick={() => this.handleTabChange("alert")}
                       >
                         <img src={alertIcon} alt="" />

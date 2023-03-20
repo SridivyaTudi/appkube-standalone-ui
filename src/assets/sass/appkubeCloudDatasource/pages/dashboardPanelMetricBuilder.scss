@@ -116,7 +116,7 @@
 
                 .panel-gray-button {
                     padding: 0 15px;
-                    background-color: #FAFBFD;
+                    background-color: #E0E0E0;
                     color: #2662F0;
                     font-size: 12px;
                     line-height: 35px;
@@ -138,6 +138,10 @@
                         text-align: center;
                         font-size: 10px;
                         margin-top: 9px;
+                    }
+                    
+                    &.active{
+                        background-color: #FAFBFD;
                     }
                 }
             }

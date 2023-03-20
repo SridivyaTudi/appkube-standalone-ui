@@ -2,6 +2,7 @@ import React from "react";
 import Api from "./Api";
 import Log from "./Log";
 import Metric from "./Metric";
+import QueryOptions from "./QueryOptions";
 import Trace from "./Trace";
 
 class QueryTab extends React.Component {
@@ -42,6 +43,7 @@ class QueryTab extends React.Component {
             Query inspector
           </div>
         </div>
+        <QueryOptions />
         <div className="d-block panel-query-inspector">
           <i class="fas fa-chevron-down"></i>
           <strong>A</strong>
