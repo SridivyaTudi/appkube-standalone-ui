@@ -5,12 +5,16 @@ import alertIcon from "../../../assets/img/appkubeCloudDatasource/img/alert-icon
 import QueryTab from "./QueryTab";
 import TransformationTab from "./TransformationTab";
 import AlertTab from "./AlertTab";
+import Panel from "./SideBar/Panel";
+import Field from "./SideBar/Field";
+import OverRides from "./SideBar/OverRides";
 
 class DashboardPanelMetricBuilder extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currentTab: "query",
+      currentSideBarTab: "panel",
     };
   }
 
@@ -18,8 +22,12 @@ class DashboardPanelMetricBuilder extends React.Component {
     this.setState({ currentTab: tab });
   };
 
+  handleSideBarTabChange = (tab) => {
+    this.setState({ currentSideBarTab: tab });
+  };
+
   render() {
-    const { currentTab } = this.state;
+    const { currentTab, currentSideBarTab } = this.state;
     return (
       <div className="asset-container">
         <div className="dashboard-panel-container">
@@ -132,60 +140,38 @@ class DashboardPanelMetricBuilder extends React.Component {
                 <div className="col-lg-3 col-md-3 col-sm-12">
                   <div className="d-block panel-right">
                     <div className="d-inline-flex buttons">
-                      <button className="panel-gray-button min-width-inherit">
+                      <button
+                        className={`panel-gray-button min-width-inherit ${
+                          currentSideBarTab === "panel" && "active"
+                        }`}
+                        onClick={() => this.handleSideBarTabChange("panel")}
+                      >
                         Panel
                       </button>
-                      <button className="panel-gray-button min-width-inherit">
+                      <button
+                        className={`panel-gray-button min-width-inherit ${
+                          currentSideBarTab === "field" && "active"
+                        }`}
+                        onClick={() => this.handleSideBarTabChange("field")}
+                      >
                         Field
                       </button>
-                      <button className="panel-gray-button min-width-inherit">
+                      <button
+                        className={`panel-gray-button min-width-inherit ${
+                          currentSideBarTab === "overrides" && "active"
+                        }`}
+                        onClick={() => this.handleSideBarTabChange("overrides")}
+                      >
                         Overrides
                       </button>
                     </div>
-                    <div className="d-block menus">
-                      <ul>
-                        <li>
-                          <i class="fas fa-chevron-right"></i>
-                          Setting
-                        </li>
-                        <li>
-                          <i class="fas fa-chevron-right"></i>
-                          Visualisation
-                        </li>
-                        <li>
-                          <i class="fas fa-chevron-right"></i>
-                          Display
-                        </li>
-                        <li>
-                          <i class="fas fa-chevron-right"></i>
-                          Series overrides
-                        </li>
-                        <li>
-                          <i class="fas fa-chevron-right"></i>
-                          Axes
-                        </li>
-                        <li>
-                          <i class="fas fa-chevron-right"></i>
-                          Legend
-                        </li>
-                        <li>
-                          <i class="fas fa-chevron-right"></i>
-                          Treshholds
-                        </li>
-                        <li>
-                          <i class="fas fa-chevron-right"></i>
-                          Time region
-                        </li>
-                        <li>
-                          <i class="fas fa-chevron-right"></i>
-                          Links
-                        </li>
-                        <li>
-                          <i class="fas fa-chevron-right"></i>
-                          Repeat options
-                        </li>
-                      </ul>
-                    </div>
+                    {currentSideBarTab === "panel" ? (
+                      <Panel />
+                    ) : currentSideBarTab === "field" ? (
+                      <Field />
+                    ) : (
+                      currentSideBarTab === "overrides" && <OverRides />
+                    )}
                   </div>
                 </div>
               </div>
