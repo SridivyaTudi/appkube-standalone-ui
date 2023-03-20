@@ -39,6 +39,7 @@ import SearchAlert from '../alertmanager/pages/searchAlert';
 
 //***** Custom Manage Dashboards *****//
 import ManageDashboards from '../custom-manage-dashboards';
+import ImportDashboard from '../custom-manage-dashboards/import-dashboard';
 
 //***** EMS Reporting *****//
 import EmsDashboard from '../emsReporting/pages/Dashboard';
@@ -128,6 +129,7 @@ export const AllRoutes = () => {
 
       {/***** Custom Manage Dashboards *****/}
       <Route path="/managedashboards" element={<ManageDashboards />} />
+      <Route path="/custom-manage-dashboards/import-dashboard" element={<ImportDashboard />} />
 
       {/***** EMS Reporting *****/}
       <Route path="/emsReporting/pages/home" element={<EmsDashboard />} />

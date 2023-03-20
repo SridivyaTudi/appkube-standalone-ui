@@ -1,17 +1,17 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
-class TagFilter extends Component {
+class SortPicker extends Component {
   render() {
     return (
       <div className='d-block'>
         <select name="selectedFruit">
-        <option value="apple">Filter by starred</option>
+        <option value="apple">Apple</option>
         <option value="banana">Banana</option>
         <option value="orange">Orange</option>
       </select>
       </div>
-    );
+    )
   }
 }
 
-export default TagFilter;
+export default SortPicker;

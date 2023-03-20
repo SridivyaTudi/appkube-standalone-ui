@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import { Collapse } from 'reactstrap';
-//import { UnimplementedFeaturePopup } from './components/UnimplementedFeaturePopup';
-import NewDashboard from './NewDashboard';
-//import { Checkbox, getTagColorsFromName } from '@grafana/ui';
+import React, { Component } from "react";
+import { Collapse } from "reactstrap";
+import UnimplementedFeaturePopup from './components/UnimplementedFeaturePopup';
+import NewDashboard from "./NewDashboard";
+//import { Checkbox, getTagColorsFromName } from "@grafana/ui";
 //import { backendSrv } from 'app/core/services/backend_srv';
-//import { SortPicker } from 'app/core/components/Select/SortPicker';
-import TagFilter from './components/TagFilter';
-import  FilterInput  from './components/FilterInput';
+import SortPicker from "./components/SortPicker";
+import TagFilter from "./components/TagFilter";
+import FilterInput from "./components/FilterInput";
 
 class ManageTab extends Component {
   unimplementedFeatureModalRef;
@@ -18,8 +18,8 @@ class ManageTab extends Component {
       showNewDashboardPopup: false,
       isStarred: false,
       selectedTags: [],
-      sortValue: 'alpha-asc',
-      searchKey: '',
+      sortValue: "alpha-asc",
+      searchKey: "",
     };
     this.unimplementedFeatureModalRef = React.createRef();
   }
@@ -31,10 +31,10 @@ class ManageTab extends Component {
     this.getSearchData(sendData);
   }
 
-  // onClickUnImplementedFeature = (link) => {
-  //   this.unimplementedFeatureModalRef.current.setLink(link);
-  //   this.unimplementedFeatureModalRef.current.toggle();
-  // };
+  onClickUnImplementedFeature = (link) => {
+    this.unimplementedFeatureModalRef.current.setLink(link);
+    this.unimplementedFeatureModalRef.current.toggle();
+  };
 
   toggleNewDashPopup = () => {
     this.setState({
@@ -47,7 +47,7 @@ class ManageTab extends Component {
     let tagList = [];
     for (let i = 0; i < result.length; i++) {
       const dash = result[i];
-      if (dash.type === 'dash-db') {
+      if (dash.type === "dash-db") {
         retData[dash.folderId] = retData[dash.folderId] || {
           subData: [],
           openSubFolder: false,
@@ -57,7 +57,7 @@ class ManageTab extends Component {
         if (dash.folderTitle) {
           retData[dash.folderId].title = dash.folderTitle;
         } else {
-          retData[dash.folderId].title = 'General';
+          retData[dash.folderId].title = "General";
         }
         retData[dash.folderId].subData.push({
           ...dash,
@@ -98,7 +98,8 @@ class ManageTab extends Component {
     const { folderArray } = this.state;
     if (folderArray) {
       const parentCheckbox = folderArray[parentIndex];
-      parentCheckbox.subData[childIndex].checkValue = !parentCheckbox.subData[childIndex].checkValue;
+      parentCheckbox.subData[childIndex].checkValue =
+        !parentCheckbox.subData[childIndex].checkValue;
       for (let j = 0; j < parentCheckbox.subData.length; j++) {
         if (parentCheckbox.subData[j].checkValue === true) {
           countCheckedCheckbox++;
@@ -106,7 +107,8 @@ class ManageTab extends Component {
           countCheckedCheckbox--;
         }
       }
-      parentCheckbox.checkValueStatus = countCheckedCheckbox === parentCheckbox.subData.length;
+      parentCheckbox.checkValueStatus =
+        countCheckedCheckbox === parentCheckbox.subData.length;
       this.setState({
         folderArray,
       });
@@ -272,17 +274,29 @@ class ManageTab extends Component {
   // };
 
   render() {
-    const { showNewDashboardPopup, isStarred, searchKey, selectedTags, sortValue } = this.state;
+    const {
+      showNewDashboardPopup,
+      isStarred,
+      searchKey,
+      selectedTags,
+      sortValue,
+    } = this.state;
     return (
       <div>
         <div className="manage-dashboard-search">
           <div className="row">
             <div className="col-lg-12 col-md-12 col-sm-12">
               <div className="search-buttons float-right">
-                <a className="dashboard-blue-button" onClick={this.toggleNewDashPopup}>
+                <a
+                  className="dashboard-blue-button"
+                  onClick={this.toggleNewDashPopup}
+                >
                   New Dashboard
                 </a>
-                <a className="dashboard-blue-button m-r-0" onClick={() => this.onClickUnImplementedFeature('')}>
+                <a
+                  className="dashboard-blue-button m-r-0"
+                  onClick={() => this.onClickUnImplementedFeature("")}
+                >
                   New Folder
                 </a>
               </div>
@@ -292,7 +306,7 @@ class ManageTab extends Component {
         {!showNewDashboardPopup && (
           <>
             <div className="manage-dashboard-fliter-sort">
-              <div className="row" style={{ alignItems: 'center' }}>
+              <div className="row" style={{ alignItems: "center" }}>
                 <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
                   <div className="form-group search-control-group">
                     <FilterInput
@@ -300,7 +314,7 @@ class ManageTab extends Component {
                       inputClassName="gf-form-input"
                       value={searchKey}
                       onChange={this.onQueryChange}
-                      placeholder={'Search dashboards by name'}
+                      placeholder={"Search dashboards by name"}
                     />
                   </div>
                 </div>
@@ -313,16 +327,19 @@ class ManageTab extends Component {
                   />
                 </div>
                 <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-                  {/* <Checkbox label="Filter by starred" onChange={this.onStarredFilterChange} value={isStarred} /> */}
+                  <label>
+                    <input className="" type="checkbox" name="myCheckbox" defaultChecked={true}/>
+                    <span className="">Filter by starred</span>
+                  </label>
                 </div>
                 <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 sort-container">
-                  {/* <SortPicker onChange={this.onSortChange} value={sortValue} /> */}
+                  <SortPicker onChange={this.onSortChange} value={sortValue} />
                 </div>
               </div>
             </div>
             <div className="manage-dashboard-general">
               {/* {this.renderDashboardTree()} */}
-              </div>
+            </div>
           </>
         )}
         {showNewDashboardPopup && (
@@ -330,7 +347,7 @@ class ManageTab extends Component {
             <NewDashboard closeNewDashboard={this.toggleNewDashPopup} />
           </div>
         )}
-        {/* <UnimplementedFeaturePopup ref={this.unimplementedFeatureModalRef} /> */}
+        <UnimplementedFeaturePopup ref={this.unimplementedFeatureModalRef} />
       </div>
     );
   }
