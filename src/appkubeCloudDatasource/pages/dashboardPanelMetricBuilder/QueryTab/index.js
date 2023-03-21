@@ -101,6 +101,47 @@ class QueryTab extends React.Component {
             </button>
           </div>
         </div>
+        <div className="query-editor">
+          <div className="query-type-option">
+            <div className="query-type-button">Query type</div>
+            <div className="type-option">
+              <select className="form-select" aria-label="Default select example">
+                <option selected>List public files</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div>
+          <div className="query-type-option">
+            <div className="query-type-button">Path</div>
+            <div className="type-option">
+              <select className="form-select" aria-label="Default select example">
+                <option selected>List public files</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+              <span><i class="far fa-times"></i></span>
+            </div>
+          </div>
+          <div className="query-type-option">
+            <div className="query-type-button">Fields</div>
+            <div className="type-option">
+              <select className="form-select" aria-label="Default select example">
+                <option selected>List public files</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+              <span><i class="far fa-times"></i></span>
+            </div>
+            <div className="buffer-button">Buffer</div>
+            <div className="">
+              <input type="text" className="form-control" placeholder="Auto" />
+            </div>
+          </div>
+        </div>
         <div className="d-block panel-builder-code">
           <div className="d-inline-block select-menu">
             <select
