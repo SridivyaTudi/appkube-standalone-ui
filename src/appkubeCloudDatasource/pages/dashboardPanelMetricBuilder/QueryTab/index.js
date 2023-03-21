@@ -35,23 +35,28 @@ class QueryTab extends React.Component {
             </button>
           </div>
           <div className="d-inline-block query-options-box">
-            <i
-              class={`fa fa-chevron-${queryOptionsShow ? "down" : "right"}`}
-              onClick={() => {
+            <div className="d-inline-block" onClick={() => {
                 this.setState({
                   queryOptionsShow: !this.state.queryOptionsShow,
                 });
-              }}
+              }}>
+              <i
+              class={`fa fa-chevron-${queryOptionsShow ? "down" : "right"}`}
+             
             ></i>
-            <strong>Query options</strong>
+             <strong>Query options</strong>
+            </div>
+            
+           
             <span>MD = auto =1257</span>
             <span>interval = 15s</span>
+            {queryOptionsShow && <QueryOptions />}
           </div>
           <div className="d-inline-block query-inspector-box">
             Query inspector
           </div>
         </div>
-        {queryOptionsShow && <QueryOptions />}
+        
         <div className="d-block panel-query-inspector">
           <i class="fas fa-chevron-down"></i>
           <strong>A</strong>

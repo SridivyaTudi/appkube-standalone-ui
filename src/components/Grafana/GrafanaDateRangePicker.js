@@ -578,7 +578,7 @@ class GrafanaDateRangePicker extends Component {
                       <FormControlLabel
                         control={(
                           <Switch
-                            checked={liveTail}
+                            //checked={liveTail}
                             color="primary"
                             onChange={this.handleChange('liveTail')}
                           />

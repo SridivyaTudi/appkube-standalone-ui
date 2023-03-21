@@ -203,6 +203,8 @@
           font-size: 12px;
           line-height: 36px;
           margin-right: 5px;
+          cursor: pointer;
+          position: relative;
 
           i {
             margin-right: 15px;
@@ -215,6 +217,132 @@
 
           span {
             padding-right: 20px;
+          }
+          .query-options {
+            position: absolute;
+            left: 0;
+            top: 40px;
+            z-index: 10;
+            background: #fff;
+            padding: 5px;
+            width: 100%;
+            overflow: auto;
+            .query-options-inner {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: start;
+              margin-top: 5px;
+              .data-point-btn {
+                font-size: 12px;
+                width: 160px;
+                background-color: #f4f5f5;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-right: 5px;
+                padding: 0 10px;
+                i {
+                  margin: 0;
+                }
+              }
+
+              .data-point-equal {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 15px;
+                height: 30px;
+                background-color: #f4f5f5;
+                margin-right: 5px;
+                margin-left: 5px;
+
+                color: #eb7b18;
+              }
+              .data-panel {
+                display: flex;
+                align-items: center;
+                padding: 0 8px;
+                flex-shrink: 0;
+                font-weight: 500;
+                font-size: 12px;
+                background-color: #f4f5f5;
+                height: 32px;
+                line-height: 32px;
+                margin-right: 4px;
+                border-radius: 2px;
+                justify-content: space-between;
+                border: none;
+              }
+              .form-control {
+                font-size: 12px;
+                line-height: 16px;
+                font-weight: 400;
+              }
+              .switch {
+                position: relative;
+                display: inline-block;
+                width: 30px;
+                height: 15px;
+              }
+              
+              /* Hide default HTML checkbox */
+              .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+              }
+              
+              /* The slider */
+              .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: transparent;
+                border: 1px solid rgba(36, 41, 46, 0.30);
+                -webkit-transition: .4s;
+                transition: .4s;
+              }
+              
+              .slider:before {
+                position: absolute;
+                content: "";
+                height: 13px;
+                width: 13px;
+                left: 1px;
+                bottom: 0;
+                background: rgba(36, 41, 46, 0.75);
+                -webkit-transition: .4s;
+                transition: .4s;
+              }
+              
+              input:checked + .slider {
+                background-color: #2196F3;
+              }
+              
+              input:focus + .slider {
+                box-shadow: 0 0 1px #2196F3;
+              }
+              
+              input:checked + .slider:before {
+                -webkit-transform: translateX(15px);
+                -ms-transform: translateX(15px);
+                transform: translateX(15px);
+                background-color: #ffffff;
+              }
+              
+              /* Rounded sliders */
+              .slider.round {
+                border-radius: 34px;
+              }
+              
+              .slider.round:before {
+                border-radius: 50%;
+              }
+            }
           }
         }
 
@@ -584,51 +712,5 @@
         }
       }
     }
-  }
-}
-.Query-options-inner {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  margin-top: 5px;
-  .data-point-btn {
-    font-size: 12px;
-    width: 160px;
-    background-color: #f4f5f5;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-right: 5px;
-  }
-  
-  .data-point-equal {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-    height: 30px;
-    background-color: #f4f5f5;
-    margin-right: 5px;
-    margin-left: 5px;
-   
-    color: #eb7b18;
-  }
-  .data-panel{
-   display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    padding: 0 15px;
-    height: 30px;
-    background-color: #f4f5f5;
-   
-    
-  }
-  .form-control{
-    font-size: 12px;
-    line-height: 16px;
-    font-weight: 400;
-
   }
 }
