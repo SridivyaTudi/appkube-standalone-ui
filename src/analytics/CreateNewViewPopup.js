@@ -66,19 +66,19 @@ export class CreateNewViewPopup extends Component {
     return retData;
   };
 
-  // handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   this.setState({
-  //     isSubmitted: true,
-  //   });
-  //   const errorData = this.validate(true);
-  //   if (errorData.isValid) {
-  //     const { viewName, description } = this.state;
-  //     localStorage.setItem('viewData', JSON.stringify({ viewName, description }));
-  //     locationService.push('/analytics/new/dashboard');
-  //     // window.location.assign('/analytics/f/new');
-  //   }
-  // };
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.setState({
+      isSubmitted: true,
+    });
+    const errorData = this.validate(true);
+    if (errorData.isValid) {
+      const { viewName, description } = this.state;
+      localStorage.setItem('viewData', JSON.stringify({ viewName, description }));
+      //locationService.push('/analytics/new/dashboard');
+      // window.location.assign('/analytics/f/new');
+    }
+  };
 
   render() {
     const { modal, viewName, description, isSubmitted } = this.state;

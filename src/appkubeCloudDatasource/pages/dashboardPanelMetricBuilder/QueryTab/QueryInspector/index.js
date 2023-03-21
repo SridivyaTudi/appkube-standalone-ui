@@ -45,6 +45,7 @@ class QueryInspector extends React.Component {
               </button>
             </div>
             <h3>Inspect: Panel Title</h3>
+            <p>1 queries with total query time of 3.10 s</p>
             <div className="d-inline-flex buttons">
               <a
                 className={currentActiveTab === "data" ? "active" : ""}
