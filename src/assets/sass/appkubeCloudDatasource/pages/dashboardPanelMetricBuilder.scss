@@ -650,6 +650,7 @@
         }
       }
       .query-editor {
+        margin-left: 24px;
         .query-type-option {
           display: flex;
           align-items: start;
@@ -668,7 +669,7 @@
             width: 96px;
             color: rgb(36, 41, 46);
           }
-          .buffer-button{
+          .buffer-button {
             margin-left: 5px;
             padding: 0 8px;
             font-weight: 500;
@@ -693,6 +694,40 @@
               position: absolute;
               top: 6px;
               right: 25px;
+            }
+          }
+        }
+        .data-testid-info {
+          display: flex;
+          align-items: stretch;
+          background: #f4f5f5;
+          box-shadow: 0px 1px 2px rgba(24, 26, 27, 0.2);
+          margin-bottom: 16px;
+          border-radius: 2px;
+          .info-icon {
+            font-size: 20px;
+            padding: 16px 24px;
+            background: #3871dc;
+            border-radius: 2px 0 0 2px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          .testid-info-content{
+            padding: 16px;
+            label{
+              font-size: 16px;
+              line-height: 20px;
+              font-weight: 500;
+              margin-bottom: 5px;
+              color: rgba(36, 41, 46, 1);
+            }
+            span{
+              font-size: 14px;
+              line-height: 18px;
+              font-weight: 400;
+              color: rgba(36, 41, 46, 1);
             }
           }
         }

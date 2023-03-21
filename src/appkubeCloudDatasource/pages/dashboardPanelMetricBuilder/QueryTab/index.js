@@ -141,6 +141,15 @@ class QueryTab extends React.Component {
               <input type="text" className="form-control" placeholder="Auto" />
             </div>
           </div>
+          <div className="data-testid-info">
+            <div className="info-icon">
+            <i class="far fa-info-circle"></i>
+            </div>
+            <div className="testid-info-content">
+              <label className="d-block">Grafana Live - Measurements</label>
+              <span>This supports real-time event streams in Grafana core. This feature is under heavy development. Expect the interfaces and structures to change as this becomes more production ready.</span>
+            </div>
+          </div>
         </div>
         <div className="d-block panel-builder-code">
           <div className="d-inline-block select-menu">
