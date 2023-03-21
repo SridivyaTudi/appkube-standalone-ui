@@ -4,6 +4,7 @@ import Log from "./Log";
 import Metric from "./Metric";
 import QueryOptions from "./QueryOptions";
 import Trace from "./Trace";
+import QueryInspector from "./QueryInspector";
 
 class QueryTab extends React.Component {
   constructor(props) {
@@ -12,11 +13,22 @@ class QueryTab extends React.Component {
       queryType: "metric",
       metricQueryTypeBuilder: false,
       queryOptionsShow: false,
+      queryInspectorModalVisible: false,
     };
   }
 
+  toggleQueryInspectorModal = () => {
+    this.setState({ queryInspectorModalVisible: false });
+  };
+
   render() {
-    const { queryType, metricQueryTypeBuilder, queryOptionsShow } = this.state;
+    const {
+      queryType,
+      metricQueryTypeBuilder,
+      queryOptionsShow,
+      queryInspectorModalVisible,
+    } = this.state;
+
     return (
       <>
         <div className="d-block panel-data-source">
@@ -35,28 +47,37 @@ class QueryTab extends React.Component {
             </button>
           </div>
           <div className="d-inline-block query-options-box">
-            <div className="d-inline-block" onClick={() => {
+            <div
+              className="d-inline-block"
+              onClick={() => {
                 this.setState({
                   queryOptionsShow: !this.state.queryOptionsShow,
                 });
-              }}>
+              }}
+            >
               <i
-              class={`fa fa-chevron-${queryOptionsShow ? "down" : "right"}`}
-             
-            ></i>
-             <strong>Query options</strong>
+                class={`fa fa-chevron-${queryOptionsShow ? "down" : "right"}`}
+              ></i>
+              <strong>Query options</strong>
             </div>
-            
-           
+
             <span>MD = auto =1257</span>
             <span>interval = 15s</span>
             {queryOptionsShow && <QueryOptions />}
           </div>
           <div className="d-inline-block question-button">
-            <button type="button" class="panel-gray-button inspector-btn"> Query inspector</button>
+            <button
+              type="button"
+              class="panel-gray-button inspector-btn"
+              onClick={() => {
+                this.setState({ queryInspectorModalVisible: true });
+              }}
+            >
+              Query inspector
+            </button>
           </div>
         </div>
-        
+
         <div className="d-block panel-query-inspector">
           <i class="fas fa-chevron-down"></i>
           <strong>A</strong>
@@ -133,6 +154,9 @@ class QueryTab extends React.Component {
         {queryType === "log" && <Log />}
         {queryType === "trace" && <Trace />}
         {queryType === "api" && <Api />}
+        {queryInspectorModalVisible && (
+          <QueryInspector visible={this.toggleQueryInspectorModal} />
+        )}
       </>
     );
   }

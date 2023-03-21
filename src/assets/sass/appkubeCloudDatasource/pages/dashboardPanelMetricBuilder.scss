@@ -186,20 +186,13 @@
           margin-right: 5px;
 
           .panel-gray-button {
-            background: rgba(36, 41, 46, 0.16);
+            background-color: #f0f3f7;
             padding: 0 10px;
             color: #414d55;
             font-size: 16px;
             line-height: 36px;
             border-radius: 0;
             margin-right: 0;
-            
-          }
-          .inspector-btn{
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 36px;
-
           }
         }
 
@@ -292,14 +285,14 @@
                 width: 30px;
                 height: 15px;
               }
-              
+
               /* Hide default HTML checkbox */
               .switch input {
                 opacity: 0;
                 width: 0;
                 height: 0;
               }
-              
+
               /* The slider */
               .slider {
                 position: absolute;
@@ -309,11 +302,11 @@
                 right: 0;
                 bottom: 0;
                 background-color: transparent;
-                border: 1px solid rgba(36, 41, 46, 0.30);
-                -webkit-transition: .4s;
-                transition: .4s;
+                border: 1px solid rgba(36, 41, 46, 0.3);
+                -webkit-transition: 0.4s;
+                transition: 0.4s;
               }
-              
+
               .slider:before {
                 position: absolute;
                 content: "";
@@ -322,30 +315,30 @@
                 left: 1px;
                 bottom: 0;
                 background: rgba(36, 41, 46, 0.75);
-                -webkit-transition: .4s;
-                transition: .4s;
+                -webkit-transition: 0.4s;
+                transition: 0.4s;
               }
-              
+
               input:checked + .slider {
-                background-color: #2196F3;
+                background-color: #2196f3;
               }
-              
+
               input:focus + .slider {
-                box-shadow: 0 0 1px #2196F3;
+                box-shadow: 0 0 1px #2196f3;
               }
-              
+
               input:checked + .slider:before {
                 -webkit-transform: translateX(15px);
                 -ms-transform: translateX(15px);
                 transform: translateX(15px);
                 background-color: #ffffff;
               }
-              
+
               /* Rounded sliders */
               .slider.round {
                 border-radius: 34px;
               }
-              
+
               .slider.round:before {
                 border-radius: 50%;
               }
@@ -718,6 +711,101 @@
           }
         }
       }
+    }
+  }
+}
+
+.query-inspector {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100vh;
+  width: 100%;
+  z-index: 99999;
+  display: flex;
+
+  .mask {
+    flex: 1;
+    background-color: rgba(208, 209, 211, 0.24);
+    backdrop-filter: blur(1px);
+    opacity: 1;
+  }
+
+  .query-modal {
+    flex: 1;
+    background: #fff;
+
+    .head-div {
+      background-color: #f4f5f5;
+      padding: 10px 2px 0px 20px;
+
+      .buttons-div {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        gap: 10px;
+
+        button {
+          border: none;
+          background-color: #f4f5f5;
+          font-size: 18px;
+          outline: none;
+        }
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 21px;
+        line-height: 25px;
+        font-weight: 500;
+        letter-spacing: 0em;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+        margin-bottom: 0.45em;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 5px;
+        margin-top: 30px;
+
+        a {
+          color: rgba(36, 41, 46, 0.75);
+          padding: 12px 16px 8px;
+
+          &:hover {
+            background: linear-gradient(
+              to top,
+              rgba(36, 41, 46, 0.75) 4px,
+              transparent 0
+            );
+            border-radius: 2px;
+          }
+
+          &.active {
+            position: relative;
+
+            &::before {
+              display: block;
+              content: " ";
+              position: absolute;
+              left: 0;
+              right: 0;
+              height: 4px;
+              border-radius: 2px;
+              bottom: 0px;
+              background-image: linear-gradient(
+                90deg,
+                #ff8833 0%,
+                #f53e4c 100%
+              );
+            }
+          }
+        }
+      }
+    }
+
+    .body-div {
+      padding: 10px;
     }
   }
 }
