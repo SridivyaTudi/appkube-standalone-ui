@@ -52,8 +52,8 @@ class QueryTab extends React.Component {
             <span>interval = 15s</span>
             {queryOptionsShow && <QueryOptions />}
           </div>
-          <div className="d-inline-block query-inspector-box">
-            Query inspector
+          <div className="d-inline-block question-button">
+            <button type="button" class="panel-gray-button inspector-btn"> Query inspector</button>
           </div>
         </div>
         

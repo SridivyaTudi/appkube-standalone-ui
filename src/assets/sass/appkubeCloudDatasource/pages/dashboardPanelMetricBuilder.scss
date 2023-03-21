@@ -186,13 +186,20 @@
           margin-right: 5px;
 
           .panel-gray-button {
-            background-color: #f0f3f7;
+            background: rgba(36, 41, 46, 0.16);
             padding: 0 10px;
             color: #414d55;
             font-size: 16px;
             line-height: 36px;
             border-radius: 0;
             margin-right: 0;
+            
+          }
+          .inspector-btn{
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 36px;
+
           }
         }
 
