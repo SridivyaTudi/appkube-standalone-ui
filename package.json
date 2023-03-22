@@ -26,6 +26,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "mui-datatables": "^4.2.2",
+    "multiselect-react-dropdown": "^2.0.25",
     "notistack": "^2.0.8",
     "plotly.js": "^2.18.2",
     "prop-types": "^15.8.1",

@@ -1,19 +1,30 @@
-import React, { Component } from "react";
-import { FormControlLabel, Switch } from "@mui/material";
+import React from "react";
 
 class QueryOptions extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      relativeTime: "",
+      timeShift: "",
+    };
   }
 
+  handleInputChange = (e) => {
+    if (e.target.value) {
+      this.setState({ [e.target.name]: [e.target.value] });
+    } else {
+      this.setState({ [e.target.name]: "" });
+    }
+  };
+
   render() {
+    const { relativeTime, timeShift } = this.state;
     return (
       <>
         <div className="query-options">
           <div className="d-block query-options-inner">
             <div className="d-inline-block">
-              <button className="btn data-point-btn">
+              <button className=" data-point-btn">
                 Max data points<i className="far fa-question-circle"></i>
               </button>
             </div>
@@ -25,7 +36,7 @@ class QueryOptions extends React.Component {
           </div>
           <div className="d-block query-options-inner">
             <div className="d-inline-block">
-              <button className="btn data-point-btn">
+              <button className="data-point-btn">
                 Min interval<i className="far fa-question-circle"></i>
               </button>
             </div>
@@ -40,7 +51,7 @@ class QueryOptions extends React.Component {
           </div>
           <div className="d-block query-options-inner">
             <div className="d-inline-block">
-              <button className="btn data-point-btn">
+              <button className="data-point-btn">
                 Interval<i className="far fa-question-circle"></i>
               </button>
             </div>
@@ -52,7 +63,7 @@ class QueryOptions extends React.Component {
           </div>
           <div className="d-block query-options-inner">
             <div className="d-inline-block">
-              <button className="btn data-point-btn">Relative time</button>
+              <button className="data-point-btn">Relative time</button>
             </div>
             <div className="d-inline-block">
               <input
@@ -60,12 +71,15 @@ class QueryOptions extends React.Component {
                 id="text"
                 class="form-control"
                 placeholder="1h"
+                name="relativeTime"
+                value={relativeTime}
+                onChange={(e) => this.handleInputChange(e)}
               />
             </div>
           </div>
           <div className="d-block query-options-inner">
             <div className="d-inline-block">
-              <button className="btn data-point-btn">Time shift</button>
+              <button className="data-point-btn">Time shift</button>
             </div>
             <div className="d-inline-block">
               <input
@@ -73,18 +87,25 @@ class QueryOptions extends React.Component {
                 id="text"
                 class="form-control"
                 placeholder="1h"
+                name="timeShift"
+                value={timeShift}
+                onChange={(e) => this.handleInputChange(e)}
               />
             </div>
           </div>
-          <div className="d-block query-options-inner">
-            <div className="d-inline-block">
-              <button className="btn data-point-btn">Hide time info</button>
+          {relativeTime || timeShift ? (
+            <div className="d-block query-options-inner">
+              <div className="d-inline-block">
+                <button className="data-point-btn">Hide time info</button>
+              </div>
+              <label class="switch">
+                <input type="checkbox" />
+                <span class="slider round"></span>
+              </label>
             </div>
-            <label class="switch">
-              <input type="checkbox" />
-              <span class="slider round"></span>
-            </label>
-          </div>
+          ) : (
+            <></>
+          )}
         </div>
       </>
     );

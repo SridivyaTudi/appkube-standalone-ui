@@ -46,25 +46,32 @@ class QueryTab extends React.Component {
               <i class="far fa-question-circle"></i>
             </button>
           </div>
-          <div className="d-inline-block query-options-box">
-            <div
-              className="d-inline-block"
-              onClick={() => {
-                this.setState({
-                  queryOptionsShow: !this.state.queryOptionsShow,
-                });
-              }}
-            >
-              <i
-                class={`fa fa-chevron-${queryOptionsShow ? "down" : "right"}`}
-              ></i>
-              <strong>Query options</strong>
-            </div>
+          <div
+            className="query-options-container "
+            style={{ height: queryOptionsShow ? "280px" : "0px" }}
+          >
+            <div className="d-inline-block query-options-box">
+              <div
+                style={{ cursor: "pointer" }}
+                className="d-inline-block"
+                onClick={() => {
+                  this.setState({
+                    queryOptionsShow: !this.state.queryOptionsShow,
+                  });
+                }}
+              >
+                <i
+                  class={`fa fa-chevron-${queryOptionsShow ? "down" : "right"}`}
+                ></i>
+                <strong>Query options</strong>
+              </div>
 
-            <span>MD = auto =1257</span>
-            <span>interval = 15s</span>
+              <span>MD = auto =1257</span>
+              <span>interval = 15s</span>
+            </div>
             {queryOptionsShow && <QueryOptions />}
           </div>
+
           <div className="d-inline-block question-button">
             <button
               type="button"
@@ -77,80 +84,7 @@ class QueryTab extends React.Component {
             </button>
           </div>
         </div>
-
-        <div className="d-block panel-query-inspector">
-          <i class="fas fa-chevron-down"></i>
-          <strong>A</strong>
-          <p>
-            {
-              '{"namespace":"","metricName":"","expression":"","dimensions":{},"region":"default","id":"","alias":"","statistics":["Average"],"period":"","refId":"A","matchExact":true}'
-            }
-          </p>
-          <div className="float-right">
-            <button className="btn">
-              <i class="fas fa-caret-down"></i>
-            </button>
-            <button className="btn">
-              <i class="fas fa-caret-up"></i>
-            </button>
-            <button className="btn">
-              <i class="far fa-copy"></i>
-            </button>
-            <button className="btn">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
-        <div className="query-editor">
-          <div className="query-type-option">
-            <div className="query-type-button">Query type</div>
-            <div className="type-option">
-              <select className="form-select" aria-label="Default select example">
-                <option selected>List public files</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-          </div>
-          <div className="query-type-option">
-            <div className="query-type-button">Path</div>
-            <div className="type-option">
-              <select className="form-select" aria-label="Default select example">
-                <option selected>List public files</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-              <span><i class="far fa-times"></i></span>
-            </div>
-          </div>
-          <div className="query-type-option">
-            <div className="query-type-button">Fields</div>
-            <div className="type-option">
-              <select className="form-select" aria-label="Default select example">
-                <option selected>List public files</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-              <span><i class="far fa-times"></i></span>
-            </div>
-            <div className="buffer-button">Buffer</div>
-            <div className="">
-              <input type="text" className="form-control" placeholder="Auto" />
-            </div>
-          </div>
-          <div className="data-testid-info">
-            <div className="info-icon">
-            <i class="far fa-info-circle"></i>
-            </div>
-            <div className="testid-info-content">
-              <label className="d-block">Grafana Live - Measurements</label>
-              <span>This supports real-time event streams in Grafana core. This feature is under heavy development. Expect the interfaces and structures to change as this becomes more production ready.</span>
-            </div>
-          </div>
-        </div>
+        <QueryInspector />
         <div className="d-block panel-builder-code">
           <div className="d-inline-block select-menu">
             <select
