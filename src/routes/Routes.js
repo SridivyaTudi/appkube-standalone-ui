@@ -42,6 +42,7 @@ import ManageDashboards from '../custom-manage-dashboards';
 import ImportDashboard from '../custom-manage-dashboards/import-dashboard';
 //***** analytics *****//
 import Analytics from '../analytics';
+import AddNewView from '../analytics/addNewView';
 
 
 
@@ -138,6 +139,7 @@ export const AllRoutes = () => {
 
       {/***** analytics *****/}
       <Route path="/analytics" element={<Analytics />} />
+      <Route path="/analytics/addNewView" element={<AddNewView />} />
 
       {/***** EMS Reporting *****/}
       <Route path="/emsReporting/pages/home" element={<EmsDashboard />} />
