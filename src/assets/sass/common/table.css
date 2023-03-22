@@ -443,7 +443,7 @@
   background-color: #333333;
 } */
 .custom-table.dark .data-table-parent .data-table tbody tr.checked-row {
-  background-color: #202226 !important;
+  background-color: #202226;
 }
 
 

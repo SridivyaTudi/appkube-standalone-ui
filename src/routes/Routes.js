@@ -44,7 +44,9 @@ import ImportDashboard from '../custom-manage-dashboards/import-dashboard';
 import Analytics from '../analytics';
 import AddNewView from '../analytics/addNewView';
 
-
+//***** taskManager *****//
+import TaskManager from '../task-manager';
+import CreateDashboard from '../task-manager/create-dashboard';
 
 //***** EMS Reporting *****//
 import EmsDashboard from '../emsReporting/pages/Dashboard';
@@ -140,6 +142,10 @@ export const AllRoutes = () => {
       {/***** analytics *****/}
       <Route path="/analytics" element={<Analytics />} />
       <Route path="/analytics/addNewView" element={<AddNewView />} />
+
+       {/***** taskManager *****/}
+       <Route path="/taskManager" element={<TaskManager />} />
+       <Route path='/taskmanager/create-dashboard' element={<CreateDashboard />} />
 
       {/***** EMS Reporting *****/}
       <Route path="/emsReporting/pages/home" element={<EmsDashboard />} />
