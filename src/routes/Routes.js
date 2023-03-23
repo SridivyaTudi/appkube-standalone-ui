@@ -57,7 +57,7 @@ import ComplianceRulesets from '../compliancemanager/pages/ComplianceRulesets';
 import ComplianceRemediation from '../compliancemanager/pages/complianceRemediation';
 import CompliancePolicy from '../compliancemanager/pages/compliancePolicy';
 import ComplianceHistory from '../compliancemanager/pages/complianceHistory';
-import ComplianceExclusions from '../compliancemanager/pages/complianceExclusions';
+import ComplianceExclusions from '../compliancemanager/pages/complianceexclusions';
 import ComplianceAssessmentHistory from '../compliancemanager/pages/complianceAssessmentHistory';
 import ClearHistory from '../compliancemanager/pages/clearHistory';
 import ApiGateway from '../compliancemanager/pages/apiGateway';
@@ -156,7 +156,7 @@ export const AllRoutes = () => {
       <Route path="/compliancemanager/pages/complianceRemediation" element={<ComplianceRemediation />} />
       <Route path="/compliancemanager/pages/compliancePolicy" element={<CompliancePolicy />} />
       <Route path="/compliancemanager/pages/complianceHistory" element={<ComplianceHistory />} />
-      <Route path="/compliancemanager/pages/complianceExclusions" element={<ComplianceExclusions />} />
+      <Route path="/compliancemanager/pages/complianceexclusions" element={<ComplianceExclusions />} />
       <Route path="/compliancemanager/pages/complianceAssessmentHistory" element={<ComplianceAssessmentHistory />} />
       <Route path="/compliancemanager/pages/clearHistory" element={<ClearHistory />} />
       <Route path="/compliancemanager/pages/apiGateway" element={<ApiGateway />} />
