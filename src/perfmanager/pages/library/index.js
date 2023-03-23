@@ -508,17 +508,19 @@ class Library extends React.Component {
                       Add Folder
                     </a>
                   </Rbac>
-                  <div className="form-group search-control-group">
-                    <form>
-                      <input
-                        type="text"
-                        className="input-group-text"
-                        placeholder="Search"
-                      />
-                      <button>
-                        <i className="fa fa-search"></i>
-                      </button>
-                    </form>
+                  <div className="search-box">
+                    <div className="search-control-group">
+                      <form>
+                        <input
+                          type="text"
+                          className="input-group-text"
+                          placeholder="Search"
+                        />
+                        <button>
+                          <i className="fa fa-search"></i>
+                        </button>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>

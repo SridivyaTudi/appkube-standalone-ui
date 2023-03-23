@@ -17,14 +17,13 @@ class Workflows extends React.Component {
           <div className="row">
             <div className="col-sm-10">
               <div className="search-box">
-                <button className="search-button">
+                <div className="search-control-group">
+                <input type="text" className="input-group-text"
+                  placeholder="Search Template here"/>
+                  <button className="search-button">
                   <i className="fa fa-search"></i>
                 </button>
-                <input
-                  type="text"
-                  placeholder="Search Template here"
-                  className="input"
-                />
+                </div>
               </div>
             </div>
             <div className="col-sm-2">

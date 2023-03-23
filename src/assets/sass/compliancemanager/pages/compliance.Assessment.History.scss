@@ -9,33 +9,33 @@
     }
   }
   .search-box{
-    .search-control-group{
-      position: relative;
-      width: 300px;
-      .input-group-text{
-        max-width: 100%;
-        text-align: left;
-        padding-left: 35px;
-        width: 100%;
-        border: 1px solid #8392a7;
-        background-color: #ffffff;
-        font-size: 13px;
-        color: #8998AC;
-        font-weight: 400;
-        height: 36px;
-      }
-      button{
-        position: absolute;
-        left: 0;
-        top: 0;
-        z-index: 1;
-        cursor: pointer;
-        border: none;
-        background-color: transparent;
-        width: 36px;
-        height: 36px;
-      }
-    }
+    // .search-control-group{
+    //   position: relative;
+    //   width: 300px;
+    //   .input-group-text{
+    //     max-width: 100%;
+    //     text-align: left;
+    //     padding-left: 35px;
+    //     width: 100%;
+    //     border: 1px solid #8392a7;
+    //     background-color: #ffffff;
+    //     font-size: 13px;
+    //     color: #8998AC;
+    //     font-weight: 400;
+    //     height: 36px;
+    //   }
+    //   button{
+    //     position: absolute;
+    //     left: 0;
+    //     top: 0;
+    //     z-index: 1;
+    //     cursor: pointer;
+    //     border: none;
+    //     background-color: transparent;
+    //     width: 36px;
+    //     height: 36px;
+    //   }
+    // }
     .file-export{
       position: relative;
       a{
