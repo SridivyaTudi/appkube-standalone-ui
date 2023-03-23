@@ -377,13 +377,31 @@
         color: #414d55;
         font-weight: 500;
 
-        strong {
+        .queryTitle {
           color: #2662f0;
           font-size: 14px;
           margin-left: 10px;
           margin-right: 10px;
           display: inline-block;
           vertical-align: top;
+          border: 1px solid transparent;
+          padding-left: 1px;
+          padding-right: 30px;
+          border-radius: 3px;
+          position: relative;
+
+          &:hover {
+            border: 1px dashed gray;
+            background: rgba(36, 41, 46, 0.16);
+            cursor: pointer;
+          }
+
+          i {
+            color: rgb(36, 41, 46);
+            position: absolute;
+            right: 10px;
+            top: 5px;
+          }
         }
 
         p {

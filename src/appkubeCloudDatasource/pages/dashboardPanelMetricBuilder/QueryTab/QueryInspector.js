@@ -1,7 +1,7 @@
 import React from "react";
 import Multiselect from "multiselect-react-dropdown";
 
-class QueryInspector extends React.Component {
+class QueryInspectorModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -9,6 +9,9 @@ class QueryInspector extends React.Component {
       queryType: "",
       path: "",
       fields: "",
+      titleHover: false,
+      queryTitle: this.props.name,
+      titleEdit: false,
     };
   }
 
@@ -20,8 +23,23 @@ class QueryInspector extends React.Component {
     }
   };
 
+  handleTitleHover = () => {
+    this.setState({ titleHover: !this.state.titleHover });
+  };
+
+  handleQueryEditEnter = (e) => {
+    if (e.keyCode == 13) {
+      this.setState({ titleEdit: false, titleHover: false });
+    }
+  };
+
+  handleInputChange = (e) => {
+    this.setState({ [e.target.name]: [e.target.value] });
+  };
+
   render() {
     const { inspectorOpen, queryType, path, fields } = this.state;
+    const { currentIndex } = this.props;
     return (
       <>
         <div className="d-block panel-query-inspector">
@@ -32,23 +50,67 @@ class QueryInspector extends React.Component {
             }}
             style={{ cursor: "pointer" }}
           ></i>
-          <strong>A</strong>
+          {!this.state.titleEdit && (
+            <strong
+              className="queryTitle"
+              onMouseEnter={() => {
+                this.setState({ titleHover: !this.state.titleHover });
+              }}
+              onMouseLeave={() => {
+                this.setState({ titleHover: !this.state.titleHover });
+              }}
+              onClick={() => {
+                this.setState({ titleEdit: true });
+              }}
+            >
+              {this.state.queryTitle}
+              {this.state.titleHover && <i class="fas fa-pencil"></i>}
+            </strong>
+          )}
+          {this.state.titleEdit && (
+            <input
+              type="text"
+              name="queryTitle"
+              value={this.state.queryTitle}
+              onKeyDown={this.handleQueryEditEnter}
+              onChange={this.handleInputChange}
+              onBlur={(e) => {
+                this.setState({
+                  titleEdit: false,
+                  titleHover: false,
+                  [e.target.name]: [e.target.value],
+                });
+              }}
+            />
+          )}
           <p>
             {
               '{"namespace":"","metricName":"","expression":"","dimensions":{},"region":"default","id":"","alias":"","statistics":["Average"],"period":"","refId":"A","matchExact":true}'
             }
           </p>
           <div className="float-right">
-            <button className="btn">
+            <button
+              className="btn"
+              onClick={() => this.props.handleSort(currentIndex, "down")}
+            >
               <i class="fas fa-caret-down"></i>
             </button>
-            <button className="btn">
+            <button
+              className="btn"
+              onClick={() => this.props.handleSort(currentIndex, "up")}
+            >
               <i class="fas fa-caret-up"></i>
             </button>
-            <button className="btn">
+            <button
+              className="btn"
+              onClick={() => this.props.handleCopy(currentIndex)}
+            >
               <i class="far fa-copy"></i>
             </button>
-            <button className="btn">
+            <button
+              className="btn"
+              onClick={() => this.props.handleDelete(currentIndex)}
+            >
               <i class="fas fa-times"></i>
             </button>
           </div>
@@ -95,7 +157,7 @@ class QueryInspector extends React.Component {
                 </div>
               </div>
             )}
-            {path && (
+            {path && queryType && (
               <div className="query-type-option">
                 <div className="query-type-button">Fields</div>
                 <div className="type-option">
@@ -145,4 +207,4 @@ class QueryInspector extends React.Component {
   }
 }
 
-export default QueryInspector;
+export default QueryInspectorModal;

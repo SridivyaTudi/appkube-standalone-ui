@@ -5,6 +5,7 @@ import Metric from "./Metric";
 import QueryOptions from "./QueryOptions";
 import Trace from "./Trace";
 import QueryInspector from "./QueryInspector";
+import QueryInspectorModal from "./QueryInspector/index";
 
 class QueryTab extends React.Component {
   constructor(props) {
@@ -14,11 +15,55 @@ class QueryTab extends React.Component {
       metricQueryTypeBuilder: false,
       queryOptionsShow: false,
       queryInspectorModalVisible: false,
+      QueryInspectorData: ["adipiscing", "maximus", "Integer"],
     };
   }
 
   toggleQueryInspectorModal = () => {
     this.setState({ queryInspectorModalVisible: false });
+  };
+
+  handleQueryInspectorSort = (currentIndex, direction) => {
+    const { QueryInspectorData } = this.state;
+
+    const position = QueryInspectorData.findIndex(
+      (i, index) => index === currentIndex
+    );
+
+    if (position < 0) {
+      throw new Error("Given item not found.");
+    } else if (
+      (direction === "up" && position === 0) ||
+      (direction === "down" && position === QueryInspectorData.length - 1)
+    ) {
+      return;
+    }
+
+    const item = QueryInspectorData[position];
+    const newQueryInspectorData = QueryInspectorData.filter(
+      (i, index) => index !== currentIndex
+    );
+    if (direction === "up") {
+      newQueryInspectorData.splice(position - 1, 0, item);
+    } else {
+      newQueryInspectorData.splice(position + 1, 0, item);
+    }
+
+    this.setState({ QueryInspectorData: newQueryInspectorData });
+  };
+
+  handleQueryInspectorCopy = (itemIndex) => {
+    let { QueryInspectorData } = this.state;
+    const copiedItem = QueryInspectorData[itemIndex];
+    this.setState((prevState) => ({
+      QueryInspectorData: [...prevState.QueryInspectorData, copiedItem],
+    }));
+  };
+
+  handleQueryInspectorDelete = (itemIndex) => {
+    let { QueryInspectorData } = this.state;
+    QueryInspectorData.splice(itemIndex, 1);
+    this.setState({ QueryInspectorData });
   };
 
   render() {
@@ -27,6 +72,7 @@ class QueryTab extends React.Component {
       metricQueryTypeBuilder,
       queryOptionsShow,
       queryInspectorModalVisible,
+      QueryInspectorData,
     } = this.state;
 
     return (
@@ -84,7 +130,17 @@ class QueryTab extends React.Component {
             </button>
           </div>
         </div>
-        <QueryInspector />
+        {QueryInspectorData.map((item, index) => {
+          return (
+            <QueryInspector
+              currentIndex={index}
+              name={QueryInspectorData[index]}
+              handleSort={this.handleQueryInspectorSort}
+              handleCopy={this.handleQueryInspectorCopy}
+              handleDelete={this.handleQueryInspectorDelete}
+            />
+          );
+        })}
         <div className="d-block panel-builder-code">
           <div className="d-inline-block select-menu">
             <select
@@ -139,7 +195,7 @@ class QueryTab extends React.Component {
         {queryType === "trace" && <Trace />}
         {queryType === "api" && <Api />}
         {queryInspectorModalVisible && (
-          <QueryInspector visible={this.toggleQueryInspectorModal} />
+          <QueryInspectorModal visible={this.toggleQueryInspectorModal} />
         )}
       </>
     );
