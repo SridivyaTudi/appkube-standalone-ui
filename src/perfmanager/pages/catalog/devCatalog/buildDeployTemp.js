@@ -79,7 +79,7 @@ class DeploymentTemplate extends React.Component {
                     <p>A catalogue is collection of dashboards</p>
                   </div>
                   <div className="col-md-3 col-sm-12">
-                    <button className="create-btn">Add Catalogue</button>
+                    <button className="blue-button">Add Catalogue</button>
                   </div>
                 </div>
               </div>
