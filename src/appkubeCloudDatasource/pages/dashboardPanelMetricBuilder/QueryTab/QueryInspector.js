@@ -10,8 +10,8 @@ class QueryInspectorModal extends React.Component {
       path: "",
       fields: "",
       titleHover: false,
-      queryTitle: this.props.name,
       titleEdit: false,
+      queryTitle: this.props.name,
     };
   }
 
@@ -27,18 +27,13 @@ class QueryInspectorModal extends React.Component {
     this.setState({ titleHover: !this.state.titleHover });
   };
 
-  handleQueryEditEnter = (e) => {
-    if (e.keyCode == 13) {
-      this.setState({ titleEdit: false, titleHover: false });
-    }
-  };
-
-  handleInputChange = (e) => {
+  handleNameChange = (e) => {
     this.setState({ [e.target.name]: [e.target.value] });
+    this.props.handleNameChange(this.state.queryTitle, this.props.currentIndex);
   };
 
   render() {
-    const { inspectorOpen, queryType, path, fields } = this.state;
+    const { inspectorOpen, queryType, path, queryTitle } = this.state;
     const { currentIndex } = this.props;
     return (
       <>
@@ -63,7 +58,7 @@ class QueryInspectorModal extends React.Component {
                 this.setState({ titleEdit: true });
               }}
             >
-              {this.state.queryTitle}
+              {this.props.name}
               {this.state.titleHover && <i class="fas fa-pencil"></i>}
             </strong>
           )}
@@ -71,15 +66,20 @@ class QueryInspectorModal extends React.Component {
             <input
               type="text"
               name="queryTitle"
-              value={this.state.queryTitle}
-              onKeyDown={this.handleQueryEditEnter}
-              onChange={this.handleInputChange}
+              value={queryTitle}
+              onKeyDown={(e) => {
+                this.handleNameChange(e);
+                if (e.keyCode === 13) {
+                  this.setState({ titleEdit: false, titleHover: false });
+                }
+              }}
+              onChange={(e) => this.handleNameChange(e)}
               onBlur={(e) => {
                 this.setState({
                   titleEdit: false,
                   titleHover: false,
-                  [e.target.name]: [e.target.value],
                 });
+                this.handleNameChange(e);
               }}
             />
           )}

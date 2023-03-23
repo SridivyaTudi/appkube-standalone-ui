@@ -66,6 +66,12 @@ class QueryTab extends React.Component {
     this.setState({ QueryInspectorData });
   };
 
+  handleQueryInspectorNameChange = (value, index) => {
+    const { QueryInspectorData } = this.state;
+    QueryInspectorData[index] = value;
+    this.setState({ QueryInspectorData });
+  };
+
   render() {
     const {
       queryType,
@@ -138,6 +144,7 @@ class QueryTab extends React.Component {
               handleSort={this.handleQueryInspectorSort}
               handleCopy={this.handleQueryInspectorCopy}
               handleDelete={this.handleQueryInspectorDelete}
+              handleNameChange={this.handleQueryInspectorNameChange}
             />
           );
         })}
