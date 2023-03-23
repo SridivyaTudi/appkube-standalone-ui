@@ -244,18 +244,18 @@ class CollectionView extends Component {
                     </select>
                   </div>
                   <div className="search-box">
-                  <div className="form-group search-control-group">
-                    <form>
-                      <input
-                        type="text"
-                        className="input-group-text"
-                        placeholder="Search"
-                      />
-                      <button>
-                        <i className="fa fa-search"></i>
-                      </button>
-                    </form>
-                  </div>
+                    <div className="form-group search-control-group">
+                      <form>
+                        <input
+                          type="text"
+                          className="input-group-text"
+                          placeholder="Search"
+                        />
+                        <button>
+                          <i className="fa fa-search"></i>
+                        </button>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
