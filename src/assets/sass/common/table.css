@@ -422,7 +422,7 @@
   border-color: #ababab;
 }
 
-.custom-table.dark .toolbar .showing {
+/* .custom-table.dark .toolbar .showing {
   color: #ffffff;
 }
 
@@ -432,7 +432,7 @@
 
 .custom-table.dark .toolbar .showby span {
   color: #ffffff;
-}
+} */
 
 /* .custom-table.dark .data-table-parent .data-table th,
 .custom-table.dark .data-table-parent .data-table td {

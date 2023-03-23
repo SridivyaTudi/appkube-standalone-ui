@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ManageDashboards from "./manageDashboards";
 import TopMenu from "../catalog/topMenu";
 
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
