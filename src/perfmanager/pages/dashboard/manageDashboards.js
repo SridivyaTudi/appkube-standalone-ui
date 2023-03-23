@@ -192,6 +192,7 @@ class ManageDashboards extends React.Component {
         <div className="manage-dashboard-search">
           <div className="row">
             <div className="col-lg-4 col-md-12 col-sm-12">
+            <div className="search-box">
               <div className="form-group search-control-group">
                 <form>
                   <input
@@ -203,6 +204,7 @@ class ManageDashboards extends React.Component {
                     <i className="fa fa-search"></i>
                   </button>
                 </form>
+              </div>
               </div>
             </div>
             <div className="col-lg-8 col-md-12 col-sm-12">

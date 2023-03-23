@@ -183,6 +183,13 @@ a {
         padding-bottom: 15px;
         border-bottom: 1px solid $perfmanager-container-border-color;
     }
+    .library-search{
+      .float-right{
+        display: flex;
+        align-items: baseline;
+        justify-content: end;
+      }
+    }
 }
 
 .common-right-btn{

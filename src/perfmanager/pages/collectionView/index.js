@@ -243,6 +243,7 @@ class CollectionView extends Component {
                       <option>Category</option>
                     </select>
                   </div>
+                  <div className="search-box">
                   <div className="form-group search-control-group">
                     <form>
                       <input
@@ -254,6 +255,7 @@ class CollectionView extends Component {
                         <i className="fa fa-search"></i>
                       </button>
                     </form>
+                  </div>
                   </div>
                 </div>
               </div>

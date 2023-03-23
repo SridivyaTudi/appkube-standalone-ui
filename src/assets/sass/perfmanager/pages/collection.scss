@@ -73,21 +73,21 @@
 
 .collection-dashboard-fliter-sort{
     padding-bottom: 20px;
-    .sort-checkbox{
-        display: inline-block;
-        vertical-align: top;
-        padding-right: 15px;
-        padding-top: 10px;
-        span{
-            padding-left: 10px;
-            color: $collection-dashboard-text-color;
-            font-size: 14px;
-            line-height: 20px;
-            font-weight: 500;
-            display: inline-block;
-            vertical-align: top;
-        }
-    }
+    // .sort-checkbox{
+    //     display: inline-block;
+    //     vertical-align: top;
+    //     padding-right: 15px;
+    //     padding-top: 10px;
+    //     span{
+    //         padding-left: 10px;
+    //         color: $collection-dashboard-text-color;
+    //         font-size: 14px;
+    //         line-height: 20px;
+    //         font-weight: 500;
+    //         display: inline-block;
+    //         vertical-align: top;
+    //     }
+    // }
     .sort-view{
         display: inline-block;
         vertical-align: top;
@@ -121,30 +121,30 @@
             }
         }
     }
-    .sort-select-menu{
-        background-color: #F0F3F7;
-        border-radius: 8px;
-        height: 40px;
-        display: inline-block;
-        width: 265px;
-        span{
-            display: inline-block;
-            padding-top: 10px;
-            padding-left: 15px;
-            padding-right: 10px;
-            vertical-align: top;
-        }
-        select{
-            display: inline-block;
-            background-color: transparent;
-            border: none;
-            vertical-align: top;
-            margin-top: 5px;
-            width: 210px;
-            cursor: pointer;
-            color: #464c54;
-        }
-    }
+    // .sort-select-menu{
+    //     background-color: #F0F3F7;
+    //     border-radius: 8px;
+    //     height: 40px;
+    //     display: inline-block;
+    //     width: 265px;
+    //     span{
+    //         display: inline-block;
+    //         padding-top: 10px;
+    //         padding-left: 15px;
+    //         padding-right: 10px;
+    //         vertical-align: top;
+    //     }
+    //     select{
+    //         display: inline-block;
+    //         background-color: transparent;
+    //         border: none;
+    //         vertical-align: top;
+    //         margin-top: 5px;
+    //         width: 210px;
+    //         cursor: pointer;
+    //         color: #464c54;
+    //     }
+    // }
 }
 
 .collection-dashboard-general{

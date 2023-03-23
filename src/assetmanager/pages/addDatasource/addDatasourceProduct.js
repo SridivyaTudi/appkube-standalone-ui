@@ -266,9 +266,8 @@ class AddDatasourceProduct extends React.Component {
                   </div>
                   <div className="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
-                      <div className="right-search-bar">
-                        <div className="form-group search-control m-b-0">
-                          <i className="fa fa-search" />
+                      <div className="search-box">
+                        <div className="form-group search-control-group m-b-0">
                           <input
                             type="text"
                             className="input-group-text"
@@ -277,6 +276,7 @@ class AddDatasourceProduct extends React.Component {
                             value={searchkey}
                             onChange={this.handleSearchChange}
                           />
+                          <button><i className="fa fa-search" /></button>
                         </div>
                       </div>
                     </div>
