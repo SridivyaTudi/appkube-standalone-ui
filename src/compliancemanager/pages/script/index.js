@@ -221,19 +221,22 @@ class Script extends React.Component {
                 <div className="context-preview-box">
                   <h4>Context Preview</h4>
                   <div className="context-preview">
-                    <div className="d-block form-group filter-search-control">
+                    <div className="search-box">
                       <form>
-                        <input
-                          type="text"
-                          className="input-group-text"
-                          placeholder="Search"
-                          value=""
-                        />
-                        <button>
-                          <i className="fa fa-search"></i>
-                        </button>
+                        <div className="form-group search-control-group m-b-0">
+                          <input
+                            type="text"
+                            className="input-group-text"
+                            placeholder="Search"
+                            value=""
+                          />
+                          <button>
+                            <i className="fa fa-search"></i>
+                          </button>
+                        </div>
                       </form>
                     </div>
+
                     <div className="preview">
                       <ul>
                         <li>

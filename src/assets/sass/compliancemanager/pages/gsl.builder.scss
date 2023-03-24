@@ -1,69 +1,69 @@
 .gslbuilder-page-container{
-    .gsl-editor-logos{
-        h3{
-            display: block;
-            font-size: 16px;
-            color: $gslbuilder-content-color;
-            font-weight: 600;
-            line-height: 20px;
-            margin-bottom: 10px;
-        }
-        ul{
-            li{
-                display: inline-block;
-                vertical-align: top;
-                margin-right: 30px;
-                margin-bottom: 15px;
-                width: 180px;
-                height: 50px;
-                background-color: #F0F3F7;
-                box-shadow: 0px 1px 5px #00000029;
-                border-radius: 5px;
-                text-align: left;
-                padding-right: 10px;
-                padding-left: 10px;
-                line-height: 50px;
+    // .gsl-editor-logos{
+    //     h3{
+    //         display: block;
+    //         font-size: 16px;
+    //         color: $gslbuilder-content-color;
+    //         font-weight: 600;
+    //         line-height: 20px;
+    //         margin-bottom: 10px;
+    //     }
+    //     ul{
+    //         li{
+    //             display: inline-block;
+    //             vertical-align: top;
+    //             margin-right: 30px;
+    //             margin-bottom: 15px;
+    //             width: 180px;
+    //             height: 50px;
+    //             background-color: #F0F3F7;
+    //             box-shadow: 0px 1px 5px #00000029;
+    //             border-radius: 5px;
+    //             text-align: left;
+    //             padding-right: 10px;
+    //             padding-left: 10px;
+    //             line-height: 50px;
 
-                input{
-                    display: inline-block;
-                    margin-right: 10px;
-                }
-                label{
-                    color: #3B4859;
-                    font-size: 16px;
-                    font-weight: 500;
-                    line-height: 50px;
-                    display: inline-block;
-                    vertical-align: top;
-                }
+    //             input{
+    //                 display: inline-block;
+    //                 margin-right: 10px;
+    //             }
+    //             label{
+    //                 color: #3B4859;
+    //                 font-size: 16px;
+    //                 font-weight: 500;
+    //                 line-height: 50px;
+    //                 display: inline-block;
+    //                 vertical-align: top;
+    //             }
 
-                a{
-                    display: block;
-                    span{
-                        display: inline-block;
-                        vertical-align: top;
-                        padding-right: 10px;
-                        padding-top: 0;
-                        padding-left: 10px;
-                        width: 65px;
-                        line-height: 48px;
-                        img{
-                            max-width: 100%;
-                            height: auto;
-                        }
-                    }
-                    p{
-                        color: #3B4859;
-                        font-size: 16px;
-                        font-weight: 500;
-                        line-height: 50px;
-                        display: inline-block;
-                        vertical-align: top;
-                    }
-                }
-            }
-        }
-    }
+    //             a{
+    //                 display: block;
+    //                 span{
+    //                     display: inline-block;
+    //                     vertical-align: top;
+    //                     padding-right: 10px;
+    //                     padding-top: 0;
+    //                     padding-left: 10px;
+    //                     width: 65px;
+    //                     line-height: 48px;
+    //                     img{
+    //                         max-width: 100%;
+    //                         height: auto;
+    //                     }
+    //                 }
+    //                 p{
+    //                     color: #3B4859;
+    //                     font-size: 16px;
+    //                     font-weight: 500;
+    //                     line-height: 50px;
+    //                     display: inline-block;
+    //                     vertical-align: top;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
     .gsl-editor-radio{
         margin-top: 20px;

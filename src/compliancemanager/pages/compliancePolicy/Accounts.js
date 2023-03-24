@@ -166,17 +166,19 @@ class Accounts extends React.Component {
             <strong>Select Accounts</strong>
           </div>
           <div className="d-inline-block width-50 text-right">
-            <div className="d-inline-block form-group search-control-group">
-              <input
-                type="text"
-                onChange={this.onSearchChange}
-                value={this.state.searchKey}
-                className="input-group-text"
-                placeholder="Search"
-              />
-              <button>
-                <i className="fa fa-search"></i>
-              </button>
+            <div className="search-box">
+              <div className="d-inline-block form-group search-control-group">
+                <input
+                  type="text"
+                  onChange={this.onSearchChange}
+                  value={this.state.searchKey}
+                  className="input-group-text pl-3"
+                  placeholder="Search"
+                />
+                <button>
+                  <i className="fa fa-search"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>

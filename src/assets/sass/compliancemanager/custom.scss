@@ -297,12 +297,12 @@ a {
 /*********************************** Filters Container *********************************/
 .filter-container {    
     .filter-control-group {
-        width: 158px;
-        max-width: 158px;
-        padding-left: 0;
-        display: inline-block;
-        position: relative;
-        margin-right: 15px;
+        // width: 158px;
+        // max-width: 158px;
+        // padding-left: 0;
+        // display: inline-block;
+        // position: relative;
+        // margin-right: 15px;
         &.clear-filters {
             margin-top: 23px;
             position: relative;
@@ -362,21 +362,21 @@ a {
             max-width: 100%;
             margin-right: 0;
         }
-        .form-control{
-            background-color: #f0f3f7 !important;
-            border: none !important;
-            font-size: 12px;
-            cursor: pointer;
-            height: 35px;
-        }
-        label{
-            color: $filter-container-label-text-color;
-            padding-bottom: 3px;
-            font-size: 12px;
-        }
-        .clear-btn{
-            min-width: 100%;
-        }
+        // .form-control{
+        //     background-color: #f0f3f7 !important;
+        //     border: none !important;
+        //     font-size: 12px;
+        //     cursor: pointer;
+        //     height: 35px;
+        // }
+        // label{
+        //     color: $filter-container-label-text-color;
+        //     padding-bottom: 3px;
+        //     font-size: 12px;
+        // }
+        // .clear-btn{
+        //     min-width: 100%;
+        // }
     }
 }
 

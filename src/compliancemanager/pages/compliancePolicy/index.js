@@ -305,7 +305,7 @@ class CompliancePolicy extends React.Component {
   onClickCloudAccountPolicy = (e) => {
     this.cloudAccountPolicyRef.current.toggle();
   };
-  
+
   onClickAddOrganizationalUnitPolicy = (e) => {
     this.addOrganizationalUnitPolicyRef.current.toggle();
   };
@@ -415,11 +415,10 @@ class CompliancePolicy extends React.Component {
                   </a>
                 </div>
               </div>
-
-              <div className="d-block width-100 p-t-15 p-b-20 search-box">
-                <div className="row">
-                  <div className="col-lg-12 col-md-12 col-sm-12">
-                    <div className="d-inline-block form-group search-control-group">
+              <div className="d-block width-100 p-t-15 p-b-20">
+                <div className="search-box">
+                  <form>
+                    <div className="form-group search-control-group m-b-0">
                       <input
                         type="text"
                         onChange={this.onSearchChange}
@@ -431,7 +430,7 @@ class CompliancePolicy extends React.Component {
                         <i className="fa fa-search"></i>
                       </button>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
 

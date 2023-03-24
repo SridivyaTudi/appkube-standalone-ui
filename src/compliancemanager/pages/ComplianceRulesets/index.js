@@ -352,17 +352,21 @@ class ComplianceRulesets extends React.Component {
               <div className="d-block width-100 p-t-15 p-b-20 search-box rulest-search-box">
                 <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6">
-                    <div className="d-inline-block form-group search-control-group">
-                      <input
-                        type="text"
-                        onChange={this.onSearchChange}
-                        value={this.state.searchKey}
-                        className="input-group-text"
-                        placeholder="Search"
-                      />
-                      <button>
-                        <i className="fa fa-search"></i>
-                      </button>
+                    <div className="search-box">
+                      <form>
+                        <div className="form-group search-control-group m-b-0">
+                          <input
+                            type="text"
+                            onChange={this.onSearchChange}
+                            value={this.state.searchKey}
+                            className="input-group-text"
+                            placeholder="Search"
+                          />
+                          <button>
+                            <i className="fa fa-search"></i>
+                          </button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6">

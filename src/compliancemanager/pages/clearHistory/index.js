@@ -153,7 +153,8 @@ class ClearHistory extends React.Component {
                 <div className="context-preview-box">
                   <h4>Context Preview</h4>
                   <div className="context-preview">
-                    <div className="d-block form-group filter-search-control">
+                    <div className="search-box">
+                    <div className="form-group search-control-group m-b-0">
                       <form>
                         <input
                           type="text"
@@ -166,6 +167,8 @@ class ClearHistory extends React.Component {
                         </button>
                       </form>
                     </div>
+                    </div>
+                    
                     <div className="preview">
                       <ul>
                         <li>
