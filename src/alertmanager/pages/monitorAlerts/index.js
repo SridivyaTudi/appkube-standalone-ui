@@ -200,8 +200,8 @@ class MonitorAlerts extends React.Component {
       <div className="monitor-alerts-container">
         <div className="alert-page-container">
           <div className="common-container">
-            <a
-              className="alert-blue-button"
+            <a type="button"
+              className="asset-blue-button"
               onClick={() => this.onClickUnImplementedFeature("")}
             >
               <i className="fa fa-refresh"></i>&nbsp;&nbsp; Refresh

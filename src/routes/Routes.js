@@ -14,7 +14,7 @@ import CatalogueManagement from '../perfmanager/pages/catalogueManagement';
 import Environments from '../assetmanager/pages/environments';
 import AmazonServices from '../assetmanager/pages/amazonservices';
 import Kubernetes from '../assetmanager/pages/kubernetes';
-import StorageDetails from '../assetmanager/pages/StorageDetails';
+import StorageDetails from '../assetmanager/pages/storagedetails';
 import AccountSetup from '../assetmanager/pages/accountsetup';
 import DepartmentWiseProducts from '../assetmanager/pages/departmentWiseProducts';
 import DepartmentWiseCharts from '../assetmanager/pages/departmentWiseProducts/departmentChart';
@@ -33,7 +33,7 @@ import ManageAlertRule from '../alertmanager/pages/manageAlertRule';
 import AllAlerts from '../alertmanager/pages/allAlerts';
 import Rules from '../alertmanager/pages/rules';
 import CreateRule from '../alertmanager/pages/createRule';
-import AllTickets from '../alertmanager/pages/allTickets';
+import AllTickets from '../alertmanager/pages/alltickets';
 import ScriptEditor from '../alertmanager/pages/scriptEditor';
 import SearchAlert from '../alertmanager/pages/searchAlert';
 
@@ -111,7 +111,7 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/environments" element={<Environments />} />
       <Route path="/assetmanager/pages/amazonservices" element={<AmazonServices />} />
       <Route path="/assetmanager/pages/kubernetes" element={<Kubernetes />} />
-      <Route path="/assetmanager/pages/storage-details" element={<StorageDetails />} />
+      <Route path="/assetmanager/pages/storagedetails" element={<StorageDetails />} />
       <Route path="/assetmanager/pages/accountsetup" element={<AccountSetup />} />
       <Route path="/assetmanager/pages/department-wise-products" element={<DepartmentWiseProducts />} />
       <Route path="/assetmanager/pages/department-wise-charts" element={<DepartmentWiseCharts />} />

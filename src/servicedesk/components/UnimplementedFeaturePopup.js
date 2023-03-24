@@ -46,13 +46,13 @@ class UnimplementedFeaturePopup extends React.Component {
               <Link
                 to={`${config.basePath}${state.link}`}
                 onClick={this.toggle}
-                className="alert-blue-button m-b-0"
+                className="asset-blue-button m-b-0"
               >
                 Continue
               </Link>
             )}
             <button
-              className="alert-gray-button m-r-0 m-b-0"
+              className="asset-gray-button m-r-0 m-b-0"
               onClick={this.toggle}
             >
               Close

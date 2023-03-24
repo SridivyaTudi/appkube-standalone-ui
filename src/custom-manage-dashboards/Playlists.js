@@ -72,7 +72,7 @@ class Playlists extends Component{
               </div>
               <div className="playlist-buttons">
                 <Button
-                  className="dashboard-blue-button m-b-0 min-width-inherit"
+                  className="asset-blue-button m-b-0 min-width-inherit"
                   onClick={() => this.openEditPlayList(playlistItems[i])}
                 >
                   <i className="fa fa-edit"></i>
@@ -134,7 +134,7 @@ class Playlists extends Component{
               <div className="playlist-inner">
                 <div className="playlist-heading">There are no playlist created yet</div>
                 <div className="playlist-btn">
-                  <Button onClick={this.openNewPlaylist} className="dashboard-blue-button">
+                  <Button onClick={this.openNewPlaylist} className="asset-blue-button">
                     Create new Playlist
                   </Button>
                 </div>
@@ -154,7 +154,7 @@ class Playlists extends Component{
           <div className="save-playlist-container">
             <div className="save-playlist-inner">
               <div className="d-block text-right">
-                <Button onClick={this.openNewPlaylist} className="dashboard-blue-button m-r-0">
+                <Button onClick={this.openNewPlaylist} className="asset-blue-button m-r-0">
                   Create new Playlist
                 </Button>
               </div>

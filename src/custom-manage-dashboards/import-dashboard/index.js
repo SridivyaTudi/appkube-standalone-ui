@@ -353,7 +353,7 @@ export class ImportDashboard extends Component {
                 </form>
               </div>
               <div className="float-right common-right-btn">
-                <a className="import-white-button m-r-0" href="/managedashboards">
+                <a className="white-button m-r-0" href="/managedashboards">
                   <i className="fa fa-arrow-circle-left"></i>
                   &nbsp;&nbsp; Back
                 </a>
@@ -393,20 +393,20 @@ export class ImportDashboard extends Component {
                 <div className="d-block text-right p-t-20">
                   <button
                     disabled={activeTab === 0}
-                    className={activeTab !== 0 ? 'import-blue-button' : 'import-blue-button disable'}
+                    className={activeTab !== 0 ? 'blue-button' : 'blue-button disable'}
                     onClick={(e) => this.setActiveTab(activeTab - 1)}
                   >
                     Previous
                   </button>
                   {activeTab !== 4 && (
                     <button
-                      className={activeTab !== 4 ? 'import-blue-button m-r-0' : 'm-r-0 disable'}
+                      className={activeTab !== 4 ? 'blue-button m-r-0' : 'm-r-0 disable'}
                       onClick={(e) => this.setActiveTab(activeTab + 1)}
                     >
                       Next
                     </button>
                   )}
-                  {activeTab === 4 && <button className="import-blue-button m-r-0">Finish</button>}
+                  {activeTab === 4 && <button className="blue-button m-r-0">Finish</button>}
                 </div>
               </div>
             </div>

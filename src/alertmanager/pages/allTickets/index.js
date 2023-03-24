@@ -3,8 +3,8 @@ import { config } from "../../config";
 import StartECPopup from "./StartECPopup";
 import InstancePopup from "./InstancePopup";
 import { RestService } from "../_service/RestService";
-import Table from "./../../components/table";
-import Rbac from "./../../components/Rbac";
+import Table from "../../components/table";
+import Rbac from "../../components/Rbac";
 import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 
 class AllTickets extends React.Component {
@@ -176,19 +176,19 @@ class AllTickets extends React.Component {
                     childName="alltickets-index-createticketbtn"
                   >
                     <button
-                      className="alert-white-button"
+                      className="asset-white-button"
                       onClick={this.onClickOpenNewTicket}
                     >
                       <i className="fa fa-plus"></i>&nbsp;&nbsp; Create Ticket
                     </button>
                   </Rbac>
                   <button
-                    className="alert-white-button"
+                    className="asset-white-button"
                     onClick={this.onRefreshClick}
                   >
                     <i className="fa fa-refresh"></i>&nbsp;&nbsp; Refresh
                   </button>
-                  <button className="alert-white-button">
+                  <button className="asset-white-button">
                     <i className="fa fa-floppy-o"></i>&nbsp;&nbsp; Save Search
                   </button>
                   <div

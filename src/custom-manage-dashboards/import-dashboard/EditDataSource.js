@@ -72,7 +72,7 @@ class EditDataSource extends Component {
             </div>
           </div>
           <div className="d-block text-right">
-            <button className="import-blue-button m-r-0">Bulk edit</button>
+            <button className="blue-button m-r-0">Bulk edit</button>
           </div>
           <div className="bulk-lists">{this._displaycatalogList()}</div>
         </div>
@@ -82,7 +82,7 @@ class EditDataSource extends Component {
               <div className="row">
                 <div className="col-lg-3 col-md-12 col-sm-12 order">
                   <div className="d-block width-100 text-right">
-                    <a className="import-white-button min-width-inherit m-r-0">
+                    <a className="white-button min-width-inherit m-r-0">
                       <i className="fa fa-arrow-circle-left"></i>
                       &nbsp;&nbsp;Back
                     </a>

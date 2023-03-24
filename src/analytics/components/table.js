@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 //import * as React from 'react';
-import '../../assets/sass/common/table.css';
+import "../../assets/sass/common/table.css";
 
 const sortEnum = {
   NONE: 0,
@@ -18,11 +18,11 @@ export class Table extends Component {
       perPageLimit: this.props.perPageLimit,
       noOfRecordPerPage: this.props.perPageLimit,
       columns: this.props.valueFromData.columns,
-      totalPages: '',
+      totalPages: "",
       currentPage: 0,
-      searchKey: '',
+      searchKey: "",
       sortType: sortEnum.NONE,
-      sortKey: '',
+      sortKey: "",
       isAllChecked: false,
       visibleCheckbox: this.props.visiblecheckboxStatus,
       showSelect: false,
@@ -31,13 +31,17 @@ export class Table extends Component {
   }
 
   tableBodyData() {
-    const { displayData, perPageLimit, currentPage, columns, visibleCheckbox } = this.state;
+    const { displayData, perPageLimit, currentPage, columns, visibleCheckbox } =
+      this.state;
     const retData = [];
     const length = displayData.length;
     const cLength = columns.length;
     if (length > 0) {
       for (let i = 0; i < length; i++) {
-        if (i >= currentPage * perPageLimit && i <= currentPage * perPageLimit + (perPageLimit - 1)) {
+        if (
+          i >= currentPage * perPageLimit &&
+          i <= currentPage * perPageLimit + (perPageLimit - 1)
+        ) {
           const tdJSX = [];
           if (visibleCheckbox === true) {
             tdJSX.push(
@@ -66,7 +70,7 @@ export class Table extends Component {
                 tdJSX.push(jsx);
               } else {
                 tdJSX.push(
-                  key === 'name' ? (
+                  key === "name" ? (
                     <td>
                       <a href={`/analytics/view?id=${i + 1}`}>{row[key]}</a>
                     </td>
@@ -83,7 +87,7 @@ export class Table extends Component {
     } else {
       retData.push(
         <tr>
-          <td colSpan={cLength} style={{ textAlign: 'center' }}>
+          <td colSpan={cLength} style={{ textAlign: "center" }}>
             There is no data
           </td>
         </tr>
@@ -97,18 +101,21 @@ export class Table extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (JSON.stringify(prevProps.valueFromData) !== JSON.stringify(this.props.valueFromData)) {
+    if (
+      JSON.stringify(prevProps.valueFromData) !==
+      JSON.stringify(this.props.valueFromData)
+    ) {
       this.setState({
         data: this.props.valueFromData.data,
         displayData: this.props.valueFromData.data,
         perPageLimit: this.props.perPageLimit,
         noOfRecordPerPage: this.props.perPageLimit,
         columns: this.props.valueFromData.columns,
-        totalPages: '',
+        totalPages: "",
         currentPage: 0,
-        searchKey: '',
+        searchKey: "",
         sortType: sortEnum.NONE,
-        sortKey: '',
+        sortKey: "",
         isAllChecked: false,
         visibleCheckbox: this.props.visiblecheckboxStatus,
         showSelect: false,
@@ -126,25 +133,31 @@ export class Table extends Component {
   }
 
   tableHeader() {
-    const { sortType, sortKey, columns, visibleCheckbox, displayData } = this.state;
+    const { sortType, sortKey, columns, visibleCheckbox, displayData } =
+      this.state;
     const length = columns.length;
     const retData = [];
     if (visibleCheckbox === true && displayData.length > 0) {
       retData.push(
         <th>
-          <input type="checkbox" checked={this.state.isAllChecked} onChange={this.checkAllBoxes} className="checkbox" />
+          <input
+            type="checkbox"
+            checked={this.state.isAllChecked}
+            onChange={this.checkAllBoxes}
+            className="checkbox"
+          />
         </th>
       );
     }
     for (let i = 0; i < length; i++) {
       const item = columns[i];
-      let icon = 'sort-none';
+      let icon = "sort-none";
       let onClickSortType = sortEnum.ASCENDING;
       if (sortType === sortEnum.ASCENDING && sortKey === item.key) {
-        icon = 'sort-ascending';
+        icon = "sort-ascending";
         onClickSortType = sortEnum.DESCENDING;
       } else if (sortType === sortEnum.DESCENDING && sortKey === item.key) {
-        icon = 'sort-descending';
+        icon = "sort-descending";
         onClickSortType = sortEnum.ASCENDING;
       }
       if (!item.isRemoved) {
@@ -209,9 +222,11 @@ export class Table extends Component {
         rows.push(
           <li className="page-item" key={i}>
             <a
-              className={currentPage === i ? 'page-link active' : 'page-link deactive'}
+              className={
+                currentPage === i ? "page-link active" : "page-link deactive"
+              }
               href="#"
-              onClick={(e) => this.navigatePage('btn-click', e, i)}
+              onClick={(e) => this.navigatePage("btn-click", e, i)}
             >
               {i + 1}
             </a>
@@ -222,9 +237,11 @@ export class Table extends Component {
         <ul>
           <li className="page-item previous">
             <a
-              className={currentPage === 0 ? 'page-link desable' : 'page-link enable'}
+              className={
+                currentPage === 0 ? "page-link desable" : "page-link enable"
+              }
               href="#"
-              onClick={(e) => this.navigatePage('pre', e, '')}
+              onClick={(e) => this.navigatePage("pre", e, "")}
             >
               Previous
             </a>
@@ -233,8 +250,12 @@ export class Table extends Component {
           <li className="page-item next">
             <a
               href="#"
-              className={currentPage === this.state.totalPages - 1 ? 'page-link desable' : 'page-link enable'}
-              onClick={(e) => this.navigatePage('next', e, '')}
+              className={
+                currentPage === this.state.totalPages - 1
+                  ? "page-link desable"
+                  : "page-link enable"
+              }
+              onClick={(e) => this.navigatePage("next", e, "")}
             >
               Next
             </a>
@@ -249,17 +270,17 @@ export class Table extends Component {
     let { totalPages, currentPage } = this.state;
     e.preventDefault();
     switch (target) {
-      case 'pre':
+      case "pre":
         if (currentPage !== 0) {
           currentPage = currentPage - 1;
         }
         break;
-      case 'next':
+      case "next":
         if (currentPage !== totalPages - 1) {
           currentPage = currentPage + 1;
         }
         break;
-      case 'btn-click':
+      case "btn-click":
         currentPage = i;
         break;
     }
@@ -286,7 +307,7 @@ export class Table extends Component {
     const totalData = displayData.length;
     let totalPages = 1;
     let perPageLimit = totalData;
-    if (e.target.value !== 'all') {
+    if (e.target.value !== "all") {
       totalPages = Math.ceil(totalData / e.target.value);
       perPageLimit = e.target.value;
     }
@@ -302,19 +323,19 @@ export class Table extends Component {
       searchKey: value,
       currentPage: 0,
       sortType: sortEnum.NONE,
-      sortKey: '',
+      sortKey: "",
     });
     const { data } = this.state;
 
     let result = [];
-    if (value !== '') {
+    if (value !== "") {
       if (data && data.length > 0) {
         for (let i = 0; i < data.length; i++) {
           let prm = data[i];
           let k;
-          let name = '';
+          let name = "";
           for (k in prm) {
-            name = name + '' + prm[k];
+            name = name + "" + prm[k];
           }
           name = name.toLowerCase();
           if (name.indexOf(value.toLowerCase()) !== -1) {
@@ -382,7 +403,12 @@ export class Table extends Component {
         const item = columns[i];
         retData.push(
           <label className="option" htmlFor={item.key}>
-            <input id={item.key} checked={!item.isRemoved} type="checkbox" onChange={(e) => this.handleChecked(e, i)} />
+            <input
+              id={item.key}
+              checked={!item.isRemoved}
+              type="checkbox"
+              onChange={(e) => this.handleChecked(e, i)}
+            />
             {item.label}
           </label>
         );
@@ -415,9 +441,9 @@ export class Table extends Component {
       endIndex = displayData.length;
     }
     if (showingLine) {
-      showingLine = showingLine.replace('%start%', startIndex);
-      showingLine = showingLine.replace('%end%', endIndex);
-      showingLine = showingLine.replace('%total%', displayData.length);
+      showingLine = showingLine.replace("%start%", startIndex);
+      showingLine = showingLine.replace("%end%", endIndex);
+      showingLine = showingLine.replace("%total%", displayData.length);
     }
     return (
       <div className={`${tableClasses.parentClass} custom-table p-5`}>
@@ -432,24 +458,39 @@ export class Table extends Component {
               <span className="d-inline-block">entries per page</span>
             </div>
             <div className="d-inline-block multiselect">
-              <div className="form-control select-label" onClick={this.toggleColumnSelect}>
+              <div
+                className="form-control select-label"
+                onClick={this.toggleColumnSelect}
+              >
                 Select columns <i className="fa fa-chevron-down pull-right"></i>
               </div>
-              <div style={{ display: showSelect ? '' : 'none' }} className="options">
+              <div
+                style={{ display: showSelect ? "" : "none" }}
+                className="options"
+              >
                 {this.renderColumns()}
               </div>
-              {showSelect && <div className="multiselect-bg" onClick={this.toggleColumnSelect}></div>}
+              {showSelect && (
+                <div
+                  className="multiselect-bg"
+                  onClick={this.toggleColumnSelect}
+                ></div>
+              )}
             </div>
-            <div className="d-inline-block pull-right form-group filter-search-control">
-              <input
-                type="text"
-                className="input-group-text"
-                onChange={this.onSearchChange}
-                value={this.state.searchKey}
-              />
-              <button>
-                <i className="fa fa-search pull-right"></i>
-              </button>
+            <div className="d-inline-block pull-right form-group search-box">
+              <form>
+                <div className="form-group search-control-group m-b-0">
+                <input
+                  type="text"
+                  className="input-group-text"
+                  onChange={this.onSearchChange}
+                  value={this.state.searchKey}
+                />
+                <button>
+                  <i className="fa fa-search pull-right"></i>
+                </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -461,7 +502,9 @@ export class Table extends Component {
             <tbody>{this.tableBodyData()}</tbody>
           </table>
         </div>
-        <div className="d-block width-100 p-t-15 text-right pagination">{this.peginationOfTable()}</div>
+        <div className="d-block width-100 p-t-15 text-right pagination">
+          {this.peginationOfTable()}
+        </div>
       </div>
     );
   }

@@ -316,13 +316,13 @@ class StorageDetails extends React.Component {
               </div>
               <div className="d-block text-right">
                 <button
-                  className="analytics-gray-button cancel"
+                  className="asset-gray-button cancel"
                   onClick={this.openViewModal}
                 >
                   Cancel
                 </button>
                 <button
-                  className="analytics-blue-button m-r-0 continue"
+                  className="asset-blue-button m-r-0 continue"
                   onClick={this.saveEnvironmentView}
                 >
                   Continue

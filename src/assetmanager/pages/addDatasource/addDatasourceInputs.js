@@ -69,9 +69,7 @@ class AddDatasourceInputs extends React.Component {
               <div className="account-specific-content">
                 <span>{source} Account specific input source</span>
                 <div className="specific-heading">
-                  <p>
-                    Account &#8758;
-                  </p>
+                  <p>Account &#8758;</p>
                 </div>
               </div>
               <div className="source-boxs">
@@ -128,19 +126,21 @@ class AddDatasourceInputs extends React.Component {
           <div className="data-source-section">
             <div className="source-content">
               <div className="add-input-content">
-                <div className="form-group">
-                  <div className="right-search-bar">
-                    <div className="form-group search-control m-b-0">
-                      <i className="fa fa-search" />
+                <div className="search-box">
+                  <form>
+                    <div className="form-group search-control-group m-b-0">
                       <input
                         type="text"
                         className="input-group-text"
                         placeholder="Search"
                       />
+                      <button>
+                        <i className="fa fa-search" />
+                      </button>
                     </div>
-                  </div>
+                  </form>
                 </div>
-                <div className="back-btn">
+                <div className="back-btn d-inline-block">
                   <button
                     type="button"
                     className="btn btn-outline-secondary btn-link"

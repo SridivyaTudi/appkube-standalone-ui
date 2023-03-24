@@ -35,26 +35,26 @@
   }
 }
 
-.analytics-white-button {
-  background: white;
-  color: rgb(59, 72, 89);
-  border: none;
-  padding: 7px 20px;
-  border-radius: 4px;
-  margin-right: 10px;
-  display: inline-block;
-  min-width: 182px;
-  text-align: center;
+// .analytics-white-button {
+//   background: white;
+//   color: rgb(59, 72, 89);
+//   border: none;
+//   padding: 7px 20px;
+//   border-radius: 4px;
+//   margin-right: 10px;
+//   display: inline-block;
+//   min-width: 182px;
+//   text-align: center;
 
-  i {
-    color: rgb(87, 164, 255);
-  }
+//   i {
+//     color: rgb(87, 164, 255);
+//   }
 
-  &:hover {
-    background: rgb(230, 230, 230);
-    color: rgb(59, 72, 89);
-  }
-}
+//   &:hover {
+//     background: rgb(230, 230, 230);
+//     color: rgb(59, 72, 89);
+//   }
+// }
 
 .min-width-auto {
   min-width: auto !important;

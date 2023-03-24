@@ -8,6 +8,10 @@
   width: 100%;
   display: block;
 }
+.custom-table .toolbar .search-box{
+  display: inline-block;
+  float: right;
+}
 
 .custom-table .toolbar .showing {
   display: inline-block;

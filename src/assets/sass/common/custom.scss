@@ -148,6 +148,7 @@
       background-color: transparent;
       width: 36px;
       height: 36px;
+      color: #8998ac;
     }
   }
 }
@@ -212,9 +213,10 @@
     font-size: 12px;
     font-weight: 300;
     color: #414d55;
-    line-height: 32px;
+    line-height: 36px;
     padding: 0 10px;
     cursor: pointer;
+    height: 36px;
 
     i {
       display: inline-block;
@@ -321,5 +323,36 @@
     background-color: transparent;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
+  }
+}
+
+//*********************************Filter group*************************************//
+
+.filter-control-group {
+  width: 160px;
+  max-width: 160px;
+  padding-left: 0;
+  display: inline-block;
+  position: relative;
+  margin-right: 15px;
+  margin-left: 15px;
+  label {
+    color: #3b4859;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &.date-time-range-picker {
+    width: 370px;
+    max-width: 370px;
+  }
+
+  .form-control {
+    background-color: #f0f3f7 !important;
+    border: none !important;
+    font-size: 12px;
+    cursor: pointer;
   }
 }

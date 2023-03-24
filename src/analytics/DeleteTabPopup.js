@@ -41,13 +41,13 @@ export class DeleteTabPopup extends Component {
             <p>{deleteContent}</p>
           </div>
           <div className="d-block text-center p-t-20">
-            <button className="analytics-gray-button cancel" onClick={this.handleClose}>
+            <button className="asset-gray-button cancel" onClick={this.handleClose}>
               Cancel
             </button>
             <button
               disabled={isLoading}
               onClick={this.deleteData}
-              className={`analytics-blue-button m-r-0 continue ${isLoading ? 'disabled' : ''}`}
+              className={`asset-blue-button m-r-0 continue ${isLoading ? 'disabled' : ''}`}
             >
               Continue
             </button>

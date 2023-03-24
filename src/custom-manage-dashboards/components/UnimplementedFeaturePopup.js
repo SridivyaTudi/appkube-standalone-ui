@@ -41,7 +41,7 @@ class UnimplementedFeaturePopup extends Component {
         <ModalFooter>
           <div className="d-block text-center">
             {state.link && (
-              <a href={`${state.link}`} onClick={this.toggle} className="dashboard-blue-button m-b-0">
+              <a href={`${state.link}`} onClick={this.toggle} className="asset-blue-button m-b-0">
                 Continue
               </a>
             )}

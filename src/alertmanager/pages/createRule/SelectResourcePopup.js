@@ -23,7 +23,17 @@ class SelectResourcePopup extends React.Component {
         toggle={this.toggle}
         className="modal-container alert-modal-container"
       >
-        <ModalHeader toggle={this.toggle}>Select Resource</ModalHeader>
+        <ModalHeader>
+          Select Resource
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </ModalHeader>
         <ModalBody
           style={{
             height: "calc(100vh - 210px)",
@@ -122,7 +132,7 @@ class SelectResourcePopup extends React.Component {
               <div className="primary-color-label">Prod_DB_SYN14</div>
             </div>
             <div>
-              <button className="alert-blue-button">Done</button>
+              <button className="asset-blue-button">Done</button>
             </div>
           </div>
         </ModalBody>

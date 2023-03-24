@@ -246,7 +246,7 @@ class ViewNewView extends Component{
                 <div className="d-block text-right">
                   <a>
                     <button
-                      className="analytics-white-button min-width-auto m-r-1"
+                      className="white-button min-width-auto m-r-1"
                       onClick={() => this.props.hidedashboardView()}
                     >
                       <i className="fa fa-arrow-circle-left"></i>
@@ -254,7 +254,7 @@ class ViewNewView extends Component{
                     </button>
                     <button
                       disabled={loading}
-                      className={`analytics-blue-button ${loading ? 'disabled' : ''}`}
+                      className={`asset-blue-button ${loading ? 'disabled' : ''}`}
                       onClick={this.saveDashboard}
                     >
                       Save and add to View list

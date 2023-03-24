@@ -1,21 +1,21 @@
-.dashboard-blue-button {
-  background: #3b7cff !important;
-  color: #ffffff !important;
-  border: none !important;
-  padding: 7px 18px !important;
-  border-radius: 0px !important;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  display: inline-block !important;
-  min-width: 180px;
-  text-align: center;
+// .dashboard-blue-button {
+//   background: #3b7cff !important;
+//   color: #ffffff !important;
+//   border: none !important;
+//   padding: 7px 18px !important;
+//   border-radius: 0px !important;
+//   margin-right: 10px;
+//   margin-bottom: 10px;
+//   display: inline-block !important;
+//   min-width: 180px;
+//   text-align: center;
 
-  &:hover,
-  &:focus {
-    background: #0f5efd !important;
-    color: #ffffff !important;
-  }
-}
+//   &:hover,
+//   &:focus {
+//     background: #0f5efd !important;
+//     color: #ffffff !important;
+//   }
+// }
 
 .dashboard-gray-button {
   background: #dde4e9 !important;
@@ -924,15 +924,15 @@
                 vertical-align: middle;
               }
 
-              .dashboard-blue-button {
-                margin: 0;
-                float: right;
-                padding: 4px 10px;
-                font-weight: 400;
-                min-width: 120px;
-                text-align: left;
-                vertical-align: top;
-              }
+              // .dashboard-blue-button {
+              //   margin: 0;
+              //   float: right;
+              //   padding: 4px 10px;
+              //   font-weight: 400;
+              //   min-width: 120px;
+              //   text-align: left;
+              //   vertical-align: top;
+              // }
             }
 
             &:nth-child(even) {
@@ -948,10 +948,10 @@
       vertical-align: top !important;
     }
 
-    .dashboard-blue-button {
-      border-radius: 8px !important;
-      vertical-align: top !important;
-    }
+    // .dashboard-blue-button {
+    //   border-radius: 8px !important;
+    //   vertical-align: top !important;
+    // }
 
     .save-playlist-container {
       border: 1px solid #8392a7;

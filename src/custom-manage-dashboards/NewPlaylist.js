@@ -61,7 +61,7 @@ class NewPlaylists extends Component {
             {dashboardList[i].title}
           </td>
           <td>
-            <Button className="dashboard-blue-button" onClick={() => this.addNewPlayList(i)}>
+            <Button className="asset-blue-button" onClick={() => this.addNewPlayList(i)}>
               <i className="fa fa-plus"></i>&nbsp;&nbsp; Add to List
             </Button>
           </td>
@@ -226,7 +226,7 @@ class NewPlaylists extends Component {
                   <Button onClick={this.onClickCancel} className="dashboard-gray-button">
                     Cancel
                   </Button>
-                  <Button disabled={!enabled} onClick={this.createPlaylist} className="dashboard-blue-button m-r-0">
+                  <Button disabled={!enabled} onClick={this.createPlaylist} className="asset-blue-button m-r-0">
                     Save
                   </Button>
                 </div>
@@ -279,7 +279,7 @@ class NewPlaylists extends Component {
                       disabled={!this.checkActiveButtonStatus()}
                       onClick={() => this.addMultipleDataToNewPlayList()}
                       type="button"
-                      className="dashboard-blue-button"
+                      className="asset-blue-button"
                     >
                       <i className="fa fa-plus"></i>
                       &nbsp;&nbsp; Add all to List
@@ -319,7 +319,7 @@ class NewPlaylists extends Component {
                 <div className="col-md-6 col-sm-12">
                   <div className="float-right playlist">
                     <a href={""}>
-                      <Button onClick={() => this.backToPlayListPage()} className="dashboard-blue-button m-r-0">
+                      <Button onClick={() => this.backToPlayListPage()} className="asset-blue-button m-r-0">
                         Create new playlist
                       </Button>
                     </a>

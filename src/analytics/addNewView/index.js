@@ -1,13 +1,13 @@
 // Libraries
-import React, {Component} from 'react';
+import React, { Component } from "react";
 //import { locationService } from '@grafana/runtime';
-import { UncontrolledPopover, PopoverBody, Collapse } from 'reactstrap';
+import { UncontrolledPopover, PopoverBody, Collapse } from "reactstrap";
 //import { backendSrv } from 'app/core/services/backend_srv';
 //import { getTagColorsFromName, Checkbox } from '@grafana/ui';
-import  SortPicker from '../components/SortPicker';
-import TagFilter from '../components/TagFilter';
-import FilterInput from '../components/FilterInput';
-import ViewNewView from './ViewNewView';
+import SortPicker from "../components/SortPicker";
+import TagFilter from "../components/TagFilter";
+import FilterInput from "../components/FilterInput";
+import ViewNewView from "./ViewNewView";
 //import { config } from '../../config';
 
 // export interface Props {
@@ -15,19 +15,19 @@ import ViewNewView from './ViewNewView';
 //   $injector;
 // }
 
-class AddNewView extends Component{
+class AddNewView extends Component {
   showStarredFilter;
   breadCrumbs = [
     {
-      label: 'Home',
+      label: "Home",
       route: `/`,
     },
     {
-      label: 'Analytics',
+      label: "Analytics",
       route: `/analytics`,
     },
     {
-      label: 'Create View',
+      label: "Create View",
       isCurrentPage: true,
     },
   ];
@@ -39,7 +39,7 @@ class AddNewView extends Component{
     this.state = {
       tabs: [
         {
-          label: 'New Tab',
+          label: "New Tab",
           isEdit: false,
           dashboardList: [],
         },
@@ -53,14 +53,14 @@ class AddNewView extends Component{
         {
           isStarred: false,
           selectedTags: [],
-          sortValue: 'alpha-asc',
-          searchKey: '',
+          sortValue: "alpha-asc",
+          searchKey: "",
         },
       ],
       showView: false,
-      viewName: '',
-      description: '',
-      id: '',
+      viewName: "",
+      description: "",
+      id: "",
       editedData: [],
     };
     this.viewRef = React.createRef();
@@ -68,11 +68,11 @@ class AddNewView extends Component{
 
   componentDidMount() {
     //Check if it is edit
-    let id = this.getParameterByName('id', window.location.href);
+    let id = this.getParameterByName("id", window.location.href);
     if (id) {
       this.getDashData(id);
     } else {
-      let viewData = localStorage.getItem('viewData');
+      let viewData = localStorage.getItem("viewData");
       if (viewData) {
         viewData = JSON.parse(viewData);
         this.setState({
@@ -91,27 +91,30 @@ class AddNewView extends Component{
   }
 
   getParameterByName(name, url) {
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
       results = regex.exec(url);
     if (!results) {
       return null;
     }
     if (!results[2]) {
-      return '';
+      return "";
     }
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
   }
 
   getDashData = (id) => {
     let requestOptionsGet = {
       method: `GET`,
     };
-    fetch( requestOptionsGet)
+    fetch(requestOptionsGet)
       .then((response) => response.json())
       .then((response) => {
         const { viewJson, name, description } = response;
-        const result = this.checkEditedDashboards(JSON.parse(viewJson), this.state.folderArray);
+        const result = this.checkEditedDashboards(
+          JSON.parse(viewJson),
+          this.state.folderArray
+        );
         this.setState({
           viewName: name,
           description: description,
@@ -129,13 +132,16 @@ class AddNewView extends Component{
       });
 
     // Delete it after api implementation
-    let data = localStorage.getItem('dashboardList');
+    let data = localStorage.getItem("dashboardList");
     if (data) {
       data = JSON.parse(data);
       for (let i = 0; i < data.length; i++) {
         if (data[i].id === id) {
           const { viewJson, name, description } = data[i];
-          const result = this.checkEditedDashboards(viewJson, this.state.folderArray);
+          const result = this.checkEditedDashboards(
+            viewJson,
+            this.state.folderArray
+          );
           this.setState({
             viewName: name,
             description: description,
@@ -157,7 +163,12 @@ class AddNewView extends Component{
   };
 
   checkEditedDashboards = (viewJSON, folderArray) => {
-    if (viewJSON && folderArray && viewJSON.length > 0 && folderArray.length > 0) {
+    if (
+      viewJSON &&
+      folderArray &&
+      viewJSON.length > 0 &&
+      folderArray.length > 0
+    ) {
       viewJSON = JSON.parse(JSON.stringify(viewJSON));
       const tabs = [];
       const selectedDashboards = [];
@@ -193,8 +204,8 @@ class AddNewView extends Component{
         filterData.push({
           isStarred: false,
           selectedTags: [],
-          sortValue: 'alpha-asc',
-          searchKey: '',
+          sortValue: "alpha-asc",
+          searchKey: "",
         });
       }
       return {
@@ -238,7 +249,7 @@ class AddNewView extends Component{
     let tagList = [];
     for (let i = 0; i < result.length; i++) {
       const dash = result[i];
-      if (dash.type === 'dash-db') {
+      if (dash.type === "dash-db") {
         retData[dash.folderId] = retData[dash.folderId] || {
           subData: [],
           openSubFolder: false,
@@ -248,7 +259,7 @@ class AddNewView extends Component{
         if (dash.folderTitle) {
           retData[dash.folderId].title = dash.folderTitle;
         } else {
-          retData[dash.folderId].title = 'General';
+          retData[dash.folderId].title = "General";
         }
         retData[dash.folderId].subData.push({
           ...dash,
@@ -307,9 +318,13 @@ class AddNewView extends Component{
       let tab = tabs[i];
       retData.push(
         <li key={`tab-${i}`} className={`nav-item `}>
-          <a className={i === activeTab ? 'nav-link active' : 'nav-link'}>
-            {!tab.isEdit && <span onClick={(e) => this.navigateTab(i)}>{tab.label}</span>}
-            {!tab.isEdit && <i className="fa fa-angle-down" id={`PopoverFocus-${i}`}></i>}
+          <a className={i === activeTab ? "nav-link active" : "nav-link"}>
+            {!tab.isEdit && (
+              <span onClick={(e) => this.navigateTab(i)}>{tab.label}</span>
+            )}
+            {!tab.isEdit && (
+              <i className="fa fa-angle-down" id={`PopoverFocus-${i}`}></i>
+            )}
             {tab.isEdit && (
               <input
                 type="text"
@@ -322,7 +337,12 @@ class AddNewView extends Component{
             )}
           </a>
           {!tab.isEdit && (
-            <UncontrolledPopover trigger="legacy" className="popup-btn" placement="bottom" target={`PopoverFocus-${i}`}>
+            <UncontrolledPopover
+              trigger="legacy"
+              className="popup-btn"
+              placement="bottom"
+              target={`PopoverFocus-${i}`}
+            >
               <PopoverBody>
                 <ul>
                   <li onClick={() => this.editTabTitle(i)}>
@@ -410,15 +430,15 @@ class AddNewView extends Component{
     const length = tabs.length;
     selectedDashboards.push([]);
     tabs.push({
-      label: 'New Tab' + ' ' + (length + 1),
+      label: "New Tab" + " " + (length + 1),
       isEdit: false,
       dashboardList: JSON.parse(JSON.stringify(folderArray)),
     });
     filterData.push({
       isStarred: false,
       selectedTags: [],
-      sortValue: 'alpha-asc',
-      searchKey: '',
+      sortValue: "alpha-asc",
+      searchKey: "",
     });
     this.setState({
       tabs,
@@ -434,7 +454,8 @@ class AddNewView extends Component{
     if (tabs[activeTab]) {
       const dashboardList = tabs[activeTab].dashboardList;
       const parentCheckbox = dashboardList[parentIndex];
-      parentCheckbox.subData[childIndex].checkValue = !parentCheckbox.subData[childIndex].checkValue;
+      parentCheckbox.subData[childIndex].checkValue =
+        !parentCheckbox.subData[childIndex].checkValue;
       for (let j = 0; j < parentCheckbox.subData.length; j++) {
         if (parentCheckbox.subData[j].checkValue === true) {
           countCheckedCheckbox++;
@@ -442,7 +463,8 @@ class AddNewView extends Component{
           countCheckedCheckbox--;
         }
       }
-      parentCheckbox.checkValueStatus = countCheckedCheckbox === parentCheckbox.subData.length;
+      parentCheckbox.checkValueStatus =
+        countCheckedCheckbox === parentCheckbox.subData.length;
       this.checkForEnabled(tabs);
       this.setState({
         tabs,
@@ -521,11 +543,12 @@ class AddNewView extends Component{
             for (let k = 0; k < attribute.length; k++) {
               const subAtt = attribute[k];
               // const color = getTagColorsFromName(subAtt);
-              subAttributeFolder.push(
+              subAttributeFolder
+                .push
                 // <div className={`tag`} style={{ backgroundColor: color.color }}>
                 //   {subAtt}
                 // </div>
-              );
+                ();
             }
           }
           const subFolder = subFolders[j];
@@ -683,12 +706,14 @@ class AddNewView extends Component{
 
   render() {
     const breadCrumbs = this.breadCrumbs;
-    const pageTitle = 'ANALYTICS';
-    const { isPreviewEnabled, filterData, activeTab, showView, viewName } = this.state;
-    const { isStarred, searchKey, selectedTags, sortValue } = filterData[activeTab];
+    const pageTitle = "ANALYTICS";
+    const { isPreviewEnabled, filterData, activeTab, showView, viewName } =
+      this.state;
+    const { isStarred, searchKey, selectedTags, sortValue } =
+      filterData[activeTab];
     return (
       <React.Fragment>
-        <div style={{ display: `${showView ? 'none' : 'block'}` }}>
+        <div style={{ display: `${showView ? "none" : "block"}` }}>
           {/* <div className="breadcrumbs-container">
             {pageTitle && <div className="page-title">{pageTitle}</div>}
             <div className="breadcrumbs">
@@ -718,14 +743,11 @@ class AddNewView extends Component{
             <div className="analytics-heading-container">
               <div className="row">
                 <div className="col-lg-6 col-md-6 col-sm-6">
-                  <h4 style={{ lineHeight: '36px' }}>{viewName}</h4>
+                  <h4 style={{ lineHeight: "36px" }}>{viewName}</h4>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6">
                   <div className="d-block text-right">
-                    <button
-                      className="analytics-white-button min-width-auto m-r-0"
-                      
-                    >
+                    <button className="white-button min-width-auto m-r-0">
                       <i className="fa fa-arrow-circle-left"></i>
                       &nbsp;&nbsp;Back
                     </button>
@@ -749,17 +771,15 @@ class AddNewView extends Component{
                 </div>
                 <div className="tabs-right-section">
                   <div className="manage-dashboard-search">
-                    <div className="row" style={{ alignItems: 'center' }}>
+                    <div className="row" style={{ alignItems: "center" }}>
                       <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-                        <div className="form-group search-control-group">
-                          <FilterInput
-                            labelClassName="gf-form--has-input-icon"
-                            inputClassName="gf-form-input"
-                            value={searchKey}
-                            onChange={this.onQueryChange}
-                            placeholder={'Search dashboards by name'}
-                          />
-                        </div>
+                        <FilterInput
+                          labelClassName="gf-form--has-input-icon"
+                          inputClassName="gf-form-input"
+                          value={searchKey}
+                          onChange={this.onQueryChange}
+                          placeholder={"Search dashboards by name"}
+                        />
                       </div>
                       <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 tag-filter-container">
                         <TagFilter
@@ -773,14 +793,22 @@ class AddNewView extends Component{
                         {/* <Checkbox label="Filter by starred" onChange={this.onStarredFilterChange} value={isStarred} /> */}
                       </div>
                       <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 sort-container">
-                        <SortPicker onChange={this.onSortChange} value={sortValue} />
+                        <SortPicker
+                          onChange={this.onSortChange}
+                          value={sortValue}
+                        />
                       </div>
                     </div>
                   </div>
-                  <div className="manage-dashboard-general">{this.renderDashboardTree()}</div>
+                  <div className="manage-dashboard-general">
+                    {this.renderDashboardTree()}
+                  </div>
                   {isPreviewEnabled && (
                     <div className="text-right">
-                      <button className="analytics-blue-button" onClick={this.sendData}>
+                      <button
+                        className="asset-blue-button"
+                        onClick={this.sendData}
+                      >
                         Preview
                       </button>
                     </div>
@@ -790,7 +818,7 @@ class AddNewView extends Component{
             </div>
           </div>
         </div>
-        <div style={{ display: `${showView ? 'block' : 'none'}` }}>
+        <div style={{ display: `${showView ? "block" : "none"}` }}>
           <ViewNewView
             ref={this.viewRef}
             $scope={this.props.$scope}

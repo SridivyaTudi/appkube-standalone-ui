@@ -535,27 +535,27 @@ a {
     color: $filter-container-label-text-color;
   }
 
-  .filter-control-group {
-    width: 170px;
-    max-width: 170px;
-    padding-left: 0;
-    display: inline-block;
-    position: relative;
-    margin-right: 15px;
-    margin-left: 15px;
+  // .filter-control-group {
+  //   width: 170px;
+  //   max-width: 170px;
+  //   padding-left: 0;
+  //   display: inline-block;
+  //   position: relative;
+  //   margin-right: 15px;
+  //   margin-left: 15px;
 
-    &.date-time-range-picker {
-      width: 370px;
-      max-width: 370px;
-    }
+  //   &.date-time-range-picker {
+  //     width: 370px;
+  //     max-width: 370px;
+  //   }
 
-    .form-control {
-      background-color: #f0f3f7 !important;
-      border: none !important;
-      font-size: 12px;
-      cursor: pointer;
-    }
-  }
+  //   .form-control {
+  //     background-color: #f0f3f7 !important;
+  //     border: none !important;
+  //     font-size: 12px;
+  //     cursor: pointer;
+  //   }
+  // }
 }
 
 .primary-select-box {

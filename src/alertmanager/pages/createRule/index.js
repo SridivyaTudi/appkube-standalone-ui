@@ -29,19 +29,19 @@ class CreateRule extends React.Component {
       <div className="create-rule-container">
         <div className="alert-page-container">
           <div className="common-container">
-            <a className="alert-white-button">
+            <a className="asset-white-button">
               <i className="fa fa-plus"></i>&nbsp;&nbsp; New Alert Rule
             </a>
-            <a className="alert-white-button">
+            <a className="asset-white-button">
               <i className="fa fa-play-circle"></i>&nbsp;&nbsp; Enable
             </a>
-            <a className="alert-white-button">
+            <a className="asset-white-button">
               <i className="fa fa-stop-circle"></i>&nbsp;&nbsp; Disable
             </a>
-            <a className="alert-white-button">
+            <a className="asset-white-button">
               <i className="fa fa-refresh"></i>&nbsp;&nbsp; Refresh
             </a>
-            <a className="alert-white-button">
+            <a className="asset-white-button">
               <i className="fa fa-trash"></i>&nbsp;&nbsp; Delete
             </a>
           </div>
@@ -63,7 +63,7 @@ class CreateRule extends React.Component {
                   </div>
                   <div>
                     <button
-                      className="alert-blue-button"
+                      className="asset-blue-button"
                       onClick={this.onClickSelectResource}
                     >
                       Select Resource
@@ -88,7 +88,7 @@ class CreateRule extends React.Component {
                   </div>
                   <div>
                     <button
-                      className="alert-blue-button"
+                      className="asset-blue-button"
                       onClick={this.onClickAddCondition}
                     >
                       Add Condition
@@ -112,8 +112,8 @@ class CreateRule extends React.Component {
                 <div className="create-rule-header-content">
                   <div className="italic-label">No action group selected</div>
                   <div>
-                    <button className="alert-gray-button m-r-2">Add</button>
-                    <button className="alert-gray-button">Create</button>
+                    <button className="asset-gray-button m-r-2">Add</button>
+                    <button className="asset-gray-button">Create</button>
                   </div>
                 </div>
               </div>
@@ -143,17 +143,17 @@ class CreateRule extends React.Component {
                     ></textarea>
                   </div>
                   <div className="m-t-1">
-                    <button className="alert-gray-button m-r-2">
+                    <button className="asset-gray-button m-r-2">
                       Save &amp; enable
                     </button>
-                    <button className="alert-gray-button">Save</button>
+                    <button className="asset-gray-button">Save</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="common-container">
-            <button className="alert-gray-button">Create Alert Rule</button>
+            <button className="asset-gray-button">Create Alert Rule</button>
           </div>
         </div>
         <SelectResourcePopup ref={this.selectResourceModalRef} />
