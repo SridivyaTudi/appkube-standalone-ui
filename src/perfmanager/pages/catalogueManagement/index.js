@@ -265,7 +265,7 @@ class CatalogueManagement extends Component {
       <div className="perfmanager-dashboard-container">
         <div className="perfmanager-page-container">
           <div className="common-container">{/* <TopMenu /> */}</div>
-          <div className="common-container">
+          <div className="common-container collection-search">
             <div className="catalog-app-text">
               <h3>Catalogue</h3>
               <p>A catalogue is collection of dashboards</p>

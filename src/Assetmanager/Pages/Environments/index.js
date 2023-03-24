@@ -364,15 +364,19 @@ class Environments extends Component {
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-12">
-                  <div className="form-group search-control m-b-0">
-                    <button className="btn btn-search">
-                      <i className="fa fa-search" />
-                    </button>
-                    <input
-                      type="text"
-                      className="input-group-text"
-                      placeholder="Search"
-                    />
+                  <div className="search-box">
+                    <form>
+                    <div className="form-group search-control-group m-b-0">
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder="Search"
+                      />
+                      <button className="btn btn-search">
+                        <i className="fa fa-search" />
+                      </button>
+                    </div>
+                    </form>
                   </div>
                 </div>
               </div>

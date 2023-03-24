@@ -267,17 +267,21 @@ class AddDatasourceProduct extends React.Component {
                   <div className="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <div className="search-box">
-                        <div className="form-group search-control-group m-b-0">
-                          <input
-                            type="text"
-                            className="input-group-text"
-                            placeholder="Search"
-                            name="searchkey"
-                            value={searchkey}
-                            onChange={this.handleSearchChange}
-                          />
-                          <button><i className="fa fa-search" /></button>
-                        </div>
+                        <form>
+                          <div className="form-group search-control-group m-b-0">
+                            <input
+                              type="text"
+                              className="input-group-text"
+                              placeholder="Search"
+                              name="searchkey"
+                              value={searchkey}
+                              onChange={this.handleSearchChange}
+                            />
+                            <button>
+                              <i className="fa fa-search" />
+                            </button>
+                          </div>
+                        </form>
                       </div>
                     </div>
                   </div>
