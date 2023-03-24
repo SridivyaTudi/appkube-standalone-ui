@@ -416,7 +416,7 @@ class CreateDashboard extends Component {
                 </div>
               </div>
               <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                <a href="/taskmanager" className="float-right m-b-0 m-r-0 task-white-button">
+                <a href="/taskmanager" className="float-right m-b-0 m-r-0 white-button">
                   <i className="fa fa-arrow-circle-left"></i>
                   &nbsp;&nbsp; Back
                 </a>

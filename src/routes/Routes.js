@@ -33,7 +33,7 @@ import ManageAlertRule from '../alertmanager/pages/manageAlertRule';
 import AllAlerts from '../alertmanager/pages/allAlerts';
 import Rules from '../alertmanager/pages/rules';
 import CreateRule from '../alertmanager/pages/createRule';
-import AllTickets from '../alertmanager/pages/allTickets';
+import AllTickets from '../alertmanager/pages/alltickets';
 import ScriptEditor from '../alertmanager/pages/scriptEditor';
 import SearchAlert from '../alertmanager/pages/searchAlert';
 

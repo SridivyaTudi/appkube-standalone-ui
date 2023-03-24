@@ -288,13 +288,13 @@ class ManageTab extends Component {
             <div className="col-lg-12 col-md-12 col-sm-12">
               <div className="search-buttons float-right">
                 <a
-                  className="dashboard-blue-button"
+                  className="asset-blue-button"
                   onClick={this.toggleNewDashPopup}
                 >
                   New Dashboard
                 </a>
                 <a
-                  className="dashboard-blue-button m-r-0"
+                  className="asset-blue-button m-r-0"
                   onClick={() => this.onClickUnImplementedFeature("")}
                 >
                   New Folder
