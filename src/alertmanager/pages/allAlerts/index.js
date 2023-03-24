@@ -652,16 +652,16 @@ class AllAlerts extends React.Component {
           <div className="common-container">
             <Link
               to={`/alertmanager/pages/manage-alert-rule`}
-              className="alert-white-button"
+              className="asset-white-button"
             >
               <i className="fa fa-plus"></i>&nbsp;&nbsp; New Alert Rule
             </Link>
-            <a className="alert-white-button" onClick={this.refreshData}>
+            <a className="asset-white-button" onClick={this.refreshData}>
               <i className="fa fa-refresh"></i>&nbsp;&nbsp; Refresh
             </a>
             <Link
               to={`/alertmanager/pages/monitor-alerts`}
-              className="alert-white-button float-right"
+              className="asset-white-button min-width-inherit float-right"
             >
               <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
             </Link>
@@ -785,7 +785,7 @@ class AllAlerts extends React.Component {
                   onChange={this.clearAllFilters}
                 />
                 <button
-                  className="alert-blue-button m-r-0 m-b-0 clear-btn"
+                  className="asset-blue-button m-r-0 m-b-0 clear-btn"
                   onChange={this.clearAllFilters}
                 >
                   Clear All Filters

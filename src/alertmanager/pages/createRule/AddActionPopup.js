@@ -23,8 +23,16 @@ class AddActionPopup extends React.Component {
         toggle={this.toggle}
         className="modal-container alert-modal-container"
       >
-        <ModalHeader toggle={this.toggle}>
+        <ModalHeader >
           Select an action group to attach to this alert rule
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
         </ModalHeader>
         <ModalBody
           style={{

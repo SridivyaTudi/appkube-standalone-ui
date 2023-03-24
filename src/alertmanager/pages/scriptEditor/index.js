@@ -19,12 +19,12 @@ class ScriptEditor extends Component {
               </div>
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="float-right script-editor-btn">
-                  <button className="alert-white-button">Editor</button>
-                  <button className="alert-white-button">Editor+ Logs</button>
-                  <button className="alert-white-button">
+                  <button className="asset-white-button">Editor</button>
+                  <button className="asset-white-button">Editor+ Logs</button>
+                  <button className="asset-white-button">
                     Save New Script
                   </button>
-                  <button className="alert-white-button">Exit</button>
+                  <button className="asset-white-button">Exit</button>
                 </div>
               </div>
             </div>
@@ -38,8 +38,8 @@ class ScriptEditor extends Component {
               />
             </div>
             <div className="script-search-btn">
-              <button className="alert-white-button">Stream</button>
-              <button className="alert-white-button">Batch</button>
+              <button className="asset-white-button">Stream</button>
+              <button className="asset-white-button">Batch</button>
             </div>
             <div className="script-select">
               <select>

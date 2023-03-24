@@ -135,7 +135,7 @@
   border-radius: 7px !important;
 }
 
-.alert-gray-button {
+/* .alert-gray-button {
   background: #dde4e9;
   color: #8392a7;
   border: none;
@@ -151,7 +151,7 @@
 .alert-gray-button:focus {
   background: #dbe0e4 !important;
   color: #8392a7 !important;
-}
+} */
 
 .d-block {
   display: block;

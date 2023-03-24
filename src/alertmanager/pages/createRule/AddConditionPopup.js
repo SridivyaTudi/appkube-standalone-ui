@@ -70,7 +70,16 @@ class AddConditionPopup extends React.Component {
         toggle={this.toggle}
         className="modal-container alert-modal-container"
       >
-        <ModalHeader toggle={this.toggle}>Configure signal logic</ModalHeader>
+        <ModalHeader >Configure signal logic
+        <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </ModalHeader>
         <ModalBody
           style={{
             height: "calc(100vh - 210px)",
@@ -181,7 +190,7 @@ class AddConditionPopup extends React.Component {
                   </div>
                 </div>
                 <div className="m-t-2">
-                  <button className="alert-blue-button">Done</button>
+                  <button className="asset-blue-button">Done</button>
                 </div>
               </div>
             </React.Fragment>
@@ -351,9 +360,9 @@ class AddConditionPopup extends React.Component {
                 </div>
               </div>
               <div className="m-t-2">
-                <button className="alert-blue-button m-r-1">Done</button>
+                <button className="asset-blue-button m-r-1">Done</button>
                 <button
-                  className="alert-blue-button m-r-1"
+                  className="asset-blue-button m-r-1"
                   onClick={(e) => this.toggleDefineLogic(false)}
                 >
                   Back

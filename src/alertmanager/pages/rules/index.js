@@ -134,13 +134,13 @@ class Rules extends Component {
                 >
                   <Link
                     to={`/alertmanager/pages/manage-alert-rule`}
-                    className="alert-white-button"
+                    className="asset-white-button"
                   >
                     <i className="fa fa-plus"></i>&nbsp;&nbsp; New Alert Rule
                   </Link>
                 </Rbac>
                 <a
-                  className="alert-white-button"
+                  className="asset-white-button"
                   onClick={() => this.onClickUnImplementedFeature("")}
                 >
                   <i className="fa fa-refresh"></i>&nbsp;&nbsp; Refresh
@@ -149,7 +149,7 @@ class Rules extends Component {
               <div className="col-md-3 col-sm-12">
                 <Link
                   to={`/alertmanager/pages/manage-alert-rule`}
-                  className="alert-white-button float-right"
+                  className="asset-white-button min-width-inherit float-right"
                 >
                   <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
                 </Link>

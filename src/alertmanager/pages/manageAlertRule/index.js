@@ -237,13 +237,13 @@ class ManageAlertRule extends React.Component {
             <div className="row">
               <div className="col-md-6 col-sm-12">
                 <button
-                  className="alert-gray-button kpi-btn active"
+                  className="asset-gray-button kpi-btn active"
                   onClick={() => this.onClickUnImplementedFeature("")}
                 >
                   KPI
                 </button>
                 <button
-                  className="alert-gray-button log-btn"
+                  className="asset-gray-button log-btn"
                   onClick={() => this.onClickUnImplementedFeature("")}
                 >
                   Log
@@ -253,7 +253,7 @@ class ManageAlertRule extends React.Component {
                 <div className="float-right common-right-btn">
                   <Link
                     to={`/alertmanager/pages/monitor-alerts`}
-                    className="alert-white-button min-width-inherit"
+                    className="asset-white-button min-width-inherit"
                   >
                     <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
                   </Link>
@@ -274,7 +274,7 @@ class ManageAlertRule extends React.Component {
                   <div className="float-right common-right-btn">
                     <Link
                       to={`/alertmanager/pages/alert-rule-builder`}
-                      className="alert-blue-button m-r-0 create-rule-btn"
+                      className="asset-blue-button m-r-0 create-rule-btn"
                     >
                       Create Alert Rule
                     </Link>
@@ -311,7 +311,7 @@ class ManageAlertRule extends React.Component {
                   >
                     <Link
                       to={`/alertmanager/pages/script-editor`}
-                      className="alert-blue-button m-r-0 create-rule-btn"
+                      className="asset-blue-button m-r-0 create-rule-btn"
                     >
                       Write Script
                     </Link>

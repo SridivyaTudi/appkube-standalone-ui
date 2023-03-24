@@ -85,12 +85,12 @@ class AlertRuleBuilder extends React.Component {
               </div>
               <div className="col-md-7 col-sm-12">
                 <div className="float-right common-right-btn">
-                  <button className="alert-blue-button save-rule">
+                  <button className="asset-blue-button save-rule">
                     Save Rule
                   </button>
                   <Link
                     to={`/alertmanager/pages/monitor-alerts`}
-                    className="alert-white-button min-width-inherit"
+                    className="asset-white-button min-width-inherit"
                   >
                     <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
                   </Link>
@@ -108,7 +108,7 @@ class AlertRuleBuilder extends React.Component {
             <div className="d-block width-100 text-right alert-wizard-buttons">
               {!state.hidePrevBtn && (
                 <button
-                  className="alert-blue-button m-r-0 m-b-0 previous-btn"
+                  className="asset-blue-button m-r-0 m-b-0 previous-btn"
                   onClick={this.onClickPrevious}
                 >
                   Previous
@@ -116,14 +116,14 @@ class AlertRuleBuilder extends React.Component {
               )}
               {!state.hideNextBtn && (
                 <button
-                  className="alert-blue-button m-r-0 m-b-0 next-btn"
+                  className="asset-blue-button m-r-0 m-b-0 next-btn"
                   onClick={this.onClickNext}
                 >
                   Next
                 </button>
               )}
               {!state.hideFinishBtn && (
-                <button className="alert-blue-button m-r-0 m-b-0 finish-btn">
+                <button className="asset-blue-button m-r-0 m-b-0 finish-btn">
                   Finish
                 </button>
               )}
