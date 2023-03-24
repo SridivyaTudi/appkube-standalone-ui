@@ -260,19 +260,24 @@ class AddDatasource extends React.Component {
             <div className="source-head">
               <h3>inputs</h3>
               <div className="right-search-bar">
-                <div className="form-group search-control m-b-0">
-                  <button className="btn btn-search">
-                    <i className="fa fa-search" />
-                  </button>
-                  <input
-                    type="text"
-                    name="searchkey"
-                    value={searchkey}
-                    className="input-group-text"
-                    placeholder="Search"
-                    onChange={this.handleStateChange}
-                  />
+                <div className="search-box">
+                  <form>
+                    <div className="form-group search-control-group m-b-0">
+                      <input
+                        type="text"
+                        name="searchkey"
+                        value={searchkey}
+                        className="input-group-text"
+                        placeholder="Search"
+                        onChange={this.handleStateChange}
+                      />
+                      <button className="btn btn-search">
+                        <i className="fa fa-search" />
+                      </button>
+                    </div>
+                  </form>
                 </div>
+
                 <div className="back-btn">
                   <Link
                     to="/assetmanager/pages/environments"
