@@ -330,7 +330,7 @@ class Collection extends Component {
             <TopMenu />
           </div>
           <div className="common-container border-bottom-0">
-            <div className="collection-logos">
+            <div className="gsl-editor-logos">
               <ul>
                 <li>
                   <a>

@@ -1,22 +1,4 @@
-.modal {
-  max-width: 992px !important;
-  -webkit-box-shadow: 0px 0px 16px #3B48593D;
-  box-shadow: 0px 0px 16px #3B48593D;
-  border-radius: 10px;
-  background: white;
 
-  .modal-content {
-    padding: 40px;
-    padding-right: 25px;
-
-    .modal-body {
-      padding-right: 15px;
-    }
-
-
-  }
-
-}
 
 .modal-backdrop {
   background-color: #141414B3;
@@ -24,71 +6,15 @@
 }
 
 .servicdesk-modal-container {
-  max-width: 992px !important;
-  -webkit-box-shadow: 0px 0px 16px #3B48593D;
-  box-shadow: 0px 0px 16px #3B48593D;
-  border-radius: 10px;
-  background: white;
-  position: relative;
-
   .modal-content {
     padding: 30px;
 
-    .close-btn {
-      background-color: #F93D3D;
-      border-radius: 50%;
-      color: #ffffff;
-      font-size: 15px;
-      line-height: 26px;
-      width: 28px;
-      text-align: center;
-      height: 28px;
-      border: none;
-      font-weight: bold;
-      text-shadow: 0px 1px 0px white;
-      position: absolute;
-      right: -14px;
-      top: -14px;
-    }
+    
 
-    .modal-header {
-      background: white;
-      box-shadow: none;
-      border-bottom: 1px dashed #a2c0d4;
-      margin-bottom: 20px;
-      padding: 0 10px 10px;
-
-      .modal-title {
-        color: #3b4859;
-        float: left;
-        margin: 0px;
-        font-size: 16px;
-        font-weight: 500;
-        padding: 0;
-        line-height: 28px;
-      }
-
-      button {
-        float: right;
-        font-size: 28px;
-        top: 0;
-        position: relative;
-        color: #ffffff;
-        opacity: 1;
-        width: 28px;
-        height: 28px;
-        background-color: red;
-        border-radius: 50%;
-        border: none;
-        line-height: 28px;
-        text-align: center;
-      }
-    }
+    
 
     .modal-body {
       padding: 0px 10px;
-      color: #3b4859;
-
       p {
         font-style: italic;
       }
@@ -156,25 +82,6 @@
           line-height: 12px;
           vertical-align: top;
         }
-      }
-    }
-
-    .modal-footer {
-      padding: 20px 15px 0px;
-      background: none;
-      border: none;
-      border-top: 1px dashed #a2c0d4;
-
-      .blue-button {
-        border-radius: 7px !important;
-      }
-
-      .gray-button {
-        border-radius: 7px !important;
-      }
-
-      .white-button {
-        border-radius: 7px !important;
       }
     }
   }

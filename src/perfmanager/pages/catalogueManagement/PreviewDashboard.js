@@ -32,7 +32,7 @@ class PreviewDashboard extends Component {
             aria-label="Close"
             onClick={this.toggle}
           >
-            <span aria-hidden="true">x</span>
+            <i class="fal fa-times"></i>
           </button>
         </ModalHeader>
         <ModalBody

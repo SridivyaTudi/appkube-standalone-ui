@@ -40,7 +40,7 @@ class UnimplementedFeaturePopup extends Component {
             aria-label="Close"
             onClick={this.toggle}
           >
-            <span aria-hidden="true">×</span>
+           <i class="fal fa-times"></i>
           </button>
         </ModalHeader>
         <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
@@ -49,7 +49,7 @@ class UnimplementedFeaturePopup extends Component {
             continue?
           </p>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter className="footer-top-br">
           <div className="d-block text-center">
             {state.link && (
               <Link

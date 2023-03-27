@@ -1,49 +1,10 @@
 .logmanager-modal-container {
-  max-width: 992px !important;
-  -webkit-box-shadow: 0px 0px 16px #3B48593D;
-  box-shadow: 0px 0px 16px #3B48593D;
-  border-radius: 10px;
-  background: white;
   .modal-content {
     padding: 30px;
-    .modal-header {
-      background: white;
-      box-shadow: none;
-      border-bottom: 1px dashed #a2c0d4;
-      margin-bottom: 20px;
-      padding: 0 10px 10px;
-      .modal-title {
-        color: #3b4859;
-        float: left;
-        margin: 0px;
-        font-size: 16px;
-        font-weight: 500;
-        padding: 0;
-        line-height: 28px;
-        width: 100%;
-        span{
-          font-weight: 400;
-        }
-      }
-      button {
-        float: right;
-        font-size: 28px;
-        top: 0;
-        position: relative;
-        color: #ffffff;
-        opacity: 1;
-        width: 28px;
-        height: 28px;
-        background-color: red;
-        border-radius: 50%;
-        border: none;
-        line-height: 28px;
-        text-align: center;
-      }
-    }
+    
     .modal-body{
       padding: 0px 10px;
-      color: #3b4859;
+     
       p{
         font-style: italic;
       }
@@ -138,21 +99,6 @@
           vertical-align: top;
           padding-left: 8px;
         }
-      }
-    }
-    .modal-footer{
-      padding: 20px 15px 0px;
-      background: none;
-      border: none;
-      border-top: 1px dashed #a2c0d4;
-      .blue-button{
-        border-radius: 7px!important;
-      }
-      .gray-button{
-        border-radius: 7px!important;
-      }
-      .white-button{
-        border-radius: 7px!important;
       }
     }
     .contact-popup-buttons{

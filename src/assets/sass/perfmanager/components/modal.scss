@@ -1,44 +1,6 @@
 .perfmanager-modal-container {
-  max-width: 992px !important;
-  box-shadow: 0px 0px 16px #3B48593D;
-  border-radius: 10px;
-  background: white;
   .modal-content {
-    padding: 20px 20px;
-    .modal-header {
-      background: white;
-      box-shadow: none;
-      border-bottom: 1px dashed #a2c0d4;
-      margin-bottom: 30px;
-      padding: 0 10px 10px;
-      .modal-title {
-        color: #3b4859;
-        float: left;
-        margin: 0px;
-        font-size: 16px;
-        font-weight: 500;
-        padding: 0;
-        line-height: 28px;
-        width: 100%;
-      }
-      button {
-        float: right;
-        font-size: 28px;
-        top: 0;
-        position: relative;
-        color: #ffffff;
-        opacity: 1;
-        width: 28px;
-        height: 28px;
-        background-color: red;
-        border-radius: 50%;
-        border: none;
-        line-height: 28px;
-        text-align: center;
-      }
-    }
     .modal-body{
-      padding: 0px;
       img{
         max-width: 100%;
         height: auto;
@@ -114,9 +76,4 @@
       }
     }
   }
-  .modal-footer{
-    background-color: #FFFFFF;
-    border-color: #FFFFFF;
-  }
-  
 }

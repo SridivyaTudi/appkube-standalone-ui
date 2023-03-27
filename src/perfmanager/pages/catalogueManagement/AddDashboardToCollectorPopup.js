@@ -236,6 +236,14 @@ export class AddDashboardToCollectorPopup extends Component {
         ></AlertMessage>
         <ModalHeader toggle={this.closeModel}>
           {this.state.catalogName}{" "}
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <i class="fal fa-times"></i>
+          </button>
         </ModalHeader>
         <ModalBody
           style={{

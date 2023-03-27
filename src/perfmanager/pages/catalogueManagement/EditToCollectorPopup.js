@@ -179,7 +179,16 @@ class EditToCollectorPopup extends Component {
           severity={state.severity}
           msg={state.message}
         ></AlertMessage>
-        <ModalHeader toggle={this.closeModel}>Update Catalog</ModalHeader>
+        <ModalHeader toggle={this.closeModel}>Update Catalog
+        <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <i class="fal fa-times"></i>
+          </button>
+        </ModalHeader>
         <ModalBody
           style={{
             height: "calc(48vh - 0px)",
