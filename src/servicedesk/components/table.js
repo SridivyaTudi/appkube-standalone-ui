@@ -474,16 +474,20 @@ class Table extends React.Component {
               {this.renderColumns()}
             </div>
           </div>
-          <div className="filter-search-control">
-            <input
-              type="text"
-              className="input-group-text"
-              onChange={this.onSearchChange}
-              value={this.state.searchKey}
-            />
-            <button>
-              <span>Search</span>
-            </button>
+          <div className="search-box">
+            <form>
+              <div className="form-group search-control-group m-b-0">
+                <input
+                  type="text"
+                  className="input-group-text"
+                  onChange={this.onSearchChange}
+                  value={this.state.searchKey}
+                />
+                <button>
+                 <i className="fa fa-search"></i>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
         <div className={`${tableClasses.tableParent} data-table-parent`}>
