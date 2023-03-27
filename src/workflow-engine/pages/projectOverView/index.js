@@ -147,7 +147,7 @@ class ProjectOverView extends Component {
               </div>
               <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12">
                 <div className="fliter-right-content">
-                  <div className="plus-icon col-12">
+                  <div className="plus-icon">
                     <Link to="/workflow-engine/pages/createUsecase">
                       <i className="fa fa-plus" />
                     </Link>

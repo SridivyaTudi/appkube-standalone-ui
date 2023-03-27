@@ -103,9 +103,7 @@ class ContentsPacks extends React.Component {
               <tr>
                 <td>
                   <p>{rowData.description}</p>
-                  <p>
-                    {rowData.rules}&nbsp;&nbsp;
-                  </p>
+                  <p>{rowData.rules}&nbsp;&nbsp;</p>
                 </td>
                 <td>
                   <div className="d-inline-block">
@@ -176,23 +174,31 @@ class ContentsPacks extends React.Component {
             </div>
           </div>
           <div className="common-container">
-            <div className="d-inline-block form-group search-control">
-              <button>
-                <i className="fa fa-search"></i>
-              </button>
-              <input type="text" className="input-group-text" />
-            </div>
-            <div className="d-inline-block">
-              <button className="blue-button m-b-0">Filter</button>
-              <button className="blue-button m-b-0">Reset</button>
-            </div>
-            <div className="float-right new-stream-btn">
-              <button
-                className="blue-button m-b-0 m-r-0"
-                onClick={this.onClickOpenCreateStreamPopup}
-              >
-                New Stream
-              </button>
+            <div className="new-stream-searchbar">
+              <div className="searchbar-left">
+                <div className="search-box">
+                  <form>
+                    <div className="search-control-group">
+                      <input type="text" className="input-group-text" />
+                      <button>
+                        <i className="fa fa-search"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <button className="blue-button m-b-0">Filter</button>
+                <button className="blue-button m-b-0">Reset</button>
+              </div>
+              <div className="searchbar-right">
+                <div className="new-stream-btn">
+                  <button
+                    className="blue-button m-b-0 m-r-0"
+                    onClick={this.onClickOpenCreateStreamPopup}
+                  >
+                    New Stream
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
           <div className="common-container border-bottom-0">

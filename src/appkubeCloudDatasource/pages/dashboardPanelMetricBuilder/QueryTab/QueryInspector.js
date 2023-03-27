@@ -161,7 +161,7 @@ class QueryInspectorModal extends React.Component {
               <div className="query-type-option">
                 <div className="query-type-button">Fields</div>
                 <div className="type-option">
-                  <Multiselect
+                  <Multiselect className="fields-select"
                     isObject={false}
                     onKeyPressFn={function noRefCheck() {}}
                     onRemove={function noRefCheck() {}}
