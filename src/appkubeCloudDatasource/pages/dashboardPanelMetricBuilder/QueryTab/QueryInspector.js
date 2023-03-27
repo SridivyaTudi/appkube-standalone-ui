@@ -66,7 +66,7 @@ class QueryInspectorModal extends React.Component {
             <input
               type="text"
               name="queryTitle"
-              value={queryTitle}
+              value={this.state.queryTitle}
               onKeyDown={(e) => {
                 this.handleNameChange(e);
                 if (e.keyCode === 13) {
@@ -174,7 +174,6 @@ class QueryInspectorModal extends React.Component {
                       "Option 4",
                       "Option 5",
                     ]}
-                    style={{}}
                   />
                 </div>
                 <div className="buffer-button">Buffer</div>

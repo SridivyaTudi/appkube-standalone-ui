@@ -48,7 +48,6 @@ class QueryTab extends React.Component {
     } else {
       newQueryInspectorData.splice(position + 1, 0, item);
     }
-
     this.setState({ QueryInspectorData: newQueryInspectorData });
   };
 
@@ -139,8 +138,9 @@ class QueryTab extends React.Component {
         {QueryInspectorData.map((item, index) => {
           return (
             <QueryInspector
+              key={index}
               currentIndex={index}
-              name={QueryInspectorData[index]}
+              name={item}
               handleSort={this.handleQueryInspectorSort}
               handleCopy={this.handleQueryInspectorCopy}
               handleDelete={this.handleQueryInspectorDelete}
