@@ -181,7 +181,7 @@ class ProjectOverView extends Component {
                   </div>
                   <Link
                     to={`/workflow-engine/pages/projectWise`}
-                    className="btn-primary pro-overview-btn"
+                    className="blue-button pro-overview-btn"
                   >
                     <i className="fas fa-chevron-left"></i> Back
                   </Link>

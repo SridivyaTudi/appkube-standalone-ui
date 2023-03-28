@@ -430,7 +430,7 @@ class EditorGslBuilder extends React.Component {
                     </li>
                   </ul>
                 </div>
-                <div className="row">
+                <div className="row region-section">
                   <div className="col-md-3 col-sm-3">
                     <div className="form-group filter-control-group">
                       <label htmlFor="Account">Account</label>

@@ -168,13 +168,13 @@ class ProcurementDetail extends Component {
                 <div className="heading-content-right">
                   <Link
                     to={`/workflow-engine/pages/project-overview`}
-                    className="btn-primary pro-overview-btn"
+                    className="blue-button pro-overview-btn"
                   >
                     Project Overview
                   </Link>
                   <Link
                     to="/workflow-engine/pages/projectWise"
-                    className="btn-primary pro-overview-btn"
+                    className="blue-button pro-overview-btn"
                   >
                     <i className="fas fa-chevron-left"></i> Back
                   </Link>

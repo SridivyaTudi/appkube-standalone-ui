@@ -32,7 +32,7 @@ class UnimplementedFeaturePopup extends Component {
         <ModalHeader>
           Unimplemented Feature
           <button type="button" className="close" aria-label="Close" onClick={this.toggle}>
-            <span aria-hidden="true">×</span>
+          <i class="fal fa-times"></i>
           </button>
         </ModalHeader>
         <ModalBody style={{ overflowY: 'auto', overflowX: 'hidden' }}>

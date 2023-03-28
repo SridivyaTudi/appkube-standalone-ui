@@ -754,7 +754,7 @@ class WorkFlow extends Component {
                     <button
                       type="button"
                       disabled={activeStage == 0}
-                      className="btn btn-primary previous-btn"
+                      className="btn btn-primary blue-button"
                       onClick={() => this.moveToNextPage("previous")}
                     >
                       Previous
@@ -766,7 +766,7 @@ class WorkFlow extends Component {
                           usecaseData?.stepinput?.stages.length - 1 ===
                           activeStage
                         }
-                        className="btn btn-primary previous-btn next-btn"
+                        className="btn btn-primary blue-button next-btn"
                         onClick={() => this.moveToNextPage("next")}
                       >
                         Next

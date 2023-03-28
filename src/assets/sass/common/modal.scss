@@ -5,6 +5,25 @@
   background: white;
   .modal-content {
     padding: 20px 20px;
+    position: relative;
+    .close-btn {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 22px;
+      background: red;
+      border-radius: 50%;
+      border: none;
+      color: #fff;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      &:focus {
+        outline: none;
+      }
+    }
+
     .modal-header {
       background: white;
       box-shadow: none;
@@ -24,7 +43,9 @@
       button {
         color: #ffffff;
         opacity: 1;
+        font-size: 22px;
         width: 28px;
+        line-height: 28px;
         height: 28px;
         background-color: red;
         border-radius: 50%;
@@ -43,16 +64,16 @@
     background-color: #ffffff;
     border-color: #ffffff;
     .blue-button {
-        border-radius: 7px !important;
-      }
+      border-radius: 7px !important;
+    }
 
-      .gray-button {
-        border-radius: 7px !important;
-      }
+    .gray-button {
+      border-radius: 7px !important;
+    }
 
-      .white-button {
-        border-radius: 7px !important;
-      }
+    .white-button {
+      border-radius: 7px !important;
+    }
     &.footer-top-br {
       border-top: 1px dashed #a2c0d4;
     }

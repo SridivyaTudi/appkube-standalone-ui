@@ -74,7 +74,7 @@ class OpenNewContactPopup extends React.Component {
       console.log("Loading company data failed. Error: ", err);
     }
   }
-  
+
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
@@ -400,7 +400,7 @@ class OpenNewContactPopup extends React.Component {
       isAlertOpen: false,
     });
   };
-  
+
   render() {
     const {
       modal,
@@ -442,7 +442,7 @@ class OpenNewContactPopup extends React.Component {
           msg={state.message}
         ></AlertMessage>
         <button className="close-btn" onClick={this.handleClose}>
-          X
+          <i class="fal fa-times"></i>
         </button>
         <ModalBody
           style={{

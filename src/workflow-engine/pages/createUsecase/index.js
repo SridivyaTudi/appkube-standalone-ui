@@ -867,8 +867,7 @@ class CreateUsecase extends Component {
                   </div>
                   <Link
                     to="/a/xformation-workflow-engine/project-wise"
-                    className="btn-primary pro-overview-btn"
-                  >
+                    className="blue-button">
                     <i className="fas fa-chevron-left" /> Back
                   </Link>
                 </div>
@@ -990,7 +989,7 @@ class CreateUsecase extends Component {
                         </div>
                         {/*  */}
                         <button
-                          className="add-stage-btn"
+                          className="blue-button"
                           onClick={(e) => this.addDetails(i)}
                         >
                           <div className="d-inline-block">
@@ -1156,7 +1155,7 @@ class CreateUsecase extends Component {
                 {stages && stages.length > 0 && (
                   <div className="basic-details-btn">
                     <button
-                      className="btn btn-primary"
+                      className="blue-button"
                       onClick={this.submitWorkflow}
                     >
                       Save

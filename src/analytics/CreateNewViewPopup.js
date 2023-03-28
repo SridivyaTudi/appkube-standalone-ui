@@ -84,11 +84,11 @@ export class CreateNewViewPopup extends Component {
     const { modal, viewName, description, isSubmitted } = this.state;
     const errorData = this.validate(isSubmitted);
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="analytics-modal-container">
+      <Modal isOpen={modal} toggle={this.toggle} className="modal-container analytics-modal-container">
         <ModalHeader>
           Creating New View
           <button type="button" className="close" aria-label="Close" onClick={this.toggle}>
-            <span aria-hidden="true">×</span>
+          <i class="fal fa-times"></i>
           </button>
         </ModalHeader>
         <ModalBody style={{ height: 'calc(54vh - 50px)', overflowY: 'auto', overflowX: 'hidden' }}>

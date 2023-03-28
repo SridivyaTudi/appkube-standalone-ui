@@ -32,7 +32,7 @@ export class DeleteTabPopup extends Component {
     const { modal } = this.state;
     const { deleteContent, isLoading } = this.props;
     return (
-      <Modal isOpen={modal} toggle={this.toggle} className="analytics-modal-container">
+      <Modal isOpen={modal} toggle={this.toggle} className="modal-container analytics-modal-container">
         <h4 className="warning-heading">
           <i className="fa fa-exclamation-circle"></i>Warning
         </h4>

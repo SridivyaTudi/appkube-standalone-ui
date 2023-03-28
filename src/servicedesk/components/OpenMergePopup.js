@@ -30,7 +30,7 @@ class OpenMergePopup extends React.Component {
         className="modal-container servicdesk-modal-container"
       >
         <button className="close-btn" onClick={this.handleClose}>
-          X
+        <i class="fal fa-times"></i>
         </button>
         <ModalBody
           style={{

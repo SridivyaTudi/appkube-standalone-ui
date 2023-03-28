@@ -205,7 +205,7 @@ class OpenNewCompanyPopup extends React.Component {
       companyLogo: URL.createObjectURL(e.target.files[0]),
     });
   };
-  
+
   handleCloseAlert = (e) => {
     this.setState({
       isAlertOpen: false,
@@ -241,7 +241,7 @@ class OpenNewCompanyPopup extends React.Component {
           msg={state.message}
         ></AlertMessage>
         <button className="close-btn" onClick={this.handleClose}>
-          X
+          <i class="fal fa-times"></i>
         </button>
         <ModalBody
           style={{

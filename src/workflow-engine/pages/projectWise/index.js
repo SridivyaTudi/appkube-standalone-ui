@@ -138,7 +138,7 @@ class ProjectWise extends Component {
                 <div className="heading-content-right">
                   <Link
                     to={`/a/xformation-workflow-engine/create-new-usecase`}
-                    className="btn-primary pro-overview-btn"
+                    className="blue-button pro-overview-btn"
                   >
                     Create Usecase
                   </Link>

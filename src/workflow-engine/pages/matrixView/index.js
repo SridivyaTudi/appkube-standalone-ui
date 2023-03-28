@@ -42,8 +42,7 @@ class MatrixView extends Component {
                     </div>
                     <Link
                       to="/a/xformation-workflow-engine/procurement-detail/1"
-                      className="btn-primary pro-overview-btn"
-                    >
+                      className="blue-button">
                       <i className="fas fa-chevron-left"></i> Back
                     </Link>
                   </div>

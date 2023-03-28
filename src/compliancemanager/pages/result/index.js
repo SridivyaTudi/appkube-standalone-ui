@@ -66,7 +66,7 @@ class Result extends React.Component {
                     </li>
                   </ul>
                 </div>
-                <div className="row">
+                <div className="row region-section">
                   <div className="col-md-3 col-sm-6">
                     <div className="form-group filter-control-group">
                       <label htmlFor="Account">Account</label>
