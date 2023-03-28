@@ -45,7 +45,7 @@ class UnimplementedFeaturePopup extends Component {
                 Continue
               </a>
             )}
-            <button className="dashboard-gray-button" onClick={this.toggle}>
+            <button className="asset-gray-button" onClick={this.toggle}>
               Close
             </button>
           </div>

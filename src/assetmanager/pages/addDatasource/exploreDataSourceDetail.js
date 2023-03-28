@@ -31,15 +31,19 @@ class ExploreDataSourceDetail extends React.Component {
             <div className="source-head">
               <h3>inputs</h3>
               <div className="right-search-bar">
-                <div className="form-group search-control m-b-0">
-                  <button className="btn btn-search">
-                    <i className="fa fa-search" />
-                  </button>
-                  <input
-                    type="text"
-                    className="input-group-text"
-                    placeholder="Search"
-                  />
+                <div className="search-box">
+                  <form>
+                    <div className="form-group search-control-group m-b-0">
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder="Search"
+                      />
+                      <button className="btn btn-search">
+                        <i className="fa fa-search" />
+                      </button>
+                    </div>
+                  </form>
                 </div>
                 <div className="back-btn">
                   <button type="button" className="btn btn-link">
@@ -241,61 +245,69 @@ class ExploreDataSourceDetail extends React.Component {
                           <div className="environgment-details metrics-name">
                             <div className="row">
                               <div className="col-xl-4 col-lg-4 col-md-4 col-smm-12 col-xs-12">
-                                <div className="form-group description-content">
-                                  <label htmlFor="description">
-                                    Name Space
-                                  </label>
-                                  <select
-                                    className="input-group-text"
-                                    name="environment"
-                                    value=""
-                                    onChange={this.handleStateChange}
-                                  >
-                                    <option key="1" value="aws">
-                                      Select
-                                    </option>
-                                    <option key="2" value="Cloud">
-                                      1
-                                    </option>
-                                  </select>
+                                <div className="source-content">
+                                  <div className="form-group description-content">
+                                    <label htmlFor="description">
+                                      Name Space
+                                    </label>
+                                    <select
+                                      className="input-group-text"
+                                      name="environment"
+                                      value=""
+                                      onChange={this.handleStateChange}
+                                    >
+                                      <option key="1" value="aws">
+                                        Select
+                                      </option>
+                                      <option key="2" value="Cloud">
+                                        1
+                                      </option>
+                                    </select>
+                                  </div>
                                 </div>
                               </div>
                               <div className="col-xl-4 col-lg-4 col-md-4 col-smm-12 col-xs-12">
-                                <div className="form-group description-content">
-                                  <label htmlFor="description">
-                                    Metrics Name
-                                  </label>
-                                  <select
-                                    className="input-group-text"
-                                    name="environment"
-                                    value=""
-                                    onChange={this.handleStateChange}
-                                  >
-                                    <option key="1" value="aws">
-                                      Select
-                                    </option>
-                                    <option key="2" value="Cloud">
-                                      1
-                                    </option>
-                                  </select>
+                                <div className="source-content">
+                                  <div className="form-group description-content">
+                                    <label htmlFor="description">
+                                      Metrics Name
+                                    </label>
+                                    <select
+                                      className="input-group-text"
+                                      name="environment"
+                                      value=""
+                                      onChange={this.handleStateChange}
+                                    >
+                                      <option key="1" value="aws">
+                                        Select
+                                      </option>
+                                      <option key="2" value="Cloud">
+                                        1
+                                      </option>
+                                    </select>
+                                  </div>
                                 </div>
                               </div>
                               <div className="col-xl-4 col-lg-4 col-md-4 col-smm-12 col-xs-12">
-                                <div className="form-group description-content">
-                                  <label htmlFor="description">Statistic</label>
-                                  <select
-                                    className="input-group-text"
-                                    name="environment"
-                                    value=""
-                                    onChange={this.handleStateChange}
-                                  >
-                                    <option key="1" value="aws">
-                                      Select
-                                    </option>
-                                    <option key="2" value="Cloud">
-                                      1
-                                    </option>
-                                  </select>
+                                <div className="source-content">
+                                  <div className="form-group description-content">
+                                    <label htmlFor="description">
+                                      Statistic
+                                    </label>
+                                    <select
+                                      className="input-group-text"
+                                      name="environment"
+                                      value=""
+                                      onChange={this.handleStateChange}
+                                    >
+                                      <option key="1" value="aws">
+                                        Select
+                                      </option>
+                                      <option key="2" value="Cloud">
+                                        1
+                                      </option>
+                                    </select>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -322,35 +334,47 @@ class ExploreDataSourceDetail extends React.Component {
                           <div className="environgment-details metrics-name">
                             <div className="row">
                               <div className="col-xl-4 col-lg-4 col-md-4 col-smm-12 col-xs-12">
-                                <div className="form-group description-content">
-                                  <label htmlFor="description">
-                                    ID &#8722; <span>optional</span>
-                                    <i className="fal fa-exclamation-circle" />
-                                  </label>
-                                  <input type="text" className="form-control" />
+                                <div className="source-content">
+                                  <div className="form-group description-content">
+                                    <label htmlFor="description">
+                                      ID &#8722; <span>optional</span>
+                                      <i className="fal fa-exclamation-circle" />
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
                                 </div>
                               </div>
                               <div className="col-xl-4 col-lg-4 col-md-4 col-smm-12 col-xs-12">
-                                <div className="form-group description-content">
-                                  <label htmlFor="description">
-                                    Period
-                                    <span />
-                                    <i className="fal fa-exclamation-circle" />
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Auto"
-                                  />
+                                <div className="source-content">
+                                  <div className="form-group description-content">
+                                    <label htmlFor="description">
+                                      Period
+                                      <span />
+                                      <i className="fal fa-exclamation-circle" />
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="Auto"
+                                    />
+                                  </div>
                                 </div>
                               </div>
                               <div className="col-xl-4 col-lg-4 col-md-4 col-smm-12 col-xs-12">
-                                <div className="form-group description-content">
-                                  <label htmlFor="description">
-                                    Alias &#8722; <span>optional</span>
-                                    <i className="fal fa-exclamation-circle" />
-                                  </label>
-                                  <input type="text" className="form-control" />
+                                <div className="source-content">
+                                  <div className="form-group description-content">
+                                    <label htmlFor="description">
+                                      Alias &#8722; <span>optional</span>
+                                      <i className="fal fa-exclamation-circle" />
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
                                 </div>
                               </div>
                             </div>

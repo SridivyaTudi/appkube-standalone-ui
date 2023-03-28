@@ -592,103 +592,115 @@ class SearchAlert extends Component {
                     </button>
                   </div>
                   <div className="filterbox">
-                    <div className="box">
-                      <label>Resource Group</label>
-                      <div className="rainge">
-                        <div className="min-box">
-                          <select
-                            className="form-control"
-                            name="resourceGroup"
-                            value={resourceGroup}
-                            onChange={this.handleStateChange}
-                          >
-                            <option value="">Select Resource Group</option>
-                            {this.createSelectbox(this.resourceGroup)}
-                          </select>
+                    <div className="box source-content">
+                      <div className="description-content">
+                        <label>Resource Group</label>
+                        <div className="rainge">
+                          <div className="min-box">
+                            <select
+                              className="form-control"
+                              name="resourceGroup"
+                              value={resourceGroup}
+                              onChange={this.handleStateChange}
+                            >
+                              <option value="">Select Resource Group</option>
+                              {this.createSelectbox(this.resourceGroup)}
+                            </select>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div className="box">
-                      <label>Resources</label>
-                      <div className="rainge">
-                        <div className="min-box">
-                          <select
-                            className="form-control"
-                            name="resource"
-                            value={resource}
-                            onChange={this.handleStateChange}
-                          >
-                            <option value="">Select Resources</option>
-                            {this.createSelectbox(
-                              this.resources[resourceGroup]
-                            )}
-                          </select>
+                    <div className="box source-content">
+                      <div className="description-content">
+                        <label>Resources</label>
+                        <div className="rainge">
+                          <div className="min-box">
+                            <select
+                              className="form-control"
+                              name="resource"
+                              value={resource}
+                              onChange={this.handleStateChange}
+                            >
+                              <option value="">Select Resources</option>
+                              {this.createSelectbox(
+                                this.resources[resourceGroup]
+                              )}
+                            </select>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div className="box">
-                      <label>Monitor services</label>
-                      <div className="rainge">
-                        <div className="min-box">
-                          <select
-                            className="form-control"
-                            name="monitorService"
-                            value={monitorService}
-                            onChange={this.handleStateChange}
-                          >
-                            <option value="">Select Monitor Services</option>
-                            {this.createSelectbox(this.monitoringServices)}
-                          </select>
+                    <div className="box source-content">
+                      <div className="description-content">
+                        <label>Monitor services</label>
+                        <div className="rainge">
+                          <div className="min-box">
+                            <select
+                              className="form-control"
+                              name="monitorService"
+                              value={monitorService}
+                              onChange={this.handleStateChange}
+                            >
+                              <option value="">Select Monitor Services</option>
+                              {this.createSelectbox(this.monitoringServices)}
+                            </select>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div className="box">
-                      <label>Alert Type</label>
-                      <div className="rainge">
-                        <div className="min-box">
-                          <select
-                            className="form-control"
-                            name="alertType"
-                            value={alertType}
-                            onChange={this.handleStateChange}
-                          >
-                            <option value="">Select Alert Type</option>
-                            {this.createSelectbox(this.alertTypes)}
-                          </select>
+                    <div className="box source-content">
+                      <div className="description-content">
+                        <label>Alert Type</label>
+                        <div className="rainge">
+                          <div className="min-box">
+                            <select
+                              className="form-control"
+                              name="alertType"
+                              value={alertType}
+                              onChange={this.handleStateChange}
+                            >
+                              <option value="">Select Alert Type</option>
+                              {this.createSelectbox(this.alertTypes)}
+                            </select>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div className="box">
-                      <label>Serverity</label>
-                      <div className="rainge">
-                        <div className="min-box">
-                          <select
-                            className="form-control"
-                            name="severity"
-                            value={severity}
-                            onChange={this.handleStateChange}
-                          >
-                            <option value="">Select Severity</option>
-                            {this.createSelectbox(this.severity)}
-                          </select>
+                    <div className="box source-content">
+                      <div className="description-content">
+                        <label>Serverity</label>
+                        <div className="rainge">
+                          <div className="min-box">
+                            <select
+                              className="form-control"
+                              name="severity"
+                              value={severity}
+                              onChange={this.handleStateChange}
+                            >
+                              <option value="">Select Severity</option>
+                              {this.createSelectbox(this.severity)}
+                            </select>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div className="box">
-                      <label>Alert state</label>
-                      <div className="rainge">
-                        <div className="min-box">
-                          <select
-                            className="form-control"
-                            name="alertState"
-                            value={alertState}
-                            onChange={this.handleStateChange}
-                          >
-                            <option value="Select Alert State">
-                              Select Alert State
-                            </option>
-                            {this.createSelectbox(this.alertStates)}
-                          </select>
+                    <div className="box source-content">
+                      <div className="description-content">
+                        <label>Alert state</label>
+                        <div className="rainge">
+                          <div className="min-box">
+                            <select
+                              className="form-control"
+                              name="alertState"
+                              value={alertState}
+                              onChange={this.handleStateChange}
+                            >
+                              <option value="Select Alert State">
+                                Select Alert State
+                              </option>
+                              {this.createSelectbox(this.alertStates)}
+                            </select>
+                          </div>
                         </div>
                       </div>
                     </div>

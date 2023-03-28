@@ -30,23 +30,23 @@ class ScriptEditor extends Component {
             </div>
           </div>
           <div className="common-container border-bottom-0 p-t-20 script-editor">
-            <div className="script-search">
-              <input
-                type="text"
-                className="input-group-text"
-                placeholder="ID your Script"
-              />
-            </div>
-            <div className="script-search-btn">
+            <div className="script-editor-new">
+              <div className="script-search">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="ID your Script"
+                />
+              </div>
               <button className="asset-white-button">Stream</button>
-              <button className="asset-white-button">Batch</button>
-            </div>
-            <div className="script-select">
-              <select>
-                <option>greater than</option>
-                <option>greater than</option>
-                <option>greater than</option>
-              </select>
+                <button className="asset-white-button">Batch</button>
+              <div className="script-select">
+                <select className="form-control">
+                  <option>greater than</option>
+                  <option>greater than</option>
+                  <option>greater than</option>
+                </select>
+              </div>
             </div>
           </div>
           <div className="common-container border-bottom-0 p-t-20 script-editor">

@@ -161,9 +161,10 @@
 
 .sort-checkbox {
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle;
   padding-right: 15px;
   padding-top: 10px;
+  margin-right: 10px;
 
   span {
     padding-left: 10px;
@@ -324,6 +325,24 @@
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
   }
+  .description-content {
+    label {
+      font-size: 14px;
+      line-height: 18px;
+      display: block;
+      margin-bottom: 10px;
+      color: #3b4859;
+
+      span {
+        font-weight: 400;
+        font-style: italic;
+      }
+
+      i {
+        margin-left: 8px;
+      }
+    }
+  }
 }
 
 //*********************************Filter group*************************************//
@@ -358,56 +377,146 @@
   }
 }
 
-
-
 //*******************************gsl editor logos************************************//
-.gsl-editor-logos{
+.gsl-editor-logos {
   padding-bottom: 20px;
-  h3{
-      display: block;
-      font-size: 16px;
-      color: $gslbuilder-content-color;
-      font-weight: 600;
-      line-height: 20px;
-      margin-bottom: 10px;
+  h3 {
+    display: block;
+    font-size: 16px;
+    color: $gslbuilder-content-color;
+    font-weight: 600;
+    line-height: 20px;
+    margin-bottom: 10px;
   }
-  ul{
-      li{
+  ul {
+    li {
+      display: inline-block;
+      vertical-align: top;
+      padding-right: 30px;
+      padding-bottom: 15px;
+      a {
+        display: block;
+        width: 180px;
+        height: 50px;
+        background-color: #f0f3f7;
+        box-shadow: 0px 1px 5px #00000029;
+        border-radius: 5px;
+        text-align: left;
+        padding-right: 10px;
+        span {
           display: inline-block;
           vertical-align: top;
-          padding-right: 30px;
-          padding-bottom: 15px;
-          a{
-              display: block;
-              width: 180px;
-              height: 50px;
-              background-color: #F0F3F7;
-              box-shadow: 0px 1px 5px #00000029;
-              border-radius: 5px;
-              text-align: left;
-              padding-right: 10px;
-              span{
-                  display: inline-block;
-                  vertical-align: top;
-                  padding-right: 10px;
-                  padding-top: 0;
-                  padding-left: 10px;
-                  width: 65px;
-                  line-height: 48px;
-                  img{
-                      max-width: 100%;
-                      height: auto;
-                  }
-              }
-              p{
-                  color: #3B4859;
-                  font-size: 16px;
-                  font-weight: 500;
-                  line-height: 50px;
-                  display: inline-block;
-                  vertical-align: top;
-              }
+          padding-right: 10px;
+          padding-top: 0;
+          padding-left: 10px;
+          width: 65px;
+          line-height: 48px;
+          img {
+            max-width: 100%;
+            height: auto;
           }
+        }
+        p {
+          color: #3b4859;
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 50px;
+          display: inline-block;
+          vertical-align: top;
+        }
       }
+    }
   }
+}
+//****************************************Form-control****************************************//
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+
+/*********************************** Script Search *********************************/
+
+.script-search {
+  display: inline-block;
+  width: 60.8%;
+  margin-right: 10px;
+
+  .input-group-text {
+    background-color: #ffffff;
+    border: 1px solid #8392a7;
+    text-align: left;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 300;
+    color: #2662f0;
+  }
+}
+
+.script-search-btn {
+  display: inline-block;
+  width: auto;
+  margin-right: 10px;
+
+  .alert-white-button {
+    background-color: #dde4e9;
+    color: #8392a7;
+    min-width: auto;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover {
+      background-color: #3b7cff;
+      color: #ffffff;
+    }
+  }
+}
+
+.script-select {
+  display: inline-block;
+  width: 19.5%;
+
+  select {
+    width: 100%;
+    background-color: #efefef;
+    border: none;
+    color: #414d55;
+    font-size: 14px;
+    font-weight: 300;
+    border-radius: 4px;
+    padding: 2px 10px;
+  }
+}
+
+@media (max-width: 992px) {
+  .script-search {
+    width: 100%;
+    padding-bottom: 15px;
+  }
+
+  .script-select {
+    width: 40%;
+  }
+}
+/*********************************** Script Editor Code *********************************/
+.validate-bottom-text {
+  display: block;
+  font-size: 11px;
+  line-height: 16px;
+  color: #3b4859;
+  font-weight: 300;
+  margin-top: 25px;
 }

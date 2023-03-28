@@ -88,35 +88,35 @@
                     .add-inputs-content {
                         margin-top: 15px;
 
-                        .description-content {
-                            width: 60%;
-                            display: flex;
-                            align-items: center;
-                            justify-content: space-between;
+                        // .description-content {
+                        //     width: 60%;
+                        //     display: flex;
+                        //     align-items: center;
+                        //     justify-content: space-between;
 
-                            label {
-                                font-size: 16px;
-                                line-height: 20px;
-                                font-weight: 500;
-                                color: #3b4859;
-                                margin: 0;
-                            }
+                        //     label {
+                        //         font-size: 16px;
+                        //         line-height: 20px;
+                        //         font-weight: 500;
+                        //         color: #3b4859;
+                        //         margin: 0;
+                        //     }
 
-                            .input-group-text {
-                                width: 300px;
-                                height: 38px;
-                                margin-bottom: 0;
-                                font-size: 1rem;
-                                font-weight: 400;
-                                line-height: 1.5;
-                                color: #495057;
-                                text-align: left;
-                                white-space: nowrap;
-                                background-color: transparent;
-                                border: 1px solid #ced4da;
-                                border-radius: 0.25rem;
-                            }
-                        }
+                        //     .input-group-text {
+                        //         width: 300px;
+                        //         height: 38px;
+                        //         margin-bottom: 0;
+                        //         font-size: 1rem;
+                        //         font-weight: 400;
+                        //         line-height: 1.5;
+                        //         color: #495057;
+                        //         text-align: left;
+                        //         white-space: nowrap;
+                        //         background-color: transparent;
+                        //         border: 1px solid #ced4da;
+                        //         border-radius: 0.25rem;
+                        //     }
+                        // }
                     }
                 }
 
@@ -149,35 +149,35 @@
                         margin: 0 0 25px 0;
                     }
 
-                    .description-content {
-                        width: 60%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
+                    // .description-content {
+                    //     width: 60%;
+                    //     display: flex;
+                    //     align-items: center;
+                    //     justify-content: space-between;
 
-                        label {
-                            font-size: 16px;
-                            line-height: 20px;
-                            font-weight: 500;
-                            color: #3b4859;
-                            margin: 0;
-                        }
+                    //     label {
+                    //         font-size: 16px;
+                    //         line-height: 20px;
+                    //         font-weight: 500;
+                    //         color: #3b4859;
+                    //         margin: 0;
+                    //     }
 
-                        .input-group-text {
-                            width: 300px;
-                            height: 38px;
-                            margin-bottom: 0;
-                            font-size: 1rem;
-                            font-weight: 400;
-                            line-height: 1.5;
-                            color: #495057;
-                            text-align: left;
-                            white-space: nowrap;
-                            background-color: transparent;
-                            border: 1px solid #ced4da;
-                            border-radius: 0.25rem;
-                        }
-                    }
+                    //     .input-group-text {
+                    //         width: 300px;
+                    //         height: 38px;
+                    //         margin-bottom: 0;
+                    //         font-size: 1rem;
+                    //         font-weight: 400;
+                    //         line-height: 1.5;
+                    //         color: #495057;
+                    //         text-align: left;
+                    //         white-space: nowrap;
+                    //         background-color: transparent;
+                    //         border: 1px solid #ced4da;
+                    //         border-radius: 0.25rem;
+                    //     }
+                    // }
                 }
 
                 .add-input-content {
@@ -653,31 +653,31 @@
                             .metrics-name {
                                 border-bottom: none;
 
-                                .description-content {
-                                    width: 100%;
-                                    display: block;
+                                // .description-content {
+                                //     width: 100%;
+                                //     display: block;
 
-                                    label {
-                                        font-size: 14px;
-                                        line-height: 18px;
-                                        display: block;
-                                        margin-bottom: 10px;
-                                        color: #3b4859;
+                                //     label {
+                                //         font-size: 14px;
+                                //         line-height: 18px;
+                                //         display: block;
+                                //         margin-bottom: 10px;
+                                //         color: #3b4859;
 
-                                        span {
-                                            font-weight: 400;
-                                            font-style: italic;
-                                        }
+                                //         span {
+                                //             font-weight: 400;
+                                //             font-style: italic;
+                                //         }
 
-                                        i {
-                                            margin-left: 8px;
-                                        }
-                                    }
+                                //         i {
+                                //             margin-left: 8px;
+                                //         }
+                                //     }
 
-                                    .input-group-text {
-                                        width: 100%;
-                                    }
-                                }
+                                //     .input-group-text {
+                                //         width: 100%;
+                                //     }
+                                // }
                             }
 
                             .dimension-heading {
@@ -1152,14 +1152,14 @@
                         }
                     }
 
-                    .environgment-details {
-                        .description-content {
-                            width: 75%;
-                            display: flex;
-                            align-items: center;
-                            justify-content: space-between;
-                        }
-                    }
+                    // .environgment-details {
+                    //     // .description-content {
+                    //     //     width: 75%;
+                    //     //     display: flex;
+                    //     //     align-items: center;
+                    //     //     justify-content: space-between;
+                    //     // }
+                    // }
                 }
             }
         }
@@ -1187,16 +1187,16 @@
                     }
 
                     .environgment-details {
-                        .description-content {
-                            width: 100%;
-                            display: flex;
-                            align-items: center;
-                            justify-content: space-between;
+                        // .description-content {
+                        //     width: 100%;
+                        //     display: flex;
+                        //     align-items: center;
+                        //     justify-content: space-between;
 
-                            .input-group-text {
-                                width: 230px;
-                            }
-                        }
+                        //     .input-group-text {
+                        //         width: 230px;
+                        //     }
+                        // }
                     }
 
                     .source-details {
@@ -1347,18 +1347,18 @@
 
                 .source-content {
                     .environgment-details {
-                        .description-content {
-                            width: 100%;
-                            display: block;
+                        // .description-content {
+                        //     width: 100%;
+                        //     display: block;
 
-                            label {
-                                margin-bottom: 10px;
-                            }
+                        //     label {
+                        //         margin-bottom: 10px;
+                        //     }
 
-                            .input-group-text {
-                                width: 100%;
-                            }
-                        }
+                        //     .input-group-text {
+                        //         width: 100%;
+                        //     }
+                        // }
                     }
 
                     .source-boxs {

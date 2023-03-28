@@ -47,7 +47,16 @@ class CreateRemediationPopup extends React.Component {
         toggle={this.toggle}
         className="modal-container assessments-modal-container"
       >
-        <ModalHeader toggle={this.toggle}>Create New Remediation</ModalHeader>
+        <ModalHeader>Create New Remediation
+        <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+           <i class="fal fa-times"></i>
+          </button>
+        </ModalHeader>
         <ModalBody
           style={{
             height: "calc(74vh - 110px)",

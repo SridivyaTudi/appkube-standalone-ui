@@ -328,7 +328,7 @@ class ManageTab extends Component {
                 </div>
                 <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
                   <label>
-                    <input className="" type="checkbox" name="myCheckbox" defaultChecked={true}/>
+                    <input className="sort-checkbox" type="checkbox" name="myCheckbox" defaultChecked={true}/>
                     <span className="">Filter by starred</span>
                   </label>
                 </div>

@@ -77,7 +77,7 @@ class AddConditionPopup extends React.Component {
             aria-label="Close"
             onClick={this.toggle}
           >
-            <span aria-hidden="true">×</span>
+           <i class="fal fa-times"></i>
           </button>
         </ModalHeader>
         <ModalBody
