@@ -68,8 +68,8 @@ import EditorGslBuilder from '../compliancemanager/pages/editor-gsl-builder';
 
 //***** workflow-engine *****//
 import WorkflowDashboard from '../workflow-engine/pages/dashboard';
-import CreateUsecase from '../workflow-engine/pages/createUsecase';
-import MatrixView from '../workflow-engine/pages/matrixView';
+import CreateUsecase from '../workflow-engine/pages/create-usecase';
+import MatrixView from '../workflow-engine/pages/matrix-view';
 import ProcurementDetail from '../workflow-engine/pages/procurement';
 import ProjectOverView from '../workflow-engine/pages/projectOverView';
 import ProjectWise from '../workflow-engine/pages/projectWise';
@@ -167,8 +167,8 @@ export const AllRoutes = () => {
 
       {/***** workflow-engine *****/}
       <Route path="/workflow-engine/pages/dashboard" element={<WorkflowDashboard />} />
-      <Route path="/workflow-engine/pages/createUsecase" element={<CreateUsecase />} />
-      <Route path="/workflow-engine/pages/matrixView" element={<MatrixView />} />
+      <Route path="/workflow-engine/pages/create-usecase" element={<CreateUsecase />} />
+      <Route path="/workflow-engine/pages/matrix-view" element={<MatrixView />} />
       <Route path="/workflow-engine/pages/procurement" element={<ProcurementDetail />} />
       <Route path="/workflow-engine/pages/projectOverView" element={<ProjectOverView />} />
       <Route path="/workflow-engine/pages/projectWise" element={<ProjectWise />} />
