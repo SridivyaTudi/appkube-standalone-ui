@@ -324,19 +324,23 @@ export class ServiceView extends React.Component {
                   <h3>{serviceNature}</h3>
                 </div>
                 <div className="col-md-5">
-                  <div className="form-group search-control m-b-0">
-                    <button className="btn btn-search">
-                      <i className="fa fa-search" />
-                    </button>
-                    <input
-                      type="text"
-                      className="input-group-text"
-                      placeholder="Search"
-                      value={searchKeyword[serviceNature] || ""}
-                      onChange={(e) =>
-                        this.onChangeSearch(serviceNature, e)
-                      }
-                    />
+                  <div className="search-box">
+                    <form>
+                      <div className="form-group search-control-group m-b-0">
+                        <input
+                          type="text"
+                          className="input-group-text"
+                          placeholder="Search"
+                          value={searchKeyword[serviceNature] || ""}
+                          onChange={(e) =>
+                            this.onChangeSearch(serviceNature, e)
+                          }
+                        />
+                        <button className="btn btn-search">
+                          <i className="fa fa-search" />
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>

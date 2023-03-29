@@ -293,18 +293,22 @@ class CloudDashboards extends React.Component {
     return (
       <div className="catalogue-right-container">
         <div className="templated-search">
-          <div className="row">
+          <div className="row d-flex align-items-center">
             <div className="col-sm-10">
               <div className="search-box">
-                <button className="search-button">
-                  <i className="fa fa-search"></i>
-                </button>
-                <input
-                  type="text"
-                  onChange={(e) => this.filterValues(e)}
-                  placeholder="Search Template here"
-                  className="input"
-                />
+                <form>
+                  <div className="form-group search-control-group m-b-0">
+                    <input
+                      type="text"
+                      onChange={(e) => this.filterValues(e)}
+                      placeholder="Search Template here"
+                      className="input-group-text"
+                    />
+                    <button className="search-button">
+                      <i className="fa fa-search"></i>
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
             <div className="col-sm-2">

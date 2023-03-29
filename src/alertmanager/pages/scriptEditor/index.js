@@ -13,19 +13,13 @@ class ScriptEditor extends Component {
       <div className="monitor-alerts-container">
         <div className="alert-page-container">
           <div className="common-container script-editor">
-            <div className="row">
-              <div className="col-lg-3 col-md-12 col-sm-12">
-                <div className="alert-heading">Script Editor</div>
-              </div>
-              <div className="col-lg-9 col-md-12 col-sm-12">
-                <div className="float-right script-editor-btn">
-                  <button className="asset-white-button">Editor</button>
-                  <button className="asset-white-button">Editor+ Logs</button>
-                  <button className="asset-white-button">
-                    Save New Script
-                  </button>
-                  <button className="asset-white-button">Exit</button>
-                </div>
+            <div className="script-editor-top-button">
+              <div className="alert-heading">Script Editor</div>
+              <div className="float-right script-editor-btn">
+                <button className="asset-white-button">Editor</button>
+                <button className="asset-white-button">Editor+ Logs</button>
+                <button className="asset-white-button">Save New Script</button>
+                <button className="asset-white-button m-r-0">Exit</button>
               </div>
             </div>
           </div>
@@ -39,7 +33,7 @@ class ScriptEditor extends Component {
                 />
               </div>
               <button className="asset-white-button">Stream</button>
-                <button className="asset-white-button">Batch</button>
+              <button className="asset-white-button">Batch</button>
               <div className="script-select">
                 <select className="form-control">
                   <option>greater than</option>

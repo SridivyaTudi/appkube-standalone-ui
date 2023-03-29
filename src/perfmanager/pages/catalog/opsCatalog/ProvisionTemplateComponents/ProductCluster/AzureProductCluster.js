@@ -244,12 +244,12 @@ class AzureProductCluster extends React.Component {
             </p>
             <div className="d-block text-right">
               <button
-                className="next-btn"
+                className="blue-button"
                 onClick={() => this.props.showMainView()}
               >
                 Back
               </button>
-              <button className="next-btn" onClick={() => this.setActiveTab(1)}>
+              <button className="blue-button" onClick={() => this.setActiveTab(1)}>
                 Next
               </button>
             </div>
@@ -402,10 +402,10 @@ class AzureProductCluster extends React.Component {
               </div>
             </div>
             <div className="d-block text-right">
-              <button className="next-btn" onClick={() => this.setActiveTab(0)}>
+              <button className="blue-button" onClick={() => this.setActiveTab(0)}>
                 Back
               </button>
-              <button className="next-btn" onClick={this.handleSubmit}>
+              <button className="blue-button" onClick={this.handleSubmit}>
                 Create
               </button>
             </div>

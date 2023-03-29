@@ -1,262 +1,288 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 //import * as React from 'react';
-import  CatalogList  from './CatalogList';
-import  SelectDashboard  from './SelectDashboard';
-import  EditDataSource  from './EditDataSource';
-import  Preview  from './Preview';
-import  Import  from './Import';
+import CatalogList from "./CatalogList";
+import SelectDashboard from "./SelectDashboard";
+import EditDataSource from "./EditDataSource";
+import Preview from "./Preview";
+import Import from "./Import";
 
 export class ImportDashboard extends Component {
   breadCrumbs = [
     {
-      label: 'Home',
+      label: "Home",
       route: `/`,
     },
     {
-      label: 'Manage Dashboards',
+      label: "Manage Dashboards",
       isCurrentPage: true,
     },
   ];
   constructor(props) {
     super(props);
     this.state = {
-      searchKey: '',
+      searchKey: "",
       catalogs: [
         {
-          catalogName: 'Aws config',
+          catalogName: "Aws config",
           catalogDescription: `Amazon Web Services (AWS) Config provides a simple web services interface that can be used to track modifications made to the resources that belong to an AWS account.`,
-          catalogImage: '',
+          catalogImage: "",
           catalogListL: [
             {
-              name: 'AWS Config Overview - Interactive',
+              name: "AWS Config Overview - Interactive",
               description: `Dashboard Panels Changed Resources by Type Configuration Activity by AWS Region Deleted Resources by Type Discovered Resources by Type Modifications by Day - Outlier Modifications by Day - Trend Recent Modifications Resource Modifications Trend Data Access Level Sharing Outside The Org: This dashboard is inaccessible to people outside the organization. Last Modified On: 12/03/2019 6:27:14 AM +0530 Created On: 12/03/2019 6:27:14 AM +0530 Type: Dashboard`,
             },
-            { name: 'AWS Config Overview - Live' },
-            { name: 'Resource Modification Details - Interactive' },
-            { name: 'Configuration Trend' },
-            { name: 'Latest Resource Modifications' },
-            { name: 'Most Frequently Modified Resource Types (with latest update)' },
-            { name: 'Relationships' },
-            { name: 'ResourceNames Lookup Table Generator' },
+            { name: "AWS Config Overview - Live" },
+            { name: "Resource Modification Details - Interactive" },
+            { name: "Configuration Trend" },
+            { name: "Latest Resource Modifications" },
+            {
+              name: "Most Frequently Modified Resource Types (with latest update)",
+            },
+            { name: "Relationships" },
+            { name: "ResourceNames Lookup Table Generator" },
           ],
         },
         {
-          catalogName: 'AWS Elastic Load Balancer - Application',
+          catalogName: "AWS Elastic Load Balancer - Application",
           catalogDescription: `Amazon Web Services (AWS) Config provides a simple web services interface that can be used to track modifications made to the resources that belong to an AWS account.`,
-          catalogImage: '',
+          catalogImage: "",
           catalogListL: [
             {
-              name: 'AWS Config Overview - Interactive',
+              name: "AWS Config Overview - Interactive",
               description: `Dashboard Panels Changed Resources by Type Configuration Activity by AWS Region Deleted Resources by Type Discovered Resources by Type Modifications by Day - Outlier Modifications by Day - Trend Recent Modifications Resource Modifications Trend Data Access Level Sharing Outside The Org: This dashboard is inaccessible to people outside the organization. Last Modified On: 12/03/2019 6:27:14 AM +0530 Created On: 12/03/2019 6:27:14 AM +0530 Type: Dashboard`,
             },
-            { name: 'AWS Config Overview - Live' },
-            { name: 'Resource Modification Details - Interactive' },
-            { name: 'Configuration Trend' },
-            { name: 'Latest Resource Modifications' },
-            { name: 'Most Frequently Modified Resource Types (with latest update)' },
-            { name: 'Relationships' },
-            { name: 'ResourceNames Lookup Table Generator' },
+            { name: "AWS Config Overview - Live" },
+            { name: "Resource Modification Details - Interactive" },
+            { name: "Configuration Trend" },
+            { name: "Latest Resource Modifications" },
+            {
+              name: "Most Frequently Modified Resource Types (with latest update)",
+            },
+            { name: "Relationships" },
+            { name: "ResourceNames Lookup Table Generator" },
           ],
         },
         {
-          catalogName: 'AWS Security Hub',
+          catalogName: "AWS Security Hub",
           catalogDescription: `Amazon Web Services (AWS) Config provides a simple web services interface that can be used to track modifications made to the resources that belong to an AWS account.`,
-          catalogImage: '',
+          catalogImage: "",
           catalogListL: [
             {
-              name: 'AWS Config Overview - Interactive',
+              name: "AWS Config Overview - Interactive",
               description: `Dashboard Panels Changed Resources by Type Configuration Activity by AWS Region Deleted Resources by Type Discovered Resources by Type Modifications by Day - Outlier Modifications by Day - Trend Recent Modifications Resource Modifications Trend Data Access Level Sharing Outside The Org: This dashboard is inaccessible to people outside the organization. Last Modified On: 12/03/2019 6:27:14 AM +0530 Created On: 12/03/2019 6:27:14 AM +0530 Type: Dashboard`,
             },
-            { name: 'AWS Config Overview - Live' },
-            { name: 'Resource Modification Details - Interactive' },
-            { name: 'Configuration Trend' },
-            { name: 'Latest Resource Modifications' },
-            { name: 'Most Frequently Modified Resource Types (with latest update)' },
-            { name: 'Relationships' },
-            { name: 'ResourceNames Lookup Table Generator' },
+            { name: "AWS Config Overview - Live" },
+            { name: "Resource Modification Details - Interactive" },
+            { name: "Configuration Trend" },
+            { name: "Latest Resource Modifications" },
+            {
+              name: "Most Frequently Modified Resource Types (with latest update)",
+            },
+            { name: "Relationships" },
+            { name: "ResourceNames Lookup Table Generator" },
           ],
         },
         {
-          catalogName: 'Amazon Dynamo DB',
+          catalogName: "Amazon Dynamo DB",
           catalogDescription: `Amazon Web Services (AWS) Config provides a simple web services interface that can be used to track modifications made to the resources that belong to an AWS account.`,
-          catalogImage: '',
+          catalogImage: "",
           catalogListL: [
             {
-              name: 'AWS Config Overview - Interactive',
+              name: "AWS Config Overview - Interactive",
               description: `Dashboard Panels Changed Resources by Type Configuration Activity by AWS Region Deleted Resources by Type Discovered Resources by Type Modifications by Day - Outlier Modifications by Day - Trend Recent Modifications Resource Modifications Trend Data Access Level Sharing Outside The Org: This dashboard is inaccessible to people outside the organization. Last Modified On: 12/03/2019 6:27:14 AM +0530 Created On: 12/03/2019 6:27:14 AM +0530 Type: Dashboard`,
             },
-            { name: 'AWS Config Overview - Live' },
-            { name: 'Resource Modification Details - Interactive' },
-            { name: 'Configuration Trend' },
-            { name: 'Latest Resource Modifications' },
-            { name: 'Most Frequently Modified Resource Types (with latest update)' },
-            { name: 'Relationships' },
-            { name: 'ResourceNames Lookup Table Generator' },
+            { name: "AWS Config Overview - Live" },
+            { name: "Resource Modification Details - Interactive" },
+            { name: "Configuration Trend" },
+            { name: "Latest Resource Modifications" },
+            {
+              name: "Most Frequently Modified Resource Types (with latest update)",
+            },
+            { name: "Relationships" },
+            { name: "ResourceNames Lookup Table Generator" },
           ],
         },
         {
-          catalogName: 'AWS Elasticache Redis ULM',
+          catalogName: "AWS Elasticache Redis ULM",
           catalogDescription: `Amazon Web Services (AWS) Config provides a simple web services interface that can be used to track modifications made to the resources that belong to an AWS account.`,
-          catalogImage: '',
+          catalogImage: "",
           catalogListL: [
             {
-              name: 'AWS Config Overview - Interactive',
+              name: "AWS Config Overview - Interactive",
               description: `Dashboard Panels Changed Resources by Type Configuration Activity by AWS Region Deleted Resources by Type Discovered Resources by Type Modifications by Day - Outlier Modifications by Day - Trend Recent Modifications Resource Modifications Trend Data Access Level Sharing Outside The Org: This dashboard is inaccessible to people outside the organization. Last Modified On: 12/03/2019 6:27:14 AM +0530 Created On: 12/03/2019 6:27:14 AM +0530 Type: Dashboard`,
             },
-            { name: 'AWS Config Overview - Live' },
-            { name: 'Resource Modification Details - Interactive' },
-            { name: 'Configuration Trend' },
-            { name: 'Latest Resource Modifications' },
-            { name: 'Most Frequently Modified Resource Types (with latest update)' },
-            { name: 'Relationships' },
-            { name: 'ResourceNames Lookup Table Generator' },
+            { name: "AWS Config Overview - Live" },
+            { name: "Resource Modification Details - Interactive" },
+            { name: "Configuration Trend" },
+            { name: "Latest Resource Modifications" },
+            {
+              name: "Most Frequently Modified Resource Types (with latest update)",
+            },
+            { name: "Relationships" },
+            { name: "ResourceNames Lookup Table Generator" },
           ],
         },
         {
-          catalogName: 'AWS Security Hub',
+          catalogName: "AWS Security Hub",
           catalogDescription: `Amazon Web Services (AWS) Config provides a simple web services interface that can be used to track modifications made to the resources that belong to an AWS account.`,
-          catalogImage: '',
+          catalogImage: "",
           catalogListL: [
             {
-              name: 'AWS Config Overview - Interactive',
+              name: "AWS Config Overview - Interactive",
               description: `Dashboard Panels Changed Resources by Type Configuration Activity by AWS Region Deleted Resources by Type Discovered Resources by Type Modifications by Day - Outlier Modifications by Day - Trend Recent Modifications Resource Modifications Trend Data Access Level Sharing Outside The Org: This dashboard is inaccessible to people outside the organization. Last Modified On: 12/03/2019 6:27:14 AM +0530 Created On: 12/03/2019 6:27:14 AM +0530 Type: Dashboard`,
             },
-            { name: 'AWS Config Overview - Live' },
-            { name: 'Resource Modification Details - Interactive' },
-            { name: 'Configuration Trend' },
-            { name: 'Latest Resource Modifications' },
-            { name: 'Most Frequently Modified Resource Types (with latest update)' },
-            { name: 'Relationships' },
-            { name: 'ResourceNames Lookup Table Generator' },
+            { name: "AWS Config Overview - Live" },
+            { name: "Resource Modification Details - Interactive" },
+            { name: "Configuration Trend" },
+            { name: "Latest Resource Modifications" },
+            {
+              name: "Most Frequently Modified Resource Types (with latest update)",
+            },
+            { name: "Relationships" },
+            { name: "ResourceNames Lookup Table Generator" },
           ],
         },
         {
-          catalogName: 'Amazon CloudTrail',
+          catalogName: "Amazon CloudTrail",
           catalogDescription: `Amazon Web Services (AWS) Config provides a simple web services interface that can be used to track modifications made to the resources that belong to an AWS account.`,
-          catalogImage: '',
+          catalogImage: "",
           catalogListL: [
             {
-              name: 'AWS Config Overview - Interactive',
+              name: "AWS Config Overview - Interactive",
               description: `Dashboard Panels Changed Resources by Type Configuration Activity by AWS Region Deleted Resources by Type Discovered Resources by Type Modifications by Day - Outlier Modifications by Day - Trend Recent Modifications Resource Modifications Trend Data Access Level Sharing Outside The Org: This dashboard is inaccessible to people outside the organization. Last Modified On: 12/03/2019 6:27:14 AM +0530 Created On: 12/03/2019 6:27:14 AM +0530 Type: Dashboard`,
             },
-            { name: 'AWS Config Overview - Live' },
-            { name: 'Resource Modification Details - Interactive' },
-            { name: 'Configuration Trend' },
-            { name: 'Latest Resource Modifications' },
-            { name: 'Most Frequently Modified Resource Types (with latest update)' },
-            { name: 'Relationships' },
-            { name: 'ResourceNames Lookup Table Generator' },
+            { name: "AWS Config Overview - Live" },
+            { name: "Resource Modification Details - Interactive" },
+            { name: "Configuration Trend" },
+            { name: "Latest Resource Modifications" },
+            {
+              name: "Most Frequently Modified Resource Types (with latest update)",
+            },
+            { name: "Relationships" },
+            { name: "ResourceNames Lookup Table Generator" },
           ],
         },
         {
-          catalogName: 'Amazon SES',
+          catalogName: "Amazon SES",
           catalogDescription: `Amazon Web Services (AWS) Config provides a simple web services interface that can be used to track modifications made to the resources that belong to an AWS account.`,
-          catalogImage: '',
+          catalogImage: "",
           catalogListL: [
             {
-              name: 'AWS Config Overview - Interactive',
+              name: "AWS Config Overview - Interactive",
               description: `Dashboard Panels Changed Resources by Type Configuration Activity by AWS Region Deleted Resources by Type Discovered Resources by Type Modifications by Day - Outlier Modifications by Day - Trend Recent Modifications Resource Modifications Trend Data Access Level Sharing Outside The Org: This dashboard is inaccessible to people outside the organization. Last Modified On: 12/03/2019 6:27:14 AM +0530 Created On: 12/03/2019 6:27:14 AM +0530 Type: Dashboard`,
             },
-            { name: 'AWS Config Overview - Live' },
-            { name: 'Resource Modification Details - Interactive' },
-            { name: 'Configuration Trend' },
-            { name: 'Latest Resource Modifications' },
-            { name: 'Most Frequently Modified Resource Types (with latest update)' },
-            { name: 'Relationships' },
-            { name: 'ResourceNames Lookup Table Generator' },
+            { name: "AWS Config Overview - Live" },
+            { name: "Resource Modification Details - Interactive" },
+            { name: "Configuration Trend" },
+            { name: "Latest Resource Modifications" },
+            {
+              name: "Most Frequently Modified Resource Types (with latest update)",
+            },
+            { name: "Relationships" },
+            { name: "ResourceNames Lookup Table Generator" },
           ],
         },
         {
-          catalogName: 'AWS Inspector',
+          catalogName: "AWS Inspector",
           catalogDescription: `Amazon Web Services (AWS) Config provides a simple web services interface that can be used to track modifications made to the resources that belong to an AWS account.`,
-          catalogImage: '',
+          catalogImage: "",
           catalogListL: [
             {
-              name: 'AWS Config Overview - Interactive',
+              name: "AWS Config Overview - Interactive",
               description: `Dashboard Panels Changed Resources by Type Configuration Activity by AWS Region Deleted Resources by Type Discovered Resources by Type Modifications by Day - Outlier Modifications by Day - Trend Recent Modifications Resource Modifications Trend Data Access Level Sharing Outside The Org: This dashboard is inaccessible to people outside the organization. Last Modified On: 12/03/2019 6:27:14 AM +0530 Created On: 12/03/2019 6:27:14 AM +0530 Type: Dashboard`,
             },
-            { name: 'AWS Config Overview - Live' },
-            { name: 'Resource Modification Details - Interactive' },
-            { name: 'Configuration Trend' },
-            { name: 'Latest Resource Modifications' },
-            { name: 'Most Frequently Modified Resource Types (with latest update)' },
-            { name: 'Relationships' },
-            { name: 'ResourceNames Lookup Table Generator' },
+            { name: "AWS Config Overview - Live" },
+            { name: "Resource Modification Details - Interactive" },
+            { name: "Configuration Trend" },
+            { name: "Latest Resource Modifications" },
+            {
+              name: "Most Frequently Modified Resource Types (with latest update)",
+            },
+            { name: "Relationships" },
+            { name: "ResourceNames Lookup Table Generator" },
           ],
         },
         {
-          catalogName: 'AWS Inspector',
+          catalogName: "AWS Inspector",
           catalogDescription: `Amazon Web Services (AWS) Config provides a simple web services interface that can be used to track modifications made to the resources that belong to an AWS account.`,
-          catalogImage: '',
+          catalogImage: "",
           catalogListL: [
             {
-              name: 'AWS Config Overview - Interactive',
+              name: "AWS Config Overview - Interactive",
               description: `Dashboard Panels Changed Resources by Type Configuration Activity by AWS Region Deleted Resources by Type Discovered Resources by Type Modifications by Day - Outlier Modifications by Day - Trend Recent Modifications Resource Modifications Trend Data Access Level Sharing Outside The Org: This dashboard is inaccessible to people outside the organization. Last Modified On: 12/03/2019 6:27:14 AM +0530 Created On: 12/03/2019 6:27:14 AM +0530 Type: Dashboard`,
             },
-            { name: 'AWS Config Overview - Live' },
-            { name: 'Resource Modification Details - Interactive' },
-            { name: 'Configuration Trend' },
-            { name: 'Latest Resource Modifications' },
-            { name: 'Most Frequently Modified Resource Types (with latest update)' },
-            { name: 'Relationships' },
-            { name: 'ResourceNames Lookup Table Generator' },
+            { name: "AWS Config Overview - Live" },
+            { name: "Resource Modification Details - Interactive" },
+            { name: "Configuration Trend" },
+            { name: "Latest Resource Modifications" },
+            {
+              name: "Most Frequently Modified Resource Types (with latest update)",
+            },
+            { name: "Relationships" },
+            { name: "ResourceNames Lookup Table Generator" },
           ],
         },
         {
-          catalogName: 'AWS Inspector',
+          catalogName: "AWS Inspector",
           catalogDescription: `Amazon Web Services (AWS) Config provides a simple web services interface that can be used to track modifications made to the resources that belong to an AWS account.`,
-          catalogImage: '',
+          catalogImage: "",
           catalogListL: [
             {
-              name: 'AWS Config Overview - Interactive',
+              name: "AWS Config Overview - Interactive",
               description: `Dashboard Panels Changed Resources by Type Configuration Activity by AWS Region Deleted Resources by Type Discovered Resources by Type Modifications by Day - Outlier Modifications by Day - Trend Recent Modifications Resource Modifications Trend Data Access Level Sharing Outside The Org: This dashboard is inaccessible to people outside the organization. Last Modified On: 12/03/2019 6:27:14 AM +0530 Created On: 12/03/2019 6:27:14 AM +0530 Type: Dashboard`,
             },
-            { name: 'AWS Config Overview - Live' },
-            { name: 'Resource Modification Details - Interactive' },
-            { name: 'Configuration Trend' },
-            { name: 'Latest Resource Modifications' },
-            { name: 'Most Frequently Modified Resource Types (with latest update)' },
-            { name: 'Relationships' },
-            { name: 'ResourceNames Lookup Table Generator' },
+            { name: "AWS Config Overview - Live" },
+            { name: "Resource Modification Details - Interactive" },
+            { name: "Configuration Trend" },
+            { name: "Latest Resource Modifications" },
+            {
+              name: "Most Frequently Modified Resource Types (with latest update)",
+            },
+            { name: "Relationships" },
+            { name: "ResourceNames Lookup Table Generator" },
           ],
         },
         {
-          catalogName: 'AWS Inspector',
+          catalogName: "AWS Inspector",
           catalogDescription: `Amazon Web Services (AWS) Config provides a simple web services interface that can be used to track modifications made to the resources that belong to an AWS account.`,
-          catalogImage: '',
+          catalogImage: "",
           catalogListL: [
             {
-              name: 'AWS Config Overview - Interactive',
+              name: "AWS Config Overview - Interactive",
               description: `Dashboard Panels Changed Resources by Type Configuration Activity by AWS Region Deleted Resources by Type Discovered Resources by Type Modifications by Day - Outlier Modifications by Day - Trend Recent Modifications Resource Modifications Trend Data Access Level Sharing Outside The Org: This dashboard is inaccessible to people outside the organization. Last Modified On: 12/03/2019 6:27:14 AM +0530 Created On: 12/03/2019 6:27:14 AM +0530 Type: Dashboard`,
             },
-            { name: 'AWS Config Overview - Live' },
-            { name: 'Resource Modification Details - Interactive' },
-            { name: 'Configuration Trend' },
-            { name: 'Latest Resource Modifications' },
-            { name: 'Most Frequently Modified Resource Types (with latest update)' },
-            { name: 'Relationships' },
-            { name: 'ResourceNames Lookup Table Generator' },
+            { name: "AWS Config Overview - Live" },
+            { name: "Resource Modification Details - Interactive" },
+            { name: "Configuration Trend" },
+            { name: "Latest Resource Modifications" },
+            {
+              name: "Most Frequently Modified Resource Types (with latest update)",
+            },
+            { name: "Relationships" },
+            { name: "ResourceNames Lookup Table Generator" },
           ],
         },
       ],
       catalogTab2Data: {
-        catalogName: 'Aws config',
+        catalogName: "Aws config",
         catalogDescription: `Amazon Web Services (AWS) Config provides a 
         simple web services interface that can be used to track modifications 
         made to the resources that belong to an AWS account.`,
-        catalogImage: '',
+        catalogImage: "",
         catalogListL: [
           {
-            name: 'AWS Config Overview - Interactive',
+            name: "AWS Config Overview - Interactive",
             description: `Dashboard Panels Changed Resources by Type Configuration Activity by AWS Region Deleted Resources by Type Discovered Resources by Type Modifications by Day - Outlier Modifications by Day - Trend Recent Modifications Resource Modifications Trend Data Access Level Sharing Outside The Org: This dashboard is inaccessible to people outside the organization. Last Modified On: 12/03/2019 6:27:14 AM +0530 Created On: 12/03/2019 6:27:14 AM +0530 Type: Dashboard`,
           },
-          { name: 'AWS Config Overview - Live' },
-          { name: 'Resource Modification Details - Interactive' },
-          { name: 'Configuration Trend' },
-          { name: 'Latest Resource Modifications' },
-          { name: 'Most Frequently Modified Resource Types (with latest update)' },
-          { name: 'Relationships' },
-          { name: 'ResourceNames Lookup Table Generator' },
+          { name: "AWS Config Overview - Live" },
+          { name: "Resource Modification Details - Interactive" },
+          { name: "Configuration Trend" },
+          { name: "Latest Resource Modifications" },
+          {
+            name: "Most Frequently Modified Resource Types (with latest update)",
+          },
+          { name: "Relationships" },
+          { name: "ResourceNames Lookup Table Generator" },
         ],
       },
       activeTab: 0,
@@ -330,7 +356,7 @@ export class ImportDashboard extends Component {
           </div>
           <div className="common-container border-bottom-0">
             <div className="d-block m-b-10">
-              <div className="category-select">
+              <div className="script-select m-r-1">
                 <select className="form-control">
                   <option>category</option>
                   <option>category</option>
@@ -338,18 +364,20 @@ export class ImportDashboard extends Component {
                   <option>category</option>
                 </select>
               </div>
-              <div className="form-group category-control-group">
+              <div className="search-box d-inline-block">
                 <form>
-                  <input
-                    type="text"
-                    onChange={this.keyPress}
-                    className="input-group-text"
-                    value={this.state.searchKey}
-                    placeholder="Search"
-                  />
-                  <button>
-                    <i className="fa fa-search"></i>
-                  </button>
+                  <div className="form-group search-control-group m-b-0">
+                    <input
+                      type="text"
+                      onChange={this.keyPress}
+                      className="input-group-text"
+                      value={this.state.searchKey}
+                      placeholder="Search"
+                    />
+                    <button>
+                      <i className="fa fa-search"></i>
+                    </button>
+                  </div>
                 </form>
               </div>
               <div className="float-right common-right-btn">
@@ -361,21 +389,58 @@ export class ImportDashboard extends Component {
             </div>
             <div className="wizard-container">
               <div className="wizard-step-line-container">
-                <div className={activeTab === 0 ? 'wizard-step-button active' : 'wizard-step-button'}>
+                <div
+                  className={
+                    activeTab === 0
+                      ? "wizard-step-button active"
+                      : "wizard-step-button"
+                  }
+                >
                   Select Catalog
                 </div>
-                <div className={activeTab === 1 ? 'wizard-step-button active' : 'wizard-step-button'}>
+                <div
+                  className={
+                    activeTab === 1
+                      ? "wizard-step-button active"
+                      : "wizard-step-button"
+                  }
+                >
                   Select Dashboard
                 </div>
-                <div className={activeTab === 2 ? 'wizard-step-button active' : 'wizard-step-button'}>
+                <div
+                  className={
+                    activeTab === 2
+                      ? "wizard-step-button active"
+                      : "wizard-step-button"
+                  }
+                >
                   Edit Data Source
                 </div>
-                <div className={activeTab === 3 ? 'wizard-step-button active' : 'wizard-step-button'}>Preview</div>
-                <div className={activeTab === 4 ? 'wizard-step-button active' : 'wizard-step-button'}>Import</div>
+                <div
+                  className={
+                    activeTab === 3
+                      ? "wizard-step-button active"
+                      : "wizard-step-button"
+                  }
+                >
+                  Preview
+                </div>
+                <div
+                  className={
+                    activeTab === 4
+                      ? "wizard-step-button active"
+                      : "wizard-step-button"
+                  }
+                >
+                  Import
+                </div>
               </div>
               <div className="wizard-step-component import-dashboard-container">
                 {activeTab === 0 && (
-                  <CatalogList catalogsData={this.state.catalogs} setCatalogDetail={this.openCatalogDetail} />
+                  <CatalogList
+                    catalogsData={this.state.catalogs}
+                    setCatalogDetail={this.openCatalogDetail}
+                  />
                 )}
                 {activeTab === 1 && (
                   <SelectDashboard
@@ -384,29 +449,43 @@ export class ImportDashboard extends Component {
                   />
                 )}
                 {activeTab === 2 && (
-                  <EditDataSource catalogsData={this.state.catalogTab2Data} setCatalogDetail={this.openCatalogDetail} />
+                  <EditDataSource
+                    catalogsData={this.state.catalogTab2Data}
+                    setCatalogDetail={this.openCatalogDetail}
+                  />
                 )}
                 {activeTab === 3 && (
-                  <Preview catalogsData={this.state.catalogTab2Data} setCatalogDetail={this.openCatalogDetail} />
+                  <Preview
+                    catalogsData={this.state.catalogTab2Data}
+                    setCatalogDetail={this.openCatalogDetail}
+                  />
                 )}
-                {activeTab === 4 && <Import catalogsData={this.state.catalogTab2Data} />}
+                {activeTab === 4 && (
+                  <Import catalogsData={this.state.catalogTab2Data} />
+                )}
                 <div className="d-block text-right p-t-20">
                   <button
                     disabled={activeTab === 0}
-                    className={activeTab !== 0 ? 'blue-button' : 'blue-button disable'}
+                    className={
+                      activeTab !== 0 ? "blue-button" : "blue-button disable"
+                    }
                     onClick={(e) => this.setActiveTab(activeTab - 1)}
                   >
                     Previous
                   </button>
                   {activeTab !== 4 && (
                     <button
-                      className={activeTab !== 4 ? 'blue-button m-r-0' : 'm-r-0 disable'}
+                      className={
+                        activeTab !== 4 ? "blue-button m-r-0" : "m-r-0 disable"
+                      }
                       onClick={(e) => this.setActiveTab(activeTab + 1)}
                     >
                       Next
                     </button>
                   )}
-                  {activeTab === 4 && <button className="blue-button m-r-0">Finish</button>}
+                  {activeTab === 4 && (
+                    <button className="blue-button m-r-0">Finish</button>
+                  )}
                 </div>
               </div>
             </div>

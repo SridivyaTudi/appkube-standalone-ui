@@ -580,14 +580,23 @@ class ProductWiseServicesSla extends React.Component {
                     {isTopologyActive ? (
                       <div className="col-lg-3 col-md-3 col-sm-12">
                         <div className="search-box">
-                          <i className="fa fa-search" aria-hidden="true"></i>
-                          <input
-                            type="text"
-                            className="input-group-text"
-                            placeholder={"Search"}
-                            value={topologySearchKeyword}
-                            onChange={this.onChangeSearchKeyword}
-                          />
+                          <form>
+                            <div className="form-group search-control-group m-b-0">
+                              <input
+                                type="text"
+                                className="input-group-text"
+                                placeholder={"Search"}
+                                value={topologySearchKeyword}
+                                onChange={this.onChangeSearchKeyword}
+                              />
+                              <button>
+                                <i
+                                  className="fa fa-search"
+                                  aria-hidden="true"
+                                ></i>
+                              </button>
+                            </div>
+                          </form>
                         </div>
                       </div>
                     ) : (

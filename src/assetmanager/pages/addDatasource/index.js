@@ -298,7 +298,7 @@ class AddDatasource extends React.Component {
                 <h5>Account Details</h5>
               </div>
               <div className="environgment-details">
-                <div className="form-group description-content">
+                <div className="form-group description-content select-data-source">
                   <label htmlFor="description">Select Environment</label>
                   <select
                     className="input-group-text"
@@ -321,7 +321,7 @@ class AddDatasource extends React.Component {
                       })}
                   </select>
                 </div>
-                <div className="form-group description-content">
+                <div className="form-group description-content select-data-source">
                   <label htmlFor="description">Select Account</label>
                   <select
                     className="input-group-text"

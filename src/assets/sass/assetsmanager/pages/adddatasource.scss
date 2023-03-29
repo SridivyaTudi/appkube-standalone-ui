@@ -85,6 +85,21 @@
             font-weight: 500;
             margin: 0 0 25px 0;
           }
+          .select-data-source {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            label {
+              margin: 0;
+              width: 200px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+            .input-group-text{
+              width: 350px;
+            }
+          }
         }
 
         .add-input-content {

@@ -117,26 +117,31 @@ class Filter extends Component {
     }
     return <>No filter data available</>;
   };
-  
+
   render() {
     const { searchString } = this.state;
     return (
       <div className="catalogue-filters">
         <div className="filter-search">
           <strong>Filters</strong>
-          <div className="filter-input">
-            <button className="search-icon">
-              <i className="fa fa-search"></i>
-            </button>
-            <input
-              type="text"
-              placeholder="Search"
-              value={searchString}
-              onChange={this.handleChangeSearch}
-            />
-            <button className="close-icon" onClick={this.handleClearFilter}>
-              <i className="fa fa-close"></i>
-            </button>
+          <div className="search-box filter-input">
+            <form>
+              <div className="form-group search-control-group m-b-0">
+                <button className="search-icon">
+                  <i className="fa fa-search"></i>
+                </button>
+                <input
+                  className="input-group-text"
+                  type="text"
+                  placeholder="Search"
+                  value={searchString}
+                  onChange={this.handleChangeSearch}
+                />
+                <span className="close-icon" onClick={this.handleClearFilter}>
+                  <i className="fa fa-close"></i>
+                </span>
+              </div>
+            </form>
           </div>
         </div>
         {this.renderFilters()}

@@ -33,7 +33,7 @@ class DataSources extends React.Component {
     };
     this.previewDashboardPopupRef = React.createRef();
   }
-  
+
   componentDidMount() {
     this.createFilterJson();
   }
@@ -304,7 +304,7 @@ class DataSources extends React.Component {
       isassociatedApplicationLocation && isassociatedCloud && isassociatedCreds
     );
   };
-  
+
   formFields = () => {
     const { view, dashboards } = this.state;
     return (
@@ -313,15 +313,19 @@ class DataSources extends React.Component {
           <div className="row">
             <div className="col-sm-10">
               <div className="search-box">
-                <button className="search-button">
-                  <i className="fa fa-search"></i>
-                </button>
-                <input
-                  type="text"
-                  onChange={(e) => this.filterValues(e)}
-                  placeholder="Search Template here"
-                  className="input"
-                />
+                <form>
+                  <div className="form-group search-control-group m-b-0">
+                    <input
+                      type="text"
+                      className="input-group-text"
+                      onChange={(e) => this.filterValues(e)}
+                      placeholder="Search Template here"
+                    />
+                    <button className="search-button">
+                      <i className="fa fa-search"></i>
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
             <div className="col-sm-2">

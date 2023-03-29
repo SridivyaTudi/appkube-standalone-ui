@@ -637,7 +637,7 @@
 
 .script-select {
   display: inline-block;
-  width: 19.5%;
+  width: 25.5%;
 
   select {
     width: 100%;
@@ -661,7 +661,7 @@
     width: 40%;
   }
 }
-/*********************************** Script Editor Code *********************************/
+//*********************************** Script Editor Code *********************************//
 .validate-bottom-text {
   display: block;
   font-size: 11px;
@@ -669,4 +669,25 @@
   color: #3b4859;
   font-weight: 300;
   margin-top: 25px;
+}
+
+//*********************************** Open Create Menu *********************************//
+.open-create-menu{
+  position: absolute;
+  z-index: 100;
+  right: 15px;
+  top: 36px;
+  background-color: #f0f3f7;
+  box-shadow: 0px 2px 5px #00000029;
+  width: 120px;
+  z-index: 10;
+  padding: 5px 0;
+  a{
+      color: #2a9ce7;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 20px;
+      display: block;
+      padding: 4px 0;
+  }
 }

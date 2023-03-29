@@ -1,15 +1,16 @@
-
-
 .script-editor {
   padding-right: 20px;
-  .script-editor-new{
+  .script-editor-top-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .script-editor-new {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 }
-
-
 
 @media (max-width: 992px) {
   .script-editor-btn {
@@ -21,4 +22,3 @@
     }
   }
 }
-
