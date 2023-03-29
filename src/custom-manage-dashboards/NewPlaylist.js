@@ -217,7 +217,7 @@ class NewPlaylists extends Component {
       <div className="new-playlist-container">
         {createListOpen === true && (
           <div>
-            <div className="row">
+            <div className="row m-b-1">
               <div className="col-lg-5 col-md-12 col-sm-12">
                 <div className="new-playlist-heading">New Playlist</div>
               </div>
@@ -226,7 +226,7 @@ class NewPlaylists extends Component {
                   <Button onClick={this.onClickCancel} className="asset-gray-button">
                     Cancel
                   </Button>
-                  <Button disabled={!enabled} onClick={this.createPlaylist} className="asset-blue-button m-r-0">
+                  <Button disabled={!enabled} onClick={this.createPlaylist} className="asset-blue-button m-r-0 m-b-0">
                     Save
                   </Button>
                 </div>

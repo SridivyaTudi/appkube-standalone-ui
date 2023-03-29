@@ -1,7 +1,7 @@
 import React from "react";
 import Tree from "../../components/Tree";
 import DiscardPopup from "../../components/DiscardPopup";
-import ApiKeySourcePopup from "./../../components/ApiKeySourcePopup";
+import ApiKeySourcePopup from "../../components/ApiKeySourcePopup";
 import { dummyData } from "./dummyData";
 import { propertiesDummy } from "./properties";
 

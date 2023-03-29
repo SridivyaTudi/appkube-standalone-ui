@@ -55,16 +55,16 @@ import EmsDashboard from '../emsReporting/pages/Dashboard';
 import ComplianDashboard from '../compliancemanager/pages/dashboard';
 import ComplianceRulesets from '../compliancemanager/pages/ComplianceRulesets';
 import ComplianceRemediation from '../compliancemanager/pages/complianceRemediation';
-import CompliancePolicy from '../compliancemanager/pages/compliancePolicy';
-import ComplianceHistory from '../compliancemanager/pages/complianceHistory';
+import CompliancePolicy from '../compliancemanager/pages/compliancepolicy';
+import ComplianceHistory from '../compliancemanager/pages/compliancehistory';
 import ComplianceExclusions from '../compliancemanager/pages/complianceexclusions';
-import ComplianceAssessmentHistory from '../compliancemanager/pages/complianceAssessmentHistory';
-import ClearHistory from '../compliancemanager/pages/clearHistory';
-import ApiGateway from '../compliancemanager/pages/apiGateway';
+import ComplianceAssessmentHistory from '../compliancemanager/pages/compliance-assessment-history';
+import ClearHistory from '../compliancemanager/pages/clear-history';
+import ApiGateway from '../compliancemanager/pages/api-gateway';
 import Script from '../compliancemanager/pages/script';
 import Result from '../compliancemanager/pages/result';
-import GslBuilder from '../compliancemanager/pages/gslBuilder';
-import EditorGslBuilder from '../compliancemanager/pages/editorGslBuilder';
+import GslBuilder from '../compliancemanager/pages/gsl-builder';
+import EditorGslBuilder from '../compliancemanager/pages/editor-gsl-builder';
 
 //***** workflow-engine *****//
 import WorkflowDashboard from '../workflow-engine/pages/dashboard';
@@ -144,8 +144,8 @@ export const AllRoutes = () => {
       <Route path="/analytics/addNewView" element={<AddNewView />} />
 
        {/***** taskManager *****/}
-       <Route path="/taskManager" element={<TaskManager />} />
-       <Route path='/taskmanager/create-dashboard' element={<CreateDashboard />} />
+       <Route path="/task-manager" element={<TaskManager />} />
+       <Route path='/task-manager/create-dashboard' element={<CreateDashboard />} />
 
       {/***** EMS Reporting *****/}
       <Route path="/emsReporting/pages/home" element={<EmsDashboard />} />
@@ -154,16 +154,16 @@ export const AllRoutes = () => {
       <Route path="/compliancemanager/pages/dashboard" element={<ComplianDashboard />} />
       <Route path="/compliancemanager/pages/complianceRulesets" element={<ComplianceRulesets />} />
       <Route path="/compliancemanager/pages/complianceRemediation" element={<ComplianceRemediation />} />
-      <Route path="/compliancemanager/pages/compliancePolicy" element={<CompliancePolicy />} />
-      <Route path="/compliancemanager/pages/complianceHistory" element={<ComplianceHistory />} />
+      <Route path="/compliancemanager/pages/compliancepolicy" element={<CompliancePolicy />} />
+      <Route path="/compliancemanager/pages/compliancehistory" element={<ComplianceHistory />} />
       <Route path="/compliancemanager/pages/complianceexclusions" element={<ComplianceExclusions />} />
-      <Route path="/compliancemanager/pages/complianceAssessmentHistory" element={<ComplianceAssessmentHistory />} />
-      <Route path="/compliancemanager/pages/clearHistory" element={<ClearHistory />} />
-      <Route path="/compliancemanager/pages/apiGateway" element={<ApiGateway />} />
+      <Route path="/compliancemanager/pages/compliance-assessment-history" element={<ComplianceAssessmentHistory />} />
+      <Route path="/compliancemanager/pages/clear-history" element={<ClearHistory />} />
+      <Route path="/compliancemanager/pages/api-gateway" element={<ApiGateway />} />
       <Route path="/compliancemanager/pages/script" element={<Script />} />
       <Route path="/compliancemanager/pages/result" element={<Result />} />
-      <Route path="/compliancemanager/pages/gslBuilder" element={<GslBuilder />} />
-      <Route path="/compliancemanager/pages/editorGslBuilder" element={<EditorGslBuilder />} />
+      <Route path="/compliancemanager/pages/gsl-builder" element={<GslBuilder />} />
+      <Route path="/compliancemanager/pages/editor-gsl-builder" element={<EditorGslBuilder />} />
 
       {/***** workflow-engine *****/}
       <Route path="/workflow-engine/pages/dashboard" element={<WorkflowDashboard />} />
