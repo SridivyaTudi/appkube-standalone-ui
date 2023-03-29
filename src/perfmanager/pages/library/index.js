@@ -490,37 +490,35 @@ class Library extends React.Component {
           <div className="common-container">
             <TopMenu />
           </div>
-          <div className="common-container library-search">
-            <div className="row">
-              <div className="col-lg-3 col-md-12 col-sm-12">
+          <div className="common-container">
+            <div className="search-top-header">
+              <div className="header-left">
                 <div className="library-heading">Library</div>
               </div>
-              <div className="col-lg-9 col-md-12 col-sm-12">
-                <div className="float-right">
-                  <Rbac
-                    parentName={config.PARENT_NAME}
-                    childName="library-index-addfolderbtn"
+              <div className="float-right header-right">
+                <Rbac
+                  parentName={config.PARENT_NAME}
+                  childName="library-index-addfolderbtn"
+                >
+                  <a
+                    className="blue-button m-b-0 add-folder"
+                    onClick={() => this.onClickUnImplementedFeature("")}
                   >
-                    <a
-                      className="blue-button m-r-5 add-folder"
-                      onClick={() => this.onClickUnImplementedFeature("")}
-                    >
-                      Add Folder
-                    </a>
-                  </Rbac>
-                  <div className="search-box">
-                    <div className="search-control-group">
-                      <form>
-                        <input
-                          type="text"
-                          className="input-group-text"
-                          placeholder="Search"
-                        />
-                        <button>
-                          <i className="fa fa-search"></i>
-                        </button>
-                      </form>
-                    </div>
+                    Add Folder
+                  </a>
+                </Rbac>
+                <div className="search-box">
+                  <div className="search-control-group">
+                    <form>
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder="Search"
+                      />
+                      <button>
+                        <i className="fa fa-search"></i>
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>

@@ -78,15 +78,6 @@
 
 .team-dashboard-page-container {
   background-color: $overview-container-background-color;
-
-  .common-container {
-    padding-top: 15px;
-    padding-left: 45px;
-    padding-right: 45px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #f5f6f5;
-  }
-
   a {
     &:focus,
     &:hover {

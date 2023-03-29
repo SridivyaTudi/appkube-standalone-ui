@@ -229,33 +229,31 @@ class CollectionView extends Component {
           <div className="common-container">
             <TopMenu />
           </div>
-          <div className="common-container collection-search">
-            <div className="row">
-              <div className="col-lg-3 col-md-12 col-sm-12">
+          <div className="common-container">
+            <div className="search-top-header">
+              <div className="header-left">
                 <div className="collection-heading">Collection</div>
               </div>
-              <div className="col-lg-9 col-md-12 col-sm-12">
-                <div className="float-right">
-                  <div className="category-select">
-                    <select className="form-control">
-                      <option>Category</option>
-                      <option>Category</option>
-                      <option>Category</option>
-                    </select>
-                  </div>
-                  <div className="search-box">
-                    <div className="form-group search-control-group">
-                      <form>
-                        <input
-                          type="text"
-                          className="input-group-text"
-                          placeholder="Search"
-                        />
-                        <button>
-                          <i className="fa fa-search"></i>
-                        </button>
-                      </form>
-                    </div>
+              <div className="float-right header-right">
+                <div className="script-select m-r-1">
+                  <select className="form-control">
+                    <option>Category</option>
+                    <option>Category</option>
+                    <option>Category</option>
+                  </select>
+                </div>
+                <div className="search-box">
+                  <div className="search-control-group">
+                    <form>
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder="Search"
+                      />
+                      <button>
+                        <i className="fa fa-search"></i>
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>

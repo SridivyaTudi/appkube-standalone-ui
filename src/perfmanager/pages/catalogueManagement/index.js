@@ -243,7 +243,7 @@ class CatalogueManagement extends Component {
     this.setState({
       catalogType: catalogType,
     });
-    
+
     if (!(catalogType == "") && !(catalogType == "ALL")) {
       console.log("before filter :: ", catalogs);
       let displayCatalogData = catalogs.filter((d) => d.type === catalogType);
@@ -272,48 +272,52 @@ class CatalogueManagement extends Component {
             </div>
           </div>
           <div className="common-container">
-            <div className="text-left">
-              <Rbac
-                parentName={config.PARENT_NAME}
-                childName="commancomponent-createbuttoncomponent-createbtn"
-              >
-                <a
-                  style={{ float: "left" }}
-                  onClick={this.onClickCreateCatalog}
-                  className="blue-button m-r-0 min-width-inherit width-auto create-btn"
+            <div className="search-top-header">
+              <div className="text-left header-left">
+                <Rbac
+                  parentName={config.PARENT_NAME}
+                  childName="commancomponent-createbuttoncomponent-createbtn"
                 >
-                  Add Catalogue
-                </a>
-              </Rbac>
-            </div>
-            <div className="text-right">
-              <div className="category-select">
-                <select
-                  className="form-control"
-                  name="catalogType"
-                  value={state.catalogType}
-                  onChange={this.onClickFilterByCatalogType}
-                >
-                  <option value="ALL">ALL</option>
-                  <option value="AWS">AWS</option>
-                  <option value="AZURE">AZURE</option>
-                  <option value="GCP">GCP</option>
-                  <option value="Synectiks">Synectiks</option>
-                </select>
+                  <a
+                    style={{ float: "left" }}
+                    onClick={this.onClickCreateCatalog}
+                    className="blue-button m-r-0 m-b-0 min-width-inherit width-auto create-btn"
+                  >
+                    Add Catalogue
+                  </a>
+                </Rbac>
               </div>
-              <div className="form-group category-control-group">
-                <form>
-                  <input
-                    type="text"
-                    onChange={this.keyPress}
-                    className="input-group-text"
-                    value={this.state.searchKey}
-                    placeholder="Search"
-                  />
-                  <button>
-                    <i className="fa fa-search"></i>
-                  </button>
-                </form>
+              <div className="text-right header-right">
+                <div className="script-select m-r-1">
+                  <select
+                    className="form-control"
+                    name="catalogType"
+                    value={state.catalogType}
+                    onChange={this.onClickFilterByCatalogType}
+                  >
+                    <option value="ALL">ALL</option>
+                    <option value="AWS">AWS</option>
+                    <option value="AZURE">AZURE</option>
+                    <option value="GCP">GCP</option>
+                    <option value="Synectiks">Synectiks</option>
+                  </select>
+                </div>
+                <div className="search-box">
+                  <form>
+                    <div className="form-group search-control-group m-b-0">
+                      <input
+                        type="text"
+                        onChange={this.keyPress}
+                        className="input-group-text"
+                        value={this.state.searchKey}
+                        placeholder="Search"
+                      />
+                      <button className="btn btn-search">
+                        <i className="fa fa-search"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

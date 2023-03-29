@@ -190,29 +190,27 @@ class ManageDashboards extends React.Component {
     return (
       <div>
         <div className="manage-dashboard-search">
-          <div className="row">
-            <div className="col-lg-4 col-md-12 col-sm-12">
-            <div className="search-box">
-              <div className="form-group search-control-group">
+          <div className="search-top-header">
+            <div className="header-left">
+              <div className="search-box">
                 <form>
-                  <input
-                    type="text"
-                    className="input-group-text"
-                    placeholder="Search dashboards by name"
-                  />
-                  <button>
-                    <i className="fa fa-search"></i>
-                  </button>
+                  <div className="form-group search-control-group">
+                    <input
+                      type="text"
+                      className="input-group-text"
+                      placeholder="Search dashboards by name"
+                    />
+                    <button>
+                      <i className="fa fa-search"></i>
+                    </button>
+                  </div>
                 </form>
               </div>
-              </div>
             </div>
-            <div className="col-lg-8 col-md-12 col-sm-12">
-              <div className="search-buttons float-right">
-                <a className="blue-button">New Dashboard</a>
-                <a className="blue-button">New Folder</a>
-                <a className="blue-button m-r-0">Import</a>
-              </div>
+            <div className="search-buttons float-right header-right">
+              <a className="blue-button">New Dashboard</a>
+              <a className="blue-button">New Folder</a>
+              <a className="blue-button m-r-0">Import</a>
             </div>
           </div>
         </div>

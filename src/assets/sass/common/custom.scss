@@ -1,4 +1,12 @@
-/*********************************** Buttons *********************************/
+//*********************************** Common Container *********************************//
+.common-container {
+  padding-top: 15px;
+  padding-left: 45px;
+  padding-right: 45px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid $perfmanager-container-border-color;
+}
+//*********************************** Buttons *********************************//
 .white-button {
   background: white !important;
   min-width: 100px;
@@ -280,7 +288,7 @@
   }
 }
 
-/*********************************** fliter *********************************/
+//*********************************** fliter *********************************//
 
 .fliter {
   position: relative;
@@ -637,7 +645,7 @@
 
 .script-select {
   display: inline-block;
-  width: 25.5%;
+  width: 220px;
 
   select {
     width: 100%;
@@ -645,9 +653,11 @@
     border: none;
     color: #414d55;
     font-size: 14px;
+    line-height: 36px;
     font-weight: 300;
     border-radius: 4px;
     padding: 2px 10px;
+    height: 36px;
   }
 }
 
@@ -689,5 +699,17 @@
       line-height: 20px;
       display: block;
       padding: 4px 0;
+  }
+}
+
+//******************************************Search- top Head*******************************************//
+.search-top-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .header-right{
+    display: flex;
+    align-items: center;
+    justify-content: end;
   }
 }
