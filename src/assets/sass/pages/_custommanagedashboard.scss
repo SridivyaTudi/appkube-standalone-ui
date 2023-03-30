@@ -95,13 +95,7 @@
   }
 }
 
-.float-right {
-  float: right;
-}
 
-.border-bottom-0 {
-  border-bottom: none !important;
-}
 
 .custom-manage-dashboards-page-container {
   background-color: $overview-container-background-color;
@@ -117,10 +111,6 @@
 
   .width-auto {
     width: auto;
-  }
-
-  .min-width-inherit {
-    min-width: inherit !important;
   }
 
   .manage-dashboard-heading {
@@ -169,7 +159,7 @@
         padding-right: 30px;
         vertical-align: top;
 
-        input[type='radio'] {
+        input[type="radio"] {
           margin-top: 3px;
           cursor: pointer;
           vertical-align: top;
@@ -719,7 +709,7 @@
                   cursor: pointer;
 
                   &:before {
-                    content: '';
+                    content: "";
                     background-color: #2662f0;
                     height: 8px;
                     width: 2px;
@@ -732,7 +722,7 @@
 
                   &:after {
                     border: solid transparent;
-                    content: ' ';
+                    content: " ";
                     height: 0;
                     width: 0;
                     pointer-events: none;
@@ -763,7 +753,7 @@
 
                   &:before {
                     border: solid transparent;
-                    content: ' ';
+                    content: " ";
                     height: 0;
                     width: 0;
                     pointer-events: none;
@@ -780,7 +770,7 @@
                   }
 
                   &:after {
-                    content: '';
+                    content: "";
                     background-color: #2662f0;
                     height: 8px;
                     width: 2px;
@@ -806,7 +796,7 @@
                   background: none;
 
                   &:before {
-                    content: '';
+                    content: "";
                     width: 2px;
                     height: 13px;
                     position: absolute;
@@ -819,7 +809,7 @@
                   }
 
                   &:after {
-                    content: '';
+                    content: "";
                     width: 2px;
                     height: 13px;
                     position: absolute;
@@ -1007,7 +997,7 @@
                 background: none;
 
                 &:before {
-                  content: '';
+                  content: "";
                   width: 2px;
                   height: 13px;
                   position: absolute;
@@ -1020,7 +1010,7 @@
                 }
 
                 &:after {
-                  content: '';
+                  content: "";
                   width: 2px;
                   height: 13px;
                   position: absolute;

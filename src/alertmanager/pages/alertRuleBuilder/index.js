@@ -90,7 +90,7 @@ class AlertRuleBuilder extends React.Component {
                   </button>
                   <Link
                     to={`/alertmanager/pages/monitor-alerts`}
-                    className="asset-white-button min-width-inherit"
+                    className="asset-white-button min-width-inherit m-r-0"
                   >
                     <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
                   </Link>

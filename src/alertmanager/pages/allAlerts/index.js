@@ -661,7 +661,7 @@ class AllAlerts extends React.Component {
             </a>
             <Link
               to={`/alertmanager/pages/monitor-alerts`}
-              className="asset-white-button min-width-inherit float-right"
+              className="asset-white-button min-width-inherit m-r-0 float-right "
             >
               <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
             </Link>

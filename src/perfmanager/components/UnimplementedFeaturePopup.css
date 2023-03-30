@@ -136,28 +136,8 @@
   border-radius: 7px !important;
 }
 
-/* .alert-gray-button {
-  background: #dde4e9;
-  color: #8392a7;
-  border: none;
-  padding: 7px 20px;
-  border-radius: 4px;
-  margin-right: 10px;
-  display: inline-block;
-  min-width: 182px;
-  text-align: center;
-}
 
-.alert-gray-button:hover,
-.alert-gray-button:focus {
-  background: #dbe0e4 !important;
-  color: #8392a7 !important;
-} */
 
-.d-block {
-  display: block;
-}
 
-.text-center {
-  text-align: center;
-}
+
+

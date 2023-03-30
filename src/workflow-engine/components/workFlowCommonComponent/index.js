@@ -620,7 +620,7 @@ class WorkFlow extends Component {
                   <div className="workflow-data">
                     {activeStage === 0 ? (
                       <React.Fragment>
-                        <div className="api-code"></div>
+                        {/* <div className="api-code"></div> */}
                         <div className="api-code">
                           <div className="heading">
                             <h5>{"Usecase Development"}</h5>

@@ -229,7 +229,7 @@ class Analytics extends Component {
           </div>
           <div className="analytics-table-container">
             <div className="new-view-btn">
-              <button className="asset-blue-button" onClick={this.onClickCreateNewView}>
+              <button className="asset-blue-button m-r-0" onClick={this.onClickCreateNewView}>
                 New View
               </button>
             </div>

@@ -58,18 +58,18 @@ import ComplianceRemediation from '../compliancemanager/pages/complianceRemediat
 import CompliancePolicy from '../compliancemanager/pages/compliancepolicy';
 import ComplianceHistory from '../compliancemanager/pages/compliancehistory';
 import ComplianceExclusions from '../compliancemanager/pages/complianceexclusions';
-import ComplianceAssessmentHistory from '../compliancemanager/pages/compliance-assessment-history';
-import ClearHistory from '../compliancemanager/pages/clear-history';
-import ApiGateway from '../compliancemanager/pages/api-gateway';
+import ComplianceAssessmentHistory from '../compliancemanager/pages/complianceAssessmentHistory';
+import ClearHistory from '../compliancemanager/pages/clearHistory';
+import ApiGateway from '../compliancemanager/pages/apiGateway';
 import Script from '../compliancemanager/pages/script';
 import Result from '../compliancemanager/pages/result';
-import GslBuilder from '../compliancemanager/pages/gsl-builder';
-import EditorGslBuilder from '../compliancemanager/pages/editor-gsl-builder';
+import GslBuilder from '../compliancemanager/pages/gslBuilder';
+import EditorGslBuilder from '../compliancemanager/pages/editorGslBuilder';
 
 //***** workflow-engine *****//
 import WorkflowDashboard from '../workflow-engine/pages/dashboard';
-import CreateUsecase from '../workflow-engine/pages/create-usecase';
-import MatrixView from '../workflow-engine/pages/matrix-view';
+import CreateUsecase from '../workflow-engine/pages/createUsecase';
+import MatrixView from '../workflow-engine/pages/matrixView';
 import ProcurementDetail from '../workflow-engine/pages/procurement';
 import ProjectOverView from '../workflow-engine/pages/projectOverView';
 import ProjectWise from '../workflow-engine/pages/projectWise';
@@ -157,18 +157,18 @@ export const AllRoutes = () => {
       <Route path="/compliancemanager/pages/compliancepolicy" element={<CompliancePolicy />} />
       <Route path="/compliancemanager/pages/compliancehistory" element={<ComplianceHistory />} />
       <Route path="/compliancemanager/pages/complianceexclusions" element={<ComplianceExclusions />} />
-      <Route path="/compliancemanager/pages/compliance-assessment-history" element={<ComplianceAssessmentHistory />} />
-      <Route path="/compliancemanager/pages/clear-history" element={<ClearHistory />} />
-      <Route path="/compliancemanager/pages/api-gateway" element={<ApiGateway />} />
+      <Route path="/compliancemanager/pages/complianceAssessmentHistory" element={<ComplianceAssessmentHistory />} />
+      <Route path="/compliancemanager/pages/clearHistory" element={<ClearHistory />} />
+      <Route path="/compliancemanager/pages/apiGateway" element={<ApiGateway />} />
       <Route path="/compliancemanager/pages/script" element={<Script />} />
       <Route path="/compliancemanager/pages/result" element={<Result />} />
-      <Route path="/compliancemanager/pages/gsl-builder" element={<GslBuilder />} />
-      <Route path="/compliancemanager/pages/editor-gsl-builder" element={<EditorGslBuilder />} />
+      <Route path="/compliancemanager/pages/gslBuilder" element={<GslBuilder />} />
+      <Route path="/compliancemanager/pages/editorGslBuilder" element={<EditorGslBuilder />} />
 
       {/***** workflow-engine *****/}
       <Route path="/workflow-engine/pages/dashboard" element={<WorkflowDashboard />} />
-      <Route path="/workflow-engine/pages/create-usecase" element={<CreateUsecase />} />
-      <Route path="/workflow-engine/pages/matrix-view" element={<MatrixView />} />
+      <Route path="/workflow-engine/pages/createUsecase" element={<CreateUsecase />} />
+      <Route path="/workflow-engine/pages/matrixView" element={<MatrixView />} />
       <Route path="/workflow-engine/pages/procurement" element={<ProcurementDetail />} />
       <Route path="/workflow-engine/pages/projectOverView" element={<ProjectOverView />} />
       <Route path="/workflow-engine/pages/projectWise" element={<ProjectWise />} />
@@ -189,7 +189,6 @@ export const AllRoutes = () => {
        <Route path="/servicedesk/pages/reports" element={<Reports />} />
        <Route path="/servicedesk/pages/reportHelpdesh" element={<ReportHelpdesh />} />
        <Route path="/servicedesk/pages/charts" element={<Charts />} />
-
        {/***** AppkubeCloudDatasource *****/}
        <Route path="/appkubeCloudDatasource/pages/dashboardPanelMetricBuilder" element={<DashboardPanelMetricBuilder />} />
     </Routes>

@@ -149,7 +149,7 @@ class Rules extends Component {
               <div className="col-md-3 col-sm-12">
                 <Link
                   to={`/alertmanager/pages/manage-alert-rule`}
-                  className="asset-white-button min-width-inherit float-right"
+                  className="asset-white-button min-width-inherit float-right m-r-0"
                 >
                   <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
                 </Link>

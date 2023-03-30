@@ -867,7 +867,7 @@ class CreateUsecase extends Component {
                   </div>
                   <Link
                     to="/a/xformation-workflow-engine/project-wise"
-                    className="blue-button">
+                    className="blue-button m-r-0">
                     <i className="fas fa-chevron-left" /> Back
                   </Link>
                 </div>

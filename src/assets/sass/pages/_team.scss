@@ -78,64 +78,6 @@
 
 .team-dashboard-page-container {
   background-color: $overview-container-background-color;
-  a {
-    &:focus,
-    &:hover {
-      color: #000000;
-    }
-  }
-
-  .float-right {
-    float: right;
-  }
-
-  .text-right {
-    text-align: right;
-  }
-
-  .text-left {
-    text-align: left;
-  }
-
-  .d-block {
-    display: block;
-  }
-
-  .d-flex {
-    display: flex;
-  }
-
-  .p-l-0 {
-    padding-left: 0 !important;
-  }
-
-  .p-r-0 {
-    padding-right: 0 !important;
-  }
-
-  .p-t-0 {
-    padding-top: 0 !important;
-  }
-
-  .p-b-0 {
-    padding-bottom: 0 !important;
-  }
-
-  .p-t-20 {
-    padding-top: 20px !important;
-  }
-
-  .m-l-0 {
-    margin-left: 0 !important;
-  }
-
-  .m-r-0 {
-    margin-right: 0 !important;
-  }
-
-  .m-b-0 {
-    margin-bottom: 0 !important;
-  }
 
   .m-b-10 {
     margin-bottom: 10px !important;
@@ -147,14 +89,6 @@
 
   .width-100 {
     width: 100%;
-  }
-
-  .min-width-inherit {
-    min-width: inherit !important;
-  }
-
-  .border-bottom-0 {
-    border-bottom: none !important;
   }
 
   .heading {

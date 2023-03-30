@@ -253,7 +253,7 @@ class ManageAlertRule extends React.Component {
                 <div className="float-right common-right-btn">
                   <Link
                     to={`/alertmanager/pages/monitor-alerts`}
-                    className="asset-white-button min-width-inherit"
+                    className="asset-white-button min-width-inherit m-r-0"
                   >
                     <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
                   </Link>

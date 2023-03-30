@@ -1,150 +1,4 @@
-a {
-text-decoration: none;
-  &:focus,
-  &:hover {
-    color: #000000;
-  }
-}
 
-.custom-scrollbar--page {
-  overflow: inherit !important;
-}
-
-.float-right {
-  float: right;
-}
-
-.justify-content-end {
-  justify-content: end;
-}
-
-.v-a-top {
-  vertical-align: top;
-}
-
-.v-a-middle {
-  vertical-align: middle;
-}
-
-.d-flex {
-  display: flex;
-}
-
-.d-block {
-  display: block;
-}
-
-.d-inline-block {
-  display: inline-block;
-}
-
-.p-t-0 {
-  padding-top: 0 !important;
-}
-
-.p-t-5 {
-  padding-top: 5px !important;
-}
-
-.p-t-10 {
-  padding-top: 10px !important;
-}
-
-.p-t-15 {
-  padding-top: 15px !important;
-}
-
-.p-t-20 {
-  padding-top: 20px !important;
-}
-
-.p-r-0 {
-  padding-right: 0 !important;
-}
-
-.p-r-5 {
-  padding-right: 5px !important;
-}
-
-.p-r-10 {
-  padding-right: 10px !important;
-}
-
-.p-r-15 {
-  padding-right: 15px !important;
-}
-
-.p-r-20 {
-  padding-right: 20px !important;
-}
-
-.p-b-0 {
-  padding-bottom: 0px !important;
-}
-
-.p-b-5 {
-  padding-bottom: 5px !important;
-}
-
-.p-b-10 {
-  padding-bottom: 10px !important;
-}
-
-.p-b-15 {
-  padding-bottom: 15px !important;
-}
-
-.p-b-20 {
-  padding-bottom: 20px !important;
-}
-
-.p-l-0 {
-  padding-left: 0 !important;
-}
-
-.p-l-5 {
-  padding-left: 5px !important;
-}
-
-.p-l-10 {
-  padding-left: 10px !important;
-}
-
-.p-l-15 {
-  padding-left: 15px !important;
-}
-
-.p-l-20 {
-  padding-left: 20px !important;
-}
-
-.m-l-0 {
-  margin-left: 0 !important;
-}
-
-.m-r-0 {
-  margin-right: 0 !important;
-}
-
-.m-t-0 {
-  margin-top: 0 !important;
-}
-
-.m-b-0 {
-  margin-bottom: 0 !important;
-}
-
-.width-auto {
-  width: auto;
-}
-
-.min-width-inherit {
-  min-width: inherit !important;
-}
-
-.border-bottom-0 {
-  border-bottom: none !important;
-}
 
 .asset-heading {
   line-height: 36px;
@@ -186,8 +40,7 @@ text-decoration: none;
 
 /************************** Forms ***********************/
 
-.form-row> {
-
+.form-row > {
   .col,
   [class*="col-"] {
     padding-right: 5px;
@@ -202,8 +55,6 @@ text-decoration: none;
     margin-bottom: 0.5rem;
   }
 }
-
-
 
 .form-row {
   display: -ms-flexbox;
@@ -224,8 +75,6 @@ text-decoration: none;
   margin-right: -1px;
 }
 
-
-
 /********************** New css ******************************/
 .asset-page-container {
   background-color: $asset-container-background-color;
@@ -234,23 +83,19 @@ text-decoration: none;
   padding-bottom: 10px;
 }
 
-
-
 /*********************************** Buttons *********************************/
-
-
 
 .open-create-menu {
   position: absolute;
   background-color: #ffffff;
-  border: 1px solid #8392A7;
+  border: 1px solid #8392a7;
   width: 150px;
   z-index: 10;
   padding: 10px 0 5px 0;
   text-align: left;
 
   a {
-    color: #414D55 !important;
+    color: #414d55 !important;
     font-size: 11px;
     font-weight: 400;
     line-height: 14px;
@@ -259,7 +104,7 @@ text-decoration: none;
     margin-left: 0 !important;
 
     &:hover {
-      color: #3B7CFF !important;
+      color: #3b7cff !important;
     }
   }
 }
@@ -273,6 +118,3 @@ text-decoration: none;
   z-index: 10;
   background-color: transparent;
 }
-
-
-
