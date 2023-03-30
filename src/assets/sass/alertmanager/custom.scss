@@ -9,37 +9,6 @@
   }
 }
 
-//*************************** Page header ********************//
-
-.page-header-container {
-  background-color: #e9f4fc;
-  padding: 10px 0px;
-  padding-left: 10px;
-
-  .page-header {
-    color: #7a7a7a;
-    margin-right: 30px;
-    font-size: 19px;
-    font-weight: bold;
-    padding: 0px !important;
-  }
-
-  .header-button {
-    margin-right: 30px;
-    color: #7a7a7a !important;
-    border: none;
-    background: none;
-
-    i {
-      padding-right: 10px;
-    }
-
-    &:hover {
-      color: #040404 !important;
-    }
-  }
-}
-
 /************************** Forms ***********************/
 
 .form-row > {

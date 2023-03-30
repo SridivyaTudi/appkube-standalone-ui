@@ -290,7 +290,7 @@ class AddDatasourceProduct extends React.Component {
                       <Link
                         to={`/assetmanager/pages/add-data-source`}
                         type="button"
-                        className="asset-blue-button"
+                        className="asset-blue-button m-r-0"
                       >
                         Add input
                       </Link>

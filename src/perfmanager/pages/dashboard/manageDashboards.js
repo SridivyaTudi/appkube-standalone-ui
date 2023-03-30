@@ -217,36 +217,38 @@ class ManageDashboards extends React.Component {
         <div className="manage-dashboard-fliter-sort">
           <div className="row">
             <div className="col-lg-6 col-md-12 col-sm-12">
-              <div className="sort-checkbox">
-                <input type="checkbox" className="checkbox" />
-              </div>
-              <div className="sort-view">
-                <ul>
-                  <li className="active">
-                    <a>
-                      <img src={folderIcon} alt="" />
-                    </a>
-                  </li>
-                  <li>
-                    <a>
-                      <img src={listIcon} alt="" />
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className="sort-select-menu">
-                <span>
-                  <img src={sortIcon} alt="" />
-                </span>
-                <select>
-                  <option>Sort (Default A-Z)</option>
-                  <option>Sort (Default A-Z)</option>
-                  <option>Sort (Default A-Z)</option>
-                </select>
+              <div className="fliter-sort-left">
+                <div className="sort-checkbox">
+                  <input type="checkbox" className="checkbox" />
+                </div>
+                <div className="sort-view">
+                  <ul>
+                    <li className="active">
+                      <a>
+                        <img src={folderIcon} alt="" />
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <img src={listIcon} alt="" />
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div className="sort-select-menu">
+                  <span>
+                    <img src={sortIcon} alt="" />
+                  </span>
+                  <select>
+                    <option>Sort (Default A-Z)</option>
+                    <option>Sort (Default A-Z)</option>
+                    <option>Sort (Default A-Z)</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div className="col-lg-6 col-md-12 col-sm-12">
-              <div className="filter-starred float-right">
+              <div className="filter-starred float-right fliter-sort-right">
                 <div className="sort-checkbox">
                   <input type="checkbox" className="checkbox" />
                   <span>Filter by starred</span>
