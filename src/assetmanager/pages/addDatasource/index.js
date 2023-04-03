@@ -282,7 +282,7 @@ class AddDatasource extends React.Component {
                   <Link
                     to="/assetmanager/pages/environments"
                     type="button"
-                    className="btn btn-link"
+                    className="btn btn-link m-r-0"
                   >
                     <i className="far fa-arrow-alt-circle-left" />
                     Back

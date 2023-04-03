@@ -853,7 +853,7 @@ class DiscoveredAssets extends React.Component {
                             <i className="fa fa-refresh"></i> Refresh
                           </button>
                           <button className="asset-white-button min-width-inherit m-r-0">
-                            <i className="fa fa-trash"></i> Delete
+                            <i className="fa-regular fa-trash-can"></i> Delete
                           </button>
                         </div>
                       </div>

@@ -131,7 +131,7 @@ class Library extends React.Component {
                   childName="library-index-tbl-editbtn"
                 >
                   <button className="btn btn-link">
-                    <i className="fa fa-edit"></i>
+                    <i className="fa-regular fa-pen-to-square"></i>
                   </button>
                 </Rbac>
                 {item.isFolder && (
@@ -143,7 +143,7 @@ class Library extends React.Component {
                       onClick={() => this.removeFolder(item)}
                       className="btn btn-link"
                     >
-                      <i className="fa fa-trash"></i>
+                      <i className="fa-regular fa-trash-can"></i>
                     </button>
                   </Rbac>
                 )}
@@ -156,7 +156,7 @@ class Library extends React.Component {
                       onClick={() => this.removeCollector(item)}
                       className="btn btn-link"
                     >
-                      <i className="fa fa-trash"></i>
+                      <i className="fa-regular fa-trash-can"></i>
                     </button>
                   </Rbac>
                 )}
@@ -264,13 +264,13 @@ class Library extends React.Component {
                   <i className="fa fa-eye"></i>
                 </button>
                 <button className="btn btn-link">
-                  <i className="fa fa-edit"></i>
+                  <i className="fa-regular fa-pen-to-square"></i>
                 </button>
                 <button
                   onClick={() => this.deleteDashboard(dashboard)}
                   className="btn btn-link"
                 >
-                  <i className="fa fa-trash"></i>
+                  <i className="fa-regular fa-trash-can"></i>
                 </button>
                 <button
                   className="btn btn-link"

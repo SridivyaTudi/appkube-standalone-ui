@@ -115,6 +115,13 @@
 
   .manage-dashboard-search {
     padding-bottom: 30px;
+    .search-top-header{
+      .header-left{
+        .input-group-text{
+          width: 430px;
+        }
+      }
+    }
   }
 
   .manage-dashboard-fliter-sort {

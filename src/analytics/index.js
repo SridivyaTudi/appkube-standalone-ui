@@ -72,10 +72,10 @@ class Analytics extends Component {
               <td>
                 <div className="d-inline-block">
                   {/* <button className="btn btn-link" onClick={() => this.editDashbord(viewObj)}>
-                    <i className="fa fa-edit" />
+                    <i className="fa-regular fa-pen-to-square" />
                   </button> */}
                   <button className="btn btn-link" onClick={() => this.onClickDelete(viewObj)}>
-                    <i className="fa fa-trash" />
+                    <i className="fa-regular fa-trash-can" />
                   </button>
                 </div>
               </td>

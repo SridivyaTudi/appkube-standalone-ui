@@ -44,13 +44,13 @@ class ComplianceExclusions extends React.Component {
                     onClick={this.onClickEditExclusion}
                     className="btn btn-link"
                   >
-                    <i className="fa fa-edit"></i>
+                    <i class="fa-regular fa-pen-to-square"></i>
                   </button>
                   <button
                     onClick={this.onClickDeleteExclusion}
                     className="btn btn-link"
                   >
-                    <i className="fa fa-trash"></i>
+                   <i class="fa-regular fa-trash-can"></i>
                   </button>
                 </div>
               </td>

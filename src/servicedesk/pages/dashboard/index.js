@@ -131,7 +131,7 @@ class Dashboard extends React.Component {
                       className="btn btn-link"
                       onClick={(e) => this.onClickOpenEditTicket(e, ticketObj)}
                     >
-                      <i className="fa fa-edit"></i>
+                      <i className="fa-regular fa-pen-to-square"></i>
                     </button>
                   </Rbac>
                   <Rbac
@@ -139,7 +139,7 @@ class Dashboard extends React.Component {
                     childName="dashborad-index-tickettbl-deletebtn"
                   >
                     <button className="btn btn-link">
-                      <i className="fa fa-trash"></i>
+                      <i className="fa-regular fa-trash-can"></i>
                     </button>
                   </Rbac>
                 </div>

@@ -111,7 +111,7 @@ class ApiGateway extends React.Component {
                 <div className="editor-add-code">
                   <div className="d-inline-block code">
                     <button>
-                      <i className="fa fa-trash"></i>
+                    <i class="far fa-trash-alt"></i>
                     </button>
                     <p>ApiGateway</p>
                   </div>

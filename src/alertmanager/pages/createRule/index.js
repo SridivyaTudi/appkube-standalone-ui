@@ -42,7 +42,7 @@ class CreateRule extends React.Component {
               <i className="fa fa-refresh"></i>&nbsp;&nbsp; Refresh
             </a>
             <a className="asset-white-button">
-              <i className="fa fa-trash"></i>&nbsp;&nbsp; Delete
+              <i className="fa-regular fa-trash-can"></i>&nbsp;&nbsp; Delete
             </a>
           </div>
           <div className="common-container">

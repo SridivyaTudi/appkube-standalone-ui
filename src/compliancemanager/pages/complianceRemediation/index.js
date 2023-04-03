@@ -44,13 +44,13 @@ class ComplianceRemediation extends React.Component {
                     onClick={this.onClickEditRemediation}
                     className="btn btn-link"
                   >
-                    <i className="fa fa-edit"></i>
+                    <i className="fa-regular fa-pen-to-square"></i>
                   </button>
                   <button
                     onClick={this.onClickDeleteRemediation}
                     className="btn btn-link"
                   >
-                    <i className="fa fa-trash"></i>
+                    <i className="fa-regular fa-trash-can"></i>
                   </button>
                 </div>
               </td>

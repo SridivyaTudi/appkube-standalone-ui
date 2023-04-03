@@ -79,7 +79,7 @@ class CatalogueManagement extends Component {
                 style={{ float: "right" }}
                 onClick={(e) => this.onClickaEditToCollector(e, val)}
               >
-                <i className="fa fa-edit"></i>
+                <i className="fa-regular fa-pen-to-square"></i>
               </a>
               <a style={{ float: "right", marginRight: "9px" }}>
                 <i className="fa fa-refresh"></i>

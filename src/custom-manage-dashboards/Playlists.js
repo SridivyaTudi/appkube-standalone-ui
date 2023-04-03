@@ -75,7 +75,7 @@ class Playlists extends Component{
                   className="asset-blue-button m-b-0 min-width-inherit"
                   onClick={() => this.openEditPlayList(playlistItems[i])}
                 >
-                  <i className="fa fa-edit"></i>
+                  <i className="fa-regular fa-pen-to-square"></i>
                 </Button>
                 <Button
                   className="dashboard-danger-button m-b-0 m-r-0 min-width-inherit"

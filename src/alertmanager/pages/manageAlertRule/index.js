@@ -42,7 +42,7 @@ class ManageAlertRule extends React.Component {
                       className="btn btn-link"
                       onClick={() => this.onClickUnImplementedFeature("")}
                     >
-                      <i className="fa fa-edit"></i>
+                      <i class="fa-regular fa-pen-to-square"></i>
                     </button>
                   </Rbac>
                   <Rbac
@@ -53,7 +53,7 @@ class ManageAlertRule extends React.Component {
                       className="btn btn-link"
                       onClick={() => this.onClickUnImplementedFeature("")}
                     >
-                      <i className="fa fa-trash"></i>
+                      <i class="fa-regular fa-trash-can"></i>
                     </button>
                   </Rbac>
                 </div>
@@ -109,7 +109,7 @@ class ManageAlertRule extends React.Component {
                       className="btn btn-link"
                       onClick={() => this.onClickUnImplementedFeature("")}
                     >
-                      <i className="fa fa-edit"></i>
+                     <i class="fa-regular fa-pen-to-square"></i>
                     </button>
                   </Rbac>
                   <Rbac
@@ -120,7 +120,7 @@ class ManageAlertRule extends React.Component {
                       className="btn btn-link"
                       onClick={() => this.onClickUnImplementedFeature("")}
                     >
-                      <i className="fa fa-trash"></i>
+                      <i class="fa-regular fa-trash-can"></i>
                     </button>
                   </Rbac>
                 </div>
@@ -178,10 +178,10 @@ class ManageAlertRule extends React.Component {
             <div className="d-inline-block">
               <div className="enabled"></div>
               <button className="btn btn-link">
-                <i className="fa fa-edit"></i>
+                <i className="fa-regular fa-pen-to-square"></i>
               </button>
               <button className="btn btn-link">
-                <i className="fa fa-trash"></i>
+                <i className="fa-regular fa-trash-can"></i>
               </button>
             </div>
           </td>
@@ -208,10 +208,10 @@ class ManageAlertRule extends React.Component {
             <div className="d-flex">
               <div className="enabled"></div>
               <button className="btn btn-link">
-                <i className="fa fa-edit"></i>
+                <i className="fa-regular fa-pen-to-square"></i>
               </button>
               <button className="btn btn-link">
-                <i className="fa fa-trash"></i>
+                <i className="fa-regular fa-trash-can"></i>
               </button>
             </div>
           </td>

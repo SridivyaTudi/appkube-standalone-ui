@@ -131,7 +131,7 @@ class SearchAlert extends Component {
                     <button className="btn btn-link">
                       <i
                         onClick={(e) => this.onClickEditAlert(e, alert)}
-                        className="fa fa-edit"
+                        className="fa-regular fa-pen-to-square"
                       ></i>
                     </button>
                   </Rbac>
@@ -142,7 +142,7 @@ class SearchAlert extends Component {
                     <button className="btn btn-link">
                       <i
                         onClick={(e) => this.onClickDeleteAlert(e, alert)}
-                        className="fa fa-trash"
+                        className="fa-regular fa-trash-can"
                       ></i>
                     </button>
                   </Rbac>

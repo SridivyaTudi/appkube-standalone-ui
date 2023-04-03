@@ -399,7 +399,7 @@ class EditorGslBuilder extends React.Component {
           <button
             style={{ visibility: mouseOverIndex === i ? "visible" : "hidden" }}
           >
-            <i className="fa fa-trash"></i>
+            <i className="fa-regular fa-trash-can"></i>
           </button>
           <p dangerouslySetInnerHTML={{ __html: row.value }}></p>
         </div>

@@ -43,7 +43,7 @@
   width: 75px;
   border-radius: 3px;
   cursor: pointer;
-  height: 34px;
+  height: 36px;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   font-weight: 400;
@@ -100,7 +100,7 @@
   display: inline-block;
   border-radius: 3px;
   cursor: pointer;
-  height: 34px;
+  height: 36px;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   font-weight: 400;
@@ -407,7 +407,7 @@
   display: inline-block;
   position: relative;
   margin: 10px 10px 0 0;
-  vertical-align: top;
+  vertical-align: baseline;
 }
 .custom-table .data-table-parent .data-table .enabled:after {
   position: absolute;

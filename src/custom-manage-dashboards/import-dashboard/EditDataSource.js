@@ -26,10 +26,10 @@ class EditDataSource extends Component {
             </div>
             <div className="col-lg-2 col-md-3 col-sm-3 text-right">
               <button className="btn btn-link" onClick={this.setIsEdit}>
-                <i className="fa fa-edit"></i>
+                <i className="fa-regular fa-pen-to-square"></i>
               </button>
               <button className="btn btn-link">
-                <i className="fa fa-trash"></i>
+                <i className="fa-regular fa-trash-can"></i>
               </button>
             </div>
           </div>

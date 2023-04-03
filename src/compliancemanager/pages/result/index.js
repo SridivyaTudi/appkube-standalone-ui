@@ -132,7 +132,7 @@ class Result extends React.Component {
                       </div>
                       <div className="edit-button">
                         <button>
-                          <i className="fa fa-edit"></i>
+                          <i className="fa-regular fa-pen-to-square"></i>
                         </button>
                       </div>
                     </div>

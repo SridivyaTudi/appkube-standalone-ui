@@ -126,10 +126,10 @@ class ContentsPacks extends React.Component {
                       <div className="enabled"></div>
                     </div>
                     <button className="btn btn-link">
-                      <i className="fa fa-edit"></i>
+                      <i className="fa-regular fa-pen-to-square"></i>
                     </button>
                     <button className="btn btn-link">
-                      <i className="fa fa-trash"></i>
+                      <i className="fa-regular fa-trash-can"></i>
                     </button>
                     <button
                       className="btn btn-link"

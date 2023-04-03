@@ -347,7 +347,7 @@ class AddNewView extends Component {
                 <ul>
                   <li onClick={() => this.editTabTitle(i)}>
                     <a>
-                      <i className="fa fa-edit"></i>
+                      <i className="fa-regular fa-pen-to-square"></i>
                       Rename Tab
                     </a>
                   </li>
@@ -370,7 +370,7 @@ class AddNewView extends Component {
                   {tabs.length !== 1 && (
                     <li onClick={() => this.deleteTabData(i)}>
                       <a>
-                        <i className="fa fa-trash"></i>
+                        <i className="fa-regular fa-trash-can"></i>
                         Delete
                       </a>
                     </li>

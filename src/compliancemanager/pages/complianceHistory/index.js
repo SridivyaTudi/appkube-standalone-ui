@@ -417,7 +417,7 @@ class ComplianceHistory extends React.Component {
             </div>
           </div>
           <div className="common-container filter-container">
-            <div className="row">
+            <div className="row align-items-center">
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="form-group filter-control-group">
                   <label htmlFor="rulesGroup">
@@ -477,17 +477,17 @@ class ComplianceHistory extends React.Component {
               <div className="col-lg-3 col-md-4 col-sm-12">
                 <div className="search-box">
                   <form>
-                    <div className="form-group search-control-group">
-                        <input
-                          type="text"
-                          onChange={this.onSearchChange}
-                          value={this.state.searchKey}
-                          className="input-group-text"
-                          placeholder="Search"
-                        />
-                        <button>
-                          <i className="fa fa-search"></i>
-                        </button>
+                    <div className="form-group search-control-group m-b-0">
+                      <input
+                        type="text"
+                        onChange={this.onSearchChange}
+                        value={this.state.searchKey}
+                        className="input-group-text"
+                        placeholder=""
+                      />
+                      <button>
+                        <i className="fa fa-search"></i>
+                      </button>
                     </div>
                   </form>
                 </div>

@@ -100,7 +100,7 @@ class CollectionView extends Component {
                     className="btn btn-link"
                     onClick={() => this.onClickUnImplementedFeature("")}
                   >
-                    <i className="fa fa-edit"></i>
+                    <i className="fa-regular fa-pen-to-square"></i>
                   </button>
                 </Rbac>
                 <Rbac
@@ -111,7 +111,7 @@ class CollectionView extends Component {
                     className="btn btn-link"
                     onClick={() => this.onClickUnImplementedFeature("")}
                   >
-                    <i className="fa fa-trash"></i>
+                    <i className="fa-regular fa-trash-can"></i>
                   </button>
                 </Rbac>
                 <button
@@ -171,7 +171,7 @@ class CollectionView extends Component {
                     className="btn btn-link"
                     onClick={() => this.onClickUnImplementedFeature("")}
                   >
-                    <i className="fa fa-edit"></i>
+                    <i className="fa-regular fa-pen-to-square"></i>
                   </button>
                 </Rbac>
                 <Rbac
@@ -182,7 +182,7 @@ class CollectionView extends Component {
                     className="btn btn-link"
                     onClick={() => this.onClickUnImplementedFeature("")}
                   >
-                    <i className="fa fa-trash"></i>
+                    <i className="fa-regular fa-trash-can"></i>
                   </button>
                 </Rbac>
                 <Rbac
