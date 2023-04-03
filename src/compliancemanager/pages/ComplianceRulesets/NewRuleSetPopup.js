@@ -201,7 +201,7 @@ class NewRulSetPopup extends React.Component {
             </div>
           </div>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter className="footer-top-br">
           <div className="d-block text-center">
             <button onClick={this.submit} className="blue-button m-r-0 m-b-0">
               SAVE

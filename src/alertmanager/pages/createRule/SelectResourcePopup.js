@@ -46,7 +46,7 @@ class SelectResourcePopup extends React.Component {
               No condition defined, click on 'Add' to select a signal and define
               its logic
             </div>
-            <div className="form-row m-t-1">
+            <div className=" m-t-1">
               <div className="form-group filter-control-group col-md-6 col-sm-12">
                 <label htmlFor="resourcetype" className="primary-color-label">
                   Filter by resource type
@@ -78,18 +78,13 @@ class SelectResourcePopup extends React.Component {
                 </select>
               </div>
               <div className="form-group filter-control-group col-md-12 col-sm-12">
-                <div className="input-group mb-2">
-                  <div className="input-group-prepend">
-                    <div className="input-group-text">
-                      <i className="fa fa-search"></i>
+                <div className="modal-search-bar">
+                  <form>
+                    <div className=" search-control-group m-b-0">
+                      <input type="text" id="inlineFormInputGroup" className="input-group-text" placeholder="filter alerts" />
+                      <button><i className="fa fa-search"></i></button>
                     </div>
-                  </div>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="inlineFormInputGroup"
-                    placeholder="filter alerts"
-                  />
+                  </form>
                 </div>
               </div>
             </div>

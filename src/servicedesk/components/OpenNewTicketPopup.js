@@ -560,7 +560,7 @@ class OpenNewTicketPopup extends React.Component {
             </div>
             <div className="row">
               <div className="col-lg-12 col-md-12 col-sm-12">
-                <div className="form-group">
+                <div className="form-group d-flex">
                   <div className="d-inline-block form-check create-author">
                     <input
                       type="radio"

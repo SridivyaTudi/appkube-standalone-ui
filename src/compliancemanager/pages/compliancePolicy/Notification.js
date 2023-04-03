@@ -178,12 +178,12 @@ class Notification extends React.Component {
     return (
       <div className="d-inline-block width-100 compliance-account">
         <div className="compliance-account-heading">
-          <div className="d-inline-block width-50">
+          <div className="d-inline-block width-50 m-b-2">
             <strong>Select Notification</strong>
           </div>
           <div className="d-inline-block width-50 text-right">
             <div className="search-box">
-              <div className="d-inline-block form-group search-control-group">
+              <div className="d-inline-block  search-control-group">
                 <input
                   type="text"
                   onChange={this.onSearchChange}

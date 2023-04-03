@@ -40,7 +40,7 @@ class DeleteRemediationPopup extends React.Component {
             ruleset 'AWS CIS Foundations v. 1.0.0', are you sure?
           </p>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter className="footer-top-br">
           <div className="d-block text-center">
             <button className="blue-button m-r-0 m-b-0">Delete</button>
           </div>

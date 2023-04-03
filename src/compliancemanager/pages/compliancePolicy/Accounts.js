@@ -161,13 +161,13 @@ class Accounts extends React.Component {
   render() {
     return (
       <div className="d-inline-block width-100 compliance-account">
-        <div className="compliance-account-heading">
+        <div className="compliance-account-heading m-b-2">
           <div className="d-inline-block width-50">
             <strong>Select Accounts</strong>
           </div>
           <div className="d-inline-block width-50 text-right">
             <div className="search-box">
-              <div className="d-inline-block form-group search-control-group">
+              <div className="d-inline-block  search-control-group">
                 <input
                   type="text"
                   onChange={this.onSearchChange}

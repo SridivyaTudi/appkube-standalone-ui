@@ -159,7 +159,7 @@ class CreateExclusionPopup extends React.Component {
             <textarea className="input-group-text d-block"></textarea>
           </div>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter className="footer-top-br">
           <div className="d-block text-center">
             <button className="blue-button m-r-0 m-b-0">SAVE</button>
           </div>

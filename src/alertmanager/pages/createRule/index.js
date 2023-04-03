@@ -127,20 +127,26 @@ class CreateRule extends React.Component {
                   </div>
                 </div>
                 <div className="create-rule-header-content">
-                  <div className="form-group filter-control-group col-md-6 col-sm-12 m-t-1 p-l-0 p-r-0">
-                    <label htmlFor="ruleName" className="">
-                      Alert Rule Name
-                    </label>
-                    <input type="text" className="form-control" id="ruleName" />
-                  </div>
-                  <div className="form-group filter-control-group col-md-6 col-sm-12 p-l-0 p-r-0">
-                    <label htmlFor="description" className="">
-                      Description
-                    </label>
-                    <textarea
-                      className="form-control"
-                      id="description"
-                    ></textarea>
+                  <div className="d-flex justify-content-center align-items-center h-100">
+                    <div className="form-group filter-control-group col-md-6 col-sm-12 p-l-0 p-r-0">
+                      <label htmlFor="ruleName" className="">
+                        Alert Rule Name
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="ruleName"
+                      />
+                    </div>
+                    <div className="form-group filter-control-group col-md-6 col-sm-12 p-l-0 p-r-0">
+                      <label htmlFor="description" className="">
+                        Description
+                      </label>
+                      <textarea
+                        className="form-control"
+                        id="description"
+                      ></textarea>
+                    </div>
                   </div>
                   <div className="m-t-1">
                     <button className="asset-gray-button m-r-2">

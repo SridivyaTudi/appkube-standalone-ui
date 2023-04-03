@@ -23,7 +23,7 @@ class AddActionPopup extends React.Component {
         toggle={this.toggle}
         className="modal-container alert-modal-container"
       >
-        <ModalHeader >
+        <ModalHeader>
           Select an action group to attach to this alert rule
           <button
             type="button"
@@ -50,18 +50,20 @@ class AddActionPopup extends React.Component {
             </div>
             <div className="form-row m-t-1">
               <div className="form-group filter-control-group col-md-12 col-sm-12">
-                <div className="input-group mb-2">
-                  <div className="input-group-prepend">
-                    <div className="input-group-text">
-                      <i className="fa fa-search"></i>
+                <div className="modal-search-bar">
+                  <form>
+                    <div className=" search-control-group m-b-0">
+                      <input
+                        type="text"
+                        id="inlineFormInputGroup"
+                        className="input-group-text"
+                        placeholder="filter alerts"
+                      />
+                      <button>
+                        <i className="fa fa-search"></i>
+                      </button>
                     </div>
-                  </div>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="inlineFormInputGroup"
-                    placeholder="filter alerts"
-                  />
+                  </form>
                 </div>
               </div>
             </div>

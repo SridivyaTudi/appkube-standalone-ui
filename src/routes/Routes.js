@@ -53,18 +53,18 @@ import EmsDashboard from '../emsReporting/pages/Dashboard';
 
 //***** compliancemanager *****//
 import ComplianDashboard from '../compliancemanager/pages/dashboard';
+import ComplianceExclusions from '../compliancemanager/pages/complianceexclusions';
 import ComplianceRulesets from '../compliancemanager/pages/ComplianceRulesets';
 import ComplianceRemediation from '../compliancemanager/pages/complianceRemediation';
+import ComplianceAssessmentHistory from '../compliancemanager/pages/complianceAssessmentHistory';
 import CompliancePolicy from '../compliancemanager/pages/compliancepolicy';
 import ComplianceHistory from '../compliancemanager/pages/compliancehistory';
-import ComplianceExclusions from '../compliancemanager/pages/complianceexclusions';
-import ComplianceAssessmentHistory from '../compliancemanager/pages/complianceAssessmentHistory';
-import ClearHistory from '../compliancemanager/pages/clearHistory';
+import GslBuilder from '../compliancemanager/pages/gslBuilder';
 import ApiGateway from '../compliancemanager/pages/apiGateway';
+import EditorGslBuilder from '../compliancemanager/pages/editorGslBuilder';
+import ClearHistory from '../compliancemanager/pages/clearHistory';
 import Script from '../compliancemanager/pages/script';
 import Result from '../compliancemanager/pages/result';
-import GslBuilder from '../compliancemanager/pages/gslBuilder';
-import EditorGslBuilder from '../compliancemanager/pages/editorGslBuilder';
 
 //***** workflow-engine *****//
 import WorkflowDashboard from '../workflow-engine/pages/dashboard';
@@ -149,7 +149,7 @@ export const AllRoutes = () => {
 
       {/***** EMS Reporting *****/}
       <Route path="/emsReporting/pages/home" element={<EmsDashboard />} />
-
+      
       {/***** compliancemanager *****/}
       <Route path="/compliancemanager/pages/dashboard" element={<ComplianDashboard />} />
       <Route path="/compliancemanager/pages/complianceRulesets" element={<ComplianceRulesets />} />

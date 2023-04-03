@@ -70,14 +70,15 @@ class AddConditionPopup extends React.Component {
         toggle={this.toggle}
         className="modal-container alert-modal-container"
       >
-        <ModalHeader >Configure signal logic
-        <button
+        <ModalHeader>
+          Configure signal logic
+          <button
             type="button"
             className="close"
             aria-label="Close"
             onClick={this.toggle}
           >
-           <i class="fal fa-times"></i>
+            <i class="fal fa-times"></i>
           </button>
         </ModalHeader>
         <ModalBody
@@ -94,7 +95,7 @@ class AddConditionPopup extends React.Component {
                   Choose a signal below and configure the logic on the next
                   screen to define the alert condition
                 </div>
-                <div className="form-row m-t-1">
+                <div className="m-t-1">
                   <div className="form-group filter-control-group col-md-6 col-sm-12">
                     <label htmlFor="signalType" className="primary-color-label">
                       Signal Type
@@ -126,18 +127,20 @@ class AddConditionPopup extends React.Component {
                     </select>
                   </div>
                   <div className="form-group filter-control-group col-md-12 col-sm-12">
-                    <div className="input-group mb-2">
-                      <div className="input-group-prepend">
-                        <div className="input-group-text">
-                          <i className="fa fa-search"></i>
+                    <div className="modal-search-bar">
+                      <form>
+                        <div className=" search-control-group m-b-0">
+                          <input
+                            type="text"
+                            id="inlineFormInputGroup"
+                            className="input-group-text"
+                            placeholder="filter alerts"
+                          />
+                          <button>
+                            <i className="fa fa-search"></i>
+                          </button>
                         </div>
-                      </div>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="inlineFormInputGroup"
-                        placeholder="filter alerts"
-                      />
+                      </form>
                     </div>
                   </div>
                 </div>

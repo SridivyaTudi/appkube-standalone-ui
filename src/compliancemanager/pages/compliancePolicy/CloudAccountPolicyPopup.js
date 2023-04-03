@@ -3,7 +3,7 @@ import Accounts from "./Accounts";
 import Rulesets from "./Rulesets";
 import Notification from "./Notification";
 import Wizard from "./Wizard";
-import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 class CloudAccountPolicyPopup extends React.Component {
   constructor(props) {

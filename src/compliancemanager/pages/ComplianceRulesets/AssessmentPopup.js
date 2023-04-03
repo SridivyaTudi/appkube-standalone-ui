@@ -81,7 +81,7 @@ class AssessmentPopup extends React.Component {
             </div>
           </div>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter className="footer-top-br">
           <div className="d-block text-center" onClick={this.toggle}>
             <Link
               to={`/compliancemanager/pages/compliancehistory`}
