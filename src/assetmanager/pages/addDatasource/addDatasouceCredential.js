@@ -320,8 +320,8 @@ class AddDatasourceCredential extends React.Component {
             <div className="source-content">
               <div className="heading">
                 <h4>Add inputs</h4>
-                <div className="add-inputs-content">
-                  <div className="form-group description-content">
+                <div className="add-inputs-content environgment-details">
+                  <div className="form-group description-content select-data-source">
                     <label htmlFor="Name">Name</label>
                     <input
                       className="input-group-text"
@@ -336,7 +336,7 @@ class AddDatasourceCredential extends React.Component {
                 <h5>Account Details</h5>
               </div>
               <div className="environgment-details">
-                <div className="form-group description-content">
+                <div className="form-group description-content select-data-source">
                   <label htmlFor="description">Select Environment</label>
                   <input
                     className="input-group-text"
@@ -344,7 +344,7 @@ class AddDatasourceCredential extends React.Component {
                     value={environment}
                   />
                 </div>
-                <div className="form-group description-content">
+                <div className="form-group description-content select-data-source">
                   <label htmlFor="description">Select Account</label>
                   <input
                     className="input-group-text"
@@ -396,7 +396,7 @@ class AddDatasourceCredential extends React.Component {
                         {addCredForm && (
                           <div className="environgment-details">
                             <h5>Connection Detail</h5>
-                            <div className="form-group description-content">
+                            <div className="form-group description-content select-data-source">
                               <label htmlFor="description">vault Key Id</label>
                               <input
                                 type="text"
@@ -443,7 +443,16 @@ class AddDatasourceCredential extends React.Component {
           toggle={this.toggle}
           className="modal-container assetmanager-modal-container"
         >
-          <ModalHeader toggle={this.toggle}>Synectiks Vault</ModalHeader>
+          <ModalHeader >Synectiks Vault
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={this.toggle}
+          >
+            <i class="fal fa-times"></i>
+          </button>
+          </ModalHeader>
           <ModalBody
             style={{
               height: "calc(60vh - 50px)",
@@ -477,7 +486,7 @@ class AddDatasourceCredential extends React.Component {
                   );
                 })}
             </div>
-            <div className="modal-submit-button">
+            <div className="modal-submit-button text-right">
               <button
                 className="asset-blue-button"
                 onClick={this.addDataSourceCred}

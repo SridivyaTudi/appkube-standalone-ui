@@ -49,7 +49,7 @@ class UnimplementedFeaturePopup extends Component {
             continue?
           </p>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter className="footer-top-br">
           <div className="d-block text-center">
             {state.link && (
               <Link
