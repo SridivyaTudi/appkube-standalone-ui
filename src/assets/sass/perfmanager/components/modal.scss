@@ -1,4 +1,5 @@
 .perfmanager-modal-container {
+  border-radius: 0!important;
   .modal-content {
     .modal-body{
       img{
@@ -72,6 +73,126 @@
             vertical-align: top;
             margin-bottom: 0;
           }
+        }
+      }
+    }
+  }
+  &.preview-dashboard-popup {
+    .nabtn-close {
+      position: absolute;
+      right: -20px;
+      top: -20px;
+      border: none!important;
+      width: 48px;
+      height: 48px;
+      text-align: center;
+      line-height: 48px;
+      font-size: 18px;
+      color: #6f7682;
+      margin: 0!important;
+      padding: 0!important;
+      background: #f0f3f7!important;
+      &:hover {
+        background-color: #3b7cff!important;
+        color: #ffffff;
+      }
+    }
+  
+    .nabtn-left {
+      position: absolute;
+      left: -20px;
+      top: 45%;
+      border: none!important;
+      width: 48px;
+      height: 48px;
+      text-align: center;
+      line-height: 48px;
+      font-size: 32px;
+      color: #6f7682;
+      margin: 0!important;
+      padding: 0!important;
+      background: #f0f3f7!important;
+  
+      &:hover {
+        background-color: #3b7cff!important;
+        color: #ffffff;
+      }
+    }
+  
+    .nabtn-right {
+      position: absolute;
+      right: -20px;
+      top: 45%;
+      border: none!important;
+      width: 48px;
+      height: 48px;
+      text-align: center;
+      line-height: 48px;
+      font-size: 32px;
+      color: #6f7682;
+      margin: 0!important;
+      padding: 0!important;
+      background: #f0f3f7!important;
+      &:hover {
+        background-color: #3b7cff!important;
+        color: #ffffff;
+      }
+    }
+  
+    .slider-buttons {
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      z-index: 10;
+      width: 100%;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+  
+      .button {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #ffffff;
+        border: 1px solid #6f7682;
+        margin: 0 4px;
+        cursor: pointer;
+  
+        &:hover {
+          background-color: #3b7cff;
+          border-color: #3b7cff;
+        }
+  
+        &.active {
+          background-color: #3b7cff;
+          border-color: #3b7cff;
+        }
+      }
+    }
+  
+    .slider-content {
+      display: block;
+      width: calc(100% - 100px);
+      height: 480px;
+      overflow: hidden;
+      overflow-y: scroll;
+      margin-left: 50px;
+      margin-right: 50px;
+  
+      .item-image {
+        display: none;
+        width: 100%;
+        text-align: center;
+  
+        &.active {
+          display: block;
+        }
+  
+        img {
+          max-width: 100%;
+          height: auto;
         }
       }
     }

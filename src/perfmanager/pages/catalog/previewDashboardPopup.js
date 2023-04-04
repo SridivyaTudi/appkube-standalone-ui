@@ -34,13 +34,13 @@ export class PreviewDashboardPopup extends Component {
       >
         <ModalBody style={{ maxHeight: "550px" }}>
           <button className="nabtn-close" onClick={this.toggle}>
-            <i className="fa fa-close"></i>
+          <i class="far fa-times"></i>
           </button>
           <button className="nabtn-left">
-            <i className="fa fa-angle-left"></i>
+          <i class="far fa-chevron-left"></i>
           </button>
           <button className="nabtn-right">
-            <i className="fa fa-angle-right"></i>
+          <i class="far fa-chevron-right"></i>
           </button>
           <div className="slider-content">
             <div className="item-image active">
