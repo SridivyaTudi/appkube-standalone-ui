@@ -11,6 +11,9 @@
     &.archive {
       margin-top: 27px;
       position: relative;
+      display: flex;
+      align-items: self-end;
+      justify-content: start;
 
       input {
         width: 100%;
