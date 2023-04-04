@@ -131,7 +131,7 @@ class QueryTab extends React.Component {
                 this.setState({ queryInspectorModalVisible: true });
               }}
             >
-              Query inspector
+              Query inspectors
             </button>
           </div>
         </div>
