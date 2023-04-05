@@ -55,7 +55,7 @@ class DiscardPopup extends React.Component {
         >
           <div>Remove '{text}', Are you sure?</div>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter className="footer-top-br">
           <div className="text-right">
             <button
               onClick={() => this.toggle(-1, "")}

@@ -86,9 +86,9 @@
         margin-top: -4px;
       }
 
-      textarea.form-control {
-        height: 120px;
-      }
+      // textarea.form-control {
+      //   height: 120px;
+      // }
       .input-group-text {
         background-color: #ffffff;
         border: 1px solid #8392a7;
@@ -133,6 +133,9 @@
         }
       }
       .form-group {
+        textarea{
+          height: auto;
+        }
         padding-bottom: 20px;
         margin-bottom: 0px;
         label {
@@ -160,9 +163,9 @@
           margin-top: -4px;
         }
 
-        textarea.form-control {
-          height: 120px;
-        }
+        // textarea.form-control {
+        //   height: 120px;
+        // }
 
         .select-rule {
           margin-top: 10px;
