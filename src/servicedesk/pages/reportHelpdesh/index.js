@@ -103,7 +103,7 @@ class ReportHelpdesh extends React.Component {
         <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
           <div className="d-block text-center desk-box">
             <Link
-              to={`${config.basePath}/charts`}
+              to="/servicedesk/pages/charts"
               className="d-block text-center"
             >
               <div className="d-block text-right icon">
@@ -158,9 +158,8 @@ class ReportHelpdesh extends React.Component {
               </div>
             </div>
           </div>
-
           <div className="common-container border-bottom-0 filter-container">
-            <div className="row">
+            <div className="row report-filter">
               <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
                 <div className="form-group filter-control-group">
                   <label htmlFor="selecttimeperiod">Select Time Period</label>
@@ -244,7 +243,7 @@ class ReportHelpdesh extends React.Component {
                 </div>
               </div>
               <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
-                <div className="p-t-20 form-group">
+                <div className="p-t-20 form-group filter-control-group">
                   <a
                     href="#"
                     className="blue-button m-r-0 m-b-0 apply-filters-button"
@@ -277,7 +276,7 @@ class ReportHelpdesh extends React.Component {
                       <i className="fa fa-file"></i>
                     </button>
                     <button className="white-button min-width-inherit width-auto m-r-0">
-                      <i className="fa fa-calendar"></i>
+                    <i class="far fa-calendar-alt"></i>
                     </button>
                   </div>
                 </div>

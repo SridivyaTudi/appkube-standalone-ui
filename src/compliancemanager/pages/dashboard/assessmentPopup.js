@@ -36,7 +36,7 @@ class AssessmentPopup extends React.Component {
           </button>
         </ModalHeader>
         <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
-          <p>
+          <p className="m-b-1">
             You are about to run all displayed assessments. This could take a
             few minutes. Are you sure?
           </p>

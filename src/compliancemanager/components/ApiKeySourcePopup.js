@@ -55,7 +55,7 @@ class ApiKeySourcePopup extends React.Component {
             </div>
           </div>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter className="footer-top-br">
           <div className="text-right">
             <button
               onClick={() => this.toggle("", "")}

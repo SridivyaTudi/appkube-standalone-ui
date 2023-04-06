@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import awsLogo from "../../../assets/img/perfmanager/aws.png";
-import microsoftAzureLogo from "../../../assets/img/perfmanager/microsoftazure.png";
-import gcpLogo from "../../../assets/img/perfmanager/google-cloud.png";
-import KubernetesLogo from "../../../assets/img/perfmanager/kubernetes.png";
+import awsLogo from "../../../assets/img/aws.png";
+import microsoftAzureLogo from "../../../assets/img/microsoftazure.png";
+import gcpLogo from "../../../assets/img/google-cloud.png";
+import KubernetesLogo from "../../../assets/img/kubernetes.png";
 import folderIcon from "../../../assets/img/perfmanager/folder.png";
 import listIcon from "../../../assets/img/perfmanager/list.png";
 import sortIcon from "../../../assets/img/perfmanager/sort.png";

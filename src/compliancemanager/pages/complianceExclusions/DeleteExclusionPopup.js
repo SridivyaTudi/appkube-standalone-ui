@@ -35,7 +35,7 @@ class DeleteExclusionPopup extends React.Component {
           </button>
         </ModalHeader>
         <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
-          <p>
+          <p className="m-b-1">
             You are about to delete Exclusion for cloud account '*' and ruleset
             'AWS CIS Foundations v. 1.0.0', are you sure?
           </p>

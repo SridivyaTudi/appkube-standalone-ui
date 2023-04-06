@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Jobs from "../../../assets/img/jobs.png";
-import Microsoftazure from "../../../assets/img/assetmanager/microsoftazure.png";
-import GoogleCloud from "../../../assets/img/assetmanager/google-cloud.png";
-import Aws from "../../../assets/img/assetmanager/aws.png";
-import Kubernetes from "../../../assets/img/assetmanager/kubernetes.png";
+import Microsoftazure from "../../../assets/img/microsoftazure.png";
+import GoogleCloud from "../../../assets/img/google-cloud.png";
+import Aws from "../../../assets/img/aws.png";
+import Kubernetes from "../../../assets/img/kubernetes.png";
 
 const LOGOS = {
   aws: Aws,

@@ -121,7 +121,7 @@ class Script extends React.Component {
                 </div>
                 <div className="editor-add-code">
                   <div className="d-inline-block code">
-                    <p>ApiGateway</p>
+                    <p className="m-b-1">ApiGateway</p>
                   </div>
                   <div className="choosh-popup">
                     <ul>

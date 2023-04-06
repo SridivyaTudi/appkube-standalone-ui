@@ -1,8 +1,6 @@
 import React, {Component} from "react";
-//import * as React from 'react';
+import CategoryImage1 from '../../assets/img/category-image1.png';
 import './lib/styles.css';
-//import Carousel from 'react-multi-carousel';
-
 // const responsive = {
 //   desktop: {
 //     breakpoint: {
@@ -49,7 +47,7 @@ class Preview extends Component {
           <div className="row">
             <div className="col-lg-2 col-md-3 col-sm-12">
               <div className="heading-image">
-                <img src="public/img/category-image1.png" alt="" />
+                <img src={CategoryImage1} alt="" />
               </div>
             </div>
             <div className="col-lg-10 col-md-9 col-sm-12">
