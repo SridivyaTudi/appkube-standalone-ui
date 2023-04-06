@@ -116,7 +116,7 @@ class Charts extends React.Component {
               </div>
               <div className="col-lg-4 col-md-4 col-sm-12 text-right">
                 <Link
-                  to={`${config.basePath}/reporthelpdesh`}
+                  to="/servicedesk/pages/reportHelpdesh"
                   className="blue-button m-r-0 m-b-0 min-width-inherit width-auto create-btn"
                 >
                   Back

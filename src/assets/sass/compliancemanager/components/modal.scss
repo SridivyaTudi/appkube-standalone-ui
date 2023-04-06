@@ -1,4 +1,37 @@
 .assessments-modal-container {
+    .wizard-step-line-container{
+        .wizard-step-button{
+            width: 33.33%;
+            &:before {
+                position: absolute;
+                top: 1px;
+                right: -28px;
+                content: '';
+                border: solid transparent;
+                border-color: rgba(159, 163, 165, 0);
+                border-left-color: #9fa3a5;
+                border-width: 14px;
+                margin-top: 0px;
+                width: 0;
+                height: 0;
+                z-index: 1;
+            }
+            :after {
+                position: absolute;
+                top: 1px;
+                right: -27px;
+                content: '';
+                border: solid transparent;
+                border-color: rgba(221, 228, 233, 0);
+                border-left-color: #dde4e9;
+                border-width: 14px;
+                margin-top: 0px;
+                width: 0;
+                height: 0;
+                z-index: 1;
+            }
+        }
+    }
   .modal-content {
     .modal-body{
       padding: 0px 10px;
@@ -68,64 +101,6 @@
             border-radius: 8px!important;
         }
     }
-      
-      // p{
-      //   font-style: italic;
-      // }
-      // .form-group{
-      //   padding-bottom: 20px;
-      //   label{
-      //     font-size: 13px;
-      //     font-weight: 500;
-      //     line-height: 36px;
-      //     color: #3B4859;
-      //     padding-right: 20px;
-      //   }
-      //   .form-control{
-      //     background-color: #f0f3f7 !important;
-      //     border: none !important;
-      //     font-size: 13px;
-      //     height: 36px;
-      //   }
-      //   .input-group-text{
-      //     background-color: #FFFFFF;
-      //     border: 1px solid #8392A7;
-      //     border-radius: 4px;
-      //     font-size: 13px;
-      //     font-weight: 500;
-      //     line-height: 34px;
-      //     color: #3B4859;
-      //     padding: 0 10px;
-      //     width: 100%;
-      //     text-align: left;
-      //   }
-      //   .checkbox{
-      //     display: inline-block;
-      //     margin-right: 5px;
-      //     vertical-align: middle;
-      //     cursor: pointer;
-      //     margin-top: -4px;
-      //   }
-      //   textarea.form-control{
-      //     height: 120px;
-      //   }
-      //   .select-rule{
-      //     margin-top: 10px;
-      //     margin-left: 30px;
-      //   }
-      //   .d-inline-block{
-      //     display: inline-block;
-      //   }
-      //   .width-auto{
-      //     width: auto;
-      //   }
-      //   .text{
-      //     padding: 0 3px;
-      //     line-height: 12px;
-      //     vertical-align: top;
-      //   }
-      // }
     }
-    
   }
 }
