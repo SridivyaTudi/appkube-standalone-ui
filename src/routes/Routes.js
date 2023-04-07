@@ -14,7 +14,7 @@ import CatalogueManagement from '../perfmanager/pages/catalogueManagement';
 import Environments from '../assetmanager/pages/environments';
 import AmazonServices from '../assetmanager/pages/amazonservices';
 import Kubernetes from '../assetmanager/pages/kubernetes';
-import StorageDetails from '../assetmanager/pages/storagedetails';
+import StorageDetails from '../assetmanager/pages/storageDetails';
 import AccountSetup from '../assetmanager/pages/accountsetup';
 import DepartmentWiseProducts from '../assetmanager/pages/departmentWiseProducts';
 import DepartmentWiseCharts from '../assetmanager/pages/departmentWiseProducts/departmentChart';
@@ -33,7 +33,7 @@ import ManageAlertRule from '../alertmanager/pages/manageAlertRule';
 import AllAlerts from '../alertmanager/pages/allAlerts';
 import Rules from '../alertmanager/pages/rules';
 import CreateRule from '../alertmanager/pages/createRule';
-import AllTickets from '../alertmanager/pages/alltickets';
+import AllTickets from '../alertmanager/pages/allTickets';
 import ScriptEditor from '../alertmanager/pages/scriptEditor';
 import SearchAlert from '../alertmanager/pages/searchAlert';
 
@@ -54,12 +54,12 @@ import EmsDashboard from '../emsReporting/pages/Dashboard';
 
 //***** compliancemanager *****//
 import ComplianDashboard from '../compliancemanager/pages/dashboard';
-import ComplianceExclusions from '../compliancemanager/pages/complianceexclusions';
+import ComplianceExclusions from '../compliancemanager/pages/complianceExclusions';
 import ComplianceRulesets from '../compliancemanager/pages/ComplianceRulesets';
 import ComplianceRemediation from '../compliancemanager/pages/complianceRemediation';
 import ComplianceAssessmentHistory from '../compliancemanager/pages/complianceAssessmentHistory';
-import CompliancePolicy from '../compliancemanager/pages/compliancepolicy';
-import ComplianceHistory from '../compliancemanager/pages/compliancehistory';
+import CompliancePolicy from '../compliancemanager/pages/compliancePolicy';
+import ComplianceHistory from '../compliancemanager/pages/complianceHistory';
 import GslBuilder from '../compliancemanager/pages/gslBuilder';
 import ApiGateway from '../compliancemanager/pages/apiGateway';
 import EditorGslBuilder from '../compliancemanager/pages/editorGslBuilder';
