@@ -419,14 +419,22 @@ export class TopologyView extends React.Component {
         <Modal
           isOpen={modal}
           toggle={this.toggle}
-          className="modal-topology-view"
+          className="modal-topology-view modal-container"
         >
-          <ModalHeader toggle={this.toggle}>
+          <ModalHeader>
             {modalData.serviceName}
+            <button
+              type="button"
+              className="close"
+              aria-label="Close"
+              onClick={this.toggle}
+            >
+              <i class="fal fa-times"></i>
+            </button>
           </ModalHeader>
           <ModalBody
             style={{
-              height: "calc(80vh - 50px)",
+              height: "calc(75vh - 50px)",
               overflowY: "auto",
               overflowX: "hidden",
             }}

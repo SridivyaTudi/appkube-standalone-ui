@@ -46,6 +46,7 @@ import AddNewView from '../analytics/addNewView';
 
 //***** taskManager *****//
 import TaskManager from '../task-manager';
+import AllTasks from '../task-manager/all-tasks';
 import CreateDashboard from '../task-manager/create-dashboard';
 
 //***** EMS Reporting *****//
@@ -145,6 +146,7 @@ export const AllRoutes = () => {
 
        {/***** taskManager *****/}
        <Route path="/task-manager" element={<TaskManager />} />
+       <Route path='/task-manager/all-tasks' element={<AllTasks />} />
        <Route path='/task-manager/create-dashboard' element={<CreateDashboard />} />
 
       {/***** EMS Reporting *****/}

@@ -1,9 +1,8 @@
-// Libraries
 import React, {Component} from 'react';
+// Libraries
 //import { updateLocation } from 'app/core/actions';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-import Table from './table';
+// import 'react-circular-progressbar/dist/styles.css';
+import Table from '../table';
 
 // Services & Utils
 // export interface Props {
@@ -13,7 +12,7 @@ import Table from './table';
 //   location;
 // }
 
-class TaskManager extends Component {
+class AllTasks extends Component {
   // breadCrumbs = [
   //   {
   //     label: 'Home',
@@ -60,7 +59,7 @@ class TaskManager extends Component {
                 <div className="d-inline-block">
                   <div className="enabled"></div>
                   <button className="btn btn-link">
-                    <i className="fa-regular fa-pen-to-square"></i>
+                  <i className="fa-regular fa-pen-to-square"></i>
                   </button>
                   <button className="btn btn-link">
                     <i className="fa-regular fa-trash-can"></i>
@@ -72,6 +71,60 @@ class TaskManager extends Component {
         },
       ],
       data: [
+        {
+          name: 'CPU Percentage',
+          ruleType: 'Threshold',
+          message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
+          alertHandlers: 'Slack (default)',
+        },
+        {
+          name: 'Disk Read Bytes	',
+          ruleType: 'Threshold',
+          message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
+          alertHandlers: 'Slack (default)',
+        },
+        {
+          name: 'Disk Write Bytes	',
+          ruleType: 'Threshold',
+          message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
+          alertHandlers: 'Slack (default)',
+        },
+        {
+          name: 'CPU Percentage',
+          ruleType: 'Threshold',
+          message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
+          alertHandlers: 'Slack (default)',
+        },
+        {
+          name: 'Disk Read Bytes	',
+          ruleType: 'Threshold',
+          message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
+          alertHandlers: 'Slack (default)',
+        },
+        {
+          name: 'Disk Write Bytes	',
+          ruleType: 'Threshold',
+          message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
+          alertHandlers: 'Slack (default)',
+        },
+        {
+          name: 'CPU Percentage',
+          ruleType: 'Threshold',
+          message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
+          alertHandlers: 'Slack (default)',
+        },
+        {
+          name: 'Disk Read Bytes	',
+          ruleType: 'Threshold',
+          message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
+          alertHandlers: 'Slack (default)',
+        },
+        {
+          name: 'Disk Write Bytes	',
+          ruleType: 'Threshold',
+          message: '{{.ID}} {{.Name}} {{.TaskName}} {{….',
+          alertHandlers: 'Slack (default)',
+        },
         {
           name: 'CPU Percentage',
           ruleType: 'Threshold',
@@ -200,7 +253,7 @@ class TaskManager extends Component {
         },
       ],
     };
-    this.perPageLimit = 4;
+    this.perPageLimit = 9;
     this.checkboxValue = true;
   }
 
@@ -213,9 +266,8 @@ class TaskManager extends Component {
   }
 
   render() {
-    //const breadCrumbs = this.breadCrumbs;
+    const breadCrumbs = this.breadCrumbs;
     const pageTitle = 'TASK MANAGER';
-    const percentage = 66;
     return (
       <React.Fragment>
         {/* <div className="breadcrumbs-container">
@@ -260,42 +312,6 @@ class TaskManager extends Component {
             </div>
           </div>
           <div className="common-container border-bottom-0">
-            <div className="task-dashboards-container">
-              <div className="row">
-                <div className="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                  <a href="/task-manager/all-tasks">
-                    <div className="task-dashboard-box" style={{ borderColor: '#00004d' }}>
-                      <span>Total Daskboards</span>
-                      <strong>45</strong>
-                    </div>
-                  </a>
-                </div>
-                <div className="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                  <a>
-                    <div className="task-dashboard-box" style={{ borderColor: '#00861b' }}>
-                      <span>Completed</span>
-                      <strong>25</strong>
-                    </div>
-                  </a>
-                </div>
-                <div className="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                  <a>
-                    <div className="task-dashboard-box" style={{ borderColor: '#ffa000' }}>
-                      <span>In progress</span>
-                      <strong>25</strong>
-                    </div>
-                  </a>
-                </div>
-                <div className="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                  <a>
-                    <div className="task-dashboard-box" style={{ borderColor: '#98adff' }}>
-                      <span>Un assigned</span>
-                      <strong>3</strong>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
             <div className="task-table-container">
               <div className="heading">All Tasks</div>
               <Table
@@ -312,83 +328,6 @@ class TaskManager extends Component {
                 dark={!this.isLightTheme()}
               />
             </div>
-            <div className="task-table-container">
-              <div className="heading">Details</div>
-              <Table
-                valueFromData={this.tableValue}
-                perPageLimit={this.perPageLimit}
-                visiblecheckboxStatus={this.checkboxValue}
-                tableClasses={{
-                  table: 'task-data-tabel',
-                  tableParent: 'tasks-data-table',
-                  parentClass: 'all-task-data-table',
-                }}
-                searchKey="name"
-                showingLine="Showing %start% to %end% of %total%"
-                dark={!this.isLightTheme()}
-              />
-            </div>
-            <div className="task-progressbar-container">
-              <div className="row">
-                <div className="col-lg-4 col-md-6 col-sm-12">
-                  <div className="task-progressbar-box">
-                    <h3>Ganesh</h3>
-                    <div className="d-block text-center">
-                      <div className="d-inline-block progressbar">
-                        <CircularProgressbar
-                          value={percentage}
-                          text={`${percentage}%`}
-                          styles={buildStyles({
-                            textSize: '32px',
-                            trailColor: '#a6cee3',
-                            pathColor: `rgba(31, 120, 180, ${percentage / 100})`,
-                          })}
-                        />
-                      </div>
-                      <div className="d-inline-block progressbar-text">8 of 10 Daskboard Completed</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6 col-sm-12">
-                  <div className="task-progressbar-box">
-                    <h3>Akhila</h3>
-                    <div className="d-block text-center">
-                      <div className="d-inline-block progressbar">
-                        <CircularProgressbar
-                          value={percentage}
-                          text={`${percentage}%`}
-                          styles={buildStyles({
-                            textSize: '32px',
-                            trailColor: '#a6cee3',
-                            pathColor: `rgba(31, 120, 180, ${percentage / 100})`,
-                          })}
-                        />
-                      </div>
-                      <div className="d-inline-block progressbar-text">8 of 10 Daskboard Completed</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6 col-sm-12">
-                  <div className="task-progressbar-box">
-                    <h3>Zakir</h3>
-                    <div className="d-block text-center">
-                      <div className="d-inline-block progressbar">
-                        <CircularProgressbar
-                          value={percentage}
-                          text={`${percentage}%`}
-                          styles={buildStyles({
-                            textSize: '32px',
-                            trailColor: '#a6cee3',
-                            pathColor: `rgba(31, 120, 180, ${percentage / 100})`,
-                          })}
-                        />
-                      </div>
-                      <div className="d-inline-block progressbar-text">8 of 10 Daskboard Completed</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </React.Fragment>
@@ -396,4 +335,4 @@ class TaskManager extends Component {
   }
 }
 
-export default TaskManager;
+export default AllTasks;

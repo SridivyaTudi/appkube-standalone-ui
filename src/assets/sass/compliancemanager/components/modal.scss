@@ -104,3 +104,17 @@
     }
   }
 }
+@media only screen and (max-width: 1024px){
+    .assessments-modal-container{
+        .wizard-step-line-container{
+            .wizard-step-button{
+                &:before{
+                    display: block;
+                }
+                &:after{
+                    display: block;
+                }
+            }
+        }
+    }
+}
