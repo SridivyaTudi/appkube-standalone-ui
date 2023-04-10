@@ -1,0 +1,30 @@
+.wizard-step-component-container {
+  .wizard-step-component {
+    .account-setup-tab-contents {
+      .operation-card {
+        display: grid;
+        min-height: 500px;
+        padding: 30px;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+        ul {
+          padding: 0 0 0 30px;
+          li {
+            font-size: 14px;
+            line-height: 18px;
+            font-weight: 400;
+            color: #707070;
+            margin-bottom: 8px;
+          }
+        }
+      }
+      .contents{
+        ul{
+            li{
+                list-style: auto;
+                margin-bottom: 8px;
+            }
+        }
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ import CatalogueManagement from '../perfmanager/pages/catalogueManagement';
 import Environments from '../assetmanager/pages/environments';
 import AmazonServices from '../assetmanager/pages/amazonservices';
 import Kubernetes from '../assetmanager/pages/kubernetes';
-import StorageDetails from '../assetmanager/pages/storageDetails';
+import StorageDetails from '../assetmanager/pages/storagedetails';
 import AccountSetup from '../assetmanager/pages/accountsetup';
 import DepartmentWiseProducts from '../assetmanager/pages/departmentWiseProducts';
 import DepartmentWiseCharts from '../assetmanager/pages/departmentWiseProducts/departmentChart';
@@ -25,6 +25,7 @@ import AddDatasouceCredential from '../assetmanager/pages/addDatasource/addDatas
 import ExploreDataSourceDetail from '../assetmanager/pages/addDatasource/exploreDataSourceDetail';
 import AddDataSourceProduct from '../assetmanager/pages/addDatasource/addDatasourceProduct';
 import AddDatasourceInputs from '../assetmanager/pages/addDatasource/addDatasourceInputs';
+import DiscovryEnvironments from '../assetmanager/pages/discovryEnvironments';
 
 //***** Alertmanager *****//
 import MonitorAlerts from '../alertmanager/pages/monitorAlerts';
@@ -33,7 +34,7 @@ import ManageAlertRule from '../alertmanager/pages/manageAlertRule';
 import AllAlerts from '../alertmanager/pages/allAlerts';
 import Rules from '../alertmanager/pages/rules';
 import CreateRule from '../alertmanager/pages/createRule';
-import AllTickets from '../alertmanager/pages/allTickets';
+import AllTickets from '../alertmanager/pages/alltickets';
 import ScriptEditor from '../alertmanager/pages/scriptEditor';
 import SearchAlert from '../alertmanager/pages/searchAlert';
 
@@ -54,12 +55,12 @@ import EmsDashboard from '../emsReporting/pages/Dashboard';
 
 //***** compliancemanager *****//
 import ComplianDashboard from '../compliancemanager/pages/dashboard';
-import ComplianceExclusions from '../compliancemanager/pages/complianceExclusions';
+import ComplianceExclusions from '../compliancemanager/pages/complianceexclusions';
 import ComplianceRulesets from '../compliancemanager/pages/ComplianceRulesets';
 import ComplianceRemediation from '../compliancemanager/pages/complianceRemediation';
 import ComplianceAssessmentHistory from '../compliancemanager/pages/complianceAssessmentHistory';
-import CompliancePolicy from '../compliancemanager/pages/compliancePolicy';
-import ComplianceHistory from '../compliancemanager/pages/complianceHistory';
+import CompliancePolicy from '../compliancemanager/pages/compliancepolicy';
+import ComplianceHistory from '../compliancemanager/pages/compliancehistory';
 import GslBuilder from '../compliancemanager/pages/gslBuilder';
 import ApiGateway from '../compliancemanager/pages/apiGateway';
 import EditorGslBuilder from '../compliancemanager/pages/editorGslBuilder';
@@ -123,6 +124,8 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/explore-datasource" element={<ExploreDataSourceDetail />} />
       <Route path="/assetmanager/pages/add-data-source-product" element={<AddDataSourceProduct />} />
       <Route path="/assetmanager/pages/add-data-source-inputs" element={<AddDatasourceInputs />} />
+      <Route path="/assetmanager/pages/discovryenvironments" element={<DiscovryEnvironments />} />
+      
 
       {/***** Alertmanager *****/}
       <Route path="/alertmanager/pages/monitor-alerts" element={<MonitorAlerts />} />
@@ -131,7 +134,7 @@ export const AllRoutes = () => {
       <Route path="/alertmanager/pages/all-alerts" element={<AllAlerts />} />
       <Route path="/alertmanager/pages/rules" element={<Rules />} />
       <Route path="/alertmanager/pages/create-rule" element={<CreateRule />} />
-      <Route path="/alertmanager/pages/all-tickets" element={<AllTickets />} />
+      <Route path="/alertmanager/pages/alltickets" element={<AllTickets />} />
       <Route path="/alertmanager/pages/script-editor" element={<ScriptEditor />} />
       <Route path="/alertmanager/pages/search-alert" element={<SearchAlert />} />
 
