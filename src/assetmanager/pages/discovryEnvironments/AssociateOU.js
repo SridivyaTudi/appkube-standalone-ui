@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import CreateNewAssociateOuPopup from "./CreateNewAssociateOuPopup";
 
 class AssociateOU extends Component {
   constructor(props) {
@@ -6,6 +7,7 @@ class AssociateOU extends Component {
     this.state = {
       collapsed: [],
       selectedData: [],
+      showPopup: false,
     };
     this.createNewOURef = React.createRef();
   }
@@ -22,6 +24,16 @@ class AssociateOU extends Component {
     this.setState({
       selectedData: [id, unitId],
     });
+  };
+
+  toggleMenu = () => {
+    this.setState({
+      showMenu: !this.state.showMenu,
+    });
+  };
+
+  popupToggle = () => {
+    this.setState({ showPopup: !this.state.showPopup });
   };
 
   renderOrganizations = (organizationList) => {
@@ -75,25 +87,70 @@ class AssociateOU extends Component {
 
   render() {
     const { organizationList, meta } = this.props;
+    const { showPopup } = this.state;
     return (
-      <div className="d-inline-block width-100 account-setup-tab-contents">
-        <div className="contents">
-          <div className="sub-heading">
-            <strong>
-            Select Organizational Unit to Associate with Cloud Account Or Create new
-            </strong>
-          </div>
-          <p>
-            Select the OU from below or <strong><a>create new OU</a></strong>
-          </p>
-          <div className="collapse-contents">
-            <ul>
-              {organizationList !== null &&
-                this.renderOrganizations(organizationList)}
-            </ul>
+      <>
+        <div className="d-inline-block width-100 account-setup-tab-contents">
+          <div className="contents">
+            <div className="sub-heading">
+              <strong>
+                Select Organizational Unit to Associate with Cloud Account Or
+                Create new
+              </strong>
+            </div>
+            <p>
+              Select the OU from below or{" "}
+              <strong>
+                <a
+                  onClick={() => {
+                    this.setState({ showPopup: !this.state.showPopup });
+                  }}
+                >
+                  create new OU
+                </a>
+              </strong>
+            </p>
+            <div onClick={this.toggleMenu} className="open-close-menu">
+              <div className="caret-right"></div>
+              {/* <div className="caret-down"></div> */}
+              <strong>Synectiks</strong>
+            </div>
+            {this.state.showMenu == true && (
+              <div className="menu-list">
+                <ul>
+                  <li>
+                    <a href="#">
+                      <strong>Finance</strong>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <strong>IT Networking</strong>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <strong>Monitoring</strong>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            )}
+            <div className="collapse-contents">
+              <ul>
+                {organizationList !== null &&
+                  this.renderOrganizations(organizationList)}
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
+        {showPopup && (
+          <CreateNewAssociateOuPopup
+            isOpen={showPopup}
+            toggle={this.popupToggle}
+          />
+        )}
+      </>
     );
   }
 }

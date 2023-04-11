@@ -155,35 +155,35 @@ class CreateRole extends Component {
                   type="text"
                   name="displayName"
                   value={displayName}
-                  placeholder="Account Name"
+                  placeholder="Optional"
                   onChange={this.handleStateChange}
                 ></input>
               </div>
               <span>{errorData.displayName.message}</span>
               <div className="form-group">
-                <label>Access Key Id</label>
+                <label>Role ARN</label>
                 <input
                   className="form-control"
                   type="text"
                   name="accessKey"
                   value={accessKey}
-                  placeholder="AWS Access Key"
+                  placeholder=""
                   onChange={this.handleStateChange}
                 ></input>
               </div>
               <span>{errorData.accessKey.message}</span>
               <div className="form-group">
-                <label>Secrete Key</label>
+                <label>External Id</label>
                 <input
                   className="form-control"
                   type="text"
                   name="secretKey"
                   value={secretKey}
-                  placeholder="AWS Secret Key"
+                  placeholder="ME4@s7fvs@dQdghDvdsea4RE"
                   onChange={this.handleStateChange}
                 ></input>
               </div>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label>Account Id</label>
                 <input
                   className="form-control"
@@ -193,7 +193,7 @@ class CreateRole extends Component {
                   placeholder="AWS Account Id"
                   onChange={this.handleStateChange}
                 ></input>
-              </div>
+              </div> */}
               <span>{errorData.secretKey.message}</span>
             </div>
           </div>

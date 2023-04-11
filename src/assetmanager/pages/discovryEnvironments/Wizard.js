@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import AccountAddedSuccessfullyPopup from "./AccountAddedSuccessfullyPopup";
 
 class Wizard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentStep: 0,
+      showPopup: false,
     };
   }
 
@@ -65,11 +67,15 @@ class Wizard extends Component {
     return retData;
   };
 
+  popupToggle = () => {
+    this.setState({ showPopup: !this.state.showPopup });
+  };
+
   render() {
-    const { currentStep } = this.state;
+    const { currentStep, showPopup } = this.state;
     const { steps } = this.props;
     return (
-      <div className="account-setup-container">
+      <div className="account-setup-container new-environment-container">
         <div className="heading">New AWS Account Setup</div>
         <div className="wizard-step-line-container">
           {this.createStepLine()}
@@ -98,14 +104,23 @@ class Wizard extends Component {
             )}
             {currentStep >= steps.length - 1 && (
               <button
-                onClick={this.props.submitPage}
+                onClick={() => {
+                  this.setState({ showPopup: !this.state.showPopup });
+                }}
+                // onClick={this.props.submitPage}
                 className="asset-blue-button m-r-0 m-b-0"
               >
-                Submit
+                Finish
               </button>
             )}
           </div>
         </div>
+        {showPopup && (
+          <AccountAddedSuccessfullyPopup
+            isOpen={showPopup}
+            toggle={this.popupToggle}
+          />
+        )}
       </div>
     );
   }
