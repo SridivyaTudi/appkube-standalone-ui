@@ -714,3 +714,26 @@
     margin-top: 15px;
   }
 }
+.tagged-box{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  color: #FFFFFF;
+  background-color: #B8E986;
+  text-align: center;
+  margin-right: 5px;
+}
+.tagged-box i{
+  font-size: 16px;
+  line-height: 25px;
+}
+.custom-table .data-table-parent .data-table tbody tr:nth-child(odd) .action-btn{
+  background-color: #ffffff;
+  
+}
+.action-btn{
+  color: #0077B6;
+  border: none;
+  background-color: #F8F9FB;
+}
+

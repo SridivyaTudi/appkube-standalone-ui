@@ -26,6 +26,7 @@ import ExploreDataSourceDetail from '../assetmanager/pages/addDatasource/explore
 import AddDataSourceProduct from '../assetmanager/pages/addDatasource/addDatasourceProduct';
 import AddDatasourceInputs from '../assetmanager/pages/addDatasource/addDatasourceInputs';
 import DiscovryEnvironments from '../assetmanager/pages/discovryEnvironments';
+import TaggingWizard from'../assetmanager/pages/taggingWizard';
 
 //***** Alertmanager *****//
 import MonitorAlerts from '../alertmanager/pages/monitorAlerts';
@@ -125,6 +126,7 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/add-data-source-product" element={<AddDataSourceProduct />} />
       <Route path="/assetmanager/pages/add-data-source-inputs" element={<AddDatasourceInputs />} />
       <Route path="/assetmanager/pages/discovryenvironments" element={<DiscovryEnvironments />} />
+      <Route path="/assetmanager/pages/taggingWizard" element={<TaggingWizard />} />
       
 
       {/***** Alertmanager *****/}
