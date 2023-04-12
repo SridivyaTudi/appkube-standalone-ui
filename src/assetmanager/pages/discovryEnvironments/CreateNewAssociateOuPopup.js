@@ -25,10 +25,11 @@ export class CreateNewAssociateOuPopup extends Component {
   render() {
     const state = this.state;
     return (
-      <Modal style={{ borderRadius: "0px" }}
+      <Modal
+        style={{ borderRadius: "0px" }}
         isOpen={this.props.isOpen}
         toggle={this.props.toggle}
-        className="modal-container discovry-enronment-container" 
+        className="modal-container discovry-enronment-container"
       >
         <ModalHeader>
           <strong>Create New Organizational Unit</strong>
@@ -41,23 +42,29 @@ export class CreateNewAssociateOuPopup extends Component {
             <i class="fal fa-times"></i>
           </button>
         </ModalHeader>
-        <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
+        <ModalBody
+          style={{
+            height: "calc(100vh - 280px)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
           <div className="form-group">
             <label>Display Name</label>
             <input
               className="input-group-text"
               type="text"
               name="displayName"
-            //   value={displayName}
+              //   value={displayName}
               placeholder="Name of OU"
               onChange={this.handleStateChange}
             ></input>
           </div>
           <p>Select the Account or OU below</p>
           <div className="select-synectiks">
-          <div onClick={this.toggleMenu} className="open-close-menu">
+            <div onClick={this.toggleMenu} className="open-close-menu">
               <div className="caret-right"></div>
-              {/* <div className="caret-down"></div> */}
+              {/* <div className="caret-down active"></div> */}
               <strong>Synectiks</strong>
             </div>
             {this.state.showMenu == true && (
