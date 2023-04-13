@@ -40,7 +40,7 @@ export class TaggingWizard extends Component {
               </div>
               <div className="col-lg-3 col-md-3 col-sm-12">
                 <div className="float-right common-right-btn">
-                  <Link className="asset-white-button min-width-inherit m-r-0">
+                  <Link className="asset-white-button min-width-inherit m-r-1">
                     <img alt="jobs" src={Jobs} style={{ maxWidth: "20px" }} />
                   </Link>
                   <a className="white-button m-r-0" href="#">
