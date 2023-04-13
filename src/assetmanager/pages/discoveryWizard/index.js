@@ -7,7 +7,7 @@ import CreateRole from "./CreateRole";
 import AssociateOU from "./AssociateOU";
 import Finish from "./Finish";
 
-class DiscovryEnvironments extends Component {
+class DiscoveryWizard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -175,4 +175,4 @@ class DiscovryEnvironments extends Component {
   }
 }
 
-export default DiscovryEnvironments;
+export default DiscoveryWizard;

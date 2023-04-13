@@ -25,7 +25,7 @@ import AddDatasouceCredential from '../assetmanager/pages/addDatasource/addDatas
 import ExploreDataSourceDetail from '../assetmanager/pages/addDatasource/exploreDataSourceDetail';
 import AddDataSourceProduct from '../assetmanager/pages/addDatasource/addDatasourceProduct';
 import AddDatasourceInputs from '../assetmanager/pages/addDatasource/addDatasourceInputs';
-import DiscovryEnvironments from '../assetmanager/pages/discovryEnvironments';
+import DiscoveryWizard from '../assetmanager/pages/discoveryWizard';
 import TaggingWizard from'../assetmanager/pages/taggingWizard';
 import AddTaggingWizard from '../assetmanager/pages/addTaggingWizard';
 
@@ -126,7 +126,7 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/explore-datasource" element={<ExploreDataSourceDetail />} />
       <Route path="/assetmanager/pages/add-data-source-product" element={<AddDataSourceProduct />} />
       <Route path="/assetmanager/pages/add-data-source-inputs" element={<AddDatasourceInputs />} />
-      <Route path="/assetmanager/pages/discovryenvironments" element={<DiscovryEnvironments />} />
+      <Route path="/assetmanager/pages/discoveryWizard" element={<DiscoveryWizard />} />
       <Route path="/assetmanager/pages/taggingWizard" element={<TaggingWizard />} />
       <Route path="/assetmanager/pages/addTaggingWizard" element={<AddTaggingWizard />} />
       

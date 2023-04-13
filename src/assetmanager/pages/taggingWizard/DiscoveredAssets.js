@@ -44,7 +44,7 @@ export class DiscoveredAssets extends Component {
           renderCallback: () => {
             return (
               <td className="text-center">
-                <button className="action-btn"><i class="far fa-plus"></i></button>
+                <button className="action-btn"><a href="/assetmanager/pages/addTaggingWizard"><i class="far fa-plus"></i></a></button>
               </td>
             );
           },
