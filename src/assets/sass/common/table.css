@@ -374,11 +374,22 @@
   width: 100%;
   margin-bottom: 1rem;
 }
+.custom-table .data-table-parent .data-table th {
+  padding: 7px 10px;
+  text-align: left;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #414D55;
+}
 
-.custom-table .data-table-parent .data-table th,
 .custom-table .data-table-parent .data-table td {
   padding: 7px 10px;
   text-align: left;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #39475B;
 }
 
 .custom-table .data-table-parent .data-table tbody tr:nth-child(odd) {
@@ -715,8 +726,8 @@
   }
 }
 .tagged-box{
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   color: #FFFFFF;
   background-color: #B8E986;
@@ -724,8 +735,8 @@
   margin-right: 5px;
 }
 .tagged-box i{
-  font-size: 16px;
-  line-height: 25px;
+  font-size: 13px;
+  line-height: 20px;
 }
 .custom-table .data-table-parent .data-table tbody tr:nth-child(odd) .action-btn{
   color: #0077B6;
