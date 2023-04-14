@@ -728,12 +728,18 @@
   line-height: 25px;
 }
 .custom-table .data-table-parent .data-table tbody tr:nth-child(odd) .action-btn{
+  color: #0077B6;
   background-color: #ffffff;
   
 }
-.action-btn{
+.action-btn {
   color: #0077B6;
   border: none;
   background-color: #F8F9FB;
+}
+
+.action-btn i{
+  color: #0077B6;
+
 }
 

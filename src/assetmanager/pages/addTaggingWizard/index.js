@@ -5,102 +5,7 @@ import { Collapse } from "reactstrap";
 export class AddTaggingWizard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      collectionArray: [
-        {
-          name: "Synectiks",
-          type: "Installed",
-          messages: "71",
-          openCollectionStatus: false,
-          subCollectionData: [
-            {
-              subCollectionName: "Human Resource",
-            },
-            {
-              subCollectionName: "IT Networking",
-            },
-            {
-              subCollectionName: "Monitoring",
-            },
-            {
-              subCollectionName: "Monitoring",
-            },
-            {
-              subCollectionName: "Monitoring",
-            },
-            {
-              subCollectionName: "Monitoring",
-            },
-          ],
-        },
-      ],
-    };
-  }
-  createCollectionTable = () => {
-    const retData = [];
-    const { collectionArray } = this.state;
-    const length = collectionArray.length;
-    for (let i = 0; i < length; i++) {
-      const collection = collectionArray[i];
-      const subCollections = collection.subCollectionData;
-      const subCollectionJSX = [];
-      for (let j = 0; j < subCollections.length; j++) {
-        const collectionsubData = subCollections[j];
-        subCollectionJSX.push(
-          <div className="tbody">
-            <div className="tbody-td first">
-              <div
-                onClick={() => this.opensubCollection(i)}
-                className="caret-right"
-              ></div>
-              
-              {collectionsubData.subCollectionName}
-            </div>
-            {/* <div className="tbody-td">
-              {collectionsubData.subCollectionType}
-            </div> */}
-          </div>
-        );
-      }
-      retData.push(
-        <div className="tbody">
-          <div className="tbody-inner">
-            <div className="tbody-td">
-              {collection.openCollectionStatus == false && (
-                <div
-                  onClick={() => this.opensubCollection(i)}
-                  className="caret-right"
-                ></div>
-              )}
-              {collection.openCollectionStatus == true && (
-                <div
-                  onClick={() => this.opensubCollection(i)}
-                  className="caret-down"
-                ></div>
-              )}
-              {collection.name}
-              {/* <b>({subCollections.length})</b> */}
-            </div>
-          </div>
-          <Collapse isOpen={collection.openCollectionStatus}>
-            {subCollectionJSX}
-          </Collapse>
-        </div>
-      );
-    }
-    return retData;
-  };
-  opensubCollection(index) {
-    const { collectionArray } = this.state;
-    for (let i = 0; i < collectionArray.length; i++) {
-      if (i == index) {
-        collectionArray[i].openCollectionStatus =
-          !collectionArray[i].openCollectionStatus;
-      }
-    }
-    this.setState({
-      collectionArray: collectionArray,
-    });
+    this.state = {};
   }
   render() {
     return (
@@ -144,13 +49,312 @@ export class AddTaggingWizard extends Component {
                         <h4 className="m-b-0">Resources</h4>
                       </div>
                       <div className="resources-contant">
-                        <div className="collection-details">
-                          <div className="container-inner">
-                            <div className="collection-data-table">
-                              {this.createCollectionTable()}
-                            </div>
-                          </div>
-                        </div>
+                        <table className="data-table">
+                          <tr>
+                            <td>
+                              <div className="table-contant">
+                                <input type="checkbox" className="checkbox" />
+                                <span>Synectiks</span>
+                              </div>
+                              <table className="data-table inner">
+                                <tr>
+                                  <td>
+                                    <div className="table-contant">
+                                      <input
+                                        type="checkbox"
+                                        className="checkbox"
+                                      />
+                                      <span>Human Resource</span>
+                                    </div>
+                                    <table className="data-table inner">
+                                      <tr>
+                                        <td>
+                                          <div className="table-contant">
+                                            <input
+                                              type="checkbox"
+                                              className="checkbox"
+                                            />
+                                            <span>HRMS</span>
+                                          </div>
+                                          <table className="data-table inner">
+                                            <tr>
+                                              <td>
+                                                <div className="table-contant">
+                                                  <input
+                                                    type="checkbox"
+                                                    className="checkbox"
+                                                  />
+                                                  <span>Development</span>
+                                                </div>
+                                                <table className="data-table inner">
+                                                  <tr>
+                                                    <td>
+                                                      <div className="table-contant">
+                                                        <input
+                                                          type="checkbox"
+                                                          className="checkbox"
+                                                        />
+                                                        <span>
+                                                          Payroll Management
+                                                        </span>
+                                                      </div>
+                                                      <table className="data-table inner">
+                                                        <tr>
+                                                          <td>
+                                                            <div className="table-contant">
+                                                              <input
+                                                                type="checkbox"
+                                                                className="checkbox"
+                                                              />
+                                                              <span>
+                                                                App Services
+                                                              </span>
+                                                            </div>
+                                                            <table className="data-table inner">
+                                                              <tr>
+                                                                <td>
+                                                                  <div className="table-contant">
+                                                                    <input
+                                                                      type="checkbox"
+                                                                      className="checkbox"
+                                                                    />
+                                                                    <span>
+                                                                      Java
+                                                                      Springboot
+                                                                      API
+                                                                      Service
+                                                                    </span>
+                                                                  </div>
+                                                                </td>
+                                                              </tr>
+                                                              <tr>
+                                                                <td>
+                                                                  <div className="table-contant">
+                                                                    <input
+                                                                      type="checkbox"
+                                                                      className="checkbox"
+                                                                    />
+                                                                    <span>
+                                                                      Golang API
+                                                                      Services
+                                                                    </span>
+                                                                  </div>
+                                                                </td>
+                                                              </tr>
+                                                              <tr>
+                                                                <td>
+                                                                  <div className="table-contant">
+                                                                    <input
+                                                                      type="checkbox"
+                                                                      className="checkbox"
+                                                                    />
+                                                                    <span>
+                                                                      NodeJs API
+                                                                      Services
+                                                                    </span>
+                                                                  </div>
+                                                                </td>
+                                                              </tr>
+                                                              <tr>
+                                                                <td>
+                                                                  <div className="table-contant">
+                                                                    <input
+                                                                      type="checkbox"
+                                                                      className="checkbox"
+                                                                    />
+                                                                    <span>
+                                                                      Java
+                                                                      Lambda
+                                                                      Functions{" "}
+                                                                    </span>
+                                                                  </div>
+                                                                </td>
+                                                              </tr>
+                                                            </table>
+                                                          </td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td>
+                                                            <div className="table-contant">
+                                                              <input
+                                                                type="checkbox"
+                                                                className="checkbox"
+                                                              />
+                                                              <span>
+                                                                Data Services
+                                                              </span>
+                                                            </div>
+                                                          </td>
+                                                        </tr>
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>
+                                                      <div className="table-contant">
+                                                        <input
+                                                          type="checkbox"
+                                                          className="checkbox"
+                                                        />
+                                                        <span>
+                                                          Leave Management
+                                                        </span>
+                                                      </div>
+                                                    </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>
+                                                      <div className="table-contant">
+                                                        <input
+                                                          type="checkbox"
+                                                          className="checkbox"
+                                                        />
+                                                        <span>
+                                                          Facility Management
+                                                        </span>
+                                                      </div>
+                                                    </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>
+                                                      <div className="table-contant">
+                                                        <input
+                                                          type="checkbox"
+                                                          className="checkbox"
+                                                        />
+                                                        <span>
+                                                          Appraisal Management
+                                                        </span>
+                                                      </div>
+                                                    </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>
+                                                      <div className="table-contant">
+                                                        <input
+                                                          type="checkbox"
+                                                          className="checkbox"
+                                                        />
+                                                        <span>
+                                                          H&M Management
+                                                        </span>
+                                                      </div>
+                                                    </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>
+                                                      <div className="table-contant">
+                                                        <input
+                                                          type="checkbox"
+                                                          className="checkbox"
+                                                        />
+                                                        <span>
+                                                          Vendor Management
+                                                        </span>
+                                                      </div>
+                                                    </td>
+                                                  </tr>
+                                                </table>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td>
+                                                <div className="table-contant">
+                                                  <input
+                                                    type="checkbox"
+                                                    className="checkbox"
+                                                  />
+                                                  <span>Stage</span>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td>
+                                                <div className="table-contant">
+                                                  <input
+                                                    type="checkbox"
+                                                    className="checkbox"
+                                                  />
+                                                  <span>Testing</span>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td>
+                                                <div className="table-contant">
+                                                  <input
+                                                    type="checkbox"
+                                                    className="checkbox"
+                                                  />
+                                                  <span>Production</span>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <div className="table-contant">
+                                            <input
+                                              type="checkbox"
+                                              className="checkbox"
+                                            />
+                                            <span>Account Management</span>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <div className="table-contant">
+                                            <input
+                                              type="checkbox"
+                                              className="checkbox"
+                                            />
+                                            <span>Inventory Management</span>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <div className="table-contant">
+                                            <input
+                                              type="checkbox"
+                                              className="checkbox"
+                                            />
+                                            <span>Travel Management</span>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div className="table-contant">
+                                      <input
+                                        type="checkbox"
+                                        className="checkbox"
+                                      />
+                                      <span>IT Networking</span>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div className="table-contant">
+                                      <input
+                                        type="checkbox"
+                                        className="checkbox"
+                                      />
+                                      <span>Monitoring</span>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
                       </div>
                     </div>
                   </div>
