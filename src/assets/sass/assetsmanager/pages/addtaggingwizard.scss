@@ -62,9 +62,11 @@
                           }
                         }
                       }
-                      .table-contant {
-                        background-color: #fff;
-                        padding: 5px 0px 5px 45px;
+                      tr{
+                        .table-contant {
+                          background-color: #fff;
+                          padding: 5px 0px 5px 45px;
+                        }
                       }
                       .inner {
                         tr {
@@ -75,9 +77,11 @@
                             }
                           }
                         }
-                        .table-contant {
-                          background-color: #f8f9fb;
-                          padding: 5px 0px 5px 60px;
+                        tr{
+                          .table-contant {
+                            background-color: #f8f9fb;
+                            padding: 5px 0px 5px 60px;
+                          }
                         }
                         .inner {
                           tr {
@@ -88,9 +92,11 @@
                               }
                             }
                           }
-                          .table-contant {
-                            background-color: #fff;
-                            padding: 5px 0px 5px 75px;
+                          tr{
+                            .table-contant {
+                              background-color: #fff;
+                              padding: 5px 0px 5px 75px;
+                            }
                           }
                           .inner {
                             tr {
@@ -101,10 +107,13 @@
                                 }
                               }
                             }
-                            .table-contant {
-                              background-color: #f8f9fb;
-                              padding: 5px 0px 5px 90px;
+                            tr{
+                              .table-contant {
+                                background-color: #f8f9fb;
+                                padding: 5px 0px 5px 90px;
+                              }
                             }
+                            
                             .inner {
                               tr {
                                 &:nth-child(odd) {
@@ -114,9 +123,11 @@
                                   }
                                 }
                               }
-                              .table-contant {
-                                background-color: #fff;
-                                padding: 5px 0px 5px 105px;
+                              tr{
+                                .table-contant {
+                                  background-color: #fff;
+                                  padding: 5px 0px 5px 105px;
+                                }
                               }
                             }
                           }
