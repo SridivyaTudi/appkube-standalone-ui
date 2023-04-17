@@ -386,7 +386,7 @@ class Collection extends Component {
             <div className="collection-dashboard-search">
               <div className="row">
                 <div className="col-lg-12 col-md-12 col-sm-12">
-                  <div className="search-buttons float-right">
+                  <div className="search-buttons">
                     <a className="blue-button">New Dashboard</a>
                     <a className="blue-button">New Folder</a>
                     <a className="blue-button m-r-0">Import</a>
@@ -397,7 +397,7 @@ class Collection extends Component {
             <div className="collection-dashboard-fliter-sort">
               <div className="row">
                 <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12">
-                  <div className="fliter-sort-left">
+                  <div className="fliter-sort-left m-b-1">
                     <div className="sort-checkbox">
                       <input type="checkbox" className="checkbox" />
                     </div>
@@ -428,7 +428,7 @@ class Collection extends Component {
                   </div>
                 </div>
                 <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12">
-                  <div className="filter-starred float-right fliter-sort-right">
+                  <div className="filter-starred float-right fliter-sort-right m-b-1">
                     <div className="sort-checkbox">
                       <input type="checkbox" className="checkbox" />
                       <span>Filter by starred</span>

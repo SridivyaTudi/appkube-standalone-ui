@@ -43,3 +43,19 @@
       margin-right: 0;
   }
 }
+@media (max-width: 991px) {
+  .fliter-sort-left{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  .fliter-sort-right{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    
+  }
+}
+

@@ -188,10 +188,10 @@ class CloudDashboards extends React.Component {
                       </div>
                       <h3 className="title is-block">{name}</h3>
                       <p className="subtitle is-block">{description}</p>
-                      <div className="library-icon">
+                      <div className="library-icon m-b-1">
                         <a>{`Add Catalog To library`}</a>
                       </div>
-                      <div className="preview-dashboard-icon">
+                      <div className="preview-dashboard-icon m-b-1">
                         <a onClick={() => this.onClickPreviewDashboard(images)}>
                           {`Preview Dashboard`}
                         </a>
@@ -294,7 +294,7 @@ class CloudDashboards extends React.Component {
       <div className="catalogue-right-container">
         <div className="templated-search">
           <div className="row d-flex align-items-center">
-            <div className="col-sm-10">
+            <div className="col-lx-10 col-lg-9 col-md-12 col-sm-12 col-xs-12">
               <div className="search-box">
                 <form>
                   <div className="form-group search-control-group m-b-0">
@@ -311,7 +311,7 @@ class CloudDashboards extends React.Component {
                 </form>
               </div>
             </div>
-            <div className="col-sm-2">
+            <div className="col-lx-2 col-lg-3 col-md-12 col-sm-12 col-xs-12">
               <div className="btnContainer">
                 <button
                   className={
@@ -349,13 +349,13 @@ class CloudDashboards extends React.Component {
     return (
       <div className="catalogue-inner-tabs-container">
         <div className="row">
-          <div className="col-lg-3 col-md-3 col-sm-12 col-r-p">
+          <div className="col-lg-3 col-md-4 col-sm-12 col-r-p">
             <Filter
               filterJsonData={filterData}
               onChangeFilter={this.onChangeFilter}
             />
           </div>
-          <div className="col-lg-9 col-md-9 col-sm-12 col-l-p">
+          <div className="col-lg-9 col-md-8 col-sm-12 col-l-p">
             {this.formFields()}
           </div>
         </div>

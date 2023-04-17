@@ -43,10 +43,14 @@ export class TaggingWizard extends Component {
                   <Link className="m-r-1">
                     <img alt="jobs" src={SearchIcon} style={{ maxWidth: "20px" }} />
                   </Link>
-                  <a className="white-button m-r-0" href="#">
-                  <i class="far fa-arrow-circle-left"></i>
-                    &nbsp;&nbsp; Back
-                  </a>
+                  <Link
+                    to="/assetmanager/pages/environments"
+                    type="button"
+                    className="btn btn-link m-r-0"
+                  >
+                    <i className="far fa-arrow-alt-circle-left" />
+                    Back
+                  </Link>
                 </div>
               </div>
             </div>

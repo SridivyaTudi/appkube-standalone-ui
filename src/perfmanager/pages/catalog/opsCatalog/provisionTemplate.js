@@ -120,7 +120,7 @@ class ProvisioningTemplates extends React.Component {
           retData.push(
             <div
               className={`col-sm-12 ${
-                view === "grid" ? "col-md-6" : "col-md-12"
+                view === "grid" ? "col-md-12 col-lg-6" : "col-md-12" 
               }`}
               onClick={() => this.setActiveView(Type, associatedCloud)}
             >
@@ -205,7 +205,7 @@ class ProvisioningTemplates extends React.Component {
         </div>
         <div className="templated-search">
           <div className="row">
-            <div className="col-sm-10">
+            <div className="col-lx-10 col-lg-9 col-md-12 col-sm-12 col-xs-12">
               <div className="search-box">
                 <form>
                   <div className="form-group search-control-group m-b-0">
@@ -222,7 +222,7 @@ class ProvisioningTemplates extends React.Component {
                 </form>
               </div>
             </div>
-            <div className="col-sm-2">
+            <div className="col-lx-2 col-lg-3 col-md-12 col-sm-12 col-xs-12">
               <div className="btnContainer">
                 <button
                   className={
@@ -275,13 +275,13 @@ class ProvisioningTemplates extends React.Component {
     ) : (
       <div className="catalogue-inner-tabs-container templates-container">
         <div className="row">
-          <div className="col-lg-3 col-md-3 col-sm-12 col-r-p">
+          <div className="col-lg-3 col-md-4 col-sm-12 col-r-p">
             <Filter
               filterJsonData={filterData}
               onChangeFilter={this.onChangeFilter}
             />
           </div>
-          <div className="col-lg-9 col-md-9 col-sm-12 col-l-p">
+          <div className="col-lg-9 col-md-8 col-sm-12 col-l-p">
             {this.formFields()}
           </div>
         </div>

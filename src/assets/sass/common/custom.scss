@@ -1,4 +1,4 @@
- h3 {
+h3 {
   font-size: 20px;
   line-height: 24px;
   color: #3b4859;
@@ -27,7 +27,6 @@ p {
   padding-right: 45px;
   padding-bottom: 15px;
   border-bottom: 1px solid $perfmanager-container-border-color;
-  
 }
 //*********************************** Buttons *********************************//
 .white-button {
@@ -51,7 +50,6 @@ p {
     color: #57a4ff !important;
   }
 }
-
 
 .blue-button {
   background: #3b7cff !important;
@@ -235,9 +233,18 @@ p {
   cursor: no-drop;
   opacity: 0.8;
 }
-button{
-  &:focus{
+button {
+  &:focus {
     outline: none;
+  }
+}
+.btn-link {
+  color: #3b4859;
+
+  i {
+    margin-right: 8px;
+    font-size: 18px;
+    color: #57a4ff;
   }
 }
 //*************************************Search Bar***************************************//
@@ -1028,7 +1035,6 @@ a {
     }
 
     &:last-child {
-
       &:after,
       &:before {
         display: none;
@@ -1045,7 +1051,6 @@ a {
     display: none;
   }
 }
-
 
 @media (min-width: 1200px) {
   .col-xl-4 {
@@ -1108,4 +1113,23 @@ a {
 }
 .blue {
   color: #438afb;
+}
+@media (max-width: 991px) {
+  .common-container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (max-width: 767px) {
+  .search-top-header{
+    display: block;
+    .header-right{
+     text-align: left;
+     margin-top: 15px;
+     display: flex;
+     align-items: center;
+     justify-content: flex-start;
+    }
+  }
 }

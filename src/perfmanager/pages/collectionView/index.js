@@ -232,9 +232,9 @@ class CollectionView extends Component {
           <div className="common-container">
             <div className="search-top-header">
               <div className="header-left">
-                <div className="collection-heading">Collection</div>
+                <div className="collection-heading"><h4><strong>Collection</strong></h4></div>
               </div>
-              <div className="float-right header-right">
+              <div className="header-right">
                 <div className="script-select m-r-1">
                   <select className="form-control">
                     <option>Category</option>
