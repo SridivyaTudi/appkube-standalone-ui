@@ -610,7 +610,7 @@
 
 
 
-@media only screen and (max-width: 1200px) and (min-width: 768px) {
+@media only screen and (max-width: 1280px) and (min-width: 768px) {
   .custom-table .toolbar {
     float: left;
   }
@@ -650,6 +650,12 @@
     width: 50%;
     margin-top: 15px;
     float: left;
+  }
+  .custom-table .toolbar .search-box{
+    margin-top: 15px;
+  }
+  .custom-table .toolbar .search-box .search-control-group .input-group-text {
+    height: 34px;
   }
 
   .custom-table .toolbar .multiselect .form-control.select-label {
@@ -752,5 +758,45 @@
 .action-btn i{
   color: #0077B6;
 
+}
+@media only screen and (max-width: 767px) {
+  .custom-table .toolbar .showing {
+    float: left;
+    width: 100%;
+    
+  }
+    .custom-table .toolbar .multiselect {
+      width: 100%;
+      margin-top: 15px;
+      float: left;
+  }
+  .custom-table .toolbar .showby .form-control {
+    display: block;
+    width: 100%;
+    height: 34px;  
+ }
+ .custom-table .toolbar .showby span {
+    padding-left: 0;
+  }
+  .custom-table .toolbar .multiselect .form-control.select-label {
+    width: 100%;
+    display: block;
+  }
+  .custom-table .toolbar .showby {
+    width: 100%;
+    float: left;
+    text-align: left;
+    
+  }
+  .custom-table .toolbar .search-box{
+    margin-top: 15px;
+    display: block;
+    text-align: left;
+    width: 100%;
+  }
+  .custom-table .toolbar .search-box .search-control-group .input-group-text {
+    height: 34px;
+    width: 100%;
+  }
 }
 

@@ -80,12 +80,12 @@ class AlertRuleBuilder extends React.Component {
         <div className="alert-page-container">
           <div className="common-container">
             <div className="row">
-              <div className="col-md-5 col-sm-12">
+              <div className="col-lg-4 col-md-12 col-sm-12">
                 <div className="alert-heading">Alert Rule Builder</div>
               </div>
-              <div className="col-md-7 col-sm-12">
-                <div className="float-right common-right-btn">
-                  <button className="asset-blue-button save-rule">
+              <div className="col-lg-8 col-md-12 col-sm-12">
+                <div className="common-right-btn">
+                  <button className="asset-blue-button save-rule m-b-0">
                     Save Rule
                   </button>
                   <Link

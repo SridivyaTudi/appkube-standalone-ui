@@ -45,8 +45,12 @@
 
     div {
       text-align: left;
-      margin-left: 35px;
+      // margin-left: 35px;
       margin-top: 15px;
+    }
+    .filter-control-group{
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 }

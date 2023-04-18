@@ -235,7 +235,7 @@ class ManageAlertRule extends React.Component {
         <div className="alert-page-container">
           <div className="common-container">
             <div className="row">
-              <div className="col-md-6 col-sm-12">
+              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <button
                   className="asset-gray-button kpi-btn active"
                   onClick={() => this.onClickUnImplementedFeature("")}
@@ -249,7 +249,7 @@ class ManageAlertRule extends React.Component {
                   Log
                 </button>
               </div>
-              <div className="col-md-6 col-sm-12">
+              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div className="float-right common-right-btn">
                   <Link
                     to={`/alertmanager/pages/monitor-alerts`}
@@ -263,15 +263,15 @@ class ManageAlertRule extends React.Component {
           </div>
           <div className="common-container manage-container">
             <div className="row">
-              <div className="col-lg-8 col-md-12 col-sm-12 manage-rules-search">
+              <div className="col-lg-8 col-md-8 col-sm-12 manage-rules-search">
                 <div className="manage-rules-search-text">3 Alert Rules</div>
               </div>
-              <div className="col-lg-4 col-md-12 col-sm-12 manage-rules-btn">
+              <div className="col-lg-4 col-md-4 col-sm-12 manage-rules-btn">
                 <Rbac
                   parentName={config.PARENT_NAME}
                   childName="managealertrule-index-createalertrulebtn"
                 >
-                  <div className="float-right common-right-btn">
+                  <div className="common-right-btn">
                     <Link
                       to={`/alertmanager/pages/alert-rule-builder`}
                       className="asset-blue-button m-r-0 create-rule-btn"
