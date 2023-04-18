@@ -474,23 +474,23 @@
 
 @media only screen and (max-width: 1023px) {
   .import-dashboard-page-container {
-    .wizard-step-line-container {
-      .wizard-step-button {
-        width: 100%;
-        border-left: 1px solid #707070b5;
-        border-right: 1px solid #707070b5;
-        border-bottom: none;
+    // .wizard-step-line-container {
+    //   .wizard-step-button {
+    //     width: 100%;
+    //     border-left: 1px solid #707070b5;
+    //     border-right: 1px solid #707070b5;
+    //     border-bottom: none;
 
-        &:last-child {
-          border-bottom: 1px solid #707070b5;
-        }
+    //     &:last-child {
+    //       border-bottom: 1px solid #707070b5;
+    //     }
 
-        &:before,
-        &:after {
-          display: none;
-        }
-      }
-    }
+    //     &:before,
+    //     &:after {
+    //       display: none;
+    //     }
+    //   }
+    // }
   }
 }
 

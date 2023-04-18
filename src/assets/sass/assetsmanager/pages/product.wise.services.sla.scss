@@ -24,6 +24,9 @@
         font-weight: 600;
         padding-bottom: 5px;
         margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .services-sla-boxs {
@@ -463,4 +466,16 @@
             }
         }
     }
+}
+@media (max-width: 991px) {
+    .services-sla-container{
+        .services-heading {
+            display: block;
+            .header-right{
+                select{
+                    width: 100%;
+                }
+            }
+        }
+    } 
 }
