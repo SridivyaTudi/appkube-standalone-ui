@@ -29,6 +29,7 @@ export class TaggingWizard extends Component {
       },
     ];
   }
+  
   render() {
     return (
       <div className="asset-container">
@@ -41,7 +42,11 @@ export class TaggingWizard extends Component {
               <div className="col-lg-3 col-md-3 col-sm-12">
                 <div className="float-right common-right-btn">
                   <Link className="m-r-1">
-                    <img alt="jobs" src={SearchIcon} style={{ maxWidth: "20px" }} />
+                    <img
+                      alt="jobs"
+                      src={SearchIcon}
+                      style={{ maxWidth: "20px" }}
+                    />
                   </Link>
                   <Link
                     to="/assetmanager/pages/environments"

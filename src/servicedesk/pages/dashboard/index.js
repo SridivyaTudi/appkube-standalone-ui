@@ -7,8 +7,8 @@ import Table from "./../../components/table";
 import { RestService } from "../_service/RestService";
 import Rbac from "../Rbac/Rbac";
 import CreateButtonComponent from "../commanComponents/CreateButtonComponent";
-import DatePicker from "react-date-picker";
-import "react-datepicker/dist/react-datepicker.css";
+// import DatePicker from "react-date-picker";
+// import "react-datepicker/dist/react-datepicker.css";
 import OpenEditTicketPopup from "../../components/OpenEditTicketPopup";
 
 class Dashboard extends React.Component {
@@ -394,12 +394,12 @@ class Dashboard extends React.Component {
                     </div>
                     <div className="col-lg-7 col-md-12 col-sm-12 text-right">
                       <div className="d-inline-block v-a-top calendar-box">
-                        <DatePicker
+                        {/* <DatePicker
                           onChange={this.setDate}
                           value={selectedDate}
                           format="dd-MM-y"
                           clearIcon={null}
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>
