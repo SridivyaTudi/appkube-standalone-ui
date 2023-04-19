@@ -30,7 +30,6 @@ export class AddTaggingWizard extends Component {
   componentDidMount() {
     let getId = window.location.pathname;
     getId = getId.replace('/assetmanager/pages/addTaggingWizard/','')
-    // getId = 2;
     this.getDiscoverAssest(getId);
   }
   handleToggleTree(type, id = 0) {
