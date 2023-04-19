@@ -224,11 +224,11 @@ class Environments extends Component {
                 <i className="fa fa-angle-down"></i>
               </div>
             </div>
-            <div className="recent-fliters-container">
+            <div className="recent-fliters-container m-t-1">
               <div className="row">
-                <div className="col-lg-8 col-md-8 col-sm-12">
+                <div className="col-lg-8 col-md-12 col-sm-12 ">
                   <div className="row">
-                    <div className="col-lg-4 col-md-4 col-sm-12">
+                    <div className="col-lg-4 col-md-12 col-sm-12 m-b-1">
                       <div className="fliter">
                         <div
                           className="fliter-toggel"
@@ -281,7 +281,7 @@ class Environments extends Component {
                         />
                       </div>
                     </div>
-                    <div className="col-lg-4 col-md-4 col-sm-12">
+                    <div className="col-lg-4 col-md-12 col-sm-12 m-b-1">
                       <div className="fliter">
                         <div
                           className="fliter-toggel"
@@ -353,7 +353,7 @@ class Environments extends Component {
                         />
                       </div>
                     </div>
-                    <div className="col-lg-4 col-md-4 col-sm-12">
+                    <div className="col-lg-4 col-md-12 col-sm-12 m-b-1">
                       <div className="fliter">
                         <div className="fliter-toggel">
                           <i className="fa fa-sign-out" />
@@ -363,7 +363,7 @@ class Environments extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-4 col-md-4 col-sm-12">
+                <div className="col-lg-4 col-md-12 col-sm-12 m-b-1">
                   <div className="search-box">
                     <form>
                     <div className="form-group search-control-group m-b-0">

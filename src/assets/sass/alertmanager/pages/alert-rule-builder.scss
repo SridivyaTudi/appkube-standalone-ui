@@ -788,34 +788,89 @@
   }
 }
 
-
-@media only screen and (max-width: 767px) {
-  .float-right.common-right-btn {
-    text-align: left;
-    float: left;
+@media only screen and (max-width: 1280px){
+  .condition-box{
+    .condition-header{
+      .send-alert-text{
+        margin-bottom: 15px;
+      }
+      .greater-select{
+        margin-bottom: 15px;
+      }
+      .greater-search{
+        margin-bottom: 10px;
+        padding: 0;
+      }
+    }
   }
 }
 
-@media only screen and (max-width: 992px) {
-  .common-right-btn .alert-white-button {
-    min-width: 100px;
-  }
 
-  .wizard-step-line-container .wizard-step-button {
-    width: 100%;
-    border-left: 1px solid #707070b5;
-    border-right: 1px solid #707070b5;
-    border-bottom: none;
+@media only screen and (max-width: 767px) {
+  // .float-right.common-right-btn {
+  //   text-align: left;
+  //   float: left;
+  // }
+}
 
-    &:last-child {
-      border-bottom: 1px solid #707070b5;
+@media only screen and (max-width: 991px) {
+  .manage-alert-rule-container{
+    .alert-page-container{
+      .common-right-btn{
+        text-align: left;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .wizard-container{
+        padding-left: 0;
+        padding-right: 0;
+        .wizard-step-line-container{
+          .wizard-step-button {
+            font-size: 10px;
+          }
+        }
+      }
     }
-
-    &:before,
-    &:after {
-      display: none;
+  }
+  @media only screen and (max-width: 767px) {
+    .manage-alert-rule-container{
+      .alert-page-container{
+        .common-right-btn{
+          .save-rule{
+            min-width: 100px;
+            
+          }
+        }
+        .wizard-container{
+          .wizard-step-line-container{
+            .wizard-step-button {
+              font-size: 12px;
+            }
+          }
+        }
+      }
     }
   }
+  // .common-right-btn .alert-white-button {
+  //   min-width: 100px;
+  // }
+
+  // .wizard-step-line-container .wizard-step-button {
+  //   width: 100%;
+  //   border-left: 1px solid #707070b5;
+  //   border-right: 1px solid #707070b5;
+  //   border-bottom: none;
+
+  //   &:last-child {
+  //     border-bottom: 1px solid #707070b5;
+  //   }
+
+  //   &:before,
+  //   &:after {
+  //     display: none;
+  //   }
+  // }
 
   .time-series-box .time-series-header {
     width: 980px;

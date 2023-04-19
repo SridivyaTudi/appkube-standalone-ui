@@ -166,11 +166,11 @@ class AllTickets extends React.Component {
         <div className="alert-page-container">
           <div className="common-container">
             <div className="row">
-              <div className="col-lg-3 col-md-12 col-sm-12">
+              <div className="col-xl-3 col-lg-12 col-md-12 col-sm-12">
                 <div className="alert-heading">All Tickets</div>
               </div>
-              <div className="col-lg-9 col-md-12 col-sm-12">
-                <div className="float-right script-editor-btn">
+              <div className="col-xl-9 col-lg-12 col-md-12 col-sm-12">
+                <div className="script-editor-btn">
                   <Rbac
                     parentName={config.PARENT_NAME}
                     childName="alltickets-index-createticketbtn"
