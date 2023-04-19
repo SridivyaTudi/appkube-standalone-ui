@@ -355,36 +355,40 @@ export class ImportDashboard extends Component {
             <label>Import Dashboard</label>
           </div>
           <div className="common-container border-bottom-0">
-            <div className="d-block m-b-10">
-              <div className="script-select m-r-1">
-                <select className="form-control">
-                  <option>category</option>
-                  <option>category</option>
-                  <option>category</option>
-                  <option>category</option>
-                </select>
+            <div className="row m-b-1">
+              <div className="col-lg-10 col-md-10 col-sm-12">
+                <div className="script-select m-r-1">
+                  <select className="form-control">
+                    <option>category</option>
+                    <option>category</option>
+                    <option>category</option>
+                    <option>category</option>
+                  </select>
+                </div>
+                <div className="search-box">
+                  <form>
+                    <div className="form-group search-control-group m-b-0">
+                      <input
+                        type="text"
+                        onChange={this.keyPress}
+                        className="input-group-text"
+                        value={this.state.searchKey}
+                        placeholder="Search"
+                      />
+                      <button>
+                        <i className="fa fa-search"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
-              <div className="search-box d-inline-block">
-                <form>
-                  <div className="form-group search-control-group m-b-0">
-                    <input
-                      type="text"
-                      onChange={this.keyPress}
-                      className="input-group-text"
-                      value={this.state.searchKey}
-                      placeholder="Search"
-                    />
-                    <button>
-                      <i className="fa fa-search"></i>
-                    </button>
-                  </div>
-                </form>
-              </div>
-              <div className="float-right common-right-btn">
-                <a className="white-button m-r-0" href="/managedashboards">
-                  <i className="fa fa-arrow-circle-left"></i>
-                  &nbsp;&nbsp; Back
-                </a>
+              <div className="col-lg-2 col-md-2 col-sm-12 ">
+                <div className="common-right-btn">
+                  <a className="white-button m-r-0" href="/managedashboards">
+                    <i className="fa fa-arrow-circle-left"></i>
+                    &nbsp;&nbsp; Back
+                  </a>
+                </div>
               </div>
             </div>
             <div className="wizard-container">

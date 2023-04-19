@@ -395,24 +395,30 @@ class CompliancePolicy extends React.Component {
           <div className="common-container">
             <div className="assessment-boxes">
               <div className="d-block width-100 heading">
-                <div className="d-inline-block width-50 heading-left">
-                  <h3>
-                    Showing {policyData.length} of {perPageLimit} results
-                  </h3>
-                </div>
-                <div className="d-inline-block width-50 text-right heading-right">
-                  <a
-                    onClick={this.onClickCloudAccountPolicy}
-                    className="blue-button"
-                  >
-                    Add Cloud Account Policy
-                  </a>
-                  <a
-                    onClick={this.onClickAddOrganizationalUnitPolicy}
-                    className="blue-button m-r-0"
-                  >
-                    Add Organizational Unit Policy
-                  </a>
+                <div className="row">
+                  <div className="col-lg-4 col-md-4 col-sm-12">
+                    <div className="d-inline-block">
+                      <h3>
+                        Showing {policyData.length} of {perPageLimit} results
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-sm-12">
+                    <div className="add-policy-head">
+                      <a
+                        onClick={this.onClickCloudAccountPolicy}
+                        className="blue-button"
+                      >
+                        Add Cloud Account Policy
+                      </a>
+                      <a
+                        onClick={this.onClickAddOrganizationalUnitPolicy}
+                        className="blue-button m-r-0"
+                      >
+                        Add Organizational Unit Policy
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="d-block width-100 p-t-15 p-b-20">

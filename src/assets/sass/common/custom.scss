@@ -1238,7 +1238,6 @@ a {
   }
   .wizard-step-line-container {
     .wizard-step-button {
-      display: block;
       width: 100%;
       border-left: 1px solid #707070b5;
       border-right: 1px solid #707070b5;
@@ -1249,6 +1248,30 @@ a {
       &:before,
       &:after {
         display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 540px) {
+  .filter-control-group {
+    width: 100%;
+    max-width: 100%;
+  }
+ 
+}
+@media (max-width: 578px){
+  .gsl-editor-logos {
+    ul{
+      li{
+        display: block;
+        padding-right: 0;
+        a{
+          width: 100%;
+        }
+        &:last-child{
+          padding-right: 0;
+        }
       }
     }
   }

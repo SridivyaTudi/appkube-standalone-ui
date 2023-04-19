@@ -246,13 +246,13 @@ class TaskManager extends Component {
         <div className="task-dashboard-page-container">
           <div className="common-container">
             <div className="row">
-              <div className="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+              <div className="col-xs-12 col-sm-6 col-md-7 col-lg-8">
                 <div className="heading">
                   <h3>Task Manager</h3>
                   <span>Provider</span>
                 </div>
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+              <div className="col-xs-12 col-sm-6 col-md-5 col-lg-4">
                 <a href="/task-manager/create-dashboard" className="float-right m-b-0 m-r-0 blue-button">
                   New Task
                 </a>

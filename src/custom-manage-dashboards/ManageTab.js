@@ -305,9 +305,9 @@ class ManageTab extends Component {
         </div>
         {!showNewDashboardPopup && (
           <>
-            <div className="manage-dashboard-fliter-sort">
+            <div className="manage-dashboard-fliter-sort m-t-1">
               <div className="row" style={{ alignItems: "center" }}>
-                <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+                <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 m-b-1">
                   <div className="form-group search-control-group">
                     <FilterInput
                       labelClassName="gf-form--has-input-icon"
@@ -318,7 +318,7 @@ class ManageTab extends Component {
                     />
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 tag-filter-container">
+                <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 m-b-1 tag-filter-container">
                   <TagFilter
                     isClearable
                     tags={selectedTags}
@@ -326,13 +326,13 @@ class ManageTab extends Component {
                     onChange={this.onTagFilterChange}
                   />
                 </div>
-                <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+                <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 m-b-1">
                   <label>
                     <input className="sort-checkbox" type="checkbox" name="myCheckbox" defaultChecked={true}/>
                     <span className="">Filter by starred</span>
                   </label>
                 </div>
-                <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 sort-container">
+                <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 sort-container m-b-1">
                   <SortPicker onChange={this.onSortChange} value={sortValue} />
                 </div>
               </div>

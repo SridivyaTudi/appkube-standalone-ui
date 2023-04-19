@@ -331,23 +331,27 @@ class ComplianceRulesets extends React.Component {
           <div className="common-container">
             <div className="assessment-boxes">
               <div className="d-block width-100 heading">
-                <div className="d-inline-block width-50">
-                  <h3>
-                    Showing {rules.length} of {perPageLimit} results
-                  </h3>
+                <div className="row d-flex justify-content-center align-items-center">
+                  <div className="col-lg-6 col-md-6 col-sm-12">
+                    <div className="d-inline-block">
+                      <h3>
+                        Showing {rules.length} of {perPageLimit} results
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="col-lg-6 col-md-6 col-sm-12">
+                    <div className="d-block add-policy-head">
+                      <a onClick={this.addNewPolicy}
+                        className="blue-button m-b-1">
+                        ADD POLICY
+                      </a>
+                      <a onClick={this.onClickonClickRunRuleset}
+                        className="blue-button m-r-0 m-b-1">
+                        ADD RULESET
+                      </a>
+                    </div>
+                  </div>
                 </div>
-                <div className="d-inline-block width-50 text-right">
-                  <a onClick={this.addNewPolicy} className="blue-button m-b-0">
-                    ADD POLICY
-                  </a>
-                  <a
-                    onClick={this.onClickonClickRunRuleset}
-                    className="blue-button m-r-0 m-b-0"
-                  >
-                    ADD RULESET
-                  </a>
-                </div>
-                <div className="d-inline-block width-50 text-right"></div>
               </div>
               <div className="d-block width-100 p-t-15 p-b-20 search-box rulest-search-box">
                 <div className="row">
