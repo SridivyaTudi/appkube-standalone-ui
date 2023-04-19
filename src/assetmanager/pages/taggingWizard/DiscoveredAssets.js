@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import awsLogo from "../../img/aws.png";
 import microsoftAzureLogo from "../../img/microsoftazure.png";
 import gcpLogo from "../../img/google-cloud.png";
-//import Table from "./../../components/table";
 import Table from "./components/table";
-import Rbac from "./components/Rbac";
+
 export class DiscoveredAssets extends Component {
   constructor(props) {
     super(props);
+
+    this.perPageLimit = 3;
+    // this.checkboxValue = true;
+    this.state = {};
     this.tableValue = {
       columns: [
         {
@@ -32,8 +35,10 @@ export class DiscoveredAssets extends Component {
           renderCallback: () => {
             return (
               <td>
-                <div className="tagged-box d-inline-block"><i class="far fa-check"></i></div>
-               Tagged
+                <div className="tagged-box d-inline-block">
+                  <i class="far fa-check"></i>
+                </div>
+                Tagged
               </td>
             );
           },
@@ -44,7 +49,11 @@ export class DiscoveredAssets extends Component {
           renderCallback: () => {
             return (
               <td className="text-center">
-                <button className="action-btn"><a href="/assetmanager/pages/addTaggingWizard"><i class="far fa-plus"></i></a></button>
+                <button className="action-btn">
+                  <a href="/assetmanager/pages/addTaggingWizard">
+                    <i class="far fa-plus"></i>
+                  </a>
+                </button>
               </td>
             );
           },
@@ -52,7 +61,7 @@ export class DiscoveredAssets extends Component {
       ],
       data: [
         {
-          name: "45sdf28d",
+          name: "Sagar",
           ruleType: "EC2",
           message: "AWS (657907747545)",
           alertHandlers: "VPC-45sdf28d",
@@ -70,12 +79,19 @@ export class DiscoveredAssets extends Component {
           alertHandlers: "VPC-45sdf28d",
         },
       ],
-     
     };
-    this.perPageLimit = 3;
-    // this.checkboxValue = true;
-    this.state = {};
   }
+
+  async componentDidMount() {
+    const { tableValue } = this.state;
+    const response = await fetch(
+      `http://34.199.12.114:5057/api/discovered-assets`
+    );
+    const tableData = await response.json();
+    tableValue.data = tableData;
+    this.setState({ tableValue });
+  }
+
   isLightTheme() {
     const w = window;
     if (w.grafanaBootData && w.grafanaBootData.user) {
@@ -83,6 +99,7 @@ export class DiscoveredAssets extends Component {
     }
     return false;
   }
+
   render() {
     return (
       <div className="discovered-assets-contant">
@@ -142,7 +159,7 @@ export class DiscoveredAssets extends Component {
         </div>
         <div className="alert-data-table-container managealertrules-data-table-container">
           <Table
-            valueFromData={this.tableValue}
+            valueFromData={this.state.tableValue}
             perPageLimit={this.perPageLimit}
             visiblecheckboxStatus={this.checkboxValue}
             tableClasses={{
