@@ -3,15 +3,14 @@ import awsLogo from "../../img/aws.png";
 import microsoftAzureLogo from "../../img/microsoftazure.png";
 import gcpLogo from "../../img/google-cloud.png";
 import Table from "./components/table";
+import { NavLink  } from "react-router-dom";
 
 export class DiscoveredAssets extends Component {
   constructor(props) {
     super(props);
-
     this.perPageLimit = 3;
     // this.checkboxValue = true;
-    this.state = {};
-    this.tableValue = {
+    this.state = {
       columns: [
         {
           label: "Element ID",
@@ -46,52 +45,47 @@ export class DiscoveredAssets extends Component {
         {
           label: "Action",
           key: "alertHandlers",
-          renderCallback: () => {
+          renderCallback: (value, index) => {
             return (
               <td className="text-center">
                 <button className="action-btn">
-                  <a href="/assetmanager/pages/addTaggingWizard">
+                   <NavLink
+                        to={`/assetmanager/pages/addTaggingWizard/${index.id}`}
+                      > 
                     <i class="far fa-plus"></i>
-                  </a>
+                    </NavLink>
+                  {/* </a> */}
                 </button>
               </td>
             );
           },
         },
       ],
-      data: [
-        {
-          name: "Sagar",
-          ruleType: "EC2",
-          message: "AWS (657907747545)",
-          alertHandlers: "VPC-45sdf28d",
-        },
-        {
-          name: "ds42es114	",
-          ruleType: "EKS",
-          message: "AWS (657907747545)",
-          alertHandlers: "VPC-45sdf28d",
-        },
-        {
-          name: "4se215es5	",
-          ruleType: "Lambda",
-          message: "AWS (657907747545)",
-          alertHandlers: "VPC-45sdf28d",
-        },
-      ],
+      data: [ ],
     };
+    // this.tableValue = ;
   }
-
-  async componentDidMount() {
-    const { tableValue } = this.state;
+  async getAssets(){
     const response = await fetch(
       `http://34.199.12.114:5057/api/discovered-assets`
     );
     const tableData = await response.json();
-    tableValue.data = tableData;
-    this.setState({ tableValue });
+    let tableValue = tableData.map((asset)=>{
+        return {
+          id: asset.id,
+          name: asset.elementId,
+          ruleType: asset.elementType,
+          message: asset.landingZone,
+          alertHandlers:asset.productEnclave,
+        }
+    });
+    // this.tableValue.data = tableValue
+    this.setState({...this.tableValue,['data']:tableValue});
   }
-
+    componentDidMount() {
+      this.getAssets()
+    }
+  
   isLightTheme() {
     const w = window;
     if (w.grafanaBootData && w.grafanaBootData.user) {
@@ -159,7 +153,7 @@ export class DiscoveredAssets extends Component {
         </div>
         <div className="alert-data-table-container managealertrules-data-table-container">
           <Table
-            valueFromData={this.state.tableValue}
+            valueFromData={this.state}
             perPageLimit={this.perPageLimit}
             visiblecheckboxStatus={this.checkboxValue}
             tableClasses={{
