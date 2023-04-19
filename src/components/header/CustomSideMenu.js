@@ -221,7 +221,7 @@ export class CustomSideMenu extends PureComponent {
           ],
         },
         {
-          link: "/taskmanager",
+          link: "/task-manager",
           text: "Task Manager",
           childName: "taskmanager",
           isImplemented: true,

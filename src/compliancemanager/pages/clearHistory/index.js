@@ -67,7 +67,7 @@ class ClearHistory extends React.Component {
                   </ul>
                 </div>
                 <div className="row region-section">
-                  <div className="col-md-3 col-sm-6">
+                  <div className="col-lg-3 col-md-3 col-sm-6">
                     <div className="form-group filter-control-group">
                       <label htmlFor="Account">Account</label>
                       <select className="form-control" id="Account">
@@ -78,7 +78,7 @@ class ClearHistory extends React.Component {
                       </select>
                     </div>
                   </div>
-                  <div className="col-md-3 col-sm-6">
+                  <div className="col-lg-3 col-md-3 col-sm-6">
                     <div className="form-group filter-control-group">
                       <label htmlFor="Region">Region</label>
                       <select className="form-control" id="Region">
@@ -89,7 +89,7 @@ class ClearHistory extends React.Component {
                       </select>
                     </div>
                   </div>
-                  <div className="col-md-3 col-sm-6">
+                  <div className="col-lg-3 col-md-3 col-sm-6">
                     <div className="form-group filter-control-group">
                       <label htmlFor="VPC">VPC</label>
                       <select className="form-control" id="VPC">
@@ -100,7 +100,7 @@ class ClearHistory extends React.Component {
                       </select>
                     </div>
                   </div>
-                  <div className="col-md-3 col-sm-6">
+                  <div className="col-lg-3 col-md-3 col-sm-6">
                     <div className="form-group filter-control-group">
                       <a className="blue-button m-r-0 m-b-0 runtest-button">
                         <i className="fa fa-play-circle"></i> RUN TEST
@@ -151,7 +151,7 @@ class ClearHistory extends React.Component {
               </div>
               <div className="col-xl-4 col-sm-12">
                 <div className="context-preview-box">
-                  <h4>Context Preview</h4>
+                  <h4 className="m-t-1">Context Preview</h4>
                   <div className="context-preview">
                     <div className="search-box">
                     <div className="form-group search-control-group m-b-0">

@@ -1,4 +1,7 @@
 .assessment-boxes {
+  .add-policy-head {
+    text-align: right;
+  }
   .heading {
     border-bottom: 1px solid #d9e4f2;
     h3 {
@@ -206,6 +209,9 @@
 
 @media (max-width: 767px) {
   .assessment-boxes {
+    .add-policy-head {
+      text-align: left;
+  }
     .heading {
       h3 {
         font-size: 12px;
