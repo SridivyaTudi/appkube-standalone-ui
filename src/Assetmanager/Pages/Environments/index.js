@@ -5,6 +5,7 @@ import Microsoftazure from "../../../assets/img/microsoftazure.png";
 import GoogleCloud from "../../../assets/img/google-cloud.png";
 import Aws from "../../../assets/img/aws.png";
 import Kubernetes from "../../../assets/img/kubernetes.png";
+import { config } from '../../config';
 
 const LOGOS = {
   aws: Aws,
@@ -29,20 +30,20 @@ class Environments extends Component {
   };
 
   getAccountList = () => {
-    fetch("http://34.199.12.114:5057/api/cloud-environment/search")
+    fetch(config.GET_ALL_ENVS)
       .then((response) => response.json())
       .then((data) => {
         const commonData = {};
         const accounts = {};
         data.forEach((account) => {
-          accounts[account.cloud.name] = accounts[account.cloud.name] || [];
-          accounts[account.cloud.name].push(account);
-          commonData[account.cloud.name] = commonData[account.cloud.name]
-            ? commonData[account.cloud.name]
+          accounts[account.cloud] = accounts[account.cloud] || [];
+          accounts[account.cloud].push(account);
+          commonData[account.cloud] = commonData[account.cloud]
+            ? commonData[account.cloud]
             : {
                 totalBill: 0,
               };
-          commonData[account.cloud.name].totalBill += account.totalBilling;
+          commonData[account.cloud].totalBill += account.totalBilling || 0;
         });
         this.setState({
           accountList: accounts,
@@ -59,15 +60,15 @@ class Environments extends Component {
       const accounts = accountList[env];
       if (accounts.length > 0) {
         const account = accounts[0];
-        const data = commonData[account.cloud.name];
+        const data = commonData[account.cloud];
         retData.push(
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
             <div className="services-box">
               <div className="heading">
                 <span>
-                  <img src={LOGOS[account.cloud.name.toLowerCase()]} alt="" />
+                  <img src={LOGOS[account.cloud.toLowerCase()]} alt="" />
                 </span>
-                <h3>{account.cloud.name}</h3>
+                <h3>{account.cloud}</h3>
               </div>
               <div className="table-box">
                 <table className="table">
@@ -120,9 +121,9 @@ class Environments extends Component {
           <tr key={`env-${envIndex}-${accountIndex}`}>
             <td>
               <Link
-                to={`/assetmanager/pages/amazonservices?accountId=${account.accountId}&cloudName=${account.cloud.name}`}
+                to={`/assetmanager/pages/amazonservices?accountId=${account.accountId}&cloudName=${account.cloud}`}
               >
-                {account.cloud.name} ({account.accountId})
+                {account.cloud} ({account.accountId})
               </Link>
             </td>
             <td>{account.totalProductEnclave}</td>
@@ -141,7 +142,7 @@ class Environments extends Component {
                     ></div>
                     <div className="text-center open-create-menu">
                       <a
-                        href={`/assetmanager/pages/add-data-source?accountId=${account.accountId}&cloudName=${account.cloud.name}`}
+                        href={`/assetmanager/pages/add-data-source?accountId=${account.accountId}&cloudName=${account.cloud}`}
                       >
                         Add New Input
                       </a>
@@ -173,9 +174,9 @@ class Environments extends Component {
               <tr>
                 <th>
                   <span>
-                    <img src={LOGOS[account.cloud.name.toLowerCase()]} alt="" />
+                    <img src={LOGOS[account.cloud.toLowerCase()]} alt="" />
                   </span>
-                  {account.cloud.name}
+                  {account.cloud}
                 </th>
                 <th>Product Enclave</th>
                 <th>Products</th>

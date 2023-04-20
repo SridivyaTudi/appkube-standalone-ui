@@ -53,3 +53,9 @@ export const configFun = (configIp, mainProductUrl) => {
     // PREVIEW_DASHBOARDS_URL: `${mainApplicationBaseUrl}/dashboards/previewDashboard`,
   };
 };
+
+const ASSETMANAGER_ENDPOINT = "http://34.199.12.114:5057/api";
+
+export const config = {
+  GET_ALL_ENVS: `${ASSETMANAGER_ENDPOINT}/cloud-environments`
+};
