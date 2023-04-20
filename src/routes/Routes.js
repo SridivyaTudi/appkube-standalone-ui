@@ -128,7 +128,7 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/add-data-source-inputs" element={<AddDatasourceInputs />} />
       <Route path="/assetmanager/pages/discoveryWizard" element={<DiscoveryWizard />} />
       <Route path="/assetmanager/pages/taggingWizard" element={<TaggingWizard />} />
-      <Route path="/assetmanager/pages/addTaggingWizard" element={<AddTaggingWizard />} />
+      <Route path="/assetmanager/pages/addTaggingWizard/:id" element={<AddTaggingWizard />} />
       
 
       {/***** Alertmanager *****/}
