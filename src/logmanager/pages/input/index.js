@@ -1,10 +1,10 @@
 import React from "react";
 import { config } from "../../config";
-import CreateStreamPopup from "./../dashboard/createStreamPopup";
-import NewStreamRulePopup from "./../dashboard/newStreamRulePopup";
-import SetOutputPopup from "./../dashboard/setOutputParameter";
-import AllEventsPopup from "./../dashboard/allEventPopup";
-import TopMenu from "./../dashboard/topMenu";
+import CreateStreamPopup from "./../dashboard/CreateStreamPopup";
+import NewStreamRulePopup from "./../dashboard/NewStreamRulePopup";
+import SetOutputPopup from "./../dashboard/SetOutputParameter";
+import AllEventsPopup from "./../dashboard/AllEventPopup";
+import TopMenu from "./../dashboard/TopMenu";
 
 let indexSetMap = new Map();
 indexSetMap.set("5fb950ef6439c846ee76f455", "Default index set");

@@ -17,14 +17,14 @@ import Kubernetes from '../assetmanager/pages/kubernetes';
 import StorageDetails from '../assetmanager/pages/storagedetails';
 import AccountSetup from '../assetmanager/pages/accountsetup';
 import DepartmentWiseProducts from '../assetmanager/pages/departmentWiseProducts';
-import DepartmentWiseCharts from '../assetmanager/pages/departmentWiseProducts/departmentChart';
+import DepartmentWiseCharts from '../assetmanager/pages/departmentWiseProducts/DepartmentChart';
 import ProductWiseCost from '../assetmanager/pages/departmentWiseProducts/ProductWiseCost';
 import ProductWiseServicesSla from '../assetmanager/pages/productWiseServicesSla';
 import AddDatasource from '../assetmanager/pages/addDatasource';
-import AddDatasouceCredential from '../assetmanager/pages/addDatasource/addDatasouceCredential';
-import ExploreDataSourceDetail from '../assetmanager/pages/addDatasource/exploreDataSourceDetail';
-import AddDataSourceProduct from '../assetmanager/pages/addDatasource/addDatasourceProduct';
-import AddDatasourceInputs from '../assetmanager/pages/addDatasource/addDatasourceInputs';
+import AddDataSourceCredential from '../assetmanager/pages/addDatasource/AddDataSouceCredential';
+import ExploreDataSourceDetail from '../assetmanager/pages/addDatasource/ExploreDataSourceDetail';
+import AddDataSourceProduct from '../assetmanager/pages/addDatasource/AddDataSourceProduct';
+import AddDatasourceInputs from '../assetmanager/pages/addDatasource/AddDataSourceInputs';
 import DiscoveryWizard from '../assetmanager/pages/discoveryWizard';
 import TaggingWizard from'../assetmanager/pages/taggingWizard';
 import AddTaggingWizard from '../assetmanager/pages/addTaggingWizard';
@@ -122,7 +122,7 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/product-wise-cost" element={<ProductWiseCost />} />
       <Route path="/assetmanager/pages/product-wise-services-sla" element={<ProductWiseServicesSla />} />
       <Route path="/assetmanager/pages/add-data-source" element={<AddDatasource />} />
-      <Route path="/assetmanager/pages/add-datasource-credential" element={<AddDatasouceCredential />} />
+      <Route path="/assetmanager/pages/add-datasource-credential" element={<AddDataSourceCredential />} />
       <Route path="/assetmanager/pages/explore-datasource" element={<ExploreDataSourceDetail />} />
       <Route path="/assetmanager/pages/add-data-source-product" element={<AddDataSourceProduct />} />
       <Route path="/assetmanager/pages/add-data-source-inputs" element={<AddDatasourceInputs />} />

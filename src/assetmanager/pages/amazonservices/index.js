@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { images } from "../../img";
-import Wizard from "./wizard";
-import DiscoveredAssets from "./discoveredassets";
-import Applications from "./applications";
-import Billing from "./billing";
-import ThreatAndSecurityEvents from "./threatandsecurityevents";
-import CompliancePolicies from "./compliancepolicies";
-import Alerts from "./alerts";
-import Inputs from "./inputs";
+import Wizard from "./Wizard";
+import DiscoveredAssets from "./DiscoveredAssets";
+import Applications from "./Applications";
+import Billing from "./Billing";
+import ThreatAndSecurityEvents from "./ThreatAndSecurityEvents";
+import CompliancePolicies from "./CompliancePolicies";
+import Alerts from "./Alerts";
+import Inputs from "./Inputs";
 
 class AmazonServices extends React.Component {
   constructor(props) {

@@ -2,8 +2,8 @@ import React from "react";
 import previewDashboardIcon from "../img/preview-dashboard-icon.png";
 import libraryIcon from "../img/library-icon.png";
 import previewDashboard from "../img/preview-dashboard.png";
-import Filter from "./../filter";
-import { PreviewDashboardPopup } from "./../previewDashboardPopup";
+import Filter from "./../Filter";
+import { PreviewDashboardPopup } from "./../PreviewDashboardPopup";
 
 class AppBlocks extends React.Component {
   constructor(props) {

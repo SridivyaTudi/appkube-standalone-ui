@@ -4,9 +4,9 @@ import { RestService } from "../_service/RestService";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import { CommonService } from "../_common/common";
 import AlertMessage from "../../components/AlertMessage";
-import masterDummyData from "./masterDatasourceDummy.json";
+import masterDummyData from "./MasterDataSourceDummy.json";
 
-class AddDatasourceCredential extends React.Component {
+class AddDataSourceCredential extends React.Component {
   constructor(props) {
     super(props);
     let accountId = CommonService.getParameterByName(
@@ -507,4 +507,4 @@ class AddDatasourceCredential extends React.Component {
   }
 }
 
-export default AddDatasourceCredential;
+export default AddDataSourceCredential;

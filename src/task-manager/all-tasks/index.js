@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 // Libraries
 //import { updateLocation } from 'app/core/actions';
 // import 'react-circular-progressbar/dist/styles.css';
-import Table from '../table';
+import Table from '../Table';
 
 // Services & Utils
 // export interface Props {

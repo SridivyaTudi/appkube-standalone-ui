@@ -9,7 +9,7 @@ import sortIcon from "../../../assets/img/perfmanager/sort.png";
 import tagIcon from "../../../assets/img/perfmanager/tag.png";
 import openFolderIcon from "../../../assets/img/perfmanager/open-folder.png";
 import { Collapse } from "reactstrap";
-import TopMenu from "../catalog/topMenu";
+import TopMenu from "../catalog/TopMenu";
 
 class Collection extends Component {
   constructor(props) {

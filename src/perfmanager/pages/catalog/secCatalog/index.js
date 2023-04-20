@@ -1,10 +1,10 @@
 import React from "react";
-import CompliancePolicies from "./compliancePolicies";
-import ComplianceRules from "./complianceRules";
-import ConainerSecurityTemplates from "./conainerSecurityTemplates";
-import DataSecurityTemplates from "./dataSecurityTemplates";
-import ComplianceAuditors from "./complianceAuditors";
-import CodeSecurityTemplates from "./codeSecurityTemplets";
+import CompliancePolicies from "./CompliancePolicies";
+import ComplianceRules from "./ComplianceRules";
+import ConainerSecurityTemplates from "./ConainerSecurityTemplates";
+import DataSecurityTemplates from "./DataSecurityTemplates";
+import ComplianceAuditors from "./ComplianceAuditors";
+import CodeSecurityTemplates from "./CodeSecurityTemplets";
 
 class SecCatalogue extends React.Component {
   tabMapping = [

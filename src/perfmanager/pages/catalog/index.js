@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import DevCatalogue from "./devCatalog";
 import SecCatalogue from "./secCatalog";
 import OpsCatalogue from "./opsCatalog";
-import { catalogData } from "./catalogue";
+import { catalogData } from "./Catalogue";
 
 class Catalog extends Component {
   tabMapping = [

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Applications from './applications';
-import SlaCentral from './slaCentral';
-import DevSecOpsCentral from './devSecOpsCentral';
+import Applications from './Applications';
+import SlaCentral from './SlaCentral';
+import DevSecOpsCentral from './DevSecOpsCentral';
 
 class Overview extends Component {
   constructor(props) {

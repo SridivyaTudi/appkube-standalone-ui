@@ -1,9 +1,9 @@
 import React from "react";
-import AppBlocks from "./appBlocks";
-import LibrarySdk from "./libraryAndSDKs";
-import DeploymentTemplate from "./buildDeployTemp";
-import ISVSolutions from "./iSVsolutions";
-import DataFlow from "./dataflows";
+import AppBlocks from "./AppBlocks";
+import LibrarySdk from "./LibraryAndSDKs";
+import DeploymentTemplate from "./BuildDeployTemp";
+import ISVSolutions from "./ISVsolutions";
+import DataFlow from "./Dataflows";
 
 class DevCatalogue extends React.Component {
   tabMapping = [

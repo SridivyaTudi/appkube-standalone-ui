@@ -3,7 +3,7 @@ import Tree from "../../components/Tree";
 import DiscardPopup from "../../components/DiscardPopup";
 import ApiKeySourcePopup from "../../components/ApiKeySourcePopup";
 import { dummyData } from "./dummyData";
-import { propertiesDummy } from "./properties";
+import { propertiesDummy } from "./Properties";
 
 class EditorGslBuilder extends React.Component {
   constructor(props) {

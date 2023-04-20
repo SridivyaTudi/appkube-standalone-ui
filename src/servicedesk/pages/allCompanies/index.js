@@ -1,7 +1,7 @@
 import React from "react";
 import { config } from "../../config";
 import companyIcon from "../../img/company-icon.png";
-import Table from "./../../components/table";
+import Table from "./../../components/Table";
 import { RestService } from "../_service/RestService";
 import CreateButtonComponent from "../commanComponents/CreateButtonComponent";
 

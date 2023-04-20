@@ -1,5 +1,5 @@
 import React from "react";
-import Table from "./../../components/table";
+import Table from "./../../components/Table";
 import CreateButtonComponent from "../commanComponents/CreateButtonComponent";
 import { RestService } from "../_service/RestService";
 import { config } from "../../config";

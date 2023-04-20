@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ManageDashboards from "./manageDashboards";
-import TopMenu from "../catalog/topMenu";
+import ManageDashboards from "./ManageDashboards";
+import TopMenu from "../catalog/TopMenu";
 
 
 class Dashboard extends Component {

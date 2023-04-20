@@ -3,7 +3,7 @@ import awsIcon from "../img/aws-2.png";
 import azureIcon from "../img/azure-1.png";
 import googleCloudIcon from "../img/google-cloud-1.png";
 import acronisIcon from "../img/acronis.png";
-import Filter from "./../filter";
+import Filter from "./../Filter";
 import AwsProductCluster from "./ProvisionTemplateComponents/ProductCluster/AwsProductCluster";
 import AzureProductCluster from "./ProvisionTemplateComponents/ProductCluster/AzureProductCluster";
 import GoogleProductCluster from "./ProvisionTemplateComponents/ProductCluster/GoogleProductCluster";

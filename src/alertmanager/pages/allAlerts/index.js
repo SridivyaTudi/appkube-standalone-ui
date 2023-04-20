@@ -13,7 +13,7 @@ import EditAlertPopup from "./EditAlertPopup";
 import { RestService } from "../_service/RestService";
 import AlertMessage from "../../components/AlertMessage";
 import ConfirmDialog from "../../components/ConfirmDialog";
-import Table from "./../../components/table";
+import Table from "./../../components/Table";
 import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
 import Rbac from "./../../components/Rbac";
 

@@ -1,11 +1,11 @@
 import React from "react";
 import { config } from "../../config";
 import { CommonService } from "../_common/common";
-import CreateStreamPopup from "./createStreamPopup";
-import NewStreamRulePopup from "./newStreamRulePopup";
-import SetOutputPopup from "./setOutputParameter";
-import AllEventsPopup from "./allEventPopup";
-import TopMenu from "./topMenu";
+import CreateStreamPopup from "./CreateStreamPopup";
+import NewStreamRulePopup from "./NewStreamRulePopup";
+import SetOutputPopup from "./SetOutputParameter";
+import AllEventsPopup from "./AllEventPopup";
+import TopMenu from "./TopMenu";
 
 let indexSetMap = new Map();
 class Dashboard extends React.Component {

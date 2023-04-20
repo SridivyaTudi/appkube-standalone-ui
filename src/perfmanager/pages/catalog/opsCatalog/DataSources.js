@@ -2,9 +2,9 @@ import React from "react";
 import previewDashboardIcon from "../img/preview-dashboard-icon.png";
 import libraryIcon from "../img/library-icon.png";
 import PreviewDashboardPopup from "./PreviewDashboardPopup";
-import Filter from "./../filter";
+import Filter from "./../Filter";
 
-class CloudDashboards extends React.Component {
+class DataSources extends React.Component {
   backupUrl =
     "https://image.shutterstock.com/image-vector/set-colourful-business-charts-diagram-260nw-1388414240.jpg";
   constructor(props) {
@@ -14,28 +14,18 @@ class CloudDashboards extends React.Component {
       view: "grid",
       filterData: [
         {
+          name: "Application Location",
+          key: "associatedApplicationLocation",
+          filter: [],
+        },
+        {
           name: "Cloud",
           key: "associatedCloud",
           filter: [],
         },
         {
-          name: "DataType",
-          key: "associatedDataType",
-          filter: [],
-        },
-        {
-          name: "SLAType",
-          key: "associatedSLAType",
-          filter: [],
-        },
-        {
-          name: "Element",
-          key: "associatedCloudElementType",
-          filter: [],
-        },
-        {
-          name: "DataSource Type",
-          key: "associatedDataSourceType",
+          name: "Creds",
+          key: "associatedCreds",
           filter: [],
         },
       ],
@@ -51,11 +41,9 @@ class CloudDashboards extends React.Component {
   createFilterJson = () => {
     let { dashboards, filterData } = this.state;
     const filterKeys = [
-      "associatedDataSourceType",
-      "associatedCloudElementType",
+      "associatedApplicationLocation",
       "associatedCloud",
-      "associatedDataType",
-      "associatedSLAType",
+      "associatedCreds",
     ];
     const filteredData = {};
     for (let i = 0; i < dashboards.length; i++) {
@@ -63,8 +51,8 @@ class CloudDashboards extends React.Component {
       for (let j = 0; j < filterKeys.length; j++) {
         const filter = filterKeys[j];
         filteredData[filter] = filteredData[filter] || [];
-        if (filteredData[filter].indexOf(dashboard[filter].trim()) === -1) {
-          filteredData[filter].push(dashboard[filter].trim());
+        if (filteredData[filter].indexOf(dashboard[filter]) === -1) {
+          filteredData[filter].push(dashboard[filter]);
         }
       }
     }
@@ -79,7 +67,7 @@ class CloudDashboards extends React.Component {
           const filter = filterKeys[k];
           for (let j = 0; j < filteredData[filter].length; j++) {
             let filters = filteredData[filter][j];
-            if (filterData[i].key == filter.trim() && filters) {
+            if (filterData[i].key == filter && filters) {
               filterData[i].filter.push({ value: filters, label: filters });
             }
           }
@@ -90,6 +78,14 @@ class CloudDashboards extends React.Component {
       filterData,
     });
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (JSON.stringify(prevProps.data) !== JSON.stringify(this.props.data)) {
+      this.setState({
+        dashboards: this.props.data,
+      });
+    }
+  }
 
   onClickPreviewDashboard = (images) => {
     if (images && images.length > 0) {
@@ -102,6 +98,51 @@ class CloudDashboards extends React.Component {
     }
   };
 
+  renderDashboardsList = (dashboards) => {
+    let retData = [];
+    if (dashboards && dashboards.length > 0) {
+      retData = [];
+      for (let i = 0; i < dashboards.length; i++) {
+        const { id, name, description, imgUrl } = dashboards[i];
+        retData.push(
+          <>
+            <div className={`blog-list-item box`} key={id}>
+              <div className="module-card-content">
+                <div className="row">
+                  <div className="col-md-1 col-sm-12 p-r-0">
+                    <img height="100px" width="100px" src={imgUrl} alt={name} />
+                  </div>
+                  <div className="col-md-11 col-sm-12">
+                    <h3 className="title is-block">{name}</h3>
+                    <p className="subtitle is-block">{description}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="module-card-footer">
+                <div className="module-card-footer-details">
+                  <a>
+                    <img src={libraryIcon} alt="" />
+                    {`Add Catalog To library`}
+                  </a>
+                </div>
+                <div className="module-card-footer-provider">
+                  <a onClick={this.onClickPreviewDashboard}>
+                    <img src={previewDashboardIcon} alt="" />
+                    {`Preview Dashboard`}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      }
+    } else {
+      retData = [];
+      retData.push(<div>No Data Found</div>);
+    }
+    return retData;
+  };
+
   renderDashboardsView = (dashboards) => {
     const { view } = this.state;
     let retData = [];
@@ -109,23 +150,20 @@ class CloudDashboards extends React.Component {
       retData = [];
       for (let i = 0; i < dashboards.length; i++) {
         const {
-          id,
           name,
           description,
-          images,
-          associatedDataSourceType,
-          associatedDataType,
-          associatedSLAType,
+          imgUrl,
+          associatedApplicationLocation,
           associatedCloud,
-          associatedCloudElementType,
+          associatedCreds,
+          id,
+          images,
         } = dashboards[i];
         if (
           this.hideDashboard(
-            associatedDataSourceType,
-            associatedDataType,
-            associatedSLAType,
+            associatedApplicationLocation,
             associatedCloud,
-            associatedCloudElementType
+            associatedCreds
           )
         ) {
           retData.push(
@@ -144,11 +182,7 @@ class CloudDashboards extends React.Component {
                           <img
                             height="100px"
                             width="100px"
-                            src={
-                              images && images.length > 0
-                                ? images[0]
-                                : this.backupUrl
-                            }
+                            src={imgUrl}
                             alt={name}
                           />
                         </div>
@@ -166,7 +200,7 @@ class CloudDashboards extends React.Component {
                         </a>
                       </div>
                       <div className="module-card-footer-provider">
-                        <a onClick={() => this.onClickPreviewDashboard(images)}>
+                        <a onClick={this.onClickPreviewDashboard}>
                           <img src={previewDashboardIcon} alt="" />
                           {`Preview Dashboard`}
                         </a>
@@ -188,11 +222,11 @@ class CloudDashboards extends React.Component {
                       </div>
                       <h3 className="title is-block">{name}</h3>
                       <p className="subtitle is-block">{description}</p>
-                      <div className="library-icon m-b-1">
+                      <div className="library-icon">
                         <a>{`Add Catalog To library`}</a>
                       </div>
-                      <div className="preview-dashboard-icon m-b-1">
-                        <a onClick={() => this.onClickPreviewDashboard(images)}>
+                      <div className="preview-dashboard-icon">
+                        <a onClick={this.onClickPreviewDashboard}>
                           {`Preview Dashboard`}
                         </a>
                       </div>
@@ -214,46 +248,8 @@ class CloudDashboards extends React.Component {
     return retData;
   };
 
-  hideDashboard = (
-    associatedDataSourceType,
-    associatedDataType,
-    associatedSLAType,
-    associatedCloud,
-    associatedCloudElementType
-  ) => {
-    const { selectedFilter } = this.state;
-    const isAssociatedDatasourceType =
-      !selectedFilter["associatedDataSourceType"] ||
-      (selectedFilter["associatedDataSourceType"] &&
-        selectedFilter["associatedDataSourceType"].indexOf(
-          associatedDataSourceType
-        ) !== -1);
-    const isAssociatedDataType =
-      !selectedFilter["associatedDataType"] ||
-      (selectedFilter["associatedDataType"] &&
-        selectedFilter["associatedDataType"].indexOf(associatedDataType) !==
-          -1);
-    const isAssociatedSLAType =
-      !selectedFilter["associatedSLAType"] ||
-      (selectedFilter["associatedSLAType"] &&
-        selectedFilter["associatedSLAType"].indexOf(associatedSLAType) !== -1);
-    const isCloud =
-      !selectedFilter["associatedCloud"] ||
-      (selectedFilter["associatedCloud"] &&
-        selectedFilter["associatedCloud"].indexOf(associatedCloud) !== -1);
-    const isElement =
-      !selectedFilter["associatedCloudElementType"] ||
-      (selectedFilter["associatedCloudElementType"] &&
-        selectedFilter["associatedCloudElementType"].indexOf(
-          associatedCloudElementType
-        ) !== -1);
-    return (
-      isAssociatedDatasourceType &&
-      isAssociatedDataType &&
-      isAssociatedSLAType &&
-      isCloud &&
-      isElement
-    );
+  dashboardsView = (type) => {
+    this.setState({ view: type });
   };
 
   filterValues = (e) => {
@@ -278,14 +274,35 @@ class CloudDashboards extends React.Component {
     }
   };
 
-  dashboardsView = (type) => {
-    this.setState({ view: type });
-  };
-
   onChangeFilter = (filters) => {
     this.setState({
       selectedFilter: filters,
     });
+  };
+
+  hideDashboard = (
+    associatedApplicationLocation,
+    associatedCloud,
+    associatedCreds
+  ) => {
+    const { selectedFilter } = this.state;
+    const isassociatedApplicationLocation =
+      !selectedFilter["associatedApplicationLocation"] ||
+      (selectedFilter["associatedApplicationLocation"] &&
+        selectedFilter["associatedApplicationLocation"].indexOf(
+          associatedApplicationLocation
+        ) !== -1);
+    const isassociatedCloud =
+      !selectedFilter["associatedCloud"] ||
+      (selectedFilter["associatedCloud"] &&
+        selectedFilter["associatedCloud"].indexOf(associatedCloud) !== -1);
+    const isassociatedCreds =
+      !selectedFilter["associatedCreds"] ||
+      (selectedFilter["associatedCreds"] &&
+        selectedFilter["associatedCreds"].indexOf(associatedCreds) !== -1);
+    return (
+      isassociatedApplicationLocation && isassociatedCloud && isassociatedCreds
+    );
   };
 
   formFields = () => {
@@ -293,16 +310,16 @@ class CloudDashboards extends React.Component {
     return (
       <div className="catalogue-right-container">
         <div className="templated-search">
-          <div className="row d-flex align-items-center">
+          <div className="row">
             <div className="col-lx-10 col-lg-9 col-md-12 col-sm-12 col-xs-12">
               <div className="search-box">
                 <form>
                   <div className="form-group search-control-group m-b-0">
                     <input
                       type="text"
+                      className="input-group-text"
                       onChange={(e) => this.filterValues(e)}
                       placeholder="Search Template here"
-                      className="input-group-text"
                     />
                     <button className="search-button">
                       <i className="fa fa-search"></i>
@@ -345,7 +362,7 @@ class CloudDashboards extends React.Component {
   };
 
   render() {
-    const { filterData } = this.state;
+    const { images, filterData } = this.state;
     return (
       <div className="catalogue-inner-tabs-container">
         <div className="row">
@@ -361,11 +378,11 @@ class CloudDashboards extends React.Component {
         </div>
         <PreviewDashboardPopup
           ref={this.previewDashboardPopupRef}
-          images={[]}
+          images={images}
         />
       </div>
     );
   }
 }
 
-export default CloudDashboards;
+export default DataSources;

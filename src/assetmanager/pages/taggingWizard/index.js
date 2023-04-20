@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import SearchIcon from "../../../assets/img/search-icon.svg";
-import Wizard from "./wizard";
+import Wizard from "./Wizard";
 import DiscoveredAssets from "./DiscoveredAssets";
 import TaggedAssets from "./TaggedAssets";
 import UntaggedAssets from "./UntaggedAssets";

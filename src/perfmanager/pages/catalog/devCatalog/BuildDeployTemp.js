@@ -2,17 +2,16 @@ import React from "react";
 import previewDashboardIcon from "../img/preview-dashboard-icon.png";
 import libraryIcon from "../img/library-icon.png";
 import previewDashboard from "../img/preview-dashboard.png";
-import Filter from "./../filter";
-import { PreviewDashboardPopup } from "./../previewDashboardPopup";
+import Filter from "./../Filter";
+import { PreviewDashboardPopup } from "./../PreviewDashboardPopup";
 
-class DataFlow extends React.Component {
+class DeploymentTemplate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       dashboards: this.props.data || [],
     };
   }
-
   onClickPreviewDashboard = () => {
     this.previewDashboardPopupRef.current.setLink("");
     this.previewDashboardPopupRef.current.toggle();
@@ -65,7 +64,6 @@ class DataFlow extends React.Component {
 
   render() {
     const { dashboards } = this.state;
-    console.log(this.props);
     return (
       <div className="catalogue-inner-tabs-container">
         <div className="row">
@@ -118,4 +116,4 @@ class DataFlow extends React.Component {
   }
 }
 
-export default DataFlow;
+export default DeploymentTemplate;

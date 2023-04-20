@@ -12,7 +12,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { config } from "../../config";
-import Table from "./../../components/table";
+import Table from "./../../components/Table";
 import { RestService } from "../_service/RestService";
 import CreateButtonComponent from "../commanComponents/CreateButtonComponent";
 

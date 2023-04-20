@@ -8,10 +8,10 @@ import { Collapse, UncontrolledPopover, PopoverBody } from "reactstrap";
 import collapseToggleIcon from "./img/config-collapse-icon1.png";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import AlertMessage from "../../components/AlertMessage";
-import TopMenu from "./../catalog/topMenu";
+import TopMenu from "./../catalog/TopMenu";
 import Rbac from "../../components/Rbac";
 import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
-import ViewDashboardJsonPopup from "./viewDashboardJsonPopup";
+import ViewDashboardJsonPopup from "./ViewDashboardJsonPopup";
 
 class Library extends React.Component {
   constructor(props) {

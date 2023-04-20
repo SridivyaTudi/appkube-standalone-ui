@@ -2,16 +2,17 @@ import React from "react";
 import previewDashboardIcon from "../img/preview-dashboard-icon.png";
 import libraryIcon from "../img/library-icon.png";
 import previewDashboard from "../img/preview-dashboard.png";
-import Filter from "./../filter";
-import { PreviewDashboardPopup } from "./../previewDashboardPopup";
+import Filter from "./../Filter";
+import { PreviewDashboardPopup } from "./../PreviewDashboardPopup";
 
-class DeploymentTemplate extends React.Component {
+class ISVSolutions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       dashboards: this.props.data || [],
     };
   }
+
   onClickPreviewDashboard = () => {
     this.previewDashboardPopupRef.current.setLink("");
     this.previewDashboardPopupRef.current.toggle();
@@ -87,27 +88,6 @@ class DeploymentTemplate extends React.Component {
                 {this.renderDashboards(dashboards)}
               </div>
             </div>
-            {/* <div className="catalogue-right-container">
-              <div>
-                Select a template to start with. You can use filters or the seach box the scope.
-              </div>
-              <div className="templated-search">
-                <div className="row">
-                  <div className="col-sm-10">
-                    <div className="search-box">
-                      <button className="search-button"><i className="fa fa-search"></i></button>
-                      <input type="text" placeholder="Search Template here" className="input" />
-                    </div>
-                  </div>
-                  <div className="col-sm-2">
-                    <div className="btnContainer">
-                      <button className="btn btn-grid btn-active"><i className="fa fa-th-large"></i></button>
-                      <button className="btn btn-list"><i className="fa fa-list"></i></button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
         <PreviewDashboardPopup ref={this.previewDashboardPopupRef} />
@@ -116,4 +96,4 @@ class DeploymentTemplate extends React.Component {
   }
 }
 
-export default DeploymentTemplate;
+export default ISVSolutions;

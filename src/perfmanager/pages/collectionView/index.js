@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { config } from "../../config";
 import { Collapse } from "reactstrap";
-import TopMenu from "../catalog/topMenu";
+import TopMenu from "../catalog/TopMenu";
 import Rbac from "../../components/Rbac";
 import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 

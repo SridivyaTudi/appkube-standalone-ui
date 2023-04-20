@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { config } from "../../config";
 import ticketIconImage1 from "../../img/ticket-icon-img1.png";
 import { Line } from "react-chartjs-2";
-import Table from "./../../components/table";
+import Table from "./../../components/Table";
 import { RestService } from "../_service/RestService";
 import Rbac from "../Rbac/Rbac";
 import CreateButtonComponent from "../commanComponents/CreateButtonComponent";

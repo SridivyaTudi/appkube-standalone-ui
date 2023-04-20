@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import awsLogo from "../../img/aws.png";
 import microsoftAzureLogo from "../../img/microsoftazure.png";
 import gcpLogo from "../../img/google-cloud.png";
-import Table from "./components/table";
+import Table from "./components/Table";
 import { NavLink  } from "react-router-dom";
 
 export class DiscoveredAssets extends Component {

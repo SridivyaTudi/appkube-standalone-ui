@@ -6,7 +6,7 @@ import { UncontrolledPopover, PopoverBody } from "reactstrap";
 import EditAlertPopup from "../allAlerts/EditAlertPopup";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import AlertMessage from "../../components/AlertMessage";
-import Table from "../../components/table";
+import Table from "../../components/Table";
 import Rbac from "../../components/Rbac";
 
 class SearchAlert extends Component {

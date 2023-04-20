@@ -1,11 +1,11 @@
 import React from "react";
-import CloudDashboards from "./cloudDashboards";
-import DataSources from "./dataSources";
-import ProvisioningTemplates from "./provisionTemplate";
-import Collectors from "./collectors";
-import Diagonostics from "./diagonostics";
-import KubeOperators from "./kubeOperators";
-import Workflows from "./workflows";
+import CloudDashboards from "./CloudDashboards";
+import DataSources from "./DataSources";
+import ProvisioningTemplates from "./ProvisionTemplate";
+import Collectors from "./Collectors";
+import Diagonostics from "./Diagonostics";
+import KubeOperators from "./KubeOperators";
+import Workflows from "./Workflows";
 
 class OpsCatalogue extends React.Component {
   tabMapping = [

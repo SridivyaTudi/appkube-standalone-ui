@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Metrics from "../analytics/img/metrics.svg";
 // Libraries
 //import { updateLocation } from 'app/core/actions';
-import Table from '../analytics/components/table';
+import Table from '../analytics/components/Table';
 import CreateNewViewPopup from './CreateNewViewPopup';
 // import { config } from '../config';
 //import { locationService } from '@grafana/runtime';

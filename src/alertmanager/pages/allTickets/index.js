@@ -3,7 +3,7 @@ import { config } from "../../config";
 import StartECPopup from "./StartECPopup";
 import InstancePopup from "./InstancePopup";
 import { RestService } from "../_service/RestService";
-import Table from "../../components/table";
+import Table from "../../components/Table";
 import Rbac from "../../components/Rbac";
 import UnimplementedFeaturePopup from "../../components/UnimplementedFeaturePopup";
 

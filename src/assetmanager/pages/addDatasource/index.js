@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { images } from "../../img";
 import { CommonService } from "../_common/common";
 import AlertMessage from "../../components/AlertMessage";
-import masterDummyData from "./masterDatasourceDummy.json";
-import searchData from "./searchData.json";
+import MasterDummyData from "./MasterDataSourceDummy.json";
+import searchData from "./SearchData.json";
 
 class AddDatasource extends React.Component {
   constructor(props) {
@@ -53,7 +53,7 @@ class AddDatasource extends React.Component {
   };
 
   getMasterDataSource = () => {
-    this.manipulateData(masterDummyData);
+    this.manipulateData(MasterDummyData);
     // try {
     //   fetch(`/api/datasources/master-datasources`).then((response) => {
     //     console.log("Loading Asstes : ", response);

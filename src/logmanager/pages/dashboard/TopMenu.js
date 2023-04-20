@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import LaunchTcpInputPopup from "./launchTcpInputPopup";
-import ContentPacksPopup from "./contentPacksPopup";
+import LaunchTcpInputPopup from "./LaunchTcpInputPopup";
+import ContentPacksPopup from "./ContentPacksPopup";
 
 class TopMenu extends React.Component {
   constructor(props) {
