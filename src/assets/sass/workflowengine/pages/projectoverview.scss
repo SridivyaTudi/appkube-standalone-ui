@@ -916,6 +916,23 @@
 @media only screen and (max-width: 767px) {
     .project-over-view-container {
         .project-over-view-section {
+            .project-over-view-inner-content {
+                .project-over-view-left-content {
+                    .sidebar {
+                        ul {
+                            li {
+                                width: 160px;
+                                padding: 10px;
+                                margin-right: 10px;
+
+                                &.active {
+                                    width: 175px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             .fliter-container {
                 .fliter-right-content {
                     display: inline-flex !important;

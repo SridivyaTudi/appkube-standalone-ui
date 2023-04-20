@@ -453,7 +453,7 @@ class OpenTickets extends React.Component {
           </div>
           <div className="common-container border-bottom-0 filter-container">
             <div className="row">
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="Agents">Agents</label>
                   <select
@@ -470,7 +470,7 @@ class OpenTickets extends React.Component {
                   </select>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="dueby">Due by</label>
                   <select
@@ -489,7 +489,7 @@ class OpenTickets extends React.Component {
                   </select>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="Status">Status</label>
                   <select
@@ -509,7 +509,7 @@ class OpenTickets extends React.Component {
                   </select>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="Priority">Priority</label>
                   <select
@@ -529,7 +529,7 @@ class OpenTickets extends React.Component {
                   </select>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="Type">Type</label>
                   <select
@@ -548,7 +548,7 @@ class OpenTickets extends React.Component {
                   </select>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="Tags">Tags</label>
                   <select
@@ -566,7 +566,7 @@ class OpenTickets extends React.Component {
                   </select>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="Companies">Companies</label>
                   <select
@@ -583,7 +583,7 @@ class OpenTickets extends React.Component {
                   </select>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="Contacts">Contacts</label>
                   <select

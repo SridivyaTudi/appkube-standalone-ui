@@ -69,18 +69,18 @@ class DataFlow extends React.Component {
     return (
       <div className="catalogue-inner-tabs-container">
         <div className="row">
-          <div className="col-lg-3 col-md-3 col-sm-12 col-r-p">
+          <div className="col-lg-3 col-md-4 col-sm-12 col-r-p">
             <Filter />
           </div>
-          <div className="col-lg-9 col-md-9 col-sm-12 col-l-p">
+          <div className="col-lg-9 col-md-8 col-sm-12 col-l-p">
             <div className="catalogue-right-container">
               <div className="heading">
                 <div className="row">
-                  <div className="col-md-9 col-sm-12">
+                  <div className="col-md-8 col-sm-12">
                     <h3>Catalogue</h3>
                     <p>A catalogue is collection of dashboards</p>
                   </div>
-                  <div className="col-md-3 col-sm-12">
+                  <div className="col-md-4 col-sm-12">
                     <button className="blue-button m-r-0 float-right">Add Catalogue</button>
                   </div>
                 </div>

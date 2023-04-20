@@ -493,9 +493,9 @@ class Library extends React.Component {
           <div className="common-container">
             <div className="search-top-header">
               <div className="header-left">
-                <div className="library-heading">Library</div>
+                <div className="library-heading"><h4 className="m-b-0"><strong>Library</strong></h4></div>
               </div>
-              <div className="float-right header-right">
+              <div className="header-right">
                 <Rbac
                   parentName={config.PARENT_NAME}
                   childName="library-index-addfolderbtn"

@@ -175,28 +175,34 @@ class Input extends React.Component {
           </div>
           <div className="common-container">
             <div className="new-stream-searchbar">
-              <div className="searchbar-left">
-                <div className="search-box">
-                  <form>
-                    <div className="search-control-group">
-                      <input type="text" className="input-group-text" />
-                      <button>
-                        <i className="fa fa-search"></i>
+              <div className="row">
+                <div className="col-lg-8 col-md-8 col-sm-12">
+                  <div className="searchbar-left">
+                    <div className="search-box">
+                      <form>
+                        <div className="search-control-group">
+                          <input type="text" className="input-group-text" />
+                          <button>
+                            <i className="fa fa-search"></i>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                    <button className="blue-button m-b-0">Filter</button>
+                    <button className="blue-button m-b-0 m-r-0">Reset</button>
+                  </div>
+                </div>
+                <div className="col-lg-4 col-md-4 col-sm-12">
+                  <div className="searchbar-right">
+                    <div className="new-stream-btn">
+                      <button
+                        className="blue-button m-b-0 m-r-0"
+                        onClick={this.onClickOpenCreateStreamPopup}
+                      >
+                        New Stream
                       </button>
                     </div>
-                  </form>
-                </div>
-                <button className="blue-button m-b-0">Filter</button>
-                <button className="blue-button m-b-0">Reset</button>
-              </div>
-              <div className="searchbar-right">
-                <div className="new-stream-btn">
-                  <button
-                    className="blue-button m-b-0 m-r-0"
-                    onClick={this.onClickOpenCreateStreamPopup}
-                  >
-                    New Stream
-                  </button>
+                  </div>
                 </div>
               </div>
             </div>

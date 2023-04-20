@@ -34,11 +34,11 @@ class DashboardPanelMetricBuilder extends React.Component {
           <div className="common-container">
             <div className="d-block page-heading">
               <div className="row">
-                <div className="col-lg-9 col-md-9 col-sm-12">
-                  <div className="asset-heading">New Dashboard / Add Panel</div>
+                <div className="col-lg-9 col-md-7 col-sm-12">
+                  <div className="heading-left"><h4><strong>New Dashboard / Add Panel</strong></h4></div>
                 </div>
-                <div className="col-lg-3 col-md-3 col-sm-12">
-                  <div className="float-right">
+                <div className="col-lg-3 col-md-5 col-sm-12">
+                  <div className="heading-right">
                     <button className="panel-gray-button min-width-inherit">
                       Save
                     </button>
@@ -54,7 +54,7 @@ class DashboardPanelMetricBuilder extends React.Component {
             </div>
             <div className="d-block add-panel-container">
               <div className="row">
-                <div className="col-lg-9 col-md-9 col-sm-12">
+                <div className="col-lg-9 col-md-8 col-sm-12">
                   <div className="d-block panel-left">
                     <div className="d-block graph-panel">
                       <div className="d-flex graph-top-panel">
@@ -137,7 +137,7 @@ class DashboardPanelMetricBuilder extends React.Component {
                     )}
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-3 col-sm-12">
+                <div className="col-lg-3 col-md-4 col-sm-12">
                   <div className="d-block panel-right">
                     <div className="d-inline-flex buttons">
                       <button

@@ -374,11 +374,22 @@
   width: 100%;
   margin-bottom: 1rem;
 }
+.custom-table .data-table-parent .data-table th {
+  padding: 7px 10px;
+  text-align: left;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #414D55;
+}
 
-.custom-table .data-table-parent .data-table th,
 .custom-table .data-table-parent .data-table td {
   padding: 7px 10px;
   text-align: left;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #39475B;
 }
 
 .custom-table .data-table-parent .data-table tbody tr:nth-child(odd) {
@@ -599,7 +610,7 @@
 
 
 
-@media only screen and (max-width: 1200px) and (min-width: 768px) {
+@media only screen and (max-width: 1280px) and (min-width: 768px) {
   .custom-table .toolbar {
     float: left;
   }
@@ -639,6 +650,12 @@
     width: 50%;
     margin-top: 15px;
     float: left;
+  }
+  .custom-table .toolbar .search-box{
+    margin-top: 15px;
+  }
+  .custom-table .toolbar .search-box .search-control-group .input-group-text {
+    height: 34px;
   }
 
   .custom-table .toolbar .multiselect .form-control.select-label {
@@ -715,8 +732,8 @@
   }
 }
 .tagged-box{
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   color: #FFFFFF;
   background-color: #B8E986;
@@ -724,16 +741,62 @@
   margin-right: 5px;
 }
 .tagged-box i{
-  font-size: 16px;
-  line-height: 25px;
+  font-size: 13px;
+  line-height: 20px;
 }
 .custom-table .data-table-parent .data-table tbody tr:nth-child(odd) .action-btn{
+  color: #0077B6;
   background-color: #ffffff;
   
 }
-.action-btn{
+.action-btn {
   color: #0077B6;
   border: none;
   background-color: #F8F9FB;
+}
+
+.action-btn i{
+  color: #0077B6;
+
+}
+@media only screen and (max-width: 767px) {
+  .custom-table .toolbar .showing {
+    float: left;
+    width: 100%;
+    
+  }
+    .custom-table .toolbar .multiselect {
+      width: 100%;
+      margin-top: 15px;
+      float: left;
+  }
+  .custom-table .toolbar .showby .form-control {
+    display: block;
+    width: 100%;
+    height: 34px;  
+ }
+ .custom-table .toolbar .showby span {
+    padding-left: 0;
+  }
+  .custom-table .toolbar .multiselect .form-control.select-label {
+    width: 100%;
+    display: block;
+  }
+  .custom-table .toolbar .showby {
+    width: 100%;
+    float: left;
+    text-align: left;
+    
+  }
+  .custom-table .toolbar .search-box{
+    margin-top: 15px;
+    display: block;
+    text-align: left;
+    width: 100%;
+  }
+  .custom-table .toolbar .search-box .search-control-group .input-group-text {
+    height: 34px;
+    width: 100%;
+  }
 }
 

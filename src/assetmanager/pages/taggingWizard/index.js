@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Jobs from "../../../assets/img/jobs.png";
+import SearchIcon from "../../../assets/img/search-icon.svg";
 import Wizard from "./wizard";
 import DiscoveredAssets from "./DiscoveredAssets";
 import TaggedAssets from "./TaggedAssets";
@@ -29,6 +29,7 @@ export class TaggingWizard extends Component {
       },
     ];
   }
+  
   render() {
     return (
       <div className="asset-container">
@@ -40,13 +41,21 @@ export class TaggingWizard extends Component {
               </div>
               <div className="col-lg-3 col-md-3 col-sm-12">
                 <div className="float-right common-right-btn">
-                  <Link className="asset-white-button min-width-inherit m-r-1">
-                    <img alt="jobs" src={Jobs} style={{ maxWidth: "20px" }} />
+                  <Link className="m-r-1">
+                    <img
+                      alt="jobs"
+                      src={SearchIcon}
+                      style={{ maxWidth: "20px" }}
+                    />
                   </Link>
-                  <a className="white-button m-r-0" href="#">
-                    <i className="fa fa-arrow-circle-left"></i>
-                    &nbsp;&nbsp; Back
-                  </a>
+                  <Link
+                    to="/assetmanager/pages/environments"
+                    type="button"
+                    className="btn btn-link m-r-0"
+                  >
+                    <i className="far fa-arrow-alt-circle-left" />
+                    Back
+                  </Link>
                 </div>
               </div>
             </div>

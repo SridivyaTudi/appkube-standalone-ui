@@ -3,7 +3,8 @@
 }
 
 .common-container {
-  .kpi-btn, .log-btn {
+  .kpi-btn,
+  .log-btn {
     min-width: 60px;
     font-size: 14px;
     font-weight: 300;
@@ -63,15 +64,15 @@
   }
 }
 
-.manage-rules-btn{
- .common-right-btn {
-   margin-bottom: 10px;
-  .alert-white-button {
-    font-size: 14px;
-    font-weight: 300;
-    margin-right: 0;
+.manage-rules-btn {
+  .common-right-btn {
+    margin-bottom: 10px;
+    .alert-white-button {
+      font-size: 14px;
+      font-weight: 300;
+      margin-right: 0;
+    }
   }
- }
 }
 
 .manage-data-table {
@@ -182,8 +183,26 @@
   }
 
   .common-container {
-    .kpi-btn, .log-btn {
+    .kpi-btn,
+    .log-btn {
       margin-bottom: 10px;
+    }
+  }
+  .manage-alert-rule {
+    .alert-page-container {
+      .common-container{
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .manage-container{
+        padding-left: 0;
+        padding-right: 0;
+        .manage-rules-btn{
+          .common-right-btn{
+            text-align: left;
+          }
+        }
+      }
     }
   }
 }

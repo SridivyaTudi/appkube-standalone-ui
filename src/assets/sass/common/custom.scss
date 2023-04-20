@@ -1,4 +1,4 @@
- h3 {
+h3 {
   font-size: 20px;
   line-height: 24px;
   color: #3b4859;
@@ -27,7 +27,6 @@ p {
   padding-right: 45px;
   padding-bottom: 15px;
   border-bottom: 1px solid $perfmanager-container-border-color;
-  
 }
 //*********************************** Buttons *********************************//
 .white-button {
@@ -51,7 +50,6 @@ p {
     color: #57a4ff !important;
   }
 }
-
 
 .blue-button {
   background: #3b7cff !important;
@@ -235,9 +233,18 @@ p {
   cursor: no-drop;
   opacity: 0.8;
 }
-button{
-  &:focus{
+button {
+  &:focus {
     outline: none;
+  }
+}
+.btn-link {
+  color: #3b4859;
+
+  i {
+    margin-right: 8px;
+    font-size: 18px;
+    color: #57a4ff;
   }
 }
 //*************************************Search Bar***************************************//
@@ -338,6 +345,10 @@ button{
     padding: 0 10px;
     cursor: pointer;
     height: 36px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
 
     i {
       display: inline-block;
@@ -349,6 +360,10 @@ button{
     span {
       display: inline-block;
       vertical-align: top;
+      width: 70%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -1028,7 +1043,6 @@ a {
     }
 
     &:last-child {
-
       &:after,
       &:before {
         display: none;
@@ -1045,7 +1059,6 @@ a {
     display: none;
   }
 }
-
 
 @media (min-width: 1200px) {
   .col-xl-4 {
@@ -1108,4 +1121,158 @@ a {
 }
 .blue {
   color: #438afb;
+}
+
+//***************************************unit tabs***************************************//
+.urganisational-unit-container {
+  .unit-tabs {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: #d9e4f2;
+    text-align: center;
+    margin: 10px 10px 0 10px;
+    overflow: hidden;
+
+    ul {
+      display: flex;
+      padding-left: 2px;
+      padding-right: 2px;
+      padding-top: 2px;
+      padding-bottom: 1px;
+      justify-content: flex-start;
+
+      li {
+        list-style: none;
+        display: contents;
+
+        a {
+          font-size: 12px;
+          line-height: 16px;
+          font-weight: 500;
+          color: #414d55;
+          padding: 10px 20px;
+
+          &:hover {
+            background-color: #ffffff;
+            color: #2662f0;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+          }
+        }
+
+        &.active {
+          a {
+            background-color: #ffffff;
+            color: #2662f0;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1280px) {
+  .urganisational-unit-container {
+    .unit-tabs {
+      ul {
+        li {
+          a {
+            padding: 10px 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .common-container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (max-width: 767px) {
+  .search-top-header {
+    display: block;
+    .header-right {
+      text-align: left;
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  }
+  .urganisational-unit-container {
+    .unit-tabs {
+      ul {
+        display: block;
+        padding-left: 2px;
+        padding-right: 2px;
+
+        li {
+          display: block;
+
+          a {
+            display: block;
+          }
+
+          .active {
+            background-color: #ffffff;
+            color: #2662f0;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+          }
+
+          &:hover {
+            background-color: #ffffff;
+            color: #2662f0;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+          }
+        }
+      }
+    }
+  }
+  .wizard-step-line-container {
+    .wizard-step-button {
+      width: 100%;
+      border-left: 1px solid #707070b5;
+      border-right: 1px solid #707070b5;
+      border-bottom: none;
+      &:last-child {
+        border-bottom: 1px solid #707070b5;
+      }
+      &:before,
+      &:after {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 540px) {
+  .filter-control-group {
+    width: 100%;
+    max-width: 100%;
+  }
+ 
+}
+@media (max-width: 578px){
+  .gsl-editor-logos {
+    ul{
+      li{
+        display: block;
+        padding-right: 0;
+        a{
+          width: 100%;
+        }
+        &:last-child{
+          padding-right: 0;
+        }
+      }
+    }
+  }
 }

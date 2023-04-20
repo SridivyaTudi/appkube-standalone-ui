@@ -223,10 +223,10 @@ class NewPlaylists extends Component {
               </div>
               <div className="col-lg-7 col-md-12 col-sm-12">
                 <div className="float-right playlist">
-                  <Button onClick={this.onClickCancel} className="asset-gray-button">
+                  <Button onClick={this.onClickCancel} className="asset-gray-button m-b-1">
                     Cancel
                   </Button>
-                  <Button disabled={!enabled} onClick={this.createPlaylist} className="asset-blue-button m-r-0 m-b-0">
+                  <Button disabled={!enabled} onClick={this.createPlaylist} className="asset-blue-button m-r-0 m-b-1">
                     Save
                   </Button>
                 </div>

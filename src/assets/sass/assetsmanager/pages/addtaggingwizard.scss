@@ -13,7 +13,7 @@
           color: #414d55;
         }
         .resources-box {
-          min-height: 500px;
+          min-height: 100%;
           border-radius: 5px;
           border: 0.5px solid #909292;
           .resources-title {
@@ -22,70 +22,118 @@
           }
           .resources-contant {
             padding: 5px;
-            .collection-details {
-              .container-inner {
-                .collection-data-table {
+            .data-table {
+              display: block;
+              width: 100%;
+              tr {
+                display: block;
+                width: 100%;
+                td {
                   width: 100%;
-                  background-color: #ffffff;
-                  font-size: 13px;
-                  line-height: 24px;
-                  .tbody{
-                    display: block;
-                    width: 100%;
-                    &:nth-child(odd ){
-                      .tbody-inner{
-                        background-color: #f8f9fb;
-                      }
-                    }
-                    .tbody-inner{
-                      display: block;
-                      width: 100%;
-                    }
-                    .tbody-td{
-                      display: inline-block;
-                      padding: 10px 10px;
-                      color: #3b4859;
-                      font-weight: 500;
-                      vertical-align: top;
-                      &.first{
-                        display: block;
-                        width: 100%;
-                        padding-left: 35px;
-                      }
-                    }
-                    .collapse{
-                      .tbody{
-                        &:nth-child(even){
-                          background-color: #f8f9fb;
+                  display: block;
+                  font-size: 12px;
+                  font-weight: 500;
+                  line-height: 16px;
+                  padding: 0;
+
+                  .table-contant {
+                    background-color: #f8f9fb;
+                    padding: 5px 0px 5px 15px;
+                  }
+                  .inner {
+                    tr {
+                      &:nth-child(odd) {
+                        .table-contant {
+                          background-color: #fff;
+                          padding: 5px 0px 5px 30px;
                         }
                       }
                     }
-                  }
-                  .caret-right {
-                    display: inline-block;
-                    vertical-align: middle;
-                    width: 13px;
-                    height: 13px;
-                    border: 2px solid #8392a7;
-                    background: transparent;
-                    margin-top: 0;
-                    margin-right: 10px;
-                    cursor: pointer;
-                    border-radius: 2px;
-                  }
-                  .caret-down {
-                    display: inline-block;
-                    vertical-align: middle;
-                    width: 13px;
-                    height: 13px;
-                    background: #8392a7;
-                    margin-top: 0;
-                    margin-right: 10px;
-                    cursor: pointer;
-                    border-style: none;
-                    border-width: 0;
-                    border-color: none;
-                    border-radius: 2px;
+                    .table-contant {
+                      background-color: #f8f9fb;
+                      padding: 5px 0px 5px 30px;
+                    }
+                    .inner {
+                      tr {
+                        &:nth-child(odd) {
+                          .table-contant {
+                            background-color: #f8f9fb;
+                            padding: 5px 0px 5px 45px;
+                          }
+                        }
+                      }
+                      tr{
+                        .table-contant {
+                          background-color: #fff;
+                          padding: 5px 0px 5px 45px;
+                        }
+                      }
+                      .inner {
+                        tr {
+                          &:nth-child(odd) {
+                            .table-contant {
+                              background-color: #fff;
+                              padding: 5px 0px 5px 60px;
+                            }
+                          }
+                        }
+                        tr{
+                          .table-contant {
+                            background-color: #f8f9fb;
+                            padding: 5px 0px 5px 60px;
+                          }
+                        }
+                        .inner {
+                          tr {
+                            &:nth-child(odd) {
+                              .table-contant {
+                                background-color: #f8f9fb;
+                                padding: 5px 0px 5px 75px;
+                              }
+                            }
+                          }
+                          tr{
+                            .table-contant {
+                              background-color: #fff;
+                              padding: 5px 0px 5px 75px;
+                            }
+                          }
+                          .inner {
+                            tr {
+                              &:nth-child(odd) {
+                                .table-contant {
+                                  background-color: #fff;
+                                  padding: 5px 0px 5px 90px;
+                                }
+                              }
+                            }
+                            tr{
+                              .table-contant {
+                                background-color: #f8f9fb;
+                                padding: 5px 0px 5px 90px;
+                              }
+                            }
+                            
+                            .inner {
+                              tr {
+                                &:nth-child(odd) {
+                                  .table-contant {
+                                    background-color: #f8f9fb;
+                                    padding: 5px 0px 5px 105px;
+                                  }
+                                }
+                              }
+                              tr{
+                                .table-contant {
+                                  background-color: #fff;
+                                  padding: 5px 0px 5px 105px;
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -97,8 +145,8 @@
               padding: 8px 10px;
               background-color: #f8f9fb;
               p {
-                font-size: 14px;
-                line-height: 20px;
+                font-size: 12px;
+                line-height: 16px;
                 font-weight: 500;
                 color: #39475b;
                 margin-bottom: 0;

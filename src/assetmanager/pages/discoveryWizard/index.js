@@ -151,10 +151,10 @@ class DiscoveryWizard extends Component {
         <div className="accountsetup-page-container">
           <div className="common-container">
             <div className="row">
-              <div className="col-lg-9 col-md-9 col-sm-12">
+              <div className="col-lg-9 col-md-9 col-sm-8 col-xs-6">
                 <div className="asset-heading">Environments</div>
               </div>
-              <div className="col-lg-3 col-md-3 col-sm-12">
+              <div className="col-lg-3 col-md-3 col-sm-4 col-xs-6">
                 <div className="float-right common-right-btn ">
                   <Link
                     to={`/assetmanager/pages/environments`}

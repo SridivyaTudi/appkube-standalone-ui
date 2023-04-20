@@ -447,39 +447,38 @@ export class Table extends Component {
     }
     return (
       <div className={`${tableClasses.parentClass} custom-table p-5`}>
-        <div className="row">
-          <div className="col-sm-12">
-            <div className="d-inline-block showing">{showingLine}</div>
-            <div className="d-inline-block showby">
-              <label className="d-inline-block">Show</label>
-              <select onChange={this.handleChange} className="form-control">
-                {this.displayShowPageLimit()}
-              </select>
-              <span className="d-inline-block">entries per page</span>
+        <div className="toolbar">
+          <div className="d-inline-block showing">{showingLine}</div>
+          <div className="d-inline-block showby">
+            <label className="d-inline-block">Show</label>
+            <select onChange={this.handleChange} className="form-control">
+              {this.displayShowPageLimit()}
+            </select>
+            <span className="d-inline-block">entries per page</span>
+          </div>
+          <div className="d-inline-block multiselect">
+            <div
+              className="form-control select-label"
+              onClick={this.toggleColumnSelect}
+            >
+              Select columns <i className="fa fa-chevron-down pull-right"></i>
             </div>
-            <div className="d-inline-block multiselect">
+            <div
+              style={{ display: showSelect ? "" : "none" }}
+              className="options"
+            >
+              {this.renderColumns()}
+            </div>
+            {showSelect && (
               <div
-                className="form-control select-label"
+                className="multiselect-bg"
                 onClick={this.toggleColumnSelect}
-              >
-                Select columns <i className="fa fa-chevron-down pull-right"></i>
-              </div>
-              <div
-                style={{ display: showSelect ? "" : "none" }}
-                className="options"
-              >
-                {this.renderColumns()}
-              </div>
-              {showSelect && (
-                <div
-                  className="multiselect-bg"
-                  onClick={this.toggleColumnSelect}
-                ></div>
-              )}
-            </div>
-            <div className="d-inline-block pull-right form-group search-box">
-              <form>
-                <div className="form-group search-control-group m-b-0">
+              ></div>
+            )}
+          </div>
+          <div className="d-inline-block pull-right form-group search-box">
+            <form>
+              <div className="form-group search-control-group m-b-0">
                 <input
                   type="text"
                   className="input-group-text"
@@ -489,9 +488,8 @@ export class Table extends Component {
                 <button>
                   <i className="fa fa-search pull-right"></i>
                 </button>
-                </div>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
         <div className={tableClasses.tableParent}>

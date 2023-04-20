@@ -234,13 +234,13 @@ class ResourceWiseViewAllTasks extends Component {
           <div className="project-wise-status">
             <div className="heading">All Task</div>
             <div className="row d-flex align-items-center justify-content-center">
-              <div className="col-lg-4">
+              <div className="col-lg-4 col-md-4 col-sm-12 m-b-1">
                 <div className="task-heading-content">
                   <p>Role - Project Management</p>
                   <span>Total Task- 10</span>
                 </div>
               </div>
-              <div className="col-lg-4">
+              <div className="col-lg-4 col-md-4 col-sm-12 m-b-1">
                 <div className="filler-search">
                   <select>
                     <option>Sort by</option>
@@ -250,7 +250,7 @@ class ResourceWiseViewAllTasks extends Component {
                   </select>
                 </div>
               </div>
-              <div className="col-lg-4">
+              <div className="col-lg-4 col-md-4 col-sm-12 m-b-1">
                 <div className="search-bar">
                   <input
                     type="text"

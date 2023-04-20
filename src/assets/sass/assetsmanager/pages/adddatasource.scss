@@ -30,19 +30,6 @@
           align-items: center;
           justify-content: space-between;
 
-          .back-btn {
-            margin-left: 15px;
-
-            .btn-link {
-              color: #3b4859;
-
-              i {
-                margin-right: 8px;
-                font-size: 18px;
-                color: #57a4ff;
-              }
-            }
-          }
         }
       }
 
@@ -1111,7 +1098,7 @@
 
             .back-btn {
               .btn-link {
-                padding: 0;
+                padding: 0 10px;
               }
             }
           }

@@ -523,19 +523,16 @@ class ProductWiseServicesSla extends React.Component {
       <div className="asset-container">
         <div className="services-sla-container">
           <div className="common-container border-bottom-0">
-            <div
-              className="services-heading"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              Product Wise Services SLA
-              <select value={accountId} onChange={this.onChangeAccount}>
-                <option value="">All</option>
-                {this.renderAccountOptions()}
-              </select>
+            <div className="services-heading">
+              <div className="header-left">
+              <h4>Product Wise Services SLA</h4>
+              </div>
+              <div className="header-right">
+                <select value={accountId} onChange={this.onChangeAccount}>
+                  <option value="">All</option>
+                  {this.renderAccountOptions()}
+                </select>
+              </div>
             </div>
             {!isDataLoaded ? (
               <div className="services-sla-boxs">Loading...</div>

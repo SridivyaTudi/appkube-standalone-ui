@@ -16,10 +16,10 @@ class Alerts extends Component {
         </div>
         <div className="showing-export">
           <div className="row d-flex justify-content-center">
-            <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 m-b-1">
               <div className="showing-heading">Showing results 0 of 0</div>
             </div>
-            <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 m-b-1">
               <div className="fliter">
                 <div className="fliter-toggel">
                   <i className="fa fa-clock-o"></i>
@@ -27,7 +27,7 @@ class Alerts extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+            <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12 m-b-1">
               <div className="search-box">
                 <form>
                   <div className="form-group search-control-group">

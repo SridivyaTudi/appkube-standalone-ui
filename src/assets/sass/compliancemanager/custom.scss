@@ -74,15 +74,6 @@
     }
   }
 }
-
-@media (max-width: 1200px) {
-  .filter-container {
-    .assessments {
-      float: left;
-    }
-  }
-}
-
 .open-full-screen {
   position: fixed;
   left: 0;
@@ -96,4 +87,37 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+}
+
+@media (max-width: 1200px) {
+  .filter-container {
+    .assessments {
+      float: left;
+    }
+  }
+}
+
+
+@media screen and  (max-width: 767px){
+  .compliancemanager-page-container{
+      .region-section{
+          .filter-control-group{
+              width: 100%;
+
+              max-width: 100%;
+          }
+      }
+      .context-preview-box{
+          .context-preview{
+              .search-box{
+                  .filter-search-control{
+                      width: 100%;
+                      max-width: 100%;
+                      display: block;
+                  }
+              }
+          }
+      }
+  }
+  
 }

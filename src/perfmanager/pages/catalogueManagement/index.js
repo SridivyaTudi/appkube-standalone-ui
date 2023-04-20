@@ -267,13 +267,13 @@ class CatalogueManagement extends Component {
           <div className="common-container">{/* <TopMenu /> */}</div>
           <div className="common-container collection-search">
             <div className="catalog-app-text">
-              <h3>Catalogue</h3>
+              <h3><strong>Catalogue</strong></h3>
               <p>A catalogue is collection of dashboards</p>
             </div>
           </div>
           <div className="common-container">
             <div className="search-top-header">
-              <div className="text-left header-left">
+              <div className="header-left">
                 <Rbac
                   parentName={config.PARENT_NAME}
                   childName="commancomponent-createbuttoncomponent-createbtn"
@@ -281,13 +281,13 @@ class CatalogueManagement extends Component {
                   <a
                     style={{ float: "left" }}
                     onClick={this.onClickCreateCatalog}
-                    className="blue-button m-r-0 m-b-0 min-width-inherit width-auto create-btn"
+                    className="blue-button min-width-inherit width-auto create-btn"
                   >
                     Add Catalogue
                   </a>
                 </Rbac>
               </div>
-              <div className="text-right header-right">
+              <div className=" header-right">
                 <div className="script-select m-r-1">
                   <select
                     className="form-control"

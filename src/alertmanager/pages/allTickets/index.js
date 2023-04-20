@@ -166,39 +166,31 @@ class AllTickets extends React.Component {
         <div className="alert-page-container">
           <div className="common-container">
             <div className="row">
-              <div className="col-lg-3 col-md-12 col-sm-12">
+              <div className="col-xl-3 col-lg-12 col-md-12 col-sm-12">
                 <div className="alert-heading">All Tickets</div>
               </div>
-              <div className="col-lg-9 col-md-12 col-sm-12">
-                <div className="float-right script-editor-btn">
+              <div className="col-xl-9 col-lg-12 col-md-12 col-sm-12">
+                <div className="script-editor-btn">
                   <Rbac
                     parentName={config.PARENT_NAME}
                     childName="alltickets-index-createticketbtn"
                   >
-                    <button
-                      className="asset-white-button"
+                    <button className="asset-white-button m-b-1"
                       onClick={this.onClickOpenNewTicket}
                     >
                       <i className="fa fa-plus"></i>&nbsp;&nbsp; Create Ticket
                     </button>
                   </Rbac>
                   <button
-                    className="asset-white-button"
+                    className="asset-white-button m-b-1"
                     onClick={this.onRefreshClick}
                   >
                     <i className="fa fa-refresh"></i>&nbsp;&nbsp; Refresh
                   </button>
-                  <button className="asset-white-button">
+                  <button className="asset-white-button m-b-1">
                     <i className="fa fa-floppy-o"></i>&nbsp;&nbsp; Save Search
                   </button>
-                  <div
-                    className="form-group filter-control-group"
-                    style={{
-                      display: "inline-block",
-                      marginRight: "0px",
-                      marginBottom: "0px",
-                    }}
-                  >
+                  <div className="form-group filter-control-group">
                     <select className="form-control">
                       <option>Export</option>
                       <option>2</option>

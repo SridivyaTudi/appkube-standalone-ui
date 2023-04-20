@@ -112,8 +112,8 @@ class CreateRule extends React.Component {
                 <div className="create-rule-header-content">
                   <div className="italic-label">No action group selected</div>
                   <div>
-                    <button className="asset-gray-button m-r-2">Add</button>
-                    <button className="asset-gray-button">Create</button>
+                    <button className="asset-gray-button m-r-2 m-b-1">Add</button>
+                    <button className="asset-gray-button m-b-1">Create</button>
                   </div>
                 </div>
               </div>
@@ -128,7 +128,7 @@ class CreateRule extends React.Component {
                 </div>
                 <div className="create-rule-header-content">
                   <div className="d-flex justify-content-center align-items-center h-100">
-                    <div className="form-group filter-control-group col-md-6 col-sm-12 p-l-0 p-r-0">
+                    <div className="filter-control-group col-md-6 col-sm-12 p-l-0 p-r-0 m-r-2">
                       <label htmlFor="ruleName" className="">
                         Alert Rule Name
                       </label>
@@ -138,7 +138,7 @@ class CreateRule extends React.Component {
                         id="ruleName"
                       />
                     </div>
-                    <div className="form-group filter-control-group col-md-6 col-sm-12 p-l-0 p-r-0">
+                    <div className="filter-control-group col-md-6 col-sm-12 p-l-0 p-r-0">
                       <label htmlFor="description" className="">
                         Description
                       </label>
@@ -149,10 +149,10 @@ class CreateRule extends React.Component {
                     </div>
                   </div>
                   <div className="m-t-1">
-                    <button className="asset-gray-button m-r-2">
+                    <button className="asset-gray-button m-r-2 m-b-1">
                       Save &amp; enable
                     </button>
-                    <button className="asset-gray-button">Save</button>
+                    <button className="asset-gray-button m-b-1">Save</button>
                   </div>
                 </div>
               </div>

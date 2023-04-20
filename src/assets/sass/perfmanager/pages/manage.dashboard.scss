@@ -114,7 +114,7 @@
   }
 
   .manage-dashboard-search {
-    padding-bottom: 30px;
+   // padding-bottom: 30px;
     .search-top-header{
       .header-left{
         .input-group-text{
@@ -126,6 +126,9 @@
 
   .manage-dashboard-fliter-sort {
     padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     .sort-view {
       display: inline-block;
@@ -854,27 +857,52 @@
     }
   }
 }
+@media (max-width: 1200px) {
+  .perfmanager-dashboard-container {
+    .manage-dashboard-search {
+      // padding-bottom: 30px;
+      .search-top-header{
+        .header-left{
+          .input-group-text{
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+ 
+}
 
 @media (max-width: 990px) {
   .perfmanager-dashboard-container {
+
+    .manage-dashboard-search{
+      .search-top-header{
+        display: block;
+      }
+    }
     .filter-starred {
       &.float-right {
         float: left;
-        padding-top: 15px;
+        // padding-top: 15px;
       }
     }
 
     .manage-dashboard-search {
       .search-control-group {
         width: 100%;
-        margin-bottom: 15px;
+        // margin-bottom: 15px;
       }
 
       .search-buttons {
         &.float-right {
           float: left;
+          display: contents;
         }
       }
+    }
+    .manage-dashboard-fliter-sort{
+      display: block;
     }
 
     .manage-dashboard-general {
@@ -923,12 +951,13 @@
     }
 
     .manage-dashboard-fliter-sort {
+      display: block;
       .sort-select-menu {
-        width: 75%;
-        margin-top: 15px;
+        width: 50%;
+        // margin-top: 15px;
 
         select {
-          width: 80%;
+          width: 70%;
         }
       }
     }

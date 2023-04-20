@@ -160,7 +160,7 @@ class ReportHelpdesh extends React.Component {
           </div>
           <div className="common-container border-bottom-0 filter-container">
             <div className="row report-filter">
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="selecttimeperiod">Select Time Period</label>
                   <input
@@ -170,7 +170,7 @@ class ReportHelpdesh extends React.Component {
                   />
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="agents">Agents</label>
                   <select className="form-control">
@@ -182,7 +182,7 @@ class ReportHelpdesh extends React.Component {
                   </select>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="groups">Groups</label>
                   <select className="form-control">
@@ -197,7 +197,7 @@ class ReportHelpdesh extends React.Component {
                   </select>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="customer">Customer</label>
                   <select className="form-control">
@@ -208,7 +208,7 @@ class ReportHelpdesh extends React.Component {
                   </select>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="type">Type</label>
                   <select className="form-control">
@@ -219,7 +219,7 @@ class ReportHelpdesh extends React.Component {
                   </select>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="source">Source</label>
                   <select className="form-control">
@@ -230,7 +230,7 @@ class ReportHelpdesh extends React.Component {
                   </select>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="form-group filter-control-group">
                   <label htmlFor="priority">Priority</label>
                   <select className="form-control">
@@ -242,7 +242,7 @@ class ReportHelpdesh extends React.Component {
                   </select>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+              <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div className="p-t-20 form-group filter-control-group">
                   <a
                     href="#"

@@ -277,7 +277,6 @@ class AddDatasource extends React.Component {
                     </div>
                   </form>
                 </div>
-
                 <div className="back-btn">
                   <Link
                     to="/assetmanager/pages/environments"

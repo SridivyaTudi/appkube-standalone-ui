@@ -9,14 +9,14 @@ class Workflows extends React.Component {
   render() {
     return (
       <div className="catalogue-right-container">
-        <div>
+        <p className="m-t-1">
           Select a template to start with. You can use filters or the seach box
           the scope.
-        </div>
-        <div className="templated-search">
+        </p>
+        <div className="templated-search ">
           <div className="row">
-            <div className="col-sm-10">
-              <div className="search-box">
+            <div className="col-lx-10 col-lg-9 col-md-12 col-sm-12 col-xs-12">
+              <div className="search-box m-b-1">
                 <div className="search-control-group">
                 <input type="text" className="input-group-text"
                   placeholder="Search Template here"/>
@@ -26,9 +26,9 @@ class Workflows extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="col-sm-2">
-              <div className="btnContainer">
-                <button className="btn btn-grid btn-active">
+            <div className="col-lx-2 col-lg-3 col-md-12 col-sm-12 col-xs-12">
+              <div className="btnContainer m-b-1">
+                <button className="btn btn-grid btn-active ">
                   <i className="fa fa-th-large"></i>
                 </button>
                 <button className="btn btn-list">
