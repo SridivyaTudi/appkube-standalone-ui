@@ -18,19 +18,18 @@ export class AddTaggingWizard extends Component {
       wizardPathNames: [],
     };
   }
+
   async getDiscoverAssest(id) {
     const response = await fetch(
       `http://34.199.12.114:5057/api/organizations/${id}`
     );
     const discoverData = await response.json();
-    if(discoverData['status'] != 404){
+    if (discoverData["status"] != 404) {
       this.setState({ ...this.state, ["data"]: discoverData });
     }
   }
   componentDidMount() {
-    let getId = window.location.pathname;
-    getId = getId.replace('/assetmanager/pages/addTaggingWizard/','')
-    // getId = 2;
+    let getId = this.handleGetId();
     this.getDiscoverAssest(getId);
   }
   handleToggleTree(type, id = 0) {
@@ -50,7 +49,8 @@ export class AddTaggingWizard extends Component {
         ["toggleTree"]: {
           ...this.state.toggleTree,
           ["departments"]: toggleTree["departments"],
-        },['wizardPathNames']:[]
+        },
+        ["wizardPathNames"]: [],
       });
     } else if (type == "products") {
       toggleTree["products"][id] = !toggleTree["products"][id];
@@ -82,14 +82,48 @@ export class AddTaggingWizard extends Component {
       });
     }
   }
-  handlePath(data, checked) {
+  async handlePath(data, checked) {
     let { wizardPathNames } = this.state;
+    let pathKeys = ["PRODUCT", "ENV", "MODULE", "SERVICE", "SERVICE_TYPE"];
+
     if (checked) {
-      wizardPathNames.push(data);
+      this.handleDiscoverAssetsUpdate().then((res) => {
+        if (res && res.tag) {
+          let getTab = res.tag.split(",");
+          let newPath = "";
+          getTab.forEach((tempData, key) => {
+            if (key > 0) {
+              newPath += " > ";
+            }
+            newPath += tempData.replace(`${pathKeys[key]}=`, "");
+          });
+          wizardPathNames.push({id:data.id,value:newPath});
+          this.setState({
+            ...this.state,
+            ["wizardPathNames"]: wizardPathNames,
+          });
+        }
+      });
     } else {
       wizardPathNames = wizardPathNames.filter((path) => path.id != data.id);
+      this.setState({ ...this.state, ["wizardPathNames"]: wizardPathNames });
     }
-    this.setState({ ...this.state, ["wizardPathNames"]: wizardPathNames });
+  }
+  handleGetId() {
+    return window.location.pathname.replace(
+      "/assetmanager/pages/addTaggingWizard/",
+      ""
+    );
+  }
+  async handleDiscoverAssetsUpdate() {
+    let getId = this.handleGetId();
+    return new Promise(async function (myResolve, myReject) {
+      const response = await fetch(
+        `http://34.199.12.114:5057/api/discovered-assets/${getId}`
+      );
+      const discoverData = await response.json();
+      myResolve(discoverData);
+    });
   }
   render() {
     return (
@@ -445,7 +479,6 @@ export class AddTaggingWizard extends Component {
                                                                                                                 .checked
                                                                                                             );
                                                                                                           }}
-
                                                                                                         />
                                                                                                         <span>
                                                                                                           {
