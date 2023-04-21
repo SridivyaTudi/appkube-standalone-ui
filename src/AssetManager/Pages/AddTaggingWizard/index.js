@@ -87,17 +87,20 @@ export class AddTaggingWizard extends Component {
     let pathKeys = ["PRODUCT", "ENV", "MODULE", "SERVICE", "SERVICE_TYPE"];
 
     if (checked) {
-      this.handleDiscoverAssetsUpdate().then((res) => {
+      this.handleDiscoverAssetsUpdate(data).then((res) => {
         if (res && res.tag) {
           let getTab = res.tag.split(",");
           let newPath = "";
           getTab.forEach((tempData, key) => {
-            if (key > 0) {
+            if (key > 1) {
               newPath += " > ";
             }
-            newPath += tempData.replace(`${pathKeys[key]}=`, "");
+            if(key > 0){
+              console.log(tempData)
+              newPath += tempData.replace(`${pathKeys[key-1]}=`, "");
+            }
           });
-          wizardPathNames.push({id:data.id,value:newPath});
+          wizardPathNames.push({ id: data.id, value: newPath });
           this.setState({
             ...this.state,
             ["wizardPathNames"]: wizardPathNames,
@@ -110,19 +113,49 @@ export class AddTaggingWizard extends Component {
     }
   }
   handleGetId() {
-    return window.location.pathname.replace(
-      "/assetmanager/pages/addTaggingWizard/",
-      ""
-    );
+    try {
+      return window.location.pathname
+        .replace("/assetmanager/pages/addTaggingWizard/", "")
+        .split("/")[0];
+    } catch (e) {
+      console.log(e);
+    }
   }
-  async handleDiscoverAssetsUpdate() {
-    let getId = this.handleGetId();
+  handleGetLandingId() {
+    try {
+      return window.location.pathname
+        .replace("/assetmanager/pages/addTaggingWizard/", "")
+        .split("/")[1];
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async handleDiscoverAssetsUpdate(otherparams) {
+    let getLandingId = this.handleGetLandingId();
     return new Promise(async function (myResolve, myReject) {
       const response = await fetch(
-        `http://34.199.12.114:5057/api/discovered-assets/${getId}`
+        `http://34.199.12.114:5057/api/service-allocations/search?landingZone=${getLandingId}&${otherparams.id}`
       );
-      const discoverData = await response.json();
-      myResolve(discoverData);
+      const discoverDataId = await response.json();
+      if (discoverDataId && discoverDataId.length) {
+        const response = await fetch(
+          `http://34.199.12.114:5057/api/service-allocations/${otherparams.currentId}`,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+              },
+            method: "PATCH",
+            body: JSON.stringify({
+              id:discoverDataId[0].id,
+              tag: otherparams.value+discoverDataId[0].serviceType,
+            }),
+          }
+        );
+        const discoverData = await response.json();
+        myResolve(discoverData);
+      }
+      
     });
   }
   render() {
@@ -404,14 +437,17 @@ export class AddTaggingWizard extends Component {
                                                                                                           onChange={(
                                                                                                             e
                                                                                                           ) => {
+                                                                                                          
                                                                                                             this.handlePath(
                                                                                                               {
-                                                                                                                id: `${department.id}_${product.id}_${deploymentEnvironment.id}_${module.id}`,
-                                                                                                                value: `${this.state.data.name} > ${department.name} > ${product.name} > ${deploymentEnvironment.name} > ${module.name} > ${appService.name}`,
+                                                                                                                id: `departmentId=${department.id}&productId=${product.id}&deploymentEnvironmentId=${deploymentEnvironment.id}&moduleId=${module.id}&servicesId=${appService.id}`,
+                                                                                                                value: `asset-id-${this.handleGetId()},PRODUCT=${product.name},ENV=${deploymentEnvironment.name},MODULE=${module.name},SERVICE=${appService.name},SERVICE_TYPE=`,
+                                                                                                                currentId:appService.id
                                                                                                               },
                                                                                                               e
                                                                                                                 .target
-                                                                                                                .checked
+                                                                                                                .checked,
+                                                                                                                appService.id
                                                                                                             );
                                                                                                           }}
                                                                                                         />
@@ -471,12 +507,14 @@ export class AddTaggingWizard extends Component {
                                                                                                           ) => {
                                                                                                             this.handlePath(
                                                                                                               {
-                                                                                                                id: `${department.id}_${product.id}_${deploymentEnvironment.id}_${module.id}_${dataService.id}`,
-                                                                                                                value: `${this.state.data.name} > ${department.name} > ${product.name} > ${deploymentEnvironment.name} > ${module.name} > ${dataService.name}`,
+                                                                                                                id: `departmentId=${department.id}&productId=${product.id}&deploymentEnvironmentId=${deploymentEnvironment.id}&moduleId=${module.id}&servicesId=${dataService.id}`,
+                                                                                                                value: `asset-id-${this.handleGetId()},PRODUCT=${product.name},ENV=${deploymentEnvironment.name},MODULE=${module.name},SERVICE=${dataService.name},SERVICE_TYPE=`,
+                                                                                                                currentId:dataService.id
                                                                                                               },
                                                                                                               e
                                                                                                                 .target
-                                                                                                                .checked
+                                                                                                                .checked,
+                                                                                                                dataService.id
                                                                                                             );
                                                                                                           }}
                                                                                                         />

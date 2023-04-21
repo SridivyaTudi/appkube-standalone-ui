@@ -26,7 +26,7 @@ import ExploreDataSourceDetail from '../AssetManager/Pages/AddDatasource/Explore
 import AddDataSourceProduct from '../AssetManager/Pages/AddDatasource/AddDataSourceProduct';
 import AddDatasourceInputs from '../AssetManager/Pages/AddDatasource/AddDataSourceInputs';
 import DiscoveryWizard from '../AssetManager/Pages/DiscoveryWizard';
-import TaggingWizard from'../AssetManager/Pages/TaggingWizard';
+import TaggingWizard from '../AssetManager/Pages/TaggingWizard';
 import AddTaggingWizard from '../AssetManager/Pages/AddTaggingWizard';
 
 //***** AlertManager *****//
@@ -128,7 +128,7 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/add-data-source-inputs" element={<AddDatasourceInputs />} />
       <Route path="/assetmanager/pages/discoveryWizard" element={<DiscoveryWizard />} />
       <Route path="/assetmanager/pages/taggingWizard" element={<TaggingWizard />} />
-      <Route path="/assetmanager/pages/addTaggingWizard/:id" element={<AddTaggingWizard />} />
+      <Route path="/assetmanager/pages/addTaggingWizard/:id/:landingZone" element={<AddTaggingWizard />} />
       
 
       {/***** AlertManager *****/}

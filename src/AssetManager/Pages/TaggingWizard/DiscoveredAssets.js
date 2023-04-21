@@ -50,7 +50,7 @@ export class DiscoveredAssets extends Component {
               <td className="text-center">
                 <button className="action-btn">
                    <NavLink
-                        to={`/assetmanager/pages/addTaggingWizard/${index.id}`}
+                        to={`/assetmanager/pages/addTaggingWizard/${index.id}/${index.landingZone}`}
                       > 
                     <i class="far fa-plus"></i>
                     </NavLink>
@@ -77,6 +77,7 @@ export class DiscoveredAssets extends Component {
           ruleType: asset.elementType,
           message: asset.landingZone,
           alertHandlers:asset.productEnclave,
+          landingZone:asset.landingZone
         }
     });
     // this.tableValue.data = tableValue
