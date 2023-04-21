@@ -81,130 +81,134 @@ class QueryTab extends React.Component {
     } = this.state;
 
     return (
-      <>
-        <div className="d-block panel-data-source">
-          <div className="d-inline-block data-source-box">Data Source</div>
-          <div className="d-inline-block data-source-select">
-            <select>
-              <option>Default </option>
-              <option>Default 1</option>
-              <option>Default 2</option>
-              <option>Default 3</option>
-            </select>
-          </div>
-          <div className="d-inline-block question-button">
-            <button className="panel-gray-button min-width-inherit">
-              <i class="far fa-question-circle"></i>
-            </button>
-          </div>
-          <div
-            className="query-options-container "
-            style={{ height: queryOptionsShow ? "280px" : "0px" }}
-          >
-            <div className="d-inline-block query-options-box">
-              <div
-                style={{ cursor: "pointer" }}
-                className="d-inline-block"
+      <div className="main-panal-data-contant">
+        <div className="panal-data-inner-contant">
+          <div className="d-block panel-data-source">
+            <div className="d-inline-block data-source-box">Data Source</div>
+            <div className="d-inline-block data-source-select">
+              <select>
+                <option>Default </option>
+                <option>Default 1</option>
+                <option>Default 2</option>
+                <option>Default 3</option>
+              </select>
+            </div>
+            <div className="d-inline-block question-button">
+              <button className="panel-gray-button min-width-inherit">
+                <i class="far fa-question-circle"></i>
+              </button>
+            </div>
+            <div
+              className="query-options-container "
+              style={{ height: queryOptionsShow ? "280px" : "0px" }}
+            >
+              <div className="d-inline-block query-options-box">
+                <div
+                  style={{ cursor: "pointer" }}
+                  className="d-inline-block"
+                  onClick={() => {
+                    this.setState({
+                      queryOptionsShow: !this.state.queryOptionsShow,
+                    });
+                  }}
+                >
+                  <i
+                    class={`fa fa-chevron-${
+                      queryOptionsShow ? "down" : "right"
+                    }`}
+                  ></i>
+                  <strong>Query options</strong>
+                </div>
+
+                <span>MD = auto =1257</span>
+                <span>interval = 15s</span>
+              </div>
+              {queryOptionsShow && <QueryOptions />}
+            </div>
+
+            <div className="d-inline-block question-button">
+              <button
+                type="button"
+                class="panel-gray-button inspector-btn"
                 onClick={() => {
-                  this.setState({
-                    queryOptionsShow: !this.state.queryOptionsShow,
-                  });
+                  this.setState({ queryInspectorModalVisible: true });
                 }}
               >
-                <i
-                  class={`fa fa-chevron-${queryOptionsShow ? "down" : "right"}`}
-                ></i>
-                <strong>Query options</strong>
-              </div>
-
-              <span>MD = auto =1257</span>
-              <span>interval = 15s</span>
+                Query inspectors
+              </button>
             </div>
-            {queryOptionsShow && <QueryOptions />}
           </div>
-
-          <div className="d-inline-block question-button">
-            <button
-              type="button"
-              class="panel-gray-button inspector-btn"
-              onClick={() => {
-                this.setState({ queryInspectorModalVisible: true });
-              }}
-            >
-              Query inspectors
-            </button>
-          </div>
-        </div>
-        {QueryInspectorData.map((item, index) => {
-          return (
-            <QueryInspector
-              key={index}
-              currentIndex={index}
-              name={item}
-              handleSort={this.handleQueryInspectorSort}
-              handleCopy={this.handleQueryInspectorCopy}
-              handleDelete={this.handleQueryInspectorDelete}
-              handleNameChange={this.handleQueryInspectorNameChange}
-            />
-          );
-        })}
-        <div className="d-block panel-builder-code">
-          <div className="d-inline-block select-menu">
-            <select
-              value={queryType}
-              onChange={(e) => {
-                this.setState({ queryType: e.target.value });
-              }}
-            >
-              <option value={"metric"}>Metric</option>
-              <option value={"log"}>LOG</option>
-              <option value={"trace"}>Trace</option>
-              <option value={"api"}>API</option>
-            </select>
+          {QueryInspectorData.map((item, index) => {
+            return (
+              <QueryInspector
+                key={index}
+                currentIndex={index}
+                name={item}
+                handleSort={this.handleQueryInspectorSort}
+                handleCopy={this.handleQueryInspectorCopy}
+                handleDelete={this.handleQueryInspectorDelete}
+                handleNameChange={this.handleQueryInspectorNameChange}
+              />
+            );
+          })}
+          <div className="d-block panel-builder-code">
+            <div className="d-inline-block select-menu">
+              <select
+                value={queryType}
+                onChange={(e) => {
+                  this.setState({ queryType: e.target.value });
+                }}
+              >
+                <option value={"metric"}>Metric</option>
+                <option value={"log"}>LOG</option>
+                <option value={"trace"}>Trace</option>
+                <option value={"api"}>API</option>
+              </select>
+            </div>
+            {queryType === "metric" && (
+              <>
+                <div className="d-inline-block select-menu">
+                  <select>
+                    <option>Metric Search</option>
+                    <option>Metric Query</option>
+                  </select>
+                </div>
+                <div className="float-right builder-code-button">
+                  <button
+                    className={metricQueryTypeBuilder ? `btn active` : `btn`}
+                    onClick={() => {
+                      this.setState({
+                        metricQueryTypeBuilder: !metricQueryTypeBuilder,
+                      });
+                    }}
+                  >
+                    Builder
+                  </button>
+                  <button
+                    className={!metricQueryTypeBuilder ? `btn active` : `btn`}
+                    onClick={() => {
+                      this.setState({
+                        metricQueryTypeBuilder: !metricQueryTypeBuilder,
+                      });
+                    }}
+                  >
+                    Code
+                  </button>
+                </div>
+              </>
+            )}
           </div>
           {queryType === "metric" && (
-            <>
-              <div className="d-inline-block select-menu">
-                <select>
-                  <option>Metric Search</option>
-                  <option>Metric Query</option>
-                </select>
-              </div>
-              <div className="float-right builder-code-button">
-                <button
-                  className={metricQueryTypeBuilder ? `btn active` : `btn`}
-                  onClick={() => {
-                    this.setState({
-                      metricQueryTypeBuilder: !metricQueryTypeBuilder,
-                    });
-                  }}
-                >
-                  Builder
-                </button>
-                <button
-                  className={!metricQueryTypeBuilder ? `btn active` : `btn`}
-                  onClick={() => {
-                    this.setState({
-                      metricQueryTypeBuilder: !metricQueryTypeBuilder,
-                    });
-                  }}
-                >
-                  Code
-                </button>
-              </div>
-            </>
+            <Metric queryType={this.state.metricQueryTypeBuilder} />
+          )}
+          {queryType === "log" && <Log />}
+          {queryType === "trace" && <Trace />}
+          {queryType === "api" && <Api />}
+          {queryInspectorModalVisible && (
+            <QueryInspectorModal visible={this.toggleQueryInspectorModal} />
           )}
         </div>
-        {queryType === "metric" && (
-          <Metric queryType={this.state.metricQueryTypeBuilder} />
-        )}
-        {queryType === "log" && <Log />}
-        {queryType === "trace" && <Trace />}
-        {queryType === "api" && <Api />}
-        {queryInspectorModalVisible && (
-          <QueryInspectorModal visible={this.toggleQueryInspectorModal} />
-        )}
-      </>
+      </div>
     );
   }
 }

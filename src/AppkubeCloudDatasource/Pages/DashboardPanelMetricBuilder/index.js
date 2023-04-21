@@ -54,7 +54,7 @@ class DashboardPanelMetricBuilder extends React.Component {
             </div>
             <div className="d-block add-panel-container">
               <div className="row">
-                <div className="col-lg-9 col-md-8 col-sm-12">
+                <div className="col-lg-9 col-md-12 col-sm-12">
                   <div className="d-block panel-left">
                     <div className="d-block graph-panel">
                       <div className="d-flex graph-top-panel">
@@ -137,7 +137,7 @@ class DashboardPanelMetricBuilder extends React.Component {
                     )}
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-4 col-sm-12">
+                <div className="col-lg-3 col-md-12 col-sm-12">
                   <div className="d-block panel-right">
                     <div className="d-inline-flex buttons">
                       <button
