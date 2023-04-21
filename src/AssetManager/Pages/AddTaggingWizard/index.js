@@ -99,7 +99,7 @@ export class AddTaggingWizard extends Component {
               newPath += tempData.replace(`${pathKeys[key - 1]}=`, "");
             }
           });
-          wizardPathNames.push({ id: data.id, value: newPath });
+          wizardPathNames.push({ id: data.id, value: newPath,type:data.type });
           this.setState({
             ...this.state,
             ["wizardPathNames"]: wizardPathNames,
@@ -449,6 +449,7 @@ export class AddTaggingWizard extends Component {
                                                                                                                 },SERVICE_TYPE=`,
                                                                                                                 currentId:
                                                                                                                   appService.id,
+                                                                                                                  type:"APP"
                                                                                                               },
                                                                                                               e
                                                                                                                 .target
@@ -468,9 +469,9 @@ export class AddTaggingWizard extends Component {
                                                                                                                   (
                                                                                                                     path
                                                                                                                   ) =>
-                                                                                                                    path.id ==
-                                                                                                                    `departmentId=${department.id}&productId=${product.id}&deploymentEnvironmentId=${deploymentEnvironment.id}&moduleId=${module.id}&servicesId=${appService.id}`
-                                                                                                                )
+                                                                                                                  path.type == 'APP' &&  path.id ==
+                                                                                                                    `departmentId=${department.id}&productId=${product.id}&deploymentEnvironmentId=${deploymentEnvironment.id}&moduleId=${module.id}&servicesId=${appService.id}` && path.type == 'APP'
+                                                                                                                ).length > 0 ? true : false
                                                                                                               : false}
                                                                                                         />
                                                                                                         <span>
@@ -536,9 +537,9 @@ export class AddTaggingWizard extends Component {
                                                                                                                   (
                                                                                                                     path
                                                                                                                   ) =>
-                                                                                                                    path.id ==
+                                                                                                                   path.type == 'DATA' && path.id ==
                                                                                                                     `departmentId=${department.id}&productId=${product.id}&deploymentEnvironmentId=${deploymentEnvironment.id}&moduleId=${module.id}&servicesId=${dataService.id}`
-                                                                                                                )
+                                                                                                                ).length > 0 ? true : false
                                                                                                               : false
                                                                                                           }
                                                                                                           onChange={(
@@ -558,6 +559,7 @@ export class AddTaggingWizard extends Component {
                                                                                                                 },SERVICE_TYPE=`,
                                                                                                                 currentId:
                                                                                                                   dataService.id,
+                                                                                                                  type:'DATA'
                                                                                                               },
                                                                                                               e
                                                                                                                 .target
