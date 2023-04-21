@@ -1,0 +1,306 @@
+/*********************************** Total Alerts Three Boxes *********************************/
+
+.monitor-alerts-container {
+  .alert-data-container {
+    margin: 0px !important;
+
+    .alert-data-block {
+      margin-bottom: 10px;
+      padding-left: 0px;
+      padding-right: 45px;
+
+      a {
+        display: block;
+        padding: 10px;
+        background-color: #f0f3f7;
+        box-shadow: 0px 1px 5px #00000029;
+        border-radius: 5px;
+
+        &:hover {
+          background: #f8f9fa;
+          box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
+        }
+      }
+
+      .alert-data-label {
+        color: #3b4859;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        position: relative;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+
+        &:after {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          background-color: #3b7cff;
+          width: 40px;
+          height: 2px;
+          content: "";
+        }
+      }
+
+      .alert-data {
+        color: #39579a;
+        font-size: 30px;
+        font-weight: 600;
+        line-height: 34px;
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .alert-data-meta {
+        color: #475363;
+        font-size: 11px;
+        line-height: 14px;
+      }
+    }
+  }
+
+  .alert-data-table-container {
+    .progress-td {
+      width: 50%;
+      position: relative;
+    }
+
+    .progress-label {
+      display: inline-block;
+      width: 50px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .monitor-alerts-container .alert-data-container .alert-data-block {
+    padding-right: 15px;
+  }
+}
+
+/*********************************** Charts *********************************/
+
+.charts-container {
+  padding-right: 20px;
+  border-bottom: none;
+
+  .chart-block .chart-inner {
+    background: #f0f3f7;
+    box-shadow: 0px 1px 5px #00000029;
+    display: block;
+    min-height: 250px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-right: 30px;
+
+    &.current {
+      background: #e31335;
+
+      &.average {
+        background: #15c64c;
+      }
+    }
+
+    .label {
+      text-align: center;
+      display: block;
+      background: #dae4f3;
+      color: #3b4859;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 600;
+
+      i {
+        float: right;
+        padding-right: 10px;
+        font-size: 18px;
+      }
+    }
+
+    &.current {
+      .label {
+        color: #ffffff;
+        background: #e31335;
+        border-bottom: 1px solid #f1899a;
+      }
+
+      &.average .label {
+        background: #15c64c;
+        border-bottom: 1px solid #95e5ae;
+      }
+    }
+  }
+}
+
+/*********************************** Charts Table *********************************/
+
+.chart-data-table {
+  display: block;
+  width: 100%;
+  padding-top: 5px;
+
+  .table {
+    width: 100%;
+
+    tbody {
+      width: 100%;
+
+      tr {
+        width: 100%;
+      }
+    }
+
+    th, td {
+      color: #3b4859;
+      font-size: 11px;
+      line-height: 15px;
+      padding: 8px 20px 8px 20px;
+    }
+
+    .chart-header {
+      border-bottom: 1px solid #e4ebf4;
+      text-transform: uppercase;
+    }
+
+    .high {
+      background: #ff0000;
+      border-radius: 4px;
+      color: #ffffff;
+      font-weight: 500;
+      display: block;
+      font-size: 10px;
+      line-height: 16px;
+      text-align: center;
+    }
+
+    .low {
+      background: #3b7cff;
+      border-radius: 4px;
+      color: #ffffff;
+      font-weight: 500;
+      display: block;
+      font-size: 10px;
+      line-height: 16px;
+      text-align: center;
+    }
+
+    .medium {
+      background: #ff8f00;
+      border-radius: 4px;
+      color: #ffffff;
+      font-weight: 500;
+      display: block;
+      font-size: 10px;
+      line-height: 16px;
+      text-align: center;
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .charts-container .chart-block .chart-inner {
+    margin-right: 0;
+  }
+}
+
+/*********************************** Current Wait Time *********************************/
+
+.current-text {
+  font-size: 48px;
+  color: #ffffff;
+  font-weight: 400;
+  line-height: 66px;
+  display: block;
+  padding: 25px 0 0 10px;
+  text-align: center;
+
+  sub {
+    font-size: 18px;
+  }
+}
+
+.current-bottom {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  select {
+    background-color: #e31335;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    border-radius: 25px;
+    font-size: 11px;
+    line-height: 18px;
+    font-weight: 400;
+    padding: 2px 10px;
+    width: 100%;
+  }
+}
+
+.average .current-bottom select {
+  background-color: #15c64c;
+}
+
+.current-bottom .minutes-text {
+  font-size: 11px;
+  line-height: 18px;
+  font-weight: 400;
+  color: #ffffff;
+  padding-left: 0;
+  padding-top: 10px;
+}
+
+.current-responce-time-chart {
+  padding: 15px;
+  padding-left: 0;
+  height: 140px;
+  display: block;
+  width: 100%;
+}
+
+.current-time-chart {
+  padding: 15px;
+  height: 200px;
+  display: block;
+  width: 100%;
+}
+
+/*********************************** Alert Volume Today *********************************/
+
+.legend-container {
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+
+.custom-chart-legends {
+  list-style: none;
+  text-align: center;
+  margin-top: -10px;
+  display: block;
+  width: 100%;
+
+  li {
+    display: inline-block;
+    padding: 0 5px;
+    font-size: 10px;
+    line-height: 14px;
+    vertical-align: top;
+    color: #3b4859;
+    font-weight: 300;
+
+    .legend-background {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 5px;
+      vertical-align: middle;
+      margin-top: -2px;
+    }
+  }
+}

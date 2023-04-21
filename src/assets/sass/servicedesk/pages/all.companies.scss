@@ -1,0 +1,41 @@
+.all-companies-tabel{
+    display: grid;
+    width: 100%;
+    .select-all{
+        .checkbox{
+            display: inline-block;
+            vertical-align: middle;
+            margin-top: -3px;
+        }
+        label{
+            font-size: 14px;
+            line-height: 40px;
+            color: $all-tickets-text-color;
+            font-weight: 500;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+
+}
+
+@media (max-width: 992px){
+    .companies-control-group{
+        margin-top: 15px;
+    }
+    .all-companies-container{
+        .create-button{
+            float: left;
+            margin-top: 0px;
+        }
+    }
+}
+
+@media (max-width: 767px){
+    .all-companies-container{
+        .create-button{
+            float: left;
+            margin-top: 15px;
+        }
+    }
+}

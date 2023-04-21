@@ -1,0 +1,93 @@
+.enabled-rule-text {
+  color: #3b4859;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 34px;
+}
+
+.bulk-action {
+  width: 150px;
+  float: right;
+
+  .form-control {
+    background-color: #f0f3f7 !important;
+    border: none !important;
+  }
+}
+
+.filter-alerts {
+  display: block;
+  position: relative;
+  margin-top: 15px;
+
+  .input-group-text {
+    max-width: 100%;
+    text-align: left;
+    padding-left: 30px;
+    width: 100%;
+    border: 1px solid #8392a7;
+    background-color: #ffffff;
+  }
+
+  button {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.enabled-disabled-container {
+  .enabled, .disabled {
+    width: 8px;
+    height: 8px;
+    background-color: #004fac;
+    display: inline-block;
+    position: relative;
+    margin: 5px 0 0 5px;
+
+    &:after {
+      position: absolute;
+      left: -4px;
+      top: -4px;
+      width: 16px;
+      height: 16px;
+      content: "";
+      border: 1px solid #004fac;
+      border-radius: 50%;
+    }
+  }
+
+  .text {
+    display: inline-block;
+    top: 0px;
+    position: relative;
+    padding-left: 5px;
+  }
+}
+
+
+@media (max-width: 767px) {
+  .common-container .alert-white-button {
+    min-width: inherit;
+  }
+
+  .bulk-action {
+    width: 100%;
+    float: left;
+  }
+
+  .alert-white-button.float-right {
+    float: none;
+    text-align: left;
+  }
+
+  .filter-container .filter-control-group {
+    max-width: 100%;
+  }
+}

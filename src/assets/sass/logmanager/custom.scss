@@ -1,0 +1,83 @@
+
+
+
+/*********************************** Filters Container *********************************/
+.form-group {
+  margin-bottom: 1rem;
+  label {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.logmanager-page-container {
+  background-color: $logmanager-container-background-color;
+  margin: 10px 20px;
+  border-radius: 10px;
+  padding-bottom: 10px;
+
+  .page-heading {
+    display: block;
+    margin-bottom: 0;
+    h1 {
+      color: $page-heading-text-color;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 32px;
+      display: block;
+      margin-bottom: 0;
+    }
+    span {
+      display: block;
+      color: #a9b9c6;
+      font-size: 13px;
+      line-height: 18px;
+      font-weight: 500;
+    }
+  }
+}
+
+.enabled-disabled-container {
+  width: 16px;
+  margin-right: 7px;
+  .enabled {
+    width: 8px;
+    height: 8px;
+    background-color: #004fac;
+    display: inline-block;
+    position: relative;
+    margin: 5px 0 0 5px;
+    &:after {
+      position: absolute;
+      left: -4px;
+      top: -4px;
+      width: 16px;
+      height: 16px;
+      content: "";
+      border: 1px solid #004fac;
+      border-radius: 50%;
+    }
+  }
+}
+.enabled-disabled-container {
+  width: 16px;
+  margin-right: 7px;
+  .disabled {
+    width: 8px;
+    height: 8px;
+    background-color: #004fac;
+    display: inline-block;
+    position: relative;
+    margin: 5px 0 0 5px;
+    &:after {
+      position: absolute;
+      left: -4px;
+      top: -4px;
+      width: 16px;
+      height: 16px;
+      content: "";
+      border: 1px solid #004fac;
+      border-radius: 50%;
+    }
+  }
+}
+

@@ -1,0 +1,180 @@
+.reports-page-container{
+    padding: 10px 45px;
+    .reports-left{
+        background-color: #F0F3F7;
+        border-radius: 3px;
+        padding: 20px 30px 30px;
+        .heading{
+            color: #323C47;
+            font-size: 20px;
+            line-height: 24px;
+            font-weight: 600;
+        }
+        .ask-question{
+            border: 1px solid #D1DAE2;
+            color: #929598;
+            font-size: 12px;
+            line-height: 18px;
+            font-weight: 500;
+            padding: 7px 15px;
+            margin-bottom: 20px;
+        }
+        .helpdesk-box{
+            border-top: 1px solid #D1DAE2;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            &.productivity{
+                ul{
+                    li{
+                        span{
+                            background-color:rgba(67, 138, 251, 0.1);
+                            i{
+                                color: rgba(67, 138, 251, 1);
+                            }
+                        }
+                    }
+                }
+            }
+            &.happiness{
+                ul{
+                    li{
+                        span{
+                            background-color:rgba(246, 115, 115, 0.1);
+                            i{
+                                color:rgba(246, 115, 115, 1);
+                            }
+                        }
+                    }
+                }
+            }
+            .helpdesk-heading{
+                color: #323C47;
+                font-size: 14px;
+                font-weight: 600;
+                line-height: 18px;
+                padding-bottom: 0px;
+            }
+            ul{
+                padding-top: 10px;
+                li{
+                    margin-right: 30px;
+                    width: 100px;
+                    vertical-align: top;
+                    margin-bottom: 10px;
+                    &:last-child{
+                        margin-right: 0;
+                    }
+                    span{
+                        width: 80px;
+                        height: 80px;
+                        line-height: 80px;
+                        background-color:rgba(72, 199, 65, 0.1);
+                        border-radius: 3px;
+                        margin-bottom: 5px;
+                        i{
+                            font-size: 32px;
+                            line-height: 80px;
+                            color: #48C741;
+                        }
+                    }
+                    strong{
+                        font-size: 11px;
+                        line-height: 16px;
+                        font-weight: 600;
+                        color: #323C47;
+                        text-transform: uppercase;
+                    }
+                }
+            }
+        }
+        .build-reports-text{
+            border-top: 1px solid #D1DAE2;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            p{
+                font-size: 12px;
+                line-height: 16px;
+                color: #A9B9C6;
+                font-weight: 500;
+                margin-bottom: 3px;
+            }
+            strong{
+                font-size: 12px;
+                line-height: 16px;
+                color: #438AFB;
+                font-weight: 600;
+                a{
+                    color: #438AFB;
+                }
+            }
+        }
+    }
+    .reports-right{
+        background-color: #F0F3F7;
+        border-radius: 3px;
+        padding: 20px 15px 30px;
+        min-height: 777px;
+        .heading{
+            h3{
+                font-size: 16px;
+                line-height: 22px;
+                color: #323C47;
+                font-weight: 600;
+            }
+            p{
+                font-size: 11px;
+                line-height: 16px;
+                color: #A9B9C6;
+                font-weight: 500;
+            }
+        }
+        .customize-link{
+            font-size: 12px;
+            line-height: 16px;
+            color: #438AFB;
+            font-weight: 600;
+            a{
+                color: #438AFB;
+            }
+        }
+        .insight-box{
+            border: 1px solid #D1DAE2;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            .insight-heading{
+                color: #D1DAE2;
+                font-size: 11px;
+                line-height: 18px;
+                font-weight: 500;
+                strong{
+                    color: #3B7CFF;
+                    font-size: 13px;
+                    font-weight: 600;
+                }
+            }
+            .insight-heading-right-text{
+                color: #3B7CFF;
+                font-size: 12px;
+                font-weight: 600;
+                line-height: 18px;
+                &.red{
+                    color: #F67373;
+                }
+            }
+            .insight-text{
+                color:#A9B9C6;
+                font-size: 11px;
+                line-height: 18px;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+@media (max-width: 1200px){
+    .reports-page-container{
+        .reports-right{
+            margin-top: 30px;
+        }
+    }
+}

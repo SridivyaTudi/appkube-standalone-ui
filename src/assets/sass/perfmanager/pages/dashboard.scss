@@ -1,0 +1,11 @@
+.dashboard-metrics{
+    padding-top: 200px;
+    padding-bottom: 200px;
+    text-align: center;
+    p{
+        font-size: 24px;
+        line-height: 28px;
+        font-weight: 500;
+        color: $dashboard-metrics-text-color;
+    }
+}

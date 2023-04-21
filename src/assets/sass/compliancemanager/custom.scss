@@ -1,0 +1,123 @@
+
+
+
+.compliancemanager-page-container {
+  background-color: $compliancemanager-container-background-color;
+  margin: 10px 20px;
+  border-radius: 10px;
+  padding-bottom: 10px;
+}
+
+
+
+/*********************************** Filters Container *********************************/
+.filter-container {
+  .filter-control-group {
+    &.clear-filters {
+      margin-top: 23px;
+      position: relative;
+      padding-bottom: 0;
+      label {
+        &:after {
+          top: 0;
+          left: 0;
+          width: 35px;
+          height: 35px;
+          content: "";
+          background-color: #f0f3f7;
+          z-index: 0;
+          position: absolute;
+          border-radius: 3px;
+        }
+        span {
+          display: inline-block;
+          padding-left: 45px;
+          color: $filter-container-label-text-color;
+          vertical-align: middle;
+          padding-top: 0;
+          cursor: pointer;
+          position: relative;
+          line-height: 35px;
+          &:before {
+            content: "";
+            width: 1px;
+            height: 18px;
+            position: absolute;
+            top: 9px;
+            left: 17px;
+            background: #333;
+            opacity: 1;
+            transform: rotate(-45deg);
+            cursor: pointer;
+            z-index: 1;
+          }
+          &:after {
+            content: "";
+            width: 1px;
+            height: 18px;
+            position: absolute;
+            top: 9px;
+            left: 17px;
+            background: #333;
+            opacity: 1;
+            transform: rotate(45deg);
+            cursor: pointer;
+            z-index: 1;
+          }
+        }
+      }
+    }
+    &.assessments {
+      width: 100%;
+      max-width: 100%;
+      margin-right: 0;
+    }
+  }
+}
+.open-full-screen {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.region-section {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+@media (max-width: 1200px) {
+  .filter-container {
+    .assessments {
+      float: left;
+    }
+  }
+}
+
+
+@media screen and  (max-width: 767px){
+  .compliancemanager-page-container{
+      .region-section{
+          .filter-control-group{
+              width: 100%;
+
+              max-width: 100%;
+          }
+      }
+      .context-preview-box{
+          .context-preview{
+              .search-box{
+                  .filter-search-control{
+                      width: 100%;
+                      max-width: 100%;
+                      display: block;
+                  }
+              }
+          }
+      }
+  }
+  
+}

@@ -1,0 +1,148 @@
+.logmanager-modal-container {
+  .modal-content {
+    padding: 30px;
+    
+    .modal-body{
+      padding: 0px 10px;
+     
+      
+      .form-check{
+        .form-check-input{
+          margin-right: 7px;
+        }
+        .form-check-label{
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 18px;
+          color: #3B4859;
+        }
+      }
+     
+    }
+    .contact-popup-buttons{
+      button{
+        border: 1px solid #89898a;
+        background-color: #89898a;
+        color: #ffffff;
+        font-size: 15px;
+        line-height: 36px;
+        font-weight: 500;
+        padding: 0 30px;
+        margin: 0;
+        border-radius: 5px;
+        text-align: center;
+        &.save{
+          border-color: #3B7CFF;
+          background-color: #3B7CFF;
+          color: #ffffff;
+          margin-left: 15px;
+        }
+      }
+    }
+    .popup-parameters-container{
+      span{
+        font-size: 14px;
+        display: block;
+        line-height: 18px;
+        color: #3b4859;
+        font-weight: 400;
+        padding-bottom: 15px;
+      }
+      .blue-button{
+        font-size: 13px;
+      }
+    }
+    .rules-defined{
+      border-top: 1px dashed #a2c0d4;
+      padding-top: 5px;
+      margin-bottom: 50px;
+      .no-rules-defined{
+        background-color: #f8faff;
+        padding: 5px 5px;
+        display: block;
+        i{
+          display: inline-block;
+          padding-right: 7px;
+          font-size: 13px;
+          line-height: 18px;
+          color: #3b97d3;
+        }
+        span{
+          display: inline-block;
+          font-size: 13px;
+          line-height: 18px;
+          color: #3b4859;
+          padding-bottom: 0px;
+        }
+      }
+      .manage-rules{
+        display: block;
+        padding-top: 10px;
+        h4{
+          font-size: 14px;
+          line-height: 18px;
+          font-weight: 500;
+          margin-bottom: 0;
+          display: block;
+        }
+        span{
+          font-size: 13px;
+          line-height: 18px;
+          font-weight: 400;
+          padding-bottom: 0;
+          display: block;
+          font-style: italic;
+        }
+      }
+    }
+    .message-tabs-container{
+      span{
+        display: block;
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 500;
+        padding-bottom: 10px;
+      }
+      .messages-tabs{
+        display: block;
+        ul{
+          li{
+            display: inline-block;
+            a{
+              background-color: #fafbfd;
+              border: 2px solid #fafbfd;
+              padding: 10px 10px;
+              color: #2662f0;
+              font-size: 14px;
+              line-height: 18px;
+              font-weight: 500;
+              display: block;
+            }
+            &.active-tab{
+              a{
+                background-color: #ffffff;
+              }
+            }
+          }
+        }
+        .lod-messages{
+          font-size: 13px;
+          line-height: 18px;
+          font-weight: 400;
+          font-style: italic;
+          display: block;
+          padding-top: 15px;
+          padding-bottom: 10px;
+        }
+        .form-group{
+          .input-group-text{
+            margin-right: 15px;
+            max-width: 300px;
+            width: 300px;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+}

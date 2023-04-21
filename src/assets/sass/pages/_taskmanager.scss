@@ -1,0 +1,390 @@
+// .task-blue-button {
+//   background: #3b7cff !important;
+//   color: #ffffff !important;
+//   border: none !important;
+//   padding: 7px 18px !important;
+//   border-radius: 5px !important;
+//   margin-right: 10px;
+//   margin-bottom: 10px;
+//   display: inline-block !important;
+//   min-width: 100px;
+//   text-align: center;
+
+//   &:hover,
+//   &:focus {
+//     background: #0f5efd !important;
+//     color: #ffffff !important;
+//   }
+// }
+
+// .task-gray-button {
+//   background: #dde4e9 !important;
+//   color: #8392a7 !important;
+//   border: none !important;
+//   padding: 7px 18px !important;
+//   border-radius: 5px !important;
+//   margin-right: 10px;
+//   display: inline-block !important;
+//   min-width: 100px;
+//   text-align: center;
+
+//   &:hover,
+//   &:focus {
+//     background: #dbe0e4 !important;
+//     color: #8392a7 !important;
+//   }
+// }
+
+// .task-white-button {
+//   background: white !important;
+//   min-width: 100px;
+//   color: #3b4859 !important;
+//   border: none !important;
+//   padding: 7px 18px !important;
+//   border-radius: 5px !important;
+//   margin-right: 10px;
+//   display: inline-block !important;
+//   text-align: center;
+
+//   &:hover,
+//   &:focus {
+//     background: #e6e6e6 !important;
+//     color: #3b4859 !important;
+//   }
+
+//   i {
+//     color: #57a4ff !important;
+//   }
+// }
+
+.task-disable {
+  background: #8392a7 !important;
+  color: #000000 !important;
+  border: none !important;
+  padding: 7px 18px !important;
+  border-radius: 5px !important;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: inline-block !important;
+  min-width: 100px;
+  text-align: center;
+
+  &:hover,
+  &:focus {
+    background: #8392a7 !important;
+    color: #000000 !important;
+  }
+}
+
+.task-dashboard-page-container {
+  background-color: $overview-container-background-color;
+
+  .bg-white {
+    background-color: #ffffff;
+  }
+
+  .common-container {
+    padding-top: 15px;
+    padding-left: 45px;
+    padding-right: 45px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f5f6f5;
+  }
+
+  .width-auto {
+    width: auto;
+  }
+
+  .width-100 {
+    width: 100%;
+  }
+
+  .heading {
+    h3 {
+      line-height: 18px;
+      color: $overview-page-title-color;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 0;
+    }
+
+    span {
+      line-height: 14px;
+      color: $overview-page-title-color;
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+
+  .task-dashboards-container {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f5f6f5;
+
+    .task-dashboard-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      text-align: center;
+      width: 100%;
+      height: 100px;
+      box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.2);
+      border-top: 10px solid;
+      border-radius: 3px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      background-color: #ffffff;
+
+      span {
+        line-height: 18px;
+        color: #3b4859;
+        font-size: 14px;
+        font-weight: 400;
+        display: block;
+        width: 100%;
+      }
+
+      strong {
+        color: #3b4859;
+        font-size: 32px;
+        line-height: 36px;
+        font-weight: 600;
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+
+  .task-table-container {
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+
+    .heading {
+      line-height: 24px;
+      color: #3b4859;
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 0;
+      background-color: #dae4f3;
+      padding: 10px 15px;
+    }
+
+    .custom-table {
+      padding: 15px;
+      padding-top: 0;
+    }
+  }
+
+  .task-progressbar-container {
+    padding-top: 10px;
+    width: 100%;
+    display: block;
+
+    .task-progressbar-box {
+      padding: 10px;
+      display: block;
+      width: 100%;
+      background-color: #f0f3f7;
+      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+      border-radius: 3px;
+
+      h3 {
+        display: block;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+        color: #3b4859;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #bac0c8;
+      }
+
+      .progressbar {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 10px;
+      }
+
+      .progressbar-text {
+        display: block;
+        color: #ffffff;
+        font-size: 13px;
+        line-height: 24px;
+        font-weight: 400;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        background-color: #1f78b4;
+      }
+    }
+  }
+}
+
+.create-edit-dashboard {
+  .general-center-contain {
+    .own-dashboard {
+      display: block;
+      width: 100%;
+      text-align: center;
+
+      span {
+        display: block;
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        font-size: 16px;
+        line-height: 24px;
+        color: #3b4859;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.approve-tab-container {
+  display: block;
+  width: 100%;
+  padding-top: 10px;
+
+  .approve-dashboard-content {
+    border-bottom: 1px solid #f7f7f7;
+    padding-bottom: 0px;
+    margin-bottom: 10px;
+
+    .form-group {
+      display: block;
+      margin-bottom: 5px;
+
+      label {
+        width: 20%;
+        display: inline-block;
+        vertical-align: top;
+        margin-bottom: 0;
+        font-size: 12px;
+      }
+
+      span {
+        width: 75%;
+        display: inline-block;
+        vertical-align: top;
+        margin-bottom: 0;
+        padding-left: 5px;
+
+        span {
+          color: brown;
+        }
+
+        a {
+          color: #3b7cff;
+        }
+      }
+    }
+  }
+
+  .approve-dashboard-table {
+    display: block;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 40px;
+
+    .table {
+      width: 100%;
+
+      tr:nth-child(odd) {
+        td {
+          background-color: #f8f9fb;
+        }
+      }
+
+      td {
+        display: block;
+        cursor: pointer;
+        padding: 10px 15px;
+        border: 1px solid transparent;
+
+        &:hover {
+          border-color: #3b7cff;
+        }
+
+        .content {
+          display: block;
+
+          label {
+            display: inline-block;
+            vertical-align: top;
+            margin-bottom: 0;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 16px;
+          }
+
+          span {
+            display: inline-block;
+            vertical-align: top;
+            margin-bottom: 0;
+            padding-left: 5px;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 16px;
+          }
+        }
+
+        p {
+          display: block;
+          margin-bottom: 0;
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 16px;
+          color: #3b4859;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .task-dashboard-page-container {
+    .task-dashboards-container {
+      margin-bottom: 0;
+
+      .task-dashboard-box {
+        margin-bottom: 30px;
+      }
+    }
+
+    .task-progressbar-box {
+      margin-bottom: 30px;
+    }
+  }
+
+  .approve-tab-container {
+    .approve-dashboard-content {
+      .form-group {
+        label {
+          width: 30%;
+        }
+
+        span {
+          width: 70%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .task-dashboard-page-container {
+    .float-right.new-task-button {
+      float: left;
+    }
+  }
+}

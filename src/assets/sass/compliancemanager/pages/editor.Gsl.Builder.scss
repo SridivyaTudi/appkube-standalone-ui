@@ -1,0 +1,51 @@
+.editorgslbuilder-page-container{
+    .editor-add-code{
+        background-color: #F0F3F7;
+        box-shadow: 0px 1px 5px #00000029;
+        border-radius: 2px;
+        padding: 10px 15px;
+        margin-top: 20px;
+        .code{
+            padding-right: 10px;
+            cursor: pointer;
+            button{
+                border: none;
+                background-color: transparent;
+                padding: 0;
+            }
+            &:hover{
+                button{
+                    color: #f93d3d;
+                }
+                p{
+                    color: #f93d3d;
+                }
+            }
+        }
+    }
+
+    .editor-code{
+        padding-top: 30px;
+        .editor-code-heading{
+            font-size: 11px;
+            font-weight: 400;
+            color: $gslbuilder-content-color;
+            line-height: 28px;
+        }
+        span{
+            display: inline-block;
+            background-color: #F0F3F7;
+            font-size: 11px;
+            font-weight: 400;
+            font-style: italic;
+            line-height: 28px;
+            padding: 0 10px;
+            color: #2a9ce7;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+    }
+
+}
+
