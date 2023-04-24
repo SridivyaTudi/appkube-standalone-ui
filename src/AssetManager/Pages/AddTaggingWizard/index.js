@@ -205,6 +205,38 @@ export class AddTaggingWizard extends Component {
         });
     }
   }
+  async handlemodule(searchString){
+    let { wizardPathNames } = this.state;
+     let pathKeys = ["PRODUCT", "ENV", "MODULE", "SERVICE", "SERVICE_TYPE"];
+    const response = await fetch(`http://34.199.12.114:5057/api/tags/search?${searchString}`)
+    const taggData = await response.json();
+    if(taggData && taggData.length){
+      taggData.forEach((tag)=>{
+        let tagId = `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`
+        if(wizardPathNames.filter((path) => path.id ==tagId && path.type == tag.serviceAllocation.serviceType).length == 0){
+          let getTab =tag.tag.split(",");
+          let newPath = "";
+          getTab.forEach((tempData, key) => {
+            if (key > 1) {
+              newPath += " > ";
+            }
+            if (key > 0) {
+              newPath += tempData.replace(`${pathKeys[key - 1]}=`, "");
+            }
+          });
+          wizardPathNames.push({
+            id: `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`,
+            type: tag.serviceAllocation.serviceType,
+            value:newPath
+          });
+        }
+      })
+      this.setState({
+        ...this.state,
+        ["wizardPathNames"]: wizardPathNames,
+      });
+    }
+  }
   render() {
     return (
       <div className="asset-container">
@@ -436,11 +468,15 @@ export class AddTaggingWizard extends Component {
                                                                                           <input
                                                                                             type="checkbox"
                                                                                             className="checkbox"
-                                                                                            onChange={() => {
+                                                                                            onChange={(e) => {
                                                                                               this.handleToggleTree(
                                                                                                 "modules",
                                                                                                 `${department.id}_${product.id}_${deploymentEnvironment.id}_${module.id}`
                                                                                               );
+                                                                                              if(e.target.checked){
+                                                                                                this.handlemodule(`landingZone=${this.handleGetLandingId()}&departmentId=${department.id}&productId=${product.id}&deploymentEnvironmentId=${deploymentEnvironment.id}&moduleId=${module.id}&discoveredAssetId=${this.handleGetId()}`)
+                                                                                              }
+                                                                                              
                                                                                             }}
                                                                                             checked={
                                                                                               this
