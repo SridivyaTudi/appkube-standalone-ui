@@ -31,11 +31,12 @@ export class DiscoveredAssets extends Component {
         {
           label: "Tag Status",
           key: "action",
-          renderCallback: () => {
+          renderCallback: (key,value) => {
             return (
               <td>
-                <div className="tagged-box d-inline-block">
-                  <i class="far fa-check"></i>
+                <div className={` ${value.tagStatus && value.tagStatus =='Tagged' ? 'tagged-box' : 'tagged-red-box'} d-inline-block`}>
+                  <i class={`${value.tagStatus && value.tagStatus =='Tagged' ? 'far fa-check' : 'fa fa-times'}  `}></i>
+                  {/* <i class="fa fa-times" aria-hidden="true"></i> */}
                 </div>
                 Tagged
               </td>
@@ -77,7 +78,8 @@ export class DiscoveredAssets extends Component {
           ruleType: asset.elementType,
           message: asset.landingZone,
           alertHandlers:asset.productEnclave,
-          landingZone:asset.landingZone
+          landingZone:asset.landingZone,
+          tagStatus:asset.tagStatus
         }
     });
     // this.tableValue.data = tableValue
