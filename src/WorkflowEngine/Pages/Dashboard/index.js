@@ -700,7 +700,6 @@ class WorkflowDashboard extends Component {
                           </li>
                         </ul>
                       </div>
-                      z
                     </div>
                   </div>
                   <div className="project-list-content">

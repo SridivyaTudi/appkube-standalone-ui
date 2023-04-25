@@ -1219,11 +1219,15 @@
             .average-section {
                 .statistics-graph {
                     margin-bottom: 30px;
+                    .requistions-graph {
+                        width: 100%;
+                        display: block;
+                    }
                 }
             }
 
             .project-resources-section {
-                padding-top: 0;
+                padding-top: 30px;
 
                 .resources-list {
                     margin-top: 30px;
@@ -1244,6 +1248,7 @@
 }
 
 @media only screen and (max-width: 767px) {
+     
     .owrkflow-dashboard-container {
         .dashboard-container {
             .fliter-container {
@@ -1286,6 +1291,14 @@
                     margin-top: 20px;
                 }
             }
+            .average-section{
+                .statistics-graph{
+                    .requistions-graph {
+                        width: 360px;
+                        margin: 0 auto;
+                    }
+                } 
+            } 
         }
     }
 }

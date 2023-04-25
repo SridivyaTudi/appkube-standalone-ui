@@ -211,7 +211,7 @@
   .assessment-boxes {
     .add-policy-head {
       text-align: left;
-  }
+    }
     .heading {
       h3 {
         font-size: 12px;
@@ -220,6 +220,17 @@
     .search-box {
       .search-control-group {
         width: 100%;
+      }
+    }
+  }
+}
+@media (max-width: 540px) {
+  .assessment-boxes {
+    .add-policy-head {
+      .blue-button{
+        display: block;
+        width: 100%;
+        margin-right: 0;
       }
     }
   }

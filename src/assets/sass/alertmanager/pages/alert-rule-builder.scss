@@ -344,7 +344,7 @@
       button {
         position: absolute;
         left: 0;
-        top: 0;
+        top: 2px;
         border: none;
         background-color: transparent;
         color: #8392a7;
@@ -805,14 +805,6 @@
   }
 }
 
-
-@media only screen and (max-width: 767px) {
-  // .float-right.common-right-btn {
-  //   text-align: left;
-  //   float: left;
-  // }
-}
-
 @media only screen and (max-width: 991px) {
   .manage-alert-rule-container{
     .alert-page-container{
@@ -839,7 +831,6 @@
         .common-right-btn{
           .save-rule{
             min-width: 100px;
-            
           }
         }
         .wizard-container{
