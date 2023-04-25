@@ -22,7 +22,7 @@ export class AddTaggingWizard extends Component {
 
   async getDiscoverAssest(id) {
     const response = await fetch(
-      `http://34.199.12.114:5057/api/organizations/${id}`
+      `http://34.199.12.114:5057/api/organizations/search?landingZone=${id}`
     );
     const discoverData = await response.json();
     if (discoverData["status"] != 404) {
