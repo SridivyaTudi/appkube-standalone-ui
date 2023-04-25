@@ -33,7 +33,7 @@ export class AddTaggingWizard extends Component {
     let getId = this.handleGetId();
     this.getDiscoverAssest(getId);
   }
-  handleToggleTree(type, id = 0) {
+  handleToggleTree(type, id = 0,isChecked) {
     let { toggleTree } = this.state;
     if (type == "parent") {
       this.setState({
@@ -41,6 +41,10 @@ export class AddTaggingWizard extends Component {
         ["toggleTree"]: {
           ...this.state.toggleTree,
           [`${type}`]: !this.state.toggleTree[`${type}`],
+          ['departments']:  isChecked ? this.state.toggleTree[`departments`] : {},
+          ['products']:  isChecked ? this.state.toggleTree[`products`] : {},
+          ['deploymentEnvironments']:  isChecked ? this.state.toggleTree[`deploymentEnvironments`] : {},
+          ['modules']:  isChecked ? this.state.toggleTree[`modules`] : {}
         },
       });
     } else if (type == "departments") {
@@ -50,6 +54,9 @@ export class AddTaggingWizard extends Component {
         ["toggleTree"]: {
           ...this.state.toggleTree,
           ["departments"]: toggleTree["departments"],
+          ['products']:  isChecked ? this.state.toggleTree[`products`] : {},
+          ['deploymentEnvironments']:  isChecked ? this.state.toggleTree[`deploymentEnvironments`] : {},
+          ['modules']:  isChecked ? this.state.toggleTree[`modules`] : {}
         },
         ["wizardPathNames"]: [],
       });
@@ -60,7 +67,10 @@ export class AddTaggingWizard extends Component {
         ["toggleTree"]: {
           ...this.state.toggleTree,
           ["products"]: toggleTree["products"],
+          ['deploymentEnvironments']:  isChecked ? this.state.toggleTree[`deploymentEnvironments`] : {},
+          ['modules']:  isChecked ? this.state.toggleTree[`modules`] : {}
         },
+        ["wizardPathNames"]: []
       });
     } else if (type == "deploymentEnvironments") {
       toggleTree["deploymentEnvironments"][id] =
@@ -70,7 +80,9 @@ export class AddTaggingWizard extends Component {
         ["toggleTree"]: {
           ...this.state.toggleTree,
           ["deploymentEnvironments"]: toggleTree["deploymentEnvironments"],
+          ['modules']:  isChecked ? this.state.toggleTree[`modules`] : {}
         },
+        ["wizardPathNames"]: []
       });
     } else if (type == "modules") {
       toggleTree["modules"][id] = !toggleTree["modules"][id];
@@ -104,6 +116,7 @@ export class AddTaggingWizard extends Component {
             id: data.id,
             value: newPath,
             type: data.type,
+            tagId:res.id
           });
           this.setState({
             ...this.state,
@@ -113,10 +126,14 @@ export class AddTaggingWizard extends Component {
         }
       });
     } else {
-      this.handleTagDelete(data.currentId).then((res) => {
-        wizardPathNames = wizardPathNames.filter((path) => path.id != data.id);
-        this.setState({ ...this.state, ["wizardPathNames"]: wizardPathNames });
-        this.toastMessage(0,'Tag Deleted')
+      let getTabId =  wizardPathNames.filter((path) => path.id == data.id)
+      this.handleTagDelete(getTabId.length && getTabId[0].tagId).then((res) => {
+        if (res) {
+          wizardPathNames = wizardPathNames.filter((path) => path.id != data.id);
+          this.setState({ ...this.state, ["wizardPathNames"]: wizardPathNames });
+          this.toastMessage(1,'Tag untagged.')    
+        }
+      
       });
     
     }
@@ -176,8 +193,11 @@ export class AddTaggingWizard extends Component {
         },
         method: "DELETE",
       });
-      const res = await response.json();
-      return res;
+     
+      if(response.status == 204){
+        myResolve(true);
+      }
+     
     });
   }
   toastMessage(type,message) {
@@ -227,7 +247,7 @@ export class AddTaggingWizard extends Component {
           wizardPathNames.push({
             id: `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`,
             type: tag.serviceAllocation.serviceType,
-            value:newPath
+            value:newPath,tagId:tag.id
           });
         }
       })
@@ -302,8 +322,8 @@ export class AddTaggingWizard extends Component {
                                   <input
                                     type="checkbox"
                                     className="checkbox"
-                                    onChange={() => {
-                                      this.handleToggleTree("parent");
+                                    onChange={(e) => {
+                                      this.handleToggleTree("parent",0,e.target.checked);
                                     }}
                                   />
                                   <span>{this.state.data.name}</span>
@@ -323,10 +343,10 @@ export class AddTaggingWizard extends Component {
                                                 <input
                                                   type="checkbox"
                                                   className="checkbox"
-                                                  onChange={() => {
+                                                  onChange={(e) => {
                                                     this.handleToggleTree(
                                                       "departments",
-                                                      department.id
+                                                      department.id,e.target.checked
                                                     );
                                                   }}
                                                   checked={
@@ -358,10 +378,10 @@ export class AddTaggingWizard extends Component {
                                                               <input
                                                                 type="checkbox"
                                                                 className="checkbox"
-                                                                onChange={() => {
+                                                                onChange={(e) => {
                                                                   this.handleToggleTree(
                                                                     "products",
-                                                                    `${department.id}_${product.id}`
+                                                                    `${department.id}_${product.id}`,e.target.checked
                                                                   );
                                                                 }}
                                                                 checked={
@@ -408,10 +428,10 @@ export class AddTaggingWizard extends Component {
                                                                             <input
                                                                               type="checkbox"
                                                                               className="checkbox"
-                                                                              onChange={() => {
+                                                                              onChange={(e) => {
                                                                                 this.handleToggleTree(
                                                                                   "deploymentEnvironments",
-                                                                                  `${department.id}_${product.id}_${deploymentEnvironment.id}`
+                                                                                  `${department.id}_${product.id}_${deploymentEnvironment.id}`,e.target.checked
                                                                                 );
                                                                               }}
                                                                               checked={
@@ -471,7 +491,7 @@ export class AddTaggingWizard extends Component {
                                                                                             onChange={(e) => {
                                                                                               this.handleToggleTree(
                                                                                                 "modules",
-                                                                                                `${department.id}_${product.id}_${deploymentEnvironment.id}_${module.id}`
+                                                                                                `${department.id}_${product.id}_${deploymentEnvironment.id}_${module.id}`,e.target.checked
                                                                                               );
                                                                                               if(e.target.checked){
                                                                                                 this.handlemodule(`landingZone=${this.handleGetLandingId()}&departmentId=${department.id}&productId=${product.id}&deploymentEnvironmentId=${deploymentEnvironment.id}&moduleId=${module.id}&discoveredAssetId=${this.handleGetId()}`)
