@@ -39,7 +39,7 @@ class NewDashboard extends Component {
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-sm-12 own-dashboard">
-                <a href={`/custom-manage-dashboards/import-dashboard`}>
+                <a href={`/managedashboards/custom-manage-dashboards/import-dashboard`}>
                   <span>
                     <img src={ImportDashboardImage} alt="Import Dashboard from Catalog" />
                   </span>

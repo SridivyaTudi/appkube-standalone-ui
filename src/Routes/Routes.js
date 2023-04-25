@@ -113,13 +113,13 @@ export const AllRoutes = () => {
 
       {/***** AssetManager *****/}
       <Route path="/assetmanager/pages/environments" element={<Environments />} />
-      <Route path="/assetmanager/pages/amazonservices" element={<AmazonServices />} />
+      <Route path="/assetmanager/pages/environments/amazonservices" element={<AmazonServices />} />
       <Route path="/assetmanager/pages/kubernetes" element={<Kubernetes />} />
       <Route path="/assetmanager/pages/storagedetails" element={<StorageDetails />} />
       <Route path="/assetmanager/pages/accountsetup" element={<AccountSetup />} />
       <Route path="/assetmanager/pages/department-wise-products" element={<DepartmentWiseProducts />} />
-      <Route path="/assetmanager/pages/department-wise-charts" element={<DepartmentWiseCharts />} />
-      <Route path="/assetmanager/pages/product-wise-cost" element={<ProductWiseCost />} />
+      <Route path="/assetmanager/pages/department-wise-products/department-wise-charts" element={<DepartmentWiseCharts />} />
+      <Route path="/assetmanager/pages/department-wise-products/product-wise-cost" element={<ProductWiseCost />} />
       <Route path="/assetmanager/pages/product-wise-services-sla" element={<ProductWiseServicesSla />} />
       <Route path="/assetmanager/pages/add-data-source" element={<AddDatasource />} />
       <Route path="/assetmanager/pages/add-datasource-credential" element={<AddDataSourceCredential />} />
@@ -135,8 +135,8 @@ export const AllRoutes = () => {
       <Route path="/alertmanager/pages/monitor-alerts" element={<MonitorAlerts />} />
       <Route path="/alertmanager/pages/alert-rule-builder" element={<AlertRuleBuilder />} />
       <Route path="/alertmanager/pages/manage-alert-rule" element={<ManageAlertRule />} />
-      <Route path="/alertmanager/pages/all-alerts" element={<AllAlerts />} />
-      <Route path="/alertmanager/pages/rules" element={<Rules />} />
+      <Route path="/alertmanager/pages/monitor-alerts/all-alerts" element={<AllAlerts />} />
+      <Route path="/alertmanager/pages/monitor-alerts/rules" element={<Rules />} />
       <Route path="/alertmanager/pages/create-rule" element={<CreateRule />} />
       <Route path="/alertmanager/pages/alltickets" element={<AllTickets />} />
       <Route path="/alertmanager/pages/script-editor" element={<ScriptEditor />} />
@@ -144,8 +144,7 @@ export const AllRoutes = () => {
 
       {/***** Custom Manage Dashboards *****/}
       <Route path="/managedashboards" element={<ManageDashboards />} />
-      <Route path="/custom-manage-dashboards/import-dashboard" element={<ImportDashboard />} />
-      <Route path="" />
+      <Route path="/managedashboards/custom-manage-dashboards/import-dashboard" element={<ImportDashboard />} />
 
       {/***** analytics *****/}
       <Route path="/analytics" element={<Analytics />} />
