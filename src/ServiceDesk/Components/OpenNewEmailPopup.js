@@ -308,7 +308,7 @@ class OpenNewEmailPopup extends React.Component {
           msg={state.message}
         ></AlertMessage>
         <button className="close-btn" onClick={this.handleClose}>
-        <i class="fal fa-times"></i>
+        <i className="fal fa-times"></i>
         </button>
         <ModalBody
           style={{

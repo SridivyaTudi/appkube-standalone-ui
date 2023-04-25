@@ -121,7 +121,7 @@ class Environments extends Component {
           <tr key={`env-${envIndex}-${accountIndex}`}>
             <td>
               <Link
-                to={`/assetmanager/pages/amazonservices?accountId=${account.accountId}&cloudName=${account.cloud}`}
+                to={`/assetmanager/pages/environments/amazonservices?accountId=${account.accountId}&cloudName=${account.cloud}`}
               >
                 {account.cloud} ({account.accountId})
               </Link>
