@@ -112,7 +112,7 @@ class AddDatasourceProduct extends React.Component {
                                 ) {
                                   return (
                                     <Link
-                                      to={`/datasources/edit/${accountdata.uid}`}
+                                      to={`/assetmanager/pages/add-data-source-product/datasources/edit/${accountdata.uid}`}
                                     >
                                       <div className="source-box">
                                         <div className="images">

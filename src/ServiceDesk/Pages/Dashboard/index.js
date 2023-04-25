@@ -223,7 +223,7 @@ class Dashboard extends React.Component {
     for (let i = 0; i < ticketingData.length; i++) {
       const data = ticketingData[i];
       retData.push(
-        <div className="col-xl-5 col-lg-4 col-md-6 col-sm-12">
+        <div className="col-xl-5 col-lg-4 col-md-6 col-sm-12" key={data.ticketingname}>
           <div className="d-block text-center ticketing-box">
             <Link
               to={`${config.basePath}/opentickets?type=${data.ticketingname}`}
@@ -327,7 +327,7 @@ class Dashboard extends React.Component {
     for (let i = 0; i < performerAgentsData.length; i++) {
       const data = performerAgentsData[i];
       retData.push(
-        <tr>
+        <tr key={data.agentName}>
           <td>
             <span className="image"></span> {data.agentName}
           </td>

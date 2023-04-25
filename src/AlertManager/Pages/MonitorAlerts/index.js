@@ -209,14 +209,14 @@ class MonitorAlerts extends React.Component {
           </div>
           <div className="alert-data-container row common-container">
             <div className="alert-data-block col-lg-3 col-md-6 col-sm-12">
-              <Link to={`/alertmanager/pages/all-alerts`}>
+              <Link to={`/alertmanager/pages/monitor-alerts/all-alerts`}>
                 <div className="alert-data-label">Total alerts</div>
                 <div className="alert-data">{totalAlerts}</div>
                 <div className="alert-data-meta">&nbsp;</div>
               </Link>
             </div>
             <div className="alert-data-block col-lg-3 col-md-6 col-sm-12">
-              <a onClick={() => this.onClickUnImplementedFeature("/rules")}>
+              <a onClick={() => this.onClickUnImplementedFeature("/alertmanager/pages/monitor-alerts/rules")}>
                 <div className="alert-data-label">Total alert rules</div>
                 <div className="alert-data">0</div>
                 <div className="alert-data-meta">Enabled 0</div>
