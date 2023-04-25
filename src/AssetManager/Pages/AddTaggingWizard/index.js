@@ -4,7 +4,12 @@ import React, { Component } from "react";
 import { Collapse } from "reactstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-export class AddTaggingWizard extends Component {
+import { useParams } from "react-router-dom";
+
+function withParams(Component) {
+  return props => <Component {...props} params={useParams()} />;
+}
+class AddTaggingWizard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +24,6 @@ export class AddTaggingWizard extends Component {
       wizardPathNames: [],
     };
   }
-
   async getDiscoverAssest(id) {
     const response = await fetch(
       `http://34.199.12.114:5057/api/organizations/search?landingZone=${id}`
@@ -33,7 +37,7 @@ export class AddTaggingWizard extends Component {
     let getId = this.handleGetId();
     this.getDiscoverAssest(getId);
   }
-  handleToggleTree(type, id = 0,isChecked) {
+  handleToggleTree(type, id = 0, isChecked) {
     let { toggleTree } = this.state;
     if (type == "parent") {
       this.setState({
@@ -41,10 +45,14 @@ export class AddTaggingWizard extends Component {
         ["toggleTree"]: {
           ...this.state.toggleTree,
           [`${type}`]: !this.state.toggleTree[`${type}`],
-          ['departments']:  isChecked ? this.state.toggleTree[`departments`] : {},
-          ['products']:  isChecked ? this.state.toggleTree[`products`] : {},
-          ['deploymentEnvironments']:  isChecked ? this.state.toggleTree[`deploymentEnvironments`] : {},
-          ['modules']:  isChecked ? this.state.toggleTree[`modules`] : {}
+          ["departments"]: isChecked
+            ? this.state.toggleTree[`departments`]
+            : {},
+          ["products"]: isChecked ? this.state.toggleTree[`products`] : {},
+          ["deploymentEnvironments"]: isChecked
+            ? this.state.toggleTree[`deploymentEnvironments`]
+            : {},
+          ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
         },
       });
     } else if (type == "departments") {
@@ -54,9 +62,11 @@ export class AddTaggingWizard extends Component {
         ["toggleTree"]: {
           ...this.state.toggleTree,
           ["departments"]: toggleTree["departments"],
-          ['products']:  isChecked ? this.state.toggleTree[`products`] : {},
-          ['deploymentEnvironments']:  isChecked ? this.state.toggleTree[`deploymentEnvironments`] : {},
-          ['modules']:  isChecked ? this.state.toggleTree[`modules`] : {}
+          ["products"]: isChecked ? this.state.toggleTree[`products`] : {},
+          ["deploymentEnvironments"]: isChecked
+            ? this.state.toggleTree[`deploymentEnvironments`]
+            : {},
+          ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
         },
         ["wizardPathNames"]: [],
       });
@@ -67,10 +77,12 @@ export class AddTaggingWizard extends Component {
         ["toggleTree"]: {
           ...this.state.toggleTree,
           ["products"]: toggleTree["products"],
-          ['deploymentEnvironments']:  isChecked ? this.state.toggleTree[`deploymentEnvironments`] : {},
-          ['modules']:  isChecked ? this.state.toggleTree[`modules`] : {}
+          ["deploymentEnvironments"]: isChecked
+            ? this.state.toggleTree[`deploymentEnvironments`]
+            : {},
+          ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
         },
-        ["wizardPathNames"]: []
+        ["wizardPathNames"]: [],
       });
     } else if (type == "deploymentEnvironments") {
       toggleTree["deploymentEnvironments"][id] =
@@ -80,9 +92,9 @@ export class AddTaggingWizard extends Component {
         ["toggleTree"]: {
           ...this.state.toggleTree,
           ["deploymentEnvironments"]: toggleTree["deploymentEnvironments"],
-          ['modules']:  isChecked ? this.state.toggleTree[`modules`] : {}
+          ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
         },
-        ["wizardPathNames"]: []
+        ["wizardPathNames"]: [],
       });
     } else if (type == "modules") {
       toggleTree["modules"][id] = !toggleTree["modules"][id];
@@ -116,42 +128,41 @@ export class AddTaggingWizard extends Component {
             id: data.id,
             value: newPath,
             type: data.type,
-            tagId:res.id
+            tagId: res.id,
           });
           this.setState({
             ...this.state,
             ["wizardPathNames"]: wizardPathNames,
           });
-          this.toastMessage(1,'Tag Added')
+          this.toastMessage(1, "Tag Added");
         }
       });
     } else {
-      let getTabId =  wizardPathNames.filter((path) => path.id == data.id)
+      let getTabId = wizardPathNames.filter((path) => path.id == data.id);
       this.handleTagDelete(getTabId.length && getTabId[0].tagId).then((res) => {
         if (res) {
-          wizardPathNames = wizardPathNames.filter((path) => path.id != data.id);
-          this.setState({ ...this.state, ["wizardPathNames"]: wizardPathNames });
-          this.toastMessage(1,'Tag untagged.')    
+          wizardPathNames = wizardPathNames.filter(
+            (path) => path.id != data.id
+          );
+          this.setState({
+            ...this.state,
+            ["wizardPathNames"]: wizardPathNames,
+          });
+          this.toastMessage(1, "Tag untagged.");
         }
-      
       });
-    
     }
   }
   handleGetId() {
     try {
-      return window.location.pathname
-        .replace("/assetmanager/pages/addTaggingWizard/", "")
-        .split("/")[0];
+      return this.props.params.id;
     } catch (e) {
       console.log(e);
     }
   }
   handleGetLandingId() {
     try {
-      return window.location.pathname
-        .replace("/assetmanager/pages/addTaggingWizard/", "")
-        .split("/")[1];
+      return  this.props.params.landingZone
     } catch (e) {
       console.log(e);
     }
@@ -193,14 +204,13 @@ export class AddTaggingWizard extends Component {
         },
         method: "DELETE",
       });
-     
-      if(response.status == 204){
+
+      if (response.status == 204) {
         myResolve(true);
       }
-     
     });
   }
-  toastMessage(type,message) {
+  toastMessage(type, message) {
     if (type) {
       toast.success(message, {
         position: "top-right",
@@ -211,7 +221,7 @@ export class AddTaggingWizard extends Component {
         draggable: true,
         progress: undefined,
         theme: "light",
-        });
+      });
     } else {
       toast.error(message, {
         position: "top-right",
@@ -222,19 +232,26 @@ export class AddTaggingWizard extends Component {
         draggable: true,
         progress: undefined,
         theme: "light",
-        });
+      });
     }
   }
-  async handlemodule(searchString){
+  async handlemodule(searchString) {
     let { wizardPathNames } = this.state;
-     let pathKeys = ["PRODUCT", "ENV", "MODULE", "SERVICE", "SERVICE_TYPE"];
-    const response = await fetch(`http://34.199.12.114:5057/api/tags/search?${searchString}`)
+    let pathKeys = ["PRODUCT", "ENV", "MODULE", "SERVICE", "SERVICE_TYPE"];
+    const response = await fetch(
+      `http://34.199.12.114:5057/api/tags/search?${searchString}`
+    );
     const taggData = await response.json();
-    if(taggData && taggData.length){
-      taggData.forEach((tag)=>{
-        let tagId = `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`
-        if(wizardPathNames.filter((path) => path.id ==tagId && path.type == tag.serviceAllocation.serviceType).length == 0){
-          let getTab =tag.tag.split(",");
+    if (taggData && taggData.length) {
+      taggData.forEach((tag) => {
+        let tagId = `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`;
+        if (
+          wizardPathNames.filter(
+            (path) =>
+              path.id == tagId && path.type == tag.serviceAllocation.serviceType
+          ).length == 0
+        ) {
+          let getTab = tag.tag.split(",");
           let newPath = "";
           getTab.forEach((tempData, key) => {
             if (key > 1) {
@@ -247,10 +264,11 @@ export class AddTaggingWizard extends Component {
           wizardPathNames.push({
             id: `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`,
             type: tag.serviceAllocation.serviceType,
-            value:newPath,tagId:tag.id
+            value: newPath,
+            tagId: tag.id,
           });
         }
-      })
+      });
       this.setState({
         ...this.state,
         ["wizardPathNames"]: wizardPathNames,
@@ -260,21 +278,6 @@ export class AddTaggingWizard extends Component {
   render() {
     return (
       <div className="asset-container">
-        {/* <ToastComponent /> */}
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
-        {/* Same as */}
-        <ToastContainer />
         <div className="tagging-wizard-container">
           <div className="common-container">
             <div className="row">
@@ -323,7 +326,11 @@ export class AddTaggingWizard extends Component {
                                     type="checkbox"
                                     className="checkbox"
                                     onChange={(e) => {
-                                      this.handleToggleTree("parent",0,e.target.checked);
+                                      this.handleToggleTree(
+                                        "parent",
+                                        0,
+                                        e.target.checked
+                                      );
                                     }}
                                   />
                                   <span>{this.state.data.name}</span>
@@ -346,7 +353,8 @@ export class AddTaggingWizard extends Component {
                                                   onChange={(e) => {
                                                     this.handleToggleTree(
                                                       "departments",
-                                                      department.id,e.target.checked
+                                                      department.id,
+                                                      e.target.checked
                                                     );
                                                   }}
                                                   checked={
@@ -378,10 +386,14 @@ export class AddTaggingWizard extends Component {
                                                               <input
                                                                 type="checkbox"
                                                                 className="checkbox"
-                                                                onChange={(e) => {
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
                                                                   this.handleToggleTree(
                                                                     "products",
-                                                                    `${department.id}_${product.id}`,e.target.checked
+                                                                    `${department.id}_${product.id}`,
+                                                                    e.target
+                                                                      .checked
                                                                   );
                                                                 }}
                                                                 checked={
@@ -428,10 +440,15 @@ export class AddTaggingWizard extends Component {
                                                                             <input
                                                                               type="checkbox"
                                                                               className="checkbox"
-                                                                              onChange={(e) => {
+                                                                              onChange={(
+                                                                                e
+                                                                              ) => {
                                                                                 this.handleToggleTree(
                                                                                   "deploymentEnvironments",
-                                                                                  `${department.id}_${product.id}_${deploymentEnvironment.id}`,e.target.checked
+                                                                                  `${department.id}_${product.id}_${deploymentEnvironment.id}`,
+                                                                                  e
+                                                                                    .target
+                                                                                    .checked
                                                                                 );
                                                                               }}
                                                                               checked={
@@ -488,15 +505,33 @@ export class AddTaggingWizard extends Component {
                                                                                           <input
                                                                                             type="checkbox"
                                                                                             className="checkbox"
-                                                                                            onChange={(e) => {
+                                                                                            onChange={(
+                                                                                              e
+                                                                                            ) => {
                                                                                               this.handleToggleTree(
                                                                                                 "modules",
-                                                                                                `${department.id}_${product.id}_${deploymentEnvironment.id}_${module.id}`,e.target.checked
+                                                                                                `${department.id}_${product.id}_${deploymentEnvironment.id}_${module.id}`,
+                                                                                                e
+                                                                                                  .target
+                                                                                                  .checked
                                                                                               );
-                                                                                              if(e.target.checked){
-                                                                                                this.handlemodule(`landingZone=${this.handleGetLandingId()}&departmentId=${department.id}&productId=${product.id}&deploymentEnvironmentId=${deploymentEnvironment.id}&moduleId=${module.id}&discoveredAssetId=${this.handleGetId()}`)
+                                                                                              if (
+                                                                                                e
+                                                                                                  .target
+                                                                                                  .checked
+                                                                                              ) {
+                                                                                                this.handlemodule(
+                                                                                                  `landingZone=${this.handleGetLandingId()}&departmentId=${
+                                                                                                    department.id
+                                                                                                  }&productId=${
+                                                                                                    product.id
+                                                                                                  }&deploymentEnvironmentId=${
+                                                                                                    deploymentEnvironment.id
+                                                                                                  }&moduleId=${
+                                                                                                    module.id
+                                                                                                  }&discoveredAssetId=${this.handleGetId()}`
+                                                                                                );
                                                                                               }
-                                                                                              
                                                                                             }}
                                                                                             checked={
                                                                                               this
@@ -1171,4 +1206,4 @@ export class AddTaggingWizard extends Component {
     );
   }
 }
-export default AddTaggingWizard;
+export default withParams(AddTaggingWizard); 
