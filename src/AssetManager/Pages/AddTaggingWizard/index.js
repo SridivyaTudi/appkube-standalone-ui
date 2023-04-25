@@ -2,7 +2,8 @@ import { escape } from "lodash";
 import { object } from "prop-types";
 import React, { Component } from "react";
 import { Collapse } from "reactstrap";
-//import { config } from "../../config";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export class AddTaggingWizard extends Component {
   constructor(props) {
     super(props);
@@ -95,21 +96,29 @@ export class AddTaggingWizard extends Component {
             if (key > 1) {
               newPath += " > ";
             }
-            if(key > 0){
-              console.log(tempData)
-              newPath += tempData.replace(`${pathKeys[key-1]}=`, "");
+            if (key > 0) {
+              newPath += tempData.replace(`${pathKeys[key - 1]}=`, "");
             }
           });
-          wizardPathNames.push({ id: data.id, value: newPath });
+          wizardPathNames.push({
+            id: data.id,
+            value: newPath,
+            type: data.type,
+          });
           this.setState({
             ...this.state,
             ["wizardPathNames"]: wizardPathNames,
           });
+          this.toastMessage(1,'Tag Added')
         }
       });
     } else {
-      wizardPathNames = wizardPathNames.filter((path) => path.id != data.id);
-      this.setState({ ...this.state, ["wizardPathNames"]: wizardPathNames });
+      this.handleTagDelete(data.currentId).then((res) => {
+        wizardPathNames = wizardPathNames.filter((path) => path.id != data.id);
+        this.setState({ ...this.state, ["wizardPathNames"]: wizardPathNames });
+        this.toastMessage(0,'Tag Deleted')
+      });
+    
     }
   }
   handleGetId() {
@@ -132,35 +141,120 @@ export class AddTaggingWizard extends Component {
   }
   async handleDiscoverAssetsUpdate(otherparams) {
     let getLandingId = this.handleGetLandingId();
+    let getId = this.handleGetId();
     return new Promise(async function (myResolve, myReject) {
       const response = await fetch(
         `http://34.199.12.114:5057/api/service-allocations/search?landingZone=${getLandingId}&${otherparams.id}`
       );
       const discoverDataId = await response.json();
       if (discoverDataId && discoverDataId.length) {
-        const response = await fetch(
-          `http://34.199.12.114:5057/api/service-allocations/${otherparams.currentId}`,
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json"
-              },
-            method: "PATCH",
-            body: JSON.stringify({
-              id:discoverDataId[0].id,
-              tag: otherparams.value+discoverDataId[0].serviceType,
-            }),
-          }
-        );
+        const response = await fetch(`http://34.199.12.114:5057/api/tags`, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({
+            discoveredAsset: {
+              id: getId,
+            },
+            serviceAllocation: otherparams.serviceAllocation,
+            tag: otherparams.value + discoverDataId[0].serviceType,
+          }),
+        });
         const discoverData = await response.json();
         myResolve(discoverData);
       }
-      
     });
+  }
+  async handleTagDelete(id) {
+    return new Promise(async function (myResolve, myReject) {
+      const response = await fetch(`http://34.199.12.114:5057/api/tags/${id}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "DELETE",
+      });
+      const res = await response.json();
+      return res;
+    });
+  }
+  toastMessage(type,message) {
+    if (type) {
+      toast.success(message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+    } else {
+      toast.error(message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+    }
+  }
+  async handlemodule(searchString){
+    let { wizardPathNames } = this.state;
+     let pathKeys = ["PRODUCT", "ENV", "MODULE", "SERVICE", "SERVICE_TYPE"];
+    const response = await fetch(`http://34.199.12.114:5057/api/tags/search?${searchString}`)
+    const taggData = await response.json();
+    if(taggData && taggData.length){
+      taggData.forEach((tag)=>{
+        let tagId = `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`
+        if(wizardPathNames.filter((path) => path.id ==tagId && path.type == tag.serviceAllocation.serviceType).length == 0){
+          let getTab =tag.tag.split(",");
+          let newPath = "";
+          getTab.forEach((tempData, key) => {
+            if (key > 1) {
+              newPath += " > ";
+            }
+            if (key > 0) {
+              newPath += tempData.replace(`${pathKeys[key - 1]}=`, "");
+            }
+          });
+          wizardPathNames.push({
+            id: `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`,
+            type: tag.serviceAllocation.serviceType,
+            value:newPath
+          });
+        }
+      })
+      this.setState({
+        ...this.state,
+        ["wizardPathNames"]: wizardPathNames,
+      });
+    }
   }
   render() {
     return (
       <div className="asset-container">
+        {/* <ToastComponent /> */}
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+        {/* Same as */}
+        <ToastContainer />
         <div className="tagging-wizard-container">
           <div className="common-container">
             <div className="row">
@@ -374,11 +468,15 @@ export class AddTaggingWizard extends Component {
                                                                                           <input
                                                                                             type="checkbox"
                                                                                             className="checkbox"
-                                                                                            onChange={() => {
+                                                                                            onChange={(e) => {
                                                                                               this.handleToggleTree(
                                                                                                 "modules",
                                                                                                 `${department.id}_${product.id}_${deploymentEnvironment.id}_${module.id}`
                                                                                               );
+                                                                                              if(e.target.checked){
+                                                                                                this.handlemodule(`landingZone=${this.handleGetLandingId()}&departmentId=${department.id}&productId=${product.id}&deploymentEnvironmentId=${deploymentEnvironment.id}&moduleId=${module.id}&discoveredAssetId=${this.handleGetId()}`)
+                                                                                              }
+                                                                                              
                                                                                             }}
                                                                                             checked={
                                                                                               this
@@ -437,19 +535,68 @@ export class AddTaggingWizard extends Component {
                                                                                                           onChange={(
                                                                                                             e
                                                                                                           ) => {
-                                                                                                          
                                                                                                             this.handlePath(
                                                                                                               {
                                                                                                                 id: `departmentId=${department.id}&productId=${product.id}&deploymentEnvironmentId=${deploymentEnvironment.id}&moduleId=${module.id}&servicesId=${appService.id}`,
-                                                                                                                value: `asset-id-${this.handleGetId()},PRODUCT=${product.name},ENV=${deploymentEnvironment.name},MODULE=${module.name},SERVICE=${appService.name},SERVICE_TYPE=`,
-                                                                                                                currentId:appService.id
+                                                                                                                value: `asset-id-${this.handleGetId()},PRODUCT=${
+                                                                                                                  product.name
+                                                                                                                },ENV=${
+                                                                                                                  deploymentEnvironment.name
+                                                                                                                },MODULE=${
+                                                                                                                  module.name
+                                                                                                                },SERVICE=${
+                                                                                                                  appService.name
+                                                                                                                },SERVICE_TYPE=`,
+                                                                                                                currentId:
+                                                                                                                  appService.id,
+                                                                                                                type: "APP",
+                                                                                                                serviceAllocation:
+                                                                                                                  {
+                                                                                                                    landingZone:
+                                                                                                                      this.handleGetLandingId(),
+                                                                                                                    departmentId:
+                                                                                                                      department.id,
+                                                                                                                    productId:
+                                                                                                                      product.id,
+                                                                                                                    deploymentEnvironmentId:
+                                                                                                                      deploymentEnvironment.id,
+                                                                                                                    moduleId:
+                                                                                                                      module.id,
+                                                                                                                    servicesId:
+                                                                                                                      appService.id,
+                                                                                                                  },
                                                                                                               },
                                                                                                               e
                                                                                                                 .target
                                                                                                                 .checked,
-                                                                                                                appService.id
+                                                                                                              appService.id
                                                                                                             );
                                                                                                           }}
+                                                                                                          checked={
+                                                                                                            this
+                                                                                                              .state
+                                                                                                              .wizardPathNames &&
+                                                                                                            this
+                                                                                                              .state
+                                                                                                              .wizardPathNames
+                                                                                                              .length
+                                                                                                              ? this.state.wizardPathNames.filter(
+                                                                                                                  (
+                                                                                                                    path
+                                                                                                                  ) =>
+                                                                                                                    path.type ==
+                                                                                                                      "APP" &&
+                                                                                                                    path.id ==
+                                                                                                                      `departmentId=${department.id}&productId=${product.id}&deploymentEnvironmentId=${deploymentEnvironment.id}&moduleId=${module.id}&servicesId=${appService.id}` &&
+                                                                                                                    path.type ==
+                                                                                                                      "APP"
+                                                                                                                )
+                                                                                                                  .length >
+                                                                                                                0
+                                                                                                                ? true
+                                                                                                                : false
+                                                                                                              : false
+                                                                                                          }
                                                                                                         />
                                                                                                         <span>
                                                                                                           {
@@ -502,19 +649,67 @@ export class AddTaggingWizard extends Component {
                                                                                                         <input
                                                                                                           type="checkbox"
                                                                                                           className="checkbox"
+                                                                                                          checked={
+                                                                                                            this
+                                                                                                              .state
+                                                                                                              .wizardPathNames &&
+                                                                                                            this
+                                                                                                              .state
+                                                                                                              .wizardPathNames
+                                                                                                              .length
+                                                                                                              ? this.state.wizardPathNames.filter(
+                                                                                                                  (
+                                                                                                                    path
+                                                                                                                  ) =>
+                                                                                                                    path.type ==
+                                                                                                                      "DATA" &&
+                                                                                                                    path.id ==
+                                                                                                                      `departmentId=${department.id}&productId=${product.id}&deploymentEnvironmentId=${deploymentEnvironment.id}&moduleId=${module.id}&servicesId=${dataService.id}`
+                                                                                                                )
+                                                                                                                  .length >
+                                                                                                                0
+                                                                                                                ? true
+                                                                                                                : false
+                                                                                                              : false
+                                                                                                          }
                                                                                                           onChange={(
                                                                                                             e
                                                                                                           ) => {
                                                                                                             this.handlePath(
                                                                                                               {
                                                                                                                 id: `departmentId=${department.id}&productId=${product.id}&deploymentEnvironmentId=${deploymentEnvironment.id}&moduleId=${module.id}&servicesId=${dataService.id}`,
-                                                                                                                value: `asset-id-${this.handleGetId()},PRODUCT=${product.name},ENV=${deploymentEnvironment.name},MODULE=${module.name},SERVICE=${dataService.name},SERVICE_TYPE=`,
-                                                                                                                currentId:dataService.id
+                                                                                                                value: `asset-id-${this.handleGetId()},PRODUCT=${
+                                                                                                                  product.name
+                                                                                                                },ENV=${
+                                                                                                                  deploymentEnvironment.name
+                                                                                                                },MODULE=${
+                                                                                                                  module.name
+                                                                                                                },SERVICE=${
+                                                                                                                  dataService.name
+                                                                                                                },SERVICE_TYPE=`,
+                                                                                                                currentId:
+                                                                                                                  dataService.id,
+                                                                                                                type: "DATA",
+                                                                                                                serviceAllocation:
+                                                                                                                  {
+                                                                                                                    landingZone:
+                                                                                                                      this.handleGetLandingId(),
+                                                                                                                    departmentId:
+                                                                                                                      department.id,
+                                                                                                                    productId:
+                                                                                                                      product.id,
+                                                                                                                    deploymentEnvironmentId:
+                                                                                                                      deploymentEnvironment.id,
+                                                                                                                    moduleId:
+                                                                                                                      module.id,
+                                                                                                                    servicesId:
+                                                                                                                      dataService.id,
+                                                                                                                  },
                                                                                                               },
                                                                                                               e
                                                                                                                 .target
                                                                                                                 .checked,
-                                                                                                                dataService.id
+                                                                                                              dataService.id
                                                                                                             );
                                                                                                           }}
                                                                                                         />
