@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useParams } from "react-router-dom";
 
 function withParams(Component) {
-  return props => <Component {...props} params={useParams()} />;
+  return (props) => <Component {...props} params={useParams()} />;
 }
 class AddTaggingWizard extends Component {
   constructor(props) {
@@ -24,14 +24,16 @@ class AddTaggingWizard extends Component {
       wizardPathNames: [],
     };
   }
-  async getDiscoverAssest(id) {
-    const response = await fetch(
+  getDiscoverAssest(id) {
+    return fetch(
       `http://34.199.12.114:5057/api/organizations/search?landingZone=${id}`
-    );
-    const discoverData = await response.json();
-    if (discoverData["status"] != 404) {
-      this.setState({ ...this.state, ["data"]: discoverData });
-    }
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        if (res["status"] != 404) {
+          this.setState({ ...this.state, ["data"]: res });
+        }
+      });
   }
   componentDidMount() {
     let getId = this.handleGetId();
@@ -39,84 +41,134 @@ class AddTaggingWizard extends Component {
   }
   handleToggleTree(type, id = 0, isChecked) {
     let { toggleTree } = this.state;
-    if (type == "parent") {
-      this.setState({
-        ...this.state,
-        ["toggleTree"]: {
-          ...this.state.toggleTree,
-          [`${type}`]: !this.state.toggleTree[`${type}`],
-          ["departments"]: isChecked
-            ? this.state.toggleTree[`departments`]
-            : {},
-          ["products"]: isChecked ? this.state.toggleTree[`products`] : {},
-          ["deploymentEnvironments"]: isChecked
-            ? this.state.toggleTree[`deploymentEnvironments`]
-            : {},
-          ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
-        },
-      });
-    } else if (type == "departments") {
-      toggleTree["departments"][id] = !toggleTree["departments"][id];
-      this.setState({
-        ...this.state,
-        ["toggleTree"]: {
-          ...this.state.toggleTree,
-          ["departments"]: toggleTree["departments"],
-          ["products"]: isChecked ? this.state.toggleTree[`products`] : {},
-          ["deploymentEnvironments"]: isChecked
-            ? this.state.toggleTree[`deploymentEnvironments`]
-            : {},
-          ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
-        },
-        ["wizardPathNames"]: [],
-      });
-    } else if (type == "products") {
-      toggleTree["products"][id] = !toggleTree["products"][id];
-      this.setState({
-        ...this.state,
-        ["toggleTree"]: {
-          ...this.state.toggleTree,
-          ["products"]: toggleTree["products"],
-          ["deploymentEnvironments"]: isChecked
-            ? this.state.toggleTree[`deploymentEnvironments`]
-            : {},
-          ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
-        },
-        ["wizardPathNames"]: [],
-      });
-    } else if (type == "deploymentEnvironments") {
-      toggleTree["deploymentEnvironments"][id] =
-        !toggleTree["deploymentEnvironments"][id];
-      this.setState({
-        ...this.state,
-        ["toggleTree"]: {
-          ...this.state.toggleTree,
-          ["deploymentEnvironments"]: toggleTree["deploymentEnvironments"],
-          ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
-        },
-        ["wizardPathNames"]: [],
-      });
-    } else if (type == "modules") {
-      toggleTree["modules"][id] = !toggleTree["modules"][id];
-      this.setState({
-        ...this.state,
-        ["toggleTree"]: {
-          ...this.state.toggleTree,
-          ["modules"]: toggleTree["modules"],
-        },
-      });
-    }
+    toggleTree[`${type}`][id] = !toggleTree[`${type}`][id];
+    this.setState({
+      ...this.state,
+      ["toggleTree"]: {
+        ...this.state.toggleTree,
+        ["parent"]:
+          type == "parent"
+            ? !this.state.toggleTree[`${type}`]
+            : this.state.toggleTree[`parent`],
+        ["departments"]:
+          type == "departments"
+            ? toggleTree[`${type}`]
+            : type == "parent"
+            ? isChecked
+              ? this.state.toggleTree[`departments`]
+              : {}
+            : this.state.toggleTree[`departments`],
+        ["products"]:
+          type == "products"
+            ? toggleTree[`${type}`]
+            : type == "departments" || type == "parent"
+            ? isChecked
+              ? this.state.toggleTree[`products`]
+              : {}
+            : this.state.toggleTree[`products`],
+        ["deploymentEnvironments"]:
+          type == "deploymentEnvironments"
+            ? toggleTree[`${type}`]
+            : type == "departments" || type == "products" || type == "parent"
+            ? isChecked
+              ? this.state.toggleTree[`deploymentEnvironments`]
+              : {}
+            : this.state.toggleTree[`deploymentEnvironments`],
+        ["modules"]:
+          type == "modules"
+            ? toggleTree[`${type}`]
+            : type == "departments" ||
+              type == "products" ||
+              type == "deploymentEnvironments" ||
+              type == "parent"
+            ? isChecked
+              ? this.state.toggleTree[`modules`]
+              : {}
+            : this.state.toggleTree[`modules`],
+      },
+      ["wizardPathNames"]:
+        type == "modules" ? this.state[`wizardPathNames`] : [],
+    });
   }
-  async handlePath(data, checked) {
+  // handleToggleTree(type, id = 0, isChecked) {
+  //   let { toggleTree } = this.state;
+  //   if (type == "parent") {
+  //     this.setState({
+  //       ...this.state,
+  //       ["toggleTree"]: {
+  //         ...this.state.toggleTree,
+  //         [`${type}`]: !this.state.toggleTree[`${type}`],
+  //         ["departments"]: isChecked
+  //           ? this.state.toggleTree[`departments`]
+  //           : {},
+  //         ["products"]: isChecked ? this.state.toggleTree[`products`] : {},
+  //         ["deploymentEnvironments"]: isChecked
+  //           ? this.state.toggleTree[`deploymentEnvironments`]
+  //           : {},
+  //         ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
+  //       },
+  //     });
+  //   } else if (type == "departments") {
+  //     toggleTree["departments"][id] = !toggleTree["departments"][id];
+  //     this.setState({
+  //       ...this.state,
+  //       ["toggleTree"]: {
+  //         ...this.state.toggleTree,
+  //         ["departments"]: toggleTree["departments"],
+  //         ["products"]: isChecked ? this.state.toggleTree[`products`] : {},
+  //         ["deploymentEnvironments"]: isChecked
+  //           ? this.state.toggleTree[`deploymentEnvironments`]
+  //           : {},
+  //         ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
+  //       },
+  //       ["wizardPathNames"]: [],
+  //     });
+  //   } else if (type == "products") {
+  //     toggleTree["products"][id] = !toggleTree["products"][id];
+  //     this.setState({
+  //       ...this.state,
+  //       ["toggleTree"]: {
+  //         ...this.state.toggleTree,
+  //         ["products"]: toggleTree["products"],
+  //         ["deploymentEnvironments"]: isChecked
+  //           ? this.state.toggleTree[`deploymentEnvironments`]
+  //           : {},
+  //         ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
+  //       },
+  //       ["wizardPathNames"]: [],
+  //     });
+  //   } else if (type == "deploymentEnvironments") {
+  //     toggleTree["deploymentEnvironments"][id] =
+  //       !toggleTree["deploymentEnvironments"][id];
+  //     this.setState({
+  //       ...this.state,
+  //       ["toggleTree"]: {
+  //         ...this.state.toggleTree,
+  //         ["deploymentEnvironments"]: toggleTree["deploymentEnvironments"],
+  //         ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
+  //       },
+  //       ["wizardPathNames"]: [],
+  //     });
+  //   } else if (type == "modules") {
+  //     toggleTree["modules"][id] = !toggleTree["modules"][id];
+  //     this.setState({
+  //       ...this.state,
+  //       ["toggleTree"]: {
+  //         ...this.state.toggleTree,
+  //         ["modules"]: toggleTree["modules"],
+  //       },
+  //     });
+  //   }
+  // }
+  handlePath(data, checked) {
     let { wizardPathNames } = this.state;
     let pathKeys = ["PRODUCT", "ENV", "MODULE", "SERVICE", "SERVICE_TYPE"];
-
     if (checked) {
       this.handleDiscoverAssetsUpdate(data).then((res) => {
         if (res && res.tag) {
-          let getTab = res.tag.split(",");
+          let tagPath = res.tag.split(",");
           let newPath = "";
-          getTab.forEach((tempData, key) => {
+          tagPath.forEach((tempData, key) => {
             if (key > 1) {
               newPath += " > ";
             }
@@ -162,54 +214,96 @@ class AddTaggingWizard extends Component {
   }
   handleGetLandingId() {
     try {
-      return  this.props.params.landingZone
+      return this.props.params.landingZone;
     } catch (e) {
       console.log(e);
     }
   }
-  async handleDiscoverAssetsUpdate(otherparams) {
+  handleDiscoverAssetsUpdate(otherparams) {
     let getLandingId = this.handleGetLandingId();
     let getId = this.handleGetId();
-    return new Promise(async function (myResolve, myReject) {
-      const response = await fetch(
-        `http://34.199.12.114:5057/api/service-allocations/search?landingZone=${getLandingId}&${otherparams.id}`
-      );
-      const discoverDataId = await response.json();
-      if (discoverDataId && discoverDataId.length) {
-        const response = await fetch(`http://34.199.12.114:5057/api/tags`, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify({
-            discoveredAsset: {
-              id: getId,
-            },
-            serviceAllocation: otherparams.serviceAllocation,
-            tag: otherparams.value + discoverDataId[0].serviceType,
-          }),
-        });
-        const discoverData = await response.json();
-        myResolve(discoverData);
-      }
-    });
-  }
-  async handleTagDelete(id) {
-    return new Promise(async function (myResolve, myReject) {
-      const response = await fetch(`http://34.199.12.114:5057/api/tags/${id}`, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        method: "DELETE",
-      });
 
-      if (response.status == 204) {
-        myResolve(true);
-      }
-    });
+    return fetch(
+      `http://34.199.12.114:5057/api/service-allocations/search?landingZone=${getLandingId}&${otherparams.id}`
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        if (res && res.length) {
+          return fetch(`http://34.199.12.114:5057/api/tags`, {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify({
+              discoveredAsset: {
+                id: getId,
+              },
+              serviceAllocation: otherparams.serviceAllocation,
+              tag: otherparams.value + res[0].serviceType,
+            }),
+          })
+            .then((response) => response.json())
+            .then((res) => res);
+        }
+      });
   }
+  // async handleDiscoverAssetsUpdate(otherparams) {
+  //   let getLandingId = this.handleGetLandingId();
+  //   let getId = this.handleGetId();
+  //   return new Promise(async function (myResolve, myReject) {
+  //     const response = await fetch(
+  //       `http://34.199.12.114:5057/api/service-allocations/search?landingZone=${getLandingId}&${otherparams.id}`
+  //     );
+  //     const discoverDataId = await response.json();
+  //     if (discoverDataId && discoverDataId.length) {
+  //       const response = await fetch(`http://34.199.12.114:5057/api/tags`, {
+  //         headers: {
+  //           Accept: "application/json",
+  //           "Content-Type": "application/json",
+  //         },
+  //         method: "POST",
+  //         body: JSON.stringify({
+  //           discoveredAsset: {
+  //             id: getId,
+  //           },
+  //           serviceAllocation: otherparams.serviceAllocation,
+  //           tag: otherparams.value + discoverDataId[0].serviceType,
+  //         }),
+  //       });
+  //       const discoverData = await response.json();
+  //       myResolve(discoverData);
+  //     }
+  //   });
+  // }
+  handleTagDelete(id) {
+    return fetch(`http://34.199.12.114:5057/api/tags/${id}`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "DELETE",
+    }).then(
+      (res) => {},
+      (error) => error.status == 204
+    );
+  }
+
+  // async handleTagDelete(id) {
+  //   return new Promise(async function (myResolve, myReject) {
+  //     const response = await fetch(`http://34.199.12.114:5057/api/tags/${id}`, {
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //       },
+  //       method: "DELETE",
+  //     });
+
+  //     if (response.status == 204) {
+  //       myResolve(true);
+  //     }
+  //   });
+  // }
   toastMessage(type, message) {
     if (type) {
       toast.success(message, {
@@ -235,45 +329,46 @@ class AddTaggingWizard extends Component {
       });
     }
   }
-  async handlemodule(searchString) {
+  handlemodule(searchString) {
     let { wizardPathNames } = this.state;
     let pathKeys = ["PRODUCT", "ENV", "MODULE", "SERVICE", "SERVICE_TYPE"];
-    const response = await fetch(
-      `http://34.199.12.114:5057/api/tags/search?${searchString}`
-    );
-    const taggData = await response.json();
-    if (taggData && taggData.length) {
-      taggData.forEach((tag) => {
-        let tagId = `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`;
-        if (
-          wizardPathNames.filter(
-            (path) =>
-              path.id == tagId && path.type == tag.serviceAllocation.serviceType
-          ).length == 0
-        ) {
-          let getTab = tag.tag.split(",");
-          let newPath = "";
-          getTab.forEach((tempData, key) => {
-            if (key > 1) {
-              newPath += " > ";
-            }
-            if (key > 0) {
-              newPath += tempData.replace(`${pathKeys[key - 1]}=`, "");
+    return fetch(`http://34.199.12.114:5057/api/tags/search?${searchString}`)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res && res.length) {
+          res.forEach((tag) => {
+            let tagId = `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`;
+            if (
+              wizardPathNames.filter(
+                (path) =>
+                  path.id == tagId &&
+                  path.type == tag.serviceAllocation.serviceType
+              ).length == 0
+            ) {
+              let tagPath = tag.tag.split(",");
+              let newPath = "";
+              tagPath.forEach((tempData, key) => {
+                if (key > 1) {
+                  newPath += " > ";
+                }
+                if (key > 0) {
+                  newPath += tempData.replace(`${pathKeys[key - 1]}=`, "");
+                }
+              });
+              wizardPathNames.push({
+                id: `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`,
+                type: tag.serviceAllocation.serviceType,
+                value: newPath,
+                tagId: tag.id,
+              });
             }
           });
-          wizardPathNames.push({
-            id: `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`,
-            type: tag.serviceAllocation.serviceType,
-            value: newPath,
-            tagId: tag.id,
+          this.setState({
+            ...this.state,
+            ["wizardPathNames"]: wizardPathNames,
           });
         }
       });
-      this.setState({
-        ...this.state,
-        ["wizardPathNames"]: wizardPathNames,
-      });
-    }
   }
   render() {
     return (
@@ -1206,4 +1301,4 @@ class AddTaggingWizard extends Component {
     );
   }
 }
-export default withParams(AddTaggingWizard); 
+export default withParams(AddTaggingWizard);
