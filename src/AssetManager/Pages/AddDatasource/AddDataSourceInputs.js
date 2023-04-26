@@ -125,7 +125,7 @@ class AddDatasourceInputs extends React.Component {
         <div className="add-data-source-page-container">
           <div className="data-source-section">
             <div className="source-content">
-              <div className="add-input-content">
+              <div className="add-input-content m-t-0">
                 <div className="search-box">
                   <form>
                     <div className="form-group search-control-group m-b-0">

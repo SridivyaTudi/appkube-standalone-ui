@@ -771,8 +771,8 @@ class AddNewView extends Component {
                 </div>
                 <div className="tabs-right-section">
                   <div className="manage-dashboard-search">
-                    <div className="row" style={{ alignItems: "center" }}>
-                      <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+                    <div className="row d-flex justify-content-center align-items-center">
+                      <div className="col-xl-3 col-lg-6 col-md-12 col-sm-12">
                         <FilterInput
                           labelClassName="gf-form--has-input-icon"
                           inputClassName="gf-form-input"
@@ -781,7 +781,7 @@ class AddNewView extends Component {
                           placeholder={"Search dashboards by name"}
                         />
                       </div>
-                      <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 tag-filter-container">
+                      <div className="col-xl-3 col-lg-6 col-md-12 col-sm-12 tag-filter-container">
                         <TagFilter
                           isClearable
                           tags={selectedTags}
@@ -789,10 +789,10 @@ class AddNewView extends Component {
                           onChange={this.onTagFilterChange}
                         />
                       </div>
-                      <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+                      <div className="col-xl-3 col-lg-6 col-md-12 col-sm-12">
                         {/* <Checkbox label="Filter by starred" onChange={this.onStarredFilterChange} value={isStarred} /> */}
                       </div>
-                      <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 sort-container">
+                      <div className="col-xl-3 col-lg-6 col-md-12 col-sm-12 sort-container">
                         <SortPicker
                           onChange={this.onSortChange}
                           value={sortValue}

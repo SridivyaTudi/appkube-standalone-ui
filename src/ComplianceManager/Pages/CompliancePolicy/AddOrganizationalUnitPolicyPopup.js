@@ -56,7 +56,7 @@ class AddOrganizationalUnitPolicyPopup extends React.Component {
           style={{
             height: "calc(75vh - 110px)",
             overflowY: "auto",
-            overflowX: "hidden",
+            overflowX: "auto",
           }}
         >
           <Wizard steps={this.steps} />
