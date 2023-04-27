@@ -236,7 +236,7 @@ class AddTaggingWizard extends Component {
             ...this.state,
             ["wizardPathNames"]: wizardPathNames,
           });
-          ToastMessage("Tag Added",'success');
+          ToastMessage("Tag Added", "success");
         }
       });
     } else {
@@ -250,7 +250,7 @@ class AddTaggingWizard extends Component {
             ...this.state,
             ["wizardPathNames"]: wizardPathNames,
           });
-          ToastMessage("Tag untagged",'success');
+          ToastMessage("Tag untagged", "success");
         }
       });
     }
