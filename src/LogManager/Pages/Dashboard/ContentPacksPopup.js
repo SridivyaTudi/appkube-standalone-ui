@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
-import { config } from "../../config";
+import config from "../../../config";
 import AlertMessage from "../../Components/AlertMessage";
 
 class ContentPacksPopup extends React.Component {

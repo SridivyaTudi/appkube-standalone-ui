@@ -12,7 +12,6 @@ class SlaCentral extends Component {
   }
 
   componentDidMount = () => {
-    console.log(Services);
     fetch(Services.slaCentral)
       .then((response) => response.json())
       .then((result) => {

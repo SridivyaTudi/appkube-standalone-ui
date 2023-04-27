@@ -1,6 +1,6 @@
 import React from "react";
-import { config } from "../../config";
-import { CommonService } from "../_common/common";
+import config from "../../../config";
+import { RestService } from "../../../Services/RestService";
 import CreateStreamPopup from "./CreateStreamPopup";
 import NewStreamRulePopup from "./NewStreamRulePopup";
 import SetOutputPopup from "./SetOutputParameter";
@@ -60,7 +60,7 @@ class Dashboard extends React.Component {
   }
 
   getIndexSets = async () => {
-    var requestOptions = await CommonService.requestOptionsForGetRequest();
+    var requestOptions = await RestService.requestOptionsForGetRequest();
     await fetch(config.GET_INDEX_SETS, requestOptions)
       .then((response) => response.text())
       .then((result) => {
@@ -76,7 +76,7 @@ class Dashboard extends React.Component {
   };
 
   getStreams = async () => {
-    var requestOptions = await CommonService.requestOptionsForGetRequest();
+    var requestOptions = await RestService.requestOptionsForGetRequest();
     await fetch(config.STREAM, requestOptions)
       .then((response) => response.text())
       .then((result) => {
@@ -92,7 +92,7 @@ class Dashboard extends React.Component {
   };
 
   getTcpInputStream = async () => {
-    var requestOptions = await CommonService.requestOptionsForGetRequest();
+    var requestOptions = await RestService.requestOptionsForGetRequest();
     await fetch(config.TCP_INPUT_STREAM, requestOptions)
       .then((response) => response.text())
       .then((result) => {

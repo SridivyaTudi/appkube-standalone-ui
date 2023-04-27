@@ -78,7 +78,7 @@ class EditAlertPopup extends React.Component {
       guid: guid,
       alertState: alertState,
     };
-    await RestService.updateData(config.UPDATE_ALERT, obj).then((response) => {
+    await RestService.postData(config.UPDATE_ALERT, obj).then((response) => {
       if (response.length > 0) {
         this.setState({
           severity: config.SEVERITY_SUCCESS,
