@@ -78,24 +78,25 @@ export class DiscoveredAssets extends Component {
     };
     // this.tableValue = ;
   }
-  async getAssets() {
-    const response = await fetch(
-      `http://34.199.12.114:5057/api/discovered-assets`
-    );
-    const tableData = await response.json();
-    let tableValue = tableData.map((asset) => {
-      return {
-        id: asset.id,
-        name: asset.elementId,
-        ruleType: asset.elementType,
-        message: asset.landingZone,
-        alertHandlers: asset.productEnclave,
-        landingZone: asset.landingZone,
-        tagStatus: asset.tagStatus,
-      };
-    });
-    // this.tableValue.data = tableValue
-    this.setState({ ...this.tableValue, ["data"]: tableValue });
+   getAssets() {
+    return fetch(
+      `http://34.199.12.114:6067/api/discovered-assets`
+    ).then((response)=>response.json()).then((res)=>{
+      if(res){
+       let tableValue =  res.map((asset) => {
+          return {
+            id: asset.id,
+            name: asset.elementId,
+            ruleType: asset.elementType,
+            message: asset.landingZone,
+            alertHandlers: asset.productEnclave,
+            landingZone: asset.landingZone,
+            tagStatus: asset.tagStatus,
+          };
+        });
+        this.setState({ ...this.tableValue, ["data"]: tableValue });
+      }
+    })
   }
   componentDidMount() {
     this.getAssets();

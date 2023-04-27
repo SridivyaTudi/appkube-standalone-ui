@@ -9,60 +9,117 @@ import { ToastMessage } from "../../../Toast/ToastMessage";
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
 }
+const resetChildNode = {
+  parent: [],
+  departments: ["parent"],
+  products: ["departments", "parent"],
+  deploymentEnvironments: ["departments", "parent", "products"],
+  modules: ["departments", "parent", "products", "deploymentEnvironments"],
+};
 class AddTaggingWizard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {
-        name: "Parent 1",
-        id: 1,
-        departments: [
-          {
-            id: "11",
-            name: "Department 1",
-            products: [
-              {
-                id: "111",
-                name: "Produt 111",
-                deploymentEnvironments: [
-                  {
-                    id: "1111",
-                    name: "deploymentEnvironments 11111",
-                    modules: [
-                      {
-                        id: "1111111",
-                        name: "modules 11111111",
-                        appServices: [
-                          {
-                            id: "1111111111",
-                            name: "appServices 1",
-                          },
-                          {
-                            id: "1111111111112",
-                            name: "appServices 11111111111112",
-                          },
-                        ],
-                        dataServices: [
-                          {
-                            id: "1111111111454545",
-                            name: "appServices 1",
-                          },
-                          {
-                            id: "11111111111145645454452",
-                            name: "appServices 111111111111124545645",
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
+      data: [
+        {
+          name: "Parent 1",
+          id: 1,
+          departments: [
+            {
+              id: "11",
+              name: "Department 1",
+              products: [
+                {
+                  id: "111",
+                  name: "Produt 111",
+                  deploymentEnvironments: [
+                    {
+                      id: "1111",
+                      name: "deploymentEnvironments 11111",
+                      modules: [
+                        {
+                          id: "1111111",
+                          name: "modules 11111111",
+                          appServices: [
+                            {
+                              id: "1111111111",
+                              name: "appServices 1",
+                            },
+                            {
+                              id: "1111111111112",
+                              name: "appServices 11111111111112",
+                            },
+                          ],
+                          dataServices: [
+                            {
+                              id: "1111111111454545",
+                              name: "appServices 1",
+                            },
+                            {
+                              id: "11111111111145645454452",
+                              name: "appServices 111111111111124545645",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Parent 2",
+          id: 2,
+          departments: [
+            {
+              id: "11",
+              name: "Department 1",
+              products: [
+                {
+                  id: "111",
+                  name: "Produt 111",
+                  deploymentEnvironments: [
+                    {
+                      id: "1111",
+                      name: "deploymentEnvironments 11111",
+                      modules: [
+                        {
+                          id: "1111111",
+                          name: "modules 11111111",
+                          appServices: [
+                            {
+                              id: "1111111111",
+                              name: "appServices 1",
+                            },
+                            {
+                              id: "1111111111112",
+                              name: "appServices 11111111111112",
+                            },
+                          ],
+                          dataServices: [
+                            {
+                              id: "1111111111454545",
+                              name: "appServices 1",
+                            },
+                            {
+                              id: "11111111111145645454452",
+                              name: "appServices 111111111111124545645",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
       toggleTree: {
-        parent: false,
+        parent: {},
         departments: {},
         products: {},
         deploymentEnvironments: {},
@@ -73,71 +130,95 @@ class AddTaggingWizard extends Component {
   }
   getDiscoverAssest(id) {
     return fetch(
-      `http://34.199.12.114:5057/api/organizations/search?landingZone=${id}`
+      `http://34.199.12.114:6067/api/organizations/search?landingZone=${id}`
     )
       .then((response) => response.json())
       .then((res) => {
         if (res["status"] != 404) {
-          this.setState({ ...this.state, ["data"]: res });
+          this.setState({ data: res });
         }
       });
   }
   componentDidMount() {
-    let getId = this.handleGetId();
-    // this.getDiscoverAssest(getId);
+    // this.getDiscoverAssest(this.handleGetLandingId());
   }
   handleToggleTree(type, id = 0, isChecked) {
     let { toggleTree } = this.state;
-    if (type != "parent") {
-      toggleTree[`${type}`][id] = !toggleTree[`${type}`][id];
-    }
+    toggleTree[`${type}`][id] = !toggleTree[`${type}`][id];
+
     this.setState({
-      ...this.state,
-      ["toggleTree"]: {
-        ...this.state.toggleTree,
-        ["parent"]:
-          type == "parent"
-            ? !this.state.toggleTree[`${type}`]
-            : this.state.toggleTree[`parent`],
-        ["departments"]:
-          type == "departments"
-            ? toggleTree[`${type}`]
-            : type == "parent"
-            ? isChecked
-              ? this.state.toggleTree[`departments`]
-              : {}
-            : this.state.toggleTree[`departments`],
-        ["products"]:
-          type == "products"
-            ? toggleTree[`${type}`]
-            : type == "departments" || type == "parent"
-            ? isChecked
-              ? this.state.toggleTree[`products`]
-              : {}
-            : this.state.toggleTree[`products`],
-        ["deploymentEnvironments"]:
-          type == "deploymentEnvironments"
-            ? toggleTree[`${type}`]
-            : type == "departments" || type == "products" || type == "parent"
-            ? isChecked
-              ? this.state.toggleTree[`deploymentEnvironments`]
-              : {}
-            : this.state.toggleTree[`deploymentEnvironments`],
-        ["modules"]:
-          type == "modules"
-            ? toggleTree[`${type}`]
-            : type == "departments" ||
-              type == "products" ||
-              type == "deploymentEnvironments" ||
-              type == "parent"
-            ? isChecked
-              ? this.state.toggleTree[`modules`]
-              : {}
-            : this.state.toggleTree[`modules`],
-      },
-      ["wizardPathNames"]:
-        type == "modules" ? this.state[`wizardPathNames`] : [],
+      toggleTree: this.setStateToggleTree(toggleTree, type, isChecked,id.toString().charAt(0)
+      ),
+      wizardPathNames: type == "modules" ? this.state.wizardPathNames : [],
     });
+    console.log(this.state);
+    // this.setState({
+    //   toggleTree: {
+    //     ...this.state.toggleTree,
+    //     parent:
+    //       type == "parent"
+    //         ? !this.state.toggleTree[`${type}`]
+    //         : this.state.toggleTree[`parent`],
+    //     departments:
+    //       type == "departments"
+    //         ? toggleTree[`${type}`]
+    //         : type == "parent"
+    //         ? isChecked
+    //           ? this.state.toggleTree[`departments`]
+    //           : {}
+    //         : this.state.toggleTree[`departments`],
+    //     products:
+    //       type == "products"
+    //         ? toggleTree[`${type}`]
+    //         : type == "departments" || type == "parent"
+    //         ? isChecked
+    //           ? this.state.toggleTree[`products`]
+    //           : {}
+    //         : this.state.toggleTree[`products`],
+    //     deploymentEnvironments:
+    //       type == "deploymentEnvironments"
+    //         ? toggleTree[`${type}`]
+    //         : type == "departments" || type == "products" || type == "parent"
+    //         ? isChecked
+    //           ? this.state.toggleTree[`deploymentEnvironments`]
+    //           : {}
+    //         : this.state.toggleTree[`deploymentEnvironments`],
+    //     modules:
+    //       type == "modules"
+    //         ? toggleTree[`${type}`]
+    //         : type == "departments" ||
+    //           type == "products" ||
+    //           type == "deploymentEnvironments" ||
+    //           type == "parent"
+    //         ? isChecked
+    //           ? this.state.toggleTree[`modules`]
+    //           : {}
+    //         : this.state.toggleTree[`modules`],
+    //   },
+    //   ["wizardPathNames"]:
+    //     type == "modules" ? this.state[`wizardPathNames`] : [],
+    // });
+  }
+  setStateToggleTree(treeData, customType, isChecked,parentId) {
+    let prepareTreeObj = {};
+    Object.keys(treeData).forEach((defaultType) => {
+      prepareTreeObj[defaultType] =
+        defaultType == customType
+          ? treeData[`${customType}`]
+          : resetChildNode[defaultType].indexOf(customType) >= 0
+          ? isChecked
+            ? this.state.toggleTree[`${defaultType}`]
+            : this.unmarkedTag(defaultType,parentId)
+          : this.state.toggleTree[`${defaultType}`];
+    });
+    return prepareTreeObj;
+  }
+  unmarkedTag(defaultType,parentId){
+    let prepareType = {}
+    Object.keys(this.state.toggleTree[`${defaultType}`]).forEach((key)=>{
+      prepareType[`${defaultType}`] = key.toString().charAt(parentId) ? false : this.state.toggleTree[`${defaultType}`][key]   
+    })
+    return prepareType
   }
   // handleToggleTree(type, id = 0, isChecked) {
   //   let { toggleTree } = this.state;
@@ -395,17 +476,18 @@ class AddTaggingWizard extends Component {
       });
   }
   renderDiscoverAssests() {
-    return Object.keys(this.state.data).length ? (
+    return this.state.data.length ? (
       this.renderParent("parent", this.state.data)
     ) : (
       <></>
     );
   }
   renderParent(type, data) {
-    return (
-      <tr>
-        <td>
-          {/* <div className="table-contant">
+    return data.map((parent, index) => {
+      return (
+        <tr>
+          <td>
+            {/* <div className="table-contant">
             <input
               type="checkbox"
               className="checkbox"
@@ -415,19 +497,24 @@ class AddTaggingWizard extends Component {
             />
             <span>{data.name}</span>
           </div> */}
-          {this.renderCommonHtml(type, data.name, 0)}
-          {this.isDepartMentListExist(data.departments) ? (
-            <table className="data-table inner">
-              {this.renderDepartment("departments", data.departments)}
-            </table>
-          ) : (
-            <></>
-          )}
-        </td>
-      </tr>
-    );
+            {this.renderCommonHtml(type, parent.name, parent.id)}
+            {this.isDepartMentListExist(parent.departments, parent.id) ? (
+              <table className="data-table inner">
+                {this.renderDepartment(
+                  "departments",
+                  parent.departments,
+                  parent.id
+                )}
+              </table>
+            ) : (
+              <></>
+            )}
+          </td>
+        </tr>
+      );
+    });
   }
-  renderDepartment(type, data) {
+  renderDepartment(type, data, ids) {
     return data.map((department, index) => {
       return (
         <tr key={index}>
@@ -456,11 +543,10 @@ class AddTaggingWizard extends Component {
             )}
             {this.isProductListExist(department.products, department.id) ? (
               <table className="data-table inner">
-                {this.renderProducts(
-                  "products",
-                  department.products,
-                  department.id
-                )}
+                {this.renderProducts("products", department.products, {
+                  department: department.id,
+                  parent: ids,
+                })}
               </table>
             ) : (
               <></>
@@ -470,7 +556,7 @@ class AddTaggingWizard extends Component {
       );
     });
   }
-  renderProducts(type, data, departmentId) {
+  renderProducts(type, data, ids) {
     return data.map((product, index) => {
       return (
         <tr key={index}>
@@ -498,17 +584,17 @@ class AddTaggingWizard extends Component {
             {this.renderCommonHtml(
               "products",
               product.name,
-              `${departmentId}_${product.id}`
+              `${ids.parent}_${ids.department}_${product.id}`
             )}
             {this.isDepolyMentListExist(
               product.deploymentEnvironments,
-              `${departmentId}_${product.id}`
+              `${ids.parent}_${ids.department}_${product.id}`
             ) ? (
               <table className="data-table inner">
                 {this.renderDeploymentEnvironments(
                   "deploymentEnvironments",
                   product.deploymentEnvironments,
-                  { department: departmentId, product: product.id },
+                  { ...ids, ...{ product: product.id } },
                   {
                     product: product.name,
                   }
@@ -550,20 +636,19 @@ class AddTaggingWizard extends Component {
             {this.renderCommonHtml(
               "deploymentEnvironments",
               deploymentEnvironment.name,
-              `${ids.department}_${ids.product}_${deploymentEnvironment.id}`
+              `${ids.parent}_${ids.department}_${ids.product}_${deploymentEnvironment.id}`
             )}
             {this.isModuleListExist(
               deploymentEnvironment.modules,
-              `${ids.department}_${ids.product}_${deploymentEnvironment.id}`
+              `${ids.parent}_${ids.department}_${ids.product}_${deploymentEnvironment.id}`
             ) ? (
               <table className="data-table inner">
                 {this.renderModule(
                   "modules",
                   deploymentEnvironment.modules,
                   {
-                    department: ids.department,
-                    product: ids.product,
-                    deploymentEnvironment: deploymentEnvironment.id,
+                    ...ids,
+                    ...{ deploymentEnvironment: deploymentEnvironment.id },
                   },
                   {
                     ...names,
@@ -618,7 +703,7 @@ class AddTaggingWizard extends Component {
             {this.renderCommonHtml(
               "modules",
               module.name,
-              `${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`,
+              `${ids.parent}_${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`,
               () => {
                 return this.handlemodule(
                   `landingZone=${this.handleGetLandingId()}&departmentId=${
@@ -633,7 +718,7 @@ class AddTaggingWizard extends Component {
             )}
             {this.state.toggleTree["modules"] &&
             this.state.toggleTree["modules"][
-              `${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`
+              `${ids.parent}_${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`
             ] &&
             module.appServices &&
             module.appServices.length ? (
@@ -642,10 +727,8 @@ class AddTaggingWizard extends Component {
                   "appService",
                   module.appServices,
                   {
-                    department: ids.department,
-                    product: ids.product,
-                    deploymentEnvironment: ids.deploymentEnvironment,
-                    module: module.id,
+                   ...ids,
+                    ...{module: module.id}
                   },
                   { ...names, ...{ module: module.name } }
                 )}
@@ -805,8 +888,13 @@ class AddTaggingWizard extends Component {
       ).length > 0
     );
   }
-  isDepartMentListExist(data) {
-    return this.state.toggleTree.parent && data && data.length;
+  isDepartMentListExist(data, id) {
+    return (
+      this.state.toggleTree.parent &&
+      this.state.toggleTree["parent"][id] &&
+      data &&
+      data.length
+    );
   }
   isProductListExist(data, id) {
     return (
