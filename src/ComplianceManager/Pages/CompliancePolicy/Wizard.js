@@ -63,7 +63,7 @@ class Wizard extends React.Component {
     const { currentStep } = this.state;
     const { steps } = this.props;
     return (
-      <div>
+      <div className="modal-inner-container">
         <div className="wizard-step-line-container">
           {this.createStepLine()}
         </div>

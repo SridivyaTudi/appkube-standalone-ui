@@ -553,30 +553,24 @@ class ProductWiseServicesSla extends React.Component {
                 <ul className="tabs">{this.displayEnvServices()}</ul>
                 <div className="common-container bottom-border-none">
                   <div className="row">
-                    <div
-                      className="col-lg-9 col-md-9 col-sm-12"
-                      style={{ marginBottom: "10px" }}
-                    >
-                      <div className="topology-heading">
+                    <div className="col-lg-8 col-md-8 col-sm-12">
+                      <div className="topology-heading m-b-1">
                         {isTopologyActive
                           ? "Topology view"
                           : "Service wise view"}
-                        <div
-                          style={{ marginLeft: "10px", cursor: "pointer" }}
-                          className="asset-white-button min-width-inherit"
-                          onClick={this.toggleView}
-                        >
+                        <div className="asset-white-button min-width-inherit m-l-1"
+                          onClick={this.toggleView}>
                           <img
                             src={images.Jobs}
                             alt=""
-                            style={{ maxWidth: "15px" }}
+                            style={{ maxWidth: "16px" }}
                           />
                         </div>
                       </div>
                     </div>
                     {isTopologyActive ? (
-                      <div className="col-lg-3 col-md-3 col-sm-12">
-                        <div className="search-box">
+                      <div className="col-lg-4 col-md-4 col-sm-12">
+                        <div className="search-box m-b-1">
                           <form>
                             <div className="form-group search-control-group m-b-0">
                               <input

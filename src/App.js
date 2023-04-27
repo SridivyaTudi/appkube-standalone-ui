@@ -4,6 +4,7 @@ import Header from "./Components/Header";
 import Breadcrumbs from "./Components/Breadcrumbs";
 import { CustomSideMenu } from "./Components/Header/CustomSideMenu";
 import { AllRoutes } from "./Routes/Routes";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -12,6 +13,20 @@ function App() {
       <BrowserRouter>
         <div className="main-view">
           {/* <Sidebar /> */}
+          <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+        {/* Same as */}
+        <ToastContainer />
           <CustomSideMenu />
           <Header />
           <div className="scroll-canvas--dashboard monitor-main-body">

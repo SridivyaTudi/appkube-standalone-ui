@@ -9,6 +9,7 @@
         padding: 20px;
         border-bottom: none;
         margin-bottom: 15px;
+        overflow: auto;
 
     }
 
@@ -208,7 +209,6 @@
                 display: block;
                 padding-top: 0px;
                 padding-bottom: 0px;
-
                 .heading {
                     display: block;
                     padding-top: 3px;
@@ -466,6 +466,22 @@
             }
         }
     }
+}
+@media (max-width: 1280px){
+    .services-sla-container{
+        .services-tabs{
+            .services-contents{
+                .environment-services{
+                    .topology-view-container{
+                        .topology-view-contains {
+                            width: 930px;
+                            overflow-x: auto;
+                        }
+                    }
+                }
+            }
+        }
+    }     
 }
 @media (max-width: 991px) {
     .services-sla-container{
