@@ -2,9 +2,9 @@ import { escape } from "lodash";
 import { object } from "prop-types";
 import React, { Component } from "react";
 import { Collapse } from "reactstrap";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams } from "react-router-dom";
+import { ToastMessage } from "../../../Toast/ToastMessage";
 
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
@@ -139,7 +139,6 @@ class AddTaggingWizard extends Component {
       ["wizardPathNames"]:
         type == "modules" ? this.state[`wizardPathNames`] : [],
     });
-    console.log(this.state);
   }
   // handleToggleTree(type, id = 0, isChecked) {
   //   let { toggleTree } = this.state;
@@ -237,7 +236,7 @@ class AddTaggingWizard extends Component {
             ...this.state,
             ["wizardPathNames"]: wizardPathNames,
           });
-          this.toastMessage(1, "Tag Added");
+          ToastMessage("Tag Added",'success');
         }
       });
     } else {
@@ -251,7 +250,7 @@ class AddTaggingWizard extends Component {
             ...this.state,
             ["wizardPathNames"]: wizardPathNames,
           });
-          this.toastMessage(1, "Tag untagged.");
+          ToastMessage("Tag untagged",'success');
         }
       });
     }
@@ -355,31 +354,6 @@ class AddTaggingWizard extends Component {
   //     }
   //   });
   // }
-  toastMessage(type, message) {
-    if (type) {
-      toast.success(message, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    } else {
-      toast.error(message, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    }
-  }
   handlemodule(searchString) {
     let { wizardPathNames } = this.state;
     let pathKeys = ["PRODUCT", "ENV", "MODULE", "SERVICE", "SERVICE_TYPE"];
@@ -564,7 +538,10 @@ class AddTaggingWizard extends Component {
               />
               <span>{deploymentEnvironment.name}</span>
             </div>
-            {this.isModuleListExist(deploymentEnvironment.modules, `${ids.department}_${ids.product}_${deploymentEnvironment.id}`) ? (
+            {this.isModuleListExist(
+              deploymentEnvironment.modules,
+              `${ids.department}_${ids.product}_${deploymentEnvironment.id}`
+            ) ? (
               <table className="data-table inner">
                 {this.renderModule(
                   "modules",
@@ -772,37 +749,31 @@ class AddTaggingWizard extends Component {
     );
   }
   isDepartMentListExist(data) {
-    return (
-      this.state.toggleTree.parent &&
-      data.departments &&
-      data.departments.length
-    );
+    return this.state.toggleTree.parent && data && data.length;
   }
   isProductListExist(data, id) {
     return (
       this.state.toggleTree["departments"] &&
       this.state.toggleTree["departments"][id] &&
-      data.products &&
-      data.products.length
+      data &&
+      data.length
     );
   }
   isDepolyMentListExist(data, id) {
     return (
       this.state.toggleTree["products"] &&
       this.state.toggleTree["products"][`${id}`] &&
-      data.deploymentEnvironments &&
-      data.deploymentEnvironments.length
+      data &&
+      data.length
     );
   }
-  isModuleListExist(data, id){
+  isModuleListExist(data, id) {
     return (
       this.state.toggleTree["deploymentEnvironments"] &&
-            this.state.toggleTree["deploymentEnvironments"][
-              id
-            ] &&
-            data.modules &&
-            data.modules.length
-    )
+      this.state.toggleTree["deploymentEnvironments"][id] &&
+      data &&
+      data.length
+    );
   }
   render() {
     return (

@@ -3,8 +3,8 @@ import awsLogo from "../../img/aws.png";
 import microsoftAzureLogo from "../../img/microsoftazure.png";
 import gcpLogo from "../../img/google-cloud.png";
 import Table from "./Components/Table";
-import { NavLink  } from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
+import {ToastMessage} from "../../../Toast/ToastMessage";
 export class DiscoveredAssets extends Component {
   constructor(props) {
     super(props);
@@ -31,11 +31,23 @@ export class DiscoveredAssets extends Component {
         {
           label: "Tag Status",
           key: "action",
-          renderCallback: (key,value) => {
+          renderCallback: (key, value) => {
             return (
               <td>
-                <div className={` ${value.tagStatus && value.tagStatus =='Tagged' ? 'tagged-box' : 'tagged-red-box'} d-inline-block`}>
-                  <i class={`${value.tagStatus && value.tagStatus =='Tagged' ? 'far fa-check' : 'fa fa-times'}  `}></i>
+                <div
+                  className={` ${
+                    value.tagStatus && value.tagStatus == "Tagged"
+                      ? "tagged-box"
+                      : "tagged-red-box"
+                  } d-inline-block`}
+                >
+                  <i
+                    class={`${
+                      value.tagStatus && value.tagStatus == "Tagged"
+                        ? "far fa-check"
+                        : "fa fa-times"
+                    }  `}
+                  ></i>
                   {/* <i class="fa fa-times" aria-hidden="true"></i> */}
                 </div>
                 Tagged
@@ -50,11 +62,11 @@ export class DiscoveredAssets extends Component {
             return (
               <td className="text-center">
                 <button className="action-btn">
-                   <NavLink
-                        to={`/assetmanager/pages/addTaggingWizard/${index.id}/${index.landingZone}`}
-                      > 
+                  <NavLink
+                    to={`/assetmanager/pages/addTaggingWizard/${index.id}/${index.landingZone}`}
+                  >
                     <i class="far fa-plus"></i>
-                    </NavLink>
+                  </NavLink>
                   {/* </a> */}
                 </button>
               </td>
@@ -62,33 +74,33 @@ export class DiscoveredAssets extends Component {
           },
         },
       ],
-      data: [ ],
+      data: [],
     };
     // this.tableValue = ;
   }
-  async getAssets(){
+  async getAssets() {
     const response = await fetch(
       `http://34.199.12.114:5057/api/discovered-assets`
     );
     const tableData = await response.json();
-    let tableValue = tableData.map((asset)=>{
-        return {
-          id: asset.id,
-          name: asset.elementId,
-          ruleType: asset.elementType,
-          message: asset.landingZone,
-          alertHandlers:asset.productEnclave,
-          landingZone:asset.landingZone,
-          tagStatus:asset.tagStatus
-        }
+    let tableValue = tableData.map((asset) => {
+      return {
+        id: asset.id,
+        name: asset.elementId,
+        ruleType: asset.elementType,
+        message: asset.landingZone,
+        alertHandlers: asset.productEnclave,
+        landingZone: asset.landingZone,
+        tagStatus: asset.tagStatus,
+      };
     });
     // this.tableValue.data = tableValue
-    this.setState({...this.tableValue,['data']:tableValue});
+    this.setState({ ...this.tableValue, ["data"]: tableValue });
   }
-    componentDidMount() {
-      this.getAssets()
-    }
-  
+  componentDidMount() {
+    this.getAssets();
+  }
+
   isLightTheme() {
     const w = window;
     if (w.grafanaBootData && w.grafanaBootData.user) {
