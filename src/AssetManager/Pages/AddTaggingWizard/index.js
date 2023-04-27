@@ -91,7 +91,6 @@ class AddTaggingWizard extends Component {
     if (type != "parent") {
       toggleTree[`${type}`][id] = !toggleTree[`${type}`][id];
     }
-
     this.setState({
       ...this.state,
       ["toggleTree"]: {
@@ -406,7 +405,7 @@ class AddTaggingWizard extends Component {
     return (
       <tr>
         <td>
-          <div className="table-contant">
+          {/* <div className="table-contant">
             <input
               type="checkbox"
               className="checkbox"
@@ -415,7 +414,8 @@ class AddTaggingWizard extends Component {
               }}
             />
             <span>{data.name}</span>
-          </div>
+          </div> */}
+          {this.renderCommonHtml(type, data.name, 0)}
           {this.isDepartMentListExist(data.departments) ? (
             <table className="data-table inner">
               {this.renderDepartment("departments", data.departments)}
@@ -432,7 +432,7 @@ class AddTaggingWizard extends Component {
       return (
         <tr key={index}>
           <td>
-            <div className="table-contant">
+            {/* <div className="table-contant">
               <input
                 type="checkbox"
                 className="checkbox"
@@ -443,13 +443,17 @@ class AddTaggingWizard extends Component {
                     e.target.checked
                   );
                 }}
-                checked={
-                  this.state.toggleTree["departments"] &&
+                checked={this.state.toggleTree["departments"] &&
                   this.state.toggleTree["departments"][department.id]
                 }
               />
               <span>{department.name}</span>
-            </div>
+            </div> */}
+            {this.renderCommonHtml(
+              "departments",
+              department.name,
+              department.id
+            )}
             {this.isProductListExist(department.products, department.id) ? (
               <table className="data-table inner">
                 {this.renderProducts(
@@ -471,7 +475,7 @@ class AddTaggingWizard extends Component {
       return (
         <tr key={index}>
           <td>
-            <div className="table-contant">
+            {/* <div className="table-contant">
               <input
                 type="checkbox"
                 className="checkbox"
@@ -490,7 +494,12 @@ class AddTaggingWizard extends Component {
                 }
               />
               <span>{product.name}</span>
-            </div>
+            </div> */}
+            {this.renderCommonHtml(
+              "products",
+              product.name,
+              `${departmentId}_${product.id}`
+            )}
             {this.isDepolyMentListExist(
               product.deploymentEnvironments,
               `${departmentId}_${product.id}`
@@ -518,7 +527,7 @@ class AddTaggingWizard extends Component {
       return (
         <tr key={index}>
           <td>
-            <div className="table-contant">
+            {/* <div className="table-contant">
               <input
                 type="checkbox"
                 className="checkbox"
@@ -537,7 +546,12 @@ class AddTaggingWizard extends Component {
                 }
               />
               <span>{deploymentEnvironment.name}</span>
-            </div>
+            </div> */}
+            {this.renderCommonHtml(
+              "deploymentEnvironments",
+              deploymentEnvironment.name,
+              `${ids.department}_${ids.product}_${deploymentEnvironment.id}`
+            )}
             {this.isModuleListExist(
               deploymentEnvironment.modules,
               `${ids.department}_${ids.product}_${deploymentEnvironment.id}`
@@ -570,7 +584,7 @@ class AddTaggingWizard extends Component {
       return (
         <tr key={index}>
           <td>
-            <div className="table-contant">
+            {/* <div className="table-contant">
               <input
                 type="checkbox"
                 className="checkbox"
@@ -600,7 +614,23 @@ class AddTaggingWizard extends Component {
                 }
               />
               <span>{module.name}</span>
-            </div>
+            </div> */}
+            {this.renderCommonHtml(
+              "modules",
+              module.name,
+              `${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`,
+              () => {
+                return this.handlemodule(
+                  `landingZone=${this.handleGetLandingId()}&departmentId=${
+                    ids.department
+                  }&productId=${ids.product}&deploymentEnvironmentId=${
+                    ids.deploymentEnvironment
+                  }&moduleId=${
+                    module.id
+                  }&discoveredAssetId=${this.handleGetId()}`
+                );
+              }
+            )}
             {this.state.toggleTree["modules"] &&
             this.state.toggleTree["modules"][
               `${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`
@@ -655,7 +685,7 @@ class AddTaggingWizard extends Component {
       return (
         <tr key={index}>
           <td>
-            <div className="table-contant">
+            {/* <div className="table-contant">
               <input
                 type="checkbox"
                 className="checkbox"
@@ -673,7 +703,18 @@ class AddTaggingWizard extends Component {
                 checked={this.isServiceTagged(ids, "APP")}
               />
               <span>{appService.name}</span>
-            </div>
+            </div> */}
+            {this.renderCommonHtml("APP", appService.name, ids, (isChecked) => {
+              return this.handlePath(
+                this.getHandlePathFirstArgs(
+                  { ...ids, ...{ appService: appService.id } },
+                  { ...names, ...{ appService: appService.name } },
+                  "APP"
+                ),
+                isChecked,
+                appService.id
+              );
+            })}
           </td>
         </tr>
       );
@@ -684,7 +725,7 @@ class AddTaggingWizard extends Component {
       return (
         <tr key={index}>
           <td>
-            <div className="table-contant">
+            {/* <div className="table-contant">
               <input
                 type="checkbox"
                 className="checkbox"
@@ -702,7 +743,23 @@ class AddTaggingWizard extends Component {
                 checked={this.isServiceTagged(ids, "DATA")}
               />
               <span>{dataService.name}</span>
-            </div>
+            </div> */}
+            {this.renderCommonHtml(
+              "DATA",
+              dataService.name,
+              ids,
+              (isChecked) => {
+                return this.handlePath(
+                  this.getHandlePathFirstArgs(
+                    { ...ids, ...{ dataService: dataService.id } },
+                    { ...names, ...{ dataService: dataService.name } },
+                    "DATA"
+                  ),
+                  isChecked,
+                  dataService.id
+                );
+              }
+            )}
           </td>
         </tr>
       );
@@ -773,6 +830,37 @@ class AddTaggingWizard extends Component {
       this.state.toggleTree["deploymentEnvironments"][id] &&
       data &&
       data.length
+    );
+  }
+  renderCommonHtml(type, name, id, callBackFunction) {
+    return (
+      <div className="table-contant">
+        <input
+          type="checkbox"
+          className="checkbox"
+          onChange={(e) => {
+            if (type == "APP" || type == "DATA") {
+              callBackFunction(e.target.checked);
+            } else {
+              this.handleToggleTree(type, id, e.target.checked);
+              if (type == "modules" && e.target.checked) {
+                callBackFunction();
+              }
+            }
+          }}
+          checked={
+            type == "APP" || type == "DATA"
+              ? this.isServiceTagged(id, type)
+              : this.renderIsChecked(type, id)
+          }
+        />
+        <span>{name}</span>
+      </div>
+    );
+  }
+  renderIsChecked(type, id) {
+    return (
+      this.state.toggleTree[`${type}`] && this.state.toggleTree[`${type}`][id]
     );
   }
   render() {

@@ -4,7 +4,7 @@ import microsoftAzureLogo from "../../img/microsoftazure.png";
 import gcpLogo from "../../img/google-cloud.png";
 import Table from "./Components/Table";
 import { NavLink } from "react-router-dom";
-import {ToastMessage} from "../../../Toast/ToastMessage";
+import { ToastMessage } from "../../../Toast/ToastMessage";
 export class DiscoveredAssets extends Component {
   constructor(props) {
     super(props);
@@ -118,12 +118,16 @@ export class DiscoveredAssets extends Component {
               <div className="discovered-edit-logos">
                 <ul>
                   <li>
-                    <a className="active">
-                      <span>
-                        <img src={awsLogo} alt="" />
-                      </span>
-                      <p>AWS</p>
-                    </a>
+                    <NavLink
+                      to={`/assetmanager/pages/addTaggingWizard/11/1234545`}
+                    >
+                      <a className="active">
+                        <span>
+                          <img src={awsLogo} alt="" />
+                        </span>
+                        <p>AWS</p>
+                      </a>
+                    </NavLink>
                   </li>
                   <li>
                     <a>
