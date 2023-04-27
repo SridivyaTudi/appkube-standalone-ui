@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { config } from "../../config";
-import { RestService } from "../_service/RestService";
+import config from "../../../config";
+import { RestService } from "../../../Services/RestService";
 import { Link } from "react-router-dom";
 import { UncontrolledPopover, PopoverBody } from "reactstrap";
 import EditAlertPopup from "../AllAlerts/EditAlertPopup";
@@ -388,7 +388,7 @@ class SearchAlert extends Component {
   };
 
   async callDeleteApi(url) {
-    await RestService.deleteObject(url).then((response) => {
+    await RestService.deleteData(url).then((response) => {
       console.log("Delete alert response: ", response);
     });
     this.setState({

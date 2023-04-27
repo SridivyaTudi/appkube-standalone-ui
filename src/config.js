@@ -1,15 +1,13 @@
-//const ALERT_URL = "alert.service.com";
-//const SEARCH_URL = "search.service.com";
-
 const searchSrvUrl = `http://34.199.12.114:8092`;
 const alertSrvUrl = `http://34.199.12.114:5055`;
 const ticketSrvUrl = `http://34.199.12.114:7100/api`;
-// const searchSrvUrl = `http://localhost:8092`;
-// const alertSrvUrl = `http://localhost:5055`;
-// const ticketSrvUrl = `http://localhost:7100/api`;
 
-export const config = {
-  basePath: '/alertmanager/page',
+let config = {
+  baseURL: "http://34.199.12.114:5057/api",
+  alertManagerURL: "http://34.199.12.114:8092",
+
+  /* ALERTMANAGER SERVICES  */
+  alertManagerBasePath: "/alertmanager/page",
   GET_ALL_ALERT_FROM_ELASTIC: `${alertSrvUrl}/api/listAllAlertFromElastic`,
   GET_ALL_ALERT_FROM_DB: `${alertSrvUrl}/api/listAlert`,
   UPDATE_ALERT: `${alertSrvUrl}/api/updateAlert`,
@@ -26,10 +24,13 @@ export const config = {
   GET_TEAM_MATRICS_DATA_URL: `${ticketSrvUrl}/getTeamMatricsData`,
   GET_ALERT_ACTIVITIES: `${alertSrvUrl}/api/getDataFromAlertActivity`,
 
-  PARENT_NAME: 'alertmanager',
+  ALERT_MANAGER_PARENT_NAME: "alertmanager",
 
-  SEVERITY_ERROR: 'error',
-  SEVERITY_SUCCESS: 'success',
-  SERVER_ERROR_MESSAGE: 'Operation failed. Please check service logs for details',
-  UPDATE_ALERT_SUCCESS_MESSAGE: 'Alert updated successfully',
+  SEVERITY_ERROR: "error",
+  SEVERITY_SUCCESS: "success",
+  SERVER_ERROR_MESSAGE:
+    "Operation failed. Please check service logs for details",
+  UPDATE_ALERT_SUCCESS_MESSAGE: "Alert updated successfully",
 };
+
+export default config;

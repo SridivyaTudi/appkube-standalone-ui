@@ -7,10 +7,10 @@ import {
   UncontrolledPopover,
   PopoverBody,
 } from "reactstrap";
-import { config } from "../../config";
+import config from "../../../config";
 import PopupContent from "./PopupContent";
 import EditAlertPopup from "./EditAlertPopup";
-import { RestService } from "../_service/RestService";
+import { RestService } from "../../../Services/RestService";
 import AlertMessage from "../../Components/AlertMessage";
 import ConfirmDialog from "../../Components/ConfirmDialog";
 import Table from "./../../Components/Table";
@@ -351,14 +351,16 @@ class AllAlerts extends React.Component {
   }
 
   fetchData = () => {
-    RestService.getData(config.GET_ALL_ALERT_FROM_ELASTIC, null, null).then(
-      (response) => {
-        console.log("alert data : ", response);
-        this.setState({
-          alertData: response,
-        });
-      }
-    );
+    RestService.getData(
+      config.GET_ALL_ALERT_FROM_ELASTIC,
+      null,
+      null
+    ).then((response) => {
+      console.log("alert data : ", response);
+      this.setState({
+        alertData: response,
+      });
+    });
   };
   toggle = () => {
     this.setState({
@@ -556,7 +558,7 @@ class AllAlerts extends React.Component {
 
   handleConfirmDelete = (objectType, object) => {
     let url = config.DELETE_ALERT + `/` + object.guid;
-    RestService.deleteObject(url).then((response) => {
+    RestService.deleteData(url).then((response) => {
       try {
         this.setState({
           alertData: response,
@@ -579,7 +581,7 @@ class AllAlerts extends React.Component {
 
   async callDeleteApi(url) {
     let res;
-    await RestService.deleteObject(url).then((response) => {
+    await RestService.deleteData(url).then((response) => {
       res = response;
     });
     return res;

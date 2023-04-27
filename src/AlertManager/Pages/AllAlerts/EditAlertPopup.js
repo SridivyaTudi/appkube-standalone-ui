@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
-import { RestService } from "../_service/RestService";
-import { config } from "../../config";
+import { RestService } from "../../../Services/RestService";
+import config from "../../../config";
 import AlertMessage from "../../Components/AlertMessage";
 
 class EditAlertPopup extends React.Component {
@@ -78,9 +78,7 @@ class EditAlertPopup extends React.Component {
       guid: guid,
       alertState: alertState,
     };
-    console.log("Alert being update : ", obj);
-    await RestService.add(config.UPDATE_ALERT, obj).then((response) => {
-      console.log("update alert response: ", response);
+    await RestService.updateData(config.UPDATE_ALERT, obj).then((response) => {
       if (response.length > 0) {
         this.setState({
           severity: config.SEVERITY_SUCCESS,

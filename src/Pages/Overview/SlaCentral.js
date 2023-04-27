@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
+import Services from "../../Services";
 
 class SlaCentral extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class SlaCentral extends Component {
   }
 
   componentDidMount = () => {
-    fetch("http://34.199.12.114:5057/api/analytics/sla-central")
+    console.log(Services);
+    fetch(Services.slaCentral)
       .then((response) => response.json())
       .then((result) => {
         this.setState({ slaData: result });

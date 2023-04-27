@@ -1,8 +1,8 @@
 import React from "react";
-import { config } from "../../config";
+import config from "../../../config";
 import StartECPopup from "./StartECPopup";
 import InstancePopup from "./InstancePopup";
-import { RestService } from "../_service/RestService";
+import { RestService } from "../../../Services/RestService";
 import Table from "../../Components/Table";
 import Rbac from "../../Components/Rbac";
 import UnimplementedFeaturePopup from "../../Components/UnimplementedFeaturePopup";

@@ -5,6 +5,7 @@ import CurrentAvrageWaitTimeChart from "./CurrentAvrageWaitTimeChart";
 import AlertVolumeByStatusChart from "./AlertVolumeByStatusChart";
 import AlertVolumeChart from "./AlertVolumeChart";
 import UnimplementedFeaturePopup from "../../Components/UnimplementedFeaturePopup";
+import Services from "../../../Services";
 
 class MonitorAlerts extends React.Component {
   constructor(props) {
@@ -83,9 +84,7 @@ class MonitorAlerts extends React.Component {
   }
 
   fetchAvgRespTimeData = () => {
-    fetch(
-      `http://34.199.12.114:5055/api/getAvgResponseTimeGraphDataFromDb`
-    ).then((response) => {
+    fetch(Services.getAvgResponseTimeGraphDataFromDb).then((response) => {
       this.setState({
         avgRespTimeData: response,
         dailyAvgRespTime: response.lineDataSetList[0],
@@ -95,15 +94,13 @@ class MonitorAlerts extends React.Component {
   };
 
   fetchAvgWaitTimeData = () => {
-    fetch(`http://34.199.12.114:5055/api/getWaitTimeGraphDataFromDb`).then(
-      (response) => {
-        this.setState({
-          avgWaitTimeData: response,
-          dailyAvgWaitTime: response.lineDataSetList[0],
-        });
-        console.log("Avg Resp Time Data :::::: ", response);
-      }
-    );
+    fetch(Services.getWaitTimeGraphDataFromDb).then((response) => {
+      this.setState({
+        avgWaitTimeData: response,
+        dailyAvgWaitTime: response.lineDataSetList[0],
+      });
+      console.log("Avg Resp Time Data :::::: ", response);
+    });
   };
 
   createOptionForAvgRespTime = () => {
@@ -143,7 +140,7 @@ class MonitorAlerts extends React.Component {
   };
 
   fetchDatatopAlertToday = () => {
-    fetch(`http://34.199.12.114:5055/api/topAlertToday`).then((response) => {
+    fetch(Services.topAlertToday).then((response) => {
       this.setState({
         topAlertsTodayData: response,
       });
@@ -152,20 +149,16 @@ class MonitorAlerts extends React.Component {
   };
 
   fetchTeamMatricsData = () => {
-    fetch(`http://34.199.12.114:7100/api/getTeamMatricsData`).then(
-      (response) => {
-        this.setState({
-          teamMetricsData: response,
-        });
-        console.log("Team Matrics data :::::: ", response);
-      }
-    );
+    fetch(Services.getTeamMatricsData).then((response) => {
+      this.setState({
+        teamMetricsData: response,
+      });
+      console.log("Team Matrics data :::::: ", response);
+    });
   };
 
   fetchData = () => {
-    fetch(
-      "http://34.199.12.114:8092/search/totalRecords?type=alert&index=alert"
-    ).then((response) => {
+    fetch(Services.totalRecords).then((response) => {
       this.setState({
         totalAlerts: response,
       });
@@ -200,7 +193,8 @@ class MonitorAlerts extends React.Component {
       <div className="monitor-alerts-container">
         <div className="alert-page-container">
           <div className="common-container">
-            <a type="button"
+            <a
+              type="button"
               className="asset-blue-button"
               onClick={() => this.onClickUnImplementedFeature("")}
             >
@@ -216,7 +210,13 @@ class MonitorAlerts extends React.Component {
               </Link>
             </div>
             <div className="alert-data-block col-lg-3 col-md-6 col-sm-12">
-              <a onClick={() => this.onClickUnImplementedFeature("/alertmanager/pages/monitor-alerts/rules")}>
+              <a
+                onClick={() =>
+                  this.onClickUnImplementedFeature(
+                    "/alertmanager/pages/monitor-alerts/rules"
+                  )
+                }
+              >
                 <div className="alert-data-label">Total alert rules</div>
                 <div className="alert-data">0</div>
                 <div className="alert-data-meta">Enabled 0</div>
