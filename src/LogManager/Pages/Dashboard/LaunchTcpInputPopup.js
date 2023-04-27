@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
-import { config } from "../../config";
-import { CommonService } from "../_common/common";
+import config from "../../../config";
+import { RestService } from "../../../Services/RestService";
 import AlertMessage from "./../../Components/AlertMessage";
 let nodeIdMap = new Map();
 
@@ -43,7 +43,7 @@ class LaunchTcpInputPopup extends React.Component {
   }
 
   getAllNodesInCluster = async () => {
-    var requestOptions = await CommonService.requestOptionsForGetRequest();
+    var requestOptions = await RestService.requestOptionsForGetRequest();
     await fetch(config.GET_ALL_NODES_IN_CLUSTER, requestOptions)
       .then((response) => response.text())
       .then((result) => {
@@ -154,7 +154,7 @@ class LaunchTcpInputPopup extends React.Component {
       };
       var raw = JSON.stringify(data);
 
-      var requestOptions = CommonService.requestOptionsForPostRequest(raw);
+      var requestOptions = RestService.requestOptionsForPostRequest(raw);
       fetch(config.TCP_INPUT_STREAM, requestOptions)
         .then((response) => response.text())
         .then((result) => {

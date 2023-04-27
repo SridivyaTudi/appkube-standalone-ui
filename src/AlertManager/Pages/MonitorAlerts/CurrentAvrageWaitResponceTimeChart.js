@@ -11,6 +11,8 @@ import {
   LineElement,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import Services from "../../../Services";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -84,9 +86,7 @@ class CurrentAvrageWaitResponceTimeChart extends React.Component {
   }
 
   fetchData = () => {
-    fetch(
-      `http://34.199.12.114:5055/api/getAvgResponseTimeGraphDataFromDb`
-    ).then((response) => {
+    fetch(Services.getAvgResponseTimeGraphDataFromDb).then((response) => {
       this.setState({
         datasets: [
           {

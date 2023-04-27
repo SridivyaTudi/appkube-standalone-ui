@@ -1,7 +1,7 @@
 import React from "react";
 import QryUtils from "./QryUtils";
 import Utils from "../../../utils";
-import { config } from "../../../config";
+import config from "../../../../config";
 import "./QueryPanel.css";
 
 class QueryPanel extends React.Component {

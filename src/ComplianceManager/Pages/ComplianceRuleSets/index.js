@@ -5,7 +5,7 @@ import NewPolicyPopup from "./NewPolicyPopup";
 import AssessmentPopup from "./AssessmentPopup";
 import CreateRemediationPopup from "./CreateRemediationPopup";
 import CreateExclusionPopup from "./CreateExclusionPopup";
-import { config } from "../../config";
+import config from "../../../config";
 import Utils from "../../utils";
 
 class ComplianceRulesets extends React.Component {

@@ -11,8 +11,7 @@ import {
   LineElement,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { RestService } from "../_service/RestService";
-import { config } from "../../config";
+import Services from "../../../Services";
 
 ChartJS.register(
   CategoryScale,
@@ -101,32 +100,30 @@ class AlertVolumeChart extends React.Component {
   }
 
   fetchData = () => {
-    fetch(`http://34.199.12.114:5055/api/getAlertVolumeData`).then(
-      (response) => {
-        this.setState({
-          datasets: [
-            {
-              label: "New",
-              lineTension: 0.1,
-              fill: false,
-              borderColor: "rgba(252, 203, 80, 1)",
-              data: response.newAlertList,
-            },
-            {
-              label: "Resolved",
-              lineTension: 0.1,
-              fill: false,
-              borderColor: "rgba(73, 183, 234, 1)",
-              data: response.closedAlertList,
-            },
-          ],
-          labels: response.daysList,
-        });
-        console.log("Total alert data :::::: ", response);
-      }
-    );
+    fetch(Services.getAlertVolumeData).then((response) => {
+      this.setState({
+        datasets: [
+          {
+            label: "New",
+            lineTension: 0.1,
+            fill: false,
+            borderColor: "rgba(252, 203, 80, 1)",
+            data: response.newAlertList,
+          },
+          {
+            label: "Resolved",
+            lineTension: 0.1,
+            fill: false,
+            borderColor: "rgba(73, 183, 234, 1)",
+            data: response.closedAlertList,
+          },
+        ],
+        labels: response.daysList,
+      });
+      console.log("Total alert data :::::: ", response);
+    });
   };
-  
+
   createLegend = () => {
     const text = [];
     const { legends } = this.state;
