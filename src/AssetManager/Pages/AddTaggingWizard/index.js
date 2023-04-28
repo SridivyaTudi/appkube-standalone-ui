@@ -230,7 +230,7 @@ class AddTaggingWizard extends Component {
         <tr>
           <td>
             {this.renderCommonHtml(type, parent.name, parent.id)}
-            {this.isDepartMentListExist(parent.departments, parent.id) ? (
+            {this.isOtherListExist(parent.departments, parent.id, type) ? (
               <table className="data-table inner">
                 {this.renderDepartment("departments", parent.departments, {
                   parent: parent.id,
@@ -254,9 +254,10 @@ class AddTaggingWizard extends Component {
               department.name,
               `${ids.parent}_${department.id}`
             )}
-            {this.isProductListExist(
+            {this.isOtherListExist(
               department.products,
-              `${ids.parent}_${department.id}`
+              `${ids.parent}_${department.id}`,
+              type
             ) ? (
               <table className="data-table inner">
                 {this.renderProducts("products", department.products, {
@@ -282,9 +283,10 @@ class AddTaggingWizard extends Component {
               product.name,
               `${ids.parent}_${ids.department}_${product.id}`
             )}
-            {this.isDepolyMentListExist(
+            {this.isOtherListExist(
               product.deploymentEnvironments,
-              `${ids.parent}_${ids.department}_${product.id}`
+              `${ids.parent}_${ids.department}_${product.id}`,
+              type
             ) ? (
               <table className="data-table inner">
                 {this.renderDeploymentEnvironments(
@@ -314,9 +316,10 @@ class AddTaggingWizard extends Component {
               deploymentEnvironment.name,
               `${ids.parent}_${ids.department}_${ids.product}_${deploymentEnvironment.id}`
             )}
-            {this.isModuleListExist(
+            {this.isOtherListExist(
               deploymentEnvironment.modules,
-              `${ids.parent}_${ids.department}_${ids.product}_${deploymentEnvironment.id}`
+              `${ids.parent}_${ids.department}_${ids.product}_${deploymentEnvironment.id}`,
+              type
             ) ? (
               <table className="data-table inner">
                 {this.renderModule(
@@ -361,12 +364,11 @@ class AddTaggingWizard extends Component {
                 );
               }
             )}
-            {this.state.toggleTree["modules"] &&
-            this.state.toggleTree["modules"][
-              `${ids.parent}_${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`
-            ] &&
-            module.appServices &&
-            module.appServices.length ? (
+            {this.isOtherListExist(
+              module.appServices,
+              `${ids.parent}_${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`,
+              type
+            ) ? (
               <table className="data-table inner">
                 {this.renderAppServices(
                   "appService",
@@ -381,12 +383,11 @@ class AddTaggingWizard extends Component {
             ) : (
               <></>
             )}
-            {this.state.toggleTree["modules"] &&
-            this.state.toggleTree["modules"][
-              `${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`
-            ] &&
-            module.dataServices &&
-            module.dataServices.length ? (
+            {this.isOtherListExist(
+              module.dataServices,
+              `${ids.parent}_${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`,
+              type
+            ) ? (
               <table className="data-table inner">
                 {this.renderDataServices(
                   "dataService",
@@ -495,34 +496,10 @@ class AddTaggingWizard extends Component {
       ).length > 0
     );
   }
-  isDepartMentListExist(data, id) {
+  isOtherListExist(data, id, type) {
     return (
       this.state.toggleTree.parent &&
-      this.state.toggleTree["parent"][id] &&
-      data &&
-      data.length
-    );
-  }
-  isProductListExist(data, id) {
-    return (
-      this.state.toggleTree["departments"] &&
-      this.state.toggleTree["departments"][id] &&
-      data &&
-      data.length
-    );
-  }
-  isDepolyMentListExist(data, id) {
-    return (
-      this.state.toggleTree["products"] &&
-      this.state.toggleTree["products"][`${id}`] &&
-      data &&
-      data.length
-    );
-  }
-  isModuleListExist(data, id) {
-    return (
-      this.state.toggleTree["deploymentEnvironments"] &&
-      this.state.toggleTree["deploymentEnvironments"][id] &&
+      this.state.toggleTree[`${type}`][id] &&
       data &&
       data.length
     );
@@ -554,7 +531,9 @@ class AddTaggingWizard extends Component {
     );
   }
   renderIsChecked(type, id) {
-    return this.state.toggleTree[`${type}`] && this.state.toggleTree[`${type}`][id]
+    return (
+      this.state.toggleTree[`${type}`] && this.state.toggleTree[`${type}`][id]
+    );
   }
   render() {
     return (
