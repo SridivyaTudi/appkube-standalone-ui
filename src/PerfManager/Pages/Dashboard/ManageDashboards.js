@@ -5,8 +5,8 @@ import listIcon from "../../img/list.png";
 import sortIcon from "../../img/sort.png";
 import openFolderIcon from "../../img/open-folder.png";
 import { Collapse } from "reactstrap";
-import { RestService } from "../_service/RestService";
-import { config } from "../../config";
+import { RestService } from "../../../Services/RestService";
+import config from "../../../config";
 import { getTagColorsFromName } from "../_utilities";
 import data from "./data.json";
 
@@ -19,7 +19,7 @@ class ManageDashboards extends React.Component {
   }
 
   componentDidMount() {
-    // RestService.getDashboardList(config.DASHBOARD_LIST_API).then((response) => {
+    // RestService.get(config.DASHBOARD_LIST_API).then((response) => {
     //   console.log(response);
     //   const retData = this.manipulateData(response);
     //   const folderArray = this.convertObjectToArray(retData);

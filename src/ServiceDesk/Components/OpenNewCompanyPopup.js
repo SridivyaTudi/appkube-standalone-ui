@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, ModalBody } from "reactstrap";
 import CustomTextbox from "./CustomTextbox";
 import axios from "axios";
-import { config } from "../config";
+import config from "../../config";
 import AlertMessage from "./AlertMessage";
 
 class OpenNewCompanyPopup extends React.Component {

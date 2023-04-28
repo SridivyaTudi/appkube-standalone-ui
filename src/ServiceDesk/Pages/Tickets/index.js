@@ -11,9 +11,9 @@ import {
   LineElement,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { config } from "../../config";
+import config from "../../../config";
 import Table from "./../../Components/Table";
-import { RestService } from "../_service/RestService";
+import { RestService } from "../../../Services/RestService";
 import CreateButtonComponent from "../CommanComponents/CreateButtonComponent";
 
 ChartJS.register(

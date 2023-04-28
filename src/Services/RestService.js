@@ -8,6 +8,8 @@ export const RestService = {
   getBasicAuthEncodedString,
   requestOptionsForGetRequest,
   requestOptionsForPostRequest,
+  postOptionWithAuthentication,
+  optionWithAuthentication,
 };
 
 function getRequestOptions(type, extraHeaders, body) {
@@ -87,6 +89,41 @@ function requestOptionsForPostRequest(bodyData) {
   myHeaders.append("Content-Type", "application/json");
   var requestOptions = {
     method: "POST",
+    headers: myHeaders,
+    body: bodyData,
+    redirect: "follow",
+  };
+  return requestOptions;
+}
+
+function postOptionWithAuthentication(bodyData) {
+  var myHeaders = new Headers();
+  // myHeaders.append("X-Requested-By", "XMLHttpRequest");
+  // myHeaders.append("Referrer-Policy", "no-referrer-when-downgrade");
+
+  myHeaders.append(
+    "Authorization",
+    getBasicAuthEncodedString(config.USERID, config.PASSWORD)
+  );
+  myHeaders.append("Content-Type", "application/json");
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: bodyData,
+    redirect: "follow",
+  };
+  return requestOptions;
+}
+
+function optionWithAuthentication(bodyData, methodType) {
+  var myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    getBasicAuthEncodedString(config.USERID, config.PASSWORD)
+  );
+  myHeaders.append("Content-Type", "application/json");
+  var requestOptions = {
+    method: methodType,
     headers: myHeaders,
     body: bodyData,
     redirect: "follow",

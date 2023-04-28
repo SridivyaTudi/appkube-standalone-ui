@@ -1,8 +1,8 @@
 import React from "react";
 import CreateButtonComponent from "../CommanComponents/CreateButtonComponent";
 import Table from "./../../Components/Table";
-import { RestService } from "../_service/RestService";
-import { config } from "../../config";
+import { RestService } from "../../../Services/RestService";
+import config from "../../../config";
 
 class AllContacts extends React.Component {
   perPageLimit;

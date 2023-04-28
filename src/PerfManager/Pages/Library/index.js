@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { config } from "../../config";
+import config from "../../../config";
 import folderIcon from "./img/config-collapse-icon1.png";
 import fileIcon from "./img/config-collapse-icon2.png";
-import { RestService } from "../_service/RestService";
+import { RestService } from "../../../Services/RestService";
 import { Collapse, UncontrolledPopover, PopoverBody } from "reactstrap";
 import collapseToggleIcon from "./img/config-collapse-icon1.png";
 import ConfirmDialog from "../../Components/ConfirmDialog";
@@ -441,7 +441,7 @@ class Library extends React.Component {
   };
 
   async callDeleteApi(url) {
-    await RestService.deleteObject(url)
+    await RestService.deleteData(url)
       .then((response) => {
         console.log("Delete Response : ", response);
         this.setState({

@@ -1,8 +1,8 @@
 import React from "react";
 import Table from "./../../Components/Table";
 import CreateButtonComponent from "../CommanComponents/CreateButtonComponent";
-import { RestService } from "../_service/RestService";
-import { config } from "../../config";
+import { RestService } from "../../../Services/RestService";
+import config from "../../../config";
 import UnimplementedFeaturePopup from "../../Components/UnimplementedFeaturePopup";
 
 class MySelectObj {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { config } from "../../config";
+import config from "../../../config";
 import { Collapse } from "reactstrap";
 import TopMenu from "../Catalog/TopMenu";
 import Rbac from "../../Components/Rbac";

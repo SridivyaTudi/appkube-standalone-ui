@@ -2,8 +2,8 @@ import React from "react";
 import { Modal, ModalBody } from "reactstrap";
 import CustomTextbox from "./CustomTextbox";
 import Customselectbox from "./Customselectbox";
-import { config } from "../config";
-import { RestService } from "../Pages/_service/RestService";
+import config from "../../config";
+import { RestService } from "../../Services/RestService";
 import AlertMessage from "./AlertMessage";
 import axios from "axios";
 

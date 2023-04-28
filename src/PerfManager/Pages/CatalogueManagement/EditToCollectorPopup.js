@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
-import { config } from "../../config";
+import config from "../../../config";
 import AlertMessage from "../../Components/AlertMessage";
 // import axios from 'axios';
 

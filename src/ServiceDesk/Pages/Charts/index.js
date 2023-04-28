@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { config } from "../../config";
+import config from "../../../config";
 
 class Charts extends React.Component {
   barChartOptions = {

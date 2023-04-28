@@ -1,8 +1,8 @@
 import React from "react";
-import { config } from "../../config";
+import config from "../../../config";
 import companyIcon from "../../img/company-icon.png";
 import Table from "./../../Components/Table";
-import { RestService } from "../_service/RestService";
+import { RestService } from "../../../Services/RestService";
 import CreateButtonComponent from "../CommanComponents/CreateButtonComponent";
 
 class AllCompanies extends React.Component {

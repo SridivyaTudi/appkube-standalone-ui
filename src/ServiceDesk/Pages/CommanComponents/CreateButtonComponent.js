@@ -1,5 +1,5 @@
 import React from "react";
-import { config } from "../../config";
+import config from "../../../config";
 import OpenNewContactPopup from "../../Components/OpenNewContactPopup";
 import OpenNewCompanyPopup from "../../Components/OpenNewCompanyPopup";
 import OpenNewEmailPopup from "../../Components/OpenNewEmailPopup";

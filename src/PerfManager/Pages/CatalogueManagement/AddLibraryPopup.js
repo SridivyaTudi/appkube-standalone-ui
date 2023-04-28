@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import { Collapse } from "reactstrap";
 import openFolderIcon from "../../../assets/img/perfmanager/open-folder.png";
-import { RestService } from "../_service/RestService";
-import { config } from "../../config";
+import { RestService } from "../../../Services/RestService";
+import config from "../../../config";
 import AlertMessage from "../../Components/AlertMessage";
 
 class AddLibraryPopup extends Component {
@@ -271,7 +271,7 @@ class AddLibraryPopup extends Component {
       dataSource: dataSource === null ? "AWS" : dataSource,
     };
     console.log("Object being added to library : ", obj);
-    await RestService.add(config.ADD_COLLECTOR_TO_LIBRARY, obj).then(
+    await RestService.postData(config.ADD_COLLECTOR_TO_LIBRARY, obj).then(
       (response) => {
         console.log("response: ", response);
         if (response === "OK") {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalBody } from "reactstrap";
-import { config } from "../../config";
+import config from "../../../config";
 import AlertMessage from "../../Components/AlertMessage";
 
 class AddCatalog extends Component {
