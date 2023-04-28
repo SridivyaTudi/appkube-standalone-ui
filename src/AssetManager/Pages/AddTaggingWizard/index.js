@@ -20,104 +20,7 @@ class AddTaggingWizard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-        {
-          name: "Parent 1",
-          id: 1,
-          departments: [
-            {
-              id: "11",
-              name: "Department 1",
-              products: [
-                {
-                  id: "111",
-                  name: "Produt 111",
-                  deploymentEnvironments: [
-                    {
-                      id: "1111",
-                      name: "deploymentEnvironments 11111",
-                      modules: [
-                        {
-                          id: "1111111",
-                          name: "modules 11111111",
-                          appServices: [
-                            {
-                              id: "1111111111",
-                              name: "appServices 1",
-                            },
-                            {
-                              id: "1111111111112",
-                              name: "appServices 11111111111112",
-                            },
-                          ],
-                          dataServices: [
-                            {
-                              id: "1111111111454545",
-                              name: "appServices 1",
-                            },
-                            {
-                              id: "11111111111145645454452",
-                              name: "appServices 111111111111124545645",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          name: "Parent 2",
-          id: 2,
-          departments: [
-            {
-              id: "11",
-              name: "Department 1",
-              products: [
-                {
-                  id: "111",
-                  name: "Produt 111",
-                  deploymentEnvironments: [
-                    {
-                      id: "1111",
-                      name: "deploymentEnvironments 11111",
-                      modules: [
-                        {
-                          id: "1111111",
-                          name: "modules 11111111",
-                          appServices: [
-                            {
-                              id: "1111111111",
-                              name: "appServices 1",
-                            },
-                            {
-                              id: "1111111111112",
-                              name: "appServices 11111111111112",
-                            },
-                          ],
-                          dataServices: [
-                            {
-                              id: "1111111111454545",
-                              name: "appServices 1",
-                            },
-                            {
-                              id: "11111111111145645454452",
-                              name: "appServices 111111111111124545645",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
+      data: [],
       toggleTree: {
         parent: {},
         departments: {},
@@ -140,18 +43,16 @@ class AddTaggingWizard extends Component {
       });
   }
   componentDidMount() {
-    // this.getDiscoverAssest(this.handleGetLandingId());
+    this.getDiscoverAssest(this.handleGetLandingId());
   }
   handleToggleTree(type, id = 0, isChecked) {
     let { toggleTree } = this.state;
     toggleTree[`${type}`][id] = !toggleTree[`${type}`][id];
 
     this.setState({
-      toggleTree: this.setStateToggleTree(toggleTree, type, isChecked,id.toString().charAt(0)
-      ),
+      toggleTree: this.setStateToggleTree(toggleTree, type, isChecked,id),
       wizardPathNames: type == "modules" ? this.state.wizardPathNames : [],
     });
-    console.log(this.state);
     // this.setState({
     //   toggleTree: {
     //     ...this.state.toggleTree,
@@ -199,7 +100,7 @@ class AddTaggingWizard extends Component {
     //     type == "modules" ? this.state[`wizardPathNames`] : [],
     // });
   }
-  setStateToggleTree(treeData, customType, isChecked,parentId) {
+  setStateToggleTree(treeData, customType, isChecked,id) {
     let prepareTreeObj = {};
     Object.keys(treeData).forEach((defaultType) => {
       prepareTreeObj[defaultType] =
@@ -208,15 +109,15 @@ class AddTaggingWizard extends Component {
           : resetChildNode[defaultType].indexOf(customType) >= 0
           ? isChecked
             ? this.state.toggleTree[`${defaultType}`]
-            : this.unmarkedTag(defaultType,parentId)
+            : this.unmarkedTag(defaultType,id)
           : this.state.toggleTree[`${defaultType}`];
     });
     return prepareTreeObj;
   }
-  unmarkedTag(defaultType,parentId){
+  unmarkedTag(defaultType,id){
     let prepareType = {}
     Object.keys(this.state.toggleTree[`${defaultType}`]).forEach((key)=>{
-      prepareType[`${defaultType}`] = key.toString().charAt(parentId) ? false : this.state.toggleTree[`${defaultType}`][key]   
+      prepareType[`${defaultType}`] = key.startsWith(id) ? false : this.state.toggleTree[`${defaultType}`][key]   
     })
     return prepareType
   }
@@ -503,7 +404,7 @@ class AddTaggingWizard extends Component {
                 {this.renderDepartment(
                   "departments",
                   parent.departments,
-                  parent.id
+                 {parent:parent.id} 
                 )}
               </table>
             ) : (
@@ -539,13 +440,13 @@ class AddTaggingWizard extends Component {
             {this.renderCommonHtml(
               "departments",
               department.name,
-              department.id
+              `${ids.parent}_${department.id}`
             )}
-            {this.isProductListExist(department.products, department.id) ? (
+            {this.isProductListExist(department.products, `${ids.parent}_${department.id}`) ? (
               <table className="data-table inner">
                 {this.renderProducts("products", department.products, {
                   department: department.id,
-                  parent: ids,
+                  parent: ids.parent,
                 })}
               </table>
             ) : (
@@ -947,9 +848,7 @@ class AddTaggingWizard extends Component {
     );
   }
   renderIsChecked(type, id) {
-    return (
-      this.state.toggleTree[`${type}`] && this.state.toggleTree[`${type}`][id]
-    );
+    return this.state.toggleTree[`${type}`] && this.state.toggleTree[`${type}`][id]
   }
   render() {
     return (
