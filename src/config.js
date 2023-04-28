@@ -13,14 +13,14 @@ const logMrgSrvUrl = `http://100.64.3.237:9000/api`;
 
 const PERF_MANAGER_IP = "100.64.107.25";
 //const securitySrvUrl = `http://${PERF_MANAGER_IP}:8094`;
-const assetSrvUrl = `http://${PERF_MANAGER_IP}:5057/api`;
+const assetSrvUrl = `http://${PERF_MANAGER_IP}:6067/api`;
 const grafanaUrl = `http://${PERF_MANAGER_IP}:3000/api`;
 const perfManagerCatalogSrvUrl = `http://${PERF_MANAGER_IP}:5050/api`;
 
 const localHostTicketSrvUrl = `http://100.64.108.25:7100/api`;
 
 let config = {
-  baseURL: "http://34.199.12.114:5057/api",
+  baseURL: "http://34.199.12.114:6067/api",
   alertManagerURL: "http://34.199.12.114:8092",
 
   /* ALERTMANAGER SERVICES  */
@@ -175,7 +175,7 @@ let config = {
 
   GET_AWS_REGIONS: `${assetSrvUrl}/getAwsRegions`,
   PREVIEW_DASHBOARDS_URL: `${grafanaUrl}/dashboards/previewDashboard`,
-  SEARCH_CONFIG_DASHBOARD: `http://18.234.236.211:5057/api/catalogue/search`,
+  SEARCH_CONFIG_DASHBOARD: `http://18.234.236.211:6067/api/catalogue/search`,
 
   /* SERVICE DESK SERVICES */
   serviceDeskBasePath: "/servicedesk",
