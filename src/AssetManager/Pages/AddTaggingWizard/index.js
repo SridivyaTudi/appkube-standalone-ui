@@ -48,59 +48,12 @@ class AddTaggingWizard extends Component {
   handleToggleTree(type, id = 0, isChecked) {
     let { toggleTree } = this.state;
     toggleTree[`${type}`][id] = !toggleTree[`${type}`][id];
-
     this.setState({
-      toggleTree: this.setStateToggleTree(toggleTree, type, isChecked,id),
+      toggleTree: this.setStateToggleTree(toggleTree, type, isChecked, id),
       wizardPathNames: type == "modules" ? this.state.wizardPathNames : [],
     });
-    // this.setState({
-    //   toggleTree: {
-    //     ...this.state.toggleTree,
-    //     parent:
-    //       type == "parent"
-    //         ? !this.state.toggleTree[`${type}`]
-    //         : this.state.toggleTree[`parent`],
-    //     departments:
-    //       type == "departments"
-    //         ? toggleTree[`${type}`]
-    //         : type == "parent"
-    //         ? isChecked
-    //           ? this.state.toggleTree[`departments`]
-    //           : {}
-    //         : this.state.toggleTree[`departments`],
-    //     products:
-    //       type == "products"
-    //         ? toggleTree[`${type}`]
-    //         : type == "departments" || type == "parent"
-    //         ? isChecked
-    //           ? this.state.toggleTree[`products`]
-    //           : {}
-    //         : this.state.toggleTree[`products`],
-    //     deploymentEnvironments:
-    //       type == "deploymentEnvironments"
-    //         ? toggleTree[`${type}`]
-    //         : type == "departments" || type == "products" || type == "parent"
-    //         ? isChecked
-    //           ? this.state.toggleTree[`deploymentEnvironments`]
-    //           : {}
-    //         : this.state.toggleTree[`deploymentEnvironments`],
-    //     modules:
-    //       type == "modules"
-    //         ? toggleTree[`${type}`]
-    //         : type == "departments" ||
-    //           type == "products" ||
-    //           type == "deploymentEnvironments" ||
-    //           type == "parent"
-    //         ? isChecked
-    //           ? this.state.toggleTree[`modules`]
-    //           : {}
-    //         : this.state.toggleTree[`modules`],
-    //   },
-    //   ["wizardPathNames"]:
-    //     type == "modules" ? this.state[`wizardPathNames`] : [],
-    // });
   }
-  setStateToggleTree(treeData, customType, isChecked,id) {
+  setStateToggleTree(treeData, customType, isChecked, id) {
     let prepareTreeObj = {};
     Object.keys(treeData).forEach((defaultType) => {
       prepareTreeObj[defaultType] =
@@ -109,88 +62,20 @@ class AddTaggingWizard extends Component {
           : resetChildNode[defaultType].indexOf(customType) >= 0
           ? isChecked
             ? this.state.toggleTree[`${defaultType}`]
-            : this.unmarkedTag(defaultType,id)
+            : this.unmarkedTag(defaultType, id)
           : this.state.toggleTree[`${defaultType}`];
     });
     return prepareTreeObj;
   }
-  unmarkedTag(defaultType,id){
-    let prepareType = {}
-    Object.keys(this.state.toggleTree[`${defaultType}`]).forEach((key)=>{
-      prepareType[`${defaultType}`] = key.startsWith(id) ? false : this.state.toggleTree[`${defaultType}`][key]   
-    })
-    return prepareType
+  unmarkedTag(defaultType, id) {
+    let prepareType = {};
+    Object.keys(this.state.toggleTree[`${defaultType}`]).forEach((key) => {
+      prepareType[key] = key.startsWith(id)
+        ? false
+        : this.state.toggleTree[`${defaultType}`][key];
+    });
+    return prepareType;
   }
-  // handleToggleTree(type, id = 0, isChecked) {
-  //   let { toggleTree } = this.state;
-  //   if (type == "parent") {
-  //     this.setState({
-  //       ...this.state,
-  //       ["toggleTree"]: {
-  //         ...this.state.toggleTree,
-  //         [`${type}`]: !this.state.toggleTree[`${type}`],
-  //         ["departments"]: isChecked
-  //           ? this.state.toggleTree[`departments`]
-  //           : {},
-  //         ["products"]: isChecked ? this.state.toggleTree[`products`] : {},
-  //         ["deploymentEnvironments"]: isChecked
-  //           ? this.state.toggleTree[`deploymentEnvironments`]
-  //           : {},
-  //         ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
-  //       },
-  //     });
-  //   } else if (type == "departments") {
-  //     toggleTree["departments"][id] = !toggleTree["departments"][id];
-  //     this.setState({
-  //       ...this.state,
-  //       ["toggleTree"]: {
-  //         ...this.state.toggleTree,
-  //         ["departments"]: toggleTree["departments"],
-  //         ["products"]: isChecked ? this.state.toggleTree[`products`] : {},
-  //         ["deploymentEnvironments"]: isChecked
-  //           ? this.state.toggleTree[`deploymentEnvironments`]
-  //           : {},
-  //         ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
-  //       },
-  //       ["wizardPathNames"]: [],
-  //     });
-  //   } else if (type == "products") {
-  //     toggleTree["products"][id] = !toggleTree["products"][id];
-  //     this.setState({
-  //       ...this.state,
-  //       ["toggleTree"]: {
-  //         ...this.state.toggleTree,
-  //         ["products"]: toggleTree["products"],
-  //         ["deploymentEnvironments"]: isChecked
-  //           ? this.state.toggleTree[`deploymentEnvironments`]
-  //           : {},
-  //         ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
-  //       },
-  //       ["wizardPathNames"]: [],
-  //     });
-  //   } else if (type == "deploymentEnvironments") {
-  //     toggleTree["deploymentEnvironments"][id] =
-  //       !toggleTree["deploymentEnvironments"][id];
-  //     this.setState({
-  //       ...this.state,
-  //       ["toggleTree"]: {
-  //         ...this.state.toggleTree,
-  //         ["deploymentEnvironments"]: toggleTree["deploymentEnvironments"],
-  //         ["modules"]: isChecked ? this.state.toggleTree[`modules`] : {},
-  //       },
-  //       ["wizardPathNames"]: [],
-  //     });
-  //   } else if (type == "modules") {
-  //     toggleTree["modules"][id] = !toggleTree["modules"][id];
-  //     this.setState({
-  //       ...this.state,
-  //       ["toggleTree"]: {
-  //         ...this.state.toggleTree,
-  //         ["modules"]: toggleTree["modules"],
-  //       },
-  //     });
-  //   }
-  // }
   handlePath(data, checked) {
     let { wizardPathNames } = this.state;
     let pathKeys = ["PRODUCT", "ENV", "MODULE", "SERVICE", "SERVICE_TYPE"];
@@ -279,34 +164,6 @@ class AddTaggingWizard extends Component {
         }
       });
   }
-  // async handleDiscoverAssetsUpdate(otherparams) {
-  //   let getLandingId = this.handleGetLandingId();
-  //   let getId = this.handleGetId();
-  //   return new Promise(async function (myResolve, myReject) {
-  //     const response = await fetch(
-  //       `http://34.199.12.114:5057/api/service-allocations/search?landingZone=${getLandingId}&${otherparams.id}`
-  //     );
-  //     const discoverDataId = await response.json();
-  //     if (discoverDataId && discoverDataId.length) {
-  //       const response = await fetch(`http://34.199.12.114:5057/api/tags`, {
-  //         headers: {
-  //           Accept: "application/json",
-  //           "Content-Type": "application/json",
-  //         },
-  //         method: "POST",
-  //         body: JSON.stringify({
-  //           discoveredAsset: {
-  //             id: getId,
-  //           },
-  //           serviceAllocation: otherparams.serviceAllocation,
-  //           tag: otherparams.value + discoverDataId[0].serviceType,
-  //         }),
-  //       });
-  //       const discoverData = await response.json();
-  //       myResolve(discoverData);
-  //     }
-  //   });
-  // }
   handleTagDelete(id) {
     return fetch(`http://34.199.12.114:5057/api/tags/${id}`, {
       headers: {
@@ -319,22 +176,6 @@ class AddTaggingWizard extends Component {
       (error) => error.status == 204
     );
   }
-
-  // async handleTagDelete(id) {
-  //   return new Promise(async function (myResolve, myReject) {
-  //     const response = await fetch(`http://34.199.12.114:5057/api/tags/${id}`, {
-  //       headers: {
-  //         Accept: "application/json",
-  //         "Content-Type": "application/json",
-  //       },
-  //       method: "DELETE",
-  //     });
-
-  //     if (response.status == 204) {
-  //       myResolve(true);
-  //     }
-  //   });
-  // }
   handlemodule(searchString) {
     let { wizardPathNames } = this.state;
     let pathKeys = ["PRODUCT", "ENV", "MODULE", "SERVICE", "SERVICE_TYPE"];
@@ -388,24 +229,12 @@ class AddTaggingWizard extends Component {
       return (
         <tr>
           <td>
-            {/* <div className="table-contant">
-            <input
-              type="checkbox"
-              className="checkbox"
-              onChange={(e) => {
-                this.handleToggleTree(type, 0, e.target.checked);
-              }}
-            />
-            <span>{data.name}</span>
-          </div> */}
             {this.renderCommonHtml(type, parent.name, parent.id)}
             {this.isDepartMentListExist(parent.departments, parent.id) ? (
               <table className="data-table inner">
-                {this.renderDepartment(
-                  "departments",
-                  parent.departments,
-                 {parent:parent.id} 
-                )}
+                {this.renderDepartment("departments", parent.departments, {
+                  parent: parent.id,
+                })}
               </table>
             ) : (
               <></>
@@ -420,29 +249,15 @@ class AddTaggingWizard extends Component {
       return (
         <tr key={index}>
           <td>
-            {/* <div className="table-contant">
-              <input
-                type="checkbox"
-                className="checkbox"
-                onChange={(e) => {
-                  this.handleToggleTree(
-                    "departments",
-                    department.id,
-                    e.target.checked
-                  );
-                }}
-                checked={this.state.toggleTree["departments"] &&
-                  this.state.toggleTree["departments"][department.id]
-                }
-              />
-              <span>{department.name}</span>
-            </div> */}
             {this.renderCommonHtml(
               "departments",
               department.name,
               `${ids.parent}_${department.id}`
             )}
-            {this.isProductListExist(department.products, `${ids.parent}_${department.id}`) ? (
+            {this.isProductListExist(
+              department.products,
+              `${ids.parent}_${department.id}`
+            ) ? (
               <table className="data-table inner">
                 {this.renderProducts("products", department.products, {
                   department: department.id,
@@ -462,26 +277,6 @@ class AddTaggingWizard extends Component {
       return (
         <tr key={index}>
           <td>
-            {/* <div className="table-contant">
-              <input
-                type="checkbox"
-                className="checkbox"
-                onChange={(e) => {
-                  this.handleToggleTree(
-                    "products",
-                    `${departmentId}_${product.id}`,
-                    e.target.checked
-                  );
-                }}
-                checked={
-                  this.state.toggleTree["products"] &&
-                  this.state.toggleTree["products"][
-                    `${departmentId}_${product.id}`
-                  ]
-                }
-              />
-              <span>{product.name}</span>
-            </div> */}
             {this.renderCommonHtml(
               "products",
               product.name,
@@ -514,26 +309,6 @@ class AddTaggingWizard extends Component {
       return (
         <tr key={index}>
           <td>
-            {/* <div className="table-contant">
-              <input
-                type="checkbox"
-                className="checkbox"
-                onChange={(e) => {
-                  this.handleToggleTree(
-                    "deploymentEnvironments",
-                    `${ids.department}_${ids.product}_${deploymentEnvironment.id}`,
-                    e.target.checked
-                  );
-                }}
-                checked={
-                  this.state.toggleTree["deploymentEnvironments"] &&
-                  this.state.toggleTree["deploymentEnvironments"][
-                    `${ids.department}_${ids.product}_${deploymentEnvironment.id}`
-                  ]
-                }
-              />
-              <span>{deploymentEnvironment.name}</span>
-            </div> */}
             {this.renderCommonHtml(
               "deploymentEnvironments",
               deploymentEnvironment.name,
@@ -570,37 +345,6 @@ class AddTaggingWizard extends Component {
       return (
         <tr key={index}>
           <td>
-            {/* <div className="table-contant">
-              <input
-                type="checkbox"
-                className="checkbox"
-                onChange={(e) => {
-                  this.handleToggleTree(
-                    "modules",
-                    `${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`,
-                    e.target.checked
-                  );
-                  if (e.target.checked) {
-                    this.handlemodule(
-                      `landingZone=${this.handleGetLandingId()}&departmentId=${
-                        ids.department
-                      }&productId=${ids.product}&deploymentEnvironmentId=${
-                        ids.deploymentEnvironment
-                      }&moduleId=${
-                        module.id
-                      }&discoveredAssetId=${this.handleGetId()}`
-                    );
-                  }
-                }}
-                checked={
-                  this.state.toggleTree["modules"] &&
-                  this.state.toggleTree["modules"][
-                    `${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`
-                  ]
-                }
-              />
-              <span>{module.name}</span>
-            </div> */}
             {this.renderCommonHtml(
               "modules",
               module.name,
@@ -628,8 +372,8 @@ class AddTaggingWizard extends Component {
                   "appService",
                   module.appServices,
                   {
-                   ...ids,
-                    ...{module: module.id}
+                    ...ids,
+                    ...{ module: module.id },
                   },
                   { ...names, ...{ module: module.name } }
                 )}
@@ -669,25 +413,6 @@ class AddTaggingWizard extends Component {
       return (
         <tr key={index}>
           <td>
-            {/* <div className="table-contant">
-              <input
-                type="checkbox"
-                className="checkbox"
-                onChange={(e) => {
-                  this.handlePath(
-                    this.getHandlePathFirstArgs(
-                      { ...ids, ...{ appService: appService.id } },
-                      { ...names, ...{ appService: appService.name } },
-                      "APP"
-                    ),
-                    e.target.checked,
-                    appService.id
-                  );
-                }}
-                checked={this.isServiceTagged(ids, "APP")}
-              />
-              <span>{appService.name}</span>
-            </div> */}
             {this.renderCommonHtml("APP", appService.name, ids, (isChecked) => {
               return this.handlePath(
                 this.getHandlePathFirstArgs(
@@ -709,25 +434,6 @@ class AddTaggingWizard extends Component {
       return (
         <tr key={index}>
           <td>
-            {/* <div className="table-contant">
-              <input
-                type="checkbox"
-                className="checkbox"
-                onChange={(e) => {
-                  this.handlePath(
-                    this.getHandlePathFirstArgs(
-                      { ...ids, ...{ dataService: dataService.id } },
-                      { ...names, ...{ dataService: dataService.name } },
-                      "DATA"
-                    ),
-                    e.target.checked,
-                    dataService.id
-                  );
-                }}
-                checked={this.isServiceTagged(ids, "DATA")}
-              />
-              <span>{dataService.name}</span>
-            </div> */}
             {this.renderCommonHtml(
               "DATA",
               dataService.name,
