@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
-import { config } from "../../config";
-import { CommonService } from "../_common/common";
+import config from "../../../config";
+import { RestService } from "../../../Services/RestService";
 import AlertMessage from "./../../Components/AlertMessage";
 let indexSetMap = new Map();
 
@@ -26,7 +26,7 @@ class CreateStreamPopup extends React.Component {
   }
 
   getIndexSets = async () => {
-    var requestOptions = await CommonService.requestOptionsForGetRequest();
+    var requestOptions = await RestService.requestOptionsForGetRequest();
     await fetch(config.GET_INDEX_SETS, requestOptions)
       .then((response) => response.text())
       .then((result) => {
@@ -99,7 +99,7 @@ class CreateStreamPopup extends React.Component {
         remove_matches_from_default_stream: removeMatches,
       });
       console.log("Data : ", raw);
-      var requestOptions = CommonService.requestOptionsForPostRequest(raw);
+      var requestOptions = RestService.requestOptionsForPostRequest(raw);
       fetch(config.STREAM, requestOptions)
         .then((response) => response.text())
         .then((result) => {

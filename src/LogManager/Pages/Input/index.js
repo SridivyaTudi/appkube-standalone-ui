@@ -1,5 +1,5 @@
 import React from "react";
-import { config } from "../../config";
+import config from "../../../config";
 import CreateStreamPopup from "./../Dashboard/CreateStreamPopup";
 import NewStreamRulePopup from "./../Dashboard/NewStreamRulePopup";
 import SetOutputPopup from "./../Dashboard/SetOutputParameter";

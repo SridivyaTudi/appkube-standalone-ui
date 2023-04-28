@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { config } from "../../config";
+import config from "../../../config";
 import ticketIconImage1 from "../../img/ticket-icon-img1.png";
 import { Line } from "react-chartjs-2";
 import Table from "./../../Components/Table";
-import { RestService } from "../_service/RestService";
+import { RestService } from "../../../Services/RestService";
 import Rbac from "../Rbac/Rbac";
 import CreateButtonComponent from "../CommanComponents/CreateButtonComponent";
 // import DatePicker from "react-date-picker";
@@ -367,7 +367,7 @@ class Dashboard extends React.Component {
         <div className="servicedesk-page-container">
           <div className="common-container">
             <div className="row">
-              <div className="col-lg-8 col-md-8 col-sm-12">
+              <div className="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                 <div className="page-heading">
                   <h1>Dashboard</h1>
                   <span>Complete Overview of the Tickets</span>

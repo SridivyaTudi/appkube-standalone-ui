@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { config } from "../../config";
+import config from "../../../config";
 import Table from "../../Components/Table";
 import Rbac from "../../Components/Rbac";
 import UnimplementedFeaturePopup from "../../Components/UnimplementedFeaturePopup";

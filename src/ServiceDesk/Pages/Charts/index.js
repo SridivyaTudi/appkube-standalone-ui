@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { config } from "../../config";
+import config from "../../../config";
 
 class Charts extends React.Component {
   barChartOptions = {
@@ -109,15 +109,15 @@ class Charts extends React.Component {
         <div className="servicedesk-page-container">
           <div className="common-container">
             <div className="row">
-              <div className="col-lg-8 col-md-8 col-sm-12">
+              <div className="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                 <div className="page-heading">
                   <h1>Created Tickets</h1>
                 </div>
               </div>
-              <div className="col-lg-4 col-md-4 col-sm-12 text-right">
+              <div className="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-right">
                 <Link
                   to="/servicedesk/pages/reportHelpdesh"
-                  className="blue-button m-r-0 m-b-0 min-width-inherit width-auto create-btn"
+                  className="blue-button m-r-0 m-b-0 m-t-0 min-width-inherit width-auto create-btn"
                 >
                   Back
                 </Link>

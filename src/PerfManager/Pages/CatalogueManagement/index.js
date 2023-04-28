@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { config } from "../../config";
+import config from "../../../config";
 import { Collapse } from "reactstrap";
 import categoryImage from "../../../assets/img/perfmanager/category-image1.png";
 import collapseToggleIcon from "../../../assets/img/perfmanager/config-collapse-icon1.png";
@@ -8,7 +8,7 @@ import AddDashboardToCollectorPopup from "./AddDashboardToCollectorPopup";
 import EditToCollectorPopup from "./EditToCollectorPopup";
 import PreviewDashboard from "./PreviewDashboard";
 import AddCatalog from "./AddCatalog";
-import { RestService } from "../_service/RestService";
+import { RestService } from "../../../Services/RestService";
 import Rbac from "../../Components/Rbac";
 
 class CatalogueManagement extends Component {

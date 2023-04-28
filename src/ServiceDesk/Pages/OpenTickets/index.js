@@ -1,8 +1,8 @@
 import React from "react";
 import Table from "./../../Components/Table";
 import CreateButtonComponent from "../CommanComponents/CreateButtonComponent";
-import { RestService } from "../_service/RestService";
-import { config } from "../../config";
+import { RestService } from "../../../Services/RestService";
+import config from "../../../config";
 import UnimplementedFeaturePopup from "../../Components/UnimplementedFeaturePopup";
 
 class MySelectObj {
@@ -443,7 +443,7 @@ class OpenTickets extends React.Component {
         <div className="servicedesk-page-container">
           <div className="common-container">
             <div className="row">
-              <div className="col-lg-8 col-md-8 col-sm-12">
+              <div className="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                 <div className="page-heading">
                   <h1>{page_type}</h1>
                 </div>

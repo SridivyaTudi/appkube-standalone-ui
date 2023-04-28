@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, ModalBody } from "reactstrap";
 import CustomTextbox from "./CustomTextbox";
 import axios from "axios";
-import { config } from "../config";
+import config from "../../config";
 import AlertMessage from "./AlertMessage";
 
 class OpenNewCompanyPopup extends React.Component {
@@ -276,7 +276,7 @@ class OpenNewCompanyPopup extends React.Component {
                   className="companyLogo"
                   onChange={this.handleImageChange}
                 />
-                <p className="d-block">
+                <p className="d-block m-b-1">
                   An image of the person, it's best if it has the same length
                   and height
                 </p>

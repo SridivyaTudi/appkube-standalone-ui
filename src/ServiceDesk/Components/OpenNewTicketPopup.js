@@ -3,9 +3,9 @@ import { Modal, ModalBody } from "reactstrap";
 import CustomTextbox from "./CustomTextbox";
 import Customselectbox from "./Customselectbox";
 import CustomTextareabox from "./CustomTextareabox";
-import { config } from "../config";
+import config from "../../config";
 import axios from "axios";
-import { RestService } from "../Pages/_service/RestService";
+import { RestService } from "../../Services/RestService";
 import AlertMessage from "./AlertMessage";
 
 class MySelectObj {

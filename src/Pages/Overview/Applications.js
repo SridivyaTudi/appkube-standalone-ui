@@ -15,7 +15,8 @@ import Cloud from "../../assets/img/cloud.svg";
 import Azure from "../../assets/img/azure.svg";
 import GCP from "../../assets/img/gcp.svg";
 import AWS from "../../assets/img/aws.svg";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
+import Services from "../../Services";
 
 ChartJS.register(
   CategoryScale,
@@ -99,7 +100,7 @@ class Applications extends Component {
   }
 
   componentDidMount = () => {
-    fetch("http://34.199.12.114:5057/api/analytics/cloud-wise-spend")
+    fetch(Services.cloudWiseSpend)
       .then((response) => response.json())
       .then((result) => {
         this.setState({

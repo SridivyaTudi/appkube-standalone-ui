@@ -4,8 +4,8 @@ import CustomTextbox from "./CustomTextbox";
 import Customselectbox from "./Customselectbox";
 import CustomTextareabox from "./CustomTextareabox";
 import Multiselect from "./Multiselect/multiselects/multiselect.component";
-import { config } from "../config";
-import { RestService } from "../Pages/_service/RestService";
+import config from "../../config";
+import { RestService } from "../../Services/RestService";
 import AlertMessage from "./AlertMessage";
 import axios from "axios";
 

@@ -1,8 +1,8 @@
 import React from "react";
 import CreateButtonComponent from "../CommanComponents/CreateButtonComponent";
 import Table from "./../../Components/Table";
-import { RestService } from "../_service/RestService";
-import { config } from "../../config";
+import { RestService } from "../../../Services/RestService";
+import config from "../../../config";
 
 class AllContacts extends React.Component {
   perPageLimit;
@@ -98,7 +98,7 @@ class AllContacts extends React.Component {
         <div className="servicedesk-page-container all-contacts-container">
           <div className="common-container">
             <div className="row">
-              <div className="col-lg-8 col-md-8 col-sm-12">
+              <div className="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                 <div className="page-heading">
                   <h1>All Contacts</h1>
                 </div>

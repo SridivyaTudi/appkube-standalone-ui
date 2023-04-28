@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { config } from "../../config";
+import config from "../../../config";
 import helpdeskIcon from "../../img/helpdesk-icon.png";
 import ticketIcon from "../../img/ticket-icon.png";
 import phoneSummaryIcon from "../../img/phone-summary-icon.png";

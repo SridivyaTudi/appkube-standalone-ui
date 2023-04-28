@@ -11,6 +11,7 @@ import {
   LineElement,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import Services from "../../../Services";
 
 ChartJS.register(
   CategoryScale,
@@ -82,25 +83,23 @@ class CurrentAvrageWaitTimeChart extends React.Component {
     }
   }
   fetchData = () => {
-    fetch(`http://34.199.12.114:5055/api/getWaitTimeGraphDataFromDb`).then(
-      (response) => {
-        this.setState({
-          datasets: [
-            {
-              label: "Line Dataset",
-              lineTension: 0.2,
-              fill: false,
-              borderColor: "rgba(255,255,255,0.5)",
-              data: response.lineDataSetList,
-              borderWidth: 2,
-              type: "line",
-            },
-          ],
-          labels: response.daysList,
-        });
-        console.log("Avg Resp Time Data :::::: ", response);
-      }
-    );
+    fetch(Services.getWaitTimeGraphDataFromDb).then((response) => {
+      this.setState({
+        datasets: [
+          {
+            label: "Line Dataset",
+            lineTension: 0.2,
+            fill: false,
+            borderColor: "rgba(255,255,255,0.5)",
+            data: response.lineDataSetList,
+            borderWidth: 2,
+            type: "line",
+          },
+        ],
+        labels: response.daysList,
+      });
+      console.log("Avg Resp Time Data :::::: ", response);
+    });
   };
 
   render() {

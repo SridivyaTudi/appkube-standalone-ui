@@ -1,5 +1,5 @@
 import React from "react";
-import { config } from "../../config";
+import config from "../../../config";
 import QueryPanel from "./Query/QueryPanel";
 import Utils from "../../utils";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";

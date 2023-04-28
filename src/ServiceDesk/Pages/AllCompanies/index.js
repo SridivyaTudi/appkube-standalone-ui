@@ -1,8 +1,8 @@
 import React from "react";
-import { config } from "../../config";
+import config from "../../../config";
 import companyIcon from "../../img/company-icon.png";
 import Table from "./../../Components/Table";
-import { RestService } from "../_service/RestService";
+import { RestService } from "../../../Services/RestService";
 import CreateButtonComponent from "../CommanComponents/CreateButtonComponent";
 
 class AllCompanies extends React.Component {
@@ -86,7 +86,7 @@ class AllCompanies extends React.Component {
         <div className="servicedesk-page-container all-contacts-container">
           <div className="common-container">
             <div className="row">
-              <div className="col-lg-8 col-md-8 col-sm-12">
+              <div className="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                 <div className="page-heading">
                   <h1>All Companies</h1>
                 </div>
