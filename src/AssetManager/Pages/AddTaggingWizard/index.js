@@ -31,6 +31,9 @@ class AddTaggingWizard extends Component {
       wizardPathNames: [],
     };
   }
+  componentDidMount() {
+    this.getDiscoverAssest(this.handleGetLandingId());
+  }
   getDiscoverAssest(id) {
     return fetch(
       `http://34.199.12.114:6067/api/organizations/search?landingZone=${id}`
@@ -39,11 +42,10 @@ class AddTaggingWizard extends Component {
       .then((res) => {
         if (res["status"] != 404) {
           this.setState({ data: res });
+        } else {
+          ToastMessage("There is some issue", "unsuccess");
         }
       });
-  }
-  componentDidMount() {
-    this.getDiscoverAssest(this.handleGetLandingId());
   }
   handleToggleTree(type, id = 0, isChecked) {
     let { toggleTree } = this.state;
@@ -140,12 +142,16 @@ class AddTaggingWizard extends Component {
     let getId = this.handleGetId();
 
     return fetch(
-      `http://34.199.12.114:5057/api/service-allocations/search?landingZone=${getLandingId}&${otherparams.id}`
+      `http://34.199.12.114:6067/api/service-allocations/search?landingZone=${getLandingId}&${otherparams.id}`
     )
-      .then((response) => response.json())
+      .then((response) =>
+        response.status != 404
+          ? response.json()
+          : ToastMessage("There is some issue", "unsuccess")
+      )
       .then((res) => {
         if (res && res.length) {
-          return fetch(`http://34.199.12.114:5057/api/tags`, {
+          return fetch(`http://34.199.12.114:6067/api/tags`, {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
@@ -165,22 +171,27 @@ class AddTaggingWizard extends Component {
       });
   }
   handleTagDelete(id) {
-    return fetch(`http://34.199.12.114:5057/api/tags/${id}`, {
+    return fetch(`http://34.199.12.114:6067/api/tags/${id}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       method: "DELETE",
     }).then(
-      (res) => {},
+      (res) =>
+        res.status == 404 && ToastMessage("There is some issue", "unsuccess"),
       (error) => error.status == 204
     );
   }
   handlemodule(searchString) {
     let { wizardPathNames } = this.state;
     let pathKeys = ["PRODUCT", "ENV", "MODULE", "SERVICE", "SERVICE_TYPE"];
-    return fetch(`http://34.199.12.114:5057/api/tags/search?${searchString}`)
-      .then((response) => response.json())
+    return fetch(`http://34.199.12.114:6067/api/tags/search?${searchString}`)
+      .then((response) =>
+        response.status != 404
+          ? response.json()
+          : ToastMessage("There is some issue", "unsuccess")
+      )
       .then((res) => {
         if (res && res.length) {
           res.forEach((tag) => {
@@ -218,10 +229,8 @@ class AddTaggingWizard extends Component {
       });
   }
   renderDiscoverAssests() {
-    return this.state.data.length ? (
-      this.renderParent("parent", this.state.data)
-    ) : (
-      <></>
+    return (
+      this.state.data.length && this.renderParent("parent", this.state.data)
     );
   }
   renderParent(type, data) {
@@ -230,14 +239,12 @@ class AddTaggingWizard extends Component {
         <tr>
           <td>
             {this.renderCommonHtml(type, parent.name, parent.id)}
-            {this.isOtherListExist(parent.departments, parent.id, type) ? (
+            {this.isOtherListExist(parent.departments, parent.id, type) && (
               <table className="data-table inner">
                 {this.renderDepartment("departments", parent.departments, {
                   parent: parent.id,
                 })}
               </table>
-            ) : (
-              <></>
             )}
           </td>
         </tr>
@@ -258,15 +265,13 @@ class AddTaggingWizard extends Component {
               department.products,
               `${ids.parent}_${department.id}`,
               type
-            ) ? (
+            ) && (
               <table className="data-table inner">
                 {this.renderProducts("products", department.products, {
                   department: department.id,
                   parent: ids.parent,
                 })}
               </table>
-            ) : (
-              <></>
             )}
           </td>
         </tr>
@@ -287,7 +292,7 @@ class AddTaggingWizard extends Component {
               product.deploymentEnvironments,
               `${ids.parent}_${ids.department}_${product.id}`,
               type
-            ) ? (
+            ) && (
               <table className="data-table inner">
                 {this.renderDeploymentEnvironments(
                   "deploymentEnvironments",
@@ -298,8 +303,6 @@ class AddTaggingWizard extends Component {
                   }
                 )}
               </table>
-            ) : (
-              <></>
             )}
           </td>
         </tr>
@@ -320,7 +323,7 @@ class AddTaggingWizard extends Component {
               deploymentEnvironment.modules,
               `${ids.parent}_${ids.department}_${ids.product}_${deploymentEnvironment.id}`,
               type
-            ) ? (
+            ) && (
               <table className="data-table inner">
                 {this.renderModule(
                   "modules",
@@ -335,8 +338,6 @@ class AddTaggingWizard extends Component {
                   }
                 )}
               </table>
-            ) : (
-              <></>
             )}
           </td>
         </tr>
@@ -368,7 +369,7 @@ class AddTaggingWizard extends Component {
               module.appServices,
               `${ids.parent}_${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`,
               type
-            ) ? (
+            ) && (
               <table className="data-table inner">
                 {this.renderAppServices(
                   "appService",
@@ -380,14 +381,12 @@ class AddTaggingWizard extends Component {
                   { ...names, ...{ module: module.name } }
                 )}
               </table>
-            ) : (
-              <></>
             )}
             {this.isOtherListExist(
               module.dataServices,
               `${ids.parent}_${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`,
               type
-            ) ? (
+            ) && (
               <table className="data-table inner">
                 {this.renderDataServices(
                   "dataService",
@@ -401,8 +400,6 @@ class AddTaggingWizard extends Component {
                   { ...names, ...{ module: module.name } }
                 )}
               </table>
-            ) : (
-              <></>
             )}
           </td>
         </tr>
