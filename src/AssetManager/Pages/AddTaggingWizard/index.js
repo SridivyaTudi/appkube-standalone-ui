@@ -230,7 +230,7 @@ class AddTaggingWizard extends Component {
   }
   renderDiscoverAssests() {
     return (
-      this.state.data.length && this.renderParent("parent", this.state.data)
+      this.state.data.length ? this.renderParent("parent", this.state.data) : <></>
     );
   }
   renderParent(type, data) {
