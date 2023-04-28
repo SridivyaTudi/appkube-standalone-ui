@@ -477,7 +477,7 @@ class OpenNewContactPopup extends React.Component {
                   name="contactPhoto"
                   onChange={this.handleImageChange}
                 />
-                <p className="d-block">
+                <p className="d-block m-b-1">
                   An image of the person, it's best if it has the same length
                   and height
                 </p>

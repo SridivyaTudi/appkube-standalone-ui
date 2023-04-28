@@ -49,7 +49,7 @@ class CreateButtonComponent extends React.Component {
   render() {
     const { openCreateMenu } = this.state;
     return (
-      <div className="col-lg-4 col-md-4 col-sm-12 text-right">
+      <div className="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-right">
         <Rbac
           parentName={config.PARENT_NAME}
           childName="commancomponent-createbuttoncomponent-createbtn"

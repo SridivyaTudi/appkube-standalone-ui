@@ -407,7 +407,7 @@ class Tickets extends React.Component {
         <div className="servicedesk-page-container">
           <div className="common-container">
             <div className="row">
-              <div className="col-lg-8 col-md-8 col-sm-12">
+              <div className="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                 <div className="page-heading">
                   <h1>Quick Statistics</h1>
                   <span>List of ticket opened by Customer</span>

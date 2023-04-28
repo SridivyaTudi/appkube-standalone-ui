@@ -118,12 +118,12 @@ class TicketsDetails extends React.Component {
         <div className="servicedesk-page-container">
           <div className="common-container">
             <div className="row">
-              <div className="col-lg-8 col-md-8 col-sm-12">
+              <div className="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                 <div className="page-heading">
                   <h1>Ticket Details</h1>
                 </div>
               </div>
-              <div className="col-lg-4 col-md-4 col-sm-12 text-right">
+              <div className="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-right">
                 <Rbac childName="CreateLink-TicketPlugin">
                   <a
                     href="#"
