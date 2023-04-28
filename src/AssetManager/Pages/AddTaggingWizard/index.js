@@ -239,13 +239,13 @@ class AddTaggingWizard extends Component {
         <tr>
           <td>
             {this.renderCommonHtml(type, parent.name, parent.id)}
-            {this.isOtherListExist(parent.departments, parent.id, type) && (
+            {this.isOtherListExist(parent.departments, parent.id, type) ? (
               <table className="data-table inner">
                 {this.renderDepartment("departments", parent.departments, {
                   parent: parent.id,
                 })}
               </table>
-            )}
+            ) : <></>}
           </td>
         </tr>
       );
@@ -265,14 +265,14 @@ class AddTaggingWizard extends Component {
               department.products,
               `${ids.parent}_${department.id}`,
               type
-            ) && (
+            ) ? (
               <table className="data-table inner">
                 {this.renderProducts("products", department.products, {
                   department: department.id,
                   parent: ids.parent,
                 })}
               </table>
-            )}
+            ) : <></>}
           </td>
         </tr>
       );
@@ -292,7 +292,7 @@ class AddTaggingWizard extends Component {
               product.deploymentEnvironments,
               `${ids.parent}_${ids.department}_${product.id}`,
               type
-            ) && (
+            ) ? (
               <table className="data-table inner">
                 {this.renderDeploymentEnvironments(
                   "deploymentEnvironments",
@@ -303,7 +303,7 @@ class AddTaggingWizard extends Component {
                   }
                 )}
               </table>
-            )}
+            ) : <></>}
           </td>
         </tr>
       );
@@ -323,7 +323,7 @@ class AddTaggingWizard extends Component {
               deploymentEnvironment.modules,
               `${ids.parent}_${ids.department}_${ids.product}_${deploymentEnvironment.id}`,
               type
-            ) && (
+            ) ? (
               <table className="data-table inner">
                 {this.renderModule(
                   "modules",
@@ -338,7 +338,7 @@ class AddTaggingWizard extends Component {
                   }
                 )}
               </table>
-            )}
+            ) : <></>}
           </td>
         </tr>
       );
@@ -369,7 +369,7 @@ class AddTaggingWizard extends Component {
               module.appServices,
               `${ids.parent}_${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`,
               type
-            ) && (
+            ) ? (
               <table className="data-table inner">
                 {this.renderAppServices(
                   "appService",
@@ -381,12 +381,12 @@ class AddTaggingWizard extends Component {
                   { ...names, ...{ module: module.name } }
                 )}
               </table>
-            )}
+            ) : <></>}
             {this.isOtherListExist(
               module.dataServices,
               `${ids.parent}_${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`,
               type
-            ) && (
+            ) ? (
               <table className="data-table inner">
                 {this.renderDataServices(
                   "dataService",
@@ -400,7 +400,7 @@ class AddTaggingWizard extends Component {
                   { ...names, ...{ module: module.name } }
                 )}
               </table>
-            )}
+            ) : <></>}
           </td>
         </tr>
       );
