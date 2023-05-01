@@ -84,24 +84,26 @@ export class DiscoveredAssets extends Component {
     // this.tableValue = ;
   }
   getAssets() {
-    return RestService.getData(apiEndPoint.getDiscoveredAssets, null, null).then(
-      (response) => {
-        if (response) {
-          let tableValue = response.map((asset) => {
-            return {
-              id: asset.id,
-              name: asset.elementId,
-              ruleType: asset.elementType,
-              message: asset.landingZone,
-              alertHandlers: asset.productEnclave,
-              landingZone: asset.landingZone,
-              tagStatus: asset.tagStatus,
-            };
-          });
-          this.setState({ ...this.tableValue, ["data"]: tableValue });
-        }
+    return RestService.getData(
+      apiEndPoint.getDiscoveredAssets,
+      null,
+      null
+    ).then((response) => {
+      if (response) {
+        let tableValue = response.map((asset) => {
+          return {
+            id: asset.id,
+            name: asset.elementId,
+            ruleType: asset.elementType,
+            message: asset.landingZone,
+            alertHandlers: asset.productEnclave,
+            landingZone: asset.landingZone,
+            tagStatus: asset.tagStatus,
+          };
+        });
+        this.setState({ ...this.tableValue, ["data"]: tableValue });
       }
-    );
+    });
   }
   componentDidMount() {
     this.getAssets();
@@ -124,16 +126,12 @@ export class DiscoveredAssets extends Component {
               <div className="discovered-edit-logos">
                 <ul>
                   <li>
-                    <NavLink
-                      to={`/assetmanager/pages/addTaggingWizard/11/1234545`}
-                    >
-                      <a className="active">
-                        <span>
-                          <img src={awsLogo} alt="" />
-                        </span>
-                        <p>AWS</p>
-                      </a>
-                    </NavLink>
+                    <a className="active">
+                      <span>
+                        <img src={awsLogo} alt="" />
+                      </span>
+                      <p>AWS</p>
+                    </a>
                   </li>
                   <li>
                     <a>
