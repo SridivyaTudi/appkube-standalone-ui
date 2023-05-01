@@ -10,6 +10,12 @@ const apiEndPoint = {
   topAlertToday: `${config.baseURL}/topAlertToday`,
   getTeamMatricsData: `${config.baseURL}/getTeamMatricsData`,
   totalRecords: `${config.alertManagerURL}/search/totalRecords?type=alert&index=alert`,
+  getDiscoveredAssets:`${config.baseURL}/discovered-assets`,
+  getOrganizations:`${config.baseURL}/organizations/search?landingZone=`,
+  serviceAllocations:`${config.baseURL}/service-allocations/search?landingZone=`,
+  tagList:`${config.baseURL}/tags`,
+  removeTag:`${config.baseURL}/tags`,
+  searchTag:`${config.baseURL}api/tags/search?`
 };
 
 export default apiEndPoint;
