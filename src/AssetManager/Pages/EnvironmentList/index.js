@@ -273,59 +273,6 @@ class EnvironmentList extends Component {
                   }
                 />
               </div>
-              {/* <div className="multiselect">
-                <div
-                  className="form-control select-label"
-                  onClick={() => this.toggleColumnSelect("filterShow")}
-                >
-                  <i className="fas fa-funnel-dollar fillter-icon"></i>
-                  Select columns
-                  <i className="fas fa-caret-down arrow-icon"></i>
-                </div>
-                <div
-                  style={{ display: filterShow ? "" : "none" }}
-                  className="border options"
-                >
-                  <div className="search-bar">
-                    <input type="text" placeholder="Search...." />
-                  </div>
-                  <label className="option">
-                    <input
-                      type="checkbox"
-                      onChange={() => this.handleChecked()}
-                    />
-                    OU
-                  </label>
-                  <label className="option">
-                    <input
-                      type="checkbox"
-                      onChange={() => this.handleChecked()}
-                    />
-                    Status
-                  </label>
-                  <label className="option">
-                    <input
-                      type="checkbox"
-                      onChange={() => this.handleChecked()}
-                    />
-                    No of Assets
-                  </label>
-                  <label className="option">
-                    <input
-                      type="checkbox"
-                      onChange={() => this.handleChecked()}
-                    />
-                    Logs
-                  </label>
-                  <label className="option">
-                    <input
-                      type="checkbox"
-                      onChange={() => this.handleChecked()}
-                    />
-                    Performance & Availability
-                  </label>
-                </div>
-              </div> */}
             </div>
             <div className="col-lg-9 col-md-9 col-sm-12">
               <div className="row d-flex justify-content-center align-items-center h-100">
