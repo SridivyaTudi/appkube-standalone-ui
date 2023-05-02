@@ -75,12 +75,12 @@ class AppBlocks extends React.Component {
             <div className="catalogue-right-container">
               <div className="heading">
                 <div className="row">
-                  <div className="col-md-8 col-sm-12">
+                  <div className="col-lg-7 col-md-12 col-sm-12">
                     <h3>Catalogue</h3>
                     <p>A catalogue is collection of dashboards</p>
                   </div>
-                  <div className="col-md-4 col-sm-12">
-                    <button className="blue-button m-r-0 float-right">Add Catalogue</button>
+                  <div className="col-lg-5 col-md-12 col-sm-12">
+                    <button className="blue-button m-r-0">Add Catalogue</button>
                   </div>
                 </div>
               </div>

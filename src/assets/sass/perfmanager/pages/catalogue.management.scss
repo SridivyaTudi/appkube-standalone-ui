@@ -241,6 +241,9 @@
                 color: #3b4859;
                 margin-bottom: 0;
               }
+              .blue-button {
+                float: right;
+              }
 
               .btnContainer {
                 display: flex;
@@ -885,12 +888,15 @@
   .perfmanager-dashboard-container {
     .search-top-header {
       display: block;
-      .header-left{
+      .header-left {
         margin-bottom: 15px;
-      } 
+      }
       .header-right {
         display: block;
         text-align: left;
+        .search-box{
+          margin-top: 10px;
+        }
         .script-select {
           display: block;
           width: 100%;
@@ -898,10 +904,19 @@
         }
       }
     }
+
     .catalogue-management-container {
-      .catalogue-tabs-container {
-        .catalogue-inner-tabs-container {
-          .catalogue-right-container {
+      .common-container {
+        .catalogue-tabs-container {
+          .catalogue-inner-tabs-container {
+            .catalogue-right-container {
+              .heading {
+                .blue-button {
+                  float: left;
+                  margin-top: 15px;
+                }
+              }
+            }
             .templated-search {
               .search-box {
                 margin-bottom: 15px;
@@ -923,6 +938,7 @@
                 }
                 .module-card-content {
                   .library-icon {
+                    margin-bottom: 10px;
                     width: auto !important;
                   }
                   .preview-dashboard-icon {

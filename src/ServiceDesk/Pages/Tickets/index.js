@@ -417,7 +417,7 @@ class Tickets extends React.Component {
             </div>
           </div>
           <div className="common-container border-bottom-0">
-            <div className="row">
+            <div className="row d-flex justify-content-center align-items-center">
               <div className="col-lg-3 col-md-4 col-sm-12">
                 <div className="d-inline-block tickets-number-box">
                   <h3 className="d-block m-b-5 red">
@@ -427,7 +427,7 @@ class Tickets extends React.Component {
                 </div>
               </div>
               <div className="col-lg-7 col-md-8 col-sm-12">
-                <div className="d-block w-100 text-right">
+                <div className="d-block w-100">
                   <div className="d-inline-block tickets-number-box">
                     <h3 className="d-block m-b-5 blue">
                       {quickStat.opentTicketsPercentage}%

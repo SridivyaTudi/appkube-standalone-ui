@@ -867,6 +867,7 @@
 }
 
 @media only screen and (max-width: 991px) {
+    
     .project-over-view-container {
         .project-over-view-section {
             .project-over-view-inner-content {
@@ -884,6 +885,18 @@
                             }
                         }
                     }
+                }
+                .project-over-view-right-content{
+                    padding: 20px 20px;
+                    .workflow-inner-data-contant{
+                        .workflow-view-table-section{
+                            .workflow-view-table{
+                                .table {
+                                    width: 800px;
+                                }
+                            } 
+                        } 
+                    } 
                 }
             }
 
@@ -931,6 +944,9 @@
                             }
                         }
                     }
+                }
+                .project-over-view-right-content{
+                    padding: 10px 10px;
                 }
             }
             .fliter-container {

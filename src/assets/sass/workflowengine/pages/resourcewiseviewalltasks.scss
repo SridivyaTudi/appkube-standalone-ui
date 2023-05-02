@@ -176,6 +176,7 @@
                 overflow-x: scroll;
                 width: 100%;
                 .table {
+                    width: 100%;
                     .thead {
                         width: 100%;
                         display: flex;
@@ -452,4 +453,18 @@
             }
         }
     }
+}
+@media screen and (max-width: 991px) {
+    .owrkflow-resource-wise-View-container{
+        .resource-wise-View-page-container{
+            .project-wise-status{
+                .project-wise-table{
+                    width: 100%;
+                    .table {
+                        width: 800px;
+                    }
+                } 
+            } 
+        } 
+    } 
 }
