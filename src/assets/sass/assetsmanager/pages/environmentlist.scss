@@ -14,7 +14,7 @@
       margin-right: 8px;
       margin-bottom: 15px;
       background: #ffffff 0% 0% no-repeat padding-box;
-      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1607843137);
+      box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
       border-radius: 5px;
       overflow: hidden;
       .environment-title {
@@ -95,13 +95,11 @@
   .add-new-environment {
     display: block;
     width: 100%;
-    .multiselect {
-      position: relative;
-      z-index: 10;
-      display: inline-block;
-      border: none;
-      .form-control {
-        width: 100%;
+    margin-top: 15px;
+    .fliter {
+      margin-right: 15px;
+      .fliter-toggel {
+        width: 160px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -111,22 +109,32 @@
         font-size: 12px;
         font-weight: 600;
         height: 36px;
+        &.new-environment {
+          background-color: transparent;
+          border: 1px solid #383874;
+        }
         .fillter-icon {
-          margin-right: 8px;
+          margin-right: 5px;
         }
         .arrow-icon {
-          margin-left: 8px;
+          margin-left: 5px;
+          margin-right: 0;
         }
       }
-      .options {
-        position: absolute;
-        left: 0;
-        top: 37px;
+      .fliter-collapse {
         background-color: #ffffff;
-        padding: 15px 15px 10px 15px;
-        width: 230px;
-        box-shadow: 0px 0px 6px -4px #3b4859;
-        border-radius: 3px;
+        border-radius: 0px 0px 4px 4px;
+        padding: 10px 10px 0;
+        display: none;
+        position: absolute;
+        top: 40px;
+        width: 100%;
+        left: 0;
+        z-index: 10;
+        box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+        &.active {
+          display: block;
+        }
         .search-bar {
           width: 100%;
           display: block;
@@ -145,31 +153,37 @@
             }
           }
         }
-        .option {
+
+        ul {
           display: block;
-          padding-bottom: 5px;
-          margin-bottom: 0;
-          color: #3b4859;
-          font-size: 13px;
-          line-height: 24px;
-          font-weight: 400;
-          cursor: pointer;
-          input {
-            margin-right: 10px;
-            display: inline-block;
-            vertical-align: middle;
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          li {
+            display: block;
+            padding-bottom: 5px;
+            margin-bottom: 0;
+            color: #383874;
+            font-size: 12px;
+            line-height: 24px;
+            font-weight: 400;
+            cursor: pointer;
+            input {
+              margin-right: 10px;
+              display: inline-block;
+              vertical-align: middle;
+            }
           }
         }
       }
     }
     .export-sction {
-      float: right;
-      .multiselect {
-        position: relative;
-        z-index: 10;
-        display: inline-block;
-        border: none;
-        .form-control {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      .fliter {
+        margin-right: 15px;
+        .fliter-toggel {
           width: 100%;
           display: flex;
           align-items: center;
@@ -180,31 +194,44 @@
           font-size: 12px;
           font-weight: 600;
           height: 36px;
+          &.new-environment {
+            background-color: transparent;
+            border: 1px solid #383874;
+          }
           .fillter-icon {
-            margin-right: 8px;
+            margin-right: 5px;
           }
           .arrow-icon {
-            margin-left: 8px;
+            margin-left: 5px;
+            margin-right: 0;
           }
         }
-        .options {
-          position: absolute;
-          left: 0;
-          top: 37px;
+        .fliter-collapse {
           background-color: #ffffff;
-          padding: 15px 15px 10px 15px;
-          width: 195px;
-          box-shadow: 0px 0px 6px -4px #3b4859;
-          border-radius: 3px;
+          border-radius: 0px 0px 4px 4px;
+          padding: 10px 10px 0;
+          display: none;
+          position: absolute;
+          top: 40px;
+          width: 100%;
+          left: 0;
+          z-index: 10;
+          box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+          &.recent-collapse {
+            width: 150px;
+            right: 0;
+          }
+          &.active {
+            display: block;
+          }
           ul {
             display: block;
-            width: 100%;
+            list-style: none;
             padding: 0;
             margin: 0;
             li {
               display: block;
               padding-bottom: 5px;
-              list-style: none;
               a {
                 color: #414d55;
                 display: block;
@@ -216,26 +243,19 @@
                   height: 24px;
                   line-height: 24px;
                   margin-right: 5px;
-                  img {
-                    max-width: 100%;
-                  }
                 }
                 p {
                   display: inline-block;
                   vertical-align: top;
                   margin-bottom: 0;
                   margin-top: 3px;
-                  font-size: 12px;
+                  font-size: 10px;
                   line-height: 18px;
                   font-weight: 500;
                 }
               }
             }
           }
-        }
-        .new-environment {
-          background-color: transparent;
-          border: 1px solid #383874;
         }
       }
     }
@@ -253,10 +273,8 @@
     background-color: #ffffff;
     margin-top: 30px;
     padding: 20px 0;
-    border-radius: 15px;
-    box-shadow: 1px 2px 6px -2px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 1px 2px 6px -2px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 1px 2px 6px -2px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
 
     .table {
       display: flex;
@@ -312,7 +330,7 @@
             width: 14.2857%;
             text-align: center;
             border-bottom: 1px solid #d9d9d9;
-           position: relative;
+            position: relative;
             .list-icon {
               background: transparent;
               border: none;
@@ -321,12 +339,35 @@
             .menu-list {
               position: absolute;
               top: 32px;
-              padding: 10px 15px;
+              padding: 5px;
               z-index: 1;
-              right: 0;
+              left: 0;
+              border-radius: 5px;
               background: #ffffff;
               box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
-          }
+              ul {
+                display: block;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+                li {
+                  display: block;
+                  list-style: none;
+                  text-align: left;
+                  border-radius: 3px;
+                  padding: 5px 10px;
+                  &.active {
+                    background: #dde1f8;
+                  }
+                  a {
+                    font-size: 10px;
+                    line-height: 14px;
+                    font-weight: 500;
+                    color: #383874;
+                  }
+                }
+              }
+            }
             a {
               color: #2662f0;
             }

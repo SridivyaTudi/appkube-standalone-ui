@@ -3,15 +3,15 @@ import Aws from "../../../assets/img/aws.png";
 import Microsoftazure from "../../../assets/img/microsoftazure.png";
 import GoogleCloud from "../../../assets/img/google-cloud.png";
 import kubernetes from "../../../assets/img/kubernetes.png";
+import { Link } from "react-router-dom";
 
 class EnvironmentList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterShow: false,
-      recentShow: false,
-      envShow: false,
-      showMenu: false,
+      showRecentFilter: false,
+      showAddNewFilter: false,
+      showSelectFilter: false,
     };
   }
   toggleColumnSelect = (drdName) => {
@@ -28,7 +28,7 @@ class EnvironmentList extends Component {
   };
 
   render() {
-    const { filterShow, envShow, recentShow } = this.state;
+    const { showRecentFilter, showAddNewFilter, showSelectFilter } = this.state;
     return (
       <div className="environmentlist-container">
         <div className="list-heading">
@@ -197,9 +197,83 @@ class EnvironmentList extends Component {
           </div>
         </div>
         <div className="add-new-environment">
-          <div className="row">
+          <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-lg-3 col-md-3 col-sm-12">
-              <div className="multiselect">
+              <div className="fliter">
+                <div
+                  className="fliter-toggel"
+                  onClick={() =>
+                    this.setState({
+                      showSelectFilter: !showSelectFilter,
+                    })
+                  }
+                >
+                  <i className="fas fa-alarm-clock fillter-icon"></i>
+                  Select and fillter
+                  <i className="fas fa-caret-down arrow-icon"></i>
+                </div>
+                <div
+                  className={
+                    showSelectFilter === true
+                      ? "fliter-collapse active"
+                      : "fliter-collapse"
+                  }
+                >
+                  <div className="search-bar">
+                    <input type="text" placeholder="Search...." />
+                  </div>
+                  <ul>
+                    <li>
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
+                      OU
+                    </li>
+                    <li>
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
+                      Status
+                    </li>
+                    <li>
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
+                      No of Assets
+                    </li>
+                    <li>
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
+                      Logs
+                    </li>
+                    <li>
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
+                      Performance & Availability
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  className={
+                    showSelectFilter === true
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
+                  onClick={() =>
+                    this.setState({
+                      showSelectFilter: !showSelectFilter,
+                    })
+                  }
+                />
+              </div>
+              {/* <div className="multiselect">
                 <div
                   className="form-control select-label"
                   onClick={() => this.toggleColumnSelect("filterShow")}
@@ -251,94 +325,143 @@ class EnvironmentList extends Component {
                     Performance & Availability
                   </label>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="col-lg-9 col-md-9 col-sm-12">
-              <div className="row">
+              <div className="row d-flex justify-content-center align-items-center h-100">
                 <div className="col-lg-8 col-md-12 col-sm-12">
                   <div className="export-sction">
-                    <div className="multiselect">
+                    <div className="fliter">
                       <div
-                        className="form-control select-label"
-                        onClick={() => this.toggleColumnSelect("recentShow")}
+                        className="fliter-toggel"
+                        onClick={() =>
+                          this.setState({
+                            showRecentFilter: !showRecentFilter,
+                          })
+                        }
                       >
-                        <i className="fas fa-stopwatch fillter-icon"></i>
+                        <i className="fas fa-alarm-clock fillter-icon"></i>
                         Recent
                         <i className="fas fa-caret-down arrow-icon"></i>
                       </div>
                       <div
-                        style={{ display: recentShow ? "" : "none" }}
-                        className="border options"
+                        className={
+                          showRecentFilter === true
+                            ? "fliter-collapse recent-collapse active"
+                            : "fliter-collapse"
+                        }
                       >
                         <ul>
                           <li>
-                            <a href="">
+                            <Link to={`/assetmanager/pages/accountsetup`}>
                               <span>
-                                <img src={Aws} />
+                                <img src={Aws} alt="AWS" />
                               </span>
-                              <p>AWS (657907747545)</p>
-                            </a>
+                              <p>(657907747545)</p>
+                            </Link>
                           </li>
                           <li>
-                            <a href="">
+                            <Link to={`/assetmanager/pages/accountsetup`}>
                               <span>
-                                <img src={Aws} />
+                                <img src={Aws} alt="" />
                               </span>
-                              <p>AWS (657907747545)</p>
-                            </a>
+                              <p>(655668745458)</p>
+                            </Link>
                           </li>
                           <li>
-                            <a href="">
+                            <Link to={`/assetmanager/pages/accountsetup`}>
                               <span>
-                                <img src={Microsoftazure} />
+                                <img src={Microsoftazure} alt="" />
                               </span>
-                              <p>AWS (657907747545)</p>
-                            </a>
+                              <p>(655668745458)</p>
+                            </Link>
                           </li>
                         </ul>
                       </div>
-                    </div>
-                    <div className="multiselect m-l-1 m-r-1">
                       <div
-                        className="form-control new-environment"
-                        onClick={() => this.toggleColumnSelect("envShow")}
+                        className={
+                          showRecentFilter === true
+                            ? "fliters-collapse-bg active"
+                            : "fliters-collapse-bg"
+                        }
+                        onClick={() =>
+                          this.setState({
+                            showRecentFilter: !showRecentFilter,
+                          })
+                        }
+                      />
+                    </div>
+                    <div className="fliter">
+                      <div
+                        className="fliter-toggel new-environment"
+                        onClick={() =>
+                          this.setState({
+                            showAddNewFilter: !showAddNewFilter,
+                          })
+                        }
                       >
                         Add New Environment
                         <i className="fas fa-caret-down arrow-icon"></i>
                       </div>
                       <div
-                        style={{ display: envShow ? "" : "none" }}
-                        className="border options"
+                        className={
+                          showAddNewFilter === true
+                            ? "fliter-collapse active"
+                            : "fliter-collapse"
+                        }
                       >
                         <ul>
                           <li>
-                            <a href="">
+                            <Link to={`/assetmanager/pages/accountsetup`}>
                               <span>
-                                <img src={Aws} />
+                                <img src={Aws} alt="Aws" />
                               </span>
-                              <p>AWS (657907747545)</p>
-                            </a>
+                              <p>Amazon Web Services</p>
+                            </Link>
                           </li>
                           <li>
-                            <a href="">
+                            <Link to={`/assetmanager/pages/accountsetup`}>
                               <span>
-                                <img src={Aws} />
+                                <img
+                                  src={Microsoftazure}
+                                  alt="Microsoftazure"
+                                />
                               </span>
-                              <p>AWS (657907747545)</p>
-                            </a>
+                              <p>Azure Cloud</p>
+                            </Link>
                           </li>
                           <li>
-                            <a href="">
+                            <Link to={`/assetmanager/pages/accountsetup`}>
                               <span>
-                                <img src={Microsoftazure} />
+                                <img src={GoogleCloud} alt="GoogleCloud" />
                               </span>
-                              <p>AWS (657907747545)</p>
-                            </a>
+                              <p>Google Cloud Platform</p>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link to={`/assetmanager/pages/accountsetup`}>
+                              <span>
+                                <img src={kubernetes} alt="Kubernetes" />
+                              </span>
+                              <p>Kubernetes</p>
+                            </Link>
                           </li>
                         </ul>
                       </div>
+                      <div
+                        className={
+                          showAddNewFilter === true
+                            ? "fliters-collapse-bg active"
+                            : "fliters-collapse-bg"
+                        }
+                        onClick={() =>
+                          this.setState({
+                            showAddNewFilter: !showAddNewFilter,
+                          })
+                        }
+                      />
                     </div>
-                    <button class="new-button m-r-0">
+                    <button class="new-button m-r-0 m-b-0">
                       <i className="fas fa-external-link-square-alt p-r-10"></i>
                       Export
                     </button>
@@ -395,9 +518,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -411,9 +559,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -427,9 +600,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -443,9 +641,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -459,9 +682,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
               </tbody>
@@ -499,9 +747,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -515,9 +788,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -531,9 +829,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -547,9 +870,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -563,9 +911,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
               </tbody>
@@ -603,9 +976,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -619,9 +1017,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -635,9 +1058,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -651,9 +1099,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -667,9 +1140,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
               </tbody>
@@ -707,9 +1205,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -723,9 +1246,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -739,9 +1287,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -755,9 +1328,34 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button className="list-icon">
+                    <button
+                      type="button"
+                      onClick={this.toggleMenu}
+                      className="list-icon"
+                    >
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    {this.state.showMenu == true && (
+                      <div className="menu-list">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
+                          </li>
+                          <li>
+                            <a href="#">Add Compliance</a>
+                          </li>
+                          <li>
+                            <a href="#">Associate to OU</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New VPC</a>
+                          </li>
+                          <li>
+                            <a href="#">Add New Product</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -781,35 +1379,20 @@ class EnvironmentList extends Component {
                     {this.state.showMenu == true && (
                       <div className="menu-list">
                         <ul>
-                          <li>
-                            <a href="#">
-                              <i className="fal fa-exclamation-circle"></i>
-                              Helpe
-                            </a>
+                          <li className="active">
+                            <a href="#">Add New datasource</a>
                           </li>
                           <li>
-                            <a href="#">
-                              <i className="fas fa-clone"></i>
-                              Duplicate
-                            </a>
+                            <a href="#">Add Compliance</a>
                           </li>
                           <li>
-                            <a href="#">
-                              <i className="far fa-eye"></i>
-                              Disable
-                            </a>
+                            <a href="#">Associate to OU</a>
                           </li>
                           <li>
-                            <a href="#">
-                              <i className="fas fa-trash-alt"></i>
-                              Delete
-                            </a>
+                            <a href="#">Add New VPC</a>
                           </li>
                           <li>
-                            <a href="#">
-                              <i className="fas fa-th-large"></i>
-                              Move
-                            </a>
+                            <a href="#">Add New Product</a>
                           </li>
                         </ul>
                       </div>
