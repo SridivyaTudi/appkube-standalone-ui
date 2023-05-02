@@ -333,17 +333,15 @@
             padding-bottom: 10px;
             font-size: 14px;
             font-weight: 400;
-            color: #000000;
+            color: #393975;
             width: 14.2857%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             text-align: center;
-
-            &.active {
-              font-weight: 600;
+            i{
+              vertical-align: text-top;
             }
-
             &:nth-child(1) {
               text-align: left;
             }

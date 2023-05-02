@@ -268,7 +268,7 @@ class EnvironmentList extends Component {
                       </div>
                       <div
                         className={
-                          showRecentFilter === true ? 'fliter-collapse recent-collapse active' : 'fliter-collapse'
+                          showRecentFilter === true ? 'fliter-collapse  active' : 'fliter-collapse'
                         }
                       >
                         <ul>
@@ -391,12 +391,12 @@ class EnvironmentList extends Component {
             <table className="overview">
               <thead>
                 <tr>
-                  <th className="active">
+                  <th>
                     <i className="fas fa-sort-down"></i>
                     <div className="environment-image">
                       <img src={Aws} />
-                    </div>{' '}
-                    AWS
+                    </div>
+                    <strong>AWS</strong>
                   </th>
                   <th>Product Enclave</th>
                   <th>Product</th>
@@ -600,12 +600,12 @@ class EnvironmentList extends Component {
             <table className="overview">
               <thead>
                 <tr>
-                  <th className="active">
+                  <th>
                     <i className="fas fa-sort-down"></i>
                     <div className="environment-image">
                       <img src={Microsoftazure} />
                     </div>
-                    Azure Cloud
+                    <strong>Azure Cloud</strong>
                   </th>
                   <th>Product Enclave</th>
                   <th>Product</th>
@@ -809,12 +809,12 @@ class EnvironmentList extends Component {
             <table className="overview">
               <thead>
                 <tr>
-                  <th className="active">
+                  <th>
                     <i className="fas fa-sort-down"></i>
                     <div className="environment-image">
                       <img src={GoogleCloud} />
                     </div>
-                    Google Cloud Platform
+                    <strong>Google Cloud Platform</strong>
                   </th>
                   <th>Product Enclave</th>
                   <th>Product</th>
@@ -1018,12 +1018,12 @@ class EnvironmentList extends Component {
             <table className="overview">
               <thead>
                 <tr>
-                  <th className="active">
+                  <th>
                     <i className="fas fa-sort-down"></i>
                     <div className="environment-image">
                       <img src={kubernetes} />
                     </div>
-                    Kubernetes
+                    <strong>Kubernetes</strong>
                   </th>
                   <th>Product Enclave</th>
                   <th>Product</th>
