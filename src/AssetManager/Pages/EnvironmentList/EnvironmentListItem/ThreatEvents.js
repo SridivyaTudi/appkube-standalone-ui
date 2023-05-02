@@ -9,6 +9,7 @@ class ThreatEvents extends Component {
     this.state = {
       showSelectFilter: false,
       showServiceViewFilter: false,
+      showRecentFilter: false,
     };
   }
 
@@ -20,7 +21,7 @@ class ThreatEvents extends Component {
   };
 
   render() {
-    const { showSelectFilter, showServiceViewFilter } = this.state;
+    const { showSelectFilter, showServiceViewFilter, showRecentFilter } = this.state;
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
@@ -137,7 +138,7 @@ class ThreatEvents extends Component {
                     className="fliter-toggel"
                     onClick={() =>
                       this.setState({
-                        showServiceViewFilter: !showServiceViewFilter,
+                        showRecentFilter: !showRecentFilter,
                       })
                     }
                   >
@@ -146,9 +147,7 @@ class ThreatEvents extends Component {
                     <i className="fas fa-caret-down arrow-icon"></i>
                   </div>
                   <div
-                    className={
-                      showServiceViewFilter === true ? 'fliter-collapse recent-collapse active' : 'fliter-collapse'
-                    }
+                    className={showRecentFilter === true ? 'fliter-collapse recent-collapse active' : 'fliter-collapse'}
                   >
                     <ul>
                       <li>
@@ -178,10 +177,10 @@ class ThreatEvents extends Component {
                     </ul>
                   </div>
                   <div
-                    className={showServiceViewFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
+                    className={showRecentFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
                     onClick={() =>
                       this.setState({
-                        showServiceViewFilter: !showServiceViewFilter,
+                        showRecentFilter: !showRecentFilter,
                       })
                     }
                   />
@@ -190,7 +189,7 @@ class ThreatEvents extends Component {
                   <form>
                     <div className="form-group search-control-group m-b-0">
                       <input type="text" className="input-group-text" placeholder="Search" />
-                      <button>
+                      <button className="search-btn">
                         <i className="fa fa-search" />
                       </button>
                     </div>

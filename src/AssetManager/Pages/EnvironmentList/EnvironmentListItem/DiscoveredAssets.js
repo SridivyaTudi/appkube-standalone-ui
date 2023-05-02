@@ -140,7 +140,7 @@ class DiscoveredAssets extends Component {
                   <form>
                     <div className="form-group search-control-group m-b-0">
                       <input type="text" className="input-group-text" placeholder="Search" />
-                      <button>
+                      <button className="search-btn">
                         <i className="fa fa-search" />
                       </button>
                     </div>

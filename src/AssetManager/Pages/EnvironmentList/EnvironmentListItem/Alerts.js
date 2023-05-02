@@ -9,6 +9,7 @@ class Alerts extends Component {
     this.state = {
       showSelectFilter: false,
       showServiceViewFilter: false,
+      showRecentFilter: false,
     };
   }
 
@@ -20,7 +21,7 @@ class Alerts extends Component {
   };
 
   render() {
-    const { showSelectFilter, showServiceViewFilter } = this.state;
+    const { showSelectFilter, showServiceViewFilter, showRecentFilter } = this.state;
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
@@ -132,15 +133,63 @@ class Alerts extends Component {
             </div>
             <div className="col-lg-6 col-md-6 col-sm-12">
               <div className="d-inline-block width-100 text-right">
-                <button class="new-button m-b-0">
-                  <i className="fas fa-external-link-square-alt p-r-10"></i>
-                  Export
-                </button>
+                <div className="environment-fliter">
+                  <div
+                    className="fliter-toggel"
+                    onClick={() =>
+                      this.setState({
+                        showRecentFilter: !showRecentFilter,
+                      })
+                    }
+                  >
+                    <i class="far fa-clock fillter-icon"></i>
+                    Recent
+                    <i className="fas fa-caret-down arrow-icon"></i>
+                  </div>
+                  <div
+                    className={showRecentFilter === true ? 'fliter-collapse recent-collapse active' : 'fliter-collapse'}
+                  >
+                    <ul>
+                      <li>
+                        <Link to={`/assetmanager/pages/accountsetup`}>
+                          <span>
+                            <img src={Aws} alt="AWS" />
+                          </span>
+                          <p>(657907747545)</p>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to={`/assetmanager/pages/accountsetup`}>
+                          <span>
+                            <img src={Aws} alt="" />
+                          </span>
+                          <p>(655668745458)</p>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to={`/assetmanager/pages/accountsetup`}>
+                          <span>
+                            <img src={Microsoftazure} alt="" />
+                          </span>
+                          <p>(655668745458)</p>
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                  <div
+                    className={showRecentFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
+                    onClick={() =>
+                      this.setState({
+                        showRecentFilter: !showRecentFilter,
+                      })
+                    }
+                  />
+                </div>
                 <div className="search-box">
                   <form>
                     <div className="form-group search-control-group m-b-0">
                       <input type="text" className="input-group-text" placeholder="Search" />
-                      <button>
+                      <button className="search-btn">
                         <i className="fa fa-search" />
                       </button>
                     </div>

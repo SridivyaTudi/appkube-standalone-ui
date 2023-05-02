@@ -9,6 +9,7 @@ class Application extends Component {
     this.state = {
       showSelectFilter: false,
       showServiceViewFilter: false,
+      showRecentFilter: false,
     };
   }
 
@@ -20,7 +21,7 @@ class Application extends Component {
   };
 
   render() {
-    const { showSelectFilter, showServiceViewFilter } = this.state;
+    const { showSelectFilter, showServiceViewFilter, showRecentFilter } = this.state;
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
@@ -137,7 +138,7 @@ class Application extends Component {
                     className="fliter-toggel"
                     onClick={() =>
                       this.setState({
-                        showServiceViewFilter: !showServiceViewFilter,
+                        showRecentFilter: !showRecentFilter,
                       })
                     }
                   >
@@ -147,7 +148,7 @@ class Application extends Component {
                   </div>
                   <div
                     className={
-                      showServiceViewFilter === true ? 'fliter-collapse recent-collapse active' : 'fliter-collapse'
+                      showRecentFilter === true ? 'fliter-collapse recent-collapse active' : 'fliter-collapse'
                     }
                   >
                     <ul>
@@ -178,10 +179,10 @@ class Application extends Component {
                     </ul>
                   </div>
                   <div
-                    className={showServiceViewFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
+                    className={showRecentFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
                     onClick={() =>
                       this.setState({
-                        showServiceViewFilter: !showServiceViewFilter,
+                        showRecentFilter: !showRecentFilter,
                       })
                     }
                   />
@@ -190,7 +191,7 @@ class Application extends Component {
                   <form>
                     <div className="form-group search-control-group m-b-0">
                       <input type="text" className="input-group-text" placeholder="Search" />
-                      <button>
+                      <button className="search-btn">
                         <i className="fa fa-search" />
                       </button>
                     </div>
