@@ -360,7 +360,7 @@ class EnvironmentList extends Component {
                         <ul>
                           <li>
                             <Link to={`/assetmanager/pages/accountsetup`}>
-                              <span>
+                              <span className="image-box">
                                 <img src={Aws} alt="Aws" />
                               </span>
                               <p>Amazon Web Services</p>
@@ -368,7 +368,7 @@ class EnvironmentList extends Component {
                           </li>
                           <li>
                             <Link to={`/assetmanager/pages/accountsetup`}>
-                              <span>
+                              <span className="image-box">
                                 <img
                                   src={Microsoftazure}
                                   alt="Microsoftazure"
@@ -379,7 +379,7 @@ class EnvironmentList extends Component {
                           </li>
                           <li>
                             <Link to={`/assetmanager/pages/accountsetup`}>
-                              <span>
+                              <span className="image-box">
                                 <img src={GoogleCloud} alt="GoogleCloud" />
                               </span>
                               <p>Google Cloud Platform</p>
@@ -387,7 +387,7 @@ class EnvironmentList extends Component {
                           </li>
                           <li>
                             <Link to={`/assetmanager/pages/accountsetup`}>
-                              <span>
+                              <span className="image-box">
                                 <img src={kubernetes} alt="Kubernetes" />
                               </span>
                               <p>Kubernetes</p>
@@ -423,9 +423,9 @@ class EnvironmentList extends Component {
                           className="input-group-text"
                           placeholder="Search"
                         />
-                        <button>
+                        <span className="search-btn">
                           <i className="fa fa-search" />
-                        </button>
+                        </span>
                       </div>
                     </form>
                   </div>
