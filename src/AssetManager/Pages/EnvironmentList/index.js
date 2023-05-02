@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import Aws from "../../../assets/img/aws.png";
-import Microsoftazure from "../../../assets/img/microsoftazure.png";
-import GoogleCloud from "../../../assets/img/google-cloud.png";
-import kubernetes from "../../../assets/img/kubernetes.png";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import Aws from '../../../assets/img/aws.png';
+import Microsoftazure from '../../../assets/img/microsoftazure.png';
+import GoogleCloud from '../../../assets/img/google-cloud.png';
+import kubernetes from '../../../assets/img/kubernetes.png';
+import { Link } from 'react-router-dom';
 
 class EnvironmentList extends Component {
   constructor(props) {
@@ -46,28 +46,28 @@ class EnvironmentList extends Component {
               <ul>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#ff9900" }}></span>
+                    <span style={{ backgroundColor: '#ff9900' }}></span>
                     <p>Environments</p>
                   </div>
                   <label>20</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#0089d6" }}></span>
+                    <span style={{ backgroundColor: '#0089d6' }}></span>
                     <p>Assets</p>
                   </div>
                   <label>150</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#da4f44" }}></span>
+                    <span style={{ backgroundColor: '#da4f44' }}></span>
                     <p>Alerts</p>
                   </div>
                   <label>100</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#00b929" }}></span>
+                    <span style={{ backgroundColor: '#00b929' }}></span>
                     <p>Total Billing</p>
                   </div>
                   <label>&#65284;200</label>
@@ -86,28 +86,28 @@ class EnvironmentList extends Component {
               <ul>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#ff9900" }}></span>
+                    <span style={{ backgroundColor: '#ff9900' }}></span>
                     <p>Environments</p>
                   </div>
                   <label>20</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#0089d6" }}></span>
+                    <span style={{ backgroundColor: '#0089d6' }}></span>
                     <p>Assets</p>
                   </div>
                   <label>150</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#da4f44" }}></span>
+                    <span style={{ backgroundColor: '#da4f44' }}></span>
                     <p>Alerts</p>
                   </div>
                   <label>100</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#00b929" }}></span>
+                    <span style={{ backgroundColor: '#00b929' }}></span>
                     <p>Total Billing</p>
                   </div>
                   <label>&#65284;200</label>
@@ -126,28 +126,28 @@ class EnvironmentList extends Component {
               <ul>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#ff9900" }}></span>
+                    <span style={{ backgroundColor: '#ff9900' }}></span>
                     <p>Environments</p>
                   </div>
                   <label>20</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#0089d6" }}></span>
+                    <span style={{ backgroundColor: '#0089d6' }}></span>
                     <p>Assets</p>
                   </div>
                   <label>150</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#da4f44" }}></span>
+                    <span style={{ backgroundColor: '#da4f44' }}></span>
                     <p>Alerts</p>
                   </div>
                   <label>100</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#00b929" }}></span>
+                    <span style={{ backgroundColor: '#00b929' }}></span>
                     <p>Total Billing</p>
                   </div>
                   <label>&#65284;200</label>
@@ -166,28 +166,28 @@ class EnvironmentList extends Component {
               <ul>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#ff9900" }}></span>
+                    <span style={{ backgroundColor: '#ff9900' }}></span>
                     <p>Environments</p>
                   </div>
                   <label>20</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#0089d6" }}></span>
+                    <span style={{ backgroundColor: '#0089d6' }}></span>
                     <p>Assets</p>
                   </div>
                   <label>150</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#da4f44" }}></span>
+                    <span style={{ backgroundColor: '#da4f44' }}></span>
                     <p>Alerts</p>
                   </div>
                   <label>100</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: "#00b929" }}></span>
+                    <span style={{ backgroundColor: '#00b929' }}></span>
                     <p>Total Billing</p>
                   </div>
                   <label>&#65284;200</label>
@@ -199,7 +199,7 @@ class EnvironmentList extends Component {
         <div className="add-new-environment">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-lg-3 col-md-3 col-sm-12">
-              <div className="fliter">
+              <div className="environment-fliter">
                 <div
                   className="fliter-toggel"
                   onClick={() =>
@@ -208,64 +208,39 @@ class EnvironmentList extends Component {
                     })
                   }
                 >
-                  <i className="fas fa-alarm-clock fillter-icon"></i>
+                  <i class="fas fa-filter fillter-icon"></i>
                   Select and fillter
                   <i className="fas fa-caret-down arrow-icon"></i>
                 </div>
-                <div
-                  className={
-                    showSelectFilter === true
-                      ? "fliter-collapse active"
-                      : "fliter-collapse"
-                  }
-                >
+                <div className={showSelectFilter === true ? 'fliter-collapse active' : 'fliter-collapse'}>
                   <div className="search-bar">
                     <input type="text" placeholder="Search...." />
                   </div>
                   <ul>
                     <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
+                      <input type="checkbox" onChange={() => this.handleChecked()} />
                       OU
                     </li>
                     <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
+                      <input type="checkbox" onChange={() => this.handleChecked()} />
                       Status
                     </li>
                     <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
+                      <input type="checkbox" onChange={() => this.handleChecked()} />
                       No of Assets
                     </li>
                     <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
+                      <input type="checkbox" onChange={() => this.handleChecked()} />
                       Logs
                     </li>
                     <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
+                      <input type="checkbox" onChange={() => this.handleChecked()} />
                       Performance & Availability
                     </li>
                   </ul>
                 </div>
                 <div
-                  className={
-                    showSelectFilter === true
-                      ? "fliters-collapse-bg active"
-                      : "fliters-collapse-bg"
-                  }
+                  className={showSelectFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
                   onClick={() =>
                     this.setState({
                       showSelectFilter: !showSelectFilter,
@@ -278,7 +253,7 @@ class EnvironmentList extends Component {
               <div className="row d-flex justify-content-center align-items-center h-100">
                 <div className="col-lg-8 col-md-12 col-sm-12">
                   <div className="export-sction">
-                    <div className="fliter">
+                    <div className="environment-fliter">
                       <div
                         className="fliter-toggel"
                         onClick={() =>
@@ -293,9 +268,7 @@ class EnvironmentList extends Component {
                       </div>
                       <div
                         className={
-                          showRecentFilter === true
-                            ? "fliter-collapse recent-collapse active"
-                            : "fliter-collapse"
+                          showRecentFilter === true ? 'fliter-collapse recent-collapse active' : 'fliter-collapse'
                         }
                       >
                         <ul>
@@ -326,11 +299,7 @@ class EnvironmentList extends Component {
                         </ul>
                       </div>
                       <div
-                        className={
-                          showRecentFilter === true
-                            ? "fliters-collapse-bg active"
-                            : "fliters-collapse-bg"
-                        }
+                        className={showRecentFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
                         onClick={() =>
                           this.setState({
                             showRecentFilter: !showRecentFilter,
@@ -338,7 +307,7 @@ class EnvironmentList extends Component {
                         }
                       />
                     </div>
-                    <div className="fliter">
+                    <div className="environment-fliter">
                       <div
                         className="fliter-toggel new-environment"
                         onClick={() =>
@@ -350,13 +319,7 @@ class EnvironmentList extends Component {
                         Add New Environment
                         <i className="fas fa-caret-down arrow-icon"></i>
                       </div>
-                      <div
-                        className={
-                          showAddNewFilter === true
-                            ? "fliter-collapse active"
-                            : "fliter-collapse"
-                        }
-                      >
+                      <div className={showAddNewFilter === true ? 'fliter-collapse active' : 'fliter-collapse'}>
                         <ul>
                           <li>
                             <Link to={`/assetmanager/pages/accountsetup`}>
@@ -369,10 +332,7 @@ class EnvironmentList extends Component {
                           <li>
                             <Link to={`/assetmanager/pages/accountsetup`}>
                               <span>
-                                <img
-                                  src={Microsoftazure}
-                                  alt="Microsoftazure"
-                                />
+                                <img src={Microsoftazure} alt="Microsoftazure" />
                               </span>
                               <p>Azure Cloud</p>
                             </Link>
@@ -396,11 +356,7 @@ class EnvironmentList extends Component {
                         </ul>
                       </div>
                       <div
-                        className={
-                          showAddNewFilter === true
-                            ? "fliters-collapse-bg active"
-                            : "fliters-collapse-bg"
-                        }
+                        className={showAddNewFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
                         onClick={() =>
                           this.setState({
                             showAddNewFilter: !showAddNewFilter,
@@ -418,11 +374,7 @@ class EnvironmentList extends Component {
                   <div className="search-box">
                     <form>
                       <div className="form-group search-control-group m-b-0">
-                        <input
-                          type="text"
-                          className="input-group-text"
-                          placeholder="Search"
-                        />
+                        <input type="text" className="input-group-text" placeholder="Search" />
                         <button>
                           <i className="fa fa-search" />
                         </button>
@@ -443,7 +395,7 @@ class EnvironmentList extends Component {
                     <i className="fas fa-sort-down"></i>
                     <div className="environment-image">
                       <img src={Aws} />
-                    </div>{" "}
+                    </div>{' '}
                     AWS
                   </th>
                   <th>Product Enclave</th>
@@ -457,7 +409,7 @@ class EnvironmentList extends Component {
                 <tr>
                   <td>
                     <strong>
-                      <a href="#">AWS (657907747554)</a>
+                      <a href="/assetmanager/pages/environmentlistitem">AWS (657907747554)</a>
                     </strong>
                   </td>
                   <td>2 VPC</td>
@@ -465,11 +417,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -506,11 +454,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -547,11 +491,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -588,11 +528,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -629,11 +565,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -694,11 +626,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -735,11 +663,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -776,11 +700,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -817,11 +737,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -858,11 +774,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -923,11 +835,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -964,11 +872,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -1005,11 +909,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -1046,11 +946,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -1087,11 +983,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -1152,11 +1044,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -1193,11 +1081,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -1234,11 +1118,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -1275,11 +1155,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (
@@ -1316,11 +1192,7 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     {this.state.showMenu == true && (

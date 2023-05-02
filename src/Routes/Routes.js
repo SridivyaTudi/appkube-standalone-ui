@@ -13,6 +13,7 @@ import CatalogueManagement from '../PerfManager/Pages/CatalogueManagement';
 //***** AssetManager *****//
 import Environments from '../AssetManager/Pages/Environments';
 import EnvironmentList from '../AssetManager/Pages/EnvironmentList';
+import EnvironmentListItem from '../AssetManager/Pages/EnvironmentList/EnvironmentListItem';
 import AmazonServices from '../AssetManager/Pages/AmazonServices';
 import Kubernetes from '../AssetManager/Pages/Kubernetes';
 import StorageDetails from '../AssetManager/Pages/StorageDetails';
@@ -115,6 +116,7 @@ export const AllRoutes = () => {
       {/***** AssetManager *****/}
       <Route path="/assetmanager/pages/environments" element={<Environments />} />
       <Route path="/assetmanager/pages/environmentlist" element={<EnvironmentList/>}/>
+      <Route path="/assetmanager/pages/environmentlistitem" element={<EnvironmentListItem/>}/>
       <Route path="/assetmanager/pages/environments/amazonservices" element={<AmazonServices />} />
       <Route path="/assetmanager/pages/kubernetes" element={<Kubernetes />} />
       <Route path="/assetmanager/pages/storagedetails" element={<StorageDetails />} />
