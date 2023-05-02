@@ -44,7 +44,7 @@ function deleteData(url) {
   return fetch(url, {
     method: "DELETE",
     redirect: "follow",
-  }).then((response) => response.json());
+  }).then((response) => response.json(),(error) => error.json());
 }
 
 function putData(url, data) {

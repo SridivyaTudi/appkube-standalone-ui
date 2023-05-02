@@ -5,6 +5,11 @@ import gcpLogo from "../../img/google-cloud.png";
 import Table from "./Components/Table";
 import { NavLink } from "react-router-dom";
 import { ToastMessage } from "../../../Toast/ToastMessage";
+import { RestService } from "../../../Services/RestService";
+import apiEndPoint from "../../../Services";
+
+import config from "../../../config";
+
 export class DiscoveredAssets extends Component {
   constructor(props) {
     super(props);
@@ -78,12 +83,14 @@ export class DiscoveredAssets extends Component {
     };
     // this.tableValue = ;
   }
-   getAssets() {
-    return fetch(
-      `http://34.199.12.114:6067/api/discovered-assets`
-    ).then((response)=>response.json()).then((res)=>{
-      if(res){
-       let tableValue =  res.map((asset) => {
+  getAssets() {
+    return RestService.getData(
+      apiEndPoint.getDiscoveredAssets,
+      null,
+      null
+    ).then((response) => {
+      if (response) {
+        let tableValue = response.map((asset) => {
           return {
             id: asset.id,
             name: asset.elementId,
@@ -96,7 +103,7 @@ export class DiscoveredAssets extends Component {
         });
         this.setState({ ...this.tableValue, ["data"]: tableValue });
       }
-    })
+    });
   }
   componentDidMount() {
     this.getAssets();
@@ -119,16 +126,12 @@ export class DiscoveredAssets extends Component {
               <div className="discovered-edit-logos">
                 <ul>
                   <li>
-                    <NavLink
-                      to={`/assetmanager/pages/addTaggingWizard/11/1234545`}
-                    >
-                      <a className="active">
-                        <span>
-                          <img src={awsLogo} alt="" />
-                        </span>
-                        <p>AWS</p>
-                      </a>
-                    </NavLink>
+                    <a className="active">
+                      <span>
+                        <img src={awsLogo} alt="" />
+                      </span>
+                      <p>AWS</p>
+                    </a>
                   </li>
                   <li>
                     <a>

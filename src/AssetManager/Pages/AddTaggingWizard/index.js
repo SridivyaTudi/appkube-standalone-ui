@@ -5,7 +5,8 @@ import { Collapse } from "reactstrap";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams } from "react-router-dom";
 import { ToastMessage } from "../../../Toast/ToastMessage";
-
+import { RestService } from "../../../Services/RestService";
+import apiEndPoint from "../../../Services";
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
 }
@@ -21,7 +22,7 @@ class AddTaggingWizard extends Component {
     super(props);
     this.state = {
       data: [],
-      toggleTree: {
+      toggleTreeData: {
         parent: {},
         departments: {},
         products: {},
@@ -31,48 +32,65 @@ class AddTaggingWizard extends Component {
       wizardPathNames: [],
     };
   }
-  getDiscoverAssest(id) {
-    return fetch(
-      `http://34.199.12.114:6067/api/organizations/search?landingZone=${id}`
-    )
-      .then((response) => response.json())
-      .then((res) => {
-        if (res["status"] != 404) {
-          this.setState({ data: res });
-        }
-      });
-  }
   componentDidMount() {
-    this.getDiscoverAssest(this.handleGetLandingId());
+    try {
+      this.getDiscoverAssest(this.props.params.landingZone);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  getDiscoverAssest(id) {
+    return RestService.getData(
+      `${apiEndPoint.getOrganizations}${id}`,
+      null,
+      null
+    ).then((response) => {
+      if (response) {
+        if (response["status"] != 404) {
+          this.setState({ data: response });
+        } else {
+          ToastMessage("There is some issue", "unsuccess");
+        }
+      }
+    });
   }
   handleToggleTree(type, id = 0, isChecked) {
-    let { toggleTree } = this.state;
-    toggleTree[`${type}`][id] = !toggleTree[`${type}`][id];
+    let { toggleTreeData } = this.state;
+    toggleTreeData[type][id] = !toggleTreeData[`${type}`][id];
     this.setState({
-      toggleTree: this.setStateToggleTree(toggleTree, type, isChecked, id),
+      toggleTreeData: this.setStateToggleTree(
+        toggleTreeData,
+        type,
+        isChecked,
+        id
+      ),
       wizardPathNames: type == "modules" ? this.state.wizardPathNames : [],
     });
   }
   setStateToggleTree(treeData, customType, isChecked, id) {
     let prepareTreeObj = {};
-    Object.keys(treeData).forEach((defaultType) => {
+    let treeDataList = Object.keys(treeData);
+    treeDataList.forEach((defaultType) => {
       prepareTreeObj[defaultType] =
         defaultType == customType
           ? treeData[`${customType}`]
           : resetChildNode[defaultType].indexOf(customType) >= 0
           ? isChecked
-            ? this.state.toggleTree[`${defaultType}`]
-            : this.unmarkedTag(defaultType, id)
-          : this.state.toggleTree[`${defaultType}`];
+            ? this.state.toggleTreeData[`${defaultType}`]
+            : this.unmarkTag(defaultType, id)
+          : this.state.toggleTreeData[`${defaultType}`];
     });
     return prepareTreeObj;
   }
-  unmarkedTag(defaultType, id) {
+  unmarkTag(defaultType, id) {
     let prepareType = {};
-    Object.keys(this.state.toggleTree[`${defaultType}`]).forEach((key) => {
+    let toggleTreeDataType = Object.keys(
+      this.state.toggleTreeData[defaultType]
+    );
+    toggleTreeDataType.forEach((key) => {
       prepareType[key] = key.startsWith(id)
         ? false
-        : this.state.toggleTree[`${defaultType}`][key];
+        : this.state.toggleTreeData[defaultType][key];
     });
     return prepareType;
   }
@@ -99,123 +117,87 @@ class AddTaggingWizard extends Component {
             tagId: res.id,
           });
           this.setState({
-            ...this.state,
-            ["wizardPathNames"]: wizardPathNames,
+            wizardPathNames: wizardPathNames,
           });
           ToastMessage("Tag Added", "success");
         }
       });
     } else {
-      let getTabId = wizardPathNames.filter((path) => path.id == data.id);
-      this.handleTagDelete(getTabId.length && getTabId[0].tagId).then((res) => {
+      let tabId = wizardPathNames.filter((path) => path.id == data.id);
+      this.handleTagDelete(tabId.length && tabId[0].tagId).then((res) => {
         if (res) {
           wizardPathNames = wizardPathNames.filter(
             (path) => path.id != data.id
           );
-          this.setState({
-            ...this.state,
-            ["wizardPathNames"]: wizardPathNames,
-          });
+          this.setState({ wizardPathNames });
           ToastMessage("Tag untagged", "success");
         }
       });
     }
   }
-  handleGetId() {
-    try {
-      return this.props.params.id;
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  handleGetLandingId() {
-    try {
-      return this.props.params.landingZone;
-    } catch (e) {
-      console.log(e);
-    }
-  }
   handleDiscoverAssetsUpdate(otherparams) {
-    let getLandingId = this.handleGetLandingId();
-    let getId = this.handleGetId();
-
-    return fetch(
-      `http://34.199.12.114:5057/api/service-allocations/search?landingZone=${getLandingId}&${otherparams.id}`
-    )
-      .then((response) => response.json())
-      .then((res) => {
-        if (res && res.length) {
-          return fetch(`http://34.199.12.114:5057/api/tags`, {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            method: "POST",
-            body: JSON.stringify({
-              discoveredAsset: {
-                id: getId,
-              },
-              serviceAllocation: otherparams.serviceAllocation,
-              tag: otherparams.value + res[0].serviceType,
-            }),
-          })
-            .then((response) => response.json())
-            .then((res) => res);
-        }
-      });
+    return RestService.getData(
+      `${apiEndPoint.serviceAllocations}${this.props.params.landingZone}&${otherparams.id}`,
+      null,
+      null
+    ).then((res) => {
+      if (res && res.length) {
+        return RestService.postData(`${apiEndPoint.tagList}`, {
+          discoveredAsset: {
+            id: this.props.params.id,
+          },
+          serviceAllocation: otherparams.serviceAllocation,
+          tag: otherparams.value + res[0].serviceType,
+        }).then((res) => res);
+      }
+    });
   }
   handleTagDelete(id) {
-    return fetch(`http://34.199.12.114:5057/api/tags/${id}`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      method: "DELETE",
-    }).then(
-      (res) => {},
+    return RestService.deleteData(apiEndPoint.removeTag).then(
+      (res) =>
+        res.status == 404 && ToastMessage("There is some issue", "unsuccess"),
       (error) => error.status == 204
     );
   }
   handlemodule(searchString) {
     let { wizardPathNames } = this.state;
     let pathKeys = ["PRODUCT", "ENV", "MODULE", "SERVICE", "SERVICE_TYPE"];
-    return fetch(`http://34.199.12.114:5057/api/tags/search?${searchString}`)
-      .then((response) => response.json())
-      .then((res) => {
-        if (res && res.length) {
-          res.forEach((tag) => {
-            let tagId = `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`;
-            if (
-              wizardPathNames.filter(
-                (path) =>
-                  path.id == tagId &&
-                  path.type == tag.serviceAllocation.serviceType
-              ).length == 0
-            ) {
-              let tagPath = tag.tag.split(",");
-              let newPath = "";
-              tagPath.forEach((tempData, key) => {
-                if (key > 1) {
-                  newPath += " > ";
-                }
-                if (key > 0) {
-                  newPath += tempData.replace(`${pathKeys[key - 1]}=`, "");
-                }
-              });
-              wizardPathNames.push({
-                id: `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`,
-                type: tag.serviceAllocation.serviceType,
-                value: newPath,
-                tagId: tag.id,
-              });
-            }
-          });
-          this.setState({
-            ...this.state,
-            ["wizardPathNames"]: wizardPathNames,
-          });
-        }
-      });
+    return RestService.getData(
+      apiEndPoint.searchTag + searchString,
+      null,
+      null
+    ).then((res) => {
+      if (res && res.length) {
+        res.forEach((tag) => {
+          let tagId = `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`;
+          if (
+            wizardPathNames.filter(
+              (path) =>
+                path.id == tagId &&
+                path.type == tag.serviceAllocation.serviceType
+            ).length == 0
+          ) {
+            let tagPath = tag.tag.split(",");
+            let newPath = "";
+            tagPath.forEach((tempData, key) => {
+              if (key > 1) {
+                newPath += " > ";
+              }
+              if (key > 0) {
+                newPath += tempData.replace(`${pathKeys[key - 1]}=`, "");
+              }
+            });
+            wizardPathNames.push({
+              id: `departmentId=${tag.serviceAllocation.departmentId}&productId=${tag.serviceAllocation.productId}&deploymentEnvironmentId=${tag.serviceAllocation.deploymentEnvironmentId}&moduleId=${tag.serviceAllocation.moduleId}&servicesId=${tag.serviceAllocation.servicesId}`,
+              type: tag.serviceAllocation.serviceType,
+              value: newPath,
+              tagId: tag.id,
+            });
+          }
+        });
+        this.setState({ wizardPathNames });
+      }
+    });
   }
   renderDiscoverAssests() {
     return this.state.data.length ? (
@@ -227,7 +209,7 @@ class AddTaggingWizard extends Component {
   renderParent(type, data) {
     return data.map((parent, index) => {
       return (
-        <tr>
+        <tr key={index}>
           <td>
             {this.renderCommonHtml(type, parent.name, parent.id)}
             {this.isOtherListExist(parent.departments, parent.id, type) ? (
@@ -354,7 +336,7 @@ class AddTaggingWizard extends Component {
               `${ids.parent}_${ids.department}_${ids.product}_${ids.deploymentEnvironment}_${module.id}`,
               () => {
                 return this.handlemodule(
-                  `landingZone=${this.handleGetLandingId()}&departmentId=${
+                  `landingZone=${this.props.params.landingZone}&departmentId=${
                     ids.department
                   }&productId=${ids.product}&deploymentEnvironmentId=${
                     ids.deploymentEnvironment
@@ -471,7 +453,7 @@ class AddTaggingWizard extends Component {
       currentId: type == "APP" ? ids.appService : ids.dataService,
       type: type,
       serviceAllocation: {
-        landingZone: this.handleGetLandingId(),
+        landingZone: this.props.params.landingZone,
         departmentId: ids.department,
         productId: ids.product,
         deploymentEnvironmentId: ids.deploymentEnvironment,
@@ -486,20 +468,20 @@ class AddTaggingWizard extends Component {
       this.state.wizardPathNames.length &&
       this.state.wizardPathNames.filter(
         (path) =>
-          path.type == type &&
-          path.id ==
+          path.type === type &&
+          path.id ===
             `departmentId=${ids.department}&productId=${
               ids.product
             }&deploymentEnvironmentId=${ids.deploymentEnvironment}&moduleId=${
               ids.module
-            }&servicesId=${type == "APP" ? ids.appService : ids.dataService}`
+            }&servicesId=${type === "APP" ? ids.appService : ids.dataService}`
       ).length > 0
     );
   }
   isOtherListExist(data, id, type) {
     return (
-      this.state.toggleTree.parent &&
-      this.state.toggleTree[`${type}`][id] &&
+      this.state.toggleTreeData.parent &&
+      this.state.toggleTreeData[type][id] &&
       data &&
       data.length
     );
@@ -511,17 +493,17 @@ class AddTaggingWizard extends Component {
           type="checkbox"
           className="checkbox"
           onChange={(e) => {
-            if (type == "APP" || type == "DATA") {
+            if (type === "APP" || type === "DATA") {
               callBackFunction(e.target.checked);
             } else {
               this.handleToggleTree(type, id, e.target.checked);
-              if (type == "modules" && e.target.checked) {
+              if (type === "modules" && e.target.checked) {
                 callBackFunction();
               }
             }
           }}
           checked={
-            type == "APP" || type == "DATA"
+            type === "APP" || type === "DATA"
               ? this.isServiceTagged(id, type)
               : this.renderIsChecked(type, id)
           }
@@ -532,7 +514,7 @@ class AddTaggingWizard extends Component {
   }
   renderIsChecked(type, id) {
     return (
-      this.state.toggleTree[`${type}`] && this.state.toggleTree[`${type}`][id]
+      this.state.toggleTreeData[type] && this.state.toggleTreeData[type][id]
     );
   }
   render() {
