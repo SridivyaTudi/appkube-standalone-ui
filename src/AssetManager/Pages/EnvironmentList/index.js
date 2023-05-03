@@ -454,30 +454,9 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -491,30 +470,9 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button"  className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -528,30 +486,9 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -565,30 +502,9 @@ class EnvironmentList extends Component {
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
               </tbody>
@@ -621,35 +537,14 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>2 VPC</td>
+                  <td>2 Area</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -658,35 +553,14 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>5 VPC</td>
+                  <td>3 Area</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -695,35 +569,14 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>8 VPC</td>
+                  <td>5 Area</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -732,35 +585,14 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>5 VPC</td>
+                  <td>9 Area</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -769,35 +601,14 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>6 VPC</td>
+                  <td>1 Area</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
               </tbody>
@@ -830,35 +641,14 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>2 VPC</td>
+                  <td>2 Projects</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -867,35 +657,14 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>5 VPC</td>
+                  <td>7 Projects</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -904,35 +673,14 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>8 VPC</td>
+                  <td>4 Projects</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -941,7 +689,7 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>5 VPC</td>
+                  <td>5 Projects</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
@@ -949,27 +697,6 @@ class EnvironmentList extends Component {
                     <button type="button" onClick={this.toggleMenu} className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -978,35 +705,14 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>6 VPC</td>
+                  <td>5 Projects</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
               </tbody>
@@ -1039,35 +745,14 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>2 VPC</td>
+                  <td>2 NS</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -1076,35 +761,14 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>5 VPC</td>
+                  <td>7 NS</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button"  className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -1113,35 +777,14 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>8 VPC</td>
+                  <td>3 NS</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button"  className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -1150,35 +793,14 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>5 VPC</td>
+                  <td>8 NS</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -1187,35 +809,14 @@ class EnvironmentList extends Component {
                       <a href="#">AWS (657907747554)</a>
                     </strong>
                   </td>
-                  <td>6 VPC</td>
+                  <td>5 NS</td>
                   <td>10</td>
                   <td>25</td>
                   <td>2</td>
                   <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
+                    <button type="button"className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
               </tbody>

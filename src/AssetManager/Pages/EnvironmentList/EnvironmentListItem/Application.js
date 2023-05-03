@@ -308,48 +308,25 @@ class Application extends Component {
                 </tr>
                 <tr>
                   <td>
-                  <i className="m-r-1 fas fa-sort-down"></i>
+                    <i className="m-r-1 fas fa-sort-down"></i>
                     <strong>
                       <a href="#">Procurement</a>
                     </strong>
                   </td>
                   <td>10</td>
                   <td>25</td>
-                  <td className="ou">Parchase, Account, Finance, vendor Mgmt, Admin</td>
+                  <td className="ou">
+                    Parchase, Account, Finance, vendor Mgmt, Admin
+                  </td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
                   <td>
-                  <i className="m-r-1 fas fa-sort-down"></i>
+                    <i className="m-r-1 fas fa-sort-down"></i>
                     <strong>
                       <a href="#">Supply Chain</a>
                     </strong>
@@ -358,75 +335,25 @@ class Application extends Component {
                   <td>25</td>
                   <td className="ou">Sale Accounts, Finance</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
                 <tr>
                   <td>
-                  <i className="m-r-1 fas fa-sort-down"></i>
+                    <i className="m-r-1 fas fa-sort-down"></i>
                     <strong>
                       <a href="#">HRMS</a>
                     </strong>
                   </td>
                   <td>10</td>
                   <td>25</td>
-                  <td className="ou">Admin, HR, Management, IT</td>
+                  <td className="">Admin, HR, Management, IT</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
+                    <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
                   </td>
                 </tr>
               </tbody>
