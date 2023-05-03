@@ -199,6 +199,40 @@ class Inputs extends Component {
             </div>
           </div>
         </div>
+        <div className="environment-table-section">
+          <div className="table">
+            <table className="overview">
+              <thead>
+                <tr>
+                  <th>
+                  <i className="m-r-1 fas fa-sort-down"></i>
+                    <strong>Name</strong>
+                  </th>
+                  <th>Source of input</th>
+                  <th>Type of input</th>
+                  <th>Dashboard</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Name</strong></td>
+                  <td>Grafana</td>
+                  <td>KPI</td>
+                  <td>05</td>
+                  <td><button className="green-btn">Active</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Name</strong></td>
+                  <td>Grafana</td>
+                  <td>KPI</td>
+                  <td>05</td>
+                  <td><button className="green-btn">Active</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     );
   }

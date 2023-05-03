@@ -339,7 +339,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             text-align: center;
-            i{
+            i {
               vertical-align: text-top;
             }
             &:nth-child(1) {
@@ -423,6 +423,40 @@
 
             &:nth-child(1) {
               text-align: left;
+            }
+            .green-btn {
+              color: #ffffff;
+              background: #00b929;
+              font-size: 12px;
+              font-weight: 500;
+              border: none;
+              padding: 5px 10px;
+              border-radius: 4px;
+            }
+            .billing-section {
+              min-height: 250px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              .billing-details {
+                width: 80%;
+                height: 45px;
+                padding: 10px;
+                background-color: #023aff;
+                display: flex;
+                border-radius: 5px;
+                align-items: center;
+                justify-content: start;
+                i {
+                  font-size: 25px;
+                  color: #01f1e3;
+                  margin-right: 10px;
+                }
+                p {
+                  color: #ffffff;
+                  margin: 0;
+                }
+              }
             }
           }
         }
@@ -644,5 +678,4 @@
       margin-top: 30px;
     }
   }
-
 }
