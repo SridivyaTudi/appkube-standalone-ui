@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Aws from '../../../../assets/img/aws.png';
 import Microsoftazure from '../../../../assets/img/microsoftazure.png';
+import VpcServicesIcon from '../../../../assets/img/assetmanager/vpc-services-icon.png';
+import ClusterIcon from '../../../../assets/img/assetmanager/cluster-icon.png';
 import { Link } from 'react-router-dom';
 
 class DiscoveredAssets extends Component {
@@ -148,6 +150,119 @@ class DiscoveredAssets extends Component {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="discovered-assets-body">
+          <div className="row">
+            <div className="col-lg-7 col-md-7 col-sm-12">
+              <div className="services-panel">
+                <div className="services-panel-title bottom-border">
+                  <div className="image">
+                    <img src={Aws} />
+                  </div>
+                  <div className="name">Amazon Web Services</div>
+                </div>
+                <div className="services-panel-body">
+                  <div className="gmnoprint">
+                    <div className="gmnoprint-plus-minus">
+                      <button className="btn btn-plus">
+                        <i class="fal fa-plus"></i>
+                      </button>
+                      <button className="btn btn-minus">
+                        <i class="fal fa-minus"></i>
+                      </button>
+                    </div>
+                    <div className="gmnoprint-map">
+                      <button className="btn btn-map">
+                        <i class="fal fa-map-marker-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="services-text-box active">Amazon Web Services</div>
+                  <div className="global-servies">
+                    <ul>
+                      <li>
+                        <span>
+                          <img src={VpcServicesIcon} alt="" />
+                        </span>
+                        VPC 1
+                      </li>
+                      <li className="active">
+                        <span>
+                          <img src={VpcServicesIcon} alt="" />
+                        </span>
+                        VPC 2
+                      </li>
+                      <li>
+                        <span>
+                          <img src={VpcServicesIcon} alt="" />
+                        </span>
+                        VPC 3
+                      </li>
+                      <li>
+                        <span>
+                          <img src={VpcServicesIcon} alt="" />
+                        </span>
+                        VPC 4
+                      </li>
+                    </ul>
+                    <div className="global-servies-menu">
+                      <label className="active">
+                        <span>
+                          <img src={VpcServicesIcon} alt="" />
+                        </span>
+                        Global servies
+                      </label>
+                    </div>
+                  </div>
+                  <div className="global-servies cluster-servies">
+                    <ul>
+                      <li>
+                        <span>
+                          <img src={ClusterIcon} alt="" />
+                        </span>
+                        Cluster 1
+                      </li>
+                      <li className="active">
+                        <span>
+                          <img src={ClusterIcon} alt="" />
+                        </span>
+                        Cluster 2
+                      </li>
+                      <li>
+                        <span>
+                          <img src={ClusterIcon} alt="" />
+                        </span>
+                        Cluster 3
+                      </li>
+                      <li>
+                        <span>
+                          <img src={ClusterIcon} alt="" />
+                        </span>
+                        Cluster 4
+                      </li>
+                      <li>
+                        <span>
+                          <img src={ClusterIcon} alt="" />
+                        </span>
+                        Cluster 4
+                      </li>
+                    </ul>
+                    <div className="global-servies-menu">
+                      <label className="active">Cloud Management Services</label>
+                      <label>Gateway Services</label>
+                    </div>
+                  </div>
+                  <div className="global-servies app-servies">
+                    <div className="global-servies-menu">
+                      <label className="active">App Services</label>
+                      <label>Data Services</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-5 col-md-5 col-sm-12"></div>
           </div>
         </div>
       </div>
