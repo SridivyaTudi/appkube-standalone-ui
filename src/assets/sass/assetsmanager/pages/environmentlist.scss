@@ -326,21 +326,27 @@
 
         thead {
           border-bottom: 1px dashed #383874;
-
           th {
             padding-left: 15px;
             padding-right: 15px;
             padding-bottom: 10px;
             font-size: 14px;
-            font-weight: 400;
-            color: #393975;
+            font-weight: 600;
+            color: #000000;
             width: 14.2857%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             text-align: center;
+            strong {
+              color: #393975;
+              font-size: 15px;
+            }
             i {
               vertical-align: text-top;
+            }
+            &.ou {
+              text-align: left;
             }
             &:nth-child(1) {
               text-align: left;
@@ -364,97 +370,121 @@
         }
 
         tbody {
-          td {
-            padding: 10px 20px;
-            font-size: 12px;
-            font-weight: 400;
-            color: #000000;
-            width: 14.2857%;
-            text-align: center;
+          tr {
             border-bottom: 1px solid #d9d9d9;
-            position: relative;
-
-            .list-icon {
-              background: transparent;
-              border: none;
-              color: #98a2b3;
+            &:last-child {
+              border-bottom: none;
             }
+            td {
+              padding: 10px 20px;
+              font-size: 12px;
+              font-weight: 400;
+              color: #000000;
+              width: 14.2857%;
+              text-align: center;
+              position: relative;
+              &.ou {
+                max-width: 190px;
+                text-align: left;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+              .input-name {
+                padding-left: 18px;
+                color: #393975;
+                font-size: 15px;
+              }
 
-            .menu-list {
-              position: absolute;
-              top: 32px;
-              padding: 5px;
-              z-index: 1;
-              left: 0;
-              border-radius: 5px;
-              background: #ffffff;
-              box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+              i {
+                vertical-align: text-top;
+              }
 
-              ul {
-                display: block;
-                width: 100%;
-                padding: 0;
-                margin: 0;
+              .list-icon {
+                background: transparent;
+                border: none;
+                color: #98a2b3;
+              }
 
-                li {
+              .menu-list {
+                position: absolute;
+                top: 32px;
+                padding: 5px;
+                z-index: 1;
+                left: 0;
+                border-radius: 5px;
+                background: #ffffff;
+                box-shadow: -1px 2px 10px 5px rgba(0, 0, 0, 0.05);
+
+                ul {
                   display: block;
-                  list-style: none;
-                  text-align: left;
-                  border-radius: 3px;
-                  padding: 5px 10px;
+                  width: 100%;
+                  padding: 0;
+                  margin: 0;
 
-                  &.active {
-                    background: #dde1f8;
-                  }
+                  li {
+                    display: block;
+                    list-style: none;
+                    text-align: left;
+                    border-radius: 3px;
+                    padding: 5px 10px;
 
-                  a {
-                    font-size: 10px;
-                    line-height: 14px;
-                    font-weight: 500;
-                    color: #383874;
+                    &.active {
+                      background: #dde1f8;
+                    }
+
+                    a {
+                      font-size: 10px;
+                      line-height: 14px;
+                      font-weight: 600;
+                      color: #383874;
+                    }
                   }
                 }
               }
-            }
 
-            a {
-              color: #2662f0;
-            }
+              a {
+                color: #2662f0;
+              }
 
-            &:nth-child(1) {
-              text-align: left;
-            }
-            .green-btn {
-              color: #ffffff;
-              background: #00b929;
-              font-size: 12px;
-              font-weight: 500;
-              border: none;
-              padding: 5px 10px;
-              border-radius: 4px;
-            }
-            .billing-section {
-              min-height: 250px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              .billing-details {
-                width: 80%;
-                height: 45px;
-                padding: 10px;
-                background-color: #023aff;
+              &:nth-child(1) {
+                text-align: left;
+              }
+              .green-btn {
+                color: #ffffff;
+                background: #00b929;
+                font-size: 12px;
+                font-weight: 500;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 4px;
+              }
+              .billing-section {
+                min-height: 250px;
                 display: flex;
-                border-radius: 5px;
                 align-items: center;
-                justify-content: start;
-                i {
-                  font-size: 25px;
-                  color: #01f1e3;
-                  margin-right: 10px;
-                }
-                p {
-                  color: #ffffff;
-                  margin: 0;
+                justify-content: center;
+                .billing-details {
+                  width: 80%;
+                  height: 40px;
+                  padding: 10px;
+                  background-color: #023aff;
+                  display: flex;
+                  border-radius: 5px;
+                  align-items: center;
+                  justify-content: start;
+                  i {
+                    font-size: 18px;
+                    color: #01f1e3;
+                    margin-right: 10px;
+                  }
+                  p {
+                    color: #ffffff;
+                    margin: 0;
+                    font-size: 12px;
+                    line-height: 16px;
+                    font-weight: 500;
+                  }
                 }
               }
             }

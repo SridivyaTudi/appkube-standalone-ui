@@ -260,7 +260,7 @@ class Application extends Component {
                   </th>
                   <th>App Services</th>
                   <th>Data Services</th>
-                  <th>OU</th>
+                  <th className="ou">OU</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -274,7 +274,7 @@ class Application extends Component {
                   </td>
                   <td>10</td>
                   <td>25</td>
-                  <td>Admin, Account, Admission, Transport </td>
+                  <td className="ou">Admin, Account, Admission, Transport </td>
                   <td>
                     <button
                       type="button"
@@ -315,7 +315,7 @@ class Application extends Component {
                   </td>
                   <td>10</td>
                   <td>25</td>
-                  <td>Parchase, Account, Finance, vendor Mgmt, Admin</td>
+                  <td className="ou">Parchase, Account, Finance, vendor Mgmt, Admin</td>
                   <td>
                     <button
                       type="button"
@@ -356,7 +356,7 @@ class Application extends Component {
                   </td>
                   <td>10</td>
                   <td>25</td>
-                  <td>Sale Accounts, Finance</td>
+                  <td className="ou">Sale Accounts, Finance</td>
                   <td>
                     <button
                       type="button"
@@ -397,7 +397,7 @@ class Application extends Component {
                   </td>
                   <td>10</td>
                   <td>25</td>
-                  <td>Admin, HR, Management, IT</td>
+                  <td className="ou">Admin, HR, Management, IT</td>
                   <td>
                     <button
                       type="button"

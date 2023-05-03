@@ -30,7 +30,7 @@ class Billing extends Component {
                 <td colspan="6" >
                   <div className="billing-section">
                     <div className="billing-details">
-                      <i class="fal fa-info-circle"></i>
+                    <i class="fal fa-question-circle"></i>
                       <p>Billing details will be displayed here</p>
                     </div>
                   </div>

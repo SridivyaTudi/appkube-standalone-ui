@@ -264,8 +264,10 @@ class Alerts extends Component {
                   <td colspan="6" border-spacing="0">
                     <div className="billing-section">
                       <div className="billing-details">
-                        <i class="fal fa-info-circle"></i>
-                        <p>Alerts for this Account / Asset will be displayed here</p>
+                        <i class="fal fa-question-circle"></i>
+                        <p>
+                          Alerts for this Account / Asset will be displayed here
+                        </p>
                       </div>
                     </div>
                   </td>

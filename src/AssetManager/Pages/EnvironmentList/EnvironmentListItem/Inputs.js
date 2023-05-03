@@ -216,14 +216,14 @@ class Inputs extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Name</strong></td>
+                  <td><strong className='input-name'>Name</strong></td>
                   <td>Grafana</td>
                   <td>KPI</td>
                   <td>05</td>
                   <td><button className="green-btn">Active</button></td>
                 </tr>
                 <tr>
-                  <td><strong>Name</strong></td>
+                  <td><strong className='input-name '>Name</strong></td>
                   <td>Grafana</td>
                   <td>KPI</td>
                   <td>05</td>
