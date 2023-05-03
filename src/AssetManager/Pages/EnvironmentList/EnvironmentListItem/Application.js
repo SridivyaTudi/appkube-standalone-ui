@@ -349,7 +349,7 @@ class Application extends Component {
                   </td>
                   <td>10</td>
                   <td>25</td>
-                  <td className="">Admin, HR, Management, IT</td>
+                  <td className="ou">Admin, HR, Management, IT</td>
                   <td>
                     <button type="button" className="list-icon">
                       <i class="fas fa-ellipsis-v"></i>
