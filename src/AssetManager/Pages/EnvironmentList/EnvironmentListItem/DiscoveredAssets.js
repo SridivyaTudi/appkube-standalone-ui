@@ -21,6 +21,12 @@ class DiscoveredAssets extends Component {
     });
   };
 
+  toggleMenu = () => {
+    this.setState({
+      showMenu: !this.state.showMenu,
+    });
+  };
+
   render() {
     const { showSelectFilter, showServiceViewFilter } = this.state;
     return (
@@ -157,10 +163,7 @@ class DiscoveredAssets extends Component {
             <div className="col-lg-7 col-md-7 col-sm-12">
               <div className="services-panel">
                 <div className="services-panel-title bottom-border">
-                  <div className="image">
-                    <img src={Aws} />
-                  </div>
-                  <div className="name">Amazon Web Services</div>
+                  <div className="name">Topology View</div>
                 </div>
                 <div className="services-panel-body">
                   <div className="gmnoprint">
@@ -178,91 +181,185 @@ class DiscoveredAssets extends Component {
                       </button>
                     </div>
                   </div>
-                  <div className="services-text-box active">Amazon Web Services</div>
-                  <div className="global-servies">
-                    <ul>
-                      <li>
-                        <span>
-                          <img src={VpcServicesIcon} alt="" />
-                        </span>
-                        VPC 1
-                      </li>
-                      <li className="active">
-                        <span>
-                          <img src={VpcServicesIcon} alt="" />
-                        </span>
-                        VPC 2
-                      </li>
-                      <li>
-                        <span>
-                          <img src={VpcServicesIcon} alt="" />
-                        </span>
-                        VPC 3
-                      </li>
-                      <li>
-                        <span>
-                          <img src={VpcServicesIcon} alt="" />
-                        </span>
-                        VPC 4
-                      </li>
-                    </ul>
-                    <div className="global-servies-menu">
-                      <label className="active">
-                        <span>
-                          <img src={VpcServicesIcon} alt="" />
-                        </span>
-                        Global servies
-                      </label>
+                  <div className="services-inner-body">
+                    <div className="services-text-box active">Amazon Web Services</div>
+                    <div className="global-servies">
+                      <ul>
+                        <li>
+                          <span>
+                            <img src={VpcServicesIcon} alt="" />
+                          </span>
+                          VPC 1
+                        </li>
+                        <li className="active">
+                          <span>
+                            <img src={VpcServicesIcon} alt="" />
+                          </span>
+                          VPC 2
+                        </li>
+                        <li>
+                          <span>
+                            <img src={VpcServicesIcon} alt="" />
+                          </span>
+                          VPC 3
+                        </li>
+                        <li>
+                          <span>
+                            <img src={VpcServicesIcon} alt="" />
+                          </span>
+                          VPC 4
+                        </li>
+                      </ul>
+                      <div className="global-servies-menu">
+                        <label className="active">
+                          <span>
+                            <img src={VpcServicesIcon} alt="" />
+                          </span>
+                          Global servies
+                        </label>
+                      </div>
                     </div>
-                  </div>
-                  <div className="global-servies cluster-servies">
-                    <ul>
-                      <li>
-                        <span>
-                          <img src={ClusterIcon} alt="" />
-                        </span>
-                        Cluster 1
-                      </li>
-                      <li className="active">
-                        <span>
-                          <img src={ClusterIcon} alt="" />
-                        </span>
-                        Cluster 2
-                      </li>
-                      <li>
-                        <span>
-                          <img src={ClusterIcon} alt="" />
-                        </span>
-                        Cluster 3
-                      </li>
-                      <li>
-                        <span>
-                          <img src={ClusterIcon} alt="" />
-                        </span>
-                        Cluster 4
-                      </li>
-                      <li>
-                        <span>
-                          <img src={ClusterIcon} alt="" />
-                        </span>
-                        Cluster 4
-                      </li>
-                    </ul>
-                    <div className="global-servies-menu">
-                      <label className="active">Cloud Management Services</label>
-                      <label>Gateway Services</label>
+                    <div className="global-servies cluster-servies">
+                      <ul>
+                        <li>
+                          <span>
+                            <img src={ClusterIcon} alt="" />
+                          </span>
+                          Cluster 1
+                        </li>
+                        <li className="active">
+                          <span>
+                            <img src={ClusterIcon} alt="" />
+                          </span>
+                          Cluster 2
+                        </li>
+                        <li>
+                          <span>
+                            <img src={ClusterIcon} alt="" />
+                          </span>
+                          Cluster 3
+                        </li>
+                        <li>
+                          <span>
+                            <img src={ClusterIcon} alt="" />
+                          </span>
+                          Cluster 4
+                        </li>
+                      </ul>
+                      <div className="global-servies-menu">
+                        <label className="active">Cloud Management Services</label>
+                        <label>Gateway Services</label>
+                      </div>
                     </div>
-                  </div>
-                  <div className="global-servies app-servies">
-                    <div className="global-servies-menu">
-                      <label className="active">App Services</label>
-                      <label>Data Services</label>
+                    <div className="global-servies app-servies">
+                      <div className="global-servies-menu">
+                        <label className="active">App Services</label>
+                        <label>Data Services</label>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-lg-5 col-md-5 col-sm-12"></div>
+            <div className="col-lg-5 col-md-5 col-sm-12">
+              <div className="environment-table-section" style={{ height: '395px' }}>
+                <div className="table">
+                  <table className="overview">
+                    <thead>
+                      <tr>
+                        <th>
+                          <div className="environment-image">
+                            <img src={Aws} />
+                          </div>
+                        </th>
+                        <th>Products</th>
+                        <th>App Services</th>
+                        <th>Data Services</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>VPC 1</td>
+                        <td>02</td>
+                        <td>25</td>
+                        <td>35</td>
+                        <td>
+                          <button type="button" onClick={this.toggleMenu} className="list-icon">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </button>
+                          {this.state.showMenu == true && (
+                            <div className="menu-list">
+                              <ul>
+                                <li className="active">
+                                  <a href="#">Add New datasource</a>
+                                </li>
+                                <li>
+                                  <a href="#">Add Compliance</a>
+                                </li>
+                                <li>
+                                  <a href="#">Associate to OU</a>
+                                </li>
+                                <li>
+                                  <a href="#">Add New VPC</a>
+                                </li>
+                                <li>
+                                  <a href="#">Add New Product</a>
+                                </li>
+                              </ul>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>VPC 2</td>
+                        <td>02</td>
+                        <td>25</td>
+                        <td>35</td>
+                        <td>
+                          <button type="button" className="list-icon">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>VPC 3</td>
+                        <td>02</td>
+                        <td>25</td>
+                        <td>35</td>
+                        <td>
+                          <button type="button" className="list-icon">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>VPC 4</td>
+                        <td>02</td>
+                        <td>25</td>
+                        <td>35</td>
+                        <td>
+                          <button type="button" className="list-icon">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Global Service</td>
+                        <td>02</td>
+                        <td>25</td>
+                        <td>35</td>
+                        <td>
+                          <button type="button" className="list-icon">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

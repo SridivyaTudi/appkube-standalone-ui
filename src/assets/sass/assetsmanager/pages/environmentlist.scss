@@ -326,6 +326,7 @@
 
         thead {
           border-bottom: 1px dashed #383874;
+
           th {
             padding-left: 15px;
             padding-right: 15px;
@@ -338,16 +339,20 @@
             overflow: hidden;
             text-overflow: ellipsis;
             text-align: center;
+
             strong {
               color: #393975;
               font-size: 15px;
             }
+
             i {
               vertical-align: text-top;
             }
+
             &.ou {
               text-align: left;
             }
+
             &:nth-child(1) {
               text-align: left;
             }
@@ -372,9 +377,11 @@
         tbody {
           tr {
             border-bottom: 1px solid #d9d9d9;
+
             &:last-child {
               border-bottom: none;
             }
+
             td {
               padding: 10px 20px;
               font-size: 12px;
@@ -383,6 +390,7 @@
               width: 14.2857%;
               text-align: center;
               position: relative;
+
               &.ou {
                 max-width: 190px;
                 text-align: left;
@@ -390,6 +398,7 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
               }
+
               .input-name {
                 padding-left: 18px;
                 color: #393975;
@@ -450,6 +459,7 @@
               &:nth-child(1) {
                 text-align: left;
               }
+
               .green-btn {
                 color: #ffffff;
                 background: #00b929;
@@ -459,11 +469,13 @@
                 padding: 5px 10px;
                 border-radius: 4px;
               }
+
               .billing-section {
                 min-height: 250px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+
                 .billing-details {
                   width: 80%;
                   height: 40px;
@@ -473,11 +485,13 @@
                   border-radius: 5px;
                   align-items: center;
                   justify-content: start;
+
                   i {
                     font-size: 18px;
                     color: #01f1e3;
                     margin-right: 10px;
                   }
+
                   p {
                     color: #ffffff;
                     margin: 0;
@@ -666,6 +680,7 @@
     .services-panel-body {
       height: 350px;
       display: flex;
+      align-items: center;
       width: 100%;
       padding: 20px;
       position: relative;
@@ -718,6 +733,13 @@
             background-color: #ffffff;
           }
         }
+      }
+
+      .services-inner-body {
+        display: flex;
+        width: 100%;
+        margin-top: auto;
+        margin-bottom: auto;
       }
 
       .services-text-box {
@@ -787,9 +809,7 @@
         }
 
         &.app-servies {
-          margin-top: calc(50% - 102px);
-          margin-bottom: auto;
-          transform: translateY(-50%);
+          margin-bottom: 10px;
         }
 
         &:last-child {
@@ -942,6 +962,62 @@
       display: block;
       width: 100%;
       margin-top: 30px;
+    }
+  }
+
+  .discovered-assets {
+    .services-panel {
+      .services-panel-title {
+        .name {
+          margin-left: 0;
+        }
+      }
+    }
+
+    .environment-table-section {
+      padding-top: 0;
+      padding-bottom: 0;
+      height: auto;
+
+      .table {
+        table {
+          thead {
+            th {
+              padding-top: 10px;
+              padding-bottom: 10px;
+              padding-left: 15px;
+              padding-right: 15px;
+              font-size: 13px;
+              line-height: 25px;
+              font-weight: 500;
+              width: auto;
+
+              .environment-image {
+                margin: 0px;
+                width: 24px;
+                height: 24px;
+                padding: 2px;
+              }
+            }
+          }
+
+          tbody {
+            tr {
+              td {
+                padding-left: 15px;
+                padding-right: 15px;
+                width: auto;
+                white-space: nowrap;
+                .menu-list {
+                  left: auto;
+                  right: 30px;
+                  width: 150px;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
