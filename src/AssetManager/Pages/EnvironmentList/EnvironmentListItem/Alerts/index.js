@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Aws from "../../../../assets/img/aws.png";
-import Microsoftazure from "../../../../assets/img/microsoftazure.png";
+import Aws from "../../../../../assets/img/aws.png";
+import Microsoftazure from "../../../../../assets/img/microsoftazure.png";
 import { Link } from "react-router-dom";
 
-class CompliancePolicies extends Component {
+class Alerts extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -249,49 +249,28 @@ class CompliancePolicies extends Component {
               <thead>
                 <tr>
                   <th>
-                    <strong>AWS CCPA Framework</strong>
+                    <i className="m-r-1 fas fa-sort-down"></i>
+                    <strong>Severity</strong>
                   </th>
+                  <th>Created Time</th>
+                  <th>Sources</th>
+                  <th>Title</th>
+                  <th>Assignee</th>
+                  <th>Category</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Environment</td>
-                  <td>Notification</td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (6579077747545)</a>
-                    </strong>
+                  <td colspan="6" border-spacing="0">
+                    <div className="billing-section">
+                      <div className="billing-details">
+                        <i class="fal fa-question-circle"></i>
+                        <p>
+                          Alerts for this Account / Asset will be displayed here
+                        </p>
+                      </div>
+                    </div>
                   </td>
-                  <td>3</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className="environment-table-section">
-          <div className="table">
-            <table className="overview">
-              <thead>
-                <tr>
-                  <th>
-                    <strong>AWS HIPPS Compliance</strong>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Environment</td>
-                  <td>Notification</td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (6579077747545)</a>
-                    </strong>
-                  </td>
-                  <td>3</td>
                 </tr>
               </tbody>
             </table>
@@ -302,4 +281,4 @@ class CompliancePolicies extends Component {
   }
 }
 
-export default CompliancePolicies;
+export default Alerts;

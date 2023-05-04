@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Aws from "../../../../assets/img/aws.png";
-import Microsoftazure from "../../../../assets/img/microsoftazure.png";
+import Aws from "../../../../../assets/img/aws.png";
+import Microsoftazure from "../../../../../assets/img/microsoftazure.png";
 import { Link } from "react-router-dom";
 
-class Alerts extends Component {
+class ThreatEvents extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -261,14 +261,8 @@ class Alerts extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td colspan="6" border-spacing="0">
+                  <td colspan="6">
                     <div className="billing-section">
-                      <div className="billing-details">
-                        <i class="fal fa-question-circle"></i>
-                        <p>
-                          Alerts for this Account / Asset will be displayed here
-                        </p>
-                      </div>
                     </div>
                   </td>
                 </tr>
@@ -281,4 +275,4 @@ class Alerts extends Component {
   }
 }
 
-export default Alerts;
+export default ThreatEvents;

@@ -1,16 +1,37 @@
 import React, { Component } from 'react';
-import Aws from '../../../../assets/img/aws.png';
-import Microsoftazure from '../../../../assets/img/microsoftazure.png';
-import VpcServicesIcon from '../../../../assets/img/assetmanager/vpc-services-icon.png';
-import ClusterIcon from '../../../../assets/img/assetmanager/cluster-icon.png';
+import Aws from '../../../../../assets/img/aws.png';
+import Microsoftazure from '../../../../../assets/img/microsoftazure.png';
+import VpcServicesIcon from '../../../../../assets/img/assetmanager/vpc-services-icon.png';
+import ClusterIcon from '../../../../../assets/img/assetmanager/cluster-icon.png';
 import { Link } from 'react-router-dom';
+import S3Table from './S3Table';
+import CdnTable from './CdnTable';
+import WafTable from './WafTable';
 
 class DiscoveredAssets extends Component {
+  tableMapping = [
+    {
+      name: 'S3',
+      dataKey: 's3',
+      component: S3Table,
+    },
+    {
+      name: 'CDN',
+      dataKey: 'cdn',
+      component: CdnTable,
+    },
+    {
+      name: 'WAF',
+      dataKey: 'waf',
+      component: WafTable,
+    },
+  ];
   constructor(props) {
     super(props);
     this.state = {
       showSelectFilter: false,
       showServiceViewFilter: false,
+      activeTab: 0,
     };
   }
 
@@ -27,8 +48,12 @@ class DiscoveredAssets extends Component {
     });
   };
 
+  setActiveTab = (activeTab) => {
+    this.setState({ activeTab });
+  };
+
   render() {
-    const { showSelectFilter, showServiceViewFilter } = this.state;
+    const { showSelectFilter, showServiceViewFilter, activeTab } = this.state;
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
@@ -145,14 +170,12 @@ class DiscoveredAssets extends Component {
                   Export
                 </button>
                 <div className="search-box">
-                  <form>
-                    <div className="form-group search-control-group m-b-0">
-                      <input type="text" className="input-group-text" placeholder="Search" />
-                      <button className="search-btn">
-                        <i className="fa fa-search" />
-                      </button>
-                    </div>
-                  </form>
+                  <div className="form-group search-control-group m-b-0">
+                    <input type="text" className="input-group-text" placeholder="Search" />
+                    <button className="search-btn">
+                      <i className="fa fa-search" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -262,7 +285,7 @@ class DiscoveredAssets extends Component {
               </div>
             </div>
             <div className="col-lg-5 col-md-5 col-sm-12">
-              <div className="environment-table-section" style={{ height: '395px' }}>
+              {/* <div className="environment-table-section" style={{ height: '395px' }}>
                 <div className="table">
                   <table className="overview">
                     <thead>
@@ -357,6 +380,248 @@ class DiscoveredAssets extends Component {
                       </tr>
                     </tbody>
                   </table>
+                </div>
+              </div> */}
+              {/* <div className="fliter-tabs">
+                <div className="global-services-fliter">
+                  <div className="heading">
+                    <div className="breadcrumbs">
+                      <ul>
+                        <li>
+                          <a href="#">AWS</a>
+                        </li>
+                        <li>
+                          <i class="far fa-chevron-right"></i>
+                        </li>
+                        <li>
+                          <span>Global Services</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <button type="button" className="btn btn-ellipsis">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                  </div>
+                  <div className="fliter-inputs">
+                    <div className="search-control">
+                      <input type="text" className="input-group-text" placeholder="" />
+                    </div>
+                    <div className="search-control">
+                      <input type="text" className="input-group-text" placeholder="" />
+                    </div>
+                    <div className="search-control">
+                      <input type="text" className="input-group-text" placeholder="" />
+                    </div>
+                  </div>
+                </div>
+                <div className="services-panel-tabs">
+                  <div className="tabs-head">
+                    <ul>
+                      {this.tableMapping.map((tabData, index) => {
+                        return (
+                          <li
+                            key={`ops-tab-${index}`}
+                            className={index === activeTab ? 'active' : ''}
+                            onClick={(e) => this.setActiveTab(index)}
+                          >
+                            {tabData.name}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                  <div className="tabs-content">
+                    {this.tableMapping.map((tabData, index) => {
+                      if (activeTab === index) {
+                        return <tabData.component data={[tabData.dataKey]} />;
+                      } else {
+                        return <></>;
+                      }
+                    })}
+                  </div>
+                </div>
+              </div> */}
+              {/* <div className="fliter-tabs">
+                <div
+                  className="global-services-fliter"
+                  style={{ height: '533px', boxShadow: '0px 10px 20px 0px rgba(0, 0, 0, 0.04)' }}
+                >
+                  <div className="heading">
+                    <div className="breadcrumbs">
+                      <ul>
+                        <li>
+                          <a href="#">AWS</a>
+                        </li>
+                        <li>
+                          <i class="far fa-chevron-right"></i>
+                        </li>
+                        <li>
+                          <span>VPC 1</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="fliter-inputs">
+                    <div className="search-control">
+                      <input type="text" className="input-group-text" placeholder="" />
+                    </div>
+                    <div className="search-control">
+                      <input type="text" className="input-group-text" placeholder="" />
+                    </div>
+                    <div className="search-control">
+                      <input type="text" className="input-group-text" placeholder="" />
+                    </div>
+                  </div>
+                </div>
+              </div> */}
+              <div className="fliter-tabs">
+                <div className="global-services-fliter">
+                  <div className="heading">
+                    <div className="breadcrumbs">
+                      <ul>
+                        <li>
+                          <a href="#">AWS</a>
+                        </li>
+                        <li>
+                          <i class="far fa-chevron-right"></i>
+                        </li>
+                        <li>
+                          <a href="#">VPC 1</a>
+                        </li>
+                        <li>
+                          <i class="far fa-chevron-right"></i>
+                        </li>
+                        <li>
+                          <a href="#">Cluster 1</a>
+                        </li>
+                        <li>
+                          <i class="far fa-chevron-right"></i>
+                        </li>
+                        <li>
+                          <span>App Services</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <button type="button" className="btn btn-ellipsis">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                  </div>
+                  <div className="fliter-inputs">
+                    <div className="search-control">
+                      <input type="text" className="input-group-text" placeholder="" />
+                    </div>
+                    <div className="search-control">
+                      <input type="text" className="input-group-text" placeholder="" />
+                    </div>
+                    <div className="search-control">
+                      <input type="text" className="input-group-text" placeholder="" />
+                    </div>
+                  </div>
+                </div>
+                <div className="environment-table-section" style={{ height: '373px' }}>
+                  <div className="table">
+                    <table className="overview">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Performance</th>
+                          <th>Availability</th>
+                          <th>Security</th>
+                          <th>Data Protection</th>
+                          <th>User Exp</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <strong>
+                              <a href="#">EMS</a>
+                            </strong>
+                            <i class="fas fa-caret-right m-l-1"></i>
+                          </td>
+                          <td>
+                            <div className="box red">2</div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box orange">3</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <strong>
+                              <a href="#">Supply Chain</a>
+                            </strong>
+                            <i class="fas fa-caret-right m-l-1"></i>
+                          </td>
+                          <td>
+                            <div className="box red">2</div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box orange">3</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <strong>
+                              <a href="#">Procurement</a>
+                            </strong>
+                            <i class="fas fa-caret-right m-l-1"></i>
+                          </td>
+                          <td>
+                            <div className="box red">2</div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box orange">3</div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
