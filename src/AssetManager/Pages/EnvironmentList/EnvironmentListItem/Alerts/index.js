@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Aws from "../../../../assets/img/aws.png";
-import Microsoftazure from "../../../../assets/img/microsoftazure.png";
+import Aws from "../../../../../assets/img/aws.png";
+import Microsoftazure from "../../../../../assets/img/microsoftazure.png";
 import { Link } from "react-router-dom";
 
-class Application extends Component {
+class Alerts extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,12 +17,6 @@ class Application extends Component {
     let current = this.state[drdName];
     this.setState({
       [drdName]: !current,
-    });
-  };
-
-  toggleMenu = () => {
-    this.setState({
-      showMenu: !this.state.showMenu,
     });
   };
 
@@ -256,177 +250,26 @@ class Application extends Component {
                 <tr>
                   <th>
                     <i className="m-r-1 fas fa-sort-down"></i>
-                    <strong>Name</strong>
+                    <strong>Severity</strong>
                   </th>
-                  <th>App Services</th>
-                  <th>Data Services</th>
-                  <th className="ou">OU</th>
-                  <th>Actions</th>
+                  <th>Created Time</th>
+                  <th>Sources</th>
+                  <th>Title</th>
+                  <th>Assignee</th>
+                  <th>Category</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>
-                    <i className="m-r-1 fas fa-sort-down"></i>
-                    <strong>
-                      <a href="#">EMS</a>
-                    </strong>
-                  </td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td className="ou">Admin, Account, Admission, Transport </td>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
+                  <td colspan="6" border-spacing="0">
+                    <div className="billing-section">
+                      <div className="billing-details">
+                        <i class="fal fa-question-circle"></i>
+                        <p>
+                          Alerts for this Account / Asset will be displayed here
+                        </p>
                       </div>
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                  <i className="m-r-1 fas fa-sort-down"></i>
-                    <strong>
-                      <a href="#">Procurement</a>
-                    </strong>
-                  </td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td className="ou">Parchase, Account, Finance, vendor Mgmt, Admin</td>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                  <i className="m-r-1 fas fa-sort-down"></i>
-                    <strong>
-                      <a href="#">Supply Chain</a>
-                    </strong>
-                  </td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td className="ou">Sale Accounts, Finance</td>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                  <i className="m-r-1 fas fa-sort-down"></i>
-                    <strong>
-                      <a href="#">HRMS</a>
-                    </strong>
-                  </td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td className="ou">Admin, HR, Management, IT</td>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -438,4 +281,4 @@ class Application extends Component {
   }
 }
 
-export default Application;
+export default Alerts;

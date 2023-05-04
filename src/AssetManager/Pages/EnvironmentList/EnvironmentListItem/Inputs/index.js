@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import Aws from "../../../../assets/img/aws.png";
-import Microsoftazure from "../../../../assets/img/microsoftazure.png";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import Aws from '../../../../../assets/img/aws.png';
+import Microsoftazure from '../../../../../assets/img/microsoftazure.png';
+import { Link } from 'react-router-dom';
 
-class CompliancePolicies extends Component {
+class Inputs extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,8 +21,7 @@ class CompliancePolicies extends Component {
   };
 
   render() {
-    const { showSelectFilter, showServiceViewFilter, showRecentFilter } =
-      this.state;
+    const { showSelectFilter, showServiceViewFilter, showRecentFilter } = this.state;
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
@@ -41,60 +40,35 @@ class CompliancePolicies extends Component {
                   Select and fillter
                   <i className="fas fa-caret-down arrow-icon"></i>
                 </div>
-                <div
-                  className={
-                    showSelectFilter === true
-                      ? "fliter-collapse active"
-                      : "fliter-collapse"
-                  }
-                >
+                <div className={showSelectFilter === true ? 'fliter-collapse active' : 'fliter-collapse'}>
                   <div className="search-bar">
                     <input type="text" placeholder="Search...." />
                   </div>
                   <ul>
                     <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
+                      <input type="checkbox" onChange={() => this.handleChecked()} />
                       OU
                     </li>
                     <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
+                      <input type="checkbox" onChange={() => this.handleChecked()} />
                       Status
                     </li>
                     <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
+                      <input type="checkbox" onChange={() => this.handleChecked()} />
                       No of Assets
                     </li>
                     <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
+                      <input type="checkbox" onChange={() => this.handleChecked()} />
                       Logs
                     </li>
                     <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
+                      <input type="checkbox" onChange={() => this.handleChecked()} />
                       Performance & Availability
                     </li>
                   </ul>
                 </div>
                 <div
-                  className={
-                    showSelectFilter === true
-                      ? "fliters-collapse-bg active"
-                      : "fliters-collapse-bg"
-                  }
+                  className={showSelectFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
                   onClick={() =>
                     this.setState({
                       showSelectFilter: !showSelectFilter,
@@ -117,9 +91,7 @@ class CompliancePolicies extends Component {
                 </div>
                 <div
                   className={
-                    showServiceViewFilter === true
-                      ? "fliter-collapse recent-collapse active"
-                      : "fliter-collapse"
+                    showServiceViewFilter === true ? 'fliter-collapse recent-collapse active' : 'fliter-collapse'
                   }
                 >
                   <ul>
@@ -150,11 +122,7 @@ class CompliancePolicies extends Component {
                   </ul>
                 </div>
                 <div
-                  className={
-                    showServiceViewFilter === true
-                      ? "fliters-collapse-bg active"
-                      : "fliters-collapse-bg"
-                  }
+                  className={showServiceViewFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
                   onClick={() =>
                     this.setState({
                       showServiceViewFilter: !showServiceViewFilter,
@@ -179,11 +147,7 @@ class CompliancePolicies extends Component {
                     <i className="fas fa-caret-down arrow-icon"></i>
                   </div>
                   <div
-                    className={
-                      showRecentFilter === true
-                        ? "fliter-collapse recent-collapse active"
-                        : "fliter-collapse"
-                    }
+                    className={showRecentFilter === true ? 'fliter-collapse recent-collapse active' : 'fliter-collapse'}
                   >
                     <ul>
                       <li>
@@ -213,11 +177,7 @@ class CompliancePolicies extends Component {
                     </ul>
                   </div>
                   <div
-                    className={
-                      showRecentFilter === true
-                        ? "fliters-collapse-bg active"
-                        : "fliters-collapse-bg"
-                    }
+                    className={showRecentFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
                     onClick={() =>
                       this.setState({
                         showRecentFilter: !showRecentFilter,
@@ -228,11 +188,7 @@ class CompliancePolicies extends Component {
                 <div className="search-box">
                   <form>
                     <div className="form-group search-control-group m-b-0">
-                      <input
-                        type="text"
-                        className="input-group-text"
-                        placeholder="Search"
-                      />
+                      <input type="text" className="input-group-text" placeholder="Search" />
                       <button className="search-btn">
                         <i className="fa fa-search" />
                       </button>
@@ -249,49 +205,29 @@ class CompliancePolicies extends Component {
               <thead>
                 <tr>
                   <th>
-                    <strong>AWS CCPA Framework</strong>
+                  <i className="m-r-1 fas fa-sort-down"></i>
+                    <strong>Name</strong>
                   </th>
+                  <th>Source of input</th>
+                  <th>Type of input</th>
+                  <th>Dashboard</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Environment</td>
-                  <td>Notification</td>
+                  <td><strong className='input-name'>Name</strong></td>
+                  <td>Grafana</td>
+                  <td>KPI</td>
+                  <td>05</td>
+                  <td><button className="green-btn">Active</button></td>
                 </tr>
                 <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (6579077747545)</a>
-                    </strong>
-                  </td>
-                  <td>3</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className="environment-table-section">
-          <div className="table">
-            <table className="overview">
-              <thead>
-                <tr>
-                  <th>
-                    <strong>AWS HIPPS Compliance</strong>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Environment</td>
-                  <td>Notification</td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (6579077747545)</a>
-                    </strong>
-                  </td>
-                  <td>3</td>
+                  <td><strong className='input-name '>Name</strong></td>
+                  <td>Grafana</td>
+                  <td>KPI</td>
+                  <td>05</td>
+                  <td><button className="green-btn">Active</button></td>
                 </tr>
               </tbody>
             </table>
@@ -302,4 +238,4 @@ class CompliancePolicies extends Component {
   }
 }
 
-export default CompliancePolicies;
+export default Inputs;

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Aws from "../../../../assets/img/aws.png";
-import Microsoftazure from "../../../../assets/img/microsoftazure.png";
+import Aws from "../../../../../assets/img/aws.png";
+import Microsoftazure from "../../../../../assets/img/microsoftazure.png";
 import { Link } from "react-router-dom";
 
-class ThreatEvents extends Component {
+class CompliancePolicies extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -249,22 +249,49 @@ class ThreatEvents extends Component {
               <thead>
                 <tr>
                   <th>
-                    <i className="m-r-1 fas fa-sort-down"></i>
-                    <strong>Severity</strong>
+                    <strong>AWS CCPA Framework</strong>
                   </th>
-                  <th>Created Time</th>
-                  <th>Sources</th>
-                  <th>Title</th>
-                  <th>Assignee</th>
-                  <th>Category</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td colspan="6">
-                    <div className="billing-section">
-                    </div>
+                  <td>Environment</td>
+                  <td>Notification</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>
+                      <a href="#">AWS (6579077747545)</a>
+                    </strong>
                   </td>
+                  <td>3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="environment-table-section">
+          <div className="table">
+            <table className="overview">
+              <thead>
+                <tr>
+                  <th>
+                    <strong>AWS HIPPS Compliance</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Environment</td>
+                  <td>Notification</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>
+                      <a href="#">AWS (6579077747545)</a>
+                    </strong>
+                  </td>
+                  <td>3</td>
                 </tr>
               </tbody>
             </table>
@@ -275,4 +302,4 @@ class ThreatEvents extends Component {
   }
 }
 
-export default ThreatEvents;
+export default CompliancePolicies;
