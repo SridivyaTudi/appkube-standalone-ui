@@ -54,7 +54,7 @@ export const configFun = (configIp, mainProductUrl) => {
   };
 };
 
-const ASSETMANAGER_ENDPOINT = "http://34.199.12.114:5057/api";
+const ASSETMANAGER_ENDPOINT = "http://34.199.12.114:6067/api";
 
 export const config = {
   GET_ALL_ENVS: `${ASSETMANAGER_ENDPOINT}/cloud-environments`

@@ -99,6 +99,7 @@ import Charts from '../ServiceDesk/Pages/Charts';
 
 //***** AppkubeCloudDatasource *****//
 import DashboardPanelMetricBuilder from "../AppkubeCloudDatasource/Pages/DashboardPanelMetricBuilder"
+import AmazonServicesNew from '../AssetManager/Pages/AmazonServicesNew';
 
 
 export const AllRoutes = () => {
@@ -118,6 +119,7 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/environmentlist" element={<EnvironmentList/>}/>
       <Route path="/assetmanager/pages/environmentlistitem" element={<EnvironmentListItem/>}/>
       <Route path="/assetmanager/pages/environments/amazonservices" element={<AmazonServices />} />
+      <Route path="/assetmanager/pages/environments/amazonservicesnew" element={<AmazonServicesNew />} />
       <Route path="/assetmanager/pages/kubernetes" element={<Kubernetes />} />
       <Route path="/assetmanager/pages/storagedetails" element={<StorageDetails />} />
       <Route path="/assetmanager/pages/accountsetup" element={<AccountSetup />} />
