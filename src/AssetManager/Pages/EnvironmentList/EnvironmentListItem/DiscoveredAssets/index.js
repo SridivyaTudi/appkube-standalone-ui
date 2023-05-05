@@ -1,38 +1,39 @@
-import React, { Component } from 'react';
-import { images } from '../../../../img';
-import Aws from '../../../../../assets/img/aws.png';
-import Microsoftazure from '../../../../../assets/img/microsoftazure.png';
-import VpcServicesIcon from '../../../../../assets/img/assetmanager/vpc-services-icon.png';
-import ClusterIcon from '../../../../../assets/img/assetmanager/cluster-icon.png';
-import { Link } from 'react-router-dom';
-import S3Table from './S3Table';
-import CdnTable from './CdnTable';
-import WafTable from './WafTable';
-import { RestService } from '../../../_service/RestService';
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import React, { Component } from "react";
+import { images } from "../../../../img";
+import Aws from "../../../../../assets/img/aws.png";
+import Microsoftazure from "../../../../../assets/img/microsoftazure.png";
+import VpcServicesIcon from "../../../../../assets/img/assetmanager/vpc-services-icon.png";
+import ClusterIcon from "../../../../../assets/img/assetmanager/cluster-icon.png";
+import { Link } from "react-router-dom";
+import S3Table from "./S3Table";
+import CdnTable from "./CdnTable";
+import WafTable from "./WafTable";
+import { RestService } from "../../../_service/RestService";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { type } from "@testing-library/user-event/dist/type";
 
 class DiscoveredAssets extends Component {
   tableMapping = [
     {
-      name: 'S3',
-      dataKey: 's3',
+      name: "S3",
+      dataKey: "s3",
       component: S3Table,
     },
     {
-      name: 'CDN',
-      dataKey: 'cdn',
+      name: "CDN",
+      dataKey: "cdn",
       component: CdnTable,
     },
     {
-      name: 'WAF',
-      dataKey: 'waf',
+      name: "WAF",
+      dataKey: "waf",
       component: WafTable,
     },
   ];
   constructor(props) {
     super(props);
     const queryPrm = new URLSearchParams(document.location.search);
-    const cloudName = queryPrm.get('cloudName');
+    const cloudName = queryPrm.get("cloudName");
     this.state = {
       display_detail: true,
       displaygetEnvironmentData: null,
@@ -46,6 +47,13 @@ class DiscoveredAssets extends Component {
         clusterId: null,
         productId: null,
       },
+      breadcrumbs: [
+        {
+          id: "service",
+          name: cloudName,
+          type: "service",
+        },
+      ],
       showSelectFilter: false,
       showServiceViewFilter: false,
       activeTab: 0,
@@ -64,7 +72,7 @@ class DiscoveredAssets extends Component {
         });
       });
     } catch (err) {
-      console.log('Loading accounts failed. Error: ', err);
+      console.log("Loading accounts failed. Error: ", err);
     }
   };
 
@@ -79,8 +87,8 @@ class DiscoveredAssets extends Component {
 
   componentDidMount() {
     const queryPrm = new URLSearchParams(document.location.search);
-    const accountId = queryPrm.get('accountId');
-    const cloudName = queryPrm.get('cloudName');
+    const accountId = queryPrm.get("accountId");
+    const cloudName = queryPrm.get("cloudName");
     this.getServicesData(accountId);
   }
 
@@ -89,7 +97,7 @@ class DiscoveredAssets extends Component {
     let retData = [];
 
     let row = displaygetEnvironmentData;
-    if (row.cloudType.toLowerCase() === 'AWS'.toLowerCase()) {
+    if (row.cloudType.toLowerCase() === "AWS".toLowerCase()) {
       const { display_detail } = this.state;
       retData.push(
         <div>
@@ -99,7 +107,10 @@ class DiscoveredAssets extends Component {
             </span>
             <h2>Amazon Web Services</h2>
             <div className="icon float-right" onClick={this.showHideDetail}>
-              <i className={display_detail ? 'fa fa-minus' : 'fa fa-plus'} aria-hidden="true"></i>
+              <i
+                className={display_detail ? "fa fa-minus" : "fa fa-plus"}
+                aria-hidden="true"
+              ></i>
             </div>
           </div>
           {display_detail && (
@@ -124,7 +135,9 @@ class DiscoveredAssets extends Component {
                     </div>
                     <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
                       <div className="services-added">
-                        <span>{row.organizationName && row.organizationName}</span>
+                        <span>
+                          {row.organizationName && row.organizationName}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -148,7 +161,10 @@ class DiscoveredAssets extends Component {
                     </div>
                     <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
                       <div className="services-added">
-                        <span>{row.organizationalUnit && row.organizationalUnit.name}</span>
+                        <span>
+                          {row.organizationalUnit &&
+                            row.organizationalUnit.name}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -156,7 +172,9 @@ class DiscoveredAssets extends Component {
                 <div className="col-lg-6 col-md-6 col-sm-12">
                   <div className="row">
                     <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">Total Online Instances</div>
+                      <div className="services-added">
+                        Total Online Instances
+                      </div>
                     </div>
                     <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
                       <div className="services-added">0</div>
@@ -166,7 +184,9 @@ class DiscoveredAssets extends Component {
                 <div className="col-lg-6 col-md-6 col-sm-12">
                   <div className="row">
                     <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">Full Protection Security Group</div>
+                      <div className="services-added">
+                        Full Protection Security Group
+                      </div>
                     </div>
                     <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
                       <div className="services-added">0</div>
@@ -179,14 +199,18 @@ class DiscoveredAssets extends Component {
                       <div className="services-added">Cloud Guard ID</div>
                     </div>
                     <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">e5b82995-c0fc-729d-a67b-926r81a5963d</div>
+                      <div className="services-added">
+                        e5b82995-c0fc-729d-a67b-926r81a5963d
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-12">
                   <div className="row">
                     <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">Read Only Security Group</div>
+                      <div className="services-added">
+                        Read Only Security Group
+                      </div>
                     </div>
                     <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
                       <div className="services-added">0</div>
@@ -219,7 +243,9 @@ class DiscoveredAssets extends Component {
         return (
           <li
             key={vpcIndex}
-            className={`${vpcIndex == this.state.toggleNode.vpcId ? 'active' : ''}`}
+            className={`${
+              vpcIndex == this.state.toggleNode.vpcId ? "active" : ""
+            }`}
             onClick={() => {
               this.setState({
                 toggleNode: {
@@ -230,48 +256,88 @@ class DiscoveredAssets extends Component {
                   clusterId: null,
                   productId: null,
                 },
+                breadcrumbs: this.prepareBreadCrumbs(
+                  { id: "VPC" + "_" + vpcIndex, name: vpc.name, type: "VPC" },
+                  "VPC" + "_" + vpcIndex,
+                  "VPC"
+                ),
               });
             }}
           >
             <span>
               <img src={VpcServicesIcon} alt="" />
             </span>
-            {vpc.name}
+            
+          {this.getServiceName(vpc.name, "vpc")}
           </li>
         );
       });
     }
   }
-
+  prepareBreadCrumbs(data, index, type) {
+    let tempBreadData = [];
+    if (
+      this.state.breadcrumbs.filter((breadcrumb) => breadcrumb.type == type)
+        .length
+    ) {
+      if (
+        this.state.breadcrumbs.filter((breadcrumb) => breadcrumb.id == index)
+          .length
+      ) {
+        tempBreadData = this.state.breadcrumbs;
+      } else {
+        tempBreadData = this.state.breadcrumbs.filter(
+          (breadcrumb) => breadcrumb.type != type
+        );
+        tempBreadData = [...tempBreadData, data];
+      }
+    } else {
+      tempBreadData = [...this.state.breadcrumbs, data];
+    }
+    return tempBreadData;
+  }
   renderClusters(index) {
     if (
       this.state.toggleNode.VPCS &&
       this.state.treeData[index].clusters &&
       this.state.treeData[index].clusters.length
     ) {
-      return this.state.treeData[index].clusters.map((cluster, clusterIndex) => {
-        return (
-          <li
-            key={clusterIndex}
-            onClick={() => {
-              this.setState({
-                toggleNode: {
-                  ...this.state.toggleNode,
-                  vpcId: index,
-                  clusterId: clusterIndex,
-                  products: true,
-                },
-              });
-            }}
-            className={`${clusterIndex == this.state.toggleNode.clusterId ? 'active' : ''}`}
-          >
-            <span>
-              <img src={ClusterIcon} alt="" />
-            </span>
-            {cluster.name.charAt(0).toUpperCase() + cluster.name.toLowerCase().slice(1)}
-          </li>
-        );
-      });
+      return this.state.treeData[index].clusters.map(
+        (cluster, clusterIndex) => {
+          return (
+            <li
+              key={clusterIndex}
+              onClick={() => {
+                this.setState({
+                  toggleNode: {
+                    ...this.state.toggleNode,
+                    vpcId: index,
+                    clusterId: clusterIndex,
+                    products: true,
+                  },
+                  breadcrumbs: this.prepareBreadCrumbs(
+                    {
+                      id: "cluster" + "_" + clusterIndex,
+                      name: cluster.name,
+                      type: "cluster",
+                    },
+                    "cluster" + "_" + clusterIndex,
+                    "cluster"
+                  ),
+                });
+              }}
+              className={`${
+                clusterIndex == this.state.toggleNode.clusterId ? "active" : ""
+              }`}
+            >
+              <span>
+                <img src={ClusterIcon} alt="" />
+              </span>
+              {this.getServiceName(cluster.name, "cluster")}
+            </li>
+          );
+        }
+      );
     }
   }
 
@@ -281,25 +347,38 @@ class DiscoveredAssets extends Component {
       this.state.treeData[vpcIndex].clusters[clusterIndex].products &&
       this.state.treeData[vpcIndex].clusters[clusterIndex].products.length
     ) {
-      return this.state.treeData[vpcIndex].clusters[clusterIndex].products.map((product, productIndex) => {
-        return (
-          <label
-            className={`${productIndex == this.state.toggleNode.productId ? 'active' : ''}`}
-            key={productIndex}
-            onClick={() => {
-              this.setState({
-                toggleNode: {
-                  ...this.state.toggleNode,
-                  productId: productIndex,
-                  products: true,
-                },
-              });
-            }}
-          >
-            {product.name.charAt(0).toUpperCase() + product.name.toLowerCase().slice(1)}
-          </label>
-        );
-      });
+      return this.state.treeData[vpcIndex].clusters[clusterIndex].products.map(
+        (product, productIndex) => {
+          return (
+            <label
+              className={`${
+                productIndex == this.state.toggleNode.productId ? "active" : ""
+              }`}
+              key={productIndex}
+              onClick={() => {
+                this.setState({
+                  toggleNode: {
+                    ...this.state.toggleNode,
+                    productId: productIndex,
+                    products: true,
+                  },
+                  breadcrumbs: this.prepareBreadCrumbs(
+                    {
+                      id: "product" + "_" + productIndex,
+                      name: product.name,
+                      type: "product",
+                    },
+                    "product" + "_" + productIndex,
+                    "product"
+                  ),
+                });
+              }}
+            >
+              {this.getServiceName(product.name, "product")}
+            </label>
+          );
+        }
+      );
     }
   }
 
@@ -319,7 +398,51 @@ class DiscoveredAssets extends Component {
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
+  getCloudName() {
+    const queryPrm = new URLSearchParams(document.location.search);
+    return queryPrm.get("cloudName") || "";
+  }
+  getBreadCrumbs() {
+    return (
+      this.state.breadcrumbs &&
+      this.state.breadcrumbs.map((data, index) => {
+        return (
+          <>
+            {index > 0 ? (
+              <li>
+                <i class="far fa-chevron-right"></i>
+              </li>
+            ) : (
+              <></>
+            )}
 
+            <li>
+              <a>{data.name}</a>
+            </li>
+          </>
+        );
+      })
+    );
+  }
+  getServiceName(name, type) {
+    if (type == "vpc") {
+      return name ? name.toUpperCase() : "";
+    } else {
+      let firstChar = name ? name.charAt(0).toUpperCase() : "";
+      let otherStr = name ? name.toLowerCase().slice(1) : "";
+      let string = firstChar + otherStr
+      return string;
+    }
+  }
+  handleToggleNode(type,index){
+    // this.setState({
+    //   toggleNode: {
+    //     ...this.state.toggleNode,
+    //     productId: productIndex,
+    //     products: true,
+    //   },
+    // });
+  }
   render() {
     const { showSelectFilter, showServiceViewFilter, activeTab } = this.state;
     return (
@@ -340,35 +463,60 @@ class DiscoveredAssets extends Component {
                   Select and fillter
                   <i className="fas fa-caret-down arrow-icon"></i>
                 </div>
-                <div className={showSelectFilter === true ? 'fliter-collapse active' : 'fliter-collapse'}>
+                <div
+                  className={
+                    showSelectFilter === true
+                      ? "fliter-collapse active"
+                      : "fliter-collapse"
+                  }
+                >
                   <div className="search-bar">
                     <input type="text" placeholder="Search...." />
                   </div>
                   <ul>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       OU
                     </li>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       Status
                     </li>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       No of Assets
                     </li>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       Logs
                     </li>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       Performance & Availability
                     </li>
                   </ul>
                 </div>
                 <div
-                  className={showSelectFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
+                  className={
+                    showSelectFilter === true
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
                   onClick={() =>
                     this.setState({
                       showSelectFilter: !showSelectFilter,
@@ -391,7 +539,9 @@ class DiscoveredAssets extends Component {
                 </div>
                 <div
                   className={
-                    showServiceViewFilter === true ? 'fliter-collapse recent-collapse active' : 'fliter-collapse'
+                    showServiceViewFilter === true
+                      ? "fliter-collapse recent-collapse active"
+                      : "fliter-collapse"
                   }
                 >
                   <ul>
@@ -422,7 +572,11 @@ class DiscoveredAssets extends Component {
                   </ul>
                 </div>
                 <div
-                  className={showServiceViewFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
+                  className={
+                    showServiceViewFilter === true
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
                   onClick={() =>
                     this.setState({
                       showServiceViewFilter: !showServiceViewFilter,
@@ -439,7 +593,11 @@ class DiscoveredAssets extends Component {
                 </button>
                 <div className="search-box">
                   <div className="form-group search-control-group m-b-0">
-                    <input type="text" className="input-group-text" placeholder="Search" />
+                    <input
+                      type="text"
+                      className="input-group-text"
+                      placeholder="Search"
+                    />
                     <button className="search-btn">
                       <i className="fa fa-search" />
                     </button>
@@ -556,10 +714,16 @@ class DiscoveredAssets extends Component {
                       <React.Fragment>
                         <div className="gmnoprint">
                           <div className="gmnoprint-plus-minus">
-                            <button className="btn btn-plus" onClick={() => zoomIn()}>
+                            <button
+                              className="btn btn-plus"
+                              onClick={() => zoomIn()}
+                            >
                               <i class="fal fa-plus"></i>
                             </button>
-                            <button className="btn btn-minus" onClick={() => zoomOut()}>
+                            <button
+                              className="btn btn-minus"
+                              onClick={() => zoomOut()}
+                            >
                               <i class="fal fa-minus"></i>
                             </button>
                           </div>
@@ -570,15 +734,15 @@ class DiscoveredAssets extends Component {
                           </div>
                         </div>
                         <TransformComponent
-                          wrapperStyle={{ width: '100%', height: '100%' }}
+                          wrapperStyle={{ width: "100%", height: "100%" }}
                           contentStyle={{
-                            width: '100%',
-                            height: '100%',
-                            justifyContent: 'center',
-                            alignItems: 'flex-start',
-                            paddingTop: '120px',
-                            display: 'flex',
-                            transform: 'translate(0px, 0px) scale(0)',
+                            width: "100%",
+                            height: "100%",
+                            justifyContent: "center",
+                            alignItems: "flex-start",
+                            paddingTop: "120px",
+                            display: "flex",
+                            transform: "translate(0px, 0px) scale(0)",
                           }}
                         >
                           <div
@@ -594,16 +758,32 @@ class DiscoveredAssets extends Component {
                                   vpcId: null,
                                   productId: null,
                                 },
+                                breadcrumbs: this.state.breadcrumbs.filter(
+                                  (breadcrumb) => breadcrumb.id == "service"
+                                ),
                               });
                             }}
                           >
-                            Amazon Web Services
+                            {this.getCloudName()}
                           </div>
                           <div
-                            className={` ${this.state.treeData && this.state.treeData.length ? 'global-servies' : ''}`}
+                            className={` ${
+                              this.state.treeData && this.state.treeData.length
+                                ? "global-servies"
+                                : ""
+                            }`}
                           >
-                            <ul>{this.state.toggleNode.VPCS ? this.renderVPCData() : <></>}</ul>
-                            <div className="global-servies-menu" style={{ display: 'none' }}>
+                            <ul>
+                              {this.state.toggleNode.VPCS ? (
+                                this.renderVPCData()
+                              ) : (
+                                <></>
+                              )}
+                            </ul>
+                            <div
+                              className="global-servies-menu"
+                              style={{ display: "none" }}
+                            >
                               <label className="active">
                                 <span>
                                   <img src={VpcServicesIcon} alt="" />
@@ -613,11 +793,15 @@ class DiscoveredAssets extends Component {
                             </div>
                           </div>
                           <div
-                            className={` ${this.state.toggleNode.clusters ? 'global-servies cluster-servies' : ''}`}
+                            className={` ${
+                              this.state.toggleNode.clusters
+                                ? "global-servies cluster-servies"
+                                : ""
+                            }`}
                             style={{
-                              marginTop: '0',
-                              marginBottom: '0',
-                              transform: 'translateY(0%)',
+                              marginTop: "0",
+                              marginBottom: "0",
+                              transform: "translateY(0%)",
                             }}
                           >
                             <ul>
@@ -627,21 +811,40 @@ class DiscoveredAssets extends Component {
                                 <></>
                               )}
                             </ul>
-                            <div className="global-servies-menu" style={{ display: 'none' }}>
-                              <label className="active">Cloud Management Services</label>
+                            <div
+                              className="global-servies-menu"
+                              style={{ display: "none" }}
+                            >
+                              <label className="active">
+                                Cloud Management Services
+                              </label>
                               <label>Gateway Services</label>
                             </div>
                           </div>
-                          <div className={` ${this.state.toggleNode.products ? 'global-servies app-servies' : ''}`}>
+                          <div
+                            className={` ${
+                              this.state.toggleNode.products
+                                ? "global-servies app-servies"
+                                : ""
+                            }`}
+                          >
                             <div className="global-servies-menu">
                               {this.state.toggleNode.products ? (
-                                this.renderProducts(this.state.toggleNode.vpcId, this.state.toggleNode.clusterId)
+                                this.renderProducts(
+                                  this.state.toggleNode.vpcId,
+                                  this.state.toggleNode.clusterId
+                                )
                               ) : (
                                 <></>
                               )}
                             </div>
-                            <div className="global-servies-menu " style={{ display: 'none' }}>
-                              <label className="active">Cloud Management Services</label>
+                            <div
+                              className="global-servies-menu "
+                              style={{ display: "none" }}
+                            >
+                              <label className="active">
+                                Cloud Management Services
+                              </label>
                               <label>Gateway Services</label>
                             </div>
                           </div>
@@ -658,7 +861,8 @@ class DiscoveredAssets extends Component {
                   <div className="heading">
                     <div className="breadcrumbs">
                       <ul>
-                        <li>
+                        {this.getBreadCrumbs()}
+                        {/* <li>
                           <a href="#">AWS</a>
                         </li>
                         <li>
@@ -678,7 +882,7 @@ class DiscoveredAssets extends Component {
                         </li>
                         <li>
                           <span>App Services</span>
-                        </li>
+                        </li> */}
                       </ul>
                     </div>
                     <button type="button" className="btn btn-ellipsis">
@@ -687,17 +891,32 @@ class DiscoveredAssets extends Component {
                   </div>
                   <div className="fliter-inputs">
                     <div className="search-control">
-                      <input type="text" className="input-group-text" placeholder="" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder=""
+                      />
                     </div>
                     <div className="search-control">
-                      <input type="text" className="input-group-text" placeholder="" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder=""
+                      />
                     </div>
                     <div className="search-control">
-                      <input type="text" className="input-group-text" placeholder="" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder=""
+                      />
                     </div>
                   </div>
                 </div>
-                <div className="environment-table-section" style={{ height: '373px' }}>
+                <div
+                  className="environment-table-section"
+                  style={{ height: "373px" }}
+                >
                   <div className="table">
                     <table className="overview">
                       <thead>
@@ -763,8 +982,7 @@ class DiscoveredAssets extends Component {
                               <i class="far fa-check"></i>
                             </div>
                           </td>
-                          <td>
-                          </td>
+                          <td></td>
                         </tr>
                         <tr>
                           <td>
@@ -800,7 +1018,10 @@ class DiscoveredAssets extends Component {
                 </div>
               </div>
 
-              <div className="environment-table-section" style={{ height: '395px' }}>
+              <div
+                className="environment-table-section"
+                style={{ height: "395px" }}
+              >
                 <div className="table">
                   <table className="overview">
                     <thead>
@@ -823,7 +1044,11 @@ class DiscoveredAssets extends Component {
                         <td>25</td>
                         <td>35</td>
                         <td>
-                          <button type="button" onClick={this.toggleMenu} className="list-icon">
+                          <button
+                            type="button"
+                            onClick={this.toggleMenu}
+                            className="list-icon"
+                          >
                             <i class="fas fa-ellipsis-v"></i>
                           </button>
                           {this.state.showMenu == true && (
@@ -919,13 +1144,25 @@ class DiscoveredAssets extends Component {
                   </div>
                   <div className="fliter-inputs">
                     <div className="search-control">
-                      <input type="text" className="input-group-text" placeholder="" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder=""
+                      />
                     </div>
                     <div className="search-control">
-                      <input type="text" className="input-group-text" placeholder="" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder=""
+                      />
                     </div>
                     <div className="search-control">
-                      <input type="text" className="input-group-text" placeholder="" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder=""
+                      />
                     </div>
                   </div>
                 </div>
@@ -936,7 +1173,7 @@ class DiscoveredAssets extends Component {
                         return (
                           <li
                             key={`ops-tab-${index}`}
-                            className={index === activeTab ? 'active' : ''}
+                            className={index === activeTab ? "active" : ""}
                             onClick={(e) => this.setActiveTab(index)}
                           >
                             {tabData.name}
@@ -959,7 +1196,10 @@ class DiscoveredAssets extends Component {
               <div className="fliter-tabs">
                 <div
                   className="global-services-fliter"
-                  style={{ height: '533px', boxShadow: '0px 10px 20px 0px rgba(0, 0, 0, 0.04)' }}
+                  style={{
+                    height: "533px",
+                    boxShadow: "0px 10px 20px 0px rgba(0, 0, 0, 0.04)",
+                  }}
                 >
                   <div className="heading">
                     <div className="breadcrumbs">
@@ -978,13 +1218,25 @@ class DiscoveredAssets extends Component {
                   </div>
                   <div className="fliter-inputs">
                     <div className="search-control">
-                      <input type="text" className="input-group-text" placeholder="" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder=""
+                      />
                     </div>
                     <div className="search-control">
-                      <input type="text" className="input-group-text" placeholder="" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder=""
+                      />
                     </div>
                     <div className="search-control">
-                      <input type="text" className="input-group-text" placeholder="" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder=""
+                      />
                     </div>
                   </div>
                 </div>
@@ -1023,17 +1275,32 @@ class DiscoveredAssets extends Component {
                   </div>
                   <div className="fliter-inputs">
                     <div className="search-control">
-                      <input type="text" className="input-group-text" placeholder="" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder=""
+                      />
                     </div>
                     <div className="search-control">
-                      <input type="text" className="input-group-text" placeholder="" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder=""
+                      />
                     </div>
                     <div className="search-control">
-                      <input type="text" className="input-group-text" placeholder="" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder=""
+                      />
                     </div>
                   </div>
                 </div>
-                <div className="environment-table-section" style={{ height: '373px' }}>
+                <div
+                  className="environment-table-section"
+                  style={{ height: "373px" }}
+                >
                   <div className="table">
                     <table className="overview">
                       <thead>

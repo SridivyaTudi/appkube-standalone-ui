@@ -320,7 +320,7 @@ class AmazonServicesNew extends React.Component {
                     products:true,
                   },
                 })}}>
-              {product.name} {clusterIndex}
+              {product.name}
             </label>
           );
         }
