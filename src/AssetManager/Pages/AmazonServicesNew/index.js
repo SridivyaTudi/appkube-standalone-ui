@@ -337,7 +337,7 @@ class AmazonServicesNew extends React.Component {
           </div>
           <div className="row">
             <div className="col-lg-9">
-              <TransformWrapper wrapperClass="ASdfsdfsdfsdf">
+              <TransformWrapper >
                 {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                   <React.Fragment>
                     <div className="services-panel-body">
