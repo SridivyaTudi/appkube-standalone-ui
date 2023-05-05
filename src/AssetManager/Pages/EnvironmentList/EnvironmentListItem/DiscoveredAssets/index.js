@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { images } from '../../../../img';
 import Aws from '../../../../../assets/img/aws.png';
 import Microsoftazure from '../../../../../assets/img/microsoftazure.png';
 import VpcServicesIcon from '../../../../../assets/img/assetmanager/vpc-services-icon.png';
@@ -7,6 +8,8 @@ import { Link } from 'react-router-dom';
 import S3Table from './S3Table';
 import CdnTable from './CdnTable';
 import WafTable from './WafTable';
+import { RestService } from '../../../_service/RestService';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 class DiscoveredAssets extends Component {
   tableMapping = [
@@ -28,11 +31,276 @@ class DiscoveredAssets extends Component {
   ];
   constructor(props) {
     super(props);
+    const queryPrm = new URLSearchParams(document.location.search);
+    const cloudName = queryPrm.get('cloudName');
     this.state = {
+      display_detail: true,
+      displaygetEnvironmentData: null,
+      cloudAssets: [],
+      treeDataNew: {},
+      toggleNode: {
+        VPCS: true,
+        clusters: false,
+        products: false,
+        vpcId: null,
+        clusterId: null,
+        productId: null,
+      },
       showSelectFilter: false,
       showServiceViewFilter: false,
       activeTab: 0,
     };
+  }
+
+  getServicesData = async (accountId) => {
+    try {
+      await RestService.getData(
+        `http://34.199.12.114:5057/api/account-services/search?accountId=${accountId}`,
+        null,
+        null
+      ).then((response) => {
+        this.setState({
+          treeData: response[0].account_services_json.vpcs,
+        });
+      });
+    } catch (err) {
+      console.log('Loading accounts failed. Error: ', err);
+    }
+  };
+
+  submitPage = () => {};
+
+  showHideDetail = () => {
+    const { display_detail } = this.state;
+    this.setState({
+      display_detail: !display_detail,
+    });
+  };
+
+  componentDidMount() {
+    const queryPrm = new URLSearchParams(document.location.search);
+    const accountId = queryPrm.get('accountId');
+    const cloudName = queryPrm.get('cloudName');
+    this.getServicesData(accountId);
+  }
+
+  displayAwsData() {
+    const { displaygetEnvironmentData } = this.state;
+    let retData = [];
+
+    let row = displaygetEnvironmentData;
+    if (row.cloudType.toLowerCase() === 'AWS'.toLowerCase()) {
+      const { display_detail } = this.state;
+      retData.push(
+        <div>
+          <div className="heading">
+            <span>
+              <img src={images.awsLogo} alt="" />
+            </span>
+            <h2>Amazon Web Services</h2>
+            <div className="icon float-right" onClick={this.showHideDetail}>
+              <i className={display_detail ? 'fa fa-minus' : 'fa fa-plus'} aria-hidden="true"></i>
+            </div>
+          </div>
+          {display_detail && (
+            <div className="service-content">
+              <div className="row">
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                  <div className="row">
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">Account Holder Name</div>
+                    </div>
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">
+                        <span>{row.name}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                  <div className="row">
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">Organisation</div>
+                    </div>
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">
+                        <span>{row.organizationName && row.organizationName}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                  <div className="row">
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">Account Number</div>
+                    </div>
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">
+                        <span>{row.accountId}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                  <div className="row">
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">Organisation Unit</div>
+                    </div>
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">
+                        <span>{row.organizationalUnit && row.organizationalUnit.name}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                  <div className="row">
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">Total Online Instances</div>
+                    </div>
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">0</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                  <div className="row">
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">Full Protection Security Group</div>
+                    </div>
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">0</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                  <div className="row">
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">Cloud Guard ID</div>
+                    </div>
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">e5b82995-c0fc-729d-a67b-926r81a5963d</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                  <div className="row">
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">Read Only Security Group</div>
+                    </div>
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">0</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                  <div className="row">
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">Added At</div>
+                    </div>
+                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <div className="services-added">{row.createdOn}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    return retData;
+  }
+
+  renderVPCData() {
+    if (this.state.treeData && this.state.treeData.length) {
+      return this.state.treeData.map((vpc, vpcIndex) => {
+        return (
+          <li
+            key={vpcIndex}
+            className={`${vpcIndex == this.state.toggleNode.vpcId ? 'active' : ''}`}
+            onClick={() => {
+              this.setState({
+                toggleNode: {
+                  ...this.state.toggleNode,
+                  vpcId: vpcIndex,
+                  clusters: true,
+                  products: false,
+                  clusterId: null,
+                  productId: null,
+                },
+              });
+            }}
+          >
+            <span>
+              <img src={VpcServicesIcon} alt="" />
+            </span>
+            {vpc.name}
+          </li>
+        );
+      });
+    }
+  }
+
+  renderClusters(index) {
+    if (
+      this.state.toggleNode.VPCS &&
+      this.state.treeData[index].clusters &&
+      this.state.treeData[index].clusters.length
+    ) {
+      return this.state.treeData[index].clusters.map((cluster, clusterIndex) => {
+        return (
+          <li
+            key={clusterIndex}
+            onClick={() => {
+              this.setState({
+                toggleNode: {
+                  ...this.state.toggleNode,
+                  vpcId: index,
+                  clusterId: clusterIndex,
+                  products: true,
+                },
+              });
+            }}
+            className={`${clusterIndex == this.state.toggleNode.clusterId ? 'active' : ''}`}
+          >
+            <span>
+              <img src={ClusterIcon} alt="" />
+            </span>
+            {cluster.name.charAt(0).toUpperCase() + cluster.name.toLowerCase().slice(1)}
+          </li>
+        );
+      });
+    }
+  }
+
+  renderProducts(vpcIndex, clusterIndex) {
+    if (
+      this.state.toggleNode.clusters &&
+      this.state.treeData[vpcIndex].clusters[clusterIndex].products &&
+      this.state.treeData[vpcIndex].clusters[clusterIndex].products.length
+    ) {
+      return this.state.treeData[vpcIndex].clusters[clusterIndex].products.map((product, productIndex) => {
+        return (
+          <label
+            className={`${productIndex == this.state.toggleNode.productId ? 'active' : ''}`}
+            key={productIndex}
+            onClick={() => {
+              this.setState({
+                toggleNode: {
+                  ...this.state.toggleNode,
+                  productId: productIndex,
+                  products: true,
+                },
+              });
+            }}
+          >
+            {product.name.charAt(0).toUpperCase() + product.name.toLowerCase().slice(1)}
+          </label>
+        );
+      });
+    }
   }
 
   toggleColumnSelect = (drdName) => {
@@ -188,7 +456,7 @@ class DiscoveredAssets extends Component {
                 <div className="services-panel-title bottom-border">
                   <div className="name">Topology View</div>
                 </div>
-                <div className="services-panel-body">
+                {/* <div className="services-panel-body">
                   <div className="gmnoprint">
                     <div className="gmnoprint-plus-minus">
                       <button className="btn btn-plus">
@@ -281,11 +549,258 @@ class DiscoveredAssets extends Component {
                       </div>
                     </div>
                   </div>
+                </div> */}
+                <div className="services-panel-body">
+                  <TransformWrapper>
+                    {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                      <React.Fragment>
+                        <div className="gmnoprint">
+                          <div className="gmnoprint-plus-minus">
+                            <button className="btn btn-plus" onClick={() => zoomIn()}>
+                              <i class="fal fa-plus"></i>
+                            </button>
+                            <button className="btn btn-minus" onClick={() => zoomOut()}>
+                              <i class="fal fa-minus"></i>
+                            </button>
+                          </div>
+                          <div className="gmnoprint-map">
+                            <button className="btn btn-map">
+                              <i class="fal fa-map-marker-alt"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <TransformComponent
+                          wrapperStyle={{ width: '100%', height: '100%' }}
+                          contentStyle={{
+                            width: '100%',
+                            height: '100%',
+                            justifyContent: 'center',
+                            alignItems: 'flex-start',
+                            paddingTop: '120px',
+                            display: 'flex',
+                            transform: 'translate(0px, 0px) scale(0)',
+                          }}
+                        >
+                          <div
+                            className="services-text-box active"
+                            onClick={() => {
+                              this.setState({
+                                toggleNode: {
+                                  ...this.state.toggleNode,
+                                  VPCS: true,
+                                  clusters: false,
+                                  products: false,
+                                  clusterId: null,
+                                  vpcId: null,
+                                  productId: null,
+                                },
+                              });
+                            }}
+                          >
+                            Amazon Web Services
+                          </div>
+                          <div
+                            className={` ${this.state.treeData && this.state.treeData.length ? 'global-servies' : ''}`}
+                          >
+                            <ul>{this.state.toggleNode.VPCS ? this.renderVPCData() : <></>}</ul>
+                            <div className="global-servies-menu" style={{ display: 'none' }}>
+                              <label className="active">
+                                <span>
+                                  <img src={VpcServicesIcon} alt="" />
+                                </span>
+                                Global servies
+                              </label>
+                            </div>
+                          </div>
+                          <div
+                            className={` ${this.state.toggleNode.clusters ? 'global-servies cluster-servies' : ''}`}
+                            style={{
+                              marginTop: '0',
+                              marginBottom: '0',
+                              transform: 'translateY(0%)',
+                            }}
+                          >
+                            <ul>
+                              {this.state.toggleNode.clusters ? (
+                                this.renderClusters(this.state.toggleNode.vpcId)
+                              ) : (
+                                <></>
+                              )}
+                            </ul>
+                            <div className="global-servies-menu" style={{ display: 'none' }}>
+                              <label className="active">Cloud Management Services</label>
+                              <label>Gateway Services</label>
+                            </div>
+                          </div>
+                          <div className={` ${this.state.toggleNode.products ? 'global-servies app-servies' : ''}`}>
+                            <div className="global-servies-menu">
+                              {this.state.toggleNode.products ? (
+                                this.renderProducts(this.state.toggleNode.vpcId, this.state.toggleNode.clusterId)
+                              ) : (
+                                <></>
+                              )}
+                            </div>
+                            <div className="global-servies-menu " style={{ display: 'none' }}>
+                              <label className="active">Cloud Management Services</label>
+                              <label>Gateway Services</label>
+                            </div>
+                          </div>
+                        </TransformComponent>
+                      </React.Fragment>
+                    )}
+                  </TransformWrapper>
                 </div>
               </div>
             </div>
             <div className="col-lg-5 col-md-5 col-sm-12">
-              {/* <div className="environment-table-section" style={{ height: '395px' }}>
+              <div className="fliter-tabs">
+                <div className="global-services-fliter">
+                  <div className="heading">
+                    <div className="breadcrumbs">
+                      <ul>
+                        <li>
+                          <a href="#">AWS</a>
+                        </li>
+                        <li>
+                          <i class="far fa-chevron-right"></i>
+                        </li>
+                        <li>
+                          <a href="#">VPC 1</a>
+                        </li>
+                        <li>
+                          <i class="far fa-chevron-right"></i>
+                        </li>
+                        <li>
+                          <a href="#">Cluster 1</a>
+                        </li>
+                        <li>
+                          <i class="far fa-chevron-right"></i>
+                        </li>
+                        <li>
+                          <span>App Services</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <button type="button" className="btn btn-ellipsis">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                  </div>
+                  <div className="fliter-inputs">
+                    <div className="search-control">
+                      <input type="text" className="input-group-text" placeholder="" />
+                    </div>
+                    <div className="search-control">
+                      <input type="text" className="input-group-text" placeholder="" />
+                    </div>
+                    <div className="search-control">
+                      <input type="text" className="input-group-text" placeholder="" />
+                    </div>
+                  </div>
+                </div>
+                <div className="environment-table-section" style={{ height: '373px' }}>
+                  <div className="table">
+                    <table className="overview">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Performance</th>
+                          <th>Availability</th>
+                          <th>Security</th>
+                          <th>Data Protection</th>
+                          <th>User Exp</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <strong>
+                              <a href="#">EMS</a>
+                            </strong>
+                          </td>
+                          <td>
+                            <div className="box red">2</div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box orange">3</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <strong>
+                              <a href="#">Supply Chain</a>
+                            </strong>
+                          </td>
+                          <td>
+                            <div className="box red">2</div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <strong>
+                              <a href="#">Procurement</a>
+                            </strong>
+                          </td>
+                          <td>
+                            <div className="box red">2</div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box green">
+                              <i class="far fa-check"></i>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="box orange">3</div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div className="environment-table-section" style={{ height: '395px' }}>
                 <div className="table">
                   <table className="overview">
                     <thead>
@@ -381,8 +896,8 @@ class DiscoveredAssets extends Component {
                     </tbody>
                   </table>
                 </div>
-              </div> */}
-              {/* <div className="fliter-tabs">
+              </div>
+              <div className="fliter-tabs">
                 <div className="global-services-fliter">
                   <div className="heading">
                     <div className="breadcrumbs">
@@ -440,8 +955,8 @@ class DiscoveredAssets extends Component {
                     })}
                   </div>
                 </div>
-              </div> */}
-              {/* <div className="fliter-tabs">
+              </div>
+              <div className="fliter-tabs">
                 <div
                   className="global-services-fliter"
                   style={{ height: '533px', boxShadow: '0px 10px 20px 0px rgba(0, 0, 0, 0.04)' }}
@@ -473,7 +988,7 @@ class DiscoveredAssets extends Component {
                     </div>
                   </div>
                 </div>
-              </div> */}
+              </div>
               <div className="fliter-tabs">
                 <div className="global-services-fliter">
                   <div className="heading">

@@ -264,6 +264,7 @@ class AmazonServicesNew extends React.Component {
       });
     }
   }
+
   renderClusters(index) {
     if (
       this.state.toggleNode.VPCS &&
@@ -299,6 +300,7 @@ class AmazonServicesNew extends React.Component {
       );
     }
   }
+
   renderProducts(vpcIndex, clusterIndex) {
     if (
       this.state.toggleNode.clusters &&
@@ -325,6 +327,7 @@ class AmazonServicesNew extends React.Component {
       );
     }
   }
+  
   render() {
     return (
       <div className="asset-container">
