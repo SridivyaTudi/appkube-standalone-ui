@@ -894,7 +894,7 @@
       .header-right {
         display: block;
         text-align: left;
-        .search-box{
+        .search-box {
           margin-top: 10px;
         }
         .script-select {
@@ -958,6 +958,14 @@
   .perfmanager-dashboard-container {
     .catalogue-management-container {
       .catalogue-tabs-container {
+        .catalogue-inner-tabs{
+          ul {
+            li {
+              width: 100%;
+              display: block;
+            }
+          }
+        }
         .catalogue-inner-tabs-container {
           .catalogue-right-container {
             .templated-search {
