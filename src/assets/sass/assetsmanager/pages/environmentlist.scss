@@ -315,11 +315,11 @@
     box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
 
     .table {
-      display: flex;
+      display: block;
       width: 100%;
       display: -webkit-box;
-      overflow: hidden;
-      overflow-x: auto;
+      // overflow: hidden;
+      //overflow-x: auto;
 
       table {
         width: 100%;
@@ -390,6 +390,9 @@
               width: 14.2857%;
               text-align: center;
               position: relative;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
 
               &.ou {
                 max-width: 125px;
@@ -417,10 +420,11 @@
 
               .menu-list {
                 position: absolute;
+                width: 150px;
                 top: 32px;
                 padding: 5px;
                 z-index: 11;
-                left: 0;
+                right: 0;
                 border-radius: 5px;
                 background: #ffffff;
                 box-shadow: -1px 2px 10px 5px rgba(0, 0, 0, 0.05);
@@ -682,7 +686,7 @@
       display: flex;
       align-items: center;
       width: 100%;
-      padding: 20px 30px;
+      padding: 20px 20px;
       position: relative;
       overflow: hidden;
       overflow-y: auto;
@@ -1196,17 +1200,17 @@
     }
     .discovered-assets {
       .global-services-fliter {
-        .heading{
-          .breadcrumbs{
-            ul{
-              li{
+        .heading {
+          .breadcrumbs {
+            ul {
+              li {
                 span {
                   font-size: 12px;
                 }
-              } 
-            } 
-          } 
-        } 
+              }
+            }
+          }
+        }
         .fliter-inputs {
           width: 100%;
           display: block;

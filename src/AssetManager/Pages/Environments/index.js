@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import Aws from '../../../assets/img/aws.png';
-import Microsoftazure from '../../../assets/img/microsoftazure.png';
-import GoogleCloud from '../../../assets/img/google-cloud.png';
-import Kubernetes from '../../../assets/img/kubernetes.png';
-import { Link } from 'react-router-dom';
-import { config } from '../../config';
+import React, { Component } from "react";
+import Aws from "../../../assets/img/aws.png";
+import Microsoftazure from "../../../assets/img/microsoftazure.png";
+import GoogleCloud from "../../../assets/img/google-cloud.png";
+import Kubernetes from "../../../assets/img/kubernetes.png";
+import { Link } from "react-router-dom";
+import { config } from "../../config";
 
 const LOGOS = {
   aws: Aws,
@@ -73,28 +73,28 @@ class Environments extends Component {
               <ul>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: '#ff9900' }}></span>
+                    <span style={{ backgroundColor: "#ff9900" }}></span>
                     <p>Environments</p>
                   </div>
                   <label>{accounts.length}</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: '#0089d6' }}></span>
+                    <span style={{ backgroundColor: "#0089d6" }}></span>
                     <p>Assets</p>
                   </div>
                   <label>0</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: '#da4f44' }}></span>
+                    <span style={{ backgroundColor: "#da4f44" }}></span>
                     <p>Alerts</p>
                   </div>
                   <label>0</label>
                 </li>
                 <li>
                   <div className="data-text">
-                    <span style={{ backgroundColor: '#00b929' }}></span>
+                    <span style={{ backgroundColor: "#00b929" }}></span>
                     <p>Total Billing</p>
                   </div>
                   <label>&#65284;{data.totalBill}</label>
@@ -110,7 +110,8 @@ class Environments extends Component {
 
   handleMenuToggle = (envKey, accountIndex) => {
     const { accountList } = this.state;
-    accountList[envKey][accountIndex].showMenu = !accountList[envKey][accountIndex].showMenu;
+    accountList[envKey][accountIndex].showMenu =
+      !accountList[envKey][accountIndex].showMenu;
     this.setState({
       accountList,
     });
@@ -223,7 +224,9 @@ class Environments extends Component {
         <div className="list-heading">
           <h3>Environments</h3>
         </div>
-        <div className="environment-boxs">{this.renderEnvironmentBoxes()}</div>
+        <div className="environment-boxs">
+          {this.renderEnvironmentBoxes()}
+          </div>
         <div className="add-new-environment">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-lg-3 col-md-3 col-sm-12">
@@ -240,35 +243,60 @@ class Environments extends Component {
                   Select and fillter
                   <i className="fas fa-caret-down arrow-icon"></i>
                 </div>
-                <div className={showSelectFilter === true ? 'fliter-collapse active' : 'fliter-collapse'}>
+                <div
+                  className={
+                    showSelectFilter === true
+                      ? "fliter-collapse active"
+                      : "fliter-collapse"
+                  }
+                >
                   <div className="search-bar">
                     <input type="text" placeholder="Search...." />
                   </div>
                   <ul>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       OU
                     </li>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       Status
                     </li>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       No of Assets
                     </li>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       Logs
                     </li>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       Performance & Availability
                     </li>
                   </ul>
                 </div>
                 <div
-                  className={showSelectFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
+                  className={
+                    showSelectFilter === true
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
                   onClick={() =>
                     this.setState({
                       showSelectFilter: !showSelectFilter,
@@ -294,10 +322,18 @@ class Environments extends Component {
                         Recent
                         <i className="fas fa-caret-down arrow-icon"></i>
                       </div>
-                      <div className={showRecentFilter === true ? 'fliter-collapse  active' : 'fliter-collapse'}>
+                      <div
+                        className={
+                          showRecentFilter === true
+                            ? "fliter-collapse  active"
+                            : "fliter-collapse"
+                        }
+                      >
                         <ul>
                           <li>
-                            <Link to={`/assetmanager/pages/environments/accountsetup`}>
+                            <Link
+                              to={`/assetmanager/pages/environments/accountsetup`}
+                            >
                               <span>
                                 <img src={Aws} alt="AWS" />
                               </span>
@@ -305,7 +341,9 @@ class Environments extends Component {
                             </Link>
                           </li>
                           <li>
-                            <Link to={`/assetmanager/pages/environments/accountsetup`}>
+                            <Link
+                              to={`/assetmanager/pages/environments/accountsetup`}
+                            >
                               <span>
                                 <img src={Aws} alt="" />
                               </span>
@@ -313,7 +351,9 @@ class Environments extends Component {
                             </Link>
                           </li>
                           <li>
-                            <Link to={`/assetmanager/pages/environments/accountsetup`}>
+                            <Link
+                              to={`/assetmanager/pages/environments/accountsetup`}
+                            >
                               <span>
                                 <img src={Microsoftazure} alt="" />
                               </span>
@@ -323,7 +363,11 @@ class Environments extends Component {
                         </ul>
                       </div>
                       <div
-                        className={showRecentFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
+                        className={
+                          showRecentFilter === true
+                            ? "fliters-collapse-bg active"
+                            : "fliters-collapse-bg"
+                        }
                         onClick={() =>
                           this.setState({
                             showRecentFilter: !showRecentFilter,
@@ -343,10 +387,18 @@ class Environments extends Component {
                         Add New Environment
                         <i className="fas fa-caret-down arrow-icon"></i>
                       </div>
-                      <div className={showAddNewFilter === true ? 'fliter-collapse active' : 'fliter-collapse'}>
+                      <div
+                        className={
+                          showAddNewFilter === true
+                            ? "fliter-collapse active"
+                            : "fliter-collapse"
+                        }
+                      >
                         <ul>
                           <li>
-                            <Link to={`/assetmanager/pages/environments/accountsetup`}>
+                            <Link
+                              to={`/assetmanager/pages/environments/accountsetup`}
+                            >
                               <span className="image-box">
                                 <img src={Aws} alt="Aws" />
                               </span>
@@ -354,15 +406,22 @@ class Environments extends Component {
                             </Link>
                           </li>
                           <li>
-                            <Link to={`/assetmanager/pages/environments/accountsetup`}>
+                            <Link
+                              to={`/assetmanager/pages/environments/accountsetup`}
+                            >
                               <span className="image-box">
-                                <img src={Microsoftazure} alt="Microsoftazure" />
+                                <img
+                                  src={Microsoftazure}
+                                  alt="Microsoftazure"
+                                />
                               </span>
                               <p>Azure Cloud</p>
                             </Link>
                           </li>
                           <li>
-                            <Link to={`/assetmanager/pages/environments/accountsetup`}>
+                            <Link
+                              to={`/assetmanager/pages/environments/accountsetup`}
+                            >
                               <span className="image-box">
                                 <img src={GoogleCloud} alt="GoogleCloud" />
                               </span>
@@ -370,7 +429,9 @@ class Environments extends Component {
                             </Link>
                           </li>
                           <li>
-                            <Link to={`/assetmanager/pages/environments/accountsetup`}>
+                            <Link
+                              to={`/assetmanager/pages/environments/accountsetup`}
+                            >
                               <span className="image-box">
                                 <img src={Kubernetes} alt="Kubernetes" />
                               </span>
@@ -380,7 +441,11 @@ class Environments extends Component {
                         </ul>
                       </div>
                       <div
-                        className={showAddNewFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
+                        className={
+                          showAddNewFilter === true
+                            ? "fliters-collapse-bg active"
+                            : "fliters-collapse-bg"
+                        }
                         onClick={() =>
                           this.setState({
                             showAddNewFilter: !showAddNewFilter,
@@ -398,7 +463,11 @@ class Environments extends Component {
                   <div className="search-box">
                     <form>
                       <div className="form-group search-control-group m-b-0">
-                        <input type="text" className="input-group-text" placeholder="Search" />
+                        <input
+                          type="text"
+                          className="input-group-text"
+                          placeholder="Search"
+                        />
                         <button className="search-btn">
                           <i className="fa fa-search" />
                         </button>
