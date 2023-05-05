@@ -122,7 +122,7 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/environments/amazonservicesnew" element={<AmazonServicesNew />} />
       <Route path="/assetmanager/pages/kubernetes" element={<Kubernetes />} />
       <Route path="/assetmanager/pages/storagedetails" element={<StorageDetails />} />
-      <Route path="/assetmanager/pages/accountsetup" element={<AccountSetup />} />
+      <Route path="/assetmanager/pages/environments/accountsetup" element={<AccountSetup />} />
       <Route path="/assetmanager/pages/department-wise-products" element={<DepartmentWiseProducts />} />
       <Route path="/assetmanager/pages/department-wise-products/department-wise-charts" element={<DepartmentWiseCharts />} />
       <Route path="/assetmanager/pages/department-wise-products/product-wise-cost" element={<ProductWiseCost />} />

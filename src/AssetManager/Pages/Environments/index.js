@@ -52,19 +52,6 @@ class Environments extends Component {
       });
   };
 
-  toggleColumnSelect = (drdName) => {
-    let current = this.state[drdName];
-    this.setState({
-      [drdName]: !current,
-    });
-  };
-
-  toggleMenu = () => {
-    this.setState({
-      showMenu: !this.state.showMenu,
-    });
-  };
-
   renderEnvironmentBoxes = () => {
     const { accountList, commonData } = this.state;
     const keys = Object.keys(accountList);
@@ -75,36 +62,44 @@ class Environments extends Component {
         const account = accounts[0];
         const data = commonData[account.cloud];
         retData.push(
-          <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-            <div className="services-box">
-              <div className="heading">
-                <span>
-                  <img src={LOGOS[account.cloud.toLowerCase()]} alt="" />
-                </span>
-                <h3>{account.cloud}</h3>
+          <div className="environment-box" key={account.cloud}>
+            <div className="environment-title">
+              <div className="environment-image">
+                <img src={LOGOS[account.cloud.toLowerCase()]} alt="" />
               </div>
-              <div className="table-box">
-                <table className="table">
-                  <tbody>
-                    <tr>
-                      <td>Accounts</td>
-                      <td>{accounts.length}</td>
-                    </tr>
-                    <tr>
-                      <td>Assets</td>
-                      <td>0</td>
-                    </tr>
-                    <tr>
-                      <td>Alerts</td>
-                      <td>0</td>
-                    </tr>
-                    <tr>
-                      <td>Total Billing</td>
-                      <td>{data.totalBill}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <div className="title-name">{account.cloud}</div>
+            </div>
+            <div className="data-contant">
+              <ul>
+                <li>
+                  <div className="data-text">
+                    <span style={{ backgroundColor: '#ff9900' }}></span>
+                    <p>Environments</p>
+                  </div>
+                  <label>{accounts.length}</label>
+                </li>
+                <li>
+                  <div className="data-text">
+                    <span style={{ backgroundColor: '#0089d6' }}></span>
+                    <p>Assets</p>
+                  </div>
+                  <label>0</label>
+                </li>
+                <li>
+                  <div className="data-text">
+                    <span style={{ backgroundColor: '#da4f44' }}></span>
+                    <p>Alerts</p>
+                  </div>
+                  <label>0</label>
+                </li>
+                <li>
+                  <div className="data-text">
+                    <span style={{ backgroundColor: '#00b929' }}></span>
+                    <p>Total Billing</p>
+                  </div>
+                  <label>&#65284;{data.totalBill}</label>
+                </li>
+              </ul>
             </div>
           </div>
         );
@@ -143,37 +138,48 @@ class Environments extends Component {
             <td>{account.totalAppServices}</td>
             <td>{account.totalDataServices}</td>
             <td>
-              <div className="d-block text-center action-edit">
-                {account.showMenu && (
-                  <>
-                    <div
-                      className="open-create-menu-close"
-                      onClick={(e) => {
-                        this.handleMenuToggle(env, accountIndex);
-                      }}
-                    ></div>
-                    <div className="text-center open-create-menu">
-                      <a
-                        href={`/assetmanager/pages/add-data-source?accountId=${account.accountId}&cloudName=${account.cloud}`}
-                      >
-                        Add New Input
-                      </a>
-                      <a>Add Cluster</a>
-                      <a>Add Cloud Managed Services</a>
-                      <a>Add Gateway Services</a>
-                    </div>
-                  </>
-                )}
-
-                <button
-                  className="asset-white-button min-width-inherit m-r-0"
-                  onClick={(e) => {
-                    this.handleMenuToggle(env, accountIndex);
-                  }}
-                >
-                  <i className="fa fa-ellipsis-h"></i>
-                </button>
-              </div>
+              <button
+                type="button"
+                className="list-icon"
+                onClick={(e) => {
+                  this.handleMenuToggle(env, accountIndex);
+                }}
+              >
+                <i className="fas fa-ellipsis-v"></i>
+              </button>
+              {account.showMenu == true && (
+                <>
+                  <div
+                    className="open-create-menu-close"
+                    onClick={(e) => {
+                      this.handleMenuToggle(env, accountIndex);
+                    }}
+                  ></div>
+                  <div className="menu-list">
+                    <ul>
+                      <li className="active">
+                        <a
+                          href={`/assetmanager/pages/add-data-source?accountId=${account.accountId}&cloudName=${account.cloud}`}
+                        >
+                          Add New datasource
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">Add Compliance</a>
+                      </li>
+                      <li>
+                        <a href="#">Associate to OU</a>
+                      </li>
+                      <li>
+                        <a href="#">Add New VPC</a>
+                      </li>
+                      <li>
+                        <a href="#">Add New Product</a>
+                      </li>
+                    </ul>
+                  </div>
+                </>
+              )}
             </td>
           </tr>
         );
@@ -183,7 +189,7 @@ class Environments extends Component {
         retData.push(
           <div className="environment-table-section">
             <div className="table">
-              <table className="table">
+              <table className="overview">
                 <thead>
                   <tr>
                     <th>
@@ -217,168 +223,7 @@ class Environments extends Component {
         <div className="list-heading">
           <h3>Environments</h3>
         </div>
-        <div className="environment-boxs">
-          <div className="environment-box">
-            <div className="environment-title">
-              <div className="environment-image">
-                <img src={Aws} />
-              </div>
-              <div className="title-name">Amazon Web Services</div>
-            </div>
-            <div className="data-contant">
-              <ul>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#ff9900' }}></span>
-                    <p>Environments</p>
-                  </div>
-                  <label>20</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#0089d6' }}></span>
-                    <p>Assets</p>
-                  </div>
-                  <label>150</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#da4f44' }}></span>
-                    <p>Alerts</p>
-                  </div>
-                  <label>100</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#00b929' }}></span>
-                    <p>Total Billing</p>
-                  </div>
-                  <label>&#65284;200</label>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="environment-box">
-            <div className="environment-title">
-              <div className="environment-image">
-                <img src={Microsoftazure} />
-              </div>
-              <div className="title-name">Azure Cloud</div>
-            </div>
-            <div className="data-contant">
-              <ul>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#ff9900' }}></span>
-                    <p>Environments</p>
-                  </div>
-                  <label>20</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#0089d6' }}></span>
-                    <p>Assets</p>
-                  </div>
-                  <label>150</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#da4f44' }}></span>
-                    <p>Alerts</p>
-                  </div>
-                  <label>100</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#00b929' }}></span>
-                    <p>Total Billing</p>
-                  </div>
-                  <label>&#65284;200</label>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="environment-box">
-            <div className="environment-title">
-              <div className="environment-image">
-                <img src={GoogleCloud} />
-              </div>
-              <div className="title-name">Google Cloud Platform</div>
-            </div>
-            <div className="data-contant">
-              <ul>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#ff9900' }}></span>
-                    <p>Environments</p>
-                  </div>
-                  <label>20</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#0089d6' }}></span>
-                    <p>Assets</p>
-                  </div>
-                  <label>150</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#da4f44' }}></span>
-                    <p>Alerts</p>
-                  </div>
-                  <label>100</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#00b929' }}></span>
-                    <p>Total Billing</p>
-                  </div>
-                  <label>&#65284;200</label>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="environment-box">
-            <div className="environment-title">
-              <div className="environment-image">
-                <img src={Kubernetes} />
-              </div>
-              <div className="title-name">Kubernetes</div>
-            </div>
-            <div className="data-contant">
-              <ul>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#ff9900' }}></span>
-                    <p>Environments</p>
-                  </div>
-                  <label>20</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#0089d6' }}></span>
-                    <p>Assets</p>
-                  </div>
-                  <label>150</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#da4f44' }}></span>
-                    <p>Alerts</p>
-                  </div>
-                  <label>100</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: '#00b929' }}></span>
-                    <p>Total Billing</p>
-                  </div>
-                  <label>&#65284;200</label>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <div className="environment-boxs">{this.renderEnvironmentBoxes()}</div>
         <div className="add-new-environment">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-lg-3 col-md-3 col-sm-12">
@@ -391,7 +236,7 @@ class Environments extends Component {
                     })
                   }
                 >
-                  <i class="fas fa-filter fillter-icon"></i>
+                  <i className="fas fa-filter fillter-icon"></i>
                   Select and fillter
                   <i className="fas fa-caret-down arrow-icon"></i>
                 </div>
@@ -452,7 +297,7 @@ class Environments extends Component {
                       <div className={showRecentFilter === true ? 'fliter-collapse  active' : 'fliter-collapse'}>
                         <ul>
                           <li>
-                            <Link to={`/assetmanager/pages/accountsetup`}>
+                            <Link to={`/assetmanager/pages/environments/accountsetup`}>
                               <span>
                                 <img src={Aws} alt="AWS" />
                               </span>
@@ -460,7 +305,7 @@ class Environments extends Component {
                             </Link>
                           </li>
                           <li>
-                            <Link to={`/assetmanager/pages/accountsetup`}>
+                            <Link to={`/assetmanager/pages/environments/accountsetup`}>
                               <span>
                                 <img src={Aws} alt="" />
                               </span>
@@ -468,7 +313,7 @@ class Environments extends Component {
                             </Link>
                           </li>
                           <li>
-                            <Link to={`/assetmanager/pages/accountsetup`}>
+                            <Link to={`/assetmanager/pages/environments/accountsetup`}>
                               <span>
                                 <img src={Microsoftazure} alt="" />
                               </span>
@@ -501,7 +346,7 @@ class Environments extends Component {
                       <div className={showAddNewFilter === true ? 'fliter-collapse active' : 'fliter-collapse'}>
                         <ul>
                           <li>
-                            <Link to={`/assetmanager/pages/accountsetup`}>
+                            <Link to={`/assetmanager/pages/environments/accountsetup`}>
                               <span className="image-box">
                                 <img src={Aws} alt="Aws" />
                               </span>
@@ -509,7 +354,7 @@ class Environments extends Component {
                             </Link>
                           </li>
                           <li>
-                            <Link to={`/assetmanager/pages/accountsetup`}>
+                            <Link to={`/assetmanager/pages/environments/accountsetup`}>
                               <span className="image-box">
                                 <img src={Microsoftazure} alt="Microsoftazure" />
                               </span>
@@ -517,7 +362,7 @@ class Environments extends Component {
                             </Link>
                           </li>
                           <li>
-                            <Link to={`/assetmanager/pages/accountsetup`}>
+                            <Link to={`/assetmanager/pages/environments/accountsetup`}>
                               <span className="image-box">
                                 <img src={GoogleCloud} alt="GoogleCloud" />
                               </span>
@@ -525,7 +370,7 @@ class Environments extends Component {
                             </Link>
                           </li>
                           <li>
-                            <Link to={`/assetmanager/pages/accountsetup`}>
+                            <Link to={`/assetmanager/pages/environments/accountsetup`}>
                               <span className="image-box">
                                 <img src={Kubernetes} alt="Kubernetes" />
                               </span>
@@ -543,7 +388,7 @@ class Environments extends Component {
                         }
                       />
                     </div>
-                    <button class="new-button m-r-0 m-b-0">
+                    <button className="new-button m-r-0 m-b-0">
                       <i className="fas fa-external-link-square-alt p-r-10"></i>
                       Export
                     </button>
@@ -566,443 +411,6 @@ class Environments extends Component {
           </div>
         </div>
         {this.renderEnvironmentTable()}
-        <div className="environment-table-section">
-          <div className="table">
-            <table className="overview">
-              <thead>
-                <tr>
-                  <th>
-                    <i className="fas fa-sort-down"></i>
-                    <div className="environment-image">
-                      <img src={Aws} />
-                    </div>
-                    <strong>AWS</strong>
-                  </th>
-                  <th>Product Enclave</th>
-                  <th>Product</th>
-                  <th>App Services</th>
-                  <th>Data Services</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="/assetmanager/pages/environmentlistitem">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>2 VPC</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>5 VPC</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>8 VPC</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>5 VPC</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>6 VPC</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        {/* <div className="environment-table-section">
-          <div className="table">
-            <table className="overview">
-              <thead>
-                <tr>
-                  <th>
-                    <i className="fas fa-sort-down"></i>
-                    <div className="environment-image">
-                      <img src={Microsoftazure} />
-                    </div>
-                    <strong>Azure Cloud</strong>
-                  </th>
-                  <th>Product Enclave</th>
-                  <th>Product</th>
-                  <th>App Services</th>
-                  <th>Data Services</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>2 Area</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>3 Area</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>5 Area</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>9 Area</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>1 Area</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className="environment-table-section">
-          <div className="table">
-            <table className="overview">
-              <thead>
-                <tr>
-                  <th>
-                    <i className="fas fa-sort-down"></i>
-                    <div className="environment-image">
-                      <img src={GoogleCloud} />
-                    </div>
-                    <strong>Google Cloud Platform</strong>
-                  </th>
-                  <th>Product Enclave</th>
-                  <th>Product</th>
-                  <th>App Services</th>
-                  <th>Data Services</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>2 Projects</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>7 Projects</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>4 Projects</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>5 Projects</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" onClick={this.toggleMenu} className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>5 Projects</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className="environment-table-section">
-          <div className="table">
-            <table className="overview">
-              <thead>
-                <tr>
-                  <th>
-                    <i className="fas fa-sort-down"></i>
-                    <div className="environment-image">
-                      <img src={kubernetes} />
-                    </div>
-                    <strong>Kubernetes</strong>
-                  </th>
-                  <th>Product Enclave</th>
-                  <th>Product</th>
-                  <th>App Services</th>
-                  <th>Data Services</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>2 NS</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>7 NS</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>3 NS</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>8 NS</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>
-                      <a href="#">AWS (657907747554)</a>
-                    </strong>
-                  </td>
-                  <td>5 NS</td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>2</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div> */}
       </div>
     );
   }
