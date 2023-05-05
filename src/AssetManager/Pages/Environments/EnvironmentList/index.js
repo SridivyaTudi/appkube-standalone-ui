@@ -8,7 +8,7 @@ import CompliancePolicies from './CompliancePolicies';
 import Alerts from './Alerts';
 import Inputs from './Inputs';
 
-class EnvironmentListItem extends Component {
+class EnvironmentList extends Component {
   tabMapping = [
     {
       name: 'Discovered Assets',
@@ -145,4 +145,4 @@ class EnvironmentListItem extends Component {
   }
 }
 
-export default EnvironmentListItem;
+export default EnvironmentList;
