@@ -1,7 +1,7 @@
 .environmentlist-container {
   width: 100%;
   display: block;
-  padding: 15px 45px;
+  padding: 15px 20px;
   background-color: #f6f7fb;
 
   .list-heading {
@@ -772,8 +772,8 @@
           line-height: 16px;
           font-weight: 900;
           color: #dbdff1;
-          content: '\f0da';
-          font-family: 'Font Awesome 5 Pro';
+          content: "\f0da";
+          font-family: "Font Awesome 5 Pro";
         }
       }
 
@@ -901,8 +901,8 @@
               line-height: 16px;
               font-weight: 900;
               color: #dbdff1;
-              content: '\f0da';
-              font-family: 'Font Awesome 5 Pro';
+              content: "\f0da";
+              font-family: "Font Awesome 5 Pro";
             }
 
             span {
@@ -941,15 +941,16 @@
         li {
           display: inline-block;
           vertical-align: top;
-          font-size: 14px;
+          font-size: 12px;
           line-height: 20px;
           font-weight: 500;
           color: #000000;
           padding-top: 7px;
           padding-bottom: 7px;
-          padding-left: 27px;
-          padding-right: 27px;
+          padding-left: 18px;
+          padding-right: 18px;
           border-radius: 30px;
+          cursor: pointer;
           cursor: pointer;
 
           &.active {
@@ -1044,9 +1045,7 @@
                   i {
                     vertical-align: middle;
                   }
-
                 }
-
               }
             }
           }
@@ -1123,7 +1122,6 @@
             vertical-align: middle;
           }
         }
-
       }
 
       .fliter-inputs {
@@ -1158,6 +1156,57 @@
             &:focus {
               outline: none;
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .environmentlist-container {
+    .services-panel-tabs {
+      .tabs-head {
+        ul {
+          width: 100%;
+          li {
+            font-size: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+          }
+        }
+      }
+    }
+
+    .environment-fliter {
+      display: block;
+      width: 100%;
+      .fliter-toggel {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+    }
+    .new-button {
+      display: block;
+      margin-bottom: 15px;
+      margin-right: 0;
+    }
+    .search-box {
+      width: 100%;
+    }
+  }
+}
+@media only screen and (max-width: 767px) {
+  .environmentlist-container {
+    .services-panel-tabs {
+      .tabs-head {
+        ul {
+          width: 100%;
+          li {
+            display: block;
+            font-size: 12px;
+            padding-left: 15px;
+            padding-right: 15px;
           }
         }
       }
