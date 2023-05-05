@@ -419,7 +419,7 @@
                 position: absolute;
                 top: 32px;
                 padding: 5px;
-                z-index: 1;
+                z-index: 11;
                 left: 0;
                 border-radius: 5px;
                 background: #ffffff;
@@ -1193,6 +1193,33 @@
     }
     .search-box {
       width: 100%;
+    }
+    .discovered-assets {
+      .global-services-fliter {
+        .heading{
+          .breadcrumbs{
+            ul{
+              li{
+                span {
+                  font-size: 12px;
+                }
+              } 
+            } 
+          } 
+        } 
+        .fliter-inputs {
+          width: 100%;
+          display: block;
+          .search-control {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            &:first-child {
+              width: 100%;
+            }
+          }
+        }
+      }
     }
   }
 }
