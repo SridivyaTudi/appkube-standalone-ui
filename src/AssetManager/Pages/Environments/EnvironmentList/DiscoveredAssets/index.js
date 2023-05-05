@@ -11,7 +11,24 @@ import WafTable from "./WafTable";
 import { RestService } from "../../../_service/RestService";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { type } from "@testing-library/user-event/dist/type";
-
+const servicesTreeCondition = {
+  service:['cluster','product','vpc','clusterId','vpcId','productId'],
+  vpc: ["vpcId", "cluster", "product", "clusterId", "productId"],
+  cluster: ["vpcId", "product", "clusterId",'productId'],
+  product: ["productId", "product"],
+};
+const breadcrumbResetCondition = {
+  service:['vpc','cluster','product'],
+  vpc: [ 'cluster',"product"],
+  cluster : ['product'],
+  product:[]
+}
+const nextTypes = {
+  service:'vpc',
+  vpc:'cluster',
+  cluster:'product',
+  product:''
+}
 class DiscoveredAssets extends Component {
   tableMapping = [
     {
@@ -40,9 +57,9 @@ class DiscoveredAssets extends Component {
       cloudAssets: [],
       treeDataNew: {},
       toggleNode: {
-        VPCS: true,
-        clusters: false,
-        products: false,
+        vpc: true,
+        cluster: false,
+        product: false,
         vpcId: null,
         clusterId: null,
         productId: null,
@@ -52,6 +69,7 @@ class DiscoveredAssets extends Component {
           id: "service",
           name: cloudName,
           type: "service",
+          serviceIndexs:{}
         },
       ],
       showSelectFilter: false,
@@ -247,28 +265,29 @@ class DiscoveredAssets extends Component {
               vpcIndex == this.state.toggleNode.vpcId ? "active" : ""
             }`}
             onClick={() => {
-              this.setState({
-                toggleNode: {
-                  ...this.state.toggleNode,
-                  vpcId: vpcIndex,
-                  clusters: true,
-                  products: false,
-                  clusterId: null,
-                  productId: null,
-                },
-                breadcrumbs: this.prepareBreadCrumbs(
-                  { id: "VPC" + "_" + vpcIndex, name: vpc.name, type: "VPC" },
-                  "VPC" + "_" + vpcIndex,
-                  "VPC"
-                ),
-              });
+              this.handleToggleNode({ vpcId: vpcIndex }, vpc.name, "vpc",true,'cluster');
+              // this.setState({
+              //   toggleNode: {
+              //     ...this.state.toggleNode,
+              //     vpcId: vpcIndex,
+              //     clusters: true,
+              //     products: false,
+              //     clusterId: null,
+              //     productId: null,
+              //   },
+              //   breadcrumbs: this.prepareBreadCrumbs(
+              //     { id: "VPC" + "_" + vpcIndex, name: vpc.name, type: "VPC" },
+              //     "VPC" + "_" + vpcIndex,
+              //     "VPC"
+              //   ),
+              // });
             }}
           >
             <span>
               <img src={VpcServicesIcon} alt="" />
             </span>
-            
-          {this.getServiceName(vpc.name, "vpc")}
+
+            {this.getServiceName(vpc.name, "vpc")}
           </li>
         );
       });
@@ -277,28 +296,33 @@ class DiscoveredAssets extends Component {
   prepareBreadCrumbs(data, index, type) {
     let tempBreadData = [];
     if (
-      this.state.breadcrumbs.filter((breadcrumb) => breadcrumb.type == type)
+      this.state.breadcrumbs.filter((breadcrumb) => breadcrumb.type === type)
         .length
     ) {
       if (
-        this.state.breadcrumbs.filter((breadcrumb) => breadcrumb.id == index)
+        this.state.breadcrumbs.filter((breadcrumb) => breadcrumb.id === index)
           .length
       ) {
         tempBreadData = this.state.breadcrumbs;
       } else {
         tempBreadData = this.state.breadcrumbs.filter(
-          (breadcrumb) => breadcrumb.type != type
+          (breadcrumb) => breadcrumb.type !== type
         );
         tempBreadData = [...tempBreadData, data];
       }
     } else {
       tempBreadData = [...this.state.breadcrumbs, data];
     }
+    console.log(tempBreadData,'1')
+    breadcrumbResetCondition[type].forEach((keyType)=>{
+      tempBreadData = tempBreadData.filter((breadcrumb) => breadcrumb.type !== keyType)
+    })
+    console.log(tempBreadData,'2')
     return tempBreadData;
   }
   renderClusters(index) {
     if (
-      this.state.toggleNode.VPCS &&
+      this.state.toggleNode.vpc &&
       this.state.treeData[index].clusters &&
       this.state.treeData[index].clusters.length
     ) {
@@ -308,23 +332,24 @@ class DiscoveredAssets extends Component {
             <li
               key={clusterIndex}
               onClick={() => {
-                this.setState({
-                  toggleNode: {
-                    ...this.state.toggleNode,
-                    vpcId: index,
-                    clusterId: clusterIndex,
-                    products: true,
-                  },
-                  breadcrumbs: this.prepareBreadCrumbs(
-                    {
-                      id: "cluster" + "_" + clusterIndex,
-                      name: cluster.name,
-                      type: "cluster",
-                    },
-                    "cluster" + "_" + clusterIndex,
-                    "cluster"
-                  ),
-                });
+                this.handleToggleNode({ vpcId: index, clusterId: clusterIndex}, cluster.name, "cluster",true,'product');
+                // this.setState({
+                //   toggleNode: {
+                //     ...this.state.toggleNode,
+                //     vpcId: index,
+                //     clusterId: clusterIndex,
+                //     products: true,
+                //   },
+                //   breadcrumbs: this.prepareBreadCrumbs(
+                //     {
+                //       id: "cluster" + "_" + clusterIndex,
+                //       name: cluster.name,
+                //       type: "cluster",
+                //     },
+                //     "cluster" + "_" + clusterIndex,
+                //     "cluster"
+                //   ),
+                // });
               }}
               className={`${
                 clusterIndex == this.state.toggleNode.clusterId ? "active" : ""
@@ -343,7 +368,7 @@ class DiscoveredAssets extends Component {
 
   renderProducts(vpcIndex, clusterIndex) {
     if (
-      this.state.toggleNode.clusters &&
+      this.state.toggleNode.cluster &&
       this.state.treeData[vpcIndex].clusters[clusterIndex].products &&
       this.state.treeData[vpcIndex].clusters[clusterIndex].products.length
     ) {
@@ -356,22 +381,24 @@ class DiscoveredAssets extends Component {
               }`}
               key={productIndex}
               onClick={() => {
-                this.setState({
-                  toggleNode: {
-                    ...this.state.toggleNode,
-                    productId: productIndex,
-                    products: true,
-                  },
-                  breadcrumbs: this.prepareBreadCrumbs(
-                    {
-                      id: "product" + "_" + productIndex,
-                      name: product.name,
-                      type: "product",
-                    },
-                    "product" + "_" + productIndex,
-                    "product"
-                  ),
-                });
+                this.handleToggleNode({ vpcId: vpcIndex, clusterId: clusterIndex, productId: productIndex}, product.name, "product",true);
+
+                // this.setState({
+                //   toggleNode: {
+                //     ...this.state.toggleNode,
+                //     productId: productIndex,
+                //     products: true,
+                //   },
+                //   breadcrumbs: this.prepareBreadCrumbs(
+                //     {
+                //       id: "product" + "_" + productIndex,
+                //       name: product.name,
+                //       type: "product",
+                //     },
+                //     "product" + "_" + productIndex,
+                //     "product"
+                //   ),
+                // });
               }}
             >
               {this.getServiceName(product.name, "product")}
@@ -409,14 +436,18 @@ class DiscoveredAssets extends Component {
         return (
           <>
             {index > 0 ? (
-              <li>
+              <li >
                 <i class="far fa-chevron-right"></i>
               </li>
             ) : (
               <></>
             )}
-
-            <li>
+            <li onClick={()=>{
+              if(this.state.breadcrumbs.length > 1){
+                this.handleToggleNode(data.serviceIndexs,data.type == 'service' ? 'vpc' : '', data.type,data.type == 'service' ? false : true,data.type && nextTypes[data.type] || '');
+              }
+                
+              }}>
               <a>{data.name}</a>
             </li>
           </>
@@ -430,18 +461,43 @@ class DiscoveredAssets extends Component {
     } else {
       let firstChar = name ? name.charAt(0).toUpperCase() : "";
       let otherStr = name ? name.toLowerCase().slice(1) : "";
-      let string = firstChar + otherStr
+      let string = firstChar + otherStr;
       return string;
     }
   }
-  handleToggleNode(type,index){
-    // this.setState({
-    //   toggleNode: {
-    //     ...this.state.toggleNode,
-    //     productId: productIndex,
-    //     products: true,
-    //   },
-    // });
+  handleToggleNode(serviceIndexs, name, type, isBreadCumbEdit = false,nextType) {
+    let { toggleNode, breadcrumbs } = this.state;
+    servicesTreeCondition[type].forEach((key) => {
+      if (type == 'service') {
+        toggleNode[key] =  key.endsWith("Id") ? null : key.startsWith(name) ? true : false
+      } else {
+        toggleNode[key] =  key.endsWith("Id")
+        ? key in serviceIndexs
+          ? serviceIndexs[key]
+          : null
+        : key == type || key == nextType
+        ? true
+        : false;
+      }
+    });
+   
+    if (isBreadCumbEdit) {
+      breadcrumbs = this.prepareBreadCrumbs(
+        {
+          id: type + "_" + serviceIndexs[`${type}Id`],
+          name: this.getServiceName(name,type),
+          type: type,serviceIndexs:serviceIndexs
+        },
+        type + "_" + serviceIndexs[`${type}Id`],
+        type,
+      );
+    } else {
+      breadcrumbResetCondition[type].forEach((keyType)=>{
+        breadcrumbs = breadcrumbs.filter((breadcrumb) => breadcrumb.type !== keyType)
+      })
+    }
+    console.log(toggleNode)
+     this.setState({ toggleNode, breadcrumbs });
   }
   render() {
     const { showSelectFilter, showServiceViewFilter, activeTab } = this.state;
@@ -449,7 +505,7 @@ class DiscoveredAssets extends Component {
       <div className="discovered-assets">
         <div className="discovered-assets-head">
           <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-12">
+            <div className="col-lg-6 col-md-12 col-sm-12">
               <div className="environment-fliter">
                 <div
                   className="fliter-toggel"
@@ -585,9 +641,9 @@ class DiscoveredAssets extends Component {
                 />
               </div>
             </div>
-            <div className="col-lg-6 col-md-6 col-sm-12">
+            <div className="col-lg-6 col-md-12 col-sm-12">
               <div className="d-inline-block width-100 text-right">
-                <button class="new-button m-b-0">
+                <button class="new-button">
                   <i className="fas fa-external-link-square-alt p-r-10"></i>
                   Export
                 </button>
@@ -609,7 +665,7 @@ class DiscoveredAssets extends Component {
         </div>
         <div className="discovered-assets-body">
           <div className="row">
-            <div className="col-lg-7 col-md-7 col-sm-12">
+            <div className="col-lg-7 col-md-12 col-sm-12">
               <div className="services-panel">
                 <div className="services-panel-title bottom-border">
                   <div className="name">Topology View</div>
@@ -738,7 +794,7 @@ class DiscoveredAssets extends Component {
                           contentStyle={{
                             width: "100%",
                             height: "100%",
-                            justifyContent: "center",
+                            justifyContent: "flex-start",
                             alignItems: "flex-start",
                             paddingTop: "120px",
                             display: "flex",
@@ -748,20 +804,21 @@ class DiscoveredAssets extends Component {
                           <div
                             className="services-text-box active"
                             onClick={() => {
-                              this.setState({
-                                toggleNode: {
-                                  ...this.state.toggleNode,
-                                  VPCS: true,
-                                  clusters: false,
-                                  products: false,
-                                  clusterId: null,
-                                  vpcId: null,
-                                  productId: null,
-                                },
-                                breadcrumbs: this.state.breadcrumbs.filter(
-                                  (breadcrumb) => breadcrumb.id == "service"
-                                ),
-                              });
+                              this.handleToggleNode({  }, 'vpc', "service",false);
+                              // this.setState({
+                              //   toggleNode: {
+                              //     ...this.state.toggleNode,
+                              //     VPCS: true,
+                              //     clusters: false,
+                              //     products: false,
+                              //     clusterId: null,
+                              //     vpcId: null,
+                              //     productId: null,
+                              //   },
+                              //   breadcrumbs: this.state.breadcrumbs.filter(
+                              //     (breadcrumb) => breadcrumb.id == "service"
+                              //   ),
+                              // });
                             }}
                           >
                             {this.getCloudName()}
@@ -774,7 +831,7 @@ class DiscoveredAssets extends Component {
                             }`}
                           >
                             <ul>
-                              {this.state.toggleNode.VPCS ? (
+                              {this.state.toggleNode.vpc ? (
                                 this.renderVPCData()
                               ) : (
                                 <></>
@@ -794,7 +851,7 @@ class DiscoveredAssets extends Component {
                           </div>
                           <div
                             className={` ${
-                              this.state.toggleNode.clusters
+                              this.state.toggleNode.cluster
                                 ? "global-servies cluster-servies"
                                 : ""
                             }`}
@@ -805,7 +862,7 @@ class DiscoveredAssets extends Component {
                             }}
                           >
                             <ul>
-                              {this.state.toggleNode.clusters ? (
+                              {this.state.toggleNode.cluster ? (
                                 this.renderClusters(this.state.toggleNode.vpcId)
                               ) : (
                                 <></>
@@ -823,13 +880,13 @@ class DiscoveredAssets extends Component {
                           </div>
                           <div
                             className={` ${
-                              this.state.toggleNode.products
+                              this.state.toggleNode.product
                                 ? "global-servies app-servies"
                                 : ""
                             }`}
                           >
                             <div className="global-servies-menu">
-                              {this.state.toggleNode.products ? (
+                              {this.state.toggleNode.product ? (
                                 this.renderProducts(
                                   this.state.toggleNode.vpcId,
                                   this.state.toggleNode.clusterId
@@ -855,7 +912,7 @@ class DiscoveredAssets extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-5 col-md-5 col-sm-12">
+            <div className="col-lg-5 col-md-12 col-sm-12">
               <div className="fliter-tabs">
                 <div className="global-services-fliter">
                   <div className="heading">
