@@ -431,7 +431,7 @@
                 top: 32px;
                 padding: 5px;
                 z-index: 11;
-                right: 0;
+                left: 0;
                 border-radius: 5px;
                 background: #ffffff;
                 box-shadow: -1px 2px 10px 5px rgba(0, 0, 0, 0.05);
@@ -1177,6 +1177,12 @@
 
 @media only screen and (max-width: 1200px) {
   .environmentlist-container {
+    .environment-table-section {
+      overflow-x: auto;
+      .table {
+       width: 1000px;
+      }
+    }
     .services-panel-tabs {
       .tabs-head {
         ul {
