@@ -12,23 +12,23 @@ import { RestService } from "../../../_service/RestService";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { type } from "@testing-library/user-event/dist/type";
 const servicesTreeCondition = {
-  service:['cluster','product','vpc','clusterId','vpcId','productId'],
+  service: ["cluster", "product", "vpc", "clusterId", "vpcId", "productId"],
   vpc: ["vpcId", "cluster", "product", "clusterId", "productId"],
-  cluster: ["vpcId", "product", "clusterId",'productId'],
+  cluster: ["vpcId", "product", "clusterId", "productId"],
   product: ["productId", "product"],
 };
 const breadcrumbResetCondition = {
-  service:['vpc','cluster','product'],
-  vpc: [ 'cluster',"product"],
-  cluster : ['product'],
-  product:[]
-}
+  service: ["vpc", "cluster", "product"],
+  vpc: ["cluster", "product"],
+  cluster: ["product"],
+  product: [],
+};
 const nextTypes = {
-  service:'vpc',
-  vpc:'cluster',
-  cluster:'product',
-  product:''
-}
+  service: "vpc",
+  vpc: "cluster",
+  cluster: "product",
+  product: "",
+};
 class DiscoveredAssets extends Component {
   tableMapping = [
     {
@@ -69,12 +69,13 @@ class DiscoveredAssets extends Component {
           id: "service",
           name: cloudName,
           type: "service",
-          serviceIndexs:{}
+          serviceIndexs: {},
         },
       ],
       showSelectFilter: false,
       showServiceViewFilter: false,
       activeTab: 0,
+      vpcsDetails: [],
     };
   }
 
@@ -88,6 +89,7 @@ class DiscoveredAssets extends Component {
         this.setState({
           treeData: response[0].account_services_json.vpcs,
         });
+        this.getVpcsDetails(response[0].account_services_json.vpcs);
       });
     } catch (err) {
       console.log("Loading accounts failed. Error: ", err);
@@ -265,7 +267,13 @@ class DiscoveredAssets extends Component {
               vpcIndex == this.state.toggleNode.vpcId ? "active" : ""
             }`}
             onClick={() => {
-              this.handleToggleNode({ vpcId: vpcIndex }, vpc.name, "vpc",true,'cluster');
+              this.handleToggleNode(
+                { vpcId: vpcIndex },
+                vpc.name,
+                "vpc",
+                true,
+                "cluster"
+              );
               // this.setState({
               //   toggleNode: {
               //     ...this.state.toggleNode,
@@ -313,11 +321,11 @@ class DiscoveredAssets extends Component {
     } else {
       tempBreadData = [...this.state.breadcrumbs, data];
     }
-    console.log(tempBreadData,'1')
-    breadcrumbResetCondition[type].forEach((keyType)=>{
-      tempBreadData = tempBreadData.filter((breadcrumb) => breadcrumb.type !== keyType)
-    })
-    console.log(tempBreadData,'2')
+    breadcrumbResetCondition[type].forEach((keyType) => {
+      tempBreadData = tempBreadData.filter(
+        (breadcrumb) => breadcrumb.type !== keyType
+      );
+    });
     return tempBreadData;
   }
   renderClusters(index) {
@@ -332,7 +340,13 @@ class DiscoveredAssets extends Component {
             <li
               key={clusterIndex}
               onClick={() => {
-                this.handleToggleNode({ vpcId: index, clusterId: clusterIndex}, cluster.name, "cluster",true,'product');
+                this.handleToggleNode(
+                  { vpcId: index, clusterId: clusterIndex },
+                  cluster.name,
+                  "cluster",
+                  true,
+                  "product"
+                );
                 // this.setState({
                 //   toggleNode: {
                 //     ...this.state.toggleNode,
@@ -381,7 +395,16 @@ class DiscoveredAssets extends Component {
               }`}
               key={productIndex}
               onClick={() => {
-                this.handleToggleNode({ vpcId: vpcIndex, clusterId: clusterIndex, productId: productIndex}, product.name, "product",true);
+                this.handleToggleNode(
+                  {
+                    vpcId: vpcIndex,
+                    clusterId: clusterIndex,
+                    productId: productIndex,
+                  },
+                  product.name,
+                  "product",
+                  true
+                );
 
                 // this.setState({
                 //   toggleNode: {
@@ -436,18 +459,25 @@ class DiscoveredAssets extends Component {
         return (
           <>
             {index > 0 ? (
-              <li >
+              <li>
                 <i class="far fa-chevron-right"></i>
               </li>
             ) : (
               <></>
             )}
-            <li onClick={()=>{
-              if(this.state.breadcrumbs.length > 1){
-                this.handleToggleNode(data.serviceIndexs,data.type == 'service' ? 'vpc' : '', data.type,data.type == 'service' ? false : true,data.type && nextTypes[data.type] || '');
-              }
-                
-              }}>
+            <li
+              onClick={() => {
+                if (this.state.breadcrumbs.length > 1) {
+                  this.handleToggleNode(
+                    data.serviceIndexs,
+                    data.type == "service" ? "vpc" : "",
+                    data.type,
+                    data.type == "service" ? false : true,
+                    (data.type && nextTypes[data.type]) || ""
+                  );
+                }
+              }}
+            >
               <a>{data.name}</a>
             </li>
           </>
@@ -465,39 +495,170 @@ class DiscoveredAssets extends Component {
       return string;
     }
   }
-  handleToggleNode(serviceIndexs, name, type, isBreadCumbEdit = false,nextType) {
+  handleToggleNode(
+    serviceIndexs,
+    name,
+    type,
+    isBreadCumbEdit = false,
+    nextType
+  ) {
     let { toggleNode, breadcrumbs } = this.state;
     servicesTreeCondition[type].forEach((key) => {
-      if (type == 'service') {
-        toggleNode[key] =  key.endsWith("Id") ? null : key.startsWith(name) ? true : false
+      if (type == "service") {
+        toggleNode[key] = key.endsWith("Id")
+          ? null
+          : key.startsWith(name)
+          ? true
+          : false;
       } else {
-        toggleNode[key] =  key.endsWith("Id")
-        ? key in serviceIndexs
-          ? serviceIndexs[key]
-          : null
-        : key == type || key == nextType
-        ? true
-        : false;
+        toggleNode[key] = key.endsWith("Id")
+          ? key in serviceIndexs
+            ? serviceIndexs[key]
+            : null
+          : key == type || key == nextType
+          ? true
+          : false;
       }
     });
-   
+
     if (isBreadCumbEdit) {
       breadcrumbs = this.prepareBreadCrumbs(
         {
           id: type + "_" + serviceIndexs[`${type}Id`],
-          name: this.getServiceName(name,type),
-          type: type,serviceIndexs:serviceIndexs
+          name: this.getServiceName(name, type),
+          type: type,
+          serviceIndexs: serviceIndexs,
         },
         type + "_" + serviceIndexs[`${type}Id`],
-        type,
+        type
       );
     } else {
-      breadcrumbResetCondition[type].forEach((keyType)=>{
-        breadcrumbs = breadcrumbs.filter((breadcrumb) => breadcrumb.type !== keyType)
-      })
+      breadcrumbResetCondition[type].forEach((keyType) => {
+        breadcrumbs = breadcrumbs.filter(
+          (breadcrumb) => breadcrumb.type !== keyType
+        );
+      });
     }
-    console.log(toggleNode)
-     this.setState({ toggleNode, breadcrumbs });
+    console.log(toggleNode);
+    this.setState({ toggleNode, breadcrumbs });
+  }
+  getVpcsDetails(treeData) {
+    let vpcs = [];
+    for (let vpcIndex = 0; vpcIndex < treeData.length; vpcIndex++) {
+      let details = {
+        name: "",
+        product_count: 0,
+        app_count: 0,
+        data_count: 0,
+      };
+      details.name = treeData[vpcIndex].name;
+      const clusters = treeData[vpcIndex].clusters;
+
+      clusters.forEach((cluster) => {
+        const products = cluster.products;
+        details.product_count += products.length;
+        products.forEach((product) => {
+          const { environments, name } = product;
+          environments.forEach((env) => {
+            const { services } = env;
+
+            services.common.forEach((appData) => {
+              if (appData.app) {
+                details.app_count += appData.app.length;
+              }
+              if (appData.data) {
+                details.data_count += appData.data.length;
+              }
+            });
+            services.business.forEach((appData) => {
+              if (appData.app && appData.app.length > 0) {
+                details.app_count += appData.app.length;
+              }
+              if (appData.data && appData.data.length > 0) {
+                details.data_count += appData.data.length;
+              }
+            });
+          });
+        });
+      });
+      vpcs.push(details);
+    }
+    console.log(vpcs);
+    this.setState({
+      vpcsDetails: vpcs,
+    });
+  }
+  renderVpcsDetails() {
+    return this.state.vpcsDetails.map((vpc, index) => {
+      return (
+        <tr key={index}>
+          <td>{vpc.name}</td>
+          <td>{vpc.product_count}</td>
+          <td>{vpc.app_count}</td>
+          <td>{vpc.data_count}</td>
+          <td>
+            <button
+              type="button"
+              onClick={this.toggleMenu}
+              className="list-icon"
+            >
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+            {this.state.showMenu == true && (
+              <div className="menu-list">
+                <ul>
+                  <li className="active">
+                    <a href="#">Add New datasource</a>
+                  </li>
+                  <li>
+                    <a href="#">Add Compliance</a>
+                  </li>
+                  <li>
+                    <a href="#">Associate to OU</a>
+                  </li>
+                  <li>
+                    <a href="#">Add New VPC</a>
+                  </li>
+                  <li>
+                    <a href="#">Add New Product</a>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </td>
+        </tr>
+      );
+    });
+  }
+  generateVpcDetailsTable() {
+    return (
+      <div className="environment-table-section" style={{ height: "395px" }}>
+        <div className="table discovered-assets-table">
+          <table className="overview">
+            <thead>
+              <tr>
+                <th>
+                  <div className="environment-image">
+                    <img src={Aws} />
+                  </div>
+                </th>
+                <th>Products</th>
+                <th>App Services</th>
+                <th>Data Services</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.vpcsDetails && this.state.vpcsDetails.length ? (
+                this.renderVpcsDetails()
+              ) : (
+                <></>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
   }
   render() {
     const { showSelectFilter, showServiceViewFilter, activeTab } = this.state;
@@ -804,7 +965,12 @@ class DiscoveredAssets extends Component {
                           <div
                             className="services-text-box active"
                             onClick={() => {
-                              this.handleToggleNode({  }, 'vpc', "service",false);
+                              this.handleToggleNode(
+                                {},
+                                "vpc",
+                                "service",
+                                false
+                              );
                               // this.setState({
                               //   toggleNode: {
                               //     ...this.state.toggleNode,
@@ -913,7 +1079,13 @@ class DiscoveredAssets extends Component {
               </div>
             </div>
             <div className="col-lg-5 col-md-12 col-sm-12">
-              <div className="fliter-tabs">
+            {this.state.breadcrumbs && this.state.breadcrumbs.length == 1 && this.state.vpcsDetails && this.state.vpcsDetails.length ? (
+                this.generateVpcDetailsTable()
+              ) : (
+                <></>
+              )}
+              
+              <div className="fliter-tabs" style={{display:`${this.state.breadcrumbs && this.state.breadcrumbs.length == 4 ? 'block' : 'none' }`}}>
                 <div className="global-services-fliter">
                   <div className="heading">
                     <div className="breadcrumbs">
@@ -1074,8 +1246,8 @@ class DiscoveredAssets extends Component {
                   </div>
                 </div>
               </div>
-
-              <div
+             
+              {/* <div
                 className="environment-table-section"
                 style={{ height: "395px" }}
               >
@@ -1094,8 +1266,9 @@ class DiscoveredAssets extends Component {
                         <th>Actions</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
+                    <tbody> */}
+
+              {/* <tr>
                         <td>VPC 1</td>
                         <td>02</td>
                         <td>25</td>
@@ -1130,8 +1303,8 @@ class DiscoveredAssets extends Component {
                             </div>
                           )}
                         </td>
-                      </tr>
-                      <tr>
+                      </tr> */}
+              {/* <tr>
                         <td>VPC 2</td>
                         <td>02</td>
                         <td>25</td>
@@ -1174,17 +1347,18 @@ class DiscoveredAssets extends Component {
                             <i class="fas fa-ellipsis-v"></i>
                           </button>
                         </td>
-                      </tr>
-                    </tbody>
+                      </tr> */}
+              {/* </tbody>
                   </table>
                 </div>
-              </div>
-              <div className="fliter-tabs">
+              </div> */}
+              <div className="fliter-tabs" style={{display:`${this.state.breadcrumbs && this.state.breadcrumbs.length == 3 ? 'block' : 'none' }`}}>
                 <div className="global-services-fliter">
                   <div className="heading">
                     <div className="breadcrumbs">
                       <ul>
-                        <li>
+                      {this.getBreadCrumbs()}
+                        {/* <li>
                           <a href="#">AWS</a>
                         </li>
                         <li>
@@ -1192,7 +1366,7 @@ class DiscoveredAssets extends Component {
                         </li>
                         <li>
                           <span>Global Services</span>
-                        </li>
+                        </li> */}
                       </ul>
                     </div>
                     <button type="button" className="btn btn-ellipsis">
@@ -1250,7 +1424,7 @@ class DiscoveredAssets extends Component {
                   </div>
                 </div>
               </div>
-              <div className="fliter-tabs">
+              <div className="fliter-tabs" style={{display:`${this.state.breadcrumbs && this.state.breadcrumbs.length == 2 ? 'block' : 'none' }`}}>
                 <div
                   className="global-services-fliter"
                   style={{
@@ -1261,7 +1435,8 @@ class DiscoveredAssets extends Component {
                   <div className="heading">
                     <div className="breadcrumbs">
                       <ul>
-                        <li>
+                      {this.getBreadCrumbs()}
+                        {/* <li>
                           <a href="#">AWS</a>
                         </li>
                         <li>
@@ -1269,7 +1444,7 @@ class DiscoveredAssets extends Component {
                         </li>
                         <li>
                           <span>VPC 1</span>
-                        </li>
+                        </li> */}
                       </ul>
                     </div>
                   </div>
@@ -1298,7 +1473,7 @@ class DiscoveredAssets extends Component {
                   </div>
                 </div>
               </div>
-              <div className="fliter-tabs">
+              <div className="fliter-tabs" style={{display:'none'}}>
                 <div className="global-services-fliter">
                   <div className="heading">
                     <div className="breadcrumbs">
