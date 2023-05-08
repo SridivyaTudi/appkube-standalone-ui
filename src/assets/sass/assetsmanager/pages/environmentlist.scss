@@ -1180,7 +1180,7 @@
     .environment-table-section {
       overflow-x: auto;
       .table {
-       width: 1000px;
+        width: 1000px;
       }
     }
     .services-panel-tabs {
@@ -1241,8 +1241,37 @@
     }
   }
 }
+
+@media only screen and (max-width: 991px) {
+  .environmentlist-container {
+    .discovered-assets {
+      .global-services-fliter {
+        .fliter-inputs {
+          display: flex;
+          .search-control {
+            margin-left: 7.5px;
+            margin-right: 7.5px;
+          }
+        }
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 767px) {
   .environmentlist-container {
+    .discovered-assets {
+      .global-services-fliter {
+        .fliter-inputs {
+          width: 100%;
+          display: block;
+          .search-control {
+            margin-left: 0;
+            margin-right: 0;
+          }
+        }
+      }
+    }
     .services-panel-tabs {
       .tabs-head {
         ul {

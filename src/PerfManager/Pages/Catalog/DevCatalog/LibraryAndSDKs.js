@@ -68,10 +68,10 @@ class LibrarySdk extends React.Component {
     return (
       <div className="catalogue-inner-tabs-container">
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-sm-12 col-r-p">
+          <div className="col-lg-3 col-md-5 col-sm-12 col-r-p">
             <Filter />
           </div>
-          <div className="col-lg-9 col-md-8 col-sm-12 col-l-p">
+          <div className="col-lg-9 col-md-7 col-sm-12 col-l-p">
             <div className="catalogue-right-container">
               <div className="heading">
                 <div className="row">

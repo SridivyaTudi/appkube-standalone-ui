@@ -553,7 +553,7 @@ class AddTaggingWizard extends Component {
                   Please select below the resources you want to tag with element
                 </p>
                 <div className="row">
-                  <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div className="resources-box">
                       <div className="resources-title">
                         <h4 className="m-b-0">Resources</h4>
@@ -565,7 +565,7 @@ class AddTaggingWizard extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div className="resources-box">
                       <div className="resources-title">
                         <h4 className="m-b-0">Existing tags of element</h4>

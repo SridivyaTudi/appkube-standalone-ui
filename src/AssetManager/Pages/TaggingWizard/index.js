@@ -36,10 +36,10 @@ export class TaggingWizard extends Component {
         <div className="tagging-wizard-container">
           <div className="common-container">
             <div className="row">
-              <div className="col-lg-9 col-md-9 col-sm-12">
+              <div className="col-lg-9 col-md-9 col-sm-6 col-xs-12">
                 <div className="asset-heading">Discovered Assets</div>
               </div>
-              <div className="col-lg-3 col-md-3 col-sm-12">
+              <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div className="float-right common-right-btn">
                   <Link className="m-r-1">
                     <img

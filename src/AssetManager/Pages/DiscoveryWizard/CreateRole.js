@@ -89,7 +89,7 @@ class CreateRole extends Component {
     return (
       <div className="d-inline-block width-100 account-setup-tab-contents">
         <div className="row">
-          <div className="col-md-9 col-sm-12">
+          <div className="col-lg-9 col-md-8 col-sm-12">
             <div className="account-setup-left-contents">
               <div className="contents">
                 <strong>Create IAM user for Synectiks Monitoring</strong>
@@ -146,7 +146,7 @@ class CreateRole extends Component {
               </div>
             </div>
           </div>
-          <div className="col-md-3 col-sm-12">
+          <div className="col-lg-3 col-md-4 col-sm-12">
             <div className="account-setup-right-contents">
               <div className="form-group">
                 <label>Display Name</label>

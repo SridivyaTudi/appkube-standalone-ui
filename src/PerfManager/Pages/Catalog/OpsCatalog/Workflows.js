@@ -15,7 +15,7 @@ class Workflows extends React.Component {
         </p>
         <div className="templated-search ">
           <div className="row">
-            <div className="col-lx-10 col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <div className="col-lg-9 col-md-8 col-sm-12 col-xs-12">
               <div className="search-box m-b-1">
                 <div className="search-control-group">
                 <input type="text" className="input-group-text"
@@ -26,7 +26,7 @@ class Workflows extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="col-lx-2 col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12">
               <div className="btnContainer m-b-1">
                 <button className="btn btn-grid btn-active ">
                   <i className="fa fa-th-large"></i>

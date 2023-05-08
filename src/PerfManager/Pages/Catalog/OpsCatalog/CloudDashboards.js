@@ -294,7 +294,7 @@ class CloudDashboards extends React.Component {
       <div className="catalogue-right-container">
         <div className="templated-search">
           <div className="row d-flex align-items-center">
-            <div className="col-lx-10 col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <div className="col-lx-10 col-lg-8 col-md-12 col-sm-12 col-xs-12">
               <div className="search-box">
                 <form>
                   <div className="form-group search-control-group m-b-0">
@@ -311,7 +311,7 @@ class CloudDashboards extends React.Component {
                 </form>
               </div>
             </div>
-            <div className="col-lx-2 col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div className="col-lx-2 col-lg-4 col-md-12 col-sm-12 col-xs-12">
               <div className="btnContainer">
                 <button
                   className={
@@ -349,13 +349,13 @@ class CloudDashboards extends React.Component {
     return (
       <div className="catalogue-inner-tabs-container">
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-sm-12 col-r-p">
+          <div className="col-lg-3 col-md-5 col-sm-12 col-r-p">
             <Filter
               filterJsonData={filterData}
               onChangeFilter={this.onChangeFilter}
             />
           </div>
-          <div className="col-lg-9 col-md-8 col-sm-12 col-l-p">
+          <div className="col-lg-9 col-md-7 col-sm-12 col-l-p">
             {this.formFields()}
           </div>
         </div>
