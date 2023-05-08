@@ -318,8 +318,11 @@
       display: block;
       width: 100%;
       display: -webkit-box;
-      // overflow: hidden;
-      //overflow-x: auto;
+
+      &.discovered-assets-table {
+        overflow: hidden;
+        overflow-x: auto;
+      }
 
       table {
         width: 100%;
@@ -393,7 +396,7 @@
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
-              &:last-child{
+              &:last-child {
                 overflow: unset;
                 text-overflow: unset;
               }
@@ -461,6 +464,7 @@
               }
 
               a {
+                font-weight: 600;
                 color: #2662f0;
               }
 

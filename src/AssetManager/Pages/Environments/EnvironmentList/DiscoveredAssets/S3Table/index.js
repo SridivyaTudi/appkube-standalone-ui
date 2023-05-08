@@ -10,7 +10,7 @@ class S3Table extends Component {
     const {} = this.state;
     return (
       <div className="environment-table-section" style={{ height: '300px' }}>
-        <div className="table">
+        <div className="table discovered-assets-table">
           <table className="overview">
             <thead>
               <tr>

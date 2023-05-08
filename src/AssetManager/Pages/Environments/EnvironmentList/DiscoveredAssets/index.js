@@ -974,7 +974,7 @@ class DiscoveredAssets extends Component {
                   className="environment-table-section"
                   style={{ height: "373px" }}
                 >
-                  <div className="table">
+                  <div className="table  discovered-assets-table">
                     <table className="overview">
                       <thead>
                         <tr>
@@ -1079,7 +1079,7 @@ class DiscoveredAssets extends Component {
                 className="environment-table-section"
                 style={{ height: "395px" }}
               >
-                <div className="table">
+                <div className="table discovered-assets-table">
                   <table className="overview">
                     <thead>
                       <tr>
@@ -1358,7 +1358,7 @@ class DiscoveredAssets extends Component {
                   className="environment-table-section"
                   style={{ height: "373px" }}
                 >
-                  <div className="table">
+                  <div className="table discovered-assets-table">
                     <table className="overview">
                       <thead>
                         <tr>
