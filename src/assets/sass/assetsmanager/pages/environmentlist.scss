@@ -393,6 +393,10 @@
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
+              &:last-child{
+                overflow: unset;
+                text-overflow: unset;
+              }
 
               &.ou {
                 max-width: 125px;
@@ -409,7 +413,7 @@
               }
 
               i {
-                vertical-align: text-top;
+                vertical-align: baseline;
               }
 
               .list-icon {
