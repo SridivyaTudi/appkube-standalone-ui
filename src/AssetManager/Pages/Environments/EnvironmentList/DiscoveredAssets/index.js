@@ -11,6 +11,13 @@ import WafTable from "./WafTable";
 import { RestService } from "../../../_service/RestService";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { type } from "@testing-library/user-event/dist/type";
+import { CSVLink } from "react-csv";
+const headers = [
+  { label: 'Service Name', key: 'name' },
+  { label: 'Product', key: 'product_count' },
+  { label: 'App Service', key: 'app_count' },
+  { label: 'Data Service', key: 'data_count' },
+];
 const servicesTreeCondition = {
   service: ["cluster", "product", "vpc", "clusterId", "vpcId", "productId"],
   vpc: ["vpcId", "cluster", "product", "clusterId", "productId"],
@@ -803,12 +810,24 @@ class DiscoveredAssets extends Component {
               </div>
             </div>
             <div className="col-lg-6 col-md-12 col-sm-12">
-              <div className="d-inline-block width-100 text-right">
-                <button class="new-button">
-                  <i className="fas fa-external-link-square-alt p-r-10"></i>
-                  Export
-                </button>
-                <div className="search-box">
+            <div className="d-inline-block width-100 text-right">
+            {
+              this.state.vpcsDetails &&
+              this.state.vpcsDetails.length ?   
+                <CSVLink
+                  data={this.state.vpcsDetails}
+                  headers={headers}
+                  filename={"vpcs.csv"}
+                  target="_blank"
+                >
+                  <button class="new-button">
+                    <i className="fas fa-external-link-square-alt p-r-10"></i>
+                    Export
+                  </button>
+                </CSVLink>
+                 :<></>
+            }
+            <div className="search-box">
                   <div className="form-group search-control-group m-b-0">
                     <input
                       type="text"
@@ -1079,13 +1098,25 @@ class DiscoveredAssets extends Component {
               </div>
             </div>
             <div className="col-lg-5 col-md-12 col-sm-12">
-            {this.state.breadcrumbs && this.state.breadcrumbs.length == 1 && this.state.vpcsDetails && this.state.vpcsDetails.length ? (
+              {this.state.breadcrumbs &&
+              this.state.breadcrumbs.length == 1 &&
+              this.state.vpcsDetails &&
+              this.state.vpcsDetails.length ? (
                 this.generateVpcDetailsTable()
               ) : (
                 <></>
               )}
-              
-              <div className="fliter-tabs" style={{display:`${this.state.breadcrumbs && this.state.breadcrumbs.length == 4 ? 'block' : 'none' }`}}>
+
+              <div
+                className="fliter-tabs"
+                style={{
+                  display: `${
+                    this.state.breadcrumbs && this.state.breadcrumbs.length == 4
+                      ? "block"
+                      : "none"
+                  }`,
+                }}
+              >
                 <div className="global-services-fliter">
                   <div className="heading">
                     <div className="breadcrumbs">
@@ -1246,7 +1277,7 @@ class DiscoveredAssets extends Component {
                   </div>
                 </div>
               </div>
-             
+
               {/* <div
                 className="environment-table-section"
                 style={{ height: "395px" }}
@@ -1352,12 +1383,21 @@ class DiscoveredAssets extends Component {
                   </table>
                 </div>
               </div> */}
-              <div className="fliter-tabs" style={{display:`${this.state.breadcrumbs && this.state.breadcrumbs.length == 3 ? 'block' : 'none' }`}}>
+              <div
+                className="fliter-tabs"
+                style={{
+                  display: `${
+                    this.state.breadcrumbs && this.state.breadcrumbs.length == 3
+                      ? "block"
+                      : "none"
+                  }`,
+                }}
+              >
                 <div className="global-services-fliter">
                   <div className="heading">
                     <div className="breadcrumbs">
                       <ul>
-                      {this.getBreadCrumbs()}
+                        {this.getBreadCrumbs()}
                         {/* <li>
                           <a href="#">AWS</a>
                         </li>
@@ -1424,7 +1464,16 @@ class DiscoveredAssets extends Component {
                   </div>
                 </div>
               </div>
-              <div className="fliter-tabs" style={{display:`${this.state.breadcrumbs && this.state.breadcrumbs.length == 2 ? 'block' : 'none' }`}}>
+              <div
+                className="fliter-tabs"
+                style={{
+                  display: `${
+                    this.state.breadcrumbs && this.state.breadcrumbs.length == 2
+                      ? "block"
+                      : "none"
+                  }`,
+                }}
+              >
                 <div
                   className="global-services-fliter"
                   style={{
@@ -1435,7 +1484,7 @@ class DiscoveredAssets extends Component {
                   <div className="heading">
                     <div className="breadcrumbs">
                       <ul>
-                      {this.getBreadCrumbs()}
+                        {this.getBreadCrumbs()}
                         {/* <li>
                           <a href="#">AWS</a>
                         </li>
@@ -1473,7 +1522,7 @@ class DiscoveredAssets extends Component {
                   </div>
                 </div>
               </div>
-              <div className="fliter-tabs" style={{display:'none'}}>
+              <div className="fliter-tabs" style={{ display: "none" }}>
                 <div className="global-services-fliter">
                   <div className="heading">
                     <div className="breadcrumbs">
