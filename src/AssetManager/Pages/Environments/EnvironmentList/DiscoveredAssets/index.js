@@ -881,7 +881,7 @@ class DiscoveredAssets extends Component {
         </div>
         <div className="discovered-assets-body">
           {this.state.isLoderData ? (
-            <div className="chart-spinner">
+            <div className="chart-spinner text-center w-100 p-t-20 p-b-20">
               <i className="fa fa-spinner fa-spin" /> Loading...
             </div>
           ) : (

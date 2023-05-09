@@ -25,6 +25,7 @@ class Environments extends Component {
       searchkey: '',
       accounts: '',
       searchedAccountList: {},
+      currentActiveTableIndex: [0,1,2],
     };
   }
 
@@ -113,10 +114,22 @@ class Environments extends Component {
   };
 
   handleMenuToggle = (envKey, accountIndex) => {
-    const { accountList } = this.state;
-    accountList[envKey][accountIndex].showMenu = !accountList[envKey][accountIndex].showMenu;
+    const { searchedAccountList } = this.state;
+    searchedAccountList[envKey][accountIndex].showMenu = !searchedAccountList[envKey][accountIndex].showMenu;
     this.setState({
-      accountList,
+      searchedAccountList,
+    });
+  };
+
+  handleTableToggle = (envIndex) => {
+    let { currentActiveTableIndex } = this.state;
+    if (!currentActiveTableIndex.includes(envIndex)) {
+      currentActiveTableIndex.push(envIndex);
+    } else {
+      currentActiveTableIndex = currentActiveTableIndex.filter((item) => item !== envIndex);
+    }
+    this.setState({
+      currentActiveTableIndex,
     });
   };
 
@@ -194,10 +207,19 @@ class Environments extends Component {
           <div className="environment-table-section">
             <div className="table">
               <table className="overview">
-                <thead>
+                <thead className={this.state.currentActiveTableIndex.includes(envIndex) ? 'active' : ''}>
                   <tr>
                     <th>
-                      <i className="fas fa-sort-down"></i>
+                      <i
+                        className={
+                          this.state.currentActiveTableIndex.includes(envIndex)
+                            ? 'fas fa-sort-down'
+                            : 'fas fa-caret-right'
+                        }
+                        onClick={() => {
+                          this.handleTableToggle(envIndex);
+                        }}
+                      ></i>
                       <div className="environment-image">
                         <img src={LOGOS[account.cloud.toLowerCase()]} alt="" />
                       </div>
@@ -210,7 +232,7 @@ class Environments extends Component {
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>{accountsJSX}</tbody>
+                {this.state.currentActiveTableIndex.includes(envIndex) && <tbody>{accountsJSX}</tbody>}
               </table>
             </div>
           </div>
@@ -251,9 +273,7 @@ class Environments extends Component {
         <div className="list-heading">
           <h3>Environments</h3>
         </div>
-        <div className="environment-boxs">
-          {this.renderEnvironmentBoxes()}
-          </div>
+        <div className="environment-boxs">{this.renderEnvironmentBoxes()}</div>
         <div className="add-new-environment">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-lg-3 col-md-3 col-sm-12">
@@ -277,23 +297,23 @@ class Environments extends Component {
                   <ul>
                     <li>
                       <input type="checkbox" onChange={() => this.handleChecked()} />
-                      OU
+                      <label>OU</label>
                     </li>
                     <li>
                       <input type="checkbox" onChange={() => this.handleChecked()} />
-                      Status
+                      <label>Status</label>
                     </li>
                     <li>
                       <input type="checkbox" onChange={() => this.handleChecked()} />
-                      No of Assets
+                      <label>No of Assets</label>
                     </li>
                     <li>
                       <input type="checkbox" onChange={() => this.handleChecked()} />
-                      Logs
+                      <label>Logs</label>
                     </li>
                     <li>
                       <input type="checkbox" onChange={() => this.handleChecked()} />
-                      Performance & Availability
+                      <label>Performance & Availability</label>
                     </li>
                   </ul>
                 </div>
