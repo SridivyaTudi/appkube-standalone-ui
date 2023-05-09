@@ -93,8 +93,20 @@
   .servicedesk-dashboard-container {
     .desk-depth-container {
       .filters-buttons {
+        text-align: right;
+      }
+    }
+  }
+}
+@media (max-width: 540px) {
+  .servicedesk-dashboard-container {
+    .desk-depth-container {
+      .filters-buttons {
         text-align: left;
       }
+    }
+    .create-btn {
+      margin-top: 15px;
     }
   }
 }

@@ -17,7 +17,7 @@ class EditDataSource extends Component {
       let row = catalogs.catalogListL[i];
       retData.push(
         <div className="collapse-card-body">
-          <div className="row">
+          <div className="row d-flex justify-content-center align-items-center">
             <div className="col-lg-10 col-md-9 col-sm-9">
               <span>
                 <img src={ConfigCollapseIcon1} alt="" />
