@@ -251,7 +251,9 @@ class Environments extends Component {
         <div className="list-heading">
           <h3>Environments</h3>
         </div>
-        <div className="environment-boxs">{this.renderEnvironmentBoxes()}</div>
+        <div className="environment-boxs">
+          {this.renderEnvironmentBoxes()}
+          </div>
         <div className="add-new-environment">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-lg-3 col-md-3 col-sm-12">

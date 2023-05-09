@@ -431,7 +431,7 @@ class EditorGslBuilder extends React.Component {
                   </ul>
                 </div>
                 <div className="row region-section">
-                  <div className="col-lg-3 col-md-3 col-sm-6">
+                  <div className="col-lg-4 col-md-4 col-sm-6">
                     <div className="form-group filter-control-group">
                       <label htmlFor="Account">Account</label>
                       <select className="form-control" id="Account">
@@ -442,7 +442,7 @@ class EditorGslBuilder extends React.Component {
                       </select>
                     </div>
                   </div>
-                  <div className="col-lg-3 col-md-3 col-sm-6">
+                  <div className="col-lg-4 col-md-4 col-sm-6">
                     <div className="form-group filter-control-group">
                       <label htmlFor="Region">Region</label>
                       <select className="form-control" id="Region">
@@ -453,7 +453,7 @@ class EditorGslBuilder extends React.Component {
                       </select>
                     </div>
                   </div>
-                  <div className="col-lg-3 col-md-3 col-sm-6">
+                  <div className="col-lg-4 col-md-4 col-sm-6">
                     <div className="form-group filter-control-group">
                       <label htmlFor="vpc">VPC</label>
                       <select className="form-control" id="vpc">
@@ -464,7 +464,7 @@ class EditorGslBuilder extends React.Component {
                       </select>
                     </div>
                   </div>
-                  <div className="col-lg-3 col-md-3 col-sm-6">
+                  <div className="col-lg-4 col-md-4 col-sm-6">
                     <div className="p-t-20 form-group">
                       <a className="blue-button m-r-0 m-b-0 runtest-button">
                         <i className="fa fa-play-circle"></i> RUN TEST
