@@ -762,7 +762,7 @@
         position: relative;
         margin-right: 25px;
         margin-top: 20px;
-        width: 80px;
+        width: 15%;
         height: 70px;
         font-size: 12px;
         line-height: 16px;
@@ -791,12 +791,12 @@
 
       .global-servies {
         display: inline-flex;
-        width: 115px;
+        width: 22%;
         flex-wrap: wrap;
         margin-right: 25px;
 
         &.cluster-servies {
-          width: 130px;
+          width: 26%;
 
           &::after {
             top: auto;
