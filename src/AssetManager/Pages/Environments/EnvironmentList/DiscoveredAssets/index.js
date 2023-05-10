@@ -13,8 +13,6 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { type } from "@testing-library/user-event/dist/type";
 import { CSVLink } from "react-csv";
 import CommonFilterViewSearch from "../CommonFilterViewSearch";
-
-
 const headers = [
   { label: "Service Name", key: "name" },
   { label: "Product", key: "product_count" },
@@ -62,6 +60,7 @@ class DiscoveredAssets extends Component {
     super(props);
     const queryPrm = new URLSearchParams(document.location.search);
     const cloudName = queryPrm.get("cloudName");
+    
     this.state = {
       display_detail: true,
       displaygetEnvironmentData: null,
@@ -89,8 +88,10 @@ class DiscoveredAssets extends Component {
       vpcsDetails: [],
       vpcsDetailsBackUp: [],
       searchString: "",
-      isLoderData:true
+      isLoderData:true,
+      accountId: queryPrm.get("accountId")
     };
+   
   }
 
   getServicesData = async (accountId) => {
@@ -102,7 +103,8 @@ class DiscoveredAssets extends Component {
       ).then((response) => {
         this.setState({
           treeData: response[0].account_services_json.vpcs,
-          isLoderData:false
+          isLoderData:false,
+          accountId:accountId
         });
         this.getVpcsDetails(response[0].account_services_json.vpcs);
       });
@@ -126,7 +128,17 @@ class DiscoveredAssets extends Component {
     const cloudName = queryPrm.get("cloudName");
     this.getServicesData(accountId);
   }
-
+  componentDidUpdate = (prevState, prevProps) => {
+    if (
+      this.state.accountId !== null &&
+      this.state.accountId !== prevProps.accountId
+    ) {
+      this.setState({
+        isLoderData : true
+      });
+      this.getServicesData(this.state.accountId);
+    }
+  };
   displayAwsData() {
     const { displaygetEnvironmentData } = this.state;
     let retData = [];
@@ -708,7 +720,7 @@ class DiscoveredAssets extends Component {
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
-        <CommonFilterViewSearch data={{vpcsDetails:this.state.vpcsDetails}} handleSearch={(string)=>{this.filterVpcsData(string)}}  />
+        <CommonFilterViewSearch data={{vpcsDetails:this.state.vpcsDetails}} handleSearch={(string)=>{this.filterVpcsData(string)}} updateAccountId={(accountId)=> this.setState({accountId})} />
 
           {/* <div className="row">
             <div className="col-lg-6 col-md-12 col-sm-12">
