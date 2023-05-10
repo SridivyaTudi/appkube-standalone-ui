@@ -1,49 +1,49 @@
-import React, { Component } from 'react';
-import Aws from '../../../../assets/img/aws.png';
-import DiscoveredAssets from './DiscoveredAssets';
-import Application from './Application';
-import Billing from './Billing';
-import ThreatEvents from './ThreatEvents';
-import CompliancePolicies from './CompliancePolicies';
-import Alerts from './Alerts';
-import Inputs from './Inputs';
+import React, { Component } from "react";
+import Aws from "../../../../assets/img/aws.png";
+import DiscoveredAssets from "./DiscoveredAssets";
+import Application from "./Application";
+import Billing from "./Billing";
+import ThreatEvents from "./ThreatEvents";
+import CompliancePolicies from "./CompliancePolicies";
+import Alerts from "./Alerts";
+import Inputs from "./Inputs";
 
 class EnvironmentList extends Component {
   tabMapping = [
     {
-      name: 'Discovered Assets',
-      dataKey: 'discovered',
-      component: DiscoveredAssets,
+      name: "Discovered Assets",
+      dataKey: "discovered",
+      component: <DiscoveredAssets />,
     },
     {
-      name: 'Application',
-      dataKey: 'application',
-      component: Application,
+      name: "Application",
+      dataKey: "application",
+      component: <Application />,
     },
     {
-      name: 'Billing',
-      dataKey: 'billing',
-      component: Billing,
+      name: "Billing",
+      dataKey: "billing",
+      component: <Billing />,
     },
     {
-      name: 'Threat and security Events',
-      dataKey: 'threat',
-      component: ThreatEvents,
+      name: "Threat and security Events",
+      dataKey: "threat",
+      component: <ThreatEvents />,
     },
     {
-      name: 'Compliance Policies',
-      dataKey: 'compliance',
-      component: CompliancePolicies,
+      name: "Compliance Policies",
+      dataKey: "compliance",
+      component: <CompliancePolicies />,
     },
     {
-      name: 'Alerts',
-      dataKey: 'alerts',
-      component: Alerts,
+      name: "Alerts",
+      dataKey: "alerts",
+      component: <Alerts />,
     },
     {
-      name: 'Inputs',
-      dataKey: 'inputs',
-      component: Inputs,
+      name: "Inputs",
+      dataKey: "inputs",
+      component: <Inputs />,
     },
   ];
   constructor(props) {
@@ -72,41 +72,55 @@ class EnvironmentList extends Component {
           <h3>Environments</h3>
         </div>
         <div className="services-panel">
-          <div className={`services-panel-title ${servicesPanelShow ? 'bottom-border' : ''}`}>
+          <div
+            className={`services-panel-title ${
+              servicesPanelShow ? "bottom-border" : ""
+            }`}
+          >
             <div className="image">
               <img src={Aws} />
             </div>
             <div className="name">Amazon Web Services</div>
-            <div className="right-arrow" onClick={() => this.toggleColumnSelect('filterShow')}>
-              <i className={`fa ${servicesPanelShow ? 'fa-caret-down' : 'fa-caret-right'}`}></i>
+            <div
+              className="right-arrow"
+              onClick={() => this.toggleColumnSelect("filterShow")}
+            >
+              <i
+                className={`fa ${
+                  servicesPanelShow ? "fa-caret-down" : "fa-caret-right"
+                }`}
+              ></i>
             </div>
           </div>
-          <div className="data-contant" style={{ display: servicesPanelShow ? '' : 'none' }}>
+          <div
+            className="data-contant"
+            style={{ display: servicesPanelShow ? "" : "none" }}
+          >
             <ul>
               <li>
                 <div className="data-text">
-                  <span style={{ backgroundColor: '#ff9900' }}></span>
+                  <span style={{ backgroundColor: "#ff9900" }}></span>
                   <p>Environments</p>
                 </div>
                 <label>20</label>
               </li>
               <li>
                 <div className="data-text">
-                  <span style={{ backgroundColor: '#0089d6' }}></span>
+                  <span style={{ backgroundColor: "#0089d6" }}></span>
                   <p>Assets</p>
                 </div>
                 <label>150</label>
               </li>
               <li>
                 <div className="data-text">
-                  <span style={{ backgroundColor: '#da4f44' }}></span>
+                  <span style={{ backgroundColor: "#da4f44" }}></span>
                   <p>Alerts</p>
                 </div>
                 <label>100</label>
               </li>
               <li>
                 <div className="data-text">
-                  <span style={{ backgroundColor: '#00b929' }}></span>
+                  <span style={{ backgroundColor: "#00b929" }}></span>
                   <p>Total Alerts</p>
                 </div>
                 <label>&#65284;200</label>
@@ -121,7 +135,7 @@ class EnvironmentList extends Component {
                 return (
                   <li
                     key={`ops-tab-${index}`}
-                    className={index === activeTab ? 'active' : ''}
+                    className={index === activeTab ? "active" : ""}
                     onClick={(e) => this.setActiveTab(index)}
                   >
                     {tabData.name}
@@ -133,7 +147,7 @@ class EnvironmentList extends Component {
           <div className="tabs-content">
             {this.tabMapping.map((tabData, index) => {
               if (activeTab === index) {
-                return <tabData.component data={[tabData.dataKey]} />;
+                return tabData.component;
               } else {
                 return <></>;
               }

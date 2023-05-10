@@ -546,7 +546,6 @@ class DiscoveredAssets extends Component {
         );
       });
     }
-    console.log(toggleNode);
     this.setState({ toggleNode, breadcrumbs });
   }
   getVpcsDetails(treeData) {
@@ -590,7 +589,6 @@ class DiscoveredAssets extends Component {
       });
       vpcs.push(details);
     }
-    console.log(vpcs);
     this.setState({
       vpcsDetails: vpcs,
     });

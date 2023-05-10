@@ -15,7 +15,8 @@ const apiEndPoint = {
   serviceAllocations:`${config.baseURL}/service-allocations/search?landingZone=`,
   tagList:`${config.baseURL}/tags`,
   removeTag:`${config.baseURL}/tags`,
-  searchTag:`${config.baseURL}api/tags/search?`
+  searchTag:`${config.baseURL}api/tags/search?`,
+  getDepartmentWiseData: `${config.newBaseURL}/department-wise-analytics/get-data?associatedLandingZone=`
 };
 
 export default apiEndPoint;

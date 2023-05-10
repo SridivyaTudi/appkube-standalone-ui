@@ -21,6 +21,7 @@ const localHostTicketSrvUrl = `http://100.64.108.25:7100/api`;
 
 let config = {
   baseURL: "http://34.199.12.114:6067/api",
+  newBaseURL: 'http://34.199.12.114:5057/api',
   alertManagerURL: "http://34.199.12.114:8092",
 
   /* ALERTMANAGER SERVICES  */

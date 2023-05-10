@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Aws from "../../../../../assets/img/aws.png";
 import Microsoftazure from "../../../../../assets/img/microsoftazure.png";
 import { Link } from "react-router-dom";
+import apiEndPoint from "../../../../../Services";
 
 class Application extends Component {
   constructor(props) {
@@ -10,8 +11,34 @@ class Application extends Component {
       showSelectFilter: false,
       showServiceViewFilter: false,
       showRecentFilter: false,
+      currentAccountId: null,
+      departmentWiseData: {},
     };
   }
+
+  componentDidMount = async () => {
+    this.getCurrentAccountId();
+  };
+
+  componentDidUpdate = async (prevState, prevProps) => {
+    if (
+      this.state.currentAccountId !== null &&
+      this.state.currentAccountId !== prevProps.currentAccountId
+    ) {
+      const response = await fetch(
+        `${apiEndPoint.getDepartmentWiseData + this.state.currentAccountId}`
+      );
+      const jsonData = await response.json();
+      this.setState({ departmentWiseData: jsonData });
+    }
+  };
+
+  getCurrentAccountId = () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const accountId = urlParams.get("accountId");
+    this.setState({ currentAccountId: accountId });
+  };
 
   toggleColumnSelect = (drdName) => {
     let current = this.state[drdName];
@@ -26,9 +53,41 @@ class Application extends Component {
     });
   };
 
+  getAppServicesCount = (product) => {
+    let count = 0;
+    product.deploymentEnvironmentList.map((env) => {
+      env.serviceCategoryList.map((serviceCategory) => {
+        serviceCategory.serviceNameList.map((serviceName) => {
+          serviceName.tagList[0].serviceList?.map((service) => {
+            count++;
+          });
+        });
+      });
+    });
+    return count;
+  };
+
+  getDataServicesCount = (product) => {
+    let count = 0;
+    product.deploymentEnvironmentList.map((env) => {
+      env.serviceCategoryList.map((serviceCategory) => {
+        serviceCategory.serviceNameList.map((serviceName) => {
+          serviceName.tagList[1].serviceList?.map((service) => {
+            count++;
+          });
+        });
+      });
+    });
+    return count;
+  };
+
   render() {
-    const { showSelectFilter, showServiceViewFilter, showRecentFilter } =
-      this.state;
+    const {
+      showSelectFilter,
+      showServiceViewFilter,
+      showRecentFilter,
+      departmentWiseData,
+    } = this.state;
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
@@ -265,97 +324,68 @@ class Application extends Component {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <i className="m-r-1 fas fa-sort-down"></i>
-                    <strong>
-                      <a href="#">EMS</a>
-                    </strong>
-                  </td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td className="ou">Admin, Account, Admission, Transport </td>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={this.toggleMenu}
-                      className="list-icon"
-                    >
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    {this.state.showMenu == true && (
-                      <div className="menu-list">
-                        <ul>
-                          <li className="active">
-                            <a href="#">Add New datasource</a>
-                          </li>
-                          <li>
-                            <a href="#">Add Compliance</a>
-                          </li>
-                          <li>
-                            <a href="#">Associate to OU</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New VPC</a>
-                          </li>
-                          <li>
-                            <a href="#">Add New Product</a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <i className="m-r-1 fas fa-sort-down"></i>
-                    <strong>
-                      <a href="#">Procurement</a>
-                    </strong>
-                  </td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td className="ou">
-                    Parchase, Account, Finance, vendor Mgmt, Admin
-                  </td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <i className="m-r-1 fas fa-sort-down"></i>
-                    <strong>
-                      <a href="#">Supply Chain</a>
-                    </strong>
-                  </td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td className="ou">Sale Accounts, Finance</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <i className="m-r-1 fas fa-sort-down"></i>
-                    <strong>
-                      <a href="#">HRMS</a>
-                    </strong>
-                  </td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td className="ou">Admin, HR, Management, IT</td>
-                  <td>
-                    <button type="button" className="list-icon">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                  </td>
-                </tr>
+                {departmentWiseData?.organization?.departmentList?.map(
+                  (item) => {
+                    return (
+                      <>
+                        <p>{item.name}</p>
+                        {item.productList.map((product) => {
+                          return (
+                            <>
+                              <tr>
+                                <td>
+                                  <i className="m-r-1 fas fa-sort-down"></i>
+                                  <strong>
+                                    <a href="#">{product.name}</a>
+                                  </strong>
+                                </td>
+                                <td>{this.getAppServicesCount(product)}</td>
+                                <td>{this.getDataServicesCount(product)}</td>
+                                <td className="ou">
+                                  {product.deploymentEnvironmentList.map(
+                                    (env) => {
+                                      return `${env.name}, `;
+                                    }
+                                  )}
+                                </td>
+                                <td>
+                                  <button
+                                    type="button"
+                                    onClick={this.toggleMenu}
+                                    className="list-icon"
+                                  >
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+                                  {this.state.showMenu == true && (
+                                    <div className="menu-list">
+                                      <ul>
+                                        <li className="active">
+                                          <a href="#">Add New datasource</a>
+                                        </li>
+                                        <li>
+                                          <a href="#">Add Compliance</a>
+                                        </li>
+                                        <li>
+                                          <a href="#">Associate to OU</a>
+                                        </li>
+                                        <li>
+                                          <a href="#">Add New VPC</a>
+                                        </li>
+                                        <li>
+                                          <a href="#">Add New Product</a>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  )}
+                                </td>
+                              </tr>
+                            </>
+                          );
+                        })}
+                      </>
+                    );
+                  }
+                )}
               </tbody>
             </table>
           </div>
