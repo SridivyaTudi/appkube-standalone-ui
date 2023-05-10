@@ -12,6 +12,9 @@ import { RestService } from "../../../_service/RestService";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { type } from "@testing-library/user-event/dist/type";
 import { CSVLink } from "react-csv";
+import CommonFilterViewSearch from "../CommonFilterViewSearch";
+
+
 const headers = [
   { label: "Service Name", key: "name" },
   { label: "Product", key: "product_count" },
@@ -705,7 +708,9 @@ class DiscoveredAssets extends Component {
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
-          <div className="row">
+        <CommonFilterViewSearch data={{vpcsDetails:this.state.vpcsDetails}} handleSearch={(string)=>{this.filterVpcsData(string)}}  />
+
+          {/* <div className="row">
             <div className="col-lg-6 col-md-12 col-sm-12">
               <div className="environment-fliter">
                 <div
@@ -876,7 +881,7 @@ class DiscoveredAssets extends Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="discovered-assets-body">
           {this.state.isLoderData ? (
