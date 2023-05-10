@@ -26,7 +26,7 @@ class CommonFilterViewSearch extends Component {
     this.state = {
       showSelectFilter: false,
       showServiceViewFilter: false,
-      accountList: [],
+      accountList: [],...props.data
     };
   }
   componentDidMount() {
