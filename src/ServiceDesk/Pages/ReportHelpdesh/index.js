@@ -137,7 +137,7 @@ class ReportHelpdesh extends React.Component {
                 <a
                   href="#"
                   onClick={this.onClickOpenSubLink}
-                  className="blue-button m-r-0 m-t-0 m-b-0 min-width-inherit width-auto create-btn"
+                  className="blue-button m-r-0  m-b-0 min-width-inherit width-auto create-btn"
                 >
                   Create
                 </a>
@@ -258,13 +258,13 @@ class ReportHelpdesh extends React.Component {
           <div className="common-container border-bottom-0 desk-depth-container">
             <div className="d-block p-b-20">
               <div className="row">
-                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <div className="d-block p-b-10 heading">
                     <h2 className="d-block m-b-0">Help Desk In-Depth</h2>
                     <span className="d-block">Last update 30 mins ago</span>
                   </div>
                 </div>
-                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <div className="d-block text-right filters-buttons">
                     <button className="blue-button min-width-inherit width-auto">
                       Hide Filters

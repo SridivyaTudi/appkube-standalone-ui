@@ -16,6 +16,8 @@ import ConfirmDialog from "../../Components/ConfirmDialog";
 import Table from "./../../Components/Table";
 import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
 import Rbac from "./../../Components/Rbac";
+import '@wojtekmaj/react-datetimerange-picker/dist/DateTimeRangePicker.css';
+
 
 class AllAlerts extends React.Component {
   constructor(props) {
@@ -351,16 +353,14 @@ class AllAlerts extends React.Component {
   }
 
   fetchData = () => {
-    RestService.getData(
-      config.GET_ALL_ALERT_FROM_ELASTIC,
-      null,
-      null
-    ).then((response) => {
-      console.log("alert data : ", response);
-      this.setState({
-        alertData: response,
-      });
-    });
+    RestService.getData(config.GET_ALL_ALERT_FROM_ELASTIC, null, null).then(
+      (response) => {
+        console.log("alert data : ", response);
+        this.setState({
+          alertData: response,
+        });
+      }
+    );
   };
   toggle = () => {
     this.setState({

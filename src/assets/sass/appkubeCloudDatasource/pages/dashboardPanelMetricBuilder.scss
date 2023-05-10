@@ -983,6 +983,31 @@
           }
         }
       }
+      .panel-right {
+        .buttons {
+          .panel-gray-button {
+            width: 100%;
+            display: block;
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 991px){
+  .dashboard-panel-container {
+    .add-panel-container {
+      .panel-right {
+        .buttons {
+          .panel-gray-button {
+            width: auto;
+            display: inline-block;
+            margin-bottom: 0;
+          }
+        }
+      }
     }
   }
 }
