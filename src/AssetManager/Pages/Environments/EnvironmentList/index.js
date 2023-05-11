@@ -52,6 +52,8 @@ class EnvironmentList extends Component {
     this.state = {
       servicesPanelShow: false,
       activeTab: 0,
+      treeData:[],
+      isLoderData:true
     };
   }
 
@@ -64,28 +66,8 @@ class EnvironmentList extends Component {
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
-  componentDidMount() {
-    const queryPrm = new URLSearchParams(document.location.search);
-    const accountId = queryPrm.get("accountId");
-    const cloudName = queryPrm.get("cloudName");
-    this.getServicesData(accountId);
-  }
-  getServicesData = async (accountId) => {
-    try {
-      await RestService.getData(
-        `http://34.199.12.114:5057/api/account-services/search?accountId=${accountId}`,
-        null,
-        null
-      ).then((response) => {
-        this.setState({
-          treeData: response[0].account_services_json.vpcs,
-          isLoderData:false
-        });
-      });
-    } catch (err) {
-      console.log("Loading accounts failed. Error: ", err);
-    }
-  };
+
+
   render() {
     const { servicesPanelShow, activeTab } = this.state;
     return (

@@ -5,18 +5,78 @@ import Inputs from "./Inputs";
 import { CSVLink } from "react-csv";
 import { Link } from "react-router-dom";
 import Microsoftazure from "../../../../assets/img/microsoftazure.png";
+import { config } from "./../../../config";
+import GoogleCloud from "../../../../assets/img/google-cloud.png";
+import Kubernetes from "../../../../assets/img/kubernetes.png";
 const headers = [
-    { label: "Service Name", key: "name" },
-    { label: "Product", key: "product_count" },
-    { label: "App Service", key: "app_count" },
-    { label: "Data Service", key: "data_count" },
-  ];
+  { label: "Service Name", key: "name" },
+  { label: "Product", key: "product_count" },
+  { label: "App Service", key: "app_count" },
+  { label: "Data Service", key: "data_count" },
+];
+const LOGOS = {
+  aws: Aws,
+  azure: Microsoftazure,
+  gcp: GoogleCloud,
+  kubernetes: Kubernetes,
+};
 class CommonFilterViewSearch extends Component {
   constructor(props) {
     super(props);
-    this.state = { showSelectFilter: false, showServiceViewFilter: false, };
+    this.state = {
+      showSelectFilter: false,
+      showServiceViewFilter: false,
+      accountList: [],...props.data
+    };
   }
-
+  componentDidMount() {
+    this.getAccountList();
+  }
+  getAccountList = () => {
+    fetch(config.GET_ALL_ENVS)
+      .then((response) => response.json())
+      .then((data) => {
+        const commonData = {};
+        const accounts = {};
+        data.forEach((account) => {
+          accounts[account.cloud] = accounts[account.cloud] || [];
+          accounts[account.cloud].push(account);
+          commonData[account.cloud] = commonData[account.cloud]
+            ? commonData[account.cloud]
+            : {
+                totalBill: 0,
+              };
+          commonData[account.cloud].totalBill += account.totalBilling || 0;
+        });
+        this.setState({
+          accountList: accounts,
+        });
+      });
+  };
+  renderAccountList = () => {
+   return Object.keys(this.state.accountList).map((key) => {
+      return this.state.accountList[key].map((account, innerKey) => {
+        return (
+          <li key={innerKey}>
+            <Link
+              to={`/assetmanager/pages/environments/environmentlist?accountId=${account.accountId}&cloudName=${account.cloud}`} onClick={()=>{
+                this.setState({showServiceViewFilter:false})
+                this.props.updateAccountId(account.accountId)
+              }}
+            >
+              <span>
+                <img
+                  src={LOGOS[account.cloud.toLowerCase()]}
+                  alt={account.cloud}
+                />
+              </span>
+              <p>({account.accountId})</p>
+            </Link>
+          </li>
+        );
+      });
+    });
+  };
   render() {
     const { showSelectFilter, showServiceViewFilter } = this.state;
     return (
@@ -117,7 +177,13 @@ class CommonFilterViewSearch extends Component {
               }
             >
               <ul>
-                <li>
+                {this.state.accountList &&
+                Object.keys(this.state.accountList).length ? (
+                  this.renderAccountList()
+                ) : (
+                  <></>
+                )}
+                {/* <li>
                   <Link to={`/assetmanager/pages/accountsetup`}>
                     <span>
                       <img src={Aws} alt="AWS" />
@@ -140,7 +206,7 @@ class CommonFilterViewSearch extends Component {
                     </span>
                     <p>(655668745458)</p>
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
             <div
@@ -181,7 +247,7 @@ class CommonFilterViewSearch extends Component {
                   className="input-group-text"
                   placeholder="Search"
                   onChange={(e) => {
-                        this.props.handleSearch(e.target.value);
+                    this.props.handleSearch(e.target.value);
                   }}
                 />
                 <button className="search-btn">
