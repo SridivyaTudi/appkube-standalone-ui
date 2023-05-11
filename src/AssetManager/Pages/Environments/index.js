@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import Aws from "../../../assets/img/aws.png";
-import Microsoftazure from "../../../assets/img/microsoftazure.png";
-import GoogleCloud from "../../../assets/img/google-cloud.png";
+import AWS from "../../../assets/img/aws.png";
+import AZURE from "../../../assets/img/microsoftazure.png";
+import GCP from "../../../assets/img/google-cloud.png";
 import Kubernetes from "../../../assets/img/kubernetes.png";
 import { Link } from "react-router-dom";
 import { config } from "../../config";
 
 const LOGOS = {
-  aws: Aws,
-  azure: Microsoftazure,
-  gcp: GoogleCloud,
+  aws: AWS,
+  azure: AZURE,
+  gcp: GCP,
   kubernetes: Kubernetes,
 };
 
@@ -53,7 +53,9 @@ class Environments extends Component {
           accountList: accounts,
           commonData,
           searchedAccountList: JSON.parse(JSON.stringify(accounts)),
-          currentActiveTableIndex:Object.keys(commonData).map((data,index)=>index)
+          currentActiveTableIndex: Object.keys(commonData).map(
+            (data, index) => index
+          ),
         });
       });
   };
@@ -149,6 +151,7 @@ class Environments extends Component {
           <tr key={`env-${envIndex}-${accountIndex}`}>
             <td>
               <Link
+                onClick={() => this.setLocalRecent(env, account)}
                 to={`/assetmanager/pages/environments/environmentlist?accountId=${account.accountId}&cloudName=${account.cloud}`}
               >
                 {account.cloud} ({account.accountId})
@@ -253,6 +256,30 @@ class Environments extends Component {
     });
     return retData;
   }
+
+  setLocalRecent = (env, account) => {
+    let currentLocalRecentEnv = localStorage.getItem("recentEnv");
+    if (localStorage.getItem("recentEnv") === null) {
+      let newEnvArray = JSON.stringify([
+        { env: env, accountId: account.accountId },
+      ]);
+      localStorage.setItem("recentEnv", newEnvArray);
+    } else if (JSON.parse(currentLocalRecentEnv).length > 2) {
+      let newArray = JSON.parse(currentLocalRecentEnv);
+      newArray.shift();
+      newArray.push(
+        JSON.stringify([{ env: env, accountId: account.accountId }])
+      );
+      localStorage.setItem("recentEnv", JSON.stringify(newArray));
+    } else {
+      let newArray = JSON.parse(currentLocalRecentEnv);
+      newArray.push(
+        JSON.stringify([{ env: env, accountId: account.accountId }])
+      );
+      localStorage.setItem("recentEnv", JSON.stringify(newArray));
+    }
+    console.log(localStorage.getItem("recentEnv"));
+  };
 
   handleSearchChange = (e) => {
     let value = e.target.value;
@@ -390,36 +417,32 @@ class Environments extends Component {
                         }
                       >
                         <ul>
-                          <li>
-                            <Link
-                              to={`/assetmanager/pages/environments/accountsetup`}
-                            >
-                              <span>
-                                <img src={Aws} alt="AWS" />
-                              </span>
-                              <p>(657907747545)</p>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={`/assetmanager/pages/environments/accountsetup`}
-                            >
-                              <span>
-                                <img src={Aws} alt="" />
-                              </span>
-                              <p>(655668745458)</p>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={`/assetmanager/pages/environments/accountsetup`}
-                            >
-                              <span>
-                                <img src={Microsoftazure} alt="" />
-                              </span>
-                              <p>(655668745458)</p>
-                            </Link>
-                          </li>
+                          {JSON.parse(localStorage.getItem("recentEnv"))?.map(
+                            (env) => {
+                              let item = JSON.parse(env);
+                              return (
+                                <li>
+                                  <Link
+                                    to={`/assetmanager/pages/environments/accountsetup`}
+                                  >
+                                    <span>
+                                      <img
+                                        src={
+                                          item[0].env === "AWS"
+                                            ? AWS
+                                            : item[0].env === "AZURE"
+                                            ? AZURE
+                                            : GCP
+                                        }
+                                        alt="AWS"
+                                      />
+                                    </span>
+                                    <p>(657907747545)</p>
+                                  </Link>
+                                </li>
+                              );
+                            }
+                          )}
                         </ul>
                       </div>
                       <div
@@ -460,7 +483,7 @@ class Environments extends Component {
                               to={`/assetmanager/pages/environments/accountsetup`}
                             >
                               <span className="image-box">
-                                <img src={Aws} alt="Aws" />
+                                <img src={AWS} alt="AWS" />
                               </span>
                               <p>Amazon Web Services</p>
                             </Link>
@@ -470,10 +493,7 @@ class Environments extends Component {
                               to={`/assetmanager/pages/environments/accountsetup`}
                             >
                               <span className="image-box">
-                                <img
-                                  src={Microsoftazure}
-                                  alt="Microsoftazure"
-                                />
+                                <img src={AZURE} alt="AZURE" />
                               </span>
                               <p>Azure Cloud</p>
                             </Link>
@@ -483,7 +503,7 @@ class Environments extends Component {
                               to={`/assetmanager/pages/environments/accountsetup`}
                             >
                               <span className="image-box">
-                                <img src={GoogleCloud} alt="GoogleCloud" />
+                                <img src={GCP} alt="GCP" />
                               </span>
                               <p>Google Cloud Platform</p>
                             </Link>
