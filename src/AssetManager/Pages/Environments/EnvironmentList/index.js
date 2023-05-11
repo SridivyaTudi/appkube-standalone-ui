@@ -8,13 +8,15 @@ import CompliancePolicies from "./CompliancePolicies";
 import Alerts from "./Alerts";
 import Inputs from "./Inputs";
 import { RestService } from "../../_service/RestService";
-
+import ServicesNameLogo from "./ServicesNameLogo";
 class EnvironmentList extends Component {
   tabMapping = [
     {
       name: "Discovered Assets",
       dataKey: "discovered",
-      component: <DiscoveredAssets  />,
+      component: <DiscoveredAssets updateCloudName={(service)=>{
+        this.setState({service})
+      }}  />,
     },
     {
       name: "Application",
@@ -53,7 +55,8 @@ class EnvironmentList extends Component {
       servicesPanelShow: false,
       activeTab: 0,
       treeData:[],
-      isLoderData:true
+      isLoderData:true,
+      service:this.getCloudName(1)
     };
   }
 
@@ -66,8 +69,20 @@ class EnvironmentList extends Component {
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
-
-
+  getCloudName(iskey=0) {
+    const queryPrm = new URLSearchParams(document.location.search);
+    if(iskey) {
+      return queryPrm.get("cloudName")
+    }
+    return ServicesNameLogo.ServicesName[queryPrm.get("cloudName")] || "";
+  }
+  
+  componentDidMount = ()=>{
+    if(this.state.service != localStorage.getItem('serviceName')){
+      this.setState({service:localStorage.getItem('serviceName')})
+    }
+   
+  }
   render() {
     const { servicesPanelShow, activeTab } = this.state;
     return (
@@ -82,9 +97,9 @@ class EnvironmentList extends Component {
             }`}
           >
             <div className="image">
-              <img src={Aws} />
+              <img src={this.state.service && ServicesNameLogo.LOGOS[this.getCloudName(1)] || ''} />
             </div>
-            <div className="name">Amazon Web Services</div>
+            <div className="name">{this.getCloudName()}</div>
             <div
               className="right-arrow"
               onClick={() => this.toggleColumnSelect("filterShow")}
