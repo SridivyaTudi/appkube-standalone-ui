@@ -13,6 +13,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { type } from "@testing-library/user-event/dist/type";
 import { CSVLink } from "react-csv";
 import CommonFilterViewSearch from "../CommonFilterViewSearch";
+import ServicesNameLogo from "../ServicesNameLogo";
 const headers = [
   { label: "Service Name", key: "name" },
   { label: "Product", key: "product_count" },
@@ -495,7 +496,7 @@ class DiscoveredAssets extends Component {
   };
   getCloudName() {
     const queryPrm = new URLSearchParams(document.location.search);
-    return queryPrm.get("cloudName") || "";
+    return ServicesNameLogo.ServicesName[queryPrm.get("cloudName")] || "";
   }
   getBreadCrumbs() {
     return (
@@ -706,7 +707,6 @@ class DiscoveredAssets extends Component {
   }
   filterVpcsData(searchString) {
     let { vpcsDetailsBackUp, vpcsDetails } = this.state;
-    console.log(searchString);
     vpcsDetails =
       searchString != ""
         ? vpcsDetailsBackUp.filter((vpc) =>
@@ -720,7 +720,10 @@ class DiscoveredAssets extends Component {
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
-        <CommonFilterViewSearch data={{vpcsDetails:this.state.vpcsDetails}} handleSearch={(string)=>{this.filterVpcsData(string)}} updateAccountId={(accountId)=> this.setState({accountId})} />
+        <CommonFilterViewSearch data={{vpcsDetails:this.state.vpcsDetails}} handleSearch={(string)=>{this.filterVpcsData(string)}} updateAccountId={(accountId)=> { 
+          this.setState({accountId});
+          this.props.updateCloudName(new URLSearchParams(document.location.search).get('cloudName'))
+          }} />
 
           {/* <div className="row">
             <div className="col-lg-6 col-md-12 col-sm-12">

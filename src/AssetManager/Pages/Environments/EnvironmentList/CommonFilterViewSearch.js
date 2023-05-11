@@ -62,6 +62,7 @@ class CommonFilterViewSearch extends Component {
               to={`/assetmanager/pages/environments/environmentlist?accountId=${account.accountId}&cloudName=${account.cloud}`} onClick={()=>{
                 this.setState({showServiceViewFilter:false})
                 this.props.updateAccountId(account.accountId)
+                localStorage.setItem('serviceName',account.cloud)
               }}
             >
               <span>
@@ -76,6 +77,14 @@ class CommonFilterViewSearch extends Component {
         );
       });
     });
+  };
+  componentDidUpdate = async (prevState, prevProps) => {
+  if (
+      this.props.data.vpcsDetails !== null &&
+      this.props.data.vpcsDetails !== this.state.vpcsDetails
+    ) {
+      this.setState({ vpcsDetails:this.props.data.vpcsDetails })
+    }
   };
   render() {
     const { showSelectFilter, showServiceViewFilter } = this.state;
