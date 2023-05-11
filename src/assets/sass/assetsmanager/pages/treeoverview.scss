@@ -1,0 +1,157 @@
+.tree-overview-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    background-color: #f6f7fb;
+    height: 700px;
+    padding-left: 15px;
+    padding-right: 15px;
+    overflow: hidden;
+
+    .tree-overview-left {
+        width: 25%;
+        display: inline-flex;
+        flex-wrap: wrap;
+        padding-top: 30px;
+        padding-bottom: 30px;
+
+        .heading {
+            display: flex;
+            width: 100%;
+            font-size: 26px;
+            line-height: 30px;
+            font-weight: 600;
+            color: #383874;
+            margin-bottom: 20px;
+        }
+
+        .total-cost-price {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+
+            span {
+                display: flex;
+                width: 100%;
+                font-size: 16px;
+                line-height: 20px;
+                font-weight: 500;
+                color: #383874;
+                margin-bottom: 10px;
+            }
+
+            strong {
+                display: flex;
+                width: 100%;
+                font-size: 48px;
+                line-height: 50px;
+                font-weight: 600;
+                color: #383874;
+            }
+        }
+
+        .cost-businnesses {
+            display: block;
+            width: 75%;
+
+            .businnesses-box {
+                display: block;
+                width: 100%;
+                padding: 15px;
+                margin-top: 30px;
+                background-color: #ffffff;
+                border-radius: 10px;
+                box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+
+                .businnesses-heading {
+                    display: block;
+                    font-size: 14px;
+                    line-height: 18px;
+                    font-weight: 600;
+                    color: #383874;
+                    padding-bottom: 10px;
+                }
+
+                .icon {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 60px;
+                    height: 60px;
+                    background-color: #8676ff;
+                    border-radius: 15px;
+                    margin-left: 10px;
+
+                    img {
+                        max-width: 48px;
+                        height: auto;
+                    }
+                }
+
+                .cost {
+                    width: 100%;
+                    display: block;
+                    text-align: center;
+                    font-size: 56px;
+                    line-height: 60px;
+                    font-weight: 600;
+                    color: #383874;
+                }
+            }
+        }
+
+        .total-accounts {
+            display: block;
+            width: 90%;
+            margin-top: 30px;
+
+            .accounts-heading {
+                width: 100%;
+                display: block;
+                font-size: 32px;
+                line-height: 34px;
+                font-weight: 600;
+                color: #383874;
+                padding-bottom: 10px;
+            }
+
+            .accounts-box {
+                display: block;
+                width: 100%;
+                padding: 15px;
+                background-color: #ffffff;
+                border-radius: 10px;
+                box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+            }
+        }
+
+
+    }
+
+    .tree-overview-center {
+        display: inline-flex;
+        width: 50%;
+        height: 100%;
+
+        .tree-overview {
+            display: flex;
+            width: 120%;
+            height: 112%;
+            margin-top: -10%;
+            margin-left: -10%;
+            flex-wrap: wrap;
+            border-radius: 50%;
+            background-color: #eef0fa;
+        }
+
+    }
+
+    .tree-overview-right {
+        width: 25%;
+        display: inline-flex;
+        flex-wrap: wrap;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+}

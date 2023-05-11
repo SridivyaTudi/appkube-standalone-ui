@@ -30,6 +30,7 @@ import AddDatasourceInputs from '../AssetManager/Pages/AddDatasource/AddDataSour
 import DiscoveryWizard from '../AssetManager/Pages/DiscoveryWizard';
 import TaggingWizard from '../AssetManager/Pages/TaggingWizard';
 import AddTaggingWizard from '../AssetManager/Pages/AddTaggingWizard';
+import TreeOverview from '../AssetManager/Pages/TreeOverview';
 
 //***** AlertManager *****//
 import MonitorAlerts from '../AlertManager/Pages/MonitorAlerts';
@@ -135,6 +136,7 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/discoveryWizard" element={<DiscoveryWizard />} />
       <Route path="/assetmanager/pages/taggingWizard" element={<TaggingWizard />} />
       <Route path="/assetmanager/pages/addTaggingWizard/:id/:landingZone" element={<AddTaggingWizard />} />
+      <Route path="/assetmanager/pages/treeoverview" element={<TreeOverview />} />
       
 
       {/***** AlertManager *****/}
@@ -205,6 +207,9 @@ export const AllRoutes = () => {
        <Route path="/servicedesk/pages/charts" element={<Charts />} />
        {/***** AppkubeCloudDatasource *****/}
        <Route path="/appkubeCloudDatasource/pages/dashboardPanelMetricBuilder" element={<DashboardPanelMetricBuilder />} />
+       
+
+
     </Routes>
   );
 };
