@@ -13,6 +13,7 @@ class Application extends Component {
       showRecentFilter: false,
       currentAccountId: null,
       departmentWiseData: {},
+      showMenuIndex: null,
     };
   }
 
@@ -47,10 +48,16 @@ class Application extends Component {
     });
   };
 
-  toggleMenu = () => {
-    this.setState({
-      showMenu: !this.state.showMenu,
-    });
+  toggleMenu = (index) => {
+    if (this.state.showMenuIndex === null) {
+      this.setState({
+        showMenuIndex: index,
+      });
+    } else {
+      this.setState({
+        showMenuIndex: null,
+      });
+    }
   };
 
   getAppServicesCount = (product) => {
@@ -329,7 +336,7 @@ class Application extends Component {
                     return (
                       <>
                         <p>{item.name}</p>
-                        {item.productList.map((product) => {
+                        {item.productList.map((product, index) => {
                           return (
                             <>
                               <tr>
@@ -351,12 +358,12 @@ class Application extends Component {
                                 <td>
                                   <button
                                     type="button"
-                                    onClick={this.toggleMenu}
+                                    onClick={() => this.toggleMenu(index)}
                                     className="list-icon"
                                   >
                                     <i class="fas fa-ellipsis-v"></i>
                                   </button>
-                                  {this.state.showMenu == true && (
+                                  {this.state.showMenuIndex === index && (
                                     <div className="menu-list">
                                       <ul>
                                         <li className="active">
