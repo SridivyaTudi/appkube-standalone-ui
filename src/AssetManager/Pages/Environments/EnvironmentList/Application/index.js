@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Aws from "../../../../../assets/img/aws.png";
 import Microsoftazure from "../../../../../assets/img/microsoftazure.png";
 import { Link } from "react-router-dom";
-import apiEndPoint from "../../../../../Services";
 
 class Application extends Component {
   constructor(props) {
@@ -12,34 +11,9 @@ class Application extends Component {
       showServiceViewFilter: false,
       showRecentFilter: false,
       currentAccountId: null,
-      departmentWiseData: {},
       showMenuIndex: null,
     };
   }
-
-  componentDidMount = async () => {
-    this.getCurrentAccountId();
-  };
-
-  componentDidUpdate = async (prevState, prevProps) => {
-    if (
-      this.state.currentAccountId !== null &&
-      this.state.currentAccountId !== prevProps.currentAccountId
-    ) {
-      const response = await fetch(
-        `${apiEndPoint.getDepartmentWiseData + this.state.currentAccountId}`
-      );
-      const jsonData = await response.json();
-      this.setState({ departmentWiseData: jsonData });
-    }
-  };
-
-  getCurrentAccountId = () => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const accountId = urlParams.get("accountId");
-    this.setState({ currentAccountId: accountId });
-  };
 
   toggleColumnSelect = (drdName) => {
     let current = this.state[drdName];
@@ -93,7 +67,6 @@ class Application extends Component {
       showSelectFilter,
       showServiceViewFilter,
       showRecentFilter,
-      departmentWiseData,
     } = this.state;
     return (
       <div className="discovered-assets">
@@ -331,11 +304,10 @@ class Application extends Component {
                 </tr>
               </thead>
               <tbody>
-                {departmentWiseData?.organization?.departmentList?.map(
+                {this.props.departmentWiseData?.organization?.departmentList?.map(
                   (item) => {
                     return (
                       <>
-                        <p>{item.name}</p>
                         {item.productList.map((product, index) => {
                           return (
                             <>

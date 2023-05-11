@@ -7,46 +7,38 @@ import ThreatEvents from "./ThreatEvents";
 import CompliancePolicies from "./CompliancePolicies";
 import Alerts from "./Alerts";
 import Inputs from "./Inputs";
-import { RestService } from "../../_service/RestService";
+import apiEndPoint from "../../../../Services";
 import ServicesNameLogo from "./ServicesNameLogo";
+
 class EnvironmentList extends Component {
   tabMapping = [
     {
       name: "Discovered Assets",
       dataKey: "discovered",
-      component: <DiscoveredAssets updateCloudName={(service)=>{
-        this.setState({service})
-      }}  />,
     },
     {
       name: "Application",
       dataKey: "application",
-      component: <Application />,
     },
     {
       name: "Billing",
       dataKey: "billing",
-      component: <Billing />,
     },
     {
       name: "Threat and security Events",
       dataKey: "threat",
-      component: <ThreatEvents />,
     },
     {
       name: "Compliance Policies",
       dataKey: "compliance",
-      component: <CompliancePolicies />,
     },
     {
       name: "Alerts",
       dataKey: "alerts",
-      component: <Alerts />,
     },
     {
       name: "Inputs",
       dataKey: "inputs",
-      component: <Inputs />,
     },
   ];
   constructor(props) {
@@ -54,9 +46,10 @@ class EnvironmentList extends Component {
     this.state = {
       servicesPanelShow: false,
       activeTab: 0,
-      treeData:[],
-      isLoderData:true,
-      service:this.getCloudName(1)
+      treeData: [],
+      isLoderData: true,
+      service: this.getCloudName(1),
+      departmentWiseData: {},
     };
   }
 
@@ -69,20 +62,42 @@ class EnvironmentList extends Component {
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
-  getCloudName(iskey=0) {
+
+  getCloudName(iskey = 0) {
     const queryPrm = new URLSearchParams(document.location.search);
-    if(iskey) {
-      return queryPrm.get("cloudName")
+    if (iskey) {
+      return queryPrm.get("cloudName");
     }
     return ServicesNameLogo.ServicesName[queryPrm.get("cloudName")] || "";
   }
-  
-  componentDidMount = ()=>{
-    if(this.state.service != localStorage.getItem('serviceName')){
-      this.setState({service:localStorage.getItem('serviceName')})
+
+  componentDidMount = async () => {
+    if (this.state.service !== localStorage.getItem("serviceName")) {
+      this.setState({ service: localStorage.getItem("serviceName") });
     }
-   
-  }
+    this.getCurrentAccountId();
+  };
+
+  componentDidUpdate = async (prevState, prevProps) => {
+    if (
+      this.state.currentAccountId !== null &&
+      this.state.currentAccountId !== prevProps.currentAccountId
+    ) {
+      const response = await fetch(
+        `${apiEndPoint.getDepartmentWiseData + this.state.currentAccountId}`
+      );
+      const jsonData = await response.json();
+      this.setState({ departmentWiseData: jsonData });
+    }
+  };
+
+  getCurrentAccountId = () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const accountId = urlParams.get("accountId");
+    this.setState({ currentAccountId: accountId });
+  };
+
   render() {
     const { servicesPanelShow, activeTab } = this.state;
     return (
@@ -97,7 +112,13 @@ class EnvironmentList extends Component {
             }`}
           >
             <div className="image">
-              <img src={this.state.service && ServicesNameLogo.LOGOS[this.getCloudName(1)] || ''} />
+              <img
+                src={
+                  (this.state.service &&
+                    ServicesNameLogo.LOGOS[this.getCloudName(1)]) ||
+                  ""
+                }
+              />
             </div>
             <div className="name">{this.getCloudName()}</div>
             <div
@@ -164,13 +185,27 @@ class EnvironmentList extends Component {
             </ul>
           </div>
           <div className="tabs-content">
-            {this.tabMapping.map((tabData, index) => {
-              if (activeTab === index) {
-                return tabData.component;
-              } else {
-                return <></>;
-              }
-            })}
+            {activeTab === 0 ? (
+              <DiscoveredAssets
+                updateCloudName={(service) => {
+                  this.setState({ service });
+                }}
+              />
+            ) : activeTab === 1 ? (
+              <Application
+                departmentWiseData={this.state?.departmentWiseData}
+              />
+            ) : activeTab === 2 ? (
+              <Billing />
+            ) : activeTab === 3 ? (
+              <ThreatEvents />
+            ) : activeTab === 4 ? (
+              <CompliancePolicies />
+            ) : activeTab === 5 ? (
+              <Alerts />
+            ) : (
+              <Inputs />
+            )}
           </div>
         </div>
       </div>
