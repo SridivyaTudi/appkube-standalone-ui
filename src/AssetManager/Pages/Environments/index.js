@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import Aws from "../../../assets/img/aws.png";
-import Microsoftazure from "../../../assets/img/microsoftazure.png";
-import GoogleCloud from "../../../assets/img/google-cloud.png";
+import AWS from "../../../assets/img/aws.png";
+import AZURE from "../../../assets/img/microsoftazure.png";
+import GCP from "../../../assets/img/google-cloud.png";
 import Kubernetes from "../../../assets/img/kubernetes.png";
 import { Link } from "react-router-dom";
 import { config } from "../../config";
 
 const LOGOS = {
-  aws: Aws,
-  azure: Microsoftazure,
-  gcp: GoogleCloud,
+  aws: AWS,
+  azure: AZURE,
+  gcp: GCP,
   kubernetes: Kubernetes,
 };
 
@@ -501,7 +501,7 @@ class Environments extends Component {
                               to={`/assetmanager/pages/environments/accountsetup`}
                             >
                               <span className="image-box">
-                                <img src={Aws} alt="Aws" />
+                                <img src={AWS} alt="AWS" />
                               </span>
                               <p>Amazon Web Services</p>
                             </Link>
@@ -511,10 +511,7 @@ class Environments extends Component {
                               to={`/assetmanager/pages/environments/accountsetup`}
                             >
                               <span className="image-box">
-                                <img
-                                  src={Microsoftazure}
-                                  alt="Microsoftazure"
-                                />
+                                <img src={AZURE} alt="AZURE" />
                               </span>
                               <p>Azure Cloud</p>
                             </Link>
@@ -524,7 +521,7 @@ class Environments extends Component {
                               to={`/assetmanager/pages/environments/accountsetup`}
                             >
                               <span className="image-box">
-                                <img src={GoogleCloud} alt="GoogleCloud" />
+                                <img src={GCP} alt="GCP" />
                               </span>
                               <p>Google Cloud Platform</p>
                             </Link>
