@@ -447,10 +447,10 @@ class Environments extends Component {
                                       <img
                                         src={
                                           item.accountType === "AWS"
-                                            ? Aws
+                                            ? AWS
                                             : item.accountType === "GCP"
-                                            ? GoogleCloud
-                                            : Microsoftazure
+                                            ? GCP
+                                            : AZURE
                                         }
                                         alt={item.accountType}
                                       />
