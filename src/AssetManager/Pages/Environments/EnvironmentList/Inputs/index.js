@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import Aws from '../../../../../assets/img/aws.png';
-import Microsoftazure from '../../../../../assets/img/microsoftazure.png';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import AWS from "../../../../../assets/img/aws.png";
+import AZURE from "../../../../../assets/img/microsoftazure.png";
+import GCP from "../../../../../assets/img/google-cloud.png";
+import { Link } from "react-router-dom";
 
 class Inputs extends Component {
   constructor(props) {
@@ -20,8 +21,25 @@ class Inputs extends Component {
     });
   };
 
+  setLocalRecentService = (account) => {
+    let recentEnv = JSON.parse(localStorage.getItem("recentEnv"));
+    recentEnv.map((item, index) => {
+      if (item.accountId === account.accountId) {
+        arrayMove(recentEnv, index, 0);
+      }
+    });
+
+    function arrayMove(arr, fromIndex, toIndex) {
+      var element = arr[fromIndex];
+      arr.splice(fromIndex, 1);
+      arr.splice(toIndex, 0, element);
+      localStorage.setItem("recentEnv", JSON.stringify(arr));
+    }
+  };
+
   render() {
-    const { showSelectFilter, showServiceViewFilter, showRecentFilter } = this.state;
+    const { showSelectFilter, showServiceViewFilter, showRecentFilter } =
+      this.state;
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
@@ -40,35 +58,60 @@ class Inputs extends Component {
                   Select and fillter
                   <i className="fas fa-caret-down arrow-icon"></i>
                 </div>
-                <div className={showSelectFilter === true ? 'fliter-collapse active' : 'fliter-collapse'}>
+                <div
+                  className={
+                    showSelectFilter === true
+                      ? "fliter-collapse active"
+                      : "fliter-collapse"
+                  }
+                >
                   <div className="search-bar">
                     <input type="text" placeholder="Search...." />
                   </div>
                   <ul>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       OU
                     </li>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       Status
                     </li>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       No of Assets
                     </li>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       Logs
                     </li>
                     <li>
-                      <input type="checkbox" onChange={() => this.handleChecked()} />
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleChecked()}
+                      />
                       Performance & Availability
                     </li>
                   </ul>
                 </div>
                 <div
-                  className={showSelectFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
+                  className={
+                    showSelectFilter === true
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
                   onClick={() =>
                     this.setState({
                       showSelectFilter: !showSelectFilter,
@@ -91,14 +134,16 @@ class Inputs extends Component {
                 </div>
                 <div
                   className={
-                    showServiceViewFilter === true ? 'fliter-collapse recent-collapse active' : 'fliter-collapse'
+                    showServiceViewFilter === true
+                      ? "fliter-collapse recent-collapse active"
+                      : "fliter-collapse"
                   }
                 >
                   <ul>
                     <li>
                       <Link to={`/assetmanager/pages/accountsetup`}>
                         <span>
-                          <img src={Aws} alt="AWS" />
+                          <img src={AWS} alt="AWS" />
                         </span>
                         <p>(657907747545)</p>
                       </Link>
@@ -106,7 +151,7 @@ class Inputs extends Component {
                     <li>
                       <Link to={`/assetmanager/pages/accountsetup`}>
                         <span>
-                          <img src={Aws} alt="" />
+                          <img src={AWS} alt="" />
                         </span>
                         <p>(655668745458)</p>
                       </Link>
@@ -114,7 +159,7 @@ class Inputs extends Component {
                     <li>
                       <Link to={`/assetmanager/pages/accountsetup`}>
                         <span>
-                          <img src={Microsoftazure} alt="" />
+                          <img src={AZURE} alt="" />
                         </span>
                         <p>(655668745458)</p>
                       </Link>
@@ -122,7 +167,11 @@ class Inputs extends Component {
                   </ul>
                 </div>
                 <div
-                  className={showServiceViewFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
+                  className={
+                    showServiceViewFilter === true
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
                   onClick={() =>
                     this.setState({
                       showServiceViewFilter: !showServiceViewFilter,
@@ -147,37 +196,47 @@ class Inputs extends Component {
                     <i className="fas fa-caret-down arrow-icon"></i>
                   </div>
                   <div
-                    className={showRecentFilter === true ? 'fliter-collapse recent-collapse active' : 'fliter-collapse'}
+                    className={
+                      showRecentFilter === true
+                        ? "fliter-collapse recent-collapse active"
+                        : "fliter-collapse"
+                    }
                   >
                     <ul>
-                      <li>
-                        <Link to={`/assetmanager/pages/accountsetup`}>
-                          <span>
-                            <img src={Aws} alt="AWS" />
-                          </span>
-                          <p>(657907747545)</p>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to={`/assetmanager/pages/accountsetup`}>
-                          <span>
-                            <img src={Aws} alt="" />
-                          </span>
-                          <p>(655668745458)</p>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to={`/assetmanager/pages/accountsetup`}>
-                          <span>
-                            <img src={Microsoftazure} alt="" />
-                          </span>
-                          <p>(655668745458)</p>
-                        </Link>
-                      </li>
+                      {JSON.parse(localStorage.getItem("recentEnv"))?.map(
+                        (item) => {
+                          return (
+                            <li>
+                              <Link
+                                to={`/assetmanager/pages/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
+                                onClick={() => this.setLocalRecentService(item)}
+                              >
+                                <span>
+                                  <img
+                                    src={
+                                      item.accountType === "AWS"
+                                        ? AWS
+                                        : item.accountType === "GCP"
+                                        ? GCP
+                                        : AZURE
+                                    }
+                                    alt={item.accountType}
+                                  />
+                                </span>
+                                <p>({item.accountId})</p>
+                              </Link>
+                            </li>
+                          );
+                        }
+                      )}
                     </ul>
                   </div>
                   <div
-                    className={showRecentFilter === true ? 'fliters-collapse-bg active' : 'fliters-collapse-bg'}
+                    className={
+                      showRecentFilter === true
+                        ? "fliters-collapse-bg active"
+                        : "fliters-collapse-bg"
+                    }
                     onClick={() =>
                       this.setState({
                         showRecentFilter: !showRecentFilter,
@@ -188,7 +247,11 @@ class Inputs extends Component {
                 <div className="search-box">
                   <form>
                     <div className="form-group search-control-group m-b-0">
-                      <input type="text" className="input-group-text" placeholder="Search" />
+                      <input
+                        type="text"
+                        className="input-group-text"
+                        placeholder="Search"
+                      />
                       <button className="search-btn">
                         <i className="fa fa-search" />
                       </button>
@@ -205,7 +268,7 @@ class Inputs extends Component {
               <thead>
                 <tr>
                   <th>
-                  <i className="m-r-1 fas fa-sort-down"></i>
+                    <i className="m-r-1 fas fa-sort-down"></i>
                     <strong>Name</strong>
                   </th>
                   <th>Source of input</th>
@@ -216,18 +279,26 @@ class Inputs extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td><strong className='input-name'>Name</strong></td>
+                  <td>
+                    <strong className="input-name">Name</strong>
+                  </td>
                   <td>Grafana</td>
                   <td>KPI</td>
                   <td>05</td>
-                  <td><button className="green-btn">Active</button></td>
+                  <td>
+                    <button className="green-btn">Active</button>
+                  </td>
                 </tr>
                 <tr>
-                  <td><strong className='input-name '>Name</strong></td>
+                  <td>
+                    <strong className="input-name ">Name</strong>
+                  </td>
                   <td>Grafana</td>
                   <td>KPI</td>
                   <td>05</td>
-                  <td><button className="green-btn">Active</button></td>
+                  <td>
+                    <button className="green-btn">Active</button>
+                  </td>
                 </tr>
               </tbody>
             </table>

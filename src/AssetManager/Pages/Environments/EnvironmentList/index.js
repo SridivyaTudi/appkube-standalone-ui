@@ -98,6 +98,10 @@ class EnvironmentList extends Component {
     this.setState({ currentAccountId: accountId });
   };
 
+  updateCurrentAccountId = (id) => {
+    this.setState({ currentAccountId: id });
+  };
+
   render() {
     const { servicesPanelShow, activeTab } = this.state;
     return (
@@ -194,6 +198,7 @@ class EnvironmentList extends Component {
             ) : activeTab === 1 ? (
               <Application
                 departmentWiseData={this.state?.departmentWiseData}
+                updateCurrentAccountId={this.updateCurrentAccountId}
               />
             ) : activeTab === 2 ? (
               <Billing />
