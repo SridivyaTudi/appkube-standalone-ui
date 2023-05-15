@@ -63,11 +63,8 @@ class Application extends Component {
   };
 
   render() {
-    const {
-      showSelectFilter,
-      showServiceViewFilter,
-      showRecentFilter,
-    } = this.state;
+    const { showSelectFilter, showServiceViewFilter, showRecentFilter } =
+      this.state;
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">

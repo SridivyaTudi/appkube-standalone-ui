@@ -53,7 +53,9 @@ class Environments extends Component {
           accountList: accounts,
           commonData,
           searchedAccountList: JSON.parse(JSON.stringify(accounts)),
-          currentActiveTableIndex:Object.keys(commonData).map((data,index)=>index)
+          currentActiveTableIndex: Object.keys(commonData).map(
+            (data, index) => index
+          ),
         });
       });
   };
@@ -150,6 +152,7 @@ class Environments extends Component {
             <td>
               <Link
                 to={`/assetmanager/pages/environments/environmentlist?accountId=${account.accountId}&cloudName=${account.cloud}`}
+                onClick={() => this.setLocalRecentService(account)}
               >
                 {account.cloud} ({account.accountId})
               </Link>
@@ -278,6 +281,46 @@ class Environments extends Component {
     });
   };
 
+  setLocalRecentService = (account) => {
+    let recentEnv = JSON.parse(localStorage.getItem("recentEnv"));
+    let isDuplicate = false;
+    recentEnv.map((item, index) => {
+      if (item.accountId === account.accountId) {
+        isDuplicate = true;
+        arrayMove(recentEnv, index, 0);
+      }
+    });
+
+    function arrayMove(arr, fromIndex, toIndex) {
+      var element = arr[fromIndex];
+      arr.splice(fromIndex, 1);
+      arr.splice(toIndex, 0, element);
+      localStorage.setItem("recentEnv", JSON.stringify(arr));
+    }
+
+    if (localStorage.getItem("recentEnv") === null) {
+      let newItem = [
+        { accountType: account.cloud, accountId: account.accountId },
+      ];
+      localStorage.setItem("recentEnv", JSON.stringify(newItem));
+    } else if (recentEnv.length > 2 && isDuplicate === false) {
+      recentEnv.pop();
+      let newItem = {
+        accountType: account.cloud,
+        accountId: account.accountId,
+      };
+      recentEnv.unshift(newItem);
+      localStorage.setItem("recentEnv", JSON.stringify(recentEnv));
+    } else if (isDuplicate === false) {
+      let newItem = {
+        accountType: account.cloud,
+        accountId: account.accountId,
+      };
+      recentEnv.push(newItem);
+      localStorage.setItem("recentEnv", JSON.stringify(recentEnv));
+    }
+  };
+
   render() {
     const { showRecentFilter, showAddNewFilter, showSelectFilter, searchkey } =
       this.state;
@@ -390,36 +433,34 @@ class Environments extends Component {
                         }
                       >
                         <ul>
-                          <li>
-                            <Link
-                              to={`/assetmanager/pages/environments/accountsetup`}
-                            >
-                              <span>
-                                <img src={Aws} alt="AWS" />
-                              </span>
-                              <p>(657907747545)</p>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={`/assetmanager/pages/environments/accountsetup`}
-                            >
-                              <span>
-                                <img src={Aws} alt="" />
-                              </span>
-                              <p>(655668745458)</p>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={`/assetmanager/pages/environments/accountsetup`}
-                            >
-                              <span>
-                                <img src={Microsoftazure} alt="" />
-                              </span>
-                              <p>(655668745458)</p>
-                            </Link>
-                          </li>
+                          {JSON.parse(localStorage.getItem("recentEnv"))?.map(
+                            (item) => {
+                              return (
+                                <li>
+                                  <Link
+                                    to={`/assetmanager/pages/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
+                                    onClick={() =>
+                                      this.setLocalRecentService(item)
+                                    }
+                                  >
+                                    <span>
+                                      <img
+                                        src={
+                                          item.accountType === "AWS"
+                                            ? Aws
+                                            : item.accountType === "GCP"
+                                            ? GoogleCloud
+                                            : Microsoftazure
+                                        }
+                                        alt={item.accountType}
+                                      />
+                                    </span>
+                                    <p>({item.accountId})</p>
+                                  </Link>
+                                </li>
+                              );
+                            }
+                          )}
                         </ul>
                       </div>
                       <div
