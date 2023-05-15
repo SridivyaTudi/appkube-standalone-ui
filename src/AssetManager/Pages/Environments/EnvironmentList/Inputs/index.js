@@ -209,7 +209,12 @@ class Inputs extends Component {
                             <li>
                               <Link
                                 to={`/assetmanager/pages/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
-                                onClick={() => this.setLocalRecentService(item)}
+                                onClick={() => {
+                                  this.setLocalRecentService(item);
+                                  this.props.updateCurrentAccountId(
+                                    item.accountId
+                                  );
+                                }}
                               >
                                 <span>
                                   <img
