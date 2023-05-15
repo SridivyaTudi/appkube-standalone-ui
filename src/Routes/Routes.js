@@ -31,6 +31,8 @@ import DiscoveryWizard from '../AssetManager/Pages/DiscoveryWizard';
 import TaggingWizard from '../AssetManager/Pages/TaggingWizard';
 import AddTaggingWizard from '../AssetManager/Pages/AddTaggingWizard';
 import TreeOverview from '../AssetManager/Pages/TreeOverview';
+import OverviewDetails from'../AssetManager/Pages/TreeOverview/OverviewDetails';
+import MeshServices from'../AssetManager/Pages/MeshServices';
 
 //***** AlertManager *****//
 import MonitorAlerts from '../AlertManager/Pages/MonitorAlerts';
@@ -137,6 +139,8 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/taggingWizard" element={<TaggingWizard />} />
       <Route path="/assetmanager/pages/addTaggingWizard/:id/:landingZone" element={<AddTaggingWizard />} />
       <Route path="/assetmanager/pages/treeoverview" element={<TreeOverview />} />
+      <Route path="/assetmanager/pages/treeoverview/overviewdetails" element={<OverviewDetails/>}/> 
+      <Route path="/assetmanager/pages/meshservices" element={<MeshServices />} />
       
 
       {/***** AlertManager *****/}
