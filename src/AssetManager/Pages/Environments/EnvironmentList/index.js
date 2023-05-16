@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Aws from "../../../../assets/img/aws.png";
 import DiscoveredAssets from "./DiscoveredAssets";
 import Application from "./Application";
 import Billing from "./Billing";
@@ -9,6 +8,9 @@ import Alerts from "./Alerts";
 import Inputs from "./Inputs";
 import apiEndPoint from "../../../../Services";
 import ServicesNameLogo from "./ServicesNameLogo";
+import AWS from "../../../../assets/img/aws.png";
+import AZURE from "../../../../assets/img/microsoftazure.png";
+import GCP from "../../../../assets/img/google-cloud.png";
 
 class EnvironmentList extends Component {
   tabMapping = [
@@ -63,12 +65,9 @@ class EnvironmentList extends Component {
     this.setState({ activeTab });
   };
 
-  getCloudName(iskey = 0) {
+  getCloudName() {
     const queryPrm = new URLSearchParams(document.location.search);
-    if (iskey) {
-      return queryPrm.get("cloudName");
-    }
-    return ServicesNameLogo.ServicesName[queryPrm.get("cloudName")] || "";
+    return queryPrm.get("cloudName");
   }
 
   componentDidMount = async () => {
@@ -116,13 +115,8 @@ class EnvironmentList extends Component {
             }`}
           >
             <div className="image">
-              <img
-                src={
-                  (this.state.service &&
-                    ServicesNameLogo.LOGOS[this.getCloudName(1)]) ||
-                  ""
-                }
-              />
+              <img src={ServicesNameLogo.LOGOS[this.getCloudName()]} />
+              {/* <img src={window[this.getCloudName()]} /> */}
             </div>
             <div className="name">{this.getCloudName()}</div>
             <div
