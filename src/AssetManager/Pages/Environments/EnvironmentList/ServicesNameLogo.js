@@ -14,4 +14,5 @@ const LOGOS = {
   AZURE: Microsoftazure,
   GCP: GoogleCloud,
 };
-export default {ServicesName,LOGOS };
+
+export default { ServicesName, LOGOS };

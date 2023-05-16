@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Aws from "../../../../../assets/img/aws.png";
-import Microsoftazure from "../../../../../assets/img/microsoftazure.png";
+import AWS from "../../../../../assets/img/aws.png";
+import AZURE from "../../../../../assets/img/microsoftazure.png";
+import GCP from "../../../../../assets/img/google-cloud.png";
 import { Link } from "react-router-dom";
-import apiEndPoint from "../../../../../Services";
 
 class Application extends Component {
   constructor(props) {
@@ -12,34 +12,9 @@ class Application extends Component {
       showServiceViewFilter: false,
       showRecentFilter: false,
       currentAccountId: null,
-      departmentWiseData: {},
       showMenuIndex: null,
     };
   }
-
-  componentDidMount = async () => {
-    this.getCurrentAccountId();
-  };
-
-  componentDidUpdate = async (prevState, prevProps) => {
-    if (
-      this.state.currentAccountId !== null &&
-      this.state.currentAccountId !== prevProps.currentAccountId
-    ) {
-      const response = await fetch(
-        `${apiEndPoint.getDepartmentWiseData + this.state.currentAccountId}`
-      );
-      const jsonData = await response.json();
-      this.setState({ departmentWiseData: jsonData });
-    }
-  };
-
-  getCurrentAccountId = () => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const accountId = urlParams.get("accountId");
-    this.setState({ currentAccountId: accountId });
-  };
 
   toggleColumnSelect = (drdName) => {
     let current = this.state[drdName];
@@ -88,13 +63,25 @@ class Application extends Component {
     return count;
   };
 
+  setLocalRecentService = (account) => {
+    let recentEnv = JSON.parse(localStorage.getItem("recentEnv"));
+    recentEnv.map((item, index) => {
+      if (item.accountId === account.accountId) {
+        arrayMove(recentEnv, index, 0);
+      }
+    });
+
+    function arrayMove(arr, fromIndex, toIndex) {
+      var element = arr[fromIndex];
+      arr.splice(fromIndex, 1);
+      arr.splice(toIndex, 0, element);
+      localStorage.setItem("recentEnv", JSON.stringify(arr));
+    }
+  };
+
   render() {
-    const {
-      showSelectFilter,
-      showServiceViewFilter,
-      showRecentFilter,
-      departmentWiseData,
-    } = this.state;
+    const { showSelectFilter, showServiceViewFilter, showRecentFilter } =
+      this.state;
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
@@ -198,7 +185,7 @@ class Application extends Component {
                     <li>
                       <Link to={`/assetmanager/pages/accountsetup`}>
                         <span>
-                          <img src={Aws} alt="AWS" />
+                          <img src={AWS} alt="AWS" />
                         </span>
                         <p>(657907747545)</p>
                       </Link>
@@ -206,7 +193,7 @@ class Application extends Component {
                     <li>
                       <Link to={`/assetmanager/pages/accountsetup`}>
                         <span>
-                          <img src={Aws} alt="" />
+                          <img src={AWS} alt="" />
                         </span>
                         <p>(655668745458)</p>
                       </Link>
@@ -214,7 +201,7 @@ class Application extends Component {
                     <li>
                       <Link to={`/assetmanager/pages/accountsetup`}>
                         <span>
-                          <img src={Microsoftazure} alt="" />
+                          <img src={AZURE} alt="" />
                         </span>
                         <p>(655668745458)</p>
                       </Link>
@@ -258,30 +245,37 @@ class Application extends Component {
                     }
                   >
                     <ul>
-                      <li>
-                        <Link to={`/assetmanager/pages/accountsetup`}>
-                          <span>
-                            <img src={Aws} alt="AWS" />
-                          </span>
-                          <p>(657907747545)</p>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to={`/assetmanager/pages/accountsetup`}>
-                          <span>
-                            <img src={Aws} alt="" />
-                          </span>
-                          <p>(655668745458)</p>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to={`/assetmanager/pages/accountsetup`}>
-                          <span>
-                            <img src={Microsoftazure} alt="" />
-                          </span>
-                          <p>(655668745458)</p>
-                        </Link>
-                      </li>
+                      {JSON.parse(localStorage.getItem("recentEnv"))?.map(
+                        (item) => {
+                          return (
+                            <li>
+                              <Link
+                                to={`/assetmanager/pages/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
+                                onClick={() => {
+                                  this.setLocalRecentService(item);
+                                  this.props.updateCurrentAccountId(
+                                    item.accountId
+                                  );
+                                }}
+                              >
+                                <span>
+                                  <img
+                                    src={
+                                      item.accountType === "AWS"
+                                        ? AWS
+                                        : item.accountType === "GCP"
+                                        ? GCP
+                                        : AZURE
+                                    }
+                                    alt={item.accountType}
+                                  />
+                                </span>
+                                <p>({item.accountId})</p>
+                              </Link>
+                            </li>
+                          );
+                        }
+                      )}
                     </ul>
                   </div>
                   <div
@@ -331,11 +325,10 @@ class Application extends Component {
                 </tr>
               </thead>
               <tbody>
-                {departmentWiseData?.organization?.departmentList?.map(
+                {this.props.departmentWiseData?.organization?.departmentList?.map(
                   (item) => {
                     return (
                       <>
-                        <p>{item.name}</p>
                         {item.productList.map((product, index) => {
                           return (
                             <>

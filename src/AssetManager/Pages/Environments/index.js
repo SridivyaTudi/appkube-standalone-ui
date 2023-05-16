@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import Aws from "../../../assets/img/aws.png";
-import Microsoftazure from "../../../assets/img/microsoftazure.png";
-import GoogleCloud from "../../../assets/img/google-cloud.png";
+import AWS from "../../../assets/img/aws.png";
+import AZURE from "../../../assets/img/microsoftazure.png";
+import GCP from "../../../assets/img/google-cloud.png";
 import Kubernetes from "../../../assets/img/kubernetes.png";
 import { Link } from "react-router-dom";
 import { config } from "../../config";
 
 const LOGOS = {
-  aws: Aws,
-  azure: Microsoftazure,
-  gcp: GoogleCloud,
+  aws: AWS,
+  azure: AZURE,
+  gcp: GCP,
   kubernetes: Kubernetes,
 };
 
@@ -26,6 +26,7 @@ class Environments extends Component {
       accounts: "",
       searchedAccountList: {},
       currentActiveTableIndex: [],
+      dataFetched: false,
     };
   }
 
@@ -53,7 +54,10 @@ class Environments extends Component {
           accountList: accounts,
           commonData,
           searchedAccountList: JSON.parse(JSON.stringify(accounts)),
-          currentActiveTableIndex:Object.keys(commonData).map((data,index)=>index)
+          currentActiveTableIndex: Object.keys(commonData).map(
+            (data, index) => index
+          ),
+          dataFetched: true,
         });
       });
   };
@@ -150,6 +154,7 @@ class Environments extends Component {
             <td>
               <Link
                 to={`/assetmanager/pages/environments/environmentlist?accountId=${account.accountId}&cloudName=${account.cloud}`}
+                onClick={() => this.setLocalRecentService(account)}
               >
                 {account.cloud} ({account.accountId})
               </Link>
@@ -278,271 +283,321 @@ class Environments extends Component {
     });
   };
 
+  setLocalRecentService = (account) => {
+    let recentEnv = JSON.parse(localStorage.getItem("recentEnv"));
+    let isDuplicate = false;
+    recentEnv.map((item, index) => {
+      if (item.accountId === account.accountId) {
+        isDuplicate = true;
+        arrayMove(recentEnv, index, 0);
+      }
+    });
+
+    function arrayMove(arr, fromIndex, toIndex) {
+      var element = arr[fromIndex];
+      arr.splice(fromIndex, 1);
+      arr.splice(toIndex, 0, element);
+      localStorage.setItem("recentEnv", JSON.stringify(arr));
+    }
+
+    if (localStorage.getItem("recentEnv") === null) {
+      let newItem = [
+        { accountType: account.cloud, accountId: account.accountId },
+      ];
+      localStorage.setItem("recentEnv", JSON.stringify(newItem));
+    } else if (recentEnv.length > 2 && isDuplicate === false) {
+      recentEnv.pop();
+      let newItem = {
+        accountType: account.cloud,
+        accountId: account.accountId,
+      };
+      recentEnv.unshift(newItem);
+      localStorage.setItem("recentEnv", JSON.stringify(recentEnv));
+    } else if (isDuplicate === false) {
+      let newItem = {
+        accountType: account.cloud,
+        accountId: account.accountId,
+      };
+      recentEnv.push(newItem);
+      localStorage.setItem("recentEnv", JSON.stringify(recentEnv));
+    }
+  };
+
   render() {
-    const { showRecentFilter, showAddNewFilter, showSelectFilter, searchkey } =
-      this.state;
+    const {
+      showRecentFilter,
+      showAddNewFilter,
+      showSelectFilter,
+      searchkey,
+      dataFetched,
+    } = this.state;
     return (
       <div className="environmentlist-container">
-        <div className="list-heading">
-          <h3>Environments</h3>
-        </div>
-        <div className="environment-boxs">{this.renderEnvironmentBoxes()}</div>
-        <div className="add-new-environment">
-          <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-lg-3 col-md-3 col-sm-12">
-              <div className="environment-fliter">
-                <div
-                  className="fliter-toggel"
-                  onClick={() =>
-                    this.setState({
-                      showSelectFilter: !showSelectFilter,
-                    })
-                  }
-                >
-                  <i className="fas fa-filter fillter-icon"></i>
-                  Select and fillter
-                  <i className="fas fa-caret-down arrow-icon"></i>
-                </div>
-                <div
-                  className={
-                    showSelectFilter === true
-                      ? "fliter-collapse active"
-                      : "fliter-collapse"
-                  }
-                >
-                  <div className="search-bar">
-                    <input type="text" placeholder="Search...." />
-                  </div>
-                  <ul>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      <label>OU</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      <label>Status</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      <label>No of Assets</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      <label>Logs</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      <label>Performance & Availability</label>
-                    </li>
-                  </ul>
-                </div>
-                <div
-                  className={
-                    showSelectFilter === true
-                      ? "fliters-collapse-bg active"
-                      : "fliters-collapse-bg"
-                  }
-                  onClick={() =>
-                    this.setState({
-                      showSelectFilter: !showSelectFilter,
-                    })
-                  }
-                />
-              </div>
+        {!dataFetched ? (
+          <div className="chart-spinner text-center w-100 p-t-20 p-b-20">
+            <i className="fa fa-spinner fa-spin" /> Loading...
+          </div>
+        ) : (
+          <>
+            <div className="list-heading">
+              <h3>Environments</h3>
             </div>
-            <div className="col-lg-9 col-md-9 col-sm-12">
+            <div className="environment-boxs">
+              {this.renderEnvironmentBoxes()}
+            </div>
+            <div className="add-new-environment">
               <div className="row d-flex justify-content-center align-items-center h-100">
-                <div className="col-lg-8 col-md-12 col-sm-12">
-                  <div className="export-sction">
-                    <div className="environment-fliter">
-                      <div
-                        className="fliter-toggel"
-                        onClick={() =>
-                          this.setState({
-                            showRecentFilter: !showRecentFilter,
-                          })
-                        }
-                      >
-                        <i className="fas fa-alarm-clock fillter-icon"></i>
-                        Recent
-                        <i className="fas fa-caret-down arrow-icon"></i>
-                      </div>
-                      <div
-                        className={
-                          showRecentFilter === true
-                            ? "fliter-collapse  active"
-                            : "fliter-collapse"
-                        }
-                      >
-                        <ul>
-                          <li>
-                            <Link
-                              to={`/assetmanager/pages/environments/accountsetup`}
-                            >
-                              <span>
-                                <img src={Aws} alt="AWS" />
-                              </span>
-                              <p>(657907747545)</p>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={`/assetmanager/pages/environments/accountsetup`}
-                            >
-                              <span>
-                                <img src={Aws} alt="" />
-                              </span>
-                              <p>(655668745458)</p>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={`/assetmanager/pages/environments/accountsetup`}
-                            >
-                              <span>
-                                <img src={Microsoftazure} alt="" />
-                              </span>
-                              <p>(655668745458)</p>
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                      <div
-                        className={
-                          showRecentFilter === true
-                            ? "fliters-collapse-bg active"
-                            : "fliters-collapse-bg"
-                        }
-                        onClick={() =>
-                          this.setState({
-                            showRecentFilter: !showRecentFilter,
-                          })
-                        }
-                      />
+                <div className="col-lg-3 col-md-3 col-sm-12">
+                  <div className="environment-fliter">
+                    <div
+                      className="fliter-toggel"
+                      onClick={() =>
+                        this.setState({
+                          showSelectFilter: !showSelectFilter,
+                        })
+                      }
+                    >
+                      <i className="fas fa-filter fillter-icon"></i>
+                      Select and fillter
+                      <i className="fas fa-caret-down arrow-icon"></i>
                     </div>
-                    <div className="environment-fliter">
-                      <div
-                        className="fliter-toggel new-environment"
-                        onClick={() =>
-                          this.setState({
-                            showAddNewFilter: !showAddNewFilter,
-                          })
-                        }
-                      >
-                        Add New Environment
-                        <i className="fas fa-caret-down arrow-icon"></i>
+                    <div
+                      className={
+                        showSelectFilter === true
+                          ? "fliter-collapse active"
+                          : "fliter-collapse"
+                      }
+                    >
+                      <div className="search-bar">
+                        <input type="text" placeholder="Search...." />
                       </div>
-                      <div
-                        className={
-                          showAddNewFilter === true
-                            ? "fliter-collapse active"
-                            : "fliter-collapse"
-                        }
-                      >
-                        <ul>
-                          <li>
-                            <Link
-                              to={`/assetmanager/pages/environments/accountsetup`}
-                            >
-                              <span className="image-box">
-                                <img src={Aws} alt="Aws" />
-                              </span>
-                              <p>Amazon Web Services</p>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={`/assetmanager/pages/environments/accountsetup`}
-                            >
-                              <span className="image-box">
-                                <img
-                                  src={Microsoftazure}
-                                  alt="Microsoftazure"
-                                />
-                              </span>
-                              <p>Azure Cloud</p>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={`/assetmanager/pages/environments/accountsetup`}
-                            >
-                              <span className="image-box">
-                                <img src={GoogleCloud} alt="GoogleCloud" />
-                              </span>
-                              <p>Google Cloud Platform</p>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={`/assetmanager/pages/environments/accountsetup`}
-                            >
-                              <span className="image-box">
-                                <img src={Kubernetes} alt="Kubernetes" />
-                              </span>
-                              <p>Kubernetes</p>
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                      <div
-                        className={
-                          showAddNewFilter === true
-                            ? "fliters-collapse-bg active"
-                            : "fliters-collapse-bg"
-                        }
-                        onClick={() =>
-                          this.setState({
-                            showAddNewFilter: !showAddNewFilter,
-                          })
-                        }
-                      />
+                      <ul>
+                        <li>
+                          <input
+                            type="checkbox"
+                            onChange={() => this.handleChecked()}
+                          />
+                          <label>OU</label>
+                        </li>
+                        <li>
+                          <input
+                            type="checkbox"
+                            onChange={() => this.handleChecked()}
+                          />
+                          <label>Status</label>
+                        </li>
+                        <li>
+                          <input
+                            type="checkbox"
+                            onChange={() => this.handleChecked()}
+                          />
+                          <label>No of Assets</label>
+                        </li>
+                        <li>
+                          <input
+                            type="checkbox"
+                            onChange={() => this.handleChecked()}
+                          />
+                          <label>Logs</label>
+                        </li>
+                        <li>
+                          <input
+                            type="checkbox"
+                            onChange={() => this.handleChecked()}
+                          />
+                          <label>Performance & Availability</label>
+                        </li>
+                      </ul>
                     </div>
-                    <button className="new-button m-r-0 m-b-0">
-                      <i className="fas fa-external-link-square-alt p-r-10"></i>
-                      Export
-                    </button>
+                    <div
+                      className={
+                        showSelectFilter === true
+                          ? "fliters-collapse-bg active"
+                          : "fliters-collapse-bg"
+                      }
+                      onClick={() =>
+                        this.setState({
+                          showSelectFilter: !showSelectFilter,
+                        })
+                      }
+                    />
                   </div>
                 </div>
-                <div className="col-lg-4 col-md-12 col-sm-12">
-                  <div className="search-box">
-                    <form>
-                      <div className="form-group search-control-group m-b-0">
-                        <input
-                          type="text"
-                          className="input-group-text"
-                          placeholder="Search"
-                          name="searchkey"
-                          value={searchkey}
-                          onChange={this.handleSearchChange}
-                        />
-                        <button className="search-btn">
-                          <i className="fa fa-search" />
+                <div className="col-lg-9 col-md-9 col-sm-12">
+                  <div className="row d-flex justify-content-center align-items-center h-100">
+                    <div className="col-lg-8 col-md-12 col-sm-12">
+                      <div className="export-sction">
+                        <div className="environment-fliter">
+                          <div
+                            className="fliter-toggel"
+                            onClick={() =>
+                              this.setState({
+                                showRecentFilter: !showRecentFilter,
+                              })
+                            }
+                          >
+                            <i className="fas fa-alarm-clock fillter-icon"></i>
+                            Recent
+                            <i className="fas fa-caret-down arrow-icon"></i>
+                          </div>
+                          <div
+                            className={
+                              showRecentFilter === true
+                                ? "fliter-collapse  active"
+                                : "fliter-collapse"
+                            }
+                          >
+                            <ul>
+                              {JSON.parse(
+                                localStorage.getItem("recentEnv")
+                              )?.map((item) => {
+                                return (
+                                  <li>
+                                    <Link
+                                      to={`/assetmanager/pages/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
+                                      onClick={() =>
+                                        this.setLocalRecentService(item)
+                                      }
+                                    >
+                                      <span>
+                                        <img
+                                          src={
+                                            item.accountType === "AWS"
+                                              ? AWS
+                                              : item.accountType === "GCP"
+                                              ? GCP
+                                              : AZURE
+                                          }
+                                          alt={item.accountType}
+                                        />
+                                      </span>
+                                      <p>({item.accountId})</p>
+                                    </Link>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </div>
+                          <div
+                            className={
+                              showRecentFilter === true
+                                ? "fliters-collapse-bg active"
+                                : "fliters-collapse-bg"
+                            }
+                            onClick={() =>
+                              this.setState({
+                                showRecentFilter: !showRecentFilter,
+                              })
+                            }
+                          />
+                        </div>
+                        <div className="environment-fliter">
+                          <div
+                            className="fliter-toggel new-environment"
+                            onClick={() =>
+                              this.setState({
+                                showAddNewFilter: !showAddNewFilter,
+                              })
+                            }
+                          >
+                            Add New Environment
+                            <i className="fas fa-caret-down arrow-icon"></i>
+                          </div>
+                          <div
+                            className={
+                              showAddNewFilter === true
+                                ? "fliter-collapse active"
+                                : "fliter-collapse"
+                            }
+                          >
+                            <ul>
+                              <li>
+                                <Link
+                                  to={`/assetmanager/pages/environments/accountsetup`}
+                                >
+                                  <span className="image-box">
+                                    <img src={AWS} alt="AWS" />
+                                  </span>
+                                  <p>Amazon Web Services</p>
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  to={`/assetmanager/pages/environments/accountsetup`}
+                                >
+                                  <span className="image-box">
+                                    <img src={AZURE} alt="AZURE" />
+                                  </span>
+                                  <p>Azure Cloud</p>
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  to={`/assetmanager/pages/environments/accountsetup`}
+                                >
+                                  <span className="image-box">
+                                    <img src={GCP} alt="GCP" />
+                                  </span>
+                                  <p>Google Cloud Platform</p>
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  to={`/assetmanager/pages/environments/accountsetup`}
+                                >
+                                  <span className="image-box">
+                                    <img src={Kubernetes} alt="Kubernetes" />
+                                  </span>
+                                  <p>Kubernetes</p>
+                                </Link>
+                              </li>
+                            </ul>
+                          </div>
+                          <div
+                            className={
+                              showAddNewFilter === true
+                                ? "fliters-collapse-bg active"
+                                : "fliters-collapse-bg"
+                            }
+                            onClick={() =>
+                              this.setState({
+                                showAddNewFilter: !showAddNewFilter,
+                              })
+                            }
+                          />
+                        </div>
+                        <button className="new-button m-r-0 m-b-0">
+                          <i className="fas fa-external-link-square-alt p-r-10"></i>
+                          Export
                         </button>
                       </div>
-                    </form>
+                    </div>
+                    <div className="col-lg-4 col-md-12 col-sm-12">
+                      <div className="search-box">
+                        <form>
+                          <div className="form-group search-control-group m-b-0">
+                            <input
+                              type="text"
+                              className="input-group-text"
+                              placeholder="Search"
+                              name="searchkey"
+                              value={searchkey}
+                              onChange={this.handleSearchChange}
+                            />
+                            <button className="search-btn">
+                              <i className="fa fa-search" />
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        {this.renderEnvironmentTable()}
+            {this.renderEnvironmentTable()}
+          </>
+        )}
       </div>
     );
   }

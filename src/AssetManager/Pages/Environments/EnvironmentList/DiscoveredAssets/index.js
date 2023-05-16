@@ -39,6 +39,7 @@ const nextTypes = {
   product: "",
 };
 let transformScale = 0;
+
 class DiscoveredAssets extends Component {
   tableMapping = [
     {
@@ -506,7 +507,7 @@ class DiscoveredAssets extends Component {
           <>
             {index > 0 ? (
               <li>
-                <i class="far fa-chevron-right"></i>
+                <i className="far fa-chevron-right"></i>
               </li>
             ) : (
               <></>
@@ -647,7 +648,7 @@ class DiscoveredAssets extends Component {
               onClick={this.toggleMenu}
               className="list-icon"
             >
-              <i class="fas fa-ellipsis-v"></i>
+              <i className="fas fa-ellipsis-v"></i>
             </button>
             {this.state.showMenu == true && (
               <div className="menu-list">
@@ -736,7 +737,7 @@ class DiscoveredAssets extends Component {
                     })
                   }
                 >
-                  <i class="fas fa-filter fillter-icon"></i>
+                  <i className="fas fa-filter fillter-icon"></i>
                   Select and fillter
                   <i className="fas fa-caret-down arrow-icon"></i>
                 </div>
@@ -810,7 +811,7 @@ class DiscoveredAssets extends Component {
                     })
                   }
                 >
-                  <i class="far fa-eye fillter-icon"></i>
+                  <i className="far fa-eye fillter-icon"></i>
                   Service View
                   <i className="fas fa-caret-down arrow-icon"></i>
                 </div>
@@ -871,7 +872,7 @@ class DiscoveredAssets extends Component {
                     filename={"vpcs.csv"}
                     target="_blank"
                   >
-                    <button class="new-button">
+                    <button className="new-button">
                       <i className="fas fa-external-link-square-alt p-r-10"></i>
                       Export
                     </button>
@@ -914,15 +915,15 @@ class DiscoveredAssets extends Component {
                   <div className="gmnoprint">
                     <div className="gmnoprint-plus-minus">
                       <button className="btn btn-plus">
-                        <i class="fal fa-plus"></i>
+                        <i className="fal fa-plus"></i>
                       </button>
                       <button className="btn btn-minus">
-                        <i class="fal fa-minus"></i>
+                        <i className="fal fa-minus"></i>
                       </button>
                     </div>
                     <div className="gmnoprint-map">
                       <button className="btn btn-map">
-                        <i class="fal fa-map-marker-alt"></i>
+                        <i className="fal fa-map-marker-alt"></i>
                       </button>
                     </div>
                   </div>
@@ -1026,13 +1027,13 @@ class DiscoveredAssets extends Component {
                                   className="btn btn-plus"
                                   onClick={() => zoomIn()}
                                 >
-                                  <i class="fal fa-plus"></i>
+                                  <i className="fal fa-plus"></i>
                                 </button>
                                 <button
                                   className="btn btn-minus"
                                   onClick={() => zoomOut()}
                                 >
-                                  <i class="fal fa-minus"></i>
+                                  <i className="fal fa-minus"></i>
                                 </button>
                               </div>
                               <div
@@ -1045,7 +1046,7 @@ class DiscoveredAssets extends Component {
                                 }}
                               >
                                 <button className="btn btn-map">
-                                  <i class="fal fa-map-marker-alt"></i>
+                                  <i className="fal fa-map-marker-alt"></i>
                                 </button>
                               </div>
                             </div>
@@ -1202,19 +1203,19 @@ class DiscoveredAssets extends Component {
                           <a href="#">AWS</a>
                         </li>
                         <li>
-                          <i class="far fa-chevron-right"></i>
+                          <i className="far fa-chevron-right"></i>
                         </li>
                         <li>
                           <a href="#">VPC 1</a>
                         </li>
                         <li>
-                          <i class="far fa-chevron-right"></i>
+                          <i className="far fa-chevron-right"></i>
                         </li>
                         <li>
                           <a href="#">Cluster 1</a>
                         </li>
                         <li>
-                          <i class="far fa-chevron-right"></i>
+                          <i className="far fa-chevron-right"></i>
                         </li>
                         <li>
                           <span>App Services</span>
@@ -1222,7 +1223,7 @@ class DiscoveredAssets extends Component {
                         </ul>
                       </div>
                       <button type="button" className="btn btn-ellipsis">
-                        <i class="fas fa-ellipsis-v"></i>
+                        <i className="fas fa-ellipsis-v"></i>
                       </button>
                     </div>
                     <div className="fliter-inputs">
@@ -1277,17 +1278,17 @@ class DiscoveredAssets extends Component {
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
@@ -1305,17 +1306,17 @@ class DiscoveredAssets extends Component {
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td></td>
@@ -1331,17 +1332,17 @@ class DiscoveredAssets extends Component {
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
@@ -1386,7 +1387,7 @@ class DiscoveredAssets extends Component {
                             onClick={this.toggleMenu}
                             className="list-icon"
                           >
-                            <i class="fas fa-ellipsis-v"></i>
+                            <i className="fas fa-ellipsis-v"></i>
                           </button>
                           {this.state.showMenu == true && (
                             <div className="menu-list">
@@ -1418,7 +1419,7 @@ class DiscoveredAssets extends Component {
                         <td>35</td>
                         <td>
                           <button type="button" className="list-icon">
-                            <i class="fas fa-ellipsis-v"></i>
+                            <i className="fas fa-ellipsis-v"></i>
                           </button>
                         </td>
                       </tr>
@@ -1429,7 +1430,7 @@ class DiscoveredAssets extends Component {
                         <td>35</td>
                         <td>
                           <button type="button" className="list-icon">
-                            <i class="fas fa-ellipsis-v"></i>
+                            <i className="fas fa-ellipsis-v"></i>
                           </button>
                         </td>
                       </tr>
@@ -1440,7 +1441,7 @@ class DiscoveredAssets extends Component {
                         <td>35</td>
                         <td>
                           <button type="button" className="list-icon">
-                            <i class="fas fa-ellipsis-v"></i>
+                            <i className="fas fa-ellipsis-v"></i>
                           </button>
                         </td>
                       </tr>
@@ -1451,7 +1452,7 @@ class DiscoveredAssets extends Component {
                         <td>35</td>
                         <td>
                           <button type="button" className="list-icon">
-                            <i class="fas fa-ellipsis-v"></i>
+                            <i className="fas fa-ellipsis-v"></i>
                           </button>
                         </td>
                       </tr> */}
@@ -1479,7 +1480,7 @@ class DiscoveredAssets extends Component {
                           <a href="#">AWS</a>
                         </li>
                         <li>
-                          <i class="far fa-chevron-right"></i>
+                          <i className="far fa-chevron-right"></i>
                         </li>
                         <li>
                           <span>Global Services</span>
@@ -1487,7 +1488,7 @@ class DiscoveredAssets extends Component {
                         </ul>
                       </div>
                       <button type="button" className="btn btn-ellipsis">
-                        <i class="fas fa-ellipsis-v"></i>
+                        <i className="fas fa-ellipsis-v"></i>
                       </button>
                     </div>
                     <div className="fliter-inputs">
@@ -1567,7 +1568,7 @@ class DiscoveredAssets extends Component {
                           <a href="#">AWS</a>
                         </li>
                         <li>
-                          <i class="far fa-chevron-right"></i>
+                          <i className="far fa-chevron-right"></i>
                         </li>
                         <li>
                           <span>VPC 1</span>
@@ -1609,19 +1610,19 @@ class DiscoveredAssets extends Component {
                             <a href="#">AWS</a>
                           </li>
                           <li>
-                            <i class="far fa-chevron-right"></i>
+                            <i className="far fa-chevron-right"></i>
                           </li>
                           <li>
                             <a href="#">VPC 1</a>
                           </li>
                           <li>
-                            <i class="far fa-chevron-right"></i>
+                            <i className="far fa-chevron-right"></i>
                           </li>
                           <li>
                             <a href="#">Cluster 1</a>
                           </li>
                           <li>
-                            <i class="far fa-chevron-right"></i>
+                            <i className="far fa-chevron-right"></i>
                           </li>
                           <li>
                             <span>App Services</span>
@@ -1629,7 +1630,7 @@ class DiscoveredAssets extends Component {
                         </ul>
                       </div>
                       <button type="button" className="btn btn-ellipsis">
-                        <i class="fas fa-ellipsis-v"></i>
+                        <i className="fas fa-ellipsis-v"></i>
                       </button>
                     </div>
                     <div className="fliter-inputs">
@@ -1678,24 +1679,24 @@ class DiscoveredAssets extends Component {
                               <strong>
                                 <a href="#">EMS</a>
                               </strong>
-                              <i class="fas fa-caret-right m-l-1"></i>
+                              <i className="fas fa-caret-right m-l-1"></i>
                             </td>
                             <td>
                               <div className="box red">2</div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
@@ -1707,24 +1708,24 @@ class DiscoveredAssets extends Component {
                               <strong>
                                 <a href="#">Supply Chain</a>
                               </strong>
-                              <i class="fas fa-caret-right m-l-1"></i>
+                              <i className="fas fa-caret-right m-l-1"></i>
                             </td>
                             <td>
                               <div className="box red">2</div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
@@ -1736,24 +1737,24 @@ class DiscoveredAssets extends Component {
                               <strong>
                                 <a href="#">Procurement</a>
                               </strong>
-                              <i class="fas fa-caret-right m-l-1"></i>
+                              <i className="fas fa-caret-right m-l-1"></i>
                             </td>
                             <td>
                               <div className="box red">2</div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
                               <div className="box green">
-                                <i class="far fa-check"></i>
+                                <i className="far fa-check"></i>
                               </div>
                             </td>
                             <td>
