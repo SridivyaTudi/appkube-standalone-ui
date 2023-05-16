@@ -1,6 +1,11 @@
-import React, { Component } from 'react';
-import businnessesIocn from '../../../assets/img/assetmanager/businnesses-icon.png';
-import meshIocn from '../../../assets/img/assetmanager/mesh-icon.png';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import businnessesIocn from "../../../assets/img/assetmanager/businnesses-icon.png";
+import meshIocn from "../../../assets/img/assetmanager/mesh-icon.png";
+import Lakes from "../../../assets/img/assetmanager/lakes.png";
+import Targets from "../../../assets/img/assetmanager/targets.png";
+import Tables from "../../../assets/img/assetmanager/tables.png";
+import Catalougeus from "../../../assets/img/assetmanager/catalougeus.png";
 import d3 from "d3";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 var treeData = {
@@ -14,9 +19,8 @@ var treeData = {
           children: [{ name: "AFF-111" }, { name: "AFF-112" }],
         },
         { name: "AUT-12", children: [{ name: "AFF-121" }] },
-       
       ],
-      readious:20
+      readious: 20,
     },
     {
       name: "PUB-2",
@@ -30,13 +34,12 @@ var treeData = {
             { name: "AFF-281" },
             { name: "AFF-282" },
             { name: "AFF-283" },
-            
           ],
         },
       ],
-      readious:20
+      readious: 20,
     },
-    { name: "PUB-3", readious:20 },
+    { name: "PUB-3", readious: 20 },
     {
       name: "PUB-4",
       children: [
@@ -44,22 +47,19 @@ var treeData = {
         { name: "AUT-42" },
         {
           name: "AUT-43",
-         
         },
         { name: "AUT-44" },
-      ], readious:20
+      ],
+      readious: 20,
     },
     {
       name: "PUB-5",
       children: [
         {
           name: "AUT-51",
-         
         },
         { name: "AUT-52" },
         { name: "AUT-53" },
-       
-      
       ],
     },
     {
@@ -69,7 +69,7 @@ var treeData = {
           name: "AUT-61",
           children: [
             { name: "AFF-611" },
-           
+
             {
               name: "AFF-614",
               children: [{ name: "ADD-6141" }, { name: "ADD-6142" }],
@@ -78,11 +78,11 @@ var treeData = {
         },
         { name: "AUT-62" },
         { name: "AUT-63" },
-       
-      ], radious:20
+      ],
+      radious: 20,
     },
   ],
-  radious:30
+  radious: 30,
 };
 class TreeOverview extends Component {
   constructor(props) {
@@ -174,7 +174,7 @@ class TreeOverview extends Component {
         .on("mouseout", function () {
           return tooltip.style("visibility", "hidden");
         });
-        console.log(nodeEnter)
+      console.log(nodeEnter);
       nodeEnter
         .append("circle")
         .attr("r", 1e-6)
@@ -205,9 +205,9 @@ class TreeOverview extends Component {
 
       nodeUpdate
         .select("circle")
-        .attr("r",function (d) {
-          return d.radious ||10;
-        } )
+        .attr("r", function (d) {
+          return d.radious || 10;
+        })
         .attr("x", 50)
         .attr("y", 50)
         .style("fill", function (d) {
@@ -275,7 +275,6 @@ class TreeOverview extends Component {
       //   d.children = d._children;
       //   d._children = null;
       // }
-
       // update(d);
     }
 
@@ -293,7 +292,9 @@ class TreeOverview extends Component {
           </div>
           <div className="cost-businnesses">
             <div className="businnesses-box">
-              <div className="businnesses-heading">{'Line of Businnesses (LOBs)'}</div>
+              <div className="businnesses-heading">
+                {"Line of Businnesses (LOBs)"}
+              </div>
               <div className="row">
                 <div className="col-md-6">
                   <div className="icon">
@@ -306,7 +307,7 @@ class TreeOverview extends Component {
               </div>
             </div>
             <div className="businnesses-box">
-              <div className="businnesses-heading">{'Total Mesh'}</div>
+              <div className="businnesses-heading">{"Total Mesh"}</div>
               <div className="row">
                 <div className="col-md-6">
                   <div className="icon">
@@ -328,42 +329,102 @@ class TreeOverview extends Component {
               </div>
               <div className="content">
                 <span>Producer Accounts</span>
-                <strong>02</strong>
+                <strong>05</strong>
               </div>
               <div className="content">
                 <span>Consumer Accounts</span>
-                <strong>02</strong>
+                <strong>23</strong>
               </div>
             </div>
           </div>
         </div>
         <div className="tree-overview-center">
-        
-        <TransformWrapper >
-        {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-                  <React.Fragment>
-                  
-                      <TransformComponent
-                        // wrapperStyle={{ width: "100%", height: "100%" }}
-                        // contentStyle={{
-                        //   width: "100%",
-                        //   height: "100%",
-                        //   justifyContent: "center",
-                        //   alignItems: "flex-start",
-                        //   paddingTop: "50px",
-                        //   display: "flex",
-                        //   transform: "translate(0px, 0px) scale(0)",
-                        // }}
-                      >
-                    <div className="tree-overview"  id="tree_circular"></div>
-                      </TransformComponent>
-                   
-                  </React.Fragment>
-                )}
-         
+          <TransformWrapper>
+            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+              <React.Fragment>
+                <TransformComponent
+                // wrapperStyle={{ width: "100%", height: "100%" }}
+                // contentStyle={{
+                //   width: "100%",
+                //   height: "100%",
+                //   justifyContent: "center",
+                //   alignItems: "flex-start",
+                //   paddingTop: "50px",
+                //   display: "flex",
+                //   transform: "translate(0px, 0px) scale(0)",
+                // }}
+                >
+                  <div className="tree-overview" id="tree_circular"></div>
+                </TransformComponent>
+              </React.Fragment>
+            )}
           </TransformWrapper>
         </div>
-        <div className="tree-overview-right"></div>
+        <div className="tree-overview-right">
+          <div className="head">
+            <button className="new-button-outline">Refresh</button>
+            <button className="new-button">
+              <Link to={`/assetmanager/pages/treeoverview/overviewdetails`}>
+                Change View
+              </Link>
+            </button>
+          </div>
+          <div className="heading">Resources</div>
+          <div className="cost-businnesses">
+            <div className="businnesses-box">
+              <div className="businnesses-heading">{"Lakes"}</div>
+              <div className="row">
+                <div className="col-md-5">
+                  <div className="icon">
+                    <img src={Lakes} alt="" />
+                  </div>
+                </div>
+                <div className="col-md-7">
+                  <div className="cost">2K</div>
+                </div>
+              </div>
+            </div>
+            <div className="businnesses-box">
+              <div className="businnesses-heading">{"Total s3 Targets"}</div>
+              <div className="row">
+                <div className="col-md-5">
+                  <div className="icon">
+                    <img src={Targets} alt="" />
+                  </div>
+                </div>
+                <div className="col-md-7">
+                  <div className="cost">10K</div>
+                </div>
+              </div>
+            </div>
+            <div className="businnesses-box">
+              <div className="businnesses-heading">{"Total Tables"}</div>
+              <div className="row">
+                <div className="col-md-5">
+                  <div className="icon">
+                    <img src={Tables} alt="" />
+                  </div>
+                </div>
+                <div className="col-md-7">
+                  <div className="cost">50K</div>
+                </div>
+              </div>
+            </div>
+            <div className="businnesses-box">
+              <div className="businnesses-heading">{"Shared Catalogues"}</div>
+              <div className="row">
+                <div className="col-md-5">
+                  <div className="icon">
+                    <img src={Catalougeus} alt="" />
+                  </div>
+                </div>
+                <div className="col-md-7">
+                  <div className="cost">40K</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
