@@ -8,9 +8,7 @@ import Alerts from "./Alerts";
 import Inputs from "./Inputs";
 import apiEndPoint from "../../../../Services";
 import ServicesNameLogo from "./ServicesNameLogo";
-import AWS from "../../../../assets/img/aws.png";
-import AZURE from "../../../../assets/img/microsoftazure.png";
-import GCP from "../../../../assets/img/google-cloud.png";
+import { config } from "../../../config";
 
 class EnvironmentList extends Component {
   tabMapping = [
@@ -52,6 +50,10 @@ class EnvironmentList extends Component {
       isLoderData: true,
       service: this.getCloudName(1),
       departmentWiseData: {},
+      accountList: {},
+      commonData: {},
+      searchedAccountList: {},
+      dataFetched: false,
     };
   }
 
@@ -75,6 +77,32 @@ class EnvironmentList extends Component {
       this.setState({ service: localStorage.getItem("serviceName") });
     }
     this.getCurrentAccountId();
+    this.getAccountList();
+  };
+
+  getAccountList = () => {
+    fetch(config.GET_ALL_ENVS)
+      .then((response) => response.json())
+      .then((data) => {
+        const commonData = {};
+        const accounts = {};
+        data.forEach((account) => {
+          accounts[account.cloud] = accounts[account.cloud] || [];
+          accounts[account.cloud].push(account);
+          commonData[account.cloud] = commonData[account.cloud]
+            ? commonData[account.cloud]
+            : {
+                totalBill: 0,
+              };
+          commonData[account.cloud].totalBill += account.totalBilling || 0;
+        });
+        this.setState({
+          accountList: accounts,
+          commonData,
+          searchedAccountList: JSON.parse(JSON.stringify(accounts)),
+          dataFetched: true,
+        });
+      });
   };
 
   componentDidUpdate = async (prevState, prevProps) => {
@@ -101,6 +129,45 @@ class EnvironmentList extends Component {
     this.setState({ currentAccountId: id });
   };
 
+  renderEnvironmentBoxes = () => {
+    const { accountList, commonData } = this.state;
+    const currentEnv = accountList[this.getCloudName()];
+    const retData = [];
+    retData.push(
+      <ul>
+        <li>
+          <div className="data-text">
+            <span style={{ backgroundColor: "#ff9900" }}></span>
+            <p>Environments</p>
+          </div>
+          <label>{currentEnv.length}</label>
+        </li>
+        <li>
+          <div className="data-text">
+            <span style={{ backgroundColor: "#0089d6" }}></span>
+            <p>Assets</p>
+          </div>
+          <label>0</label>
+        </li>
+        <li>
+          <div className="data-text">
+            <span style={{ backgroundColor: "#da4f44" }}></span>
+            <p>Alerts</p>
+          </div>
+          <label>0</label>
+        </li>
+        <li>
+          <div className="data-text">
+            <span style={{ backgroundColor: "#00b929" }}></span>
+            <p>Total Alerts</p>
+          </div>
+          <label>&#65284;{commonData[this.getCloudName()].totalBill}</label>
+        </li>
+      </ul>
+    );
+    return retData;
+  };
+
   render() {
     const { servicesPanelShow, activeTab } = this.state;
     return (
@@ -116,7 +183,6 @@ class EnvironmentList extends Component {
           >
             <div className="image">
               <img src={ServicesNameLogo.LOGOS[this.getCloudName()]} />
-              {/* <img src={window[this.getCloudName()]} /> */}
             </div>
             <div className="name">{this.getCloudName()}</div>
             <div
@@ -134,36 +200,7 @@ class EnvironmentList extends Component {
             className="data-contant"
             style={{ display: servicesPanelShow ? "" : "none" }}
           >
-            <ul>
-              <li>
-                <div className="data-text">
-                  <span style={{ backgroundColor: "#ff9900" }}></span>
-                  <p>Environments</p>
-                </div>
-                <label>20</label>
-              </li>
-              <li>
-                <div className="data-text">
-                  <span style={{ backgroundColor: "#0089d6" }}></span>
-                  <p>Assets</p>
-                </div>
-                <label>150</label>
-              </li>
-              <li>
-                <div className="data-text">
-                  <span style={{ backgroundColor: "#da4f44" }}></span>
-                  <p>Alerts</p>
-                </div>
-                <label>100</label>
-              </li>
-              <li>
-                <div className="data-text">
-                  <span style={{ backgroundColor: "#00b929" }}></span>
-                  <p>Total Alerts</p>
-                </div>
-                <label>&#65284;200</label>
-              </li>
-            </ul>
+            {this.state.dataFetched && this.renderEnvironmentBoxes()}
           </div>
         </div>
         <div className="services-panel-tabs">
