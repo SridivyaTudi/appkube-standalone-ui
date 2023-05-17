@@ -5,6 +5,24 @@ class S3 extends Component {
   render() {
     return (
       <div className="mesh-iam-service">
+        <div className="d-flex radio-btn-group">
+          <div className="radio-btn">
+            <input type="radio" id="age1" name="age"  />
+            <label>Central Account</label>
+          </div>
+          <div className="radio-btn">
+            <input type="radio" id="age1" name="age"  />
+            <label>Producer Account</label>
+          </div>
+          <div className="radio-btn">
+            <input type="radio" id="age1" name="age"  />
+            <label>Consumer Account</label>
+          </div>
+          <div className="radio-btn">
+            <input type="radio" id="age1" name="age"  />
+            <label>All</label>
+          </div>
+        </div>
         <div className="environment-boxs">
           <div className="environment-box">
             <div className="environment-title">
@@ -15,44 +33,44 @@ class S3 extends Component {
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#00b929" }}></span>
-                    <p>Total Date Volume</p>
+                    <p>Total Storage Used</p>
                   </div>
-                  <label>5.7PB</label>
+                  <label>128GB</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#8676ff" }}></span>
-                    <p>Data Ingestion Rate</p>
+                    <p>Number Of Objects</p>
                   </div>
-                  <label>20 GB/Mn</label>
+                  <label>600</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#ff708b" }}></span>
-                    <p>Data Quality Score</p>
+                    <p>Ingestion Rate (Per Hour)</p>
                   </div>
-                  <label>93%</label>
+                  <label>12</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#ffba69" }}></span>
-                    <p>Most Accessed Dataset</p>
+                    <p>Data Retrivel Time (In Ms)</p>
                   </div>
-                  <label>Scales</label>
+                  <label>500</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#e323ff" }}></span>
-                    <p>Data Gov Compliance</p>
+                    <p>Data Deletion Rate</p>
                   </div>
-                  <label>89%</label>
+                  <label>1.2%</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#02eae4" }}></span>
-                    <p>DataLake Health Score</p>
+                    <p>Data Access Patterns</p>
                   </div>
-                  <label>87%</label>
+                  <label>140</label>
                 </li>
               </ul>
             </div>
@@ -68,42 +86,42 @@ class S3 extends Component {
                     <span style={{ backgroundColor: "#00b929" }}></span>
                     <p>Total Requests</p>
                   </div>
-                  <label>5200</label>
+                  <label>12000</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#8676ff" }}></span>
-                    <p>Successful Requests</p>
+                    <p>Put Requests</p>
                   </div>
-                  <label>24952</label>
+                  <label>4500</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#ff708b" }}></span>
-                    <p>Falled Requests</p>
+                    <p>Get Requests </p>
                   </div>
-                  <label>275</label>
+                  <label>2500</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#ffba69" }}></span>
-                    <p>Requests per minute</p>
+                    <p>Delete Requests</p>
                   </div>
-                  <label>85</label>
+                  <label>800</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#e323ff" }}></span>
-                    <p>Average Response Time</p>
+                    <p>List Requests</p>
                   </div>
-                  <label>4.3s</label>
+                  <label>1900</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#02eae4" }}></span>
-                    <p>Peak Response Time</p>
+                    <p>Data Transfer</p>
                   </div>
-                  <label>12.8s</label>
+                  <label>3600</label>
                 </li>
               </ul>
             </div>
@@ -117,44 +135,44 @@ class S3 extends Component {
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#00b929" }}></span>
-                    <p>Compliance Violations</p>
+                    <p>Bucket Encryption Status</p>
                   </div>
-                  <label>63</label>
+                  <label>23</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#8676ff" }}></span>
-                    <p>Falled Compliance Checks</p>
+                    <p>Object Encryption Status</p>
                   </div>
-                  <label>15</label>
+                  <label>4600</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#ff708b" }}></span>
-                    <p>Compliance Exceptions</p>
+                    <p>Access Control</p>
                   </div>
-                  <label>5</label>
+                  <label>Limited</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#ffba69" }}></span>
-                    <p>Compliance Issues Resolved</p>
+                    <p>Versioning</p>
                   </div>
-                  <label>12</label>
+                  <label>7000</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#e323ff" }}></span>
-                    <p>Compliance Audit Findings</p>
+                    <p>Audit Logs</p>
                   </div>
-                  <label>04</label>
+                  <label>4900</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#02eae4" }}></span>
-                    <p>Compliance Training</p>
+                    <p>Compliance Status</p>
                   </div>
-                  <label>50</label>
+                  <label>85%</label>
                 </li>
               </ul>
             </div>
@@ -168,44 +186,44 @@ class S3 extends Component {
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#00b929" }}></span>
-                    <p>Compliance Violations</p>
+                    <p>Total Storage</p>
                   </div>
-                  <label>63</label>
+                  <label>1028GB</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#8676ff" }}></span>
-                    <p>Falled Compliance Checks</p>
+                    <p>Total Buckets</p>
                   </div>
-                  <label>15</label>
+                  <label>200</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#ff708b" }}></span>
-                    <p>Compliance Exceptions</p>
+                    <p>Total Folders</p>
                   </div>
-                  <label>5</label>
+                  <label>952</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#ffba69" }}></span>
-                    <p>Compliance Issues Resolved</p>
+                    <p>Buckets Storage</p>
                   </div>
-                  <label>12</label>
+                  <label>256GB</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#e323ff" }}></span>
-                    <p>Compliance Audit Findings</p>
+                    <p>Folder Storage</p>
                   </div>
-                  <label>04</label>
+                  <label>256GB</label>
                 </li>
                 <li>
                   <div className="data-text">
                     <span style={{ backgroundColor: "#02eae4" }}></span>
-                    <p>Compliance Training</p>
+                    <p>Exceptions</p>
                   </div>
-                  <label>50</label>
+                  <label>263</label>
                 </li>
               </ul>
             </div>

@@ -164,6 +164,22 @@ class MeshServices extends Component {
                         <span>(657907747545)</span>
                       </Link>
                     </li>
+                    <li>
+                      <Link to={``}>
+                        <div className="image-box">
+                          <img src={AWS} alt="Kubernetes" />
+                        </div>
+                        <span>(657907747545)</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={``}>
+                        <div className="image-box">
+                          <img src={AWS} alt="Kubernetes" />
+                        </div>
+                        <span>(657907747545)</span>
+                      </Link>
+                    </li>
                   </ul>
                 </div>
                 <div

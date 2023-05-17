@@ -33,6 +33,7 @@ import AddTaggingWizard from '../AssetManager/Pages/AddTaggingWizard';
 import TreeOverview from '../AssetManager/Pages/TreeOverview';
 import OverviewDetails from'../AssetManager/Pages/TreeOverview/OverviewDetails';
 import MeshServices from'../AssetManager/Pages/MeshServices';
+import MeshTopology from '../AssetManager/Pages/MeshTopology';
 
 //***** AlertManager *****//
 import MonitorAlerts from '../AlertManager/Pages/MonitorAlerts';
@@ -141,6 +142,7 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/treeoverview" element={<TreeOverview />} />
       <Route path="/assetmanager/pages/treeoverview/overviewdetails" element={<OverviewDetails/>}/> 
       <Route path="/assetmanager/pages/meshservices" element={<MeshServices />} />
+      <Route path="assetmanager/pages/meshtopology" element={<MeshTopology />} />
       
 
       {/***** AlertManager *****/}
