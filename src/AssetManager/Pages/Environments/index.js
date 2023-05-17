@@ -270,7 +270,10 @@ class Environments extends Component {
       if (value.length) {
         accountList[env].map((account, index) => {
           result[env] = result[env] || [];
-          if (account.accountId.includes(value)) {
+          if (
+            account.accountId.includes(value) ||
+            account.cloud.toLowerCase().includes(value)
+          ) {
             result[env].push(account);
           }
         });
@@ -286,12 +289,15 @@ class Environments extends Component {
   setLocalRecentService = (account) => {
     let recentEnv = JSON.parse(localStorage.getItem("recentEnv"));
     let isDuplicate = false;
-    recentEnv.map((item, index) => {
-      if (item.accountId === account.accountId) {
-        isDuplicate = true;
-        arrayMove(recentEnv, index, 0);
-      }
-    });
+
+    if (recentEnv !== null) {
+      recentEnv.map((item, index) => {
+        if (item.accountId === account.accountId) {
+          isDuplicate = true;
+          arrayMove(recentEnv, index, 0);
+        }
+      });
+    }
 
     function arrayMove(arr, fromIndex, toIndex) {
       var element = arr[fromIndex];
