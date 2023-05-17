@@ -194,8 +194,8 @@ class Lakeformation extends Component {
                     <Link to={``}>Finance_DB</Link>
                   </td>
                   <td>Compliance</td>
-                  <td>prod_acct_1</td>
-                  <td>cons_acct_1</td>
+                  <td>prod_acct_2</td>
+                  <td>cons_acct_2</td>
                   <td>Transaction</td>
                   <td>Amount</td>
                   <td>FISMA</td>
@@ -205,10 +205,10 @@ class Lakeformation extends Component {
                   <td>
                     <Link to={``}>Marketing_DB</Link>
                   </td>
-                  <td>BI Reporting</td>
-                  <td>prod_acct_1</td>
-                  <td>cons_acct_1</td>
-                  <td>Sales</td>
+                  <td>Analytics</td>
+                  <td>prod_acct_3</td>
+                  <td>cons_acct_3</td>
+                  <td>Campaigns</td>
                   <td>Date, Amount</td>
                   <td>BI</td>
                   <td>Region:East</td>
