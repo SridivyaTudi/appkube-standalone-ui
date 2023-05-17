@@ -17,16 +17,25 @@ var treeData = {
         {
           name: "AUT-11",
           children: [{ name: "AFF-111" }, { name: "AFF-112" }],
+          radious:30
         },
-        { name: "AUT-12", children: [{ name: "AFF-121" }] },
+        { name: "AUT-12", children: [{ name: "AFF-121" }],          radious:30 },
       ],
-      readious: 20,
+      radious: 50,
     },
     {
       name: "PUB-2",
       children: [
-        { name: "AUT-21" },
-        { name: "AUT-22" },
+        { name: "AUT-21",children: [
+          { name: "AFF-281" },
+          { name: "AFF-282" },
+          { name: "AFF-283" },
+        ],          radious:30 },
+        { name: "AUT-22",children: [
+          { name: "AFF-281" },
+          { name: "AFF-282" },
+          { name: "AFF-283" },
+        ],          radious:30 },
 
         {
           name: "AUT-28",
@@ -34,33 +43,34 @@ var treeData = {
             { name: "AFF-281" },
             { name: "AFF-282" },
             { name: "AFF-283" },
-          ],
+          ],          radious:30
         },
       ],
-      readious: 20,
+      radious: 50,
     },
-    { name: "PUB-3", readious: 20 },
+    { name: "PUB-3", radious: 50 },
     {
       name: "PUB-4",
       children: [
-        { name: "AUT-41" },
-        { name: "AUT-42" },
+        { name: "AUT-41",          radious:30 },
+        { name: "AUT-42",          radious:30 },
         {
-          name: "AUT-43",
+          name: "AUT-43",          radious:30
         },
-        { name: "AUT-44" },
+        { name: "AUT-44",          radious:30 },
       ],
-      readious: 20,
+      radious: 50,
     },
     {
       name: "PUB-5",
       children: [
         {
-          name: "AUT-51",
+          name: "AUT-51",          radious:30
         },
-        { name: "AUT-52" },
-        { name: "AUT-53" },
+        { name: "AUT-52",          radious:30 },
+        { name: "AUT-53",          radious:30 },
       ],
+      radious: 50,
     },
     {
       name: "PUB-6",
@@ -68,21 +78,22 @@ var treeData = {
         {
           name: "AUT-61",
           children: [
-            { name: "AFF-611" },
+            { name: "AFF-611",           },
 
             {
               name: "AFF-614",
               children: [{ name: "ADD-6141" }, { name: "ADD-6142" }],
+             
             },
-          ],
+          ],radious:30
         },
-        { name: "AUT-62" },
-        { name: "AUT-63" },
+        { name: "AUT-62",radious:30 },
+        { name: "AUT-63",radious:30 },
       ],
-      radious: 20,
+      radious: 50,
     },
   ],
-  radious: 30,
+  radious: 80,
 };
 class TreeOverview extends Component {
   constructor(props) {
@@ -95,7 +106,7 @@ class TreeOverview extends Component {
   treeInIt(data) {
     var node = document.createElement("div");
 
-    var diameter = 800;
+    var diameter = 1000;
 
     var margin = { top: 20, right: 120, bottom: 20, left: 120 },
       width = diameter,
@@ -109,7 +120,8 @@ class TreeOverview extends Component {
       .tree()
       .size([360, diameter / 2 - 80])
       .separation(function (a, b) {
-        return (a.parent == b.parent ? 1 : 10) / a.depth || 1;
+        // return (a.parent == b.parent ? 1 : 10) / a.depth ;
+        return  10 / a.depth ;
       });
 
     var diagonal = d3.svg.diagonal.radial().projection(function (d) {
@@ -147,7 +159,7 @@ class TreeOverview extends Component {
 
       // Normalize for fixed-depth.
       nodes.forEach(function (d) {
-        d.y = d.depth && d.depth * 80;
+        d.y =   d.depth * 180 ;
       });
 
       // Update the nodes…
@@ -174,7 +186,6 @@ class TreeOverview extends Component {
         .on("mouseout", function () {
           return tooltip.style("visibility", "hidden");
         });
-      console.log(nodeEnter);
       nodeEnter
         .append("circle")
         .attr("r", 1e-6)
@@ -206,7 +217,7 @@ class TreeOverview extends Component {
       nodeUpdate
         .select("circle")
         .attr("r", function (d) {
-          return d.radious || 10;
+          return  d.radious || 10;
         })
         .attr("x", 50)
         .attr("y", 50)
@@ -234,7 +245,7 @@ class TreeOverview extends Component {
       // Update the links…
       var link = svg.selectAll("path.link").data(links, function (d) {
         return d.target.id;
-      });
+      })
 
       // Enter any new links at the parent's previous position.
       link
@@ -242,9 +253,10 @@ class TreeOverview extends Component {
         .insert("path", "g")
         .attr("class", "link")
         .attr("d", function (d) {
+         
           var o = { x: source.x0, y: source.y0 };
           return diagonal({ source: o, target: o });
-        });
+        })
 
       // Transition links to their new position.
       link.transition().duration(duration).attr("d", diagonal);
