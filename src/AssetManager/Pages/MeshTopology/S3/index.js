@@ -7,7 +7,7 @@ class S3 extends Component {
       <div className="mesh-iam-service">
        <div className="account-list-conitant">
           <div className="row">
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>450</strong>
@@ -15,7 +15,7 @@ class S3 extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>9TB</strong>
@@ -23,7 +23,7 @@ class S3 extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>14</strong>
@@ -31,7 +31,7 @@ class S3 extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>06</strong>
@@ -39,7 +39,7 @@ class S3 extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>13</strong>
@@ -47,7 +47,7 @@ class S3 extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>05</strong>
@@ -55,7 +55,7 @@ class S3 extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>03</strong>
@@ -63,7 +63,7 @@ class S3 extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>06</strong>
@@ -71,7 +71,7 @@ class S3 extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>25</strong>
@@ -79,7 +79,7 @@ class S3 extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>15</strong>
@@ -87,7 +87,7 @@ class S3 extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>50</strong>
@@ -95,7 +95,7 @@ class S3 extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>20</strong>

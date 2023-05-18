@@ -7,7 +7,7 @@ class Kms extends Component {
       <div className="mesh-iam-service">
         <div className="account-list-conitant">
           <div className="row">
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>487</strong>
@@ -15,7 +15,7 @@ class Kms extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>162</strong>
@@ -23,7 +23,7 @@ class Kms extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>325</strong>
@@ -31,7 +31,7 @@ class Kms extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>07</strong>
@@ -39,7 +39,7 @@ class Kms extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>08</strong>
@@ -47,7 +47,7 @@ class Kms extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>02</strong>
@@ -55,7 +55,7 @@ class Kms extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>01</strong>
@@ -63,7 +63,7 @@ class Kms extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>02</strong>
@@ -71,7 +71,7 @@ class Kms extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>01</strong>
@@ -79,7 +79,7 @@ class Kms extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>03</strong>
@@ -87,7 +87,7 @@ class Kms extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>01</strong>
@@ -95,7 +95,7 @@ class Kms extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-4">
               <div className="account-list-details">
                 <div className="d-block">
                   <strong>15</strong>

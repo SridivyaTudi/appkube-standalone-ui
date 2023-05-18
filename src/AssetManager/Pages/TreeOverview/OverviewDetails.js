@@ -19,12 +19,12 @@ class OverviewDetails extends Component {
       <div className="tree-overview-details">
         <div className="head">
           <div className="row">
-            <div className="col-lg-6 col-md-6">
+            <div className="col-lg-6 col-md-6 col-sm-6">
               <div className="head-left">
                 <h2>Ogranization Details</h2>
               </div>
             </div>
-            <div className="col-lg-6 col-md-6">
+            <div className="col-lg-6 col-md-6 col-sm-6">
               <div className="head-right">
                 <button className="new-button-outline m-b-0">Refresh</button>
                 <button className="new-button m-b-0 m-r-0">Change View</button>
@@ -33,58 +33,60 @@ class OverviewDetails extends Component {
           </div>
         </div>
         <div className="ogranization-details">
-          <div className="account-list">
-            <h3>Total Accounts</h3>
-            <ul>
-              <li>
-                <span>Central Accounts</span>
-                <strong>02</strong>
-              </li>
-              <li>
-                <span>Producer Accounts</span>
-                <strong>05</strong>
-              </li>
-              <li>
-                <span>Consumer Accounts</span>
-                <strong>23</strong>
-              </li>
-            </ul>
-          </div>
-          <div className="account-list-conitant">
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>30</strong>
-                <p>LOB'S</p>
-              </div>
+          <div className="ogranization-inner-details">
+            <div className="account-list">
+              <h3>Total Accounts</h3>
+              <ul>
+                <li>
+                  <span>Central Accounts</span>
+                  <strong>02</strong>
+                </li>
+                <li>
+                  <span>Producer Accounts</span>
+                  <strong>05</strong>
+                </li>
+                <li>
+                  <span>Consumer Accounts</span>
+                  <strong>23</strong>
+                </li>
+              </ul>
             </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>02</strong>
-                <p>Mesh</p>
+            <div className="account-list-conitant">
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>30</strong>
+                  <p>LOB'S</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>80</strong>
-                <p>Products</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>02</strong>
+                  <p>Mesh</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>300</strong>
-                <p>App's</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>80</strong>
+                  <p>Products</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>500</strong>
-                <p>Roles</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>300</strong>
+                  <p>App's</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>1200</strong>
-                <p>IAM Users</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>500</strong>
+                  <p>Roles</p>
+                </div>
+              </div>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>1200</strong>
+                  <p>IAM Users</p>
+                </div>
               </div>
             </div>
           </div>
@@ -99,54 +101,38 @@ class OverviewDetails extends Component {
             <div className="cost-businnesses">
               <div className="businnesses-box">
                 <div className="businnesses-heading">{"Total Lakes"}</div>
-                <div className="row">
-                  <div className="col-md-5">
-                    <div className="icon">
-                      <img src={Lakes} alt="" />
-                    </div>
+                <div className="d-flex">
+                  <div className="icon">
+                    <img src={Lakes} alt="" />
                   </div>
-                  <div className="col-md-7">
-                    <div className="cost">2K</div>
-                  </div>
+                  <div className="cost">2K</div>
                 </div>
               </div>
               <div className="businnesses-box">
                 <div className="businnesses-heading">{"Total s3 Targets"}</div>
-                <div className="row">
-                  <div className="col-md-5">
-                    <div className="icon">
-                      <img src={Targets} alt="" />
-                    </div>
+                <div className="d-flex">
+                  <div className="icon">
+                    <img src={Targets} alt="" />
                   </div>
-                  <div className="col-md-7">
-                    <div className="cost">10K</div>
-                  </div>
+                  <div className="cost">10K</div>
                 </div>
               </div>
               <div className="businnesses-box">
                 <div className="businnesses-heading">{"Total tables"}</div>
-                <div className="row">
-                  <div className="col-md-5">
-                    <div className="icon">
-                      <img src={Tables} alt="" />
-                    </div>
+                <div className="d-flex">
+                  <div className="icon">
+                    <img src={Tables} alt="" />
                   </div>
-                  <div className="col-md-7">
-                    <div className="cost">50K</div>
-                  </div>
+                  <div className="cost">50K</div>
                 </div>
               </div>
               <div className="businnesses-box">
                 <div className="businnesses-heading">{"Shared Catalogues"}</div>
-                <div className="row">
-                  <div className="col-md-5">
-                    <div className="icon">
-                      <img src={Catalougeus} alt="" />
-                    </div>
+                <div className="d-flex">
+                  <div className="icon">
+                    <img src={Catalougeus} alt="" />
                   </div>
-                  <div className="col-md-7">
-                    <div className="cost">40K</div>
-                  </div>
+                  <div className="cost">40K</div>
                 </div>
               </div>
             </div>

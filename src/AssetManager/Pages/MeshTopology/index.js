@@ -112,10 +112,7 @@ class MeshTopology extends Component {
           <div className="table">
             <table className="overview">
               <thead className="active">
-                <tr>
-                  <th>
-                    <strong>Role Name</strong>
-                  </th>
+                <tr><th><strong>Role Name</strong></th>
                   <th>Policy Name </th>
                   <th>Trust Relationship</th>
                   <th>Access Advisor</th>

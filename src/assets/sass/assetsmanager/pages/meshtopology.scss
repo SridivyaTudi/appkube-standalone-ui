@@ -99,6 +99,14 @@
               font-weight: 600;
               color: #383874;
               margin: 0;
+              max-height: 4.2em;
+              overflow: hidden;
+              display: block;
+              display: -webkit-box;
+              max-width: 100%;
+              -webkit-line-clamp: 3;
+              -webkit-box-orient: vertical;
+              text-overflow: ellipsis;
             }
           }
         }
@@ -185,6 +193,33 @@
                 font-weight: 600;
                 color: #2662f0;
               }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .mesh-topology-container {
+    .mesh-topology-right {
+      .services-panel-tabs {
+        .tabs-head {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1200px) {
+  .mesh-topology-container {
+    .mesh-topology-right {
+      .services-panel-tabs {
+        .tabs-content {
+          .account-list-conitant {
+            .account-list-details {
+              width: 100%;
             }
           }
         }
