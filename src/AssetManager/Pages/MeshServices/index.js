@@ -72,7 +72,7 @@ class MeshServices extends Component {
             </div>
             <div className="col-lg-8 col-md-12 col-sm-12">
               <div className="service-head-right">
-                <div className="environment-fliter">
+                <div className="environment-fliter m-b-1">
                   <div
                     className="fliter-toggel"
                     onClick={() =>
@@ -114,7 +114,7 @@ class MeshServices extends Component {
                     }
                   />
                 </div>
-                <div className="environment-fliter">
+                <div className="environment-fliter m-b-1">
                   <div
                     className="fliter-toggel"
                     onClick={() =>
@@ -198,7 +198,7 @@ class MeshServices extends Component {
                     }
                   />
                 </div>
-                <div className="environment-fliter">
+                <div className="environment-fliter m-b-1">
                   <div
                     className="fliter-toggel"
                     onClick={() =>
