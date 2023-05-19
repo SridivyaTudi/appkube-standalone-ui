@@ -433,70 +433,74 @@ class Environments extends Component {
                   <div className="row d-flex justify-content-center align-items-center h-100">
                     <div className="col-lg-8 col-md-12 col-sm-12">
                       <div className="export-sction">
-                        <div className="environment-fliter">
-                          <div
-                            className="fliter-toggel"
-                            onClick={() =>
-                              this.setState({
-                                showRecentFilter: !showRecentFilter,
-                              })
-                            }
-                          >
-                            <i className="fas fa-alarm-clock fillter-icon"></i>
-                            Recent
-                            <i className="fas fa-caret-down arrow-icon"></i>
+                        {JSON.parse(localStorage.getItem("recentEnv")) !==
+                          null && (
+                          <div className="environment-fliter">
+                            <div
+                              className="fliter-toggel"
+                              onClick={() =>
+                                this.setState({
+                                  showRecentFilter: !showRecentFilter,
+                                })
+                              }
+                            >
+                              <i className="fas fa-alarm-clock fillter-icon"></i>
+                              Recent
+                              <i className="fas fa-caret-down arrow-icon"></i>
+                            </div>
+                            <div
+                              className={
+                                showRecentFilter === true
+                                  ? "fliter-collapse  active"
+                                  : "fliter-collapse"
+                              }
+                            >
+                              <ul>
+                                {JSON.parse(
+                                  localStorage.getItem("recentEnv")
+                                )?.map((item) => {
+                                  return (
+                                    <li>
+                                      <Link
+                                        to={`/assetmanager/pages/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
+                                        onClick={() =>
+                                          this.setLocalRecentService(item)
+                                        }
+                                      >
+                                        <span>
+                                          <img
+                                            src={
+                                              item.accountType === "AWS"
+                                                ? AWS
+                                                : item.accountType === "GCP"
+                                                ? GCP
+                                                : AZURE
+                                            }
+                                            alt={item.accountType}
+                                          />
+                                        </span>
+                                        <p>({item.accountId})</p>
+                                      </Link>
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            </div>
+                            <div
+                              className={
+                                showRecentFilter === true
+                                  ? "fliters-collapse-bg active"
+                                  : "fliters-collapse-bg"
+                              }
+                              onClick={() =>
+                                this.setState({
+                                  showRecentFilter: !showRecentFilter,
+                                })
+                              }
+                            />
                           </div>
-                          <div
-                            className={
-                              showRecentFilter === true
-                                ? "fliter-collapse  active"
-                                : "fliter-collapse"
-                            }
-                          >
-                            <ul>
-                              {JSON.parse(
-                                localStorage.getItem("recentEnv")
-                              )?.map((item) => {
-                                return (
-                                  <li>
-                                    <Link
-                                      to={`/assetmanager/pages/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
-                                      onClick={() =>
-                                        this.setLocalRecentService(item)
-                                      }
-                                    >
-                                      <span>
-                                        <img
-                                          src={
-                                            item.accountType === "AWS"
-                                              ? AWS
-                                              : item.accountType === "GCP"
-                                              ? GCP
-                                              : AZURE
-                                          }
-                                          alt={item.accountType}
-                                        />
-                                      </span>
-                                      <p>({item.accountId})</p>
-                                    </Link>
-                                  </li>
-                                );
-                              })}
-                            </ul>
-                          </div>
-                          <div
-                            className={
-                              showRecentFilter === true
-                                ? "fliters-collapse-bg active"
-                                : "fliters-collapse-bg"
-                            }
-                            onClick={() =>
-                              this.setState({
-                                showRecentFilter: !showRecentFilter,
-                              })
-                            }
-                          />
-                        </div>
+                        )}
+
                         <div className="environment-fliter">
                           <div
                             className="fliter-toggel new-environment"

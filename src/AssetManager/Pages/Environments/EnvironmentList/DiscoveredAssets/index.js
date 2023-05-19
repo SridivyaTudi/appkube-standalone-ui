@@ -1,37 +1,30 @@
 import React, { Component } from "react";
 import { images } from "../../../../img";
 import Aws from "../../../../../assets/img/aws.png";
-import Microsoftazure from "../../../../../assets/img/microsoftazure.png";
 import VpcServicesIcon from "../../../../../assets/img/assetmanager/vpc-services-icon.png";
 import ClusterIcon from "../../../../../assets/img/assetmanager/cluster-icon.png";
-import { Link } from "react-router-dom";
 import S3Table from "./S3Table";
 import CdnTable from "./CdnTable";
 import WafTable from "./WafTable";
 import { RestService } from "../../../_service/RestService";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { type } from "@testing-library/user-event/dist/type";
-import { CSVLink } from "react-csv";
 import CommonFilterViewSearch from "../CommonFilterViewSearch";
 import ServicesNameLogo from "../ServicesNameLogo";
-const headers = [
-  { label: "Service Name", key: "name" },
-  { label: "Product", key: "product_count" },
-  { label: "App Service", key: "app_count" },
-  { label: "Data Service", key: "data_count" },
-];
+
 const servicesTreeCondition = {
   service: ["cluster", "product", "vpc", "clusterId", "vpcId", "productId"],
   vpc: ["vpcId", "cluster", "product", "clusterId", "productId"],
   cluster: ["vpcId", "product", "clusterId", "productId"],
   product: ["productId", "product"],
 };
+
 const breadcrumbResetCondition = {
   service: ["vpc", "cluster", "product"],
   vpc: ["cluster", "product"],
   cluster: ["product"],
   product: [],
 };
+
 const nextTypes = {
   service: "vpc",
   vpc: "cluster",
@@ -58,11 +51,12 @@ class DiscoveredAssets extends Component {
       component: WafTable,
     },
   ];
+
   constructor(props) {
     super(props);
     const queryPrm = new URLSearchParams(document.location.search);
     const cloudName = queryPrm.get("cloudName");
-    
+
     this.state = {
       display_detail: true,
       displaygetEnvironmentData: null,
@@ -90,10 +84,9 @@ class DiscoveredAssets extends Component {
       vpcsDetails: [],
       vpcsDetailsBackUp: [],
       searchString: "",
-      isLoderData:true,
-      accountId: queryPrm.get("accountId")
+      isLoderData: true,
+      accountId: queryPrm.get("accountId"),
     };
-   
   }
 
   getServicesData = async (accountId) => {
@@ -105,8 +98,8 @@ class DiscoveredAssets extends Component {
       ).then((response) => {
         this.setState({
           treeData: response[0].account_services_json.vpcs,
-          isLoderData:false,
-          accountId:accountId
+          isLoderData: false,
+          accountId: accountId,
         });
         this.getVpcsDetails(response[0].account_services_json.vpcs);
       });
@@ -114,8 +107,6 @@ class DiscoveredAssets extends Component {
       console.log("Loading accounts failed. Error: ", err);
     }
   };
-
-  submitPage = () => {};
 
   showHideDetail = () => {
     const { display_detail } = this.state;
@@ -127,20 +118,21 @@ class DiscoveredAssets extends Component {
   componentDidMount() {
     const queryPrm = new URLSearchParams(document.location.search);
     const accountId = queryPrm.get("accountId");
-    const cloudName = queryPrm.get("cloudName");
     this.getServicesData(accountId);
   }
+
   componentDidUpdate = (prevState, prevProps) => {
     if (
       this.state.accountId !== null &&
       this.state.accountId !== prevProps.accountId
     ) {
       this.setState({
-        isLoderData : true
+        isLoderData: true,
       });
       this.getServicesData(this.state.accountId);
     }
   };
+
   displayAwsData() {
     const { displaygetEnvironmentData } = this.state;
     let retData = [];
@@ -282,7 +274,6 @@ class DiscoveredAssets extends Component {
         </div>
       );
     }
-
     return retData;
   }
 
@@ -309,21 +300,6 @@ class DiscoveredAssets extends Component {
                 true,
                 "cluster"
               );
-              // this.setState({
-              //   toggleNode: {
-              //     ...this.state.toggleNode,
-              //     vpcId: vpcIndex,
-              //     clusters: true,
-              //     products: false,
-              //     clusterId: null,
-              //     productId: null,
-              //   },
-              //   breadcrumbs: this.prepareBreadCrumbs(
-              //     { id: "VPC" + "_" + vpcIndex, name: vpc.name, type: "VPC" },
-              //     "VPC" + "_" + vpcIndex,
-              //     "VPC"
-              //   ),
-              // });
             }}
           >
             <span>
@@ -382,23 +358,6 @@ class DiscoveredAssets extends Component {
                   true,
                   "product"
                 );
-                // this.setState({
-                //   toggleNode: {
-                //     ...this.state.toggleNode,
-                //     vpcId: index,
-                //     clusterId: clusterIndex,
-                //     products: true,
-                //   },
-                //   breadcrumbs: this.prepareBreadCrumbs(
-                //     {
-                //       id: "cluster" + "_" + clusterIndex,
-                //       name: cluster.name,
-                //       type: "cluster",
-                //     },
-                //     "cluster" + "_" + clusterIndex,
-                //     "cluster"
-                //   ),
-                // });
               }}
               className={`${
                 clusterIndex == this.state.toggleNode.clusterId ? "active" : ""
@@ -446,23 +405,6 @@ class DiscoveredAssets extends Component {
                   "product",
                   true
                 );
-
-                // this.setState({
-                //   toggleNode: {
-                //     ...this.state.toggleNode,
-                //     productId: productIndex,
-                //     products: true,
-                //   },
-                //   breadcrumbs: this.prepareBreadCrumbs(
-                //     {
-                //       id: "product" + "_" + productIndex,
-                //       name: product.name,
-                //       type: "product",
-                //     },
-                //     "product" + "_" + productIndex,
-                //     "product"
-                //   ),
-                // });
               }}
               id={`${
                 productIndex == this.state.toggleNode.productId &&
@@ -495,10 +437,12 @@ class DiscoveredAssets extends Component {
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
+
   getCloudName() {
     const queryPrm = new URLSearchParams(document.location.search);
     return ServicesNameLogo.ServicesName[queryPrm.get("cloudName")] || "";
   }
+
   getBreadCrumbs() {
     return (
       this.state.breadcrumbs &&
@@ -532,6 +476,7 @@ class DiscoveredAssets extends Component {
       })
     );
   }
+
   getServiceName(name, type) {
     if (type == "vpc") {
       return name ? name.toUpperCase() : "";
@@ -542,6 +487,7 @@ class DiscoveredAssets extends Component {
       return string;
     }
   }
+
   handleToggleNode(
     serviceIndexs,
     name,
@@ -588,6 +534,7 @@ class DiscoveredAssets extends Component {
     }
     this.setState({ toggleNode, breadcrumbs });
   }
+
   getVpcsDetails(treeData) {
     let vpcs = [];
     for (let vpcIndex = 0; vpcIndex < treeData.length; vpcIndex++) {
@@ -676,6 +623,7 @@ class DiscoveredAssets extends Component {
       );
     });
   }
+
   generateVpcDetailsTable() {
     return (
       <div className="environment-table-section" style={{ height: "395px" }}>
@@ -706,6 +654,7 @@ class DiscoveredAssets extends Component {
       </div>
     );
   }
+
   filterVpcsData(searchString) {
     let { vpcsDetailsBackUp, vpcsDetails } = this.state;
     vpcsDetails =
@@ -716,188 +665,24 @@ class DiscoveredAssets extends Component {
         : vpcsDetailsBackUp;
     this.setState({ searchString, vpcsDetails });
   }
+
   render() {
-    const { showSelectFilter, showServiceViewFilter, activeTab } = this.state;
+    const { activeTab } = this.state;
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
-        <CommonFilterViewSearch data={{vpcsDetails:this.state.vpcsDetails}} handleSearch={(string)=>{this.filterVpcsData(string)}} updateAccountId={(accountId)=> { 
-          this.setState({accountId});
-          this.props.updateCloudName(new URLSearchParams(document.location.search).get('cloudName'))
-          }} />
-
-          {/* <div className="row">
-            <div className="col-lg-6 col-md-12 col-sm-12">
-              <div className="environment-fliter">
-                <div
-                  className="fliter-toggel"
-                  onClick={() =>
-                    this.setState({
-                      showSelectFilter: !showSelectFilter,
-                    })
-                  }
-                >
-                  <i className="fas fa-filter fillter-icon"></i>
-                  Select and fillter
-                  <i className="fas fa-caret-down arrow-icon"></i>
-                </div>
-                <div
-                  className={
-                    showSelectFilter === true
-                      ? "fliter-collapse active"
-                      : "fliter-collapse"
-                  }
-                >
-                  <div className="search-bar">
-                    <input type="text" placeholder="Search...." />
-                  </div>
-                  <ul>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      OU
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      Status
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      No of Assets
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      Logs
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      Performance & Availability
-                    </li>
-                  </ul>
-                </div>
-                <div
-                  className={
-                    showSelectFilter === true
-                      ? "fliters-collapse-bg active"
-                      : "fliters-collapse-bg"
-                  }
-                  onClick={() =>
-                    this.setState({
-                      showSelectFilter: !showSelectFilter,
-                    })
-                  }
-                />
-              </div>
-              <div className="environment-fliter">
-                <div
-                  className="fliter-toggel"
-                  onClick={() =>
-                    this.setState({
-                      showServiceViewFilter: !showServiceViewFilter,
-                    })
-                  }
-                >
-                  <i className="far fa-eye fillter-icon"></i>
-                  Service View
-                  <i className="fas fa-caret-down arrow-icon"></i>
-                </div>
-                <div
-                  className={
-                    showServiceViewFilter === true
-                      ? "fliter-collapse recent-collapse active"
-                      : "fliter-collapse"
-                  }
-                >
-                  <ul>
-                    <li>
-                      <Link to={`/assetmanager/pages/accountsetup`}>
-                        <span>
-                          <img src={Aws} alt="AWS" />
-                        </span>
-                        <p>(657907747545)</p>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to={`/assetmanager/pages/accountsetup`}>
-                        <span>
-                          <img src={Aws} alt="" />
-                        </span>
-                        <p>(655668745458)</p>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to={`/assetmanager/pages/accountsetup`}>
-                        <span>
-                          <img src={Microsoftazure} alt="" />
-                        </span>
-                        <p>(655668745458)</p>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-                <div
-                  className={
-                    showServiceViewFilter === true
-                      ? "fliters-collapse-bg active"
-                      : "fliters-collapse-bg"
-                  }
-                  onClick={() =>
-                    this.setState({
-                      showServiceViewFilter: !showServiceViewFilter,
-                    })
-                  }
-                />
-              </div>
-            </div>
-            <div className="col-lg-6 col-md-12 col-sm-12">
-              <div className="d-inline-block width-100 text-right">
-                {this.state.vpcsDetails && this.state.vpcsDetails.length ? (
-                  <CSVLink
-                    data={this.state.vpcsDetails}
-                    headers={headers}
-                    filename={"vpcs.csv"}
-                    target="_blank"
-                  >
-                    <button className="new-button">
-                      <i className="fas fa-external-link-square-alt p-r-10"></i>
-                      Export
-                    </button>
-                  </CSVLink>
-                ) : (
-                  <></>
-                )}
-                <div className="search-box">
-                  <div className="form-group search-control-group m-b-0">
-                    <input
-                      type="text"
-                      className="input-group-text"
-                      placeholder="Search"
-                      onChange={(e) => {
-                        this.filterVpcsData(e.target.value);
-                      }}
-                    />
-                    <button className="search-btn">
-                      <i className="fa fa-search" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
+          <CommonFilterViewSearch
+            data={{ vpcsDetails: this.state.vpcsDetails }}
+            handleSearch={(string) => {
+              this.filterVpcsData(string);
+            }}
+            updateAccountId={(accountId) => {
+              this.setState({ accountId });
+              this.props.updateCloudName(
+                new URLSearchParams(document.location.search).get("cloudName")
+              );
+            }}
+          />
         </div>
         <div className="discovered-assets-body">
           {this.state.isLoderData ? (
@@ -911,100 +696,6 @@ class DiscoveredAssets extends Component {
                   <div className="services-panel-title bottom-border">
                     <div className="name">Topology View</div>
                   </div>
-                  {/* <div className="services-panel-body">
-                  <div className="gmnoprint">
-                    <div className="gmnoprint-plus-minus">
-                      <button className="btn btn-plus">
-                        <i className="fal fa-plus"></i>
-                      </button>
-                      <button className="btn btn-minus">
-                        <i className="fal fa-minus"></i>
-                      </button>
-                    </div>
-                    <div className="gmnoprint-map">
-                      <button className="btn btn-map">
-                        <i className="fal fa-map-marker-alt"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="services-inner-body">
-                    <div className="services-text-box active">Amazon Web Services</div>
-                    <div className="global-servies">
-                      <ul>
-                        <li>
-                          <span>
-                            <img src={VpcServicesIcon} alt="" />
-                          </span>
-                          VPC 1
-                        </li>
-                        <li className="active">
-                          <span>
-                            <img src={VpcServicesIcon} alt="" />
-                          </span>
-                          VPC 2
-                        </li>
-                        <li>
-                          <span>
-                            <img src={VpcServicesIcon} alt="" />
-                          </span>
-                          VPC 3
-                        </li>
-                        <li>
-                          <span>
-                            <img src={VpcServicesIcon} alt="" />
-                          </span>
-                          VPC 4
-                        </li>
-                      </ul>
-                      <div className="global-servies-menu">
-                        <label className="active">
-                          <span>
-                            <img src={VpcServicesIcon} alt="" />
-                          </span>
-                          Global servies
-                        </label>
-                      </div>
-                    </div>
-                    <div className="global-servies cluster-servies">
-                      <ul>
-                        <li>
-                          <span>
-                            <img src={ClusterIcon} alt="" />
-                          </span>
-                          Cluster 1
-                        </li>
-                        <li className="active">
-                          <span>
-                            <img src={ClusterIcon} alt="" />
-                          </span>
-                          Cluster 2
-                        </li>
-                        <li>
-                          <span>
-                            <img src={ClusterIcon} alt="" />
-                          </span>
-                          Cluster 3
-                        </li>
-                        <li>
-                          <span>
-                            <img src={ClusterIcon} alt="" />
-                          </span>
-                          Cluster 4
-                        </li>
-                      </ul>
-                      <div className="global-servies-menu">
-                        <label className="active">Cloud Management Services</label>
-                        <label>Gateway Services</label>
-                      </div>
-                    </div>
-                    <div className="global-servies app-servies">
-                      <div className="global-servies-menu">
-                        <label className="active">App Services</label>
-                        <label>Data Services</label>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
                   <div className="services-panel-body">
                     <TransformWrapper
                       onTransformed={(instance) => {
@@ -1197,30 +888,7 @@ class DiscoveredAssets extends Component {
                   <div className="global-services-fliter">
                     <div className="heading">
                       <div className="breadcrumbs">
-                        <ul>
-                          {this.getBreadCrumbs()}
-                          {/* <li>
-                          <a href="#">AWS</a>
-                        </li>
-                        <li>
-                          <i className="far fa-chevron-right"></i>
-                        </li>
-                        <li>
-                          <a href="#">VPC 1</a>
-                        </li>
-                        <li>
-                          <i className="far fa-chevron-right"></i>
-                        </li>
-                        <li>
-                          <a href="#">Cluster 1</a>
-                        </li>
-                        <li>
-                          <i className="far fa-chevron-right"></i>
-                        </li>
-                        <li>
-                          <span>App Services</span>
-                        </li> */}
-                        </ul>
+                        <ul>{this.getBreadCrumbs()}</ul>
                       </div>
                       <button type="button" className="btn btn-ellipsis">
                         <i className="fas fa-ellipsis-v"></i>
@@ -1354,112 +1022,6 @@ class DiscoveredAssets extends Component {
                     </div>
                   </div>
                 </div>
-
-                {/* <div
-                className="environment-table-section"
-                style={{ height: "395px" }}
-              >
-                <div className="table discovered-assets-table">
-                  <table className="overview">
-                    <thead>
-                      <tr>
-                        <th>
-                          <div className="environment-image">
-                            <img src={Aws} />
-                          </div>
-                        </th>
-                        <th>Products</th>
-                        <th>App Services</th>
-                        <th>Data Services</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody> */}
-
-                {/* <tr>
-                        <td>VPC 1</td>
-                        <td>02</td>
-                        <td>25</td>
-                        <td>35</td>
-                        <td>
-                          <button
-                            type="button"
-                            onClick={this.toggleMenu}
-                            className="list-icon"
-                          >
-                            <i className="fas fa-ellipsis-v"></i>
-                          </button>
-                          {this.state.showMenu == true && (
-                            <div className="menu-list">
-                              <ul>
-                                <li className="active">
-                                  <a href="#">Add New datasource</a>
-                                </li>
-                                <li>
-                                  <a href="#">Add Compliance</a>
-                                </li>
-                                <li>
-                                  <a href="#">Associate to OU</a>
-                                </li>
-                                <li>
-                                  <a href="#">Add New VPC</a>
-                                </li>
-                                <li>
-                                  <a href="#">Add New Product</a>
-                                </li>
-                              </ul>
-                            </div>
-                          )}
-                        </td>
-                      </tr> */}
-                {/* <tr>
-                        <td>VPC 2</td>
-                        <td>02</td>
-                        <td>25</td>
-                        <td>35</td>
-                        <td>
-                          <button type="button" className="list-icon">
-                            <i className="fas fa-ellipsis-v"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>VPC 3</td>
-                        <td>02</td>
-                        <td>25</td>
-                        <td>35</td>
-                        <td>
-                          <button type="button" className="list-icon">
-                            <i className="fas fa-ellipsis-v"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>VPC 4</td>
-                        <td>02</td>
-                        <td>25</td>
-                        <td>35</td>
-                        <td>
-                          <button type="button" className="list-icon">
-                            <i className="fas fa-ellipsis-v"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Global Service</td>
-                        <td>02</td>
-                        <td>25</td>
-                        <td>35</td>
-                        <td>
-                          <button type="button" className="list-icon">
-                            <i className="fas fa-ellipsis-v"></i>
-                          </button>
-                        </td>
-                      </tr> */}
-                {/* </tbody>
-                  </table>
-                </div>
-              </div> */}
                 <div
                   className="fliter-tabs"
                   style={{
@@ -1474,18 +1036,7 @@ class DiscoveredAssets extends Component {
                   <div className="global-services-fliter">
                     <div className="heading">
                       <div className="breadcrumbs">
-                        <ul>
-                          {this.getBreadCrumbs()}
-                          {/* <li>
-                          <a href="#">AWS</a>
-                        </li>
-                        <li>
-                          <i className="far fa-chevron-right"></i>
-                        </li>
-                        <li>
-                          <span>Global Services</span>
-                        </li> */}
-                        </ul>
+                        <ul>{this.getBreadCrumbs()}</ul>
                       </div>
                       <button type="button" className="btn btn-ellipsis">
                         <i className="fas fa-ellipsis-v"></i>
@@ -1562,18 +1113,7 @@ class DiscoveredAssets extends Component {
                   >
                     <div className="heading">
                       <div className="breadcrumbs">
-                        <ul>
-                          {this.getBreadCrumbs()}
-                          {/* <li>
-                          <a href="#">AWS</a>
-                        </li>
-                        <li>
-                          <i className="far fa-chevron-right"></i>
-                        </li>
-                        <li>
-                          <span>VPC 1</span>
-                        </li> */}
-                        </ul>
+                        <ul>{this.getBreadCrumbs()}</ul>
                       </div>
                     </div>
                     <div className="fliter-inputs">

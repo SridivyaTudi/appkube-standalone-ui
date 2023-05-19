@@ -41,6 +41,7 @@ class EnvironmentList extends Component {
       dataKey: "inputs",
     },
   ];
+
   constructor(props) {
     super(props);
     this.state = {
@@ -48,7 +49,7 @@ class EnvironmentList extends Component {
       activeTab: 0,
       treeData: [],
       isLoderData: true,
-      service: this.getCloudName(1),
+      service: this.getCloudName(),
       departmentWiseData: {},
       accountList: {},
       commonData: {},
