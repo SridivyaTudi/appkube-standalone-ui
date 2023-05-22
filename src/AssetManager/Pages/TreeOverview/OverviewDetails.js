@@ -140,7 +140,7 @@ class OverviewDetails extends Component {
         </div>
         <div className="mesh-overview">
           <div className="mesh-head">
-            <div className="row">
+            <div className="row d-flex justify-content-center align-items-center">
               <div className="col-lg-6 col-md-6 col-sm">
                 <div className="mesh-left">
                   <h2>Mesh Overview</h2>

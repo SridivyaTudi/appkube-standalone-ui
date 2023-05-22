@@ -4,6 +4,11 @@ import Aws from "../../../../../assets/img/aws.png";
 import Microsoftazure from "../../../../../assets/img/microsoftazure.png";
 import VpcServicesIcon from "../../../../../assets/img/assetmanager/vpc-services-icon.png";
 import ClusterIcon from "../../../../../assets/img/assetmanager/cluster-icon.png";
+import GlobalIcon1 from "../../../../../assets/img/assetmanager/global-icon1.png";
+import GlobalIcon2 from "../../../../../assets/img/assetmanager/global-icon2.png";
+import GlobalIcon3 from "../../../../../assets/img/assetmanager/global-icon3.png";
+import GlobalIcon4 from "../../../../../assets/img/assetmanager/global-icon4.png";
+import GlobalIcon5 from "../../../../../assets/img/assetmanager/global-icon5.png";
 import { Link } from "react-router-dom";
 import S3Table from "./S3Table";
 import CdnTable from "./CdnTable";
@@ -14,6 +19,7 @@ import { type } from "@testing-library/user-event/dist/type";
 import { CSVLink } from "react-csv";
 import CommonFilterViewSearch from "../CommonFilterViewSearch";
 import ServicesNameLogo from "../ServicesNameLogo";
+
 const headers = [
   { label: "Service Name", key: "name" },
   { label: "Product", key: "product_count" },
@@ -62,7 +68,7 @@ class DiscoveredAssets extends Component {
     super(props);
     const queryPrm = new URLSearchParams(document.location.search);
     const cloudName = queryPrm.get("cloudName");
-    
+
     this.state = {
       display_detail: true,
       displaygetEnvironmentData: null,
@@ -75,6 +81,7 @@ class DiscoveredAssets extends Component {
         vpcId: null,
         clusterId: null,
         productId: null,
+        globalService: false,
       },
       breadcrumbs: [
         {
@@ -90,10 +97,9 @@ class DiscoveredAssets extends Component {
       vpcsDetails: [],
       vpcsDetailsBackUp: [],
       searchString: "",
-      isLoderData:true,
-      accountId: queryPrm.get("accountId")
+      isLoderData: true,
+      accountId: queryPrm.get("accountId"),
     };
-   
   }
 
   getServicesData = async (accountId) => {
@@ -105,8 +111,8 @@ class DiscoveredAssets extends Component {
       ).then((response) => {
         this.setState({
           treeData: response[0].account_services_json.vpcs,
-          isLoderData:false,
-          accountId:accountId
+          isLoderData: false,
+          accountId: accountId,
         });
         this.getVpcsDetails(response[0].account_services_json.vpcs);
       });
@@ -136,7 +142,7 @@ class DiscoveredAssets extends Component {
       this.state.accountId !== prevProps.accountId
     ) {
       this.setState({
-        isLoderData : true
+        isLoderData: true,
       });
       this.getServicesData(this.state.accountId);
     }
@@ -586,6 +592,7 @@ class DiscoveredAssets extends Component {
         );
       });
     }
+    toggleNode["globalService"] = false;
     this.setState({ toggleNode, breadcrumbs });
   }
   getVpcsDetails(treeData) {
@@ -721,10 +728,18 @@ class DiscoveredAssets extends Component {
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
-        <CommonFilterViewSearch data={{vpcsDetails:this.state.vpcsDetails}} handleSearch={(string)=>{this.filterVpcsData(string)}} updateAccountId={(accountId)=> { 
-          this.setState({accountId});
-          this.props.updateCloudName(new URLSearchParams(document.location.search).get('cloudName'))
-          }} />
+          <CommonFilterViewSearch
+            data={{ vpcsDetails: this.state.vpcsDetails }}
+            handleSearch={(string) => {
+              this.filterVpcsData(string);
+            }}
+            updateAccountId={(accountId) => {
+              this.setState({ accountId });
+              this.props.updateCloudName(
+                new URLSearchParams(document.location.search).get("cloudName")
+              );
+            }}
+          />
 
           {/* <div className="row">
             <div className="col-lg-6 col-md-12 col-sm-12">
@@ -1096,10 +1111,31 @@ class DiscoveredAssets extends Component {
                                   )}
                                 </ul>
                                 <div
-                                  className="global-servies-menu"
-                                  style={{ display: "none" }}
+                                  className="global-servies-menu m-t-2"
+                                  onClick={() => {
+                                    this.handleToggleNode(
+                                      {},
+                                      "vpc",
+                                      "service",
+                                      false
+                                    );
+                                    this.setState({
+                                      toggleNode: {
+                                        ...this.state.toggleNode,
+                                        globalService:
+                                          !this.state.toggleNode.globalService,
+                                      },
+                                    });
+                                  }}
+                                  // style={{ display: "none" }}
                                 >
-                                  <label className="active">
+                                  <label
+                                    className={`${
+                                      this.state.toggleNode.globalService
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                  >
                                     <span>
                                       <img src={VpcServicesIcon} alt="" />
                                     </span>
@@ -1177,7 +1213,8 @@ class DiscoveredAssets extends Component {
                 {this.state.breadcrumbs &&
                 this.state.breadcrumbs.length == 1 &&
                 this.state.vpcsDetails &&
-                this.state.vpcsDetails.length ? (
+                this.state.vpcsDetails.length &&
+                !this.state.toggleNode.globalService ? (
                   this.generateVpcDetailsTable()
                 ) : (
                   <></>
@@ -1461,7 +1498,7 @@ class DiscoveredAssets extends Component {
                 </div>
               </div> */}
                 <div
-                  className="fliter-tabs"
+                  className="fliter-tabs global-service-penal"
                   style={{
                     display: `${
                       this.state.breadcrumbs &&
@@ -1487,11 +1524,11 @@ class DiscoveredAssets extends Component {
                         </li> */}
                         </ul>
                       </div>
-                      <button type="button" className="btn btn-ellipsis">
+                      {/* <button type="button" className="btn btn-ellipsis">
                         <i className="fas fa-ellipsis-v"></i>
-                      </button>
+                      </button> */}
                     </div>
-                    <div className="fliter-inputs">
+                    {/* <div className="fliter-inputs">
                       <div className="search-control">
                         <input
                           type="text"
@@ -1512,10 +1549,412 @@ class DiscoveredAssets extends Component {
                           className="input-group-text"
                           placeholder=""
                         />
+                      </div>
+                    </div> */}
+                  </div>
+                  <div className="environment-boxs m-t-2">
+                    <div className="environment-box">
+                      <div className="environment-title">
+                        <div className="environment-image">
+                          <img src={GlobalIcon4} alt="" />
+                        </div>
+                        <div className="title-name">EKS-Cluster</div>
+                      </div>
+                      <div className="data-contant">
+                        <ul>
+                          <li>
+                            <div className="data-text">
+                              <span
+                                style={{ backgroundColor: "#ff9900" }}
+                              ></span>
+                              <p>No of EKS</p>
+                            </div>
+                            <label>20</label>
+                          </li>
+                          <li>
+                            <div className="data-text">
+                              <span
+                                style={{ backgroundColor: "#0089d6" }}
+                              ></span>
+                              <p>CPU Ultilization</p>
+                            </div>
+                            <label>65%</label>
+                          </li>
+                          <li>
+                            <div className="data-text">
+                              <span
+                                style={{ backgroundColor: "#da4f44" }}
+                              ></span>
+                              <p>Memory</p>
+                            </div>
+                            <label>96%</label>
+                          </li>
+                          <li>
+                            <div className="data-text">
+                              <span
+                                style={{ backgroundColor: "#383874" }}
+                              ></span>
+                              <p>Network Bytes</p>
+                            </div>
+                            <label>2000</label>
+                          </li>
+                          <li>
+                            <div className="data-text">
+                              <span
+                                style={{ backgroundColor: "#ff708b" }}
+                              ></span>
+                              <p>Network Bytes Out</p>
+                            </div>
+                            <label>3500</label>
+                          </li>
+                          <li>
+                            <div className="data-text">
+                              <span
+                                style={{ backgroundColor: "#416bff" }}
+                              ></span>
+                              <p>CPU Reservation</p>
+                            </div>
+                            <label>70%</label>
+                          </li>
+                          <li>
+                            <div className="data-text">
+                              <span
+                                style={{ backgroundColor: "#006bb9" }}
+                              ></span>
+                              <p>Memory Reservation</p>
+                            </div>
+                            <label>60%</label>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="environment-box">
+                      <div className="environment-title">
+                        <div className="environment-image">
+                          <img src={GlobalIcon5} alt="" />
+                        </div>
+                        <div className="title-name">ECS-Cluster</div>
+                      </div>
+                      <div className="data-contant">
+                        <ul>
+                          <li>
+                            <div className="data-text">
+                              <span
+                                style={{ backgroundColor: "#ff9900" }}
+                              ></span>
+                              <p>No of EKS</p>
+                            </div>
+                            <label>20</label>
+                          </li>
+                          <li>
+                            <div className="data-text">
+                              <span
+                                style={{ backgroundColor: "#0089d6" }}
+                              ></span>
+                              <p>CPU Ultilization</p>
+                            </div>
+                            <label>65%</label>
+                          </li>
+                          <li>
+                            <div className="data-text">
+                              <span
+                                style={{ backgroundColor: "#da4f44" }}
+                              ></span>
+                              <p>Memory</p>
+                            </div>
+                            <label>96%</label>
+                          </li>
+                          <li>
+                            <div className="data-text">
+                              <span
+                                style={{ backgroundColor: "#383874" }}
+                              ></span>
+                              <p>Network Bytes</p>
+                            </div>
+                            <label>2000</label>
+                          </li>
+                          <li>
+                            <div className="data-text">
+                              <span
+                                style={{ backgroundColor: "#ff708b" }}
+                              ></span>
+                              <p>Network Bytes Out</p>
+                            </div>
+                            <label>3500</label>
+                          </li>
+                          <li>
+                            <div className="data-text">
+                              <span
+                                style={{ backgroundColor: "#416bff" }}
+                              ></span>
+                              <p>CPU Reservation</p>
+                            </div>
+                            <label>70%</label>
+                          </li>
+                          <li>
+                            <div className="data-text">
+                              <span
+                                style={{ backgroundColor: "#006bb9" }}
+                              ></span>
+                              <p>Memory Reservation</p>
+                            </div>
+                            <label>60%</label>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
-                  <div className="services-panel-tabs">
+                  <div className="resources-section">
+                    <h4>EKS Resources</h4>
+                    <div className="account-list-conitant">
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>$96k</strong>
+                          <p>Total Cost</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>540k</strong>
+                          <p>Total function</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>43k</strong>
+                          <p>Error Rate</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>365</strong>
+                          <p>Throttle</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>199</strong>
+                          <p>Latency</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>142</strong>
+                          <p>Trends</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>450k</strong>
+                          <p>Failure Function</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>450k</strong>
+                          <p>Total Buckets</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>41MB</strong>
+                          <p>Used CPU</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>152</strong>
+                          <p>Net Received</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>142</strong>
+                          <p>Request</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>450</strong>
+                          <p>Memory Used</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="performance-section">
+                    <div className="performance-head">
+                      <div className="row d-flex justify-content-center align-items-center">
+                        <div className="col-lg-5">
+                          <h4>EKS Performance</h4>
+                        </div>
+                        <div className="col-lg-7">
+                          <div className="head-right">
+                            <button className="light-blue-button m-b-0">
+                              <i class="far fa-stream p-r-10"></i>
+                              fillter
+                            </button>
+                            <button className="light-blue-outline m-b-0 m-r-0">
+                              Explore
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="environment-table-section">
+                      <div className="table discovered-assets-table">
+                        <table className="overview">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Performance</th>
+                              <th>Availability</th>
+                              <th>Security</th>
+                              <th>Data Protection</th>
+                              <th>User Exp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <strong>
+                                  <a href="#">S3</a>
+                                </strong>
+                                <i className="fas fa-caret-right m-l-1"></i>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box orange">
+                                  <i class="fas fa-sort-up"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <strong>
+                                  <a href="#">Attendence</a>
+                                </strong>
+                                <i className="fas fa-caret-right m-l-1"></i>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box orange">
+                                  {" "}
+                                  <i class="fas fa-sort-up"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <strong>
+                                  <a href="#">Free</a>
+                                </strong>
+                                <i className="fas fa-caret-right m-l-1"></i>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box orange">
+                                  {" "}
+                                  <i class="fas fa-sort-up"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <strong>
+                                  <a href="#">Exam</a>
+                                </strong>
+                                <i className="fas fa-caret-right m-l-1"></i>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box orange">
+                                  {" "}
+                                  <i class="fas fa-sort-up"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  {/* <div className="services-panel-tabs">
                     <div className="tabs-head">
                       <ul>
                         {this.tableMapping.map((tabData, index) => {
@@ -1540,14 +1979,15 @@ class DiscoveredAssets extends Component {
                         }
                       })}
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <div
                   className="fliter-tabs"
                   style={{
                     display: `${
                       this.state.breadcrumbs &&
-                      this.state.breadcrumbs.length == 2
+                      this.state.breadcrumbs.length == 2 &&
+                      !this.state.toggleNode.globalService
                         ? "block"
                         : "none"
                     }`,
@@ -1597,6 +2037,315 @@ class DiscoveredAssets extends Component {
                           className="input-group-text"
                           placeholder=""
                         />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="global-service-penal"
+                  style={{
+                    display: `${
+                      this.state.toggleNode.globalService ? "block" : "none"
+                    }`,
+                  }}
+                >
+                  <div className="global-services-fliter">
+                    <div className="fliter-tabs">
+                      <div className="global-services-fliter">
+                        <div className="heading">
+                          <div className="breadcrumbs">
+                            <ul>
+                              <li>
+                                <a href="#">AWS</a>
+                              </li>
+                              <li>
+                                <i className="far fa-chevron-right"></i>
+                              </li>
+                              <li>
+                                <span>App Services</span>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="global-service-cards">
+                    <div className="service-card active">
+                      <div className="service-icon">
+                        <img src={GlobalIcon1} alt="serviceicon" />
+                      </div>
+                      <div className="service-contant">
+                        <label>S3</label>
+                        <strong>235</strong>
+                      </div>
+                    </div>
+                    <div className="service-card">
+                      <div className="service-icon">
+                        <img src={GlobalIcon2} alt="serviceicon" />
+                      </div>
+                      <div className="service-contant">
+                        <label>API Gateway</label>
+                        <strong>03</strong>
+                      </div>
+                    </div>
+                    <div className="service-card">
+                      <div className="service-icon">
+                        <img src={GlobalIcon3} alt="serviceicon" />
+                      </div>
+                      <div className="service-contant">
+                        <label>Lambda</label>
+                        <strong>19</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="resources-section">
+                    <h4>S3 Resources</h4>
+                    <div className="account-list-conitant">
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>$96k</strong>
+                          <p>Total Cost</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>540k</strong>
+                          <p>Total function</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>43k</strong>
+                          <p>Error Rate</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>365</strong>
+                          <p>Throttle</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>199</strong>
+                          <p>Latency</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>142</strong>
+                          <p>Trends</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>450k</strong>
+                          <p>Failure Function</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>450k</strong>
+                          <p>Total Buckets</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>41MB</strong>
+                          <p>Used CPU</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>152</strong>
+                          <p>Net Received</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>142</strong>
+                          <p>Request</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>450</strong>
+                          <p>Memory Used</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="performance-section">
+                    <div className="performance-head">
+                      <div className="row d-flex justify-content-center align-items-center">
+                        <div className="col-lg-5">
+                          <h4>S3 Performance</h4>
+                        </div>
+                        <div className="col-lg-7">
+                          <div className="head-right">
+                            <button className="light-blue-button m-b-0">
+                              <i class="far fa-stream p-r-10"></i>
+                              fillter
+                            </button>
+                            <button className="light-blue-outline m-b-0 m-r-0">
+                              Explore
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="environment-table-section">
+                      <div className="table discovered-assets-table">
+                        <table className="overview">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Performance</th>
+                              <th>Availability</th>
+                              <th>Security</th>
+                              <th>Data Protection</th>
+                              <th>User Exp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <strong>
+                                  <a href="#">S3</a>
+                                </strong>
+                                <i className="fas fa-caret-right m-l-1"></i>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box orange">
+                                  <i class="fas fa-sort-up"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <strong>
+                                  <a href="#">Attendence</a>
+                                </strong>
+                                <i className="fas fa-caret-right m-l-1"></i>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box orange">
+                                  {" "}
+                                  <i class="fas fa-sort-up"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <strong>
+                                  <a href="#">Free</a>
+                                </strong>
+                                <i className="fas fa-caret-right m-l-1"></i>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box orange">
+                                  {" "}
+                                  <i class="fas fa-sort-up"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <strong>
+                                  <a href="#">Exam</a>
+                                </strong>
+                                <i className="fas fa-caret-right m-l-1"></i>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box orange">
+                                  {" "}
+                                  <i class="fas fa-sort-up"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                   </div>

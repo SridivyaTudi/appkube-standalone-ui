@@ -786,7 +786,7 @@
         font-weight: 500;
         color: #383874;
         border-radius: 10px;
-        border: 1px solid #c7c7e8;
+        border: 1.5px solid #c7c7e8;
         box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
 
         &.active {
@@ -797,10 +797,10 @@
           position: absolute;
           top: 25px;
           right: -16px;
-          font-size: 12px;
-          line-height: 16px;
+          font-size: 20px;
+          line-height: 20px;
           font-weight: 900;
-          color: #dbdff1;
+          color: #a5a5d7;
           content: "\f0da";
           font-family: "Font Awesome 5 Pro";
         }
@@ -837,7 +837,7 @@
           border-radius: 10px;
           overflow: hidden;
           background-color: #ffffff;
-          border: 1px solid #d9d9d9;
+          border: 1px solid #a5a5d7;
           box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.05);
 
           label {
@@ -854,14 +854,15 @@
             font-weight: 600;
             color: #383874;
             cursor: pointer;
-            border-bottom: 1px solid #d9d9d9;
+            border-bottom: 1px solid #a5a5d7;
 
             &:last-child {
               border: none;
             }
 
             &.active {
-              background-color: #dbdff1;
+              color: #ffffff;
+              background-color: #416bff;
             }
 
             span {
@@ -885,36 +886,50 @@
           list-style: none;
           position: relative;
           border-radius: 10px;
-          border: 1px solid #c7c7e8;
+          border: 1px solid #a5a5d7;
           box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.05);
 
           li {
             display: flex;
+            align-items: center;
+            justify-content: flex-start;
             width: 100%;
             height: 30px;
             font-size: 12px;
             line-height: 30px;
             font-weight: 600;
             color: #383874;
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
             cursor: pointer;
             position: relative;
-            border-bottom: 1px solid #c7c7e8;
+            border-bottom: 1px solid #a5a5d7;
 
             &:first-child {
-              border-top-left-radius: 10px;
-              border-top-right-radius: 10px;
+              border-top-left-radius: 9px;
+              border-top-right-radius: 9px;
             }
 
             &:last-child {
               border-bottom: none;
-              border-bottom-right-radius: 10px;
-              border-bottom-left-radius: 10px;
+              border-bottom-right-radius: 9px;
+              border-bottom-left-radius: 9px;
             }
 
             &.active {
-              background-color: #dbdff1;
+              span {
+                width: 20px;
+                height: 20px;
+                padding: 3px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #ffffff;
+                border-radius: 50%;
+              }
+
+              color: #ffffff;
+              background-color: #416bff;
 
               &::after {
                 opacity: 1;
@@ -926,10 +941,10 @@
               position: absolute;
               top: 8px;
               right: -16px;
-              font-size: 12px;
-              line-height: 16px;
+              font-size: 20px;
+              line-height: 20px;
               font-weight: 900;
-              color: #dbdff1;
+              color: #a5a5d7;
               content: "\f0da";
               font-family: "Font Awesome 5 Pro";
             }
@@ -938,7 +953,7 @@
               display: inline-block;
               width: 12px;
               margin-right: 5px;
-              margin-top: -2px;
+              // margin-top: -2px;
 
               img {
                 max-width: 100%;
@@ -963,7 +978,7 @@
 
       ul {
         display: inline-block;
-        width: 90%;
+        width: 86%;
         border-radius: 30px;
         background-color: #dbdff1;
 
@@ -994,6 +1009,178 @@
       display: block;
       width: 100%;
       margin-top: 30px;
+      .discovered-assets {
+        .discovered-assets-body {
+          .global-service-penal {
+            .global-services-fliter {
+              display: block;
+              width: 100%;
+              border-radius: 8px;
+              background-color: #ffffff;
+              margin-top: 30px;
+              box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04);
+
+              .heading {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 10px 15px;
+                border: none;
+
+                .breadcrumbs {
+                  display: inline-flex;
+
+                  ul {
+                    list-style: none;
+                    display: flex;
+
+                    li {
+                      display: inline-flex;
+                      padding-left: 3px;
+                      padding-right: 3px;
+                      line-height: 32px;
+                      align-items: center;
+
+                      a {
+                        color: #3b7cff;
+                        font-size: 12px;
+                      }
+
+                      i {
+                        font-size: 14px;
+                        color: #414d55;
+                      }
+
+                      span {
+                        display: inline-flex;
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        padding-top: 3px;
+                        font-size: 12px;
+                        padding-bottom: 3px;
+                        color: #416bff;
+                        font-weight: 600;
+                        line-height: 22px;
+                        border-radius: 4px;
+                        background-color: #d9e1ff;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            .global-service-cards {
+              display: flex;
+              margin-top: 20px;
+              .service-card {
+                margin: 0 5px 5px;
+                width: 130px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                background: #ffffff;
+                border-radius: 5px;
+                padding: 20px 10px;
+                .service-icon {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 35px;
+                  height: 35px;
+                  border-radius: 50%;
+                  background: #f6f7fb;
+                }
+                .service-contant {
+                  margin-left: 10px;
+                  label {
+                    width: 65px;
+                    font-size: 14px;
+                    line-height: 18px;
+                    font-weight: 700;
+                    display: block;
+                    color: #383874;
+                    margin-bottom: 8px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  }
+                  strong {
+                    font-size: 16px;
+                    line-height: 20px;
+                    font-weight: 700;
+                    display: block;
+                    color: #383874;
+                  }
+                }
+                &.active {
+                  border: 1px solid #384cff;
+                }
+              }
+            }
+            .resources-section {
+              width: 100%;
+              display: block;
+              h4 {
+                font-size: 16px;
+                line-height: 20px;
+                font-weight: 600;
+                color: #0f0f10;
+                margin: 15px 0;
+              }
+              .account-list-conitant {
+                display: flex;
+                flex-wrap: wrap;
+                .account-list-details {
+                  width: 89px;
+                  background: #ffffff;
+                  // display: inline-block;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin: 0 5px 10px 5px;
+                  padding: 10px 10px;
+                  border-radius: 10px;
+                  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+                  strong {
+                    width: 100%;
+                    display: block;
+                    text-align: center;
+                    font-size: 22px;
+                    line-height: 26px;
+                    color: #383874;
+                  }
+                  p {
+                    width: 100%;
+                    display: block;
+                    text-align: center;
+                    font-size: 12px;
+                    line-height: 16px;
+                    font-weight: 600;
+                    color: #383874;
+                    margin: 0;
+                  }
+                }
+              }
+            }
+            .performance-section {
+              .performance-head {
+                margin: 15px 0 0 0;
+                h4 {
+                  font-size: 16px;
+                  line-height: 20px;
+                  font-weight: 600;
+                  color: #0f0f10;
+                  margin: 0;
+                  .head-right {
+                    float: right;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 
@@ -1050,7 +1237,7 @@
                 .box {
                   width: 24px;
                   height: 24px;
-                  border-radius: 4px;
+                  border-radius: 25px;
                   color: #ffffff;
                   font-size: 12px;
                   line-height: 24px;
@@ -1069,6 +1256,10 @@
 
                   &.orange {
                     background-color: #faa24b;
+                    i {
+                      font-size: 20px;
+                      line-height: 32px;
+                    }
                   }
 
                   i {
@@ -1088,10 +1279,10 @@
       border-radius: 8px;
       background-color: #ffffff;
       margin-top: 30px;
-      box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04);
 
       .heading {
-        border-bottom: 1px dashed #d9d9d9;
+        border-bottom: none;
         width: 100%;
         display: flex;
         align-items: center;
