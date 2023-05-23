@@ -21,96 +21,113 @@ class DataTable extends Component {
     return (
       <>
         <div className="cloud-managed-section">
-          <h4> Cloud Managed Services</h4>
-          <div className="cloud-managed-cards">
-            <div className="service-card active">
-              <div className="service-icon">
-                <img src={CloudManagedIcon1} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Lambda</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon2} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>S3</label>
-                <strong>146</strong>
+          <div className="row">
+            <div className="col-lg-4 p-l-5 p-r-5">
+              <div className="cloud-managed-tab">
+                <ul>
+                  <li className="active"><a>All Services</a></li>
+                  <li><a>No SQLDB</a></li>
+                  <li><a>Git DB</a></li>
+                  <li><a>Search DB</a></li>
+                  <li><a>Ledger DB</a></li>
+                  <li><a>Cache DB</a></li>
+                  <li><a>Object DB</a></li>
+                  <li><a>Metrics DB</a></li>
+                </ul>
               </div>
             </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon3} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>SQS</label>
-                <strong>06</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon4} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>SNS</label>
-                <strong>06</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon5} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Redshift</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon6} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>RDS</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon7} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>AppMesh</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon8} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Kinesis</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon9} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Time-Series</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon10} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Athena</label>
-                <strong>235</strong>
+            <div className="col-lg-8 p-l-5 p-r-5">
+              <div className="cloud-managed-cards">
+                <div className="service-card active">
+                  <div className="service-icon">
+                    <img src={CloudManagedIcon1} alt="serviceicon" />
+                  </div>
+                  <div className="service-contant">
+                    <label>Lambda</label>
+                    <strong>235</strong>
+                  </div>
+                </div>
+                <div className="service-card">
+                  <div className="service-icon">
+                    <img src={CloudManagedIcon2} alt="serviceicon" />
+                  </div>
+                  <div className="service-contant">
+                    <label>S3</label>
+                    <strong>146</strong>
+                  </div>
+                </div>
+                <div className="service-card">
+                  <div className="service-icon">
+                    <img src={CloudManagedIcon3} alt="serviceicon" />
+                  </div>
+                  <div className="service-contant">
+                    <label>SQS</label>
+                    <strong>06</strong>
+                  </div>
+                </div>
+                <div className="service-card">
+                  <div className="service-icon">
+                    <img src={CloudManagedIcon4} alt="serviceicon" />
+                  </div>
+                  <div className="service-contant">
+                    <label>SNS</label>
+                    <strong>06</strong>
+                  </div>
+                </div>
+                <div className="service-card">
+                  <div className="service-icon">
+                    <img src={CloudManagedIcon5} alt="serviceicon" />
+                  </div>
+                  <div className="service-contant">
+                    <label>Redshift</label>
+                    <strong>235</strong>
+                  </div>
+                </div>
+                <div className="service-card">
+                  <div className="service-icon">
+                    <img src={CloudManagedIcon6} alt="serviceicon" />
+                  </div>
+                  <div className="service-contant">
+                    <label>RDS</label>
+                    <strong>235</strong>
+                  </div>
+                </div>
+                <div className="service-card">
+                  <div className="service-icon">
+                    <img src={CloudManagedIcon7} alt="serviceicon" />
+                  </div>
+                  <div className="service-contant">
+                    <label>AppMesh</label>
+                    <strong>235</strong>
+                  </div>
+                </div>
+                <div className="service-card">
+                  <div className="service-icon">
+                    <img src={CloudManagedIcon8} alt="serviceicon" />
+                  </div>
+                  <div className="service-contant">
+                    <label>Kinesis</label>
+                    <strong>235</strong>
+                  </div>
+                </div>
+                <div className="service-card">
+                  <div className="service-icon">
+                    <img src={CloudManagedIcon9} alt="serviceicon" />
+                  </div>
+                  <div className="service-contant">
+                    <label>Time-Series</label>
+                    <strong>235</strong>
+                  </div>
+                </div>
+                <div className="service-card">
+                  <div className="service-icon">
+                    <img src={CloudManagedIcon10} alt="serviceicon" />
+                  </div>
+                  <div className="service-contant">
+                    <label>Athena</label>
+                    <strong>235</strong>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

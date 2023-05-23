@@ -1088,6 +1088,42 @@
                 color: #0f0f10;
                 margin: 0 0 15px 0;
               }
+              .cloud-managed-tab{
+                width: 100%;
+                display: block;
+                background: #ffffff;
+                padding: 10px 5px;
+                border-radius: 5px;
+                ul{
+                  width: 100%;
+                  display: block;
+                  padding: 0;
+                  margin: 0;
+                  li{
+                    list-style: none;
+                    text-align: center;
+                    padding: 8px 5px;
+                    margin-bottom: 10px;
+                    &:hover{
+                      border-radius: 3px;
+                      background: #e8eaff;
+                    }
+                    &.active{
+                      border-radius: 3px;
+                      background: #cdd2f1;
+                      a{
+                        color: #383874;
+                      }
+                    }
+                    a{
+                      font-size: 12px;
+                      line-height: 16px;
+                      font-weight: 600;
+                      color: #000000;
+                    }
+                  }
+                }
+              }
               .cloud-managed-cards {
                 display: flex;
                 flex-wrap: wrap;
