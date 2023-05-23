@@ -31,10 +31,10 @@
     }
   }
   .opration-cards {
-    width: 70%;
+    width: 80%;
     margin: 30px auto;
     .opration-card {
-        height: 420px;
+        min-height: 450px;
       border-radius: 10px;
       background: #ffffff;
       padding: 15px 30px;
@@ -64,7 +64,7 @@
           margin-bottom: 10px;
         }
         ul {
-          width: 71%; 
+          width: 80%; 
           display: block;
           padding: 0;
           margin: 0 auto;
