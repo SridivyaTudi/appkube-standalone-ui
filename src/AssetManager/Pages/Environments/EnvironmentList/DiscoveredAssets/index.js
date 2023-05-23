@@ -106,7 +106,6 @@ class DiscoveredAssets extends Component {
     });
   };
 
-    const cloudName = queryPrm.get("cloudName");
   displayAwsData() {
     const { displaygetEnvironmentData } = this.state;
     let retData = [];
