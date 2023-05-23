@@ -9,6 +9,7 @@ import Inputs from "./Inputs";
 import apiEndPoint from "../../../../Services";
 import ServicesNameLogo from "./ServicesNameLogo";
 import { config } from "../../../config";
+import { RestService } from "../../_service/RestService";
 
 class EnvironmentList extends Component {
   tabMapping = [
@@ -41,7 +42,6 @@ class EnvironmentList extends Component {
       dataKey: "inputs",
     },
   ];
-
   constructor(props) {
     super(props);
     this.state = {
@@ -55,6 +55,8 @@ class EnvironmentList extends Component {
       commonData: {},
       searchedAccountList: {},
       dataFetched: false,
+      vpcsDetails: [],
+      vpcsDetailsBackUp: [],
     };
   }
 
@@ -79,7 +81,74 @@ class EnvironmentList extends Component {
     }
     this.getCurrentAccountId();
     this.getAccountList();
+    const queryPrm = new URLSearchParams(document.location.search);
+    const accountId = queryPrm.get("accountId");
+    this.getServicesData(accountId);
   };
+
+  getServicesData = async (accountId) => {
+    try {
+      await RestService.getData(
+        `http://34.199.12.114:5057/api/account-services/search?accountId=${accountId}`,
+        null,
+        null
+      ).then((response) => {
+        this.setState({
+          treeData: response[0].account_services_json.vpcs,
+          isLoderData: false,
+          accountId: accountId,
+        });
+        this.getVpcsDetails(response[0].account_services_json.vpcs);
+      });
+    } catch (err) {
+      console.log("Loading accounts failed. Error: ", err);
+    }
+  };
+
+  getVpcsDetails(treeData) {
+    let vpcs = [];
+    for (let vpcIndex = 0; vpcIndex < treeData.length; vpcIndex++) {
+      let details = {
+        name: "",
+        product_count: 0,
+        app_count: 0,
+        data_count: 0,
+      };
+      details.name = treeData[vpcIndex].name;
+      const clusters = treeData[vpcIndex].clusters;
+      clusters.forEach((cluster) => {
+        const products = cluster.products;
+        details.product_count += products.length;
+        products.forEach((product) => {
+          const { environments, name } = product;
+          environments.forEach((env) => {
+            const { services } = env;
+            services.common.forEach((appData) => {
+              if (appData.app) {
+                details.app_count += appData.app.length;
+              }
+              if (appData.data) {
+                details.data_count += appData.data.length;
+              }
+            });
+            services.business.forEach((appData) => {
+              if (appData.app && appData.app.length > 0) {
+                details.app_count += appData.app.length;
+              }
+              if (appData.data && appData.data.length > 0) {
+                details.data_count += appData.data.length;
+              }
+            });
+          });
+        });
+      });
+      vpcs.push(details);
+    }
+    this.setState({
+      vpcsDetails: vpcs,
+      vpcsDetailsBackUp: vpcs,
+    });
+  }
 
   getAccountList = () => {
     fetch(config.GET_ALL_ENVS)
@@ -108,14 +177,18 @@ class EnvironmentList extends Component {
 
   componentDidUpdate = async (prevState, prevProps) => {
     if (
-      this.state.currentAccountId !== null &&
-      this.state.currentAccountId !== prevProps.currentAccountId
+      this.state.accountId !== null &&
+      this.state.accountId !== prevProps.accountId
     ) {
       const response = await fetch(
-        `${apiEndPoint.getDepartmentWiseData + this.state.currentAccountId}`
+        `${apiEndPoint.getDepartmentWiseData + this.state.accountId}`
       );
       const jsonData = await response.json();
-      this.setState({ departmentWiseData: jsonData });
+      this.setState({
+        departmentWiseData: jsonData,
+        isLoderData: true,
+      });
+      this.getServicesData(this.state.accountId);
     }
   };
 
@@ -123,11 +196,11 @@ class EnvironmentList extends Component {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const accountId = urlParams.get("accountId");
-    this.setState({ currentAccountId: accountId });
+    this.setState({ accountId: accountId });
   };
 
   updateCurrentAccountId = (id) => {
-    this.setState({ currentAccountId: id });
+    this.setState({ accountId: id });
   };
 
   renderEnvironmentBoxes = () => {
@@ -212,7 +285,7 @@ class EnvironmentList extends Component {
                   <li
                     key={`ops-tab-${index}`}
                     className={index === activeTab ? "active" : ""}
-                    onClick={(e) => this.setActiveTab(index)}
+                    onClick={() => this.setActiveTab(index)}
                   >
                     {tabData.name}
                   </li>
@@ -223,6 +296,11 @@ class EnvironmentList extends Component {
           <div className="tabs-content">
             {activeTab === 0 ? (
               <DiscoveredAssets
+                vpcsDetails={
+                  this.state.vpcsDetails.length && this.state.vpcsDetails
+                }
+                isLoderData={this.state.isLoderData}
+                treeData={this.state.treeData.length && this.state.treeData}
                 updateCloudName={(service) => {
                   this.setState({ service });
                 }}

@@ -6,7 +6,6 @@ import ClusterIcon from "../../../../../assets/img/assetmanager/cluster-icon.png
 import S3Table from "./S3Table";
 import CdnTable from "./CdnTable";
 import WafTable from "./WafTable";
-import { RestService } from "../../../_service/RestService";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import CommonFilterViewSearch from "../CommonFilterViewSearch";
 import ServicesNameLogo from "../ServicesNameLogo";
@@ -56,7 +55,6 @@ class DiscoveredAssets extends Component {
     super(props);
     const queryPrm = new URLSearchParams(document.location.search);
     const cloudName = queryPrm.get("cloudName");
-
     this.state = {
       display_detail: true,
       displaygetEnvironmentData: null,
@@ -81,32 +79,10 @@ class DiscoveredAssets extends Component {
       showSelectFilter: false,
       showServiceViewFilter: false,
       activeTab: 0,
-      vpcsDetails: [],
-      vpcsDetailsBackUp: [],
       searchString: "",
-      isLoderData: true,
       accountId: queryPrm.get("accountId"),
     };
   }
-
-  getServicesData = async (accountId) => {
-    try {
-      await RestService.getData(
-        `http://34.199.12.114:5057/api/account-services/search?accountId=${accountId}`,
-        null,
-        null
-      ).then((response) => {
-        this.setState({
-          treeData: response[0].account_services_json.vpcs,
-          isLoderData: false,
-          accountId: accountId,
-        });
-        this.getVpcsDetails(response[0].account_services_json.vpcs);
-      });
-    } catch (err) {
-      console.log("Loading accounts failed. Error: ", err);
-    }
-  };
 
   showHideDetail = () => {
     const { display_detail } = this.state;
@@ -115,28 +91,9 @@ class DiscoveredAssets extends Component {
     });
   };
 
-  componentDidMount() {
-    const queryPrm = new URLSearchParams(document.location.search);
-    const accountId = queryPrm.get("accountId");
-    this.getServicesData(accountId);
-  }
-
-  componentDidUpdate = (prevState, prevProps) => {
-    if (
-      this.state.accountId !== null &&
-      this.state.accountId !== prevProps.accountId
-    ) {
-      this.setState({
-        isLoderData: true,
-      });
-      this.getServicesData(this.state.accountId);
-    }
-  };
-
   displayAwsData() {
     const { displaygetEnvironmentData } = this.state;
     let retData = [];
-
     let row = displaygetEnvironmentData;
     if (row.cloudType.toLowerCase() === "AWS".toLowerCase()) {
       const { display_detail } = this.state;
@@ -278,17 +235,17 @@ class DiscoveredAssets extends Component {
   }
 
   renderVPCData() {
-    if (this.state.treeData && this.state.treeData.length) {
-      return this.state.treeData.map((vpc, vpcIndex) => {
+    if (this.props.treeData && this.props.treeData.length) {
+      return this.props.treeData.map((vpc, vpcIndex) => {
         return (
           <li
             key={vpcIndex}
             className={`${
-              vpcIndex == this.state.toggleNode.vpcId ? "active " : ""
+              vpcIndex === this.state.toggleNode.vpcId ? "active " : ""
             }`}
             id={`${
-              vpcIndex == this.state.toggleNode.vpcId &&
-              this.state.breadcrumbs.length == 2
+              vpcIndex === this.state.toggleNode.vpcId &&
+              this.state.breadcrumbs.length === 2
                 ? "custom_location"
                 : ""
             }`}
@@ -305,13 +262,13 @@ class DiscoveredAssets extends Component {
             <span>
               <img src={VpcServicesIcon} alt="" />
             </span>
-
             {this.getServiceName(vpc.name, "vpc")}
           </li>
         );
       });
     }
   }
+
   prepareBreadCrumbs(data, index, type) {
     let tempBreadData = [];
     if (
@@ -339,13 +296,14 @@ class DiscoveredAssets extends Component {
     });
     return tempBreadData;
   }
+
   renderClusters(index) {
     if (
       this.state.toggleNode.vpc &&
-      this.state.treeData[index].clusters &&
-      this.state.treeData[index].clusters.length
+      this.props.treeData[index].clusters &&
+      this.props.treeData[index].clusters.length
     ) {
-      return this.state.treeData[index].clusters.map(
+      return this.props.treeData[index].clusters.map(
         (cluster, clusterIndex) => {
           return (
             <li
@@ -360,11 +318,11 @@ class DiscoveredAssets extends Component {
                 );
               }}
               className={`${
-                clusterIndex == this.state.toggleNode.clusterId ? "active" : ""
+                clusterIndex === this.state.toggleNode.clusterId ? "active" : ""
               }`}
               id={`${
-                clusterIndex == this.state.toggleNode.clusterId &&
-                this.state.breadcrumbs.length == 3
+                clusterIndex === this.state.toggleNode.clusterId &&
+                this.state.breadcrumbs.length === 3
                   ? "custom_location"
                   : ""
               }`}
@@ -383,15 +341,15 @@ class DiscoveredAssets extends Component {
   renderProducts(vpcIndex, clusterIndex) {
     if (
       this.state.toggleNode.cluster &&
-      this.state.treeData[vpcIndex].clusters[clusterIndex].products &&
-      this.state.treeData[vpcIndex].clusters[clusterIndex].products.length
+      this.props.treeData[vpcIndex].clusters[clusterIndex].products &&
+      this.props.treeData[vpcIndex].clusters[clusterIndex].products.length
     ) {
-      return this.state.treeData[vpcIndex].clusters[clusterIndex].products.map(
+      return this.props.treeData[vpcIndex].clusters[clusterIndex].products.map(
         (product, productIndex) => {
           return (
             <label
               className={`${
-                productIndex == this.state.toggleNode.productId ? "active" : ""
+                productIndex === this.state.toggleNode.productId ? "active" : ""
               }`}
               key={productIndex}
               onClick={() => {
@@ -407,8 +365,8 @@ class DiscoveredAssets extends Component {
                 );
               }}
               id={`${
-                productIndex == this.state.toggleNode.productId &&
-                this.state.breadcrumbs.length == 4
+                productIndex === this.state.toggleNode.productId &&
+                this.state.breadcrumbs.length === 4
                   ? "custom_location"
                   : ""
               }`}
@@ -461,9 +419,9 @@ class DiscoveredAssets extends Component {
                 if (this.state.breadcrumbs.length > 1) {
                   this.handleToggleNode(
                     data.serviceIndexs,
-                    data.type == "service" ? "vpc" : "",
+                    data.type === "service" ? "vpc" : "",
                     data.type,
-                    data.type == "service" ? false : true,
+                    data.type === "service" ? false : true,
                     (data.type && nextTypes[data.type]) || ""
                   );
                 }
@@ -478,7 +436,7 @@ class DiscoveredAssets extends Component {
   }
 
   getServiceName(name, type) {
-    if (type == "vpc") {
+    if (type === "vpc") {
       return name ? name.toUpperCase() : "";
     } else {
       let firstChar = name ? name.charAt(0).toUpperCase() : "";
@@ -497,7 +455,7 @@ class DiscoveredAssets extends Component {
   ) {
     let { toggleNode, breadcrumbs } = this.state;
     servicesTreeCondition[type].forEach((key) => {
-      if (type == "service") {
+      if (type === "service") {
         toggleNode[key] = key.endsWith("Id")
           ? null
           : key.startsWith(name)
@@ -508,7 +466,7 @@ class DiscoveredAssets extends Component {
           ? key in serviceIndexs
             ? serviceIndexs[key]
             : null
-          : key == type || key == nextType
+          : key === type || key === nextType
           ? true
           : false;
       }
@@ -535,54 +493,8 @@ class DiscoveredAssets extends Component {
     this.setState({ toggleNode, breadcrumbs });
   }
 
-  getVpcsDetails(treeData) {
-    let vpcs = [];
-    for (let vpcIndex = 0; vpcIndex < treeData.length; vpcIndex++) {
-      let details = {
-        name: "",
-        product_count: 0,
-        app_count: 0,
-        data_count: 0,
-      };
-      details.name = treeData[vpcIndex].name;
-      const clusters = treeData[vpcIndex].clusters;
-
-      clusters.forEach((cluster) => {
-        const products = cluster.products;
-        details.product_count += products.length;
-        products.forEach((product) => {
-          const { environments, name } = product;
-          environments.forEach((env) => {
-            const { services } = env;
-
-            services.common.forEach((appData) => {
-              if (appData.app) {
-                details.app_count += appData.app.length;
-              }
-              if (appData.data) {
-                details.data_count += appData.data.length;
-              }
-            });
-            services.business.forEach((appData) => {
-              if (appData.app && appData.app.length > 0) {
-                details.app_count += appData.app.length;
-              }
-              if (appData.data && appData.data.length > 0) {
-                details.data_count += appData.data.length;
-              }
-            });
-          });
-        });
-      });
-      vpcs.push(details);
-    }
-    this.setState({
-      vpcsDetails: vpcs,
-      vpcsDetailsBackUp: vpcs,
-    });
-  }
   renderVpcsDetails() {
-    return this.state.vpcsDetails.map((vpc, index) => {
+    return this.props.vpcsDetails.map((vpc, index) => {
       return (
         <tr key={index}>
           <td>{vpc.name}</td>
@@ -597,7 +509,7 @@ class DiscoveredAssets extends Component {
             >
               <i className="fas fa-ellipsis-v"></i>
             </button>
-            {this.state.showMenu == true && (
+            {this.state.showMenu === true && (
               <div className="menu-list">
                 <ul>
                   <li className="active">
@@ -643,7 +555,7 @@ class DiscoveredAssets extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.vpcsDetails && this.state.vpcsDetails.length ? (
+              {this.props.vpcsDetails && this.props.vpcsDetails.length ? (
                 this.renderVpcsDetails()
               ) : (
                 <></>
@@ -685,7 +597,7 @@ class DiscoveredAssets extends Component {
           />
         </div>
         <div className="discovered-assets-body">
-          {this.state.isLoderData ? (
+          {this.props.isLoderData ? (
             <div className="chart-spinner text-center w-100 p-t-20 p-b-20">
               <i className="fa fa-spinner fa-spin" /> Loading...
             </div>
@@ -756,7 +668,7 @@ class DiscoveredAssets extends Component {
                               <div
                                 className="services-text-box active"
                                 id={`${
-                                  this.state.breadcrumbs.length == 1
+                                  this.state.breadcrumbs.length === 1
                                     ? "custom_location"
                                     : ""
                                 }`}
@@ -773,8 +685,8 @@ class DiscoveredAssets extends Component {
                               </div>
                               <div
                                 className={` ${
-                                  this.state.treeData &&
-                                  this.state.treeData.length
+                                  this.props.treeData &&
+                                  this.props.treeData.length
                                     ? "global-servies"
                                     : ""
                                 }`}
@@ -866,9 +778,9 @@ class DiscoveredAssets extends Component {
               </div>
               <div className="col-lg-5 col-md-12 col-sm-12">
                 {this.state.breadcrumbs &&
-                this.state.breadcrumbs.length == 1 &&
-                this.state.vpcsDetails &&
-                this.state.vpcsDetails.length ? (
+                this.state.breadcrumbs.length === 1 &&
+                this.props.vpcsDetails &&
+                this.props.vpcsDetails.length ? (
                   this.generateVpcDetailsTable()
                 ) : (
                   <></>
@@ -879,7 +791,7 @@ class DiscoveredAssets extends Component {
                   style={{
                     display: `${
                       this.state.breadcrumbs &&
-                      this.state.breadcrumbs.length == 4
+                      this.state.breadcrumbs.length === 4
                         ? "block"
                         : "none"
                     }`,
@@ -1027,7 +939,7 @@ class DiscoveredAssets extends Component {
                   style={{
                     display: `${
                       this.state.breadcrumbs &&
-                      this.state.breadcrumbs.length == 3
+                      this.state.breadcrumbs.length === 3
                         ? "block"
                         : "none"
                     }`,
@@ -1098,7 +1010,7 @@ class DiscoveredAssets extends Component {
                   style={{
                     display: `${
                       this.state.breadcrumbs &&
-                      this.state.breadcrumbs.length == 2
+                      this.state.breadcrumbs.length === 2
                         ? "block"
                         : "none"
                     }`,
