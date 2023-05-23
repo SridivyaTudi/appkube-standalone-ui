@@ -21,7 +21,7 @@ var treeData = {
         },
         { name: "AUT-12", children: [{ name: "AFF-121" }], radious: 30 },
       ],
-      radious: 50,
+      radious: 40,
     },
     {
       name: "PUB-2",
@@ -55,9 +55,9 @@ var treeData = {
           radious: 30,
         },
       ],
-      radious: 50,
+      radious:  40,
     },
-    { name: "PUB-3", radious: 50 },
+    { name: "PUB-3", radious: 40 },
     {
       name: "PUB-4",
       children: [
@@ -69,7 +69,7 @@ var treeData = {
         },
         { name: "AUT-44", radious: 30 },
       ],
-      radious: 50,
+      radious:  40,
     },
     {
       name: "PUB-5",
@@ -81,7 +81,7 @@ var treeData = {
         { name: "AUT-52", radious: 30 },
         { name: "AUT-53", radious: 30 },
       ],
-      radious: 50,
+      radious:  40,
     },
     {
       name: "PUB-6",
@@ -101,10 +101,11 @@ var treeData = {
         { name: "AUT-62", radious: 30 },
         { name: "AUT-63", radious: 30 },
       ],
-      radious: 50,
+      radious:  40,
     },
   ],
-  radious: 80,
+  radious: 50,
+  isDragNotAllow: true,
 };
 class TreeOverview extends Component {
   constructor(props) {
@@ -114,47 +115,195 @@ class TreeOverview extends Component {
   componentDidMount() {
     this.treeInIt(this.state.treeData);
   }
+  // treeInIt(data) {
+  //   var node = document.createElement("div");
+
+  //   var diameter = 1000;
+
+  //   var margin = { top: 20, right: 120, bottom: 20, left: 120 },
+  //     width = diameter,
+  //     height = diameter;
+
+  //   var i = 0,
+  //     duration = 350,
+  //     root;
+
+  //   var tree = d3.layout
+  //     .tree()
+  //     .size([360, diameter / 2 - 80])
+  //     .separation(function (a, b) {
+  //       // return (a.parent == b.parent ? 1 : 10) / a.depth ;
+  //       return 10 / a.depth;
+  //     });
+
+  //   var diagonal = d3.svg.diagonal.radial().projection(function (d) {
+  //     return [d.y, (d.x / 180) * Math.PI];
+  //   });
+
+  //   var svg = d3
+  //     .select("#tree_circular")
+  //     .append("svg")
+  //     .attr("width", width)
+  //     .attr("height", height)
+  //     .append("g")
+  //     .attr(
+  //       "transform",
+  //       "translate(" + diameter / 2 + "," + diameter / 2 + ")"
+  //     );
+
+  //   root = data;
+  //   root.x0 = height / 2;
+  //   root.y0 = 0;
+
+  //   // update(root);
+  //   var tooltip = d3
+  //     .select("body")
+  //     .append("div")
+  //     .style("position", "absolute")
+  //     .style("z-index", "10")
+  //     .style("visibility", "hidden")
+  //     .style("background", "blue");
+
+  //   function update(source) {
+  //     // Compute the new tree layout.
+  //     var nodes = tree.nodes(root),
+  //       links = tree.links(nodes);
+
+  //     // Normalize for fixed-depth.
+  //     nodes.forEach(function (d) {
+  //       d.y = d.depth * 180;
+  //     });
+
+  //     // Update the nodes…
+  //     var node = svg.selectAll("g.node").data(nodes, function (d) {
+  //       return d.id || (d.id = ++i);
+  //     });
+
+  //     // Enter any new nodes at the parent's previous position.
+  //     var nodeEnter = node
+  //       .enter()
+  //       .append("g")
+  //       .attr("class", "node")
+  //       //.attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+  //       .on("click", click)
+  //       .on("mouseover", function (d) {
+  //         tooltip.text(d.name);
+  //         return tooltip.style("visibility", "visible");
+  //       })
+  //       .on("mousemove", function () {
+  //         return tooltip
+  //           .style("top", d3.event.pageY - 10 + "px")
+  //           .style("left", d3.event.pageX + 10 + "px");
+  //       })
+  //       .on("mouseout", function () {
+  //         return tooltip.style("visibility", "hidden");
+  //       });
+  //     nodeEnter
+  //       .append("circle")
+  //       .attr("r", 1e-6)
+  //       .attr("x", 50)
+  //       .attr("y", 50)
+  //       .style("fill", function (d) {
+  //         return d._children ? "lightsteelblue" : "#fff";
+  //       })
+  //       .style("transform", "rotate(0.5turn)");
+
+  //     nodeEnter
+  //       .append("text")
+  //       .attr("x", 10)
+  //       .attr("dy", ".35em")
+  //       .attr("text-anchor", "start")
+  //       .text(function (d) {
+  //         return d.name;
+  //       })
+  //       .style("fill-opacity", 1e-6);
+
+  //     // Transition nodes to their new position.
+  //     var nodeUpdate = node
+  //       .transition()
+  //       .duration(duration)
+  //       .attr("transform", function (d) {
+  //         return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")";
+  //       });
+
+  //     nodeUpdate
+  //       .select("circle")
+  //       .attr("r", function (d) {
+  //         return d.radious || 10;
+  //       })
+  //       .attr("x", 50)
+  //       .attr("y", 50)
+  //       .style("fill", function (d) {
+  //         return d._children ? "lightsteelblue" : "#fff";
+  //       })
+  //       .style("transform", "rotate(0.5turn)");
+
+  //     nodeUpdate
+  //       .select("text")
+  //       .style("fill-opacity", 1)
+  //       .attr("transform", function (d) {
+  //         return d.x < 180
+  //           ? "translate(0)"
+  //           : "rotate(180)translate(-" + (d.name.length + 50) + ")";
+  //       });
+
+  //     // TODO: appropriate transform
+  //     var nodeExit = node.exit().transition().duration(duration).remove();
+
+  //     nodeExit.select("circle").attr("r", 1e-6);
+
+  //     nodeExit.select("text").style("fill-opacity", 1e-6);
+
+  //     // Update the links…
+  //     var link = svg.selectAll("path.link").data(links, function (d) {
+  //       return d.target.id;
+  //     });
+
+  //     // Enter any new links at the parent's previous position.
+  //     link
+  //       .enter()
+  //       .insert("path", "g")
+  //       .attr("class", "link")
+  //       .attr("d", function (d) {
+  //         var o = { x: source.x0, y: source.y0 };
+  //         return diagonal({ source: o, target: o });
+  //       })
+     
+  //     // Transition links to their new position.
+  //     link.transition().duration(duration).attr("d", diagonal);
+
+  //     // Transition exiting nodes to the parent's new position.
+  //     link
+  //       .exit()
+  //       .transition()
+  //       .duration(duration)
+  //       .attr("d", function (d) {
+  //         var o = { x: source.x, y: source.y };
+  //         return diagonal({ source: o, target: o });
+  //       })
+  //       .remove();
+
+  //     // Stash the old positions for transition.
+  //     nodes.forEach(function (d) {
+  //       d.x0 = d.x;
+  //       d.y0 = d.y;
+  //     });
+  //   }
+  //   // Toggle children on click.
+  //   function click(d) {
+  //     // if (d.children) {
+  //     //   d._children = d.children;
+  //     //   d.children = null;
+  //     // } else {
+  //     //   d.children = d._children;
+  //     //   d._children = null;
+  //     // }
+  //     // update(d);
+  //   }
+
+  //   update(root);
+  // }
   treeInIt(data) {
-    var node = document.createElement("div");
-
-    var diameter = 1000;
-
-    var margin = { top: 20, right: 120, bottom: 20, left: 120 },
-      width = diameter,
-      height = diameter;
-
-    var i = 0,
-      duration = 350,
-      root;
-
-    var tree = d3.layout
-      .tree()
-      .size([360, diameter / 2 - 80])
-      .separation(function (a, b) {
-        // return (a.parent == b.parent ? 1 : 10) / a.depth ;
-        return 10 / a.depth;
-      });
-
-    var diagonal = d3.svg.diagonal.radial().projection(function (d) {
-      return [d.y, (d.x / 180) * Math.PI];
-    });
-
-    var svg = d3
-      .select("#tree_circular")
-      .append("svg")
-      .attr("width", width)
-      .attr("height", height)
-      .append("g")
-      .attr(
-        "transform",
-        "translate(" + diameter / 2 + "," + diameter / 2 + ")"
-      );
-
-    root = data;
-    root.x0 = height / 2;
-    root.y0 = 0;
-
-    // update(root);
     var tooltip = d3
       .select("body")
       .append("div")
@@ -162,145 +311,110 @@ class TreeOverview extends Component {
       .style("z-index", "10")
       .style("visibility", "hidden")
       .style("background", "blue");
+    var width = 1000;
+    var height = 1000;
+    var force = d3.layout
+      .force()
+      .gravity(0.2)
+      .charge(-4000).linkDistance(150)
+      .size([width, height]);
 
-    function update(source) {
-      // Compute the new tree layout.
-      var nodes = tree.nodes(root),
-        links = tree.links(nodes);
+    var svg = d3
+      .select("#tree_circular")
+      .append("svg:svg")
+      .attr("width", width)
+      .attr("height", height).style('textAlign','center');
 
-      // Normalize for fixed-depth.
-      nodes.forEach(function (d) {
-        d.y = d.depth * 180;
-      });
+    var root = data;
+    var nodes = flatten(root),
+      links = d3.layout.tree().links(nodes);
 
-      // Update the nodes…
-      var node = svg.selectAll("g.node").data(nodes, function (d) {
-        return d.id || (d.id = ++i);
-      });
+    nodes.forEach(function (d, i) {
+      d.x = width / 2 + i;
+      d.y = height / 2 + 100 * d.depth;
+    });
 
-      // Enter any new nodes at the parent's previous position.
-      var nodeEnter = node
-        .enter()
-        .append("g")
-        .attr("class", "node")
-        //.attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-        .on("click", click)
-        .on("mouseover", function (d) {
-          tooltip.text(d.name);
-          return tooltip.style("visibility", "visible");
-        })
-        .on("mousemove", function () {
-          return tooltip
-            .style("top", d3.event.pageY - 10 + "px")
-            .style("left", d3.event.pageX + 10 + "px");
-        })
-        .on("mouseout", function () {
-          return tooltip.style("visibility", "hidden");
-        });
-      nodeEnter
-        .append("circle")
-        .attr("r", 1e-6)
-        .attr("x", 50)
-        .attr("y", 50)
-        .style("fill", function (d) {
-          return d._children ? "lightsteelblue" : "#fff";
-        })
-        .style("transform", "rotate(0.5turn)");
+    root.fixed = true;
+    root.x = width / 2;
+    root.y = height / 2;
 
-      nodeEnter
-        .append("text")
-        .attr("x", 10)
-        .attr("dy", ".35em")
-        .attr("text-anchor", "start")
-        .text(function (d) {
-          return d.name;
-        })
-        .style("fill-opacity", 1e-6);
+    force.nodes(nodes).links(links).start();
 
-      // Transition nodes to their new position.
-      var nodeUpdate = node
-        .transition()
-        .duration(duration)
-        .attr("transform", function (d) {
-          return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")";
-        });
+    var link = svg
+      .selectAll("line")
+      .data(links)
+      .enter()
+      .insert("svg:line")
+      .attr("class", "link");
 
-      nodeUpdate
-        .select("circle")
-        .attr("r", function (d) {
-          return d.radious || 10;
-        })
-        .attr("x", 50)
-        .attr("y", 50)
-        .style("fill", function (d) {
-          return d._children ? "lightsteelblue" : "#fff";
-        })
-        .style("transform", "rotate(0.5turn)");
-
-      nodeUpdate
-        .select("text")
-        .style("fill-opacity", 1)
-        .attr("transform", function (d) {
-          return d.x < 180
-            ? "translate(0)"
-            : "rotate(180)translate(-" + (d.name.length + 50) + ")";
-        });
-
-      // TODO: appropriate transform
-      var nodeExit = node.exit().transition().duration(duration).remove();
-
-      nodeExit.select("circle").attr("r", 1e-6);
-
-      nodeExit.select("text").style("fill-opacity", 1e-6);
-
-      // Update the links…
-      var link = svg.selectAll("path.link").data(links, function (d) {
-        return d.target.id;
-      });
-
-      // Enter any new links at the parent's previous position.
-      link
-        .enter()
-        .insert("path", "g")
-        .attr("class", "link")
-        .attr("d", function (d) {
-          var o = { x: source.x0, y: source.y0 };
-          return diagonal({ source: o, target: o });
-        })
+    var node = svg
+      .selectAll("circle.node")
+      .data(nodes)
+      .enter()
+      .append("svg:circle")
+      .attr("r",function (d) {
+        return d.radious || 17.5;
+      } )
+      .attr("class", "node").attr('fill','gray')
+      .call(force.drag)
+      .on("mouseover", function (d) {
+        tooltip.text(d.name);
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function () {
+        return tooltip
+          .style("top", d3.event.pageY - 10 + "px")
+          .style("left", d3.event.pageX + 10 + "px");
+      })
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      })
+      .attr("id", function (d) {
+        if (d.isDragNotAllow) {
+          return "isDragNotAllow";
+        }
+      })
      
-      // Transition links to their new position.
-      link.transition().duration(duration).attr("d", diagonal);
+      
+    d3.select("circle#isDragNotAllow").on("mousedown.drag", null);
 
-      // Transition exiting nodes to the parent's new position.
+    force.on("tick", function (e) {
       link
-        .exit()
-        .transition()
-        .duration(duration)
-        .attr("d", function (d) {
-          var o = { x: source.x, y: source.y };
-          return diagonal({ source: o, target: o });
+        .attr("x1", function (d) {
+          return d.source.x;
         })
-        .remove();
+        .attr("y1", function (d) {
+          return d.source.y;
+        })
+        .attr("x2", function (d) {
+          return d.target.x;
+        })
+        .attr("y2", function (d) {
+          return d.target.y;
+        });
 
-      // Stash the old positions for transition.
-      nodes.forEach(function (d) {
-        d.x0 = d.x;
-        d.y0 = d.y;
-      });
+      node
+        .attr("cx", function (d) {
+          return d.x;
+        })
+        .attr("cy", function (d) {
+          return d.y;
+        });
+    });
+    function flatten(root) {
+      var nodes = [];
+      function recurse(node, depth) {
+        if (node.children) {
+          node.children.forEach(function (child) {
+            recurse(child, depth + 1);
+          });
+        }
+        node.depth = depth;
+        nodes.push(node);
+      }
+      recurse(root, 1);
+      return nodes;
     }
-    // Toggle children on click.
-    function click(d) {
-      // if (d.children) {
-      //   d._children = d.children;
-      //   d.children = null;
-      // } else {
-      //   d.children = d._children;
-      //   d._children = null;
-      // }
-      // update(d);
-    }
-
-    update(root);
   }
   render() {
     const {} = this.state;
@@ -361,10 +475,10 @@ class TreeOverview extends Component {
           </div>
         </div>
         <div className="tree-overview-center">
-          <TransformWrapper>
+          {/* <TransformWrapper>
             {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
               <React.Fragment>
-                <TransformComponent
+                <TransformComponent 
                 // wrapperStyle={{ width: "100%", height: "100%" }}
                 // contentStyle={{
                 //   width: "100%",
@@ -380,7 +494,8 @@ class TreeOverview extends Component {
                 </TransformComponent>
               </React.Fragment>
             )}
-          </TransformWrapper>
+          </TransformWrapper> */}
+          <div className="tree-overview" id="tree_circular" ></div>
         </div>
         <div className="tree-overview-right">
           <div className="head">

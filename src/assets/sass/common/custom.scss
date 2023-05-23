@@ -69,10 +69,34 @@ p {
     outline: none;
   }
 }
-.new-button-outline{
+.new-button-outline {
   background: transparent !important;
   color: #1d33d5 !important;
   border: 1px solid #1d33d5 !important;
+  padding: 7px 18px !important;
+  border-radius: 5px !important;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: inline-block !important;
+  min-width: 100px;
+  text-align: center;
+}
+.light-blue-button {
+  background: #384cff !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 7px 18px !important;
+  border-radius: 4px !important;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: inline-block !important;
+  min-width: 100px;
+  text-align: center;
+}
+.light-blue-outline {
+  background: transparent !important;
+  color: #384cff !important;
+  border: 1px solid #384cff !important;
   padding: 7px 18px !important;
   border-radius: 5px !important;
   margin-right: 10px;
@@ -1289,18 +1313,17 @@ a {
     width: 100%;
     max-width: 100%;
   }
- 
 }
-@media (max-width: 578px){
+@media (max-width: 578px) {
   .gsl-editor-logos {
-    ul{
-      li{
+    ul {
+      li {
         display: block;
         padding-right: 0;
-        a{
+        a {
           width: 100%;
         }
-        &:last-child{
+        &:last-child {
           padding-right: 0;
         }
       }
