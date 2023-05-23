@@ -9,15 +9,19 @@ import GlobalIcon2 from "../../../../../assets/img/assetmanager/global-icon2.png
 import GlobalIcon3 from "../../../../../assets/img/assetmanager/global-icon3.png";
 import GlobalIcon4 from "../../../../../assets/img/assetmanager/global-icon4.png";
 import GlobalIcon5 from "../../../../../assets/img/assetmanager/global-icon5.png";
+import GlobalIcon6 from "../../../../../assets/img/assetmanager/global-icon6.png";
+import GlobalIcon7 from "../../../../../assets/img/assetmanager/global-icon7.png";
 import { Link } from "react-router-dom";
-import S3Table from "./S3Table";
-import CdnTable from "./CdnTable";
-import WafTable from "./WafTable";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { type } from "@testing-library/user-event/dist/type";
 import { CSVLink } from "react-csv";
 import CommonFilterViewSearch from "../CommonFilterViewSearch";
 import ServicesNameLogo from "../ServicesNameLogo";
+import DataLakeTable from"./DataLakeTable";
+import ServiceMeshTable from "./ServiceMeshTable";
+import AllTable from "./AllTable";
+import AppTable from "./AppTable";
+import DataTable from "./DataTable";
 
 const headers = [
   { label: "Service Name", key: "name" },
@@ -48,19 +52,29 @@ let transformScale = 0;
 class DiscoveredAssets extends Component {
   tableMapping = [
     {
-      name: "S3",
-      dataKey: "s3",
-      component: S3Table,
+      name: "All",
+      dataKey: "all",
+      component: AllTable,
     },
     {
-      name: "CDN",
-      dataKey: "cdn",
-      component: CdnTable,
+      name: "App",
+      dataKey: "app",
+      component: AppTable,
     },
     {
-      name: "WAF",
-      dataKey: "waf",
-      component: WafTable,
+      name: "Data",
+      dataKey: "data",
+      component: DataTable,
+    },
+    {
+      name: "Datalake",
+      dataKey: "datalake",
+      component: DataLakeTable,
+    },
+    {
+      name: "ServiceMesh",
+      dataKey: "servicemesh",
+      component: ServiceMeshTable,
     },
   ];
   constructor(props) {
@@ -97,7 +111,7 @@ class DiscoveredAssets extends Component {
     };
   }
 
-  submitPage = () => {};
+  
 
   showHideDetail = () => {
     const { display_detail } = this.state;
@@ -637,7 +651,7 @@ class DiscoveredAssets extends Component {
     this.setState({ searchString, vpcsDetails });
   }
   render() {
-    const { showSelectFilter, showServiceViewFilter, activeTab } = this.state;
+    const { servicesPanelShow, activeTab } = this.state;
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
@@ -1126,7 +1140,8 @@ class DiscoveredAssets extends Component {
                 {this.state.breadcrumbs &&
                 this.state.breadcrumbs.length === 1 &&
                 this.props.vpcsDetails &&
-                this.props.vpcsDetails.length ? (
+                this.props.vpcsDetails.length &&
+                !this.state.toggleNode.globalService ? (
                   this.generateVpcDetailsTable()
                 ) : (
                   <></>
@@ -1866,7 +1881,7 @@ class DiscoveredAssets extends Component {
                       </div>
                     </div>
                   </div>
-                  {/* <div className="services-panel-tabs">
+                  <div className="services-panel-tabs">
                     <div className="tabs-head">
                       <ul>
                         {this.tableMapping.map((tabData, index) => {
@@ -1891,7 +1906,286 @@ class DiscoveredAssets extends Component {
                         }
                       })}
                     </div>
-                  </div> */}
+                  </div>
+                  <div className="global-service-cards">
+                    <div className="service-card active">
+                      <div className="service-icon">
+                        <img src={GlobalIcon6} alt="serviceicon" />
+                      </div>
+                      <div className="service-contant">
+                        <label>WAF-Service</label>
+                        <strong>235</strong>
+                      </div>
+                    </div>
+                    <div className="service-card">
+                      <div className="service-icon">
+                        <img src={GlobalIcon7} alt="serviceicon" />
+                      </div>
+                      <div className="service-contant">
+                        <label>API Gateway</label>
+                        <strong>03</strong>
+                      </div>
+                    </div>
+                    <div className="service-card">
+                      <div className="service-icon">
+                        <img src={GlobalIcon3} alt="serviceicon" />
+                      </div>
+                      <div className="service-contant">
+                        <label>Load Balancer</label>
+                        <strong>19</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="resources-section">
+                    <h4>WAF Resources</h4>
+                    <div className="account-list-conitant">
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>$96k</strong>
+                          <p>Total Cost</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>540k</strong>
+                          <p>Total function</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>43k</strong>
+                          <p>Error Rate</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>365</strong>
+                          <p>Throttle</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>199</strong>
+                          <p>Latency</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>142</strong>
+                          <p>Trends</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>450k</strong>
+                          <p>Failure Function</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>450k</strong>
+                          <p>Total Buckets</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>41MB</strong>
+                          <p>Used CPU</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>152</strong>
+                          <p>Net Received</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>142</strong>
+                          <p>Request</p>
+                        </div>
+                      </div>
+                      <div className="account-list-details">
+                        <div className="d-block">
+                          <strong>450</strong>
+                          <p>Memory Used</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="performance-section">
+                    <div className="performance-head">
+                      <div className="row d-flex justify-content-center align-items-center">
+                        <div className="col-lg-5">
+                          <h4>Lambda Performance</h4>
+                        </div>
+                        <div className="col-lg-7">
+                          <div className="head-right">
+                            <button className="light-blue-button m-b-0">
+                              <i class="far fa-stream p-r-10"></i>
+                              fillter
+                            </button>
+                            <button className="light-blue-outline m-b-0 m-r-0">
+                              Explore
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="environment-table-section">
+                      <div className="table discovered-assets-table">
+                        <table className="overview">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Performance</th>
+                              <th>Availability</th>
+                              <th>Security</th>
+                              <th>Data Protection</th>
+                              <th>User Exp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <strong>
+                                  <a href="#">S3</a>
+                                </strong>
+                                <i className="fas fa-caret-right m-l-1"></i>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box orange">
+                                  <i class="fas fa-sort-up"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <strong>
+                                  <a href="#">Attendence</a>
+                                </strong>
+                                <i className="fas fa-caret-right m-l-1"></i>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box orange">
+                                  {" "}
+                                  <i class="fas fa-sort-up"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <strong>
+                                  <a href="#">Free</a>
+                                </strong>
+                                <i className="fas fa-caret-right m-l-1"></i>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box orange">
+                                  {" "}
+                                  <i class="fas fa-sort-up"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <strong>
+                                  <a href="#">Exam</a>
+                                </strong>
+                                <i className="fas fa-caret-right m-l-1"></i>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box orange">
+                                  {" "}
+                                  <i class="fas fa-sort-up"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box red">
+                                  <i class="far fa-stop-circle"></i>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="box green">
+                                  <i className="far fa-check"></i>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div
                   className="fliter-tabs"
