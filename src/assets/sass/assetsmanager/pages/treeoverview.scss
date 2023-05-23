@@ -15,6 +15,8 @@
     flex-wrap: wrap;
     padding-top: 30px;
     padding-bottom: 30px;
+    position: relative;
+    z-index: 1;
 
     .heading {
       display: flex;
@@ -156,10 +158,11 @@
     .tree-overview {
       display: flex;
       width: 120%;
-      height: 112%;
-      margin-top: -10%;
+      height: 100%;
+      margin-top: 0%;
       margin-left: -10%;
       flex-wrap: wrap;
+      overflow: hidden;
       border-radius: 50%;
       background-color: #eef0fa;
     }
@@ -171,6 +174,9 @@
     flex-wrap: wrap;
     padding-top: 30px;
     padding-bottom: 30px;
+    position: relative;
+    z-index: 1;
+
     .head {
       .new-button {
         a {
@@ -262,7 +268,7 @@
 
 .link {
   fill: none;
-  stroke: #ccc;
+  stroke: blue;
   stroke-width: 1.5px;
 }
 .svg-tooltip {

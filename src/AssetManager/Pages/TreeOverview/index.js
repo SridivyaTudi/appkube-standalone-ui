@@ -10,18 +10,21 @@ import d3 from "d3";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 var treeData = {
   name: "AUT-1",
+
   children: [
     {
       name: "PUB-1",
       children: [
         {
           name: "AUT-11",
-          children: [{ name: "AFF-111" }, { name: "AFF-112" }],
-          radious: 30,
+          children: [{ name: "AFF-111",fill:'rgb(233 131 201)' }, { name: "AFF-112",fill:'rgb(233 131 201)' }],
+          radious: 30,fill:'rgb(108 105 255)'
         },
-        { name: "AUT-12", children: [{ name: "AFF-121" }], radious: 30 },
+        { name: "AUT-12", children: [{ name: "AFF-121",fill:'rgb(233 131 201)' }], radious: 30 ,fill:'rgb(108 105 255)'},
       ],
       radious: 40,
+      linkDistance: 100,
+      fill:'rgb(215 192 253)'
     },
     {
       name: "PUB-2",
@@ -29,59 +32,66 @@ var treeData = {
         {
           name: "AUT-21",
           children: [
-            { name: "AFF-281" },
-            { name: "AFF-282" },
-            { name: "AFF-283" },
+            { name: "AFF-281",fill:'rgb(233 131 201)' },
+            { name: "AFF-282",fill:'rgb(233 131 201)' },
+            { name: "AFF-283",fill:'rgb(233 131 201)' },
           ],
           radious: 30,
+          linkDistance: 100,fill:'rgb(108 105 255)'
         },
         {
           name: "AUT-22",
           children: [
-            { name: "AFF-281" },
-            { name: "AFF-282" },
-            { name: "AFF-283" },
+            { name: "AFF-281" ,fill:'rgb(233 131 201)'},
+            { name: "AFF-282" ,fill:'rgb(233 131 201)'},
+            { name: "AFF-283",fill:'rgb(233 131 201)' },
           ],
           radious: 30,
+          fill:'rgb(108 105 255)'
         },
 
         {
           name: "AUT-28",
           children: [
-            { name: "AFF-281" },
-            { name: "AFF-282" },
-            { name: "AFF-283" },
+            { name: "AFF-281",fill:'rgb(233 131 201)' },
+            { name: "AFF-282",fill:'rgb(233 131 201)' },
+            { name: "AFF-283" ,fill:'rgb(233 131 201)'},
           ],
-          radious: 30,
+          radious: 30, fill:'rgb(108 105 255)'
         },
       ],
-      radious:  40,
+      radious: 40,
+      fill:'rgb(215 192 253)'
     },
-    { name: "PUB-3", radious: 40 },
+    { name: "PUB-3", radious: 40, linkDistance: 100, fill:'rgb(215 192 253)'},
     {
       name: "PUB-4",
       children: [
-        { name: "AUT-41", radious: 30 },
-        { name: "AUT-42", radious: 30 },
+        { name: "AUT-41", radious: 30 ,fill:'rgb(108 105 255)'},
+        { name: "AUT-42", radious: 30 ,fill:'rgb(108 105 255)'},
         {
           name: "AUT-43",
-          radious: 30,
+          radious: 30,fill:'rgb(108 105 255)'
         },
-        { name: "AUT-44", radious: 30 },
+        { name: "AUT-44", radious: 30,fill:'rgb(108 105 255)' },
       ],
-      radious:  40,
+      radious: 40,
+      linkDistance: 100,
+      fill:'rgb(215 192 253)'
     },
     {
       name: "PUB-5",
       children: [
         {
           name: "AUT-51",
-          radious: 30,
+          radious: 30,fill:'rgb(108 105 255)'
         },
-        { name: "AUT-52", radious: 30 },
-        { name: "AUT-53", radious: 30 },
+        { name: "AUT-52", radious: 30,fill:'rgb(108 105 255)' },
+        { name: "AUT-53", radious: 30,fill:'rgb(108 105 255)' },
       ],
-      radious:  40,
+      radious: 40,
+      linkDistance: 100,
+      fill:'rgb(215 192 253)'
     },
     {
       name: "PUB-6",
@@ -89,23 +99,27 @@ var treeData = {
         {
           name: "AUT-61",
           children: [
-            { name: "AFF-611" },
+            { name: "AFF-611" ,fill:'rgb(233 131 201)'},
 
             {
               name: "AFF-614",
-              children: [{ name: "ADD-6141" }, { name: "ADD-6142" }],
+              children: [{ name: "ADD-6141",fill:'rgb(233 131 201)' }, { name: "ADD-6142" ,fill:'rgb(233 131 201)'}],fill:'rgb(233 131 201)'
             },
           ],
-          radious: 30,
+          radious: 30,fill:'rgb(108 105 255)'
         },
-        { name: "AUT-62", radious: 30 },
-        { name: "AUT-63", radious: 30 },
+        { name: "AUT-62", radious: 30,fill:'rgb(108 105 255)' },
+        { name: "AUT-63", radious: 30,fill:'rgb(108 105 255)' },
       ],
-      radious:  40,
+      fill:'rgb(215 192 253)',
+      linkDistance: 100,
+      radious: 40,
     },
   ],
   radious: 50,
+  linkDistance: 150,
   isDragNotAllow: true,
+  fill:'rgb(255 144 165)'
 };
 class TreeOverview extends Component {
   constructor(props) {
@@ -268,7 +282,7 @@ class TreeOverview extends Component {
   //         var o = { x: source.x0, y: source.y0 };
   //         return diagonal({ source: o, target: o });
   //       })
-     
+
   //     // Transition links to their new position.
   //     link.transition().duration(duration).attr("d", diagonal);
 
@@ -312,18 +326,19 @@ class TreeOverview extends Component {
       .style("visibility", "hidden")
       .style("background", "blue");
     var width = 1000;
-    var height = 1000;
+    var height = 800;
     var force = d3.layout
       .force()
-      .gravity(0.2)
-      .charge(-4000).linkDistance(150)
+      .gravity(1)
+      .charge(-5000)
+      .linkDistance(100)
       .size([width, height]);
 
     var svg = d3
       .select("#tree_circular")
       .append("svg:svg")
       .attr("width", width)
-      .attr("height", height).style('textAlign','center');
+      .attr("height", height);
 
     var root = data;
     var nodes = flatten(root),
@@ -346,16 +361,20 @@ class TreeOverview extends Component {
       .enter()
       .insert("svg:line")
       .attr("class", "link");
-
     var node = svg
       .selectAll("circle.node")
       .data(nodes)
       .enter()
+      .append("g")
       .append("svg:circle")
-      .attr("r",function (d) {
-        return d.radious || 17.5;
-      } )
-      .attr("class", "node").attr('fill','gray')
+      .attr("r", function (d) {
+        return d.radious || 20;
+      })
+      .attr("class", "node")
+      // .attr("fill", "rgb(108 105 255)")
+      .attr("fill", function (d) {
+        return d.fill || '' ;
+      })
       .call(force.drag)
       .on("mouseover", function (d) {
         tooltip.text(d.name);
@@ -373,12 +392,23 @@ class TreeOverview extends Component {
         if (d.isDragNotAllow) {
           return "isDragNotAllow";
         }
-      })
-     
-      
+      });
+    svg
+      .selectAll("g")
+      .append("text")
+      .text((d) => d.name)
+      .attr("x", (d) => d.x - 20)
+      .attr("y", (d) => d.y)
+      .attr("dy", ".3em").attr('fill','#ffffff');
     d3.select("circle#isDragNotAllow").on("mousedown.drag", null);
 
     force.on("tick", function (e) {
+      try {
+        svg.selectAll("text").remove();
+      } catch (e) {
+        console.log(e);
+      }
+
       link
         .attr("x1", function (d) {
           return d.source.x;
@@ -392,7 +422,13 @@ class TreeOverview extends Component {
         .attr("y2", function (d) {
           return d.target.y;
         });
-
+      svg
+        .selectAll("g")
+        .append("text")
+        .text((d) => d.name)
+        .attr("x", (d) => d.x - 20)
+        .attr("y", (d) => d.y)
+        .attr("dy", ".3em").attr('fill','#ffffff');
       node
         .attr("cx", function (d) {
           return d.x;
@@ -400,6 +436,17 @@ class TreeOverview extends Component {
         .attr("cy", function (d) {
           return d.y;
         });
+      //   svg.selectAll('g').append("foreignObject").attr('x',function (d) {
+      //     return d.x
+      //   })
+      //   .attr('y',function (d) {
+      //     return d.y
+      //   })
+      //   .attr("width", 480)
+      //   .attr("height", 500)
+      // .append("xhtml:div")
+      //   .style("font", "14px 'Helvetica Neue'")
+      //   .html("<p>Abcd</p>");
     });
     function flatten(root) {
       var nodes = [];
@@ -475,27 +522,29 @@ class TreeOverview extends Component {
           </div>
         </div>
         <div className="tree-overview-center">
-          {/* <TransformWrapper>
-            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-              <React.Fragment>
-                <TransformComponent 
-                // wrapperStyle={{ width: "100%", height: "100%" }}
-                // contentStyle={{
-                //   width: "100%",
-                //   height: "100%",
-                //   justifyContent: "center",
-                //   alignItems: "flex-start",
-                //   paddingTop: "50px",
-                //   display: "flex",
-                //   transform: "translate(0px, 0px) scale(0)",
-                // }}
-                >
-                  <div className="tree-overview" id="tree_circular"></div>
-                </TransformComponent>
-              </React.Fragment>
-            )}
-          </TransformWrapper> */}
-          <div className="tree-overview" id="tree_circular" ></div>
+          <div className="tree-overview">
+            <TransformWrapper>
+              {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                <React.Fragment>
+                  <TransformComponent
+                  // wrapperStyle={{ width: "100%", height: "100%" }}
+                  // contentStyle={{
+                  //   width: "100%",
+                  //   height: "100%",
+                  //   justifyContent: "center",
+                  //   alignItems: "flex-start",
+                  //   paddingTop: "50px",
+                  //   display: "flex",
+                  //   transform: "translate(0px, 0px) scale(0)",
+                  // }}
+                  >
+                    <div className="tree-overview" id="tree_circular"></div>
+                  </TransformComponent>
+                </React.Fragment>
+              )}
+            </TransformWrapper>
+            {/* <div className="tree-overview" id="tree_circular" ></div> */}
+          </div>
         </div>
         <div className="tree-overview-right">
           <div className="head">
