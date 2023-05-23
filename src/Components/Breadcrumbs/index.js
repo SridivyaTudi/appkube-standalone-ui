@@ -11,7 +11,7 @@ class Breadcrumbs extends Component {
     const {} = this.state;
 
     return (
-      <div className="breadcrumbs-container">
+      <div className="breadcrumbs-container" style={{display: "none"}}>
         <div className="page-title">MONITOR | OVERVIEW</div>
         <div className="breadcrumbs">
           <a className="breadcrumbs-link">Home</a>
