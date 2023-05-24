@@ -69,49 +69,51 @@ class Wizard extends Component {
     const { currentStep } = this.state;
     const { steps } = this.props;
     return (
-      <div className="new-account-tab-container">
-        <div className="row row d-flex justify-content-center align-items-center h-100">
-          <div className="col-lg-3 col-md-4 col-sm-12">
-            <div className="wizard-tab-line-container">
-              {this.createStepLine()}
+      <>
+        <div className="new-account-tab-container">
+          <div className="row row d-flex justify-content-center align-items-center h-100">
+            <div className="col-lg-3 col-md-4 col-sm-12">
+              <div className="wizard-tab-line-container">
+                {this.createStepLine()}
+              </div>
             </div>
-          </div>
-          <div className="col-lg-9 col-md-8 col-sm-12">
-            <div className="wizard-step-component-container">
-              {this.createStepContainer()}
-              <div className="d-flex justify-content-end align-items-center ">
-                {currentStep < steps.length - 1 && (
-                  <button
-                    onClick={(e) => this.onClickStepButton(currentStep - 1)}
-                    className="asset-blue-button m-b-0"
-                  >
-                    Previous
-                  </button>
-                )}
-                {currentStep >= steps.length + 1 && (
-                  <button className="asset-blue-button m-b-0">Previous</button>
-                )}
-                {currentStep < steps.length - 1 && (
-                  <button
-                    onClick={(e) => this.onClickStepButton(currentStep + 1)}
-                    className="asset-blue-button m-r-0 m-b-0"
-                  >
-                    Next
-                  </button>
-                )}
-                {currentStep >= steps.length - 1 && (
-                  <button
-                    onClick={this.props.submitPage}
-                    className="asset-blue-button m-r-0 m-b-0"
-                  >
-                    Submit
-                  </button>
-                )}
+            <div className="col-lg-9 col-md-8 col-sm-12">
+              <div className="wizard-step-component-container">
+                {this.createStepContainer()}
               </div>
             </div>
           </div>
         </div>
-      </div>
+        <div className="d-flex justify-content-end align-items-center ">
+          {currentStep < steps.length - 1 && (
+            <button
+              onClick={(e) => this.onClickStepButton(currentStep - 1)}
+              className="asset-blue-button m-b-0"
+            >
+              Previous
+            </button>
+          )}
+          {currentStep >= steps.length + 1 && (
+            <button className="asset-blue-button m-b-0">Previous</button>
+          )}
+          {currentStep < steps.length - 1 && (
+            <button
+              onClick={(e) => this.onClickStepButton(currentStep + 1)}
+              className="asset-blue-button m-r-0 m-b-0"
+            >
+              Next
+            </button>
+          )}
+          {currentStep >= steps.length - 1 && (
+            <button
+              onClick={this.props.submitPage}
+              className="asset-blue-button m-r-0 m-b-0"
+            >
+              Submit
+            </button>
+          )}
+        </div>
+      </>
     );
   }
 }

@@ -73,7 +73,7 @@ export class NewAccountSetup extends Component {
           </div>
           <div className="d-block">
             <button className="asset-blue-button">
-              <Link to={'/assetsmanager/pages/newaccountsetup/accountpolicy'}>Get started</Link>
+              <Link style={{color: 'white'}} to={'/assetsmanager/pages/newaccountsetup/accountpolicy'}>Get started</Link>
               </button>
           </div>
         </div>

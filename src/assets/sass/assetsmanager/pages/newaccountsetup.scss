@@ -89,6 +89,7 @@
     .new-account-tab-container {
       width: 100%;
       display: block;
+      height: 95%;
       .wizard-tab-line-container {
         padding: 0 15px;
         border-left: 2px solid #dcdae6;
@@ -98,6 +99,7 @@
           color: #b8b4cc;
           font-weight: 500;
           margin-bottom: 15px;
+          cursor: pointer;
           &.active {
             color: #384cff;
             border-left: 2px solid #384cff;
@@ -207,6 +209,12 @@
                     margin-top: 10px;
                   }
                 }
+              }
+            }
+            .added-image{
+              width: 100%;
+              img{
+                max-width: 100%;
               }
             }
           }

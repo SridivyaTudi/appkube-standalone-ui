@@ -9,8 +9,7 @@ class Finish extends Component {
           <div className="col-lg-7 col-md-6 col-sm-12">
             <h3>Associate OU</h3>
             <p className="m-b-2">
-              Select Organizational Unit to Associate with Cloud Account Or
-              Create new
+              Your AWS Account will be added to Appkube and will assocate with OU's
             </p>
           </div>
           <div className="col-lg-5 col-md-6 col-sm-12">
