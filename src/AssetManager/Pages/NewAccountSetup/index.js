@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import OprationMode1 from "../../../assets/img/assetmanager/opration-mode1.png";
 import OprationMode2 from "../../../assets/img/assetmanager/opration-mode2.png";
+import { Link } from "react-router-dom";
 
 export class NewAccountSetup extends Component {
   render() {
@@ -71,7 +72,9 @@ export class NewAccountSetup extends Component {
             </div>
           </div>
           <div className="d-block">
-            <button className="asset-blue-button">Get started</button>
+            <button className="asset-blue-button">
+              <Link style={{color: 'white'}} to={'/assetsmanager/pages/newaccountsetup/accountpolicy'}>Get started</Link>
+              </button>
           </div>
         </div>
       </div>
