@@ -35,6 +35,7 @@ import OverviewDetails from'../AssetManager/Pages/TreeOverview/OverviewDetails';
 import MeshServices from'../AssetManager/Pages/MeshServices';
 import MeshTopology from '../AssetManager/Pages/MeshTopology';
 import NewAccountSetup from '../AssetManager/Pages/NewAccountSetup';
+import AccountPolicy from '../AssetManager/Pages/NewAccountSetup/AccountPolicy';
 
 //***** AlertManager *****//
 import MonitorAlerts from '../AlertManager/Pages/MonitorAlerts';
@@ -146,6 +147,7 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/meshservices" element={<MeshServices />} />
       <Route path="/assetmanager/pages/meshtopology" element={<MeshTopology />} />
       <Route path="/assetsmanager/pages/newaccountsetup" element={<NewAccountSetup/>} />
+      <Route path="/assetsmanager/pages/newaccountsetup/accountpolicy" element={<AccountPolicy/>}/>
       
 
       {/***** AlertManager *****/}
