@@ -1,0 +1,340 @@
+{
+  "eksCluster": [
+    {
+      "name": "No of EKS",
+      "value": "20",
+      "backgroundColor": "#ff9900"
+    },
+    {
+      "name": "CPU Ultilization",
+      "value": "65%",
+      "backgroundColor": "#0089d6"
+    },
+    {
+      "name": "Memory",
+      "value": "96%",
+      "backgroundColor": "#da4f44"
+    },
+    {
+      "name": "Network Bytes",
+      "value": "2000",
+      "backgroundColor": "#383874"
+    },
+    {
+      "name": "Network Bytes Out",
+      "value": "3500",
+      "backgroundColor": "#ff708b"
+    },
+    {
+      "name": "CPU Reservation",
+      "value": "70%",
+      "backgroundColor": "#416bff"
+    },
+    {
+      "name": "Memory Reservation",
+      "value": "60%",
+      "backgroundColor": "#006bb9"
+    }
+  ],
+  "ecsCluster": [
+    {
+      "name": "No of EKS",
+      "value": "20",
+      "backgroundColor": "#ff9900"
+    },
+    {
+      "name": "CPU Ultilization",
+      "value": "65%",
+      "backgroundColor": "#0089d6"
+    },
+    {
+      "name": "Memory",
+      "value": "96%",
+      "backgroundColor": "#da4f44"
+    },
+    {
+      "name": "Network Bytes",
+      "value": "2000",
+      "backgroundColor": "#383874"
+    },
+    {
+      "name": "Network Bytes Out",
+      "value": "3500",
+      "backgroundColor": "#ff708b"
+    },
+    {
+      "name": "CPU Reservation",
+      "value": "70%",
+      "backgroundColor": "#416bff"
+    },
+    {
+      "name": "Memory Reservation",
+      "value": "60%",
+      "backgroundColor": "#006bb9"
+    }
+  ],
+  "eksResources": [
+    {
+      "title": "Total Cost",
+      "value": "$96k"
+    },
+    {
+      "title": "Total function",
+      "value": "540k"
+    },
+    {
+      "title": "Error Rate",
+      "value": "43k"
+    },
+    {
+      "title": "Throttle",
+      "value": "365"
+    },
+    {
+      "title": "Latency",
+      "value": "199"
+    },
+    {
+      "title": "Trends",
+      "value": "142"
+    },
+    {
+      "title": "Failure Function",
+      "value": "450k"
+    },
+    {
+      "title": "Total Buckets",
+      "value": "450k"
+    },
+    {
+      "title": "Used CPU",
+      "value": "41MB"
+    },
+    {
+      "title": "Net Received",
+      "value": "152"
+    },
+    {
+      "title": "Request",
+      "value": "142"
+    },
+    {
+      "title": "Memory Used",
+      "value": "450"
+    }
+  ],
+  "eksPerformance": [
+    {
+      "name": "S3",
+      "performance": "ok",
+      "availability": "warning",
+      "security": "error",
+      "data-protection": "error",
+      "user-exp": "ok"
+    },
+    {
+      "name": "Attendence",
+      "performance": "ok",
+      "availability": "warning",
+      "security": "error",
+      "data-protection": "error",
+      "user-exp": "ok"
+    },
+    {
+      "name": "Free",
+      "performance": "ok",
+      "availability": "warning",
+      "security": "error",
+      "data-protection": "error",
+      "user-exp": "ok"
+    },
+    {
+      "name": "Exam",
+      "performance": "ok",
+      "availability": "warning",
+      "security": "error",
+      "data-protection": "error",
+      "user-exp": "ok"
+    }
+  ],
+  "cloudManagedServices": [
+    {"name": "Lambda", "value": "235"},
+    {"name": "S3", "value": "146"},
+    {"name": "SQS", "value": "06"},
+    {"name": "SNS", "value": "06"},
+    {"name": "Redshift", "value": "235"},
+    {"name": "RDS", "value": "235"},
+    {"name": "AppMesh", "value": "235"},
+    {"name": "Kinesis", "value": "235"},
+    {"name": "TimeSeries", "value": "235"},
+    {"name": "Athena", "value": "235"}
+  ],
+  "lambdaResources": [
+    {
+      "title": "Total Cost",
+      "value": "$96k"
+    },
+    {
+      "title": "Total function",
+      "value": "540k"
+    },
+    {
+      "title": "Error Rate",
+      "value": "43k"
+    },
+    {
+      "title": "Throttle",
+      "value": "365"
+    },
+    {
+      "title": "Latency",
+      "value": "199"
+    },
+    {
+      "title": "Trends",
+      "value": "142"
+    },
+    {
+      "title": "Failure Function",
+      "value": "450k"
+    },
+    {
+      "title": "Total Buckets",
+      "value": "450k"
+    },
+    {
+      "title": "Used CPU",
+      "value": "41MB"
+    },
+    {
+      "title": "Net Received",
+      "value": "152"
+    },
+    {
+      "title": "Request",
+      "value": "142"
+    },
+    {
+      "title": "Memory Used",
+      "value": "450"
+    }
+  ],
+  "lambdaPerformance": [
+    {
+      "name": "S3",
+      "performance": "ok",
+      "availability": "warning",
+      "security": "error",
+      "data-protection": "error",
+      "user-exp": "ok"
+    },
+    {
+      "name": "Attendence",
+      "performance": "ok",
+      "availability": "warning",
+      "security": "error",
+      "data-protection": "error",
+      "user-exp": "ok"
+    },
+    {
+      "name": "Free",
+      "performance": "ok",
+      "availability": "warning",
+      "security": "error",
+      "data-protection": "error",
+      "user-exp": "ok"
+    },
+    {
+      "name": "Exam",
+      "performance": "ok",
+      "availability": "warning",
+      "security": "error",
+      "data-protection": "error",
+      "user-exp": "ok"
+    }
+  ],
+  "wafResources": [
+    {
+      "title": "Total Cost",
+      "value": "$96k"
+    },
+    {
+      "title": "Total function",
+      "value": "540k"
+    },
+    {
+      "title": "Error Rate",
+      "value": "43k"
+    },
+    {
+      "title": "Throttle",
+      "value": "365"
+    },
+    {
+      "title": "Latency",
+      "value": "199"
+    },
+    {
+      "title": "Trends",
+      "value": "142"
+    },
+    {
+      "title": "Failure Function",
+      "value": "450k"
+    },
+    {
+      "title": "Total Buckets",
+      "value": "450k"
+    },
+    {
+      "title": "Used CPU",
+      "value": "41MB"
+    },
+    {
+      "title": "Net Received",
+      "value": "152"
+    },
+    {
+      "title": "Request",
+      "value": "142"
+    },
+    {
+      "title": "Memory Used",
+      "value": "450"
+    }
+  ],
+  "wafPerformance": [
+    {
+      "name": "S3",
+      "performance": "ok",
+      "availability": "warning",
+      "security": "error",
+      "data-protection": "error",
+      "user-exp": "ok"
+    },
+    {
+      "name": "Attendence",
+      "performance": "ok",
+      "availability": "warning",
+      "security": "error",
+      "data-protection": "error",
+      "user-exp": "ok"
+    },
+    {
+      "name": "Free",
+      "performance": "ok",
+      "availability": "warning",
+      "security": "error",
+      "data-protection": "error",
+      "user-exp": "ok"
+    },
+    {
+      "name": "Exam",
+      "performance": "ok",
+      "availability": "warning",
+      "security": "error",
+      "data-protection": "error",
+      "user-exp": "ok"
+    }
+  ]
+}

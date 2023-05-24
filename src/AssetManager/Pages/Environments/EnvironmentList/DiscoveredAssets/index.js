@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { images } from "../../../../img";
 import Aws from "../../../../../assets/img/aws.png";
-import Microsoftazure from "../../../../../assets/img/microsoftazure.png";
 import VpcServicesIcon from "../../../../../assets/img/assetmanager/vpc-services-icon.png";
 import ClusterIcon from "../../../../../assets/img/assetmanager/cluster-icon.png";
 import GlobalIcon1 from "../../../../../assets/img/assetmanager/global-icon1.png";
@@ -11,17 +10,15 @@ import GlobalIcon4 from "../../../../../assets/img/assetmanager/global-icon4.png
 import GlobalIcon5 from "../../../../../assets/img/assetmanager/global-icon5.png";
 import GlobalIcon6 from "../../../../../assets/img/assetmanager/global-icon6.png";
 import GlobalIcon7 from "../../../../../assets/img/assetmanager/global-icon7.png";
-import { Link } from "react-router-dom";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { type } from "@testing-library/user-event/dist/type";
-import { CSVLink } from "react-csv";
 import CommonFilterViewSearch from "../CommonFilterViewSearch";
 import ServicesNameLogo from "../ServicesNameLogo";
-import DataLakeTable from"./DataLakeTable";
+import DataLakeTable from "./DataLakeTable";
 import ServiceMeshTable from "./ServiceMeshTable";
 import AllTable from "./AllTable";
 import AppTable from "./AppTable";
 import DataTable from "./DataTable";
+import dummyData from "./dummy.json";
 
 const headers = [
   { label: "Service Name", key: "name" },
@@ -110,8 +107,6 @@ class DiscoveredAssets extends Component {
       accountId: queryPrm.get("accountId"),
     };
   }
-
-  
 
   showHideDetail = () => {
     const { display_detail } = this.state;
@@ -474,10 +469,12 @@ class DiscoveredAssets extends Component {
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
+
   getCloudName() {
     const queryPrm = new URLSearchParams(document.location.search);
     return ServicesNameLogo.ServicesName[queryPrm.get("cloudName")] || "";
   }
+
   getBreadCrumbs() {
     return (
       this.state.breadcrumbs &&
@@ -511,6 +508,7 @@ class DiscoveredAssets extends Component {
       })
     );
   }
+
   getServiceName(name, type) {
     if (type === "vpc") {
       return name ? name.toUpperCase() : "";
@@ -521,6 +519,7 @@ class DiscoveredAssets extends Component {
       return string;
     }
   }
+
   handleToggleNode(
     serviceIndexs,
     name,
@@ -568,6 +567,7 @@ class DiscoveredAssets extends Component {
     toggleNode["globalService"] = false;
     this.setState({ toggleNode, breadcrumbs });
   }
+
   renderVpcsDetails() {
     return this.props.vpcsDetails.map((vpc, index) => {
       return (
@@ -610,6 +610,7 @@ class DiscoveredAssets extends Component {
       );
     });
   }
+
   generateVpcDetailsTable() {
     return (
       <div className="environment-table-section" style={{ height: "395px" }}>
@@ -640,6 +641,7 @@ class DiscoveredAssets extends Component {
       </div>
     );
   }
+
   filterVpcsData(searchString) {
     let { vpcsDetailsBackUp, vpcsDetails } = this.state;
     vpcsDetails =
@@ -650,6 +652,7 @@ class DiscoveredAssets extends Component {
         : vpcsDetailsBackUp;
     this.setState({ searchString, vpcsDetails });
   }
+
   render() {
     const { servicesPanelShow, activeTab } = this.state;
     return (
@@ -1485,73 +1488,25 @@ class DiscoveredAssets extends Component {
                         <div className="environment-image">
                           <img src={GlobalIcon4} alt="" />
                         </div>
-                        <div className="title-name">EKS-Cluster</div>
+                        <div className="title-name">EKS-Cluster </div>
                       </div>
                       <div className="data-contant">
                         <ul>
-                          <li>
-                            <div className="data-text">
-                              <span
-                                style={{ backgroundColor: "#ff9900" }}
-                              ></span>
-                              <p>No of EKS</p>
-                            </div>
-                            <label>20</label>
-                          </li>
-                          <li>
-                            <div className="data-text">
-                              <span
-                                style={{ backgroundColor: "#0089d6" }}
-                              ></span>
-                              <p>CPU Ultilization</p>
-                            </div>
-                            <label>65%</label>
-                          </li>
-                          <li>
-                            <div className="data-text">
-                              <span
-                                style={{ backgroundColor: "#da4f44" }}
-                              ></span>
-                              <p>Memory</p>
-                            </div>
-                            <label>96%</label>
-                          </li>
-                          <li>
-                            <div className="data-text">
-                              <span
-                                style={{ backgroundColor: "#383874" }}
-                              ></span>
-                              <p>Network Bytes</p>
-                            </div>
-                            <label>2000</label>
-                          </li>
-                          <li>
-                            <div className="data-text">
-                              <span
-                                style={{ backgroundColor: "#ff708b" }}
-                              ></span>
-                              <p>Network Bytes Out</p>
-                            </div>
-                            <label>3500</label>
-                          </li>
-                          <li>
-                            <div className="data-text">
-                              <span
-                                style={{ backgroundColor: "#416bff" }}
-                              ></span>
-                              <p>CPU Reservation</p>
-                            </div>
-                            <label>70%</label>
-                          </li>
-                          <li>
-                            <div className="data-text">
-                              <span
-                                style={{ backgroundColor: "#006bb9" }}
-                              ></span>
-                              <p>Memory Reservation</p>
-                            </div>
-                            <label>60%</label>
-                          </li>
+                          {dummyData.eksCluster.map((item) => {
+                            return (
+                              <li>
+                                <div className="data-text">
+                                  <span
+                                    style={{
+                                      backgroundColor: item.backgroundColor,
+                                    }}
+                                  ></span>
+                                  <p>{item.name}</p>
+                                </div>
+                                <label>{item.value}</label>
+                              </li>
+                            );
+                          })}
                         </ul>
                       </div>
                     </div>
@@ -1564,69 +1519,21 @@ class DiscoveredAssets extends Component {
                       </div>
                       <div className="data-contant">
                         <ul>
-                          <li>
-                            <div className="data-text">
-                              <span
-                                style={{ backgroundColor: "#ff9900" }}
-                              ></span>
-                              <p>No of EKS</p>
-                            </div>
-                            <label>20</label>
-                          </li>
-                          <li>
-                            <div className="data-text">
-                              <span
-                                style={{ backgroundColor: "#0089d6" }}
-                              ></span>
-                              <p>CPU Ultilization</p>
-                            </div>
-                            <label>65%</label>
-                          </li>
-                          <li>
-                            <div className="data-text">
-                              <span
-                                style={{ backgroundColor: "#da4f44" }}
-                              ></span>
-                              <p>Memory</p>
-                            </div>
-                            <label>96%</label>
-                          </li>
-                          <li>
-                            <div className="data-text">
-                              <span
-                                style={{ backgroundColor: "#383874" }}
-                              ></span>
-                              <p>Network Bytes</p>
-                            </div>
-                            <label>2000</label>
-                          </li>
-                          <li>
-                            <div className="data-text">
-                              <span
-                                style={{ backgroundColor: "#ff708b" }}
-                              ></span>
-                              <p>Network Bytes Out</p>
-                            </div>
-                            <label>3500</label>
-                          </li>
-                          <li>
-                            <div className="data-text">
-                              <span
-                                style={{ backgroundColor: "#416bff" }}
-                              ></span>
-                              <p>CPU Reservation</p>
-                            </div>
-                            <label>70%</label>
-                          </li>
-                          <li>
-                            <div className="data-text">
-                              <span
-                                style={{ backgroundColor: "#006bb9" }}
-                              ></span>
-                              <p>Memory Reservation</p>
-                            </div>
-                            <label>60%</label>
-                          </li>
+                          {dummyData.ecsCluster.map((item) => {
+                            return (
+                              <li>
+                                <div className="data-text">
+                                  <span
+                                    style={{
+                                      backgroundColor: item.backgroundColor,
+                                    }}
+                                  ></span>
+                                  <p>{item.name}</p>
+                                </div>
+                                <label>{item.value}</label>
+                              </li>
+                            );
+                          })}
                         </ul>
                       </div>
                     </div>
@@ -1634,78 +1541,16 @@ class DiscoveredAssets extends Component {
                   <div className="resources-section">
                     <h4>EKS Resources</h4>
                     <div className="account-list-conitant">
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>$96k</strong>
-                          <p>Total Cost</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>540k</strong>
-                          <p>Total function</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>43k</strong>
-                          <p>Error Rate</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>365</strong>
-                          <p>Throttle</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>199</strong>
-                          <p>Latency</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>142</strong>
-                          <p>Trends</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>450k</strong>
-                          <p>Failure Function</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>450k</strong>
-                          <p>Total Buckets</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>41MB</strong>
-                          <p>Used CPU</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>152</strong>
-                          <p>Net Received</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>142</strong>
-                          <p>Request</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>450</strong>
-                          <p>Memory Used</p>
-                        </div>
-                      </div>
+                      {dummyData.eksResources.map((item) => {
+                        return (
+                          <div className="account-list-details">
+                            <div className="d-block">
+                              <strong>{item.value}</strong>
+                              <p>{item.title}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                   <div className="performance-section">
@@ -1741,141 +1586,43 @@ class DiscoveredAssets extends Component {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>
-                                <strong>
-                                  <a href="#">S3</a>
-                                </strong>
-                                <i className="fas fa-caret-right m-l-1"></i>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box orange">
-                                  <i class="fas fa-sort-up"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <strong>
-                                  <a href="#">Attendence</a>
-                                </strong>
-                                <i className="fas fa-caret-right m-l-1"></i>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box orange">
-                                  {" "}
-                                  <i class="fas fa-sort-up"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <strong>
-                                  <a href="#">Free</a>
-                                </strong>
-                                <i className="fas fa-caret-right m-l-1"></i>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box orange">
-                                  {" "}
-                                  <i class="fas fa-sort-up"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <strong>
-                                  <a href="#">Exam</a>
-                                </strong>
-                                <i className="fas fa-caret-right m-l-1"></i>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box orange">
-                                  {" "}
-                                  <i class="fas fa-sort-up"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                            </tr>
+                            {dummyData.eksPerformance.map((item) => {
+                              return (
+                                <tr>
+                                  <td>
+                                    <strong>
+                                      <a href="#">{item.name}</a>
+                                    </strong>
+                                    <i className="fas fa-caret-right m-l-1"></i>
+                                  </td>
+                                  <td>
+                                    <div className="box green">
+                                      <i className="far fa-check"></i>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="box orange">
+                                      <i class="fas fa-sort-up"></i>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="box red">
+                                      <i class="far fa-stop-circle"></i>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="box red">
+                                      <i class="far fa-stop-circle"></i>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="box green">
+                                      <i className="far fa-check"></i>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         </table>
                       </div>
@@ -1939,78 +1686,16 @@ class DiscoveredAssets extends Component {
                   <div className="resources-section">
                     <h4>WAF Resources</h4>
                     <div className="account-list-conitant">
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>$96k</strong>
-                          <p>Total Cost</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>540k</strong>
-                          <p>Total function</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>43k</strong>
-                          <p>Error Rate</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>365</strong>
-                          <p>Throttle</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>199</strong>
-                          <p>Latency</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>142</strong>
-                          <p>Trends</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>450k</strong>
-                          <p>Failure Function</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>450k</strong>
-                          <p>Total Buckets</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>41MB</strong>
-                          <p>Used CPU</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>152</strong>
-                          <p>Net Received</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>142</strong>
-                          <p>Request</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>450</strong>
-                          <p>Memory Used</p>
-                        </div>
-                      </div>
+                      {dummyData.eksResources.map((item) => {
+                        return (
+                          <div className="account-list-details">
+                            <div className="d-block">
+                              <strong>{item.value}</strong>
+                              <p>{item.title}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                   <div className="performance-section">
@@ -2046,141 +1731,43 @@ class DiscoveredAssets extends Component {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>
-                                <strong>
-                                  <a href="#">S3</a>
-                                </strong>
-                                <i className="fas fa-caret-right m-l-1"></i>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box orange">
-                                  <i class="fas fa-sort-up"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <strong>
-                                  <a href="#">Attendence</a>
-                                </strong>
-                                <i className="fas fa-caret-right m-l-1"></i>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box orange">
-                                  {" "}
-                                  <i class="fas fa-sort-up"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <strong>
-                                  <a href="#">Free</a>
-                                </strong>
-                                <i className="fas fa-caret-right m-l-1"></i>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box orange">
-                                  {" "}
-                                  <i class="fas fa-sort-up"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <strong>
-                                  <a href="#">Exam</a>
-                                </strong>
-                                <i className="fas fa-caret-right m-l-1"></i>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box orange">
-                                  {" "}
-                                  <i class="fas fa-sort-up"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                            </tr>
+                            {dummyData.eksPerformance.map((item) => {
+                              return (
+                                <tr>
+                                  <td>
+                                    <strong>
+                                      <a href="#">{item.name}</a>
+                                    </strong>
+                                    <i className="fas fa-caret-right m-l-1"></i>
+                                  </td>
+                                  <td>
+                                    <div className="box green">
+                                      <i className="far fa-check"></i>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="box orange">
+                                      <i class="fas fa-sort-up"></i>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="box red">
+                                      <i class="far fa-stop-circle"></i>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="box red">
+                                      <i class="far fa-stop-circle"></i>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="box green">
+                                      <i className="far fa-check"></i>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         </table>
                       </div>
