@@ -1,19 +1,33 @@
 import React, { Component } from "react";
-import CloudManagedIcon1 from "../../../../../../assets/img/assetmanager/cloud-managed-icon1.png";
-import CloudManagedIcon2 from "../../../../../../assets/img/assetmanager/cloud-managed-icon2.png";
-import CloudManagedIcon3 from "../../../../../../assets/img/assetmanager/cloud-managed-icon3.png";
-import CloudManagedIcon4 from "../../../../../../assets/img/assetmanager/cloud-managed-icon4.png";
-import CloudManagedIcon5 from "../../../../../../assets/img/assetmanager/cloud-managed-icon5.png";
-import CloudManagedIcon6 from "../../../../../../assets/img/assetmanager/cloud-managed-icon6.png";
-import CloudManagedIcon7 from "../../../../../../assets/img/assetmanager/cloud-managed-icon7.png";
-import CloudManagedIcon8 from "../../../../../../assets/img/assetmanager/cloud-managed-icon8.png";
-import CloudManagedIcon9 from "../../../../../../assets/img/assetmanager/cloud-managed-icon9.png";
-import CloudManagedIcon10 from "../../../../../../assets/img/assetmanager/cloud-managed-icon10.png";
+import Lambda from "../../../../../../assets/img/assetmanager/cloud-managed-icon1.png";
+import S3 from "../../../../../../assets/img/assetmanager/cloud-managed-icon2.png";
+import SQS from "../../../../../../assets/img/assetmanager/cloud-managed-icon3.png";
+import SNS from "../../../../../../assets/img/assetmanager/cloud-managed-icon4.png";
+import Redshift from "../../../../../../assets/img/assetmanager/cloud-managed-icon5.png";
+import RDS from "../../../../../../assets/img/assetmanager/cloud-managed-icon6.png";
+import AppMesh from "../../../../../../assets/img/assetmanager/cloud-managed-icon7.png";
+import Kinesis from "../../../../../../assets/img/assetmanager/cloud-managed-icon8.png";
+import TimeSeries from "../../../../../../assets/img/assetmanager/cloud-managed-icon9.png";
+import Athena from "../../../../../../assets/img/assetmanager/cloud-managed-icon10.png";
+import dummyData from "./../dummy.json";
 
 class AllTable extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      serivceImages: [
+        Lambda,
+        S3,
+        SQS,
+        SNS,
+        Redshift,
+        RDS,
+        AppMesh,
+        Kinesis,
+        TimeSeries,
+        Athena,
+      ],
+    };
   }
 
   render() {
@@ -23,96 +37,19 @@ class AllTable extends Component {
         <div className="cloud-managed-section">
           <h4> Cloud Managed Services</h4>
           <div className="cloud-managed-cards">
-            <div className="service-card active">
-              <div className="service-icon">
-                <img src={CloudManagedIcon1} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Lambda</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon2} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>S3</label>
-                <strong>146</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon3} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>SQS</label>
-                <strong>06</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon4} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>SNS</label>
-                <strong>06</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon5} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Redshift</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon6} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>RDS</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon7} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>AppMesh</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon8} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Kinesis</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon9} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Time-Series</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon10} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Athena</label>
-                <strong>235</strong>
-              </div>
-            </div>
+            {dummyData.cloudManagedServices.map((item, index) => {
+              return (
+                <div className="service-card active">
+                  <div className="service-icon">
+                    <img src={this.state.serivceImages[index]} alt="serviceicon" />
+                  </div>
+                  <div className="service-contant">
+                    <label>{item.name}</label>
+                    <strong>{item.value}</strong>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="resources-section">

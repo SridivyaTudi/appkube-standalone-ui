@@ -1,19 +1,33 @@
 import React, { Component } from "react";
-import CloudManagedIcon1 from "../../../../../../assets/img/assetmanager/cloud-managed-icon1.png";
-import CloudManagedIcon2 from "../../../../../../assets/img/assetmanager/cloud-managed-icon2.png";
-import CloudManagedIcon3 from "../../../../../../assets/img/assetmanager/cloud-managed-icon3.png";
-import CloudManagedIcon4 from "../../../../../../assets/img/assetmanager/cloud-managed-icon4.png";
-import CloudManagedIcon5 from "../../../../../../assets/img/assetmanager/cloud-managed-icon5.png";
-import CloudManagedIcon6 from "../../../../../../assets/img/assetmanager/cloud-managed-icon6.png";
-import CloudManagedIcon7 from "../../../../../../assets/img/assetmanager/cloud-managed-icon7.png";
-import CloudManagedIcon8 from "../../../../../../assets/img/assetmanager/cloud-managed-icon8.png";
-import CloudManagedIcon9 from "../../../../../../assets/img/assetmanager/cloud-managed-icon9.png";
-import CloudManagedIcon10 from "../../../../../../assets/img/assetmanager/cloud-managed-icon10.png";
+import Lambda from "../../../../../../assets/img/assetmanager/cloud-managed-icon1.png";
+import S3 from "../../../../../../assets/img/assetmanager/cloud-managed-icon2.png";
+import SQS from "../../../../../../assets/img/assetmanager/cloud-managed-icon3.png";
+import SNS from "../../../../../../assets/img/assetmanager/cloud-managed-icon4.png";
+import Redshift from "../../../../../../assets/img/assetmanager/cloud-managed-icon5.png";
+import RDS from "../../../../../../assets/img/assetmanager/cloud-managed-icon6.png";
+import AppMesh from "../../../../../../assets/img/assetmanager/cloud-managed-icon7.png";
+import Kinesis from "../../../../../../assets/img/assetmanager/cloud-managed-icon8.png";
+import TimeSeries from "../../../../../../assets/img/assetmanager/cloud-managed-icon9.png";
+import Athena from "../../../../../../assets/img/assetmanager/cloud-managed-icon10.png";
+import dummyData from "./../dummy.json";
 
 class DataLakeTable extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      serivceImages: [
+        Lambda,
+        S3,
+        SQS,
+        SNS,
+        Redshift,
+        RDS,
+        AppMesh,
+        Kinesis,
+        TimeSeries,
+        Athena,
+      ],
+    };
   }
 
   render() {
@@ -21,175 +35,39 @@ class DataLakeTable extends Component {
     return (
       <>
         <div className="cloud-managed-section">
-          <h4> Cloud Managed Services</h4>
+          <h4>Cloud Managed Services</h4>
           <div className="cloud-managed-cards">
-            <div className="service-card active">
-              <div className="service-icon">
-                <img src={CloudManagedIcon1} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Lambda</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon2} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>S3</label>
-                <strong>146</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon3} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>SQS</label>
-                <strong>06</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon4} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>SNS</label>
-                <strong>06</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon5} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Redshift</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon6} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>RDS</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon7} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>AppMesh</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon8} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Kinesis</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon9} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Time-Series</label>
-                <strong>235</strong>
-              </div>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">
-                <img src={CloudManagedIcon10} alt="serviceicon" />
-              </div>
-              <div className="service-contant">
-                <label>Athena</label>
-                <strong>235</strong>
-              </div>
-            </div>
+            {dummyData.cloudManagedServices.map((item, index) => {
+              return (
+                <div className="service-card active">
+                  <div className="service-icon">
+                    <img
+                      src={this.state.serivceImages[index]}
+                      alt="serviceicon"
+                    />
+                  </div>
+                  <div className="service-contant">
+                    <label>{item.name}</label>
+                    <strong>{item.value}</strong>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="resources-section">
           <h4>Lambda Resources</h4>
           <div className="account-list-conitant">
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>$96k</strong>
-                <p>Total Cost</p>
-              </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>540k</strong>
-                <p>Total function</p>
-              </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>43k</strong>
-                <p>Error Rate</p>
-              </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>365</strong>
-                <p>Throttle</p>
-              </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>199</strong>
-                <p>Latency</p>
-              </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>142</strong>
-                <p>Trends</p>
-              </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>450k</strong>
-                <p>Failure Function</p>
-              </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>450k</strong>
-                <p>Total Buckets</p>
-              </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>41MB</strong>
-                <p>Used CPU</p>
-              </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>152</strong>
-                <p>Net Received</p>
-              </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>142</strong>
-                <p>Request</p>
-              </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>450</strong>
-                <p>Memory Used</p>
-              </div>
-            </div>
+            {dummyData.lambdaResources.map((item) => {
+              return (
+                <div className="account-list-details">
+                  <div className="d-block">
+                    <strong>{item.value}</strong>
+                    <p>{item.title}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="performance-section">
@@ -225,141 +103,43 @@ class DataLakeTable extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                      <strong>
-                        <a href="#">S3</a>
-                      </strong>
-                      <i className="fas fa-caret-right m-l-1"></i>
-                    </td>
-                    <td>
-                      <div className="box green">
-                        <i className="far fa-check"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box orange">
-                        <i class="fas fa-sort-up"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box red">
-                        <i class="far fa-stop-circle"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box red">
-                        <i class="far fa-stop-circle"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box green">
-                        <i className="far fa-check"></i>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>
-                        <a href="#">Attendence</a>
-                      </strong>
-                      <i className="fas fa-caret-right m-l-1"></i>
-                    </td>
-                    <td>
-                      <div className="box green">
-                        <i className="far fa-check"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box orange">
-                        {" "}
-                        <i class="fas fa-sort-up"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box red">
-                        <i class="far fa-stop-circle"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box red">
-                        <i class="far fa-stop-circle"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box green">
-                        <i className="far fa-check"></i>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>
-                        <a href="#">Free</a>
-                      </strong>
-                      <i className="fas fa-caret-right m-l-1"></i>
-                    </td>
-                    <td>
-                      <div className="box green">
-                        <i className="far fa-check"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box orange">
-                        {" "}
-                        <i class="fas fa-sort-up"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box red">
-                        <i class="far fa-stop-circle"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box red">
-                        <i class="far fa-stop-circle"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box green">
-                        <i className="far fa-check"></i>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>
-                        <a href="#">Exam</a>
-                      </strong>
-                      <i className="fas fa-caret-right m-l-1"></i>
-                    </td>
-                    <td>
-                      <div className="box green">
-                        <i className="far fa-check"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box orange">
-                        {" "}
-                        <i class="fas fa-sort-up"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box red">
-                        <i class="far fa-stop-circle"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box red">
-                        <i class="far fa-stop-circle"></i>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="box green">
-                        <i className="far fa-check"></i>
-                      </div>
-                    </td>
-                  </tr>
+                  {dummyData.lambdaPerformance.map((item) => {
+                    return (
+                      <tr>
+                        <td>
+                          <strong>
+                            <a href="#">{item.name}</a>
+                          </strong>
+                          <i className="fas fa-caret-right m-l-1"></i>
+                        </td>
+                        <td>
+                          <div className="box green">
+                            <i className="far fa-check"></i>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="box orange">
+                            <i class="fas fa-sort-up"></i>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="box red">
+                            <i class="far fa-stop-circle"></i>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="box red">
+                            <i class="far fa-stop-circle"></i>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="box green">
+                            <i className="far fa-check"></i>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
