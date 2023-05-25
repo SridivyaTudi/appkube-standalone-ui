@@ -793,17 +793,17 @@
           border-color: #00861b;
         }
 
-        &::after {
-          position: absolute;
-          top: 25px;
-          right: -16px;
-          font-size: 20px;
-          line-height: 20px;
-          font-weight: 900;
-          color: #a5a5d7;
-          content: "\f0da";
-          font-family: "Font Awesome 5 Pro";
-        }
+        // &::after {
+        //   position: absolute;
+        //   top: 25px;
+        //   right: -16px;
+        //   font-size: 20px;
+        //   line-height: 20px;
+        //   font-weight: 900;
+        //   color: #a5a5d7;
+        //   content: "\f0da";
+        //   font-family: "Font Awesome 5 Pro";
+        // }
       }
 
       .global-servies {
@@ -936,18 +936,18 @@
               }
             }
 
-            &::after {
-              opacity: 0;
-              position: absolute;
-              top: 8px;
-              right: -16px;
-              font-size: 20px;
-              line-height: 20px;
-              font-weight: 900;
-              color: #a5a5d7;
-              content: "\f0da";
-              font-family: "Font Awesome 5 Pro";
-            }
+            // &::after {
+            //   opacity: 0;
+            //   position: absolute;
+            //   top: 8px;
+            //   right: -16px;
+            //   font-size: 20px;
+            //   line-height: 20px;
+            //   font-weight: 900;
+            //   color: #a5a5d7;
+            //   content: "\f0da";
+            //   font-family: "Font Awesome 5 Pro";
+            // }
 
             span {
               display: inline-block;
