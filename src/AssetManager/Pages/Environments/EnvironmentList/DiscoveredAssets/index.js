@@ -19,7 +19,7 @@ import AllTable from "./AllTable";
 import AppTable from "./AppTable";
 import DataTable from "./DataTable";
 import dummyData from "./dummy.json";
-
+import { ArcherContainer, ArcherElement } from "react-archer";
 const headers = [
   { label: "Service Name", key: "name" },
   { label: "Product", key: "product_count" },
@@ -107,7 +107,7 @@ class DiscoveredAssets extends Component {
       accountId: queryPrm.get("accountId"),
     };
   }
-
+  componentDidMount() {}
   showHideDetail = () => {
     const { display_detail } = this.state;
     this.setState({
@@ -263,47 +263,67 @@ class DiscoveredAssets extends Component {
     if (this.props.treeData && this.props.treeData.length) {
       return this.props.treeData.map((vpc, vpcIndex) => {
         return (
-          <li
-            key={vpcIndex}
-            className={`${
-              vpcIndex === this.state.toggleNode.vpcId ? "active " : ""
-            }`}
-            id={`${
-              vpcIndex === this.state.toggleNode.vpcId &&
-              this.state.breadcrumbs.length === 2
-                ? "custom_location"
-                : ""
-            }`}
-            onClick={() => {
-              this.handleToggleNode(
-                { vpcId: vpcIndex },
-                vpc.name,
-                "vpc",
-                true,
-                "cluster"
-              );
-              // this.setState({
-              //   toggleNode: {
-              //     ...this.state.toggleNode,
-              //     vpcId: vpcIndex,
-              //     clusters: true,
-              //     products: false,
-              //     clusterId: null,
-              //     productId: null,
-              //   },
-              //   breadcrumbs: this.prepareBreadCrumbs(
-              //     { id: "VPC" + "_" + vpcIndex, name: vpc.name, type: "VPC" },
-              //     "VPC" + "_" + vpcIndex,
-              //     "VPC"
-              //   ),
-              // });
-            }}
+          <ArcherElement
+            id={`vpc_${vpcIndex}`}
+            relations={[
+              {
+                targetId:
+                  vpcIndex === this.state.toggleNode.vpcId &&
+                  this.state.toggleNode.clusterId >= 0
+                    ? `cluster_${this.state.toggleNode.clusterId}`
+                    : "",
+                targetAnchor: "left",
+                sourceAnchor: "right",
+                style: {
+                  strokeColor: "#a5a5d7",
+                  strokeWidth: 1.5,
+                  lineStyle: "curve",
+                },
+              },
+            ]}
           >
-            <span>
-              <img src={VpcServicesIcon} alt="" />
-            </span>
-            {this.getServiceName(vpc.name, "vpc")}
-          </li>
+            <li
+              key={vpcIndex}
+              className={`${
+                vpcIndex === this.state.toggleNode.vpcId ? "active " : ""
+              }`}
+              id={`${
+                vpcIndex === this.state.toggleNode.vpcId &&
+                this.state.breadcrumbs.length === 2
+                  ? "custom_location"
+                  : ""
+              }`}
+              onClick={(e) => {
+                this.handleToggleNode(
+                  { vpcId: vpcIndex },
+                  vpc.name,
+                  "vpc",
+                  true,
+                  "cluster"
+                );
+                // this.setState({
+                //   toggleNode: {
+                //     ...this.state.toggleNode,
+                //     vpcId: vpcIndex,
+                //     clusters: true,
+                //     products: false,
+                //     clusterId: null,
+                //     productId: null,
+                //   },
+                //   breadcrumbs: this.prepareBreadCrumbs(
+                //     { id: "VPC" + "_" + vpcIndex, name: vpc.name, type: "VPC" },
+                //     "VPC" + "_" + vpcIndex,
+                //     "VPC"
+                //   ),
+                // });
+              }}
+            >
+              <span id={`vpc_${vpcIndex}`}>
+                <img src={VpcServicesIcon} alt="" />
+              </span>
+              {this.getServiceName(vpc.name, "vpc")}
+            </li>
+          </ArcherElement>
         );
       });
     }
@@ -346,49 +366,71 @@ class DiscoveredAssets extends Component {
       return this.props.treeData[index].clusters.map(
         (cluster, clusterIndex) => {
           return (
-            <li
-              key={clusterIndex}
-              onClick={() => {
-                this.handleToggleNode(
-                  { vpcId: index, clusterId: clusterIndex },
-                  cluster.name,
-                  "cluster",
-                  true,
-                  "product"
-                );
-                // this.setState({
-                //   toggleNode: {
-                //     ...this.state.toggleNode,
-                //     vpcId: index,
-                //     clusterId: clusterIndex,
-                //     products: true,
-                //   },
-                //   breadcrumbs: this.prepareBreadCrumbs(
-                //     {
-                //       id: "cluster" + "_" + clusterIndex,
-                //       name: cluster.name,
-                //       type: "cluster",
-                //     },
-                //     "cluster" + "_" + clusterIndex,
-                //     "cluster"
-                //   ),
-                // });
-              }}
-              className={`${
-                clusterIndex === this.state.toggleNode.clusterId ? "active" : ""
-              }`}
-              id={`${
-                clusterIndex === this.state.toggleNode.clusterId &&
-                this.state.breadcrumbs.length === 3
-                  ? "custom_location"
-                  : ""
-              }`}
+            <ArcherElement
+              id={`cluster_${clusterIndex}`}
+              relations={[
+                {
+                  targetId:
+                    clusterIndex === this.state.toggleNode.clusterId &&
+                    this.state.toggleNode.productId >= 0
+                      ? `product_${this.state.toggleNode.productId}`
+                      : "",
+                  targetAnchor: "left",
+                  sourceAnchor: "right",
+                  style: {
+                    strokeColor: "#a5a5d7",
+                    strokeWidth: 1.5,
+                    lineStyle: "curve",
+                  },
+                },
+              ]}
             >
-              <span>
-                <img src={ClusterIcon} alt="" />
-              </span>
-              {this.getServiceName(cluster.name, "cluster")}
-            </li>
+              <li
+                key={clusterIndex}
+                onClick={(e) => {
+                  this.handleToggleNode(
+                    { vpcId: index, clusterId: clusterIndex },
+                    cluster.name,
+                    "cluster",
+                    true,
+                    "product"
+                  );
+                  // this.setState({
+                  //   toggleNode: {
+                  //     ...this.state.toggleNode,
+                  //     vpcId: index,
+                  //     clusterId: clusterIndex,
+                  //     products: true,
+                  //   },
+                  //   breadcrumbs: this.prepareBreadCrumbs(
+                  //     {
+                  //       id: "cluster" + "_" + clusterIndex,
+                  //       name: cluster.name,
+                  //       type: "cluster",
+                  //     },
+                  //     "cluster" + "_" + clusterIndex,
+                  //     "cluster"
+                  //   ),
+                  // });
+                }}
+                className={`${
+                  clusterIndex === this.state.toggleNode.clusterId
+                    ? "active"
+                    : ""
+                }`}
+                id={`${
+                  clusterIndex === this.state.toggleNode.clusterId &&
+                  this.state.breadcrumbs.length === 3
+                    ? "custom_location"
+                    : ""
+                }`}
+              >
+                <span id={`cluster_${clusterIndex}`}>
+                  <img src={ClusterIcon} alt="" />
+                </span>
+                {this.getServiceName(cluster.name, "cluster")}
+              </li>
+            </ArcherElement>
           );
         }
       );
@@ -404,49 +446,53 @@ class DiscoveredAssets extends Component {
       return this.props.treeData[vpcIndex].clusters[clusterIndex].products.map(
         (product, productIndex) => {
           return (
-            <label
-              className={`${
-                productIndex === this.state.toggleNode.productId ? "active" : ""
-              }`}
-              key={productIndex}
-              onClick={() => {
-                this.handleToggleNode(
-                  {
-                    vpcId: vpcIndex,
-                    clusterId: clusterIndex,
-                    productId: productIndex,
-                  },
-                  product.name,
-                  "product",
-                  true
-                );
+            <ArcherElement id={`product_${productIndex}`}>
+              <label
+                className={`${
+                  productIndex === this.state.toggleNode.productId
+                    ? "active"
+                    : ""
+                }`}
+                key={productIndex}
+                onClick={() => {
+                  this.handleToggleNode(
+                    {
+                      vpcId: vpcIndex,
+                      clusterId: clusterIndex,
+                      productId: productIndex,
+                    },
+                    product.name,
+                    "product",
+                    true
+                  );
 
-                // this.setState({
-                //   toggleNode: {
-                //     ...this.state.toggleNode,
-                //     productId: productIndex,
-                //     products: true,
-                //   },
-                //   breadcrumbs: this.prepareBreadCrumbs(
-                //     {
-                //       id: "product" + "_" + productIndex,
-                //       name: product.name,
-                //       type: "product",
-                //     },
-                //     "product" + "_" + productIndex,
-                //     "product"
-                //   ),
-                // });
-              }}
-              id={`${
-                productIndex === this.state.toggleNode.productId &&
-                this.state.breadcrumbs.length === 4
-                  ? "custom_location"
-                  : ""
-              }`}
-            >
-              {this.getServiceName(product.name, "product")}
-            </label>
+                  // this.setState({
+                  //   toggleNode: {
+                  //     ...this.state.toggleNode,
+                  //     productId: productIndex,
+                  //     products: true,
+                  //   },
+                  //   breadcrumbs: this.prepareBreadCrumbs(
+                  //     {
+                  //       id: "product" + "_" + productIndex,
+                  //       name: product.name,
+                  //       type: "product",
+                  //     },
+                  //     "product" + "_" + productIndex,
+                  //     "product"
+                  //   ),
+                  // });
+                }}
+                id={`${
+                  productIndex === this.state.toggleNode.productId &&
+                  this.state.breadcrumbs.length === 4
+                    ? "custom_location"
+                    : ""
+                }`}
+              >
+                {this.getServiceName(product.name, "product")}
+              </label>
+            </ArcherElement>
           );
         }
       );
@@ -565,6 +611,14 @@ class DiscoveredAssets extends Component {
       });
     }
     toggleNode["globalService"] = false;
+    // let custom = arrowLine({
+    //   source: "#custom_location_1",
+    //   destination: "#vpc_0",
+    //   thickness: 2,
+    //   color: "#c7c7e8",
+    // });
+    // console.log(custom.getRawSvgPath());
+
     this.setState({ toggleNode, breadcrumbs });
   }
 
@@ -995,6 +1049,7 @@ class DiscoveredAssets extends Component {
                                 </button>
                               </div>
                             </div>
+
                             <TransformComponent
                               wrapperStyle={{ width: "100%", height: "100%" }}
                               contentStyle={{
@@ -1007,130 +1062,157 @@ class DiscoveredAssets extends Component {
                                 transform: "translate(0px, 0px) scale(0)",
                               }}
                             >
-                              <div
-                                className="services-text-box active"
-                                id={`${
-                                  this.state.breadcrumbs.length === 1
-                                    ? "custom_location"
-                                    : ""
-                                }`}
-                                onClick={() => {
-                                  this.handleToggleNode(
-                                    {},
-                                    "vpc",
-                                    "service",
-                                    false
-                                  );
-                                }}
-                              >
-                                {this.getCloudName()}
-                              </div>
-                              <div
-                                className={` ${
-                                  this.props.treeData &&
-                                  this.props.treeData.length
-                                    ? "global-servies"
-                                    : ""
-                                }`}
-                              >
-                                <ul>
-                                  {this.state.toggleNode.vpc ? (
-                                    this.renderVPCData()
-                                  ) : (
-                                    <></>
-                                  )}
-                                </ul>
-                                <div
-                                  className="global-servies-menu m-t-2"
-                                  onClick={() => {
-                                    this.handleToggleNode(
-                                      {},
-                                      "vpc",
-                                      "service",
-                                      false
-                                    );
-                                    this.setState({
-                                      toggleNode: {
-                                        ...this.state.toggleNode,
-                                        globalService:
-                                          !this.state.toggleNode.globalService,
+                              <ArcherContainer>
+                                <ArcherElement
+                                  id="root"
+                                  relations={[
+                                    {
+                                      targetId:
+                                        this.state.toggleNode.vpcId >= 0
+                                          ? `vpc_${this.state.toggleNode.vpcId}` : this.state.toggleNode.globalService ? "globalService" : "",
+                                      targetAnchor: "left",
+                                      sourceAnchor: "right",
+                                      style: {
+                                        strokeColor: "#a5a5d7",
+                                        strokeWidth: 1.5,
                                       },
-                                    });
-                                  }}
-                                  // style={{ display: "none" }}
+                                    },
+                                  ]}
                                 >
-                                  <label
-                                    className={`${
-                                      this.state.toggleNode.globalService
-                                        ? "active"
+                                  <div
+                                    className="services-text-box active"
+                                    id={`${
+                                      this.state.breadcrumbs.length === 1
+                                        ? "custom_location"
                                         : ""
                                     }`}
+                                    onClick={(e) => {
+                                      this.handleToggleNode(
+                                        {},
+                                        "vpc",
+                                        "service",
+                                        false
+                                      );
+                                    }}
                                   >
-                                    <span>
-                                      <img src={VpcServicesIcon} alt="" />
+                                    <span id="custom_location_1">
+                                      {this.getCloudName()}
                                     </span>
-                                    Global servies
-                                  </label>
-                                </div>
-                              </div>
-                              <div
-                                className={` ${
-                                  this.state.toggleNode.cluster
-                                    ? "global-servies cluster-servies"
-                                    : ""
-                                }`}
-                                style={{
-                                  marginTop: "0",
-                                  marginBottom: "0",
-                                  transform: "translateY(0%)",
-                                }}
-                              >
-                                <ul>
-                                  {this.state.toggleNode.cluster ? (
-                                    this.renderClusters(
-                                      this.state.toggleNode.vpcId
-                                    )
-                                  ) : (
-                                    <></>
-                                  )}
-                                </ul>
+                                  </div>
+                                </ArcherElement>
                                 <div
-                                  className="global-servies-menu"
-                                  style={{ display: "none" }}
+                                  className={` ${
+                                    this.props.treeData &&
+                                    this.props.treeData.length
+                                      ? "global-servies"
+                                      : ""
+                                  }`}
                                 >
-                                  <label className="active">
-                                    Cloud Management Services
-                                  </label>
-                                  <label>Gateway Services</label>
+                                  <ul>
+                                    {this.state.toggleNode.vpc ? (
+                                      this.renderVPCData()
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </ul>
+                                  <ArcherElement
+                                    id="globalService"
+                                    >
+                                    <div
+                                      className="global-servies-menu m-t-2"
+                                      onClick={(e) => {
+                                        this.handleToggleNode(
+                                          {},
+                                          "vpc",
+                                          "service",
+                                          false
+                                        );
+                                        this.setState({
+                                          toggleNode: {
+                                            ...this.state.toggleNode,
+                                            globalService:
+                                              !this.state.toggleNode
+                                                .globalService,
+                                          },
+                                        });
+                                      }}
+                                      // style={{ display: "none" }}
+                                    >
+                                      <label
+                                        className={`${
+                                          this.state.toggleNode.globalService
+                                            ? "active"
+                                            : ""
+                                        }`}
+                                      >
+                                        <span>
+                                          <img src={VpcServicesIcon} alt="" />
+                                        </span>
+                                        Global servies
+                                      </label>
+                                    </div>
+                                  </ArcherElement>
                                 </div>
-                              </div>
-                              <div
-                                className={` ${
-                                  this.state.toggleNode.product
-                                    ? "global-servies app-servies"
-                                    : ""
-                                }`}
-                              >
-                                <div className="global-servies-menu">
-                                  {this.state.toggleNode.product ? (
-                                    this.renderProducts(
-                                      this.state.toggleNode.vpcId,
-                                      this.state.toggleNode.clusterId
-                                    )
-                                  ) : (
-                                    <></>
-                                  )}
+
+                                <div
+                                  className={` ${
+                                    this.state.toggleNode.cluster
+                                      ? "global-servies cluster-servies"
+                                      : ""
+                                  }`}
+                                  style={{
+                                    marginTop: "0",
+                                    marginBottom: "0",
+                                    transform: "translateY(0%)",
+                                  }}
+                                >
+                                  <ul>
+                                    {this.state.toggleNode.cluster ? (
+                                      this.renderClusters(
+                                        this.state.toggleNode.vpcId
+                                      )
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </ul>
+                                  <div
+                                    className="global-servies-menu"
+                                    style={{ display: "none" }}
+                                  >
+                                    <label className="active">
+                                      Cloud Management Services
+                                    </label>
+                                    <label>Gateway Services</label>
+                                  </div>
                                 </div>
                                 <div
-                                  className="global-servies-menu "
-                                  style={{ display: "none" }}
+                                  className={` ${
+                                    this.state.toggleNode.product
+                                      ? "global-servies app-servies"
+                                      : ""
+                                  }`}
                                 >
-                                  <label className="active">
-                                    Cloud Management Services
-                                  </label>
-                                  <label>Gateway Services</label>
+                                  <div className="global-servies-menu">
+                                    {this.state.toggleNode.product ? (
+                                      this.renderProducts(
+                                        this.state.toggleNode.vpcId,
+                                        this.state.toggleNode.clusterId
+                                      )
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </div>
+                                  <div
+                                    className="global-servies-menu "
+                                    style={{ display: "none" }}
+                                  >
+                                    <label className="active">
+                                      Cloud Management Services
+                                    </label>
+                                    <label>Gateway Services</label>
+                                  </div>
                                 </div>
-                              </div>
+                              </ArcherContainer>
                             </TransformComponent>
                           </React.Fragment>
                         );
