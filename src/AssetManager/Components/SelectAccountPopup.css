@@ -9,7 +9,7 @@
 }
 
 .select-account-modal-container .modal-content {
-  padding: 30px;
+  padding: 15px;
 }
 
 .select-account-modal-container .modal-content .modal-header {
@@ -77,6 +77,60 @@
     line-height: 16px;
     font-weight: 500;
     color: #000000;
+}
+.select-account-modal-container .modal-content .modal-body .environment-box{
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #b5b5cf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  cursor: pointer;
+}
+.select-account-modal-container .modal-content .modal-body .environment-box .envir-image{
+  background-repeat: no-repeat;
+  display: block;
+  width: 25px;
+  height: 25px;
+  margin: 0 auto 10px;
+}
+.select-account-modal-container .modal-content .modal-body .environment-box .department{
+  background-image: url("../../assets/img/assetmanager/envir-light1.png");
+}
+.select-account-modal-container .modal-content .modal-body .environment-box .testing{
+  background-image: url("../../assets/img/assetmanager/envir-light2.png");
+}
+.select-account-modal-container .modal-content .modal-body .environment-box .stage{
+  background-image: url("../../assets/img/assetmanager/envir-light3.png");
+}
+.select-account-modal-container .modal-content .modal-body .environment-box .production{
+  background-image: url("../../assets/img/assetmanager/envir-light4.png");
+}
+.select-account-modal-container .modal-content .modal-body .environment-box .environment-title{
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #9a9aaf;
+}
+.select-account-modal-container .modal-content .modal-body .environment-box:active{
+  border: 1px solid #383874;
+}
+.select-account-modal-container .modal-content .modal-body .environment-box:active .department{
+  background-image: url("../../assets/img/assetmanager/envir-dark1.png");
+}
+.select-account-modal-container .modal-content .modal-body .environment-box:active .testing{
+  background-image: url("../../assets/img/assetmanager/envir-dark2.png");
+}
+.select-account-modal-container .modal-content .modal-body .environment-box:active .stage{
+  background-image: url("../../assets/img/assetmanager/envir-dark3.png");
+}
+.select-account-modal-container .modal-content .modal-body .environment-box:active .production{
+  background-image: url("../../assets/img/assetmanager/envir-dark4.png");
+}
+.select-account-modal-container .modal-content .modal-body .environment-box:active .environment-title{
+  color: #383874;
+  font-weight: 600;
 }
 
 

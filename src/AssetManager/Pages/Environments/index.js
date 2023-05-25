@@ -5,6 +5,7 @@ import GCP from "../../../assets/img/google-cloud.png";
 import Kubernetes from "../../../assets/img/kubernetes.png";
 import { Link } from "react-router-dom";
 import { config } from "../../config";
+import SelectDepartmentPopup from "../../Components/SelectDepartmentPopup";
 
 const LOGOS = {
   aws: AWS,
@@ -28,7 +29,13 @@ class Environments extends Component {
       currentActiveTableIndex: [],
       dataFetched: false,
     };
+    this.selectDepartmentPopupModalRef = React.createRef();
   }
+
+  onClickSelectDepartmentPopup  = (link) => {
+    this.selectDepartmentPopupModalRef.current.setLink(link);
+    this.selectDepartmentPopupModalRef.current.toggle();
+  };
 
   componentDidMount = () => {
     this.getAccountList();
@@ -355,78 +362,10 @@ class Environments extends Component {
               <div className="row d-flex justify-content-center align-items-center h-100">
                 <div className="col-lg-3 col-md-3 col-sm-12">
                   <div className="environment-fliter">
-                    <div
-                      className="fliter-toggel"
-                      onClick={() =>
-                        this.setState({
-                          showSelectFilter: !showSelectFilter,
-                        })
-                      }
-                    >
+                    <div className="fliter-toggel" onClick={() => this.onClickSelectDepartmentPopup("")}>
                       <i className="fas fa-filter fillter-icon"></i>
-                      Select and fillter
-                      <i className="fas fa-caret-down arrow-icon"></i>
+                      fillter
                     </div>
-                    <div
-                      className={
-                        showSelectFilter === true
-                          ? "fliter-collapse active"
-                          : "fliter-collapse"
-                      }
-                    >
-                      <div className="search-bar">
-                        <input type="text" placeholder="Search...." />
-                      </div>
-                      <ul>
-                        <li>
-                          <input
-                            type="checkbox"
-                            onChange={() => this.handleChecked()}
-                          />
-                          <label>OU</label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            onChange={() => this.handleChecked()}
-                          />
-                          <label>Status</label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            onChange={() => this.handleChecked()}
-                          />
-                          <label>No of Assets</label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            onChange={() => this.handleChecked()}
-                          />
-                          <label>Logs</label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            onChange={() => this.handleChecked()}
-                          />
-                          <label>Performance & Availability</label>
-                        </li>
-                      </ul>
-                    </div>
-                    <div
-                      className={
-                        showSelectFilter === true
-                          ? "fliters-collapse-bg active"
-                          : "fliters-collapse-bg"
-                      }
-                      onClick={() =>
-                        this.setState({
-                          showSelectFilter: !showSelectFilter,
-                        })
-                      }
-                    />
                   </div>
                 </div>
                 <div className="col-lg-9 col-md-9 col-sm-12">
@@ -608,6 +547,7 @@ class Environments extends Component {
             {this.renderEnvironmentTable()}
           </>
         )}
+        <SelectDepartmentPopup ref={this.selectDepartmentPopupModalRef} />
       </div>
     );
   }
