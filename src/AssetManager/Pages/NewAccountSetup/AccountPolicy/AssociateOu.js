@@ -2,16 +2,23 @@ import React, { Component } from "react";
 import SelectExisting from "../../../../assets/img/assetmanager/select-existing.png";
 import CreateFileIcon from "../../../../assets/img/assetmanager/create-file-icon.png";
 import SelectAccountPopup from "../../../Components/SelectAccountPopup";
+import CreateNewAccountPopup from "../../../Components/CreateNewAccountPopup";
+
 
 class AssociateOu extends Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.selectAccountModalRef = React.createRef();
+    this.createNewAccountModalRef = React.createRef();
   }
   onClickSelectAccount  = (link) => {
     this.selectAccountModalRef.current.setLink(link);
     this.selectAccountModalRef.current.toggle();
+  };
+  onClickCreateNewAccount  = (link) => {
+    this.createNewAccountModalRef.current.setLink(link);
+    this.createNewAccountModalRef.current.toggle();
   };
   render() {
     return (
@@ -31,7 +38,7 @@ class AssociateOu extends Component {
                 Select From Existing OU
               </div>
             </div>
-            <div className="select-organizational">
+            <div className="select-organizational" onClick={() => this.onClickCreateNewAccount("")}>
               <div className="organizational-image">
                 <img src={CreateFileIcon} alt="" />
               </div>
@@ -42,6 +49,7 @@ class AssociateOu extends Component {
           </div>
         </div>
         <SelectAccountPopup ref={this.selectAccountModalRef} />
+        <CreateNewAccountPopup ref={this.createNewAccountModalRef} />
       </div>
     );
   }
