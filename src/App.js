@@ -5,8 +5,24 @@ import Breadcrumbs from "./Components/Breadcrumbs";
 import { CustomSideMenu } from "./Components/Header/CustomSideMenu";
 import { AllRoutes } from "./Routes/Routes";
 import { ToastContainer } from "react-toastify";
-
+import { useEffect } from "react";
+import { RestService } from "./Services/RestService";
+import {config} from "./AssetManager/config";
 function App() {
+  useEffect(()=>{
+    if(!localStorage.getItem('organizations')){
+      fetchData()
+    }
+    
+  },[])
+  const fetchData = () => {
+    RestService.getData(config.ORGANIZATIONS, null, null).then(
+      (response) => {
+        localStorage.setItem('organizations',JSON.stringify(response))
+       
+      }
+    );
+  };
   return (
     <div className="standalone-app">
       {/* <GrafanaComponent /> */}

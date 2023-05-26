@@ -4,6 +4,12 @@ import OprationMode2 from "../../../assets/img/assetmanager/opration-mode2.png";
 import { Link } from "react-router-dom";
 
 export class NewAccountSetup extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      service: "read_mode",
+    };
+  }
   render() {
     return (
       <div className="new-account-container">
@@ -21,7 +27,14 @@ export class NewAccountSetup extends Component {
           <div className="opration-cards">
             <div className="row d-flex align-items-center justify-content-center">
               <div className="col-lg-6">
-                <div className="opration-card active">
+                <div
+                  className={`opration-card ${
+                    this.state.service == 'read_mode' ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    this.setState({ service: "read_mode" });
+                  }}
+                >
                   <div className="card-images">
                     <img src={OprationMode1} alt="opration" />
                   </div>
@@ -45,14 +58,16 @@ export class NewAccountSetup extends Component {
                 </div>
               </div>
               <div className="col-lg-6">
-                <div className="opration-card">
+                <div className={`opration-card ${this.state.service == 'automation_mode' ? 'active' :''}`} onClick={()=>{
+                  this.setState({service:'automation_mode' })
+                }}>
                   <div className="card-images">
                     <img src={OprationMode2} alt="opration" />
                   </div>
                   <div className="card-title">Automation Mode</div>
                   <p>
-                    in the Automation Mode, Appkube can be used to actively manage your
-                    cloud and enforce best practices
+                    in the Automation Mode, Appkube can be used to actively
+                    manage your cloud and enforce best practices
                   </p>
                   <div className="available-features">
                     <label>Available Features in Automation Mode:</label>
@@ -73,8 +88,13 @@ export class NewAccountSetup extends Component {
           </div>
           <div className="d-block">
             <button className="asset-blue-button">
-              <Link style={{color: 'white'}} to={'/assetsmanager/pages/newaccountsetup/accountpolicy'}>Get started</Link>
-              </button>
+              <Link
+                style={{ color: "white" }}
+                to={"/assetsmanager/pages/newaccountsetup/accountpolicy"}
+              >
+                Get started
+              </Link>
+            </button>
           </div>
         </div>
       </div>
