@@ -22,14 +22,14 @@ export class CustomSideMenu extends PureComponent {
       childName: 'overview',
     },
     {
-      link: '/assetmanager/pages/environments/environmentList',
+      link: '/assetmanager/pages/environments',
       text: 'Assets',
       cssClass: 'assets',
       childName: 'assets',
       isImplemented: true,
       subMenu: [
         {
-          link: '/assetmanager/pages/environments/environmentList',
+          link: '/assetmanager/pages/environments',
           text: 'Environments',
           childName: 'assets',
           isImplemented: true,
