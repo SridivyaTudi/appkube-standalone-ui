@@ -142,7 +142,7 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/discoveryWizard" element={<DiscoveryWizard />} />
       <Route path="/assetmanager/pages/taggingWizard" element={<TaggingWizard />} />
       <Route path="/assetmanager/pages/addTaggingWizard/:id/:landingZone" element={<AddTaggingWizard />} />
-      <Route path="/assetmanager/pages/treeoverview" element={<TreeOverview />} />
+      <Route path="/assetmanager/pages/meshoverview" element={<TreeOverview />} />
       <Route path="/assetmanager/pages/treeoverview/overviewdetails" element={<OverviewDetails/>}/> 
       <Route path="/assetmanager/pages/meshservices" element={<MeshServices />} />
       <Route path="/assetmanager/pages/meshtopology" element={<MeshTopology />} />
