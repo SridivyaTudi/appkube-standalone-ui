@@ -214,7 +214,7 @@ class EnvironmentList extends Component {
             <span style={{ backgroundColor: "#ff9900" }}></span>
             <p>Environments</p>
           </div>
-          <label>{currentEnv.length}</label>
+          <label>{currentEnv?.length}</label>
         </li>
         <li>
           <div className="data-text">
@@ -235,7 +235,7 @@ class EnvironmentList extends Component {
             <span style={{ backgroundColor: "#00b929" }}></span>
             <p>Total Alerts</p>
           </div>
-          <label>&#65284;{commonData[this.getCloudName()].totalBill}</label>
+          <label>&#65284;{commonData[this.getCloudName()]?.totalBill}</label>
         </li>
       </ul>
     );
