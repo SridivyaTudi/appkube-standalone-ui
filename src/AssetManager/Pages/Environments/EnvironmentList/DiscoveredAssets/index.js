@@ -1068,7 +1068,7 @@ class DiscoveredAssets extends Component {
                                   relations={[
                                     {
                                       targetId:
-                                        this.state.toggleNode.vpcId >= 0
+                                        this.state.toggleNode.vpcId >= 0 && !this.state.toggleNode.globalService
                                           ? `vpc_${this.state.toggleNode.vpcId}` : this.state.toggleNode.globalService ? "globalService" : "",
                                       targetAnchor: "left",
                                       sourceAnchor: "right",
