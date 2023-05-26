@@ -3,13 +3,8 @@ import { images } from "../../../../img";
 import Aws from "../../../../../assets/img/aws.png";
 import VpcServicesIcon from "../../../../../assets/img/assetmanager/vpc-services-icon.png";
 import ClusterIcon from "../../../../../assets/img/assetmanager/cluster-icon.png";
-import GlobalIcon1 from "../../../../../assets/img/assetmanager/global-icon1.png";
-import GlobalIcon2 from "../../../../../assets/img/assetmanager/global-icon2.png";
-import GlobalIcon3 from "../../../../../assets/img/assetmanager/global-icon3.png";
 import GlobalIcon4 from "../../../../../assets/img/assetmanager/global-icon4.png";
 import GlobalIcon5 from "../../../../../assets/img/assetmanager/global-icon5.png";
-import GlobalIcon6 from "../../../../../assets/img/assetmanager/global-icon6.png";
-import GlobalIcon7 from "../../../../../assets/img/assetmanager/global-icon7.png";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import CommonFilterViewSearch from "../CommonFilterViewSearch";
 import ServicesNameLogo from "../ServicesNameLogo";
@@ -20,12 +15,11 @@ import AppTable from "./AppTable";
 import DataTable from "./DataTable";
 import dummyData from "./dummy.json";
 import { ArcherContainer, ArcherElement } from "react-archer";
-const headers = [
-  { label: "Service Name", key: "name" },
-  { label: "Product", key: "product_count" },
-  { label: "App Service", key: "app_count" },
-  { label: "Data Service", key: "data_count" },
-];
+import EksCluster from "./EksCluster";
+import EcsCluster from "./EcsCluster";
+import WafResources from "./WafResources";
+import GlobalSerivces from "./GlobalServices";
+
 const servicesTreeCondition = {
   service: ["cluster", "product", "vpc", "clusterId", "vpcId", "productId"],
   vpc: ["vpcId", "cluster", "product", "clusterId", "productId"],
@@ -105,9 +99,10 @@ class DiscoveredAssets extends Component {
       activeTab: 0,
       searchString: "",
       accountId: queryPrm.get("accountId"),
+      currentActiveCluster: "eksCluster",
     };
   }
-  componentDidMount() {}
+
   showHideDetail = () => {
     const { display_detail } = this.state;
     this.setState({
@@ -301,21 +296,6 @@ class DiscoveredAssets extends Component {
                   true,
                   "cluster"
                 );
-                // this.setState({
-                //   toggleNode: {
-                //     ...this.state.toggleNode,
-                //     vpcId: vpcIndex,
-                //     clusters: true,
-                //     products: false,
-                //     clusterId: null,
-                //     productId: null,
-                //   },
-                //   breadcrumbs: this.prepareBreadCrumbs(
-                //     { id: "VPC" + "_" + vpcIndex, name: vpc.name, type: "VPC" },
-                //     "VPC" + "_" + vpcIndex,
-                //     "VPC"
-                //   ),
-                // });
               }}
             >
               <span id={`vpc_${vpcIndex}`}>
@@ -395,23 +375,6 @@ class DiscoveredAssets extends Component {
                     true,
                     "product"
                   );
-                  // this.setState({
-                  //   toggleNode: {
-                  //     ...this.state.toggleNode,
-                  //     vpcId: index,
-                  //     clusterId: clusterIndex,
-                  //     products: true,
-                  //   },
-                  //   breadcrumbs: this.prepareBreadCrumbs(
-                  //     {
-                  //       id: "cluster" + "_" + clusterIndex,
-                  //       name: cluster.name,
-                  //       type: "cluster",
-                  //     },
-                  //     "cluster" + "_" + clusterIndex,
-                  //     "cluster"
-                  //   ),
-                  // });
                 }}
                 className={`${
                   clusterIndex === this.state.toggleNode.clusterId
@@ -465,23 +428,6 @@ class DiscoveredAssets extends Component {
                     "product",
                     true
                   );
-
-                  // this.setState({
-                  //   toggleNode: {
-                  //     ...this.state.toggleNode,
-                  //     productId: productIndex,
-                  //     products: true,
-                  //   },
-                  //   breadcrumbs: this.prepareBreadCrumbs(
-                  //     {
-                  //       id: "product" + "_" + productIndex,
-                  //       name: product.name,
-                  //       type: "product",
-                  //     },
-                  //     "product" + "_" + productIndex,
-                  //     "product"
-                  //   ),
-                  // });
                 }}
                 id={`${
                   productIndex === this.state.toggleNode.productId &&
@@ -611,14 +557,6 @@ class DiscoveredAssets extends Component {
       });
     }
     toggleNode["globalService"] = false;
-    // let custom = arrowLine({
-    //   source: "#custom_location_1",
-    //   destination: "#vpc_0",
-    //   thickness: 2,
-    //   color: "#c7c7e8",
-    // });
-    // console.log(custom.getRawSvgPath());
-
     this.setState({ toggleNode, breadcrumbs });
   }
 
@@ -707,8 +645,12 @@ class DiscoveredAssets extends Component {
     this.setState({ searchString, vpcsDetails });
   }
 
+  changeActiveCluster = (cluster) => {
+    this.setState({ currentActiveCluster: cluster });
+  };
+
   render() {
-    const { servicesPanelShow, activeTab } = this.state;
+    const { activeTab, currentActiveCluster, toggleNode } = this.state;
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
@@ -724,179 +666,6 @@ class DiscoveredAssets extends Component {
               );
             }}
           />
-
-          {/* <div className="row">
-            <div className="col-lg-6 col-md-12 col-sm-12">
-              <div className="environment-fliter">
-                <div
-                  className="fliter-toggel"
-                  onClick={() =>
-                    this.setState({
-                      showSelectFilter: !showSelectFilter,
-                    })
-                  }
-                >
-                  <i className="fas fa-filter fillter-icon"></i>
-                  Select and fillter
-                  <i className="fas fa-caret-down arrow-icon"></i>
-                </div>
-                <div
-                  className={
-                    showSelectFilter === true
-                      ? "fliter-collapse active"
-                      : "fliter-collapse"
-                  }
-                >
-                  <div className="search-bar">
-                    <input type="text" placeholder="Search...." />
-                  </div>
-                  <ul>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      OU
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      Status
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      No of Assets
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      Logs
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      Performance & Availability
-                    </li>
-                  </ul>
-                </div>
-                <div
-                  className={
-                    showSelectFilter === true
-                      ? "fliters-collapse-bg active"
-                      : "fliters-collapse-bg"
-                  }
-                  onClick={() =>
-                    this.setState({
-                      showSelectFilter: !showSelectFilter,
-                    })
-                  }
-                />
-              </div>
-              <div className="environment-fliter">
-                <div
-                  className="fliter-toggel"
-                  onClick={() =>
-                    this.setState({
-                      showServiceViewFilter: !showServiceViewFilter,
-                    })
-                  }
-                >
-                  <i className="far fa-eye fillter-icon"></i>
-                  Service View
-                  <i className="fas fa-caret-down arrow-icon"></i>
-                </div>
-                <div
-                  className={
-                    showServiceViewFilter === true
-                      ? "fliter-collapse recent-collapse active"
-                      : "fliter-collapse"
-                  }
-                >
-                  <ul>
-                    <li>
-                      <Link to={`/assetmanager/pages/accountsetup`}>
-                        <span>
-                          <img src={Aws} alt="AWS" />
-                        </span>
-                        <p>(657907747545)</p>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to={`/assetmanager/pages/accountsetup`}>
-                        <span>
-                          <img src={Aws} alt="" />
-                        </span>
-                        <p>(655668745458)</p>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to={`/assetmanager/pages/accountsetup`}>
-                        <span>
-                          <img src={Microsoftazure} alt="" />
-                        </span>
-                        <p>(655668745458)</p>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-                <div
-                  className={
-                    showServiceViewFilter === true
-                      ? "fliters-collapse-bg active"
-                      : "fliters-collapse-bg"
-                  }
-                  onClick={() =>
-                    this.setState({
-                      showServiceViewFilter: !showServiceViewFilter,
-                    })
-                  }
-                />
-              </div>
-            </div>
-            <div className="col-lg-6 col-md-12 col-sm-12">
-              <div className="d-inline-block width-100 text-right">
-                {this.state.vpcsDetails && this.state.vpcsDetails.length ? (
-                  <CSVLink
-                    data={this.state.vpcsDetails}
-                    headers={headers}
-                    filename={"vpcs.csv"}
-                    target="_blank"
-                  >
-                    <button className="new-button">
-                      <i className="fas fa-external-link-square-alt p-r-10"></i>
-                      Export
-                    </button>
-                  </CSVLink>
-                ) : (
-                  <></>
-                )}
-                <div className="search-box">
-                  <div className="form-group search-control-group m-b-0">
-                    <input
-                      type="text"
-                      className="input-group-text"
-                      placeholder="Search"
-                      onChange={(e) => {
-                        this.filterVpcsData(e.target.value);
-                      }}
-                    />
-                    <button className="search-btn">
-                      <i className="fa fa-search" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
         <div className="discovered-assets-body">
           {this.props.isLoderData ? (
@@ -910,100 +679,6 @@ class DiscoveredAssets extends Component {
                   <div className="services-panel-title bottom-border">
                     <div className="name">Topology View</div>
                   </div>
-                  {/* <div className="services-panel-body">
-                  <div className="gmnoprint">
-                    <div className="gmnoprint-plus-minus">
-                      <button className="btn btn-plus">
-                        <i className="fal fa-plus"></i>
-                      </button>
-                      <button className="btn btn-minus">
-                        <i className="fal fa-minus"></i>
-                      </button>
-                    </div>
-                    <div className="gmnoprint-map">
-                      <button className="btn btn-map">
-                        <i className="fal fa-map-marker-alt"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="services-inner-body">
-                    <div className="services-text-box active">Amazon Web Services</div>
-                    <div className="global-servies">
-                      <ul>
-                        <li>
-                          <span>
-                            <img src={VpcServicesIcon} alt="" />
-                          </span>
-                          VPC 1
-                        </li>
-                        <li className="active">
-                          <span>
-                            <img src={VpcServicesIcon} alt="" />
-                          </span>
-                          VPC 2
-                        </li>
-                        <li>
-                          <span>
-                            <img src={VpcServicesIcon} alt="" />
-                          </span>
-                          VPC 3
-                        </li>
-                        <li>
-                          <span>
-                            <img src={VpcServicesIcon} alt="" />
-                          </span>
-                          VPC 4
-                        </li>
-                      </ul>
-                      <div className="global-servies-menu">
-                        <label className="active">
-                          <span>
-                            <img src={VpcServicesIcon} alt="" />
-                          </span>
-                          Global servies
-                        </label>
-                      </div>
-                    </div>
-                    <div className="global-servies cluster-servies">
-                      <ul>
-                        <li>
-                          <span>
-                            <img src={ClusterIcon} alt="" />
-                          </span>
-                          Cluster 1
-                        </li>
-                        <li className="active">
-                          <span>
-                            <img src={ClusterIcon} alt="" />
-                          </span>
-                          Cluster 2
-                        </li>
-                        <li>
-                          <span>
-                            <img src={ClusterIcon} alt="" />
-                          </span>
-                          Cluster 3
-                        </li>
-                        <li>
-                          <span>
-                            <img src={ClusterIcon} alt="" />
-                          </span>
-                          Cluster 4
-                        </li>
-                      </ul>
-                      <div className="global-servies-menu">
-                        <label className="active">Cloud Management Services</label>
-                        <label>Gateway Services</label>
-                      </div>
-                    </div>
-                    <div className="global-servies app-servies">
-                      <div className="global-servies-menu">
-                        <label className="active">App Services</label>
-                        <label>Data Services</label>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
                   <div className="services-panel-body">
                     <TransformWrapper
                       onTransformed={(instance) => {
@@ -1068,8 +743,12 @@ class DiscoveredAssets extends Component {
                                   relations={[
                                     {
                                       targetId:
-                                        this.state.toggleNode.vpcId >= 0 && !this.state.toggleNode.globalService
-                                          ? `vpc_${this.state.toggleNode.vpcId}` : this.state.toggleNode.globalService ? "globalService" : "",
+                                        this.state.toggleNode.vpcId >= 0 &&
+                                        !this.state.toggleNode.globalService
+                                          ? `vpc_${this.state.toggleNode.vpcId}`
+                                          : this.state.toggleNode.globalService
+                                          ? "globalService"
+                                          : "",
                                       targetAnchor: "left",
                                       sourceAnchor: "right",
                                       style: {
@@ -1115,9 +794,7 @@ class DiscoveredAssets extends Component {
                                       <></>
                                     )}
                                   </ul>
-                                  <ArcherElement
-                                    id="globalService"
-                                    >
+                                  <ArcherElement id="globalService">
                                     <div
                                       className="global-servies-menu m-t-2"
                                       onClick={(e) => {
@@ -1136,7 +813,6 @@ class DiscoveredAssets extends Component {
                                           },
                                         });
                                       }}
-                                      // style={{ display: "none" }}
                                     >
                                       <label
                                         className={`${
@@ -1186,7 +862,7 @@ class DiscoveredAssets extends Component {
                                   </div>
                                 </div>
                                 <div
-                                  className={` ${
+                                  className={`${
                                     this.state.toggleNode.product
                                       ? "global-servies app-servies"
                                       : ""
@@ -1231,7 +907,6 @@ class DiscoveredAssets extends Component {
                 ) : (
                   <></>
                 )}
-
                 <div
                   className="fliter-tabs"
                   style={{
@@ -1246,30 +921,7 @@ class DiscoveredAssets extends Component {
                   <div className="global-services-fliter">
                     <div className="heading">
                       <div className="breadcrumbs">
-                        <ul>
-                          {this.getBreadCrumbs()}
-                          {/* <li>
-                          <a href="#">AWS</a>
-                        </li>
-                        <li>
-                          <i className="far fa-chevron-right"></i>
-                        </li>
-                        <li>
-                          <a href="#">VPC 1</a>
-                        </li>
-                        <li>
-                          <i className="far fa-chevron-right"></i>
-                        </li>
-                        <li>
-                          <a href="#">Cluster 1</a>
-                        </li>
-                        <li>
-                          <i className="far fa-chevron-right"></i>
-                        </li>
-                        <li>
-                          <span>App Services</span>
-                        </li> */}
-                        </ul>
+                        <ul>{this.getBreadCrumbs()}</ul>
                       </div>
                       <button type="button" className="btn btn-ellipsis">
                         <i className="fas fa-ellipsis-v"></i>
@@ -1403,112 +1055,6 @@ class DiscoveredAssets extends Component {
                     </div>
                   </div>
                 </div>
-
-                {/* <div
-                className="environment-table-section"
-                style={{ height: "395px" }}
-              >
-                <div className="table discovered-assets-table">
-                  <table className="overview">
-                    <thead>
-                      <tr>
-                        <th>
-                          <div className="environment-image">
-                            <img src={Aws} />
-                          </div>
-                        </th>
-                        <th>Products</th>
-                        <th>App Services</th>
-                        <th>Data Services</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody> */}
-
-                {/* <tr>
-                        <td>VPC 1</td>
-                        <td>02</td>
-                        <td>25</td>
-                        <td>35</td>
-                        <td>
-                          <button
-                            type="button"
-                            onClick={this.toggleMenu}
-                            className="list-icon"
-                          >
-                            <i className="fas fa-ellipsis-v"></i>
-                          </button>
-                          {this.state.showMenu == true && (
-                            <div className="menu-list">
-                              <ul>
-                                <li className="active">
-                                  <a href="#">Add New datasource</a>
-                                </li>
-                                <li>
-                                  <a href="#">Add Compliance</a>
-                                </li>
-                                <li>
-                                  <a href="#">Associate to OU</a>
-                                </li>
-                                <li>
-                                  <a href="#">Add New VPC</a>
-                                </li>
-                                <li>
-                                  <a href="#">Add New Product</a>
-                                </li>
-                              </ul>
-                            </div>
-                          )}
-                        </td>
-                      </tr> */}
-                {/* <tr>
-                        <td>VPC 2</td>
-                        <td>02</td>
-                        <td>25</td>
-                        <td>35</td>
-                        <td>
-                          <button type="button" className="list-icon">
-                            <i className="fas fa-ellipsis-v"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>VPC 3</td>
-                        <td>02</td>
-                        <td>25</td>
-                        <td>35</td>
-                        <td>
-                          <button type="button" className="list-icon">
-                            <i className="fas fa-ellipsis-v"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>VPC 4</td>
-                        <td>02</td>
-                        <td>25</td>
-                        <td>35</td>
-                        <td>
-                          <button type="button" className="list-icon">
-                            <i className="fas fa-ellipsis-v"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Global Service</td>
-                        <td>02</td>
-                        <td>25</td>
-                        <td>35</td>
-                        <td>
-                          <button type="button" className="list-icon">
-                            <i className="fas fa-ellipsis-v"></i>
-                          </button>
-                        </td>
-                      </tr> */}
-                {/* </tbody>
-                  </table>
-                </div>
-              </div> */}
                 <div
                   className="fliter-tabs global-service-penal"
                   style={{
@@ -1523,195 +1069,96 @@ class DiscoveredAssets extends Component {
                   <div className="global-services-fliter">
                     <div className="heading">
                       <div className="breadcrumbs">
-                        <ul>
-                          {this.getBreadCrumbs()}
-                          {/* <li>
-                          <a href="#">AWS</a>
-                        </li>
-                        <li>
-                          <i className="far fa-chevron-right"></i>
-                        </li>
-                        <li>
-                          <span>Global Services</span>
-                        </li> */}
-                        </ul>
-                      </div>
-                      {/* <button type="button" className="btn btn-ellipsis">
-                        <i className="fas fa-ellipsis-v"></i>
-                      </button> */}
-                    </div>
-                    {/* <div className="fliter-inputs">
-                      <div className="search-control">
-                        <input
-                          type="text"
-                          className="input-group-text"
-                          placeholder=""
-                        />
-                      </div>
-                      <div className="search-control">
-                        <input
-                          type="text"
-                          className="input-group-text"
-                          placeholder=""
-                        />
-                      </div>
-                      <div className="search-control">
-                        <input
-                          type="text"
-                          className="input-group-text"
-                          placeholder=""
-                        />
-                      </div>
-                    </div> */}
-                  </div>
-                  <div className="environment-boxs m-t-2">
-                    <div className="environment-box">
-                      <div className="environment-title">
-                        <div className="environment-image">
-                          <img src={GlobalIcon4} alt="" />
-                        </div>
-                        <div className="title-name">EKS-Cluster </div>
-                      </div>
-                      <div className="data-contant">
-                        <ul>
-                          {dummyData.eksCluster.map((item) => {
-                            return (
-                              <li>
-                                <div className="data-text">
-                                  <span
-                                    style={{
-                                      backgroundColor: item.backgroundColor,
-                                    }}
-                                  ></span>
-                                  <p>{item.name}</p>
-                                </div>
-                                <label>{item.value}</label>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="environment-box">
-                      <div className="environment-title">
-                        <div className="environment-image">
-                          <img src={GlobalIcon5} alt="" />
-                        </div>
-                        <div className="title-name">ECS-Cluster</div>
-                      </div>
-                      <div className="data-contant">
-                        <ul>
-                          {dummyData.ecsCluster.map((item) => {
-                            return (
-                              <li>
-                                <div className="data-text">
-                                  <span
-                                    style={{
-                                      backgroundColor: item.backgroundColor,
-                                    }}
-                                  ></span>
-                                  <p>{item.name}</p>
-                                </div>
-                                <label>{item.value}</label>
-                              </li>
-                            );
-                          })}
-                        </ul>
+                        <ul>{this.getBreadCrumbs()}</ul>
                       </div>
                     </div>
                   </div>
-                  <div className="resources-section">
-                    <h4>EKS Resources</h4>
-                    <div className="account-list-conitant">
-                      {dummyData.eksResources.map((item) => {
-                        return (
-                          <div className="account-list-details">
-                            <div className="d-block">
-                              <strong>{item.value}</strong>
-                              <p>{item.title}</p>
+                  {toggleNode.clusterId === 0 ? (
+                    <>
+                      <div className="environment-boxs m-t-2">
+                        <div
+                          className="environment-box"
+                          onClick={() => this.changeActiveCluster("eksCluster")}
+                          style={{
+                            border:
+                              currentActiveCluster === "eksCluster"
+                                ? "2px solid #416bff"
+                                : "2px solid #fff",
+                          }}
+                        >
+                          <div className="environment-title">
+                            <div className="environment-image">
+                              <img src={GlobalIcon4} alt="" />
                             </div>
+                            <div className="title-name">EKS-Cluster</div>
                           </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <div className="performance-section">
-                    <div className="performance-head">
-                      <div className="row d-flex justify-content-center align-items-center">
-                        <div className="col-lg-5">
-                          <h4>EKS Performance</h4>
+                          <div className="data-contant">
+                            <ul>
+                              {dummyData.eksCluster.map((item) => {
+                                return (
+                                  <li>
+                                    <div className="data-text">
+                                      <span
+                                        style={{
+                                          backgroundColor: item.backgroundColor,
+                                        }}
+                                      ></span>
+                                      <p>{item.name}</p>
+                                    </div>
+                                    <label>{item.value}</label>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </div>
                         </div>
-                        <div className="col-lg-7">
-                          <div className="head-right">
-                            <button className="light-blue-button m-b-0">
-                              <i class="far fa-stream p-r-10"></i>
-                              fillter
-                            </button>
-                            <button className="light-blue-outline m-b-0 m-r-0">
-                              Explore
-                            </button>
+                        <div
+                          className="environment-box"
+                          onClick={() => this.changeActiveCluster("ecsCluster")}
+                          style={{
+                            border:
+                              currentActiveCluster === "ecsCluster"
+                                ? "2px solid #416bff"
+                                : "2px solid #fff",
+                          }}
+                        >
+                          <div className="environment-title">
+                            <div className="environment-image">
+                              <img src={GlobalIcon5} alt="" />
+                            </div>
+                            <div className="title-name">ECS-Cluster</div>
+                          </div>
+                          <div className="data-contant">
+                            <ul>
+                              {dummyData.ecsCluster.map((item) => {
+                                return (
+                                  <li>
+                                    <div className="data-text">
+                                      <span
+                                        style={{
+                                          backgroundColor: item.backgroundColor,
+                                        }}
+                                      ></span>
+                                      <p>{item.name}</p>
+                                    </div>
+                                    <label>{item.value}</label>
+                                  </li>
+                                );
+                              })}
+                            </ul>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="environment-table-section">
-                      <div className="table discovered-assets-table">
-                        <table className="overview">
-                          <thead>
-                            <tr>
-                              <th>Name</th>
-                              <th>Performance</th>
-                              <th>Availability</th>
-                              <th>Security</th>
-                              <th>Data Protection</th>
-                              <th>User Exp</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {dummyData.eksPerformance.map((item) => {
-                              return (
-                                <tr>
-                                  <td>
-                                    <strong>
-                                      <a href="#">{item.name}</a>
-                                    </strong>
-                                    <i className="fas fa-caret-right m-l-1"></i>
-                                  </td>
-                                  <td>
-                                    <div className="box green">
-                                      <i className="far fa-check"></i>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div className="box orange">
-                                      <i class="fas fa-sort-up"></i>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div className="box red">
-                                      <i class="far fa-stop-circle"></i>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div className="box red">
-                                      <i class="far fa-stop-circle"></i>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div className="box green">
-                                      <i className="far fa-check"></i>
-                                    </div>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
+                      {currentActiveCluster === "eksCluster" && <EksCluster />}
+                      {currentActiveCluster === "ecsCluster" && <EcsCluster />}
+                    </>
+                  ) : toggleNode.clusterId === 1 ? (
+                    <AllTable />
+                  ) : (
+                    <WafResources />
+                  )}
                   <div className="services-panel-tabs">
-                    <div className="tabs-head">
+                    {/* <div className="tabs-head">
                       <ul>
                         {this.tableMapping.map((tabData, index) => {
                           return (
@@ -1725,8 +1172,8 @@ class DiscoveredAssets extends Component {
                           );
                         })}
                       </ul>
-                    </div>
-                    <div className="tabs-content">
+                    </div> */}
+                    {/* <div className="tabs-content">
                       {this.tableMapping.map((tabData, index) => {
                         if (activeTab === index) {
                           return <tabData.component data={[tabData.dataKey]} />;
@@ -1734,126 +1181,7 @@ class DiscoveredAssets extends Component {
                           return <></>;
                         }
                       })}
-                    </div>
-                  </div>
-                  <div className="global-service-cards">
-                    <div className="service-card active">
-                      <div className="service-icon">
-                        <img src={GlobalIcon6} alt="serviceicon" />
-                      </div>
-                      <div className="service-contant">
-                        <label>WAF-Service</label>
-                        <strong>235</strong>
-                      </div>
-                    </div>
-                    <div className="service-card">
-                      <div className="service-icon">
-                        <img src={GlobalIcon7} alt="serviceicon" />
-                      </div>
-                      <div className="service-contant">
-                        <label>API Gateway</label>
-                        <strong>03</strong>
-                      </div>
-                    </div>
-                    <div className="service-card">
-                      <div className="service-icon">
-                        <img src={GlobalIcon3} alt="serviceicon" />
-                      </div>
-                      <div className="service-contant">
-                        <label>Load Balancer</label>
-                        <strong>19</strong>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="resources-section">
-                    <h4>WAF Resources</h4>
-                    <div className="account-list-conitant">
-                      {dummyData.eksResources.map((item) => {
-                        return (
-                          <div className="account-list-details">
-                            <div className="d-block">
-                              <strong>{item.value}</strong>
-                              <p>{item.title}</p>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <div className="performance-section">
-                    <div className="performance-head">
-                      <div className="row d-flex justify-content-center align-items-center">
-                        <div className="col-lg-5">
-                          <h4>Lambda Performance</h4>
-                        </div>
-                        <div className="col-lg-7">
-                          <div className="head-right">
-                            <button className="light-blue-button m-b-0">
-                              <i class="far fa-stream p-r-10"></i>
-                              fillter
-                            </button>
-                            <button className="light-blue-outline m-b-0 m-r-0">
-                              Explore
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="environment-table-section">
-                      <div className="table discovered-assets-table">
-                        <table className="overview">
-                          <thead>
-                            <tr>
-                              <th>Name</th>
-                              <th>Performance</th>
-                              <th>Availability</th>
-                              <th>Security</th>
-                              <th>Data Protection</th>
-                              <th>User Exp</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {dummyData.eksPerformance.map((item) => {
-                              return (
-                                <tr>
-                                  <td>
-                                    <strong>
-                                      <a href="#">{item.name}</a>
-                                    </strong>
-                                    <i className="fas fa-caret-right m-l-1"></i>
-                                  </td>
-                                  <td>
-                                    <div className="box green">
-                                      <i className="far fa-check"></i>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div className="box orange">
-                                      <i class="fas fa-sort-up"></i>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div className="box red">
-                                      <i class="far fa-stop-circle"></i>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div className="box red">
-                                      <i class="far fa-stop-circle"></i>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div className="box green">
-                                      <i className="far fa-check"></i>
-                                    </div>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div
@@ -1876,18 +1204,7 @@ class DiscoveredAssets extends Component {
                   >
                     <div className="heading">
                       <div className="breadcrumbs">
-                        <ul>
-                          {this.getBreadCrumbs()}
-                          {/* <li>
-                          <a href="#">AWS</a>
-                        </li>
-                        <li>
-                          <i className="far fa-chevron-right"></i>
-                        </li>
-                        <li>
-                          <span>VPC 1</span>
-                        </li> */}
-                        </ul>
+                        <ul>{this.getBreadCrumbs()}</ul>
                       </div>
                     </div>
                     <div className="fliter-inputs">
@@ -1915,315 +1232,7 @@ class DiscoveredAssets extends Component {
                     </div>
                   </div>
                 </div>
-                <div
-                  className="global-service-penal"
-                  style={{
-                    display: `${
-                      this.state.toggleNode.globalService ? "block" : "none"
-                    }`,
-                  }}
-                >
-                  <div className="global-services-fliter">
-                    <div className="fliter-tabs">
-                      <div className="global-services-fliter">
-                        <div className="heading">
-                          <div className="breadcrumbs">
-                            <ul>
-                              <li>
-                                <a href="#">AWS</a>
-                              </li>
-                              <li>
-                                <i className="far fa-chevron-right"></i>
-                              </li>
-                              <li>
-                                <span>App Services</span>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="global-service-cards">
-                    <div className="service-card active">
-                      <div className="service-icon">
-                        <img src={GlobalIcon1} alt="serviceicon" />
-                      </div>
-                      <div className="service-contant">
-                        <label>S3</label>
-                        <strong>235</strong>
-                      </div>
-                    </div>
-                    <div className="service-card">
-                      <div className="service-icon">
-                        <img src={GlobalIcon2} alt="serviceicon" />
-                      </div>
-                      <div className="service-contant">
-                        <label>API Gateway</label>
-                        <strong>03</strong>
-                      </div>
-                    </div>
-                    <div className="service-card">
-                      <div className="service-icon">
-                        <img src={GlobalIcon3} alt="serviceicon" />
-                      </div>
-                      <div className="service-contant">
-                        <label>Lambda</label>
-                        <strong>19</strong>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="resources-section">
-                    <h4>S3 Resources</h4>
-                    <div className="account-list-conitant">
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>$96k</strong>
-                          <p>Total Cost</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>540k</strong>
-                          <p>Total function</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>43k</strong>
-                          <p>Error Rate</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>365</strong>
-                          <p>Throttle</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>199</strong>
-                          <p>Latency</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>142</strong>
-                          <p>Trends</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>450k</strong>
-                          <p>Failure Function</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>450k</strong>
-                          <p>Total Buckets</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>41MB</strong>
-                          <p>Used CPU</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>152</strong>
-                          <p>Net Received</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>142</strong>
-                          <p>Request</p>
-                        </div>
-                      </div>
-                      <div className="account-list-details">
-                        <div className="d-block">
-                          <strong>450</strong>
-                          <p>Memory Used</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="performance-section">
-                    <div className="performance-head">
-                      <div className="row d-flex justify-content-center align-items-center">
-                        <div className="col-lg-5">
-                          <h4>S3 Performance</h4>
-                        </div>
-                        <div className="col-lg-7">
-                          <div className="head-right">
-                            <button className="light-blue-button m-b-0">
-                              <i class="far fa-stream p-r-10"></i>
-                              fillter
-                            </button>
-                            <button className="light-blue-outline m-b-0 m-r-0">
-                              Explore
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="environment-table-section">
-                      <div className="table discovered-assets-table">
-                        <table className="overview">
-                          <thead>
-                            <tr>
-                              <th>Name</th>
-                              <th>Performance</th>
-                              <th>Availability</th>
-                              <th>Security</th>
-                              <th>Data Protection</th>
-                              <th>User Exp</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>
-                                <strong>
-                                  <a href="#">S3</a>
-                                </strong>
-                                <i className="fas fa-caret-right m-l-1"></i>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box orange">
-                                  <i class="fas fa-sort-up"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <strong>
-                                  <a href="#">Attendence</a>
-                                </strong>
-                                <i className="fas fa-caret-right m-l-1"></i>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box orange">
-                                  {" "}
-                                  <i class="fas fa-sort-up"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <strong>
-                                  <a href="#">Free</a>
-                                </strong>
-                                <i className="fas fa-caret-right m-l-1"></i>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box orange">
-                                  {" "}
-                                  <i class="fas fa-sort-up"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <strong>
-                                  <a href="#">Exam</a>
-                                </strong>
-                                <i className="fas fa-caret-right m-l-1"></i>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box orange">
-                                  {" "}
-                                  <i class="fas fa-sort-up"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box red">
-                                  <i class="far fa-stop-circle"></i>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="box green">
-                                  <i className="far fa-check"></i>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                {toggleNode.globalService && <GlobalSerivces />}
                 <div className="fliter-tabs" style={{ display: "none" }}>
                   <div className="global-services-fliter">
                     <div className="heading">
