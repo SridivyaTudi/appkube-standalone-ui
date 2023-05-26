@@ -9,13 +9,34 @@ import Lakeformation from "./Lakeformation";
 import * as d3 from "d3";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 var upstreamData = [
-  { name: "John 2", parent: "",children:[{name:'jhon chid up'},{name:'jhon chid up'},{name:'jhon chid up' },{name:'jhon chid up' },{name:'jhon chid up' },],isRoot:true },
+  {
+    name: "",
+    parent: "",
+    children: [
+      { name: "Consumer" },
+      { name: "Consumer" },
+      { name: "Consumer" },
+      { name: "Consumer" },
+      { name: "Consumer" },
+    ],
+    isRoot: true,
+  },
 ];
 // Downstream data
 
 var downstreamData = [
-  { name: "down John 2", parent: "",children:[{name:'jhon chid  down'},{name:'jhon chid down'},{name:'jhon chid down'},{name:'jhon chid  down'},{name:'jhon chid  down'},],isRoot:true },
-  
+  {
+    name: "",
+    parent: "",
+    children: [
+      { name: "Producer" },
+      { name: "Producer" },
+      { name: "Producer" },
+      { name: "Producer" },
+      { name: "Producer" },
+    ],
+    isRoot: true,
+  },
 ];
 class MeshTopology extends Component {
   tabMapping = [
@@ -47,9 +68,9 @@ class MeshTopology extends Component {
       activeTab: 0,
     };
   }
-componentDidMount(){
-  this.init()
-}
+  componentDidMount() {
+    this.init();
+  }
   toggleColumnSelect = () => {
     this.setState({
       servicesPanelShow: !this.state.servicesPanelShow,
@@ -83,7 +104,9 @@ componentDidMount(){
       .select("#meshTopology")
       .append("svg")
       .attr("width", width + margin.right + margin.left)
-      .attr("height", height + margin.top + margin.bottom).style('position','relative').style('left',-310);
+      .attr("height", height + margin.top + margin.bottom)
+      .style("position", "relative")
+      .style("left", -310);
 
     this.makeRightTree();
     this.makeLeftTree();
@@ -166,9 +189,9 @@ componentDidMount(){
         // .attr("ry", 15)
         .style("fill", "var(--color-textondarkcanvas, #fff)")
         .style("strokeWidth", 33)
-        .style("stroke",function (d) {
-          return d.isRoot ? 'blue' : "rgb(0,0,0)";
-        } );
+        .style("stroke", function (d) {
+          return d.isRoot ? "blue" : "rgb(0,0,0)";
+        });
 
       nodeEnter
         .append("text")
@@ -239,7 +262,8 @@ componentDidMount(){
             source: o,
             target: o,
           });
-        }).style('stroke','grey');
+        })
+        .style("stroke", "grey");
 
       // Transition links to their new position.
       link.transition().duration(duration).attr("d", diagonal);
@@ -413,7 +437,8 @@ componentDidMount(){
             source: o,
             target: o,
           });
-        }).style('stroke','grey');
+        })
+        .style("stroke", "grey");
       // Transition links to their new position.
       link.transition().duration(duration).attr("d", diagonal);
 
@@ -450,26 +475,45 @@ componentDidMount(){
             <div className="mesh-topology-left">
               <h2>Mesh Topology</h2>
               <TransformWrapper>
-              {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-                <React.Fragment>
-                  <TransformComponent
-                  // wrapperStyle={{ width: "100%", height: "100%" }}
-                  // contentStyle={{
-                  //   width: "100%",
-                  //   height: "100%",
-                  //   justifyContent: "center",
-                  //   alignItems: "flex-start",
-                  //   paddingTop: "50px",
-                  //   display: "flex",
-                  //   transform: "translate(0px, 0px) scale(0)",
-                  // }}
-                  >
-                    <div className="topology-chart-box" id="meshTopology"></div>
-                  </TransformComponent>
-                </React.Fragment>
-              )}
-            </TransformWrapper>
-       
+                {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                  <React.Fragment>
+                    <div className="gmnoprint">
+                      <div className="gmnoprint-plus-minus">
+                        <button
+                          className="btn btn-plus"
+                          onClick={() => zoomIn()}
+                        >
+                          <i className="fal fa-plus"></i>
+                        </button>
+                        <button
+                          className="btn btn-minus"
+                          onClick={() => zoomOut()}
+                        >
+                          <i className="fal fa-minus"></i>
+                        </button>
+                      </div>
+                     
+                    </div>
+                    <TransformComponent
+                    // wrapperStyle={{ width: "100%", height: "100%" }}
+                    // contentStyle={{
+                    //   width: "100%",
+                    //   height: "100%",
+                    //   justifyContent: "center",
+                    //   alignItems: "flex-start",
+                    //   paddingTop: "50px",
+                    //   display: "flex",
+                    //   transform: "translate(0px, 0px) scale(0)",
+                    // }}
+                    >
+                      <div
+                        className="topology-chart-box"
+                        id="meshTopology"
+                      ></div>
+                    </TransformComponent>
+                  </React.Fragment>
+                )}
+              </TransformWrapper>
             </div>
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12 ">
