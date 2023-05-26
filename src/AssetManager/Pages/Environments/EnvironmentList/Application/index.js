@@ -3,6 +3,13 @@ import AWS from "../../../../../assets/img/aws.png";
 import AZURE from "../../../../../assets/img/microsoftazure.png";
 import GCP from "../../../../../assets/img/google-cloud.png";
 import { Link } from "react-router-dom";
+import RunningIcon from "../../../../../assets/img/assetmanager/running-icon.png";
+import AirAsiaIcon from "../../../../../assets/img/assetmanager/air-asia-icon.png";
+import UpdatingIcon from "../../../../../assets/img/assetmanager/updating-icon.png";
+import StopIcon from "../../../../../assets/img/assetmanager/stop-icon.png";
+import ProcurifyIcon from "../../../../../assets/img/assetmanager/procurify-icon.png";
+import FlipkartIcon from "../../../../../assets/img/assetmanager/flipkart-icon.png"
+import AppleIcon from "../../../../../assets/img/assetmanager/apple-icon.png";
 
 class Application extends Component {
   constructor(props) {
@@ -85,229 +92,109 @@ class Application extends Component {
     return (
       <div className="discovered-assets">
         <div className="discovered-assets-head">
-          <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-12">
-              <div className="environment-fliter">
-                <div
-                  className="fliter-toggel"
-                  onClick={() =>
-                    this.setState({
-                      showSelectFilter: !showSelectFilter,
-                    })
-                  }
-                >
-                  <i class="fas fa-filter fillter-icon"></i>
-                  Select and fillter
-                  <i className="fas fa-caret-down arrow-icon"></i>
+          <h3 className="m-b-2">My Workspace</h3>
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col-lg-8 col-md-8 col-sm-10">
+              <div className="d-flex justify-content-center align-items-center">
+                <div className="lest-view">
+                  <ul>
+                    <li className="active">
+                      <a>
+                        <i class="fas fa-list p-r-5"></i> List View
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <i class="fas fa-th-large p-r-5"></i> Grid View
+                      </a>
+                    </li>
+                  </ul>
                 </div>
-                <div
-                  className={
-                    showSelectFilter === true
-                      ? "fliter-collapse active"
-                      : "fliter-collapse"
-                  }
-                >
-                  <div className="search-bar">
-                    <input type="text" placeholder="Search...." />
+                <div className="environment-fliter">
+                  <div
+                    className="fliter-toggel"
+                    onClick={() =>
+                      this.setState({
+                        showSelectFilter: !showSelectFilter,
+                      })
+                    }
+                  >
+                    <i class="fas fa-filter fillter-icon"></i>
+                    fillter
+                    <i className="fas fa-caret-down arrow-icon"></i>
                   </div>
-                  <ul>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      OU
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      Status
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      No of Assets
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      Logs
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleChecked()}
-                      />
-                      Performance & Availability
-                    </li>
-                  </ul>
+                  <div
+                    className={
+                      showSelectFilter === true
+                        ? "fliter-collapse active"
+                        : "fliter-collapse"
+                    }
+                  >
+                    <div className="search-bar">
+                      <input type="text" placeholder="Search...." />
+                    </div>
+                    <ul>
+                      <li>
+                        <input
+                          type="checkbox"
+                          onChange={() => this.handleChecked()}
+                        />
+                        OU
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          onChange={() => this.handleChecked()}
+                        />
+                        Status
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          onChange={() => this.handleChecked()}
+                        />
+                        No of Assets
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          onChange={() => this.handleChecked()}
+                        />
+                        Logs
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          onChange={() => this.handleChecked()}
+                        />
+                        Performance & Availability
+                      </li>
+                    </ul>
+                  </div>
+                  <div
+                    className={
+                      showSelectFilter === true
+                        ? "fliters-collapse-bg active"
+                        : "fliters-collapse-bg"
+                    }
+                    onClick={() =>
+                      this.setState({
+                        showSelectFilter: !showSelectFilter,
+                      })
+                    }
+                  />
                 </div>
-                <div
-                  className={
-                    showSelectFilter === true
-                      ? "fliters-collapse-bg active"
-                      : "fliters-collapse-bg"
-                  }
-                  onClick={() =>
-                    this.setState({
-                      showSelectFilter: !showSelectFilter,
-                    })
-                  }
-                />
-              </div>
-              <div className="environment-fliter">
-                <div
-                  className="fliter-toggel"
-                  onClick={() =>
-                    this.setState({
-                      showServiceViewFilter: !showServiceViewFilter,
-                    })
-                  }
-                >
-                  <i class="far fa-eye fillter-icon"></i>
-                  Service View
-                  <i className="fas fa-caret-down arrow-icon"></i>
-                </div>
-                <div
-                  className={
-                    showServiceViewFilter === true
-                      ? "fliter-collapse recent-collapse active"
-                      : "fliter-collapse"
-                  }
-                >
-                  <ul>
-                    <li>
-                      <Link to={`/assetmanager/pages/accountsetup`}>
-                        <span>
-                          <img src={AWS} alt="AWS" />
-                        </span>
-                        <p>(657907747545)</p>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to={`/assetmanager/pages/accountsetup`}>
-                        <span>
-                          <img src={AWS} alt="" />
-                        </span>
-                        <p>(655668745458)</p>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to={`/assetmanager/pages/accountsetup`}>
-                        <span>
-                          <img src={AZURE} alt="" />
-                        </span>
-                        <p>(655668745458)</p>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-                <div
-                  className={
-                    showServiceViewFilter === true
-                      ? "fliters-collapse-bg active"
-                      : "fliters-collapse-bg"
-                  }
-                  onClick={() =>
-                    this.setState({
-                      showServiceViewFilter: !showServiceViewFilter,
-                    })
-                  }
-                />
+                <button className="asset-blue-button min-width-inherit m-b-0 m-r-0">
+                  <i class="fas fa-history p-r-5"></i> Recent
+                </button>
               </div>
             </div>
-            <div className="col-lg-6 col-md-6 col-sm-12">
+            <div className="col-lg-4 col-md-4 col-sm-2">
               <div className="d-inline-block width-100 text-right">
-                {JSON.parse(localStorage.getItem("recentEnv")) !== null && (
-                  <div className="environment-fliter">
-                    <div
-                      className="fliter-toggel"
-                      onClick={() =>
-                        this.setState({
-                          showRecentFilter: !showRecentFilter,
-                        })
-                      }
-                    >
-                      <i class="far fa-clock fillter-icon"></i>
-                      Recent
-                      <i className="fas fa-caret-down arrow-icon"></i>
-                    </div>
-                    <div
-                      className={
-                        showRecentFilter === true
-                          ? "fliter-collapse recent-collapse active"
-                          : "fliter-collapse"
-                      }
-                    >
-                      <ul>
-                        {JSON.parse(localStorage.getItem("recentEnv"))?.map(
-                          (item) => {
-                            return (
-                              <li>
-                                <Link
-                                  to={`/assetmanager/pages/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
-                                  onClick={() => {
-                                    this.setLocalRecentService(item);
-                                    this.props.updateCurrentAccountId(
-                                      item.accountId
-                                    );
-                                  }}
-                                >
-                                  <span>
-                                    <img
-                                      src={
-                                        item.accountType === "AWS"
-                                          ? AWS
-                                          : item.accountType === "GCP"
-                                          ? GCP
-                                          : AZURE
-                                      }
-                                      alt={item.accountType}
-                                    />
-                                  </span>
-                                  <p>({item.accountId})</p>
-                                </Link>
-                              </li>
-                            );
-                          }
-                        )}
-                      </ul>
-                    </div>
-                    <div
-                      className={
-                        showRecentFilter === true
-                          ? "fliters-collapse-bg active"
-                          : "fliters-collapse-bg"
-                      }
-                      onClick={() =>
-                        this.setState({
-                          showRecentFilter: !showRecentFilter,
-                        })
-                      }
-                    />
-                  </div>
-                )}
-
-                <div className="search-box">
-                  <form>
-                    <div className="form-group search-control-group m-b-0">
-                      <input
-                        type="text"
-                        className="input-group-text"
-                        placeholder="Search"
-                      />
-                      <button className="search-btn">
-                        <i className="fa fa-search" />
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                <button className="new-button min-width-inherit m-b-0 m-r-0">
+                  {" "}
+                  <i class="fas fa-plus-square p-r-5"></i> Create New
+                </button>
               </div>
             </div>
           </div>
@@ -318,79 +205,372 @@ class Application extends Component {
               <thead>
                 <tr>
                   <th>
-                    <i className="m-r-1 fas fa-sort-down"></i>
-                    <strong>Name</strong>
+                    <strong>Workspace</strong>
                   </th>
+                  <th>Status</th>
+                  <th>Client</th>
+                  <th className="ou">Line Of Business</th>
+                  <th>Tags</th>
+                  <th>User Count</th>
+                  <th>Usage</th>
                   <th>App Services</th>
                   <th>Data Services</th>
-                  <th className="ou">OU</th>
-                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {this.props.departmentWiseData?.organization?.departmentList?.map(
-                  (item) => {
-                    return (
-                      <>
-                        {item.productList.map((product, index) => {
-                          return (
-                            <>
-                              <tr>
-                                <td>
-                                  <i className="m-r-1 fas fa-sort-down"></i>
-                                  <strong>
-                                    <a href="#">{product.name}</a>
-                                  </strong>
-                                </td>
-                                <td>{this.getAppServicesCount(product)}</td>
-                                <td>{this.getDataServicesCount(product)}</td>
-                                <td className="ou">
-                                  {product.deploymentEnvironmentList.map(
-                                    (env) => {
-                                      return `${env.name}, `;
-                                    }
-                                  )}
-                                </td>
-                                <td>
-                                  <button
-                                    type="button"
-                                    onClick={() => this.toggleMenu(index)}
-                                    className="list-icon"
-                                  >
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  {this.state.showMenuIndex === index && (
-                                    <div className="menu-list">
-                                      <ul>
-                                        <li className="active">
-                                          <a href="#">Add New datasource</a>
-                                        </li>
-                                        <li>
-                                          <a href="#">Add Compliance</a>
-                                        </li>
-                                        <li>
-                                          <a href="#">Associate to OU</a>
-                                        </li>
-                                        <li>
-                                          <a href="#">Add New VPC</a>
-                                        </li>
-                                        <li>
-                                          <a href="#">Add New Product</a>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  )}
-                                </td>
-                              </tr>
-                            </>
-                          );
-                        })}
-                      </>
-                    );
-                  }
-                )}
+                <tr>
+                  <td>
+                    <a>HRMS</a>
+                  </td>
+                  <td>
+                    {" "}
+                    <span>
+                      <img src={RunningIcon} alt="" />
+                    </span>
+                    <strong>Running</strong>
+                  </td>
+                  <td>
+                    {" "}
+                    <span>
+                      <img src={AirAsiaIcon} alt="" />
+                    </span>
+                    <strong>Procurify</strong>
+                  </td>
+                  <td>
+                    <div className="business-btn"> Logistics</div>
+                  </td>
+                  <td>
+                    <strong>13</strong>
+                  </td>
+                  <td>
+                    <strong>500</strong>
+                  </td>
+                  <td>
+                    <strong>33%</strong>
+                  </td>
+                  <td>
+                    <strong>41</strong>
+                  </td>
+                  <td>
+                    <strong>29</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a>EMS</a>
+                  </td>
+                  <td>
+                    {" "}
+                    <span>
+                      <img src={RunningIcon} alt="" />
+                    </span>
+                    <strong>Running</strong>
+                  </td>
+                  <td>
+                    {" "}
+                    <span>
+                      <img src={AirAsiaIcon} alt="" />
+                    </span>
+                    <strong>HDFC bank</strong>
+                  </td>
+                  <td>
+                    <div className="business-btn"> Transaction</div>
+                  </td>
+                  <td>
+                    <strong>13</strong>
+                  </td>
+                  <td>
+                    <strong>500</strong>
+                  </td>
+                  <td>
+                    <strong>33%</strong>
+                  </td>
+                  <td>
+                    <strong>41</strong>
+                  </td>
+                  <td>
+                    <strong>29</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a>PROCUREMENT</a>
+                  </td>
+                  <td>
+                    {" "}
+                    <span>
+                      <img src={UpdatingIcon} alt="" />
+                    </span>
+                    <strong>Updating</strong>
+                  </td>
+                  <td>
+                    {" "}
+                    <span>
+                      <img src={AirAsiaIcon} alt="" />
+                    </span>
+                    <strong>Air Asia</strong>
+                  </td>
+                  <td>
+                    <div className="business-btn"> Fleets</div>
+                  </td>
+                  <td>
+                    <strong>13</strong>
+                  </td>
+                  <td>
+                    <strong>500</strong>
+                  </td>
+                  <td>
+                    <strong>33%</strong>
+                  </td>
+                  <td>
+                    <strong>41</strong>
+                  </td>
+                  <td>
+                    <strong>29</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a>APPCUBE</a>
+                  </td>
+                  <td>
+                    {" "}
+                    <span>
+                      <img src={StopIcon} alt="" />
+                    </span>
+                    <strong>Stop</strong>
+                  </td>
+                  <td>
+                    {" "}
+                    <span>
+                      <img src={AirAsiaIcon} alt="" />
+                    </span>
+                    <strong>Walmart</strong>
+                  </td>
+                  <td>
+                    <div className="business-btn"> Inventory</div>
+                  </td>
+                  <td>
+                    <strong>13</strong>
+                  </td>
+                  <td>
+                    <strong>500</strong>
+                  </td>
+                  <td>
+                    <strong>33%</strong>
+                  </td>
+                  <td>
+                    <strong>41</strong>
+                  </td>
+                  <td>
+                    <strong>29</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a>HRMS</a>
+                  </td>
+                  <td>
+                    {" "}
+                    <span>
+                      <img src={UpdatingIcon} alt="" />
+                    </span>
+                    <strong>Updating</strong>
+                  </td>
+                  <td>
+                    {" "}
+                    <span>
+                      <img src={AirAsiaIcon} alt="" />
+                    </span>
+                    <strong>Adobe</strong>
+                  </td>
+                  <td>
+                    <div className="business-btn"> Frames</div>
+                  </td>
+                  <td>
+                    <strong>13</strong>
+                  </td>
+                  <td>
+                    <strong>500</strong>
+                  </td>
+                  <td>
+                    <strong>33%</strong>
+                  </td>
+                  <td>
+                    <strong>41</strong>
+                  </td>
+                  <td>
+                    <strong>29</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a>EMS</a>
+                  </td>
+                  <td>
+                    {" "}
+                    <span>
+                      <img src={RunningIcon} alt="" />
+                    </span>
+                    <strong>Running</strong>
+                  </td>
+                  <td>
+                    {" "}
+                    <span>
+                      <img src={AirAsiaIcon} alt="" />
+                    </span>
+                    <strong>Procurify</strong>
+                  </td>
+                  <td>
+                    <div className="business-btn"> Banking</div>
+                  </td>
+                  <td>
+                    <strong>13</strong>
+                  </td>
+                  <td>
+                    <strong>500</strong>
+                  </td>
+                  <td>
+                    <strong>33%</strong>
+                  </td>
+                  <td>
+                    <strong>41</strong>
+                  </td>
+                  <td>
+                    <strong>29</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a>PROCUREMENT</a>
+                  </td>
+                  <td>
+                    {" "}
+                    <span>
+                      <img src={RunningIcon} alt="" />
+                    </span>
+                    <strong>Running</strong>
+                  </td>
+                  <td>
+                    {" "}
+                    <span>
+                      <img src={AirAsiaIcon} alt="" />
+                    </span>
+                    <strong>Flipkart</strong>
+                  </td>
+                  <td>
+                    <div className="business-btn"> Client</div>
+                  </td>
+                  <td>
+                    <strong>13</strong>
+                  </td>
+                  <td>
+                    <strong>500</strong>
+                  </td>
+                  <td>
+                    <strong>33%</strong>
+                  </td>
+                  <td>
+                    <strong>41</strong>
+                  </td>
+                  <td>
+                    <strong>29</strong>
+                  </td>
+                </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+        <div className="recently-viewed-section">
+          <h3 className="m-t-2 m-b-2">Recently Viewed</h3>
+          <div className="recently-cards">
+            <div className="recently-card">
+              <div className="recently-image">
+                <img src={ProcurifyIcon} alt="" />
+              </div>
+              <div className="recently-content">
+                <div className="title">Procurify</div>
+                <div className="refund-content">
+                  <span>Logistics-Tool</span>
+                </div>
+              </div>
+            </div>
+            <div className="recently-card">
+              <div className="recently-image">
+                <img src={FlipkartIcon} alt="" />
+              </div>
+              <div className="recently-content">
+                <div className="title">Flipkart-App</div>
+                <div className="refund-content">
+                  <span>Order</span>
+                  <span>Refunds</span>
+                </div>
+              </div>
+            </div>
+            <div className="recently-card">
+              <div className="recently-image">
+                <img src={AppleIcon} alt="" />
+              </div>
+              <div className="recently-content">
+                <div className="title">Apple-Data</div>
+                <div className="refund-content">
+                  <span>Security-Databese</span>
+                </div>
+              </div>
+            </div>
+            <div className="recently-card">
+              <div className="recently-image">
+                <img src={ProcurifyIcon} alt="" />
+              </div>
+              <div className="recently-content">
+                <div className="title">Forbese-Tools</div>
+                <div className="refund-content">
+                  <span>Automation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="recently-viewed-section">
+          <h3 className="m-t-2 m-b-2">Favorites</h3>
+          <div className="recently-cards">
+            <div className="recently-card">
+              <div className="recently-image">
+                <img src={ProcurifyIcon} alt="" />
+              </div>
+              <div className="recently-content">
+                <div className="title">Procurify</div>
+                <div className="refund-content">
+                  <span>Logistics-Tool</span>
+                </div>
+              </div>
+              <div className="favorites-check"><i class="fas fa-star"></i></div>
+            </div>
+            <div className="recently-card">
+              <div className="recently-image">
+                <img src={FlipkartIcon} alt="" />
+              </div>
+              <div className="recently-content">
+                <div className="title">Flipkart-App</div>
+                <div className="refund-content">
+                  <span>Order</span>
+                  <span>Refunds</span>
+                </div>
+              </div>
+              <div className="favorites-check"><i class="fas fa-star"></i></div>
+            </div>
+            <div className="recently-card">
+              <div className="recently-image">
+                <img src={AppleIcon} alt="" />
+              </div>
+              <div className="recently-content">
+                <div className="title">Apple-Data</div>
+                <div className="refund-content">
+                  <span>Security-Databese</span>
+                </div>
+              </div>
+              <div className="favorites-check"><i class="fas fa-star"></i></div>
+            </div>
           </div>
         </div>
       </div>
