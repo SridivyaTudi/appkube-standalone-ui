@@ -32,24 +32,21 @@ class DeployProject extends Component {
                 </div>
               </div>
               <div className="col-lg-6">
-                <div className="opration-card">
-                  <div className="card-images">
-                    <img src={DeploymentImg2} alt="opration" />
+                <Link to={'/assetsmanager/pages/environments/environmentlist/configurtopology'}>
+                  <div className="opration-card">
+                    <div className="card-images">
+                      <img src={DeploymentImg2} alt="opration" />
+                    </div>
+                    <div className="card-title">Create from Scratch</div>
+                    <p>Create your own or migrate an existing products</p>
                   </div>
-                  <div className="card-title">Create from Scratch</div>
-                  <p>
-                   Create your own or migrate an existing products
-                  </p>
-                </div>
+                </Link>
               </div>
             </div>
           </div>
           <div className="d-block">
             <button className="asset-blue-button">
-              <Link
-                style={{ color: "white" }}
-                to={""}
-              >
+              <Link style={{ color: "white" }} to={""}>
                 Back
               </Link>
             </button>
