@@ -8,7 +8,7 @@ import AirAsiaIcon from "../../../../../assets/img/assetmanager/air-asia-icon.pn
 import UpdatingIcon from "../../../../../assets/img/assetmanager/updating-icon.png";
 import StopIcon from "../../../../../assets/img/assetmanager/stop-icon.png";
 import ProcurifyIcon from "../../../../../assets/img/assetmanager/procurify-icon.png";
-import FlipkartIcon from "../../../../../assets/img/assetmanager/flipkart-icon.png"
+import FlipkartIcon from "../../../../../assets/img/assetmanager/flipkart-icon.png";
 import AppleIcon from "../../../../../assets/img/assetmanager/apple-icon.png";
 
 class Application extends Component {
@@ -192,8 +192,13 @@ class Application extends Component {
             <div className="col-lg-4 col-md-4 col-sm-2">
               <div className="d-inline-block width-100 text-right">
                 <button className="new-button min-width-inherit m-b-0 m-r-0">
-                  {" "}
-                  <i class="fas fa-plus-square p-r-5"></i> Create New
+                  <Link style={{color: 'white'}}
+                    to={
+                      "/assetsmanager/pages/environments/environmentlist/deployproject"
+                    }
+                  >
+                    <i class="fas fa-plus-square p-r-5"></i> Create New
+                  </Link>
                 </button>
               </div>
             </div>
@@ -544,7 +549,9 @@ class Application extends Component {
                   <span>Logistics-Tool</span>
                 </div>
               </div>
-              <div className="favorites-check"><i class="fas fa-star"></i></div>
+              <div className="favorites-check">
+                <i class="fas fa-star"></i>
+              </div>
             </div>
             <div className="recently-card">
               <div className="recently-image">
@@ -557,7 +564,9 @@ class Application extends Component {
                   <span>Refunds</span>
                 </div>
               </div>
-              <div className="favorites-check"><i class="fas fa-star"></i></div>
+              <div className="favorites-check">
+                <i class="fas fa-star"></i>
+              </div>
             </div>
             <div className="recently-card">
               <div className="recently-image">
@@ -569,7 +578,9 @@ class Application extends Component {
                   <span>Security-Databese</span>
                 </div>
               </div>
-              <div className="favorites-check"><i class="fas fa-star"></i></div>
+              <div className="favorites-check">
+                <i class="fas fa-star"></i>
+              </div>
             </div>
           </div>
         </div>

@@ -69,6 +69,26 @@ p {
     outline: none;
   }
 }
+.btn-light{
+  background: #dde1f8 !important;
+  color: #383874 !important;
+  border: none !important;
+  padding: 7px 15px !important;
+  border-radius: 5px !important;
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: inline-block !important;
+  //min-width: 100px;
+  text-align: center;
+  &:hover,
+  &:focus {
+    background: #ffffff !important;
+    color: #383874 !important;
+    outline: none;
+  }
+}
 .new-button-outline {
   background: transparent !important;
   color: #1d33d5 !important;

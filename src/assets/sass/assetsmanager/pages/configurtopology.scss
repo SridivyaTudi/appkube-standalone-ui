@@ -1,0 +1,214 @@
+.deploy-project-container {
+  width: 100%;
+  display: block;
+  padding: 15px 20px;
+  background-color: #f6f7fb;
+  h2 {
+    font-size: 22px;
+    line-height: 26px;
+    font-weight: 600;
+    color: #000000;
+  }
+  p {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+    color: #000000;
+  }
+  .configur-head {
+    .button-group {
+      display: inline-block;
+      background: #ffffff;
+      padding: 8px 15px;
+      border-radius: 5px;
+      .asset-blue-button {
+        margin-bottom: 0;
+        font-weight: 600;
+        i {
+          margin-right: 8px;
+        }
+      }
+      .btn-light {
+        margin-bottom: 0;
+        img {
+          margin-right: 8px;
+        }
+      }
+      .coustom-btn {
+        font-weight: 600;
+        margin-right: 0;
+        margin-left: 8px;
+        margin-bottom: 0;
+        position: relative;
+        &::after {
+          content: "";
+          top: 0;
+          left: -17px;
+          width: 1px;
+          height: 100%;
+          background: #edeff8;
+          position: absolute;
+        }
+      }
+    }
+  }
+  .configur-content {
+    width: 100%;
+    display: block;
+    margin-top: 20px;
+    .api-server {
+      padding: 30px 20px;
+      border-radius: 10px;
+      background: #ffffff;
+      min-height: 677px;
+      .asset-blue-button {
+        font-weight: 600;
+      }
+      .plus-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        font-size: 18px;
+        line-height: 30px;
+        text-align: center;
+        margin: 15px auto;
+        background: #3b7cff;
+        color: #ffffff;
+      }
+      .down-arrow {
+        font-size: 10px;
+        font-size: 20px;
+        margin: 10px 0;
+        color: #383874;
+      }
+      .eks-logo-boxs {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 15px;
+        padding-bottom: 15px;
+        .box-arrow {
+          font-size: 20px;
+          color: #383874;
+        }
+        .eks-logo {
+          width: 50px;
+          height: 50px;
+          align-items: center;
+          justify-content: center;
+          display: flex;
+          border-radius: 5px;
+          background: #f4f4f4;
+          margin: 10px 10px 5px 10px;
+        }
+        .title {
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 600;
+          color: #383874;
+        }
+      }
+      .progress-bar {
+        width: 100%;
+      }
+      .address-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+          i {
+            font-size: 30px;
+            color: #faa24b;
+            margin-right: 10px;
+          }
+        }
+        p {
+          font-size: 25px;
+          line-height: 30px;
+          font-weight: 600;
+          color: #384cff;
+          margin: 0;
+        }
+        i {
+          font-size: 30px;
+          color: #384cff;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+  .application-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    .reserved-card {
+      width: 165px;
+      padding: 10px;
+      border-radius: 10px;
+      background: #384cff;
+      margin: 0 10px;
+      &:first-child {
+        margin-left: 0;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 6px;
+        h4 {
+          font-size: 12px;
+          line-height: 16px;
+          font-weight: 600;
+          color: #ffffff;
+          margin: 0;
+        }
+        i {
+          width: 20px;
+          height: 20px;
+          text-align: center;
+          border-radius: 19px;
+          background: #ffffff;
+          line-height: 20px;
+          padding: 2px;
+          font-size: 12px;
+          color: #384cff;
+        }
+      }
+      .reseved-content {
+        input {
+          width: 25px;
+          border-radius: 3px;
+          font-size: 12px;
+          font-weight: 500;
+        }
+        .dropdown-arrow {
+          display: block;
+          line-height: 1.2px;
+          margin-left: 5px;
+          color: #ffffff;
+          i {
+            font-size: 12px;
+            line-height: 12px;
+          }
+        }
+        span {
+          font-size: 10px;
+          line-height: 14px;
+          font-weight: 500;
+          color: #ffffff;
+        }
+        p {
+          margin: 10px 0 0 0;
+          font-size: 10px;
+          line-height: 14px;
+          font-weight: 500;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+}
