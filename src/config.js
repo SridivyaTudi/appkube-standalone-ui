@@ -1,6 +1,7 @@
 const searchSrvUrl = `http://34.199.12.114:8092`;
 const alertSrvUrl = `http://34.199.12.114:5055`;
 const ticketSrvUrl = `http://34.199.12.114:7100/api`;
+const envsUrl = `http://34.199.12.114:6057/api`;
 
 const IP = "localhost";
 
@@ -21,8 +22,13 @@ const localHostTicketSrvUrl = `http://100.64.108.25:7100/api`;
 
 let config = {
   baseURL: "http://34.199.12.114:6067/api",
-  newBaseURL: 'http://34.199.12.114:5057/api',
+  newBaseURL: "http://34.199.12.114:5057/api",
   alertManagerURL: "http://34.199.12.114:8092",
+
+  /* ASSETMANAGER SERVICES  */
+  GET_ALL_ENVIRONMENT_COUNT: `${envsUrl}/organizations/#org-id#/cloud-environments/count`,
+  GET_ALL_ENVIRONMENT_SUMMARY: `${envsUrl}/organizations/#org-id#/cloud-environments/summary`,
+  GET_ALL_ORGS: `${envsUrl}/organizations`,
 
   /* ALERTMANAGER SERVICES  */
   alertManagerBasePath: "/alertmanager/page",

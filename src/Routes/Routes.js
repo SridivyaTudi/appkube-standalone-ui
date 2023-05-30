@@ -36,6 +36,8 @@ import MeshServices from'../AssetManager/Pages/MeshServices';
 import MeshTopology from '../AssetManager/Pages/MeshTopology';
 import NewAccountSetup from '../AssetManager/Pages/NewAccountSetup';
 import AccountPolicy from '../AssetManager/Pages/NewAccountSetup/AccountPolicy';
+import DeployProject from '../AssetManager/Pages/Environments/EnvironmentList/DeployProject';
+import ConfigurTopology from '../AssetManager/Pages/Environments/EnvironmentList/ConfigurTopology';
 
 //***** AlertManager *****//
 import MonitorAlerts from '../AlertManager/Pages/MonitorAlerts';
@@ -142,12 +144,14 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/discoveryWizard" element={<DiscoveryWizard />} />
       <Route path="/assetmanager/pages/taggingWizard" element={<TaggingWizard />} />
       <Route path="/assetmanager/pages/addTaggingWizard/:id/:landingZone" element={<AddTaggingWizard />} />
-      <Route path="/assetmanager/pages/treeoverview" element={<TreeOverview />} />
+      <Route path="/assetmanager/pages/meshoverview" element={<TreeOverview />} />
       <Route path="/assetmanager/pages/treeoverview/overviewdetails" element={<OverviewDetails/>}/> 
       <Route path="/assetmanager/pages/meshservices" element={<MeshServices />} />
       <Route path="/assetmanager/pages/meshtopology" element={<MeshTopology />} />
       <Route path="/assetsmanager/pages/newaccountsetup" element={<NewAccountSetup/>} />
       <Route path="/assetsmanager/pages/newaccountsetup/accountpolicy" element={<AccountPolicy/>}/>
+      <Route path="/assetsmanager/pages/environments/environmentlist/deployproject" element={<DeployProject/>}/>
+      <Route path="/assetsmanager/pages/environments/environmentlist/configurtopology" element={<ConfigurTopology/>}/>
       
 
       {/***** AlertManager *****/}
