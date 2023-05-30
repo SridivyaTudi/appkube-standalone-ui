@@ -38,6 +38,9 @@ import NewAccountSetup from '../AssetManager/Pages/NewAccountSetup';
 import AccountPolicy from '../AssetManager/Pages/NewAccountSetup/AccountPolicy';
 import DeployProject from '../AssetManager/Pages/Environments/EnvironmentList/DeployProject';
 import ConfigurTopology from '../AssetManager/Pages/Environments/EnvironmentList/ConfigurTopology';
+import WorkspaceDetails from '../AssetManager/Pages/Environments/EnvironmentList/WorkspaceDetails';
+
+
 
 //***** AlertManager *****//
 import MonitorAlerts from '../AlertManager/Pages/MonitorAlerts';
@@ -148,10 +151,12 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/treeoverview/overviewdetails" element={<OverviewDetails/>}/> 
       <Route path="/assetmanager/pages/meshservices" element={<MeshServices />} />
       <Route path="/assetmanager/pages/meshtopology" element={<MeshTopology />} />
-      <Route path="/assetsmanager/pages/newaccountsetup" element={<NewAccountSetup/>} />
-      <Route path="/assetsmanager/pages/newaccountsetup/accountpolicy" element={<AccountPolicy/>}/>
-      <Route path="/assetsmanager/pages/environments/environmentlist/deployproject" element={<DeployProject/>}/>
-      <Route path="/assetsmanager/pages/environments/environmentlist/configurtopology" element={<ConfigurTopology/>}/>
+      <Route path="/assetmanager/pages/newaccountsetup" element={<NewAccountSetup/>} />
+      <Route path="/assetmanager/pages/newaccountsetup/accountpolicy" element={<AccountPolicy/>}/>
+      <Route path="/assetmanager/pages/environments/environmentlist/deployproject" element={<DeployProject/>}/>
+      <Route path="/assetmanager/pages/environments/environmentlist/configurtopology" element={<ConfigurTopology/>}/>
+      <Route path="/assetmanager/pages/environments/environmentlist/workspacedetails" element={<WorkspaceDetails/>}/>
+      
       
 
       {/***** AlertManager *****/}
