@@ -14,7 +14,7 @@ import NoSqlIcon from "../../../../../assets/img/assetmanager/no-sql-icon.png";
 class ConfigurTopology extends Component {
   render() {
     return (
-      <div className="deploy-project-container">
+      <div className="deploy-project-container"> 
         <div className="page-heading">
           <h3>configur Topology</h3>
         </div>

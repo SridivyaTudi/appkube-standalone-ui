@@ -192,9 +192,10 @@ class Application extends Component {
             <div className="col-lg-4 col-md-4 col-sm-2">
               <div className="d-inline-block width-100 text-right">
                 <button className="new-button min-width-inherit m-b-0 m-r-0">
-                  <Link style={{color: 'white'}}
+                  <Link
+                    style={{ color: "white" }}
                     to={
-                      "/assetsmanager/pages/environments/environmentlist/deployproject"
+                      "/assetmanager/pages/environments/environmentlist/deployproject"
                     }
                   >
                     <i class="fas fa-plus-square p-r-5"></i> Create New
@@ -225,7 +226,13 @@ class Application extends Component {
               <tbody>
                 <tr>
                   <td>
-                    <a>HRMS</a>
+                    <Link
+                      to={
+                        "/assetmanager/pages/environments/environmentlist/workspacedetails"
+                      }
+                    >
+                      HRMS
+                    </Link>
                   </td>
                   <td>
                     {" "}
