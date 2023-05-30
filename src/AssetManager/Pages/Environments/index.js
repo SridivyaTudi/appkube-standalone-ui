@@ -5,7 +5,13 @@ import GCP from "../../../assets/img/google-cloud.png";
 import Kubernetes from "../../../assets/img/kubernetes.png";
 import { Link } from "react-router-dom";
 import { config } from "../../config";
+import { connect } from "react-redux";
 import SelectDepartmentPopup from "../../Components/SelectDepartmentPopup";
+import {
+  getEnvsAsync,
+  getEnvsSummary,
+} from "../../../redux/environments/environmentsThunk";
+import status from "../../../redux/constants/commonDS";
 
 const LOGOS = {
   aws: AWS,
@@ -22,24 +28,47 @@ class Environments extends Component {
       showAddNewFilter: false,
       showSelectFilter: false,
       accountList: {},
-      commonData: {},
       searchkey: "",
       accounts: "",
       searchedAccountList: {},
       currentActiveTableIndex: [],
       dataFetched: false,
+      allEnvData: [],
+      allEnvSummary: [],
+      menuSummaryShowMenu: [null, null],
     };
     this.selectDepartmentPopupModalRef = React.createRef();
   }
 
-  onClickSelectDepartmentPopup  = (link) => {
+  onClickSelectDepartmentPopup = (link) => {
     this.selectDepartmentPopupModalRef.current.setLink(link);
     this.selectDepartmentPopupModalRef.current.toggle();
   };
 
   componentDidMount = () => {
+    this.props.getEnvsAsync(localStorage.getItem("currentOrgId"));
+    this.props.getEnvsSummary(localStorage.getItem("currentOrgId"));
     this.getAccountList();
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.environments?.allEnvs?.status !==
+        this.props.environments.allEnvs.status &&
+      this.props.environments.allEnvs.status === status.SUCCESS &&
+      this.props.environments?.allEnvs?.data
+    ) {
+      this.setState({ allEnvData: this.props.environments.allEnvs.data });
+    }
+    if (
+      prevProps.environments?.envSummary?.status !==
+        this.props.environments.envSummary.status &&
+      this.props.environments.envSummary.status === status.SUCCESS &&
+      this.props.environments?.envSummary?.data
+    ) {
+      this.setState({ allEnvSummary: this.props.environments.envSummary.data });
+    }
+  }
 
   getAccountList = () => {
     fetch(config.GET_ALL_ENVS)
@@ -59,7 +88,6 @@ class Environments extends Component {
         });
         this.setState({
           accountList: accounts,
-          commonData,
           searchedAccountList: JSON.parse(JSON.stringify(accounts)),
           currentActiveTableIndex: Object.keys(commonData).map(
             (data, index) => index
@@ -70,68 +98,62 @@ class Environments extends Component {
   };
 
   renderEnvironmentBoxes = () => {
-    const { accountList, commonData } = this.state;
-    const keys = Object.keys(accountList);
+    const { allEnvData } = this.state;
     const retData = [];
-    keys.forEach((env) => {
-      const accounts = accountList[env];
-      if (accounts.length > 0) {
-        const account = accounts[0];
-        const data = commonData[account.cloud];
-        retData.push(
-          <div className="environment-box" key={account.cloud}>
-            <div className="environment-title">
-              <div className="environment-image">
-                <img src={LOGOS[account.cloud.toLowerCase()]} alt="" />
-              </div>
-              <div className="title-name">{account.cloud}</div>
+    allEnvData.map((env) => {
+      retData.push(
+        <div className="environment-box" key={env.cloud}>
+          <div className="environment-title">
+            <div className="environment-image">
+              <img src={LOGOS[env.cloud.toLowerCase()]} alt={env.cloud} />
             </div>
-            <div className="data-contant">
-              <ul>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: "#ff9900" }}></span>
-                    <p>Environments</p>
-                  </div>
-                  <label>{accounts.length}</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: "#0089d6" }}></span>
-                    <p>Assets</p>
-                  </div>
-                  <label>0</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: "#da4f44" }}></span>
-                    <p>Alerts</p>
-                  </div>
-                  <label>0</label>
-                </li>
-                <li>
-                  <div className="data-text">
-                    <span style={{ backgroundColor: "#00b929" }}></span>
-                    <p>Total Billing</p>
-                  </div>
-                  <label>&#65284;{data.totalBill}</label>
-                </li>
-              </ul>
-            </div>
+            <div className="title-name">{env.cloud.toUpperCase()}</div>
           </div>
-        );
-      }
+          <div className="data-contant">
+            <ul>
+              <li>
+                <div className="data-text">
+                  <span style={{ backgroundColor: "#ff9900" }}></span>
+                  <p>Environments</p>
+                </div>
+                <label>{env.environments}</label>
+              </li>
+              <li>
+                <div className="data-text">
+                  <span style={{ backgroundColor: "#0089d6" }}></span>
+                  <p>Assets</p>
+                </div>
+                <label>{env.assets}</label>
+              </li>
+              <li>
+                <div className="data-text">
+                  <span style={{ backgroundColor: "#da4f44" }}></span>
+                  <p>Alerts</p>
+                </div>
+                <label>{env.alerts}</label>
+              </li>
+              <li>
+                <div className="data-text">
+                  <span style={{ backgroundColor: "#00b929" }}></span>
+                  <p>Total Billing</p>
+                </div>
+                <label>&#65284;{env.totalBilling}</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      );
     });
     return retData;
   };
 
   handleMenuToggle = (envKey, accountIndex) => {
-    const { searchedAccountList } = this.state;
-    searchedAccountList[envKey][accountIndex].showMenu =
-      !searchedAccountList[envKey][accountIndex].showMenu;
-    this.setState({
-      searchedAccountList,
-    });
+    const { menuSummaryShowMenu } = this.state;
+    if (menuSummaryShowMenu[0] !== null && menuSummaryShowMenu[1] !== null) {
+      this.setState({ menuSummaryShowMenu: [null, null] });
+    } else {
+      this.setState({ menuSummaryShowMenu: [envKey, accountIndex] });
+    }
   };
 
   handleTableToggle = (envIndex) => {
@@ -149,50 +171,54 @@ class Environments extends Component {
   };
 
   renderEnvironmentTable() {
-    const { searchedAccountList } = this.state;
-    const keys = Object.keys(searchedAccountList);
+    const { allEnvSummary, menuSummaryShowMenu } = this.state;
     const retData = [];
-    keys.forEach((env, envIndex) => {
-      const accounts = searchedAccountList[env];
+    allEnvSummary.map((item, envIndex) => {
       const accountsJSX = [];
-      accounts.forEach((account, accountIndex) => {
+      item.environmentSummaryList.map((account, accountIndex) => {
         accountsJSX.push(
-          <tr key={`env-${envIndex}-${accountIndex}`}>
+          <tr key={`env-${accountIndex}-${envIndex}`}>
             <td>
               <Link
-                to={`/assetmanager/pages/environments/environmentlist?accountId=${account.accountId}&cloudName=${account.cloud}`}
-                onClick={() => this.setLocalRecentService(account)}
+                to={`/assetmanager/pages/environments/environmentlist?accountId=${account.landingZone}&cloudName=${account.cloud}`}
+                onClick={() =>
+                  this.setLocalRecentService({
+                    cloud: account.cloud,
+                    accountId: account.landingZone,
+                  })
+                }
               >
-                {account.cloud} ({account.accountId})
+                {account.cloud} ({account.landingZone})
               </Link>
             </td>
-            <td>{account.totalProductEnclave}</td>
-            <td>{account.totalProducts}</td>
-            <td>{account.totalAppServices}</td>
-            <td>{account.totalDataServices}</td>
+            <td>{account.productEnclave}</td>
+            <td>{account.product}</td>
+            <td>{account.appService}</td>
+            <td>{account.dataService}</td>
             <td>
               <button
                 type="button"
                 className="list-icon"
                 onClick={(e) => {
-                  this.handleMenuToggle(env, accountIndex);
+                  this.handleMenuToggle(envIndex, accountIndex);
                 }}
               >
                 <i className="fas fa-ellipsis-v"></i>
               </button>
-              {account.showMenu == true && (
+              {menuSummaryShowMenu[0] === envIndex &&
+              menuSummaryShowMenu[1] === accountIndex ? (
                 <>
                   <div
                     className="open-create-menu-close"
                     onClick={(e) => {
-                      this.handleMenuToggle(env, accountIndex);
+                      this.handleMenuToggle(envIndex, accountIndex);
                     }}
                   ></div>
                   <div className="menu-list">
                     <ul>
                       <li className="active">
                         <a
-                          href={`/assetmanager/pages/add-data-source?accountId=${account.accountId}&cloudName=${account.cloud}`}
+                          href={`/assetmanager/pages/add-data-source?accountId=${account.landingZone}&cloudName=${account.cloud}`}
                         >
                           Add New datasource
                         </a>
@@ -212,56 +238,55 @@ class Environments extends Component {
                     </ul>
                   </div>
                 </>
+              ) : (
+                <></>
               )}
             </td>
           </tr>
         );
       });
-      if (accounts.length > 0) {
-        const account = accounts[0];
-        retData.push(
-          <div className="environment-table-section">
-            <div className="table">
-              <table className="overview">
-                <thead
-                  className={
-                    this.state.currentActiveTableIndex.includes(envIndex)
-                      ? "active"
-                      : ""
-                  }
-                >
-                  <tr>
-                    <th>
-                      <i
-                        className={
-                          this.state.currentActiveTableIndex.includes(envIndex)
-                            ? "fas fa-sort-down"
-                            : "fas fa-caret-right"
-                        }
-                        onClick={() => {
-                          this.handleTableToggle(envIndex);
-                        }}
-                      ></i>
-                      <div className="environment-image">
-                        <img src={LOGOS[account.cloud.toLowerCase()]} alt="" />
-                      </div>
-                      <strong>{account.cloud}</strong>
-                    </th>
-                    <th>Product Enclave</th>
-                    <th>Products</th>
-                    <th>App Services</th>
-                    <th>Data Services</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                {this.state.currentActiveTableIndex.includes(envIndex) && (
-                  <tbody>{accountsJSX}</tbody>
-                )}
-              </table>
-            </div>
+      retData.push(
+        <div className="environment-table-section">
+          <div className="table">
+            <table className="overview">
+              <thead
+                className={
+                  this.state.currentActiveTableIndex.includes(envIndex)
+                    ? "active"
+                    : ""
+                }
+              >
+                <tr>
+                  <th>
+                    <i
+                      className={
+                        this.state.currentActiveTableIndex.includes(envIndex)
+                          ? "fas fa-sort-down"
+                          : "fas fa-caret-right"
+                      }
+                      onClick={() => {
+                        this.handleTableToggle(envIndex);
+                      }}
+                    ></i>
+                    <div className="environment-image">
+                      <img src={LOGOS[item.cloud.toLowerCase()]} alt="" />
+                    </div>
+                    <strong>{item.cloud}</strong>
+                  </th>
+                  <th>Product Enclave</th>
+                  <th>Products</th>
+                  <th>App Services</th>
+                  <th>Data Services</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              {this.state.currentActiveTableIndex.includes(envIndex) && (
+                <tbody>{accountsJSX}</tbody>
+              )}
+            </table>
           </div>
-        );
-      }
+        </div>
+      );
     });
     return retData;
   }
@@ -340,9 +365,10 @@ class Environments extends Component {
     const {
       showRecentFilter,
       showAddNewFilter,
-      showSelectFilter,
       searchkey,
       dataFetched,
+      allEnvData,
+      allEnvSummary,
     } = this.state;
     return (
       <div className="environmentlist-container">
@@ -356,13 +382,16 @@ class Environments extends Component {
               <h3>Environments</h3>
             </div>
             <div className="environment-boxs">
-              {this.renderEnvironmentBoxes()}
+              {allEnvData?.length && this.renderEnvironmentBoxes()}
             </div>
             <div className="add-new-environment">
               <div className="row d-flex justify-content-center align-items-center h-100">
                 <div className="col-lg-3 col-md-3 col-sm-12">
                   <div className="environment-fliter">
-                    <div className="fliter-toggel" onClick={() => this.onClickSelectDepartmentPopup("")}>
+                    <div
+                      className="fliter-toggel"
+                      onClick={() => this.onClickSelectDepartmentPopup("")}
+                    >
                       <i className="fas fa-filter fillter-icon"></i>
                       fillter
                     </div>
@@ -409,9 +438,11 @@ class Environments extends Component {
                                         <span>
                                           <img
                                             src={
-                                              item.accountType === "AWS"
+                                              item.accountType === "AWS" ||
+                                              item.accountType === "aws"
                                                 ? AWS
-                                                : item.accountType === "GCP"
+                                                : item.accountType === "GCP" ||
+                                                  item.accountType === "gcp"
                                                 ? GCP
                                                 : AZURE
                                             }
@@ -544,7 +575,7 @@ class Environments extends Component {
                 </div>
               </div>
             </div>
-            {this.renderEnvironmentTable()}
+            {allEnvSummary.length && this.renderEnvironmentTable()}
           </>
         )}
         <SelectDepartmentPopup ref={this.selectDepartmentPopupModalRef} />
@@ -553,4 +584,16 @@ class Environments extends Component {
   }
 }
 
-export default Environments;
+function mapStateToProps(state) {
+  const { environments } = state;
+  return {
+    environments,
+  };
+}
+
+const mapDispatchToProps = {
+  getEnvsAsync,
+  getEnvsSummary,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Environments);

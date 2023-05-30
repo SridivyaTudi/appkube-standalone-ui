@@ -256,7 +256,9 @@ class EnvironmentList extends Component {
             }`}
           >
             <div className="image">
-              <img src={ServicesNameLogo.LOGOS[this.getCloudName()]} />
+              <img
+                src={ServicesNameLogo.LOGOS[this.getCloudName().toUpperCase()]}
+              />
             </div>
             <div className="name">{this.getCloudName()}</div>
             <div
