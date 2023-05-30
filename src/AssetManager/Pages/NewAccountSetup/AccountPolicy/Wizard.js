@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-
+import { ToastMessage } from "../../../../Toast/ToastMessage";
 class Wizard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentStep: 0,
+      rolesDetails: this.props.rolesDetails ? this.props.rolesDetails : null
     };
   }
 
@@ -30,9 +31,8 @@ class Wizard extends Component {
         const step = steps[i];
         retData.push(
           <div
-            className={`wizard-step-button ${
-              currentStep === i ? "active" : ""
-            }`}
+            className={`wizard-step-button ${currentStep === i ? "active" : ""
+              }`}
             onClick={(e) => this.onClickStepButton(i)}
           >
             {step.name}
@@ -53,9 +53,8 @@ class Wizard extends Component {
         const step = steps[i];
         retData.push(
           <div
-            className={`wizard-step-component ${
-              currentStep === i ? "" : "d-none"
-            }`}
+            className={`wizard-step-component ${currentStep === i ? "" : "d-none"
+              }`}
           >
             {step.component()}
           </div>
@@ -65,6 +64,22 @@ class Wizard extends Component {
     return retData;
   };
 
+  validateCreateRoleForm = () => {
+    
+    let { name, role, externalId } = this.props.rolesDetails
+    if (name == '') {
+      ToastMessage("Name is required", "unsuccess");
+      return false;
+    } else if (role == '') {
+      ToastMessage("Role is required", "unsuccess");
+      return false;
+    } else if (externalId == '') {
+      ToastMessage("ExternalId is required", "unsuccess");
+      return false;
+    } else {
+      return true
+    }
+  }
   render() {
     const { currentStep } = this.state;
     const { steps } = this.props;
@@ -87,7 +102,9 @@ class Wizard extends Component {
         <div className="d-flex justify-content-end align-items-center ">
           {currentStep < steps.length - 1 && (
             <button
-              onClick={(e) => this.onClickStepButton(currentStep - 1)}
+              onClick={(e) => {
+                  this.onClickStepButton(currentStep - 1)
+              }}
               className="asset-blue-button m-b-0"
             >
               Previous
@@ -98,7 +115,16 @@ class Wizard extends Component {
           )}
           {currentStep < steps.length - 1 && (
             <button
-              onClick={(e) => this.onClickStepButton(currentStep + 1)}
+              onClick={(e) => {
+                
+                if (this.state.currentStep == 1 ) {
+                  if (this.validateCreateRoleForm()) {
+                    this.onClickStepButton(currentStep + 1)  
+                  }
+                } else {
+                  this.onClickStepButton(currentStep + 1)
+                }
+              }}
               className="asset-blue-button m-r-0 m-b-0"
             >
               Next

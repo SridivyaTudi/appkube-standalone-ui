@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 
 class CreateRole extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      externalId: "",
+      role: ""
+    }
+
+  }
   render() {
     return (
       <div className="d-inline-block width-100 new-account-setup-tab-contents">
@@ -59,19 +68,28 @@ class CreateRole extends Component {
                 <input
                   className="form-control"
                   type="text"
-                  placeholder="Optional"
+                  placeholder="name" value={this.state.name} onChange={(e) => {
+                    this.setState( {name:e.target.value })
+                    this.props.onChangeInput(e.target.value, this.state.role, this.state.externalId)
+                  }}
                 />
               </div>
               <div className="form-group">
                 <label>Role ARN</label>
-                <input className="form-control" type="text" placeholder="HR" />
+                <input className="form-control" type="text" placeholder="HR" value={this.state.role} onChange={(e) => {
+                  this.setState( {role:e.target.value })
+                    this.props.onChangeInput(this.state.name, e.target.value, this.state.externalId)
+                  }}/>
               </div>
               <div className="form-group">
                 <label>External ID</label>
                 <input
                   className="form-control"
                   type="text"
-                  placeholder="ME4@s7fvs@dQdghDvdsea4RE"
+                  placeholder="ME4@s7fvs@dQdghDvdsea4RE" value={this.state.externalId} onChange={(e) => {
+                    this.setState( {externalId:e.target.value })
+                    this.props.onChangeInput(this.state.name, this.state.role,e.target.value)
+                  }}
                 />
               </div>
             </div>

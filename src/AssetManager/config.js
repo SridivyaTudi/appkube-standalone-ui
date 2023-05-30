@@ -58,5 +58,6 @@ const ASSETMANAGER_ENDPOINT = "http://34.199.12.114:6057/api";
 
 export const config = {
   GET_ALL_ENVS: `${ASSETMANAGER_ENDPOINT}/cloud-environments`,
-  ORGANIZATIONS:`${ASSETMANAGER_ENDPOINT}/organizations`
+  ORGANIZATIONS:`${ASSETMANAGER_ENDPOINT}/organizations`,
+  DEPARTMENTLIST:`${ASSETMANAGER_ENDPOINT}/departments/search?organizationId=`,
 };

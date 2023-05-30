@@ -17,6 +17,8 @@ class AccountPolicy extends Component {
       name: "",
       accessKey: "",
       secretKey: "",
+      externalId:"",
+      role:""
     };
     this.roleRef = React.createRef();
     this.ouRef = React.createRef();
@@ -30,7 +32,7 @@ class AccountPolicy extends Component {
       {
         name: "Create Role",
         component: () => (
-          <CreateRole ref={this.roleRef} onChangeInput={this.onChangeInput} />
+          <CreateRole ref={this.roleRef} onChangeInput={this.onChangeInput}  />
         ),
       },
       {
@@ -81,11 +83,12 @@ class AccountPolicy extends Component {
     });
   };
 
-  onChangeInput = (name, accessKey, secretKey) => {
+  onChangeInput = (name, role, externalId) => {
+    
     this.setState({
       name,
-      accessKey,
-      secretKey,
+      role,
+      externalId
     });
   };
 
@@ -155,7 +158,7 @@ class AccountPolicy extends Component {
     return (
       <div className="new-account-container">
         <div className="new-account-page-container">
-          <Wizard ref={this.wizardRef} steps={this.steps} />
+          <Wizard ref={this.wizardRef} steps={this.steps} rolesDetails={{externalId:this.state.externalId,role:this.state.role,name:this.state.name}} />
         </div>
       </div>
     );

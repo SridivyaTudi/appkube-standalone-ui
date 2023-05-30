@@ -3,12 +3,15 @@ import SelectExisting from "../../../../assets/img/assetmanager/select-existing.
 import CreateFileIcon from "../../../../assets/img/assetmanager/create-file-icon.png";
 import SelectAccountPopup from "../../../Components/SelectAccountPopup";
 import CreateNewAccountPopup from "../../../Components/CreateNewAccountPopup";
-
+import {config} from "./../../../../AssetManager/config";
+import { RestService } from "./../../../../Services/RestService";
 
 class AssociateOu extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      departments:[]
+    };
     this.selectAccountModalRef = React.createRef();
     this.createNewAccountModalRef = React.createRef();
   }
@@ -20,6 +23,21 @@ class AssociateOu extends Component {
     this.createNewAccountModalRef.current.setLink(link);
     this.createNewAccountModalRef.current.toggle();
   };
+  componentDidMount(){
+    this.getDepartMents()
+  }
+  getDepartMents(){
+    
+    let organizationId = 1
+    if(localStorage.getItem('organizations')){
+      organizationId = JSON.parse(localStorage.getItem('organizations'))[0].id
+    }
+    RestService.getData(config.DEPARTMENTLIST+organizationId, null,null).then(
+      (response) => {
+          this.setState({departments:response})   
+      }
+    );
+  }
   render() {
     return (
       <div className="d-inline-block width-100 new-account-setup-tab-contents">
@@ -48,7 +66,7 @@ class AssociateOu extends Component {
             </div>
           </div>
         </div>
-        <SelectAccountPopup ref={this.selectAccountModalRef} />
+        <SelectAccountPopup ref={this.selectAccountModalRef} departments={this.state.departments} />
         <CreateNewAccountPopup ref={this.createNewAccountModalRef} />
       </div>
     );

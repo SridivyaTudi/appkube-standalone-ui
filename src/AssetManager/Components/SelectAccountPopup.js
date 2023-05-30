@@ -9,6 +9,7 @@ class SelectAccountPopup extends Component {
     this.state = {
       modal: false,
       link: "",
+      departments:this.props.departments
     };
   }
 
@@ -23,7 +24,56 @@ class SelectAccountPopup extends Component {
       link,
     });
   };
+  
+  componentDidMount(){
+    console.log(this.props)
 
+  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (
+  //     this.props.departments !== prevProps.departments
+  //   ) {
+  //     this.setState({
+  //       departments: this.props.departments,
+  //     });
+  //   }
+  // }
+  renderDepartments() {
+    if (this.props.departments && this.props.departments.length) {
+      let leftData = [];
+      let rightData = [];
+      let centerData = [];
+      for (let departmentIndex = 0; departmentIndex < this.state.departments.length; departmentIndex + 3) {
+        leftData.push(this.props.departments[departmentIndex])
+        if (this.props.departments[departmentIndex + 1]) 
+          centerData.push(this.props.departments[departmentIndex + 1])
+        
+        if (this.props.departments[departmentIndex + 2])
+          rightData.push(this.props.departments[departmentIndex + 2])
+      }
+
+      
+
+      [leftData, centerData, rightData].map((departments,departmentsIndex) => {
+        return (
+          <div className="col-lg-4 col-md-4 col-sm-12 text-left" key={departmentsIndex}>
+            {
+              departments.map((department,index) => {
+                return (
+
+                  <div className="d-flex align-items-center p-b-10" key={index}>
+                    <input type="checkbox" />
+                    <label>{department.name}</label>
+                  </div>
+                )
+              })
+            }
+
+          </div>
+        )
+      })
+    }
+  }
   render() {
     const state = this.state;
     return (
@@ -46,7 +96,12 @@ class SelectAccountPopup extends Component {
         <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
           <h4 className="text-left m-b-1">Select OU</h4>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 text-left">
+            {
+              this.props.departments ? this.renderDepartments() : <></>
+              
+            }
+            {/* <div className="col-lg-4 col-md-4 col-sm-12 text-left">
+
               <div className="d-flex align-items-center p-b-10">
                 <input type="checkbox" />
                 <label>HR</label>
@@ -71,16 +126,9 @@ class SelectAccountPopup extends Component {
                 <input type="checkbox" />
                 <label>Production</label>
               </div>
+
             </div>
             <div className="col-lg-4 col-md-4 col-sm-12 text-left">
-              <div className="d-flex align-items-center p-b-10">
-                <input type="checkbox" />
-                <label>Finance</label>
-              </div>
-              <div className="d-flex align-items-center p-b-10">
-                <input type="checkbox" />
-                <label>Marketing</label> 
-              </div>
               <div className="d-flex align-items-center p-b-10">
                 <input type="checkbox" />
                 <label>Finance</label>
@@ -97,6 +145,14 @@ class SelectAccountPopup extends Component {
                 <input type="checkbox" />
                 <label>Marketing</label>
               </div>
+              <div className="d-flex align-items-center p-b-10">
+                <input type="checkbox" />
+                <label>Finance</label>
+              </div>
+              <div className="d-flex align-items-center p-b-10">
+                <input type="checkbox" />
+                <label>Marketing</label>
+              </div>
             </div>
             <div className="col-lg-4 col-md-4 col-sm-12 text-left">
               <div className="d-flex align-items-center p-b-10">
@@ -105,14 +161,6 @@ class SelectAccountPopup extends Component {
               </div>
               <div className="d-flex align-items-center p-b-10">
                 <input type="checkbox" />
-                <label>Operations</label> 
-              </div>
-              <div className="d-flex align-items-center p-b-10">
-                <input type="checkbox" />
-                <label>IT</label>
-              </div>
-              <div className="d-flex align-items-center p-b-10">
-                <input type="checkbox" />
                 <label>Operations</label>
               </div>
               <div className="d-flex align-items-center p-b-10">
@@ -123,7 +171,15 @@ class SelectAccountPopup extends Component {
                 <input type="checkbox" />
                 <label>Operations</label>
               </div>
-            </div>
+              <div className="d-flex align-items-center p-b-10">
+                <input type="checkbox" />
+                <label>IT</label>
+              </div>
+              <div className="d-flex align-items-center p-b-10">
+                <input type="checkbox" />
+                <label>Operations</label>
+              </div>
+            </div> */}
           </div>
         </ModalBody>
         <ModalFooter className="footer-top-br">

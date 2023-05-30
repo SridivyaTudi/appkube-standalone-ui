@@ -2,17 +2,20 @@ import React, { Component } from "react";
 import OprationMode1 from "../../../assets/img/assetmanager/opration-mode1.png";
 import OprationMode2 from "../../../assets/img/assetmanager/opration-mode2.png";
 import { Link } from "react-router-dom";
+import AccountPolicy from "./AccountPolicy";
 
 export class NewAccountSetup extends Component {
   constructor(props) {
     super(props);
     this.state = {
       service: "read_mode",
+      accountPolicy:false
     };
   }
   render() {
     return (
-      <div className="new-account-container">
+      
+        this.state.accountPolicy ? <AccountPolicy service={this.state.service} /> :(<div className="new-account-container">
         <div className="page-heading">
           <h3>New AWS Acoount Setup</h3>
         </div>
@@ -87,17 +90,21 @@ export class NewAccountSetup extends Component {
             </div>
           </div>
           <div className="d-block">
-            <button className="asset-blue-button">
-              <Link
-                style={{ color: "white" }}
+            <button className="asset-blue-button" style={{ color: "white" }} onClick={()=>{
+              this.setState({accountPolicy:true})
+            
+            }}>
+              {/* <Link
+                
                 to={"/assetsmanager/pages/newaccountsetup/accountpolicy"}
-              >
+              > */}
                 Get started
-              </Link>
+              {/* </Link> */}
             </button>
           </div>
         </div>
       </div>
+      )
     );
   }
 }
