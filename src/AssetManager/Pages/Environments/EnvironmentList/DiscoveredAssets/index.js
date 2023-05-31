@@ -678,6 +678,7 @@ class DiscoveredAssets extends Component {
                 <div className="services-panel">
                   <div className="services-panel-title bottom-border">
                     <div className="name">Topology View</div>
+                    <div className="back-btn"><i class="fas fa-arrow-to-left"></i></div>
                   </div>
                   <div className="services-panel-body">
                     <TransformWrapper

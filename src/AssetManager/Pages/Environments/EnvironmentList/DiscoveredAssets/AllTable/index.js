@@ -41,7 +41,10 @@ class AllTable extends Component {
               return (
                 <div className="service-card active">
                   <div className="service-icon">
-                    <img src={this.state.serivceImages[index]} alt="serviceicon" />
+                    <img
+                      src={this.state.serivceImages[index]}
+                      alt="serviceicon"
+                    />
                   </div>
                   <div className="service-contant">
                     <label>{item.name}</label>
@@ -55,76 +58,78 @@ class AllTable extends Component {
         <div className="resources-section">
           <h4>Lambda Resources</h4>
           <div className="account-list-conitant">
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>$96k</strong>
-                <p>Total Cost</p>
+            <div className="account-list-conitant-scroll">
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>$96k</strong>
+                  <p>Total Cost</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>540k</strong>
-                <p>Total function</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>540k</strong>
+                  <p>Total function</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>43k</strong>
-                <p>Error Rate</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>43k</strong>
+                  <p>Error Rate</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>365</strong>
-                <p>Throttle</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>365</strong>
+                  <p>Throttle</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>199</strong>
-                <p>Latency</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>199</strong>
+                  <p>Latency</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>142</strong>
-                <p>Trends</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>142</strong>
+                  <p>Trends</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>450k</strong>
-                <p>Failure Function</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>450k</strong>
+                  <p>Failure Function</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>450k</strong>
-                <p>Total Buckets</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>450k</strong>
+                  <p>Total Buckets</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>41MB</strong>
-                <p>Used CPU</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>41MB</strong>
+                  <p>Used CPU</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>152</strong>
-                <p>Net Received</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>152</strong>
+                  <p>Net Received</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>142</strong>
-                <p>Request</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>142</strong>
+                  <p>Request</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>450</strong>
-                <p>Memory Used</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>450</strong>
+                  <p>Memory Used</p>
+                </div>
               </div>
             </div>
           </div>

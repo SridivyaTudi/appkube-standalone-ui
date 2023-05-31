@@ -58,16 +58,18 @@ class DataLakeTable extends Component {
         <div className="resources-section">
           <h4>Lambda Resources</h4>
           <div className="account-list-conitant">
-            {dummyData.lambdaResources.map((item) => {
-              return (
-                <div className="account-list-details">
-                  <div className="d-block">
-                    <strong>{item.value}</strong>
-                    <p>{item.title}</p>
+            <div className="account-list-conitant-scroll">
+              {dummyData.lambdaResources.map((item) => {
+                return (
+                  <div className="account-list-details">
+                    <div className="d-block">
+                      <strong>{item.value}</strong>
+                      <p>{item.title}</p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="performance-section">

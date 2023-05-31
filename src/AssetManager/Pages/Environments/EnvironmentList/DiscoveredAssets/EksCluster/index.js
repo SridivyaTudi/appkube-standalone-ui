@@ -13,16 +13,18 @@ class EksCluster extends React.Component {
         <div className="resources-section">
           <h4>EKS Resources</h4>
           <div className="account-list-conitant">
-            {dummyData.eksResources.map((item) => {
-              return (
-                <div className="account-list-details">
-                  <div className="d-block">
-                    <strong>{item.value}</strong>
-                    <p>{item.title}</p>
+            <div className="account-list-conitant-scroll">
+              {dummyData.eksResources.map((item) => {
+                return (
+                  <div className="account-list-details">
+                    <div className="d-block">
+                      <strong>{item.value}</strong>
+                      <p>{item.title}</p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="performance-section">
