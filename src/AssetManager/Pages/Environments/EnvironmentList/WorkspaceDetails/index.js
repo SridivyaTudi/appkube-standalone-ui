@@ -7,15 +7,43 @@ import EnvironmentsIcon from "../../../../../assets/img/assetmanager/environment
 import LockIcon from "../../../../../assets/img/assetmanager/lock-icon.png";
 import UsaFlag from "../../../../../assets/img/assetmanager/usa-flag.png";
 import RunningIcon from "../../../../../assets/img/assetmanager/running-icon.png";
-export class WorkspaceDetails extends Component {
+import Environments from "./Environments";
+import Container from "./Container";
+import Database from "./Database";
+import AccountPricing from "./AccountPricing";
+class WorkspaceDetails extends Component {
+  tabMapping = [
+    {
+      name: "Environments",
+      dataKey: "environments",
+    },
+    {
+      name: "Container",
+      dataKey: "container",
+    },
+    {
+      name: "Database",
+      dataKey: "database",
+    },
+    {
+      name: "Account and Pricing",
+      dataKey: "account",
+    },
+  ];
   constructor(props) {
     super(props);
     this.state = {
       showSelectFilter: false,
+      activeTab: 0,
     };
   }
+
+  setActiveTab = (activeTab) => {
+    this.setState({ activeTab });
+  };
+
   render() {
-    const { showSelectFilter } = this.state;
+    const { showSelectFilter, activeTab } = this.state;
     return (
       <div className="workspace-container">
         <div className="page-heading">
@@ -219,6 +247,36 @@ export class WorkspaceDetails extends Component {
                 <div className="tag-btn">Configure Integration</div>
                 <div className="tag-btn">CI/CD Configuration</div>
               </div>
+            </div>
+          </div>
+          <div className="services-panel-tabs">
+            <div className="tabs-head">
+              <ul>
+                {this.tabMapping.map((tabData, index) => {
+                  return (
+                    <li
+                      key={`ops-tab-${index}`}
+                      className={index === activeTab ? "active" : ""}
+                      onClick={() => this.setActiveTab(index)}
+                    >
+                      {tabData.name}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            <div className="tabs-content">
+              {activeTab === 0 ? (
+                <Environments />
+              ) : activeTab === 1 ? (
+                <Container />
+              ) : activeTab === 2 ? (
+                <Database />
+              ) : activeTab === 3 ? (
+                <AccountPricing />
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>

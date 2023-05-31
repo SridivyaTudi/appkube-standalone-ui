@@ -353,5 +353,50 @@
         }
       }
     }
+    .services-panel-tabs {
+      display: block;
+      width: 100%;
+      margin-top: 40px;
+
+      .tabs-head {
+        display: block;
+        width: 100%;
+        text-align: center;
+
+        ul {
+          display: inline-block;
+          width: 51%;
+          border-radius: 30px;
+          background-color: #dbdff1;
+
+          li {
+            display: inline-block;
+            vertical-align: top;
+            font-size: 12px;
+            line-height: 20px;
+            font-weight: 500;
+            color: #000000;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            padding-left: 18px;
+            padding-right: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            cursor: pointer;
+
+            &.active {
+              color: #ffffff;
+              background-color: #3247e5;
+            }
+          }
+        }
+      }
+
+      .tabs-content {
+        display: block;
+        width: 100%;
+        margin-top: 30px;
+      }
+    }
   }
 }
