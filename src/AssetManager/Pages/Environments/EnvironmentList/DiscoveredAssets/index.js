@@ -730,10 +730,11 @@ class DiscoveredAssets extends Component {
                               contentStyle={{
                                 width: "100%",
                                 height: "100%",
-                                justifyContent: "flex-start",
-                                alignItems: "flex-start",
+                                display: "block",
                                 paddingTop: "120px",
-                                display: "flex",
+                                // display: "flex",
+                                // alignItems: "flex-start",
+                                // justifyContent: "flex-start",
                                 transform: "translate(0px, 0px) scale(0)",
                               }}
                             >
