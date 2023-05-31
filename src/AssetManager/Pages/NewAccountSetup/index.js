@@ -90,7 +90,7 @@ export class NewAccountSetup extends Component {
             <button className="asset-blue-button">
               <Link
                 style={{ color: "white" }}
-                to={"/assetsmanager/pages/newaccountsetup/accountpolicy"}
+                to={"/assetmanager/pages/newaccountsetup/accountpolicy"}
               >
                 Get started
               </Link>

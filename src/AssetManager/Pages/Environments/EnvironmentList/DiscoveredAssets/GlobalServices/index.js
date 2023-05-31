@@ -3,6 +3,7 @@ import GlobalIcon1 from "../../../../../../assets/img/assetmanager/global-icon1.
 import GlobalIcon2 from "../../../../../../assets/img/assetmanager/global-icon2.png";
 import GlobalIcon3 from "../../../../../../assets/img/assetmanager/global-icon3.png";
 import dummyData from "../dummy.json";
+import SelectDepartmentPopup from "../../../../../Components/SelectDepartmentPopup";
 
 class GlobalSerivces extends React.Component {
   constructor(props) {
@@ -10,7 +11,12 @@ class GlobalSerivces extends React.Component {
     this.state = {
       currentActiveTab: "S3",
     };
+    this.selectDepartmentPopupModalRef = React.createRef();
   }
+  onClickSelectDepartmentPopup = (link) => {
+    this.selectDepartmentPopupModalRef.current.setLink(link);
+    this.selectDepartmentPopupModalRef.current.toggle();
+  };
 
   handleTabChange = (tab) => {
     this.setState({ currentActiveTab: tab });
@@ -109,7 +115,10 @@ class GlobalSerivces extends React.Component {
                 </div>
                 <div className="col-lg-7">
                   <div className="head-right">
-                    <button className="light-blue-button m-b-0">
+                    <button
+                      className="light-blue-button m-b-0"
+                      onClick={() => this.onClickSelectDepartmentPopup("")}
+                    >
                       <i class="far fa-stream p-r-10"></i>
                       fillter
                     </button>
@@ -176,6 +185,7 @@ class GlobalSerivces extends React.Component {
               </div>
             </div>
           </div>
+          <SelectDepartmentPopup ref={this.selectDepartmentPopupModalRef} />
         </div>
       </>
     );

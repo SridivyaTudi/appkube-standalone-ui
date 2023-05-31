@@ -493,7 +493,7 @@ class Environments extends Component {
                             <ul>
                               <li>
                                 <Link
-                                  to={`/assetsmanager/pages/newaccountsetup`}
+                                  to={`/assetmanager/pages/newaccountsetup`}
                                 >
                                   <span className="image-box">
                                     <img src={AWS} alt="AWS" />

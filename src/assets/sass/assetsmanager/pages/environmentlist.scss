@@ -779,7 +779,8 @@
         text-align: center;
         position: relative;
         margin-right: 25px;
-        margin-top: 20px;
+        //margin-top: 20px;
+        vertical-align: text-top;
         width: 15%;
         height: 70px;
         font-size: 12px;
@@ -1227,31 +1228,36 @@
               }
             }
             .global-service-cards {
-              display: flex;
-              flex-wrap: wrap;
+              display: -webkit-box;
+              width: 100%;
+              overflow: hidden;
+              overflow-x: auto;
               margin-top: 20px;
               .service-card {
-                margin: 0 5px 5px;
-                width: 122px;
+                margin-right: 10px;
+                width: 165px;
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
                 background: #ffffff;
                 border-radius: 5px;
                 padding: 20px 10px;
+                &:last-child{
+                  margin-right: 0;
+                }
                 .service-icon {
                   display: flex;
                   align-items: center;
                   justify-content: center;
-                  width: 35px;
-                  height: 35px;
+                  width: 40px;
+                  height: 40px;
                   border-radius: 50%;
                   background: #f6f7fb;
                 }
                 .service-contant {
                   margin-left: 10px;
                   label {
-                    width: 55px;
+                    width: 100%;
                     font-size: 14px;
                     line-height: 18px;
                     font-weight: 700;
@@ -1434,7 +1440,7 @@
         table {
           thead {
             tr {
-              border-bottom: 1px dashed  #d9d9d9;
+              border-bottom: 1px dashed #d9d9d9;
               th {
                 padding-top: 10px;
                 padding-bottom: 10px;

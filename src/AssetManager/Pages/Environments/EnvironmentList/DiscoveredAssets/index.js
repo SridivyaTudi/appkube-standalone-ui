@@ -733,7 +733,7 @@ class DiscoveredAssets extends Component {
                                 display: "block",
                                 paddingTop: "120px",
                                 // display: "flex",
-                                // alignItems: "flex-start",
+                                // alignItems: "center",
                                 // justifyContent: "flex-start",
                                 transform: "translate(0px, 0px) scale(0)",
                               }}
