@@ -1,244 +1,337 @@
 .tree-overview-container {
   display: flex;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
   background-color: #f6f7fb;
-  height: 750px;
+  //height: 750px;
   padding-left: 15px;
   padding-right: 15px;
   overflow: hidden;
 
-  .tree-overview-left {
-    width: 25%;
-    display: inline-flex;
-    flex-wrap: wrap;
-    padding-top: 30px;
-    padding-bottom: 30px;
+  .tree-overview-center {
+    display: block;
+    width: 80%;
+    height: 100%;
+    text-align: center;
     position: relative;
-    z-index: 1;
 
-    .heading {
-      display: flex;
-      width: 100%;
-      font-size: 26px;
-      line-height: 30px;
-      font-weight: 600;
-      color: #383874;
-      margin-bottom: 20px;
-    }
-
-    .total-cost-price {
-      display: flex;
-      flex-wrap: wrap;
-      width: 100%;
-
-      span {
-        display: flex;
-        width: 100%;
-        font-size: 16px;
-        line-height: 20px;
-        font-weight: 500;
-        color: #383874;
-        margin-bottom: 10px;
-      }
-
-      strong {
-        display: flex;
-        width: 100%;
-        font-size: 48px;
-        line-height: 50px;
-        font-weight: 600;
-        color: #383874;
-      }
-    }
-
-    .cost-businnesses {
+    .tree-overview {
       display: block;
-      width: 75%;
+      // flex-wrap: wrap;
+      overflow: hidden;
+      border-radius: 100%;
+      background-color: #eef0fa;
 
-      .businnesses-box {
-        display: block;
+      .transform-component-module_wrapper__SPB86 {
         width: 100%;
-        padding: 15px;
-        margin-top: 30px;
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+        display: block;
+      }
 
-        .businnesses-heading {
-          display: block;
-          font-size: 14px;
-          line-height: 18px;
-          font-weight: 600;
-          color: #383874;
-          padding-bottom: 10px;
-        }
-
-        .icon {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 60px;
-          height: 60px;
-          background-color: #8676ff;
-          border-radius: 15px;
-          margin-left: 10px;
-
-          img {
-            max-width: 48px;
-            height: auto;
+      // display: flex;
+      // width: 120%;
+      // height: 100%;
+      // margin-top: 0%;
+      // margin-left: -10%;
+      // flex-wrap: wrap;
+      // overflow: hidden;
+      // border-radius: 50%;
+      // background-color: #eef0fa;
+    }
+    .mesh-right {
+      position: absolute;
+      top: 0;
+      text-align: center;
+      right: 0;
+      left: 0;
+      .builder-code-button {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 2px 8px;
+        display: inline-block;
+        margin-top: 20px;
+        .btn {
+          background-color: #ffffff;
+          font-size: 11px;
+          line-height: 24px;
+          color: #414d55;
+          padding: 0 15px;
+          border-radius: 20px;
+          &.active {
+            color: #ffffff;
+            background: #3247e5;
+            box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
           }
         }
-
-        .cost {
-          width: 100%;
-          display: block;
-          text-align: center;
-          font-size: 56px;
-          line-height: 60px;
-          font-weight: 600;
-          color: #383874;
+      }
+      h3 {
+        font-weight: 700;
+        color: #a145ff;
+      }
+    }
+    .total-count {
+      position: absolute;
+      bottom: 30px;
+      text-align: center;
+      right: 0;
+      left: 0;
+      .total-count-inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .count-box {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          margin-right: 10px;
+          &:last-child{
+            margin-right: 0;
+          }
+          .count-icon {
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 5px;
+            background: #ffffff;
+            color: #2662f0;
+          }
+          .count-details {
+            margin-left: 8px;
+            span {
+              font-size: 10px;
+              font-weight: 500;
+              text-align: left;
+              display: block;
+              color: #383874;
+            }
+            strong {
+              font-size: 12px;
+              font-weight: 600;
+              text-align: left;
+              display: block;
+              color: #383874;
+            }
+          }
         }
       }
     }
+    .tree-overview-left {
+      position: absolute;
+      top: 0;
+      left: -115px;
+      display: inline-block;
+      flex-wrap: wrap;
+      padding-top: 30px;
+      padding-bottom: 30px;
+      // position: relative;
+      // z-index: 1;
 
-    .total-accounts {
-      display: block;
-      width: 90%;
-      margin-top: 30px;
-
-      .accounts-heading {
+      .heading {
+        display: flex;
         width: 100%;
-        display: block;
         font-size: 26px;
         line-height: 30px;
         font-weight: 600;
         color: #383874;
-        padding-bottom: 10px;
+        margin-bottom: 20px;
       }
 
-      .accounts-box {
-        display: block;
+      .total-cost-price {
+        display: flex;
+        flex-wrap: wrap;
         width: 100%;
-        padding: 15px;
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
-        .content {
+
+        span {
           display: flex;
-          align-items: center;
-          justify-content: space-between;
-          border-bottom: 1px solid #edeff8;
-          padding: 10px 15px;
-          span {
+          width: 100%;
+          font-size: 16px;
+          line-height: 20px;
+          font-weight: 500;
+          color: #383874;
+          margin-bottom: 10px;
+        }
+
+        strong {
+          display: flex;
+          width: 100%;
+          font-size: 48px;
+          line-height: 50px;
+          font-weight: 600;
+          color: #383874;
+        }
+      }
+
+      .cost-businnesses {
+        display: block;
+        .businnesses-box {
+          display: block;
+          text-align: left;
+          width: 85%;
+          padding: 15px;
+          margin-top: 30px;
+          background-color: #ffffff;
+          border-radius: 10px;
+          box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+
+          .businnesses-heading {
+            display: block;
             font-size: 14px;
             line-height: 18px;
-            font-weight: 500;
+            font-weight: 600;
+            color: #383874;
+            padding-bottom: 10px;
+          }
+
+          .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background-color: #8676ff;
+            border-radius: 15px;
+            margin-left: 10px;
+
+            img {
+              max-width: 48px;
+              height: auto;
+            }
+          }
+
+          .cost {
+            width: 100%;
+            display: block;
+            text-align: center;
+            font-size: 40px;
+            line-height: 46px;
+            font-weight: 600;
             color: #383874;
           }
-          strong {
-            font-size: 14px;
-            line-height: 18px;
-            color: #8676ff;
-          }
-          &:last-child {
-            border-bottom: none;
-          }
         }
       }
-    }
-  }
 
-  .tree-overview-center {
-    display: inline-flex;
-    width: 50%;
-    height: 100%;
-
-    .tree-overview {
-      display: flex;
-      width: 120%;
-      height: 100%;
-      margin-top: 0%;
-      margin-left: -10%;
-      flex-wrap: wrap;
-      overflow: hidden;
-      border-radius: 50%;
-      background-color: #eef0fa;
-    }
-  }
-
-  .tree-overview-right {
-    width: 25%;
-    display: inline-flex;
-    flex-wrap: wrap;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    position: relative;
-    z-index: 1;
-
-    .head {
-      .new-button {
-        a {
-          color: #ffffff;
-        }
-      }
-    }
-    .heading {
-      display: flex;
-      width: 100%;
-      font-size: 26px;
-      line-height: 30px;
-      font-weight: 600;
-      color: #383874;
-      margin-top: 20px;
-    }
-    .cost-businnesses {
-      display: block;
-      width: 75%;
-
-      .businnesses-box {
+      .total-accounts {
         display: block;
-        width: 100%;
-        padding: 15px;
+        width: 90%;
         margin-top: 30px;
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
 
-        .businnesses-heading {
+        .accounts-heading {
+          width: 100%;
           display: block;
-          font-size: 14px;
-          line-height: 18px;
+          font-size: 26px;
+          line-height: 30px;
           font-weight: 600;
           color: #383874;
           padding-bottom: 10px;
         }
 
-        .icon {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 60px;
-          height: 60px;
-          background-color: #8676ff;
-          border-radius: 15px;
-          margin-left: 10px;
-
-          img {
-            max-width: 48px;
-            height: auto;
+        .accounts-box {
+          display: block;
+          width: 100%;
+          padding: 15px;
+          background-color: #ffffff;
+          border-radius: 10px;
+          box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+          .content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #edeff8;
+            padding: 10px 15px;
+            span {
+              font-size: 14px;
+              line-height: 18px;
+              font-weight: 500;
+              color: #383874;
+            }
+            strong {
+              font-size: 14px;
+              line-height: 18px;
+              color: #8676ff;
+            }
+            &:last-child {
+              border-bottom: none;
+            }
           }
         }
+      }
+    }
+    .tree-overview-right {
+      position: absolute;
+      top: 0;
+      right: -130px;
+      display: inline-block;
+      flex-wrap: wrap;
+      padding-top: 30px;
+      padding-bottom: 30px;
+      // position: relative;
+      // z-index: 1;
 
-        .cost {
-          width: 100%;
+      .head {
+        .new-button {
+          a {
+            color: #ffffff;
+          }
+        }
+      }
+      .heading {
+        display: flex;
+        width: 100%;
+        font-size: 26px;
+        line-height: 30px;
+        font-weight: 600;
+        color: #383874;
+        margin-top: 20px;
+      }
+      .cost-businnesses {
+        display: block;
+
+        .businnesses-box {
           display: block;
-          text-align: center;
-          font-size: 50px;
-          line-height: 56px;
-          font-weight: 600;
-          color: #383874;
+          width: 85%;
+          text-align: left;
+          padding: 15px;
+          margin-top: 30px;
+          background-color: #ffffff;
+          border-radius: 10px;
+          box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+
+          .businnesses-heading {
+            display: block;
+            font-size: 14px;
+            line-height: 18px;
+            font-weight: 600;
+            color: #383874;
+            padding-bottom: 10px;
+          }
+
+          .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background-color: #8676ff;
+            border-radius: 15px;
+            margin-left: 10px;
+
+            img {
+              max-width: 48px;
+              height: auto;
+            }
+          }
+
+          .cost {
+            width: 100%;
+            display: block;
+            text-align: center;
+            font-size: 40px;
+            line-height: 46px;
+            font-weight: 600;
+            color: #383874;
+          }
         }
       }
     }
@@ -601,7 +694,7 @@
       .resources-inner-section {
         width: 1240px;
         overflow-x: scroll;
+      }
     }
-  }
   }
 }
