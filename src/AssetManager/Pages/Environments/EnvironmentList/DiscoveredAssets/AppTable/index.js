@@ -9,6 +9,7 @@ import AppMesh from "../../../../../../assets/img/assetmanager/cloud-managed-ico
 import Kinesis from "../../../../../../assets/img/assetmanager/cloud-managed-icon8.png";
 import TimeSeries from "../../../../../../assets/img/assetmanager/cloud-managed-icon9.png";
 import Athena from "../../../../../../assets/img/assetmanager/cloud-managed-icon10.png";
+import SelectDepartmentPopup from "../../../../../Components/SelectDepartmentPopup";
 import dummyData from "./../dummy.json";
 
 class AppTable extends Component {
@@ -28,7 +29,13 @@ class AppTable extends Component {
         Athena,
       ],
     };
+    this.selectDepartmentPopupModalRef = React.createRef();
   }
+
+  onClickSelectDepartmentPopup = (link) => {
+    this.selectDepartmentPopupModalRef.current.setLink(link);
+    this.selectDepartmentPopupModalRef.current.toggle();
+  };
 
   render() {
     const {} = this.state;
@@ -82,7 +89,10 @@ class AppTable extends Component {
               </div>
               <div className="col-lg-7">
                 <div className="head-right">
-                  <button className="light-blue-button m-b-0">
+                  <button
+                    className="light-blue-button m-b-0"
+                    onClick={() => this.onClickSelectDepartmentPopup("")}
+                  >
                     <i class="far fa-stream p-r-10"></i>
                     fillter
                   </button>
@@ -148,6 +158,7 @@ class AppTable extends Component {
               </table>
             </div>
           </div>
+          <SelectDepartmentPopup ref={this.selectDepartmentPopupModalRef} />
         </div>
       </>
     );

@@ -1,11 +1,18 @@
 import React from "react";
+import SelectDepartmentPopup from "../../../../../Components/SelectDepartmentPopup";
 import dummyData from "../dummy.json";
 
 class EcsCluster extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.selectDepartmentPopupModalRef = React.createRef();
   }
+
+  onClickSelectDepartmentPopup = (link) => {
+    this.selectDepartmentPopupModalRef.current.setLink(link);
+    this.selectDepartmentPopupModalRef.current.toggle();
+  };
 
   render() {
     return (
@@ -35,7 +42,7 @@ class EcsCluster extends React.Component {
               </div>
               <div className="col-lg-7">
                 <div className="head-right">
-                  <button className="light-blue-button m-b-0">
+                  <button className="light-blue-button m-b-0" onClick={() => this.onClickSelectDepartmentPopup("")}>
                     <i class="far fa-stream p-r-10"></i>
                     fillter
                   </button>
@@ -101,6 +108,7 @@ class EcsCluster extends React.Component {
               </table>
             </div>
           </div>
+          <SelectDepartmentPopup ref={this.selectDepartmentPopupModalRef} />
         </div>
       </>
     );
