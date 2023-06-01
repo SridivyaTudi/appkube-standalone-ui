@@ -9,7 +9,6 @@ class Environments extends Component {
           <div className="discovered-assets-head">
             <CommonFilterViewSearch />
           </div>
-          
         </div>
       </div>
     );

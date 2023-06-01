@@ -17,33 +17,41 @@
   }
   .configur-head {
     .button-group {
-      display: inline-block;
+      display: block;
       background: #ffffff;
-      padding: 8px 15px;
+      padding: 8px 10px;
       border-radius: 5px;
       .asset-blue-button {
+        margin-right: 10px;
         margin-bottom: 0;
         font-weight: 600;
+        font-size: 12px;
+        padding: 7px 10px !important;
         i {
           margin-right: 8px;
         }
       }
       .btn-light {
+        font-weight: 600;
+        font-size: 12px;
+        padding: 7px 10px !important;
         margin-bottom: 0;
         img {
-          margin-right: 8px;
+          margin-right: 5px;
         }
       }
       .coustom-btn {
+        float: right;
         font-weight: 600;
         margin-right: 0;
-        margin-left: 8px;
         margin-bottom: 0;
+        padding: 7px 10px !important;
+        font-size: 12px;
         position: relative;
         &::after {
           content: "";
           top: 0;
-          left: -17px;
+          left: -22px;
           width: 1px;
           height: 100%;
           background: #edeff8;
@@ -57,7 +65,7 @@
     display: block;
     margin-top: 20px;
     .api-server {
-      padding: 30px 20px;
+      padding: 30px 10px;
       border-radius: 10px;
       background: #ffffff;
       min-height: 677px;
@@ -144,11 +152,11 @@
     flex-wrap: wrap;
     justify-content: center;
     .reserved-card {
-      width: 165px;
-      padding: 10px;
+      width: 150px;
+      padding: 10px 8px;
       border-radius: 10px;
       background: #384cff;
-      margin: 0 10px;
+      margin: 0 5px;
       &:first-child {
         margin-left: 0;
       }
