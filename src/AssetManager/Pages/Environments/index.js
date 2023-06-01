@@ -4,7 +4,6 @@ import AZURE from "../../../assets/img/microsoftazure.png";
 import GCP from "../../../assets/img/google-cloud.png";
 import Kubernetes from "../../../assets/img/kubernetes.png";
 import { Link } from "react-router-dom";
-import { config } from "../../config";
 import { connect } from "react-redux";
 import SelectDepartmentPopup from "../../Components/SelectDepartmentPopup";
 import {
@@ -27,9 +26,7 @@ class Environments extends Component {
       showRecentFilter: false,
       showAddNewFilter: false,
       showSelectFilter: false,
-      accountList: {},
       searchkey: "",
-      accounts: "",
       searchedAccountList: [],
       currentActiveTableIndex: [],
       dataFetched: false,
@@ -48,7 +45,6 @@ class Environments extends Component {
   componentDidMount = () => {
     this.props.getEnvsAsync(localStorage.getItem("currentOrgId"));
     this.props.getEnvsSummary(localStorage.getItem("currentOrgId"));
-    this.getAccountList();
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -71,34 +67,18 @@ class Environments extends Component {
         searchedAccountList: JSON.parse(
           JSON.stringify(this.props.environments.envSummary.data)
         ),
+        dataFetched: true,
       });
+      this.SetCurrentActiveTableIndex();
     }
   }
 
-  getAccountList = () => {
-    fetch(config.GET_ALL_ENVS)
-      .then((response) => response.json())
-      .then((data) => {
-        const commonData = {};
-        const accounts = {};
-        data.forEach((account) => {
-          accounts[account.cloud] = accounts[account.cloud] || [];
-          accounts[account.cloud].push(account);
-          commonData[account.cloud] = commonData[account.cloud]
-            ? commonData[account.cloud]
-            : {
-                totalBill: 0,
-              };
-          commonData[account.cloud].totalBill += account.totalBilling || 0;
-        });
-        this.setState({
-          accountList: accounts,
-          currentActiveTableIndex: Object.keys(commonData).map(
-            (data, index) => index
-          ),
-          dataFetched: true,
-        });
-      });
+  SetCurrentActiveTableIndex = () => {
+    this.props.environments.envSummary.data.map((item, index) => {
+      let allIndex = [];
+      allIndex.push(index);
+      this.setState({ currentActiveTableIndex: allIndex });
+    });
   };
 
   renderEnvironmentBoxes = () => {
@@ -175,8 +155,7 @@ class Environments extends Component {
   };
 
   renderEnvironmentTable() {
-    const { menuSummaryShowMenu, searchedAccountList } =
-      this.state;
+    const { menuSummaryShowMenu, searchedAccountList } = this.state;
     const retData = [];
     searchedAccountList.map((item, envIndex) => {
       const accountsJSX = [];
