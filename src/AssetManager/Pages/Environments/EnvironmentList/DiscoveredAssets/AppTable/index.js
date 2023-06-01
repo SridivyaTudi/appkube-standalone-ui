@@ -37,22 +37,24 @@ class AppTable extends Component {
         <div className="cloud-managed-section">
           <h4> Cloud Managed Services</h4>
           <div className="cloud-managed-cards">
-            {dummyData.cloudManagedServices.map((item, index) => {
-              return (
-                <div className="service-card active">
-                  <div className="service-icon">
-                    <img
-                      src={this.state.serivceImages[index]}
-                      alt="serviceicon"
-                    />
+            <div className="cloud-managed-cards-scroll">
+              {dummyData.cloudManagedServices.map((item, index) => {
+                return (
+                  <div className="service-card active">
+                    <div className="service-icon">
+                      <img
+                        src={this.state.serivceImages[index]}
+                        alt="serviceicon"
+                      />
+                    </div>
+                    <div className="service-contant">
+                      <label>{item.name}</label>
+                      <strong>{item.value}</strong>
+                    </div>
                   </div>
-                  <div className="service-contant">
-                    <label>{item.name}</label>
-                    <strong>{item.value}</strong>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="resources-section">
