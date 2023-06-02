@@ -2,13 +2,19 @@ import React from "react";
 import GlobalIcon6 from "../../../../../../assets/img/assetmanager/global-icon6.png";
 import GlobalIcon7 from "../../../../../../assets/img/assetmanager/global-icon7.png";
 import GlobalIcon3 from "../../../../../../assets/img/assetmanager/global-icon3.png";
+import SelectDepartmentPopup from "../../../../../Components/SelectDepartmentPopup";
 import dummyData from "../dummy.json";
 
 class WafResources extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.selectDepartmentPopupModalRef = React.createRef();
   }
+  onClickSelectDepartmentPopup = (link) => {
+    this.selectDepartmentPopupModalRef.current.setLink(link);
+    this.selectDepartmentPopupModalRef.current.toggle();
+  };
 
   render() {
     return (
@@ -45,16 +51,18 @@ class WafResources extends React.Component {
         <div className="resources-section">
           <h4>WAF Resources</h4>
           <div className="account-list-conitant">
-            {dummyData.eksResources.map((item) => {
-              return (
-                <div className="account-list-details">
-                  <div className="d-block">
-                    <strong>{item.value}</strong>
-                    <p>{item.title}</p>
+            <div className="account-list-conitant-scroll">
+              {dummyData.eksResources.map((item) => {
+                return (
+                  <div className="account-list-details">
+                    <div className="d-block">
+                      <strong>{item.value}</strong>
+                      <p>{item.title}</p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="performance-section">
@@ -65,7 +73,10 @@ class WafResources extends React.Component {
               </div>
               <div className="col-lg-7">
                 <div className="head-right">
-                  <button className="light-blue-button m-b-0">
+                  <button
+                    className="light-blue-button m-b-0"
+                    onClick={() => this.onClickSelectDepartmentPopup("")}
+                  >
                     <i class="far fa-stream p-r-10"></i>
                     fillter
                   </button>
@@ -131,6 +142,7 @@ class WafResources extends React.Component {
               </table>
             </div>
           </div>
+          <SelectDepartmentPopup ref={this.selectDepartmentPopupModalRef} />
         </div>
       </>
     );

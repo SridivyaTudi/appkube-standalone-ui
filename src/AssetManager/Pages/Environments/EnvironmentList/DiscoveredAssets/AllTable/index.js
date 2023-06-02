@@ -9,6 +9,7 @@ import AppMesh from "../../../../../../assets/img/assetmanager/cloud-managed-ico
 import Kinesis from "../../../../../../assets/img/assetmanager/cloud-managed-icon8.png";
 import TimeSeries from "../../../../../../assets/img/assetmanager/cloud-managed-icon9.png";
 import Athena from "../../../../../../assets/img/assetmanager/cloud-managed-icon10.png";
+import SelectDepartmentPopup from "../../../../../Components/SelectDepartmentPopup";
 import dummyData from "./../dummy.json";
 
 class AllTable extends Component {
@@ -28,7 +29,12 @@ class AllTable extends Component {
         Athena,
       ],
     };
+    this.selectDepartmentPopupModalRef = React.createRef();
   }
+  onClickSelectDepartmentPopup = (link) => {
+    this.selectDepartmentPopupModalRef.current.setLink(link);
+    this.selectDepartmentPopupModalRef.current.toggle();
+  };
 
   render() {
     const {} = this.state;
@@ -37,94 +43,101 @@ class AllTable extends Component {
         <div className="cloud-managed-section">
           <h4> Cloud Managed Services</h4>
           <div className="cloud-managed-cards">
-            {dummyData.cloudManagedServices.map((item, index) => {
-              return (
-                <div className="service-card active">
-                  <div className="service-icon">
-                    <img src={this.state.serivceImages[index]} alt="serviceicon" />
+            <div className="cloud-managed-cards-scroll">
+              {dummyData.cloudManagedServices.map((item, index) => {
+                return (
+                  <div className="service-card active">
+                    <div className="service-icon">
+                      <img
+                        src={this.state.serivceImages[index]}
+                        alt="serviceicon"
+                      />
+                    </div>
+                    <div className="service-contant">
+                      <label>{item.name}</label>
+                      <strong>{item.value}</strong>
+                    </div>
                   </div>
-                  <div className="service-contant">
-                    <label>{item.name}</label>
-                    <strong>{item.value}</strong>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="resources-section">
           <h4>Lambda Resources</h4>
           <div className="account-list-conitant">
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>$96k</strong>
-                <p>Total Cost</p>
+            <div className="account-list-conitant-scroll">
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>$96k</strong>
+                  <p>Total Cost</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>540k</strong>
-                <p>Total function</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>540k</strong>
+                  <p>Total function</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>43k</strong>
-                <p>Error Rate</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>43k</strong>
+                  <p>Error Rate</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>365</strong>
-                <p>Throttle</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>365</strong>
+                  <p>Throttle</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>199</strong>
-                <p>Latency</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>199</strong>
+                  <p>Latency</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>142</strong>
-                <p>Trends</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>142</strong>
+                  <p>Trends</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>450k</strong>
-                <p>Failure Function</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>450k</strong>
+                  <p>Failure Function</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>450k</strong>
-                <p>Total Buckets</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>450k</strong>
+                  <p>Total Buckets</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>41MB</strong>
-                <p>Used CPU</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>41MB</strong>
+                  <p>Used CPU</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>152</strong>
-                <p>Net Received</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>152</strong>
+                  <p>Net Received</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>142</strong>
-                <p>Request</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>142</strong>
+                  <p>Request</p>
+                </div>
               </div>
-            </div>
-            <div className="account-list-details">
-              <div className="d-block">
-                <strong>450</strong>
-                <p>Memory Used</p>
+              <div className="account-list-details">
+                <div className="d-block">
+                  <strong>450</strong>
+                  <p>Memory Used</p>
+                </div>
               </div>
             </div>
           </div>
@@ -137,7 +150,10 @@ class AllTable extends Component {
               </div>
               <div className="col-lg-7">
                 <div className="head-right">
-                  <button className="light-blue-button m-b-0">
+                  <button
+                    className="light-blue-button m-b-0"
+                    onClick={() => this.onClickSelectDepartmentPopup("")}
+                  >
                     <i class="far fa-stream p-r-10"></i>
                     fillter
                   </button>
@@ -301,6 +317,7 @@ class AllTable extends Component {
               </table>
             </div>
           </div>
+          <SelectDepartmentPopup ref={this.selectDepartmentPopupModalRef} />
         </div>
       </>
     );

@@ -14,13 +14,13 @@ import NoSqlIcon from "../../../../../assets/img/assetmanager/no-sql-icon.png";
 class ConfigurTopology extends Component {
   render() {
     return (
-      <div className="deploy-project-container">
+      <div className="deploy-project-container"> 
         <div className="page-heading">
           <h3>configur Topology</h3>
         </div>
         <div className="configur-head">
           <div className="row">
-            <div className="col-lg-8">
+            <div className="col-lg-8 p-r-5">
               <div className="button-group">
                 <button className="asset-blue-button min-width-inherit">
                   <i class="fab fa-java "></i>Java
@@ -40,11 +40,11 @@ class ConfigurTopology extends Component {
                   <img src={PythonIcon} alt="paython" />
                   Python
                 </button>
-                <button className="btn-light m-r-1">
+                <button className="btn-light">
                   <img src={LangIcon} alt="lang" />
                   Lang
                 </button>
-                <button className="new-button coustom-btn m-l-1 m-r-0">
+                <button className="new-button coustom-btn m-r-0">
                   Custom <i class="fas fa-chevron-down p-l-5"></i>
                 </button>
               </div>
@@ -53,7 +53,7 @@ class ConfigurTopology extends Component {
         </div>
         <div className="configur-content">
           <div className="row">
-            <div className="col-lg-4">
+            <div className="col-lg-4 p-r-5">
               <div className="api-server text-center">
                 <div className="d-block">
                   <button className="asset-blue-button min-width-inherit m-r-0 m-b-0">
@@ -146,7 +146,7 @@ class ConfigurTopology extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-4 p-l-5 p-r-5">
               <div className="api-server text-center">
                 <h2>Application Servers</h2>
                 <p>Vartical Scaling Per Node</p>
@@ -209,7 +209,7 @@ class ConfigurTopology extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-4 p-l-5">
               <div className="api-server text-center">
                 <div className="address-content">
                   <span><i class="fa-sharp fa-solid fa-location-dot"></i></span>

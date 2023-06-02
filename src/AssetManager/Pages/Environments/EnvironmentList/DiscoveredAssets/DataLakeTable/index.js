@@ -9,6 +9,7 @@ import AppMesh from "../../../../../../assets/img/assetmanager/cloud-managed-ico
 import Kinesis from "../../../../../../assets/img/assetmanager/cloud-managed-icon8.png";
 import TimeSeries from "../../../../../../assets/img/assetmanager/cloud-managed-icon9.png";
 import Athena from "../../../../../../assets/img/assetmanager/cloud-managed-icon10.png";
+import SelectDepartmentPopup from "../../../../../Components/SelectDepartmentPopup";
 import dummyData from "./../dummy.json";
 
 class DataLakeTable extends Component {
@@ -28,7 +29,12 @@ class DataLakeTable extends Component {
         Athena,
       ],
     };
+    this.selectDepartmentPopupModalRef = React.createRef();
   }
+  onClickSelectDepartmentPopup = (link) => {
+    this.selectDepartmentPopupModalRef.current.setLink(link);
+    this.selectDepartmentPopupModalRef.current.toggle();
+  };
 
   render() {
     const {} = this.state;
@@ -37,37 +43,41 @@ class DataLakeTable extends Component {
         <div className="cloud-managed-section">
           <h4>Cloud Managed Services</h4>
           <div className="cloud-managed-cards">
-            {dummyData.cloudManagedServices.map((item, index) => {
-              return (
-                <div className="service-card active">
-                  <div className="service-icon">
-                    <img
-                      src={this.state.serivceImages[index]}
-                      alt="serviceicon"
-                    />
+            <div className="cloud-managed-cards-scroll">
+              {dummyData.cloudManagedServices.map((item, index) => {
+                return (
+                  <div className="service-card active">
+                    <div className="service-icon">
+                      <img
+                        src={this.state.serivceImages[index]}
+                        alt="serviceicon"
+                      />
+                    </div>
+                    <div className="service-contant">
+                      <label>{item.name}</label>
+                      <strong>{item.value}</strong>
+                    </div>
                   </div>
-                  <div className="service-contant">
-                    <label>{item.name}</label>
-                    <strong>{item.value}</strong>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="resources-section">
           <h4>Lambda Resources</h4>
           <div className="account-list-conitant">
-            {dummyData.lambdaResources.map((item) => {
-              return (
-                <div className="account-list-details">
-                  <div className="d-block">
-                    <strong>{item.value}</strong>
-                    <p>{item.title}</p>
+            <div className="account-list-conitant-scroll">
+              {dummyData.lambdaResources.map((item) => {
+                return (
+                  <div className="account-list-details">
+                    <div className="d-block">
+                      <strong>{item.value}</strong>
+                      <p>{item.title}</p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="performance-section">
@@ -78,7 +88,10 @@ class DataLakeTable extends Component {
               </div>
               <div className="col-lg-7">
                 <div className="head-right">
-                  <button className="light-blue-button m-b-0">
+                  <button
+                    className="light-blue-button m-b-0"
+                    onClick={() => this.onClickSelectDepartmentPopup("")}
+                  >
                     <i class="far fa-stream p-r-10"></i>
                     fillter
                   </button>
@@ -144,6 +157,7 @@ class DataLakeTable extends Component {
               </table>
             </div>
           </div>
+          <SelectDepartmentPopup ref={this.selectDepartmentPopupModalRef} />
         </div>
       </>
     );

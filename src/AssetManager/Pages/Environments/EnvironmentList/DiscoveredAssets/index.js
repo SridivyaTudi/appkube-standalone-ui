@@ -678,6 +678,7 @@ class DiscoveredAssets extends Component {
                 <div className="services-panel">
                   <div className="services-panel-title bottom-border">
                     <div className="name">Topology View</div>
+                    <div className="back-btn"><i class="fas fa-arrow-to-left"></i></div>
                   </div>
                   <div className="services-panel-body">
                     <TransformWrapper
@@ -730,10 +731,11 @@ class DiscoveredAssets extends Component {
                               contentStyle={{
                                 width: "100%",
                                 height: "100%",
-                                justifyContent: "flex-start",
-                                alignItems: "flex-start",
+                                display: "block",
                                 paddingTop: "120px",
-                                display: "flex",
+                                // display: "flex",
+                                // alignItems: "center",
+                                // justifyContent: "flex-start",
                                 transform: "translate(0px, 0px) scale(0)",
                               }}
                             >

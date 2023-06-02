@@ -32,7 +32,7 @@ class DeployProject extends Component {
                 </div>
               </div>
               <div className="col-lg-6">
-                <Link to={'/assetsmanager/pages/environments/environmentlist/configurtopology'}>
+                <Link to={'/assetmanager/pages/environments/environmentlist/configurtopology'}>
                   <div className="opration-card">
                     <div className="card-images">
                       <img src={DeploymentImg2} alt="opration" />

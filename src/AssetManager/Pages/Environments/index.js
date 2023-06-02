@@ -4,7 +4,6 @@ import AZURE from "../../../assets/img/microsoftazure.png";
 import GCP from "../../../assets/img/google-cloud.png";
 import Kubernetes from "../../../assets/img/kubernetes.png";
 import { Link } from "react-router-dom";
-import { config } from "../../config";
 import { connect } from "react-redux";
 import SelectDepartmentPopup from "../../Components/SelectDepartmentPopup";
 import {
@@ -27,10 +26,8 @@ class Environments extends Component {
       showRecentFilter: false,
       showAddNewFilter: false,
       showSelectFilter: false,
-      accountList: {},
       searchkey: "",
-      accounts: "",
-      searchedAccountList: {},
+      searchedAccountList: [],
       currentActiveTableIndex: [],
       dataFetched: false,
       allEnvData: [],
@@ -48,7 +45,6 @@ class Environments extends Component {
   componentDidMount = () => {
     this.props.getEnvsAsync(localStorage.getItem("currentOrgId"));
     this.props.getEnvsSummary(localStorage.getItem("currentOrgId"));
-    this.getAccountList();
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -66,35 +62,23 @@ class Environments extends Component {
       this.props.environments.envSummary.status === status.SUCCESS &&
       this.props.environments?.envSummary?.data
     ) {
-      this.setState({ allEnvSummary: this.props.environments.envSummary.data });
+      this.setState({
+        allEnvSummary: this.props.environments.envSummary.data,
+        searchedAccountList: JSON.parse(
+          JSON.stringify(this.props.environments.envSummary.data)
+        ),
+        dataFetched: true,
+      });
+      this.SetCurrentActiveTableIndex();
     }
   }
 
-  getAccountList = () => {
-    fetch(config.GET_ALL_ENVS)
-      .then((response) => response.json())
-      .then((data) => {
-        const commonData = {};
-        const accounts = {};
-        data.forEach((account) => {
-          accounts[account.cloud] = accounts[account.cloud] || [];
-          accounts[account.cloud].push(account);
-          commonData[account.cloud] = commonData[account.cloud]
-            ? commonData[account.cloud]
-            : {
-                totalBill: 0,
-              };
-          commonData[account.cloud].totalBill += account.totalBilling || 0;
-        });
-        this.setState({
-          accountList: accounts,
-          searchedAccountList: JSON.parse(JSON.stringify(accounts)),
-          currentActiveTableIndex: Object.keys(commonData).map(
-            (data, index) => index
-          ),
-          dataFetched: true,
-        });
-      });
+  SetCurrentActiveTableIndex = () => {
+    this.props.environments.envSummary.data.map((item, index) => {
+      let allIndex = [];
+      allIndex.push(index);
+      this.setState({ currentActiveTableIndex: allIndex });
+    });
   };
 
   renderEnvironmentBoxes = () => {
@@ -171,9 +155,9 @@ class Environments extends Component {
   };
 
   renderEnvironmentTable() {
-    const { allEnvSummary, menuSummaryShowMenu } = this.state;
+    const { menuSummaryShowMenu, searchedAccountList } = this.state;
     const retData = [];
-    allEnvSummary.map((item, envIndex) => {
+    searchedAccountList.map((item, envIndex) => {
       const accountsJSX = [];
       item.environmentSummaryList.map((account, accountIndex) => {
         accountsJSX.push(
@@ -294,28 +278,28 @@ class Environments extends Component {
   handleSearchChange = (e) => {
     let value = e.target.value;
     this.setState({ searchkey: value });
-    let { accountList, searchedAccountList } = this.state;
-    searchedAccountList = JSON.parse(JSON.stringify(accountList));
-    const result = {};
-    const keys = Object.keys(accountList);
-    keys.map((env, envIndex) => {
-      if (value.length) {
-        accountList[env].map((account, index) => {
-          result[env] = result[env] || [];
-          if (
-            account.accountId.includes(value) ||
-            account.cloud.toLowerCase().includes(value)
-          ) {
-            result[env].push(account);
+    let { allEnvSummary, searchedAccountList } = this.state;
+    searchedAccountList = JSON.parse(JSON.stringify(allEnvSummary));
+    if (value) {
+      searchedAccountList = searchedAccountList.map((cloud) => {
+        cloud.environmentSummaryList = cloud.environmentSummaryList.filter(
+          (item) => {
+            if (
+              item.landingZone.includes(value) ||
+              item.cloud.includes(value.toLowerCase())
+            ) {
+              return item;
+            }
           }
-        });
-        this.setState({
-          searchedAccountList: result,
-        });
-      } else if (value.length <= 0) {
-        this.setState({ searchedAccountList: accountList });
-      }
-    });
+        );
+        return cloud;
+      });
+      this.setState({ searchedAccountList });
+    } else {
+      this.setState({
+        searchedAccountList: JSON.parse(JSON.stringify(allEnvSummary)),
+      });
+    }
   };
 
   setLocalRecentService = (account) => {
@@ -493,7 +477,7 @@ class Environments extends Component {
                             <ul>
                               <li>
                                 <Link
-                                  to={`/assetsmanager/pages/newaccountsetup`}
+                                  to={`/assetmanager/pages/newaccountsetup`}
                                 >
                                   <span className="image-box">
                                     <img src={AWS} alt="AWS" />

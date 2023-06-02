@@ -615,7 +615,22 @@
       padding: 10px 15px;
 
       &.bottom-border {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         border-bottom: 1px dashed #d9d9d9;
+        .back-btn {
+          float: right;
+          width: 40px;
+          line-height: 40px;
+          text-align: center;
+          height: 40px;
+          font-size: 16px;
+          border-radius: 50%;
+          color: #383874;
+          background: #ffffff;
+          box-shadow: 0px 1px 6px 2px rgba(0, 0, 0, 0.05);
+        }
       }
 
       .image {
@@ -779,7 +794,8 @@
         text-align: center;
         position: relative;
         margin-right: 25px;
-        margin-top: 20px;
+        //margin-top: 20px;
+        vertical-align: text-top;
         width: 15%;
         height: 70px;
         font-size: 12px;
@@ -1134,7 +1150,7 @@
                 line-height: 20px;
                 font-weight: 600;
                 color: #0f0f10;
-                margin: 0 0 15px 0;
+                margin: 15px 0 15px 0;
               }
               .cloud-managed-tab {
                 width: 100%;
@@ -1173,85 +1189,101 @@
                 }
               }
               .cloud-managed-cards {
-                display: flex;
-                flex-wrap: wrap;
                 background: #ffffff;
                 padding: 10px 0;
                 border-radius: 5px;
-                .service-card {
-                  margin: 0 5px 10px;
-                  width: 122px;
+                display: block;
+                overflow: hidden;
+                overflow-x: auto;
+                width: 100%;
+                height: 320px;
+                .cloud-managed-cards-scroll {
                   display: flex;
-                  align-items: center;
-                  justify-content: flex-start;
-                  background: #ffffff;
-                  border-radius: 5px;
-                  padding: 20px 10px;
-                  border: 1px solid #f4f4f4;
-                  .service-icon {
+                  flex-wrap: wrap;
+                  width: 600px;
+                  margin: 10px;
+                  .service-card {
+                    margin: 0 5px 10px;
+                    width: 140px;
                     display: flex;
                     align-items: center;
-                    justify-content: center;
-                    width: 35px;
-                    height: 35px;
-                    border-radius: 50%;
-                    background: #f6f7fb;
-                  }
-                  .service-contant {
-                    margin-left: 10px;
-                    label {
-                      width: 55px;
-                      font-size: 14px;
-                      line-height: 18px;
-                      font-weight: 700;
-                      display: block;
-                      color: #383874;
-                      margin-bottom: 8px;
-                      white-space: nowrap;
-                      overflow: hidden;
-                      text-overflow: ellipsis;
+                    justify-content: flex-start;
+                    background: #ffffff;
+                    border-radius: 5px;
+                    padding: 20px 10px;
+                    border: 1px solid #f4f4f4;
+                    .service-icon {
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      width: 40px;
+                      height: 40px;
+                      border-radius: 50%;
+                      background: #f6f7fb;
+                      padding: 10px;
                     }
-                    strong {
-                      font-size: 16px;
-                      line-height: 20px;
-                      font-weight: 700;
-                      display: block;
-                      color: #383874;
+                    .service-contant {
+                      margin-left: 10px;
+                      label {
+                        width: 75px;
+                        font-size: 14px;
+                        line-height: 18px;
+                        font-weight: 600;
+                        display: block;
+                        color: #383874;
+                        margin-bottom: 8px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                      }
+                      strong {
+                        font-size: 16px;
+                        line-height: 20px;
+                        font-weight: 700;
+                        display: block;
+                        color: #383874;
+                      }
                     }
-                  }
-                  &.active {
-                    border: none;
-                    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.04);
+                    &.active {
+                      border: none;
+                      box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.04);
+                    }
                   }
                 }
               }
             }
             .global-service-cards {
               display: flex;
-              flex-wrap: wrap;
+              width: 100%;
+              overflow: hidden;
+              overflow-x: auto;
               margin-top: 20px;
+              padding-bottom: 10px;
               .service-card {
-                margin: 0 5px 5px;
-                width: 122px;
+                margin-right: 10px;
+                width: 165px;
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
                 background: #ffffff;
                 border-radius: 5px;
                 padding: 20px 10px;
+                &:last-child {
+                  margin-right: 0;
+                }
                 .service-icon {
                   display: flex;
                   align-items: center;
                   justify-content: center;
-                  width: 35px;
-                  height: 35px;
+                  width: 40px;
+                  height: 40px;
                   border-radius: 50%;
                   background: #f6f7fb;
                 }
                 .service-contant {
                   margin-left: 10px;
                   label {
-                    width: 55px;
+                    width: 95px;
                     font-size: 14px;
                     line-height: 18px;
                     font-weight: 700;
@@ -1286,10 +1318,19 @@
                 margin: 15px 0;
               }
               .account-list-conitant {
-                display: flex;
-                flex-wrap: wrap;
+                display: block;
+                overflow: hidden;
+                overflow-x: auto;
+                width: 100%;
+                height: 192px;
+                .account-list-conitant-scroll {
+                  display: flex;
+                  flex-wrap: wrap;
+                  width: 600px;
+                }
+
                 .account-list-details {
-                  width: 89px;
+                  width: 90px;
                   background: #ffffff;
                   // display: inline-block;
                   display: flex;
@@ -1434,7 +1475,7 @@
         table {
           thead {
             tr {
-              border-bottom: 1px dotted #d9d9d9;
+              border-bottom: 1px dashed #d9d9d9;
               th {
                 padding-top: 10px;
                 padding-bottom: 10px;
