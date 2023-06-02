@@ -1,11 +1,19 @@
 import React, { Component } from "react";
 import { ToastMessage } from "../../../../Toast/ToastMessage";
+import { config } from "./../../../../AssetManager/config";
+import { RestService } from "./../../../../Services/RestService";
+import { Link } from 'react-router-dom';
+
+
+
 class Wizard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentStep: 0,
-      rolesDetails: this.props.rolesDetails ? this.props.rolesDetails : null
+      rolesDetails: this.props.rolesDetails ? this.props.rolesDetails : null,
+      departmentId: 0,
+      redirectToEnviroment:false,
     };
   }
 
@@ -33,7 +41,7 @@ class Wizard extends Component {
           <div
             className={`wizard-step-button ${currentStep === i ? "active" : ""
               }`}
-            onClick={(e) => this.onClickStepButton(i)}
+            // onClick={(e) => this.onClickStepButton(i)}
           >
             {step.name}
           </div>
@@ -65,20 +73,58 @@ class Wizard extends Component {
   };
 
   validateCreateRoleForm = () => {
-    
+
     let { name, role, externalId } = this.props.rolesDetails
-    if (name == '') {
-      ToastMessage("Name is required", "unsuccess");
+    if (!name || name == '') {
+      this.props.validateCreateRoleForm({ name: true, role: false, externalId: false })
       return false;
-    } else if (role == '') {
-      ToastMessage("Role is required", "unsuccess");
+    } else if (!role || role == '') {
+      this.props.validateCreateRoleForm({ name: false, role: true, externalId: false })
       return false;
-    } else if (externalId == '') {
-      ToastMessage("ExternalId is required", "unsuccess");
+    } else if (!externalId || externalId == '') {
+      this.props.validateCreateRoleForm({ name: false, role: false, externalId: true })
       return false;
     } else {
+      this.props.validateCreateRoleForm({ name: false, role: false, externalId: false })
       return true
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (JSON.stringify(prevProps.departmentId) !== JSON.stringify(prevState.departmentId) && this.props.departmentId > 0) {
+      this.setState({
+        departmentId: this.props.departmentId,
+      });
+      if(this.state.currentStep == 2){
+        this.onClickStepButton(this.state.currentStep + 1)
+      }
+      
+    }
+    if(JSON.stringify(prevProps.roleDetails) !== JSON.stringify(prevState.roleDetails)){
+      this.setState({roleDetails:this.props.roleDetails})
+    }
+  }
+  createSubmit = () =>{
+    console.log(this.props.roleDetails)
+    let postData = {
+      "displayName": this.props.rolesDetails.name,
+      "roleArn": this.props.rolesDetails.role || '',
+      "cloud": "AWS",
+      "externalId": this.props.rolesDetails.externalId,
+      "department": {
+        "id": this.state.departmentId
+      }
+    }
+    RestService.postData(config.ADD_CLOUD_ENV,postData).then(
+      (response) => {
+        if(response.status == 500){
+          ToastMessage("Successfuly not enviroment created", "unsuccess");
+           return 1 
+        }
+        ToastMessage("Successfully new enviroment created", "success");
+        this.setState({redirectToEnviroment:true})
+      }
+    )
   }
   render() {
     const { currentStep } = this.state;
@@ -103,7 +149,7 @@ class Wizard extends Component {
           {currentStep < steps.length - 1 && (
             <button
               onClick={(e) => {
-                  this.onClickStepButton(currentStep - 1)
+                this.onClickStepButton(currentStep - 1)
               }}
               className="asset-blue-button m-b-0"
             >
@@ -116,10 +162,10 @@ class Wizard extends Component {
           {currentStep < steps.length - 1 && (
             <button
               onClick={(e) => {
-                
-                if (this.state.currentStep == 1 ) {
+
+                if (this.state.currentStep == 1) {
                   if (this.validateCreateRoleForm()) {
-                    this.onClickStepButton(currentStep + 1)  
+                    this.onClickStepButton(currentStep + 1)
                   }
                 } else {
                   this.onClickStepButton(currentStep + 1)
@@ -132,8 +178,9 @@ class Wizard extends Component {
           )}
           {currentStep >= steps.length - 1 && (
             <button
-              onClick={this.props.submitPage}
+              onClick={()=>this.createSubmit()}
               className="asset-blue-button m-r-0 m-b-0"
+              // to={`/assetmanager/pages/environments`}
             >
               Submit
             </button>

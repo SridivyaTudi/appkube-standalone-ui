@@ -17,8 +17,10 @@ class AccountPolicy extends Component {
       name: "",
       accessKey: "",
       secretKey: "",
-      externalId:"",
-      role:""
+      externalId: "",
+      role: "",
+      validateRoleFlag: { name: false, role: false, externalId: false },
+      checkedId:false
     };
     this.roleRef = React.createRef();
     this.ouRef = React.createRef();
@@ -32,16 +34,18 @@ class AccountPolicy extends Component {
       {
         name: "Create Role",
         component: () => (
-          <CreateRole ref={this.roleRef} onChangeInput={this.onChangeInput}  />
+          <CreateRole ref={this.roleRef} onChangeInput={this.onChangeInput} validateRoleFlag={this.state.validateRoleFlag} />
         ),
       },
       {
         name: "Associate OU",
-        component: () => <AssociateOu />,
+        component: () => <AssociateOu setDepartment={(checkedId,departmentName)=>{
+          this.setState({checkedId,departmentName })
+        }} roleDetails={{ externalId: this.state.externalId, role: this.state.role, name: this.state.name,departmentName:this.state.departmentName }} />,
       },
       {
         name: "Finish",
-        component: () => <Finish />,
+        component: () => <Finish roleDetails={{ externalId: this.state.externalId, role: this.state.role, name: this.state.name,departmentName:this.state.departmentName }}  />,
       },
 
       //   {
@@ -84,14 +88,16 @@ class AccountPolicy extends Component {
   };
 
   onChangeInput = (name, role, externalId) => {
-    
     this.setState({
       name,
       role,
-      externalId
+      externalId,
+      validateRoleFlag: { name: name == '' ? true : false, role: role == '' ? true : false, externalId: externalId == '' ? true : false }
     });
   };
-
+  validateCreateRoleForm = (parameters) => {
+    this.setState({ validateRoleFlag: parameters })
+  }
   getSelectedData = () => {
     return {
       name: this.state.name,
@@ -158,7 +164,7 @@ class AccountPolicy extends Component {
     return (
       <div className="new-account-container">
         <div className="new-account-page-container">
-          <Wizard ref={this.wizardRef} steps={this.steps} rolesDetails={{externalId:this.state.externalId,role:this.state.role,name:this.state.name}} />
+          <Wizard ref={this.wizardRef} steps={this.steps} rolesDetails={{ externalId: this.state.externalId, role: this.state.role, name: this.state.name }} validateCreateRoleForm={this.validateCreateRoleForm} departmentId={this.state.checkedId} />
         </div>
       </div>
     );

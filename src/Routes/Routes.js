@@ -151,7 +151,7 @@ export const AllRoutes = () => {
       <Route path="/assetmanager/pages/treeoverview/overviewdetails" element={<OverviewDetails/>}/> 
       <Route path="/assetmanager/pages/meshservices" element={<MeshServices />} />
       <Route path="/assetmanager/pages/meshtopology" element={<MeshTopology />} />
-      <Route path="/assetmanager/pages/newaccountsetup" element={<NewAccountSetup/>} />
+      <Route path="/assetmanager/pages/newaccountsetup/:name" element={<NewAccountSetup/>} />
       <Route path="/assetmanager/pages/newaccountsetup/accountpolicy" element={<AccountPolicy/>}/>
       <Route path="/assetmanager/pages/environments/environmentlist/deployproject" element={<DeployProject/>}/>
       <Route path="/assetmanager/pages/environments/environmentlist/configurtopology" element={<ConfigurTopology/>}/>
