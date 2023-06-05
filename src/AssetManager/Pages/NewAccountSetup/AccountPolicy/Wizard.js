@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { ToastMessage } from "../../../../Toast/ToastMessage";
 import { config } from "./../../../../AssetManager/config";
 import { RestService } from "./../../../../Services/RestService";
-import { Link } from 'react-router-dom';
-
+import { Link,Navigate } from 'react-router-dom';
+import {withRouter} from './withRouter';
 
 
 class Wizard extends Component {
@@ -15,7 +15,7 @@ class Wizard extends Component {
       departmentId: 0,
       redirectToEnviroment:false,
     };
-  }
+}
 
   onClickStepButton = (activeStep) => {
     this.setState({
@@ -92,6 +92,7 @@ class Wizard extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (JSON.stringify(prevProps.departmentId) !== JSON.stringify(prevState.departmentId) && this.props.departmentId > 0) {
+
       this.setState({
         departmentId: this.props.departmentId,
       });
@@ -122,7 +123,7 @@ class Wizard extends Component {
            return 1 
         }
         ToastMessage("Successfully new enviroment created", "success");
-        this.setState({redirectToEnviroment:true})
+        this.props.navigate('/assetmanager/pages/environments')
       }
     )
   }
@@ -162,14 +163,19 @@ class Wizard extends Component {
           {currentStep < steps.length - 1 && (
             <button
               onClick={(e) => {
-
+                
                 if (this.state.currentStep == 1) {
                   if (this.validateCreateRoleForm()) {
                     this.onClickStepButton(currentStep + 1)
                   }
+                } else if(this.state.currentStep == 2) {
+                  if(!this.state.departmentId){
+                    ToastMessage('Please select any Organizational Unit.','unsuccess')
+                  }
                 } else {
                   this.onClickStepButton(currentStep + 1)
                 }
+
               }}
               className="asset-blue-button m-r-0 m-b-0"
             >
@@ -180,7 +186,6 @@ class Wizard extends Component {
             <button
               onClick={()=>this.createSubmit()}
               className="asset-blue-button m-r-0 m-b-0"
-              // to={`/assetmanager/pages/environments`}
             >
               Submit
             </button>
@@ -191,4 +196,4 @@ class Wizard extends Component {
   }
 }
 
-export default Wizard;
+export default withRouter(Wizard)

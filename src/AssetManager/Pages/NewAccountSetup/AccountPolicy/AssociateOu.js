@@ -42,7 +42,7 @@ class AssociateOu extends Component {
   newDepartmentAppend = (department) => {
     this.setState({ departments: [department].concat(this.state.departments) })
     this.props.setDepartment(department.id,department.name)
-    
+    this.onClickCreateNewAccount('')
   }
   getDepartmentName = (id)=>{
     return  this.state.departments.filter((department)=>department.id == id)[0].name
