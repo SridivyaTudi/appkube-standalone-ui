@@ -60,4 +60,6 @@ export const config = {
   GET_ALL_ENVS: `${ASSETMANAGER_ENDPOINT}/cloud-environments`,
   ORGANIZATIONS:`${ASSETMANAGER_ENDPOINT}/organizations`,
   DEPARTMENTLIST:`${ASSETMANAGER_ENDPOINT}/departments/search?organizationId=`,
+  ADD_DEPARTMENT:`${ASSETMANAGER_ENDPOINT}/departments`,
+  ADD_CLOUD_ENV:`${ASSETMANAGER_ENDPOINT}/cloud-environments`,
 };

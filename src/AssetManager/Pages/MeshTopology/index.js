@@ -471,7 +471,7 @@ class MeshTopology extends Component {
     return (
       <div className="mesh-topology-container">
         <div className="row">
-          <div className="col-lg-6 col-md-6 col-sm-12">
+          <div className="col-lg-7 col-md-6 col-sm-12">
             <div className="mesh-topology-left">
               <h2>Mesh Topology</h2>
               <TransformWrapper>
@@ -516,7 +516,7 @@ class MeshTopology extends Component {
               </TransformWrapper>
             </div>
           </div>
-          <div className="col-lg-6 col-md-6 col-sm-12 ">
+          <div className="col-lg-5 col-md-6 col-sm-12 ">
             <div className="mesh-topology-right">
               <h2 className="text-center">Central Account</h2>
               <div className="services-panel-tabs">

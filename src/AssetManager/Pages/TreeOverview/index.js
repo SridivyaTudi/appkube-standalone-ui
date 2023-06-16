@@ -10,7 +10,6 @@ import d3 from "d3";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 var treeData = {
   name: "AUT-1",
-
   children: [
     {
       name: "PUB-1",
@@ -33,7 +32,7 @@ var treeData = {
       ],
       radious: 40,
       linkDistance: 100,
-      fill: "rgb(215 192 253)",
+      fill: "url(#gradentSecondCircle)",
     },
     {
       name: "PUB-2",
@@ -59,7 +58,6 @@ var treeData = {
           radious: 30,
           fill: "rgb(108 105 255)",
         },
-
         {
           name: "AUT-28",
           children: [
@@ -72,9 +70,9 @@ var treeData = {
         },
       ],
       radious: 40,
-      fill: "rgb(215 192 253)",
+      fill: "url(#gradentSecondCircle)",
     },
-    { name: "PUB-3", radious: 40, linkDistance: 100, fill: "rgb(215 192 253)" },
+    { name: "PUB-3", radious: 40, linkDistance: 100, fill: "url(#gradentSecondCircle)" },
     {
       name: "PUB-4",
       children: [
@@ -89,7 +87,7 @@ var treeData = {
       ],
       radious: 40,
       linkDistance: 100,
-      fill: "rgb(215 192 253)",
+      fill: "url(#gradentSecondCircle)",
     },
     {
       name: "PUB-5",
@@ -104,7 +102,7 @@ var treeData = {
       ],
       radious: 40,
       linkDistance: 100,
-      fill: "rgb(215 192 253)",
+      fill: "url(#gradentSecondCircle)",
     },
     {
       name: "PUB-6",
@@ -113,7 +111,6 @@ var treeData = {
           name: "AUT-61",
           children: [
             { name: "AFF-611", fill: "rgb(233 131 201)" },
-
             {
               name: "AFF-614",
               children: [
@@ -129,7 +126,7 @@ var treeData = {
         { name: "AUT-62", radious: 30, fill: "rgb(108 105 255)" },
         { name: "AUT-63", radious: 30, fill: "rgb(108 105 255)" },
       ],
-      fill: "rgb(215 192 253)",
+      fill: "url(#gradentSecondCircle)",
       linkDistance: 100,
       radious: 40,
     },
@@ -161,16 +158,14 @@ class TreeOverview extends Component {
       .style("font-size", "12px")
       .style("border-radius", "5px")
       .style("background", "white");
-
     var width = 800;
-    var height = 950;
+    var height = 800;
     var force = d3.layout
       .force()
       .gravity(1)
       .charge(-5000)
       .linkDistance(100)
       .size([width, height]);
-
     var svg = d3
       .select("#tree_circular")
       .append("svg:svg")
@@ -194,21 +189,45 @@ class TreeOverview extends Component {
       .append("stop")
       .style("stop-color", "rgba(217,36,254,1)")
       .attr("offset", "100%");
+    //Second effect
+    var svg1 = d3
+    .select("#tree_circular")
+    .append("svg:svg")
+    // .attr("width", width)
+    // .attr("height", height);
+  var grad1 = svg1
+    .append("defs")
+    .append("linearGradient")
+    .attr("id", "gradentSecondCircle")
+    .attr("cx", "100%")
+    .attr("cy", "50%")
+    .attr("r", "50%");
+    svg1
+    .select("#gradentSecondCircle")
+    .append("stop")
+    .attr("offset", "0%")
+    .attr("stop-color", "#E983C9");
+    svg1
+    .select("#gradentSecondCircle")
+    .append("stop")
+    .attr("offset", "60%")
+    .attr("stop-color", "#5964CE ");
+    svg1
+    .select("#gradentSecondCircle")
+    .append("stop")
+    .attr("offset", "60%")
+    .attr("stop-color", "#5964CE ");
     var root = data;
     var nodes = flatten(root),
       links = d3.layout.tree().links(nodes);
-
     nodes.forEach(function (d, i) {
       d.x = width / 2 + i;
       d.y = height / 2 + 100 * d.depth;
     });
-
     root.fixed = true;
     root.x = width / 2;
     root.y = height / 2;
-
     force.nodes(nodes).links(links).start();
-
     var link = svg
       .selectAll("line")
       .data(links)
@@ -227,7 +246,7 @@ class TreeOverview extends Component {
       .attr("class", "node")
       // .attr("fill", "rgb(108 105 255)")
       .attr("fill", function (d) {
-        return d.fill || "";
+        return  d.fill || "";
       })
       .call(force.drag)
       .on("mouseover", function (d) {
@@ -254,16 +273,14 @@ class TreeOverview extends Component {
       .attr("x", (d) => d.x - 20)
       .attr("y", (d) => d.y)
       .attr("dy", ".3em")
-      .attr("fill", "#ffffff");
+      .attr("fill", "#FFFFFF");
     d3.select("circle#isDragNotAllow").on("mousedown.drag", null);
-
     force.on("tick", function (e) {
       try {
         svg.selectAll("text").remove();
       } catch (e) {
         console.log(e);
       }
-
       link
         .attr("x1", function (d) {
           return d.source.x;
@@ -284,7 +301,7 @@ class TreeOverview extends Component {
         .attr("x", (d) => d.x - 20)
         .attr("y", (d) => d.y)
         .attr("dy", ".3em")
-        .attr("fill", "#ffffff");
+        .attr("fill", "#FFFFFF");
       node
         .attr("cx", function (d) {
           return d.x;

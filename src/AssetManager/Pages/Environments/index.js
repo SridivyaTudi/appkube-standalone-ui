@@ -477,7 +477,7 @@ class Environments extends Component {
                             <ul>
                               <li>
                                 <Link
-                                  to={`/assetmanager/pages/newaccountsetup`}
+                                  to={`/assetmanager/pages/newaccountsetup/aws`}
                                 >
                                   <span className="image-box">
                                     <img src={AWS} alt="AWS" />
@@ -487,7 +487,7 @@ class Environments extends Component {
                               </li>
                               <li>
                                 <Link
-                                  to={`/assetmanager/pages/environments/accountsetup`}
+                                  // to={`/assetmanager/pages/environments/newaccountsetup/azure`}
                                 >
                                   <span className="image-box">
                                     <img src={AZURE} alt="AZURE" />
@@ -497,7 +497,7 @@ class Environments extends Component {
                               </li>
                               <li>
                                 <Link
-                                  to={`/assetmanager/pages/environments/accountsetup`}
+                                  // to={`/assetmanager/pages/environments/newaccountsetup/gcp`}
                                 >
                                   <span className="image-box">
                                     <img src={GCP} alt="GCP" />
@@ -507,7 +507,7 @@ class Environments extends Component {
                               </li>
                               <li>
                                 <Link
-                                  to={`/assetmanager/pages/environments/accountsetup`}
+                                  // to={`/assetmanager/pages/environments/newaccountsetup/kubernetes`}
                                 >
                                   <span className="image-box">
                                     <img src={Kubernetes} alt="Kubernetes" />

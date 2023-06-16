@@ -9,7 +9,7 @@ class SelectAccountPopup extends Component {
     this.state = {
       modal: false,
       link: "",
-      departments:this.props.departments
+      departments:[]
     };
   }
 
@@ -26,35 +26,32 @@ class SelectAccountPopup extends Component {
   };
   
   componentDidMount(){
-    console.log(this.props)
+    this.setState({departments:this.props.departments})
 
   }
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (
-  //     this.props.departments !== prevProps.departments
-  //   ) {
-  //     this.setState({
-  //       departments: this.props.departments,
-  //     });
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (JSON.stringify(prevProps.departments) !== JSON.stringify(prevState.departments)) {
+      this.setState({
+        departments: this.props.departments,
+      });
+    }
+  }
   renderDepartments() {
-    if (this.props.departments && this.props.departments.length) {
+    
+    if (this.state.departments && this.state.departments.length) {
       let leftData = [];
       let rightData = [];
       let centerData = [];
-      for (let departmentIndex = 0; departmentIndex < this.state.departments.length; departmentIndex + 3) {
-        leftData.push(this.props.departments[departmentIndex])
-        if (this.props.departments[departmentIndex + 1]) 
-          centerData.push(this.props.departments[departmentIndex + 1])
+      for (let departmentIndex = 0; departmentIndex < this.state.departments.length; departmentIndex += 3) {
+        leftData.push(this.state.departments[departmentIndex])
+        if (this.state.departments[departmentIndex + 1]) 
+          centerData.push(this.state.departments[departmentIndex + 1])
         
-        if (this.props.departments[departmentIndex + 2])
-          rightData.push(this.props.departments[departmentIndex + 2])
+        if (this.state.departments[departmentIndex + 2])
+          rightData.push(this.state.departments[departmentIndex + 2])
       }
-
       
-
-      [leftData, centerData, rightData].map((departments,departmentsIndex) => {
+     return  [leftData,centerData,rightData].map((departments,departmentsIndex) => {
         return (
           <div className="col-lg-4 col-md-4 col-sm-12 text-left" key={departmentsIndex}>
             {
@@ -62,7 +59,9 @@ class SelectAccountPopup extends Component {
                 return (
 
                   <div className="d-flex align-items-center p-b-10" key={index}>
-                    <input type="checkbox" />
+                    <input type="checkbox" checked={department.id == this.props.checkedId} onChange={()=>{
+              this.props.setID(this.props.checkedId == department.id ? false : department.id)
+            }} />
                     <label>{department.name}</label>
                   </div>
                 )
@@ -96,8 +95,9 @@ class SelectAccountPopup extends Component {
         <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
           <h4 className="text-left m-b-1">Select OU</h4>
           <div className="row">
+            
             {
-              this.props.departments ? this.renderDepartments() : <></>
+              this.state.departments && this.state.departments.length ? this.renderDepartments() : <></>
               
             }
             {/* <div className="col-lg-4 col-md-4 col-sm-12 text-left">
@@ -190,13 +190,12 @@ class SelectAccountPopup extends Component {
             <button className="gray-button m-r-1 m-b-0" onClick={this.toggle}>
               Clear
             </button>
-            <Link
-              to={`${state.link}`}
-              onClick={this.toggle}
+            <button
+             onClick={()=>this.props.addModalOpen()}
               className="new-button m-b-0"
             >
               Add
-            </Link>
+            </button>
           </div>
         </ModalFooter>
       </Modal>

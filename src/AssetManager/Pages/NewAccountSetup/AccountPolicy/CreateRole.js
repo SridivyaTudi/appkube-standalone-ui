@@ -3,13 +3,10 @@ import React, { Component } from "react";
 class CreateRole extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: "",
-      externalId: "",
-      role: ""
-    }
+    this.state = {}
 
   }
+  
   render() {
     return (
       <div className="d-inline-block width-100 new-account-setup-tab-contents">
@@ -68,18 +65,21 @@ class CreateRole extends Component {
                 <input
                   className="form-control"
                   type="text"
-                  placeholder="name" value={this.state.name} onChange={(e) => {
+                  placeholder="Display name" value={this.state.name} onChange={(e) => {
                     this.setState( {name:e.target.value })
                     this.props.onChangeInput(e.target.value, this.state.role, this.state.externalId)
                   }}
                 />
+                <span className="red">{this.state.name =='' || this.props.validateRoleFlag.name ? 'Name is required' : ''}</span>
+
               </div>
               <div className="form-group">
                 <label>Role ARN</label>
-                <input className="form-control" type="text" placeholder="HR" value={this.state.role} onChange={(e) => {
+                <input className="form-control" type="text" placeholder="Role ARN" value={this.state.role} onChange={(e) => {
                   this.setState( {role:e.target.value })
                     this.props.onChangeInput(this.state.name, e.target.value, this.state.externalId)
                   }}/>
+                  <span className="red">{this.state.role == '' || this.props.validateRoleFlag.role ? 'Role ARN is required' : ''}</span>
               </div>
               <div className="form-group">
                 <label>External ID</label>
@@ -91,6 +91,7 @@ class CreateRole extends Component {
                     this.props.onChangeInput(this.state.name, this.state.role,e.target.value)
                   }}
                 />
+                <span className="red">{this.state.externalId == '' || this.props.validateRoleFlag.externalId ? 'External ID is required' : ''}</span>
               </div>
             </div>
           </div>
