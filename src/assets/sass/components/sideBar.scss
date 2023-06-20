@@ -1,0 +1,215 @@
+.sidebar {
+  position: fixed;
+  z-index: 11;
+  top: 50px;
+  left: 0;
+  width: 70px;
+  height: calc(100% - 50px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #ffffff;
+  box-shadow: 0 5px 7px -1px rgba(0, 0, 0, 0.15);
+
+  ul {
+    display: flex;
+    width: 100%;
+    list-style: none;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 100%;
+
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 40px;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 0px;
+      padding-right: 0px;
+      padding-top: 0;
+      padding-bottom: 0;
+
+      a {
+        padding-left: 10px;
+        padding-right: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      .sidebar-icon {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 50%;
+        height: 40px;
+        display: flex;
+
+        &.icon1 {
+          background-image: url("../../img/sidebar/sidebar-icon1.png");
+        }
+
+        &.icon2 {
+          background-image: url("../../img/sidebar/sidebar-icon2.png");
+        }
+
+        &.icon3 {
+          background-image: url("../../img/sidebar/sidebar-icon3.png");
+        }
+
+        &.icon4 {
+          background-image: url("../../img/sidebar/sidebar-icon4.png");
+        }
+
+        &.icon5 {
+          background-image: url("../../img/sidebar/sidebar-icon5.png");
+        }
+
+        &.icon6 {
+          background-image: url("../../img/sidebar/sidebar-icon6.png");
+        }
+
+        &.icon7 {
+          background-image: url("../../img/sidebar/sidebar-icon7.png");
+        }
+
+        &.icon8 {
+          background-image: url("../../img/sidebar/sidebar-icon8.png");
+        }
+
+        &.icon9 {
+          background-image: url("../../img/sidebar/sidebar-icon9.png");
+        }
+
+        &.icon10 {
+          background-image: url("../../img/sidebar/sidebar-icon10.png");
+        }
+
+        &.icon11 {
+          background-image: url("../../img/sidebar/sidebar-icon11.png");
+        }
+      }
+
+      &.active {
+        .sidebar-icon {
+          &.icon1 {
+            background-image: url("../../img/sidebar/sidebar-icon1-h.png");
+          }
+
+          &.icon2 {
+            background-image: url("../../img/sidebar/sidebar-icon2-h.png");
+          }
+
+          &.icon3 {
+            background-image: url("../../img/sidebar/sidebar-icon3-h.png");
+          }
+
+          &.icon4 {
+            background-image: url("../../img/sidebar/sidebar-icon4-h.png");
+          }
+
+          &.icon5 {
+            background-image: url("../../img/sidebar/sidebar-icon5-h.png");
+          }
+          &.icon6 {
+            background-image: url("../../img/sidebar/sidebar-icon6-h.png");
+          }
+
+          &.icon7 {
+            background-image: url("../../img/sidebar/sidebar-icon7-h.png");
+          }
+
+          &.icon8 {
+            background-image: url("../../img/sidebar/sidebar-icon8-h.png");
+          }
+
+          &.icon9 {
+            background-image: url("../../img/sidebar/sidebar-icon9-h.png");
+          }
+
+          &.icon10 {
+            background-image: url("../../img/sidebar/sidebar-icon10-h.png");
+          }
+          &.icon11 {
+            background-image: url("../../img/sidebar/sidebar-icon11-h.png");
+          }
+        }
+
+        &::before {
+          background-color: #8676FF          ;
+        }
+      }
+
+      &:hover {
+        .sidebar-icon {
+          &.icon1 {
+            background-image: url("../../img/sidebar/sidebar-icon1-h.png");
+          }
+
+          &.icon2 {
+            background-image: url("../../img/sidebar/sidebar-icon2-h.png");
+          }
+
+          &.icon3 {
+            background-image: url("../../img/sidebar/sidebar-icon3-h.png");
+          }
+
+          &.icon4 {
+            background-image: url("../../img/sidebar/sidebar-icon4-h.png");
+          }
+
+          &.icon5 {
+            background-image: url("../../img/sidebar/sidebar-icon5-h.png");
+          }
+          &.icon6 {
+            background-image: url("../../img/sidebar/sidebar-icon6-h.png");
+          }
+
+          &.icon7 {
+            background-image: url("../../img/sidebar/sidebar-icon7-h.png");
+          }
+
+          &.icon8 {
+            background-image: url("../../img/sidebar/sidebar-icon8-h.png");
+          }
+
+          &.icon9 {
+            background-image: url("../../img/sidebar/sidebar-icon9-h.png");
+          }
+
+          &.icon10 {
+            background-image: url("../../img/sidebar/sidebar-icon10-h.png");
+          }
+          &.icon11 {
+            background-image: url("../../img/sidebar/sidebar-icon11-h.png");
+          }
+        }
+
+        &::before {
+          background-color: #8676FF;
+        }
+      }
+
+      &::before {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 3px;
+        height: 100%;
+        content: "";
+        border-radius: 0 10px 10px 0;
+        background-color: #ffffff;
+      }
+    }
+  }
+}

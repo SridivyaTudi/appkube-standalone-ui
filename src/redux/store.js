@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import environmentsReducer from "./environments/environmentsSlice";
-import organizationsReducer from "./organization/organizationSlice";
+import environmentReducer from "./assetManager/environments/environmentsSlice";
+import organizationsReducer from "./assetManager/organization/organizationSlice";
+import authReducer from "./auth/authSlice";
 
-export default configureStore({
+const store = configureStore({
   reducer: {
-    environments: environmentsReducer,
-    organizations: organizationsReducer,
+    environments: environmentReducer,
+    organization: organizationsReducer,
+    auth: authReducer,
   },
 });
+
+export default store;

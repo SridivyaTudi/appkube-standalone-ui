@@ -9,25 +9,23 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: $zindex-modal-backdrop;
-  background-color: $modal-backdrop-bg;
+  z-index: 1050;
+  background-color: rgba(20, 20, 20, 0.7);
 }
 
 .modal-backdrop,
 .modal-backdrop.fade.in {
-  @include opacity(70);
+  opacity: 0.7;
 }
 
 // Base modal
 .modal {
   position: fixed;
-  z-index: $zindex-modal;
+  z-index: 1060;
   width: 100%;
-  background: $page-bg;
-  @include box-shadow(0 3px 7px rgba(0, 0, 0, 0.3));
-  @include background-clip(padding-box);
+  background: transparent;
+  box-shadow: none;
   outline: none;
-
   max-width: 750px;
   left: 0;
   right: 0;
@@ -37,24 +35,24 @@
 }
 
 .modal-header {
-  background: $page-header-bg;
-  box-shadow: $page-header-shadow;
-  border-bottom: 1px solid $page-header-border-color;
+  background: white;
+  box-shadow: none;
+  border-bottom: 1px solid #a2c0d4;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .modal-header-title {
-  font-size: $font-size-lg;
+  font-size: 18px;
   float: left;
-  padding-top: $space-sm;
-  margin: 0 $space-md;
+  padding-top: 8px;
+  margin: 0 16px;
 }
 
 .modal-header-close {
   float: right;
-  padding: 9px $spacer;
+  padding: 9px 16px;
 }
 
 // Body (where all modal content resides)
@@ -63,7 +61,7 @@
 }
 
 .modal-content {
-  padding: $spacer * 2;
+  padding: 16px * 2;
 
   &--has-scroll {
     max-height: calc(100vh - 400px);
@@ -79,10 +77,9 @@
 // Footer (for actions)
 .modal-footer {
   padding: 14px 15px 15px;
-  border-top: 1px solid $panel-bg;
-  background-color: $panel-bg;
+  border-top: 1px solid #ffffff;
+  background-color: #ffffff;
   text-align: right; // right align buttons
-  @include clearfix(); // clear it in case folks use .pull-* classes on buttons
 }
 
 .modal--narrow {
@@ -95,31 +92,33 @@
   .confirm-modal-icon {
     padding-top: 41px;
     font-size: 280%;
-    color: $green-base;
+    color: #1A7F4B;
     padding-bottom: 20px;
   }
 
   .confirm-modal-text {
-    font-size: $font-size-h4;
-    color: $link-color;
-    margin-bottom: $spacer * 2;
-    padding-top: $spacer;
+    font-size: 1.2857142857142858rem;
+    color: rgb(204, 204, 220);
+    margin-bottom: 16px * 2;
+    padding-top: 16px;
   }
 
   .confirm-modal-text2 {
-    font-size: $font-size-base;
-    padding-top: $spacer;
+    font-size: 14px;
+    padding-top: 16px;
   }
 
   .confirm-modal-buttons {
-    margin-bottom: $spacer;
+    margin-bottom: 16px;
+
     button {
-      margin-right: calc($spacer/2);
+      margin-right: calc(16px/2);
     }
   }
 
   .modal-content-confirm-text {
-    margin-bottom: $space-xl;
+    margin-bottom: 32px;
+
     span {
       text-align: center;
     }
@@ -139,9 +138,10 @@
 
   .share-modal-info-text {
     margin-top: 5px;
+
     strong {
-      color: $text-color-emphasis;
-      font-weight: $font-weight-semi-bold;
+      color: #000000;
+      font-weight: 500;
     }
   }
 

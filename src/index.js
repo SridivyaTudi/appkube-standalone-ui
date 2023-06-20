@@ -1,12 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import "./assets/sass/style.scss";
-import "./assets/sass/standalone.light.scss";
+import "./assets/sass/newstandalone.scss";
 import store from "./redux/store";
 import { Provider } from "react-redux";
+import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,5 +11,3 @@ root.render(
     <App />
   </Provider>
 );
-
-reportWebVitals();

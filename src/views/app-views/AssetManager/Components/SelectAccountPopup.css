@@ -1,0 +1,259 @@
+.select-account-modal-container {
+  max-width: 550px !important;
+  -webkit-box-shadow: 0px 0px 16px #3b48593d;
+  box-shadow: 0px 0px 16px #3b48593d;
+  border-radius: 10px;
+  background: white;
+  margin: 0 auto;
+}
+
+.select-account-modal-container .modal-content {
+  padding: 15px;
+}
+
+.select-account-modal-container .modal-content .modal-header {
+  background: white;
+  box-shadow: none;
+  border-bottom: none;
+  margin-bottom: 20px;
+  padding: 0 10px 10px;
+  position: relative;
+}
+
+.select-account-modal-container .modal-content .modal-header .modal-title {
+  color: #383874 !important;
+  text-align: center !important;
+  margin: 0px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.select-account-modal-container .modal-content .modal-header button {
+  position: absolute;
+  right: 0;
+  top: 0px;
+  cursor: pointer;
+  color: #b5b5cf;
+  opacity: 1;
+  border: none;
+  background-color: transparent;
+}
+
+.select-account-modal-container .modal-content .modal-header button:hover {
+  color: #3b4859;
+}
+
+.select-account-modal-container .modal-content .modal-body {
+  padding: 0px 10px;
+  color: #3b4859;
+}
+
+.select-account-modal-container .modal-content .modal-body::-webkit-scrollbar {
+  width: 16px;
+}
+
+.select-account-modal-container .modal-content .modal-body::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.select-account-modal-container .modal-content .modal-body::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 10px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+.select-account-modal-container .modal-content .modal-body::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
+
+.select-account-modal-container .modal-content .modal-body h4 {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.select-account-modal-container .modal-content .modal-body input {
+  margin: 0;
+}
+
+.select-account-modal-container .modal-content .modal-body label {
+  font-size: 12px;
+  line-height: 12px;
+  font-weight: 400;
+  color: #383874;
+  padding-left: 8px;
+  padding-top: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  cursor: pointer;
+}
+
+.select-account-modal-container .modal-content .modal-body .form-group label {
+  text-align: left;
+  display: block;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 500;
+  color: #000000;
+  margin: 0 0 8px 0;
+}
+
+.select-account-modal-container .modal-content .modal-body .form-group .form-control {
+  text-align: left;
+  display: block;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #000000;
+}
+
+.select-account-modal-container .modal-content .modal-body .form-group .red {
+  font-size: 12px;
+}
+
+.select-account-modal-container .modal-content .modal-body .environment-box {
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #b5b5cf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  cursor: pointer;
+}
+
+.select-account-modal-container .modal-content .modal-body .environment-box .envir-image {
+  background-repeat: no-repeat;
+  display: block;
+  width: 25px;
+  height: 25px;
+  margin: 0 auto 10px;
+}
+
+.select-account-modal-container .modal-content .modal-body .environment-box .department {
+  background-image: url("../../../../assets/img/assetmanager/envir-light1.png");
+}
+
+.select-account-modal-container .modal-content .modal-body .environment-box .testing {
+  background-image: url("../../../../assets/img/assetmanager/envir-light2.png");
+}
+
+.select-account-modal-container .modal-content .modal-body .environment-box .stage {
+  background-image: url("../../../../assets/img/assetmanager/envir-light3.png");
+}
+
+.select-account-modal-container .modal-content .modal-body .environment-box .production {
+  background-image: url("../../../../assets/img/assetmanager/envir-light4.png");
+}
+
+.select-account-modal-container .modal-content .modal-body .environment-box .environment-title {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #9a9aaf;
+}
+
+.select-account-modal-container .modal-content .modal-body .environment-box.active {
+  border: 1px solid #383874;
+}
+
+.select-account-modal-container .modal-content .modal-body .environment-box.active .department {
+  background-image: url("../../../../assets/img/assetmanager/envir-dark1.png");
+}
+
+.select-account-modal-container .modal-content .modal-body .environment-box.active .testing {
+  background-image: url("../../../../assets/img/assetmanager/envir-dark2.png");
+}
+
+.select-account-modal-container .modal-content .modal-body .environment-box.active .stage {
+  background-image: url("../../../../assets/img/assetmanager/envir-dark3.png");
+}
+
+.select-account-modal-container .modal-content .modal-body .environment-box.active .production {
+  background-image: url("../../../../assets/img/assetmanager/envir-dark4.png");
+}
+
+.select-account-modal-container .modal-content .modal-body .environment-box.active .environment-title {
+  color: #383874;
+  font-weight: 600;
+}
+
+.select-account-modal-container .modal-content .modal-body h4 {
+  color: #383874;
+}
+
+.select-account-modal-container .modal-content .modal-body p {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 300;
+  color: #838b9c;
+}
+
+.select-account-modal-container .modal-content .modal-body .form-group {
+  display: block;
+  width: 100%;
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.select-account-modal-container .modal-content .modal-body .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  padding-left: 0;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #344054;
+}
+
+.select-account-modal-container .modal-content .modal-body .form-group .form-control {
+  width: 100%;
+  height: 32px;
+  padding: 2px 10px;
+  border: 1px solid #dcdfe5;
+  border-radius: 5px;
+  font-size: 13px;
+  line-height: 26px;
+  font-weight: 400;
+  color: #344054;
+  font-family: "Poppins", sans-serif;
+}
+
+.select-account-modal-container .modal-content .modal-body .form-group .form-control::placeholder {
+  color: #b5b5cf;
+}
+
+.select-account-modal-container .modal-content .modal-body .form-group textarea.form-control {
+  height: 80px;
+  padding: 10px;
+  color: #344054;
+  line-height: 16px;
+  
+}
+
+.select-account-modal-container .modal-content .footer-top-bar {
+  padding: 20px 15px 0;
+  background: none;
+  border: none;
+}
+
+.select-account-modal-container .modal-content .footer-top-bar .gray-outline {
+  margin-right: 15px;
+}
+
+.select-account-modal-container .modal-content .footer-top-bar .blue-button {
+  min-width: 100px;
+}
+
+.select-account-modal-container .modal-content .footer-top-bar .white-outline {
+  margin-right: 15px;
+  min-width: 100px;
+}

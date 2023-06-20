@@ -1,0 +1,21 @@
+// Fonts And font-awesome Css //
+@import 'https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap';
+@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css';
+
+// Custom Css //
+@import "./common";
+@import "./custom";
+@import "./variables";
+
+// Components Css //
+@import "./components/sideBar";
+@import "./components/topBar";
+@import "./components/_modals";
+@import "./components/modal";
+
+// Pages Css //
+@import "./pages/sign";
+@import "./pages/forgetpassword";
+@import "./pages/dashboard";
+@import "./pages/environmentlist";
+@import "./pages/newaccountsetup";
