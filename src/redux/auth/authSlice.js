@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signUpUserAPI, signInUserAPI } from "./authThunk";
+import { signUpUserAPI, login } from "./authThunk";
 import status from "../constants/commonDS";
 
 const authSlice = createSlice({
@@ -39,7 +39,7 @@ const authSlice = createSlice({
         },
       };
     },
-    [signInUserAPI.pending]: (state, action) => {
+    [login.pending]: (state, action) => {
       return {
         ...state,
         signInUser: {
@@ -47,7 +47,7 @@ const authSlice = createSlice({
         },
       };
     },
-    [signInUserAPI.fulfilled]: (state, { payload }) => {
+    [login.fulfilled]: (state, { payload }) => {
       return {
         ...state,
         signInUser: {
@@ -56,7 +56,7 @@ const authSlice = createSlice({
         },
       };
     },
-    [signInUserAPI.rejected]: (state, { payload }) => {
+    [login.rejected]: (state, { payload }) => {
       return {
         ...state,
         signInUser: {

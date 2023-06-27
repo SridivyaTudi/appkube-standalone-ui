@@ -3,10 +3,12 @@ import SigninBanner from "../../../assets/img/login/signin-banner.png";
 import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { Link, Navigate } from "react-router-dom";
 import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "../../../configs/AppConfig";
-import { setCurrentUser } from "../../../utils";
-import { signInUserAPI } from "../../../redux/auth/authThunk";
+import { setCurrentUser, setCurrentOrgId } from "../../../utils";
+import { login } from "../../../redux/auth/authThunk";
 import { connect } from "react-redux";
 import status from "../../../redux/constants/commonDS";
 import { ToastMessage } from "../../../Toast/ToastMessage";
@@ -16,10 +18,10 @@ class Signin extends Component {
     super(props);
     this.state = {
       formData: {
-        email: "",
+        userName: "",
         password: "",
       },
-      passwordView: true,
+      showPassword: false,
       rememberMe: false,
       userLoggedIn: false,
       isSubmit: false,
@@ -27,19 +29,24 @@ class Signin extends Component {
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (
-      this.props.auth?.signInUser !== prevProps.auth.signInUser &&
-      this.props.auth.signInUser.status === status.SUCCESS
-    ) {
-      setCurrentUser("sagar");
-      this.setState({ userLoggedIn: true });
-    }
-
-    if (
-      this.props.auth?.signInUser !== prevProps.auth.signInUser &&
-      this.props.auth.signInUser.status === status.FAILURE
-    ) {
-      ToastMessage("User login failed!", "unsuccess");
+    if (this.props.loggedInUser.status !== prevProps.loggedInUser.status) {
+      if (
+        this.props.loggedInUser.status === status.SUCCESS &&
+        this.props.loggedInUser.data?.info
+      ) {
+        setCurrentUser(this.props.loggedInUser.data);
+        setCurrentOrgId(
+          this.props.loggedInUser.data.info.user.organization.cmdbOrgId
+        );
+        this.setState({
+          userLoggedIn: true,
+        });
+      } else if (
+        this.props.loggedInUser.status === status.FAILURE ||
+        !this.props.loggedInUser.data?.info
+      ) {
+        ToastMessage.error("User login failed!");
+      }
     }
   };
 
@@ -56,44 +63,45 @@ class Signin extends Component {
 
   handleSignIn = () => {
     this.setState({ isSubmit: true });
-    const { valid } = this.validateForm(true);
-    const { email, password } = this.state.formData;
-    if (valid) {
-      this.props.signInUserAPI({ email, password });
+    const { isValid } = this.validateForm(true);
+    if (isValid) {
+      const { userName, password } = this.state.formData;
+      this.props.login({ userName, password });
     }
   };
 
   validateForm = (isSubmit) => {
     const { formData } = this.state;
     const errors = {
-      email: "",
+      userName: "",
       password: "",
     };
-    let valid = true;
+    let isValid = true;
     if (isSubmit) {
-      if (!formData.email) {
-        errors.email = "Email/Username is required!";
-        valid = false;
+      if (!formData.userName) {
+        errors.userName = "Username is required!";
+        isValid = false;
       } else {
-        errors.email = "";
+        errors.userName = "";
       }
 
       if (!formData.password) {
         errors.password = "Password is required!";
-        valid = false;
+        isValid = false;
       } else {
         errors.password = "";
       }
     }
-    return { valid, errors };
+    return { isValid, errors };
   };
 
   render() {
-    const { formData, passwordView, rememberMe, isSubmit } = this.state;
+    const { formData, showPassword, rememberMe, isSubmit, userLoggedIn } =
+      this.state;
     const { errors } = this.validateForm(isSubmit);
     return (
       <>
-        {this.state.userLoggedIn ? (
+        {userLoggedIn ? (
           <Navigate to={`${APP_PREFIX_PATH}/dashboard`} />
         ) : (
           <Box className="sign-container">
@@ -114,7 +122,9 @@ class Signin extends Component {
                   Sign up to <strong>Appkube</strong>
                 </Box>
                 <Box className="d-block width-100 google-btn">
-                  <button className="blue-button">Sign up with google</button>
+                  <Button className="primary-btn" variant="contained">
+                    Sign up with google
+                  </Button>
                 </Box>
                 <Box className="d-block width-100 or-contant text-center">
                   <span>or</span>
@@ -127,18 +137,17 @@ class Signin extends Component {
                   >
                     <Grid item xs={12}>
                       <Box className="input-group">
-                        <label className="d-block">Email</label>
+                        <label className="d-block">Username</label>
                         <input
-                          type="email"
+                          type="userName"
                           className="form-control"
-                          name="email"
-                          placeholder="Input your email here"
-                          value={formData.email}
+                          name="userName"
+                          placeholder="Input your Username here"
+                          value={formData.userName}
                           onChange={this.handleInputChange}
-                          autoComplete="on"
                         />
-                        {errors && errors.email ? (
-                          <p className="m-b-0">{errors.email}</p>
+                        {errors.userName ? (
+                          <p className="m-b-0">{errors.userName}</p>
                         ) : (
                           <></>
                         )}
@@ -154,7 +163,7 @@ class Signin extends Component {
                       <Box className="input-group">
                         <label className="d-block">Password</label>
                         <input
-                          type={passwordView ? "password" : "text"}
+                          type={showPassword ? "text" : "password"}
                           className="form-control"
                           name="password"
                           placeholder="Input your password here"
@@ -162,19 +171,19 @@ class Signin extends Component {
                           onChange={this.handleInputChange}
                           autoComplete="on"
                         />
-                        {errors && errors?.password ? (
+                        {errors.password ? (
                           <p className="m-b-0">{errors.password}</p>
                         ) : (
                           <></>
                         )}
                         <i
                           className={`fa-sharp fa-regular fa-eye${
-                            passwordView ? "-slash" : ""
+                            showPassword ? "" : "-slash"
                           }`}
                           style={{ cursor: "pointer" }}
                           onClick={() => {
                             this.setState({
-                              passwordView: !this.state.passwordView,
+                              showPassword: !this.state.showPassword,
                             });
                           }}
                         ></i>
@@ -197,22 +206,20 @@ class Signin extends Component {
                   </Box>
                 </Box>
                 <Box className="d-flex width-100 next-step">
-                  <button
-                    className={`blue-button ${
-                      this.props.auth.signInUser.status === status.IN_PROGRESS
-                        ? "btn-disabled"
-                        : ""
-                    }`}
+                  <LoadingButton
+                    disabled={
+                      this.props.loggedInUser?.status === status.IN_PROGRESS
+                    }
+                    loading={
+                      this.props.loggedInUser?.status === status.IN_PROGRESS
+                    }
+                    loadingPosition="start"
                     onClick={this.handleSignIn}
+                    className="primary-btn"
+                    variant="contained"
                   >
-                    {this.props.auth.signInUser.status ===
-                    status.IN_PROGRESS ? (
-                      <i className="fa-solid fa-spinner fa-spin" />
-                    ) : (
-                      <></>
-                    )}
                     Sign In
-                  </button>
+                  </LoadingButton>
                   <p>
                     Doesn't have on account?
                     <Link to={`${AUTH_PREFIX_PATH}/signup`}>Sign up Now</Link>
@@ -228,14 +235,14 @@ class Signin extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { auth } = state;
+  const { loggedInUser } = state.auth;
   return {
-    auth,
+    loggedInUser,
   };
 };
 
 const mapDispatchToProps = {
-  signInUserAPI,
+  login,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signin);
