@@ -8,7 +8,7 @@ const authSlice = createSlice({
     signUpUser: {
       status: null,
     },
-    signInUser: {
+    login: {
       status: null,
     },
   },
@@ -42,7 +42,7 @@ const authSlice = createSlice({
     [login.pending]: (state, action) => {
       return {
         ...state,
-        signInUser: {
+        loggedInUser: {
           status: status.IN_PROGRESS,
         },
       };
@@ -50,16 +50,16 @@ const authSlice = createSlice({
     [login.fulfilled]: (state, { payload }) => {
       return {
         ...state,
-        signInUser: {
+        loggedInUser: {
           status: status.SUCCESS,
-          data: payload?.signInUser,
+          data: payload?.loggedInUser,
         },
       };
     },
     [login.rejected]: (state, { payload }) => {
       return {
         ...state,
-        signInUser: {
+        loggedInUser: {
           status: status.FAILURE,
         },
       };
