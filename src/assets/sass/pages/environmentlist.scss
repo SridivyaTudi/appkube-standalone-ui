@@ -442,8 +442,8 @@
                 padding-left: 40px;
 
                 a {
-                  font-weight: 600;
-                  text-transform: uppercase;
+                  font-weight: 500;
+                  //text-transform: uppercase;
                 }
               }
 
@@ -1261,7 +1261,7 @@
                 overflow: hidden;
                 overflow-x: auto;
                 width: 100%;
-                height: 320px;
+                max-height: 320px;
 
                 .cloud-managed-cards-scroll {
                   display: flex;

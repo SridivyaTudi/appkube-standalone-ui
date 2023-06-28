@@ -4,7 +4,19 @@ import GlobalIcon2 from "assets/img/assetmanager/global-icon2.png";
 import GlobalIcon3 from "assets/img/assetmanager/global-icon3.png";
 import SelectDepartmentPopup from "views/app-views/AssetManager/Components/SelectDepartmentPopup";
 import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
-import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
+import {
+  Button,
+  Box,
+  Grid,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  List,
+  ListItem,
+} from "@mui/material";
 
 class GlobalSerivces extends React.Component {
   constructor(props) {
@@ -51,8 +63,9 @@ class GlobalSerivces extends React.Component {
           </Box>
           <Box className="global-service-cards">
             <Box
-              className={`service-card ${currentActiveTab === "S3" && "active"
-                }`}
+              className={`service-card ${
+                currentActiveTab === "S3" && "active"
+              }`}
               onClick={() => this.handleTabChange("S3")}
             >
               <Box className="service-icon">
@@ -64,8 +77,9 @@ class GlobalSerivces extends React.Component {
               </Box>
             </Box>
             <Box
-              className={`service-card ${currentActiveTab === "API Gateway" && "active"
-                }`}
+              className={`service-card ${
+                currentActiveTab === "API Gateway" && "active"
+              }`}
               onClick={() => this.handleTabChange("API Gateway")}
             >
               <Box className="service-icon">
@@ -77,8 +91,9 @@ class GlobalSerivces extends React.Component {
               </Box>
             </Box>
             <Box
-              className={`service-card ${currentActiveTab === "Lambda" && "active"
-                }`}
+              className={`service-card ${
+                currentActiveTab === "Lambda" && "active"
+              }`}
               onClick={() => this.handleTabChange("Lambda")}
             >
               <Box className="service-icon">
@@ -114,24 +129,28 @@ class GlobalSerivces extends React.Component {
                   container
                   rowSpacing={1}
                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  justifyContent={'center'}
-                  alignItems={'center'}
+                  justifyContent={"center"}
+                  alignItems={"center"}
                 >
                   <Grid item lg={5} md={5} xs={12}>
                     <h4>Lambda Performance</h4>
                   </Grid>
                   <Grid item lg={7} md={7} xs={12}>
                     <Box className="head-right text-right">
-                      <button
-                        className="blue-button m-b-0 m-r-3"
+                      <Button
+                        className="primary-btn min-width-inherit m-r-3"
+                        variant="contained"
                         onClick={() => this.onClickSelectDepartmentPopup("")}
                       >
                         <i className="fa-solid fa-stream p-r-10"></i>
                         fillter
-                      </button>
-                      <button className="white-outline m-b-0 m-r-0">
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        className="primary-outline-btn"
+                      >
                         Explore
-                      </button>
+                      </Button>
                     </Box>
                   </Grid>
                 </Grid>
@@ -162,29 +181,29 @@ class GlobalSerivces extends React.Component {
                               <i className="fa-solid fa-caret-right m-l-1"></i>
                             </TableCell>
                             <TableCell align="center">
-                              <div className="box green">
+                              <Box className="box green">
                                 <i className="fa-solid fa-check"></i>
-                              </div>
+                              </Box>
                             </TableCell>
                             <TableCell align="center">
-                              <div className="box orange">
+                              <Box className="box orange">
                                 <i className="fa-solid fa-sort-up"></i>
-                              </div>
+                              </Box>
                             </TableCell>
                             <TableCell align="center">
-                              <div className="box red">
+                              <Box className="box red">
                                 <i className="fa-solid fa-stop-circle"></i>
-                              </div>
+                              </Box>
                             </TableCell>
                             <TableCell align="center">
-                              <div className="box red">
+                              <Box className="box red">
                                 <i className="fa-solid fa-stop-circle"></i>
-                              </div>
+                              </Box>
                             </TableCell>
                             <TableCell align="center">
-                              <div className="box green">
+                              <Box className="box green">
                                 <i className="fa-solid fa-check"></i>
-                              </div>
+                              </Box>
                             </TableCell>
                           </TableRow>
                         );

@@ -19,7 +19,30 @@ import EksCluster from "views/app-views/AssetManager/Environments/EnvironmentLis
 import EcsCluster from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/EcsCluster";
 import WafResources from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/WafResources";
 import GlobalSerivces from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/GlobalServices";
-import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
+import Lambda from "assets/img/assetmanager/cloud-managed-icon1.png";
+import S3 from "assets/img/assetmanager/cloud-managed-icon2.png";
+import SQS from "assets/img/assetmanager/cloud-managed-icon3.png";
+import SNS from "assets/img/assetmanager/cloud-managed-icon4.png";
+import Redshift from "assets/img/assetmanager/cloud-managed-icon5.png";
+import RDS from "assets/img/assetmanager/cloud-managed-icon6.png";
+import AppMesh from "assets/img/assetmanager/cloud-managed-icon7.png";
+import Kinesis from "assets/img/assetmanager/cloud-managed-icon8.png";
+import TimeSeries from "assets/img/assetmanager/cloud-managed-icon9.png";
+import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
+import {
+  Button,
+  IconButton,
+  Box,
+  Grid,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  List,
+  ListItem,
+} from "@mui/material";
 
 const servicesTreeCondition = {
   service: ["cluster", "product", "vpc", "clusterId", "vpcId", "productId"],
@@ -101,6 +124,18 @@ class DiscoveredAssets extends Component {
       searchString: "",
       accountId: queryPrm.get("accountId"),
       currentActiveCluster: "eksCluster",
+      serivceImages: [
+        Lambda,
+        S3,
+        SQS,
+        SNS,
+        Redshift,
+        RDS,
+        AppMesh,
+        Kinesis,
+        TimeSeries,
+        Athena,
+      ],
     };
   }
 
@@ -121,7 +156,7 @@ class DiscoveredAssets extends Component {
         <div>
           <div className="heading">
             <span>
-              <img src={'images.awsLogo'} alt="" />
+              <img src={"images.awsLogo"} alt="" />
             </span>
             <h2>Amazon Web Services</h2>
             <div className="icon float-right" onClick={this.showHideDetail}>
@@ -265,7 +300,7 @@ class DiscoveredAssets extends Component {
               {
                 targetId:
                   vpcIndex === this.state.toggleNode.vpcId &&
-                    this.state.toggleNode.clusterId >= 0
+                  this.state.toggleNode.clusterId >= 0
                     ? `cluster_${this.state.toggleNode.clusterId}`
                     : "",
                 targetAnchor: "left",
@@ -280,13 +315,15 @@ class DiscoveredAssets extends Component {
           >
             <li
               key={vpcIndex}
-              className={`${vpcIndex === this.state.toggleNode.vpcId ? "active " : ""
-                }`}
-              id={`${vpcIndex === this.state.toggleNode.vpcId &&
+              className={`${
+                vpcIndex === this.state.toggleNode.vpcId ? "active " : ""
+              }`}
+              id={`${
+                vpcIndex === this.state.toggleNode.vpcId &&
                 this.state.breadcrumbs.length === 2
-                ? "custom_location"
-                : ""
-                }`}
+                  ? "custom_location"
+                  : ""
+              }`}
               onClick={(e) => {
                 this.handleToggleNode(
                   { vpcId: vpcIndex },
@@ -351,7 +388,7 @@ class DiscoveredAssets extends Component {
                 {
                   targetId:
                     clusterIndex === this.state.toggleNode.clusterId &&
-                      this.state.toggleNode.productId >= 0
+                    this.state.toggleNode.productId >= 0
                       ? `product_${this.state.toggleNode.productId}`
                       : "",
                   targetAnchor: "left",
@@ -375,15 +412,17 @@ class DiscoveredAssets extends Component {
                     "product"
                   );
                 }}
-                className={`${clusterIndex === this.state.toggleNode.clusterId
-                  ? "active"
-                  : ""
-                  }`}
-                id={`${clusterIndex === this.state.toggleNode.clusterId &&
+                className={`${
+                  clusterIndex === this.state.toggleNode.clusterId
+                    ? "active"
+                    : ""
+                }`}
+                id={`${
+                  clusterIndex === this.state.toggleNode.clusterId &&
                   this.state.breadcrumbs.length === 3
-                  ? "custom_location"
-                  : ""
-                  }`}
+                    ? "custom_location"
+                    : ""
+                }`}
               >
                 <span id={`cluster_${clusterIndex}`}>
                   <img src={ClusterIcon} alt="" />
@@ -408,10 +447,11 @@ class DiscoveredAssets extends Component {
           return (
             <ArcherElement id={`product_${productIndex}`}>
               <label
-                className={`${productIndex === this.state.toggleNode.productId
-                  ? "active"
-                  : ""
-                  }`}
+                className={`${
+                  productIndex === this.state.toggleNode.productId
+                    ? "active"
+                    : ""
+                }`}
                 key={productIndex}
                 onClick={() => {
                   this.handleToggleNode(
@@ -425,11 +465,12 @@ class DiscoveredAssets extends Component {
                     true
                   );
                 }}
-                id={`${productIndex === this.state.toggleNode.productId &&
+                id={`${
+                  productIndex === this.state.toggleNode.productId &&
                   this.state.breadcrumbs.length === 4
-                  ? "custom_location"
-                  : ""
-                  }`}
+                    ? "custom_location"
+                    : ""
+                }`}
               >
                 {this.getServiceName(product.name, "product")}
               </label>
@@ -459,7 +500,10 @@ class DiscoveredAssets extends Component {
 
   getCloudName() {
     const queryPrm = new URLSearchParams(document.location.search);
-    return ServicesNameLogo.ServicesName[queryPrm.get("cloudName").toUpperCase()] || "";
+    return (
+      ServicesNameLogo.ServicesName[queryPrm.get("cloudName").toUpperCase()] ||
+      ""
+    );
   }
 
   getBreadCrumbs() {
@@ -520,16 +564,16 @@ class DiscoveredAssets extends Component {
         toggleNode[key] = key.endsWith("Id")
           ? null
           : key.startsWith(name)
-            ? true
-            : false;
+          ? true
+          : false;
       } else {
         toggleNode[key] = key.endsWith("Id")
           ? key in serviceIndexs
             ? serviceIndexs[key]
             : null
           : key === type || key === nextType
-            ? true
-            : false;
+          ? true
+          : false;
       }
     });
 
@@ -558,74 +602,78 @@ class DiscoveredAssets extends Component {
   renderVpcsDetails() {
     return this.props.vpcsDetails.map((vpc, index) => {
       return (
-        <tr key={index}>
-          <td>{vpc.name}</td>
-          <td>{vpc.product_count}</td>
-          <td>{vpc.app_count}</td>
-          <td>{vpc.data_count}</td>
-          <td>
-            <button
-              type="button"
+        <TableRow key={index}>
+          <TableCell align="center">{vpc.name}</TableCell>
+          <TableCell align="center">{vpc.product_count}</TableCell>
+          <TableCell align="center">{vpc.app_count}</TableCell>
+          <TableCell align="center">{vpc.data_count}</TableCell>
+          <TableCell align="center">
+            <IconButton
+              aria-label="delete"
+              size="small"
               onClick={this.toggleMenu}
               className="list-icon"
             >
               <i className="fas fa-ellipsis-v"></i>
-            </button>
+            </IconButton>
+            <Box className="open-create-menu-close"></Box>
             {this.state.showMenu === true && (
-              <div className="menu-list">
-                <ul>
-                  <li className="active">
+              <Box className="menu-list">
+                <List>
+                  <ListItem className="active">
                     <a href="#">Add New datasource</a>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <a href="#">Add Compliance</a>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <a href="#">Associate to OU</a>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <a href="#">Add New VPC</a>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <a href="#">Add New Product</a>
-                  </li>
-                </ul>
-              </div>
+                  </ListItem>
+                </List>
+              </Box>
             )}
-          </td>
-        </tr>
+          </TableCell>
+        </TableRow>
       );
     });
   }
 
   generateVpcDetailsTable() {
     return (
-      <div className="environment-table-section" style={{ height: "395px" }}>
-        <div className="table discovered-assets-table">
-          <table className="overview">
-            <thead>
-              <tr>
-                <th>
-                  <div className="environment-image">
-                    <img src={Aws} />
-                  </div>
-                </th>
-                <th>Products</th>
-                <th>App Services</th>
-                <th>Data Services</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.props.vpcsDetails && this.props.vpcsDetails.length ? (
-                this.renderVpcsDetails()
-              ) : (
-                <></>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <Box className="environment-table-section" style={{ height: "395px" }}>
+        <Box className="table discovered-assets-table">
+          <TableContainer>
+            <Table className="overview">
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <Box className="environment-image">
+                      <img src={Aws} />
+                    </Box>
+                  </TableCell>
+                  <TableCell>Products</TableCell>
+                  <TableCell>App Services</TableCell>
+                  <TableCell>Data Services</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <tbody>
+                {this.props.vpcsDetails && this.props.vpcsDetails.length ? (
+                  this.renderVpcsDetails()
+                ) : (
+                  <></>
+                )}
+              </tbody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </Box>
     );
   }
 
@@ -634,8 +682,8 @@ class DiscoveredAssets extends Component {
     vpcsDetails =
       searchString != ""
         ? vpcsDetailsBackUp.filter((vpc) =>
-          vpc.name.toLowerCase().includes(searchString.toLowerCase())
-        )
+            vpc.name.toLowerCase().includes(searchString.toLowerCase())
+          )
         : vpcsDetailsBackUp;
     this.setState({ searchString, vpcsDetails });
   }
@@ -657,7 +705,8 @@ class DiscoveredAssets extends Component {
             updateAccountId={(accountId) => {
               this.setState({ accountId });
               this.props.updateCloudName(
-                new URLSearchParams(document.location.search).get("cloudName"), accountId
+                new URLSearchParams(document.location.search).get("cloudName"),
+                accountId
               );
             }}
             accountList={this.props.accountList}
@@ -685,93 +734,131 @@ class DiscoveredAssets extends Component {
                       </Box>
                     </Box>
                     <Box className="services-panel-body">
-                      {
-                        this.props.treeData && this.props.treeData.length ?
-                          <ArcherContainer style={{ width: '100%', height: '100%' }}>
-                            <TransformWrapper
-                              onTransformed={(instance) => {
-                                transformScale = instance && instance.state.scale;
-                                this.setState({ scale: true })
-                              }}
-                            >
-                              {({
-                                zoomIn,
-                                zoomOut,
-                                instance,
-                                zoomToElement,
-                                ...rest
-                              }) => {
-                                transformScale = instance.transformState.scale;
-                                return (
-                                  <React.Fragment>
-                                    <div className="gmnoprint">
-                                      <div className="gmnoprint-plus-minus">
-                                        <button
-                                          className="btn btn-plus"
-                                          onClick={() => zoomIn()}
-                                        >
-                                          <i className="fa-solid fa-plus"></i>
-                                        </button>
-                                        <button
-                                          className="btn btn-minus"
-                                          onClick={() => zoomOut()}
-                                        >
-                                          <i className="fa-solid fa-minus"></i>
-                                        </button>
-                                      </div>
+                      {this.props.treeData && this.props.treeData.length ? (
+                        <ArcherContainer
+                          style={{ width: "100%", height: "100%" }}
+                        >
+                          <TransformWrapper
+                            onTransformed={(instance) => {
+                              transformScale = instance && instance.state.scale;
+                              this.setState({ scale: true });
+                            }}
+                          >
+                            {({
+                              zoomIn,
+                              zoomOut,
+                              instance,
+                              zoomToElement,
+                              ...rest
+                            }) => {
+                              transformScale = instance.transformState.scale;
+                              return (
+                                <React.Fragment>
+                                  <div className="gmnoprint">
+                                    <div className="gmnoprint-plus-minus">
+                                      <button
+                                        className="btn btn-plus"
+                                        onClick={() => zoomIn()}
+                                      >
+                                        <i className="fa-solid fa-plus"></i>
+                                      </button>
+                                      <button
+                                        className="btn btn-minus"
+                                        onClick={() => zoomOut()}
+                                      >
+                                        <i className="fa-solid fa-minus"></i>
+                                      </button>
+                                    </div>
+                                    <div
+                                      className="gmnoprint-map"
+                                      onClick={() => {
+                                        zoomToElement(
+                                          "custom_location",
+                                          transformScale
+                                        );
+                                      }}
+                                    >
+                                      <button className="btn btn-map">
+                                        <i className="fa-solid fa-map-marker-alt"></i>
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <TransformComponent
+                                    wrapperStyle={{
+                                      width: "100%",
+                                      height: "100%",
+                                    }}
+                                    contentStyle={{
+                                      width: "100%",
+                                      height: "100%",
+                                      display: "block",
+                                      paddingTop: "120px",
+                                      // display: "flex",
+                                      // alignItems: "center",
+                                      // justifyContent: "flex-start",
+                                      transform: "translate(0px, 0px) scale(0)",
+                                    }}
+                                  >
+                                    <ArcherElement
+                                      id="root"
+                                      relations={[
+                                        {
+                                          targetId:
+                                            this.state.toggleNode.vpcId >= 0 &&
+                                            !this.state.toggleNode.globalService
+                                              ? `vpc_${this.state.toggleNode.vpcId}`
+                                              : this.state.toggleNode
+                                                  .globalService
+                                              ? "globalService"
+                                              : "",
+                                          targetAnchor: "left",
+                                          sourceAnchor: "right",
+                                          style: {
+                                            strokeColor: "#a5a5d7",
+                                            strokeWidth: 1.5,
+                                          },
+                                        },
+                                      ]}
+                                    >
                                       <div
-                                        className="gmnoprint-map"
-                                        onClick={() => {
-                                          zoomToElement(
-                                            "custom_location",
-                                            transformScale
+                                        className="services-text-box active"
+                                        id={`${
+                                          this.state.breadcrumbs.length === 1
+                                            ? "custom_location"
+                                            : ""
+                                        }`}
+                                        onClick={(e) => {
+                                          this.handleToggleNode(
+                                            {},
+                                            "vpc",
+                                            "service",
+                                            false
                                           );
                                         }}
                                       >
-                                        <button className="btn btn-map">
-                                          <i className="fa-solid fa-map-marker-alt"></i>
-                                        </button>
+                                        <span id="custom_location_1">
+                                          {this.getCloudName()}
+                                        </span>
                                       </div>
-                                    </div>
-                                    <TransformComponent
-                                      wrapperStyle={{ width: "100%", height: "100%" }}
-                                      contentStyle={{
-                                        width: "100%",
-                                        height: "100%",
-                                        display: "block",
-                                        paddingTop: "120px",
-                                        // display: "flex",
-                                        // alignItems: "center",
-                                        // justifyContent: "flex-start",
-                                        transform: "translate(0px, 0px) scale(0)",
-                                      }}
+                                    </ArcherElement>
+                                    <div
+                                      className={` ${
+                                        this.props.treeData &&
+                                        this.props.treeData.length
+                                          ? "global-servies"
+                                          : ""
+                                      }`}
                                     >
-                                      <ArcherElement
-                                        id="root"
-                                        relations={[
-                                          {
-                                            targetId:
-                                              this.state.toggleNode.vpcId >= 0 &&
-                                                !this.state.toggleNode.globalService
-                                                ? `vpc_${this.state.toggleNode.vpcId}`
-                                                : this.state.toggleNode.globalService
-                                                  ? "globalService"
-                                                  : "",
-                                            targetAnchor: "left",
-                                            sourceAnchor: "right",
-                                            style: {
-                                              strokeColor: "#a5a5d7",
-                                              strokeWidth: 1.5,
-                                            },
-                                          },
-                                        ]}
-                                      >
+                                      <ul>
+                                        {this.state.toggleNode.vpc ? (
+                                          this.renderVPCData()
+                                        ) : (
+                                          <></>
+                                        )}
+                                      </ul>
+                                      <ArcherElement id="globalService">
                                         <div
-                                          className="services-text-box active"
-                                          id={`${this.state.breadcrumbs.length === 1
-                                            ? "custom_location"
-                                            : ""
-                                            }`}
+                                          className="global-servies-menu m-t-2"
                                           onClick={(e) => {
                                             this.handleToggleNode(
                                               {},
@@ -779,137 +866,112 @@ class DiscoveredAssets extends Component {
                                               "service",
                                               false
                                             );
+                                            this.setState({
+                                              toggleNode: {
+                                                ...this.state.toggleNode,
+                                                globalService:
+                                                  !this.state.toggleNode
+                                                    .globalService,
+                                              },
+                                            });
                                           }}
                                         >
-                                          <span id="custom_location_1">
-                                            {this.getCloudName()}
-                                          </span>
-                                        </div>
-                                      </ArcherElement>
-                                      <div
-                                        className={` ${this.props.treeData &&
-                                          this.props.treeData.length
-                                          ? "global-servies"
-                                          : ""
-                                          }`}
-                                      >
-                                        <ul>
-                                          {this.state.toggleNode.vpc ? (
-                                            this.renderVPCData()
-                                          ) : (
-                                            <></>
-                                          )}
-                                        </ul>
-                                        <ArcherElement id="globalService">
-                                          <div
-                                            className="global-servies-menu m-t-2"
-                                            onClick={(e) => {
-                                              this.handleToggleNode(
-                                                {},
-                                                "vpc",
-                                                "service",
-                                                false
-                                              );
-                                              this.setState({
-                                                toggleNode: {
-                                                  ...this.state.toggleNode,
-                                                  globalService:
-                                                    !this.state.toggleNode
-                                                      .globalService,
-                                                },
-                                              });
-                                            }}
-                                          >
-                                            <label
-                                              className={`${this.state.toggleNode.globalService
+                                          <label
+                                            className={`${
+                                              this.state.toggleNode
+                                                .globalService
                                                 ? "active"
                                                 : ""
-                                                }`}
-                                            >
-                                              <span>
-                                                <img src={VpcServicesIcon} alt="" />
-                                              </span>
-                                              Global servies
-                                            </label>
-                                          </div>
-                                        </ArcherElement>
-                                      </div>
+                                            }`}
+                                          >
+                                            <span>
+                                              <img
+                                                src={VpcServicesIcon}
+                                                alt=""
+                                              />
+                                            </span>
+                                            Global servies
+                                          </label>
+                                        </div>
+                                      </ArcherElement>
+                                    </div>
 
-                                      <div
-                                        className={` ${this.state.toggleNode.cluster
+                                    <div
+                                      className={` ${
+                                        this.state.toggleNode.cluster
                                           ? "global-servies cluster-servies"
                                           : ""
-                                          }`}
-                                        style={{
-                                          marginTop: "0",
-                                          marginBottom: "0",
-                                          transform: "translateY(0%)",
-                                        }}
-                                      >
-                                        <ul>
-                                          {this.state.toggleNode.cluster ? (
-                                            this.renderClusters(
-                                              this.state.toggleNode.vpcId
-                                            )
-                                          ) : (
-                                            <></>
-                                          )}
-                                        </ul>
-                                        <div
-                                          className="global-servies-menu"
-                                          style={{ display: "none" }}
-                                        >
-                                          <label className="active">
-                                            Cloud Management Services
-                                          </label>
-                                          <label>Gateway Services</label>
-                                        </div>
-                                      </div>
+                                      }`}
+                                      style={{
+                                        marginTop: "0",
+                                        marginBottom: "0",
+                                        transform: "translateY(0%)",
+                                      }}
+                                    >
+                                      <ul>
+                                        {this.state.toggleNode.cluster ? (
+                                          this.renderClusters(
+                                            this.state.toggleNode.vpcId
+                                          )
+                                        ) : (
+                                          <></>
+                                        )}
+                                      </ul>
                                       <div
-                                        className={`${this.state.toggleNode.product
+                                        className="global-servies-menu"
+                                        style={{ display: "none" }}
+                                      >
+                                        <label className="active">
+                                          Cloud Management Services
+                                        </label>
+                                        <label>Gateway Services</label>
+                                      </div>
+                                    </div>
+                                    <div
+                                      className={`${
+                                        this.state.toggleNode.product
                                           ? "global-servies app-servies"
                                           : ""
-                                          }`}
-                                      >
-                                        <div className="global-servies-menu">
-                                          {this.state.toggleNode.product ? (
-                                            this.renderProducts(
-                                              this.state.toggleNode.vpcId,
-                                              this.state.toggleNode.clusterId
-                                            )
-                                          ) : (
-                                            <></>
-                                          )}
-                                        </div>
-                                        <div
-                                          className="global-servies-menu "
-                                          style={{ display: "none" }}
-                                        >
-                                          <label className="active">
-                                            Cloud Management Services
-                                          </label>
-                                          <label>Gateway Services</label>
-                                        </div>
+                                      }`}
+                                    >
+                                      <div className="global-servies-menu">
+                                        {this.state.toggleNode.product ? (
+                                          this.renderProducts(
+                                            this.state.toggleNode.vpcId,
+                                            this.state.toggleNode.clusterId
+                                          )
+                                        ) : (
+                                          <></>
+                                        )}
                                       </div>
-
-                                    </TransformComponent>
-                                  </React.Fragment>
-                                );
-                              }}
-                            </TransformWrapper>
-                          </ArcherContainer>
-                          : <></>
-                      }
-
+                                      <div
+                                        className="global-servies-menu "
+                                        style={{ display: "none" }}
+                                      >
+                                        <label className="active">
+                                          Cloud Management Services
+                                        </label>
+                                        <label>Gateway Services</label>
+                                      </div>
+                                    </div>
+                                  </TransformComponent>
+                                </React.Fragment>
+                              );
+                            }}
+                          </TransformWrapper>
+                        </ArcherContainer>
+                      ) : (
+                        <></>
+                      )}
                     </Box>
                   </Box>
                 </Grid>
                 <Grid item xs={5}>
                   {this.state.breadcrumbs &&
-                    this.state.breadcrumbs.length === 1 &&
-                    this.props.vpcsDetails &&
-                    this.props.vpcsDetails.length &&
-                    !this.state.toggleNode.globalService ? (
+                  this.state.breadcrumbs.length === 1 &&
+                  this.props.vpcsDetails &&
+                  this.props.vpcsDetails.length &&
+                  !this.state.toggleNode.globalService ? (
                     this.generateVpcDetailsTable()
                   ) : (
                     <></>
@@ -917,11 +979,12 @@ class DiscoveredAssets extends Component {
                   <Box
                     className="fliter-tabs"
                     style={{
-                      display: `${this.state.breadcrumbs &&
+                      display: `${
+                        this.state.breadcrumbs &&
                         this.state.breadcrumbs.length === 4
-                        ? "block"
-                        : "none"
-                        }`,
+                          ? "block"
+                          : "none"
+                      }`,
                     }}
                   >
                     <Box className="global-services-fliter">
@@ -967,37 +1030,101 @@ class DiscoveredAssets extends Component {
                             <TableHead>
                               <TableRow>
                                 <TableCell>Name</TableCell>
-                                <TableCell align="center">Performance</TableCell>
-                                <TableCell align="center">Availability</TableCell>
+                                <TableCell align="center">
+                                  Performance
+                                </TableCell>
+                                <TableCell align="center">
+                                  Availability
+                                </TableCell>
                                 <TableCell align="center">Security</TableCell>
-                                <TableCell align="center">Data Protection</TableCell>
+                                <TableCell align="center">
+                                  Data Protection
+                                </TableCell>
                                 <TableCell align="center">User Exp</TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
                               <TableRow>
-                                <TableCell><strong><a href="#">EMS</a></strong></TableCell>
-                                <TableCell align="center"><div className="box red">2</div></TableCell>
-                                <TableCell align="center"><div className="box green"><i className="fa-solid fa-check"></i></div></TableCell>
-                                <TableCell align="center"><div className="box green"><i className="fa-solid fa-check"></i></div></TableCell>
-                                <TableCell align="center"><div className="box green"><i className="fa-solid fa-check"></i></div></TableCell>
-                                <TableCell align="center"><div className="box orange">3</div></TableCell>
+                                <TableCell>
+                                  <strong>
+                                    <a href="#">EMS</a>
+                                  </strong>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <div className="box red">2</div>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <div className="box green">
+                                    <i className="fa-solid fa-check"></i>
+                                  </div>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <div className="box green">
+                                    <i className="fa-solid fa-check"></i>
+                                  </div>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <div className="box green">
+                                    <i className="fa-solid fa-check"></i>
+                                  </div>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <div className="box orange">3</div>
+                                </TableCell>
                               </TableRow>
                               <TableRow>
-                                <TableCell><strong><a href="#">Supply Chain</a></strong></TableCell>
-                                <TableCell align="center"><div className="box red">2</div></TableCell>
-                                <TableCell align="center"><div className="box green"><i className="fa-solid fa-check"></i></div></TableCell>
-                                <TableCell align="center"><div className="box green"><i className="fa-solid fa-check"></i></div></TableCell>
-                                <TableCell align="center"><div className="box green"><i className="fa-solid fa-check"></i></div></TableCell>
+                                <TableCell>
+                                  <strong>
+                                    <a href="#">Supply Chain</a>
+                                  </strong>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <div className="box red">2</div>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <div className="box green">
+                                    <i className="fa-solid fa-check"></i>
+                                  </div>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <div className="box green">
+                                    <i className="fa-solid fa-check"></i>
+                                  </div>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <div className="box green">
+                                    <i className="fa-solid fa-check"></i>
+                                  </div>
+                                </TableCell>
                                 <TableCell align="center"></TableCell>
                               </TableRow>
                               <TableRow>
-                                <TableCell><strong><a href="#">Procurement</a></strong></TableCell>
-                                <TableCell align="center"><div className="box red">2</div></TableCell>
-                                <TableCell align="center"><div className="box green"><i className="fa-solid fa-check"></i></div></TableCell>
-                                <TableCell align="center"><div className="box green"><i className="fa-solid fa-check"></i></div></TableCell>
-                                <TableCell align="center"><div className="box green"><i className="fa-solid fa-check"></i></div></TableCell>
-                                <TableCell align="center"><div className="box orange">3</div></TableCell>
+                                <TableCell>
+                                  <strong>
+                                    <a href="#">Procurement</a>
+                                  </strong>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <div className="box red">2</div>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <div className="box green">
+                                    <i className="fa-solid fa-check"></i>
+                                  </div>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <div className="box green">
+                                    <i className="fa-solid fa-check"></i>
+                                  </div>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <div className="box green">
+                                    <i className="fa-solid fa-check"></i>
+                                  </div>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <div className="box orange">3</div>
+                                </TableCell>
                               </TableRow>
                             </TableBody>
                           </Table>
@@ -1008,11 +1135,12 @@ class DiscoveredAssets extends Component {
                   <Box
                     className="fliter-tabs global-service-penal"
                     style={{
-                      display: `${this.state.breadcrumbs &&
+                      display: `${
+                        this.state.breadcrumbs &&
                         this.state.breadcrumbs.length === 3
-                        ? "block"
-                        : "none"
-                        }`,
+                          ? "block"
+                          : "none"
+                      }`,
                     }}
                   >
                     <Box className="global-services-fliter">
@@ -1027,7 +1155,9 @@ class DiscoveredAssets extends Component {
                         <Box className="environment-boxs m-t-4">
                           <Box
                             className="environment-box"
-                            onClick={() => this.changeActiveCluster("eksCluster")}
+                            onClick={() =>
+                              this.changeActiveCluster("eksCluster")
+                            }
                             style={{
                               border:
                                 currentActiveCluster === "eksCluster"
@@ -1049,7 +1179,8 @@ class DiscoveredAssets extends Component {
                                       <Box className="data-text">
                                         <span
                                           style={{
-                                            backgroundColor: item.backgroundColor,
+                                            backgroundColor:
+                                              item.backgroundColor,
                                           }}
                                         ></span>
                                         <p>{item.name}</p>
@@ -1063,7 +1194,9 @@ class DiscoveredAssets extends Component {
                           </Box>
                           <Box
                             className="environment-box"
-                            onClick={() => this.changeActiveCluster("ecsCluster")}
+                            onClick={() =>
+                              this.changeActiveCluster("ecsCluster")
+                            }
                             style={{
                               border:
                                 currentActiveCluster === "ecsCluster"
@@ -1085,7 +1218,8 @@ class DiscoveredAssets extends Component {
                                       <Box className="data-text">
                                         <span
                                           style={{
-                                            backgroundColor: item.backgroundColor,
+                                            backgroundColor:
+                                              item.backgroundColor,
                                           }}
                                         ></span>
                                         <p>{item.name}</p>
@@ -1098,8 +1232,12 @@ class DiscoveredAssets extends Component {
                             </Box>
                           </Box>
                         </Box>
-                        {currentActiveCluster === "eksCluster" && <EksCluster />}
-                        {currentActiveCluster === "ecsCluster" && <EcsCluster />}
+                        {currentActiveCluster === "eksCluster" && (
+                          <EksCluster />
+                        )}
+                        {currentActiveCluster === "ecsCluster" && (
+                          <EcsCluster />
+                        )}
                       </>
                     ) : toggleNode.clusterId === 1 ? (
                       <AllTable />
@@ -1107,23 +1245,90 @@ class DiscoveredAssets extends Component {
                       <WafResources />
                     )}
                   </Box>
+
                   <Box
-                    className="fliter-tabs"
+                    className="fliter-tabs global-service-penal"
                     style={{
-                      display: `${this.state.breadcrumbs &&
+                      display: `${
+                        this.state.breadcrumbs &&
                         this.state.breadcrumbs.length === 2
-                        ? "block"
-                        : "none"
-                        }`,
+                          ? "block"
+                          : "none"
+                      }`,
                     }}
                   >
-                    <Box
+                    <Box className="cloud-managed-section">
+                      <h4>Cluster</h4>
+                      <Box className="cloud-managed-cards">
+                        <Box className="cloud-managed-cards-scroll">
+                          {dummyData.clusterServices.map((item, index) => {
+                            return (
+                              <Box className="service-card active">
+                                <Box className="service-icon">
+                                  <img
+                                    src={this.state.serivceImages[index]}
+                                    alt="serviceicon"
+                                  />
+                                </Box>
+                                <Box className="service-contant">
+                                  <label>{item.name}</label>
+                                  <strong>{item.value}</strong>
+                                </Box>
+                              </Box>
+                            );
+                          })}
+                        </Box>
+                      </Box>
+                      <h4>Cloud Managed Services</h4>
+                      <Box className="cloud-managed-cards">
+                        <Box className="cloud-managed-cards-scroll">
+                          {dummyData.managedServices.map((item, index) => {
+                            return (
+                              <Box className="service-card active">
+                                <Box className="service-icon">
+                                  <img
+                                    src={this.state.serivceImages[index]}
+                                    alt="serviceicon"
+                                  />
+                                </Box>
+                                <Box className="service-contant">
+                                  <label>{item.name}</label>
+                                  <strong>{item.value}</strong>
+                                </Box>
+                              </Box>
+                            );
+                          })}
+                        </Box>
+                      </Box>
+                      <h4>Gateway Services</h4>
+                      <Box className="cloud-managed-cards">
+                        <Box className="cloud-managed-cards-scroll">
+                          {dummyData.GatewayServices.map((item, index) => {
+                            return (
+                              <Box className="service-card active">
+                                <Box className="service-icon">
+                                  <img
+                                    src={this.state.serivceImages[index]}
+                                    alt="serviceicon"
+                                  />
+                                </Box>
+                                <Box className="service-contant">
+                                  <label>{item.name}</label>
+                                  <strong>{item.value}</strong>
+                                </Box>
+                              </Box>
+                            );
+                          })}
+                        </Box>
+                      </Box>
+                    </Box>
+
+                    {/* <Box
                       className="global-services-fliter"
                       style={{
                         height: "533px",
                         boxShadow: "0px 10px 20px 0px rgba(0, 0, 0, 0.04)",
-                      }}
-                    >
+                      }}>
                       <Box className="heading">
                         <Box className="breadcrumbs">
                           <ul>{this.getBreadCrumbs()}</ul>
@@ -1152,7 +1357,7 @@ class DiscoveredAssets extends Component {
                           />
                         </Box>
                       </Box>
-                    </Box>
+                    </Box> */}
                   </Box>
                   {toggleNode.globalService && <GlobalSerivces />}
                   <Box className="fliter-tabs" style={{ display: "none" }}>
@@ -1221,10 +1426,16 @@ class DiscoveredAssets extends Component {
                             <TableHead>
                               <TableRow>
                                 <TableCell>Name</TableCell>
-                                <TableCell align="center">Performance</TableCell>
-                                <TableCell align="center">Availability</TableCell>
+                                <TableCell align="center">
+                                  Performance
+                                </TableCell>
+                                <TableCell align="center">
+                                  Availability
+                                </TableCell>
                                 <TableCell align="center">Security</TableCell>
-                                <TableCell align="center">Data Protection</TableCell>
+                                <TableCell align="center">
+                                  Data Protection
+                                </TableCell>
                                 <TableCell align="center">User Exp</TableCell>
                               </TableRow>
                             </TableHead>
