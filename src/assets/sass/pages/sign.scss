@@ -160,7 +160,7 @@
       }
 
       .google-btn {
-        .blue-button {
+        .primary-btn {
           width: 50%;
         }
       }
@@ -353,6 +353,24 @@
         }
       }
 
+      .back-btn {
+        margin-bottom: 30px;
+
+        a {
+          background-color: #fff;
+          border-radius: 3px;
+          padding: 5px 10px;
+          border: 1px solid #dcdfe5;
+        }
+
+        span {
+          padding-left: 10px;
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 24px;
+        }
+      }
+
     }
 
   }
@@ -365,7 +383,7 @@
     .sign-right {
       .sign-right-content {
         .next-step {
-          .blue-button {
+          .primary-btn {
             min-width: inherit !important;
           }
 

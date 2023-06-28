@@ -18,6 +18,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: fixed;
+    left: 21.2%;
+    top: 0;
 
     .dashboard-image {
       display: flex;
@@ -280,7 +283,7 @@
 
                   .total-budget {
                     display: flex;
-                    align-items: end;
+                    align-items: flex-end;
                     justify-content: flex-start;
 
                     label {
@@ -442,7 +445,7 @@
             width: 20%;
             margin: -50px 0 0 0;
             text-align: left;
-            padding-left: 45px;
+            padding-left: 30px;
 
             .current-spend {
               width: 100%;
@@ -637,7 +640,7 @@
 
                 .total-budget {
                   display: flex;
-                  align-items: end;
+                  align-items: flex-end;
                   justify-content: flex-start;
 
                   label {
@@ -761,12 +764,12 @@
               display: inline-block;
               vertical-align: top;
               width: 100%;
-              min-height: 454px;
+              min-height: 443px;
               padding: 25px 20px;
               flex-wrap: wrap;
               background: #ffffff;
               border-radius: 10px;
-              margin-bottom: 10px;
+              margin-bottom: 0px;
               // margin-left: 1.2%;
               // margin-right: 1.2%;
               box-shadow: 0px 100px 80px rgba(108, 73, 172, 0.07),
@@ -793,7 +796,7 @@
 
                 .product-cost {
                   display: flex;
-                  align-items: end;
+                  align-items: flex-end;
                   justify-content: flex-start;
                   margin: 10px 0 0 0;
 
@@ -2143,7 +2146,7 @@
                   color: #383874;
                   text-align: center;
                   line-height: 20px;
-                  padding: 10px 15px;
+                  padding: 10px 0px;
                   cursor: pointer;
                   position: relative;
 
@@ -2209,6 +2212,121 @@
                       &.up {
                         color: #53ca43;
                       }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  .dashboard-container {
+    padding: 0 30px;
+    .dashboard-inner {
+      width: 750px;
+      height: 750px;
+      .dashboard-image {
+        img {
+          max-width: 650px;
+          margin-top: 65px;
+        }
+      }
+    }
+    .services-panel-tabs {
+      .tabs-head {
+        h2 {
+          margin: 0;
+          left: 30px;
+        }
+        ul li {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+      }
+      .tabs-content {
+        padding: 25px 30px;
+        .spend-analytics-container {
+          .spend-analytics-inner-container {
+            .analytics-left {
+              width: 25%;
+              .total-spend {
+                h1 {
+                  font-size: 35px;
+                  line-height: 40px;
+                }
+              }
+              .dashboard-spent {
+                margin-top: 30px;
+                width: 200px;
+              }
+            }
+            .analytics-center {
+              width: 50%;
+              height: 480px;
+              .analytics-line-chart {
+                width: 100%;
+              }
+            }
+            .analytics-right {
+              width: 25%;
+              padding-left: 15px;
+              .monthly-statistics-card {
+                margin-top: 30px;
+                width: 200px;
+              }
+            }
+          }
+        }
+        .cost-analysis-container {
+          .product-wise-inner-container {
+            .main-collapse-expand {
+              .collapse-expand {
+                min-height: 390px;
+                .chart-contant {
+                  .chart-details {
+                    ul {
+                      li {
+                        .right-contant {
+                          span {
+                            width: 100px;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        .process-central-container {
+          .main-collapse-expand {
+            .collapse-expand {
+              .contents {
+                display: block;
+                width: 100%;
+                padding: 0 20px;
+                .reports-boxes {
+                  .report-box {
+                    strong {
+                      font-size: 12px;
+                      line-height: 24px;
+                      color: #6a6a97;
+                      font-weight: 400;
+                      display: inline-block;
+                      vertical-align: top;
+                      width: auto;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    }
+                    .report {
+                      padding: 0;
                     }
                   }
                 }

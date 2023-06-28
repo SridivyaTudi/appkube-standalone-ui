@@ -5,6 +5,8 @@ import { RestService } from "../../Services/RestService";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { ToastMessage } from "../../../../Toast/ToastMessage";
+import Button from '@mui/material/Button';
+
 class CreateNewAccountPopup extends Component {
   constructor(props) {
     super(props);
@@ -158,15 +160,16 @@ class CreateNewAccountPopup extends Component {
         </ModalBody>
         <ModalFooter className="footer-top-bar">
           <div className="d-block text-center">
-            <button
-              className="gray-outline"
+            <Button
+              className="secondary-text-btn m-r-2"
+              variant="contained"
               onClick={() => {
                 this.props.setID(false);
               }}
             >
               Clear
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => {
                 // !this.state.initailFlag && this.state.newDepartment != '' ? this.createDepartMent() : !this.props.checkedId ? ToastMessage('Please select any Organizational Unit.', "unsuccess") : ''
                 if (!this.state.initailFlag && this.state.newDepartment != "") {
@@ -180,10 +183,11 @@ class CreateNewAccountPopup extends Component {
                   this.toggle();
                 }
               }}
-              className="new-button m-b-0"
+              className="primary-btn m-b-0"
+              variant="contained"
             >
               Add
-            </button>
+            </Button>
           </div>
         </ModalFooter>
       </Modal>

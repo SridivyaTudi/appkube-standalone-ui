@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Button from '@mui/material/Button';
 
 const departments = [
   "HR",
@@ -184,9 +185,8 @@ class SelectDepartmentPopup extends Component {
                       <Grid item lg={3} md={4} xs={12}>
                         <Box
                           onClick={() => this.handleEnvChange(item.name)}
-                          className={`environment-box ${
-                            selectedEnvs.includes(item.name) ? "active" : ""
-                          }`}
+                          className={`environment-box ${selectedEnvs.includes(item.name) ? "active" : ""
+                            }`}
                         >
                           <Box className="d-block">
                             <Box className={`envir-image ${item.img}`}></Box>
@@ -205,15 +205,20 @@ class SelectDepartmentPopup extends Component {
         </ModalBody>
         <ModalFooter className="footer-top-br">
           <Box className="d-block text-center">
-            <button className="gray-button m-r-1 m-b-0">Clear</button>
+            <Button
+              className="secondary-btn m-r-2"
+              variant="contained"
+            >
+              Clear
+            </Button>
             {selectedEnvs.length ? (
-              <Link
-                to={`${this.state.link}`}
+              <Button
                 onClick={this.toggle}
-                className="new-button m-b-0"
+                className="primary-btn min-width"
+                variant="contained"
               >
                 Submit
-              </Link>
+              </Button>
             ) : (
               <></>
             )}

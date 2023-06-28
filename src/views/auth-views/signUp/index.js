@@ -15,6 +15,7 @@ import { signUpUserAPI } from "../../../redux/auth/authThunk";
 import { connect } from "react-redux";
 import { ToastMessage } from "../../../Toast/ToastMessage";
 import status from "../../../redux/constants/commonDS";
+import Button from '@mui/material/Button';
 
 class SignUp extends Component {
   constructor(props) {
@@ -208,7 +209,12 @@ class SignUp extends Component {
                 Sign up to <strong>Appkube</strong>
               </Box>
               <Box className="d-block width-100 google-btn">
-                <button className="blue-button">Sign up with google</button>
+                <Button
+                  className="primary-btn"
+                  variant="contained"
+                >
+                  Sign up with google
+                </Button>
               </Box>
               <Box className="d-block width-100 or-contant text-center">
                 <span>or</span>
@@ -302,9 +308,8 @@ class SignUp extends Component {
                         <></>
                       )}
                       <i
-                        className={`fa-sharp fa-regular fa-eye${
-                          passwordView ? "-slash" : ""
-                        }`}
+                        className={`fa-sharp fa-regular fa-eye${passwordView ? "-slash" : ""
+                          }`}
                         style={{ cursor: "pointer" }}
                         onClick={() => {
                           this.setState({
@@ -335,12 +340,13 @@ class SignUp extends Component {
                 )}
               </Box>
               <Box className="d-flex width-100 next-step">
-                <button
-                  className="blue-button"
+                <Button
+                  className="primary-btn"
                   onClick={() => this.handleCurrentActiveStep(1)}
+                  variant="contained"
                 >
                   Next
-                </button>
+                </Button>
                 <p>
                   Already have on account?
                   <Link to={`${AUTH_PREFIX_PATH}/signin`}>Sign In Now</Link>
@@ -458,12 +464,13 @@ class SignUp extends Component {
                 </Grid>
               </Box>
               <Box className="d-flex width-100 next-step">
-                <button
-                  className="blue-button"
+                <Button
+                  className="primary-btn"
                   onClick={() => this.handleCurrentActiveStep(2)}
+                  variant="contained"
                 >
                   Next
-                </button>
+                </Button>
               </Box>
             </Box>
           </Box>
@@ -506,25 +513,21 @@ class SignUp extends Component {
               </Box>
               <Box className="d-flex width-100 next-step">
                 {/* <Link to={`${AUTH_PREFIX_PATH}/signin`}> */}
-                <button
+                <Button
                   onClick={() =>
                     !this.state.loadingData ? this.signUpSubmit() : <></>
                   }
-                  className={
-                    this.state.loadingData
-                      ? "blue-button disabled"
-                      : "blue-button"
-                  }
+                  className="primary-btn"
+                  variant="contained"
                   disabled={this.state.loadingData ? true : false}
                 >
-                  {" "}
                   {this.state.loadingData ? (
                     <i className="fa-solid fa-spinner fa-spin" />
                   ) : (
                     ""
                   )}{" "}
                   Continue To Sign In
-                </button>
+                </Button>
                 {/* </Link> */}
               </Box>
             </Box>

@@ -8,6 +8,7 @@ import GoogleCloud from "../../../../../assets/img/google-cloud.png";
 import Kubernetes from "../../../../../assets/img/kubernetes.png";
 import { Box, Grid, List, ListItem } from "@mui/material";
 import { APP_PREFIX_PATH } from "../../../../../configs/AppConfig";
+import Button from '@mui/material/Button';
 
 const headers = [
   { label: "Service Name", key: "name" },
@@ -339,10 +340,10 @@ class CommonFilterViewSearch extends Component {
                   filename={"vpcs.csv"}
                   target="_blank"
                 >
-                  <button className="new-button">
+                  <Button className="primary-btn min-width-inherit" variant="contained">
                     <i className="fas fa-external-link-square-alt p-r-10"></i>
                     Export
-                  </button>
+                  </Button>
                 </CSVLink>
               ) : (
                 <></>
