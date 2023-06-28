@@ -10,8 +10,8 @@ import { connect } from "react-redux";
 import SelectDepartmentPopup from "../Components/SelectDepartmentPopup";
 import {
   getEnvsAsync,
-  getEnvsSummary,
-} from "../../../../redux/assetManager/environments/environmentsThunk";
+  getEnvsSummary,getDepartmentsOrgWise
+} from "redux/assetManager/environments/environmentsThunk";
 import status from "../../../../redux/constants/commonDS";
 import { APP_PREFIX_PATH } from "../../../../configs/AppConfig";
 import Table from "@mui/material/Table";
@@ -48,14 +48,17 @@ class Environments extends Component {
     this.selectDepartmentPopupModalRef = React.createRef();
   }
 
-  onClickSelectDepartmentPopup = (link) => {
-    this.selectDepartmentPopupModalRef.current.setLink(link);
-    this.selectDepartmentPopupModalRef.current.toggle();
+  
+  togglePopup = () => {
+    this.setState({
+      showSelectDepartmentPopup: !this.state.showSelectDepartmentPopup,
+    });
   };
-
   componentDidMount = () => {
-    this.props.getEnvsAsync(localStorage.getItem("currentOrgId"));
-    this.props.getEnvsSummary(localStorage.getItem("currentOrgId"));
+    let currentOrgId = localStorage.getItem("currentOrgId")
+    this.props.getEnvsAsync(currentOrgId);
+    this.props.getEnvsSummary(currentOrgId);
+    this.props.getDepartmentsOrgWise(currentOrgId);
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -81,6 +84,16 @@ class Environments extends Component {
         dataFetched: true,
       });
       this.SetCurrentActiveTableIndex();
+    }
+    if (
+      prevProps.environments?.departmentsFilters?.status !==
+        this.props.environments.departmentsFilters.status &&
+      this.props.environments.departmentsFilters.status === status.SUCCESS &&
+      this.props.environments?.departmentsFilters?.data
+    ) {
+      this.setState({
+        departments: this.props.environments.departmentsFilters.data?.departments
+      });
     }
   }
 
@@ -392,7 +405,7 @@ class Environments extends Component {
                     <Box className="environment-fliter">
                       <Box
                         className="fliter-toggel"
-                        onClick={() => this.onClickSelectDepartmentPopup("")}
+                        onClick={this.togglePopup}
                       >
                         <i className="fa-solid fa-filter fillter-icon"></i>
                         fillter
@@ -590,22 +603,24 @@ class Environments extends Component {
             {allEnvSummary.length && this.renderEnvironmentTable()}
           </>
         )}
-        <SelectDepartmentPopup ref={this.selectDepartmentPopupModalRef} />
+        {this.state.showSelectDepartmentPopup ?
+        <SelectDepartmentPopup showModal={this.state.showSelectDepartmentPopup} togglePopup={this.togglePopup} departments={this.state.departments || []} />
+        : <></>}
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const { environments } = state;
+  const { environments,departments } = state;
   return {
-    environments,
+    environments,departments
   };
 }
 
 const mapDispatchToProps = {
   getEnvsAsync,
-  getEnvsSummary,
+  getEnvsSummary,getDepartmentsOrgWise
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Environments);
