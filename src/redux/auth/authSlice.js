@@ -8,7 +8,7 @@ const authSlice = createSlice({
     signUpUser: {
       status: null,
     },
-    login: {
+    loggedInUser: {
       status: null,
     },
   },
@@ -52,7 +52,7 @@ const authSlice = createSlice({
         ...state,
         loggedInUser: {
           status: status.SUCCESS,
-          data: payload?.loggedInUser,
+          data: payload,
         },
       };
     },

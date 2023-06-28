@@ -29,23 +29,19 @@ class Signin extends Component {
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.loggedInUser?.status !== prevProps.loggedInUser?.status) {
-      if (
-        this.props.loggedInUser?.status === status.SUCCESS &&
-        this.props.loggedInUser.data?.info
-      ) {
-        setCurrentUser(this.props.loggedInUser.data);
-        setCurrentOrgId(
-          this.props.loggedInUser.data.info.user.organization.cmdbOrgId
-        );
-        this.setState({
-          userLoggedIn: true,
-        });
-      } else if (
-        this.props.loggedInUser?.status === status.FAILURE ||
-        !this.props.loggedInUser.data?.info
-      ) {
-        ToastMessage.error("User login failed!");
+    if (this.props.loggedInUser.status !== prevProps.loggedInUser.status) {
+      if (this.props.loggedInUser.status === status.SUCCESS) {
+        if (this.props.loggedInUser.data.info) {
+          setCurrentUser(this.props.loggedInUser.data);
+          setCurrentOrgId(
+            this.props.loggedInUser.data.info.user.organization.cmdbOrgId
+          );
+          this.setState({
+            userLoggedIn: true,
+          });
+        } else {
+          ToastMessage.error("User login failed!");
+        }
       }
     }
   };
@@ -177,9 +173,8 @@ class Signin extends Component {
                           <></>
                         )}
                         <i
-                          className={`fa-sharp fa-regular fa-eye${
-                            showPassword ? "" : "-slash"
-                          }`}
+                          className={`fa-sharp fa-regular fa-eye${showPassword ? "" : "-slash"
+                            }`}
                           style={{ cursor: "pointer" }}
                           onClick={() => {
                             this.setState({
