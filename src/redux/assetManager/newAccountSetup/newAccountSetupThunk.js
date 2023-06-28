@@ -22,7 +22,7 @@ export const createNewOU = createAsyncThunk(
 export const getOrganizationalUnits = createAsyncThunk(
   "organizationalUnitThunk/getAll",
   async () => {
-    const url = config.GET_ORGANIZATION_DETAILS;
+    const url = config.GET_ALL_ORGS;
     const response = await fetch(`${url}`);
     if (response.ok) {
       const allOrgs = await response.json();
