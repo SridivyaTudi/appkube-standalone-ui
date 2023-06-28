@@ -1,10 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  getEnvsAsync,
-  getEnvsSummary,
-  getDepartmentsOrgWise,
-  getProductsByDepId,
-} from "./environmentsThunk";
+import { getEnvsAsync, getEnvsSummary } from "./environmentsThunk";
 import status from "../../constants/commonDS";
 
 export const environmentSlice = createSlice({
@@ -58,54 +53,6 @@ export const environmentSlice = createSlice({
       return {
         ...state,
         envSummary: {
-          status: status.FAILURE,
-        },
-      };
-    },
-    [getDepartmentsOrgWise.pending]: (state, action) => {
-      return {
-        ...state,
-        departmentsFilters: {
-          status: status.IN_PROGRESS,
-        },
-      };
-    },
-    [getDepartmentsOrgWise.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        departmentsFilters: {
-          status: status.SUCCESS,
-          data: action?.payload,
-        },
-      };
-    },
-    [getDepartmentsOrgWise.rejected]: (state, action) => {
-      return {
-        ...state,
-        departmentsFilters: {
-          status: status.FAILURE,
-        },
-      };
-    },
-    [getProductsByDepId.pending]: (state, action) => {
-      return {
-        ...state,
-        productsByDepId: { status: status.IN_PROGRESS },
-      };
-    },
-    [getProductsByDepId.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        productsByDepId: {
-          status: status.SUCCESS,
-          data: action.payload,
-        },
-      };
-    },
-    [getProductsByDepId.rejected]: (state, action) => {
-      return {
-        ...state,
-        productsByDepId: {
           status: status.FAILURE,
         },
       };

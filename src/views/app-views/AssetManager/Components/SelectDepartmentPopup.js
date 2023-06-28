@@ -3,10 +3,15 @@ import { Link } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { connect } from "react-redux";
-import { getProductsByDepId } from "redux/assetManager/environments/environmentsThunk";
-import { getCurrentOrgId } from "utils";
-import Button from "@mui/material/Button";
+
+const departments = [
+  "HR",
+  "Finance",
+  "IT",
+  "Production",
+  "Marketing",
+  "Operations",
+];
 
 const production = ["HRMS", "Procurement", "WeDesk", "CMS", "AppCube", "HMS"];
 
@@ -22,54 +27,49 @@ class SelectDepartmentPopup extends Component {
     super(props);
     this.state = {
       modal: false,
+      link: "",
       selectedDepartments: [],
       selectedProductions: [],
       selectedEnvs: [],
-      products: {},
     };
   }
 
   toggle = () => {
-    this.props.togglePopup();
     this.setState({
+      modal: !this.state.modal,
       selectedDepartments: [],
-      products: [],
+      selectedProductions: [],
       selectedEnvs: [],
     });
   };
 
-  handleCheckChange = (e, type, depId) => {
-    let orgId = getCurrentOrgId();
-    let departmentId = depId;
+  setLink = (link) => {
+    this.setState({
+      link,
+    });
+  };
+
+  handleCheckChange = (e, type) => {
     const { value, checked } = e.target;
     let { selectedDepartments, selectedProductions } = this.state;
     if (type === "dep") {
       if (checked) {
-        this.props
-          .getProductsByDepId({ orgId: orgId, depId: depId })
-          .then((res) => {
-            if (res.payload) {
-              this.setState((prevState) => ({
-                products: { ...prevState.products, [depId]: res.payload },
-              }));
-            }
-          });
+        this.setState((prevState) => ({
+          selectedDepartments: [...prevState.selectedDepartments, value],
+        }));
       } else {
-        let removeProducts = this.state.products;
-        delete removeProducts[depId];
+        let newChecked = selectedDepartments.filter((item) => item !== value);
         this.setState({
-          products: removeProducts,
+          selectedDepartments: newChecked,
+          selectedProductions: [],
+          selectedEnvs: [],
         });
-        console.log(removeProducts, "removeProducts");
       }
     } else if (type === "prod") {
       if (checked) {
         this.setState((prevState) => ({
           selectedProductions: [...prevState.selectedProductions, value],
         }));
-      } else if (selectedProductions.length <= 1) {
-        let newChecked = selectedProductions.filter((item) => item !== value);
-        this.setState({ selectedProductions: newChecked, selectedEnvs: [] });
       } else {
         let newChecked = selectedProductions.filter((item) => item !== value);
         this.setState({ selectedProductions: newChecked });
@@ -87,59 +87,12 @@ class SelectDepartmentPopup extends Component {
     this.setState({ selectedEnvs });
   };
 
-  renderDepartMents = () => {
-    return this.props.departments.map((department, index) => {
-      return (
-        <Grid item lg={4} md={4} xs={12} key={index}>
-          <Box className="d-flex align-items-center checkbox">
-            <input
-              className="checkbox-input"
-              type="checkbox"
-              checked={this.isDepartmentSelected(department.id)}
-              onChange={(e) => this.handleCheckChange(e, "dep", department.id)}
-            />
-            <label htmlFor={department.name}>{department.name}</label>
-          </Box>
-        </Grid>
-      );
-    });
-  };
-
-  renderProducts = () => {
-    return Object.keys(this.state.products).map((departmentProducts, index) => {
-      return this.state.products[departmentProducts].map(
-        (product, innerIndex) => {
-          return (
-            <Grid key={innerIndex} item lg={4} md={4} xs={12}>
-              <Box className="d-flex align-items-center">
-                <input
-                  type="checkbox"
-                  value={product}
-                  onChange={(e) => this.handleCheckChange(e, "prod")}
-                  id={product}
-                />
-                <label htmlFor={product}>{product}</label>
-              </Box>
-            </Grid>
-          );
-        }
-      );
-    });
-  };
-
-  isDepartmentSelected = (depId) => {
-    return (
-      this.state.products &&
-      Object.keys(this.state.products).length &&
-      this.state.products[depId]
-    );
-  };
   render() {
-    const { selectedProductions, selectedDepartments, selectedEnvs,products } =
+    const { selectedProductions, selectedDepartments, selectedEnvs } =
       this.state;
     return (
       <Modal
-        isOpen={this.props.showModal}
+        isOpen={this.state.modal}
         toggle={this.toggle}
         className="select-account-modal-container"
       >
@@ -154,9 +107,7 @@ class SelectDepartmentPopup extends Component {
             <i className="fa-solid fa-xmark"></i>
           </button>
         </ModalHeader>
-        <ModalBody
-          style={{ overflowY: "auto", overflowX: "hidden", height: "300px" }}
-        >
+        <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
           <h4 className="text-left m-b-1">Select Department</h4>
           <Box sx={{ width: "100%" }} className="border-bottom p-b-10">
             <Grid
@@ -166,13 +117,26 @@ class SelectDepartmentPopup extends Component {
               alignItems={"center"}
               justifyContent={"flex-start"}
             >
-              {(this.props.departments &&
-                this.props.departments.length &&
-                this.renderDepartMents()) ||
-                ""}
+              {departments.map((item) => {
+                return (
+                  <Grid item lg={4} md={4} xs={12}>
+                    <Box className="d-flex align-items-center checkbox">
+                      <input
+                        className="checkbox-input"
+                        type="checkbox"
+                        value={item}
+                        onChange={(e) => this.handleCheckChange(e, "dep")}
+                      />
+                      <label onClick={(e) => this.handleCheckChange(e, "dep")}>
+                        {item}
+                      </label>
+                    </Box>
+                  </Grid>
+                );
+              })}
             </Grid>
           </Box>
-          {products && Object.keys(products).length ? (
+          {selectedDepartments.length ? (
             <>
               <h4 className="text-left m-b-1 m-t-2">Select Production</h4>
               <Box sx={{ width: "100%" }} className="border-bottom p-b-10">
@@ -183,14 +147,28 @@ class SelectDepartmentPopup extends Component {
                   alignItems={"center"}
                   justifyContent={"flex-start"}
                 >
-                  {this.renderProducts()}
+                  {production.map((item) => {
+                    return (
+                      <Grid item lg={4} md={4} xs={12}>
+                        <Box className="d-flex align-items-center">
+                          <input
+                            type="checkbox"
+                            value={item}
+                            onChange={(e) => this.handleCheckChange(e, "prod")}
+                          />
+                          <label>{item}</label>
+                        </Box>
+                      </Grid>
+                    );
+                  })}
                 </Grid>
               </Box>
             </>
           ) : (
             <></>
           )}
-          {selectedProductions.length && products && Object.keys(products).length ? (
+
+          {selectedProductions.length && selectedDepartments.length ? (
             <>
               <h4 className="text-left m-b-1 m-t-2">Select Environment</h4>
               <Box sx={{ width: "100%" }}>
@@ -203,7 +181,7 @@ class SelectDepartmentPopup extends Component {
                 >
                   {environments.map((item) => {
                     return (
-                      <Grid key={item.name} item lg={3} md={4} xs={12}>
+                      <Grid item lg={3} md={4} xs={12}>
                         <Box
                           onClick={() => this.handleEnvChange(item.name)}
                           className={`environment-box ${
@@ -227,11 +205,13 @@ class SelectDepartmentPopup extends Component {
         </ModalBody>
         <ModalFooter className="footer-top-br">
           <Box className="d-block text-center">
-            <button className="gray-button m-r-1 m-b-0" onClick={this.toggle}>
-              Clear
-            </button>
-            {products && Object.keys(products).length ? (
-              <Link onClick={this.toggle} className="primary-btn m-b-0">
+            <button className="gray-button m-r-1 m-b-0">Clear</button>
+            {selectedEnvs.length ? (
+              <Link
+                to={`${this.state.link}`}
+                onClick={this.toggle}
+                className="new-button m-b-0"
+              >
                 Submit
               </Link>
             ) : (
@@ -243,21 +223,4 @@ class SelectDepartmentPopup extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  const { orgWiseDepartments, departmentsFilters, productsByDepId } = state;
-  return {
-    orgWiseDepartments,
-    departmentsFilters,
-    productsByDepId,
-  };
-};
-
-const mapDispatchToProps = {
-  getProductsByDepId,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SelectDepartmentPopup);
+export default SelectDepartmentPopup;
