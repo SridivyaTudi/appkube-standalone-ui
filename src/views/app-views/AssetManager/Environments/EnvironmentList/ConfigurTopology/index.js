@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import PhpIcon from "../../../../../assets/img/assetmanager/php-icon.png";
-import RubyIcon from "../../../../../assets/img/assetmanager/ruby-icon.png";
-import NetIcon from "../../../../../assets/img/assetmanager/net-icon.png";
-import PythonIcon from "../../../../../assets/img/assetmanager/python-icon.png";
-import LangIcon from "../../../../../assets/img/assetmanager/lang-icon.png";
-import GlobalIcon4 from "../../../../../assets/img/assetmanager/global-icon4.png";
-import GlobalIcon5 from "../../../../../assets/img/assetmanager/global-icon5.png";
-import GlobalIcon8 from "../../../../../assets/img/assetmanager/global-icon8.png";
-import CacheIcon from "../../../../../assets/img/assetmanager/cache-icon.png";
-import SqlIcon from "../../../../../assets/img/assetmanager/sql-icon.png";
-import NoSqlIcon from "../../../../../assets/img/assetmanager/no-sql-icon.png";
+import PhpIcon from "assets/img/assetmanager/php-icon.png";
+import RubyIcon from "assets/img/assetmanager/ruby-icon.png";
+import NetIcon from "assets/img/assetmanager/net-icon.png";
+import PythonIcon from "assets/img/assetmanager/python-icon.png";
+import LangIcon from "assets/img/assetmanager/lang-icon.png";
+import GlobalIcon4 from "assets/img/assetmanager/global-icon4.png";
+import GlobalIcon5 from "assets/img/assetmanager/global-icon5.png";
+import GlobalIcon8 from "assets/img/assetmanager/global-icon8.png";
+import CacheIcon from "assets/img/assetmanager/cache-icon.png";
+import SqlIcon from "assets/img/assetmanager/sql-icon.png";
+import NoSqlIcon from "assets/img/assetmanager/no-sql-icon.png";
 import Button from "@mui/material/Button";
 
 class ConfigurTopology extends Component {

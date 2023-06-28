@@ -40,7 +40,7 @@ class CreateNewOuPopup extends Component {
       },
     };
     RestService.postData(config.ADD_DEPARTMENT, postData).then((response) => {
-      ToastMessage("Organizational Unit Successfully created.", "success");
+      ToastMessage.success("Organizational Unit Successfully created.");
       this.setState({
         newDepartment: "",
         departments: [response].concat(this.state.departments),

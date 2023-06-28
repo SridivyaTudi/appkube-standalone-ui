@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import AWS from "../../../../assets/img/aws.png";
-import AZURE from "../../../../assets/img/microsoftazure.png";
-import GCP from "../../../../assets/img/google-cloud.png";
-import Kubernetes from "../../../../assets/img/kubernetes.png";
+import AWS from "assets/img/aws.png";
+import AZURE from "assets/img/microsoftazure.png";
+import GCP from "assets/img/google-cloud.png";
+import Kubernetes from "assets/img/kubernetes.png";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -12,8 +12,8 @@ import {
   getEnvsAsync,
   getEnvsSummary,getDepartmentsOrgWise
 } from "redux/assetManager/environments/environmentsThunk";
-import status from "../../../../redux/constants/commonDS";
-import { APP_PREFIX_PATH } from "../../../../configs/AppConfig";
+import status from "redux/constants/commonDS";
+import { APP_PREFIX_PATH } from "configs/AppConfig";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -22,7 +22,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-
+import Button from "@mui/material/Button";
 const LOGOS = {
   aws: AWS,
   azure: AZURE,
@@ -579,10 +579,13 @@ class Environments extends Component {
                                 }
                               />
                             </Box>
-                            <button className="new-button">
+                            <Button
+                              className="primary-btn min-width-inherit"
+                              variant="contained"
+                            >
                               <i className="fas fa-external-link-square-alt p-r-10"></i>
                               Export
-                            </button>
+                            </Button>
                           </Box>
                         </Grid>
                         <Grid item lg={4} md={12} xs={12}>

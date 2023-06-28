@@ -5,7 +5,7 @@ import { RestService } from "../../Services/RestService";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { ToastMessage } from "../../../../Toast/ToastMessage";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 
 class CreateNewAccountPopup extends Component {
   constructor(props) {
@@ -171,14 +171,10 @@ class CreateNewAccountPopup extends Component {
             </Button>
             <Button
               onClick={() => {
-                // !this.state.initailFlag && this.state.newDepartment != '' ? this.createDepartMent() : !this.props.checkedId ? ToastMessage('Please select any Organizational Unit.', "unsuccess") : ''
                 if (!this.state.initailFlag && this.state.newDepartment != "") {
                   this.createDepartMent();
                 } else if (!this.props.checkedId) {
-                  ToastMessage(
-                    "Please select any Organizational Unit.",
-                    "unsuccess"
-                  );
+                  ToastMessage.error("Please select any Organizational Unit.");
                 } else {
                   this.toggle();
                 }

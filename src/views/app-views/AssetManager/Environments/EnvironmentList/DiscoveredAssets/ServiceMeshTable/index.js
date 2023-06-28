@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import Lambda from "../../../../../../../assets/img/assetmanager/cloud-managed-icon1.png";
-import S3 from "../../../../../../../assets/img/assetmanager/cloud-managed-icon2.png";
-import SQS from "../../../../../../../assets/img/assetmanager/cloud-managed-icon3.png";
-import SNS from "../../../../../../../assets/img/assetmanager/cloud-managed-icon4.png";
-import Redshift from "../../../../../../../assets/img/assetmanager/cloud-managed-icon5.png";
-import RDS from "../../../../../../../assets/img/assetmanager/cloud-managed-icon6.png";
-import AppMesh from "../../../../../../../assets/img/assetmanager/cloud-managed-icon7.png";
-import Kinesis from "../../../../../../../assets/img/assetmanager/cloud-managed-icon8.png";
-import TimeSeries from "../../../../../../../assets/img/assetmanager/cloud-managed-icon9.png";
-import Athena from "../../../../../../../assets/img/assetmanager/cloud-managed-icon10.png";
-import SelectDepartmentPopup from "../../../../Components/SelectDepartmentPopup";
-import dummyData from "./../dummy.json";
+import Lambda from "assets/img/assetmanager/cloud-managed-icon1.png";
+import S3 from "assets/img/assetmanager/cloud-managed-icon2.png";
+import SQS from "assets/img/assetmanager/cloud-managed-icon3.png";
+import SNS from "assets/img/assetmanager/cloud-managed-icon4.png";
+import Redshift from "assets/img/assetmanager/cloud-managed-icon5.png";
+import RDS from "assets/img/assetmanager/cloud-managed-icon6.png";
+import AppMesh from "assets/img/assetmanager/cloud-managed-icon7.png";
+import Kinesis from "assets/img/assetmanager/cloud-managed-icon8.png";
+import TimeSeries from "assets/img/assetmanager/cloud-managed-icon9.png";
+import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
+import SelectDepartmentPopup from "views/app-views/AssetManager/Components/SelectDepartmentPopup";
+import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
 
 class ServiceMeshTable extends Component {
