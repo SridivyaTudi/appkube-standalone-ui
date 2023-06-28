@@ -126,7 +126,7 @@ class SelectAccountPopup extends Component {
             </Button>
             <Button
               onClick={() => {
-                if (!this.props.checkedId) {
+                if (!this.state.currentSelectedDepId) {
                   ToastMessage.error("Please select any Organizational Unit.");
                 } else {
                   this.props.setID(this.state.currentSelectedDepId);

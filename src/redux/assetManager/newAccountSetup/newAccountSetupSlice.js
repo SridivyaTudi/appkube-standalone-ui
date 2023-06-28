@@ -9,7 +9,7 @@ import {
 export const organizationalUnitSlice = createSlice({
   name: "organizationalUnit",
   initialState: {
-    createNewOU: {
+    createOu: {
       status: null,
     },
     organizationalUnit: {
@@ -25,7 +25,7 @@ export const organizationalUnitSlice = createSlice({
     [createNewOU.pending]: (state) => {
       return {
         ...state,
-        createNewOU: {
+        createOu: {
           status: status.IN_PROGRESS,
         },
       };
@@ -33,7 +33,7 @@ export const organizationalUnitSlice = createSlice({
     [createNewOU.fulfilled]: (state) => {
       return {
         ...state,
-        createNewOU: {
+        createOu: {
           status: status.SUCCESS,
         },
       };
@@ -41,7 +41,7 @@ export const organizationalUnitSlice = createSlice({
     [createNewOU.rejected]: (state) => {
       return {
         ...state,
-        createNewOU: {
+        createOu: {
           status: status.FAILURE,
         },
       };

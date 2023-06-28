@@ -8,7 +8,7 @@ import CreateNewAccountPopup from "../../Components/CreateNewAccountPopup";
 import config from "../../../config";
 import { RestService } from "./../../../Services/RestService";
 import { getCurrentOrgId } from "utils";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 
 class AssociateOu extends Component {
   constructor(props) {
@@ -55,7 +55,7 @@ class AssociateOu extends Component {
 
   getDepartmentName = (id) => {
     return this.state.departments.filter(
-      (department) => department.id === id
+      (department) => department.id === Number(id)
     )[0].name;
   };
 
@@ -105,7 +105,7 @@ class AssociateOu extends Component {
                 </div>
                 <div
                   className="select-organizational"
-                  onClick={() => this.toggleCreateNewOuPopup()}
+                  onClick={this.toggleCreateNewOuPopup}
                 >
                   <div className="organizational-image">
                     <img src={CreateFileIcon} alt="" />
@@ -145,7 +145,7 @@ class AssociateOu extends Component {
                 <Button
                   className="primary-btn min-width"
                   style={{ textDecoration: "none" }}
-                  onClick={() => this.toggleCreateNewOuPopup()}
+                  onClick={this.toggleCreateNewOuPopup}
                 >
                   Create OU
                 </Button>
@@ -159,17 +159,11 @@ class AssociateOu extends Component {
           }}
           newDepartmentAppend={this.newDepartmentAppend}
         />
-        {createNewOuPopupShow ? (
-          <CreateNewOuPopup
-            toggleCreateNewOuPopupShow={this.state.createNewOuPopupShow}
-            toggleCreateNewOuPopup={() => {
-              this.toggleCreateNewOuPopup();
-            }}
-            newDepartmentAppend={this.newDepartmentAppend}
-          />
-        ) : (
-          <></>
-        )}
+        <CreateNewOuPopup
+          toggleCreateNewOuPopupShow={this.state.createNewOuPopupShow}
+          toggleCreateNewOuPopup={this.toggleCreateNewOuPopup}
+          newDepartmentAppend={this.newDepartmentAppend}
+        />
         {selectAccountPopupShow ? (
           <SelectAccountPopup
             selectAccountPopupShow={this.state.selectAccountPopupShow}

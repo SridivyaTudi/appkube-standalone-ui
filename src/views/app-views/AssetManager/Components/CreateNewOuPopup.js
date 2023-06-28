@@ -3,60 +3,91 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import config from "../../config";
 import { RestService } from "../../Services/RestService";
 import { ToastMessage } from "../../../../Toast/ToastMessage";
-import Button from '@mui/material/Button';
-import LoadingButton from '@mui/lab/LoadingButton';
+import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { getCurrentOrgId } from "utils";
+import { createNewOU } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
+import { connect } from "react-redux";
+import status from "redux/constants/commonDS";
 
 class CreateNewOuPopup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false,
-      link: "",
-      initailValidationFlag: false,
-      loadingData: false,
+      isSubmit: false,
+      formData: {
+        name: "",
+        description: "",
+      },
     };
   }
 
-  toggle = () => {
-    this.setState({
-      modal: !this.state.modal,
-      name: null,
-      description: null,
-      initailValidationFlag: false,
-    });
+  createDepartMent = () => {
+    this.setState({ isSubmit: true });
+    const { isValid } = this.validate(true);
+    const { formData } = this.state;
+    if (isValid) {
+      let organizationId;
+      if (getCurrentOrgId()) {
+        organizationId = getCurrentOrgId();
+      }
+      let postData = {
+        name: formData.name,
+        organizationId: Number(organizationId),
+      };
+
+      this.props.createNewOU(postData);
+    }
   };
 
-  createDepartMent = () => {
-    this.setState({ loadingData: true });
-    let organizationId = 1;
-    if (localStorage.getItem("currentOrgId")) {
-      organizationId = localStorage.getItem("currentOrgId");
+  componentDidUpdate(prevProps) {
+    if (prevProps.createOu.status !== this.props.createOu.status) {
+      if (this.props.createOu.status === status.SUCCESS) {
+        ToastMessage.success("Organizational Unit Successfully created!");
+        this.props.newDepartmentAppend("1", this.state.description);
+        this.props.toggleCreateNewOuPopup();
+      } else if (this.props.createOu.status === status.FAILURE) {
+        ToastMessage.error("Organizational Unit Creation failed!");
+      }
     }
-    let postData = {
-      name: this.state.name,
-      description: this.state.description,
-      organization: {
-        id: organizationId,
-      },
-    };
-    RestService.postData(config.ADD_DEPARTMENT, postData).then((response) => {
-      ToastMessage.success("Organizational Unit Successfully created.");
-      this.setState({
-        newDepartment: "",
-        departments: [response].concat(this.state.departments),
-        initailFlag: true,
-        loadingData: false,
-      });
-      this.props.newDepartmentAppend(response, this.state.description);
-      this.toggle();
-    });
+  }
+
+  handleInput = (e) => {
+    const { name, value } = e.target;
+    const { formData } = this.state;
+    formData[name] = value;
+    this.setState({ formData });
   };
+
+  validate = (isSubmit) => {
+    let isValid = true;
+    const { formData } = this.state;
+    let errors = {};
+    if (isSubmit) {
+      if (!formData.name) {
+        isValid = false;
+        errors = { ...errors, name: "OU Name is required!" };
+      } else {
+        errors = { ...errors, name: "" };
+      }
+
+      if (!formData.description) {
+        isValid = false;
+        errors = { ...errors, description: "OU Description is required!" };
+      } else {
+        errors = { ...errors, description: "" };
+      }
+    }
+    return { errors, isValid };
+  };
+
   render() {
-    const state = this.state;
+    const { formData, isSubmit } = this.state;
+    const { isValid, errors } = this.validate(isSubmit);
     return (
       <Modal
-        isOpen={state.modal}
-        toggle={this.toggle}
+        isOpen={this.props.toggleCreateNewOuPopupShow}
+        toggle={this.props.toggleCreateNewOuPopup}
         className="select-account-modal-container"
       >
         <ModalHeader>
@@ -65,7 +96,7 @@ class CreateNewOuPopup extends Component {
             type="button"
             className="close"
             aria-label="Close"
-            onClick={this.toggle}
+            onClick={this.props.toggleCreateNewOuPopup}
           >
             <i className="fa-solid fa-xmark"></i>
           </button>
@@ -76,45 +107,32 @@ class CreateNewOuPopup extends Component {
             <input
               className="form-control"
               type="text"
+              name="name"
               placeholder="Synectiks01"
-              value={this.state.name}
-              onChange={(e) => {
-                this.setState({ name: e.target.value });
-              }}
+              value={formData.name}
+              onChange={this.handleInput}
             />
-
             <span className="red">
-              {(!this.state.name && !this.state.description) ||
-                this.state.initailValidationFlag
-                ? this.state.name == ""
-                  ? "Name of Ou is required"
-                  : ""
-                : this.state.name == ""
-                  ? "Name of Ou is required"
-                  : ""}
+              {isSubmit && !isValid && errors.name
+                ? "Name of Ou is required"
+                : ""}
             </span>
           </div>
           <div className="form-group">
             <label className="label">Description</label>
             <textarea
               className="form-control"
+              name="description"
               placeholder="director is a senior exqcutive responsible for overseeing the strategic department."
-              onChange={(e) => {
-                this.setState({ description: e.target.value });
-              }}
+              value={formData.description}
+              onChange={this.handleInput}
             >
               {this.state.description}
             </textarea>
-
             <span className="red">
-              {(!this.state.name && !this.state.description) ||
-                this.state.initailValidationFlag
-                ? this.state.description == ""
-                  ? "Desciption of Ou is required"
-                  : ""
-                : this.state.description == ""
-                  ? "Desciption of Ou is required"
-                  : ""}
+              {isSubmit && !isValid && errors.description
+                ? "Desciption of Ou is required"
+                : ""}
             </span>
           </div>
         </ModalBody>
@@ -123,43 +141,20 @@ class CreateNewOuPopup extends Component {
             <Button
               className="secondary-text-btn m-r-2"
               variant="contained"
-              onClick={() => {
-                this.setState({
-                  initailValidationFlag: false,
-                  name: "",
-                  description: "",
-                });
-                this.props.toggle();
-              }}
+              onClick={this.props.toggleCreateNewOuPopup}
             >
               Cancel
             </Button>
             <LoadingButton
               className="primary-btn"
               variant="contained"
-              disabled={this.state.loadingData ? true : false}
-              loading={this.state.loadingData ? true : false}
-              onClick={() => {
-                if (
-                  !this.state.name &&
-                  !this.state.description &&
-                  !this.state.initailValidationFlag
-                ) {
-                  this.setState({
-                    initailValidationFlag: true,
-                    name: "",
-                    description: "",
-                  });
-                } else if (this.state.name) {
-                  if (
-                    this.state.name != "" &&
-                    this.state.description != "" &&
-                    !this.state.loadingData
-                  ) {
-                    this.createDepartMent();
-                  }
-                }
-              }}
+              disabled={
+                this.props.creteOu?.status === status.IN_PROGRESS ? true : false
+              }
+              loading={
+                this.props.creteOu?.status === status.IN_PROGRESS ? true : false
+              }
+              onClick={this.createDepartMent}
             >
               Create
             </LoadingButton>
@@ -169,4 +164,14 @@ class CreateNewOuPopup extends Component {
     );
   }
 }
-export default CreateNewOuPopup;
+
+const mapStateToProps = (state) => {
+  const { newAccountSetup } = state;
+  return newAccountSetup;
+};
+
+const mapDispatchToProps = {
+  createNewOU,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateNewOuPopup);
