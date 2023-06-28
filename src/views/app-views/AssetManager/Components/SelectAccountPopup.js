@@ -3,6 +3,8 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Box from "@mui/material/Box";
 import Grid from '@mui/material/Grid';
 import { ToastMessage } from "../../../../Toast/ToastMessage";
+import Button from '@mui/material/Button';
+
 class SelectAccountPopup extends Component {
   constructor(props) {
     super(props);
@@ -94,7 +96,7 @@ class SelectAccountPopup extends Component {
             <i className="fa-solid fa-xmark"></i>
           </button>
         </ModalHeader>
-        <ModalBody style={{ overflow: 'hidden', overflowY: 'auto', maxHeight: '300px'}}>
+        <ModalBody style={{ overflow: 'hidden', overflowY: 'auto', maxHeight: '300px' }}>
           <h4 className="text-left m-b-1">Select OU</h4>
           <Box sx={{ width: "100%" }}>
             <Grid
@@ -110,26 +112,28 @@ class SelectAccountPopup extends Component {
         </ModalBody>
         <ModalFooter className="footer-top-bar">
           <div className="d-block text-center">
-            <button
-              className="gray-outline"
+            <Button
+              className="secondary-text-btn m-r-2"
+              variant="contained"
               onClick={() => {
-                this.props.setID(false)
+                this.props.setID(false);
               }}
             >
               Clear
-            </button>
-            <button
-              onClick={()=>{
-                if(!this.props.checkedId){
+            </Button>
+            <Button
+              onClick={() => {
+                if (!this.props.checkedId) {
                   ToastMessage('Please select any Organizational Unit.', "unsuccess");
-                 } else {
+                } else {
                   this.toggle()
-                 }
+                }
               }}
-              className="new-button"
+              className="primary-btn m-b-0"
+              variant="contained"
             >
               Add
-            </button>
+            </Button>
           </div>
         </ModalFooter>
       </Modal>

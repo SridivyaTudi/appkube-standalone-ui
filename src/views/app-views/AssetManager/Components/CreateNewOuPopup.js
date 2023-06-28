@@ -136,7 +136,10 @@ class CreateNewOuPopup extends Component {
             </Button>
             <LoadingButton
               className="primary-btn"
+              variant="contained"
               disabled={this.state.loadingData ? true : false}
+              loading={this.state.loadingData ? true : false}
+              loadingPosition="start"
               onClick={() => {
                 if (
                   !this.state.name &&
@@ -159,11 +162,6 @@ class CreateNewOuPopup extends Component {
                 }
               }}
             >
-              {this.state.loadingData ? (
-                <i className="fa-solid fa-spinner fa-spin" />
-              ) : (
-                <></>
-              )}
               Create
             </LoadingButton>
           </div>

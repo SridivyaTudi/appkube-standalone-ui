@@ -135,7 +135,7 @@ class SelectDepartmentPopup extends Component {
     );
   };
   render() {
-    const { selectedProductions, selectedDepartments, selectedEnvs,products } =
+    const { selectedProductions, selectedDepartments, selectedEnvs, products } =
       this.state;
     return (
       <Modal
@@ -206,9 +206,8 @@ class SelectDepartmentPopup extends Component {
                       <Grid key={item.name} item lg={3} md={4} xs={12}>
                         <Box
                           onClick={() => this.handleEnvChange(item.name)}
-                          className={`environment-box ${
-                            selectedEnvs.includes(item.name) ? "active" : ""
-                          }`}
+                          className={`environment-box ${selectedEnvs.includes(item.name) ? "active" : ""
+                            }`}
                         >
                           <Box className="d-block">
                             <Box className={`envir-image ${item.img}`}></Box>
@@ -227,13 +226,13 @@ class SelectDepartmentPopup extends Component {
         </ModalBody>
         <ModalFooter className="footer-top-br">
           <Box className="d-block text-center">
-            <button className="gray-button m-r-1 m-b-0" onClick={this.toggle}>
+            <Button className="secondary-btn m-r-2" variant="contained" onClick={this.toggle}>
               Clear
-            </button>
+            </Button>
             {products && Object.keys(products).length ? (
-              <Link onClick={this.toggle} className="primary-btn m-b-0">
+              <Button onClick={this.toggle} className="primary-btn min-width" variant="contained">
                 Submit
-              </Link>
+              </Button>
             ) : (
               <></>
             )}

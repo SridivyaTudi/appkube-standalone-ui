@@ -8,6 +8,7 @@ import CreateNewAccountPopup from "../../Components/CreateNewAccountPopup";
 import config from "../../../config";
 import { RestService } from "./../../../Services/RestService";
 import { ToastMessage } from "../../../../../Toast/ToastMessage";
+import Button from '@mui/material/Button';
 
 let initialFlag = true;
 
@@ -60,7 +61,7 @@ class AssociateOu extends Component {
     } catch (error) {
       console.log(error)
     }
-   
+
   }
   newDepartmentAppend = (department, description) => {
     this.setState({
@@ -139,16 +140,21 @@ class AssociateOu extends Component {
                 className="d-flex width-100 align-items-center"
                 style={{ justifyContent: "space-between" }}
               >
-                <button onClick={() => this.onClickSelectAccount("")}>
+                <Button
+                  className="primary-text-btn min-width"
+                  variant="contained"
+                  style={{ paddingLeft: 0, textDecoration: 'underline' }}
+                  onClick={() => this.onClickSelectAccount()}
+                >
                   Change OU
-                </button>
-                <button
-                  className="blue-button min-width"
-                  style={{ textDecoration: "none" }}
-                  onClick={() => this.onClickCreateNewOu("")}
+                </Button>
+                <Button
+                  className="primary-btn min-width"
+                  variant="contained"
+                  onClick={() => this.onClickCreateNewOu()}
                 >
                   Create OU
-                </button>
+                </Button>
               </div>
             </div>
           </div>

@@ -515,7 +515,6 @@ class SignUp extends Component {
                 </span>
               </Box>
               <Box className="d-flex width-100 next-step">
-                {/* <Link to={`${AUTH_PREFIX_PATH}/signin`}> */}
                 <LoadingButton
                   onClick={() =>
                     !this.state.loadingData ? this.signUpSubmit() : <></>
@@ -523,16 +522,13 @@ class SignUp extends Component {
                   className="primary-btn"
                   variant="contained"
                   disabled={this.state.loadingData ? true : false}
+                  loading={
+                    this.props.loadingData?.status === status.IN_PROGRESS
+                  }
+                  loadingPosition="start"
                 >
-                  {" "}
-                  {this.state.loadingData ? (
-                    <i className="fa-solid fa-spinner fa-spin" />
-                  ) : (
-                    ""
-                  )}{" "}
                   Continue To Sign In
                 </LoadingButton>
-                {/* </Link> */}
               </Box>
             </Box>
           </Box>
