@@ -124,7 +124,7 @@ class SelectAccountPopup extends Component {
             <Button
               onClick={() => {
                 if (!this.props.checkedId) {
-                  ToastMessage('Please select any Organizational Unit.', "unsuccess");
+                  ToastMessage.error('Please select any Organizational Unit.');
                 } else {
                   this.toggle()
                 }
