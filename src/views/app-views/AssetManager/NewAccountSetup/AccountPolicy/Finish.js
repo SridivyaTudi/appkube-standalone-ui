@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import AccountAddedImage from "../../../../../assets/img/assetmanager/account-added-image.png";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { ToastMessage } from "../../../../../Toast/ToastMessage";
-import config from "../../../config";
-import { RestService } from "./../../../Services/RestService";
 import { withRouter } from "./withRouter";
 
 class Finish extends Component {
@@ -22,29 +19,6 @@ class Finish extends Component {
       roleDetails: this.props.roleDetails,
     });
   }
-
-  createSubmit = () => {
-    let postData = {
-      displayName: this.props.roleDetails.name,
-      roleArn: this.props.roleDetails.role || "",
-      cloud: "AWS",
-      externalId: this.props.roleDetails.externalId,
-      department: {
-        id: this.props.roleDetails.departmentId,
-      },
-    };
-    this.setState({ loadingData: true });
-    RestService.postData(config.ADD_CLOUD_ENV, postData).then((response) => {
-      this.setState({ loadingData: false });
-      if (response.status == 500) {
-        ToastMessage(response.title, "unsuccess");
-        return 1;
-      }
-      ToastMessage("Successfully new account created", "success");
-
-      this.props.navigate("/environments");
-    });
-  };
 
   render() {
     return (
@@ -66,15 +40,15 @@ class Finish extends Component {
                 </h4>
                 <div className="contents">
                   <label>Display Name</label>
-                  <p> {this.props.roleDetails.name}</p>
+                  <p> {this.props.formData.displayName}</p>
                 </div>
                 <div className="contents">
                   <label>Role ARN</label>
-                  <p> {this.props.roleDetails.role}</p>
+                  <p> {this.props.formData.roleArn}</p>
                 </div>
                 <div className="contents">
                   <label>External ID</label>
-                  <p> {this.props.roleDetails.externalId}</p>
+                  <p> {this.props.formData.externalId}</p>
                 </div>
               </div>
             </Grid>

@@ -3,7 +3,7 @@ import OprationMode1 from "../../../../assets/img/assetmanager/opration-mode1.pn
 import OprationMode2 from "../../../../assets/img/assetmanager/opration-mode2.png";
 import AccountPolicy from "./AccountPolicy";
 import Box from "@mui/material/Box";
-import Grid from '@mui/material/Grid';
+import Grid from "@mui/material/Grid";
 import Button from '@mui/material/Button';
 
 export class NewAccountSetup extends Component {
@@ -11,14 +11,19 @@ export class NewAccountSetup extends Component {
     super(props);
     this.state = {
       service: "read_mode",
-      accountPolicy: false
+      accountPolicy: false,
     };
   }
   render() {
-    return (
-      this.state.accountPolicy ? <AccountPolicy service={this.state.service} previousStep={() => {
-        this.setState({ accountPolicy: false })
-      }} /> : (<div className="new-account-container">
+    return this.state.accountPolicy ? (
+      <AccountPolicy
+        service={this.state.service}
+        previousStep={() => {
+          this.setState({ accountPolicy: false });
+        }}
+      />
+    ) : (
+      <div className="new-account-container">
         <div className="page-heading">
           <h3>New AWS Acoount Setup</h3>
         </div>
@@ -36,13 +41,14 @@ export class NewAccountSetup extends Component {
                 container
                 rowSpacing={1}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                alignItems={'center'}
-                justifyContent={'flex-start'}
+                alignItems={"center"}
+                justifyContent={"flex-start"}
               >
                 <Grid item xs={6}>
                   <div
-                    className={`opration-card ${this.state.service == 'read_mode' ? "active" : ""
-                      }`}
+                    className={`opration-card ${
+                      this.state.service == "read_mode" ? "active" : ""
+                    }`}
                     onClick={() => {
                       this.setState({ service: "read_mode" });
                     }}
@@ -59,7 +65,9 @@ export class NewAccountSetup extends Component {
                     <div className="available-features">
                       <label>Available Features in Read-Only Mode:</label>
                       <ul>
-                        <li>Appkube Asset Manager for visualization of Cloud</li>
+                        <li>
+                          Appkube Asset Manager for visualization of Cloud
+                        </li>
                         <li>Business To Infrastructure Topology</li>
                         <li>Service SLE monitoring</li>
                         <li>Alerts</li>
@@ -70,9 +78,14 @@ export class NewAccountSetup extends Component {
                   </div>
                 </Grid>
                 <Grid item xs={6}>
-                  <div className={`opration-card ${this.state.service == 'automation_mode' ? 'active' : ''}`} onClick={() => {
-                    this.setState({ service: 'automation_mode' })
-                  }}>
+                  <div
+                    className={`opration-card ${
+                      this.state.service == "automation_mode" ? "active" : ""
+                    }`}
+                    onClick={() => {
+                      this.setState({ service: "automation_mode" });
+                    }}
+                  >
                     <div className="card-images">
                       <img src={OprationMode2} alt="opration" />
                     </div>
@@ -84,7 +97,9 @@ export class NewAccountSetup extends Component {
                     <div className="available-features">
                       <label>Available Features in Automation Mode:</label>
                       <ul>
-                        <li>Appkube Asset Manager for visualization of Cloud</li>
+                        <li>
+                          Appkube Asset Manager for visualization of Cloud
+                        </li>
                         <li>Business To Infrastructure Topology</li>
                         <li>Service SLE monitoring</li>
                         <li>Alerts</li>
@@ -102,16 +117,22 @@ export class NewAccountSetup extends Component {
           <div className="d-block get-started-button">
             <Button
               className="primary-btn width-25"
+              style={{ color: "white" }}
               onClick={() => {
                 this.setState({ accountPolicy: true });
               }}
             >
+              {/* <Link
+                style={{ color: "white" }}
+                to={"/assetmanager/pages/newaccountsetup/accountpolicy"}
+              > */}
               Get started
+              {/* </Link> */}
             </Button>
           </div>
         </div>
       </div>
-      ))
+    );
   }
 }
 

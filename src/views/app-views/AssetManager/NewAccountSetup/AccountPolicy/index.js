@@ -9,22 +9,15 @@ class AccountPolicy extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      organizationList: null,
-      selection: [],
-      name: "",
-      accessKey: "",
-      secretKey: "",
-      externalId: "",
-      role: "",
-      validateRoleFlag: { name: false, role: false, externalId: false },
+      formData: {
+        displayName: "",
+        roleArn: "",
+        externalId: "",
+      },
       checkedId: false,
       finishPrevious: false,
-      initialMsgFlag: false
+      isSubmit: false,
     };
-    this.roleRef = React.createRef();
-    this.ouRef = React.createRef();
-    this.wizardRef = React.createRef();
-    this.reviewRef = React.createRef();
     this.steps = [
       {
         name: "Prepare Policy",
@@ -33,126 +26,109 @@ class AccountPolicy extends Component {
       {
         name: "Create Role",
         component: () => (
-          <CreateRole ref={this.roleRef} onChangeInput={this.onChangeInput} validateRoleFlag={this.state.validateRoleFlag} />
+          <CreateRole
+            handleCreateRoleInput={this.handleCreateRoleInput}
+            validateCreateRoleForm={this.validateCreateRoleForm}
+            isSubmit={this.state.isSubmit}
+          />
         ),
       },
       {
         name: "Associate OU",
-        component: () => <AssociateOu setDepartment={(checkedId, departmentName,description) => {
-          this.setState({ checkedId, departmentName,description })
-        }} roleDetails={{ externalId: this.state.externalId, role: this.state.role, name: this.state.name, departmentName: this.state.departmentName,description:this.state.description,departmentId:this.state.checkedId }} />,
+        component: () => (
+          <AssociateOu
+            setDepartment={(checkedId, departmentName, description) => {
+              this.setState({ checkedId, departmentName, description });
+            }}
+            roleDetails={{
+              departmentName: this.state.departmentName,
+              description: this.state.description,
+              departmentId: this.state.checkedId,
+            }}
+          />
+        ),
       },
       {
         name: "Finish",
-        component: () => <Finish roleDetails={{ externalId: this.state.externalId, role: this.state.role, name: this.state.name, departmentName: this.state.departmentName, departmentId: this.state.checkedId,description:this.state.description }} previousStep={() => {
-          this.setState({ finishPrevious: true })
-        }} />,
+        component: () => (
+          <Finish
+            roleDetails={{
+              departmentName: this.state.departmentName,
+              departmentId: this.state.checkedId,
+              description: this.state.description,
+            }}
+            formData={this.state.formData}
+            previousStep={() => {
+              this.setState({ finishPrevious: true });
+            }}
+          />
+        ),
       },
-
-      //   {
-      //     name: "OU",
-      //     component: () => (
-      //       <Ou
-      //         ref={this.ouRef}
-      //         onChangeSelection={this.onChangeSelection}
-      //         organizationList={this.state.organizationList}
-      //         getOrganizationList={this.getOrganizationList}
-      //         meta={props.meta}
-      //       />
-      //     ),
-      //   },
-      //   {
-      //     name: "Review",
-      //     component: () => (
-      //       <Review
-      //         ref={this.reviewRef}
-      //         selectedOrg={
-      //           this.ouRef.current !== null
-      //             ? this.ouRef.current.getSelection()
-      //             : null
-      //         }
-      //         selectedData={
-      //           this.roleRef.current !== null
-      //             ? this.roleRef.current.getRoleData()
-      //             : null
-      //         }
-      //       />
-      //     ),
-      //   },
     ];
   }
 
-  onChangeSelection = (selection) => {
-    this.setState({
-      selection,
-    });
+  handleCreateRoleInput = (e) => {
+    const { formData } = this.state;
+    const { name, value } = e.target;
+    formData[name] = value;
+    this.setState({ formData });
   };
 
-  onChangeInput = (nameVal, roleVal, externalIdVal) => {
-    
-    // let name = nameVal
-    // let role = roleVal
-    // let externalId = externalIdVal
-    
-    // if (!nameVal && !roleVal && !externalId && !this.state.initialMsgFlag) {
-    //   this.setState({ initialMsgFlag: true })
-      let name = nameVal ? nameVal : '';
-      let role = roleVal ? roleVal : '';
-      let externalId = externalIdVal ? externalIdVal : ''
-    // }
-    this.setState({
-      name,
-      role,
-      externalId,
-      validateRoleFlag: { name:name == '' ? true : false, role: role == '' ? true : false, externalId:  externalId == '' ? true : false,initialMsgFlag:this.state.initialMsgFlag }
-    });
-  };
-  validateCreateRoleForm = (parameters) => {
-    
-    if (parameters.name && parameters.role && parameters.externalId && !this.state.initialMsgFlag) {
-      this.setState({initialMsgFlag:true})
+  validateCreateRoleForm = () => {
+    const { formData } = this.state;
+    let isValid = true;
+    let errors = {};
+    if (this.state.isSubmit) {
+      if (!formData.displayName) {
+        errors = { ...errors, displayName: "Display name is required!" };
+        isValid = false;
+      } else {
+        errors.displayName = "";
+      }
+      if (!formData.roleArn) {
+        errors.roleArn = "Role ARN is required!";
+        isValid = false;
+      } else {
+        errors.roleArn = "";
+      }
+      if (!formData.externalId) {
+        errors.externalId = "External ID is required!";
+        isValid = false;
+      } else {
+        errors.externalId = "";
+      }
     }
-    this.setState({ validateRoleFlag: parameters })
-  }
-  getSelectedData = () => {
     return {
-      name: this.state.name,
-      accessKey: this.state.accessKey,
-      secretKey: this.state.secretKey,
+      isValid,
+      errors,
     };
   };
 
-  async componentDidMount() {
-    try {
-      var usr = localStorage.getItem(`userInfo`);
-      if (usr !== null) {
-        const user = JSON.parse(usr);
-      }
-    } catch (err) {
-      console.log("Error: ", err);
-    }
-  }
-
-  getOrganizationList = () => {
-    var usr = localStorage.getItem(`userInfo`);
-
-    if (usr !== null) {
-      const user = JSON.parse(usr);
-    }
+  setIsSubmit = (submit) => {
+    this.setState({ isSubmit: submit });
   };
 
   render() {
+    const { formData } = this.state;
     return (
       <div className="new-account-container">
         <div className="new-account-page-container">
-          <Wizard ref={this.wizardRef} steps={this.steps} rolesDetails={{ externalId: this.state.externalId, role: this.state.role, name: this.state.name }} validateCreateRoleForm={this.validateCreateRoleForm} departmentId={this.state.checkedId} previousStep={(finishPrevStep) => {
-            if (finishPrevStep == 'finishPrevStep') {
-              this.setState({ finishPrevious: false })
-            } else {
-              this.props.previousStep()
-            }
-
-          }} finishPrevious={this.state.finishPrevious} />
+          <Wizard
+            steps={this.steps}
+            formData={formData}
+            validateCreateRoleForm={this.validateCreateRoleForm}
+            setIsSubmit={this.setIsSubmit}
+            isSubmit={this.state.isSubmit}
+            departmentId={this.state.checkedId}
+            previousStep={(finishPrevStep) => {
+              if (finishPrevStep === "finishPrevStep") {
+                this.setState({ finishPrevious: false });
+              } else {
+                this.props.previousStep();
+              }
+            }}
+            finishPrevious={this.state.finishPrevious}
+          />
         </div>
       </div>
     );
