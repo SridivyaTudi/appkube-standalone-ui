@@ -121,7 +121,7 @@ class AssociateOu extends Component {
             <p>
               Selected Organizational Unit
               <strong> {this.props.roleDetails.departmentName}</strong>. All you
-              need to do <br /> now is click on that{" "}
+              need to do <br /> now is click on that
               <strong>"Finished" </strong>
               button to move forward with the next step.
             </p>

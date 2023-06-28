@@ -12,7 +12,8 @@ export const organizationalUnitSlice = createSlice({
     createNewOU: {
       status: null,
     },
-    getOrganizationalUnits: {
+    organizationalUnit: {
+      status: null,
       data: {},
     },
     addCloudEnv: {

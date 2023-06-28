@@ -139,7 +139,6 @@ class CreateNewOuPopup extends Component {
               variant="contained"
               disabled={this.state.loadingData ? true : false}
               loading={this.state.loadingData ? true : false}
-              loadingPosition="start"
               onClick={() => {
                 if (
                   !this.state.name &&
