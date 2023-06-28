@@ -11,7 +11,7 @@ import { AUTH_PREFIX_PATH } from "../../../configs/AppConfig";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { navigateRouter } from "../../../utils/navigate/navigateRouter";
-import { signUpUserAPI } from "../../../redux/auth/authThunk";
+import { signUp } from "../../../redux/auth/authThunk";
 import { connect } from "react-redux";
 import { ToastMessage } from "../../../Toast/ToastMessage";
 import status from "../../../redux/constants/commonDS";
@@ -19,170 +19,187 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 
 class SignUp extends Component {
+  steps = {
+    STEP1: 0,
+    STEP2: 1,
+    STEP3: 2
+  };
   constructor(props) {
     super(props);
     this.state = {
-      currentActiveStep: 0,
-      formData: {
+      activeStep: this.steps.STEP1,
+      step1: {
         fullName: "",
         userName: "",
         email: "",
         password: "",
+        termsOfService: false,
+      },
+      step2: {
         companyName: "",
         companyLocation: "",
+        profileImg: ProfileIcon,
+        file: null,
       },
-      loadingData: false,
-      termsOfService: false,
       passwordView: true,
-      profileImg: ProfileIcon,
-      isSubmit: 0,
+      submittedSteps: [false, false, false]
     };
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.auth !== prevProps.auth) {
-      this.handleSignUp();
+    if (this.props.signUpUser.status !== prevProps.signUpUser.status) {
+      if (this.props.signUpUser.status === status.SUCCESS) {
+        ToastMessage.success("New user registered!");
+        this.props.navigate(`${AUTH_PREFIX_PATH}/signin`);
+      } else if(this.props.signUpUser.status === status.IN_PROGRESS) {
+        ToastMessage.error("User registration failed!");
+      }
     }
   };
 
-  handleSignUp = () => {
-    if (this.props.auth.signUpUserAPI?.status === status.SUCCESS) {
-      ToastMessage.success("New user registered!");
-      this.setState({ loadingData: false });
-      this.props.navigate(`${AUTH_PREFIX_PATH}/signin`);
-    } else {
-      ToastMessage.error("User registration failed!");
-      this.setState({ loadingData: false });
-      
+  setActiveStep = (newStep) => {
+    const { submittedSteps, activeStep } = this.state;
+    submittedSteps[activeStep] = true;
+    this.setState({
+      submittedSteps
+    });
+    const { isValid } = this.validateForm(activeStep, submittedSteps);
+    if (isValid) {
+      this.setState({
+        activeStep: newStep
+      });
     }
   };
 
-  handleCurrentActiveStep = (stepCount) => {
-    this.setState({ isSubmit: stepCount });
-    const { valid } = this.validateForm(stepCount);
-    if (valid && this.state.termsOfService) {
-      this.setState({ currentActiveStep: stepCount });
-    }
-  };
-
-  validateForm = (isSubmit) => {
-    const { formData, currentActiveStep } = this.state;
-    let valid = true;
+  validateForm = (activeStep, submittedSteps) => {
+    const { step1, step2 } = this.state;
+    let isValid = true;
     let errors = {
       fullName: "",
       userName: "",
       email: "",
       password: "",
+      termsOfService: "",
       companyName: "",
-      companyLocation: "",
     };
-
-    if (isSubmit === 1 && currentActiveStep === 0) {
-      if (!formData.fullName) {
+    if (activeStep === this.steps.STEP1 && submittedSteps[this.steps.STEP1]) {
+      if (!step1.fullName.trim()) {
         errors.fullName = "Full name is required!";
-        valid = false;
+        isValid = false;
       } else {
         errors.fullName = "";
       }
 
-      if (!formData.userName) {
+      if (!step1.userName.trim()) {
         errors.userName = "Username is required!";
-        valid = false;
+        isValid = false;
       } else {
         errors.userName = "";
       }
 
-      if (!formData.email) {
+      if (!step1.email.trim()) {
         errors.email = "Email is required!";
-        valid = false;
+        isValid = false;
       } else if (
-        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(formData.email)
+        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(step1.email)
       ) {
         errors.email = "Please enter valid email!";
-        valid = false;
+        isValid = false;
       } else {
         errors.email = "";
       }
 
-      if (!formData.password) {
+      if (!step1.password.trim()) {
         errors.password = "Password is required!";
-        valid = false;
+        isValid = false;
       } else if (
         !/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(
-          formData.password
+          step1.password
         )
       ) {
         errors.password = "Please enter valid password!";
-        valid = false;
+        isValid = false;
       } else {
         errors.password = "";
       }
-    }
 
-    if (isSubmit === 2 && currentActiveStep === 1) {
-      if (!formData.companyName) {
+      if (!step1.termsOfService) {
+        errors.termsOfService = "You must agree with the terms and conditions.";
+        isValid = false;
+      } else {
+        errors.termsOfService = "";
+      }
+    }
+    if (activeStep === this.steps.STEP2 && submittedSteps[this.steps.STEP2]) {
+      if (!step2.companyName) {
         errors.companyName = "Company name is required!";
-        valid = false;
+        isValid = false;
       } else {
         errors.companyName = "";
       }
-
-      if (!formData.companyLocation) {
-        errors.companyLocation = "Please select company location!";
-        valid = false;
-      } else {
-        errors.companyLocation = "";
-      }
     }
 
-    return { valid, errors };
+    return { isValid, errors };
   };
 
   handleTermsChange = (e) => {
-    this.setState({ termsOfService: e.target.checked });
+    const { step1 } = this.state;
+    step1.termsOfService = e.target.checked;
+    this.setState({ step1 });
   };
 
-  handleInputChange = (e) => {
-    let { formData } = this.state;
+  handleStep1Changes = (e) => {
+    let { step1 } = this.state;
     const { name, value } = e.target;
-    formData[name] = value;
-
-    this.setState({ formData });
+    step1[name] = value;
+    this.setState({ step1 });
   };
 
-  imageHandler = (e) => {
+  handleStep2Changes = (e) => {
+    let { step2 } = this.state;
+    const { name, value } = e.target;
+    step2[name] = value;
+    this.setState({ step2 });
+  };
+
+  onChangeCompanyProfileImage = (e) => {
     const reader = new FileReader();
+    const { step2 } = this.state;
     reader.onload = () => {
       if (reader.readyState === 2) {
-        this.setState({ profileImg: reader.result });
+        step2.profileImg = reader.result;
+        step2.file = e.target.files[0]
+        this.setState({ step2 });
       }
     };
     reader.readAsDataURL(e.target.files[0]);
   };
 
   signUpSubmit = () => {
-    this.setState({ loadingData: true });
-    this.props.signUpUserAPI({
-      userName: this.state.formData.userName,
-      password: this.state.formData.password,
-      active: true,
-      email: this.state.formData.email,
-      organization: this.state.formData.companyLocation,
-    });
+    const { step1, step2 } = this.state;
+    const formData = new FormData();
+    formData.append("username", step1.userName);
+    formData.append("organization", step2.companyName);
+    formData.append("email", step1.email);
+    formData.append("password", step1.password);
+    if (step2.file) {
+      formData.append("file", step2.file);
+    }
+    this.props.signUp(formData);
   };
 
   render() {
     const {
-      currentActiveStep,
-      formData,
-      termsOfService,
+      activeStep,
+      submittedSteps,
+      step1,
+      step2,
       passwordView,
-      isSubmit,
     } = this.state;
-    const { errors } = this.validateForm(isSubmit);
+    const { errors } = this.validateForm(activeStep, submittedSteps);
     return (
       <Box className="sign-container">
-        <Box className={`sign-step ${currentActiveStep === 0 ? "active" : ""}`}>
+        <Box className={`sign-step ${activeStep === this.steps.STEP1 ? "active" : ""}`}>
           <Box className="sign-left">
             <Box className="sign-left-content">
               <span className="d-flex width-100">Appkube</span>
@@ -235,10 +252,10 @@ class SignUp extends Component {
                         className="form-control"
                         placeholder="Input your full name here"
                         name="fullName"
-                        value={formData.fullName}
-                        onChange={this.handleInputChange}
+                        value={step1.fullName}
+                        onChange={this.handleStep1Changes}
                       />
-                      {errors.fullName ? (
+                      {submittedSteps[this.steps.STEP1] && errors.fullName ? (
                         <p className="m-b-0">{errors.fullName}</p>
                       ) : (
                         <></>
@@ -253,10 +270,10 @@ class SignUp extends Component {
                         className="form-control"
                         placeholder="Input your username here"
                         name="userName"
-                        value={formData.userName}
-                        onChange={this.handleInputChange}
+                        value={step1.userName}
+                        onChange={this.handleStep1Changes}
                       />
-                      {errors.userName ? (
+                      {submittedSteps[this.steps.STEP1] && errors.userName ? (
                         <p className="m-b-0">{errors.userName}</p>
                       ) : (
                         <></>
@@ -277,10 +294,10 @@ class SignUp extends Component {
                         className="form-control"
                         placeholder="Input your email here"
                         name="email"
-                        value={formData.email}
-                        onChange={this.handleInputChange}
+                        value={step1.email}
+                        onChange={this.handleStep1Changes}
                       />
-                      {errors.email ? (
+                      {submittedSteps[this.steps.STEP1] && errors.email ? (
                         <p className="m-b-0">{errors.email}</p>
                       ) : (
                         <></>
@@ -301,10 +318,10 @@ class SignUp extends Component {
                         className="form-control"
                         placeholder="Input your password here"
                         name="password"
-                        value={formData.password}
-                        onChange={this.handleInputChange}
+                        value={step1.password}
+                        onChange={this.handleStep1Changes}
                       />
-                      {errors.password ? (
+                      {submittedSteps[this.steps.STEP1] && errors.password ? (
                         <p className="m-b-0">{errors.password}</p>
                       ) : (
                         <></>
@@ -328,24 +345,21 @@ class SignUp extends Component {
                   <Checkbox
                     className="checkbox primary"
                     size="small"
-                    checked={termsOfService}
+                    checked={step1.termsOfService}
                     onChange={this.handleTermsChange}
                   />
                   <p>I have read and agree to the trems of Service</p>
                 </Box>
-                {!termsOfService && this.state.isSubmit ? (
-                  <p className="m-b-0 error-text">
-                    You must agree with the terms and conditions.
-                  </p>
+                {submittedSteps[this.steps.STEP1] && errors.termsOfService ? (
+                  <p className="m-b-0 error-text">{errors.termsOfService}</p>
                 ) : (
                   <></>
                 )}
               </Box>
               <Box className="d-flex width-100 next-step">
-
                 <Button
                   className="primary-btn"
-                  onClick={() => this.handleCurrentActiveStep(1)}
+                  onClick={() => this.setActiveStep(this.steps.STEP2)}
                   variant="contained"
                 >
                   Next
@@ -358,7 +372,7 @@ class SignUp extends Component {
             </Box>
           </Box>
         </Box>
-        <Box className={`sign-step ${currentActiveStep === 1 ? "active" : ""}`}>
+        <Box className={`sign-step ${activeStep === this.steps.STEP2 ? "active" : ""}`}>
           <Box className="sign-left">
             <Box className="sign-left-content">
               <span className="d-flex width-100">Appkube</span>
@@ -392,7 +406,7 @@ class SignUp extends Component {
               </Box>
               <Box className="select-profile">
                 <Box className="profile-image">
-                  <img src={this.state.profileImg} alt="profile" />
+                  <img src={step2.profileImg} alt="profile" />
                 </Box>
                 <Box className="company-content">
                   <p>Select your company profile picture</p>
@@ -401,7 +415,7 @@ class SignUp extends Component {
                     accept="image/*"
                     name="image-upload"
                     id="input"
-                    onChange={this.imageHandler}
+                    onChange={this.onChangeCompanyProfileImage}
                     hidden
                   />
                   <Box className="label">
@@ -425,40 +439,11 @@ class SignUp extends Component {
                         className="form-control"
                         placeholder="Input your name here"
                         name="companyName"
-                        value={formData.companyName}
-                        onChange={this.handleInputChange}
+                        value={step2.companyName}
+                        onChange={this.handleStep2Changes}
                       />
-                      {errors.companyName ? (
+                      {submittedSteps[this.steps.STEP2] && errors.companyName ? (
                         <p className="m-b-0">{errors.companyName}</p>
-                      ) : (
-                        <></>
-                      )}
-                    </Box>
-                  </Grid>
-                </Grid>
-                <Grid
-                  container
-                  rowSpacing={1}
-                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                >
-                  <Grid item xs={12}>
-                    <Box className="input-group">
-                      <label className="d-block text-left p-b-5">
-                        Your Company Location
-                      </label>
-                      <select
-                        name="companyLocation"
-                        id="companyLocation"
-                        value={formData.companyLocation}
-                        onChange={this.handleInputChange}
-                      >
-                        <option value="">Input your location here</option>
-                        <option value="saab">Saab</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
-                      </select>
-                      {errors.companyLocation ? (
-                        <p className="m-b-0">{errors.companyLocation}</p>
                       ) : (
                         <></>
                       )}
@@ -467,10 +452,9 @@ class SignUp extends Component {
                 </Grid>
               </Box>
               <Box className="d-flex width-100 next-step">
-
                 <Button
                   className="primary-btn"
-                  onClick={() => this.handleCurrentActiveStep(2)}
+                  onClick={() => this.setActiveStep(this.steps.STEP3)}
                   variant="contained"
                 >
                   Next
@@ -479,7 +463,7 @@ class SignUp extends Component {
             </Box>
           </Box>
         </Box>
-        <Box className={`sign-step ${currentActiveStep === 2 ? "active" : ""}`}>
+        <Box className={`sign-step ${activeStep === 2 ? "active" : ""}`}>
           <Box className="sign-left">
             <Box className="sign-left-content">
               <span className="d-flex width-100">Appkube</span>
@@ -517,15 +501,11 @@ class SignUp extends Component {
               </Box>
               <Box className="d-flex width-100 next-step">
                 <LoadingButton
-                  onClick={() =>
-                    !this.state.loadingData ? this.signUpSubmit() : <></>
-                  }
+                  onClick={this.signUpSubmit}
                   className="primary-btn"
                   variant="contained"
-                  disabled={this.state.loadingData ? true : false}
-                  loading={
-                    this.props.loadingData?.status === status.IN_PROGRESS
-                  }
+                  disabled={this.props.signUpUser.status === status.IN_PROGRESS}
+                  loading={this.props.signUpUser.status === status.IN_PROGRESS}
                   loadingPosition="start"
                 >
                   Continue To Sign In
@@ -540,14 +520,14 @@ class SignUp extends Component {
 }
 
 function mapStateToProps(state) {
-  const { auth } = state;
+  const { signUpUser } = state.auth;
   return {
-    auth,
+    signUpUser,
   };
 }
 
 const mapDispatchToProps = {
-  signUpUserAPI,
+  signUp,
 };
 
 export default connect(
