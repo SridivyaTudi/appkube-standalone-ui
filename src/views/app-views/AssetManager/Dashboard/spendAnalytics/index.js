@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Box, Grid, List, ListItem } from "@mui/material";
-import UserIcon from "../../../../../assets/img/dashboard/user-icon.png";
-import KingIcon from "../../../../../assets/img/dashboard/kingicon.png";
+import UserIcon from "assets/img/dashboard/user-icon.png";
+import KingIcon from "assets/img/dashboard/kingicon.png";
 import annotationPlugin from 'chartjs-plugin-annotation';
 
 import {

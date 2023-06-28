@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import SpendAnalytics from "./spendAnalytics";
-import CostAnalysis from "./costAnalysis";
-import SLMMetrics from "./slmMetrics";
-import ProcessCentral from "./processCentral";
-import Planet from "../../../../assets/img/dashboard/planet2.png";
+import SpendAnalytics from "views/app-views/AssetManager/Dashboard/spendAnalytics";
+import CostAnalysis from "views/app-views/AssetManager/Dashboard/costAnalysis";
+import SLMMetrics from "views/app-views/AssetManager/Dashboard/slmMetrics";
+import ProcessCentral from "views/app-views/AssetManager/Dashboard/processCentral";
+import Planet from "assets/img/dashboard/planet2.png";
 import {Box, List, ListItem} from "@mui/material";
 
 class Dashboard extends Component {
