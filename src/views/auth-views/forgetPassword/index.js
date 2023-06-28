@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import ForgotPasswordImage from "../../../assets/img/login/forgot-password-image.png";
+import ForgotPasswordImage from "assets/img/login/forgot-password-image.png";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
-import { AUTH_PREFIX_PATH } from "../../../configs/AppConfig";
+import { AUTH_PREFIX_PATH } from "configs/AppConfig";
 import Button from "@mui/material/Button";
 
 class ForgetPassword extends Component {

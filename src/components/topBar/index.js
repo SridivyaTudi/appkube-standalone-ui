@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../assets/img/logo.png";
-import notification from "../../assets/img/notification.png";
-import avatar from "../../assets/img/avatar.png";
+import logo from "assets/img/logo.png";
+import notification from "assets/img/notification.png";
+import avatar from "assets/img/avatar.png";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -9,8 +9,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { organizationsAsyncThunk } from "../../redux/assetManager/organization/organizationThunk";
-import { getCurrentOrgId, setCurrentOrgId } from "../../utils";
+import { organizationsAsyncThunk } from "redux/assetManager/organization/organizationThunk";
+import { getCurrentOrgId, setCurrentOrgId,getCurrentUser } from "utils";
 
 function TopBar() {
   const navigate = useNavigate();
@@ -41,6 +41,9 @@ function TopBar() {
     }
   }, [orgs]);
 
+  const getCurrentUserInfo = ()=>{
+    return getCurrentUser() ? getCurrentUser()?.info?.user : {username:'',email:'',profileImage:''}
+  }
   return (
     <Box className="top-bar">
       <Box sx={{ width: "100%" }}>
@@ -119,16 +122,16 @@ function TopBar() {
                   className="profile"
                   onClick={() => onClickProfile()}
                 >
-                  <img src={avatar} alt="" />
+                  <img src={getCurrentUserInfo().profileImage ? `data:image/png;base64,${getCurrentUserInfo().profileImage}` : avatar} alt="" />
                 </Box>
                 <Box className={showProfile === true ? "profile-dropdown active" : "profile-dropdown"}>
                   <Box className="d-flex align-items-center header">
                     <Box className="user-img">
-                      <img src={avatar} alt="" />
+                      <img src={getCurrentUserInfo().profileImage ? `data:image/png;base64,${getCurrentUserInfo().profileImage}` : avatar} alt="" />
                     </Box>
                     <Box className="details">
-                      <div className="name">Valerie Luna</div>
-                      <div className="email">vluna@aol.com</div>
+                      <div className="name">{getCurrentUserInfo().username}</div>
+                      <div className="email">{getCurrentUserInfo().email}</div>
                     </Box>
                   </Box>
                   <List>

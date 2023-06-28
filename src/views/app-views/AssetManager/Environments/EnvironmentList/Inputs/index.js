@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CommonFilterViewSearch from "../CommonFilterViewSearch";
+import CommonFilterViewSearch from "views/app-views/AssetManager/Environments/EnvironmentList/CommonFilterViewSearch";
 import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
 
 class Inputs extends Component {

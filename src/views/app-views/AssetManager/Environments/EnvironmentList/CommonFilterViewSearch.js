@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import Aws from "../../../../../assets/img/aws.png";
+import Aws from "assets/img/aws.png";
 import { CSVLink } from "react-csv";
 import { Link } from "react-router-dom";
-import Microsoftazure from "../../../../../assets/img/microsoftazure.png";
-import config from "../../../config";
-import GoogleCloud from "../../../../../assets/img/google-cloud.png";
-import Kubernetes from "../../../../../assets/img/kubernetes.png";
+import Microsoftazure from "assets/img/microsoftazure.png";
+import config from "views/app-views/config";
+import GoogleCloud from "assets/img/google-cloud.png";
+import Kubernetes from "assets/img/kubernetes.png";
 import { Box, Grid, List, ListItem } from "@mui/material";
-import { APP_PREFIX_PATH } from "../../../../../configs/AppConfig";
+import { APP_PREFIX_PATH } from "configs/AppConfig";
 import Button from "@mui/material/Button";
 
 const headers = [

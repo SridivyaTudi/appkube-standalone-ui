@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SigninBanner from "../../../assets/img/login/signin-banner.png";
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -188,13 +189,14 @@ class Signin extends Component {
                 </Box>
                 <Box className="remember-content width-100">
                   <Box className="d-flex width-100 align-items-center">
-                    <Checkbox
+                    <FormControlLabel
+                      control={<Checkbox />}
+                      label="Remember me"
                       className="checkbox primary"
                       size="small"
                       onChange={this.handleCheckboxChange}
                       value={rememberMe}
                     />
-                    <p>Remember me</p>
                     <Link to={`${AUTH_PREFIX_PATH}/forgetpassword`}>
                       Forgot Password?
                     </Link>

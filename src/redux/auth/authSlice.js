@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signUpUserAPI, login } from "./authThunk";
-import status from "../constants/commonDS";
+import { signUp, login } from "redux/auth/authThunk";
+import status from "redux/constants/commonDS";
 
 const authSlice = createSlice({
   name: "auth",
@@ -14,7 +14,7 @@ const authSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [signUpUserAPI.pending]: (state, action) => {
+    [signUp.pending]: (state, action) => {
       return {
         ...state,
         signUpUser: {
@@ -22,16 +22,16 @@ const authSlice = createSlice({
         },
       };
     },
-    [signUpUserAPI.fulfilled]: (state, { payload }) => {
+    [signUp.fulfilled]: (state, { payload }) => {
       return {
         ...state,
         signUpUser: {
           status: status.SUCCESS,
-          data: payload?.signUpUser,
+          data: payload,
         },
       };
     },
-    [signUpUserAPI.rejected]: (state, { payload }) => {
+    [signUp.rejected]: (state, { payload }) => {
       return {
         ...state,
         signUpUser: {

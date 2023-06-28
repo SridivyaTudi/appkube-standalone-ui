@@ -98,7 +98,8 @@ class SelectDepartmentPopup extends Component {
               checked={this.isDepartmentSelected(department.id)}
               onChange={(e) => this.handleCheckChange(e, "dep", department.id)}
             />
-            <label htmlFor={department.name}>{department.name}</label>
+            <label htmlFor={department.name} onClick={(e) => this.handleCheckChange(
+              {target:{checked:!this.isDepartmentSelected(department.id)}}, "dep", department.id)}>{department.name}</label>
           </Box>
         </Grid>
       );
@@ -134,6 +135,18 @@ class SelectDepartmentPopup extends Component {
       this.state.products[depId]
     );
   };
+
+  productsLength = ()=>{
+    let isProduct = false
+    if(this.state.products && Object.keys(this.state.products).length){
+      Object.keys(this.state.products).forEach((productKey)=>{
+        if (this.state.products[productKey] && this.state.products[productKey].length && !isProduct) {
+          isProduct = true
+        }
+      })
+    }
+    return isProduct
+  }
   render() {
     const { selectedProductions, selectedDepartments, selectedEnvs, products } =
       this.state;
@@ -172,7 +185,7 @@ class SelectDepartmentPopup extends Component {
                 ""}
             </Grid>
           </Box>
-          {products && Object.keys(products).length ? (
+          {this.productsLength()  ? (
             <>
               <h4 className="text-left m-b-1 m-t-2">Select Production</h4>
               <Box sx={{ width: "100%" }} className="border-bottom p-b-10">
@@ -229,7 +242,7 @@ class SelectDepartmentPopup extends Component {
             <Button className="secondary-btn m-r-2" variant="contained" onClick={this.toggle}>
               Clear
             </Button>
-            {products && Object.keys(products).length ? (
+            {this.productsLength()  ? (
               <Button onClick={this.toggle} className="primary-btn min-width" variant="contained">
                 Submit
               </Button>

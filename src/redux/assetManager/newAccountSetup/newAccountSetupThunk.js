@@ -7,12 +7,13 @@ export const createNewOU = createAsyncThunk(
     const url = config.DEPARTMENTS;
     const options = {
       method: "POST",
-      body: data,
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
     };
     const response = await fetch(`${url}`, options);
     if (response.ok) {
-      const response = await response.json();
-      return { response };
+      const createOuRes = await response.json();
+      return { createOuRes };
     } else {
       return Promise.reject(response.status);
     }
@@ -22,7 +23,7 @@ export const createNewOU = createAsyncThunk(
 export const getOrganizationalUnits = createAsyncThunk(
   "organizationalUnitThunk/getAll",
   async () => {
-    const url = config.GET_ORGANIZATION_DETAILS;
+    const url = config.GET_ALL_ORGS;
     const response = await fetch(`${url}`);
     if (response.ok) {
       const allOrgs = await response.json();

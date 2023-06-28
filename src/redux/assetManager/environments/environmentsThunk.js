@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import config from "../../../views/app-views/config";
+import config from "views/app-views/config";
 
 export const getEnvsAsync = createAsyncThunk(
   "environments/getEnvsAsync",

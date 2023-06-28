@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CommonFilterViewSearch from "../../CommonFilterViewSearch";
+import CommonFilterViewSearch from "views/app-views/AssetManager/Environments/EnvironmentList/CommonFilterViewSearch";
 
 class Environments extends Component {
   render() {

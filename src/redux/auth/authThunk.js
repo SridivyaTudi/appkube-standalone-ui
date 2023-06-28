@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import config from "./../../views/auth-views/config";
+import config from "views/auth-views/config";
 
-export const signUpUserAPI = createAsyncThunk(
+export const signUp = createAsyncThunk(
   "auth/signUp",
   async (userData) => {
     const url = config.SIGN_UP;
@@ -13,7 +13,7 @@ export const signUpUserAPI = createAsyncThunk(
     const response = await fetch(`${url}`, options);
     if (response.ok) {
       const newUser = await response.json();
-      return { newUser };
+      return newUser;
     } else {
       return Promise.reject(response.status);
     }

@@ -66,9 +66,9 @@ class AssociatedAccountPopup extends Component {
             </div>
           </ModalFooter>
         </Modal>
-        <CreateNewOuPopup ref={this.createNewOuModalRef} addModalOpen={() => {
+        {/* <CreateNewOuPopup ref={this.createNewOuModalRef} addModalOpen={() => {
           this.onClickCreateNewOu('')
-        }} newDepartmentAppend={this.props.newDepartmentAppend} />
+        }} newDepartmentAppend={this.props.newDepartmentAppend} /> */}
       </>
     );
   }
