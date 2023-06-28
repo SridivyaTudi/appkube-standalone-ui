@@ -215,7 +215,7 @@ class SignUp extends Component {
                   <img src={SignupBanner1} alt="SignupBanner" />
                 }
                 {activeStep === this.steps.STEP3 &&
-                  <img src={SignupBanner2} alt="SignupBanner" />
+                  <img src={SignupBanner2} alt="SignupBanner" style={{ maxHeight: "450px" }} />
                 }
               </Box>
             </Box>
