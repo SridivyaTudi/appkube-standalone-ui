@@ -43,7 +43,7 @@
       .environment-title {
         display: flex;
         align-items: center;
-        justify-content: start;
+        justify-content: flex-start;
         padding: 10px 15px;
         border-bottom: 1px dashed #d9d9d9;
 
@@ -244,7 +244,7 @@
             color: #414d55;
             display: flex;
             align-items: center;
-            justify-content: start;
+            justify-content: flex-start;
 
             &:hover {
               p {
@@ -332,7 +332,7 @@
   .export-sction {
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
   }
 
   .environment-table-section {
@@ -549,7 +549,7 @@
                   display: flex;
                   border-radius: 5px;
                   align-items: center;
-                  justify-content: start;
+                  justify-content: flex-start;
 
                   i {
                     font-size: 18px;
@@ -646,7 +646,7 @@
       width: 100%;
       display: flex;
       align-items: center;
-      justify-content: start;
+      justify-content: flex-start;
       padding: 12px 15px 10px;
 
       &.bottom-border {
@@ -1487,7 +1487,7 @@
             .recently-card {
               display: flex;
               align-items: center;
-              justify-content: start;
+              justify-content: flex-start;
               box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
               padding: 15px 10px;
               cursor: pointer;
@@ -1833,12 +1833,6 @@
         width: 100%;
         margin-bottom: 15px;
       }
-    }
-
-    .new-button {
-      display: block;
-      margin-bottom: 15px;
-      margin-right: 0;
     }
 
     .search-box {

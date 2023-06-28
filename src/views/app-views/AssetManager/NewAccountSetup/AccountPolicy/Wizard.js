@@ -3,6 +3,7 @@ import { ToastMessage } from "../../../../../Toast/ToastMessage";
 import config from "../../../config";
 import { RestService } from "./../../../Services/RestService";
 import { withRouter } from "./withRouter";
+import Button from '@mui/material/Button';
 
 class Wizard extends Component {
   constructor(props) {
@@ -167,7 +168,7 @@ class Wizard extends Component {
         </div>
         <div className="d-flex justify-content-end align-items-center wizard-step-button">
           {currentStep < steps.length - 1 && (
-            <button
+            <Button
               onClick={(e) => {
                 if (currentStep == 0) {
                   this.props.previousStep();
@@ -175,16 +176,17 @@ class Wizard extends Component {
                   this.onClickStepButton(currentStep - 1);
                 }
               }}
-              className="white-outline previous-button"
+              className="primary-outline-btn m-r-2"
+              variant="outlined"
             >
               Previous
-            </button>
+            </Button>
           )}
           {currentStep >= steps.length + 1 && (
-            <button className="white-outline previous-button">Previous</button>
+            <Button className="primary-outline-btn m-r-2" variant="outlined">Previous</Button>
           )}
           {currentStep < steps.length - 1 && (
-            <button
+            <Button
               onClick={(e) => {
                 if (this.state.currentStep == 1) {
                   if (this.validateCreateRoleForm()) {
@@ -203,33 +205,32 @@ class Wizard extends Component {
                   this.onClickStepButton(currentStep + 1);
                 }
               }}
-              className="blue-button"
+              className="primary-btn"
+              variant="contained"
             >
               Next
-            </button>
+            </Button>
           )}
           {currentStep >= steps.length - 1 && (
             <>
-              <button
+              <Button
                 onClick={(e) => {
                   this.onClickStepButton(currentStep - 1);
                 }}
-                className="blue-button previous-button"
+                className="primary-outline-btn m-r-2"
+                variant="outlined"
               >
                 Previous
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={() => {
                   if (!this.state.loadingData) {
                     this.createSubmit();
                   }
                 }}
-                className={
-                  this.state.loadingData
-                    ? "blue-button disabled"
-                    : "blue-button"
-                }
+                className="primary-btn"
                 disabled={this.state.loadingData ? true : false}
+                variant="contained"
               >
                 {this.state.loadingData ? (
                   <i className="fa-solid fa-spinner fa-spin" />
@@ -237,7 +238,7 @@ class Wizard extends Component {
                   ""
                 )}
                 Finished
-              </button>
+              </Button>
             </>
           )}
         </div>

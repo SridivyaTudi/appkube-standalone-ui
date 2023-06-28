@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
 import { AUTH_PREFIX_PATH } from "../../../configs/AppConfig";
+import Button from "@mui/material/Button";
 
 class ForgetPassword extends Component {
   constructor(props) {
@@ -125,7 +126,13 @@ class ForgetPassword extends Component {
               </Grid>
             </Box>
             <Box className="d-flex width-100 next-step">
-              <button className="blue-button" onClick={this.handleSignIn}>Reset your password</button>
+              <Button
+                className="primary-btn"
+                onClick={this.handleSignIn}
+                variant="contained"
+              >
+                Reset your password
+              </Button>
             </Box>
           </Box>
         </Box>

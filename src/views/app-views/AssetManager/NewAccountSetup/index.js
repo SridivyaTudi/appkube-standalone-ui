@@ -4,7 +4,7 @@ import OprationMode2 from "../../../../assets/img/assetmanager/opration-mode2.pn
 import AccountPolicy from "./AccountPolicy";
 import Box from "@mui/material/Box";
 import Grid from '@mui/material/Grid';
-import "../Components/SelectAccountPopup.css";
+import Button from '@mui/material/Button';
 
 export class NewAccountSetup extends Component {
   constructor(props) {
@@ -100,17 +100,14 @@ export class NewAccountSetup extends Component {
             </Box>
           </div>
           <div className="d-block get-started-button">
-            <button className="blue-button width-25" style={{ color: "white" }} onClick={() => {
-              this.setState({ accountPolicy: true })
-
-            }}>
-              {/* <Link
-                style={{ color: "white" }}
-                to={"/assetmanager/pages/newaccountsetup/accountpolicy"}
-              > */}
+            <Button
+              className="primary-btn width-25"
+              onClick={() => {
+                this.setState({ accountPolicy: true });
+              }}
+            >
               Get started
-              {/* </Link> */}
-            </button>
+            </Button>
           </div>
         </div>
       </div>

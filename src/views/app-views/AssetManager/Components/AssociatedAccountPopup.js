@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import featuredIcon from "../../../../assets/img/featured-icon.png";
 import CreateNewOuPopup from "./CreateNewOuPopup";
+import Button from '@mui/material/Button';
 
 class AssociatedAccountPopup extends Component {
   constructor(props) {
@@ -54,17 +55,14 @@ class AssociatedAccountPopup extends Component {
           </ModalBody>
           <ModalFooter className="footer-top-bar">
             <div className="d-block text-center">
-              <button
-                className="white-outline"
-              >
-                Contact Support
-              </button>
-              <button
-                className="blue-button"
-                onClick={() => this.onClickCreateNewOu("")}
+              <Button className="primary-outline-btn" variant="outlined">Contact Support</Button>
+              <Button
+                className="primary-btn"
+                onClick={() => this.onClickCreateNewOu()}
+                variant="contained"
               >
                 Create New OU
-              </button>
+              </Button>
             </div>
           </ModalFooter>
         </Modal>

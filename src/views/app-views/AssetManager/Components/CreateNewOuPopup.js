@@ -3,6 +3,8 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import config from "../../config";
 import { RestService } from "../../Services/RestService";
 import { ToastMessage } from "../../../../Toast/ToastMessage";
+import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 class CreateNewOuPopup extends Component {
   constructor(props) {
@@ -83,13 +85,13 @@ class CreateNewOuPopup extends Component {
 
             <span className="red">
               {(!this.state.name && !this.state.description) ||
-              this.state.initailValidationFlag
+                this.state.initailValidationFlag
                 ? this.state.name == ""
                   ? "Name of Ou is required"
                   : ""
                 : this.state.name == ""
-                ? "Name of Ou is required"
-                : ""}
+                  ? "Name of Ou is required"
+                  : ""}
             </span>
           </div>
           <div className="form-group">
@@ -106,35 +108,35 @@ class CreateNewOuPopup extends Component {
 
             <span className="red">
               {(!this.state.name && !this.state.description) ||
-              this.state.initailValidationFlag
+                this.state.initailValidationFlag
                 ? this.state.description == ""
                   ? "Desciption of Ou is required"
                   : ""
                 : this.state.description == ""
-                ? "Desciption of Ou is required"
-                : ""}
+                  ? "Desciption of Ou is required"
+                  : ""}
             </span>
           </div>
         </ModalBody>
         <ModalFooter className="footer-top-bar">
           <div className="d-block text-right">
-            <button
-              className="gray-outline"
+            <Button
+              className="secondary-text-btn m-r-2"
+              variant="contained"
               onClick={() => {
                 this.setState({
                   initailValidationFlag: false,
                   name: "",
                   description: "",
                 });
-                this.toggle();
+                this.props.toggle();
               }}
             >
               Cancel
-            </button>
-            <button
-              className={
-                this.state.loadingData ? "blue-button disabled" : "blue-button"
-              }
+            </Button>
+            <LoadingButton
+              className="primary-btn"
+              disabled={this.state.loadingData ? true : false}
               onClick={() => {
                 if (
                   !this.state.name &&
@@ -160,10 +162,10 @@ class CreateNewOuPopup extends Component {
               {this.state.loadingData ? (
                 <i className="fa-solid fa-spinner fa-spin" />
               ) : (
-                ""
-              )}{" "}
+                <></>
+              )}
               Create
-            </button>
+            </LoadingButton>
           </div>
         </ModalFooter>
       </Modal>

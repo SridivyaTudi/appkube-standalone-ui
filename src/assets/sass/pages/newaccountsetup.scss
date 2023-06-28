@@ -458,21 +458,6 @@
                 }
               }
 
-              button {
-                border: none;
-                cursor: pointer;
-                font-size: 14px;
-                line-height: 18px;
-                font-weight: 600;
-                padding: 0;
-                color: #384cff;
-                text-decoration: underline;
-                background-color: transparent;
-
-                &:hover {
-                  color: #384cff;
-                }
-              }
             }
 
           }
@@ -517,44 +502,26 @@
 
           }
 
-          .wizard-step-button {
-            font-family: 'Open Sans', sans-serif;
-
-            button {
-              margin-left: 0px;
-              margin-right: 15px;
-              padding-left: 60px !important;
-              padding-right: 60px !important;
-
-              &.previous-button {
-                background-color: #ffffff !important;
-                border: 1px solid #384cff !important;
-                padding-top: 9px !important;
-                padding-bottom: 9px !important;
-                color: #384cff !important;
-              }
-            }
-          }
         }
       }
 
     }
 
-    .wizard-step-button {
-      font-family: 'Open Sans', sans-serif;
+  }
+}
 
-      button {
-        min-width: 180px;
-        margin-left: 15px;
-        padding-left: 60px !important;
-        padding-right: 60px !important;
-
-        &.previous-button {
-          background-color: #ffffff !important;
-          border: 1px solid #384cff !important;
-          padding-top: 9px !important;
-          padding-bottom: 9px !important;
-          color: #384cff !important;
+@media only screen and (max-width: 1280px) {
+  .new-account-container {
+    .new-account-page-container {
+      .new-account-tab-container {
+        .wizard-step-component-container {
+          .wizard-step-component {
+            .new-account-setup-tab-contents {
+              .organizational-box {
+                width: 70%;
+              }
+            }
+          }
         }
       }
     }
