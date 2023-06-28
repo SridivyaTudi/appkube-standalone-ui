@@ -8,6 +8,7 @@ import ProcurifyIcon from "../../../../../../assets/img/assetmanager/procurify-i
 import FlipkartIcon from "../../../../../../assets/img/assetmanager/flipkart-icon.png";
 import AppleIcon from "../../../../../../assets/img/assetmanager/apple-icon.png";
 import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
+import Button from "@mui/material/Button";
 
 class Application extends Component {
   constructor(props) {
@@ -188,14 +189,17 @@ class Application extends Component {
                       }
                     />
                   </Box>
-                  <button className="blue-button min-width-inherit m-b-0 m-r-3">
+                  <Button className="primary-btn min-width-inherit m-r-3" variant="contained">
                     <i className="fa-solid fa-history p-r-5"></i> Recent
-                  </button>
+                  </Button>
                 </Box>
               </Grid>
               <Grid item lg={4} md={4} xs={10}>
                 <div className="d-inline-block width-100 text-right">
-                  <button className="new-button min-width-inherit m-b-0 m-r-0">
+                  <Button
+                    className="primary-btn"
+                    variant="contained"
+                  >
                     <Link
                       style={{ color: "white" }}
                       to={
@@ -204,7 +208,7 @@ class Application extends Component {
                     >
                       <i className="fa-solid fa-plus-square p-r-5"></i> Create New
                     </Link>
-                  </button>
+                  </Button>
                 </div>
               </Grid>
             </Grid>
