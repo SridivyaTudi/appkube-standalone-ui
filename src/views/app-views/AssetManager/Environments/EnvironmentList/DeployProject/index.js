@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import DeploymentImg1 from "../../../../../assets/img/assetmanager/deployment-img1.png";
-import DeploymentImg2 from "../../../../../assets/img/assetmanager/deployment-img2.png";
+import DeploymentImg1 from "assets/img/assetmanager/deployment-img1.png";
+import DeploymentImg2 from "assets/img/assetmanager/deployment-img2.png";
 
 class DeployProject extends Component {
   render() {

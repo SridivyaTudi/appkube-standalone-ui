@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import RunningIcon from "../../../../../../assets/img/assetmanager/running-icon.png";
-import AirAsiaIcon from "../../../../../../assets/img/assetmanager/air-asia-icon.png";
-import UpdatingIcon from "../../../../../../assets/img/assetmanager/updating-icon.png";
-import StopIcon from "../../../../../../assets/img/assetmanager/stop-icon.png";
-import ProcurifyIcon from "../../../../../../assets/img/assetmanager/procurify-icon.png";
-import FlipkartIcon from "../../../../../../assets/img/assetmanager/flipkart-icon.png";
-import AppleIcon from "../../../../../../assets/img/assetmanager/apple-icon.png";
+import RunningIcon from "assets/img/assetmanager/running-icon.png";
+import AirAsiaIcon from "assets/img/assetmanager/air-asia-icon.png";
+import UpdatingIcon from "assets/img/assetmanager/updating-icon.png";
+import StopIcon from "assets/img/assetmanager/stop-icon.png";
+import ProcurifyIcon from "assets/img/assetmanager/procurify-icon.png";
+import FlipkartIcon from "assets/img/assetmanager/flipkart-icon.png";
+import AppleIcon from "assets/img/assetmanager/apple-icon.png";
 import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
 import Button from "@mui/material/Button";
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
-import CommonFilterViewSearch from "../CommonFilterViewSearch";
+import CommonFilterViewSearch from "views/app-views/AssetManager/Environments/EnvironmentList/CommonFilterViewSearch";
 
 class ThreatEvents extends Component {
   constructor(props) {
