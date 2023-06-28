@@ -4,14 +4,12 @@ import config from "../../../config";
 import { RestService } from "./../../../Services/RestService";
 import { withRouter } from "./withRouter";
 import Button from '@mui/material/Button';
-import LoadingButton from "@mui/lab/LoadingButton";
 
 class Wizard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentStep: 0,
-      rolesDetails: this.props.rolesDetails ? this.props.rolesDetails : null,
       departmentId: false,
       redirectToEnviroment: false,
       loadingData: false,
@@ -42,7 +40,6 @@ class Wizard extends Component {
           <div
             className={`wizard-step-button ${currentStep === i ? "active" : ""
               }`}
-          // onClick={(e) => this.onClickStepButton(i)}
           >
             {step.name}
           </div>
@@ -73,39 +70,6 @@ class Wizard extends Component {
     return retData;
   };
 
-  validateCreateRoleForm = () => {
-    let { name, role, externalId } = this.props.rolesDetails;
-    if (!name || name == "") {
-      this.props.validateCreateRoleForm({
-        name: true,
-        role: true,
-        externalId: true,
-      });
-      return false;
-    } else if (!role || role == "") {
-      this.props.validateCreateRoleForm({
-        name: false,
-        role: true,
-        externalId: true,
-      });
-      return false;
-    } else if (!externalId || externalId == "") {
-      this.props.validateCreateRoleForm({
-        name: false,
-        role: false,
-        externalId: true,
-      });
-      return false;
-    } else {
-      this.props.validateCreateRoleForm({
-        name: false,
-        role: false,
-        externalId: false,
-      });
-      return true;
-    }
-  };
-
   componentDidUpdate(prevProps, prevState) {
     if (
       JSON.stringify(prevProps.departmentId) !==
@@ -114,9 +78,6 @@ class Wizard extends Component {
       this.setState({
         departmentId: this.props.departmentId,
       });
-      // if (this.state.currentStep == 2) {
-      // this.onClickStepButton(this.state.currentStep + 1)
-      // }
     }
     if (
       JSON.stringify(prevProps.roleDetails) !==
@@ -124,30 +85,30 @@ class Wizard extends Component {
     ) {
       this.setState({ roleDetails: this.props.roleDetails });
     }
-    if (this.props.finishPrevious && this.state.currentStep == 3) {
+    if (this.props.finishPrevious && this.state.currentStep === 3) {
       this.onClickStepButton(this.state.currentStep - 1);
       this.props.previousStep("finishPrevStep");
     }
   }
 
   createSubmit = () => {
-    let postData = {
-      displayName: this.props.rolesDetails.name,
-      roleArn: this.props.rolesDetails.role || "",
+    const { formData } = this.props;
+    let sendData = {
       cloud: "AWS",
-      externalId: this.props.rolesDetails.externalId,
-      department: {
-        id: this.state.departmentId,
-      },
+      displayName: formData.displayName,
+      roleArn: formData.roleArn,
+      externalId: formData.externalId,
+      status: "active",
+      departmentId: Number(this.props.departmentId),
     };
     this.setState({ loadingData: true });
-    RestService.postData(config.ADD_CLOUD_ENV, postData).then((response) => {
+    RestService.postData(config.ADD_CLOUD_ENV, sendData).then((response) => {
       this.setState({ loadingData: false });
       if (response.status == 500) {
-        ToastMessage(response.title, "unsuccess");
+        ToastMessage.error(response.title);
         return 1;
       }
-      ToastMessage("Successfully new account created", "success");
+      ToastMessage.success("Successfully new account created");
       this.props.navigate("/app/environments");
     });
   };
@@ -168,35 +129,39 @@ class Wizard extends Component {
         <div className="d-flex justify-content-end align-items-center wizard-step-button">
           {currentStep < steps.length - 1 && (
             <Button
+              className="primary-outline-btn"
               onClick={(e) => {
-                if (currentStep == 0) {
+                if (currentStep === 0) {
                   this.props.previousStep();
                 } else {
                   this.onClickStepButton(currentStep - 1);
                 }
               }}
-              className="primary-outline-btn m-r-2"
               variant="outlined"
             >
               Previous
             </Button>
           )}
           {currentStep >= steps.length + 1 && (
-            <Button className="primary-outline-btn m-r-2" variant="outlined">Previous</Button>
+            <Button className="primary-outline-btn" variant="outlined">Previous</Button>
           )}
           {currentStep < steps.length - 1 && (
             <Button
-              onClick={(e) => {
-                if (this.state.currentStep == 1) {
-                  if (this.validateCreateRoleForm()) {
-                    this.onClickStepButton(currentStep + 1);
-                  }
-                } else if (this.state.currentStep == 2) {
+              className="primary-btn"
+              onClick={() => {
+                if (this.state.currentStep === 1) {
+                  this.props.setIsSubmit(true);
+                  this.setState({ isSubmit: true }, () => {
+                    if (this.state.isSubmit) {
+                      let { isValid } = this.props.validateCreateRoleForm();
+                      if (isValid) {
+                        this.onClickStepButton(currentStep + 1);
+                      }
+                    }
+                  });
+                } else if (this.state.currentStep === 2) {
                   if (!this.props.departmentId) {
-                    ToastMessage(
-                      "Please select any Organizational Unit.",
-                      "unsuccess"
-                    );
+                    ToastMessage.error("Please select any Organizational Unit.");
                   } else {
                     this.onClickStepButton(currentStep + 1);
                   }
@@ -204,7 +169,6 @@ class Wizard extends Component {
                   this.onClickStepButton(currentStep + 1);
                 }
               }}
-              className="primary-btn"
               variant="contained"
             >
               Next
@@ -216,25 +180,30 @@ class Wizard extends Component {
                 onClick={(e) => {
                   this.onClickStepButton(currentStep - 1);
                 }}
-                className="primary-outline-btn m-r-2"
-                variant="outlined"
+                className="primary-btn previous-button"
               >
                 Previous
               </Button>
-              <LoadingButton
-                disabled={this.state.loadingData ? true : false}
-                loading={this.state.loadingData ? true : false}
-                loadingPosition="start"
+              <Button
                 onClick={() => {
                   if (!this.state.loadingData) {
                     this.createSubmit();
                   }
                 }}
-                className="primary-btn"
-                variant="contained"
+                className={
+                  this.state.loadingData
+                    ? "primary-btn disabled"
+                    : "primary-btn"
+                }
+                disabled={this.state.loadingData ? true : false}
               >
+                {this.state.loadingData ? (
+                  <i className="fa-solid fa-spinner fa-spin" />
+                ) : (
+                  ""
+                )}
                 Finished
-              </LoadingButton>
+              </Button>
             </>
           )}
         </div>

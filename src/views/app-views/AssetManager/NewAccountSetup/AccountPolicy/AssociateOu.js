@@ -7,10 +7,8 @@ import SelectAccountPopup from "../../Components/SelectAccountPopup";
 import CreateNewAccountPopup from "../../Components/CreateNewAccountPopup";
 import config from "../../../config";
 import { RestService } from "./../../../Services/RestService";
-import { ToastMessage } from "../../../../../Toast/ToastMessage";
+import { getCurrentOrgId } from "utils";
 import Button from '@mui/material/Button';
-
-let initialFlag = true;
 
 class AssociateOu extends Component {
   constructor(props) {
@@ -21,48 +19,29 @@ class AssociateOu extends Component {
       isDepartmentCreated: false,
       name: "",
       description: "",
+      selectAccountPopupShow: false,
+      createNewOuPopupShow: false,
     };
-    this.associatedAccountModalRef = React.createRef();
-    this.createNewOuModalRef = React.createRef();
-    this.selectAccountModalRef = React.createRef();
-    this.createNewAccountModalRef = React.createRef();
   }
-  onClickAssociatedAccount = () => {
-    this.associatedAccountModalRef.current.toggle();
-  };
-  onClickCreateNewOu = () => {
-    this.createNewOuModalRef.current.toggle();
-  };
-  onClickSelectAccount = (link) => {
-    this.selectAccountModalRef.current.setLink(link);
-    this.selectAccountModalRef.current.toggle();
-  };
-  onClickCreateNewAccount = (link) => {
-    this.createNewAccountModalRef.current.setLink(link);
-    this.createNewAccountModalRef.current.toggle();
-  };
+
   componentDidMount() {
     this.getDepartMents();
   }
+
   getDepartMents() {
     let organizationId = 1;
-    if (localStorage.getItem("currentOrgId")) {
-      organizationId = localStorage.getItem("currentOrgId");
+    if (getCurrentOrgId()) {
+      organizationId = getCurrentOrgId();
     }
     try {
-      RestService.getData(
-        config.GET_DEPARTMENTS + organizationId,
-        null,
-        null
-      ).then((response) => {
+      RestService.getData(config.GET_ALL_ORGS, null, null).then((response) => {
         this.setState({ departments: response });
-        initialFlag = false;
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
   }
+
   newDepartmentAppend = (department, description) => {
     this.setState({
       departments: [department].concat(this.state.departments),
@@ -72,13 +51,36 @@ class AssociateOu extends Component {
       description: description,
     });
     this.props.setDepartment(department.id, department.name, description);
-    // this.onClickCreateNewAccount('')
   };
+
   getDepartmentName = (id) => {
-    return this.state.departments.filter((department) => department.id == id)[0]
-      .name;
+    return this.state.departments.filter(
+      (department) => department.id === id
+    )[0].name;
   };
+
+  toggleSelectAccountPopup = (clear) => {
+    if (clear) {
+      this.setState({
+        name: "",
+        description: "",
+        isDepartmentCreated: false,
+        checkedId: false,
+      });
+    }
+    this.setState({
+      selectAccountPopupShow: !this.state.selectAccountPopupShow,
+    });
+  };
+
+  toggleCreateNewOuPopup = () => {
+    this.setState({
+      createNewOuPopupShow: !this.state.createNewOuPopupShow,
+    });
+  };
+
   render() {
+    const { selectAccountPopupShow, createNewOuPopupShow } = this.state;
     return (
       <>
         {!this.state.isDepartmentCreated && !this.state.checkedId ? (
@@ -92,11 +94,7 @@ class AssociateOu extends Component {
               <div className="organizational-inner-boxs">
                 <div
                   className="select-organizational"
-                  onClick={() =>
-                    this.state.departments && this.state.departments.length
-                      ? this.onClickSelectAccount("")
-                      : this.onClickAssociatedAccount("")
-                  }
+                  onClick={() => this.toggleSelectAccountPopup()}
                 >
                   <div className="organizational-image">
                     <img src={SelectExisting} alt="" />
@@ -107,7 +105,7 @@ class AssociateOu extends Component {
                 </div>
                 <div
                   className="select-organizational"
-                  onClick={() => this.onClickCreateNewOu("")}
+                  onClick={() => this.toggleCreateNewOuPopup()}
                 >
                   <div className="organizational-image">
                     <img src={CreateFileIcon} alt="" />
@@ -119,11 +117,12 @@ class AssociateOu extends Component {
           </div>
         ) : (
           <div className="d-inline-block width-100 new-account-setup-tab-contents">
-            <h3>Great Job !!</h3>
+            <h3>Great Job!!</h3>
             <p>
-              Selected Organizational Unit{" "}
-              <strong>{this.props.roleDetails.departmentName}</strong>. All you
-              need to do <br /> now is click on that <strong>"Finished"</strong>{" "}
+              Selected Organizational Unit
+              <strong> {this.props.roleDetails.departmentName}</strong>. All you
+              need to do <br /> now is click on that{" "}
+              <strong>"Finished" </strong>
               button to move forward with the next step.
             </p>
             <div className="associate-box">
@@ -140,18 +139,13 @@ class AssociateOu extends Component {
                 className="d-flex width-100 align-items-center"
                 style={{ justifyContent: "space-between" }}
               >
-                <Button
-                  className="primary-text-btn min-width"
-                  variant="contained"
-                  style={{ paddingLeft: 0, textDecoration: 'underline' }}
-                  onClick={() => this.onClickSelectAccount()}
-                >
+                <button onClick={() => this.toggleSelectAccountPopup()}>
                   Change OU
-                </Button>
+                </button>
                 <Button
                   className="primary-btn min-width"
-                  variant="contained"
-                  onClick={() => this.onClickCreateNewOu()}
+                  style={{ textDecoration: "none" }}
+                  onClick={() => this.toggleCreateNewOuPopup()}
                 >
                   Create OU
                 </Button>
@@ -160,38 +154,40 @@ class AssociateOu extends Component {
           </div>
         )}
         <AssociatedAccountPopup
-          ref={this.associatedAccountModalRef}
           addModalOpen={() => {
-            this.onClickAssociatedAccount("");
+            this.toggleSelectAccountPopup();
           }}
           newDepartmentAppend={this.newDepartmentAppend}
         />
-        <CreateNewOuPopup
-          ref={this.createNewOuModalRef}
-          addModalOpen={() => {
-            this.onClickCreateNewOu("");
-          }}
-          newDepartmentAppend={this.newDepartmentAppend}
-        />
-        <SelectAccountPopup
-          ref={this.selectAccountModalRef}
-          departments={this.state.departments}
-          addModalOpen={() => {
-            this.onClickSelectAccount("");
-            this.onClickCreateNewAccount("");
-          }}
-          checkedId={this.state.checkedId}
-          setID={(checkedId) => {
-            this.setState({ checkedId });
-            // this.onClickSelectAccount('')
-            this.props.setDepartment(
-              checkedId,
-              checkedId ? this.getDepartmentName(checkedId) : ""
-            );
-          }}
-        />
+        {createNewOuPopupShow ? (
+          <CreateNewOuPopup
+            toggleCreateNewOuPopupShow={this.state.createNewOuPopupShow}
+            toggleCreateNewOuPopup={() => {
+              this.toggleCreateNewOuPopup();
+            }}
+            newDepartmentAppend={this.newDepartmentAppend}
+          />
+        ) : (
+          <></>
+        )}
+        {selectAccountPopupShow ? (
+          <SelectAccountPopup
+            selectAccountPopupShow={this.state.selectAccountPopupShow}
+            toggleSelectAccountPopup={this.toggleSelectAccountPopup}
+            checkedId={this.state.checkedId}
+            setID={(checkedId) => {
+              this.setState({ checkedId });
+              this.props.setDepartment(
+                checkedId,
+                checkedId ? this.getDepartmentName(checkedId) : ""
+              );
+            }}
+          />
+        ) : (
+          <></>
+        )}
+
         <CreateNewAccountPopup
-          ref={this.createNewAccountModalRef}
           departments={this.state.departments}
           newDepartmentAppend={this.newDepartmentAppend}
           checkedId={this.state.checkedId}
@@ -201,7 +197,6 @@ class AssociateOu extends Component {
               checkedId,
               checkedId ? this.getDepartmentName(checkedId) : ""
             );
-            // this.onClickCreateNewAccount('')
           }}
         />
       </>
