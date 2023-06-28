@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import ProcurifyIcon from "../../../../../assets/img/assetmanager/procurify-icon.png";
-import UserIcon from "../../../../../assets/img/assetmanager/user-icon.png";
-import LogisticsIcon from "../../../../../assets/img/assetmanager/logistics-icon.png";
-import EnvironmentsIcon from "../../../../../assets/img/assetmanager/environments-icon.png";
-import LockIcon from "../../../../../assets/img/assetmanager/lock-icon.png";
-import UsaFlag from "../../../../../assets/img/assetmanager/usa-flag.png";
-import RunningIcon from "../../../../../assets/img/assetmanager/running-icon.png";
-import Environments from "./Environments";
-import Container from "./Container";
-import Database from "./Database";
-import AccountPricing from "./AccountPricing";
+import ProcurifyIcon from "assets/img/assetmanager/procurify-icon.png";
+import UserIcon from "assets/img/assetmanager/user-icon.png";
+import LogisticsIcon from "assets/img/assetmanager/logistics-icon.png";
+import EnvironmentsIcon from "assets/img/assetmanager/environments-icon.png";
+import LockIcon from "assets/img/assetmanager/lock-icon.png";
+import UsaFlag from "assets/img/assetmanager/usa-flag.png";
+import RunningIcon from "assets/img/assetmanager/running-icon.png";
+import Environments from "views/app-views/AssetManager/Environments/EnvironmentList/WorkspaceDetails/Environments/Environments";
+import Container from "views/app-views/AssetManager/Environments/EnvironmentList/WorkspaceDetails/Environments/Container";
+import Database from "views/app-views/AssetManager/Environments/EnvironmentList/WorkspaceDetails/Environments/Database";
+import AccountPricing from "views/app-views/AssetManager/Environments/EnvironmentList/WorkspaceDetails/Environments/AccountPricing";
 class WorkspaceDetails extends Component {
   tabMapping = [
     {

@@ -3,7 +3,7 @@ import Aws from "assets/img/aws.png";
 import { CSVLink } from "react-csv";
 import { Link } from "react-router-dom";
 import Microsoftazure from "assets/img/microsoftazure.png";
-import config from "../../../config";
+import config from "views/app-views/config";
 import GoogleCloud from "assets/img/google-cloud.png";
 import Kubernetes from "assets/img/kubernetes.png";
 import { Box, Grid, List, ListItem } from "@mui/material";
