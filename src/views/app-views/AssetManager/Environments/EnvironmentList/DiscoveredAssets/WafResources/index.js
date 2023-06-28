@@ -1,9 +1,9 @@
 import React from "react";
-import GlobalIcon6 from "../../../../../../../assets/img/assetmanager/global-icon6.png";
-import GlobalIcon7 from "../../../../../../../assets/img/assetmanager/global-icon7.png";
-import GlobalIcon3 from "../../../../../../../assets/img/assetmanager/global-icon3.png";
-import SelectDepartmentPopup from "../../../../Components/SelectDepartmentPopup";
-import dummyData from "../dummy.json";
+import GlobalIcon6 from "assets/img/assetmanager/global-icon6.png";
+import GlobalIcon7 from "assets/img/assetmanager/global-icon7.png";
+import GlobalIcon3 from "assets/img/assetmanager/global-icon3.png";
+import SelectDepartmentPopup from "views/app-views/AssetManager/Components/SelectDepartmentPopup";
+import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
 
 class WafResources extends React.Component {

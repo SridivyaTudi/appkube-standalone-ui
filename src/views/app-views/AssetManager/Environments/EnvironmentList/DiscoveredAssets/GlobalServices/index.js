@@ -1,9 +1,9 @@
 import React from "react";
-import GlobalIcon1 from "../../../../../../../assets/img/assetmanager/global-icon1.png";
-import GlobalIcon2 from "../../../../../../../assets/img/assetmanager/global-icon2.png";
-import GlobalIcon3 from "../../../../../../../assets/img/assetmanager/global-icon3.png";
-import dummyData from "../dummy.json";
-import SelectDepartmentPopup from "../../../../Components/SelectDepartmentPopup";
+import GlobalIcon1 from "assets/img/assetmanager/global-icon1.png";
+import GlobalIcon2 from "assets/img/assetmanager/global-icon2.png";
+import GlobalIcon3 from "assets/img/assetmanager/global-icon3.png";
+import SelectDepartmentPopup from "views/app-views/AssetManager/Components/SelectDepartmentPopup";
+import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
 
 class GlobalSerivces extends React.Component {

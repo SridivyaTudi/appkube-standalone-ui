@@ -1,6 +1,6 @@
 import React from "react";
-import SelectDepartmentPopup from "../../../../Components/SelectDepartmentPopup";
-import dummyData from "./../dummy.json";
+import SelectDepartmentPopup from "views/app-views/AssetManager/Components/SelectDepartmentPopup";
+import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
 
 class EksCluster extends React.Component {
