@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import SelectDepartmentPopup from "../Components/SelectDepartmentPopup";
 import {
   getEnvsAsync,
-  getEnvsSummary,getDepartmentsOrgWise
+  getEnvsSummary, getDepartmentsOrgWise
 } from "redux/assetManager/environments/environmentsThunk";
 import status from "../../../../redux/constants/commonDS";
 import { APP_PREFIX_PATH } from "../../../../configs/AppConfig";
@@ -22,6 +22,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import Button from "@mui/material/Button";
 
 const LOGOS = {
   aws: AWS,
@@ -48,7 +49,7 @@ class Environments extends Component {
     this.selectDepartmentPopupModalRef = React.createRef();
   }
 
-  
+
   togglePopup = () => {
     this.setState({
       showSelectDepartmentPopup: !this.state.showSelectDepartmentPopup,
@@ -64,7 +65,7 @@ class Environments extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.environments?.allEnvs?.status !==
-        this.props.environments.allEnvs.status &&
+      this.props.environments.allEnvs.status &&
       this.props.environments.allEnvs.status === status.SUCCESS &&
       this.props.environments?.allEnvs?.data
     ) {
@@ -72,7 +73,7 @@ class Environments extends Component {
     }
     if (
       prevProps.environments?.envSummary?.status !==
-        this.props.environments.envSummary.status &&
+      this.props.environments.envSummary.status &&
       this.props.environments.envSummary.status === status.SUCCESS &&
       this.props.environments?.envSummary?.data
     ) {
@@ -87,7 +88,7 @@ class Environments extends Component {
     }
     if (
       prevProps.environments?.departmentsFilters?.status !==
-        this.props.environments.departmentsFilters.status &&
+      this.props.environments.departmentsFilters.status &&
       this.props.environments.departmentsFilters.status === status.SUCCESS &&
       this.props.environments?.departmentsFilters?.data
     ) {
@@ -214,7 +215,7 @@ class Environments extends Component {
                 <i className="fas fa-ellipsis-v"></i>
               </button>
               {menuSummaryShowMenu[0] === envIndex &&
-              menuSummaryShowMenu[1] === accountIndex ? (
+                menuSummaryShowMenu[1] === accountIndex ? (
                 <>
                   <div
                     className="open-create-menu-close"
@@ -425,74 +426,74 @@ class Environments extends Component {
                           <Box className="export-sction">
                             {JSON.parse(localStorage.getItem("recentEnv")) !==
                               null && (
-                              <Box className="environment-fliter">
-                                <Box
-                                  className="fliter-toggel"
-                                  onClick={() =>
-                                    this.setState({
-                                      showRecentFilter: !showRecentFilter,
-                                    })
-                                  }
-                                >
-                                  <i className="fa-solid fa-alarm-clock fillter-icon"></i>
-                                  Recent
-                                  <i className="fa-solid fa-caret-down arrow-icon"></i>
-                                </Box>
-                                <Box
-                                  className={
-                                    showRecentFilter === true
-                                      ? "fliter-collapse  active"
-                                      : "fliter-collapse"
-                                  }
-                                >
-                                  <List>
-                                    {JSON.parse(
-                                      localStorage.getItem("recentEnv")
-                                    )?.map((item) => {
-                                      return (
-                                        <ListItem>
-                                          <Link
-                                            to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
-                                            onClick={() =>
-                                              this.setLocalRecentService(item)
-                                            }
-                                          >
-                                            <span>
-                                              <img
-                                                src={
-                                                  item.accountType === "AWS" ||
-                                                  item.accountType === "aws"
-                                                    ? AWS
-                                                    : item.accountType ===
+                                <Box className="environment-fliter">
+                                  <Box
+                                    className="fliter-toggel"
+                                    onClick={() =>
+                                      this.setState({
+                                        showRecentFilter: !showRecentFilter,
+                                      })
+                                    }
+                                  >
+                                    <i className="fa-solid fa-alarm-clock fillter-icon"></i>
+                                    Recent
+                                    <i className="fa-solid fa-caret-down arrow-icon"></i>
+                                  </Box>
+                                  <Box
+                                    className={
+                                      showRecentFilter === true
+                                        ? "fliter-collapse  active"
+                                        : "fliter-collapse"
+                                    }
+                                  >
+                                    <List>
+                                      {JSON.parse(
+                                        localStorage.getItem("recentEnv")
+                                      )?.map((item) => {
+                                        return (
+                                          <ListItem>
+                                            <Link
+                                              to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
+                                              onClick={() =>
+                                                this.setLocalRecentService(item)
+                                              }
+                                            >
+                                              <span>
+                                                <img
+                                                  src={
+                                                    item.accountType === "AWS" ||
+                                                      item.accountType === "aws"
+                                                      ? AWS
+                                                      : item.accountType ===
                                                         "GCP" ||
-                                                      item.accountType === "gcp"
-                                                    ? GCP
-                                                    : AZURE
-                                                }
-                                                alt={item.accountType}
-                                              />
-                                            </span>
-                                            <p>({item.accountId})</p>
-                                          </Link>
-                                        </ListItem>
-                                      );
-                                    })}
-                                  </List>
+                                                        item.accountType === "gcp"
+                                                        ? GCP
+                                                        : AZURE
+                                                  }
+                                                  alt={item.accountType}
+                                                />
+                                              </span>
+                                              <p>({item.accountId})</p>
+                                            </Link>
+                                          </ListItem>
+                                        );
+                                      })}
+                                    </List>
+                                  </Box>
+                                  <div
+                                    className={
+                                      showRecentFilter === true
+                                        ? "fliters-collapse-bg active"
+                                        : "fliters-collapse-bg"
+                                    }
+                                    onClick={() =>
+                                      this.setState({
+                                        showRecentFilter: !showRecentFilter,
+                                      })
+                                    }
+                                  />
                                 </Box>
-                                <div
-                                  className={
-                                    showRecentFilter === true
-                                      ? "fliters-collapse-bg active"
-                                      : "fliters-collapse-bg"
-                                  }
-                                  onClick={() =>
-                                    this.setState({
-                                      showRecentFilter: !showRecentFilter,
-                                    })
-                                  }
-                                />
-                              </Box>
-                            )}
+                              )}
                             <Box className="environment-fliter">
                               <Box
                                 className="fliter-toggel new-environment"
@@ -571,10 +572,13 @@ class Environments extends Component {
                                 }
                               />
                             </Box>
-                            <button className="new-button">
+                            <Button
+                              className="primary-btn min-width-inherit"
+                              variant="contained"
+                            >
                               <i className="fas fa-external-link-square-alt p-r-10"></i>
                               Export
-                            </button>
+                            </Button>
                           </Box>
                         </Grid>
                         <Grid item lg={4} md={12} xs={12}>
@@ -604,23 +608,23 @@ class Environments extends Component {
           </>
         )}
         {this.state.showSelectDepartmentPopup ?
-        <SelectDepartmentPopup showModal={this.state.showSelectDepartmentPopup} togglePopup={this.togglePopup} departments={this.state.departments || []} />
-        : <></>}
+          <SelectDepartmentPopup showModal={this.state.showSelectDepartmentPopup} togglePopup={this.togglePopup} departments={this.state.departments || []} />
+          : <></>}
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const { environments,departments } = state;
+  const { environments, departments } = state;
   return {
-    environments,departments
+    environments, departments
   };
 }
 
 const mapDispatchToProps = {
   getEnvsAsync,
-  getEnvsSummary,getDepartmentsOrgWise
+  getEnvsSummary, getDepartmentsOrgWise
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Environments);

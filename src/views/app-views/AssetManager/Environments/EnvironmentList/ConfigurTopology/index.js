@@ -10,11 +10,12 @@ import GlobalIcon8 from "../../../../../assets/img/assetmanager/global-icon8.png
 import CacheIcon from "../../../../../assets/img/assetmanager/cache-icon.png";
 import SqlIcon from "../../../../../assets/img/assetmanager/sql-icon.png";
 import NoSqlIcon from "../../../../../assets/img/assetmanager/no-sql-icon.png";
+import Button from "@mui/material/Button";
 
 class ConfigurTopology extends Component {
   render() {
     return (
-      <div className="deploy-project-container"> 
+      <div className="deploy-project-container">
         <div className="page-heading">
           <h3>configur Topology</h3>
         </div>
@@ -44,9 +45,12 @@ class ConfigurTopology extends Component {
                   <img src={LangIcon} alt="lang" />
                   Lang
                 </button>
-                <button className="new-button coustom-btn m-r-0">
+                <Button
+                  className="primary-btn"
+                  variant="contained"
+                >
                   Custom <i className="fas fa-chevron-down p-l-5"></i>
-                </button>
+                </Button>
               </div>
             </div>
           </div>
