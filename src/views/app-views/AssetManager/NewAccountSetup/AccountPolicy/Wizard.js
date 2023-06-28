@@ -4,6 +4,7 @@ import config from "../../../config";
 import { RestService } from "./../../../Services/RestService";
 import { withRouter } from "./withRouter";
 import Button from '@mui/material/Button';
+import LoadingButton from "@mui/lab/LoadingButton";
 
 class Wizard extends Component {
   constructor(props) {
@@ -39,10 +40,9 @@ class Wizard extends Component {
         const step = steps[i];
         retData.push(
           <div
-            className={`wizard-step-button ${
-              currentStep === i ? "active" : ""
-            }`}
-            // onClick={(e) => this.onClickStepButton(i)}
+            className={`wizard-step-button ${currentStep === i ? "active" : ""
+              }`}
+          // onClick={(e) => this.onClickStepButton(i)}
           >
             {step.name}
           </div>
@@ -62,9 +62,8 @@ class Wizard extends Component {
         const step = steps[i];
         retData.push(
           <div
-            className={`wizard-step-component ${
-              currentStep === i ? "" : "d-none"
-            }`}
+            className={`wizard-step-component ${currentStep === i ? "" : "d-none"
+              }`}
           >
             {step.component()}
           </div>
@@ -222,23 +221,20 @@ class Wizard extends Component {
               >
                 Previous
               </Button>
-              <Button
+              <LoadingButton
+                disabled={this.state.loadingData ? true : false}
+                loading={this.state.loadingData ? true : false}
+                loadingPosition="start"
                 onClick={() => {
                   if (!this.state.loadingData) {
                     this.createSubmit();
                   }
                 }}
                 className="primary-btn"
-                disabled={this.state.loadingData ? true : false}
                 variant="contained"
               >
-                {this.state.loadingData ? (
-                  <i className="fa-solid fa-spinner fa-spin" />
-                ) : (
-                  ""
-                )}
                 Finished
-              </Button>
+              </LoadingButton>
             </>
           )}
         </div>
