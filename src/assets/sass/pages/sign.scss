@@ -383,12 +383,10 @@
     .sign-right {
       .sign-right-content {
         .next-step {
-          .primary-btn {
-            min-width: inherit !important;
-          }
+          flex-wrap: wrap;
 
           p {
-            font-size: 11px;
+            width: 100%;
           }
         }
       }
