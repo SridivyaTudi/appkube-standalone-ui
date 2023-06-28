@@ -24,3 +24,37 @@ export const getEnvsSummary = createAsyncThunk(
     }
   }
 );
+export const getDepartmentsOrgWise = createAsyncThunk(
+  "environments/getDepartmentsOrgWise",
+  async (orgId) => {
+    const url = config.GET_ALL_ORGS;
+    const response = await fetch(`${url}/${orgId}`);
+    if (response.ok) {
+      const departmentsFilters = await response.json();
+      return departmentsFilters;
+    } else {
+      return Promise.reject(response.status);
+    }
+  }
+);
+export const getProductsByDepId = createAsyncThunk(
+  "environments/getProductsByDepId",
+  async (data, { getState }) => {
+    if (data) {
+      const url = config.GET_PRODUCTS_BY_DEPID;
+      const response = await fetch(
+        `${url}/${data.orgId}/departments/${data.depId}/products?orgId=${data.orgId}&depId=${data.depId}`
+      );
+      if (response.ok) {
+        const products = await response.json();
+        try {
+          return products;
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        return Promise.reject(response.status);
+      }
+    }
+  }
+);
