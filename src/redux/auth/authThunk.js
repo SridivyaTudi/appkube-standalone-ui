@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import config from "./../../views/auth-views/config";
+import config from "views/auth-views/config";
 
 export const signUp = createAsyncThunk(
   "auth/signUp",

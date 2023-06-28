@@ -7,19 +7,19 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "../configs/AppConfig";
-import Signin from "./auth-views/signIn";
-import SignUp from "./auth-views/signUp";
-import ForgetPassword from "./auth-views/forgetPassword";
-import TopBar from "../components/topBar";
-import SideBar from "../components/sideBar";
-import Environments from "./app-views/AssetManager/Environments";
-import Dashboard from "./app-views/AssetManager/Dashboard";
-import NewAccountSetup from "./app-views/AssetManager/NewAccountSetup";
-import EnvironmentList from "./app-views/AssetManager/Environments/EnvironmentList";
+import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "configs/AppConfig";
+import Signin from "views/auth-views/signIn";
+import SignUp from "views/auth-views/signUp";
+import ForgetPassword from "views/auth-views/forgetPassword";
+import TopBar from "components/topBar";
+import SideBar from "components/sideBar";
+import Environments from "views/app-views/AssetManager/Environments";
+import Dashboard from "views/app-views/AssetManager/Dashboard";
+import NewAccountSetup from "views/app-views/AssetManager/NewAccountSetup";
+import EnvironmentList from "views/app-views/AssetManager/Environments/EnvironmentList";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { getCurrentUser } from "../utils";
+import { getCurrentUser } from "utils";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
