@@ -58,14 +58,17 @@ class Environments extends Component {
     let currentOrgId = localStorage.getItem("currentOrgId")
     this.props.getEnvsAsync(currentOrgId);
     this.props.getEnvsSummary(currentOrgId);
-    this.props.getDepartmentsOrgWise(currentOrgId);
+    if (currentOrgId > 0) {
+      this.props.getDepartmentsOrgWise(currentOrgId);  
+    }
+    
   };
 
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.environments?.allEnvs?.status !==
-        this.props.environments.allEnvs.status &&
-      this.props.environments.allEnvs.status === status.SUCCESS &&
+        this.props.environments?.allEnvs?.status &&
+      this.props.environments?.allEnvs?.status === status?.SUCCESS &&
       this.props.environments?.allEnvs?.data
     ) {
       this.setState({ allEnvData: this.props.environments.allEnvs.data });
@@ -87,8 +90,8 @@ class Environments extends Component {
     }
     if (
       prevProps.environments?.departmentsFilters?.status !==
-        this.props.environments.departmentsFilters.status &&
-      this.props.environments.departmentsFilters.status === status.SUCCESS &&
+        this.props.environments?.departmentsFilters?.status &&
+      this.props.environments?.departmentsFilters?.status === status?.SUCCESS &&
       this.props.environments?.departmentsFilters?.data
     ) {
       this.setState({
@@ -98,11 +101,16 @@ class Environments extends Component {
   }
 
   SetCurrentActiveTableIndex = () => {
-    this.props.environments.envSummary.data.map((item, index) => {
-      let allIndex = [];
-      allIndex.push(index);
-      this.setState({ currentActiveTableIndex: allIndex });
-    });
+    try {
+      this.props.environments.envSummary.data.map((item, index) => {
+        let allIndex = [];
+        allIndex.push(index);
+        this.setState({ currentActiveTableIndex: allIndex });
+      });
+    } catch (error) {
+      console.log(error)
+    }
+    
   };
 
   renderEnvironmentBoxes = () => {

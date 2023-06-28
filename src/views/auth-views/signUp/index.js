@@ -47,12 +47,13 @@ class SignUp extends Component {
 
   handleSignUp = () => {
     if (this.props.auth.signUpUserAPI?.status === status.SUCCESS) {
+      ToastMessage.success("New user registered!");
       this.setState({ loadingData: false });
-      ToastMessage("New user registered!", "success");
       this.props.navigate(`${AUTH_PREFIX_PATH}/signin`);
     } else {
+      ToastMessage.error("User registration failed!");
       this.setState({ loadingData: false });
-      ToastMessage("User registration failed!", "unsuccess");
+      
     }
   };
 
