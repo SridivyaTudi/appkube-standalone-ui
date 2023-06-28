@@ -1,9 +1,15 @@
 export const getCurrentUser = () => {
-  return localStorage.getItem("currentUser");
+  const user = localStorage.getItem("currentUser");
+  if(user){
+    return JSON.parse(user);
+  }
+  return null;
 };
 
 export const setCurrentUser = (user) => {
-  return localStorage.setItem("currentUser", user);
+  if(user){
+    localStorage.setItem("currentUser", JSON.stringify(user));
+  }
 };
 
 export const getCurrentOrgId = () => {
