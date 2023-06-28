@@ -8,8 +8,6 @@ import { getProductsByDepId } from "redux/assetManager/environments/environments
 import { getCurrentOrgId } from "utils";
 import Button from "@mui/material/Button";
 
-const production = ["HRMS", "Procurement", "WeDesk", "CMS", "AppCube", "HMS"];
-
 const environments = [
   { img: "department", name: "Department" },
   { img: "testing", name: "Testing" },
@@ -38,13 +36,13 @@ class SelectDepartmentPopup extends Component {
     });
   };
 
-  handleCheckChange = (e, type, depId) => {
+  handleCheckChange = (e, type, depId,isChecked=false) => {
     let orgId = getCurrentOrgId();
     let departmentId = depId;
     const { value, checked } = e.target;
-    let { selectedDepartments, selectedProductions } = this.state;
+    let { selectedDepartments, selectedProductions , products} = this.state;
     if (type === "dep") {
-      if (checked) {
+      if (checked || isChecked) {
         this.props
           .getProductsByDepId({ orgId: orgId, depId: depId })
           .then((res) => {
@@ -55,7 +53,7 @@ class SelectDepartmentPopup extends Component {
             }
           });
       } else {
-        let removeProducts = this.state.products;
+        let removeProducts = products;
         delete removeProducts[depId];
         this.setState({
           products: removeProducts,
@@ -98,7 +96,7 @@ class SelectDepartmentPopup extends Component {
               checked={this.isDepartmentSelected(department.id)}
               onChange={(e) => this.handleCheckChange(e, "dep", department.id)}
             />
-            <label htmlFor={department.name}>{department.name}</label>
+            <label htmlFor={department.name}  onClick={(e) => this.handleCheckChange(e, "dep", department.id,!this.isDepartmentSelected(department.id))}>{department.name}</label>
           </Box>
         </Grid>
       );
@@ -134,6 +132,17 @@ class SelectDepartmentPopup extends Component {
       this.state.products[depId]
     );
   };
+  productsLength = ()=>{
+    let isProduct = false
+    if(this.state.products && Object.keys(this.state.products).length){
+      Object.keys(this.state.products).forEach((productKey)=>{
+        if (this.state.products[productKey] && this.state.products[productKey].length && !isProduct) {
+          isProduct = true
+        }
+      })
+    }
+    return isProduct
+  }
   render() {
     const { selectedProductions, selectedDepartments, selectedEnvs,products } =
       this.state;
@@ -172,7 +181,7 @@ class SelectDepartmentPopup extends Component {
                 ""}
             </Grid>
           </Box>
-          {products && Object.keys(products).length ? (
+          {this.productsLength() ? (
             <>
               <h4 className="text-left m-b-1 m-t-2">Select Production</h4>
               <Box sx={{ width: "100%" }} className="border-bottom p-b-10">
@@ -230,7 +239,7 @@ class SelectDepartmentPopup extends Component {
             <button className="gray-button m-r-1 m-b-0" onClick={this.toggle}>
               Clear
             </button>
-            {products && Object.keys(products).length ? (
+            {this.productsLength() ? (
               <Link onClick={this.toggle} className="primary-btn m-b-0">
                 Submit
               </Link>
