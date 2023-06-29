@@ -1202,14 +1202,6 @@
             }
 
             .cloud-managed-section {
-              h4 {
-                font-size: 16px;
-                line-height: 20px;
-                font-weight: 600;
-                color: #0f0f10;
-                margin: 15px 0 15px 0;
-              }
-
               .cloud-managed-tab {
                 width: 100%;
                 display: block;
@@ -1295,7 +1287,7 @@
                       margin-left: 10px;
 
                       label {
-                        width: 75px;
+                        width: 70px;
                         font-size: 14px;
                         line-height: 18px;
                         font-weight: 600;
@@ -1391,15 +1383,6 @@
             .resources-section {
               width: 100%;
               display: block;
-
-              h4 {
-                font-size: 16px;
-                line-height: 20px;
-                font-weight: 600;
-                color: #0f0f10;
-                margin: 15px 0;
-              }
-
               .account-list-conitant {
                 display: block;
                 overflow: hidden;
@@ -1451,14 +1434,8 @@
             .performance-section {
               .performance-head {
                 margin: 15px 0 0 0;
-
                 h4 {
                   width: 100%;
-                  font-size: 16px;
-                  line-height: 20px;
-                  font-weight: 600;
-                  color: #0f0f10;
-                  margin: 0;
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;

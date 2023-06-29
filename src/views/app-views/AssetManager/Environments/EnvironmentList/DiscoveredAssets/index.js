@@ -19,8 +19,8 @@ import EksCluster from "views/app-views/AssetManager/Environments/EnvironmentLis
 import EcsCluster from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/EcsCluster";
 import WafResources from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/WafResources";
 import GlobalSerivces from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/GlobalServices";
-import Lambda from "assets/img/assetmanager/cloud-managed-icon1.png";
-import S3 from "assets/img/assetmanager/cloud-managed-icon2.png";
+import EKS from "assets/img/assetmanager/global-icon4.png";
+import ECS from "assets/img/assetmanager/global-icon5.png";
 import SQS from "assets/img/assetmanager/cloud-managed-icon3.png";
 import SNS from "assets/img/assetmanager/cloud-managed-icon4.png";
 import Redshift from "assets/img/assetmanager/cloud-managed-icon5.png";
@@ -125,8 +125,8 @@ class DiscoveredAssets extends Component {
       accountId: queryPrm.get("accountId"),
       currentActiveCluster: "eksCluster",
       serivceImages: [
-        Lambda,
-        S3,
+        EKS,
+        ECS,
         SQS,
         SNS,
         Redshift,
