@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { ToastMessage } from "Toast/ToastMessage";
 import { withRouter } from "views/app-views/AssetManager/NewAccountSetup/AccountPolicy/withRouter";
 import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { addCloudEnv } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
@@ -74,7 +75,8 @@ class Wizard extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.addCloudEnvState.status !== this.props.addCloudEnvState.status &&
+      prevProps.addCloudEnvState.status !==
+        this.props.addCloudEnvState.status &&
       this.props.addCloudEnvState.status === status.SUCCESS
     ) {
       ToastMessage.success("Successfully new account created");
@@ -123,7 +125,7 @@ class Wizard extends Component {
         <div className="d-flex justify-content-end align-items-center wizard-step-button">
           {currentStep < steps.length - 1 && (
             <Button
-              className="primary-outline-btn"
+              className="primary-outline-btn m-r-2"
               onClick={(e) => {
                 if (currentStep === 0) {
                   this.props.previousStep();
@@ -137,13 +139,13 @@ class Wizard extends Component {
             </Button>
           )}
           {currentStep >= steps.length + 1 && (
-            <Button className="primary-outline-btn" variant="outlined">
+            <Button className="primary-outline-btn m-r-2" variant="outlined">
               Previous
             </Button>
           )}
           {currentStep < steps.length - 1 && (
             <Button
-              className="primary-btn"
+              className="primary-btn m-r-2"
               onClick={() => {
                 if (this.state.currentStep === 1) {
                   this.props.setIsSubmit(true);
@@ -178,30 +180,29 @@ class Wizard extends Component {
                 onClick={(e) => {
                   this.onClickStepButton(currentStep - 1);
                 }}
-                className="primary-btn previous-button"
+                className="primary-outline-btn m-r-2"
+                variant="outlined"
               >
                 Previous
               </Button>
-              <Button
+              <LoadingButton
                 onClick={this.createSubmit}
-                className={
-                  this.props.addCloudEnv.status === status.IN_PROGRESS
-                    ? "primary-btn disabled"
-                    : "primary-btn"
-                }
                 disabled={
-                  this.props.addCloudEnv.status === status.IN_PROGRESS
+                  this.props.addCloudEnvState.status === status.IN_PROGRESS
                     ? true
                     : false
                 }
+                loading={
+                  this.props.addCloudEnvState.status === status.IN_PROGRESS
+                    ? true
+                    : false
+                }
+                loadingPosition="start"
+                className="primary-btn"
+                variant="contained"
               >
-                {this.props.addCloudEnv.status === status.IN_PROGRESS ? (
-                  <i className="fa-solid fa-spinner fa-spin" />
-                ) : (
-                  ""
-                )}
                 Finished
-              </Button>
+              </LoadingButton>
             </>
           )}
         </div>

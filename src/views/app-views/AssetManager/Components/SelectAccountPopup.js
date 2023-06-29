@@ -58,7 +58,7 @@ class SelectAccountPopup extends Component {
         {currentData.map((department, index) => {
           return (
             <Grid item xs={4} key={department.id}>
-              <div className="d-flex align-items-center p-b-10" key={index}>
+              <div className="d-flex align-items-center" key={index}>
                 <input
                   type="checkbox"
                   id={department.id}
@@ -99,7 +99,7 @@ class SelectAccountPopup extends Component {
         >
           <h4 className="text-left m-b-1">Select OU</h4>
           {this.props?.organizationalUnit?.status === status.IN_PROGRESS ? (
-            <Box className="text-center align-self-center">
+            <Box className="text-center align-self-center p-t-20 p-b-20">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
           ) : (

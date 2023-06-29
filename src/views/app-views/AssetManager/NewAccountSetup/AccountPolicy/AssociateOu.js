@@ -28,7 +28,7 @@ class AssociateOu extends Component {
   componentDidUpdate = (prevProps) => {
     if (
       prevProps.organizationalUnit.status !==
-        this.props.organizationalUnit.status &&
+      this.props.organizationalUnit.status &&
       this.props.organizationalUnit.status === status.SUCCESS
     ) {
       let currentDepartments;
@@ -138,12 +138,17 @@ class AssociateOu extends Component {
                 className="d-flex width-100 align-items-center"
                 style={{ justifyContent: "space-between" }}
               >
-                <button onClick={() => this.toggleSelectAccountPopup()}>
-                  Change OU
-                </button>
+                <Button
+                  className="primary-text-btn min-width"
+                  variant="contained"
+                  style={{ paddingLeft: 0, textDecoration: 'underline' }}
+                  onClick={() => this.toggleSelectAccountPopup()}
+                >
+                  Change ou
+                </Button>
                 <Button
                   className="primary-btn min-width"
-                  style={{ textDecoration: "none" }}
+                  variant="contained"
                   onClick={this.toggleCreateNewOuPopup}
                 >
                   Create OU

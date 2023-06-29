@@ -37,6 +37,12 @@ body,
   background: #c1c2c2;
 }
 
+ul,
+li {
+  padding: 0;
+  margin: 0;
+}
+
 h1,
 h2,
 h3,
@@ -264,12 +270,6 @@ button.secondary-text-btn {
 .sign-in-btn {
   background: #384cff !important;
   text-transform: inherit !important;
-}
-
-ul,
-li {
-  padding: 0;
-  margin: 0;
 }
 
 .float-right {
