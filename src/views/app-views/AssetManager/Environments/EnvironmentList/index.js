@@ -13,7 +13,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-
+import status from "redux/constants/commonDS";
+import { getEnvironmentVpcs } from "redux/assetManager/environments/environmentData/environmentDataThunk";
+import { connect } from "react-redux";
 let isMounted = false;
 
 class EnvironmentList extends Component {
@@ -52,8 +54,7 @@ class EnvironmentList extends Component {
     this.state = {
       servicesPanelShow: false,
       activeTab: 0,
-      treeData: [],
-      isLoderData: true,
+      vpcs: [],
       service: this.getCloudName(),
       departmentWiseData: {},
       accountList: {},
@@ -89,33 +90,7 @@ class EnvironmentList extends Component {
     this.getAccountList(1);
     const queryPrm = new URLSearchParams(document.location.search);
     const accountId = queryPrm.get("accountId");
-    this.getServicesData(accountId);
-  };
-
-  getServicesData = async (accountId) => {
-    try {
-      await RestService.getData(
-        `${config.GET_ACCOUNT_SERVICES}?accountId=${accountId}`,
-        null,
-        null
-      ).then((response) => {
-        this.setState({
-          treeData:
-            (response &&
-              response.length &&
-              response[0].account_services_json &&
-              response[0].account_services_json.vpcs) ||
-            [],
-          isLoderData: false,
-          accountId: accountId,
-        });
-        if (response && response.length) {
-          this.getVpcsDetails(response[0].account_services_json.vpcs);
-        }
-      });
-    } catch (err) {
-      console.log("Loading accounts failed. Error: ", err);
-    }
+    this.props.getEnvironmentVpcs(accountId);
   };
 
   getVpcsDetails(treeData) {
@@ -206,10 +181,10 @@ class EnvironmentList extends Component {
     }
   };
 
-  componentDidUpdate = async (prevState, prevProps) => {
+  componentDidUpdate = async (prevProps,prevState) => {
     if (
       this.state.accountId !== null &&
-      this.state.accountId !== prevProps.accountId &&
+      this.state.accountId !== prevState.accountId &&
       isMounted
     ) {
       const response = await fetch(
@@ -218,9 +193,29 @@ class EnvironmentList extends Component {
       const jsonData = await response.json();
       this.setState({
         departmentWiseData: jsonData,
-        isLoderData: true,
       });
-      this.getServicesData(this.state.accountId);
+      this.props.getEnvironmentVpcs(this.state.accountId);
+    }
+
+    if (
+      prevProps.environmentData.allVpcs.status !==
+      this.props.environmentData.allVpcs.status
+    ) {
+      if (
+        this.props.environmentData.allVpcs.status === status.SUCCESS &&
+        this.props.environmentData.allVpcs.data
+      ) {
+        let envData = this.props.environmentData.allVpcs.data
+        if (envData.length) {
+          this.setState({
+            vpcs:
+              ( envData[0].account_services_json &&
+                envData[0].account_services_json.vpcs) ||
+              []
+          });
+          this.getVpcsDetails(envData[0].account_services_json.vpcs);
+        }
+      }
     }
   };
 
@@ -333,8 +328,7 @@ class EnvironmentList extends Component {
                 vpcsDetails={
                   this.state.vpcsDetails.length && this.state.vpcsDetails
                 }
-                isLoderData={this.state.isLoderData}
-                treeData={this.state.treeData.length && this.state.treeData}
+                treeData={this.state.vpcs}
                 updateCloudName={(service, accountId) => {
                   this.setState({ service, accountId });
                 }}
@@ -368,4 +362,12 @@ class EnvironmentList extends Component {
   }
 }
 
-export default EnvironmentList;
+function mapStateToProps(state) {
+  const { environmentData } = state;
+  return { environmentData };
+}
+
+const mapDispatchToProps = {
+  getEnvironmentVpcs,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(EnvironmentList);

@@ -43,6 +43,9 @@ import {
   List,
   ListItem,
 } from "@mui/material";
+import status from "redux/constants/commonDS";
+import { getEnvironmentVpcs } from "redux/assetManager/environments/environmentData/environmentDataThunk";
+import { connect } from "react-redux";
 
 const servicesTreeCondition = {
   service: ["cluster", "product", "vpc", "clusterId", "vpcId", "productId"],
@@ -714,7 +717,7 @@ class DiscoveredAssets extends Component {
           />
         </Box>
         <Box className="discovered-assets-body">
-          {this.props.isLoderData ? (
+          {this.props.environmentData.allVpcs.status  === status.IN_PROGRESS ? (
             <Box className="chart-spinner text-center width-100 p-t-20 p-b-20">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
@@ -1576,4 +1579,13 @@ class DiscoveredAssets extends Component {
   }
 }
 
-export default DiscoveredAssets;
+function mapStateToProps(state) {
+  const { environmentData } = state;
+  return { environmentData };
+}
+
+const mapDispatchToProps = {
+  getEnvironmentVpcs,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(DiscoveredAssets);
+

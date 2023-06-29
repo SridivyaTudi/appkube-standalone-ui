@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import environmentReducer from "./assetManager/environments/environmentsSlice";
-import organizationsReducer from "./assetManager/organization/organizationSlice";
-import newAccountReducer from "./assetManager/newAccountSetup/newAccountSetupSlice";
-import authReducer from "./auth/authSlice";
+import environmentReducer from "redux/assetManager/environments/environmentsSlice";
+import organizationsReducer from "redux/assetManager/organization/organizationSlice";
+import newAccountReducer from "redux/assetManager/newAccountSetup/newAccountSetupSlice";
+import authReducer from "redux/auth/authSlice";
+import environmentDataReducer from "redux/assetManager/environments/environmentData/environmentDataSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     environments: environmentReducer,
     organization: organizationsReducer,
     newAccountSetup: newAccountReducer,
+    environmentData:environmentDataReducer
   },
 });
 
