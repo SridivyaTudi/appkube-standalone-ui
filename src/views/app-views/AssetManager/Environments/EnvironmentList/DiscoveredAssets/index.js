@@ -646,7 +646,7 @@ class DiscoveredAssets extends Component {
 
   generateVpcDetailsTable() {
     return (
-      <Box className="environment-table-section" style={{ height: "395px" }}>
+      <Box className="environment-table-section discovered-table" style={{ height: "537px" }}>
         <Box className="table discovered-assets-table">
           <TableContainer>
             <Table className="overview">

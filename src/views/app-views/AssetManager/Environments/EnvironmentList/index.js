@@ -283,7 +283,7 @@ class EnvironmentList extends Component {
         </Box>
         <Box className="services-panel">
           <Box
-            className={`services-panel-title ${
+            className={`services-panel-title p-t-10 p-b-10 ${
               servicesPanelShow ? "bottom-border" : ""
             }`}
           >
