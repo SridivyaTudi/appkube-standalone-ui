@@ -125,7 +125,7 @@ class Application extends Component {
                       }
                     >
                       <i className="fa-solid fa-filter fillter-icon"></i>
-                      fillter
+                      Fillter
                       <i className="fa-solid fa-caret-down arrow-icon"></i>
                     </Box>
                     <Box
@@ -197,7 +197,7 @@ class Application extends Component {
               <Grid item lg={4} md={4} xs={10}>
                 <div className="d-inline-block width-100 text-right">
                   <Button
-                    className="primary-btn"
+                    className="primary-btn min-width-inherit"
                     variant="contained"
                   >
                     <Link
@@ -206,7 +206,7 @@ class Application extends Component {
                         "/assetmanager/pages/environments/environmentlist/deployproject"
                       }
                     >
-                      <i className="fa-solid fa-plus-square p-r-5"></i> Create New
+                      <i className="fa-solid fa-plus-square p-r-5"></i> Add New
                     </Link>
                   </Button>
                 </div>
@@ -245,31 +245,31 @@ class Application extends Component {
                     <span>
                       <img src={RunningIcon} alt="" />
                     </span>
-                    <strong>Running</strong>
+                    Running
                   </TableCell>
                   <TableCell align="center">
                     <span>
                       <img src={AirAsiaIcon} alt="" />
                     </span>
-                    <strong>Procurify</strong>
+                    Procurify
                   </TableCell>
                   <TableCell align="center">
                     <div className="business-btn"> Logistics</div>
                   </TableCell>
                   <TableCell align="center">
-                    <strong>13</strong>
+                    13
                   </TableCell>
                   <TableCell align="center">
-                    <strong>500</strong>
+                    500
                   </TableCell>
                   <TableCell align="center">
-                    <strong>33%</strong>
+                    33%
                   </TableCell>
                   <TableCell align="center">
-                    <strong>41</strong>
+                    41
                   </TableCell>
                   <TableCell align="center">
-                    <strong>29</strong>
+                    29
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -286,31 +286,31 @@ class Application extends Component {
                     <span>
                       <img src={RunningIcon} alt="" />
                     </span>
-                    <strong>Running</strong>
+                    Running
                   </TableCell>
                   <TableCell align="center">
                     <span>
                       <img src={AirAsiaIcon} alt="" />
                     </span>
-                    <strong>HDFC bank</strong>
+                    HDFC bank
                   </TableCell>
                   <TableCell align="center">
                     <div className="business-btn"> Transaction</div>
                   </TableCell>
                   <TableCell align="center">
-                    <strong>13</strong>
+                    13
                   </TableCell>
                   <TableCell align="center">
-                    <strong>500</strong>
+                    500
                   </TableCell>
                   <TableCell align="center">
-                    <strong>33%</strong>
+                    33%
                   </TableCell>
                   <TableCell align="center">
-                    <strong>41</strong>
+                    41
                   </TableCell>
                   <TableCell align="center">
-                    <strong>29</strong>
+                    29
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -327,31 +327,31 @@ class Application extends Component {
                     <span>
                       <img src={UpdatingIcon} alt="" />
                     </span>
-                    <strong>Updating</strong>
+                    Updating
                   </TableCell>
                   <TableCell align="center">
                     <span>
                       <img src={AirAsiaIcon} alt="" />
                     </span>
-                    <strong>Air Asia</strong>
+                    Air Asia
                   </TableCell>
                   <TableCell align="center">
                     <div className="business-btn"> Fleets</div>
                   </TableCell>
                   <TableCell align="center">
-                    <strong>13</strong>
+                    13
                   </TableCell>
                   <TableCell align="center">
-                    <strong>500</strong>
+                    500
                   </TableCell>
                   <TableCell align="center">
-                    <strong>33%</strong>
+                    33%
                   </TableCell>
                   <TableCell align="center">
-                    <strong>41</strong>
+                    41
                   </TableCell>
                   <TableCell align="center">
-                    <strong>29</strong>
+                    29
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -368,31 +368,31 @@ class Application extends Component {
                     <span>
                       <img src={StopIcon} alt="" />
                     </span>
-                    <strong>Stop</strong>
+                    Stop
                   </TableCell>
                   <TableCell align="center">
                     <span>
                       <img src={AirAsiaIcon} alt="" />
                     </span>
-                    <strong>Walmart</strong>
+                    Walmart
                   </TableCell>
                   <TableCell align="center">
                     <div className="business-btn"> Logistics</div>
                   </TableCell>
                   <TableCell align="center">
-                    <strong>13</strong>
+                    13
                   </TableCell>
                   <TableCell align="center">
-                    <strong>500</strong>
+                    500
                   </TableCell>
                   <TableCell align="center">
-                    <strong>33%</strong>
+                    33%
                   </TableCell>
                   <TableCell align="center">
-                    <strong>41</strong>
+                    41
                   </TableCell>
                   <TableCell align="center">
-                    <strong>29</strong>
+                    29
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -409,31 +409,31 @@ class Application extends Component {
                     <span>
                       <img src={UpdatingIcon} alt="" />
                     </span>
-                    <strong>Updating</strong>
+                    Updating
                   </TableCell>
                   <TableCell align="center">
                     <span>
                       <img src={'AirAsiaIcon'} alt="" />
                     </span>
-                    <strong>Adobe</strong>
+                    Adobe
                   </TableCell>
                   <TableCell align="center">
                     <div className="business-btn"> Frames</div>
                   </TableCell>
                   <TableCell align="center">
-                    <strong>13</strong>
+                    13
                   </TableCell>
                   <TableCell align="center">
-                    <strong>500</strong>
+                    500
                   </TableCell>
                   <TableCell align="center">
-                    <strong>33%</strong>
+                    33%
                   </TableCell>
                   <TableCell align="center">
-                    <strong>41</strong>
+                    41
                   </TableCell>
                   <TableCell align="center">
-                    <strong>29</strong>
+                    29
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -450,31 +450,31 @@ class Application extends Component {
                     <span>
                       <img src={RunningIcon} alt="" />
                     </span>
-                    <strong>Running</strong>
+                    Running
                   </TableCell>
                   <TableCell align="center">
                     <span>
                       <img src={AirAsiaIcon} alt="" />
                     </span>
-                    <strong>Procurify</strong>
+                    Procurify
                   </TableCell>
                   <TableCell align="center">
                     <div className="business-btn"> Banking</div>
                   </TableCell>
                   <TableCell align="center">
-                    <strong>13</strong>
+                    13
                   </TableCell>
                   <TableCell align="center">
-                    <strong>500</strong>
+                    500
                   </TableCell>
                   <TableCell align="center">
-                    <strong>33%</strong>
+                    33%
                   </TableCell>
                   <TableCell align="center">
-                    <strong>41</strong>
+                    41
                   </TableCell>
                   <TableCell align="center">
-                    <strong>29</strong>
+                    29
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -491,31 +491,31 @@ class Application extends Component {
                     <span>
                       <img src={RunningIcon} alt="" />
                     </span>
-                    <strong>Running</strong>
+                    Running
                   </TableCell>
                   <TableCell align="center">
                     <span>
                       <img src={AirAsiaIcon} alt="" />
                     </span>
-                    <strong>Flipkart</strong>
+                    Flipkart
                   </TableCell>
                   <TableCell align="center">
                     <div className="business-btn"> Client</div>
                   </TableCell>
                   <TableCell align="center">
-                    <strong>13</strong>
+                    13
                   </TableCell>
                   <TableCell align="center">
-                    <strong>500</strong>
+                    500
                   </TableCell>
                   <TableCell align="center">
-                    <strong>33%</strong>
+                    33%
                   </TableCell>
                   <TableCell align="center">
-                    <strong>41</strong>
+                    41
                   </TableCell>
                   <TableCell align="center">
-                    <strong>29</strong>
+                    29
                   </TableCell>
                 </TableRow>
               </TableBody>

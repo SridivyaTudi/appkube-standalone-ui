@@ -49,8 +49,8 @@ class CommonFilterViewSearch extends Component {
           commonData[account.cloud] = commonData[account.cloud]
             ? commonData[account.cloud]
             : {
-              totalBill: 0,
-            };
+                totalBill: 0,
+              };
           commonData[account.cloud].totalBill += account.totalBilling || 0;
         });
         this.setState({
@@ -139,7 +139,8 @@ class CommonFilterViewSearch extends Component {
   };
 
   render() {
-    const { showSelectFilter, showServiceViewFilter, showRecentFilter } = this.state;
+    const { showSelectFilter, showServiceViewFilter, showRecentFilter } =
+      this.state;
     return (
       <Box sx={{ width: "100%" }}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -240,7 +241,7 @@ class CommonFilterViewSearch extends Component {
               >
                 <List>
                   {this.props.accountList &&
-                    Object.keys(this.props.accountList).length ? (
+                  Object.keys(this.props.accountList).length ? (
                     this.renderAccountList()
                   ) : (
                     <></>
@@ -304,8 +305,8 @@ class CommonFilterViewSearch extends Component {
                                       item.accountType === "aws"
                                         ? LOGOS.aws
                                         : item.accountType === "gcp"
-                                          ? LOGOS.gcp
-                                          : LOGOS.azure
+                                        ? LOGOS.gcp
+                                        : LOGOS.azure
                                     }
                                     alt={item.accountType}
                                   />
