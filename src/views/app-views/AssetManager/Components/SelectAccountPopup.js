@@ -127,6 +127,7 @@ class SelectAccountPopup extends Component {
               variant="contained"
               onClick={() => {
                 this.setState({ currentSelectedDepId: undefined });
+                this.props.setID(this.state.currentSelectedDepId);
                 this.props.toggleSelectAccountPopup();
               }}
             >
