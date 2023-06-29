@@ -4,7 +4,7 @@ import {
   createNewOU,
   getOrganizationalUnits,
   addCloudEnv,
-} from "./newAccountSetupThunk";
+} from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
 
 export const organizationalUnitSlice = createSlice({
   name: "organizationalUnit",
