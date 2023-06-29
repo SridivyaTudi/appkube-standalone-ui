@@ -144,14 +144,11 @@ class CreateNewOuPopup extends Component {
               Cancel
             </Button>
             <LoadingButton
+              disabled={this.props.creteOu?.status === status.IN_PROGRESS ? true : false}
+              loading={this.props.creteOu?.status === status.IN_PROGRESS ? true : false}
               className="primary-btn"
+              loadingPosition="start"
               variant="contained"
-              disabled={
-                this.props.creteOu?.status === status.IN_PROGRESS ? true : false
-              }
-              loading={
-                this.props.creteOu?.status === status.IN_PROGRESS ? true : false
-              }
               onClick={this.createDepartMent}
             >
               Create
