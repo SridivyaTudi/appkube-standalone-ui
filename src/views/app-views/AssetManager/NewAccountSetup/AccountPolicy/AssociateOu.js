@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import SelectExisting from "../../../../../assets/img/assetmanager/select-existing.png";
-import CreateFileIcon from "../../../../../assets/img/assetmanager/create-file-icon.png";
-import AssociatedAccountPopup from "../../Components/AssociatedAccountPopup";
-import CreateNewOuPopup from "../../Components/CreateNewOuPopup";
-import SelectAccountPopup from "../../Components/SelectAccountPopup";
-import CreateNewAccountPopup from "../../Components/CreateNewAccountPopup";
+import SelectExisting from "assets/img/assetmanager/select-existing.png";
+import CreateFileIcon from "assets/img/assetmanager/create-file-icon.png";
+import AssociatedAccountPopup from "views/app-views/AssetManager/Components/AssociatedAccountPopup";
+import CreateNewOuPopup from "views/app-views/AssetManager/Components/CreateNewOuPopup";
+import SelectAccountPopup from "views/app-views/AssetManager/Components/SelectAccountPopup";
+import CreateNewAccountPopup from "views/app-views/AssetManager/Components/CreateNewAccountPopup";
 import Button from "@mui/material/Button";
 import { connect } from "react-redux";
 import { getOrganizationalUnits } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
