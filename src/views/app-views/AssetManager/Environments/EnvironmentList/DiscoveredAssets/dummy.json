@@ -169,6 +169,10 @@
     {"name": "TimeSeries", "value": "235"},
     {"name": "Athena", "value": "235"}
   ],
+  "clusterServices": [
+    {"name": "EKS", "value": "06"},
+    {"name": "ECS", "value": "04"}
+  ],
   "managedServices": [
     {"name": "Glue", "value": "235"},
     {"name": "Athena", "value": "146"},
@@ -181,10 +185,7 @@
     {"name": "Quicksight", "value": "25"},
     {"name": "EMR Studio", "value": "994"}
   ],
-  "clusterServices": [
-    {"name": "EKS", "value": "06"},
-    {"name": "ECS", "value": "04"}
-  ],
+  
   "GatewayServices": [
     {"name": "Waf", "value": "235"},
     {"name": "API", "value": "146"},

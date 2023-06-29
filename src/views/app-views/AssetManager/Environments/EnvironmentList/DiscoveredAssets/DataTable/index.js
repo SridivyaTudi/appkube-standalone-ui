@@ -11,7 +11,19 @@ import TimeSeries from "assets/img/assetmanager/cloud-managed-icon9.png";
 import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
 import SelectDepartmentPopup from "views/app-views/AssetManager/Components/SelectDepartmentPopup";
 import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
-import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
+import {
+  Button,
+  Box,
+  Grid,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  List,
+  ListItem,
+} from "@mui/material";
 
 class DataTable extends Component {
   constructor(props) {
@@ -38,7 +50,7 @@ class DataTable extends Component {
   };
 
   render() {
-    const { } = this.state;
+    const {} = this.state;
     return (
       <>
         <Box className="cloud-managed-section">
@@ -127,24 +139,25 @@ class DataTable extends Component {
                 container
                 rowSpacing={1}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                justifyContent={'center'}
-                alignItems={'center'}
+                justifyContent={"center"}
+                alignItems={"center"}
               >
                 <Grid item lg={5} md={5} xs={12}>
                   <h4>Lambda Performance</h4>
                 </Grid>
                 <Grid item lg={7} md={7} xs={12}>
                   <Box className="head-right text-right">
-                    <button
-                      className="blue-button m-b-0 m-r-3"
+                    <Button
+                      className="primary-btn min-width-inherit m-r-3"
+                      variant="contained"
                       onClick={() => this.onClickSelectDepartmentPopup("")}
                     >
                       <i className="fa-solid fa-stream p-r-10"></i>
                       fillter
-                    </button>
-                    <button className="white-outline m-b-0 m-r-0">
+                    </Button>
+                    <Button variant="outlined" className="primary-outline-btn">
                       Explore
-                    </button>
+                    </Button>
                   </Box>
                 </Grid>
               </Grid>
