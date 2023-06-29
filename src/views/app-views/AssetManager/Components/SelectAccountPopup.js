@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import { getOrganizationalUnits } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
+import { getCurrentOrgId } from "utils";
 
 class SelectAccountPopup extends Component {
   constructor(props) {
@@ -45,11 +46,18 @@ class SelectAccountPopup extends Component {
   };
 
   renderDepartments() {
+    const { departments } = this.state;
+    let currentData;
+    departments.map((item) => {
+      if (item.id === Number(getCurrentOrgId())) {
+        currentData = item.departments;
+      }
+    });
     return (
       <>
-        {this.state.departments.map((department, index) => {
+        {currentData.map((department, index) => {
           return (
-            <Grid item xs={4}>
+            <Grid item xs={4} key={department.id}>
               <div className="d-flex align-items-center p-b-10" key={index}>
                 <input
                   type="checkbox"
