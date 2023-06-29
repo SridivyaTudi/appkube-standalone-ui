@@ -10,7 +10,8 @@ import { connect } from "react-redux";
 import SelectDepartmentPopup from "views/app-views/AssetManager/Components/SelectDepartmentPopup";
 import {
   getEnvsAsync,
-  getEnvsSummary,getDepartmentsOrgWise
+  getEnvsSummary,
+  getDepartmentsOrgWise,
 } from "redux/assetManager/environments/environmentsThunk";
 import status from "redux/constants/commonDS";
 import { APP_PREFIX_PATH } from "configs/AppConfig";
@@ -40,65 +41,31 @@ class Environments extends Component {
       searchkey: "",
       searchedAccountList: [],
       currentActiveTableIndex: [],
-      dataFetched: false,
       allEnvData: [],
       allEnvSummary: [],
       menuSummaryShowMenu: [null, null],
     };
-    this.selectDepartmentPopupModalRef = React.createRef();
   }
 
-  
   togglePopup = () => {
     this.setState({
       showSelectDepartmentPopup: !this.state.showSelectDepartmentPopup,
     });
   };
   componentDidMount = () => {
-    let currentOrgId = localStorage.getItem("currentOrgId")
-    this.props.getEnvsAsync(currentOrgId);
-    this.props.getEnvsSummary(currentOrgId);
+    let currentOrgId = localStorage.getItem("currentOrgId");
     if (currentOrgId > 0) {
-      this.props.getDepartmentsOrgWise(currentOrgId);  
+      this.props.getEnvsAsync(currentOrgId);
+      this.props.getEnvsSummary(currentOrgId);
+      this.props.getDepartmentsOrgWise(currentOrgId);
     }
-    
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      prevProps.environments?.allEnvs?.status !==
-        this.props.environments?.allEnvs?.status &&
-      this.props.environments?.allEnvs?.status === status?.SUCCESS &&
-      this.props.environments?.allEnvs?.data
-    ) {
-      this.setState({ allEnvData: this.props.environments.allEnvs.data });
-    }
-    if (
-      prevProps.environments?.envSummary?.status !==
-        this.props.environments.envSummary.status &&
-      this.props.environments.envSummary.status === status.SUCCESS &&
-      this.props.environments?.envSummary?.data
-    ) {
-      this.setState({
-        allEnvSummary: this.props.environments.envSummary.data,
-        searchedAccountList: JSON.parse(
-          JSON.stringify(this.props.environments.envSummary.data)
-        ),
-        dataFetched: true,
-      });
-      this.SetCurrentActiveTableIndex();
-    }
-    if (
-      prevProps.environments?.departmentsFilters?.status !==
-        this.props.environments?.departmentsFilters?.status &&
-      this.props.environments?.departmentsFilters?.status === status?.SUCCESS &&
-      this.props.environments?.departmentsFilters?.data
-    ) {
-      this.setState({
-        departments: this.props.environments.departmentsFilters.data?.departments
-      });
-    }
-  }
+    this.allEnvsUpdates(prevProps, prevState)
+    this.envSummaryUpdates(prevProps, prevState)
+    this.departmentsUpdates(prevProps, prevState)
+}
 
   SetCurrentActiveTableIndex = () => {
     try {
@@ -108,9 +75,8 @@ class Environments extends Component {
         this.setState({ currentActiveTableIndex: allIndex });
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    
   };
 
   renderEnvironmentBoxes = () => {
@@ -377,18 +343,68 @@ class Environments extends Component {
     }
   };
 
+  allEnvsUpdates = (prevProps, prevState)=>{
+    if (
+      prevProps.environments?.allEnvs?.status !==
+      this.props.environments?.allEnvs?.status
+    ) {
+      if (
+        this.props.environments?.allEnvs?.status === status?.SUCCESS &&
+        this.props.environments?.allEnvs?.data
+      ) {
+        this.setState({ allEnvData: this.props.environments.allEnvs.data });
+      }
+    }
+  }
+
+  envSummaryUpdates = (prevProps, prevState)=>{
+    if (
+      prevProps.environments?.envSummary?.status !==
+      this.props.environments.envSummary.status
+    ) {
+      if (
+        this.props.environments.envSummary.status === status.SUCCESS &&
+        this.props.environments?.envSummary?.data
+      ) {
+        this.setState({
+          allEnvSummary: this.props.environments.envSummary.data,
+          searchedAccountList: JSON.parse(
+            JSON.stringify(this.props.environments.envSummary.data)
+          ),
+        });
+        this.SetCurrentActiveTableIndex();
+      }
+    }
+  }
+
+  departmentsUpdates = (prevProps, prevState)=>{
+    if (
+      prevProps.environments?.departmentsFilters?.status !==
+      this.props.environments?.departmentsFilters?.status
+    ) {
+      if (
+        this.props.environments?.departmentsFilters?.status ===
+          status?.SUCCESS &&
+        this.props.environments?.departmentsFilters?.data
+      ) {
+        this.setState({
+          departments:
+            this.props.environments.departmentsFilters.data?.departments,
+        });
+      }
+    }
+  }
   render() {
     const {
       showRecentFilter,
       showAddNewFilter,
       searchkey,
-      dataFetched,
       allEnvData,
       allEnvSummary,
     } = this.state;
     return (
       <div className="environment-container">
-        {!dataFetched ? (
+        {this.props.environments?.envSummary?.status === status.IN_PROGRESS ? (
           <Box className="chart-spinner text-center w-100 p-t-20 p-b-20">
             <i className="fa-solid fa-spinner fa-spin" /> Loading...
           </Box>
@@ -411,10 +427,7 @@ class Environments extends Component {
                 >
                   <Grid item lg={3} md={3} xs={12}>
                     <Box className="environment-fliter">
-                      <Box
-                        className="fliter-toggel"
-                        onClick={this.togglePopup}
-                      >
+                      <Box className="fliter-toggel" onClick={this.togglePopup}>
                         <i className="fa-solid fa-filter fillter-icon"></i>
                         fillter
                       </Box>
@@ -614,24 +627,32 @@ class Environments extends Component {
             {allEnvSummary.length && this.renderEnvironmentTable()}
           </>
         )}
-        {this.state.showSelectDepartmentPopup ?
-        <SelectDepartmentPopup showModal={this.state.showSelectDepartmentPopup} togglePopup={this.togglePopup} departments={this.state.departments || []} />
-        : <></>}
+        {this.state.showSelectDepartmentPopup ? (
+          <SelectDepartmentPopup
+            showModal={this.state.showSelectDepartmentPopup}
+            togglePopup={this.togglePopup}
+            departments={this.state.departments || []}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const { environments,departments } = state;
+  const { environments, departments } = state;
   return {
-    environments,departments
+    environments,
+    departments,
   };
 }
 
 const mapDispatchToProps = {
   getEnvsAsync,
-  getEnvsSummary,getDepartmentsOrgWise
+  getEnvsSummary,
+  getDepartmentsOrgWise,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Environments);
