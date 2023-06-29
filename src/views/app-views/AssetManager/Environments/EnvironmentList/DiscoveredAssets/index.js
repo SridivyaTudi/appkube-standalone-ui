@@ -153,137 +153,137 @@ class DiscoveredAssets extends Component {
     if (row.cloudType.toLowerCase() === "AWS".toLowerCase()) {
       const { display_detail } = this.state;
       retData.push(
-        <div>
-          <div className="heading">
+        <Box>
+          <Box className="heading">
             <span>
               <img src={"images.awsLogo"} alt="" />
             </span>
             <h2>Amazon Web Services</h2>
-            <div className="icon float-right" onClick={this.showHideDetail}>
+            <Box className="icon float-right" onClick={this.showHideDetail}>
               <i
                 className={display_detail ? "fa fa-minus" : "fa fa-plus"}
                 aria-hidden="true"
               ></i>
-            </div>
-          </div>
+            </Box>
+          </Box>
           {display_detail && (
-            <div className="service-content">
-              <div className="row">
-                <div className="col-lg-6 col-md-6 col-sm-12">
-                  <div className="row">
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">Account Holder Name</div>
-                    </div>
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">
+            <Box className="service-content">
+              <Box className="row">
+                <Box className="col-lg-6 col-md-6 col-sm-12">
+                  <Box className="row">
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">Account Holder Name</Box>
+                    </Box>
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">
                         <span>{row.name}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-12">
-                  <div className="row">
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">Organisation</div>
-                    </div>
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box className="col-lg-6 col-md-6 col-sm-12">
+                  <Box className="row">
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">Organisation</Box>
+                    </Box>
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">
                         <span>
                           {row.organizationName && row.organizationName}
                         </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-12">
-                  <div className="row">
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">Account Number</div>
-                    </div>
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box className="col-lg-6 col-md-6 col-sm-12">
+                  <Box className="row">
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">Account Number</Box>
+                    </Box>
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">
                         <span>{row.accountId}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-12">
-                  <div className="row">
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">Organisation Unit</div>
-                    </div>
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box className="col-lg-6 col-md-6 col-sm-12">
+                  <Box className="row">
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">Organisation Unit</Box>
+                    </Box>
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">
                         <span>
                           {row.organizationalUnit &&
                             row.organizationalUnit.name}
                         </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-12">
-                  <div className="row">
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box className="col-lg-6 col-md-6 col-sm-12">
+                  <Box className="row">
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">
                         Total Online Instances
-                      </div>
-                    </div>
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">0</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-12">
-                  <div className="row">
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">
+                      </Box>
+                    </Box>
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">0</Box>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box className="col-lg-6 col-md-6 col-sm-12">
+                  <Box className="row">
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">
                         Full Protection Security Group
-                      </div>
-                    </div>
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">0</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-12">
-                  <div className="row">
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">Cloud Guard ID</div>
-                    </div>
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">
+                      </Box>
+                    </Box>
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">0</Box>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box className="col-lg-6 col-md-6 col-sm-12">
+                  <Box className="row">
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">Cloud Guard ID</Box>
+                    </Box>
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">
                         e5b82995-c0fc-729d-a67b-926r81a5963d
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-12">
-                  <div className="row">
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box className="col-lg-6 col-md-6 col-sm-12">
+                  <Box className="row">
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">
                         Read Only Security Group
-                      </div>
-                    </div>
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">0</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-12">
-                  <div className="row">
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">Added At</div>
-                    </div>
-                    <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <div className="services-added">{row.createdOn}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                      </Box>
+                    </Box>
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">0</Box>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box className="col-lg-6 col-md-6 col-sm-12">
+                  <Box className="row">
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">Added At</Box>
+                    </Box>
+                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                      <Box className="services-added">{row.createdOn}</Box>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
           )}
-        </div>
+        </Box>
       );
     }
 
@@ -1051,25 +1051,25 @@ class DiscoveredAssets extends Component {
                                   </strong>
                                 </TableCell>
                                 <TableCell align="center">
-                                  <div className="box red">2</div>
+                                  <Box className="box red">2</Box>
                                 </TableCell>
                                 <TableCell align="center">
-                                  <div className="box green">
+                                  <Box className="box green">
                                     <i className="fa-solid fa-check"></i>
-                                  </div>
+                                  </Box>
                                 </TableCell>
                                 <TableCell align="center">
-                                  <div className="box green">
+                                  <Box className="box green">
                                     <i className="fa-solid fa-check"></i>
-                                  </div>
+                                  </Box>
                                 </TableCell>
                                 <TableCell align="center">
-                                  <div className="box green">
+                                  <Box className="box green">
                                     <i className="fa-solid fa-check"></i>
-                                  </div>
+                                  </Box>
                                 </TableCell>
                                 <TableCell align="center">
-                                  <div className="box orange">3</div>
+                                  <Box className="box orange">3</Box>
                                 </TableCell>
                               </TableRow>
                               <TableRow>
@@ -1079,22 +1079,22 @@ class DiscoveredAssets extends Component {
                                   </strong>
                                 </TableCell>
                                 <TableCell align="center">
-                                  <div className="box red">2</div>
+                                  <Box className="box red">2</Box>
                                 </TableCell>
                                 <TableCell align="center">
-                                  <div className="box green">
+                                  <Box className="box green">
                                     <i className="fa-solid fa-check"></i>
-                                  </div>
+                                  </Box>
                                 </TableCell>
                                 <TableCell align="center">
-                                  <div className="box green">
+                                  <Box className="box green">
                                     <i className="fa-solid fa-check"></i>
-                                  </div>
+                                  </Box>
                                 </TableCell>
                                 <TableCell align="center">
-                                  <div className="box green">
+                                  <Box className="box green">
                                     <i className="fa-solid fa-check"></i>
-                                  </div>
+                                  </Box>
                                 </TableCell>
                                 <TableCell align="center"></TableCell>
                               </TableRow>
@@ -1240,7 +1240,40 @@ class DiscoveredAssets extends Component {
                         )}
                       </>
                     ) : toggleNode.clusterId === 1 ? (
-                      <AllTable />
+                      <Box className="services-panel-tabs">
+                        <Box className="tabs-head">
+                          <List>
+                            {this.tableMapping.map((tabData, index) => {
+                              return (
+                                <ListItem
+                                  key={`ops-tab-${index}`}
+                                  className={
+                                    index === activeTab ? "active" : ""
+                                  }
+                                  onClick={() => this.setActiveTab(index)}
+                                >
+                                  {tabData.name}
+                                </ListItem>
+                              );
+                            })}
+                          </List>
+                        </Box>
+                        <Box className="tabs-content">
+                          {activeTab === 0 ? (
+                            <AllTable />
+                          ) : activeTab === 1 ? (
+                            <AppTable />
+                          ) : activeTab === 2 ? (
+                            <DataTable />
+                          ) : activeTab === 3 ? (
+                            <DataLakeTable />
+                          ) : activeTab === 4 ? (
+                            <ServiceMeshTable />
+                          ) : (
+                            <></>
+                          )}
+                        </Box>
+                      </Box>
                     ) : (
                       <WafResources />
                     )}
@@ -1364,29 +1397,29 @@ class DiscoveredAssets extends Component {
                     <Box className="global-services-fliter">
                       <Box className="heading">
                         <Box className="breadcrumbs">
-                          <ul>
-                            <li>
+                          <List>
+                            <ListItem>
                               <a href="#">AWS</a>
-                            </li>
-                            <li>
+                            </ListItem>
+                            <ListItem>
                               <i className="fa-solid fa-chevron-right"></i>
-                            </li>
-                            <li>
+                            </ListItem>
+                            <ListItem>
                               <a href="#">VPC 1</a>
-                            </li>
-                            <li>
+                            </ListItem>
+                            <ListItem>
                               <i className="fa-solid fa-chevron-right"></i>
-                            </li>
-                            <li>
+                            </ListItem>
+                            <ListItem>
                               <a href="#">Cluster 1</a>
-                            </li>
-                            <li>
+                            </ListItem>
+                            <ListItem>
                               <i className="fa-solid fa-chevron-right"></i>
-                            </li>
-                            <li>
+                            </ListItem>
+                            <ListItem>
                               <span>App Services</span>
-                            </li>
-                          </ul>
+                            </ListItem>
+                          </List>
                         </Box>
                         <button type="button" className="btn btn-ellipsis">
                           <i className="fa-solid fa-ellipsis-v"></i>
