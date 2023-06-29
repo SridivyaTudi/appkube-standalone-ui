@@ -40,12 +40,13 @@ export const addCloudEnv = createAsyncThunk(
     const url = config.ADD_CLOUD_ENV;
     const options = {
       method: "POST",
-      body: data,
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
     };
     const response = await fetch(url, options);
     if (response.ok) {
-      const response = await response.json();
-      return { response };
+      const addCloudEnvRes = await response.json();
+      return { addCloudEnvRes };
     } else {
       return Promise.reject(response.status);
     }

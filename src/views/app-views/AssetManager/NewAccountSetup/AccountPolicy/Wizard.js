@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { ToastMessage } from "../../../../../Toast/ToastMessage";
-import config from "../../../config";
-import { RestService } from "./../../../Services/RestService";
 import { withRouter } from "./withRouter";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
+import { addCloudEnv } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
+import { connect } from "react-redux";
+import status from "redux/constants/commonDS";
 
 class Wizard extends Component {
   constructor(props) {
@@ -12,7 +13,6 @@ class Wizard extends Component {
       currentStep: 0,
       departmentId: false,
       redirectToEnviroment: false,
-      loadingData: false,
     };
   }
 
@@ -38,8 +38,9 @@ class Wizard extends Component {
         const step = steps[i];
         retData.push(
           <div
-            className={`wizard-step-button ${currentStep === i ? "active" : ""
-              }`}
+            className={`wizard-step-button ${
+              currentStep === i ? "active" : ""
+            }`}
           >
             {step.name}
           </div>
@@ -59,8 +60,9 @@ class Wizard extends Component {
         const step = steps[i];
         retData.push(
           <div
-            className={`wizard-step-component ${currentStep === i ? "" : "d-none"
-              }`}
+            className={`wizard-step-component ${
+              currentStep === i ? "" : "d-none"
+            }`}
           >
             {step.component()}
           </div>
@@ -72,18 +74,11 @@ class Wizard extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      JSON.stringify(prevProps.departmentId) !==
-      JSON.stringify(prevState.departmentId)
+      prevProps.addCloudEnvState.status !== this.props.addCloudEnvState.status &&
+      this.props.addCloudEnvState.status === status.SUCCESS
     ) {
-      this.setState({
-        departmentId: this.props.departmentId,
-      });
-    }
-    if (
-      JSON.stringify(prevProps.roleDetails) !==
-      JSON.stringify(prevState.roleDetails)
-    ) {
-      this.setState({ roleDetails: this.props.roleDetails });
+      ToastMessage.success("Successfully new account created");
+      this.props.navigate("/app/environments");
     }
     if (this.props.finishPrevious && this.state.currentStep === 3) {
       this.onClickStepButton(this.state.currentStep - 1);
@@ -101,16 +96,15 @@ class Wizard extends Component {
       status: "active",
       departmentId: Number(this.props.departmentId),
     };
-    this.setState({ loadingData: true });
-    RestService.postData(config.ADD_CLOUD_ENV, sendData).then((response) => {
-      this.setState({ loadingData: false });
-      if (response.status == 500) {
-        ToastMessage.error(response.title);
-        return 1;
-      }
-      ToastMessage.success("Successfully new account created");
-      this.props.navigate("/app/environments");
-    });
+    this.props.addCloudEnv(sendData);
+    // RestService.postData(config.ADD_CLOUD_ENV, sendData).then((response) => {
+    //   if (response.status === 500) {
+    //     ToastMessage.error(response.title);
+    //     return 1;
+    //   }
+    //   ToastMessage.success("Successfully new account created");
+    //   this.props.navigate("/app/environments");
+    // });
   };
 
   render() {
@@ -143,7 +137,9 @@ class Wizard extends Component {
             </Button>
           )}
           {currentStep >= steps.length + 1 && (
-            <Button className="primary-outline-btn" variant="outlined">Previous</Button>
+            <Button className="primary-outline-btn" variant="outlined">
+              Previous
+            </Button>
           )}
           {currentStep < steps.length - 1 && (
             <Button
@@ -161,7 +157,9 @@ class Wizard extends Component {
                   });
                 } else if (this.state.currentStep === 2) {
                   if (!this.props.departmentId) {
-                    ToastMessage.error("Please select any Organizational Unit.");
+                    ToastMessage.error(
+                      "Please select any Organizational Unit."
+                    );
                   } else {
                     this.onClickStepButton(currentStep + 1);
                   }
@@ -185,19 +183,19 @@ class Wizard extends Component {
                 Previous
               </Button>
               <Button
-                onClick={() => {
-                  if (!this.state.loadingData) {
-                    this.createSubmit();
-                  }
-                }}
+                onClick={this.createSubmit}
                 className={
-                  this.state.loadingData
+                  this.props.addCloudEnv.status === status.IN_PROGRESS
                     ? "primary-btn disabled"
                     : "primary-btn"
                 }
-                disabled={this.state.loadingData ? true : false}
+                disabled={
+                  this.props.addCloudEnv.status === status.IN_PROGRESS
+                    ? true
+                    : false
+                }
               >
-                {this.state.loadingData ? (
+                {this.props.addCloudEnv.status === status.IN_PROGRESS ? (
                   <i className="fa-solid fa-spinner fa-spin" />
                 ) : (
                   ""
@@ -212,4 +210,13 @@ class Wizard extends Component {
   }
 }
 
-export default withRouter(Wizard);
+const mapStateToProps = (state) => {
+  const { newAccountSetup } = state;
+  return newAccountSetup;
+};
+
+const mapDispatchToProps = {
+  addCloudEnv,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Wizard));

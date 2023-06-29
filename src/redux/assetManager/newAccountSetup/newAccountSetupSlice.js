@@ -11,12 +11,13 @@ export const organizationalUnitSlice = createSlice({
   initialState: {
     createOu: {
       status: null,
+      data: {},
     },
     organizationalUnit: {
       status: null,
       data: {},
     },
-    addCloudEnv: {
+    addCloudEnvState: {
       status: null,
     },
   },
@@ -30,11 +31,12 @@ export const organizationalUnitSlice = createSlice({
         },
       };
     },
-    [createNewOU.fulfilled]: (state) => {
+    [createNewOU.fulfilled]: (state, action) => {
       return {
         ...state,
         createOu: {
           status: status.SUCCESS,
+          data: action.payload,
         },
       };
     },
@@ -74,7 +76,7 @@ export const organizationalUnitSlice = createSlice({
     [addCloudEnv.pending]: (state) => {
       return {
         ...state,
-        addCloudEnv: {
+        addCloudEnvState: {
           status: status.IN_PROGRESS,
         },
       };
@@ -82,7 +84,7 @@ export const organizationalUnitSlice = createSlice({
     [addCloudEnv.fulfilled]: (state) => {
       return {
         ...state,
-        addCloudEnv: {
+        addCloudEnvState: {
           status: status.SUCCESS,
         },
       };
@@ -90,7 +92,7 @@ export const organizationalUnitSlice = createSlice({
     [addCloudEnv.rejected]: (state) => {
       return {
         ...state,
-        addCloudEnv: {
+        addCloudEnvState: {
           status: status.FAILURE,
         },
       };
