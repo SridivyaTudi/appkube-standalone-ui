@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SigninBanner from "../../../assets/img/login/signin-banner.png";
+import SigninBanner from "assets/img/login/signin-banner.png";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
@@ -7,12 +7,12 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Link, Navigate } from "react-router-dom";
-import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "../../../configs/AppConfig";
-import { setCurrentUser, setCurrentOrgId } from "../../../utils";
-import { login } from "../../../redux/auth/authThunk";
+import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "configs/AppConfig";
+import { setCurrentUser, setCurrentOrgId } from "utils";
+import { login } from "redux/auth/authThunk";
 import { connect } from "react-redux";
-import status from "../../../redux/constants/commonDS";
-import { ToastMessage } from "../../../Toast/ToastMessage";
+import status from "redux/constants/commonDS";
+import { ToastMessage } from "Toast/ToastMessage";
 
 class Signin extends Component {
   constructor(props) {
