@@ -8,7 +8,7 @@ export const getEnvsAsync = createAsyncThunk(
     const response = await fetch(`${url}`);
     if (response.ok) {
       const allEnvs = await response.json();
-      return { allEnvs };
+      return allEnvs;
     }
   }
 );
@@ -20,7 +20,7 @@ export const getEnvsSummary = createAsyncThunk(
     const response = await fetch(`${url}`);
     if (response.ok) {
       const envSummary = await response.json();
-      return { envSummary };
+      return envSummary;
     }
   }
 );

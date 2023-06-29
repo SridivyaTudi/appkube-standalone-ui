@@ -9,7 +9,17 @@ import status from "redux/constants/commonDS";
 
 export const environmentSlice = createSlice({
   name: "environments",
-  initialState: {},
+  initialState: {
+    allEnvs:{
+      status: null
+    },
+    envSummary: {
+      status: null
+    },
+    departmentsFilters:{
+      status: null
+    }
+  },
   reducers: {},
   extraReducers: {
     [getEnvsAsync.pending]: (state, action) => {
@@ -20,12 +30,12 @@ export const environmentSlice = createSlice({
         },
       };
     },
-    [getEnvsAsync.fulfilled]: (state, action) => {
+    [getEnvsAsync.fulfilled]: (state, {payload}) => {
       return {
         ...state,
         allEnvs: {
           status: status.SUCCESS,
-          data: action?.payload?.allEnvs,
+          data: payload,
         },
       };
     },
@@ -45,12 +55,12 @@ export const environmentSlice = createSlice({
         },
       };
     },
-    [getEnvsSummary.fulfilled]: (state, action) => {
+    [getEnvsSummary.fulfilled]: (state, {payload}) => {
       return {
         ...state,
         envSummary: {
           status: status.SUCCESS,
-          data: action?.payload?.envSummary,
+          data:payload
         },
       };
     },
@@ -70,12 +80,12 @@ export const environmentSlice = createSlice({
         },
       };
     },
-    [getDepartmentsOrgWise.fulfilled]: (state, action) => {
+    [getDepartmentsOrgWise.fulfilled]: (state, {payload}) => {
       return {
         ...state,
         departmentsFilters: {
           status: status.SUCCESS,
-          data: action?.payload,
+          data: payload,
         },
       };
     },
@@ -93,12 +103,12 @@ export const environmentSlice = createSlice({
         productsByDepId: { status: status.IN_PROGRESS },
       };
     },
-    [getProductsByDepId.fulfilled]: (state, action) => {
+    [getProductsByDepId.fulfilled]: (state, {payload}) => {
       return {
         ...state,
         productsByDepId: {
           status: status.SUCCESS,
-          data: action.payload,
+          data: payload,
         },
       };
     },

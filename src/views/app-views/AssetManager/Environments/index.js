@@ -62,10 +62,54 @@ class Environments extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    this.allEnvsUpdates(prevProps, prevState)
-    this.envSummaryUpdates(prevProps, prevState)
-    this.departmentsUpdates(prevProps, prevState)
-}
+    if (
+      prevProps.environments.allEnvs.status !==
+      this.props.environments.allEnvs.status
+    ) {
+      if (
+        this.props.environments.allEnvs.status === status.SUCCESS &&
+        this.props.environments.allEnvs.data
+      ) {
+        this.setState({ allEnvData: this.props.environments.allEnvs.data });
+      }
+    }
+
+    if (
+      prevProps.environments.envSummary.status !==
+      this.props.environments.envSummary.status
+    ) {
+      if (
+        this.props.environments.envSummary.status === status.SUCCESS &&
+        this.props.environments.envSummary.data
+      ) {
+        this.setState({
+          allEnvSummary: this.props.environments.envSummary.data,
+          searchedAccountList: JSON.parse(
+            JSON.stringify(this.props.environments.envSummary.data)
+          ),
+        });
+        this.SetCurrentActiveTableIndex();
+      }
+    }
+
+    if (
+      prevProps.environments.departmentsFilters.status !==
+      this.props.environments.departmentsFilters.status
+    ) {
+      if (
+        this.props.environments.departmentsFilters.status ===
+          status.SUCCESS &&
+        this.props.environments.departmentsFilters.data
+      ) {
+        if (this.props.environments.departmentsFilters.data.departments) {
+          this.setState({
+            departments:
+              this.props.environments.departmentsFilters.data.departments,
+          });
+        }
+      }
+    }
+  }
 
   SetCurrentActiveTableIndex = () => {
     try {
@@ -342,58 +386,6 @@ class Environments extends Component {
       localStorage.setItem("recentEnv", JSON.stringify(recentEnv));
     }
   };
-
-  allEnvsUpdates = (prevProps, prevState)=>{
-    if (
-      prevProps.environments?.allEnvs?.status !==
-      this.props.environments?.allEnvs?.status
-    ) {
-      if (
-        this.props.environments?.allEnvs?.status === status?.SUCCESS &&
-        this.props.environments?.allEnvs?.data
-      ) {
-        this.setState({ allEnvData: this.props.environments.allEnvs.data });
-      }
-    }
-  }
-
-  envSummaryUpdates = (prevProps, prevState)=>{
-    if (
-      prevProps.environments?.envSummary?.status !==
-      this.props.environments.envSummary.status
-    ) {
-      if (
-        this.props.environments.envSummary.status === status.SUCCESS &&
-        this.props.environments?.envSummary?.data
-      ) {
-        this.setState({
-          allEnvSummary: this.props.environments.envSummary.data,
-          searchedAccountList: JSON.parse(
-            JSON.stringify(this.props.environments.envSummary.data)
-          ),
-        });
-        this.SetCurrentActiveTableIndex();
-      }
-    }
-  }
-
-  departmentsUpdates = (prevProps, prevState)=>{
-    if (
-      prevProps.environments?.departmentsFilters?.status !==
-      this.props.environments?.departmentsFilters?.status
-    ) {
-      if (
-        this.props.environments?.departmentsFilters?.status ===
-          status?.SUCCESS &&
-        this.props.environments?.departmentsFilters?.data
-      ) {
-        this.setState({
-          departments:
-            this.props.environments.departmentsFilters.data?.departments,
-        });
-      }
-    }
-  }
   render() {
     const {
       showRecentFilter,
@@ -404,7 +396,7 @@ class Environments extends Component {
     } = this.state;
     return (
       <div className="environment-container">
-        {this.props.environments?.envSummary?.status === status.IN_PROGRESS ? (
+        {this.props.environments.envSummary.status === status.IN_PROGRESS ? (
           <Box className="chart-spinner text-center w-100 p-t-20 p-b-20">
             <i className="fa-solid fa-spinner fa-spin" /> Loading...
           </Box>
@@ -414,7 +406,7 @@ class Environments extends Component {
               <h3>Environments</h3>
             </Box>
             <Box className="environment-boxs m-t-4">
-              {allEnvData?.length && this.renderEnvironmentBoxes()}
+              {allEnvData.length && this.renderEnvironmentBoxes() || ''}
             </Box>
             <Box className="add-new-environment">
               <Box sx={{ width: "100%" }}>
