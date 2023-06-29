@@ -1,6 +1,6 @@
 import React from "react";
-import SelectCloudFilter from "../SelectCloudFilter";
-import ServicesPerformance from "./ServicesPerformance";
+import SelectCloudFilter from "views/app-views/AssetManager/Components/SelectCloudFilter";
+import ServicesPerformance from "views/app-views/AssetManager/Components/ProductWiseServices/ServicesPerformance";
 import { v4 } from "uuid";
 
 class ProductWiseServices extends React.Component {

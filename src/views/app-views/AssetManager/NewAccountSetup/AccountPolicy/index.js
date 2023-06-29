@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Wizard from "./Wizard";
-import AssociateOu from "./AssociateOu";
-import PreparePolicy from "./PreparePolicy";
-import CreateRole from "./CreateRole";
-import Finish from "./Finish";
+import Wizard from "views/app-views/AssetManager/NewAccountSetup/AccountPolicy/Wizard";
+import AssociateOu from "views/app-views/AssetManager/NewAccountSetup/AccountPolicy/AssociateOu";
+import PreparePolicy from "views/app-views/AssetManager/NewAccountSetup/AccountPolicy/PreparePolicy";
+import CreateRole from "views/app-views/AssetManager/NewAccountSetup/AccountPolicy/CreateRole";
+import Finish from "views/app-views/AssetManager/NewAccountSetup/AccountPolicy/Finish";
 
 class AccountPolicy extends Component {
   constructor(props) {

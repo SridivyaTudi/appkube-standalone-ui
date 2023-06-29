@@ -50,8 +50,12 @@ class SignUp extends Component {
   componentDidUpdate = (prevProps, prevState) => {
     if (this.props.signUpUser.status !== prevProps.signUpUser.status) {
       if (this.props.signUpUser.status === status.SUCCESS) {
-        ToastMessage.success("New user registered!");
-        this.props.navigate(`${AUTH_PREFIX_PATH}/signin`);
+        if(this.props.signUpUser.data.status === 400){
+          ToastMessage.error(this.props.signUpUser.data.message);
+        } else {
+          ToastMessage.success("New user registered!");
+          this.props.navigate(`${AUTH_PREFIX_PATH}/signin`);
+        }
       } else if (this.props.signUpUser.status === status.FAILURE) {
         ToastMessage.error("User registration failed!");
       }

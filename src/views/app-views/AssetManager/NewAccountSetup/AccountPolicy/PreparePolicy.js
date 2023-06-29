@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import tooltipImg from "../../../../../assets/img/login/signup-banner1.png";
+import tooltipImg from "assets/img/login/signup-banner1.png";
 
 class PreparePolicy extends Component {
   render() {

@@ -60,7 +60,6 @@ class SelectDepartmentPopup extends Component {
         this.setState({
           products: removeProducts,
         });
-        console.log(removeProducts, "removeProducts");
       }
     } else if (type === "prod") {
       if (checked) {

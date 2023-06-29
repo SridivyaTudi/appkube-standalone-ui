@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import AccountAddedImage from "../../../../../assets/img/assetmanager/account-added-image.png";
+import AccountAddedImage from "assets/img/assetmanager/account-added-image.png";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { withRouter } from "./withRouter";
+import { withRouter } from "views/app-views/AssetManager/NewAccountSetup/AccountPolicy/withRouter";
 
 class Finish extends Component {
   constructor(props) {

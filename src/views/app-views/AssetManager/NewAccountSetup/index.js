@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import OprationMode1 from "../../../../assets/img/assetmanager/opration-mode1.png";
-import OprationMode2 from "../../../../assets/img/assetmanager/opration-mode2.png";
-import AccountPolicy from "./AccountPolicy";
+import OprationMode1 from "assets/img/assetmanager/opration-mode1.png";
+import OprationMode2 from "assets/img/assetmanager/opration-mode2.png";
+import AccountPolicy from "views/app-views/AssetManager/NewAccountSetup/AccountPolicy";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from '@mui/material/Button';
