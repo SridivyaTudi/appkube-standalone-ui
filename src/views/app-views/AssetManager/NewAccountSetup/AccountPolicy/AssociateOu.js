@@ -5,10 +5,11 @@ import AssociatedAccountPopup from "../../Components/AssociatedAccountPopup";
 import CreateNewOuPopup from "../../Components/CreateNewOuPopup";
 import SelectAccountPopup from "../../Components/SelectAccountPopup";
 import CreateNewAccountPopup from "../../Components/CreateNewAccountPopup";
-import config from "../../../config";
-import { RestService } from "./../../../Services/RestService";
-import { getCurrentOrgId } from "utils";
 import Button from "@mui/material/Button";
+import { connect } from "react-redux";
+import { getOrganizationalUnits } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
+import status from "redux/constants/commonDS";
+import { getCurrentOrgId } from "utils";
 
 class AssociateOu extends Component {
   constructor(props) {
@@ -24,23 +25,21 @@ class AssociateOu extends Component {
     };
   }
 
-  componentDidMount() {
-    this.getDepartMents();
-  }
-
-  getDepartMents() {
-    let organizationId = 1;
-    if (getCurrentOrgId()) {
-      organizationId = getCurrentOrgId();
-    }
-    try {
-      RestService.getData(config.GET_ALL_ORGS, null, null).then((response) => {
-        this.setState({ departments: response });
+  componentDidUpdate = (prevProps) => {
+    if (
+      prevProps.organizationalUnit.status !==
+        this.props.organizationalUnit.status &&
+      this.props.organizationalUnit.status === status.SUCCESS
+    ) {
+      let currentDepartments;
+      this.props.organizationalUnit.data.allOrgs.map((item) => {
+        if (item.id === Number(getCurrentOrgId())) {
+          currentDepartments = item.departments;
+        }
       });
-    } catch (error) {
-      console.log(error);
+      this.setState({ departments: currentDepartments });
     }
-  }
+  };
 
   newDepartmentAppend = (department, description) => {
     this.setState({
@@ -198,4 +197,13 @@ class AssociateOu extends Component {
   }
 }
 
-export default AssociateOu;
+const mapStateToProps = (state) => {
+  const { newAccountSetup } = state;
+  return newAccountSetup;
+};
+
+const mapDispatchToProps = {
+  getOrganizationalUnits,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AssociateOu);
