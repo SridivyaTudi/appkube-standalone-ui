@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import config from "../../config";
-import { RestService } from "../../Services/RestService";
 import { ToastMessage } from "../../../../Toast/ToastMessage";
 import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -35,7 +33,6 @@ class CreateNewOuPopup extends Component {
         name: formData.name,
         organizationId: Number(organizationId),
       };
-
       this.props.createNewOU(postData);
     }
   };
@@ -44,7 +41,10 @@ class CreateNewOuPopup extends Component {
     if (prevProps.createOu.status !== this.props.createOu.status) {
       if (this.props.createOu.status === status.SUCCESS) {
         ToastMessage.success("Organizational Unit Successfully created!");
-        this.props.newDepartmentAppend("1", this.state.description);
+        this.props.newDepartmentAppend(
+          this.props.createOu.data.createOuRes,
+          this.state.description
+        );
         this.props.toggleCreateNewOuPopup();
       } else if (this.props.createOu.status === status.FAILURE) {
         ToastMessage.error("Organizational Unit Creation failed!");
@@ -113,9 +113,7 @@ class CreateNewOuPopup extends Component {
               onChange={this.handleInput}
             />
             <span className="red">
-              {isSubmit && !isValid && errors.name
-                ? "Name of Ou is required"
-                : ""}
+              {isSubmit && !isValid && errors.name ? errors.name : ""}
             </span>
           </div>
           <div className="form-group">
@@ -131,7 +129,7 @@ class CreateNewOuPopup extends Component {
             </textarea>
             <span className="red">
               {isSubmit && !isValid && errors.description
-                ? "Desciption of Ou is required"
+                ? errors.description
                 : ""}
             </span>
           </div>

@@ -52,7 +52,7 @@ class SignUp extends Component {
       if (this.props.signUpUser.status === status.SUCCESS) {
         ToastMessage.success("New user registered!");
         this.props.navigate(`${AUTH_PREFIX_PATH}/signin`);
-      } else if (this.props.signUpUser.status === status.IN_PROGRESS) {
+      } else if (this.props.signUpUser.status === status.FAILURE) {
         ToastMessage.error("User registration failed!");
       }
     }
@@ -208,15 +208,7 @@ class SignUp extends Component {
                 Manage your project and team in easy way
               </h2>
               <Box className="d-flex width-100 banner-image">
-                {activeStep === this.steps.STEP1 &&
-                  <img src={SigninBanner} alt="SignupBanner" />
-                }
-                {activeStep === this.steps.STEP2 &&
-                  <img src={SignupBanner1} alt="SignupBanner" />
-                }
-                {activeStep === this.steps.STEP3 &&
-                  <img src={SignupBanner2} alt="SignupBanner" style={{ maxHeight: "450px" }} />
-                }
+                <img src={activeStep === this.steps.STEP1 && SigninBanner || activeStep === this.steps.STEP2 && SignupBanner1 || activeStep === this.steps.STEP3 && SignupBanner2} alt="SignupBanner" style={{ maxHeight: `${activeStep === this.steps.STEP3 && "450px"}` }} />
               </Box>
             </Box>
           </Box>
@@ -268,11 +260,33 @@ class SignUp extends Component {
                   <span>step 3</span>
                 </ListItem>
               </List>
+              <Box className="d-flex width-100 heading">
+                {activeStep === this.steps.STEP1 &&
+                  <>
+                    Sign up to <strong>Appkube</strong>
+                  </>
+                }
+                {activeStep === this.steps.STEP2 &&
+                  <>
+                    Complete your company profile
+                    <span>
+                      Thousands of businesses such as yours easily manage their
+                      project and their teams
+                    </span>
+                  </>
+                }
+                {activeStep === this.steps.STEP3 &&
+                  <>
+                    Registration Complete
+                    <span>
+                      Thousands of businesses such as yours easily manage their
+                      project and their teams
+                    </span>
+                  </>
+                }
+              </Box>
               {activeStep === this.steps.STEP1 &&
                 <>
-                  <Box className="d-flex width-100 heading">
-                    Sign up to <strong>Appkube</strong>
-                  </Box>
                   <Box className="d-block width-100 google-btn">
                     <Button
                       className="primary-btn"
@@ -419,13 +433,6 @@ class SignUp extends Component {
               }
               {activeStep === this.steps.STEP2 &&
                 <>
-                  <Box className="d-flex width-100 heading">
-                    Complete your company profile
-                    <span>
-                      Thousands of businesses such as yours easily manage their
-                      project and their teams
-                    </span>
-                  </Box>
                   <Box className="select-profile">
                     <Box className="profile-image">
                       <img src={step2.profileImg} alt="profile" />
@@ -486,13 +493,6 @@ class SignUp extends Component {
               }
               {activeStep === this.steps.STEP3 &&
                 <>
-                  <Box className="d-flex width-100 heading">
-                    Registration Complete
-                    <span>
-                      Thousands of businesses such as yours easily manage their
-                      project and their teams
-                    </span>
-                  </Box>
                   <Box className="d-flex width-100 next-step">
                     <LoadingButton
                       onClick={this.signUpSubmit}
@@ -510,7 +510,7 @@ class SignUp extends Component {
             </Box>
           </Box>
         </Box>
-      </Box>
+      </Box >
     );
   }
 }
