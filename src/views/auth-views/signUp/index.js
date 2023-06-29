@@ -52,7 +52,7 @@ class SignUp extends Component {
       if (this.props.signUpUser.status === status.SUCCESS) {
         ToastMessage.success("New user registered!");
         this.props.navigate(`${AUTH_PREFIX_PATH}/signin`);
-      } else if (this.props.signUpUser.status === status.IN_PROGRESS) {
+      } else if (this.props.signUpUser.status === status.FAILURE) {
         ToastMessage.error("User registration failed!");
       }
     }
