@@ -39,8 +39,9 @@ class Wizard extends Component {
         const step = steps[i];
         retData.push(
           <div
-            className={`wizard-step-button ${currentStep === i ? "active" : ""
-              }`}
+            className={`wizard-step-button ${
+              currentStep === i ? "active" : ""
+            }`}
           >
             {step.name}
           </div>
@@ -60,8 +61,9 @@ class Wizard extends Component {
         const step = steps[i];
         retData.push(
           <div
-            className={`wizard-step-component ${currentStep === i ? "" : "d-none"
-              }`}
+            className={`wizard-step-component ${
+              currentStep === i ? "" : "d-none"
+            }`}
           >
             {step.component()}
           </div>
@@ -73,7 +75,8 @@ class Wizard extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.addCloudEnvState.status !== this.props.addCloudEnvState.status &&
+      prevProps.addCloudEnvState.status !==
+        this.props.addCloudEnvState.status &&
       this.props.addCloudEnvState.status === status.SUCCESS
     ) {
       ToastMessage.success("Successfully new account created");
@@ -177,15 +180,23 @@ class Wizard extends Component {
                 onClick={(e) => {
                   this.onClickStepButton(currentStep - 1);
                 }}
-                className="primary-outline-btn m-r-2" 
+                className="primary-outline-btn m-r-2"
                 variant="outlined"
               >
                 Previous
               </Button>
               <LoadingButton
                 onClick={this.createSubmit}
-                disabled={this.state.loadingData ? true : false}
-                loading={this.state.loadingData ? true : false}
+                disabled={
+                  this.props.addCloudEnvState.status === status.IN_PROGRESS
+                    ? true
+                    : false
+                }
+                loading={
+                  this.props.addCloudEnvState.status === status.IN_PROGRESS
+                    ? true
+                    : false
+                }
                 loadingPosition="start"
                 className="primary-btn"
                 variant="contained"
