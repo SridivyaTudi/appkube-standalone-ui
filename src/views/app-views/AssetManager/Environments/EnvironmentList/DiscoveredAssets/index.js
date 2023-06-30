@@ -686,14 +686,15 @@ class DiscoveredAssets extends Component {
   }
 
   filterVpcsData(searchString) {
-    let { vpcsDetailsBackUp, vpcsDetails } = this.state;
+    let { allVpcsDetails, vpcsDetails } = this.props;
     vpcsDetails =
       searchString != ""
-        ? vpcsDetailsBackUp.filter((vpc) =>
+        ? allVpcsDetails.filter((vpc) =>
             vpc.name.toLowerCase().includes(searchString.toLowerCase())
           )
-        : vpcsDetailsBackUp;
-    this.setState({ searchString, vpcsDetails });
+        : allVpcsDetails;
+    this.setState({ searchString});
+    this.props.handleSearchVpcs(vpcsDetails)
   }
 
   changeActiveCluster = (cluster) => {
@@ -722,7 +723,7 @@ class DiscoveredAssets extends Component {
           />
         </Box>
         <Box className="discovered-assets-body">
-          {this.props.environmentData.allVpcs.status === status.IN_PROGRESS ? (
+          {(this.props.environmentData.allVpcs.status === status.IN_PROGRESS) || (this.props.environmentData.departments.status === status.IN_PROGRESS) ? (
             <Box className="chart-spinner text-center width-100 p-t-20 p-b-20">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
@@ -857,10 +858,8 @@ class DiscoveredAssets extends Component {
                                       }`}
                                     >
                                       <ul>
-                                        {this.state.toggleNode.vpc ? (
+                                        {this.state.toggleNode.vpc && (
                                           this.renderVPCData()
-                                        ) : (
-                                          <></>
                                         )}
                                       </ul>
                                       <ArcherElement id="globalService">
@@ -916,12 +915,10 @@ class DiscoveredAssets extends Component {
                                       }}
                                     >
                                       <ul>
-                                        {this.state.toggleNode.cluster ? (
+                                        {this.state.toggleNode.cluster && (
                                           this.renderClusters(
                                             this.state.toggleNode.vpcId
                                           )
-                                        ) : (
-                                          <></>
                                         )}
                                       </ul>
                                       <div
@@ -942,13 +939,11 @@ class DiscoveredAssets extends Component {
                                       }`}
                                     >
                                       <div className="global-servies-menu">
-                                        {this.state.toggleNode.product ? (
+                                        {this.state.toggleNode.product && (
                                           this.renderProducts(
                                             this.state.toggleNode.vpcId,
                                             this.state.toggleNode.clusterId
                                           )
-                                        ) : (
-                                          <></>
                                         )}
                                       </div>
                                       <div

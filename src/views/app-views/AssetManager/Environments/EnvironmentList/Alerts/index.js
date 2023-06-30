@@ -10,7 +10,7 @@ class Alerts extends Component {
     };
   }
 
-
+  filterVpcsData = (search)=>{}
   render() {
 
     return (

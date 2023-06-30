@@ -9,7 +9,7 @@ class Inputs extends Component {
 
     };
   }
-
+  filterVpcsData = (search)=>{}
   render() {
 
     return (

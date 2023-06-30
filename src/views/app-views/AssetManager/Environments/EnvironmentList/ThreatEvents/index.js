@@ -34,7 +34,9 @@ class ThreatEvents extends Component {
       localStorage.setItem("recentEnv", JSON.stringify(arr));
     }
   };
-
+  
+  filterVpcsData = (search)=>{}
+  
   render() {
     return (
       <div className="discovered-assets">

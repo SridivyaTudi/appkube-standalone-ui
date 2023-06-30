@@ -326,12 +326,18 @@ class EnvironmentList extends Component {
                 vpcsDetails={
                   this.state.vpcsDetails.length && this.state.vpcsDetails
                 }
+                allVpcsDetails={
+                  this.state.vpcsDetailsBackUp.length && this.state.vpcsDetailsBackUp
+                }
                 vpcsData={this.state.vpcs}
                 updateCloudName={(service, accountId) => {
                   this.setState({ service, accountId });
                 }}
                 accountList={this.state.accountList}
                 updateCurrentAccountId={this.updateCurrentAccountId}
+                handleSearchVpcs={(vpcsDetails)=>{
+                  this.setState({vpcsDetails})
+                }}
               />
             ) : activeTab === 1 ? (
               <Application
