@@ -117,14 +117,16 @@ class SignUp extends Component {
       if (!step1.password.trim()) {
         errors.password = "Password is required!";
         isValid = false;
-      } else if (
-        !/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(
-          step1.password
-        )
-      ) {
-        errors.password = "Please enter valid password!";
-        isValid = false;
-      } else {
+      } 
+      // else if (
+      //   !/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(
+      //     step1.password
+      //   )
+      // ) {
+      //   errors.password = "Please enter valid password!";
+      //   isValid = false;
+      // } 
+      else {
         errors.password = "";
       }
 
