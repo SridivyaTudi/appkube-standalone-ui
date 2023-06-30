@@ -31,7 +31,7 @@ class Billing extends Component {
                 <TableCell align="center" colSpan={6}>
                   <div className="billing-section">
                     <div className="billing-details">
-                      <i className="fal fa-question-circle"></i>
+                      <i className="fa-regular fa-circle-question"></i>
                       <p>Billing details will be displayed here</p>
                     </div>
                   </div>

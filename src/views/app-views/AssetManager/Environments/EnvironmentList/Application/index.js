@@ -5,7 +5,11 @@ import AirAsiaIcon from "assets/img/assetmanager/air-asia-icon.png";
 import UpdatingIcon from "assets/img/assetmanager/updating-icon.png";
 import StopIcon from "assets/img/assetmanager/stop-icon.png";
 import ProcurifyIcon from "assets/img/assetmanager/procurify-icon.png";
+import ProcurifyIcon1 from "assets/img/assetmanager/procurify-icon1.png";
 import FlipkartIcon from "assets/img/assetmanager/flipkart-icon.png";
+import HdfcIcon from "assets/img/assetmanager/hdfc-icon.png";
+import WalmartIcon from "assets/img/assetmanager/walmart-icon.png";
+import AdobeIcon from "assets/img/assetmanager/adobe-icon.png";
 import AppleIcon from "assets/img/assetmanager/apple-icon.png";
 import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -243,13 +247,13 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <span>
-                      <img src={RunningIcon} alt="" />
+                      <img src={RunningIcon} alt="" style={{ maxWidth: "16px"}} />
                     </span>
                     Running
                   </TableCell>
                   <TableCell align="center">
                     <span>
-                      <img src={AirAsiaIcon} alt="" />
+                      <img src={ProcurifyIcon} alt="" style={{ maxWidth: "18px"}} />
                     </span>
                     Procurify
                   </TableCell>
@@ -284,13 +288,13 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <span>
-                      <img src={RunningIcon} alt="" />
+                      <img src={RunningIcon} alt="" style={{ maxWidth: "16px"}} />
                     </span>
                     Running
                   </TableCell>
                   <TableCell align="center">
                     <span>
-                      <img src={AirAsiaIcon} alt="" />
+                      <img src={HdfcIcon} alt="" style={{ maxWidth: "18px"}} />
                     </span>
                     HDFC bank
                   </TableCell>
@@ -325,13 +329,13 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <span>
-                      <img src={UpdatingIcon} alt="" />
+                      <img src={UpdatingIcon} alt="" style={{ maxWidth: "16px"}} />
                     </span>
                     Updating
                   </TableCell>
                   <TableCell align="center">
                     <span>
-                      <img src={AirAsiaIcon} alt="" />
+                      <img src={AirAsiaIcon} alt="" style={{ maxWidth: "18px"}} />
                     </span>
                     Air Asia
                   </TableCell>
@@ -366,13 +370,13 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <span>
-                      <img src={StopIcon} alt="" />
+                      <img src={StopIcon} alt="" style={{ maxWidth: "16px"}} />
                     </span>
                     Stop
                   </TableCell>
                   <TableCell align="center">
                     <span>
-                      <img src={AirAsiaIcon} alt="" />
+                      <img src={WalmartIcon} alt="" style={{ maxWidth: "18px"}} />
                     </span>
                     Walmart
                   </TableCell>
@@ -407,13 +411,13 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <span>
-                      <img src={UpdatingIcon} alt="" />
+                      <img src={UpdatingIcon} alt="" style={{ maxWidth: "16px"}} />
                     </span>
                     Updating
                   </TableCell>
                   <TableCell align="center">
                     <span>
-                      <img src={'AirAsiaIcon'} alt="" />
+                      <img src={AdobeIcon} alt="" style={{ maxWidth: "18px"}} />
                     </span>
                     Adobe
                   </TableCell>
@@ -448,13 +452,13 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <span>
-                      <img src={RunningIcon} alt="" />
+                      <img src={RunningIcon} alt="" style={{ maxWidth: "16px"}}/>
                     </span>
                     Running
                   </TableCell>
                   <TableCell align="center">
                     <span>
-                      <img src={AirAsiaIcon} alt="" />
+                      <img src={ProcurifyIcon1} alt="" style={{ maxWidth: "18px"}} />
                     </span>
                     Procurify
                   </TableCell>
@@ -489,13 +493,13 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <span>
-                      <img src={RunningIcon} alt="" />
+                      <img src={RunningIcon} alt="" style={{ maxWidth: "16px"}} />
                     </span>
                     Running
                   </TableCell>
                   <TableCell align="center">
                     <span>
-                      <img src={AirAsiaIcon} alt="" />
+                      <img src={FlipkartIcon} alt="" style={{ maxWidth: "14px"}} />
                     </span>
                     Flipkart
                   </TableCell>
@@ -523,7 +527,7 @@ class Application extends Component {
           </TableContainer>
         </Box>
         <Box className="recently-viewed-section">
-          <h3 className="m-t-4 m-b-4">Recently Viewed</h3>
+          <h3>Recently Viewed</h3>
           <Box className="recently-cards">
             <Box className="recently-card">
               <Box className="recently-image">
@@ -573,7 +577,7 @@ class Application extends Component {
           </Box>
         </Box>
         <Box className="recently-viewed-section">
-          <h3 className="m-t-4 m-b-4">Favorites</h3>
+          <h3>Favorites</h3>
           <Box className="recently-cards">
             <Box className="recently-card">
               <Box className="recently-image">
