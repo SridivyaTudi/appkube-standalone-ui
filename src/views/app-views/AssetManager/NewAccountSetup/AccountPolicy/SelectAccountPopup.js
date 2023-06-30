@@ -83,7 +83,7 @@ class SelectAccountPopup extends Component {
     return (
       <Modal
         isOpen={this.props.selectAccountPopupShow}
-        toggle={this.props.toggleSelectAccountPopup}
+        toggle={() => this.props.toggleSelectAccountPopup()}
         className="select-account-modal-container"
       >
         <ModalHeader>
@@ -92,7 +92,7 @@ class SelectAccountPopup extends Component {
             type="button"
             className="close"
             aria-label="Close"
-            onClick={this.props.toggleSelectAccountPopup}
+            onClick={() => this.props.toggleSelectAccountPopup()}
           >
             <i className="fa-solid fa-xmark"></i>
           </button>
@@ -130,7 +130,7 @@ class SelectAccountPopup extends Component {
               variant="contained"
               onClick={() => {
                 this.setState({ currentSelectedDepId: undefined });
-                this.props.setID(this.state.currentSelectedDepId);
+                this.props.setID(false);
                 this.props.toggleSelectAccountPopup();
               }}
             >

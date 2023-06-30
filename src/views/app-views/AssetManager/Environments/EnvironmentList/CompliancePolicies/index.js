@@ -9,7 +9,7 @@ class CompliancePolicies extends Component {
       
     };
   }
-
+  filterVpcsData = (search)=>{}
   render() {
 
     return (

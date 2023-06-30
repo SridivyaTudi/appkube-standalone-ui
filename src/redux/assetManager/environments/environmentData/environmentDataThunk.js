@@ -12,3 +12,27 @@ export const getEnvironmentVpcs = createAsyncThunk(
     }
   }
 );
+
+export const getEnvironments= createAsyncThunk(
+  "environmentData/getEnvironments",
+  async (accountId) => {
+    const url = `${config.GET_ENVIRONMENTS}`
+    const response = await fetch(`${url}`);
+    if (response.ok) {
+      const environments = await response.json();
+      return environments;
+    }
+  }
+);
+
+export const getDepartments= createAsyncThunk(
+  "environmentData/getDepartments",
+  async (accountId) => {
+    const url = `${config.GET_DEPARTMENT_WISE_DATA}?associatedLandingZone=${accountId}`
+    const response = await fetch(`${url}`);
+    if (response.ok) {
+      const departments = await response.json();
+      return departments;
+    }
+  }
+);
