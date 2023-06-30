@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import config from "../../config";
-import { RestService } from "../../Services/RestService";
+import config from "../../../config";
+import { RestService } from "../../../Services/RestService";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { ToastMessage } from "../../../../Toast/ToastMessage";
+import { ToastMessage } from "../../../../../Toast/ToastMessage";
 import Button from "@mui/material/Button";
 
 class CreateNewAccountPopup extends Component {

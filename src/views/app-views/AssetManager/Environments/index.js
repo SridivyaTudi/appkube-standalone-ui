@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { connect } from "react-redux";
-import SelectDepartmentPopup from "views/app-views/AssetManager/Components/SelectDepartmentPopup";
+import SelectDepartmentPopup from "views/app-views/AssetManager/Environments/Components/SelectDepartmentPopup";
 import {
   getEnvsAsync,
   getEnvsSummary,

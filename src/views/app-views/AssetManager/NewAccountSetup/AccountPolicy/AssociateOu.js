@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import SelectExisting from "assets/img/assetmanager/select-existing.png";
 import CreateFileIcon from "assets/img/assetmanager/create-file-icon.png";
-import AssociatedAccountPopup from "views/app-views/AssetManager/Components/AssociatedAccountPopup";
-import CreateNewOuPopup from "views/app-views/AssetManager/Components/CreateNewOuPopup";
-import SelectAccountPopup from "views/app-views/AssetManager/Components/SelectAccountPopup";
-import CreateNewAccountPopup from "views/app-views/AssetManager/Components/CreateNewAccountPopup";
+import AssociatedAccountPopup from "./AssociatedAccountPopup";
+import CreateNewOuPopup from "./CreateNewOuPopup";
+import SelectAccountPopup from "./SelectAccountPopup";
+import CreateNewAccountPopup from "./CreateNewAccountPopup";
 import Button from "@mui/material/Button";
 import { connect } from "react-redux";
 import { getOrganizationalUnits } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
@@ -28,7 +28,7 @@ class AssociateOu extends Component {
   componentDidUpdate = (prevProps) => {
     if (
       prevProps.organizationalUnit.status !==
-      this.props.organizationalUnit.status &&
+        this.props.organizationalUnit.status &&
       this.props.organizationalUnit.status === status.SUCCESS
     ) {
       let currentDepartments;
@@ -141,7 +141,7 @@ class AssociateOu extends Component {
                 <Button
                   className="primary-text-btn min-width"
                   variant="contained"
-                  style={{ paddingLeft: 0, textDecoration: 'underline' }}
+                  style={{ paddingLeft: 0, textDecoration: "underline" }}
                   onClick={() => this.toggleSelectAccountPopup()}
                 >
                   Change ou

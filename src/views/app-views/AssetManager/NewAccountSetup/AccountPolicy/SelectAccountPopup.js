@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { ToastMessage } from "../../../../Toast/ToastMessage";
+import { ToastMessage } from "../../../../../Toast/ToastMessage";
 import Button from "@mui/material/Button";
 import { getOrganizationalUnits } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
 import { connect } from "react-redux";

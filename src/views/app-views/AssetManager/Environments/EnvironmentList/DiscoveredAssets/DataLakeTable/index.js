@@ -9,7 +9,7 @@ import AppMesh from "assets/img/assetmanager/cloud-managed-icon7.png";
 import Kinesis from "assets/img/assetmanager/cloud-managed-icon8.png";
 import TimeSeries from "assets/img/assetmanager/cloud-managed-icon9.png";
 import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
-import SelectDepartmentPopup from "views/app-views/AssetManager/Components/SelectDepartmentPopup";
+import SelectDepartmentPopup from "views/app-views/AssetManager/Environments/Components/SelectDepartmentPopup";
 import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import { Button, Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
 
