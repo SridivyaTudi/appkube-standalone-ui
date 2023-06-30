@@ -4,7 +4,6 @@ import CreateFileIcon from "assets/img/assetmanager/create-file-icon.png";
 import AssociatedAccountPopup from "./AssociatedAccountPopup";
 import CreateNewOuPopup from "./CreateNewOuPopup";
 import SelectAccountPopup from "./SelectAccountPopup";
-import CreateNewAccountPopup from "./CreateNewAccountPopup";
 import Button from "@mui/material/Button";
 import { connect } from "react-redux";
 import { getOrganizationalUnits } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
@@ -184,19 +183,6 @@ class AssociateOu extends Component {
         ) : (
           <></>
         )}
-
-        <CreateNewAccountPopup
-          departments={this.state.departments}
-          newDepartmentAppend={this.newDepartmentAppend}
-          checkedId={this.state.checkedId}
-          setID={(checkedId) => {
-            this.setState({ checkedId });
-            this.props.setDepartment(
-              checkedId,
-              checkedId ? this.getDepartmentName(checkedId) : ""
-            );
-          }}
-        />
       </>
     );
   }

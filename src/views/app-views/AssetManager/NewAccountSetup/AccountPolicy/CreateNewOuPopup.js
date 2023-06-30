@@ -21,7 +21,9 @@ class CreateNewOuPopup extends Component {
   }
 
   createDepartMent = () => {
-    this.setState({ isSubmit: true });
+    this.setState({
+      isSubmit: true,
+    });
     const { isValid } = this.validate(true);
     const { formData } = this.state;
     if (isValid) {
@@ -46,6 +48,13 @@ class CreateNewOuPopup extends Component {
           this.state.description
         );
         this.props.toggleCreateNewOuPopup();
+        this.setState({
+          isSubmit: false,
+          formData: {
+            name: "",
+            description: "",
+          },
+        });
       } else if (this.props.createOu.status === status.FAILURE) {
         ToastMessage.error("Organizational Unit Creation failed!");
       }
