@@ -15,6 +15,18 @@ import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, Tabl
 import Button from "@mui/material/Button";
 
 class Application extends Component {
+  tabMapping = [
+    {
+      name: "List View",
+      iconName: "fas fa-list p-r-5",
+      dataKey: "ListView",
+    },
+    {
+      name: "Grid View",
+      iconName: "fas fa-th-large p-r-5",
+      dataKey: "GridView",
+    },
+  ];
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +35,7 @@ class Application extends Component {
       showRecentFilter: false,
       currentAccountId: null,
       showMenuIndex: null,
+      activeTab: 0,
     };
   }
 
@@ -89,8 +102,12 @@ class Application extends Component {
     }
   };
 
+  setActiveTab = (activeTab) => {
+    this.setState({ activeTab });
+  };
+
   render() {
-    const { showSelectFilter, showServiceViewFilter, showRecentFilter } = this.state;
+    const { showSelectFilter, showServiceViewFilter, showRecentFilter, activeTab } = this.state;
     return (
       <Box className="discovered-assets">
         <Box className="discovered-assets-head">
@@ -107,16 +124,21 @@ class Application extends Component {
                 <Box className="d-flex justify-content-center align-items-center">
                   <Box className="lest-view">
                     <List>
-                      <ListItem className="active">
-                        <a>
-                          <i className="fas fa-list p-r-5"></i> List View
-                        </a>
-                      </ListItem>
-                      <ListItem>
-                        <a>
-                          <i className="fas fa-th-large p-r-5"></i> Grid View
-                        </a>
-                      </ListItem>
+                      {this.tabMapping.map((tabData, index) => {
+                        return (
+                          <ListItem
+                            key={`${index}`}
+                            className={index === activeTab ? "active" : ""}
+                            onClick={() => this.setActiveTab(index)}
+                            style={{ cursor: "pointer" }}
+                          >
+                            <a style={{ cursor: "pointer" }}>
+                              <i className={tabData.iconName}></i>
+                              {tabData.name}
+                            </a>
+                          </ListItem>
+                        );
+                      })}
                     </List>
                   </Box>
                   <Box className="environment-fliter">
@@ -218,314 +240,333 @@ class Application extends Component {
             </Grid>
           </Box>
         </Box>
-        <Box className="environment-table-section">
-          <TableContainer className="table">
-            <Table className="overview">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="left"><strong>Workspace</strong></TableCell>
-                  <TableCell align="center">Status</TableCell>
-                  <TableCell align="center">Client</TableCell>
-                  <TableCell align="center" className="ou">Line Of Business</TableCell>
-                  <TableCell align="center">Tags</TableCell>
-                  <TableCell align="center">User Count</TableCell>
-                  <TableCell align="center">Usage</TableCell>
-                  <TableCell align="center">App Services</TableCell>
-                  <TableCell align="center">Data Services</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell align="left">
-                    <Link
-                      to={
-                        "/assetmanager/pages/environments/environmentlist/workspacedetails"
-                      }
-                    >
-                      HRMS
-                    </Link>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span>
-                      <img src={RunningIcon} alt="" style={{ maxWidth: "16px"}} />
-                    </span>
-                    Running
-                  </TableCell>
-                  <TableCell align="center">
-                    <span>
-                      <img src={ProcurifyIcon} alt="" style={{ maxWidth: "18px"}} />
-                    </span>
-                    Procurify
-                  </TableCell>
-                  <TableCell align="center">
-                    <div className="business-btn"> Logistics</div>
-                  </TableCell>
-                  <TableCell align="center">
-                    13
-                  </TableCell>
-                  <TableCell align="center">
-                    500
-                  </TableCell>
-                  <TableCell align="center">
-                    33%
-                  </TableCell>
-                  <TableCell align="center">
-                    41
-                  </TableCell>
-                  <TableCell align="center">
-                    29
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">
-                    <Link
-                      to={
-                        "/assetmanager/pages/environments/environmentlist/workspacedetails"
-                      }
-                    >
-                      EMS
-                    </Link>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span>
-                      <img src={RunningIcon} alt="" style={{ maxWidth: "16px"}} />
-                    </span>
-                    Running
-                  </TableCell>
-                  <TableCell align="center">
-                    <span>
-                      <img src={HdfcIcon} alt="" style={{ maxWidth: "18px"}} />
-                    </span>
-                    HDFC bank
-                  </TableCell>
-                  <TableCell align="center">
-                    <div className="business-btn"> Transaction</div>
-                  </TableCell>
-                  <TableCell align="center">
-                    13
-                  </TableCell>
-                  <TableCell align="center">
-                    500
-                  </TableCell>
-                  <TableCell align="center">
-                    33%
-                  </TableCell>
-                  <TableCell align="center">
-                    41
-                  </TableCell>
-                  <TableCell align="center">
-                    29
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">
-                    <Link
-                      to={
-                        "/assetmanager/pages/environments/environmentlist/workspacedetails"
-                      }
-                    >
-                      PROCUREMENT
-                    </Link>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span>
-                      <img src={UpdatingIcon} alt="" style={{ maxWidth: "16px"}} />
-                    </span>
-                    Updating
-                  </TableCell>
-                  <TableCell align="center">
-                    <span>
-                      <img src={AirAsiaIcon} alt="" style={{ maxWidth: "18px"}} />
-                    </span>
-                    Air Asia
-                  </TableCell>
-                  <TableCell align="center">
-                    <div className="business-btn"> Fleets</div>
-                  </TableCell>
-                  <TableCell align="center">
-                    13
-                  </TableCell>
-                  <TableCell align="center">
-                    500
-                  </TableCell>
-                  <TableCell align="center">
-                    33%
-                  </TableCell>
-                  <TableCell align="center">
-                    41
-                  </TableCell>
-                  <TableCell align="center">
-                    29
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">
-                    <Link
-                      to={
-                        "/assetmanager/pages/environments/environmentlist/workspacedetails"
-                      }
-                    >
-                      APPCUBE
-                    </Link>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span>
-                      <img src={StopIcon} alt="" style={{ maxWidth: "16px"}} />
-                    </span>
-                    Stop
-                  </TableCell>
-                  <TableCell align="center">
-                    <span>
-                      <img src={WalmartIcon} alt="" style={{ maxWidth: "18px"}} />
-                    </span>
-                    Walmart
-                  </TableCell>
-                  <TableCell align="center">
-                    <div className="business-btn"> Logistics</div>
-                  </TableCell>
-                  <TableCell align="center">
-                    13
-                  </TableCell>
-                  <TableCell align="center">
-                    500
-                  </TableCell>
-                  <TableCell align="center">
-                    33%
-                  </TableCell>
-                  <TableCell align="center">
-                    41
-                  </TableCell>
-                  <TableCell align="center">
-                    29
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">
-                    <Link
-                      to={
-                        "/assetmanager/pages/environments/environmentlist/workspacedetails"
-                      }
-                    >
-                      HRMS
-                    </Link>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span>
-                      <img src={UpdatingIcon} alt="" style={{ maxWidth: "16px"}} />
-                    </span>
-                    Updating
-                  </TableCell>
-                  <TableCell align="center">
-                    <span>
-                      <img src={AdobeIcon} alt="" style={{ maxWidth: "18px"}} />
-                    </span>
-                    Adobe
-                  </TableCell>
-                  <TableCell align="center">
-                    <div className="business-btn"> Frames</div>
-                  </TableCell>
-                  <TableCell align="center">
-                    13
-                  </TableCell>
-                  <TableCell align="center">
-                    500
-                  </TableCell>
-                  <TableCell align="center">
-                    33%
-                  </TableCell>
-                  <TableCell align="center">
-                    41
-                  </TableCell>
-                  <TableCell align="center">
-                    29
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">
-                    <Link
-                      to={
-                        "/assetmanager/pages/environments/environmentlist/workspacedetails"
-                      }
-                    >
-                      EMS
-                    </Link>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span>
-                      <img src={RunningIcon} alt="" style={{ maxWidth: "16px"}}/>
-                    </span>
-                    Running
-                  </TableCell>
-                  <TableCell align="center">
-                    <span>
-                      <img src={ProcurifyIcon1} alt="" style={{ maxWidth: "18px"}} />
-                    </span>
-                    Procurify
-                  </TableCell>
-                  <TableCell align="center">
-                    <div className="business-btn"> Banking</div>
-                  </TableCell>
-                  <TableCell align="center">
-                    13
-                  </TableCell>
-                  <TableCell align="center">
-                    500
-                  </TableCell>
-                  <TableCell align="center">
-                    33%
-                  </TableCell>
-                  <TableCell align="center">
-                    41
-                  </TableCell>
-                  <TableCell align="center">
-                    29
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">
-                    <Link
-                      to={
-                        "/assetmanager/pages/environments/environmentlist/workspacedetails"
-                      }
-                    >
-                      PROCUREMENT
-                    </Link>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span>
-                      <img src={RunningIcon} alt="" style={{ maxWidth: "16px"}} />
-                    </span>
-                    Running
-                  </TableCell>
-                  <TableCell align="center">
-                    <span>
-                      <img src={FlipkartIcon} alt="" style={{ maxWidth: "14px"}} />
-                    </span>
-                    Flipkart
-                  </TableCell>
-                  <TableCell align="center">
-                    <div className="business-btn"> Client</div>
-                  </TableCell>
-                  <TableCell align="center">
-                    13
-                  </TableCell>
-                  <TableCell align="center">
-                    500
-                  </TableCell>
-                  <TableCell align="center">
-                    33%
-                  </TableCell>
-                  <TableCell align="center">
-                    41
-                  </TableCell>
-                  <TableCell align="center">
-                    29
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
+        {activeTab === 0 &&
+          <Box className="environment-table-section">
+            <TableContainer className="table">
+              <Table className="overview">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="left"><strong>Workspace</strong></TableCell>
+                    <TableCell align="center">Status</TableCell>
+                    <TableCell align="center">Client</TableCell>
+                    <TableCell align="center" className="ou">Line Of Business</TableCell>
+                    <TableCell align="center">Tags</TableCell>
+                    <TableCell align="center">User Count</TableCell>
+                    <TableCell align="center">Usage</TableCell>
+                    <TableCell align="center">App Services</TableCell>
+                    <TableCell align="center">Data Services</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell align="left">
+                      <Link
+                        to={
+                          "/assetmanager/pages/environments/environmentlist/workspacedetails"
+                        }
+                      >
+                        HRMS
+                      </Link>
+                    </TableCell>
+                    <TableCell align="center">
+                      <span>
+                        <img src={RunningIcon} alt="" style={{ maxWidth: "16px" }} />
+                      </span>
+                      Running
+                    </TableCell>
+                    <TableCell align="center">
+                      <span>
+                        <img src={ProcurifyIcon} alt="" style={{ maxWidth: "18px" }} />
+                      </span>
+                      Procurify
+                    </TableCell>
+                    <TableCell align="center">
+                      <div className="business-btn"> Logistics</div>
+                    </TableCell>
+                    <TableCell align="center">
+                      13
+                    </TableCell>
+                    <TableCell align="center">
+                      500
+                    </TableCell>
+                    <TableCell align="center">
+                      33%
+                    </TableCell>
+                    <TableCell align="center">
+                      41
+                    </TableCell>
+                    <TableCell align="center">
+                      29
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">
+                      <Link
+                        to={
+                          "/assetmanager/pages/environments/environmentlist/workspacedetails"
+                        }
+                      >
+                        EMS
+                      </Link>
+                    </TableCell>
+                    <TableCell align="center">
+                      <span>
+                        <img src={RunningIcon} alt="" style={{ maxWidth: "16px" }} />
+                      </span>
+                      Running
+                    </TableCell>
+                    <TableCell align="center">
+                      <span>
+                        <img src={HdfcIcon} alt="" style={{ maxWidth: "18px" }} />
+                      </span>
+                      HDFC bank
+                    </TableCell>
+                    <TableCell align="center">
+                      <div className="business-btn"> Transaction</div>
+                    </TableCell>
+                    <TableCell align="center">
+                      13
+                    </TableCell>
+                    <TableCell align="center">
+                      500
+                    </TableCell>
+                    <TableCell align="center">
+                      33%
+                    </TableCell>
+                    <TableCell align="center">
+                      41
+                    </TableCell>
+                    <TableCell align="center">
+                      29
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">
+                      <Link
+                        to={
+                          "/assetmanager/pages/environments/environmentlist/workspacedetails"
+                        }
+                      >
+                        PROCUREMENT
+                      </Link>
+                    </TableCell>
+                    <TableCell align="center">
+                      <span>
+                        <img src={UpdatingIcon} alt="" style={{ maxWidth: "16px" }} />
+                      </span>
+                      Updating
+                    </TableCell>
+                    <TableCell align="center">
+                      <span>
+                        <img src={AirAsiaIcon} alt="" style={{ maxWidth: "18px" }} />
+                      </span>
+                      Air Asia
+                    </TableCell>
+                    <TableCell align="center">
+                      <div className="business-btn"> Fleets</div>
+                    </TableCell>
+                    <TableCell align="center">
+                      13
+                    </TableCell>
+                    <TableCell align="center">
+                      500
+                    </TableCell>
+                    <TableCell align="center">
+                      33%
+                    </TableCell>
+                    <TableCell align="center">
+                      41
+                    </TableCell>
+                    <TableCell align="center">
+                      29
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">
+                      <Link
+                        to={
+                          "/assetmanager/pages/environments/environmentlist/workspacedetails"
+                        }
+                      >
+                        APPCUBE
+                      </Link>
+                    </TableCell>
+                    <TableCell align="center">
+                      <span>
+                        <img src={StopIcon} alt="" style={{ maxWidth: "16px" }} />
+                      </span>
+                      Stop
+                    </TableCell>
+                    <TableCell align="center">
+                      <span>
+                        <img src={WalmartIcon} alt="" style={{ maxWidth: "18px" }} />
+                      </span>
+                      Walmart
+                    </TableCell>
+                    <TableCell align="center">
+                      <div className="business-btn"> Logistics</div>
+                    </TableCell>
+                    <TableCell align="center">
+                      13
+                    </TableCell>
+                    <TableCell align="center">
+                      500
+                    </TableCell>
+                    <TableCell align="center">
+                      33%
+                    </TableCell>
+                    <TableCell align="center">
+                      41
+                    </TableCell>
+                    <TableCell align="center">
+                      29
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">
+                      <Link
+                        to={
+                          "/assetmanager/pages/environments/environmentlist/workspacedetails"
+                        }
+                      >
+                        HRMS
+                      </Link>
+                    </TableCell>
+                    <TableCell align="center">
+                      <span>
+                        <img src={UpdatingIcon} alt="" style={{ maxWidth: "16px" }} />
+                      </span>
+                      Updating
+                    </TableCell>
+                    <TableCell align="center">
+                      <span>
+                        <img src={AdobeIcon} alt="" style={{ maxWidth: "18px" }} />
+                      </span>
+                      Adobe
+                    </TableCell>
+                    <TableCell align="center">
+                      <div className="business-btn"> Frames</div>
+                    </TableCell>
+                    <TableCell align="center">
+                      13
+                    </TableCell>
+                    <TableCell align="center">
+                      500
+                    </TableCell>
+                    <TableCell align="center">
+                      33%
+                    </TableCell>
+                    <TableCell align="center">
+                      41
+                    </TableCell>
+                    <TableCell align="center">
+                      29
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">
+                      <Link
+                        to={
+                          "/assetmanager/pages/environments/environmentlist/workspacedetails"
+                        }
+                      >
+                        EMS
+                      </Link>
+                    </TableCell>
+                    <TableCell align="center">
+                      <span>
+                        <img src={RunningIcon} alt="" style={{ maxWidth: "16px" }} />
+                      </span>
+                      Running
+                    </TableCell>
+                    <TableCell align="center">
+                      <span>
+                        <img src={ProcurifyIcon1} alt="" style={{ maxWidth: "18px" }} />
+                      </span>
+                      Procurify
+                    </TableCell>
+                    <TableCell align="center">
+                      <div className="business-btn"> Banking</div>
+                    </TableCell>
+                    <TableCell align="center">
+                      13
+                    </TableCell>
+                    <TableCell align="center">
+                      500
+                    </TableCell>
+                    <TableCell align="center">
+                      33%
+                    </TableCell>
+                    <TableCell align="center">
+                      41
+                    </TableCell>
+                    <TableCell align="center">
+                      29
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">
+                      <Link
+                        to={
+                          "/assetmanager/pages/environments/environmentlist/workspacedetails"
+                        }
+                      >
+                        PROCUREMENT
+                      </Link>
+                    </TableCell>
+                    <TableCell align="center">
+                      <span>
+                        <img src={RunningIcon} alt="" style={{ maxWidth: "16px" }} />
+                      </span>
+                      Running
+                    </TableCell>
+                    <TableCell align="center">
+                      <span>
+                        <img src={FlipkartIcon} alt="" style={{ maxWidth: "14px" }} />
+                      </span>
+                      Flipkart
+                    </TableCell>
+                    <TableCell align="center">
+                      <div className="business-btn"> Client</div>
+                    </TableCell>
+                    <TableCell align="center">
+                      13
+                    </TableCell>
+                    <TableCell align="center">
+                      500
+                    </TableCell>
+                    <TableCell align="center">
+                      33%
+                    </TableCell>
+                    <TableCell align="center">
+                      41
+                    </TableCell>
+                    <TableCell align="center">
+                      29
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+        }
+        {activeTab === 1 &&
+          <Box className="environment-table-section">
+            <Box className="recently-cards">
+              <Box className="recently-card">
+                <Box className="recently-image">
+                  <img src={ProcurifyIcon} alt="" />
+                </Box>
+                <Box className="recently-content">
+                  <div className="title">Procurify</div>
+                  <Box className="refund-content">
+                    <span>Logistics-Tool</span>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        }
         <Box className="recently-viewed-section">
           <h3>Recently Viewed</h3>
           <Box className="recently-cards">
@@ -571,6 +612,18 @@ class Application extends Component {
                 <div className="title">Forbese-Tools</div>
                 <Box className="refund-content">
                   <span>Automation</span>
+                </Box>
+              </Box>
+            </Box>
+            <Box className="recently-card">
+              <Box className="recently-image">
+                <img src={ProcurifyIcon} alt="" />
+              </Box>
+              <Box className="recently-content">
+                <div className="title">Slack Inventory</div>
+                <Box className="refund-content">
+                  <span>Order</span>
+                  <span>Refund</span>
                 </Box>
               </Box>
             </Box>
