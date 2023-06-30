@@ -24,6 +24,7 @@ export const getEnvsSummary = createAsyncThunk(
     }
   }
 );
+
 export const getDepartmentsOrgWise = createAsyncThunk(
   "environments/getDepartmentsOrgWise",
   async (orgId) => {
@@ -37,18 +38,61 @@ export const getDepartmentsOrgWise = createAsyncThunk(
     }
   }
 );
+
 export const getProductsByDepId = createAsyncThunk(
   "environments/getProductsByDepId",
-  async (data, { getState }) => {
+  async (data) => {
     if (data) {
       const url = config.GET_PRODUCTS_BY_DEPID;
+      let {orgId,depId} = data
       const response = await fetch(
-        `${url}/${data.orgId}/departments/${data.depId}/products?orgId=${data.orgId}&depId=${data.depId}`
+        `${url}/${orgId}/departments/${depId}/products?orgId=${orgId}&depId=${depId}`
       );
       if (response.ok) {
         const products = await response.json();
         try {
-          return products;
+          console.log({products,depId})
+          return {products,depId};
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        return Promise.reject(response.status);
+      }
+    }
+  }
+);
+
+export const getDeploymentEnvs = createAsyncThunk(
+  "environments/getDeploymentEnvs",
+  async (data) => {
+    if (data) {
+      const url = config.GET_DEPLOYMENT_ENVIRONMENTS;
+      const response = await fetch(url);
+      if (response.ok) {
+        const deploymentEnvs = await response.json();
+        try {
+          return deploymentEnvs;
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        return Promise.reject(response.status);
+      }
+    }
+  }
+);
+
+export const getEnvsByFilters = createAsyncThunk(
+  "environments/getEnvsByFilters",
+  async (data) => {
+    if (data) {
+      const url = config.GET_ENVIRONMENTS_SUMMARY_FILTERS;
+      const response = await fetch(`${url}${data}`);
+      if (response.ok) {
+        const envsByFilter = await response.json();
+        try {
+          return envsByFilter;
         } catch (error) {
           console.log(error);
         }

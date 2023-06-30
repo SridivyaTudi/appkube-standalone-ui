@@ -4,6 +4,8 @@ import {
   getEnvsSummary,
   getDepartmentsOrgWise,
   getProductsByDepId,
+  getDeploymentEnvs,
+  getEnvsByFilters
 } from "redux/assetManager/environments/environmentsThunk";
 import status from "redux/constants/commonDS";
 
@@ -18,6 +20,14 @@ export const environmentSlice = createSlice({
     },
     departmentsFilters:{
       status: null
+    },
+    productsByDepId: {
+      status: null,
+      data:[]
+    },
+    deploymentEnvs: {
+      status: null,
+      data:[]
     }
   },
   reducers: {},
@@ -97,6 +107,7 @@ export const environmentSlice = createSlice({
         },
       };
     },
+
     [getProductsByDepId.pending]: (state, action) => {
       return {
         ...state,
@@ -104,11 +115,12 @@ export const environmentSlice = createSlice({
       };
     },
     [getProductsByDepId.fulfilled]: (state, {payload}) => {
+      let { products,depId} = payload
       return {
         ...state,
         productsByDepId: {
           status: status.SUCCESS,
-          data: payload,
+          data: {products ,depId },
         },
       };
     },
@@ -120,6 +132,56 @@ export const environmentSlice = createSlice({
         },
       };
     },
+
+    [getDeploymentEnvs.pending]: (state, action) => {
+      return {
+        ...state,
+        deploymentEnvs: { status: status.IN_PROGRESS },
+      };
+    },
+    [getDeploymentEnvs.fulfilled]: (state, {payload}) => {
+      return {
+        ...state,
+        deploymentEnvs: {
+          status: status.SUCCESS,
+          data: payload
+        },
+      };
+    },
+    [getDeploymentEnvs.rejected]: (state, action) => {
+      return {
+        ...state,
+        deploymentEnvs: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getEnvsByFilters.pending]: (state, action) => {
+      return {
+        ...state,
+        envSummary: { status: status.IN_PROGRESS },
+      };
+    },
+    [getEnvsByFilters.fulfilled]: (state, {payload}) => {
+      return {
+        ...state,
+        envSummary: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getEnvsByFilters.rejected]: (state, action) => {
+      return {
+        ...state,
+        envSummary: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    
   },
 });
 

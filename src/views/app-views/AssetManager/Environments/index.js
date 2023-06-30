@@ -57,7 +57,6 @@ class Environments extends Component {
     if (currentOrgId > 0) {
       this.props.getEnvsAsync(currentOrgId);
       this.props.getEnvsSummary(currentOrgId);
-      this.props.getDepartmentsOrgWise(currentOrgId);
     }
   };
 
@@ -89,24 +88,6 @@ class Environments extends Component {
           ),
         });
         this.SetCurrentActiveTableIndex();
-      }
-    }
-
-    if (
-      prevProps.environments.departmentsFilters.status !==
-      this.props.environments.departmentsFilters.status
-    ) {
-      if (
-        this.props.environments.departmentsFilters.status ===
-          status.SUCCESS &&
-        this.props.environments.departmentsFilters.data
-      ) {
-        if (this.props.environments.departmentsFilters.data.departments) {
-          this.setState({
-            departments:
-              this.props.environments.departmentsFilters.data.departments,
-          });
-        }
       }
     }
   }
@@ -623,7 +604,7 @@ class Environments extends Component {
           <SelectDepartmentPopup
             showModal={this.state.showSelectDepartmentPopup}
             togglePopup={this.togglePopup}
-            departments={this.state.departments || []}
+
           />
         ) : (
           <></>
@@ -644,7 +625,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   getEnvsAsync,
   getEnvsSummary,
-  getDepartmentsOrgWise,
+  getDepartmentsOrgWise
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Environments);
