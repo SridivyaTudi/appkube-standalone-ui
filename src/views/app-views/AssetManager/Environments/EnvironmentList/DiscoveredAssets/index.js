@@ -21,14 +21,19 @@ import WafResources from "views/app-views/AssetManager/Environments/EnvironmentL
 import GlobalSerivces from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/GlobalServices";
 import EKS from "assets/img/assetmanager/global-icon4.png";
 import ECS from "assets/img/assetmanager/global-icon5.png";
-import SQS from "assets/img/assetmanager/cloud-managed-icon3.png";
-import SNS from "assets/img/assetmanager/cloud-managed-icon4.png";
-import Redshift from "assets/img/assetmanager/cloud-managed-icon5.png";
-import RDS from "assets/img/assetmanager/cloud-managed-icon6.png";
-import AppMesh from "assets/img/assetmanager/cloud-managed-icon7.png";
-import Kinesis from "assets/img/assetmanager/cloud-managed-icon8.png";
-import TimeSeries from "assets/img/assetmanager/cloud-managed-icon9.png";
+import Glue from "assets/img/assetmanager/cloud-managed-icon8.png";
 import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
+import Kinesys from "assets/img/assetmanager/cloud-managed-icon11.png";
+import Redshift from "assets/img/assetmanager/cloud-managed-icon12.png";
+import IAM from "assets/img/assetmanager/cloud-managed-icon13.png";
+import S3 from "assets/img/assetmanager/cloud-managed-icon2.png";
+import LakeFormation from "assets/img/assetmanager/cloud-managed-icon14.png";
+import Sagemaker from "assets/img/assetmanager/cloud-managed-icon15.png";
+import Quicksight from "assets/img/assetmanager/cloud-managed-icon16.png";
+import EMRStudio from "assets/img/assetmanager/cloud-managed-icon17.png";
+import Waf from "assets/img/assetmanager/global-icon6.png";
+import API from "assets/img/assetmanager/global-icon7.png";
+import LB from "assets/img/assetmanager/global-icon3.png";
 import {
   Button,
   IconButton,
@@ -127,17 +132,29 @@ class DiscoveredAssets extends Component {
       searchString: "",
       accountId: queryPrm.get("accountId"),
       currentActiveCluster: "eksCluster",
-      serivceImages: [
+
+      clusterServicesImages: [
         EKS,
         ECS,
-        SQS,
-        SNS,
-        Redshift,
-        RDS,
-        AppMesh,
-        Kinesis,
-        TimeSeries,
+        
+      ],
+      managedServicesImages: [
+        Glue,
         Athena,
+        Kinesys,
+        Redshift,
+        IAM,
+        S3,
+        LakeFormation,
+        Sagemaker,
+        Quicksight,
+        EMRStudio,
+       
+      ],
+      GatewayServicesImages: [
+        Waf,
+        API,
+        LB,
       ],
     };
   }
@@ -1302,7 +1319,7 @@ class DiscoveredAssets extends Component {
                               <Box className="service-card active">
                                 <Box className="service-icon">
                                   <img
-                                    src={this.state.serivceImages[index]}
+                                    src={this.state.clusterServicesImages[index]}
                                     alt="serviceicon"
                                   />
                                 </Box>
@@ -1323,7 +1340,7 @@ class DiscoveredAssets extends Component {
                               <Box className="service-card active">
                                 <Box className="service-icon">
                                   <img
-                                    src={this.state.serivceImages[index]}
+                                    src={this.state.managedServicesImages[index]}
                                     alt="serviceicon"
                                   />
                                 </Box>
@@ -1344,7 +1361,7 @@ class DiscoveredAssets extends Component {
                               <Box className="service-card active">
                                 <Box className="service-icon">
                                   <img
-                                    src={this.state.serivceImages[index]}
+                                    src={this.state.GatewayServicesImages[index]}
                                     alt="serviceicon"
                                   />
                                 </Box>
