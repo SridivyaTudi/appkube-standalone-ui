@@ -14,10 +14,12 @@ import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import status from "redux/constants/commonDS";
-import { getEnvironmentVpcs } from "redux/assetManager/environments/environmentData/environmentDataThunk";
+import {
+  getEnvironmentVpcs,
+  getEnvironments,
+  getDepartments,
+} from "redux/assetManager/environments/environmentData/environmentDataThunk";
 import { connect } from "react-redux";
-let isMounted = false;
-
 class EnvironmentList extends Component {
   tabMapping = [
     {
@@ -60,10 +62,9 @@ class EnvironmentList extends Component {
       accountList: {},
       commonData: {},
       searchedAccountList: {},
-      dataFetched: false,
       vpcsDetails: [],
       vpcsDetailsBackUp: [],
-      isMounted: false,
+      accountId: null,
     };
   }
 
@@ -86,11 +87,8 @@ class EnvironmentList extends Component {
     if (this.state.service !== localStorage.getItem("serviceName")) {
       this.setState({ service: localStorage.getItem("serviceName") });
     }
+    this.props.getEnvironments();
     this.getCurrentAccountId();
-    this.getAccountList(1);
-    const queryPrm = new URLSearchParams(document.location.search);
-    const accountId = queryPrm.get("accountId");
-    this.props.getEnvironmentVpcs(accountId);
   };
 
   getVpcsDetails(treeData) {
@@ -138,63 +136,25 @@ class EnvironmentList extends Component {
     });
   }
 
-  getAccountList = (mount = 0) => {
-    try {
-      fetch(config.GET_ENVIRONMENTS)
-        .then(
-          (response) => response.json(),
-          (error) => {
-            console.log(error);
-          }
-        )
-        .then(
-          (data) => {
-            if (data) {
-              const commonData = {};
-              const accounts = {};
-              data.forEach((account) => {
-                accounts[account.cloud] = accounts[account.cloud] || [];
-                accounts[account.cloud].push(account);
-                commonData[account.cloud] = commonData[account.cloud]
-                  ? commonData[account.cloud]
-                  : {
-                      totalBill: 0,
-                    };
-                commonData[account.cloud].totalBill +=
-                  account.totalBilling || 0;
-              });
-              if (mount) isMounted = true;
-              this.setState({
-                accountList: accounts,
-                commonData,
-                searchedAccountList: JSON.parse(JSON.stringify(accounts)),
-                dataFetched: true,
-              });
-            }
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-    } catch (error) {
-      console.log(error);
+  componentDidUpdate = async (prevProps, prevState) => {
+    if (this.state.accountId !== prevState.accountId) {
+      this.props.getDepartments(this.state.accountId);
     }
-  };
-
-  componentDidUpdate = async (prevProps,prevState) => {
+    
     if (
-      this.state.accountId !== null &&
-      this.state.accountId !== prevState.accountId &&
-      isMounted
+      prevProps.environmentData.departments.status !==
+      this.props.environmentData.departments.status
     ) {
-      const response = await fetch(
-        `${config.GET_DEPARTMENT_WISE_DATA}?associatedLandingZone=${this.state.accountId}`
-      );
-      const jsonData = await response.json();
-      this.setState({
-        departmentWiseData: jsonData,
-      });
-      this.props.getEnvironmentVpcs(this.state.accountId);
+      if (
+        this.props.environmentData.departments.status === status.SUCCESS &&
+        this.props.environmentData.departments.data
+      ) {
+        let depData = this.props.environmentData.departments.data;
+        this.setState({
+          departmentWiseData: depData,
+        });
+        this.props.getEnvironmentVpcs(this.state.accountId);
+      }
     }
 
     if (
@@ -205,15 +165,53 @@ class EnvironmentList extends Component {
         this.props.environmentData.allVpcs.status === status.SUCCESS &&
         this.props.environmentData.allVpcs.data
       ) {
-        let envData = this.props.environmentData.allVpcs.data
+        let envData = this.props.environmentData.allVpcs.data;
+        let { vpcs } = this.state;
         if (envData.length) {
           this.setState({
             vpcs:
-              ( envData[0].account_services_json &&
+              (envData[0].account_services_json &&
                 envData[0].account_services_json.vpcs) ||
-              []
+              [],
           });
           this.getVpcsDetails(envData[0].account_services_json.vpcs);
+        } else if (vpcs.length) {
+          this.setState({
+            vpcs: [],
+            vpcsDetails: [],
+            vpcsDetailsBackUp: [],
+          });
+        }
+      }
+    }
+
+    if (
+      prevProps.environmentData.allEnv.status !==
+      this.props.environmentData.allEnv.status
+    ) {
+      if (
+        this.props.environmentData.allEnv.status === status.SUCCESS &&
+        this.props.environmentData.allEnv.data
+      ) {
+        let envs = this.props.environmentData.allEnv.data;
+        if (envs.length) {
+          const commonData = {};
+          const accounts = {};
+          envs.forEach((account) => {
+            accounts[account.cloud] = accounts[account.cloud] || [];
+            accounts[account.cloud].push(account);
+            commonData[account.cloud] = commonData[account.cloud]
+              ? commonData[account.cloud]
+              : {
+                  totalBill: 0,
+                };
+            commonData[account.cloud].totalBill += account.totalBilling || 0;
+          });
+          this.setState({
+            accountList: accounts,
+            commonData,
+            searchedAccountList: JSON.parse(JSON.stringify(accounts)),
+          });
         }
       }
     }
@@ -223,7 +221,7 @@ class EnvironmentList extends Component {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const accountId = urlParams.get("accountId");
-    this.setState({ accountId: accountId });
+    this.setState({ accountId });
   };
 
   updateCurrentAccountId = (id) => {
@@ -303,7 +301,7 @@ class EnvironmentList extends Component {
             className="data-contant"
             style={{ display: servicesPanelShow ? "" : "none" }}
           >
-            {this.state.dataFetched && this.renderEnvironmentBoxes()}
+            {this.renderEnvironmentBoxes()}
           </Box>
         </Box>
         <Box className="services-panel-tabs">
@@ -328,7 +326,7 @@ class EnvironmentList extends Component {
                 vpcsDetails={
                   this.state.vpcsDetails.length && this.state.vpcsDetails
                 }
-                treeData={this.state.vpcs}
+                vpcsData={this.state.vpcs}
                 updateCloudName={(service, accountId) => {
                   this.setState({ service, accountId });
                 }}
@@ -369,5 +367,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   getEnvironmentVpcs,
+  getEnvironments,
+  getDepartments,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EnvironmentList);

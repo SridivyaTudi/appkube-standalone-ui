@@ -133,11 +133,7 @@ class DiscoveredAssets extends Component {
       accountId: queryPrm.get("accountId"),
       currentActiveCluster: "eksCluster",
 
-      clusterServicesImages: [
-        EKS,
-        ECS,
-        
-      ],
+      clusterServicesImages: [EKS, ECS],
       managedServicesImages: [
         Glue,
         Athena,
@@ -149,13 +145,8 @@ class DiscoveredAssets extends Component {
         Sagemaker,
         Quicksight,
         EMRStudio,
-       
       ],
-      GatewayServicesImages: [
-        Waf,
-        API,
-        LB,
-      ],
+      GatewayServicesImages: [Waf, API, LB],
     };
   }
 
@@ -311,8 +302,8 @@ class DiscoveredAssets extends Component {
   }
 
   renderVPCData() {
-    if (this.props.treeData && this.props.treeData.length) {
-      return this.props.treeData.map((vpc, vpcIndex) => {
+    if (this.props.vpcsData.length) {
+      return this.props.vpcsData.map((vpc, vpcIndex) => {
         return (
           <ArcherElement
             id={`vpc_${vpcIndex}`}
@@ -367,23 +358,24 @@ class DiscoveredAssets extends Component {
 
   prepareBreadCrumbs(data, index, type) {
     let tempBreadData = [];
+    let { breadcrumbs } = this.state;
     if (
-      this.state.breadcrumbs.filter((breadcrumb) => breadcrumb.type === type)
+      breadcrumbs.filter((breadcrumb) => breadcrumb.type === type)
         .length
     ) {
       if (
-        this.state.breadcrumbs.filter((breadcrumb) => breadcrumb.id === index)
+        breadcrumbs.filter((breadcrumb) => breadcrumb.id === index)
           .length
       ) {
-        tempBreadData = this.state.breadcrumbs;
+        tempBreadData = breadcrumbs;
       } else {
-        tempBreadData = this.state.breadcrumbs.filter(
+        tempBreadData = breadcrumbs.filter(
           (breadcrumb) => breadcrumb.type !== type
         );
         tempBreadData = [...tempBreadData, data];
       }
     } else {
-      tempBreadData = [...this.state.breadcrumbs, data];
+      tempBreadData = [...breadcrumbs, data];
     }
     breadcrumbResetCondition[type].forEach((keyType) => {
       tempBreadData = tempBreadData.filter(
@@ -396,10 +388,10 @@ class DiscoveredAssets extends Component {
   renderClusters(index) {
     if (
       this.state.toggleNode.vpc &&
-      this.props.treeData[index].clusters &&
-      this.props.treeData[index].clusters.length
+      this.props.vpcsData[index].clusters &&
+      this.props.vpcsData[index].clusters.length
     ) {
-      return this.props.treeData[index].clusters.map(
+      return this.props.vpcsData[index].clusters.map(
         (cluster, clusterIndex) => {
           return (
             <ArcherElement
@@ -459,10 +451,10 @@ class DiscoveredAssets extends Component {
   renderProducts(vpcIndex, clusterIndex) {
     if (
       this.state.toggleNode.cluster &&
-      this.props.treeData[vpcIndex].clusters[clusterIndex].products &&
-      this.props.treeData[vpcIndex].clusters[clusterIndex].products.length
+      this.props.vpcsData[vpcIndex].clusters[clusterIndex].products &&
+      this.props.vpcsData[vpcIndex].clusters[clusterIndex].products.length
     ) {
-      return this.props.treeData[vpcIndex].clusters[clusterIndex].products.map(
+      return this.props.vpcsData[vpcIndex].clusters[clusterIndex].products.map(
         (product, productIndex) => {
           return (
             <ArcherElement id={`product_${productIndex}`}>
@@ -527,37 +519,34 @@ class DiscoveredAssets extends Component {
   }
 
   getBreadCrumbs() {
-    return (
-      this.state.breadcrumbs &&
-      this.state.breadcrumbs.map((data, index) => {
-        return (
-          <>
-            {index > 0 ? (
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-            ) : (
-              <></>
-            )}
-            <li
-              onClick={() => {
-                if (this.state.breadcrumbs.length > 1) {
-                  this.handleToggleNode(
-                    data.serviceIndexs,
-                    data.type === "service" ? "vpc" : "",
-                    data.type,
-                    data.type === "service" ? false : true,
-                    (data.type && nextTypes[data.type]) || ""
-                  );
-                }
-              }}
-            >
-              <a>{data.name}</a>
+    return this.state.breadcrumbs.map((data, index) => {
+      return (
+        <>
+          {index > 0 ? (
+            <li>
+              <i className="fa-solid fa-chevron-right"></i>
             </li>
-          </>
-        );
-      })
-    );
+          ) : (
+            <></>
+          )}
+          <li
+            onClick={() => {
+              if (this.state.breadcrumbs.length > 1) {
+                this.handleToggleNode(
+                  data.serviceIndexs,
+                  data.type === "service" ? "vpc" : "",
+                  data.type,
+                  data.type === "service" ? false : true,
+                  (data.type && nextTypes[data.type]) || ""
+                );
+              }
+            }}
+          >
+            <a>{data.name}</a>
+          </li>
+        </>
+      );
+    });
   }
 
   getServiceName(name, type) {
@@ -666,7 +655,10 @@ class DiscoveredAssets extends Component {
 
   generateVpcDetailsTable() {
     return (
-      <Box className="environment-table-section discovered-table" style={{ height: "537px" }}>
+      <Box
+        className="environment-table-section discovered-table"
+        style={{ height: "537px" }}
+      >
         <Box className="table discovered-assets-table">
           <TableContainer>
             <Table className="overview">
@@ -684,11 +676,7 @@ class DiscoveredAssets extends Component {
                 </TableRow>
               </TableHead>
               <tbody>
-                {this.props.vpcsDetails && this.props.vpcsDetails.length ? (
-                  this.renderVpcsDetails()
-                ) : (
-                  <></>
-                )}
+                {this.props.vpcsDetails.length && this.renderVpcsDetails()}
               </tbody>
             </Table>
           </TableContainer>
@@ -734,7 +722,7 @@ class DiscoveredAssets extends Component {
           />
         </Box>
         <Box className="discovered-assets-body">
-          {this.props.environmentData.allVpcs.status  === status.IN_PROGRESS ? (
+          {this.props.environmentData.allVpcs.status === status.IN_PROGRESS ? (
             <Box className="chart-spinner text-center width-100 p-t-20 p-b-20">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
@@ -754,7 +742,7 @@ class DiscoveredAssets extends Component {
                       </Box>
                     </Box>
                     <Box className="services-panel-body">
-                      {this.props.treeData && this.props.treeData.length ? (
+                      {this.props.vpcsData.length ? (
                         <ArcherContainer
                           style={{ width: "100%", height: "100%" }}
                         >
@@ -863,8 +851,7 @@ class DiscoveredAssets extends Component {
                                     </ArcherElement>
                                     <div
                                       className={` ${
-                                        this.props.treeData &&
-                                        this.props.treeData.length
+                                        this.props.vpcsData.length
                                           ? "global-servies"
                                           : ""
                                       }`}
@@ -987,9 +974,7 @@ class DiscoveredAssets extends Component {
                   </Box>
                 </Grid>
                 <Grid item xs={5}>
-                  {this.state.breadcrumbs &&
-                  this.state.breadcrumbs.length === 1 &&
-                  this.props.vpcsDetails &&
+                  {this.state.breadcrumbs.length === 1 &&
                   this.props.vpcsDetails.length &&
                   !this.state.toggleNode.globalService ? (
                     this.generateVpcDetailsTable()
@@ -1000,10 +985,7 @@ class DiscoveredAssets extends Component {
                     className="fliter-tabs"
                     style={{
                       display: `${
-                        this.state.breadcrumbs &&
-                        this.state.breadcrumbs.length === 4
-                          ? "block"
-                          : "none"
+                        this.state.breadcrumbs.length === 4 ? "block" : "none"
                       }`,
                     }}
                   >
@@ -1156,10 +1138,7 @@ class DiscoveredAssets extends Component {
                     className="fliter-tabs global-service-penal"
                     style={{
                       display: `${
-                        this.state.breadcrumbs &&
-                        this.state.breadcrumbs.length === 3
-                          ? "block"
-                          : "none"
+                        this.state.breadcrumbs.length === 3 ? "block" : "none"
                       }`,
                     }}
                   >
@@ -1303,10 +1282,7 @@ class DiscoveredAssets extends Component {
                     className="fliter-tabs global-service-penal"
                     style={{
                       display: `${
-                        this.state.breadcrumbs &&
-                        this.state.breadcrumbs.length === 2
-                          ? "block"
-                          : "none"
+                        this.state.breadcrumbs.length === 2 ? "block" : "none"
                       }`,
                     }}
                   >
@@ -1319,7 +1295,9 @@ class DiscoveredAssets extends Component {
                               <Box className="service-card active">
                                 <Box className="service-icon">
                                   <img
-                                    src={this.state.clusterServicesImages[index]}
+                                    src={
+                                      this.state.clusterServicesImages[index]
+                                    }
                                     alt="serviceicon"
                                   />
                                 </Box>
@@ -1340,7 +1318,9 @@ class DiscoveredAssets extends Component {
                               <Box className="service-card active">
                                 <Box className="service-icon">
                                   <img
-                                    src={this.state.managedServicesImages[index]}
+                                    src={
+                                      this.state.managedServicesImages[index]
+                                    }
                                     alt="serviceicon"
                                   />
                                 </Box>
@@ -1361,7 +1341,9 @@ class DiscoveredAssets extends Component {
                               <Box className="service-card active">
                                 <Box className="service-icon">
                                   <img
-                                    src={this.state.GatewayServicesImages[index]}
+                                    src={
+                                      this.state.GatewayServicesImages[index]
+                                    }
                                     alt="serviceicon"
                                   />
                                 </Box>
@@ -1605,4 +1587,3 @@ const mapDispatchToProps = {
   getEnvironmentVpcs,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DiscoveredAssets);
-
