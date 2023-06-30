@@ -272,7 +272,7 @@ class Environments extends Component {
         );
       });
       retData.push(
-        <div className="environment-table-section">
+        <div className="environment-table">
           <TableContainer className="table">
             <Table>
               <TableHead
