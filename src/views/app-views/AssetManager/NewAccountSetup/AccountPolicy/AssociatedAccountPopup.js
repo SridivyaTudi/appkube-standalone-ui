@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import featuredIcon from "../../../../assets/img/featured-icon.png";
+import featuredIcon from "assets/img/featured-icon.png";
 import Button from "@mui/material/Button";
 
 class AssociatedAccountPopup extends Component {
