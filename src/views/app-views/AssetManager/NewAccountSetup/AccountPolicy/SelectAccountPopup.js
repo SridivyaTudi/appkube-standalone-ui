@@ -20,6 +20,9 @@ class SelectAccountPopup extends Component {
 
   componentDidMount = () => {
     this.props.getOrganizationalUnits();
+    if (Number(this.props.checkedId)) {
+      this.setState({ currentSelectedDepId: Number(this.props.checkedId) });
+    }
   };
 
   componentDidUpdate = (prevProps) => {
