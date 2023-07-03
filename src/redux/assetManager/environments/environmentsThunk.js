@@ -25,8 +25,8 @@ export const getEnvsSummary = createAsyncThunk(
   }
 );
 
-export const getDepartmentsOrgWise = createAsyncThunk(
-  "environments/getDepartmentsOrgWise",
+export const getOrgWiseDepartments = createAsyncThunk(
+  "environments/getOrgWiseDepartments",
   async (orgId) => {
     const url = config.GET_ALL_ORGS;
     const response = await fetch(`${url}/${orgId}`);
