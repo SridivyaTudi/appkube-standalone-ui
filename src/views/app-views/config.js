@@ -15,7 +15,7 @@ const config = {
   GET_ORG_WISE_DEPARTMENTS: `${envsUrl}/query/organizations/#org-id#/departments`,
   DEPARTMENTS: `${envsUrl}/departments`,
   ADD_CLOUD_ENV: `${envsUrl}/cloud-environments`,
-  GET_PRODUCTS_BY_DEPID:`${envsUrl}/query/organizations`,
+  GET_PRODUCTS_BY_DEPID:`${envsUrl}/query/organizations/#org-id#/departments/#dep-id#/products`,
   GET_DEPLOYMENT_ENVIRONMENTS:`${envsUrl}/deployment-environments`,
   GET_ENVIRONMENTS_SUMMARY_FILTERS:`${envsUrl}/query/organizations/#org-id#/cloud-environments/summary`,
 

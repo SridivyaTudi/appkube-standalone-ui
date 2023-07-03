@@ -2,7 +2,7 @@ import React from "react";
 import GlobalIcon6 from "assets/img/assetmanager/global-icon6.png";
 import GlobalIcon7 from "assets/img/assetmanager/global-icon7.png";
 import GlobalIcon3 from "assets/img/assetmanager/global-icon3.png";
-import SelectDepartmentPopup from "views/app-views/AssetManager/Environments/Components/SelectDepartmentPopup";
+import FilterPopup from "views/app-views/AssetManager/Environments/Components/FilterPopup";
 import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import {
   Button,
@@ -166,7 +166,7 @@ class WafResources extends React.Component {
               </TableContainer>
             </Box>
           </Box>
-          <SelectDepartmentPopup ref={this.selectDepartmentPopupModalRef} />
+          <FilterPopup ref={this.selectDepartmentPopupModalRef} />
         </Box>
       </>
     );

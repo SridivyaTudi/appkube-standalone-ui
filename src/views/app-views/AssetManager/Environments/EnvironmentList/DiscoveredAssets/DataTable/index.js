@@ -9,7 +9,7 @@ import AppMesh from "assets/img/assetmanager/cloud-managed-icon7.png";
 import Kinesis from "assets/img/assetmanager/cloud-managed-icon8.png";
 import TimeSeries from "assets/img/assetmanager/cloud-managed-icon9.png";
 import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
-import SelectDepartmentPopup from "views/app-views/AssetManager/Environments/Components/SelectDepartmentPopup";
+import FilterPopup from "views/app-views/AssetManager/Environments/Components/FilterPopup";
 import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import {
   Button,
@@ -220,7 +220,7 @@ class DataTable extends Component {
               </TableContainer>
             </Box>
           </Box>
-          <SelectDepartmentPopup ref={this.selectDepartmentPopupModalRef} />
+          <FilterPopup ref={this.selectDepartmentPopupModalRef} />
         </Box>
       </>
     );

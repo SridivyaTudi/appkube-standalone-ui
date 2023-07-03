@@ -11,6 +11,8 @@ import HdfcIcon from "assets/img/assetmanager/hdfc-icon.png";
 import WalmartIcon from "assets/img/assetmanager/walmart-icon.png";
 import AdobeIcon from "assets/img/assetmanager/adobe-icon.png";
 import AppleIcon from "assets/img/assetmanager/apple-icon.png";
+import forbeseToolsIcon from "assets/img/assetmanager/forbese-tools-icon.png";
+import slackInventoryIcon from "assets/img/assetmanager/slack-inventory-icon.png";
 import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
 import Button from "@mui/material/Button";
 
@@ -551,22 +553,306 @@ class Application extends Component {
           </Box>
         }
         {activeTab === 1 &&
-          <Box className="environment-table-section">
-            <Box className="recently-cards">
-              <Box className="recently-card">
-                <Box className="recently-image">
+          <Box className="logistics-cards">
+            <Box className="logistics-card">
+              <Box className="d-flex width-100 top-content">
+                <Box className="image">
                   <img src={ProcurifyIcon} alt="" />
                 </Box>
-                <Box className="recently-content">
-                  <div className="title">Procurify</div>
-                  <Box className="refund-content">
-                    <span>Logistics-Tool</span>
+                <Box className="content">
+                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 status-content">
+                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
+                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
                   </Box>
+                </Box>
+              </Box>
+              <Box className="d-block width-100 bottom-content">
+                <Box className="content">
+                  <label>Client</label>
+                  <p>Forbese</p>
+                </Box>
+                <Box className="content">
+                  <label>Usage</label>
+                  <p>33%</p>
+                </Box>
+                <Box className="content">
+                  <label>User Count</label>
+                  <p>241</p>
+                </Box>
+                <Box className="content">
+                  <label>Tags</label>
+                  <span className="outline">Logistics</span>
+                </Box>
+                <Box className="content">
+                  <label>L.O.B</label>
+                  <span>Customs</span>
+                </Box>
+              </Box>
+            </Box>
+            <Box className="logistics-card">
+              <Box className="d-flex width-100 top-content">
+                <Box className="image">
+                  <img src={ProcurifyIcon} alt="" />
+                </Box>
+                <Box className="content">
+                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 status-content">
+                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
+                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                  </Box>
+                </Box>
+              </Box>
+              <Box className="d-block width-100 bottom-content">
+                <Box className="content">
+                  <label>Client</label>
+                  <p>Forbese</p>
+                </Box>
+                <Box className="content">
+                  <label>Usage</label>
+                  <p>33%</p>
+                </Box>
+                <Box className="content">
+                  <label>User Count</label>
+                  <p>241</p>
+                </Box>
+                <Box className="content">
+                  <label>Tags</label>
+                  <span className="outline">Logistics</span>
+                </Box>
+                <Box className="content">
+                  <label>L.O.B</label>
+                  <span>Customs</span>
+                </Box>
+              </Box>
+            </Box>
+            <Box className="logistics-card">
+              <Box className="d-flex width-100 top-content">
+                <Box className="image">
+                  <img src={ProcurifyIcon} alt="" />
+                </Box>
+                <Box className="content">
+                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 status-content">
+                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
+                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                  </Box>
+                </Box>
+              </Box>
+              <Box className="d-block width-100 bottom-content">
+                <Box className="content">
+                  <label>Client</label>
+                  <p>Forbese</p>
+                </Box>
+                <Box className="content">
+                  <label>Usage</label>
+                  <p>33%</p>
+                </Box>
+                <Box className="content">
+                  <label>User Count</label>
+                  <p>241</p>
+                </Box>
+                <Box className="content">
+                  <label>Tags</label>
+                  <span className="outline">Logistics</span>
+                </Box>
+                <Box className="content">
+                  <label>L.O.B</label>
+                  <span>Customs</span>
+                </Box>
+              </Box>
+            </Box>
+            <Box className="logistics-card">
+              <Box className="d-flex width-100 top-content">
+                <Box className="image">
+                  <img src={ProcurifyIcon} alt="" />
+                </Box>
+                <Box className="content">
+                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 status-content">
+                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
+                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                  </Box>
+                </Box>
+              </Box>
+              <Box className="d-block width-100 bottom-content">
+                <Box className="content">
+                  <label>Client</label>
+                  <p>Forbese</p>
+                </Box>
+                <Box className="content">
+                  <label>Usage</label>
+                  <p>33%</p>
+                </Box>
+                <Box className="content">
+                  <label>User Count</label>
+                  <p>241</p>
+                </Box>
+                <Box className="content">
+                  <label>Tags</label>
+                  <span className="outline">Logistics</span>
+                </Box>
+                <Box className="content">
+                  <label>L.O.B</label>
+                  <span>Customs</span>
+                </Box>
+              </Box>
+            </Box>
+            <Box className="logistics-card">
+              <Box className="d-flex width-100 top-content">
+                <Box className="image">
+                  <img src={ProcurifyIcon} alt="" />
+                </Box>
+                <Box className="content">
+                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 status-content">
+                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
+                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                  </Box>
+                </Box>
+              </Box>
+              <Box className="d-block width-100 bottom-content">
+                <Box className="content">
+                  <label>Client</label>
+                  <p>Forbese</p>
+                </Box>
+                <Box className="content">
+                  <label>Usage</label>
+                  <p>33%</p>
+                </Box>
+                <Box className="content">
+                  <label>User Count</label>
+                  <p>241</p>
+                </Box>
+                <Box className="content">
+                  <label>Tags</label>
+                  <span className="outline">Logistics</span>
+                </Box>
+                <Box className="content">
+                  <label>L.O.B</label>
+                  <span>Customs</span>
+                </Box>
+              </Box>
+            </Box>
+            <Box className="logistics-card">
+              <Box className="d-flex width-100 top-content">
+                <Box className="image">
+                  <img src={ProcurifyIcon} alt="" />
+                </Box>
+                <Box className="content">
+                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 status-content">
+                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
+                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                  </Box>
+                </Box>
+              </Box>
+              <Box className="d-block width-100 bottom-content">
+                <Box className="content">
+                  <label>Client</label>
+                  <p>Forbese</p>
+                </Box>
+                <Box className="content">
+                  <label>Usage</label>
+                  <p>33%</p>
+                </Box>
+                <Box className="content">
+                  <label>User Count</label>
+                  <p>241</p>
+                </Box>
+                <Box className="content">
+                  <label>Tags</label>
+                  <span className="outline">Logistics</span>
+                </Box>
+                <Box className="content">
+                  <label>L.O.B</label>
+                  <span>Customs</span>
+                </Box>
+              </Box>
+            </Box>
+            <Box className="logistics-card">
+              <Box className="d-flex width-100 top-content">
+                <Box className="image">
+                  <img src={ProcurifyIcon} alt="" />
+                </Box>
+                <Box className="content">
+                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 status-content">
+                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
+                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                  </Box>
+                </Box>
+              </Box>
+              <Box className="d-block width-100 bottom-content">
+                <Box className="content">
+                  <label>Client</label>
+                  <p>Forbese</p>
+                </Box>
+                <Box className="content">
+                  <label>Usage</label>
+                  <p>33%</p>
+                </Box>
+                <Box className="content">
+                  <label>User Count</label>
+                  <p>241</p>
+                </Box>
+                <Box className="content">
+                  <label>Tags</label>
+                  <span className="outline">Logistics</span>
+                </Box>
+                <Box className="content">
+                  <label>L.O.B</label>
+                  <span>Customs</span>
+                </Box>
+              </Box>
+            </Box>
+            <Box className="logistics-card">
+              <Box className="d-flex width-100 top-content">
+                <Box className="image">
+                  <img src={ProcurifyIcon} alt="" />
+                </Box>
+                <Box className="content">
+                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 status-content">
+                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
+                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                  </Box>
+                </Box>
+              </Box>
+              <Box className="d-block width-100 bottom-content">
+                <Box className="content">
+                  <label>Client</label>
+                  <p>Forbese</p>
+                </Box>
+                <Box className="content">
+                  <label>Usage</label>
+                  <p>33%</p>
+                </Box>
+                <Box className="content">
+                  <label>User Count</label>
+                  <p>241</p>
+                </Box>
+                <Box className="content">
+                  <label>Tags</label>
+                  <span className="outline">Logistics</span>
+                </Box>
+                <Box className="content">
+                  <label>L.O.B</label>
+                  <span>Customs</span>
                 </Box>
               </Box>
             </Box>
           </Box>
         }
+
         <Box className="recently-viewed-section">
           <h3>Recently Viewed</h3>
           <Box className="recently-cards">
@@ -606,7 +892,7 @@ class Application extends Component {
             </Box>
             <Box className="recently-card">
               <Box className="recently-image">
-                <img src={ProcurifyIcon} alt="" />
+                <img src={forbeseToolsIcon} alt="" />
               </Box>
               <Box className="recently-content">
                 <div className="title">Forbese-Tools</div>
@@ -617,7 +903,7 @@ class Application extends Component {
             </Box>
             <Box className="recently-card">
               <Box className="recently-image">
-                <img src={ProcurifyIcon} alt="" />
+                <img src={slackInventoryIcon} alt="" />
               </Box>
               <Box className="recently-content">
                 <div className="title">Slack Inventory</div>

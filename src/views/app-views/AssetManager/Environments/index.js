@@ -7,10 +7,12 @@ import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { connect } from "react-redux";
-import SelectDepartmentPopup from "views/app-views/AssetManager/Environments/Components/SelectDepartmentPopup";
+import FilterPopup from "views/app-views/AssetManager/Environments/Components/FilterPopup";
 import {
   getEnvsAsync,
   getEnvsSummary,
+  getProductsByDepId,
+  getEnvsByFilters 
 } from "redux/assetManager/environments/environmentsThunk";
 import status from "redux/constants/commonDS";
 import { APP_PREFIX_PATH } from "configs/AppConfig";
@@ -23,6 +25,7 @@ import TableRow from "@mui/material/TableRow";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
+import { getCurrentOrgId } from "utils";
 const LOGOS = {
   aws: AWS,
   azure: AZURE,
@@ -43,6 +46,10 @@ class Environments extends Component {
       allEnvData: [],
       allEnvSummary: [],
       menuSummaryShowMenu: [null, null],
+      products: {},
+      selectedDepartments: [],
+      selectedProductions: [],
+      selectedEnvs: [],
     };
   }
 
@@ -87,6 +94,21 @@ class Environments extends Component {
           ),
         });
         this.SetCurrentActiveTableIndex();
+      }
+    }
+
+    if (
+      prevProps.environments.productsByDepId.status !==
+      this.props.environments.productsByDepId.status
+    ) {
+      if (
+        this.props.environments.productsByDepId.status === status.SUCCESS &&
+        this.props.environments.productsByDepId.data
+      ) {
+        let { products, depId } = this.props.environments.productsByDepId.data;
+        this.setState((prevState) => ({
+          products: { ...prevState.products, [depId]: products },
+        }));
       }
     }
   }
@@ -366,6 +388,70 @@ class Environments extends Component {
       localStorage.setItem("recentEnv", JSON.stringify(recentEnv));
     }
   };
+
+  handleCheckChange = (e, type, depId) => {
+    let orgId = getCurrentOrgId();
+    let departmentId = depId;
+
+    const { value, checked } = e.target;
+    let { selectedProductions, selectedEnvs, selectedDepartments } = this.state;
+
+    if (type === "dep") {
+      if (checked) {
+        selectedDepartments.push(depId);
+        this.setState({
+          selectedDepartments,
+        });
+        this.props.getProductsByDepId({ orgId: orgId, depId: depId });
+      } else {
+        let removeProducts = this.state.products;
+        delete removeProducts[depId];
+        selectedDepartments = selectedDepartments.filter(
+          (departmentId) => departmentId !== depId
+        );
+        if (!this.productsLength()) {
+          selectedProductions = selectedEnvs = selectedDepartments = [];
+        }
+        this.setState({
+          products: removeProducts,
+          selectedProductions,
+          selectedEnvs,
+          selectedDepartments,
+        });
+      }
+    } else if (type === "prod") {
+      if (checked) {
+        this.setState((prevState) => ({
+          selectedProductions: [...prevState.selectedProductions, value],
+        }));
+      } else {
+        let newChecked = selectedProductions.filter((item) => item !== value);
+        if (!newChecked.length) {
+          selectedEnvs = [];
+        }
+        this.setState({ selectedProductions: newChecked, selectedEnvs });
+      }
+    }
+  };
+
+  handleEnvChange = (name) => {
+    let { selectedEnvs } = this.state;
+    if (selectedEnvs.includes(name)) {
+      selectedEnvs = selectedEnvs.filter((item) => item !== name);
+    } else {
+      selectedEnvs.push(name);
+    }
+    this.setState({ selectedEnvs });
+  };
+
+  handleClearFilters = ()=>{
+    const orgId = localStorage.getItem("currentOrgId");
+    this.props.getEnvsByFilters({ params:'', orgId })
+    let { selectedDepartments,selectedEnvs,selectedProductions} = this.state
+    selectedDepartments = selectedEnvs = selectedProductions = []
+    this.setState({selectedDepartments,selectedEnvs,selectedProductions})
+  }
+
   render() {
     const {
       showRecentFilter,
@@ -373,6 +459,11 @@ class Environments extends Component {
       searchkey,
       allEnvData,
       allEnvSummary,
+      selectedProductions,
+      selectedDepartments,
+      selectedEnvs,
+      showSelectDepartmentPopup,
+      products
     } = this.state;
     return (
       <div className="environment-container">
@@ -386,7 +477,7 @@ class Environments extends Component {
               <h3>Environments</h3>
             </Box>
             <Box className="environment-boxs m-t-4">
-              {allEnvData.length && this.renderEnvironmentBoxes() || ''}
+              {(allEnvData.length && this.renderEnvironmentBoxes()) || ""}
             </Box>
             <Box className="add-new-environment">
               <Box sx={{ width: "100%" }}>
@@ -596,14 +687,22 @@ class Environments extends Component {
                 </Grid>
               </Box>
             </Box>
-            {allEnvSummary.length && this.renderEnvironmentTable()}
+            {allEnvSummary.length && this.renderEnvironmentTable() || ''}
           </>
         )}
-        {this.state.showSelectDepartmentPopup ? (
-          <SelectDepartmentPopup
-            showModal={this.state.showSelectDepartmentPopup}
+        {showSelectDepartmentPopup ? (
+          <FilterPopup
+            showModal={showSelectDepartmentPopup}
             togglePopup={this.togglePopup}
-
+            handleCheckChange={this.handleCheckChange}
+            handleEnvChange={this.handleEnvChange}
+            handleClearFilters={this.handleClearFilters}
+            products={products}
+            selectedFilters={{
+              selectedDepartments,
+              selectedEnvs,
+              selectedProductions,
+            }}
           />
         ) : (
           <></>
@@ -624,6 +723,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   getEnvsAsync,
   getEnvsSummary,
+  getProductsByDepId,
+  getEnvsByFilters
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Environments);
