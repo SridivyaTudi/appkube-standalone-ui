@@ -89,7 +89,7 @@ export const getEnvsByFilters = createAsyncThunk(
     if (data) {
       let {params,orgId} = data
       const url = config.GET_ENVIRONMENTS_SUMMARY_FILTERS.replace('#org-id#',orgId);
-      const response = await fetch(`${url}?${params}`);
+      const response = await fetch(`${url} ${params ? '?' : '' } ${params}`);
       if (response.ok) {
         const envsByFilter = await response.json();
         try {

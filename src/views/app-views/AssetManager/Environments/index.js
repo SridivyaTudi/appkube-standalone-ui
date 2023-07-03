@@ -442,6 +442,15 @@ class Environments extends Component {
     }
     this.setState({ selectedEnvs });
   };
+
+  handleClearFilters = ()=>{
+    const orgId = localStorage.getItem("currentOrgId");
+    this.props.getEnvsByFilters({ params:'', orgId })
+    let { selectedDepartments,selectedEnvs,selectedProductions} = this.state
+    selectedDepartments = selectedEnvs = selectedProductions = []
+    this.setState({selectedDepartments,selectedEnvs,selectedProductions})
+  }
+  
   render() {
     const {
       showRecentFilter,
@@ -686,6 +695,7 @@ class Environments extends Component {
             togglePopup={this.togglePopup}
             handleCheckChange={this.handleCheckChange}
             handleEnvChange={this.handleEnvChange}
+            handleClearFilters={this.handleClearFilters}
             products={products}
             selectedFilters={{
               selectedDepartments,

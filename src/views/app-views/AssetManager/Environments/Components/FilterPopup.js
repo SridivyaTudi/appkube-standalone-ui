@@ -28,7 +28,7 @@ class FilterPopup extends Component {
     this.state = {
       modal: false,
       departments: [],
-      deploymentEnvs: []
+      deploymentEnvs: [],
     };
   }
 
@@ -81,15 +81,7 @@ class FilterPopup extends Component {
 
   toggle = () => {
     this.props.togglePopup();
-    // this.setState({
-    //   selectedDepartments: [],
-    //   products: [],
-    //   selectedEnvs: [],
-    //   selectedProductions: [],
-    // });
   };
-
- 
 
   renderDepartments = () => {
     let { departments } = this.state;
@@ -130,9 +122,9 @@ class FilterPopup extends Component {
   };
 
   renderProducts = () => {
-    let { selectedFilters, products } = this.props
-    let { selectedProductions } = selectedFilters
-    console.log(selectedProductions)
+    let { selectedFilters, products } = this.props;
+    let { selectedProductions } = selectedFilters;
+    console.log(selectedProductions);
     return Object.keys(products).map((departmentProducts, index) => {
       return this.props.products[departmentProducts].map(
         (product, innerIndex) => {
@@ -168,7 +160,7 @@ class FilterPopup extends Component {
 
   productsLength = () => {
     let isProduct = false;
-    const  { products } = this.props;
+    const { products } = this.props;
     if (Object.keys(products).length) {
       Object.keys(products).forEach((productKey) => {
         if (products[productKey] && products[productKey].length && !isProduct) {
@@ -180,7 +172,8 @@ class FilterPopup extends Component {
   };
 
   handleSubmit = () => {
-    let { selectedDepartments, selectedProductions, selectedEnvs } = this.props.selectedFilters;
+    let { selectedDepartments, selectedProductions, selectedEnvs } =
+      this.props.selectedFilters;
     const orgId = localStorage.getItem("currentOrgId");
     let params = "";
     if (selectedDepartments.length) {
@@ -192,15 +185,14 @@ class FilterPopup extends Component {
     if (selectedEnvs.length) {
       params += `&env=${selectedEnvs[0]}`;
     }
-    this.props.getEnvsByFilters({ params, orgId })
+    this.props.getEnvsByFilters({ params, orgId });
     this.toggle();
-    
   };
 
   render() {
-    const {departments, deploymentEnvs} = this.state;
-    const { selectedProductions,selectedEnvs} = this.props.selectedFilters
-    const { products} = this.props
+    const { departments, deploymentEnvs } = this.state;
+    const { selectedProductions, selectedEnvs } = this.props.selectedFilters;
+    const { products } = this.props;
     return (
       <Modal
         isOpen={this.props.showModal}
@@ -272,7 +264,9 @@ class FilterPopup extends Component {
                         return (
                           <Grid key={item.name} item lg={3} md={4} xs={12}>
                             <Box
-                              onClick={() => this.props.handleEnvChange(item.name)}
+                              onClick={() =>
+                                this.props.handleEnvChange(item.name)
+                              }
                               className={`environment-box ${
                                 selectedEnvs.includes(item.name) ? "active" : ""
                               }`}
@@ -304,30 +298,36 @@ class FilterPopup extends Component {
             <Button
               className="secondary-btn m-r-2"
               variant="contained"
-              onClick={this.toggle}
+              onClick={() => {
+                this.props.handleClearFilters();
+                this.toggle();
+              }}
             >
               Clear
             </Button>
-            {this.productsLength() &&
-            (<LoadingButton
-              disabled={
-                this.props.environments.envSummary.status === status.IN_PROGRESS
-                  ? true
-                  : false
-              }
-              loading={
-                this.props.environments.envSummary.status === status.IN_PROGRESS
-                  ? true
-                  : false
-              }
-              className="primary-btn min-width"
-              loadingPosition="start"
-              variant="contained"
-              onClick={() => this.handleSubmit()}
-            >
-              Submit
-            </LoadingButton>) || ''
-            }
+            {(this.productsLength() && (
+              <LoadingButton
+                disabled={
+                  this.props.environments.envSummary.status ===
+                  status.IN_PROGRESS
+                    ? true
+                    : false
+                }
+                loading={
+                  this.props.environments.envSummary.status ===
+                  status.IN_PROGRESS
+                    ? true
+                    : false
+                }
+                className="primary-btn min-width"
+                loadingPosition="start"
+                variant="contained"
+                onClick={() => this.handleSubmit()}
+              >
+                Submit
+              </LoadingButton>
+            )) ||
+              ""}
           </Box>
         </ModalFooter>
       </Modal>
@@ -350,7 +350,4 @@ const mapDispatchToProps = {
   getEnvsByFilters,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FilterPopup);
+export default connect(mapStateToProps, mapDispatchToProps)(FilterPopup);
