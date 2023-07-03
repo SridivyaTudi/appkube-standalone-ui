@@ -22,18 +22,13 @@ const deploymentImgs = {
   PROD: "production",
 };
 
-class SelectDepartmentPopup extends Component {
+class FilterPopup extends Component {
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
-      selectedDepartments: [],
-      selectedProductions: [],
-      selectedEnvs: [],
-      products: {},
       departments: [],
-      deploymentEnvs: [],
-      selectedDepartments: [],
+      deploymentEnvs: []
     };
   }
 
@@ -51,13 +46,17 @@ class SelectDepartmentPopup extends Component {
       this.props.environments.organizationWiseDepartments.status
     ) {
       if (
-        this.props.environments.organizationWiseDepartments.status === status.SUCCESS &&
+        this.props.environments.organizationWiseDepartments.status ===
+          status.SUCCESS &&
         this.props.environments.organizationWiseDepartments.data
       ) {
-        if (this.props.environments.organizationWiseDepartments.data.departments) {
+        if (
+          this.props.environments.organizationWiseDepartments.data.departments
+        ) {
           this.setState({
             departments:
-              this.props.environments.organizationWiseDepartments.data.departments,
+              this.props.environments.organizationWiseDepartments.data
+                .departments,
           });
         }
       }
@@ -78,124 +77,64 @@ class SelectDepartmentPopup extends Component {
         }
       }
     }
-
-    if (
-      prevProps.environments.productsByDepId.status !==
-      this.props.environments.productsByDepId.status
-    ) {
-      if (
-        this.props.environments.productsByDepId.status === status.SUCCESS &&
-        this.props.environments.productsByDepId.data
-      ) {
-        let { products, depId } = this.props.environments.productsByDepId.data;
-        let { selectedDepartments } = this.state;
-        selectedDepartments.push(depId);
-        this.setState((prevState) => ({
-          products: { ...prevState.products, [depId]: products },
-          selectedDepartments,
-        }));
-      }
-    }
   }
 
   toggle = () => {
     this.props.togglePopup();
-    this.setState({
-      selectedDepartments: [],
-      products: [],
-      selectedEnvs: [],
-      selectedProductions: [],
-    });
+    // this.setState({
+    //   selectedDepartments: [],
+    //   products: [],
+    //   selectedEnvs: [],
+    //   selectedProductions: [],
+    // });
   };
 
-  handleCheckChange = (e, type, depId) => {
-    let orgId = getCurrentOrgId();
-    let departmentId = depId;
+ 
 
-    const { value, checked } = e.target;
-    let { selectedProductions, selectedEnvs, selectedDepartments } = this.state;
-
-    if (type === "dep") {
-      if (checked) {
-        this.props.getProductsByDepId({ orgId: orgId, depId: depId });
-      } else {
-        let removeProducts = this.state.products;
-        delete removeProducts[depId];
-        selectedDepartments = selectedDepartments.filter(
-          (departmentId) => departmentId !== depId
-        );
-        if (!this.productsLength()) {
-          selectedProductions = selectedEnvs = selectedDepartments = [];
-        }
-        this.setState({
-          products: removeProducts,
-          selectedProductions,
-          selectedEnvs,
-          selectedDepartments,
-        });
-      }
-    } else if (type === "prod") {
-      if (checked) {
-        this.setState((prevState) => ({
-          selectedProductions: [...prevState.selectedProductions, value],
-        }));
-      } else {
-        let newChecked = selectedProductions.filter((item) => item !== value);
-        if (!newChecked.length) {
-          selectedEnvs = [];
-        }
-        this.setState({ selectedProductions: newChecked, selectedEnvs });
-      }
-    }
-  };
-
-  handleEnvChange = (name) => {
-    let { selectedEnvs } = this.state;
-    if (selectedEnvs.includes(name)) {
-      selectedEnvs = selectedEnvs.filter((item) => item !== name);
-    } else {
-      selectedEnvs.push(name);
-    }
-    this.setState({ selectedEnvs });
-  };
-
-  renderDepartMents = () => {
+  renderDepartments = () => {
     let { departments } = this.state;
-    return departments.map((department, index) => {
-      return (
-        <Grid item lg={4} md={4} xs={12} key={index}>
-          <Box className="d-flex align-items-center checkbox">
-            <input
-              className="checkbox-input"
-              type="checkbox"
-              checked={this.isDepartmentSelected(department.id)}
-              onChange={(e) => this.handleCheckChange(e, "dep", department.id)}
-            />
-            <label
-              htmlFor={department.name}
-              onClick={(e) =>
-                this.handleCheckChange(
-                  {
-                    target: {
-                      checked: !this.isDepartmentSelected(department.id),
+    if (departments.length) {
+      return departments.map((department, index) => {
+        return (
+          <Grid item lg={4} md={4} xs={12} key={index}>
+            <Box className="d-flex align-items-center checkbox">
+              <input
+                className="checkbox-input"
+                type="checkbox"
+                checked={this.isDepartmentSelected(department.id)}
+                onChange={(e) =>
+                  this.props.handleCheckChange(e, "dep", department.id)
+                }
+              />
+              <label
+                htmlFor={department.name}
+                onClick={(e) =>
+                  this.props.handleCheckChange(
+                    {
+                      target: {
+                        checked: !this.isDepartmentSelected(department.id),
+                      },
                     },
-                  },
-                  "dep",
-                  department.id
-                )
-              }
-            >
-              {department.name}
-            </label>
-          </Box>
-        </Grid>
-      );
-    });
+                    "dep",
+                    department.id
+                  )
+                }
+              >
+                {department.name}
+              </label>
+            </Box>
+          </Grid>
+        );
+      });
+    }
   };
 
   renderProducts = () => {
-    return Object.keys(this.state.products).map((departmentProducts, index) => {
-      return this.state.products[departmentProducts].map(
+    let { selectedFilters, products } = this.props
+    let { selectedProductions } = selectedFilters
+    console.log(selectedProductions)
+    return Object.keys(products).map((departmentProducts, index) => {
+      return this.props.products[departmentProducts].map(
         (product, innerIndex) => {
           return (
             <Grid key={innerIndex} item lg={4} md={4} xs={12}>
@@ -203,7 +142,8 @@ class SelectDepartmentPopup extends Component {
                 <input
                   type="checkbox"
                   value={product}
-                  onChange={(e) => this.handleCheckChange(e, "prod")}
+                  checked={selectedProductions.includes(product)}
+                  onChange={(e) => this.props.handleCheckChange(e, "prod")}
                   id={product}
                 />
                 <label htmlFor={product}>{product}</label>
@@ -216,7 +156,7 @@ class SelectDepartmentPopup extends Component {
   };
 
   isDepartmentSelected = (depId) => {
-    let { selectedDepartments } = this.state;
+    let { selectedDepartments } = this.props.selectedFilters;
     if (selectedDepartments.length)
       return selectedDepartments.filter(
         (departmentId) => departmentId === depId
@@ -228,14 +168,10 @@ class SelectDepartmentPopup extends Component {
 
   productsLength = () => {
     let isProduct = false;
-    const { products } = this.state;
+    const  { products } = this.props;
     if (Object.keys(products).length) {
       Object.keys(products).forEach((productKey) => {
-        if (
-          products[productKey] &&
-          products[productKey].length &&
-          !isProduct
-        ) {
+        if (products[productKey] && products[productKey].length && !isProduct) {
           isProduct = true;
         }
       });
@@ -244,30 +180,27 @@ class SelectDepartmentPopup extends Component {
   };
 
   handleSubmit = () => {
-    let { selectedDepartments, selectedProductions, selectedEnvs } = this.state;
-    let filterString = "";
+    let { selectedDepartments, selectedProductions, selectedEnvs } = this.props.selectedFilters;
+    const orgId = localStorage.getItem("currentOrgId");
+    let params = "";
     if (selectedDepartments.length) {
-      filterString += `departmentId=${selectedDepartments[0]}`;
+      params += `departmentId=${selectedDepartments[0]}`;
     }
     if (selectedProductions.length) {
-      filterString += `&product=${selectedProductions[0]}`;
+      params += `&product=${selectedProductions[0]}`;
     }
     if (selectedEnvs.length) {
-      filterString += `&env=${selectedEnvs[0]}`;
+      params += `&env=${selectedEnvs[0]}`;
     }
-    this.props.getEnvsByFilters(filterString).then((res)=>{
-      this.toggle();
-    })
+    this.props.getEnvsByFilters({ params, orgId })
+    this.toggle();
+    
   };
 
   render() {
-    const {
-      selectedProductions,
-      selectedEnvs,
-      products,
-      departments,
-      deploymentEnvs,
-    } = this.state;
+    const {departments, deploymentEnvs} = this.state;
+    const { selectedProductions,selectedEnvs} = this.props.selectedFilters
+    const { products} = this.props
     return (
       <Modal
         isOpen={this.props.showModal}
@@ -304,7 +237,7 @@ class SelectDepartmentPopup extends Component {
                   alignItems={"center"}
                   justifyContent={"flex-start"}
                 >
-                  {(departments.length && this.renderDepartMents()) || ""}
+                  {this.renderDepartments()}
                 </Grid>
               </Box>
               {(this.productsLength() && (
@@ -339,7 +272,7 @@ class SelectDepartmentPopup extends Component {
                         return (
                           <Grid key={item.name} item lg={3} md={4} xs={12}>
                             <Box
-                              onClick={() => this.handleEnvChange(item.name)}
+                              onClick={() => this.props.handleEnvChange(item.name)}
                               className={`environment-box ${
                                 selectedEnvs.includes(item.name) ? "active" : ""
                               }`}
@@ -375,12 +308,17 @@ class SelectDepartmentPopup extends Component {
             >
               Clear
             </Button>
-            <LoadingButton
+            {this.productsLength() &&
+            (<LoadingButton
               disabled={
-                this.props.environments.envSummary.status === status.IN_PROGRESS ? true : false
+                this.props.environments.envSummary.status === status.IN_PROGRESS
+                  ? true
+                  : false
               }
               loading={
-                this.props.environments.envSummary.status === status.IN_PROGRESS ? true : false
+                this.props.environments.envSummary.status === status.IN_PROGRESS
+                  ? true
+                  : false
               }
               className="primary-btn min-width"
               loadingPosition="start"
@@ -388,7 +326,8 @@ class SelectDepartmentPopup extends Component {
               onClick={() => this.handleSubmit()}
             >
               Submit
-            </LoadingButton>
+            </LoadingButton>) || ''
+            }
           </Box>
         </ModalFooter>
       </Modal>
@@ -414,4 +353,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SelectDepartmentPopup);
+)(FilterPopup);

@@ -1,5 +1,5 @@
 import React from "react";
-import SelectDepartmentPopup from "views/app-views/AssetManager/Environments/Components/SelectDepartmentPopup";
+import FilterPopup from "views/app-views/AssetManager/Environments/Components/FilterPopup";
 import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import {
   Button,
@@ -135,7 +135,7 @@ class EcsCluster extends React.Component {
               </TableContainer>
             </Box>
           </Box>
-          <SelectDepartmentPopup ref={this.selectDepartmentPopupModalRef} />
+          <FilterPopup ref={this.selectDepartmentPopupModalRef} />
         </Box>
       </>
     );

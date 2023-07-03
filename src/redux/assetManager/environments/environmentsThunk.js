@@ -43,16 +43,16 @@ export const getProductsByDepId = createAsyncThunk(
   "environments/getProductsByDepId",
   async (data) => {
     if (data) {
-      const url = config.GET_PRODUCTS_BY_DEPID;
-      let {orgId,depId} = data
-      const response = await fetch(
-        `${url}/${orgId}/departments/${depId}/products?orgId=${orgId}&depId=${depId}`
+      let { orgId, depId } = data;
+      let url = config.GET_PRODUCTS_BY_DEPID.replace("#org-id#", orgId).replace(
+        "#dep-id#",
+        depId
       );
+      const response = await fetch(`${url}?orgId=${orgId}&depId=${depId}`);
       if (response.ok) {
         const products = await response.json();
         try {
-          console.log({products,depId})
-          return {products,depId};
+          return { products, depId };
         } catch (error) {
           console.log(error);
         }
@@ -87,8 +87,9 @@ export const getEnvsByFilters = createAsyncThunk(
   "environments/getEnvsByFilters",
   async (data) => {
     if (data) {
-      const url = config.GET_ENVIRONMENTS_SUMMARY_FILTERS;
-      const response = await fetch(`${url}${data}`);
+      let {params,orgId} = data
+      const url = config.GET_ENVIRONMENTS_SUMMARY_FILTERS.replace('#org-id#',orgId);
+      const response = await fetch(`${url}?${params}`);
       if (response.ok) {
         const envsByFilter = await response.json();
         try {

@@ -2,7 +2,7 @@ import React from "react";
 import GlobalIcon1 from "assets/img/assetmanager/global-icon1.png";
 import GlobalIcon2 from "assets/img/assetmanager/global-icon2.png";
 import GlobalIcon3 from "assets/img/assetmanager/global-icon3.png";
-import SelectDepartmentPopup from "views/app-views/AssetManager/Environments/Components/SelectDepartmentPopup";
+import FilterPopup from "views/app-views/AssetManager/Environments/Components/FilterPopup";
 import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import {
   Button,
@@ -214,7 +214,7 @@ class GlobalSerivces extends React.Component {
               </Box>
             </Box>
           </Box>
-          <SelectDepartmentPopup ref={this.selectDepartmentPopupModalRef} />
+          <FilterPopup ref={this.selectDepartmentPopupModalRef} />
         </Box>
       </>
     );
