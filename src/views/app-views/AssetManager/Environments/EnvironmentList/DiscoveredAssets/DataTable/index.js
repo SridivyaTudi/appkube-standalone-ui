@@ -9,7 +9,6 @@ import AppMesh from "assets/img/assetmanager/cloud-managed-icon7.png";
 import Kinesis from "assets/img/assetmanager/cloud-managed-icon8.png";
 import TimeSeries from "assets/img/assetmanager/cloud-managed-icon9.png";
 import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
-import FilterPopup from "views/app-views/AssetManager/Environments/Components/FilterPopup";
 import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import {
   Button,
@@ -42,12 +41,9 @@ class DataTable extends Component {
         Athena,
       ],
     };
-    this.selectDepartmentPopupModalRef = React.createRef();
+
   }
-  onClickSelectDepartmentPopup = (link) => {
-    this.selectDepartmentPopupModalRef.current.setLink(link);
-    this.selectDepartmentPopupModalRef.current.toggle();
-  };
+ 
 
   render() {
     const {} = this.state;
@@ -220,7 +216,6 @@ class DataTable extends Component {
               </TableContainer>
             </Box>
           </Box>
-          <FilterPopup ref={this.selectDepartmentPopupModalRef} />
         </Box>
       </>
     );

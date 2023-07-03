@@ -1,5 +1,4 @@
 import React from "react";
-import FilterPopup from "views/app-views/AssetManager/Environments/Components/FilterPopup";
 import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import {
   Button,
@@ -19,12 +18,7 @@ class EksCluster extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.selectDepartmentPopupModalRef = React.createRef();
   }
-  onClickSelectDepartmentPopup = (link) => {
-    this.selectDepartmentPopupModalRef.current.setLink(link);
-    this.selectDepartmentPopupModalRef.current.toggle();
-  };
 
   render() {
     return (
@@ -134,7 +128,6 @@ class EksCluster extends React.Component {
               </TableContainer>
             </Box>
           </Box>
-          <FilterPopup ref={this.selectDepartmentPopupModalRef} />
         </Box>
       </>
     );

@@ -2,7 +2,6 @@ import React from "react";
 import GlobalIcon6 from "assets/img/assetmanager/global-icon6.png";
 import GlobalIcon7 from "assets/img/assetmanager/global-icon7.png";
 import GlobalIcon3 from "assets/img/assetmanager/global-icon3.png";
-import FilterPopup from "views/app-views/AssetManager/Environments/Components/FilterPopup";
 import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import {
   Button,
@@ -22,12 +21,7 @@ class WafResources extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.selectDepartmentPopupModalRef = React.createRef();
   }
-  onClickSelectDepartmentPopup = (link) => {
-    this.selectDepartmentPopupModalRef.current.setLink(link);
-    this.selectDepartmentPopupModalRef.current.toggle();
-  };
 
   render() {
     return (
@@ -166,7 +160,6 @@ class WafResources extends React.Component {
               </TableContainer>
             </Box>
           </Box>
-          <FilterPopup ref={this.selectDepartmentPopupModalRef} />
         </Box>
       </>
     );
