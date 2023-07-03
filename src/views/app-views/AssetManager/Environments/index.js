@@ -12,7 +12,7 @@ import {
   getEnvsAsync,
   getEnvsSummary,
   getProductsByDepId,
-  getEnvsByFilters 
+  getEnvsByFilters,
 } from "redux/assetManager/environments/environmentsThunk";
 import status from "redux/constants/commonDS";
 import { APP_PREFIX_PATH } from "configs/AppConfig";
@@ -72,12 +72,10 @@ class Environments extends Component {
       prevProps.environments.allEnvs.status !==
       this.props.environments.allEnvs.status
     ) {
-      if (
-        this.props.environments.allEnvs.status === status.SUCCESS 
-        ) {
+      if (this.props.environments.allEnvs.status === status.SUCCESS) {
         this.setState({ allEnvData: this.props.environments.allEnvs.data });
-      } else if(this.props.environments.allEnvs.status === status.FAILURE ) {
-        ToastMessage.error('There is some issue.')
+      } else if (this.props.environments.allEnvs.status === status.FAILURE) {
+        ToastMessage.error("There is some issue.");
       }
     }
 
@@ -96,9 +94,9 @@ class Environments extends Component {
           ),
         });
         this.SetCurrentActiveTableIndex();
-      } else if(this.props.environments.allEnvs.status === status.FAILURE ) {
-        ToastMessage.error('There is some issue.')
-      } 
+      } else if (this.props.environments.allEnvs.status === status.FAILURE) {
+        ToastMessage.error("There is some issue.");
+      }
     }
 
     if (
@@ -414,7 +412,7 @@ class Environments extends Component {
           (departmentId) => departmentId !== depId
         );
         if (!this.productsLength()) {
-          selectedProductions = selectedEnvs = selectedDepartments = [];
+          selectedProductions = selectedEnvs = [];
         }
         this.setState({
           products: removeProducts,
@@ -448,14 +446,39 @@ class Environments extends Component {
     this.setState({ selectedEnvs });
   };
 
-  handleClearFilters = ()=>{
+  handleClearFilters = () => {
     const orgId = localStorage.getItem("currentOrgId");
-    this.props.getEnvsByFilters({ params:'', orgId })
-    let { selectedDepartments,selectedEnvs,selectedProductions} = this.state
-    selectedDepartments = selectedEnvs = selectedProductions = []
-    this.setState({selectedDepartments,selectedEnvs,selectedProductions})
-  }
+    let { selectedDepartments, selectedEnvs, selectedProductions, products } = this.state;
+    if (selectedDepartments.length) {
+      this.props.getEnvsByFilters({ params: "", orgId });
+    }
 
+    selectedDepartments = []
+    selectedProductions = [];
+    selectedEnvs=[]
+    products = {};
+
+    this.setState({
+      selectedDepartments,
+      selectedEnvs,
+      selectedProductions,
+      products,
+    });
+    
+  };
+
+  productsLength = () => {
+    let isProduct = false;
+    const { products } = this.state;
+    if (Object.keys(products).length) {
+      Object.keys(products).forEach((productKey) => {
+        if (products[productKey] && products[productKey].length && !isProduct) {
+          isProduct = true;
+        }
+      });
+    }
+    return isProduct;
+  };
   render() {
     const {
       showRecentFilter,
@@ -467,7 +490,7 @@ class Environments extends Component {
       selectedDepartments,
       selectedEnvs,
       showSelectDepartmentPopup,
-      products
+      products,
     } = this.state;
     return (
       <div className="environment-container">
@@ -691,7 +714,9 @@ class Environments extends Component {
                 </Grid>
               </Box>
             </Box>
-            {allEnvSummary.length && this.renderEnvironmentTable() || ''}
+            {(allEnvSummary.length && this.renderEnvironmentTable()) || (
+              <Box className="chart-spinner text-center w-100 p-t-20 p-b-20">No environments found.</Box>
+            )}
           </>
         )}
         {showSelectDepartmentPopup ? (
@@ -728,7 +753,7 @@ const mapDispatchToProps = {
   getEnvsAsync,
   getEnvsSummary,
   getProductsByDepId,
-  getEnvsByFilters
+  getEnvsByFilters,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Environments);

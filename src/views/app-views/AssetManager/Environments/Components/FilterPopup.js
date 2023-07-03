@@ -124,7 +124,6 @@ class FilterPopup extends Component {
   renderProducts = () => {
     let { selectedFilters, products } = this.props;
     let { selectedProductions } = selectedFilters;
-    console.log(selectedProductions);
     return Object.keys(products).map((departmentProducts, index) => {
       return this.props.products[departmentProducts].map(
         (product, innerIndex) => {
@@ -177,13 +176,13 @@ class FilterPopup extends Component {
     const orgId = localStorage.getItem("currentOrgId");
     let params = "";
     if (selectedDepartments.length) {
-      params += `departmentId=${selectedDepartments[0]}`;
+      params += `departmentId=${selectedDepartments[selectedDepartments.length - 1]}`;
     }
     if (selectedProductions.length) {
-      params += `&product=${selectedProductions[0]}`;
+      params += `&product=${selectedProductions[selectedProductions.length - 1]}`;
     }
     if (selectedEnvs.length) {
-      params += `&env=${selectedEnvs[0]}`;
+      params += `&env=${selectedEnvs[selectedEnvs.length-1]}`;
     }
     this.props.getEnvsByFilters({ params, orgId });
     this.toggle();
@@ -191,7 +190,7 @@ class FilterPopup extends Component {
 
   render() {
     const { departments, deploymentEnvs } = this.state;
-    const { selectedProductions, selectedEnvs } = this.props.selectedFilters;
+    const { selectedProductions, selectedEnvs, selectedDepartments } = this.props.selectedFilters;
     const { products } = this.props;
     return (
       <Modal
@@ -232,7 +231,7 @@ class FilterPopup extends Component {
                   {this.renderDepartments()}
                 </Grid>
               </Box>
-              {(this.productsLength() && (
+              {selectedDepartments.length ?  this.productsLength() ?  (
                 <>
                   <h4 className="text-left m-b-1 m-t-2">Select Production</h4>
                   <Box sx={{ width: "100%" }} className="border-bottom p-b-10">
@@ -247,9 +246,8 @@ class FilterPopup extends Component {
                     </Grid>
                   </Box>
                 </>
-              )) ||
-                ""}
-              {(selectedProductions.length && Object.keys(products).length && (
+              ): <></>  :<></>}
+              {selectedDepartments.length ?  selectedProductions.length && this.productsLength() ? (
                 <>
                   <h4 className="text-left m-b-1 m-t-2">Select Environment</h4>
                   <Box sx={{ width: "100%" }}>
@@ -288,8 +286,7 @@ class FilterPopup extends Component {
                     </Grid>
                   </Box>
                 </>
-              )) ||
-                ""}
+              ) : <></> :<></>} 
             </>
           )}
         </ModalBody>
@@ -305,7 +302,7 @@ class FilterPopup extends Component {
             >
               Clear
             </Button>
-            {(this.productsLength() && (
+            {(selectedDepartments.length && (
               <LoadingButton
                 disabled={
                   this.props.environments.envSummary.status ===
