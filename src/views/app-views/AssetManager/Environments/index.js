@@ -11,7 +11,8 @@ import FilterPopup from "views/app-views/AssetManager/Environments/Components/Fi
 import {
   getEnvsAsync,
   getEnvsSummary,
-  getProductsByDepId 
+  getProductsByDepId,
+  getEnvsByFilters 
 } from "redux/assetManager/environments/environmentsThunk";
 import status from "redux/constants/commonDS";
 import { APP_PREFIX_PATH } from "configs/AppConfig";
@@ -450,7 +451,7 @@ class Environments extends Component {
     selectedDepartments = selectedEnvs = selectedProductions = []
     this.setState({selectedDepartments,selectedEnvs,selectedProductions})
   }
-  
+
   render() {
     const {
       showRecentFilter,
@@ -722,7 +723,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   getEnvsAsync,
   getEnvsSummary,
-  getProductsByDepId 
+  getProductsByDepId,
+  getEnvsByFilters
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Environments);
