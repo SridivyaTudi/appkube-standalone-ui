@@ -6,3 +6,6 @@ https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube?page-id=6795%3A29886&
 
 Environments:
 https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube?type=design&node-id=11660-66102&scaling=scale-down-width&page-id=11036%3A61674&starting-point-node-id=11116%3A62213
+
+Open API data: 
+https://github.com/AppkubeCloud/appkube-cmdb-service/blob/main/core-service-api/src/main/resources/rest_api.yaml
