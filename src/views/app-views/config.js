@@ -1,5 +1,5 @@
-const envsUrl = `https://5jdezsz635.execute-api.us-east-1.amazonaws.com/dev`;
-// const envsUrl = `http://34.199.12.114:6057/api`;
+// const envsUrl = `https://5jdezsz635.execute-api.us-east-1.amazonaws.com/dev`;
+const envsUrl = `https://34.199.12.114:6057/api`;
 const baseURL = "http://34.199.12.114:5057/api";
 const authUrl = "http://34.199.12.114:8094/security";
 
@@ -17,7 +17,6 @@ const config = {
   ADD_CLOUD_ENV: `${envsUrl}/cloud-environments`,
   GET_PRODUCTS_BY_DEPID:`${envsUrl}/query/organizations/#org-id#/departments/#dep-id#/products`,
   GET_DEPLOYMENT_ENVIRONMENTS:`${envsUrl}/deployment-environments`,
-  GET_ENVIRONMENTS_SUMMARY_FILTERS:`${envsUrl}/query/organizations/#org-id#/cloud-environments/summary`,
 
 
   /* AUTH SERVICES */

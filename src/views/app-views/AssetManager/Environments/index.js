@@ -26,6 +26,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
 import { getCurrentOrgId } from "utils";
+import { ToastMessage } from "Toast/ToastMessage";
 const LOGOS = {
   aws: AWS,
   azure: AZURE,
@@ -72,10 +73,11 @@ class Environments extends Component {
       this.props.environments.allEnvs.status
     ) {
       if (
-        this.props.environments.allEnvs.status === status.SUCCESS &&
-        this.props.environments.allEnvs.data
-      ) {
+        this.props.environments.allEnvs.status === status.SUCCESS 
+        ) {
         this.setState({ allEnvData: this.props.environments.allEnvs.data });
+      } else if(this.props.environments.allEnvs.status === status.FAILURE ) {
+        ToastMessage.error('There is some issue.')
       }
     }
 
@@ -94,7 +96,9 @@ class Environments extends Component {
           ),
         });
         this.SetCurrentActiveTableIndex();
-      }
+      } else if(this.props.environments.allEnvs.status === status.FAILURE ) {
+        ToastMessage.error('There is some issue.')
+      } 
     }
 
     if (
