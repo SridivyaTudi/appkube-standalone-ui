@@ -13,6 +13,7 @@ import {
 import { getCurrentOrgId } from "utils";
 import Button from "@mui/material/Button";
 import status from "redux/constants/commonDS";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const deploymentImgs = {
   DEV: "department",
@@ -88,7 +89,6 @@ class SelectDepartmentPopup extends Component {
       ) {
         let { products, depId } = this.props.environments.productsByDepId.data;
         let { selectedDepartments } = this.state;
-        console.log(this.props.environments.productsByDepId.data);
         selectedDepartments.push(depId);
         this.setState((prevState) => ({
           products: { ...prevState.products, [depId]: products },
@@ -255,9 +255,11 @@ class SelectDepartmentPopup extends Component {
     if (selectedEnvs.length) {
       filterString += `&env=${selectedEnvs[0]}`;
     }
-    this.props.getEnvsByFilters(filterString);
-    this.toggle();
+    this.props.getEnvsByFilters(filterString).then((res)=>{
+      this.toggle();
+    })
   };
+
   render() {
     const {
       selectedProductions,
@@ -373,7 +375,7 @@ class SelectDepartmentPopup extends Component {
             >
               Clear
             </Button>
-            {this.productsLength() ? (
+            {/* {this.productsLength() ? (
               <Button
                 onClick={() => this.handleSubmit()}
                 className="primary-btn min-width"
@@ -383,7 +385,21 @@ class SelectDepartmentPopup extends Component {
               </Button>
             ) : (
               <></>
-            )}
+            )} */}
+            <LoadingButton
+              disabled={
+                this.props.environments.envSummary.status === status.IN_PROGRESS ? true : false
+              }
+              loading={
+                this.props.environments.envSummary.status === status.IN_PROGRESS ? true : false
+              }
+              className="primary-btn min-width"
+              loadingPosition="start"
+              variant="contained"
+              onClick={() => this.handleSubmit()}
+            >
+              Submit
+            </LoadingButton>
           </Box>
         </ModalFooter>
       </Modal>
