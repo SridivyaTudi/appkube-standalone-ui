@@ -11,7 +11,6 @@ import SelectDepartmentPopup from "views/app-views/AssetManager/Environments/Com
 import {
   getEnvsAsync,
   getEnvsSummary,
-  getDepartmentsOrgWise,
 } from "redux/assetManager/environments/environmentsThunk";
 import status from "redux/constants/commonDS";
 import { APP_PREFIX_PATH } from "configs/AppConfig";
@@ -625,7 +624,6 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   getEnvsAsync,
   getEnvsSummary,
-  getDepartmentsOrgWise
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Environments);

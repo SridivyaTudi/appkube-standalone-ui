@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getEnvsAsync,
   getEnvsSummary,
-  getDepartmentsOrgWise,
+  getOrgWiseDepartments,
   getProductsByDepId,
   getDeploymentEnvs,
   getEnvsByFilters
@@ -18,7 +18,7 @@ export const environmentSlice = createSlice({
     envSummary: {
       status: null
     },
-    departmentsFilters:{
+    organizationWiseDepartments:{
       status: null
     },
     productsByDepId: {
@@ -82,27 +82,27 @@ export const environmentSlice = createSlice({
         },
       };
     },
-    [getDepartmentsOrgWise.pending]: (state, action) => {
+    [getOrgWiseDepartments.pending]: (state, action) => {
       return {
         ...state,
-        departmentsFilters: {
+        organizationWiseDepartments: {
           status: status.IN_PROGRESS,
         },
       };
     },
-    [getDepartmentsOrgWise.fulfilled]: (state, {payload}) => {
+    [getOrgWiseDepartments.fulfilled]: (state, {payload}) => {
       return {
         ...state,
-        departmentsFilters: {
+        organizationWiseDepartments: {
           status: status.SUCCESS,
           data: payload,
         },
       };
     },
-    [getDepartmentsOrgWise.rejected]: (state, action) => {
+    [getOrgWiseDepartments.rejected]: (state, action) => {
       return {
         ...state,
-        departmentsFilters: {
+        organizationWiseDepartments: {
           status: status.FAILURE,
         },
       };

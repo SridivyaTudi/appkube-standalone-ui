@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import { connect } from "react-redux";
 import {
   getProductsByDepId,
-  getDepartmentsOrgWise,
+  getOrgWiseDepartments,
   getDeploymentEnvs,
   getEnvsByFilters,
 } from "redux/assetManager/environments/environmentsThunk";
@@ -40,24 +40,24 @@ class SelectDepartmentPopup extends Component {
   componentDidMount = () => {
     let currentOrgId = localStorage.getItem("currentOrgId");
     if (currentOrgId > 0) {
-      this.props.getDepartmentsOrgWise(currentOrgId);
+      this.props.getOrgWiseDepartments(currentOrgId);
       this.props.getDeploymentEnvs(currentOrgId);
     }
   };
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.environments.departmentsFilters.status !==
-      this.props.environments.departmentsFilters.status
+      prevProps.environments.organizationWiseDepartments.status !==
+      this.props.environments.organizationWiseDepartments.status
     ) {
       if (
-        this.props.environments.departmentsFilters.status === status.SUCCESS &&
-        this.props.environments.departmentsFilters.data
+        this.props.environments.organizationWiseDepartments.status === status.SUCCESS &&
+        this.props.environments.organizationWiseDepartments.data
       ) {
-        if (this.props.environments.departmentsFilters.data.departments) {
+        if (this.props.environments.organizationWiseDepartments.data.departments) {
           this.setState({
             departments:
-              this.props.environments.departmentsFilters.data.departments,
+              this.props.environments.organizationWiseDepartments.data.departments,
           });
         }
       }
@@ -226,14 +226,14 @@ class SelectDepartmentPopup extends Component {
     else return false;
   };
 
-  productsLength = (products = []) => {
+  productsLength = () => {
     let isProduct = false;
-    let productData = products.length ? products : {};
-    if (Object.keys(this.state.products).length) {
-      Object.keys(this.state.products).forEach((productKey) => {
+    const { products } = this.state;
+    if (Object.keys(products).length) {
+      Object.keys(products).forEach((productKey) => {
         if (
-          this.state.products[productKey] &&
-          this.state.products[productKey].length &&
+          products[productKey] &&
+          products[productKey].length &&
           !isProduct
         ) {
           isProduct = true;
@@ -289,7 +289,7 @@ class SelectDepartmentPopup extends Component {
           style={{ overflowY: "auto", overflowX: "hidden", height: "300px" }}
         >
           <h4 className="text-left m-b-1">Select Department</h4>
-          {this.props.environments.departmentsFilters.status ===
+          {this.props.environments.organizationWiseDepartments.status ===
           status.IN_PROGRESS ? (
             <Box className="text-center align-self-center p-t-20 p-b-20">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
@@ -375,17 +375,6 @@ class SelectDepartmentPopup extends Component {
             >
               Clear
             </Button>
-            {/* {this.productsLength() ? (
-              <Button
-                onClick={() => this.handleSubmit()}
-                className="primary-btn min-width"
-                variant="contained"
-              >
-                Submit
-              </Button>
-            ) : (
-              <></>
-            )} */}
             <LoadingButton
               disabled={
                 this.props.environments.envSummary.status === status.IN_PROGRESS ? true : false
@@ -417,7 +406,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getProductsByDepId,
-  getDepartmentsOrgWise,
+  getOrgWiseDepartments,
   getDeploymentEnvs,
   getEnvsByFilters,
 };
