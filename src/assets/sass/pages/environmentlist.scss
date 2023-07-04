@@ -3,6 +3,13 @@
   display: block;
   padding: 40px 60px;
   background-color: #f6f7fb;
+  .new-environment-loader{
+    width: 100%;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .chart-spinner {
     min-height: 430px;
@@ -31,6 +38,14 @@
     width: 100%;
     overflow: hidden;
     overflow-x: auto;
+    .environment-loader{
+      width: 100%;
+      height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    
+    }
 
     .environment-box {
       width: 276px;

@@ -602,9 +602,9 @@ class Environments extends Component {
         <Box className="list-heading">
           <h3>Environments</h3>
         </Box>
-        <Box className="environment-boxs m-t-4 ">
+        <Box className="environment-boxs m-t-4">
           {this.props.environments.allEnvs.status === status.IN_PROGRESS ? (
-            <Box className="text-center align-self-center w-100">
+            <Box className="environment-loader w-100">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
           ) : (
@@ -816,7 +816,7 @@ class Environments extends Component {
           </Box>
         </Box>
         {this.props.environments.envSummary.status === status.IN_PROGRESS ? (
-          <Box className="text-center align-self-center p-t-20 p-b-20">
+          <Box className="new-environment-loader text-center align-self-center p-t-20 p-b-20">
             <i className="fa-solid fa-spinner fa-spin" /> Loading...
           </Box>
         ) : (
