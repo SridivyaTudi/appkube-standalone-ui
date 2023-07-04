@@ -42,7 +42,7 @@ function TopBar() {
   }, [orgs]);
 
   const getCurrentUserInfo = ()=>{
-    return getCurrentUser() ? getCurrentUser()?.info?.user : {username:'',email:'',profileImage:''}
+    return getCurrentUser() ? getCurrentUser()?.info?.user ? getCurrentUser().info.user : { username:'',email:'',profileImage:''} : {username:'',email:'',profileImage:''}
   }
   return (
     <Box className="top-bar">
