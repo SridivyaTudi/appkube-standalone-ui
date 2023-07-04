@@ -191,7 +191,32 @@
     {"name": "API", "value": "146"},
     {"name": "LB", "value": "06"}
   ],
-  
+  "AllServices": [
+    {"name": "Dynamo DB", "value": "235"},
+    {"name": "Document DB", "value": "146"},
+    {"name": "Cassndra", "value": "06"},
+    {"name": "Opensearch", "value": "06"},
+    {"name": "CloudSearch", "value": "65"},
+    {"name": "Kendra", "value": "152"},
+    {"name": "ElasticCache", "value": "235"},
+    {"name": "Redis DS", "value": "36"},
+    {"name": "Glacier", "value": "236"},
+    {"name": "CodeCommit", "value": "25"},
+    {"name": "QLDB", "value": "994"},
+    {"name": "S3", "value": "452"}
+
+  ],
+  "NoSqldbServices": [
+    {"name": "Waf", "value": "235"},
+    {"name": "API", "value": "146"},
+    {"name": "LB", "value": "06"}
+  ],
+  "GitDbServices": [
+    {"name": "Waf", "value": "235"},
+    {"name": "API", "value": "146"},
+    {"name": "LB", "value": "06"}
+  ],
+ 
   "lambdaResources": [
     {
       "title": "Total Cost",
