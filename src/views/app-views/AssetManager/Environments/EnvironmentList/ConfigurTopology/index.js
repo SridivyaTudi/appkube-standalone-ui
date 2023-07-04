@@ -13,11 +13,38 @@ import NoSqlIcon from "assets/img/assetmanager/no-sql-icon.png";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import Slider from '@mui/material/Slider';
+import { right } from "@popperjs/core";
 
 class ConfigurTopology extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: [2, 25],
+      pointStaticValueFirst: 21,
+      pointStaticValueSecond: 77,
+    };
+  }
+
+  handleChange = (event, newValue) => {
+    this.setState({ value: newValue })
+  };
+
+  valuetext(value) {
+    return `${value}`;
+  }
+
+  caluclateFirstLineWidth = () => {
+    const { pointStaticValueFirst, value } = this.state;
+    if (value[0] < pointStaticValueFirst) {
+      return value[0];
+    }
+  }
+
   render() {
+    const { value } = this.state;
     return (
-      <Box className="deploy-project-container">
+      <Box className="configure-topology-container">
         <Box className="page-heading">
           <h3>Configure Topology</h3>
         </Box>
@@ -78,7 +105,7 @@ class ConfigurTopology extends Component {
                   </Button>
                 </Box>
                 <Box className="d-block down-arrow">
-                  <i class="fa-solid fa-down-long"></i>
+                  <i className="fa-solid fa-down-long"></i>
                 </Box>
                 <Box className="d-block">
                   <Button className="primary-btn min-width-inherit" variant="contained">
@@ -88,7 +115,7 @@ class ConfigurTopology extends Component {
                 <Box className="eks-logo-boxs border-bottom">
                   <Box className="d-inline-block">
                     <Box className="box-arrow">
-                      <i class="fa-solid fa-down-long"></i>
+                      <i className="fa-solid fa-down-long"></i>
                     </Box>
                     <Box className="eks-logo">
                       <img src={GlobalIcon5} alt="" />
@@ -97,7 +124,7 @@ class ConfigurTopology extends Component {
                   </Box>
                   <Box className="d-inline-block">
                     <Box className="box-arrow">
-                      <i class="fa-solid fa-down-long"></i>
+                      <i className="fa-solid fa-down-long"></i>
                     </Box>
                     <Box className="eks-logo">
                       <img src={GlobalIcon4} alt="" />
@@ -105,7 +132,7 @@ class ConfigurTopology extends Component {
                   </Box>
                   <Box className="d-inline-block">
                     <Box className="box-arrow">
-                      <i class="fa-solid fa-down-long"></i>
+                      <i className="fa-solid fa-down-long"></i>
                     </Box>
                     <Box className="eks-logo">
                       <img src={GlobalIcon8} alt="" />
@@ -120,7 +147,7 @@ class ConfigurTopology extends Component {
                 <Box className="eks-logo-boxs">
                   <Box className="d-inline-block">
                     <Box className="box-arrow">
-                      <i class="fa-solid fa-down-long"></i>
+                      <i className="fa-solid fa-down-long"></i>
                     </Box>
                     <Box className="eks-logo">
                       <img src={CacheIcon} alt="" />
@@ -129,7 +156,7 @@ class ConfigurTopology extends Component {
                   </Box>
                   <Box className="d-inline-block">
                     <Box className="box-arrow">
-                      <i class="fa-solid fa-down-long"></i>
+                      <i className="fa-solid fa-down-long"></i>
                     </Box>
                     <Box className="eks-logo">
                       <img src={SqlIcon} alt="" />
@@ -138,7 +165,7 @@ class ConfigurTopology extends Component {
                   </Box>
                   <Box className="d-inline-block">
                     <Box className="box-arrow">
-                      <i class="fa-solid fa-down-long"></i>
+                      <i className="fa-solid fa-down-long"></i>
                     </Box>
                     <Box className="eks-logo">
                       <img src={NoSqlIcon} alt="" />
@@ -161,11 +188,11 @@ class ConfigurTopology extends Component {
                   <Box className="reserved-card">
                     <Box className="title">
                       <h4>RESERVED</h4>
-                      <i className="fas fa-question"></i>
+                      <i className="fa-solid fa-circle-question"></i>
                     </Box>
                     <Box className="reseved-content">
                       <Box className="d-flex align-items-center justify-content-center">
-                        <input id="number" type="number" value="42" />
+                        <input id="number" type="text" placeholder="02" />
                         <Box className="dropdown-arrow">
                           <Box className="d-block">
                             <i className="fas fa-angle-up"></i>
@@ -178,16 +205,18 @@ class ConfigurTopology extends Component {
                       </Box>
                       <p className="text-left">1.75 GIB, 5.6 GHz</p>
                     </Box>
+                    <div className="slider-line" style={{ right: `${value[0]}%`, width: `${this.caluclateFirstLineWidth()}%` }}>
+                    </div>
                   </Box>
                   <Box className="reserved-card">
                     <Box className="title">
                       <h4>SCALING LIMIT</h4>
-                      <i className="fas fa-question"></i>
+                      <i className="fa-solid fa-circle-question"></i>
                     </Box>
                     <Box className="reseved-content">
                       <Box className="d-flex align-items-center justify-content-center">
                         <span className="p-r-5">Up to</span>
-                        <input id="number" type="number" value="42" />
+                        <input id="number" type="text" placeholder="25" />
                         <Box className="dropdown-arrow">
                           <Box className="d-block">
                             <i className="fas fa-angle-up"></i>
@@ -200,19 +229,24 @@ class ConfigurTopology extends Component {
                       </Box>
                       <p className="text-left">up to 44 GIB, 140.8 GHz</p>
                     </Box>
+                    <div className="slider-line" style={{ left: `${value[1]}%` }}>
+                      <span style={{ width: `${value[1]}px` }}></span>
+                    </div>
                   </Box>
                 </Box>
                 <Box className="d-block m-t-3">
-                  <progress
-                    id="file"
-                    value="32"
-                    className="progress-bar"
-                    max="100"
-                  >
-                    {" "}
-                    32%{" "}
-                  </progress>
-                  <p className="m-t-2">Horizontal Scaling Per Node</p>
+                  <Slider
+                    value={value}
+                    onChange={this.handleChange}
+                    valueLabelDisplay="on"
+                    getAriaValueText={this.valuetext}
+                    className="slider"
+                    defaultValue={25}
+                    min={0}
+                    max={100}
+                    disableSwap
+                  />
+                  <p className="m-t-4">Horizontal Scaling Per Node</p>
                 </Box>
               </Box>
             </Grid>
@@ -221,7 +255,7 @@ class ConfigurTopology extends Component {
                 <Box className="address-content">
                   <span><i className="fa-sharp fa-solid fa-location-dot"></i></span>
                   <p>Region: Newyork</p>
-                  <i className="fas fa-angle-down"></i>
+                  <i className="fa-solid fa-angle-down"></i>
                 </Box>
               </Box>
             </Grid>
