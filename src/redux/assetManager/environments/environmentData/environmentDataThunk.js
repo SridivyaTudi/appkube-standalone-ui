@@ -5,7 +5,7 @@ import axios from "services";
 export const getEnvironmentVpcs = createAsyncThunk(
   "environmentData/getEnvironmentVpcs",
   async (params) => {
-    const url = `${config.GET_ACCOUNT_SERVICES}?accountId=${accountId}`;
+    const url = `${config.GET_ACCOUNT_SERVICES}`;
     try {
       const response = await axios.get(url, params);
       const vpcs = response.data;
