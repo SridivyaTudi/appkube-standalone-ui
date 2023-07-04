@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { ToastMessage } from "../../../../../Toast/ToastMessage";
 import Button from "@mui/material/Button";
-import { getOrganizationalUnits } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
+import { getOrgWiseDepartments } from "redux/assetManager/environments/environmentsThunk";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
 import { getCurrentOrgId } from "utils";
@@ -19,7 +19,7 @@ class SelectAccountPopup extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getOrganizationalUnits();
+    this.props.getOrgWiseDepartments(Number(getCurrentOrgId()));
     if (Number(this.props.checkedId)) {
       this.setState({ currentSelectedDepId: Number(this.props.checkedId) });
     }
@@ -27,13 +27,13 @@ class SelectAccountPopup extends Component {
 
   componentDidUpdate = (prevProps) => {
     if (
-      this.props.organizationalUnit &&
-      this.props.organizationalUnit.status !==
-        prevProps.organizationalUnit.status &&
-      this.props.organizationalUnit.status === status.SUCCESS
+      this.props.organizationWiseDepartments &&
+      this.props.organizationWiseDepartments.status !==
+        prevProps.organizationWiseDepartments.status &&
+      this.props.organizationWiseDepartments.status === status.SUCCESS
     ) {
       this.setState({
-        departments: this.props.organizationalUnit.data.allOrgs,
+        departments: this.props.organizationWiseDepartments.data.departments,
       });
     }
   };
@@ -50,15 +50,9 @@ class SelectAccountPopup extends Component {
 
   renderDepartments() {
     const { departments } = this.state;
-    let currentData;
-    departments.map((item) => {
-      if (item.id === Number(getCurrentOrgId())) {
-        currentData = item.departments;
-      }
-    });
     return (
       <>
-        {currentData.map((department, index) => {
+        {departments.map((department, index) => {
           return (
             <Grid item xs={4} key={department.id}>
               <div className="d-flex align-items-center" key={index}>
@@ -101,7 +95,8 @@ class SelectAccountPopup extends Component {
           style={{ overflow: "hidden", overflowY: "auto", maxHeight: "300px" }}
         >
           <h4 className="text-left m-b-1">Select OU</h4>
-          {this.props?.organizationalUnit?.status === status.IN_PROGRESS ? (
+          {this.props?.organizationWiseDepartments?.status ===
+          status.IN_PROGRESS ? (
             <Box className="text-center align-self-center p-t-20 p-b-20">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
@@ -158,12 +153,12 @@ class SelectAccountPopup extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { newAccountSetup } = state;
-  return newAccountSetup;
+  const { environments } = state;
+  return environments;
 };
 
 const mapDispatchToProps = {
-  getOrganizationalUnits,
+  getOrgWiseDepartments,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectAccountPopup);

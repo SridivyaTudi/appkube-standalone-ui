@@ -6,7 +6,7 @@ import CreateNewOuPopup from "./CreateNewOuPopup";
 import SelectAccountPopup from "./SelectAccountPopup";
 import Button from "@mui/material/Button";
 import { connect } from "react-redux";
-import { getOrganizationalUnits } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
+import { getOrgWiseDepartments } from "redux/assetManager/environments/environmentsThunk";
 import status from "redux/constants/commonDS";
 import { getCurrentOrgId } from "utils";
 
@@ -26,21 +26,18 @@ class AssociateOu extends Component {
 
   componentDidUpdate = (prevProps) => {
     if (
-      prevProps.organizationalUnit.status !==
-        this.props.organizationalUnit.status &&
-      this.props.organizationalUnit.status === status.SUCCESS
+      prevProps.organizationWiseDepartments.status !==
+        this.props.organizationWiseDepartments.status &&
+      this.props.organizationWiseDepartments.status === status.SUCCESS
     ) {
-      let currentDepartments;
-      this.props.organizationalUnit.data.allOrgs.map((item) => {
-        if (item.id === Number(getCurrentOrgId())) {
-          currentDepartments = item.departments;
-        }
+      this.setState({
+        departments: this.props.organizationWiseDepartments.data.departments,
       });
-      this.setState({ departments: currentDepartments });
     }
   };
 
   newDepartmentAppend = (department, description) => {
+    debugger;
     this.setState({
       departments: [department].concat(this.state.departments),
       checkedId: department.id,
@@ -189,12 +186,12 @@ class AssociateOu extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { newAccountSetup } = state;
-  return newAccountSetup;
+  const { environments } = state;
+  return environments;
 };
 
 const mapDispatchToProps = {
-  getOrganizationalUnits,
+  getOrgWiseDepartments,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssociateOu);

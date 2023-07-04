@@ -1,21 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import config from "views/app-views/config";
+import axios from "services";
 
 export const createNewOU = createAsyncThunk(
   "organizationalUnitThunk/createNewOU",
-  async (data) => {
+  async (params) => {
     const url = config.DEPARTMENTS;
-    const options = {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
-    };
-    const response = await fetch(`${url}`, options);
-    if (response.ok) {
-      const createOuRes = await response.json();
-      return { createOuRes };
-    } else {
-      return Promise.reject(response.status);
+    try {
+      const response = await axios.post(url, params, {
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
     }
   }
 );
@@ -23,32 +21,28 @@ export const createNewOU = createAsyncThunk(
 export const getOrganizationalUnits = createAsyncThunk(
   "organizationalUnitThunk/getAll",
   async () => {
-    const url = config.GET_ALL_ORGS;
-    const response = await fetch(`${url}`);
-    if (response.ok) {
-      const allOrgs = await response.json();
-      return { allOrgs };
-    } else {
-      return Promise.reject(response.status);
+    const url = config.GET_ALL_ORG_WISE_DEPARTMENTS;
+    try {
+      const response = await axios.get(`${url}`);
+      const allOrgs = response.data;
+      return allOrgs;
+    } catch (error) {
+      console.log(error);
     }
   }
 );
 
 export const addCloudEnv = createAsyncThunk(
   "organizationalUnitThunk/addCloundEnv",
-  async (data) => {
+  async (params) => {
     const url = config.ADD_CLOUD_ENV;
-    const options = {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
-    };
-    const response = await fetch(url, options);
-    if (response.ok) {
-      const addCloudEnvRes = await response.json();
-      return { addCloudEnvRes };
-    } else {
-      return Promise.reject(response.status);
+    try {
+      const response = await axios.post(url, params, {
+        headers: { "Content-Type": "application/json" },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
     }
   }
 );

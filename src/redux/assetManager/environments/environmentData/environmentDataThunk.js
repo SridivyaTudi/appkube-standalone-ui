@@ -1,10 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import config from "views/app-views/config";
+import axios from "services";
 
 export const getEnvironmentVpcs = createAsyncThunk(
   "environmentData/getEnvironmentVpcs",
   async (accountId) => {
-    const url = `${config.GET_ACCOUNT_SERVICES}?accountId=${accountId}`
+    const url = `${config.GET_ACCOUNT_SERVICES}?accountId=${accountId}`;
     const response = await fetch(`${url}`);
     if (response.ok) {
       const vpcs = await response.json();
@@ -13,10 +14,10 @@ export const getEnvironmentVpcs = createAsyncThunk(
   }
 );
 
-export const getEnvironments= createAsyncThunk(
+export const getEnvironments = createAsyncThunk(
   "environmentData/getEnvironments",
-  async (accountId) => {
-    const url = `${config.GET_ENVIRONMENTS}`
+  async () => {
+    const url = `${config.GET_ENVIRONMENTS}`;
     const response = await fetch(`${url}`);
     if (response.ok) {
       const environments = await response.json();
@@ -25,10 +26,10 @@ export const getEnvironments= createAsyncThunk(
   }
 );
 
-export const getDepartments= createAsyncThunk(
+export const getDepartments = createAsyncThunk(
   "environmentData/getDepartments",
   async (accountId) => {
-    const url = `${config.GET_DEPARTMENT_WISE_DATA}?associatedLandingZone=${accountId}`
+    const url = `${config.GET_DEPARTMENT_WISE_DATA}?associatedLandingZone=${accountId}`;
     const response = await fetch(`${url}`);
     if (response.ok) {
       const departments = await response.json();

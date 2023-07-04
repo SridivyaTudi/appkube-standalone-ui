@@ -5,18 +5,18 @@ const authUrl = "http://34.199.12.114:8094/security";
 
 const config = {
   /* ASSETMANAGER SERVICES  */
-  GET_ALL_ENVIRONMENT_COUNT: `${envsUrl}/query/organizations/#org-id#/cloud-environments/count`,
-  GET_ALL_ENVIRONMENT_SUMMARY: `${envsUrl}/query/organizations/#org-id#/cloud-environments/summary`,
-  GET_ALL_ORGS: `${envsUrl}/organizations`,
+  GET_ALL_ENVIRONMENT_COUNT: `/query/organizations/#org-id#/cloud-environments/count`,
+  GET_ALL_ENVIRONMENT_SUMMARY: `/query/organizations/#org-id#/cloud-environments/summary`,
+  GET_ALL_ORG_WISE_DEPARTMENTS: `/organizations/#org-id#`,
   GET_DEPARTMENT_WISE_DATA: `${baseURL}/department-wise-analytics/get-data`,
   GET_ACCOUNT_SERVICES: `${baseURL}/account-services/search`,
   GET_DEPARTMENTS: `${envsUrl}/departments/search?organizationId=`,
   GET_ENVIRONMENTS: `${envsUrl}/cloud-environments`,
   GET_ORG_WISE_DEPARTMENTS: `${envsUrl}/query/organizations/#org-id#/departments`,
-  DEPARTMENTS: `${envsUrl}/departments`,
-  ADD_CLOUD_ENV: `${envsUrl}/cloud-environments`,
-  GET_PRODUCTS_BY_DEPID:`${envsUrl}/query/organizations/#org-id#/departments/#dep-id#/products`,
-  GET_DEPLOYMENT_ENVIRONMENTS:`${envsUrl}/deployment-environments`,
+  DEPARTMENTS: `/departments`,
+  ADD_CLOUD_ENV: `/cloud-environments`,
+  GET_PRODUCTS_BY_DEPID:`/query/organizations/#org-id#/departments/#dep-id#/products`,
+  GET_DEPLOYMENT_ENVIRONMENTS:`/deployment-environments`,
 
 
   /* AUTH SERVICES */
