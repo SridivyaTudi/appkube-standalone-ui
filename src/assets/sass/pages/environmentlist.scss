@@ -364,8 +364,7 @@
         padding-bottom: 0px;
         display: table;
         width: calc(100% - 0.1em)
-          /* scrollbar is average 1em/16px width, remove it from thead width */
-        ;
+          /* scrollbar is average 1em/16px width, remove it from thead width */;
 
         &.active {
           th {
@@ -1478,10 +1477,15 @@
                   margin: 0;
 
                   li {
+                    display: block;
                     list-style: none;
                     text-align: center;
                     padding: 8px 5px;
                     margin-bottom: 10px;
+                    cursor: pointer;
+                    font-weight: 500;
+                    font-size: 14px;
+                    color: #535362;
 
                     &:hover {
                       border-radius: 3px;
@@ -1490,7 +1494,8 @@
 
                     &.active {
                       border-radius: 3px;
-                      background: #cdd2f1;
+                      background: #DDE1F8; 
+                      color: #383874;
 
                       a {
                         color: #383874;
@@ -1838,7 +1843,6 @@
             }
 
             .top-content {
-
               .image {
                 display: inline-flex;
                 width: 75px;
@@ -2059,7 +2063,6 @@
           }
         }
       }
-
     }
 
     .global-services-fliter {
@@ -2237,9 +2240,7 @@
           font-weight: 600;
           color: #383874;
         }
-
       }
-
     }
 
     .procurify-card-buttons {
@@ -2255,11 +2256,11 @@
         font-size: 18px;
 
         .fa-trash-can {
-          color: #FF2D2E;
+          color: #ff2d2e;
         }
 
         .fa-rotate-right {
-          color: #9A9AAF;
+          color: #9a9aaf;
         }
       }
     }
@@ -2275,7 +2276,7 @@
         margin-left: 20px;
 
         .primary-outline-btn {
-          border-color: #C6CBD9;
+          border-color: #c6cbd9;
           color: #383874;
           margin-right: 15px;
           font-weight: 400;
@@ -2345,9 +2346,8 @@
               font-size: 12px;
               line-height: 16px;
               font-weight: 500;
-              color: #9A9AAF;
+              color: #9a9aaf;
             }
-
           }
         }
 
@@ -2371,7 +2371,7 @@
             }
 
             .primary-btn {
-              background-color: #FF2D2E;
+              background-color: #ff2d2e;
             }
           }
 
@@ -2389,7 +2389,6 @@
               color: #383874;
               margin-bottom: 5px;
             }
-
           }
         }
       }
