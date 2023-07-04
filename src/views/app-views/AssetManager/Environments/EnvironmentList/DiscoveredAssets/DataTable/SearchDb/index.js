@@ -34,7 +34,7 @@ class SearchDb extends Component {
     return (
       <Box className="cloud-managed-cards">
         <Box className="cloud-managed-cards-scroll">
-          {dummyData.cloudManagedServices.map((item, index) => {
+          {dummyData.SearchDbServices.map((item, index) => {
             return (
               <Box className="service-card active">
                 <Box className="service-icon">

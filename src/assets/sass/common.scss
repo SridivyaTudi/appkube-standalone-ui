@@ -123,6 +123,7 @@ h3 {
   font-weight: 500;
   margin-bottom: 10px;
 }
+
 h4 {
   font-size: 16px;
   line-height: 20px;
@@ -258,6 +259,26 @@ button.secondary-text-btn {
   &:hover {
     background: #ffffff;
     color: #8392a7;
+    box-shadow: none;
+  }
+}
+
+button.light-btn {
+  background: #DDE1F8;
+  color: #383874;
+  border-radius: 5px;
+  min-width: 80px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0;
+  box-shadow: none;
+  text-transform: none;
+  font-family: "Open Sans", sans-serif;
+
+  &:hover {
+    background: #DDE1F8;
+    color: #383874;
     box-shadow: none;
   }
 }

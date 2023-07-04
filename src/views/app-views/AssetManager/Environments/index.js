@@ -176,7 +176,7 @@ class Environments extends Component {
                   <span style={{ backgroundColor: "#00b929" }}></span>
                   <p>Total Billing</p>
                 </Box>
-                <label>&#65284;{env.totalBilling}</label>
+                <label>{env.totalBilling ? `&#65284;${env.totalBilling}` : ''}</label>
               </ListItem>
             </List>
           </Box>
@@ -494,13 +494,10 @@ class Environments extends Component {
       selectEnvsNotSubmitted,
       showSelectDepartmentPopup,
     } = this.state;
-    let isSubmitedFilter =
-      !selectDepartmentsNotSubmitted.length ||
-      !selectProductionsNotSubmitted.length ||
-      !selectEnvsNotSubmitted.length;
+  
     if (
-      (!isSubmitedFilter && selectedDepartments.length) ||
-      !allEnvSummary.length
+      ((!selectDepartmentsNotSubmitted.length && selectedDepartments.length) ||
+      !allEnvSummary.length )
     ) {
       this.props.getEnvsByFilters({ params: "", orgId });
     }
@@ -508,6 +505,9 @@ class Environments extends Component {
     selectedProductions = [];
     selectedEnvs = [];
     products = {};
+    selectDepartmentsNotSubmitted = [];
+    selectProductionsNotSubmitted = [];
+    selectEnvsNotSubmitted = []
     showSelectDepartmentPopup = false;
     this.setState({
       selectedDepartments,
@@ -604,11 +604,11 @@ class Environments extends Component {
         </Box>
         <Box className="environment-boxs m-t-4">
           {this.props.environments.allEnvs.status === status.IN_PROGRESS ? (
-            <Box className="text-center align-self-center p-t-20 p-b-20">
+            <Box className="environment-loader w-100">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
           ) : (
-            (allEnvData.length && this.renderEnvironmentBoxes()) || ""
+            allEnvData?.length ? this.renderEnvironmentBoxes() :<></> 
           )}
         </Box>
         <Box className="add-new-environment">
@@ -816,7 +816,7 @@ class Environments extends Component {
           </Box>
         </Box>
         {this.props.environments.envSummary.status === status.IN_PROGRESS ? (
-          <Box className="text-center align-self-center p-t-20 p-b-20">
+          <Box className="new-environment-loader text-center align-self-center p-t-20 p-b-20">
             <i className="fa-solid fa-spinner fa-spin" /> Loading...
           </Box>
         ) : (

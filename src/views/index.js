@@ -17,7 +17,9 @@ import Environments from "views/app-views/AssetManager/Environments";
 import Dashboard from "views/app-views/AssetManager/Dashboard";
 import NewAccountSetup from "views/app-views/AssetManager/NewAccountSetup";
 import EnvironmentList from "views/app-views/AssetManager/Environments/EnvironmentList";
-import ProcurifyLogisticsTools from "views/app-views/AssetManager/ProcurifyLogisticsTools";
+import ProcurifyLogisticsTools from "views/app-views/AssetManager/Environments/EnvironmentList/ProcurifyLogisticsTools";
+import DeployProject from "views/app-views/AssetManager/Environments/EnvironmentList/DeployProject";
+import ConfigurTopology from "views/app-views/AssetManager/Environments/EnvironmentList/ConfigurTopology";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { getCurrentUser } from "utils";
@@ -99,6 +101,14 @@ export const Views = (props) => {
           <Route
             path={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
             element={<ProcurifyLogisticsTools />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/environments/deployproject`}
+            element={<DeployProject />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/environments/configurtopology`}
+            element={<ConfigurTopology />}
           />
         </Routes>
       </div>
