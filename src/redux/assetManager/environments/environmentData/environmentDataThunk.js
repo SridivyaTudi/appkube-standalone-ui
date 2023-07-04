@@ -4,12 +4,14 @@ import axios from "services";
 
 export const getEnvironmentVpcs = createAsyncThunk(
   "environmentData/getEnvironmentVpcs",
-  async (accountId) => {
+  async (params) => {
     const url = `${config.GET_ACCOUNT_SERVICES}?accountId=${accountId}`;
-    const response = await fetch(`${url}`);
-    if (response.ok) {
-      const vpcs = await response.json();
+    try {
+      const response = await axios.get(url, params);
+      const vpcs = response.data;
       return vpcs;
+    } catch (error) {
+      console.log(error);
     }
   }
 );
@@ -18,22 +20,26 @@ export const getEnvironments = createAsyncThunk(
   "environmentData/getEnvironments",
   async () => {
     const url = `${config.GET_ENVIRONMENTS}`;
-    const response = await fetch(`${url}`);
-    if (response.ok) {
-      const environments = await response.json();
+    try {
+      const response = await axios.get(url, params);
+      const environments = response.data;
       return environments;
+    } catch (error) {
+      console.log(error);
     }
   }
 );
 
 export const getDepartments = createAsyncThunk(
   "environmentData/getDepartments",
-  async (accountId) => {
-    const url = `${config.GET_DEPARTMENT_WISE_DATA}?associatedLandingZone=${accountId}`;
-    const response = await fetch(`${url}`);
-    if (response.ok) {
-      const departments = await response.json();
+  async (params) => {
+    const url = `${config.GET_DEPARTMENT_WISE_DATA}`;
+    try {
+      const response = await axios.get(url, params);
+      const departments = response.data;
       return departments;
+    } catch (error) {
+      console.log(error);
     }
   }
 );

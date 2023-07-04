@@ -37,7 +37,6 @@ class AssociateOu extends Component {
   };
 
   newDepartmentAppend = (department, description) => {
-    debugger;
     this.setState({
       departments: [department].concat(this.state.departments),
       checkedId: department.id,
