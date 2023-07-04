@@ -102,10 +102,10 @@ export class ProcurifyLogisticsTools extends Component {
                     </Box>
                     <Box className="procurify-card-buttons">
                         <Button className="primary-btn min-width-inherit" variant="contained">
-                            <i class="fa-solid fa-trash-can"></i>
+                            <i className="fa-solid fa-trash-can"></i>
                         </Button>
                         <Button className="primary-btn min-width-inherit m-r-0" variant="contained">
-                            <i class="fa-solid fa-rotate-right"></i>
+                            <i className="fa-solid fa-rotate-right"></i>
                         </Button>
                     </Box>
                 </Box>
@@ -114,13 +114,13 @@ export class ProcurifyLogisticsTools extends Component {
                         <h3 className="m-b-0" style={{ lineHeight: '36px' }}>Main Information</h3>
                         <Box className="d-inline-block buttons">
                             <Button className="primary-outline-btn min-width-inherit" variant="outlined">
-                                <i class="fa-solid fa-code-commit"></i> <span>02</span> Commits
+                                <i className="fa-solid fa-code-commit"></i> <span>02</span> Commits
                             </Button>
                             <Button className="primary-outline-btn min-width-inherit" variant="outlined">
-                                <i class="fa-solid fa-code-branch"></i> <span>01</span> Branch
+                                <i className="fa-solid fa-code-branch"></i> <span>01</span> Branch
                             </Button>
                             <Button className="primary-outline-btn min-width-inherit" variant="outlined">
-                                <i class="fa-solid fa-tags"></i> <span>31</span> Tags
+                                <i className="fa-solid fa-tags"></i> <span>31</span> Tags
                             </Button>
                         </Box>
                     </Box>
@@ -139,7 +139,7 @@ export class ProcurifyLogisticsTools extends Component {
                                 <Box className="stop-button">
                                     <label>Workspace</label>
                                     <Button className="primary-btn min-width-inherit" variant="contained">
-                                        <i class="fa-regular fa-circle-stop m-r-2"></i> Stop
+                                        <i className="fa-regular fa-circle-stop m-r-2"></i> Stop
                                     </Button>
                                 </Box>
                                 <Box className="region">
@@ -150,7 +150,7 @@ export class ProcurifyLogisticsTools extends Component {
                         <Box className="information-contents">
                             <Box className="content">
                                 <label>Status</label>
-                                <p><span><i class="fa-solid fa-gear"></i></span> Running</p>
+                                <p><span><i className="fa-solid fa-gear"></i></span> Running</p>
                             </Box>
                             <Box className="content">
                                 <label>Creation Time</label>
@@ -172,16 +172,16 @@ export class ProcurifyLogisticsTools extends Component {
                             </Box>
                             <Box className="tags-contains">
                                 <ul>
-                                    <li><i class="fa-solid fa-circle"></i> Readme</li>
-                                    <li><i class="fa-solid fa-circle"></i> CI/CD Configuration</li>
-                                    <li><i class="fa-solid fa-circle"></i> Add License</li>
-                                    <li><i class="fa-solid fa-circle"></i> Add Changelog</li>
-                                    <li><i class="fa-solid fa-circle"></i> Add Contributing</li>
-                                    <li><i class="fa-solid fa-circle"></i> Auto DevOp Enabled</li>
-                                    <li><i class="fa-solid fa-circle"></i> Add Kubernetes Cluster</li>
-                                    <li><i class="fa-solid fa-circle"></i> Add Wiki</li>
-                                    <li><i class="fa-solid fa-circle"></i> Configure Integration</li>
-                                    <li><i class="fa-solid fa-circle"></i> CI/CD Configuration</li>
+                                    <li><i className="fa-solid fa-circle"></i> Readme</li>
+                                    <li><i className="fa-solid fa-circle"></i> CI/CD Configuration</li>
+                                    <li><i className="fa-solid fa-circle"></i> Add License</li>
+                                    <li><i className="fa-solid fa-circle"></i> Add Changelog</li>
+                                    <li><i className="fa-solid fa-circle"></i> Add Contributing</li>
+                                    <li><i className="fa-solid fa-circle"></i> Auto DevOp Enabled</li>
+                                    <li><i className="fa-solid fa-circle"></i> Add Kubernetes Cluster</li>
+                                    <li><i className="fa-solid fa-circle"></i> Add Wiki</li>
+                                    <li><i className="fa-solid fa-circle"></i> Configure Integration</li>
+                                    <li><i className="fa-solid fa-circle"></i> CI/CD Configuration</li>
                                 </ul>
                             </Box>
                         </Box>
