@@ -11,6 +11,7 @@ import Environments from "views/app-views/AssetManager/Environments/EnvironmentL
 import Container from "views/app-views/AssetManager/Environments/EnvironmentList/WorkspaceDetails/Environments/Container";
 import Database from "views/app-views/AssetManager/Environments/EnvironmentList/WorkspaceDetails/Environments/Database";
 import AccountPricing from "views/app-views/AssetManager/Environments/EnvironmentList/WorkspaceDetails/Environments/AccountPricing";
+
 class WorkspaceDetails extends Component {
   tabMapping = [
     {

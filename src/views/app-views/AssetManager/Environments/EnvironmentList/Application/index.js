@@ -17,6 +17,7 @@ import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, Tabl
 import Button from "@mui/material/Button";
 import { APP_PREFIX_PATH } from "configs/AppConfig";
 
+
 class Application extends Component {
   tabMapping = [
     {
@@ -231,9 +232,7 @@ class Application extends Component {
                   >
                     <Link
                       style={{ color: "white" }}
-                      to={
-                        "/assetmanager/pages/environments/environmentlist/deployproject"
-                      }
+                      to={`${APP_PREFIX_PATH}/environments/deployproject`}
                     >
                       <i className="fa-solid fa-plus-square p-r-5"></i> Add New
                     </Link>
@@ -264,9 +263,7 @@ class Application extends Component {
                   <TableRow>
                     <TableCell align="left">
                       <Link
-                        to={
-                          `${APP_PREFIX_PATH}/environments/procurifylogisticstools`
-                        }
+                        to={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
                       >
                         HRMS
                       </Link>
@@ -305,9 +302,7 @@ class Application extends Component {
                   <TableRow>
                     <TableCell align="left">
                       <Link
-                        to={
-                          "/assetmanager/pages/environments/environmentlist/workspacedetails"
-                        }
+                        to={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
                       >
                         EMS
                       </Link>
@@ -346,9 +341,7 @@ class Application extends Component {
                   <TableRow>
                     <TableCell align="left">
                       <Link
-                        to={
-                          "/assetmanager/pages/environments/environmentlist/workspacedetails"
-                        }
+                        to={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
                       >
                         PROCUREMENT
                       </Link>
@@ -387,9 +380,7 @@ class Application extends Component {
                   <TableRow>
                     <TableCell align="left">
                       <Link
-                        to={
-                          "/assetmanager/pages/environments/environmentlist/workspacedetails"
-                        }
+                        to={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
                       >
                         APPCUBE
                       </Link>
@@ -428,9 +419,7 @@ class Application extends Component {
                   <TableRow>
                     <TableCell align="left">
                       <Link
-                        to={
-                          "/assetmanager/pages/environments/environmentlist/workspacedetails"
-                        }
+                        to={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
                       >
                         HRMS
                       </Link>
@@ -469,9 +458,7 @@ class Application extends Component {
                   <TableRow>
                     <TableCell align="left">
                       <Link
-                        to={
-                          "/assetmanager/pages/environments/environmentlist/workspacedetails"
-                        }
+                        to={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
                       >
                         EMS
                       </Link>
@@ -510,9 +497,7 @@ class Application extends Component {
                   <TableRow>
                     <TableCell align="left">
                       <Link
-                        to={
-                          "/assetmanager/pages/environments/environmentlist/workspacedetails"
-                        }
+                        to={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
                       >
                         PROCUREMENT
                       </Link>

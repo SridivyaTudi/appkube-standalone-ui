@@ -10,196 +10,199 @@ import GlobalIcon8 from "assets/img/assetmanager/global-icon8.png";
 import CacheIcon from "assets/img/assetmanager/cache-icon.png";
 import SqlIcon from "assets/img/assetmanager/sql-icon.png";
 import NoSqlIcon from "assets/img/assetmanager/no-sql-icon.png";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 
 class ConfigurTopology extends Component {
   render() {
     return (
-      <div className="deploy-project-container">
-        <div className="page-heading">
-          <h3>configur Topology</h3>
-        </div>
-        <div className="configur-head">
-          <div className="row">
-            <div className="col-lg-8 p-r-5">
-              <div className="button-group">
-                <button className="asset-blue-button min-width-inherit">
-                  <i className="fab fa-java "></i>Java
-                </button>
-                <button className="btn-light">
-                  <img src={PhpIcon} alt="php" />
-                  php
-                </button>
-                <button className="btn-light">
-                  <img src={RubyIcon} alt="ruby" />
-                  Ruby
-                </button>
-                <button className="btn-light">
-                  <img src={NetIcon} alt="net" /> .Net
-                </button>
-                <button className="btn-light">
-                  <img src={PythonIcon} alt="paython" />
-                  Python
-                </button>
-                <button className="btn-light">
-                  <img src={LangIcon} alt="lang" />
-                  Lang
-                </button>
-                <Button
-                  className="primary-btn"
-                  variant="contained"
-                >
-                  Custom <i className="fas fa-chevron-down p-l-5"></i>
+      <Box className="deploy-project-container">
+        <Box className="page-heading">
+          <h3>Configure Topology</h3>
+        </Box>
+        <Box className="configur-head">
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid item xs={8}>
+              <Box className="button-group">
+                <Button className="primary-btn min-width-inherit m-r-3" variant="contained">
+                  <i className="fab fa-java m-r-2"></i> Java
                 </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="configur-content">
-          <div className="row">
-            <div className="col-lg-4 p-r-5">
-              <div className="api-server text-center">
-                <div className="d-block">
-                  <button className="asset-blue-button min-width-inherit m-r-0 m-b-0">
+                <Button className="light-btn min-width-inherit m-r-3" variant="contained">
+                  <img src={PhpIcon} alt="php" className="m-r-2" /> Php
+                </Button>
+                <Button className="light-btn min-width-inherit m-r-3" variant="contained">
+                  <img src={RubyIcon} alt="ruby" className="m-r-2" /> Ruby
+                </Button>
+                <Button className="light-btn min-width-inherit m-r-3" variant="contained">
+                  <img src={NetIcon} alt="net" className="m-r-2" /> .Net
+                </Button>
+                <Button className="light-btn min-width-inherit m-r-3" variant="contained">
+                  <img src={PythonIcon} alt="paython" className="m-r-2" /> Python
+                </Button>
+                <Button className="light-btn min-width-inherit m-r-3" variant="contained">
+                  <img src={LangIcon} alt="lang" className="m-r-2" /> Lang
+                </Button>
+                <Button className="primary-btn primary-custom-btn min-width-inherit" variant="contained">
+                  Custom <i className="fas fa-chevron-down p-l-10"></i>
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box className="configur-content">
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid item xs={4}>
+              <Box className="api-server text-center">
+                <Box className="d-block">
+                  <Button className="primary-btn min-width-inherit" variant="contained">
                     API Gateway Server
-                  </button>
-                </div>
-                <div className="d-block">
-                  <div className="plus-icon">
-                    <i className="far fa-plus"></i>
-                  </div>
-                </div>
-                <div className="d-block">
-                  <button className="asset-blue-button min-width-inherit m-r-0 m-b-0">
+                  </Button>
+                </Box>
+                <Box className="d-block">
+                  <Box className="plus-icon">
+                    <i className="fas fa-plus"></i>
+                  </Box>
+                </Box>
+                <Box className="d-block">
+                  <Button className="primary-btn min-width-inherit" variant="contained">
                     App Layer Server
-                  </button>
-                </div>
-                <div className="d-block down-arrow">
-                  <i className="fas fa-long-arrow-alt-down"></i>
-                </div>
-                <div className="d-block">
-                  <button className="asset-blue-button min-width-inherit m-r-0 m-b-0">
+                  </Button>
+                </Box>
+                <Box className="d-block down-arrow">
+                  <i class="fa-solid fa-down-long"></i>
+                </Box>
+                <Box className="d-block">
+                  <Button className="primary-btn min-width-inherit" variant="contained">
                     Cluster <i className="fas fa-chevron-down p-l-10"></i>
-                  </button>
-                </div>
-                <div className="eks-logo-boxs border-bottom">
-                  <div className="d-inline-block">
-                    <div className="box-arrow">
-                      <i className="fas fa-long-arrow-alt-down"></i>
-                    </div>
-                    <div className="eks-logo">
+                  </Button>
+                </Box>
+                <Box className="eks-logo-boxs border-bottom">
+                  <Box className="d-inline-block">
+                    <Box className="box-arrow">
+                      <i class="fa-solid fa-down-long"></i>
+                    </Box>
+                    <Box className="eks-logo">
                       <img src={GlobalIcon5} alt="" />
-                    </div>
+                    </Box>
                     <div className="title">EKS</div>
-                  </div>
-                  <div className="d-inline-block">
-                    <div className="box-arrow">
-                      <i className="fas fa-long-arrow-alt-down"></i>
-                    </div>
-                    <div className="eks-logo">
+                  </Box>
+                  <Box className="d-inline-block">
+                    <Box className="box-arrow">
+                      <i class="fa-solid fa-down-long"></i>
+                    </Box>
+                    <Box className="eks-logo">
                       <img src={GlobalIcon4} alt="" />
-                    </div>
-                  </div>
-                  <div className="d-inline-block">
-                    <div className="box-arrow">
-                      <i className="fas fa-long-arrow-alt-down"></i>
-                    </div>
-                    <div className="eks-logo">
+                    </Box>
+                  </Box>
+                  <Box className="d-inline-block">
+                    <Box className="box-arrow">
+                      <i class="fa-solid fa-down-long"></i>
+                    </Box>
+                    <Box className="eks-logo">
                       <img src={GlobalIcon8} alt="" />
-                    </div>
-                  </div>
-                </div>
-                <div className="d-block m-t-1">
-                  <button className="asset-blue-button min-width-inherit m-r-0 m-b-0">
+                    </Box>
+                  </Box>
+                </Box>
+                <Box className="d-block m-t-1">
+                  <Button className="primary-btn min-width-inherit" variant="contained">
                     DB Layer
-                  </button>
-                </div>
-                <div className="eks-logo-boxs">
-                  <div className="d-inline-block">
-                    <div className="box-arrow">
-                      <i className="fas fa-long-arrow-alt-down"></i>
-                    </div>
-                    <div className="eks-logo">
+                  </Button>
+                </Box>
+                <Box className="eks-logo-boxs">
+                  <Box className="d-inline-block">
+                    <Box className="box-arrow">
+                      <i class="fa-solid fa-down-long"></i>
+                    </Box>
+                    <Box className="eks-logo">
                       <img src={CacheIcon} alt="" />
-                    </div>
+                    </Box>
                     <div className="title">Cache</div>
-                  </div>
-                  <div className="d-inline-block">
-                    <div className="box-arrow">
-                      <i className="fas fa-long-arrow-alt-down"></i>
-                    </div>
-                    <div className="eks-logo">
+                  </Box>
+                  <Box className="d-inline-block">
+                    <Box className="box-arrow">
+                      <i class="fa-solid fa-down-long"></i>
+                    </Box>
+                    <Box className="eks-logo">
                       <img src={SqlIcon} alt="" />
-                    </div>
+                    </Box>
                     <div className="title">SQL</div>
-                  </div>
-                  <div className="d-inline-block">
-                    <div className="box-arrow">
-                      <i className="fas fa-long-arrow-alt-down"></i>
-                    </div>
-                    <div className="eks-logo">
+                  </Box>
+                  <Box className="d-inline-block">
+                    <Box className="box-arrow">
+                      <i class="fa-solid fa-down-long"></i>
+                    </Box>
+                    <Box className="eks-logo">
                       <img src={NoSqlIcon} alt="" />
-                    </div>
+                    </Box>
                     <div className="title">No SQL</div>
-                  </div>
-                </div>
-                <div className="d-block">
-                  <div className="plus-icon">
+                  </Box>
+                </Box>
+                <Box className="d-block">
+                  <Box className="plus-icon">
                     <i className="far fa-plus"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 p-l-5 p-r-5">
-              <div className="api-server text-center">
+                  </Box>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={4}>
+              <Box className="api-server text-center">
                 <h2>Application Servers</h2>
                 <p>Vartical Scaling Per Node</p>
-                <div className="application-cards">
-                  <div className="reserved-card">
-                    <div className="title">
+                <Box className="application-cards">
+                  <Box className="reserved-card">
+                    <Box className="title">
                       <h4>RESERVED</h4>
                       <i className="fas fa-question"></i>
-                    </div>
-                    <div className="reseved-content">
-                      <div className="d-flex align-items-center justify-content-center">
+                    </Box>
+                    <Box className="reseved-content">
+                      <Box className="d-flex align-items-center justify-content-center">
                         <input id="number" type="number" value="42" />
-                        <div className="dropdown-arrow">
-                          <div className="d-block">
+                        <Box className="dropdown-arrow">
+                          <Box className="d-block">
                             <i className="fas fa-angle-up"></i>
-                          </div>
-                          <div className="d-block">
+                          </Box>
+                          <Box className="d-block">
                             <i className="fas fa-angle-down"></i>
-                          </div>
-                        </div>
+                          </Box>
+                        </Box>
                         <span className="p-l-5">Cloudlet(s)</span>
-                      </div>
+                      </Box>
                       <p className="text-left">1.75 GIB, 5.6 GHz</p>
-                    </div>
-                  </div>
-                  <div className="reserved-card">
-                    <div className="title">
+                    </Box>
+                  </Box>
+                  <Box className="reserved-card">
+                    <Box className="title">
                       <h4>SCALING LIMIT</h4>
                       <i className="fas fa-question"></i>
-                    </div>
-                    <div className="reseved-content">
-                      <div className="d-flex align-items-center justify-content-center">
+                    </Box>
+                    <Box className="reseved-content">
+                      <Box className="d-flex align-items-center justify-content-center">
                         <span className="p-r-5">Up to</span>
                         <input id="number" type="number" value="42" />
-                        <div className="dropdown-arrow">
-                          <div className="d-block">
+                        <Box className="dropdown-arrow">
+                          <Box className="d-block">
                             <i className="fas fa-angle-up"></i>
-                          </div>
-                          <div className="d-block">
+                          </Box>
+                          <Box className="d-block">
                             <i className="fas fa-angle-down"></i>
-                          </div>
-                        </div>
+                          </Box>
+                        </Box>
                         <span className="p-l-5">Cloudlet(s)</span>
-                      </div>
+                      </Box>
                       <p className="text-left">up to 44 GIB, 140.8 GHz</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="d-block m-t-3">
+                    </Box>
+                  </Box>
+                </Box>
+                <Box className="d-block m-t-3">
                   <progress
                     id="file"
                     value="32"
@@ -210,21 +213,21 @@ class ConfigurTopology extends Component {
                     32%{" "}
                   </progress>
                   <p className="m-t-2">Horizontal Scaling Per Node</p>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 p-l-5">
-              <div className="api-server text-center">
-                <div className="address-content">
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={4}>
+              <Box className="api-server text-center">
+                <Box className="address-content">
                   <span><i className="fa-sharp fa-solid fa-location-dot"></i></span>
                   <p>Region: Newyork</p>
                   <i className="fas fa-angle-down"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
     );
   }
 }
