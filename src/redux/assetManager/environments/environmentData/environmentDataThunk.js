@@ -7,7 +7,7 @@ export const getEnvironmentVpcs = createAsyncThunk(
   async (params) => {
     const url = `${config.GET_ACCOUNT_SERVICES}`;
     try {
-      const response = await axios.get(url, params);
+      const response = await axios.get(url, {params});
       const vpcs = response.data;
       return vpcs;
     } catch (error) {
@@ -35,7 +35,7 @@ export const getDepartments = createAsyncThunk(
   async (params) => {
     const url = `${config.GET_DEPARTMENT_WISE_DATA}`;
     try {
-      const response = await axios.get(url, params);
+      const response = await axios.get(url, {params});
       const departments = response.data;
       return departments;
     } catch (error) {

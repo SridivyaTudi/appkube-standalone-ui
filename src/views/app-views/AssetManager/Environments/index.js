@@ -11,8 +11,6 @@ import FilterPopup from "views/app-views/AssetManager/Environments/Components/Fi
 import {
   getEnvsAsync,
   getEnvsSummary,
-  getProductsByDepId,
-  getEnvsByFilters,
 } from "redux/assetManager/environments/environmentsThunk";
 import status from "redux/constants/commonDS";
 import { APP_PREFIX_PATH } from "configs/AppConfig";
@@ -47,27 +45,26 @@ class Environments extends Component {
       allEnvData: [],
       allEnvSummary: [],
       menuSummaryShowMenu: [null, null],
-      products: {},
-      selectedDepartments: [],
-      selectedProductions: [],
-      selectedEnvs: [],
-      selectDepartmentsNotSubmitted: [],
-      selectProductionsNotSubmitted: [],
-      selectEnvsNotSubmitted: [],
-      isSubmitFilter: false,
+      filters: {
+        selectedDepartment: -1,
+        selectedProduct: -1,
+        selectedEnv: -1
+      },
+      showFilterPopup: false
     };
   }
 
   togglePopup = () => {
     this.setState({
-      showSelectDepartmentPopup: !this.state.showSelectDepartmentPopup,
+      showFilterPopup: !this.state.showFilterPopup,
     });
   };
+
   componentDidMount = () => {
     let currentOrgId = localStorage.getItem("currentOrgId");
-    if (currentOrgId > 0) {
+    if (currentOrgId !== "") {
       this.props.getEnvsAsync(currentOrgId);
-      this.props.getEnvsSummary(currentOrgId);
+      this.props.getEnvsSummary({ orgId: currentOrgId });
     }
   };
 
@@ -82,7 +79,6 @@ class Environments extends Component {
         ToastMessage.error("There is some issue.");
       }
     }
-
     if (
       prevProps.environments.envSummary.status !==
       this.props.environments.envSummary.status
@@ -91,40 +87,21 @@ class Environments extends Component {
         this.props.environments.envSummary.status === status.SUCCESS &&
         this.props.environments.envSummary.data
       ) {
-        let { isSubmitFilter, showSelectDepartmentPopup } = this.state;
         this.setState({
           allEnvSummary: this.props.environments.envSummary.data,
           searchedAccountList: JSON.parse(
             JSON.stringify(this.props.environments.envSummary.data)
           ),
-          isSubmitFilter: isSubmitFilter ? false : isSubmitFilter,
-          showSelectDepartmentPopup: isSubmitFilter
-            ? false
-            : showSelectDepartmentPopup,
+          showFilterPopup: false
         });
-        this.SetCurrentActiveTableIndex();
+        this.setCurrentActiveTableIndex();
       } else if (this.props.environments.allEnvs.status === status.FAILURE) {
         ToastMessage.error("There is some issue.");
       }
     }
-
-    if (
-      prevProps.environments.productsByDepId.status !==
-      this.props.environments.productsByDepId.status
-    ) {
-      if (
-        this.props.environments.productsByDepId.status === status.SUCCESS &&
-        this.props.environments.productsByDepId.data
-      ) {
-        let { products, depId } = this.props.environments.productsByDepId.data;
-        this.setState((prevState) => ({
-          products: { ...prevState.products, [depId]: products },
-        }));
-      }
-    }
   }
 
-  SetCurrentActiveTableIndex = () => {
+  setCurrentActiveTableIndex = () => {
     try {
       this.props.environments.envSummary.data.map((item, index) => {
         let allIndex = [];
@@ -245,7 +222,7 @@ class Environments extends Component {
                 <i className="fas fa-ellipsis-v"></i>
               </button>
               {menuSummaryShowMenu[0] === envIndex &&
-              menuSummaryShowMenu[1] === accountIndex ? (
+                menuSummaryShowMenu[1] === accountIndex ? (
                 <>
                   <div
                     className="open-create-menu-close"
@@ -400,186 +377,6 @@ class Environments extends Component {
     }
   };
 
-  handleCheckChange = (e, type, depId) => {
-    let orgId = getCurrentOrgId();
-    let departmentId = depId;
-
-    const { value, checked } = e.target;
-    let {
-      selectedProductions,
-      selectedEnvs,
-      selectedDepartments,
-      selectDepartmentsNotSubmitted,
-      selectProductionsNotSubmitted,
-      products,
-    } = this.state;
-
-    if (type === "dep") {
-      if (checked) {
-        selectedDepartments.push(depId);
-        selectDepartmentsNotSubmitted.push(depId);
-        this.setState({
-          selectedDepartments,
-          selectDepartmentsNotSubmitted,
-        });
-        this.props.getProductsByDepId({ orgId: orgId, depId: depId });
-      } else {
-        let removeProducts = products;
-        delete removeProducts[depId];
-        selectedDepartments = selectedDepartments.filter(
-          (departmentId) => departmentId !== depId
-        );
-        selectDepartmentsNotSubmitted = selectDepartmentsNotSubmitted.filter(
-          (departmentId) => departmentId !== depId
-        );
-        if (!this.productsLength()) {
-          selectedProductions = [];
-          selectedEnvs = [];
-        }
-        this.setState({
-          products: removeProducts,
-          selectedProductions,
-          selectedEnvs,
-          selectedDepartments,
-          selectDepartmentsNotSubmitted,
-        });
-      }
-    } else if (type === "prod") {
-      if (checked) {
-        selectProductionsNotSubmitted.push(value);
-        this.setState((prevState) => ({
-          selectedProductions: [...prevState.selectedProductions, value],
-        }));
-      } else {
-        let newChecked = selectedProductions.filter((item) => item !== value);
-        if (!newChecked.length) {
-          selectedEnvs = [];
-        }
-        selectProductionsNotSubmitted = selectProductionsNotSubmitted.filter(
-          (item) => item !== value
-        );
-        this.setState({
-          selectedProductions: newChecked,
-          selectedEnvs,
-          selectProductionsNotSubmitted,
-        });
-      }
-    }
-  };
-
-  handleEnvChange = (name) => {
-    let { selectedEnvs,selectEnvsNotSubmitted } = this.state;
-    if (selectedEnvs.includes(name)) {
-      selectedEnvs = selectedEnvs.filter((item) => item !== name);
-      selectEnvsNotSubmitted =   selectEnvsNotSubmitted.filter((item) => item !== name);
-    } else {
-      selectedEnvs.push(name);
-      selectEnvsNotSubmitted.push(name);
-      
-    }
-    this.setState({ selectedEnvs,selectEnvsNotSubmitted });
-  };
-
-  handleClearFilters = () => {
-    const orgId = localStorage.getItem("currentOrgId");
-    let {
-      selectedDepartments,
-      selectedEnvs,
-      selectedProductions,
-      products,
-      allEnvSummary,
-      isSubmitFilter,
-      selectDepartmentsNotSubmitted,
-      selectProductionsNotSubmitted,
-      selectEnvsNotSubmitted,
-      showSelectDepartmentPopup,
-    } = this.state;
-  
-    if (
-      ((!selectDepartmentsNotSubmitted.length && selectedDepartments.length) ||
-      !allEnvSummary.length )
-    ) {
-      this.props.getEnvsByFilters({ params: "", orgId });
-    }
-    selectedDepartments = [];
-    selectedProductions = [];
-    selectedEnvs = [];
-    products = {};
-    selectDepartmentsNotSubmitted = [];
-    selectProductionsNotSubmitted = [];
-    selectEnvsNotSubmitted = []
-    showSelectDepartmentPopup = false;
-    this.setState({
-      selectedDepartments,
-      selectedEnvs,
-      selectedProductions,
-      products,
-      isSubmitFilter,
-      showSelectDepartmentPopup,
-    });
-  };
-
-  productsLength = () => {
-    let isProduct = false;
-    const { products } = this.state;
-    if (Object.keys(products).length) {
-      Object.keys(products).forEach((productKey) => {
-        if (products[productKey] && products[productKey].length && !isProduct) {
-          isProduct = true;
-        }
-      });
-    }
-    return isProduct;
-  };
-
-  handleClearNotSubmittedFilters = () => {
-    let {
-      selectDepartmentsNotSubmitted,
-      selectProductionsNotSubmitted,
-      selectEnvsNotSubmitted,
-      selectedProductions,
-      selectedDepartments,
-      selectedEnvs,
-      products,
-    } = this.state;
-    if (selectDepartmentsNotSubmitted.length) {
-      selectDepartmentsNotSubmitted.forEach((depId) => {
-        let removeProducts = products;
-        delete removeProducts[depId];
-        selectedDepartments = selectedDepartments.filter(
-          (departmentId) => departmentId !== depId
-        );
-      });
-      selectDepartmentsNotSubmitted = [];
-    }
-    if (selectProductionsNotSubmitted.length) {
-      selectProductionsNotSubmitted.forEach((product) => {
-        selectedProductions = selectedProductions.filter(
-          (productName) => productName !== product
-        );
-      });
-      selectProductionsNotSubmitted = [];
-    }
-
-    if (selectEnvsNotSubmitted.length) {
-      selectEnvsNotSubmitted.forEach((envOut) => {
-        selectedEnvs = selectedEnvs.filter(
-          (envIn) => envIn !== envOut
-        );
-      });
-      selectEnvsNotSubmitted = [];
-    }
-    this.setState({
-      selectedEnvs,
-      selectedDepartments,
-      selectedProductions,
-      selectProductionsNotSubmitted,
-      selectDepartmentsNotSubmitted,
-      selectEnvsNotSubmitted,
-      showSelectDepartmentPopup:false
-    })
-  };
-
   render() {
     const {
       showRecentFilter,
@@ -587,15 +384,8 @@ class Environments extends Component {
       searchkey,
       allEnvData,
       allEnvSummary,
-      selectedProductions,
-      selectedDepartments,
-      selectedEnvs,
-      showSelectDepartmentPopup,
-      products,
-      selectDepartmentsNotSubmitted,
-      selectProductionsNotSubmitted,
-      selectEnvsNotSubmitted,
-      isSubmitFilter,
+      showFilterPopup,
+      filters
     } = this.state;
     return (
       <div className="environment-container">
@@ -608,7 +398,7 @@ class Environments extends Component {
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
           ) : (
-            allEnvData?.length ? this.renderEnvironmentBoxes() :<></> 
+            allEnvData?.length ? this.renderEnvironmentBoxes() : <></>
           )}
         </Box>
         <Box className="add-new-environment">
@@ -641,73 +431,73 @@ class Environments extends Component {
                       <Box className="export-sction">
                         {JSON.parse(localStorage.getItem("recentEnv")) !==
                           null && (
-                          <Box className="environment-fliter">
-                            <Box
-                              className="fliter-toggel"
-                              onClick={() =>
-                                this.setState({
-                                  showRecentFilter: !showRecentFilter,
-                                })
-                              }
-                            >
-                              <i className="fa-solid fa-alarm-clock fillter-icon"></i>
-                              Recent
-                              <i className="fa-solid fa-caret-down arrow-icon"></i>
+                            <Box className="environment-fliter">
+                              <Box
+                                className="fliter-toggel"
+                                onClick={() =>
+                                  this.setState({
+                                    showRecentFilter: !showRecentFilter,
+                                  })
+                                }
+                              >
+                                <i className="fa-solid fa-alarm-clock fillter-icon"></i>
+                                Recent
+                                <i className="fa-solid fa-caret-down arrow-icon"></i>
+                              </Box>
+                              <Box
+                                className={
+                                  showRecentFilter === true
+                                    ? "fliter-collapse  active"
+                                    : "fliter-collapse"
+                                }
+                              >
+                                <List>
+                                  {JSON.parse(
+                                    localStorage.getItem("recentEnv")
+                                  )?.map((item) => {
+                                    return (
+                                      <ListItem>
+                                        <Link
+                                          to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
+                                          onClick={() =>
+                                            this.setLocalRecentService(item)
+                                          }
+                                        >
+                                          <span>
+                                            <img
+                                              src={
+                                                item.accountType === "AWS" ||
+                                                  item.accountType === "aws"
+                                                  ? AWS
+                                                  : item.accountType === "GCP" ||
+                                                    item.accountType === "gcp"
+                                                    ? GCP
+                                                    : AZURE
+                                              }
+                                              alt={item.accountType}
+                                            />
+                                          </span>
+                                          <p>({item.accountId})</p>
+                                        </Link>
+                                      </ListItem>
+                                    );
+                                  })}
+                                </List>
+                              </Box>
+                              <div
+                                className={
+                                  showRecentFilter === true
+                                    ? "fliters-collapse-bg active"
+                                    : "fliters-collapse-bg"
+                                }
+                                onClick={() =>
+                                  this.setState({
+                                    showRecentFilter: !showRecentFilter,
+                                  })
+                                }
+                              />
                             </Box>
-                            <Box
-                              className={
-                                showRecentFilter === true
-                                  ? "fliter-collapse  active"
-                                  : "fliter-collapse"
-                              }
-                            >
-                              <List>
-                                {JSON.parse(
-                                  localStorage.getItem("recentEnv")
-                                )?.map((item) => {
-                                  return (
-                                    <ListItem>
-                                      <Link
-                                        to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
-                                        onClick={() =>
-                                          this.setLocalRecentService(item)
-                                        }
-                                      >
-                                        <span>
-                                          <img
-                                            src={
-                                              item.accountType === "AWS" ||
-                                              item.accountType === "aws"
-                                                ? AWS
-                                                : item.accountType === "GCP" ||
-                                                  item.accountType === "gcp"
-                                                ? GCP
-                                                : AZURE
-                                            }
-                                            alt={item.accountType}
-                                          />
-                                        </span>
-                                        <p>({item.accountId})</p>
-                                      </Link>
-                                    </ListItem>
-                                  );
-                                })}
-                              </List>
-                            </Box>
-                            <div
-                              className={
-                                showRecentFilter === true
-                                  ? "fliters-collapse-bg active"
-                                  : "fliters-collapse-bg"
-                              }
-                              onClick={() =>
-                                this.setState({
-                                  showRecentFilter: !showRecentFilter,
-                                })
-                              }
-                            />
-                          </Box>
-                        )}
+                          )}
                         <Box className="environment-fliter">
                           <Box
                             className="fliter-toggel new-environment"
@@ -829,22 +619,13 @@ class Environments extends Component {
           </>
         )}
 
-        {showSelectDepartmentPopup ? (
+        {showFilterPopup ? (
           <FilterPopup
-            showModal={showSelectDepartmentPopup}
+            showModal={showFilterPopup}
             togglePopup={this.togglePopup}
-            handleCheckChange={this.handleCheckChange}
-            handleEnvChange={this.handleEnvChange}
-            handleClearFilters={this.handleClearFilters}
-            handleClearNotSubmittedFilters={this.handleClearNotSubmittedFilters}
-            products={products}
-            selectedFilters={{
-              selectedDepartments,
-              selectedEnvs,
-              selectedProductions,
-            }}
-            handleSubmitFilter={(isSubmitFilter) => {
-              this.setState({ isSubmitFilter,selectDepartmentsNotSubmitted:[],selectEnvsNotSubmitted:[],selectProductionsNotSubmitted:[] });
+            selectedFilters={filters}
+            handleSubmitFilter={(filters) => {
+              this.setState({ filters });
             }}
           />
         ) : (
@@ -856,18 +637,15 @@ class Environments extends Component {
 }
 
 function mapStateToProps(state) {
-  const { environments, departments } = state;
+  const { environments } = state;
   return {
-    environments,
-    departments,
+    environments
   };
 }
 
 const mapDispatchToProps = {
   getEnvsAsync,
   getEnvsSummary,
-  getProductsByDepId,
-  getEnvsByFilters,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Environments);
