@@ -3,7 +3,7 @@
   display: block;
   padding: 40px 60px;
   background-color: #f6f7fb;
-  .new-environment-loader{
+  .new-environment-loader {
     width: 100%;
     height: 350px;
     display: flex;
@@ -38,13 +38,12 @@
     width: 100%;
     overflow: hidden;
     overflow-x: auto;
-    .environment-loader{
+    .environment-loader {
       width: 100%;
       height: 240px;
       display: flex;
       align-items: center;
       justify-content: center;
-    
     }
 
     .environment-box {
@@ -379,8 +378,7 @@
         padding-bottom: 0px;
         display: table;
         width: calc(100% - 0.1em)
-          /* scrollbar is average 1em/16px width, remove it from thead width */
-        ;
+          /* scrollbar is average 1em/16px width, remove it from thead width */;
 
         &.active {
           th {
@@ -1510,7 +1508,7 @@
 
                     &.active {
                       border-radius: 3px;
-                      background: #DDE1F8;
+                      background: #dde1f8;
                       color: #383874;
 
                       a {
@@ -2256,9 +2254,7 @@
           font-weight: 600;
           color: #383874;
         }
-
       }
-
     }
 
     .procurify-card-buttons {
@@ -2274,11 +2270,11 @@
         font-size: 18px;
 
         .fa-trash-can {
-          color: #FF2D2E;
+          color: #ff2d2e;
         }
 
         .fa-rotate-right {
-          color: #9A9AAF;
+          color: #9a9aaf;
         }
       }
     }
@@ -2294,7 +2290,7 @@
         margin-left: 20px;
 
         .primary-outline-btn {
-          border-color: #C6CBD9;
+          border-color: #c6cbd9;
           color: #383874;
           margin-right: 15px;
           font-weight: 400;
@@ -2364,9 +2360,8 @@
               font-size: 12px;
               line-height: 16px;
               font-weight: 500;
-              color: #9A9AAF;
+              color: #9a9aaf;
             }
-
           }
         }
 
@@ -2390,7 +2385,7 @@
             }
 
             .primary-btn {
-              background-color: #FF2D2E;
+              background-color: #ff2d2e;
             }
           }
 
@@ -2408,7 +2403,23 @@
               color: #383874;
               margin-bottom: 5px;
             }
-
+            .fliter-button {
+              margin: 0;
+              .fliter-toggel {
+                display: flex;
+                //width: 100px;
+                align-items: center;
+                justify-content: space-between;
+                background: #dde1f8;
+                height: 35px;
+                padding: 5px;
+                border-radius: 3px;
+                font-size: 12px;
+                font-weight: 500;
+                color: #383874;
+                border: none;
+              }
+            }
           }
         }
       }
@@ -2501,7 +2512,7 @@
           justify-content: flex-start;
           width: 100%;
           padding: 15px 20px 0;
-          background-color: #F6F7FB;
+          background-color: #f6f7fb;
           border-radius: 10px;
           margin-top: 15px;
 
@@ -2527,7 +2538,7 @@
               i {
                 font-size: 6px;
                 margin-right: 5px;
-                color: #416BFF;
+                color: #416bff;
               }
             }
           }

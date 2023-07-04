@@ -206,7 +206,7 @@ class CommonFilterViewSearch extends Component {
                   </ListItem>
                 </List>
               </Box>
-              <div
+              <Box
                 className={
                   showSelectFilter === true
                     ? "fliters-collapse-bg active"
@@ -248,7 +248,7 @@ class CommonFilterViewSearch extends Component {
                   )}
                 </List>
               </Box>
-              <div
+              <Box
                 className={
                   showServiceViewFilter === true
                     ? "fliters-collapse-bg active"
