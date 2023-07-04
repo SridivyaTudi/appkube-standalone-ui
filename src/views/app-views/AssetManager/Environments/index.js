@@ -176,7 +176,7 @@ class Environments extends Component {
                   <span style={{ backgroundColor: "#00b929" }}></span>
                   <p>Total Billing</p>
                 </Box>
-                <label>&#65284;{env.totalBilling}</label>
+                <label>{env.totalBilling ? `&#65284;${env.totalBilling}` : ''}</label>
               </ListItem>
             </List>
           </Box>
@@ -494,13 +494,10 @@ class Environments extends Component {
       selectEnvsNotSubmitted,
       showSelectDepartmentPopup,
     } = this.state;
-    let isSubmitedFilter =
-      !selectDepartmentsNotSubmitted.length ||
-      !selectProductionsNotSubmitted.length ||
-      !selectEnvsNotSubmitted.length;
+  
     if (
-      (!isSubmitedFilter && selectedDepartments.length) ||
-      !allEnvSummary.length
+      ((!selectDepartmentsNotSubmitted.length && selectedDepartments.length) ||
+      !allEnvSummary.length )
     ) {
       this.props.getEnvsByFilters({ params: "", orgId });
     }
@@ -508,6 +505,9 @@ class Environments extends Component {
     selectedProductions = [];
     selectedEnvs = [];
     products = {};
+    selectDepartmentsNotSubmitted = [];
+    selectProductionsNotSubmitted = [];
+    selectEnvsNotSubmitted = []
     showSelectDepartmentPopup = false;
     this.setState({
       selectedDepartments,
