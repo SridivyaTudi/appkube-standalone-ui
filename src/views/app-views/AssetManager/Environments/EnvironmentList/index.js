@@ -140,7 +140,7 @@ class EnvironmentList extends Component {
     if (this.state.accountId !== prevState.accountId) {
       this.props.getDepartments(this.state.accountId);
     }
-    
+
     if (
       prevProps.environmentData.departments.status !==
       this.props.environmentData.departments.status
@@ -153,7 +153,9 @@ class EnvironmentList extends Component {
         this.setState({
           departmentWiseData: depData,
         });
-        this.props.getEnvironmentVpcs(this.state.accountId);
+        this.props.getEnvironmentVpcs({
+          accountId: this.state.accountId
+        });
       }
     }
 
@@ -203,8 +205,8 @@ class EnvironmentList extends Component {
             commonData[account.cloud] = commonData[account.cloud]
               ? commonData[account.cloud]
               : {
-                  totalBill: 0,
-                };
+                totalBill: 0,
+              };
             commonData[account.cloud].totalBill += account.totalBilling || 0;
           });
           this.setState({
@@ -276,9 +278,8 @@ class EnvironmentList extends Component {
         </Box>
         <Box className="services-panel">
           <Box
-            className={`services-panel-title p-t-10 p-b-10 ${
-              servicesPanelShow ? "bottom-border" : ""
-            }`}
+            className={`services-panel-title p-t-10 p-b-10 ${servicesPanelShow ? "bottom-border" : ""
+              }`}
           >
             <Box className="image">
               <img
@@ -291,9 +292,8 @@ class EnvironmentList extends Component {
               onClick={() => this.toggleColumnSelect("filterShow")}
             >
               <i
-                className={`fa ${
-                  servicesPanelShow ? "fa-caret-down" : "fa-caret-right"
-                }`}
+                className={`fa ${servicesPanelShow ? "fa-caret-down" : "fa-caret-right"
+                  }`}
               ></i>
             </Box>
           </Box>
@@ -335,8 +335,8 @@ class EnvironmentList extends Component {
                 }}
                 accountList={this.state.accountList}
                 updateCurrentAccountId={this.updateCurrentAccountId}
-                handleSearchVpcs={(vpcsDetails)=>{
-                  this.setState({vpcsDetails})
+                handleSearchVpcs={(vpcsDetails) => {
+                  this.setState({ vpcsDetails })
                 }}
               />
             ) : activeTab === 1 ? (

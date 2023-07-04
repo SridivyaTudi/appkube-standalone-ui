@@ -49,7 +49,6 @@ import {
   ListItem,
 } from "@mui/material";
 import status from "redux/constants/commonDS";
-import { getEnvironmentVpcs } from "redux/assetManager/environments/environmentData/environmentDataThunk";
 import { connect } from "react-redux";
 
 const servicesTreeCondition = {
@@ -1579,6 +1578,5 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  getEnvironmentVpcs,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DiscoveredAssets);
