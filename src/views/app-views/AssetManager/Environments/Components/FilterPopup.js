@@ -138,7 +138,7 @@ class FilterPopup extends Component {
   renderProducts = () => {
     const { productsByDepId } = this.props;
     const { selectedDepartment } = this.state;
-    if (productsByDepId && productsByDepId.data && productsByDepId.data.depId === selectedDepartment ) {
+    if (productsByDepId && productsByDepId.data && productsByDepId.data.depId === selectedDepartment) {
       return productsByDepId.data.products.map((product, innerIndex) => {
         return (
           <Grid item lg={4} md={4} xs={12}>
@@ -164,31 +164,34 @@ class FilterPopup extends Component {
 
   renderEnvironments = () => {
     const { deploymentEnvs } = this.props;
-    return deploymentEnvs.data.map((item) => {
-      return (
-        <Grid key={item.name} item lg={3} md={4} xs={12}>
-          <Box
-            onClick={() =>
-              this.handleEnvCheck(item.name)
-            }
-            className={`
-              environment-box 
-              ${this.state.selectedEnv === item.name ? "active" : ""}`
-            }
-          >
-            <Box className="d-block">
-              <Box
-                className={`envir-image ${deploymentImgs[item.name]
-                  }`}
-              ></Box>
-              <Box className="environment-title">
-                {item.name}
+    if (deploymentEnvs && deploymentEnvs.data) {
+      return deploymentEnvs.data.map((item) => {
+        return (
+          <Grid key={item.name} item lg={3} md={4} xs={12}>
+            <Box
+              onClick={() =>
+                this.handleEnvCheck(item.name)
+              }
+              className={`
+                environment-box 
+                ${this.state.selectedEnv === item.name ? "active" : ""}`
+              }
+            >
+              <Box className="d-block">
+                <Box
+                  className={`envir-image ${deploymentImgs[item.name]
+                    }`}
+                ></Box>
+                <Box className="environment-title">
+                  {item.name}
+                </Box>
               </Box>
             </Box>
-          </Box>
-        </Grid>
-      );
-    })
+          </Grid>
+        );
+      });
+    }
+    return [];
   };
 
   handleSubmit = () => {
@@ -200,18 +203,33 @@ class FilterPopup extends Component {
         departmentId: selectedDepartment
       };
       if (selectedProduct !== -1) {
-        params = `&product=${selectedProduct}`;
         params.product = selectedProduct;
         if (selectedEnv !== -1) {
           params.env = selectedEnv;
         }
       }
       this.props.getEnvsSummary({ params, orgId: currentOrgId });
+      this.props.handleSubmitFilter({
+        selectedDepartment,
+        selectedProduct,
+        selectedEnv
+      });
     }
   };
 
   handleClearFilters = () => {
-
+    let { selectedDepartment } = this.props.selectedFilters;
+    if(selectedDepartment !== -1){
+      let currentOrgId = getCurrentOrgId();
+      this.props.getEnvsSummary({ orgId: currentOrgId });
+    } else {
+      this.props.togglePopup();
+    }
+    this.props.handleSubmitFilter({
+      selectedDepartment: -1,
+      selectedProduct: -1,
+      selectedEnv: -1
+    });
   };
 
   sortDepartments = (departments) => {
@@ -242,7 +260,7 @@ class FilterPopup extends Component {
             className="close"
             aria-label="Close"
             onClick={() => {
-              this.props.handleClearNotSubmittedFilters()
+              this.props.togglePopup()
             }}
           >
             <i className="fa-solid fa-xmark"></i>
@@ -302,7 +320,7 @@ class FilterPopup extends Component {
                       alignItems={"center"}
                       justifyContent={"flex-start"}
                     >
-                      { this.renderEnvironments() }
+                      {this.renderEnvironments()}
                     </Grid>
                   </Box>
                 </>
@@ -313,13 +331,18 @@ class FilterPopup extends Component {
         </ModalBody>
         <ModalFooter className="footer-top-br">
           <Box className="d-block text-center">
-            <Button
+            <LoadingButton
               className="secondary-btn m-r-2"
               variant="contained"
               onClick={this.handleClearFilters}
+              disabled={this.props.envSummary.status ===
+                status.IN_PROGRESS}
+              loading={
+                this.props.envSummary.status ===
+                status.IN_PROGRESS}
             >
               Clear
-            </Button>
+            </LoadingButton>
             {selectedDepartment !== -1 ?
               <LoadingButton
                 disabled={this.props.envSummary.status ===
