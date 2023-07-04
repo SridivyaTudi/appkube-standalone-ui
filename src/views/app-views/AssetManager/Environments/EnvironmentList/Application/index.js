@@ -15,6 +15,7 @@ import forbeseToolsIcon from "assets/img/assetmanager/forbese-tools-icon.png";
 import slackInventoryIcon from "assets/img/assetmanager/slack-inventory-icon.png";
 import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
 import Button from "@mui/material/Button";
+import { APP_PREFIX_PATH } from "configs/AppConfig";
 
 class Application extends Component {
   tabMapping = [
@@ -264,7 +265,7 @@ class Application extends Component {
                     <TableCell align="left">
                       <Link
                         to={
-                          "/assetmanager/pages/environments/environmentlist/workspacedetails"
+                          `${APP_PREFIX_PATH}/environments/procurifylogisticstools`
                         }
                       >
                         HRMS

@@ -4,6 +4,12 @@
   padding: 40px 60px;
   background-color: #f6f7fb;
 
+  .chart-spinner {
+    min-height: 430px;
+    align-items: center;
+    justify-content: center;
+  }
+
   &.environmentlist {
     padding-left: 20px;
     padding-right: 20px;
@@ -16,6 +22,7 @@
       font-size: 24px;
       font-weight: 500;
       color: #383874;
+      display: inline-block;
     }
   }
 
@@ -2169,6 +2176,127 @@
           }
         }
       }
+    }
+  }
+
+  .procurify-cards {
+    width: 100%;
+    display: flex;
+    margin-top: 30px;
+    flex-wrap: wrap;
+
+    .procurify-card {
+      display: inline-flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+      padding: 15px 10px;
+      cursor: pointer;
+      min-height: 78px;
+      border-radius: 5px;
+      width: 195px;
+      margin-right: 15px;
+      background: #ffffff;
+      position: relative;
+
+      .image {
+        display: inline-flex;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #f6f7fb;
+        align-items: center;
+        justify-content: center;
+
+        img {
+          max-width: 60%;
+        }
+      }
+
+      .content {
+        display: inline-flex;
+        width: 110px;
+        flex-wrap: wrap;
+        margin-left: 10px;
+
+        label {
+          display: flex;
+          width: 100%;
+          font-size: 13px;
+          line-height: 20px;
+          font-weight: 500;
+          color: #383874;
+          margin-bottom: 3px;
+        }
+
+        strong {
+          display: flex;
+          width: 100%;
+          font-size: 13px;
+          line-height: 20px;
+          font-weight: 600;
+          color: #383874;
+        }
+
+      }
+
+    }
+
+    .procurify-card-buttons {
+      display: flex;
+      align-items: center;
+      min-height: 78px;
+
+      .primary-btn {
+        background-color: #ffffff;
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 10px 15px;
+        font-size: 18px;
+
+        .fa-trash-can {
+          color: #FF2D2E;
+        }
+
+        .fa-rotate-right {
+          color: #9A9AAF;
+        }
+      }
+    }
+  }
+
+  .main-information {
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+
+    .list-heading {
+      .buttons {
+        margin-left: 20px;
+
+        .primary-outline-btn {
+          border-color: #C6CBD9;
+          color: #383874;
+          margin-right: 15px;
+          font-weight: 400;
+
+          span {
+            padding-left: 5px;
+            padding-right: 5px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
+    .main-information-box {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+      padding: 15px 10px;
+      background-color: #ffffff;
+      margin-top: 20px;
     }
   }
 }

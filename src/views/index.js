@@ -17,6 +17,7 @@ import Environments from "views/app-views/AssetManager/Environments";
 import Dashboard from "views/app-views/AssetManager/Dashboard";
 import NewAccountSetup from "views/app-views/AssetManager/NewAccountSetup";
 import EnvironmentList from "views/app-views/AssetManager/Environments/EnvironmentList";
+import ProcurifyLogisticsTools from "views/app-views/AssetManager/ProcurifyLogisticsTools";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { getCurrentUser } from "utils";
@@ -94,6 +95,10 @@ export const Views = (props) => {
           <Route
             path={`${APP_PREFIX_PATH}/environments/kubernetes/newaccountsetup`}
             element={<NewAccountSetup />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
+            element={<ProcurifyLogisticsTools />}
           />
         </Routes>
       </div>

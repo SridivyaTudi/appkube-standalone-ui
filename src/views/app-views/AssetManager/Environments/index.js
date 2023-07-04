@@ -495,7 +495,7 @@ class Environments extends Component {
     return (
       <div className="environment-container">
         {this.props.environments.envSummary.status === status.IN_PROGRESS ? (
-          <Box className="chart-spinner text-center w-100 p-t-20 p-b-20">
+          <Box className="chart-spinner d-flex text-center w-100 p-t-20 p-b-20">
             <i className="fa-solid fa-spinner fa-spin" /> Loading...
           </Box>
         ) : (
@@ -715,7 +715,7 @@ class Environments extends Component {
               </Box>
             </Box>
             {(allEnvSummary.length && this.renderEnvironmentTable()) || (
-              <Box className="chart-spinner text-center w-100 p-t-20 p-b-20">No environments found.</Box>
+              <Box className="chart-spinner d-flex text-center w-100 p-t-20 p-b-20">No environments found.</Box>
             )}
           </>
         )}
