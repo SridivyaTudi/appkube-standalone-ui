@@ -51,6 +51,10 @@ class Environments extends Component {
       selectedDepartments: [],
       selectedProductions: [],
       selectedEnvs: [],
+      selectDepartmentsNotSubmitted: [],
+      selectProductionsNotSubmitted: [],
+      selectEnvsNotSubmitted: [],
+      isSubmitFilter: false,
     };
   }
 
@@ -87,11 +91,16 @@ class Environments extends Component {
         this.props.environments.envSummary.status === status.SUCCESS &&
         this.props.environments.envSummary.data
       ) {
+        let { isSubmitFilter, showSelectDepartmentPopup } = this.state;
         this.setState({
           allEnvSummary: this.props.environments.envSummary.data,
           searchedAccountList: JSON.parse(
             JSON.stringify(this.props.environments.envSummary.data)
           ),
+          isSubmitFilter: isSubmitFilter ? false : isSubmitFilter,
+          showSelectDepartmentPopup: isSubmitFilter
+            ? false
+            : showSelectDepartmentPopup,
         });
         this.SetCurrentActiveTableIndex();
       } else if (this.props.environments.allEnvs.status === status.FAILURE) {
@@ -396,33 +405,48 @@ class Environments extends Component {
     let departmentId = depId;
 
     const { value, checked } = e.target;
-    let { selectedProductions, selectedEnvs, selectedDepartments } = this.state;
+    let {
+      selectedProductions,
+      selectedEnvs,
+      selectedDepartments,
+      selectDepartmentsNotSubmitted,
+      selectProductionsNotSubmitted,
+      products,
+    } = this.state;
 
     if (type === "dep") {
       if (checked) {
         selectedDepartments.push(depId);
+        selectDepartmentsNotSubmitted.push(depId);
         this.setState({
           selectedDepartments,
+          selectDepartmentsNotSubmitted,
         });
         this.props.getProductsByDepId({ orgId: orgId, depId: depId });
       } else {
-        let removeProducts = this.state.products;
+        let removeProducts = products;
         delete removeProducts[depId];
         selectedDepartments = selectedDepartments.filter(
           (departmentId) => departmentId !== depId
         );
+        selectDepartmentsNotSubmitted = selectDepartmentsNotSubmitted.filter(
+          (departmentId) => departmentId !== depId
+        );
         if (!this.productsLength()) {
-          selectedProductions = selectedEnvs = [];
+          selectedProductions = [];
+          selectedEnvs = [];
         }
         this.setState({
           products: removeProducts,
           selectedProductions,
           selectedEnvs,
           selectedDepartments,
+          selectDepartmentsNotSubmitted,
         });
       }
     } else if (type === "prod") {
       if (checked) {
+        selectProductionsNotSubmitted.push(value);
         this.setState((prevState) => ({
           selectedProductions: [...prevState.selectedProductions, value],
         }));
@@ -431,40 +455,68 @@ class Environments extends Component {
         if (!newChecked.length) {
           selectedEnvs = [];
         }
-        this.setState({ selectedProductions: newChecked, selectedEnvs });
+        selectProductionsNotSubmitted = selectProductionsNotSubmitted.filter(
+          (item) => item !== value
+        );
+        this.setState({
+          selectedProductions: newChecked,
+          selectedEnvs,
+          selectProductionsNotSubmitted,
+        });
       }
     }
   };
 
   handleEnvChange = (name) => {
-    let { selectedEnvs } = this.state;
+    let { selectedEnvs,selectEnvsNotSubmitted } = this.state;
     if (selectedEnvs.includes(name)) {
       selectedEnvs = selectedEnvs.filter((item) => item !== name);
+      selectEnvsNotSubmitted =   selectEnvsNotSubmitted.filter((item) => item !== name);
     } else {
       selectedEnvs.push(name);
+      selectEnvsNotSubmitted.push(name);
+      
     }
-    this.setState({ selectedEnvs });
+    this.setState({ selectedEnvs,selectEnvsNotSubmitted });
   };
 
   handleClearFilters = () => {
     const orgId = localStorage.getItem("currentOrgId");
-    let { selectedDepartments, selectedEnvs, selectedProductions, products } = this.state;
-    if (selectedDepartments.length) {
+    let {
+      selectedDepartments,
+      selectedEnvs,
+      selectedProductions,
+      products,
+      allEnvSummary,
+      isSubmitFilter,
+      selectDepartmentsNotSubmitted,
+      selectProductionsNotSubmitted,
+      selectEnvsNotSubmitted,
+      showSelectDepartmentPopup,
+    } = this.state;
+    let isSubmitedFilter =
+      !selectDepartmentsNotSubmitted.length ||
+      !selectProductionsNotSubmitted.length ||
+      !selectEnvsNotSubmitted.length;
+    if (
+      (!isSubmitedFilter && selectedDepartments.length) ||
+      !allEnvSummary.length
+    ) {
       this.props.getEnvsByFilters({ params: "", orgId });
     }
-
-    selectedDepartments = []
+    selectedDepartments = [];
     selectedProductions = [];
-    selectedEnvs=[]
+    selectedEnvs = [];
     products = {};
-
+    showSelectDepartmentPopup = false;
     this.setState({
       selectedDepartments,
       selectedEnvs,
       selectedProductions,
       products,
+      isSubmitFilter,
+      showSelectDepartmentPopup,
     });
-    
   };
 
   productsLength = () => {
@@ -479,6 +531,55 @@ class Environments extends Component {
     }
     return isProduct;
   };
+
+  handleClearNotSubmittedFilters = () => {
+    let {
+      selectDepartmentsNotSubmitted,
+      selectProductionsNotSubmitted,
+      selectEnvsNotSubmitted,
+      selectedProductions,
+      selectedDepartments,
+      selectedEnvs,
+      products,
+    } = this.state;
+    if (selectDepartmentsNotSubmitted.length) {
+      selectDepartmentsNotSubmitted.forEach((depId) => {
+        let removeProducts = products;
+        delete removeProducts[depId];
+        selectedDepartments = selectedDepartments.filter(
+          (departmentId) => departmentId !== depId
+        );
+      });
+      selectDepartmentsNotSubmitted = [];
+    }
+    if (selectProductionsNotSubmitted.length) {
+      selectProductionsNotSubmitted.forEach((product) => {
+        selectedProductions = selectedProductions.filter(
+          (productName) => productName !== product
+        );
+      });
+      selectProductionsNotSubmitted = [];
+    }
+
+    if (selectEnvsNotSubmitted.length) {
+      selectEnvsNotSubmitted.forEach((envOut) => {
+        selectedEnvs = selectedEnvs.filter(
+          (envIn) => envIn !== envOut
+        );
+      });
+      selectEnvsNotSubmitted = [];
+    }
+    this.setState({
+      selectedEnvs,
+      selectedDepartments,
+      selectedProductions,
+      selectProductionsNotSubmitted,
+      selectDepartmentsNotSubmitted,
+      selectEnvsNotSubmitted,
+      showSelectDepartmentPopup:false
+    })
+  };
+
   render() {
     const {
       showRecentFilter,
@@ -491,234 +592,243 @@ class Environments extends Component {
       selectedEnvs,
       showSelectDepartmentPopup,
       products,
+      selectDepartmentsNotSubmitted,
+      selectProductionsNotSubmitted,
+      selectEnvsNotSubmitted,
+      isSubmitFilter,
     } = this.state;
     return (
       <div className="environment-container">
+        <Box className="list-heading">
+          <h3>Environments</h3>
+        </Box>
+        <Box className="environment-boxs m-t-4">
+          {this.props.environments.allEnvs.status === status.IN_PROGRESS ? (
+            <Box className="text-center align-self-center p-t-20 p-b-20">
+              <i className="fa-solid fa-spinner fa-spin" /> Loading...
+            </Box>
+          ) : (
+            (allEnvData.length && this.renderEnvironmentBoxes()) || ""
+          )}
+        </Box>
+        <Box className="add-new-environment">
+          <Box sx={{ width: "100%" }}>
+            <Grid
+              container
+              rowSpacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              alignItems={"center"}
+              justifyContent={"flex-start"}
+            >
+              <Grid item lg={3} md={3} xs={12}>
+                <Box className="environment-fliter">
+                  <Box className="fliter-toggel" onClick={this.togglePopup}>
+                    <i className="fa-solid fa-filter fillter-icon"></i>
+                    fillter
+                  </Box>
+                </Box>
+              </Grid>
+              <Grid item lg={9} md={9} xs={12}>
+                <Box sx={{ width: "100%" }}>
+                  <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    alignItems={"center"}
+                    justifyContent={"flex-start"}
+                  >
+                    <Grid item lg={8} md={12} xs={12}>
+                      <Box className="export-sction">
+                        {JSON.parse(localStorage.getItem("recentEnv")) !==
+                          null && (
+                          <Box className="environment-fliter">
+                            <Box
+                              className="fliter-toggel"
+                              onClick={() =>
+                                this.setState({
+                                  showRecentFilter: !showRecentFilter,
+                                })
+                              }
+                            >
+                              <i className="fa-solid fa-alarm-clock fillter-icon"></i>
+                              Recent
+                              <i className="fa-solid fa-caret-down arrow-icon"></i>
+                            </Box>
+                            <Box
+                              className={
+                                showRecentFilter === true
+                                  ? "fliter-collapse  active"
+                                  : "fliter-collapse"
+                              }
+                            >
+                              <List>
+                                {JSON.parse(
+                                  localStorage.getItem("recentEnv")
+                                )?.map((item) => {
+                                  return (
+                                    <ListItem>
+                                      <Link
+                                        to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
+                                        onClick={() =>
+                                          this.setLocalRecentService(item)
+                                        }
+                                      >
+                                        <span>
+                                          <img
+                                            src={
+                                              item.accountType === "AWS" ||
+                                              item.accountType === "aws"
+                                                ? AWS
+                                                : item.accountType === "GCP" ||
+                                                  item.accountType === "gcp"
+                                                ? GCP
+                                                : AZURE
+                                            }
+                                            alt={item.accountType}
+                                          />
+                                        </span>
+                                        <p>({item.accountId})</p>
+                                      </Link>
+                                    </ListItem>
+                                  );
+                                })}
+                              </List>
+                            </Box>
+                            <div
+                              className={
+                                showRecentFilter === true
+                                  ? "fliters-collapse-bg active"
+                                  : "fliters-collapse-bg"
+                              }
+                              onClick={() =>
+                                this.setState({
+                                  showRecentFilter: !showRecentFilter,
+                                })
+                              }
+                            />
+                          </Box>
+                        )}
+                        <Box className="environment-fliter">
+                          <Box
+                            className="fliter-toggel new-environment"
+                            onClick={() =>
+                              this.setState({
+                                showAddNewFilter: !showAddNewFilter,
+                              })
+                            }
+                          >
+                            Add New Environment
+                            <i className="fa-solid fa-caret-down arrow-icon"></i>
+                          </Box>
+                          <Box
+                            className={
+                              showAddNewFilter === true
+                                ? "fliter-collapse active"
+                                : "fliter-collapse"
+                            }
+                          >
+                            <List>
+                              <ListItem>
+                                <Link
+                                  to={`${APP_PREFIX_PATH}/environments/aws/newaccountsetup`}
+                                >
+                                  <span className="image-box">
+                                    <img src={AWS} alt="AWS" />
+                                  </span>
+                                  <p>Amazon Web Services</p>
+                                </Link>
+                              </ListItem>
+                              <ListItem>
+                                <Link
+                                  to={`${APP_PREFIX_PATH}/environments/azure/newaccountsetup`}
+                                >
+                                  <span className="image-box">
+                                    <img src={AZURE} alt="AZURE" />
+                                  </span>
+                                  <p>Azure Cloud</p>
+                                </Link>
+                              </ListItem>
+                              <ListItem>
+                                <Link
+                                  to={`${APP_PREFIX_PATH}/environments/gcp/newaccountsetup`}
+                                >
+                                  <span className="image-box">
+                                    <img src={GCP} alt="GCP" />
+                                  </span>
+                                  <p>Google Cloud Platform</p>
+                                </Link>
+                              </ListItem>
+                              <ListItem>
+                                <Link
+                                  to={`${APP_PREFIX_PATH}/environments/kubernetes/newaccountsetup`}
+                                >
+                                  <span className="image-box">
+                                    <img src={Kubernetes} alt="Kubernetes" />
+                                  </span>
+                                  <p>Kubernetes</p>
+                                </Link>
+                              </ListItem>
+                            </List>
+                          </Box>
+                          <div
+                            className={
+                              showAddNewFilter === true
+                                ? "fliters-collapse-bg active"
+                                : "fliters-collapse-bg"
+                            }
+                            onClick={() =>
+                              this.setState({
+                                showAddNewFilter: !showAddNewFilter,
+                              })
+                            }
+                          />
+                        </Box>
+                        <Button
+                          className="primary-btn min-width-inherit"
+                          variant="contained"
+                        >
+                          <i className="fas fa-external-link-square-alt p-r-10"></i>
+                          Export
+                        </Button>
+                      </Box>
+                    </Grid>
+                    <Grid item lg={4} md={12} xs={12}>
+                      <Box className="search-box">
+                        <Box className="form-group search-control-group m-b-0">
+                          <input
+                            type="text"
+                            className="input-group-text"
+                            placeholder="Search"
+                            name="searchkey"
+                            value={searchkey}
+                            onChange={this.handleSearchChange}
+                          />
+                          <button className="search-btn">
+                            <i className="fa fa-search" />
+                          </button>
+                        </Box>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
         {this.props.environments.envSummary.status === status.IN_PROGRESS ? (
-          <Box className="chart-spinner d-flex text-center w-100 p-t-20 p-b-20">
+          <Box className="text-center align-self-center p-t-20 p-b-20">
             <i className="fa-solid fa-spinner fa-spin" /> Loading...
           </Box>
         ) : (
           <>
-            <Box className="list-heading">
-              <h3>Environments</h3>
-            </Box>
-            <Box className="environment-boxs m-t-4">
-              {(allEnvData.length && this.renderEnvironmentBoxes()) || ""}
-            </Box>
-            <Box className="add-new-environment">
-              <Box sx={{ width: "100%" }}>
-                <Grid
-                  container
-                  rowSpacing={1}
-                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  alignItems={"center"}
-                  justifyContent={"flex-start"}
-                >
-                  <Grid item lg={3} md={3} xs={12}>
-                    <Box className="environment-fliter">
-                      <Box className="fliter-toggel" onClick={this.togglePopup}>
-                        <i className="fa-solid fa-filter fillter-icon"></i>
-                        fillter
-                      </Box>
-                    </Box>
-                  </Grid>
-                  <Grid item lg={9} md={9} xs={12}>
-                    <Box sx={{ width: "100%" }}>
-                      <Grid
-                        container
-                        rowSpacing={1}
-                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                        alignItems={"center"}
-                        justifyContent={"flex-start"}
-                      >
-                        <Grid item lg={8} md={12} xs={12}>
-                          <Box className="export-sction">
-                            {JSON.parse(localStorage.getItem("recentEnv")) !==
-                              null && (
-                              <Box className="environment-fliter">
-                                <Box
-                                  className="fliter-toggel"
-                                  onClick={() =>
-                                    this.setState({
-                                      showRecentFilter: !showRecentFilter,
-                                    })
-                                  }
-                                >
-                                  <i className="fa-solid fa-alarm-clock fillter-icon"></i>
-                                  Recent
-                                  <i className="fa-solid fa-caret-down arrow-icon"></i>
-                                </Box>
-                                <Box
-                                  className={
-                                    showRecentFilter === true
-                                      ? "fliter-collapse  active"
-                                      : "fliter-collapse"
-                                  }
-                                >
-                                  <List>
-                                    {JSON.parse(
-                                      localStorage.getItem("recentEnv")
-                                    )?.map((item) => {
-                                      return (
-                                        <ListItem>
-                                          <Link
-                                            to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
-                                            onClick={() =>
-                                              this.setLocalRecentService(item)
-                                            }
-                                          >
-                                            <span>
-                                              <img
-                                                src={
-                                                  item.accountType === "AWS" ||
-                                                  item.accountType === "aws"
-                                                    ? AWS
-                                                    : item.accountType ===
-                                                        "GCP" ||
-                                                      item.accountType === "gcp"
-                                                    ? GCP
-                                                    : AZURE
-                                                }
-                                                alt={item.accountType}
-                                              />
-                                            </span>
-                                            <p>({item.accountId})</p>
-                                          </Link>
-                                        </ListItem>
-                                      );
-                                    })}
-                                  </List>
-                                </Box>
-                                <div
-                                  className={
-                                    showRecentFilter === true
-                                      ? "fliters-collapse-bg active"
-                                      : "fliters-collapse-bg"
-                                  }
-                                  onClick={() =>
-                                    this.setState({
-                                      showRecentFilter: !showRecentFilter,
-                                    })
-                                  }
-                                />
-                              </Box>
-                            )}
-                            <Box className="environment-fliter">
-                              <Box
-                                className="fliter-toggel new-environment"
-                                onClick={() =>
-                                  this.setState({
-                                    showAddNewFilter: !showAddNewFilter,
-                                  })
-                                }
-                              >
-                                Add New Environment
-                                <i className="fa-solid fa-caret-down arrow-icon"></i>
-                              </Box>
-                              <Box
-                                className={
-                                  showAddNewFilter === true
-                                    ? "fliter-collapse active"
-                                    : "fliter-collapse"
-                                }
-                              >
-                                <List>
-                                  <ListItem>
-                                    <Link
-                                      to={`${APP_PREFIX_PATH}/environments/aws/newaccountsetup`}
-                                    >
-                                      <span className="image-box">
-                                        <img src={AWS} alt="AWS" />
-                                      </span>
-                                      <p>Amazon Web Services</p>
-                                    </Link>
-                                  </ListItem>
-                                  <ListItem>
-                                    <Link
-                                      to={`${APP_PREFIX_PATH}/environments/azure/newaccountsetup`}
-                                    >
-                                      <span className="image-box">
-                                        <img src={AZURE} alt="AZURE" />
-                                      </span>
-                                      <p>Azure Cloud</p>
-                                    </Link>
-                                  </ListItem>
-                                  <ListItem>
-                                    <Link
-                                      to={`${APP_PREFIX_PATH}/environments/gcp/newaccountsetup`}
-                                    >
-                                      <span className="image-box">
-                                        <img src={GCP} alt="GCP" />
-                                      </span>
-                                      <p>Google Cloud Platform</p>
-                                    </Link>
-                                  </ListItem>
-                                  <ListItem>
-                                    <Link
-                                      to={`${APP_PREFIX_PATH}/environments/kubernetes/newaccountsetup`}
-                                    >
-                                      <span className="image-box">
-                                        <img
-                                          src={Kubernetes}
-                                          alt="Kubernetes"
-                                        />
-                                      </span>
-                                      <p>Kubernetes</p>
-                                    </Link>
-                                  </ListItem>
-                                </List>
-                              </Box>
-                              <div
-                                className={
-                                  showAddNewFilter === true
-                                    ? "fliters-collapse-bg active"
-                                    : "fliters-collapse-bg"
-                                }
-                                onClick={() =>
-                                  this.setState({
-                                    showAddNewFilter: !showAddNewFilter,
-                                  })
-                                }
-                              />
-                            </Box>
-                            <Button
-                              className="primary-btn min-width-inherit"
-                              variant="contained"
-                            >
-                              <i className="fas fa-external-link-square-alt p-r-10"></i>
-                              Export
-                            </Button>
-                          </Box>
-                        </Grid>
-                        <Grid item lg={4} md={12} xs={12}>
-                          <Box className="search-box">
-                            <Box className="form-group search-control-group m-b-0">
-                              <input
-                                type="text"
-                                className="input-group-text"
-                                placeholder="Search"
-                                name="searchkey"
-                                value={searchkey}
-                                onChange={this.handleSearchChange}
-                              />
-                              <button className="search-btn">
-                                <i className="fa fa-search" />
-                              </button>
-                            </Box>
-                          </Box>
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Box>
             {(allEnvSummary.length && this.renderEnvironmentTable()) || (
-              <Box className="chart-spinner d-flex text-center w-100 p-t-20 p-b-20">No environments found.</Box>
+              <Box className="chart-spinner d-flex text-center w-100 p-t-20 p-b-20">
+                No environments found.
+              </Box>
             )}
           </>
         )}
+
         {showSelectDepartmentPopup ? (
           <FilterPopup
             showModal={showSelectDepartmentPopup}
@@ -726,11 +836,15 @@ class Environments extends Component {
             handleCheckChange={this.handleCheckChange}
             handleEnvChange={this.handleEnvChange}
             handleClearFilters={this.handleClearFilters}
+            handleClearNotSubmittedFilters={this.handleClearNotSubmittedFilters}
             products={products}
             selectedFilters={{
               selectedDepartments,
               selectedEnvs,
               selectedProductions,
+            }}
+            handleSubmitFilter={(isSubmitFilter) => {
+              this.setState({ isSubmitFilter,selectDepartmentsNotSubmitted:[],selectEnvsNotSubmitted:[],selectProductionsNotSubmitted:[] });
             }}
           />
         ) : (

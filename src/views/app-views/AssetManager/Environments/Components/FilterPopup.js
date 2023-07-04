@@ -54,8 +54,10 @@ class FilterPopup extends Component {
           this.props.environments.organizationWiseDepartments.data.departments
         ) {
           this.setState({
-            departments:
-              this.sortDepartments(this.props.environments.organizationWiseDepartments.data.departments)
+            departments: this.sortDepartments(
+              this.props.environments.organizationWiseDepartments.data
+                .departments
+            ),
           });
         }
       }
@@ -123,25 +125,40 @@ class FilterPopup extends Component {
   renderProducts = () => {
     let { selectedFilters, products } = this.props;
     let { selectedProductions } = selectedFilters;
-    return Object.keys(products).map((departmentProducts, index) => {
-      return this.props.products[departmentProducts].map(
-        (product, innerIndex) => {
-          return (
-            <Grid key={innerIndex} item lg={4} md={4} xs={12}>
-              <Box className="d-flex align-items-center">
-                <input
-                  type="checkbox"
-                  value={product}
-                  checked={selectedProductions.includes(product)}
-                  onChange={(e) => this.props.handleCheckChange(e, "prod")}
-                  id={product}
-                />
-                <label htmlFor={product}>{product}</label>
-              </Box>
-            </Grid>
-          );
-        }
-      );
+    return Object.keys(products).map((departmentId, index) => {
+      return this.props.products[departmentId].map((product, innerIndex) => {
+        return (
+          <Grid key={innerIndex} item lg={4} md={4} xs={12}>
+            <Box className="d-flex align-items-center" >
+              <input
+                type="checkbox"
+                value={product}
+                checked={selectedProductions.includes(
+                  product
+                )}
+                onChange={(e) => this.props.handleCheckChange(e, "prod")}
+                id={product}
+              />
+              <label htmlFor={product} onClick=
+                {(e) =>{
+                  this.props.handleCheckChange(
+                    {
+                      target: {
+                        checked: selectedProductions.includes(
+                          product
+                        ),
+                        value: product,
+                      },
+                    },
+                    "prod"
+                  );
+                }}>
+                {product} 
+              </label>
+            </Box>
+          </Grid>
+        );
+      });
     });
   };
 
@@ -187,14 +204,14 @@ class FilterPopup extends Component {
     if (selectedEnvs.length) {
       params += `&env=${selectedEnvs[selectedEnvs.length - 1]}`;
     }
+    this.props.handleSubmitFilter(true)
     this.props.getEnvsByFilters({ params, orgId });
-    this.toggle();
   };
 
   sortDepartments = (departments) => {
-    let sortedDepartments = []
+    let sortedDepartments = [];
     if (departments.length) {
-      sortedDepartments = Object.assign([],departments)
+      sortedDepartments = Object.assign([], departments);
       sortedDepartments.sort(function (depA, depB) {
         if (depA.name < depB.name) {
           return -1;
@@ -203,14 +220,12 @@ class FilterPopup extends Component {
           return 1;
         }
         return 0;
-      });  
-      return sortedDepartments
+      });
+      return sortedDepartments;
     } else {
-      return sortedDepartments
+      return sortedDepartments;
     }
-    
-    
-  }
+  };
   render() {
     const { departments, deploymentEnvs } = this.state;
     const { selectedProductions, selectedEnvs, selectedDepartments } =
@@ -228,7 +243,9 @@ class FilterPopup extends Component {
             type="button"
             className="close"
             aria-label="Close"
-            onClick={this.toggle}
+            onClick={()=>{
+              this.props.handleClearNotSubmittedFilters()
+            }}
           >
             <i className="fa-solid fa-xmark"></i>
           </button>
@@ -340,7 +357,6 @@ class FilterPopup extends Component {
               variant="contained"
               onClick={() => {
                 this.props.handleClearFilters();
-                this.toggle();
               }}
             >
               Clear
