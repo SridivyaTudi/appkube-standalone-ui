@@ -69,33 +69,34 @@ class Environments extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
+
     if (
-      prevProps.environments.allEnvs.status !==
-      this.props.environments.allEnvs.status
+      prevProps.allEnvs.status !==
+      this.props.allEnvs.status
     ) {
-      if (this.props.environments.allEnvs.status === status.SUCCESS) {
-        this.setState({ allEnvData: this.props.environments.allEnvs.data });
-      } else if (this.props.environments.allEnvs.status === status.FAILURE) {
+      if (this.props.allEnvs.status === status.SUCCESS) {
+        this.setState({ allEnvData: this.props.allEnvs.data });
+      } else if (this.props.allEnvs.status === status.FAILURE) {
         ToastMessage.error("There is some issue.");
       }
     }
     if (
-      prevProps.environments.envSummary.status !==
-      this.props.environments.envSummary.status
+      prevProps.envSummary.status !==
+      this.props.envSummary.status
     ) {
       if (
-        this.props.environments.envSummary.status === status.SUCCESS &&
-        this.props.environments.envSummary.data
+        this.props.envSummary.status === status.SUCCESS &&
+        this.props.envSummary.data
       ) {
         this.setState({
-          allEnvSummary: this.props.environments.envSummary.data,
+          allEnvSummary: this.props.envSummary.data,
           searchedAccountList: JSON.parse(
-            JSON.stringify(this.props.environments.envSummary.data)
+            JSON.stringify(this.props.envSummary.data)
           ),
           showFilterPopup: false
         });
         this.setCurrentActiveTableIndex();
-      } else if (this.props.environments.allEnvs.status === status.FAILURE) {
+      } else if (this.props.allEnvs.status === status.FAILURE) {
         ToastMessage.error("There is some issue.");
       }
     }
@@ -103,7 +104,7 @@ class Environments extends Component {
 
   setCurrentActiveTableIndex = () => {
     try {
-      this.props.environments.envSummary.data.map((item, index) => {
+      this.props.envSummary.data.map((item, index) => {
         let allIndex = [];
         allIndex.push(index);
         this.setState({ currentActiveTableIndex: allIndex });
@@ -393,7 +394,7 @@ class Environments extends Component {
           <h3>Environments</h3>
         </Box>
         <Box className="environment-boxs m-t-4">
-          {this.props.environments.allEnvs.status === status.IN_PROGRESS ? (
+          {this.props.allEnvs.status === status.IN_PROGRESS ? (
             <Box className="environment-loader w-100">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
@@ -605,7 +606,7 @@ class Environments extends Component {
             </Grid>
           </Box>
         </Box>
-        {this.props.environments.envSummary.status === status.IN_PROGRESS ? (
+        {this.props.envSummary.status === status.IN_PROGRESS ? (
           <Box className="new-environment-loader text-center align-self-center p-t-20 p-b-20">
             <i className="fa-solid fa-spinner fa-spin" /> Loading...
           </Box>
@@ -637,9 +638,9 @@ class Environments extends Component {
 }
 
 function mapStateToProps(state) {
-  const { environments } = state;
+  const { allEnvs,envSummary } = state.environments;
   return {
-    environments
+    allEnvs,envSummary
   };
 }
 
