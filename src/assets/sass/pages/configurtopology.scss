@@ -1,7 +1,7 @@
-.deploy-project-container {
+.configure-topology-container {
   width: 100%;
   display: block;
-  padding: 15px 20px;
+  padding: 15px 20px 50px;
   background-color: #f6f7fb;
 
   h3 {
@@ -53,10 +53,11 @@
       padding: 30px 30px;
       border-radius: 10px;
       background: #ffffff;
-      min-height: 677px;
+      min-height: 650px;
+      box-shadow: 0px 100px 80px rgba(108, 73, 172, 0.07);
 
-      .asset-blue-button {
-        font-weight: 600;
+      h2 {
+        font-weight: 500;
       }
 
       .plus-icon {
@@ -133,9 +134,9 @@
         }
 
         p {
-          font-size: 22px;
-          line-height: 26px;
-          font-weight: 600;
+          font-size: 24px;
+          line-height: 30px;
+          font-weight: 800;
           color: #384cff;
           margin: 0;
         }
@@ -146,6 +147,43 @@
           margin-left: 10px;
         }
       }
+
+      .slider {
+        .MuiSlider-rail {
+          color: #EAECF0;
+          opacity: 1;
+        }
+
+        .MuiSlider-track {
+          color: #384cff;
+        }
+
+        .MuiSlider-thumb {
+          color: #ffffff;
+          border: 1px solid #384cff;
+
+          &::before {
+            content: "";
+            background-color: #384cff;
+            left: 9px;
+            top: -27px;
+            width: 1px;
+            height: 26px;
+          }
+        }
+
+        .MuiSlider-valueLabelOpen {
+          background-color: transparent;
+          color: #101828;
+          padding: 0;
+          top: 45px;
+
+          &::before {
+            display: none;
+          }
+        }
+      }
+
     }
   }
 
@@ -155,11 +193,12 @@
     justify-content: center;
 
     .reserved-card {
-      width: 150px;
+      width: 149px;
       padding: 10px 8px;
       border-radius: 10px;
       background: #384cff;
-      margin: 0 5px;
+      margin: 0 20px 30px;
+      position: relative;
 
       &:first-child {
         margin-left: 0;
@@ -167,6 +206,32 @@
 
       &:last-child {
         margin-right: 0;
+      }
+
+      &::after {
+        background-color: #384cff;
+        content: "";
+        position: absolute;
+        left: 72px;
+        bottom: -25px;
+        width: 1px;
+        height: 25px;
+      }
+
+      .slider-line {
+        background-color: #384cff;
+        height: 1px;
+        position: absolute;
+        bottom: -25px;
+        width: auto;
+
+        span {
+          background-color: #ffffff;
+          height: 1px;
+          display: inline-block;
+          position: relative;
+          z-index: 1;
+        }
       }
 
       .title {
@@ -184,24 +249,21 @@
         }
 
         i {
-          width: 20px;
-          height: 20px;
-          text-align: center;
-          border-radius: 19px;
-          background: #ffffff;
-          line-height: 20px;
-          padding: 2px;
           font-size: 12px;
-          color: #384cff;
+          color: #ffffff;
         }
       }
 
       .reseved-content {
         input {
-          width: 25px;
+          width: 24px;
           border-radius: 3px;
           font-size: 12px;
+          line-height: 20px;
           font-weight: 500;
+          border: none;
+          text-align: center;
+          padding: 0;
         }
 
         .dropdown-arrow {
@@ -211,13 +273,13 @@
           color: #ffffff;
 
           i {
-            font-size: 12px;
-            line-height: 12px;
+            font-size: 10px;
+            line-height: 10px;
           }
         }
 
         span {
-          font-size: 10px;
+          font-size: 9px;
           line-height: 14px;
           font-weight: 500;
           color: #ffffff;
@@ -225,7 +287,7 @@
 
         p {
           margin: 10px 0 0 0;
-          font-size: 10px;
+          font-size: 9px;
           line-height: 14px;
           font-weight: 500;
           color: #ffffff;

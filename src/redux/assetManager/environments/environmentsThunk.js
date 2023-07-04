@@ -18,10 +18,11 @@ export const getEnvsAsync = createAsyncThunk(
 
 export const getEnvsSummary = createAsyncThunk(
   "environments/getEnvsSummary",
-  async (orgId) => {
+  async (data) => {
+    const {orgId, params} = data;
     const url = config.GET_ALL_ENVIRONMENT_SUMMARY.replace("#org-id#", orgId);
     try {
-      const response = await axios.get(`${url}`);
+      const response = await axios.get(`${url}`, {params});
       const allEnvSummary = response.data;
       return allEnvSummary;
     } catch (error) {
@@ -74,23 +75,6 @@ export const getDeploymentEnvs = createAsyncThunk(
       return deploymentEnvs;
     } catch (error) {
       console.log(error);
-    }
-  }
-);
-
-export const getEnvsByFilters = createAsyncThunk(
-  "environments/getEnvsByFilters",
-  async (data) => {
-    if (data) {
-      let { params, orgId } = data;
-      const url = config.GET_ALL_ENVIRONMENT_SUMMARY.replace("#org-id#", orgId);
-      try {
-        const response = await axios.get(`${url}`, { params });
-        const envsByFilter = await response.json();
-        return envsByFilter;
-      } catch (error) {
-        console.log(error);
-      }
     }
   }
 );

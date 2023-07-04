@@ -8,7 +8,7 @@ import {
   getProductsByDepId,
   getOrgWiseDepartments,
   getDeploymentEnvs,
-  getEnvsByFilters,
+  getEnvsSummary,
 } from "redux/assetManager/environments/environmentsThunk";
 import { getCurrentOrgId } from "utils";
 import Button from "@mui/material/Button";
@@ -28,52 +28,51 @@ class FilterPopup extends Component {
     this.state = {
       modal: false,
       departments: [],
-      deploymentEnvs: [],
+      selectedDepartment: -1,
+      selectedProduct: -1,
+      selectedEnv: -1
     };
   }
 
   componentDidMount = () => {
-    let currentOrgId = localStorage.getItem("currentOrgId");
-    if (currentOrgId > 0) {
-      this.props.getOrgWiseDepartments(currentOrgId);
-      this.props.getDeploymentEnvs(currentOrgId);
+    let currentOrgId = getCurrentOrgId();
+    this.props.getOrgWiseDepartments(currentOrgId);
+    this.props.getDeploymentEnvs(currentOrgId);
+    const { selectedDepartment, selectedEnv, selectedProduct } = this.props.selectedFilters;
+    this.setState({
+      selectedDepartment,
+      selectedEnv,
+      selectedProduct
+    });
+    if (selectedDepartment !== -1) {
+      this.props.getProductsByDepId({ orgId: currentOrgId, depId: selectedDepartment });
     }
   };
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.environments.organizationWiseDepartments.status !==
-      this.props.environments.organizationWiseDepartments.status
+      prevProps.organizationWiseDepartments.status !==
+      this.props.organizationWiseDepartments.status && this.props.organizationWiseDepartments.status ===
+      status.SUCCESS
     ) {
-      if (
-        this.props.environments.organizationWiseDepartments.status ===
-          status.SUCCESS &&
-        this.props.environments.organizationWiseDepartments.data
-      ) {
-        if (
-          this.props.environments.organizationWiseDepartments.data.departments
-        ) {
-          this.setState({
-            departments: this.sortDepartments(
-              this.props.environments.organizationWiseDepartments.data
-                .departments
-            ),
-          });
-        }
-      }
+      this.setState({
+        departments: this.sortDepartments(
+          JSON.parse(JSON.stringify(this.props.organizationWiseDepartments.data
+            .departments))
+        ),
+      });
     }
-
     if (
-      prevProps.environments.deploymentEnvs.status !==
-      this.props.environments.deploymentEnvs.status
+      prevProps.deploymentEnvs.status !==
+      this.props.deploymentEnvs.status
     ) {
       if (
-        this.props.environments.deploymentEnvs.status === status.SUCCESS &&
-        this.props.environments.deploymentEnvs.data
+        this.props.deploymentEnvs.status === status.SUCCESS &&
+        this.props.deploymentEnvs.data
       ) {
-        if (this.props.environments.deploymentEnvs.data) {
+        if (this.props.deploymentEnvs.data) {
           this.setState({
-            deploymentEnvs: this.props.environments.deploymentEnvs.data,
+            deploymentEnvs: this.props.deploymentEnvs.data,
           });
         }
       }
@@ -82,6 +81,29 @@ class FilterPopup extends Component {
 
   toggle = () => {
     this.props.togglePopup();
+  };
+
+  handleDepartmentCheck = (departmentID) => {
+    this.setState({
+      selectedDepartment: departmentID,
+      selectedProduct: -1,
+      selectedEnv: -1
+    });
+    let currentOrgId = getCurrentOrgId();
+    this.props.getProductsByDepId({ orgId: currentOrgId, depId: departmentID });
+  };
+
+  handleProductCheck = (product) => {
+    this.setState({
+      selectedProduct: product,
+      selectedEnv: -1
+    });
+  };
+
+  handleEnvCheck = (env) => {
+    this.setState({
+      selectedEnv: env
+    });
   };
 
   renderDepartments = () => {
@@ -93,25 +115,16 @@ class FilterPopup extends Component {
             <Box className="d-flex align-items-center checkbox">
               <input
                 className="checkbox-input"
-                type="checkbox"
-                checked={this.isDepartmentSelected(department.id)}
+                type="radio"
+                name="department"
+                checked={department.id === this.state.selectedDepartment}
                 onChange={(e) =>
-                  this.props.handleCheckChange(e, "dep", department.id)
+                  this.handleDepartmentCheck(department.id)
                 }
               />
               <label
                 htmlFor={department.name}
-                onClick={(e) =>
-                  this.props.handleCheckChange(
-                    {
-                      target: {
-                        checked: !this.isDepartmentSelected(department.id),
-                      },
-                    },
-                    "dep",
-                    department.id
-                  )
-                }
+                onClick={(e) => this.handleDepartmentCheck(department.id)}
               >
                 {department.name}
               </label>
@@ -123,114 +136,117 @@ class FilterPopup extends Component {
   };
 
   renderProducts = () => {
-    let { selectedFilters, products } = this.props;
-    let { selectedProductions } = selectedFilters;
-    return Object.keys(products).map((departmentId, index) => {
-      return this.props.products[departmentId].map((product, innerIndex) => {
+    const { productsByDepId } = this.props;
+    const { selectedDepartment } = this.state;
+    if (productsByDepId && productsByDepId.data && productsByDepId.data.depId === selectedDepartment) {
+      return productsByDepId.data.products.map((product, innerIndex) => {
         return (
-          <Grid key={innerIndex} item lg={4} md={4} xs={12}>
+          <Grid item lg={4} md={4} xs={12}>
             <Box className="d-flex align-items-center" >
               <input
-                type="checkbox"
+                type="radio"
+                name="product"
                 value={product}
-                checked={selectedProductions.includes(
-                  product
-                )}
-                onChange={(e) => this.props.handleCheckChange(e, "prod")}
-                id={product}
+                checked={product === this.state.selectedProduct}
+                onChange={(e) => this.handleProductCheck(product)}
               />
               <label htmlFor={product} onClick=
-                {(e) =>{
-                  this.props.handleCheckChange(
-                    {
-                      target: {
-                        checked: selectedProductions.includes(
-                          product
-                        ),
-                        value: product,
-                      },
-                    },
-                    "prod"
-                  );
-                }}>
-                {product} 
+                {(e) => this.handleProductCheck(product)}>
+                {product}
               </label>
             </Box>
           </Grid>
         );
       });
-    });
+    }
+    return [];
   };
 
-  isDepartmentSelected = (depId) => {
-    let { selectedDepartments } = this.props.selectedFilters;
-    if (selectedDepartments.length)
-      return selectedDepartments.filter(
-        (departmentId) => departmentId === depId
-      ).length
-        ? true
-        : false;
-    else return false;
-  };
-
-  productsLength = () => {
-    let isProduct = false;
-    const { products } = this.props;
-    if (Object.keys(products).length) {
-      Object.keys(products).forEach((productKey) => {
-        if (products[productKey] && products[productKey].length && !isProduct) {
-          isProduct = true;
-        }
+  renderEnvironments = () => {
+    const { deploymentEnvs } = this.props;
+    if (deploymentEnvs && deploymentEnvs.data) {
+      return deploymentEnvs.data.map((item) => {
+        return (
+          <Grid key={item.name} item lg={3} md={4} xs={12}>
+            <Box
+              onClick={() =>
+                this.handleEnvCheck(item.name)
+              }
+              className={`
+                environment-box 
+                ${this.state.selectedEnv === item.name ? "active" : ""}`
+              }
+            >
+              <Box className="d-block">
+                <Box
+                  className={`envir-image ${deploymentImgs[item.name]
+                    }`}
+                ></Box>
+                <Box className="environment-title">
+                  {item.name}
+                </Box>
+              </Box>
+            </Box>
+          </Grid>
+        );
       });
     }
-    return isProduct;
+    return [];
   };
 
   handleSubmit = () => {
-    let { selectedDepartments, selectedProductions, selectedEnvs } =
-      this.props.selectedFilters;
-    const orgId = localStorage.getItem("currentOrgId");
-    let params = "";
-    if (selectedDepartments.length) {
-      params += `departmentId=${
-        selectedDepartments[selectedDepartments.length - 1]
-      }`;
+    let { selectedDepartment, selectedProduct, selectedEnv } = this.state;
+    let currentOrgId = getCurrentOrgId();
+    let params = {};
+    if (selectedDepartment !== -1) {
+      params = {
+        departmentId: selectedDepartment
+      };
+      if (selectedProduct !== -1) {
+        params.product = selectedProduct;
+        if (selectedEnv !== -1) {
+          params.env = selectedEnv;
+        }
+      }
+      this.props.getEnvsSummary({ params, orgId: currentOrgId });
+      this.props.handleSubmitFilter({
+        selectedDepartment,
+        selectedProduct,
+        selectedEnv
+      });
     }
-    if (selectedProductions.length) {
-      params += `&product=${
-        selectedProductions[selectedProductions.length - 1]
-      }`;
+  };
+
+  handleClearFilters = () => {
+    let { selectedDepartment } = this.props.selectedFilters;
+    if(selectedDepartment !== -1){
+      let currentOrgId = getCurrentOrgId();
+      this.props.getEnvsSummary({ orgId: currentOrgId });
+    } else {
+      this.props.togglePopup();
     }
-    if (selectedEnvs.length) {
-      params += `&env=${selectedEnvs[selectedEnvs.length - 1]}`;
-    }
-    this.props.handleSubmitFilter(true)
-    this.props.getEnvsByFilters({ params, orgId });
+    this.props.handleSubmitFilter({
+      selectedDepartment: -1,
+      selectedProduct: -1,
+      selectedEnv: -1
+    });
   };
 
   sortDepartments = (departments) => {
-    let sortedDepartments = [];
-    if (departments.length) {
-      sortedDepartments = Object.assign([], departments);
-      sortedDepartments.sort(function (depA, depB) {
-        if (depA.name < depB.name) {
-          return -1;
-        }
-        if (depA.name > depB.name) {
-          return 1;
-        }
-        return 0;
-      });
-      return sortedDepartments;
-    } else {
-      return sortedDepartments;
-    }
+    departments.sort(function (depA, depB) {
+      if (depA.name < depB.name) {
+        return -1;
+      }
+      if (depA.name > depB.name) {
+        return 1;
+      }
+      return 0;
+    });
+    return departments;
   };
+
   render() {
-    const { departments, deploymentEnvs } = this.state;
-    const { selectedProductions, selectedEnvs, selectedDepartments } =
-      this.props.selectedFilters;
-    const { products } = this.props;
+    const { selectedDepartment, selectedProduct } = this.state;
     return (
       <Modal
         isOpen={this.props.showModal}
@@ -243,8 +259,8 @@ class FilterPopup extends Component {
             type="button"
             className="close"
             aria-label="Close"
-            onClick={()=>{
-              this.props.handleClearNotSubmittedFilters()
+            onClick={() => {
+              this.props.togglePopup()
             }}
           >
             <i className="fa-solid fa-xmark"></i>
@@ -254,8 +270,8 @@ class FilterPopup extends Component {
           style={{ overflowY: "auto", overflowX: "hidden", height: "300px" }}
         >
           <h4 className="text-left m-b-1">Select Department</h4>
-          {this.props.environments.organizationWiseDepartments.status ===
-          status.IN_PROGRESS ? (
+          {this.props.organizationWiseDepartments.status ===
+            status.IN_PROGRESS ? (
             <Box className="text-center align-self-center p-t-20 p-b-20">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
@@ -272,118 +288,76 @@ class FilterPopup extends Component {
                   {this.renderDepartments()}
                 </Grid>
               </Box>
-              {selectedDepartments.length ? (
-                this.productsLength() ? (
-                  <>
-                    <h4 className="text-left m-b-1 m-t-2">Select Production</h4>
-                    <Box
-                      sx={{ width: "100%" }}
-                      className="border-bottom p-b-10"
+              {selectedDepartment !== -1 ? (
+                <>
+                  <h4 className="text-left m-b-1 m-t-2">Select Product</h4>
+                  <Box
+                    sx={{ width: "100%" }}
+                    className="border-bottom p-b-10"
+                  >
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                      alignItems={"center"}
+                      justifyContent={"flex-start"}
                     >
-                      <Grid
-                        container
-                        rowSpacing={1}
-                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                        alignItems={"center"}
-                        justifyContent={"flex-start"}
-                      >
-                        {this.renderProducts()}
-                      </Grid>
-                    </Box>
-                  </>
-                ) : (
-                  <></>
-                )
-              ) : (
-                <></>
-              )}
-              {selectedDepartments.length ? (
-                selectedProductions.length && this.productsLength() ? (
-                  <>
-                    <h4 className="text-left m-b-1 m-t-2">
-                      Select Environment
-                    </h4>
-                    <Box sx={{ width: "100%" }}>
-                      <Grid
-                        container
-                        rowSpacing={1}
-                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                        alignItems={"center"}
-                        justifyContent={"flex-start"}
-                      >
-                        {deploymentEnvs.map((item) => {
-                          return (
-                            <Grid key={item.name} item lg={3} md={4} xs={12}>
-                              <Box
-                                onClick={() =>
-                                  this.props.handleEnvChange(item.name)
-                                }
-                                className={`environment-box ${
-                                  selectedEnvs.includes(item.name)
-                                    ? "active"
-                                    : ""
-                                }`}
-                              >
-                                <Box className="d-block">
-                                  <Box
-                                    className={`envir-image ${
-                                      deploymentImgs[item.name]
-                                    }`}
-                                  ></Box>
-                                  <Box className="environment-title">
-                                    {item.name}
-                                  </Box>
-                                </Box>
-                              </Box>
-                            </Grid>
-                          );
-                        })}
-                      </Grid>
-                    </Box>
-                  </>
-                ) : (
-                  <></>
-                )
-              ) : (
-                <></>
-              )}
+                      {this.renderProducts()}
+                    </Grid>
+                  </Box>
+                </>
+              ) : null}
+              {selectedProduct !== -1 ?
+                <>
+                  <h4 className="text-left m-b-1 m-t-2">
+                    Select Environment
+                  </h4>
+                  <Box sx={{ width: "100%" }}>
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                      alignItems={"center"}
+                      justifyContent={"flex-start"}
+                    >
+                      {this.renderEnvironments()}
+                    </Grid>
+                  </Box>
+                </>
+                : null
+              }
             </>
           )}
         </ModalBody>
         <ModalFooter className="footer-top-br">
           <Box className="d-block text-center">
-            <Button
+            <LoadingButton
               className="secondary-btn m-r-2"
               variant="contained"
-              onClick={() => {
-                this.props.handleClearFilters();
-              }}
+              onClick={this.handleClearFilters}
+              disabled={this.props.envSummary.status ===
+                status.IN_PROGRESS}
+              loading={
+                this.props.envSummary.status ===
+                status.IN_PROGRESS}
             >
               Clear
-            </Button>
-            {(selectedDepartments.length && (
+            </LoadingButton>
+            {selectedDepartment !== -1 ?
               <LoadingButton
-                disabled={
-                  this.props.environments.envSummary.status ===
-                  status.IN_PROGRESS
-                    ? true
-                    : false
-                }
+                disabled={this.props.envSummary.status ===
+                  status.IN_PROGRESS}
                 loading={
-                  this.props.environments.envSummary.status ===
-                  status.IN_PROGRESS
-                    ? true
-                    : false
-                }
+                  this.props.envSummary.status ===
+                  status.IN_PROGRESS}
                 className="primary-btn min-width"
                 loadingPosition="start"
                 variant="contained"
-                onClick={() => this.handleSubmit()}
+                onClick={this.handleSubmit}
               >
                 Submit
               </LoadingButton>
-            )) ||
-              ""}
+              : null}
           </Box>
         </ModalFooter>
       </Modal>
@@ -392,10 +366,12 @@ class FilterPopup extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { orgWiseDepartments, environments } = state;
+  const { organizationWiseDepartments, deploymentEnvs, productsByDepId, envSummary } = state.environments;
   return {
-    orgWiseDepartments,
-    environments,
+    organizationWiseDepartments,
+    deploymentEnvs,
+    productsByDepId,
+    envSummary
   };
 };
 
@@ -403,7 +379,7 @@ const mapDispatchToProps = {
   getProductsByDepId,
   getOrgWiseDepartments,
   getDeploymentEnvs,
-  getEnvsByFilters,
+  getEnvsSummary,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterPopup);
