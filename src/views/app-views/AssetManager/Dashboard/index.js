@@ -17,7 +17,7 @@ class Dashboard extends Component {
       dataKey: "cost",
     },
     {
-      name: "SLM Metrics",
+      name: "SLA Metrics",
       dataKey: "metrics",
     },
     {
