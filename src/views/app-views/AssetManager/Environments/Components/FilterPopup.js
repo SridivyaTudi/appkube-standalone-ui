@@ -55,8 +55,7 @@ class FilterPopup extends Component {
         ) {
           this.setState({
             departments:
-              this.props.environments.organizationWiseDepartments.data
-                .departments,
+              this.sortDepartments(this.props.environments.organizationWiseDepartments.data.departments)
           });
         }
       }
@@ -176,21 +175,46 @@ class FilterPopup extends Component {
     const orgId = localStorage.getItem("currentOrgId");
     let params = "";
     if (selectedDepartments.length) {
-      params += `departmentId=${selectedDepartments[selectedDepartments.length - 1]}`;
+      params += `departmentId=${
+        selectedDepartments[selectedDepartments.length - 1]
+      }`;
     }
     if (selectedProductions.length) {
-      params += `&product=${selectedProductions[selectedProductions.length - 1]}`;
+      params += `&product=${
+        selectedProductions[selectedProductions.length - 1]
+      }`;
     }
     if (selectedEnvs.length) {
-      params += `&env=${selectedEnvs[selectedEnvs.length-1]}`;
+      params += `&env=${selectedEnvs[selectedEnvs.length - 1]}`;
     }
     this.props.getEnvsByFilters({ params, orgId });
     this.toggle();
   };
 
+  sortDepartments = (departments) => {
+    let sortedDepartments = []
+    if (departments.length) {
+      sortedDepartments = Object.assign([],departments)
+      sortedDepartments.sort(function (depA, depB) {
+        if (depA.name < depB.name) {
+          return -1;
+        }
+        if (depA.name > depB.name) {
+          return 1;
+        }
+        return 0;
+      });  
+      return sortedDepartments
+    } else {
+      return sortedDepartments
+    }
+    
+    
+  }
   render() {
     const { departments, deploymentEnvs } = this.state;
-    const { selectedProductions, selectedEnvs, selectedDepartments } = this.props.selectedFilters;
+    const { selectedProductions, selectedEnvs, selectedDepartments } =
+      this.props.selectedFilters;
     const { products } = this.props;
     return (
       <Modal
@@ -231,62 +255,81 @@ class FilterPopup extends Component {
                   {this.renderDepartments()}
                 </Grid>
               </Box>
-              {selectedDepartments.length ?  this.productsLength() ?  (
-                <>
-                  <h4 className="text-left m-b-1 m-t-2">Select Production</h4>
-                  <Box sx={{ width: "100%" }} className="border-bottom p-b-10">
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                      alignItems={"center"}
-                      justifyContent={"flex-start"}
+              {selectedDepartments.length ? (
+                this.productsLength() ? (
+                  <>
+                    <h4 className="text-left m-b-1 m-t-2">Select Production</h4>
+                    <Box
+                      sx={{ width: "100%" }}
+                      className="border-bottom p-b-10"
                     >
-                      {this.renderProducts()}
-                    </Grid>
-                  </Box>
-                </>
-              ): <></>  :<></>}
-              {selectedDepartments.length ?  selectedProductions.length && this.productsLength() ? (
-                <>
-                  <h4 className="text-left m-b-1 m-t-2">Select Environment</h4>
-                  <Box sx={{ width: "100%" }}>
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                      alignItems={"center"}
-                      justifyContent={"flex-start"}
-                    >
-                      {deploymentEnvs.map((item) => {
-                        return (
-                          <Grid key={item.name} item lg={3} md={4} xs={12}>
-                            <Box
-                              onClick={() =>
-                                this.props.handleEnvChange(item.name)
-                              }
-                              className={`environment-box ${
-                                selectedEnvs.includes(item.name) ? "active" : ""
-                              }`}
-                            >
-                              <Box className="d-block">
-                                <Box
-                                  className={`envir-image ${
-                                    deploymentImgs[item.name]
-                                  }`}
-                                ></Box>
-                                <Box className="environment-title">
-                                  {item.name}
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                        alignItems={"center"}
+                        justifyContent={"flex-start"}
+                      >
+                        {this.renderProducts()}
+                      </Grid>
+                    </Box>
+                  </>
+                ) : (
+                  <></>
+                )
+              ) : (
+                <></>
+              )}
+              {selectedDepartments.length ? (
+                selectedProductions.length && this.productsLength() ? (
+                  <>
+                    <h4 className="text-left m-b-1 m-t-2">
+                      Select Environment
+                    </h4>
+                    <Box sx={{ width: "100%" }}>
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                        alignItems={"center"}
+                        justifyContent={"flex-start"}
+                      >
+                        {deploymentEnvs.map((item) => {
+                          return (
+                            <Grid key={item.name} item lg={3} md={4} xs={12}>
+                              <Box
+                                onClick={() =>
+                                  this.props.handleEnvChange(item.name)
+                                }
+                                className={`environment-box ${
+                                  selectedEnvs.includes(item.name)
+                                    ? "active"
+                                    : ""
+                                }`}
+                              >
+                                <Box className="d-block">
+                                  <Box
+                                    className={`envir-image ${
+                                      deploymentImgs[item.name]
+                                    }`}
+                                  ></Box>
+                                  <Box className="environment-title">
+                                    {item.name}
+                                  </Box>
                                 </Box>
                               </Box>
-                            </Box>
-                          </Grid>
-                        );
-                      })}
-                    </Grid>
-                  </Box>
-                </>
-              ) : <></> :<></>} 
+                            </Grid>
+                          );
+                        })}
+                      </Grid>
+                    </Box>
+                  </>
+                ) : (
+                  <></>
+                )
+              ) : (
+                <></>
+              )}
             </>
           )}
         </ModalBody>

@@ -57,9 +57,7 @@ class EcsCluster extends React.Component {
                   <Box className="head-right text-right">
                     <Button
                       className="primary-btn min-width-inherit m-r-3"
-                      variant="contained"
-                      onClick={() => this.onClickSelectDepartmentPopup("")}
-                    >
+                      variant="contained">
                       <i className="fa-solid fa-stream p-r-10"></i>
                       fillter
                     </Button>

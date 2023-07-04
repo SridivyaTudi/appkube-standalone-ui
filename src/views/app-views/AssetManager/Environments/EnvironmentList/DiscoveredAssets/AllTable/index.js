@@ -154,7 +154,6 @@ class AllTable extends Component {
                     <Button
                       className="primary-btn min-width-inherit m-r-3"
                       variant="contained"
-                      onClick={() => this.onClickSelectDepartmentPopup("")}
                     >
                       <i className="fa-solid fa-stream p-r-10"></i>
                       fillter
