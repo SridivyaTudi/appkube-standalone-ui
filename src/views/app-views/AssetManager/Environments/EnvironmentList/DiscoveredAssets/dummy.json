@@ -192,30 +192,53 @@
     {"name": "LB", "value": "06"}
   ],
   "AllServices": [
-    {"name": "Dynamo DB", "value": "235"},
-    {"name": "Document DB", "value": "146"},
+    {"name": "Dynamo DB", "value": "10"},
+    {"name": "Document DB", "value": "06"},
     {"name": "Cassndra", "value": "06"},
     {"name": "Opensearch", "value": "06"},
-    {"name": "CloudSearch", "value": "65"},
-    {"name": "Kendra", "value": "152"},
+    {"name": "CloudSearch", "value": "33"},
+    {"name": "Kendra", "value": "33"},
     {"name": "ElasticCache", "value": "235"},
-    {"name": "Redis DS", "value": "36"},
-    {"name": "Glacier", "value": "236"},
-    {"name": "CodeCommit", "value": "25"},
-    {"name": "QLDB", "value": "994"},
-    {"name": "S3", "value": "452"}
+    {"name": "Redis DS", "value": "133"},
+    {"name": "Glacier", "value": "235"},
+    {"name": "CodeCommit", "value": "33"},
+    {"name": "QLDB", "value": "235"},
+    {"name": "S3", "value": "235"}
 
   ],
   "NoSqldbServices": [
-    {"name": "Waf", "value": "235"},
-    {"name": "API", "value": "146"},
-    {"name": "LB", "value": "06"}
+    {"name": "Dynamo DB", "value": "10"},
+    {"name": "Document DB", "value": "06"},
+    {"name": "Cassandra", "value": "06"}
   ],
   "GitDbServices": [
-    {"name": "Waf", "value": "235"},
-    {"name": "API", "value": "146"},
-    {"name": "LB", "value": "06"}
+    {"name": "CodeCommit", "value": "33"}
   ],
+  "SearchDbServices": [
+    {"name": "Opensearch", "value": "96"},
+    {"name": "CloudSearch", "value": "33"},
+    {"name": "Kendra", "value": "33"}
+  ],
+  "LedgerDbServices": [
+    {"name": "QLDB", "value": "235"}
+  ],
+  "CacheDbServices": [
+    {"name": "ElasticCache", "value": "235"},
+    {"name": "Redis DB", "value":"133"}
+  ],
+  "ObjectDbServices": [
+    {"name": "Glacier", "value": "235"},
+    {"name": "S3", "value":"235"}
+  ],
+  "MetricsDbServices": [
+    {"name": "Time Series", "value": "235"}
+    
+  ],
+  
+  
+  
+ 
+
  
   "lambdaResources": [
     {

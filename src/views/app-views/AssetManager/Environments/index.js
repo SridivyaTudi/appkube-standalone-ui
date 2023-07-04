@@ -602,13 +602,13 @@ class Environments extends Component {
         <Box className="list-heading">
           <h3>Environments</h3>
         </Box>
-        <Box className="environment-boxs m-t-4">
+        <Box className="environment-boxs m-t-4 ">
           {this.props.environments.allEnvs.status === status.IN_PROGRESS ? (
-            <Box className="text-center align-self-center p-t-20 p-b-20">
+            <Box className="text-center align-self-center w-100">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
           ) : (
-            (allEnvData.length && this.renderEnvironmentBoxes()) || ""
+            allEnvData?.length ? this.renderEnvironmentBoxes() :<></> 
           )}
         </Box>
         <Box className="add-new-environment">
