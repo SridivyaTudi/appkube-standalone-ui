@@ -46,16 +46,30 @@
 
   .configur-content {
     width: 100%;
-    display: block;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     margin-top: 20px;
 
     .api-server {
+      margin-right: 20px;
+      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 398px;
       padding: 30px 30px;
       border-radius: 10px;
       background: #ffffff;
       min-height: 650px;
       box-shadow: 0px 100px 80px rgba(108, 73, 172, 0.07);
 
+      &:last-child {
+        margin-right: 0;
+      }
+      
       h2 {
         font-weight: 500;
       }
@@ -73,8 +87,7 @@
       }
 
       .down-arrow {
-        font-size: 10px;
-        font-size: 20px;
+        font-size: 16px;
         margin: 10px 0;
         color: #383874;
       }
@@ -88,7 +101,7 @@
         padding-bottom: 15px;
 
         .box-arrow {
-          font-size: 20px;
+          font-size: 16px;
           color: #383874;
         }
 
@@ -148,43 +161,13 @@
         }
       }
 
-      .slider {
-        .MuiSlider-rail {
-          color: #EAECF0;
-          opacity: 1;
-        }
-
-        .MuiSlider-track {
-          color: #384cff;
-        }
-
-        .MuiSlider-thumb {
-          color: #ffffff;
-          border: 1px solid #384cff;
-
-          &::before {
-            content: "";
-            background-color: #384cff;
-            left: 9px;
-            top: -27px;
-            width: 1px;
-            height: 26px;
-          }
-        }
-
-        .MuiSlider-valueLabelOpen {
-          background-color: transparent;
-          color: #101828;
-          padding: 0;
-          top: 45px;
-
-          &::before {
-            display: none;
-          }
-        }
-      }
-
     }
+  }
+
+  .application-cards-slider {
+    display: inline-block;
+    width: 338px;
+    margin-bottom: auto;
   }
 
   .application-cards {
@@ -213,25 +196,9 @@
         content: "";
         position: absolute;
         left: 72px;
-        bottom: -25px;
+        bottom: -24px;
         width: 1px;
         height: 25px;
-      }
-
-      .slider-line {
-        background-color: #384cff;
-        height: 1px;
-        position: absolute;
-        bottom: -25px;
-        width: auto;
-
-        span {
-          background-color: #ffffff;
-          height: 1px;
-          display: inline-block;
-          position: relative;
-          z-index: 1;
-        }
       }
 
       .title {
@@ -273,6 +240,7 @@
           color: #ffffff;
 
           i {
+            cursor: pointer;
             font-size: 10px;
             line-height: 10px;
           }
@@ -295,4 +263,62 @@
       }
     }
   }
+
+  .slider-main {
+    position: relative;
+    display: block;
+    width: 100%;
+
+    .slider-line {
+      background-color: #384cff;
+      height: 1px;
+      position: absolute;
+      top: -22px;
+
+      span {
+        background-color: #ffffff;
+        height: 1px;
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+      }
+    }
+
+    .slider {
+      .MuiSlider-rail {
+        color: #EAECF0;
+        opacity: 1;
+      }
+
+      .MuiSlider-track {
+        color: #384cff;
+      }
+
+      .MuiSlider-thumb {
+        color: #ffffff;
+        border: 1px solid #384cff;
+
+        &::before {
+          content: "";
+          background-color: #384cff;
+          left: 9px;
+          top: -27px;
+          width: 1px;
+          height: 26px;
+        }
+      }
+
+      .MuiSlider-valueLabelOpen {
+        background-color: transparent;
+        color: #101828;
+        padding: 0;
+        top: 45px;
+
+        &::before {
+          display: none;
+        }
+      }
+    }
+  }
+
 }
