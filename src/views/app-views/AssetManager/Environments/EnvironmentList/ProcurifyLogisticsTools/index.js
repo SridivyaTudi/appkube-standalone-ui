@@ -1,22 +1,21 @@
-import React, { Component } from "react";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { APP_PREFIX_PATH } from "configs/AppConfig";
-import ProcurifyIcon from "assets/img/assetmanager/procurify-icon.png";
-import UserCountIcon from "assets/img/assetmanager/user-count-icon.png";
-import LineOfBusinessIcon from "assets/img/assetmanager/line-of-business-icon.png";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import EnvironmentsIcon from "assets/img/assetmanager/environments-icon1.png";
+import LineOfBusinessIcon from "assets/img/assetmanager/line-of-business-icon.png";
+import ProcurifyIcon from "assets/img/assetmanager/procurify-icon.png";
 import SslIcon from "assets/img/assetmanager/ssl-icon.png";
-import Environments from "./Environments";
+import UserCountIcon from "assets/img/assetmanager/user-count-icon.png";
+import { APP_PREFIX_PATH } from "configs/AppConfig";
+import { Component } from "react";
+import { Link } from "react-router-dom";
+import UsaFlag from "../../../../../../assets/img/assetmanager/usa-flag.png";
+import AccountPricing from "./AccountPricing";
 import Container from "./Container";
 import Database from "./Database";
-import AccountPricing from "./AccountPricing";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import UsaFlag from "../../../../../../assets/img/assetmanager/usa-flag.png";
+import Environments from "./Environments";
 
 export class ProcurifyLogisticsTools extends Component {
   tabMapping = [
@@ -188,8 +187,8 @@ export class ProcurifyLogisticsTools extends Component {
                 <Box className="region">
                   <label>Region</label>
                   <FormControl
-                    className="fliter-button"
-                    sx={{ m: 1, minWidth: 120 }}
+                    className="Region-fliter"
+                    sx={{ m: 1, minWidth: 100 }}
                   >
                     <Select
                       className="fliter-toggel"
@@ -199,14 +198,14 @@ export class ProcurifyLogisticsTools extends Component {
                       inputProps={{ "aria-label": "Without label" }}
                     >
                       <MenuItem value="">
-                        <img src={UsaFlag} alt="" /> USA
+                        <img  src={UsaFlag} alt="" className="p-r-5" /> USA
                       </MenuItem>
                       <MenuItem value={10}>
-                        <img src={UsaFlag} alt="" /> India
+                        <img src={UsaFlag} alt="" className="p-r-5" /> India
                       </MenuItem>
                       <MenuItem value={20}>
                         {" "}
-                        <img src={UsaFlag} alt="" /> china
+                        <img src={UsaFlag} alt="" className="p-r-5" /> china
                       </MenuItem>
                     </Select>
                   </FormControl>

@@ -2403,21 +2403,26 @@
               color: #383874;
               margin-bottom: 5px;
             }
-            .fliter-button {
+            .Region-fliter {
               margin: 0;
               .fliter-toggel {
-                display: flex;
-                //width: 100px;
-                align-items: center;
-                justify-content: space-between;
                 background: #dde1f8;
                 height: 35px;
+                line-height: 35px;
                 padding: 5px;
                 border-radius: 3px;
                 font-size: 12px;
                 font-weight: 500;
                 color: #383874;
                 border: none;
+                padding: 5px 10px;
+                border-width: 0;
+                .MuiSelect-select {
+                  padding: 0;
+                }
+                .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+                  border-width: 0;
+                }
               }
             }
           }
