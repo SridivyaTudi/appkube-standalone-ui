@@ -2420,7 +2420,7 @@
                 .MuiSelect-select {
                   padding: 0;
                 }
-                .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+                .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
                   border-width: 0;
                 }
               }
@@ -2619,6 +2619,36 @@
             }
           }
         }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 1280px) {
+  .environment-container {
+    .services-panel-tabs {
+      .tabs-content {
+        .discovered-assets {
+          .logistics-cards {
+            .logistics-card {
+              width: 284px;
+              .top-content .image {
+                height: 70px;
+              }
+              &:nth-child(4) {
+                margin-right: 20px;
+              }
+
+              &:nth-child(8) {
+                margin-right: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .procurify-cards {
+      .procurify-card {
+        margin-bottom: 15px;
       }
     }
   }
