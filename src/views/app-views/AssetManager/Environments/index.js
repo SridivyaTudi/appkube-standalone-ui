@@ -188,7 +188,7 @@ class Environments extends Component {
   };
 
   renderEnvironmentTable() {
-    const { menuSummaryShowMenu, searchedEnvSummary } = this.state;
+    const { menuSummaryShowMenu, searchedEnvSummary, collapsedTableIndex } = this.state;
     const retData = [];
     searchedEnvSummary.map((item, envIndex) => {
       const accountsJSX = [];
@@ -268,7 +268,7 @@ class Environments extends Component {
             <Table>
               <TableHead
                 className={
-                  this.state.collapsedTableIndex.includes(envIndex)
+                  collapsedTableIndex.indexOf(envIndex) === -1
                     ? "active"
                     : ""
                 }
@@ -277,7 +277,7 @@ class Environments extends Component {
                   <TableCell align="left">
                     <i
                       className={
-                        this.state.collapsedTableIndex.includes(envIndex)
+                        collapsedTableIndex.indexOf(envIndex) === -1
                           ? "fa-solid fa-sort-down"
                           : "fa-solid fa-caret-right"
                       }
@@ -297,7 +297,7 @@ class Environments extends Component {
                   <TableCell align="center">Action</TableCell>
                 </TableRow>
               </TableHead>
-              {this.state.collapsedTableIndex.includes(envIndex) && (
+              {collapsedTableIndex.indexOf(envIndex) === -1 && (
                 <TableBody>{accountsJSX}</TableBody>
               )}
             </Table>
