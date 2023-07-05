@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  getEnvsAsync,
+  getEnvironmentCount,
   getEnvsSummary,
   getOrgWiseDepartments,
   getProductsByDepId,
@@ -11,7 +11,7 @@ import status from "redux/constants/commonDS";
 export const environmentSlice = createSlice({
   name: "environments",
   initialState: {
-    allEnvs:{
+    environmentCountData:{
       status: null
     },
     envSummary: {
@@ -31,27 +31,27 @@ export const environmentSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [getEnvsAsync.pending]: (state, action) => {
+    [getEnvironmentCount.pending]: (state, action) => {
       return {
         ...state,
-        allEnvs: {
+        environmentCountData: {
           status: status.IN_PROGRESS,
         },
       };
     },
-    [getEnvsAsync.fulfilled]: (state, {payload}) => {
+    [getEnvironmentCount.fulfilled]: (state, {payload}) => {
       return {
         ...state,
-        allEnvs: {
+        environmentCountData: {
           status: status.SUCCESS,
           data: payload,
         },
       };
     },
-    [getEnvsAsync.rejected]: (state, action) => {
+    [getEnvironmentCount.rejected]: (state, action) => {
       return {
         ...state,
-        allEnvs: {
+        environmentCountData: {
           status: status.FAILURE,
         },
       };

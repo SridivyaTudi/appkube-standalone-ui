@@ -9,7 +9,7 @@ import Grid from "@mui/material/Grid";
 import { connect } from "react-redux";
 import FilterPopup from "views/app-views/AssetManager/Environments/Components/FilterPopup";
 import {
-  getEnvsAsync,
+  getEnvironmentCount,
   getEnvsSummary,
 } from "redux/assetManager/environments/environmentsThunk";
 import status from "redux/constants/commonDS";
@@ -23,8 +23,9 @@ import TableRow from "@mui/material/TableRow";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
-import { getCurrentOrgId } from "utils";
+import { getRecentVisitedEnvironments, setRecentVisitedEnvironments } from "utils";
 import { ToastMessage } from "Toast/ToastMessage";
+
 const LOGOS = {
   aws: AWS,
   azure: AZURE,
@@ -36,14 +37,13 @@ class Environments extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showRecentFilter: false,
+      isRecentVisitedEnvMenuOpen: false,
       showAddNewFilter: false,
-      showSelectFilter: false,
-      searchkey: "",
-      searchedAccountList: [],
-      currentActiveTableIndex: [],
-      allEnvData: [],
-      allEnvSummary: [],
+      searchedKey: "",
+      searchedEnvSummary: [],
+      collapsedTableIndex: [],
+      environmentCountData: [],
+      envSummary: [],
       menuSummaryShowMenu: [null, null],
       filters: {
         selectedDepartment: -1,
@@ -63,105 +63,106 @@ class Environments extends Component {
   componentDidMount = () => {
     let currentOrgId = localStorage.getItem("currentOrgId");
     if (currentOrgId !== "") {
-      this.props.getEnvsAsync(currentOrgId);
+      this.props.getEnvironmentCount(currentOrgId);
       this.props.getEnvsSummary({ orgId: currentOrgId });
     }
   };
 
   componentDidUpdate(prevProps, prevState) {
-
-    if (
-      prevProps.allEnvs.status !==
-      this.props.allEnvs.status
-    ) {
-      if (this.props.allEnvs.status === status.SUCCESS) {
-        this.setState({ allEnvData: this.props.allEnvs.data });
-      } else if (this.props.allEnvs.status === status.FAILURE) {
+    if (prevProps.environmentCountData.status !== this.props.environmentCountData.status) {
+      if (this.props.environmentCountData.status === status.SUCCESS) {
+        this.setState({
+          environmentCountData: this.props.environmentCountData.data
+        });
+      } else if (this.props.environmentCountData.status === status.FAILURE) {
         ToastMessage.error("There is some issue.");
       }
     }
-    if (
-      prevProps.envSummary.status !==
-      this.props.envSummary.status
-    ) {
-      if (
-        this.props.envSummary.status === status.SUCCESS &&
-        this.props.envSummary.data
-      ) {
+    if (prevProps.envSummary.status !== this.props.envSummary.status) {
+      if (this.props.envSummary.status === status.SUCCESS) {
         this.setState({
-          allEnvSummary: this.props.envSummary.data,
-          searchedAccountList: JSON.parse(
+          envSummary: this.props.envSummary.data,
+          searchedEnvSummary: JSON.parse(
             JSON.stringify(this.props.envSummary.data)
           ),
           showFilterPopup: false
         });
-        this.setCurrentActiveTableIndex();
-      } else if (this.props.allEnvs.status === status.FAILURE) {
+      } else if (this.props.envSummary.status === status.FAILURE) {
         ToastMessage.error("There is some issue.");
       }
     }
   }
 
-  setCurrentActiveTableIndex = () => {
-    try {
-      this.props.envSummary.data.map((item, index) => {
-        let allIndex = [];
-        allIndex.push(index);
-        this.setState({ currentActiveTableIndex: allIndex });
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  renderEnvironmentBoxes = () => {
-    const { allEnvData } = this.state;
-    const retData = [];
-    allEnvData.map((env) => {
-      retData.push(
-        <Box className="environment-box" key={env.cloud}>
-          <Box className="environment-title">
-            <Box className="environment-image">
-              <img src={LOGOS[env.cloud.toLowerCase()]} alt={env.cloud} />
-            </Box>
-            <Box className="title-name">{env.cloud.toUpperCase()}</Box>
-          </Box>
-          <Box className="data-contant">
-            <List>
-              <ListItem>
-                <Box className="data-text">
-                  <span style={{ backgroundColor: "#ff9900" }}></span>
-                  <p>Environments</p>
-                </Box>
-                <label>{env.environments}</label>
-              </ListItem>
-              <ListItem>
-                <Box className="data-text">
-                  <span style={{ backgroundColor: "#0089d6" }}></span>
-                  <p>Assets</p>
-                </Box>
-                <label>{env.assets}</label>
-              </ListItem>
-              <ListItem>
-                <Box className="data-text">
-                  <span style={{ backgroundColor: "#da4f44" }}></span>
-                  <p>Alerts</p>
-                </Box>
-                <label>{env.alerts}</label>
-              </ListItem>
-              <ListItem>
-                <Box className="data-text">
-                  <span style={{ backgroundColor: "#00b929" }}></span>
-                  <p>Total Billing</p>
-                </Box>
-                <label>{env.totalBilling ? `&#65284;${env.totalBilling}` : ''}</label>
-              </ListItem>
-            </List>
-          </Box>
+  renderEnvironmentCountData = () => {
+    if (this.props.environmentCountData.status === status.IN_PROGRESS) {
+      return (
+        <Box className="environment-loader w-100">
+          <i className="fa-solid fa-spinner fa-spin" /> Loading...
         </Box>
       );
-    });
-    return retData;
+    } else if (this.props.environmentCountData.status === status.SUCCESS) {
+      const { environmentCountData } = this.state;
+      let retData = [];
+      if (environmentCountData.length > 0) {
+        environmentCountData.map((env) => {
+          retData.push(
+            <Box className="environment-box" key={env.cloud}>
+              <Box className="environment-title">
+                <Box className="environment-image">
+                  <img src={LOGOS[env.cloud.toLowerCase()]} alt={env.cloud} />
+                </Box>
+                <Box className="title-name">{env.cloud.toUpperCase()}</Box>
+              </Box>
+              <Box className="data-contant">
+                <List>
+                  <ListItem>
+                    <Box className="data-text">
+                      <span style={{ backgroundColor: "#ff9900" }}></span>
+                      <p>Environments</p>
+                    </Box>
+                    <label>{env.environments}</label>
+                  </ListItem>
+                  <ListItem>
+                    <Box className="data-text">
+                      <span style={{ backgroundColor: "#0089d6" }}></span>
+                      <p>Assets</p>
+                    </Box>
+                    <label>{env.assets}</label>
+                  </ListItem>
+                  <ListItem>
+                    <Box className="data-text">
+                      <span style={{ backgroundColor: "#da4f44" }}></span>
+                      <p>Alerts</p>
+                    </Box>
+                    <label>{env.alerts}</label>
+                  </ListItem>
+                  <ListItem>
+                    <Box className="data-text">
+                      <span style={{ backgroundColor: "#00b929" }}></span>
+                      <p>Total Billing</p>
+                    </Box>
+                    <label>{env.totalBilling ? `&#65284;${env.totalBilling}` : ''}</label>
+                  </ListItem>
+                </List>
+              </Box>
+            </Box>
+          );
+        });
+      } else {
+        retData = (
+          <Box className="environment-loader w-100">
+            There are no data available.
+          </Box>
+        );
+      }
+      return retData;
+    } else {
+      return (
+        <Box className="environment-loader w-100">
+          There is some issue. Try again later.
+        </Box>
+      );
+    }
   };
 
   handleMenuToggle = (envKey, accountIndex) => {
@@ -173,24 +174,23 @@ class Environments extends Component {
     }
   };
 
-  handleTableToggle = (envIndex) => {
-    let { currentActiveTableIndex } = this.state;
-    if (!currentActiveTableIndex.includes(envIndex)) {
-      currentActiveTableIndex.push(envIndex);
+  handleTableToggle = (tableIndex) => {
+    const { collapsedTableIndex } = this.state;
+    const index = collapsedTableIndex.indexOf(tableIndex);
+    if (index === -1) {
+      collapsedTableIndex.push(tableIndex);
     } else {
-      currentActiveTableIndex = currentActiveTableIndex.filter(
-        (item) => item !== envIndex
-      );
+      collapsedTableIndex.splice(index, 1);
     }
     this.setState({
-      currentActiveTableIndex,
+      collapsedTableIndex,
     });
   };
 
   renderEnvironmentTable() {
-    const { menuSummaryShowMenu, searchedAccountList } = this.state;
+    const { menuSummaryShowMenu, searchedEnvSummary, collapsedTableIndex } = this.state;
     const retData = [];
-    searchedAccountList.map((item, envIndex) => {
+    searchedEnvSummary.map((item, envIndex) => {
       const accountsJSX = [];
       item.environmentSummaryList.map((account, accountIndex) => {
         accountsJSX.push(
@@ -199,8 +199,8 @@ class Environments extends Component {
               <Link
                 to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${account.landingZone}&cloudName=${account.cloud}`}
                 onClick={() =>
-                  this.setLocalRecentService({
-                    cloud: account.cloud,
+                  this.addAccountToRecentlyVisited({
+                    accountType: account.cloud,
                     accountId: account.landingZone,
                   })
                 }
@@ -268,7 +268,7 @@ class Environments extends Component {
             <Table>
               <TableHead
                 className={
-                  this.state.currentActiveTableIndex.includes(envIndex)
+                  collapsedTableIndex.indexOf(envIndex) === -1
                     ? "active"
                     : ""
                 }
@@ -277,7 +277,7 @@ class Environments extends Component {
                   <TableCell align="left">
                     <i
                       className={
-                        this.state.currentActiveTableIndex.includes(envIndex)
+                        collapsedTableIndex.indexOf(envIndex) === -1
                           ? "fa-solid fa-sort-down"
                           : "fa-solid fa-caret-right"
                       }
@@ -297,7 +297,7 @@ class Environments extends Component {
                   <TableCell align="center">Action</TableCell>
                 </TableRow>
               </TableHead>
-              {this.state.currentActiveTableIndex.includes(envIndex) && (
+              {collapsedTableIndex.indexOf(envIndex) === -1 && (
                 <TableBody>{accountsJSX}</TableBody>
               )}
             </Table>
@@ -310,11 +310,11 @@ class Environments extends Component {
 
   handleSearchChange = (e) => {
     let value = e.target.value;
-    this.setState({ searchkey: value });
-    let { allEnvSummary, searchedAccountList } = this.state;
-    searchedAccountList = JSON.parse(JSON.stringify(allEnvSummary));
+    this.setState({ searchedKey: value });
+    let { envSummary, searchedEnvSummary } = this.state;
+    searchedEnvSummary = JSON.parse(JSON.stringify(envSummary));
     if (value) {
-      searchedAccountList = searchedAccountList.map((cloud) => {
+      searchedEnvSummary = searchedEnvSummary.map((cloud) => {
         cloud.environmentSummaryList = cloud.environmentSummaryList.filter(
           (item) => {
             if (
@@ -327,64 +327,70 @@ class Environments extends Component {
         );
         return cloud;
       });
-      this.setState({ searchedAccountList });
+      this.setState({ searchedEnvSummary });
     } else {
       this.setState({
-        searchedAccountList: JSON.parse(JSON.stringify(allEnvSummary)),
+        searchedEnvSummary: JSON.parse(JSON.stringify(envSummary)),
       });
     }
   };
 
-  setLocalRecentService = (account) => {
-    let recentEnv = JSON.parse(localStorage.getItem("recentEnv"));
-    let isDuplicate = false;
-
+  addAccountToRecentlyVisited = (account) => {
+    const newItem = { accountType: account.accountType, accountId: account.accountId };
+    let recentEnv = getRecentVisitedEnvironments();
     if (recentEnv !== null) {
       recentEnv.map((item, index) => {
         if (item.accountId === account.accountId) {
-          isDuplicate = true;
-          arrayMove(recentEnv, index, 0);
+          recentEnv.splice(index, 1);
         }
       });
-    }
-
-    function arrayMove(arr, fromIndex, toIndex) {
-      var element = arr[fromIndex];
-      arr.splice(fromIndex, 1);
-      arr.splice(toIndex, 0, element);
-      localStorage.setItem("recentEnv", JSON.stringify(arr));
-    }
-
-    if (localStorage.getItem("recentEnv") === null) {
-      let newItem = [
-        { accountType: account.cloud, accountId: account.accountId },
+      recentEnv.splice(0, 0, newItem);
+    } else {
+      recentEnv = [
+        newItem
       ];
-      localStorage.setItem("recentEnv", JSON.stringify(newItem));
-    } else if (recentEnv.length > 2 && isDuplicate === false) {
-      recentEnv.pop();
-      let newItem = {
-        accountType: account.cloud,
-        accountId: account.accountId,
-      };
-      recentEnv.unshift(newItem);
-      localStorage.setItem("recentEnv", JSON.stringify(recentEnv));
-    } else if (isDuplicate === false) {
-      let newItem = {
-        accountType: account.cloud,
-        accountId: account.accountId,
-      };
-      recentEnv.push(newItem);
-      localStorage.setItem("recentEnv", JSON.stringify(recentEnv));
     }
+    recentEnv.length = recentEnv.length > 5 ? 5 : recentEnv.length;
+    setRecentVisitedEnvironments(recentEnv);
+  };
+
+  toggleRecentEnvsMenu = () => {
+    this.setState({
+      isRecentVisitedEnvMenuOpen: !this.state.isRecentVisitedEnvMenuOpen,
+    })
+  };
+
+  renderRecentVisitedMenu = () => {
+    const recentEnvs = getRecentVisitedEnvironments();
+    if (recentEnvs) {
+      return recentEnvs.map((item) => {
+        return (
+          <ListItem>
+            <Link
+              to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
+              onClick={() =>
+                this.addAccountToRecentlyVisited(item)
+              }
+            >
+              <span>
+                <img
+                  src={LOGOS[item.accountType.toLowerCase()]} alt={item.accountType} />
+              </span>
+              <p>{item.accountId}</p>
+            </Link>
+          </ListItem>
+        );
+      });
+    }
+    return null;
   };
 
   render() {
     const {
-      showRecentFilter,
+      isRecentVisitedEnvMenuOpen,
       showAddNewFilter,
-      searchkey,
-      allEnvData,
-      allEnvSummary,
+      searchedKey,
+      envSummary,
       showFilterPopup,
       filters
     } = this.state;
@@ -394,13 +400,7 @@ class Environments extends Component {
           <h3>Environments</h3>
         </Box>
         <Box className="environment-boxs m-t-4">
-          {this.props.allEnvs.status === status.IN_PROGRESS ? (
-            <Box className="environment-loader w-100">
-              <i className="fa-solid fa-spinner fa-spin" /> Loading...
-            </Box>
-          ) : (
-            allEnvData?.length ? this.renderEnvironmentBoxes() : <></>
-          )}
+          {this.renderEnvironmentCountData()}
         </Box>
         <Box className="add-new-environment">
           <Box sx={{ width: "100%" }}>
@@ -430,75 +430,34 @@ class Environments extends Component {
                   >
                     <Grid item lg={8} md={12} xs={12}>
                       <Box className="export-sction">
-                        {JSON.parse(localStorage.getItem("recentEnv")) !==
-                          null && (
-                            <Box className="environment-fliter">
-                              <Box
-                                className="fliter-toggel"
-                                onClick={() =>
-                                  this.setState({
-                                    showRecentFilter: !showRecentFilter,
-                                  })
-                                }
-                              >
-                                <i className="fa-solid fa-alarm-clock fillter-icon"></i>
-                                Recent
-                                <i className="fa-solid fa-caret-down arrow-icon"></i>
-                              </Box>
-                              <Box
-                                className={
-                                  showRecentFilter === true
-                                    ? "fliter-collapse  active"
-                                    : "fliter-collapse"
-                                }
-                              >
-                                <List>
-                                  {JSON.parse(
-                                    localStorage.getItem("recentEnv")
-                                  )?.map((item) => {
-                                    return (
-                                      <ListItem>
-                                        <Link
-                                          to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
-                                          onClick={() =>
-                                            this.setLocalRecentService(item)
-                                          }
-                                        >
-                                          <span>
-                                            <img
-                                              src={
-                                                item.accountType === "AWS" ||
-                                                  item.accountType === "aws"
-                                                  ? AWS
-                                                  : item.accountType === "GCP" ||
-                                                    item.accountType === "gcp"
-                                                    ? GCP
-                                                    : AZURE
-                                              }
-                                              alt={item.accountType}
-                                            />
-                                          </span>
-                                          <p>({item.accountId})</p>
-                                        </Link>
-                                      </ListItem>
-                                    );
-                                  })}
-                                </List>
-                              </Box>
-                              <div
-                                className={
-                                  showRecentFilter === true
-                                    ? "fliters-collapse-bg active"
-                                    : "fliters-collapse-bg"
-                                }
-                                onClick={() =>
-                                  this.setState({
-                                    showRecentFilter: !showRecentFilter,
-                                  })
-                                }
-                              />
+                        {getRecentVisitedEnvironments() !== null && (
+                          <Box className="environment-fliter">
+                            <Box className="fliter-toggel" onClick={this.toggleRecentEnvsMenu}>
+                              <i className="fa-solid fa-alarm-clock fillter-icon"></i>
+                              Recent
+                              <i className="fa-solid fa-caret-down arrow-icon"></i>
                             </Box>
-                          )}
+                            <Box
+                              className={
+                                isRecentVisitedEnvMenuOpen
+                                  ? "fliter-collapse  active"
+                                  : "fliter-collapse"
+                              }
+                            >
+                              <List>
+                                {this.renderRecentVisitedMenu()}
+                              </List>
+                            </Box>
+                            <div
+                              className={
+                                isRecentVisitedEnvMenuOpen
+                                  ? "fliters-collapse-bg active"
+                                  : "fliters-collapse-bg"
+                              }
+                              onClick={this.toggleRecentEnvsMenu}
+                            />
+                          </Box>
+                        )}
                         <Box className="environment-fliter">
                           <Box
                             className="fliter-toggel new-environment"
@@ -590,8 +549,8 @@ class Environments extends Component {
                             type="text"
                             className="input-group-text"
                             placeholder="Search"
-                            name="searchkey"
-                            value={searchkey}
+                            name="searchedKey"
+                            value={searchedKey}
                             onChange={this.handleSearchChange}
                           />
                           <button className="search-btn">
@@ -612,7 +571,7 @@ class Environments extends Component {
           </Box>
         ) : (
           <>
-            {(allEnvSummary.length && this.renderEnvironmentTable()) || (
+            {(envSummary.length && this.renderEnvironmentTable()) || (
               <Box className="chart-spinner d-flex text-center w-100 p-t-20 p-b-20">
                 No environments found.
               </Box>
@@ -638,14 +597,14 @@ class Environments extends Component {
 }
 
 function mapStateToProps(state) {
-  const { allEnvs,envSummary } = state.environments;
+  const { environmentCountData, envSummary } = state.environments;
   return {
-    allEnvs,envSummary
+    environmentCountData, envSummary
   };
 }
 
 const mapDispatchToProps = {
-  getEnvsAsync,
+  getEnvironmentCount,
   getEnvsSummary,
 };
 

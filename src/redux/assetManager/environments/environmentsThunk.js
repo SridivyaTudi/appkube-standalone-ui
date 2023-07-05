@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import config from "views/app-views/config";
 import axios from "services";
 
-export const getEnvsAsync = createAsyncThunk(
-  "environments/getEnvsAsync",
+export const getEnvironmentCount = createAsyncThunk(
+  "environments/getEnvironmentCount",
   async (orgId) => {
     const url = config.GET_ALL_ENVIRONMENT_COUNT.replace("#org-id#", orgId);
     try {
