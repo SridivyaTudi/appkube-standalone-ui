@@ -46,15 +46,29 @@
 
   .configur-content {
     width: 100%;
-    display: block;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     margin-top: 20px;
 
     .api-server {
+      margin-right: 20px;
+      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 398px;
       padding: 30px 30px;
       border-radius: 10px;
       background: #ffffff;
       min-height: 650px;
       box-shadow: 0px 100px 80px rgba(108, 73, 172, 0.07);
+
+      &:last-child {
+        margin-right: 0;
+      }
       
       h2 {
         font-weight: 500;
@@ -73,8 +87,7 @@
       }
 
       .down-arrow {
-        font-size: 10px;
-        font-size: 20px;
+        font-size: 16px;
         margin: 10px 0;
         color: #383874;
       }
@@ -88,7 +101,7 @@
         padding-bottom: 15px;
 
         .box-arrow {
-          font-size: 20px;
+          font-size: 16px;
           color: #383874;
         }
 
@@ -152,8 +165,9 @@
   }
 
   .application-cards-slider {
-    display: block;
+    display: inline-block;
     width: 338px;
+    margin-bottom: auto;
   }
 
   .application-cards {

@@ -148,7 +148,7 @@ class ConfigurTopology extends Component {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid item xs={12} md={9} lg={8}>
+            <Grid item xs={12} md={11} lg={8}>
               <Box className="button-group">
                 <Button
                   className="primary-btn min-width-inherit m-r-3"
@@ -198,282 +198,274 @@ class ConfigurTopology extends Component {
           </Grid>
         </Box>
         <Box className="configur-content">
-          <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 2, lg: 3 }}
-          >
-            <Grid item xs={12} md={6} lg={4} xl={4}>
-              <Box className="api-server text-center">
-                <Box className="d-block">
-                  <Button
-                    className="primary-btn min-width-inherit"
-                    variant="contained"
-                  >
-                    API Gateway Server
-                  </Button>
+          <Box className="api-server">
+            <Box className="d-block width-100 text-center">
+              <Box className="d-block width-100">
+                <Button
+                  className="primary-btn min-width-inherit"
+                  variant="contained"
+                >
+                  API Gateway Server
+                </Button>
+              </Box>
+              <Box className="d-block width-100">
+                <Box className="plus-icon">
+                  <i className="fas fa-plus"></i>
                 </Box>
-                <Box className="d-block">
-                  <Box className="plus-icon">
-                    <i className="fas fa-plus"></i>
+              </Box>
+              <Box className="d-block width-100">
+                <Button
+                  className="primary-btn min-width-inherit"
+                  variant="contained"
+                >
+                  App Layer Server
+                </Button>
+              </Box>
+              <Box className="d-block width-100 down-arrow">
+                <i className="fa-solid fa-arrow-down-long"></i>
+              </Box>
+              <Box className="d-block width-100">
+                <Button
+                  className="primary-btn min-width-inherit"
+                  variant="contained"
+                >
+                  Cluster <i className="fas fa-chevron-down p-l-10"></i>
+                </Button>
+              </Box>
+              <Box className="width-100 eks-logo-boxs border-bottom">
+                <Box className="d-inline-block">
+                  <Box className="box-arrow">
+                    <i className="fa-solid fa-arrow-down-long"></i>
+                  </Box>
+                  <Box className="eks-logo">
+                    <img src={GlobalIcon5} alt="" />
+                  </Box>
+                  <div className="title">EKS</div>
+                </Box>
+                <Box className="d-inline-block">
+                  <Box className="box-arrow">
+                    <i className="fa-solid fa-arrow-down-long"></i>
+                  </Box>
+                  <Box className="eks-logo">
+                    <img src={GlobalIcon4} alt="" />
                   </Box>
                 </Box>
-                <Box className="d-block">
-                  <Button
-                    className="primary-btn min-width-inherit"
-                    variant="contained"
-                  >
-                    App Layer Server
-                  </Button>
-                </Box>
-                <Box className="d-block down-arrow">
-                  <i className="fa-solid fa-arrow-down-long"></i>
-                </Box>
-                <Box className="d-block">
-                  <Button
-                    className="primary-btn min-width-inherit"
-                    variant="contained"
-                  >
-                    Cluster <i className="fas fa-chevron-down p-l-10"></i>
-                  </Button>
-                </Box>
-                <Box className="eks-logo-boxs border-bottom">
-                  <Box className="d-inline-block">
-                    <Box className="box-arrow">
-                      <i className="fa-solid fa-arrow-down-long"></i>
-                    </Box>
-                    <Box className="eks-logo">
-                      <img src={GlobalIcon5} alt="" />
-                    </Box>
-                    <div className="title">EKS</div>
+                <Box className="d-inline-block">
+                  <Box className="box-arrow">
+                    <i className="fa-solid fa-arrow-down-long"></i>
                   </Box>
-                  <Box className="d-inline-block">
-                    <Box className="box-arrow">
-                      <i className="fa-solid fa-arrow-down-long"></i>
-                    </Box>
-                    <Box className="eks-logo">
-                      <img src={GlobalIcon4} alt="" />
-                    </Box>
-                  </Box>
-                  <Box className="d-inline-block">
-                    <Box className="box-arrow">
-                      <i className="fa-solid fa-arrow-down-long"></i>
-                    </Box>
-                    <Box className="eks-logo">
-                      <img src={GlobalIcon8} alt="" />
-                    </Box>
-                  </Box>
-                </Box>
-                <Box className="d-block m-t-1">
-                  <Button
-                    className="primary-btn min-width-inherit"
-                    variant="contained"
-                  >
-                    DB Layer
-                  </Button>
-                </Box>
-                <Box className="eks-logo-boxs">
-                  <Box className="d-inline-block">
-                    <Box className="box-arrow">
-                      <i className="fa-solid fa-arrow-down-long"></i>
-                    </Box>
-                    <Box className="eks-logo">
-                      <img src={CacheIcon} alt="" />
-                    </Box>
-                    <div className="title">Cache</div>
-                  </Box>
-                  <Box className="d-inline-block">
-                    <Box className="box-arrow">
-                      <i className="fa-solid fa-arrow-down-long"></i>
-                    </Box>
-                    <Box className="eks-logo">
-                      <img src={SqlIcon} alt="" />
-                    </Box>
-                    <div className="title">SQL</div>
-                  </Box>
-                  <Box className="d-inline-block">
-                    <Box className="box-arrow">
-                      <i className="fa-solid fa-arrow-down-long"></i>
-                    </Box>
-                    <Box className="eks-logo">
-                      <img src={NoSqlIcon} alt="" />
-                    </Box>
-                    <div className="title">No SQL</div>
-                  </Box>
-                </Box>
-                <Box className="d-block">
-                  <Box className="plus-icon">
-                    <i className="far fa-plus"></i>
+                  <Box className="eks-logo">
+                    <img src={GlobalIcon8} alt="" />
                   </Box>
                 </Box>
               </Box>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4} xl={4}>
-              <Box className="api-server text-center">
-                <h2>Application Servers</h2>
-                <p>Vartical Scaling Per Node</p>
-                <Box className="application-cards-slider">
-                  <Box className="application-cards">
-                    <Box className="reserved-card">
-                      <Box className="title">
-                        <h4>RESERVED</h4>
-                        <i className="fa-solid fa-circle-question"></i>
-                      </Box>
-                      <Box className="reseved-content">
-                        <Box className="d-flex align-items-center justify-content-center">
-                          <input
-                            id="number"
-                            type="text"
-                            placeholder="02"
-                            value={value[0] ? value[0] : 1}
-                            onChange={(e) => {
-                              if (e.target.value <= value[1]) {
-                                value[0] = e.target.value;
-                              } else {
-                                value[0] = value[1] - 5;
-                              }
-                              this.setState({ value }, () => {
-                                this.calculateLineMovement();
-                              });
-                            }}
-                          />
-                          <Box className="dropdown-arrow">
-                            <Box
-                              className="d-block"
-                              onClick={() =>
-                                this.handleReservedChange("reserve", "incr")
-                              }
-                            >
-                              <i className="fas fa-angle-up"></i>
-                            </Box>
-                            <Box
-                              className="d-block"
-                              onClick={() =>
-                                this.handleReservedChange("reserve", "decr")
-                              }
-                            >
-                              <i className="fas fa-angle-down"></i>
-                            </Box>
-                          </Box>
-                          <span className="p-l-5">Cloudlet(s)</span>
-                        </Box>
-                        <p className="text-left">1.75 GIB, 5.6 GHz</p>
-                      </Box>
+              <Box className="d-block width-100 m-t-1">
+                <Button
+                  className="primary-btn min-width-inherit"
+                  variant="contained"
+                >
+                  DB Layer
+                </Button>
+              </Box>
+              <Box className="width-100 eks-logo-boxs">
+                <Box className="d-inline-block">
+                  <Box className="box-arrow">
+                    <i className="fa-solid fa-arrow-down-long"></i>
+                  </Box>
+                  <Box className="eks-logo">
+                    <img src={CacheIcon} alt="" />
+                  </Box>
+                  <div className="title">Cache</div>
+                </Box>
+                <Box className="d-inline-block">
+                  <Box className="box-arrow">
+                    <i className="fa-solid fa-arrow-down-long"></i>
+                  </Box>
+                  <Box className="eks-logo">
+                    <img src={SqlIcon} alt="" />
+                  </Box>
+                  <div className="title">SQL</div>
+                </Box>
+                <Box className="d-inline-block">
+                  <Box className="box-arrow">
+                    <i className="fa-solid fa-arrow-down-long"></i>
+                  </Box>
+                  <Box className="eks-logo">
+                    <img src={NoSqlIcon} alt="" />
+                  </Box>
+                  <div className="title">No SQL</div>
+                </Box>
+              </Box>
+              <Box className="d-block width-100">
+                <Box className="plus-icon">
+                  <i className="far fa-plus"></i>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box className="api-server">
+            <Box className="d-block width-100 text-center">
+              <h2>Application Servers</h2>
+              <p>Vartical Scaling Per Node</p>
+              <Box className="application-cards-slider">
+                <Box className="application-cards">
+                  <Box className="reserved-card">
+                    <Box className="title">
+                      <h4>RESERVED</h4>
+                      <i className="fa-solid fa-circle-question"></i>
                     </Box>
-                    <Box className="reserved-card">
-                      <Box className="title">
-                        <h4>SCALING LIMIT</h4>
-                        <i className="fa-solid fa-circle-question"></i>
-                      </Box>
-                      <Box className="reseved-content">
-                        <Box className="d-flex align-items-center justify-content-center">
-                          <span className="p-r-5">Up to</span>
-                          <input
-                            id="number"
-                            type="text"
-                            placeholder="25"
-                            value={value[1]}
-                            onChange={(e) => {
-                              if (e.target.value > value[0]) {
-                                value[1] = e.target.value;
-                              } else {
-                                value[1] = value[0] + 5;
-                              }
-                              this.setState({ value }, () => {
-                                this.calculateLineMovement();
-                              });
-                            }}
-                          />
-                          <Box className="dropdown-arrow">
-                            <Box
-                              className="d-block"
-                              onClick={() =>
-                                this.handleReservedChange("limit", "incr")
-                              }
-                            >
-                              <i className="fas fa-angle-up"></i>
-                            </Box>
-                            <Box
-                              className="d-block"
-                              onClick={() =>
-                                this.handleReservedChange("limit", "decr")
-                              }
-                            >
-                              <i className="fas fa-angle-down"></i>
-                            </Box>
+                    <Box className="reseved-content">
+                      <Box className="d-flex align-items-center justify-content-center">
+                        <input
+                          id="number"
+                          type="text"
+                          placeholder="02"
+                          value={value[0] ? value[0] : 1}
+                          onChange={(e) => {
+                            if (e.target.value <= value[1]) {
+                              value[0] = e.target.value;
+                            } else {
+                              value[0] = value[1] - 5;
+                            }
+                            this.setState({ value }, () => {
+                              this.calculateLineMovement();
+                            });
+                          }}
+                        />
+                        <Box className="dropdown-arrow">
+                          <Box
+                            className="d-block"
+                            onClick={() =>
+                              this.handleReservedChange("reserve", "incr")
+                            }
+                          >
+                            <i className="fas fa-angle-up"></i>
                           </Box>
-                          <span className="p-l-5">Cloudlet(s)</span>
+                          <Box
+                            className="d-block"
+                            onClick={() =>
+                              this.handleReservedChange("reserve", "decr")
+                            }
+                          >
+                            <i className="fas fa-angle-down"></i>
+                          </Box>
                         </Box>
-                        <p className="text-left">up to 44 GIB, 140.8 GHz</p>
+                        <span className="p-l-5">Cloudlet(s)</span>
                       </Box>
+                      <p className="text-left">1.75 GIB, 5.6 GHz</p>
                     </Box>
                   </Box>
-                  <Box className="d-block m-t-3">
-                    <Box className="slider-main">
-                      <div
-                        className="slider-line"
-                        style={{
-                          left: `${
-                            firstPointerPosition <= firstPointerInitWidth
-                              ? firstPointerPosition
-                              : firstPointerInitWidth
-                          }%`,
-                          width: `${
-                            firstPointerPosition <= firstPointerInitWidth
-                              ? firstPointerInitWidth - firstPointerPosition
-                              : firstPointerPosition -
-                                firstPointerInitWidth +
-                                0.5
-                          }%`,
-                        }}
-                      ></div>
-                      <div
-                        className="slider-line"
-                        style={{
-                          left: `${
-                            secondPointerPosition <= secondPointerInitWidth
-                              ? secondPointerPosition
-                              : secondPointerInitWidth
-                          }%`,
-                          width: `${
-                            secondPointerPosition <= secondPointerInitWidth
-                              ? secondPointerInitWidth - secondPointerPosition
-                              : secondPointerPosition -
-                                secondPointerInitWidth +
-                                0.5
-                          }%`,
-                        }}
-                      ></div>
-                      <Slider
-                        value={value}
-                        onChange={this.handleChange}
-                        valueLabelDisplay="on"
-                        getAriaValueText={this.valuetext}
-                        className="slider"
-                        defaultValue={25}
-                        min={0}
-                        max={512}
-                        disableSwap
-                      />
+                  <Box className="reserved-card">
+                    <Box className="title">
+                      <h4>SCALING LIMIT</h4>
+                      <i className="fa-solid fa-circle-question"></i>
                     </Box>
+                    <Box className="reseved-content">
+                      <Box className="d-flex align-items-center justify-content-center">
+                        <span className="p-r-5">Up to</span>
+                        <input
+                          id="number"
+                          type="text"
+                          placeholder="25"
+                          value={value[1]}
+                          onChange={(e) => {
+                            if (e.target.value > value[0]) {
+                              value[1] = e.target.value;
+                            } else {
+                              value[1] = value[0] + 5;
+                            }
+                            this.setState({ value }, () => {
+                              this.calculateLineMovement();
+                            });
+                          }}
+                        />
+                        <Box className="dropdown-arrow">
+                          <Box
+                            className="d-block"
+                            onClick={() =>
+                              this.handleReservedChange("limit", "incr")
+                            }
+                          >
+                            <i className="fas fa-angle-up"></i>
+                          </Box>
+                          <Box
+                            className="d-block"
+                            onClick={() =>
+                              this.handleReservedChange("limit", "decr")
+                            }
+                          >
+                            <i className="fas fa-angle-down"></i>
+                          </Box>
+                        </Box>
+                        <span className="p-l-5">Cloudlet(s)</span>
+                      </Box>
+                      <p className="text-left">up to 44 GIB, 140.8 GHz</p>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box className="d-block m-t-3">
+                  <Box className="slider-main">
+                    <div
+                      className="slider-line"
+                      style={{
+                        left: `${
+                          firstPointerPosition <= firstPointerInitWidth
+                            ? firstPointerPosition
+                            : firstPointerInitWidth
+                        }%`,
+                        width: `${
+                          firstPointerPosition <= firstPointerInitWidth
+                            ? firstPointerInitWidth - firstPointerPosition
+                            : firstPointerPosition - firstPointerInitWidth + 0.5
+                        }%`,
+                      }}
+                    ></div>
+                    <div
+                      className="slider-line"
+                      style={{
+                        left: `${
+                          secondPointerPosition <= secondPointerInitWidth
+                            ? secondPointerPosition
+                            : secondPointerInitWidth
+                        }%`,
+                        width: `${
+                          secondPointerPosition <= secondPointerInitWidth
+                            ? secondPointerInitWidth - secondPointerPosition
+                            : secondPointerPosition -
+                              secondPointerInitWidth +
+                              0.5
+                        }%`,
+                      }}
+                    ></div>
+                    <Slider
+                      value={value}
+                      onChange={this.handleChange}
+                      valueLabelDisplay="on"
+                      getAriaValueText={this.valuetext}
+                      className="slider"
+                      defaultValue={25}
+                      min={0}
+                      max={512}
+                      disableSwap
+                    />
+                  </Box>
 
-                    <p className="m-t-4">Horizontal Scaling Per Node</p>
-                  </Box>
+                  <p className="m-t-4">Horizontal Scaling Per Node</p>
                 </Box>
               </Box>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4} xl={4}>
-              <Box className="api-server text-center">
-                <Box className="address-content">
-                  <span>
-                    <i className="fa-sharp fa-solid fa-location-dot"></i>
-                  </span>
-                  <p>Region: Newyork</p>
-                  <i className="fa-solid fa-angle-down"></i>
-                </Box>
+            </Box>
+          </Box>
+          <Box className="api-server">
+            <Box className="d-block width-100 text-center">
+              <Box className="address-content">
+                <span>
+                  <i className="fa-sharp fa-solid fa-location-dot"></i>
+                </span>
+                <p>Region: Newyork</p>
+                <i className="fa-solid fa-angle-down"></i>
               </Box>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </Box>
       </Box>
     );
