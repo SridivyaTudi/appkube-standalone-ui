@@ -38,7 +38,7 @@ class Environments extends Component {
     super(props);
     this.state = {
       isRecentVisitedEnvMenuOpen: false,
-      showAddNewFilter: false,
+      isAddNewEnvironmentShown: false,
       searchedKey: "",
       searchedEnvSummary: [],
       collapsedTableIndex: [],
@@ -188,124 +188,147 @@ class Environments extends Component {
   };
 
   renderEnvironmentTable() {
-    const { menuSummaryShowMenu, searchedEnvSummary, collapsedTableIndex } = this.state;
-    const retData = [];
-    searchedEnvSummary.map((item, envIndex) => {
-      const accountsJSX = [];
-      item.environmentSummaryList.map((account, accountIndex) => {
-        accountsJSX.push(
-          <TableRow key={`env-${accountIndex}-${envIndex}`}>
-            <TableCell align="left">
-              <Link
-                to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${account.landingZone}&cloudName=${account.cloud}`}
-                onClick={() =>
-                  this.addAccountToRecentlyVisited({
-                    accountType: account.cloud,
-                    accountId: account.landingZone,
-                  })
-                }
-              >
-                {account.cloud} ({account.landingZone})
-              </Link>
-            </TableCell>
-            <TableCell align="center">{account.productEnclave}</TableCell>
-            <TableCell align="center">{account.product}</TableCell>
-            <TableCell align="center">{account.appService}</TableCell>
-            <TableCell align="center">{account.dataService}</TableCell>
-            <TableCell align="center">
-              <button
-                type="button"
-                className="list-icon"
-                onClick={(e) => {
-                  this.handleMenuToggle(envIndex, accountIndex);
-                }}
-              >
-                <i className="fas fa-ellipsis-v"></i>
-              </button>
-              {menuSummaryShowMenu[0] === envIndex &&
-                menuSummaryShowMenu[1] === accountIndex ? (
-                <>
-                  <div
-                    className="open-create-menu-close"
+    if (this.props.envSummary.status === status.IN_PROGRESS) {
+      return (
+        <Box className="new-environment-loader text-center align-self-center p-t-20 p-b-20">
+          <i className="fa-solid fa-spinner fa-spin" /> Loading...
+        </Box>
+      );
+    } else if (this.props.envSummary.status === status.SUCCESS) {
+      const { menuSummaryShowMenu, searchedEnvSummary, collapsedTableIndex, envSummary } = this.state;
+      let retData = [];
+      if (envSummary.length > 0) {
+        searchedEnvSummary.map((item, envIndex) => {
+          let accountsJSX = [];
+          item.environmentSummaryList.map((account, accountIndex) => {
+            accountsJSX.push(
+              <TableRow key={`env-${accountIndex}-${envIndex}`}>
+                <TableCell align="left">
+                  <Link
+                    to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${account.landingZone}&cloudName=${account.cloud}`}
+                    onClick={() =>
+                      this.addAccountToRecentlyVisited({
+                        accountType: account.cloud,
+                        accountId: account.landingZone,
+                      })
+                    }
+                  >
+                    {account.cloud} ({account.landingZone})
+                  </Link>
+                </TableCell>
+                <TableCell align="center">{account.productEnclave}</TableCell>
+                <TableCell align="center">{account.product}</TableCell>
+                <TableCell align="center">{account.appService}</TableCell>
+                <TableCell align="center">{account.dataService}</TableCell>
+                <TableCell align="center">
+                  <button
+                    type="button"
+                    className="list-icon"
                     onClick={(e) => {
                       this.handleMenuToggle(envIndex, accountIndex);
                     }}
-                  ></div>
-                  <Box className="menu-list">
-                    <List>
-                      <ListItem className="active">
-                        <a
-                          href={`/assetmanager/pages/add-data-source?accountId=${account.landingZone}&cloudName=${account.cloud}`}
-                        >
-                          Add New datasource
-                        </a>
-                      </ListItem>
-                      <ListItem>
-                        <a href="#">Add CompListItemance</a>
-                      </ListItem>
-                      <ListItem>
-                        <a href="#">Associate to OU</a>
-                      </ListItem>
-                      <ListItem>
-                        <a href="#">Add New VPC</a>
-                      </ListItem>
-                      <ListItem>
-                        <a href="#">Add New Product</a>
-                      </ListItem>
-                    </List>
-                  </Box>
-                </>
-              ) : (
-                <></>
-              )}
-            </TableCell>
-          </TableRow>
-        );
-      });
-      retData.push(
-        <div className="environment-table">
-          <TableContainer className="table">
-            <Table>
-              <TableHead
-                className={
-                  collapsedTableIndex.indexOf(envIndex) === -1
-                    ? "active"
-                    : ""
-                }
-              >
-                <TableRow>
-                  <TableCell align="left">
-                    <i
-                      className={
-                        collapsedTableIndex.indexOf(envIndex) === -1
-                          ? "fa-solid fa-sort-down"
-                          : "fa-solid fa-caret-right"
-                      }
-                      onClick={() => {
-                        this.handleTableToggle(envIndex);
-                      }}
-                    ></i>
-                    <Box className="environment-image">
-                      <img src={LOGOS[item.cloud.toLowerCase()]} alt="" />
-                    </Box>
-                    <strong>{item.cloud}</strong>
-                  </TableCell>
-                  <TableCell align="center">Product Enclave</TableCell>
-                  <TableCell align="center">Products</TableCell>
-                  <TableCell align="center">App Services</TableCell>
-                  <TableCell align="center">Data Services</TableCell>
-                  <TableCell align="center">Action</TableCell>
-                </TableRow>
-              </TableHead>
-              {collapsedTableIndex.indexOf(envIndex) === -1 && (
-                <TableBody>{accountsJSX}</TableBody>
-              )}
-            </Table>
-          </TableContainer>
-        </div>
+                  >
+                    <i className="fas fa-ellipsis-v"></i>
+                  </button>
+                  {menuSummaryShowMenu[0] === envIndex &&
+                    menuSummaryShowMenu[1] === accountIndex ? (
+                    <>
+                      <div
+                        className="open-create-menu-close"
+                        onClick={(e) => {
+                          this.handleMenuToggle(envIndex, accountIndex);
+                        }}
+                      ></div>
+                      <Box className="menu-list">
+                        <List>
+                          <ListItem className="active">
+                            <a
+                              href={`/assetmanager/pages/add-data-source?accountId=${account.landingZone}&cloudName=${account.cloud}`}
+                            >
+                              Add New datasource
+                            </a>
+                          </ListItem>
+                          <ListItem>
+                            <a href="#">Add CompListItemance</a>
+                          </ListItem>
+                          <ListItem>
+                            <a href="#">Associate to OU</a>
+                          </ListItem>
+                          <ListItem>
+                            <a href="#">Add New VPC</a>
+                          </ListItem>
+                          <ListItem>
+                            <a href="#">Add New Product</a>
+                          </ListItem>
+                        </List>
+                      </Box>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </TableCell>
+              </TableRow>
+            );
+          });
+          if (accountsJSX.length === 0) {
+            accountsJSX = <TableRow><TableCell align="center">There is no data with searched key.</TableCell></TableRow>
+          }
+          retData.push(
+            <div className="environment-table">
+              <TableContainer className="table">
+                <Table>
+                  <TableHead
+                    className={
+                      collapsedTableIndex.indexOf(envIndex) === -1
+                        ? "active"
+                        : ""
+                    }
+                  >
+                    <TableRow>
+                      <TableCell align="left">
+                        <i
+                          className={
+                            collapsedTableIndex.indexOf(envIndex) === -1
+                              ? "fa-solid fa-sort-down"
+                              : "fa-solid fa-caret-right"
+                          }
+                          onClick={() => {
+                            this.handleTableToggle(envIndex);
+                          }}
+                        ></i>
+                        <Box className="environment-image">
+                          <img src={LOGOS[item.cloud.toLowerCase()]} alt="" />
+                        </Box>
+                        <strong>{item.cloud}</strong>
+                      </TableCell>
+                      <TableCell align="center">Product Enclave</TableCell>
+                      <TableCell align="center">Products</TableCell>
+                      <TableCell align="center">App Services</TableCell>
+                      <TableCell align="center">Data Services</TableCell>
+                      <TableCell align="center">Action</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  {collapsedTableIndex.indexOf(envIndex) === -1 && (
+                    <TableBody>{accountsJSX}</TableBody>
+                  )}
+                </Table>
+              </TableContainer>
+            </div>
+          );
+        });
+      } else {
+        retData = <Box className="chart-spinner d-flex text-center w-100 p-t-20 p-b-20">
+          No environments found.
+        </Box>;
+      }
+      return retData;
+    } else {
+      return (
+        <Box className="chart-spinner d-flex text-center w-100 p-t-20 p-b-20">
+          There is some issue. Try again later.
+        </Box>
       );
-    });
-    return retData;
+    }
   }
 
   handleSearchChange = (e) => {
@@ -385,10 +408,62 @@ class Environments extends Component {
     return null;
   };
 
+  toggleAddNewEnvironmentMenu = () => {
+    this.setState({
+      isAddNewEnvironmentShown: !this.state.isAddNewEnvironmentShown,
+    })
+  };
+
+  renderAddNewEnvironmentList = () => {
+    return (<>
+      <ListItem>
+        <Link
+          to={`${APP_PREFIX_PATH}/environments/aws/newaccountsetup`}
+        >
+          <span className="image-box">
+            <img src={AWS} alt="AWS" />
+          </span>
+          <p>Amazon Web Services</p>
+        </Link>
+      </ListItem>
+      <ListItem>
+        <Link
+          to={`${APP_PREFIX_PATH}/environments/azure/newaccountsetup`}
+        >
+          <span className="image-box">
+            <img src={AZURE} alt="AZURE" />
+          </span>
+          <p>Azure Cloud</p>
+        </Link>
+      </ListItem>
+      <ListItem>
+        <Link
+          to={`${APP_PREFIX_PATH}/environments/gcp/newaccountsetup`}
+        >
+          <span className="image-box">
+            <img src={GCP} alt="GCP" />
+          </span>
+          <p>Google Cloud Platform</p>
+        </Link>
+      </ListItem>
+      <ListItem>
+        <Link
+          to={`${APP_PREFIX_PATH}/environments/kubernetes/newaccountsetup`}
+        >
+          <span className="image-box">
+            <img src={Kubernetes} alt="Kubernetes" />
+          </span>
+          <p>Kubernetes</p>
+        </Link>
+      </ListItem>
+    </>
+    );
+  };
+
   render() {
     const {
       isRecentVisitedEnvMenuOpen,
-      showAddNewFilter,
+      isAddNewEnvironmentShown,
       searchedKey,
       envSummary,
       showFilterPopup,
@@ -461,76 +536,29 @@ class Environments extends Component {
                         <Box className="environment-fliter">
                           <Box
                             className="fliter-toggel new-environment"
-                            onClick={() =>
-                              this.setState({
-                                showAddNewFilter: !showAddNewFilter,
-                              })
-                            }
+                            onClick={this.toggleAddNewEnvironmentMenu}
                           >
                             Add New Environment
                             <i className="fa-solid fa-caret-down arrow-icon"></i>
                           </Box>
                           <Box
                             className={
-                              showAddNewFilter === true
+                              isAddNewEnvironmentShown
                                 ? "fliter-collapse active"
                                 : "fliter-collapse"
                             }
                           >
                             <List>
-                              <ListItem>
-                                <Link
-                                  to={`${APP_PREFIX_PATH}/environments/aws/newaccountsetup`}
-                                >
-                                  <span className="image-box">
-                                    <img src={AWS} alt="AWS" />
-                                  </span>
-                                  <p>Amazon Web Services</p>
-                                </Link>
-                              </ListItem>
-                              <ListItem>
-                                <Link
-                                  to={`${APP_PREFIX_PATH}/environments/azure/newaccountsetup`}
-                                >
-                                  <span className="image-box">
-                                    <img src={AZURE} alt="AZURE" />
-                                  </span>
-                                  <p>Azure Cloud</p>
-                                </Link>
-                              </ListItem>
-                              <ListItem>
-                                <Link
-                                  to={`${APP_PREFIX_PATH}/environments/gcp/newaccountsetup`}
-                                >
-                                  <span className="image-box">
-                                    <img src={GCP} alt="GCP" />
-                                  </span>
-                                  <p>Google Cloud Platform</p>
-                                </Link>
-                              </ListItem>
-                              <ListItem>
-                                <Link
-                                  to={`${APP_PREFIX_PATH}/environments/kubernetes/newaccountsetup`}
-                                >
-                                  <span className="image-box">
-                                    <img src={Kubernetes} alt="Kubernetes" />
-                                  </span>
-                                  <p>Kubernetes</p>
-                                </Link>
-                              </ListItem>
+                              {this.renderAddNewEnvironmentList()}
                             </List>
                           </Box>
                           <div
                             className={
-                              showAddNewFilter === true
+                              isAddNewEnvironmentShown
                                 ? "fliters-collapse-bg active"
                                 : "fliters-collapse-bg"
                             }
-                            onClick={() =>
-                              this.setState({
-                                showAddNewFilter: !showAddNewFilter,
-                              })
-                            }
+                            onClick={this.toggleAddNewEnvironmentMenu}
                           />
                         </Box>
                         <Button
@@ -565,19 +593,7 @@ class Environments extends Component {
             </Grid>
           </Box>
         </Box>
-        {this.props.envSummary.status === status.IN_PROGRESS ? (
-          <Box className="new-environment-loader text-center align-self-center p-t-20 p-b-20">
-            <i className="fa-solid fa-spinner fa-spin" /> Loading...
-          </Box>
-        ) : (
-          <>
-            {(envSummary.length && this.renderEnvironmentTable()) || (
-              <Box className="chart-spinner d-flex text-center w-100 p-t-20 p-b-20">
-                No environments found.
-              </Box>
-            )}
-          </>
-        )}
+        {this.renderEnvironmentTable()}
 
         {showFilterPopup ? (
           <FilterPopup
