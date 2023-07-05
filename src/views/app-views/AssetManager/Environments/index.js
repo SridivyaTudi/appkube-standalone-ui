@@ -350,6 +350,7 @@ class Environments extends Component {
         newItem
       ];
     }
+    recentEnv.length = recentEnv.length > 5 ? 5 : recentEnv.length;
     setRecentVisitedEnvironments(recentEnv);
   };
 
@@ -443,7 +444,9 @@ class Environments extends Component {
                                   : "fliter-collapse"
                               }
                             >
-                              {this.renderRecentVisitedMenu()}
+                              <List>
+                                {this.renderRecentVisitedMenu()}
+                              </List>
                             </Box>
                             <div
                               className={
