@@ -20,6 +20,7 @@ import EnvironmentList from "views/app-views/AssetManager/Environments/Environme
 import ProcurifyLogisticsTools from "views/app-views/AssetManager/Environments/EnvironmentList/ProcurifyLogisticsTools";
 import DeployProject from "views/app-views/AssetManager/Environments/EnvironmentList/DeployProject";
 import ConfigurTopology from "views/app-views/AssetManager/Environments/EnvironmentList/ConfigurTopology";
+import CreateScratch from "./app-views/AssetManager/Environments/EnvironmentList/CreateScratch";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { getCurrentUser } from "utils";
@@ -110,6 +111,11 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/environments/configurtopology`}
             element={<ConfigurTopology />}
           />
+          <Route
+            path={`${APP_PREFIX_PATH}/environments/createscratch`}
+            element={<CreateScratch />}
+          />
+         
         </Routes>
       </div>
     );
