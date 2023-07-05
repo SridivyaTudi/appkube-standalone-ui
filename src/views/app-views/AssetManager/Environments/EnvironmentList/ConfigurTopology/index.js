@@ -303,7 +303,7 @@ class ConfigurTopology extends Component {
               </Box>
             </Box>
           </Box>
-          <Box className="api-server">
+          <Box className="api-server min-width">
             <Box className="d-block width-100 text-center">
               <h2>Application Servers</h2>
               <p>Vartical Scaling Per Node</p>
