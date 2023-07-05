@@ -13,10 +13,20 @@ import AdobeIcon from "assets/img/assetmanager/adobe-icon.png";
 import AppleIcon from "assets/img/assetmanager/apple-icon.png";
 import forbeseToolsIcon from "assets/img/assetmanager/forbese-tools-icon.png";
 import slackInventoryIcon from "assets/img/assetmanager/slack-inventory-icon.png";
-import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
+import {
+  Box,
+  Grid,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  List,
+  ListItem,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import { APP_PREFIX_PATH } from "configs/AppConfig";
-
 
 class Application extends Component {
   tabMapping = [
@@ -40,6 +50,9 @@ class Application extends Component {
       currentAccountId: null,
       showMenuIndex: null,
       activeTab: 0,
+      procurifyIconStatus: false,
+      flipkartIconStatus: false,
+      appleDataIconStatus: false,
     };
   }
 
@@ -110,8 +123,17 @@ class Application extends Component {
     this.setState({ activeTab });
   };
 
+  
   render() {
-    const { showSelectFilter, showServiceViewFilter, showRecentFilter, activeTab } = this.state;
+    const {
+      showSelectFilter,
+      showServiceViewFilter,
+      showRecentFilter,
+      activeTab,
+      procurifyIconStatus,
+      flipkartIconStatus,
+      appleDataIconStatus
+    } = this.state;
     return (
       <Box className="discovered-assets">
         <Box className="discovered-assets-head">
@@ -121,8 +143,8 @@ class Application extends Component {
               container
               rowSpacing={1}
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              alignItems={'center'}
-              justifyContent={'flex-start'}
+              alignItems={"center"}
+              justifyContent={"flex-start"}
             >
               <Grid item lg={8} md={8} xs={10}>
                 <Box className="d-flex justify-content-center align-items-center">
@@ -219,7 +241,10 @@ class Application extends Component {
                       }
                     />
                   </Box>
-                  <Button className="primary-btn min-width-inherit m-r-3" variant="contained">
+                  <Button
+                    className="primary-btn min-width-inherit m-r-3"
+                    variant="contained"
+                  >
                     <i className="fa-solid fa-history p-r-5"></i> Recent
                   </Button>
                 </Box>
@@ -234,7 +259,8 @@ class Application extends Component {
                       style={{ color: "white" }}
                       to={`${APP_PREFIX_PATH}/environments/deployproject`}
                     >
-                      <i className="fa-solid fa-plus-square p-r-5"></i> Add New
+                      <i className="fa-solid fa-plus-square p-r-5"></i> Create
+                      New
                     </Link>
                   </Button>
                 </div>
@@ -242,16 +268,20 @@ class Application extends Component {
             </Grid>
           </Box>
         </Box>
-        {activeTab === 0 &&
+        {activeTab === 0 && (
           <Box className="environment-table-section">
             <TableContainer className="table">
               <Table className="overview">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="left"><strong>Workspace</strong></TableCell>
+                    <TableCell align="left">
+                      <strong>Workspace</strong>
+                    </TableCell>
                     <TableCell align="center">Status</TableCell>
                     <TableCell align="center">Client</TableCell>
-                    <TableCell align="center" className="ou">Line Of Business</TableCell>
+                    <TableCell align="center" className="ou">
+                      Line Of Business
+                    </TableCell>
                     <TableCell align="center">Tags</TableCell>
                     <TableCell align="center">User Count</TableCell>
                     <TableCell align="center">Usage</TableCell>
@@ -270,34 +300,32 @@ class Application extends Component {
                     </TableCell>
                     <TableCell align="center">
                       <span>
-                        <img src={RunningIcon} alt="" style={{ maxWidth: "16px" }} />
+                        <img
+                          src={RunningIcon}
+                          alt=""
+                          style={{ maxWidth: "16px" }}
+                        />
                       </span>
                       Running
                     </TableCell>
                     <TableCell align="center">
                       <span>
-                        <img src={ProcurifyIcon} alt="" style={{ maxWidth: "18px" }} />
+                        <img
+                          src={ProcurifyIcon}
+                          alt=""
+                          style={{ maxWidth: "18px" }}
+                        />
                       </span>
                       Procurify
                     </TableCell>
                     <TableCell align="center">
                       <div className="business-btn"> Logistics</div>
                     </TableCell>
-                    <TableCell align="center">
-                      13
-                    </TableCell>
-                    <TableCell align="center">
-                      500
-                    </TableCell>
-                    <TableCell align="center">
-                      33%
-                    </TableCell>
-                    <TableCell align="center">
-                      41
-                    </TableCell>
-                    <TableCell align="center">
-                      29
-                    </TableCell>
+                    <TableCell align="center">13</TableCell>
+                    <TableCell align="center">500</TableCell>
+                    <TableCell align="center">33%</TableCell>
+                    <TableCell align="center">41</TableCell>
+                    <TableCell align="center">29</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">
@@ -309,34 +337,32 @@ class Application extends Component {
                     </TableCell>
                     <TableCell align="center">
                       <span>
-                        <img src={RunningIcon} alt="" style={{ maxWidth: "16px" }} />
+                        <img
+                          src={RunningIcon}
+                          alt=""
+                          style={{ maxWidth: "16px" }}
+                        />
                       </span>
                       Running
                     </TableCell>
                     <TableCell align="center">
                       <span>
-                        <img src={HdfcIcon} alt="" style={{ maxWidth: "18px" }} />
+                        <img
+                          src={HdfcIcon}
+                          alt=""
+                          style={{ maxWidth: "18px" }}
+                        />
                       </span>
                       HDFC bank
                     </TableCell>
                     <TableCell align="center">
                       <div className="business-btn"> Transaction</div>
                     </TableCell>
-                    <TableCell align="center">
-                      13
-                    </TableCell>
-                    <TableCell align="center">
-                      500
-                    </TableCell>
-                    <TableCell align="center">
-                      33%
-                    </TableCell>
-                    <TableCell align="center">
-                      41
-                    </TableCell>
-                    <TableCell align="center">
-                      29
-                    </TableCell>
+                    <TableCell align="center">13</TableCell>
+                    <TableCell align="center">500</TableCell>
+                    <TableCell align="center">33%</TableCell>
+                    <TableCell align="center">41</TableCell>
+                    <TableCell align="center">29</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">
@@ -348,34 +374,32 @@ class Application extends Component {
                     </TableCell>
                     <TableCell align="center">
                       <span>
-                        <img src={UpdatingIcon} alt="" style={{ maxWidth: "16px" }} />
+                        <img
+                          src={UpdatingIcon}
+                          alt=""
+                          style={{ maxWidth: "16px" }}
+                        />
                       </span>
                       Updating
                     </TableCell>
                     <TableCell align="center">
                       <span>
-                        <img src={AirAsiaIcon} alt="" style={{ maxWidth: "18px" }} />
+                        <img
+                          src={AirAsiaIcon}
+                          alt=""
+                          style={{ maxWidth: "18px" }}
+                        />
                       </span>
                       Air Asia
                     </TableCell>
                     <TableCell align="center">
                       <div className="business-btn"> Fleets</div>
                     </TableCell>
-                    <TableCell align="center">
-                      13
-                    </TableCell>
-                    <TableCell align="center">
-                      500
-                    </TableCell>
-                    <TableCell align="center">
-                      33%
-                    </TableCell>
-                    <TableCell align="center">
-                      41
-                    </TableCell>
-                    <TableCell align="center">
-                      29
-                    </TableCell>
+                    <TableCell align="center">13</TableCell>
+                    <TableCell align="center">500</TableCell>
+                    <TableCell align="center">33%</TableCell>
+                    <TableCell align="center">41</TableCell>
+                    <TableCell align="center">29</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">
@@ -387,34 +411,32 @@ class Application extends Component {
                     </TableCell>
                     <TableCell align="center">
                       <span>
-                        <img src={StopIcon} alt="" style={{ maxWidth: "16px" }} />
+                        <img
+                          src={StopIcon}
+                          alt=""
+                          style={{ maxWidth: "16px" }}
+                        />
                       </span>
                       Stop
                     </TableCell>
                     <TableCell align="center">
                       <span>
-                        <img src={WalmartIcon} alt="" style={{ maxWidth: "18px" }} />
+                        <img
+                          src={WalmartIcon}
+                          alt=""
+                          style={{ maxWidth: "18px" }}
+                        />
                       </span>
                       Walmart
                     </TableCell>
                     <TableCell align="center">
                       <div className="business-btn"> Logistics</div>
                     </TableCell>
-                    <TableCell align="center">
-                      13
-                    </TableCell>
-                    <TableCell align="center">
-                      500
-                    </TableCell>
-                    <TableCell align="center">
-                      33%
-                    </TableCell>
-                    <TableCell align="center">
-                      41
-                    </TableCell>
-                    <TableCell align="center">
-                      29
-                    </TableCell>
+                    <TableCell align="center">13</TableCell>
+                    <TableCell align="center">500</TableCell>
+                    <TableCell align="center">33%</TableCell>
+                    <TableCell align="center">41</TableCell>
+                    <TableCell align="center">29</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">
@@ -426,34 +448,32 @@ class Application extends Component {
                     </TableCell>
                     <TableCell align="center">
                       <span>
-                        <img src={UpdatingIcon} alt="" style={{ maxWidth: "16px" }} />
+                        <img
+                          src={UpdatingIcon}
+                          alt=""
+                          style={{ maxWidth: "16px" }}
+                        />
                       </span>
                       Updating
                     </TableCell>
                     <TableCell align="center">
                       <span>
-                        <img src={AdobeIcon} alt="" style={{ maxWidth: "18px" }} />
+                        <img
+                          src={AdobeIcon}
+                          alt=""
+                          style={{ maxWidth: "18px" }}
+                        />
                       </span>
                       Adobe
                     </TableCell>
                     <TableCell align="center">
                       <div className="business-btn"> Frames</div>
                     </TableCell>
-                    <TableCell align="center">
-                      13
-                    </TableCell>
-                    <TableCell align="center">
-                      500
-                    </TableCell>
-                    <TableCell align="center">
-                      33%
-                    </TableCell>
-                    <TableCell align="center">
-                      41
-                    </TableCell>
-                    <TableCell align="center">
-                      29
-                    </TableCell>
+                    <TableCell align="center">13</TableCell>
+                    <TableCell align="center">500</TableCell>
+                    <TableCell align="center">33%</TableCell>
+                    <TableCell align="center">41</TableCell>
+                    <TableCell align="center">29</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">
@@ -465,34 +485,32 @@ class Application extends Component {
                     </TableCell>
                     <TableCell align="center">
                       <span>
-                        <img src={RunningIcon} alt="" style={{ maxWidth: "16px" }} />
+                        <img
+                          src={RunningIcon}
+                          alt=""
+                          style={{ maxWidth: "16px" }}
+                        />
                       </span>
                       Running
                     </TableCell>
                     <TableCell align="center">
                       <span>
-                        <img src={ProcurifyIcon1} alt="" style={{ maxWidth: "18px" }} />
+                        <img
+                          src={ProcurifyIcon1}
+                          alt=""
+                          style={{ maxWidth: "18px" }}
+                        />
                       </span>
                       Procurify
                     </TableCell>
                     <TableCell align="center">
                       <div className="business-btn"> Banking</div>
                     </TableCell>
-                    <TableCell align="center">
-                      13
-                    </TableCell>
-                    <TableCell align="center">
-                      500
-                    </TableCell>
-                    <TableCell align="center">
-                      33%
-                    </TableCell>
-                    <TableCell align="center">
-                      41
-                    </TableCell>
-                    <TableCell align="center">
-                      29
-                    </TableCell>
+                    <TableCell align="center">13</TableCell>
+                    <TableCell align="center">500</TableCell>
+                    <TableCell align="center">33%</TableCell>
+                    <TableCell align="center">41</TableCell>
+                    <TableCell align="center">29</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">
@@ -504,41 +522,39 @@ class Application extends Component {
                     </TableCell>
                     <TableCell align="center">
                       <span>
-                        <img src={RunningIcon} alt="" style={{ maxWidth: "16px" }} />
+                        <img
+                          src={RunningIcon}
+                          alt=""
+                          style={{ maxWidth: "16px" }}
+                        />
                       </span>
                       Running
                     </TableCell>
                     <TableCell align="center">
                       <span>
-                        <img src={FlipkartIcon} alt="" style={{ maxWidth: "14px" }} />
+                        <img
+                          src={FlipkartIcon}
+                          alt=""
+                          style={{ maxWidth: "14px" }}
+                        />
                       </span>
                       Flipkart
                     </TableCell>
                     <TableCell align="center">
                       <div className="business-btn"> Client</div>
                     </TableCell>
-                    <TableCell align="center">
-                      13
-                    </TableCell>
-                    <TableCell align="center">
-                      500
-                    </TableCell>
-                    <TableCell align="center">
-                      33%
-                    </TableCell>
-                    <TableCell align="center">
-                      41
-                    </TableCell>
-                    <TableCell align="center">
-                      29
-                    </TableCell>
+                    <TableCell align="center">13</TableCell>
+                    <TableCell align="center">500</TableCell>
+                    <TableCell align="center">33%</TableCell>
+                    <TableCell align="center">41</TableCell>
+                    <TableCell align="center">29</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
           </Box>
-        }
-        {activeTab === 1 &&
+        )}
+        {activeTab === 1 && (
           <Box className="logistics-cards">
             <Box className="logistics-card">
               <Box className="d-flex width-100 top-content">
@@ -546,11 +562,19 @@ class Application extends Component {
                   <img src={ProcurifyIcon} alt="" />
                 </Box>
                 <Box className="content">
-                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 title">
+                    Procurify-Logistics
+                  </Box>
                   <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
-                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
-                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">
+                      Status : <strong>Running</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      App Services : <strong>96</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      Data Services : <strong>96</strong>
+                    </span>
                   </Box>
                 </Box>
               </Box>
@@ -583,11 +607,19 @@ class Application extends Component {
                   <img src={ProcurifyIcon} alt="" />
                 </Box>
                 <Box className="content">
-                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 title">
+                    Procurify-Logistics
+                  </Box>
                   <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
-                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
-                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">
+                      Status : <strong>Running</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      App Services : <strong>96</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      Data Services : <strong>96</strong>
+                    </span>
                   </Box>
                 </Box>
               </Box>
@@ -620,11 +652,19 @@ class Application extends Component {
                   <img src={ProcurifyIcon} alt="" />
                 </Box>
                 <Box className="content">
-                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 title">
+                    Procurify-Logistics
+                  </Box>
                   <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
-                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
-                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">
+                      Status : <strong>Running</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      App Services : <strong>96</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      Data Services : <strong>96</strong>
+                    </span>
                   </Box>
                 </Box>
               </Box>
@@ -657,11 +697,19 @@ class Application extends Component {
                   <img src={ProcurifyIcon} alt="" />
                 </Box>
                 <Box className="content">
-                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 title">
+                    Procurify-Logistics
+                  </Box>
                   <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
-                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
-                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">
+                      Status : <strong>Running</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      App Services : <strong>96</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      Data Services : <strong>96</strong>
+                    </span>
                   </Box>
                 </Box>
               </Box>
@@ -694,11 +742,19 @@ class Application extends Component {
                   <img src={ProcurifyIcon} alt="" />
                 </Box>
                 <Box className="content">
-                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 title">
+                    Procurify-Logistics
+                  </Box>
                   <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
-                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
-                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">
+                      Status : <strong>Running</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      App Services : <strong>96</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      Data Services : <strong>96</strong>
+                    </span>
                   </Box>
                 </Box>
               </Box>
@@ -731,11 +787,19 @@ class Application extends Component {
                   <img src={ProcurifyIcon} alt="" />
                 </Box>
                 <Box className="content">
-                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 title">
+                    Procurify-Logistics
+                  </Box>
                   <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
-                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
-                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">
+                      Status : <strong>Running</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      App Services : <strong>96</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      Data Services : <strong>96</strong>
+                    </span>
                   </Box>
                 </Box>
               </Box>
@@ -768,11 +832,19 @@ class Application extends Component {
                   <img src={ProcurifyIcon} alt="" />
                 </Box>
                 <Box className="content">
-                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 title">
+                    Procurify-Logistics
+                  </Box>
                   <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
-                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
-                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">
+                      Status : <strong>Running</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      App Services : <strong>96</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      Data Services : <strong>96</strong>
+                    </span>
                   </Box>
                 </Box>
               </Box>
@@ -805,11 +877,19 @@ class Application extends Component {
                   <img src={ProcurifyIcon} alt="" />
                 </Box>
                 <Box className="content">
-                  <Box className="d-flex width-100 title">Procurify-Logistics</Box>
+                  <Box className="d-flex width-100 title">
+                    Procurify-Logistics
+                  </Box>
                   <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">Status : <strong>Running</strong></span>
-                    <span className="d-flex width-100">App Services : <strong>96</strong></span>
-                    <span className="d-flex width-100">Data Services : <strong>96</strong></span>
+                    <span className="d-flex width-100">
+                      Status : <strong>Running</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      App Services : <strong>96</strong>
+                    </span>
+                    <span className="d-flex width-100">
+                      Data Services : <strong>96</strong>
+                    </span>
                   </Box>
                 </Box>
               </Box>
@@ -837,7 +917,7 @@ class Application extends Component {
               </Box>
             </Box>
           </Box>
-        }
+        )}
 
         <Box className="recently-viewed-section">
           <h3>Recently Viewed</h3>
@@ -914,7 +994,13 @@ class Application extends Component {
                   <span>Logistics-Tool</span>
                 </Box>
               </Box>
-              <Box className="favorites-check">
+              <Box
+                className={
+                  procurifyIconStatus ? "favorites-star" : "favorites-check"
+                }
+                onClick={() => this.setState({ procurifyIconStatus: !procurifyIconStatus })
+              }
+              >
                 <i className="fas fa-star"></i>
               </Box>
             </Box>
@@ -929,7 +1015,12 @@ class Application extends Component {
                   <span>Refunds</span>
                 </Box>
               </Box>
-              <Box className="favorites-check">
+              <Box
+                className={
+                  flipkartIconStatus ? "favorites-star" : "favorites-check"
+                }
+                onClick={() => {this.setState({flipkartIconStatus:!flipkartIconStatus})}}
+              >
                 <i className="fas fa-star"></i>
               </Box>
             </Box>
@@ -943,7 +1034,13 @@ class Application extends Component {
                   <span>Security-Databese</span>
                 </Box>
               </Box>
-              <Box className="favorites-check">
+              <Box 
+              
+              className={
+                appleDataIconStatus ? "favorites-star" : "favorites-check"
+              }
+              onClick={() => {this.setState({appleDataIconStatus:!appleDataIconStatus})}}
+              >
                 <i className="fas fa-star"></i>
               </Box>
             </Box>

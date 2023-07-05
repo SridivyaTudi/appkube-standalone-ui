@@ -475,7 +475,9 @@
             }
 
             &:first-child {
+              width: 200px;
               padding-left: 40px;
+
             }
 
             &.ou {
@@ -1816,11 +1818,26 @@
                 width: 20px;
                 height: 20px;
                 border-radius: 50%;
-                background: #faa24b;
+                text-align: center;
+                line-height: 18px;
+                color: #c9cedb;
+                font-size: 10px;
+                border: 1px solid #c9cedb;
+                cursor: pointer;
+              }
+              .favorites-star {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
                 text-align: center;
                 line-height: 20px;
-                color: #ffffff;
+                color: #FFFFFF;
                 font-size: 10px;
+                background: #FFBA69;
+                cursor: pointer;
               }
             }
           }
