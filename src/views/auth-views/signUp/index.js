@@ -17,13 +17,13 @@ import { ToastMessage } from "Toast/ToastMessage";
 import status from "redux/constants/commonDS";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 class SignUp extends Component {
   steps = {
     STEP1: 0,
     STEP2: 1,
-    STEP3: 2
+    STEP3: 2,
   };
   constructor(props) {
     super(props);
@@ -43,14 +43,14 @@ class SignUp extends Component {
         file: null,
       },
       passwordView: true,
-      submittedSteps: [false, false, false]
+      submittedSteps: [false, false, false],
     };
   }
 
   componentDidUpdate = (prevProps, prevState) => {
     if (this.props.signUpUser.status !== prevProps.signUpUser.status) {
       if (this.props.signUpUser.status === status.SUCCESS) {
-        if(this.props.signUpUser.data.status === 400){
+        if (this.props.signUpUser.data.status === 400) {
           ToastMessage.error(this.props.signUpUser.data.message);
         } else {
           ToastMessage.success("New user registered!");
@@ -66,12 +66,12 @@ class SignUp extends Component {
     const { submittedSteps, activeStep } = this.state;
     submittedSteps[activeStep] = true;
     this.setState({
-      submittedSteps
+      submittedSteps,
     });
     const { isValid } = this.validateForm(activeStep, submittedSteps);
     if (isValid || dontValidate) {
       this.setState({
-        activeStep: newStep
+        activeStep: newStep,
       });
     }
   };
@@ -117,7 +117,7 @@ class SignUp extends Component {
       if (!step1.password.trim()) {
         errors.password = "Password is required!";
         isValid = false;
-      } 
+      }
       // else if (
       //   !/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(
       //     step1.password
@@ -125,7 +125,7 @@ class SignUp extends Component {
       // ) {
       //   errors.password = "Please enter valid password!";
       //   isValid = false;
-      // } 
+      // }
       else {
         errors.password = "";
       }
@@ -175,7 +175,7 @@ class SignUp extends Component {
     reader.onload = () => {
       if (reader.readyState === 2) {
         step2.profileImg = reader.result;
-        step2.file = e.target.files[0]
+        step2.file = e.target.files[0];
         this.setState({ step2 });
       }
     };
@@ -196,13 +196,8 @@ class SignUp extends Component {
   };
 
   render() {
-    const {
-      activeStep,
-      submittedSteps,
-      step1,
-      step2,
-      passwordView,
-    } = this.state;
+    const { activeStep, submittedSteps, step1, step2, passwordView } =
+      this.state;
     const { errors } = this.validateForm(activeStep, submittedSteps);
     return (
       <Box className="sign-container">
@@ -214,65 +209,91 @@ class SignUp extends Component {
                 Manage your project and team in easy way
               </h2>
               <Box className="d-flex width-100 banner-image">
-                <img src={activeStep === this.steps.STEP1 && SigninBanner || activeStep === this.steps.STEP2 && SignupBanner1 || activeStep === this.steps.STEP3 && SignupBanner2} alt="SignupBanner" style={{ maxHeight: `${activeStep === this.steps.STEP3 && "450px"}` }} />
+                <img
+                  src={
+                    (activeStep === this.steps.STEP1 && SigninBanner) ||
+                    (activeStep === this.steps.STEP2 && SignupBanner1) ||
+                    (activeStep === this.steps.STEP3 && SignupBanner2)
+                  }
+                  alt="SignupBanner"
+                  style={{
+                    maxHeight: `${activeStep === this.steps.STEP3 && "450px"}`,
+                  }}
+                />
               </Box>
             </Box>
           </Box>
           <Box className="sign-right">
             <Box className="sign-right-content">
               <Box className="d-block width-100 back-btn">
-                {activeStep === this.steps.STEP1 &&
+                {activeStep === this.steps.STEP1 && (
                   <Button
-                    className="primary-outline-btn min-width-inherit"
+                    className="secondary-text-btn min-width-inherit"
+                    to={`${AUTH_PREFIX_PATH}/signin`}
                     variant="outlined"
+                    component={Link}
                   >
-                    <Link
-                      className="primary-outline-btn min-width-inherit"
-                      variant="outlined"
-                      to={`${AUTH_PREFIX_PATH}/signin`}
-                    >
-                      <i className="fa-solid fa-chevron-left"></i>
-                    </Link>
+                    <i className="fa-solid fa-chevron-left"></i>
                   </Button>
-                }
-                {activeStep === this.steps.STEP2 &&
+                )}
+                {activeStep === this.steps.STEP2 && (
                   <Button
-                    className="primary-outline-btn min-width-inherit"
+                    className="secondary-text-btn min-width-inherit"
                     variant="outlined"
                     onClick={() => this.setActiveStep(this.steps.STEP1, true)}
                   >
                     <i className="fa-solid fa-chevron-left"></i>
                   </Button>
-                }
-                {activeStep === this.steps.STEP3 &&
+                )}
+                {activeStep === this.steps.STEP3 && (
                   <Button
-                    className="primary-outline-btn min-width-inherit"
+                    className="secondary-text-btn min-width-inherit"
                     variant="outlined"
                     onClick={() => this.setActiveStep(this.steps.STEP2, true)}
                   >
                     <i className="fa-solid fa-chevron-left"></i>
                   </Button>
-                }
+                )}
                 <span>Appkube</span>
               </Box>
               <List className="steps-container">
-                <ListItem className={activeStep === this.steps.STEP1 ? "active" : "" || activeStep === this.steps.STEP2 === true ? "active" : "" || activeStep === this.steps.STEP3 === true ? "active" : ""}>
+                <ListItem
+                  className={
+                    activeStep === this.steps.STEP1
+                      ? "active"
+                      : "" || (activeStep === this.steps.STEP2) === true
+                      ? "active"
+                      : "" || (activeStep === this.steps.STEP3) === true
+                      ? "active"
+                      : ""
+                  }
+                >
                   <span>step 1</span>
                 </ListItem>
-                <ListItem className={activeStep === this.steps.STEP2 ? "active" : "" || activeStep === this.steps.STEP3 === true ? "active" : ""}>
+                <ListItem
+                  className={
+                    activeStep === this.steps.STEP2
+                      ? "active"
+                      : "" || (activeStep === this.steps.STEP3) === true
+                      ? "active"
+                      : ""
+                  }
+                >
                   <span>step 2</span>
                 </ListItem>
-                <ListItem className={activeStep === this.steps.STEP3 ? "active" : ""}>
+                <ListItem
+                  className={activeStep === this.steps.STEP3 ? "active" : ""}
+                >
                   <span>step 3</span>
                 </ListItem>
               </List>
               <Box className="d-flex width-100 heading">
-                {activeStep === this.steps.STEP1 &&
+                {activeStep === this.steps.STEP1 && (
                   <>
                     Sign up to <strong>Appkube</strong>
                   </>
-                }
-                {activeStep === this.steps.STEP2 &&
+                )}
+                {activeStep === this.steps.STEP2 && (
                   <>
                     Complete your company profile
                     <span>
@@ -280,8 +301,8 @@ class SignUp extends Component {
                       project and their teams
                     </span>
                   </>
-                }
-                {activeStep === this.steps.STEP3 &&
+                )}
+                {activeStep === this.steps.STEP3 && (
                   <>
                     Registration Complete
                     <span>
@@ -289,15 +310,12 @@ class SignUp extends Component {
                       project and their teams
                     </span>
                   </>
-                }
+                )}
               </Box>
-              {activeStep === this.steps.STEP1 &&
+              {activeStep === this.steps.STEP1 && (
                 <>
                   <Box className="d-block width-100 google-btn">
-                    <Button
-                      className="primary-btn"
-                      variant="contained"
-                    >
+                    <Button className="primary-btn" variant="contained">
                       Sign up with google
                     </Button>
                   </Box>
@@ -321,7 +339,8 @@ class SignUp extends Component {
                             value={step1.fullName}
                             onChange={this.handleStep1Changes}
                           />
-                          {submittedSteps[this.steps.STEP1] && errors.fullName ? (
+                          {submittedSteps[this.steps.STEP1] &&
+                          errors.fullName ? (
                             <p className="m-b-0">{errors.fullName}</p>
                           ) : (
                             <></>
@@ -339,7 +358,8 @@ class SignUp extends Component {
                             value={step1.userName}
                             onChange={this.handleStep1Changes}
                           />
-                          {submittedSteps[this.steps.STEP1] && errors.userName ? (
+                          {submittedSteps[this.steps.STEP1] &&
+                          errors.userName ? (
                             <p className="m-b-0">{errors.userName}</p>
                           ) : (
                             <></>
@@ -387,14 +407,16 @@ class SignUp extends Component {
                             value={step1.password}
                             onChange={this.handleStep1Changes}
                           />
-                          {submittedSteps[this.steps.STEP1] && errors.password ? (
+                          {submittedSteps[this.steps.STEP1] &&
+                          errors.password ? (
                             <p className="m-b-0">{errors.password}</p>
                           ) : (
                             <></>
                           )}
                           <i
-                            className={`fa-sharp fa-regular fa-eye${passwordView ? "-slash" : ""
-                              }`}
+                            className={`fa-sharp fa-regular fa-eye${
+                              passwordView ? "-slash" : ""
+                            }`}
                             style={{ cursor: "pointer" }}
                             onClick={() => {
                               this.setState({
@@ -416,8 +438,11 @@ class SignUp extends Component {
                       />
                       <p>I have read and agree to the trems of Service</p>
                     </Box>
-                    {submittedSteps[this.steps.STEP1] && errors.termsOfService ? (
-                      <p className="m-b-0 error-text">{errors.termsOfService}</p>
+                    {submittedSteps[this.steps.STEP1] &&
+                    errors.termsOfService ? (
+                      <p className="m-b-0 error-text">
+                        {errors.termsOfService}
+                      </p>
                     ) : (
                       <></>
                     )}
@@ -436,8 +461,8 @@ class SignUp extends Component {
                     </p>
                   </Box>
                 </>
-              }
-              {activeStep === this.steps.STEP2 &&
+              )}
+              {activeStep === this.steps.STEP2 && (
                 <>
                   <Box className="select-profile">
                     <Box className="profile-image">
@@ -477,7 +502,8 @@ class SignUp extends Component {
                             value={step2.companyName}
                             onChange={this.handleStep2Changes}
                           />
-                          {submittedSteps[this.steps.STEP2] && errors.companyName ? (
+                          {submittedSteps[this.steps.STEP2] &&
+                          errors.companyName ? (
                             <p className="m-b-0">{errors.companyName}</p>
                           ) : (
                             <></>
@@ -496,27 +522,31 @@ class SignUp extends Component {
                     </Button>
                   </Box>
                 </>
-              }
-              {activeStep === this.steps.STEP3 &&
+              )}
+              {activeStep === this.steps.STEP3 && (
                 <>
                   <Box className="d-flex width-100 next-step">
                     <LoadingButton
                       onClick={this.signUpSubmit}
                       className="primary-btn"
                       variant="contained"
-                      disabled={this.props.signUpUser.status === status.IN_PROGRESS}
-                      loading={this.props.signUpUser.status === status.IN_PROGRESS}
+                      disabled={
+                        this.props.signUpUser.status === status.IN_PROGRESS
+                      }
+                      loading={
+                        this.props.signUpUser.status === status.IN_PROGRESS
+                      }
                       loadingPosition="start"
                     >
                       Continue To Sign In
                     </LoadingButton>
                   </Box>
                 </>
-              }
+              )}
             </Box>
           </Box>
         </Box>
-      </Box >
+      </Box>
     );
   }
 }

@@ -83,16 +83,12 @@ class ForgetPassword extends Component {
           <Box className="forget-left-content">
             <Box className="d-block width-100 back-btn">
               <Button
-                className="primary-outline-btn min-width-inherit"
+                className="secondary-text-btn min-width-inherit"
+                to={`${AUTH_PREFIX_PATH}/signin`}
                 variant="outlined"
+                component={Link}
               >
-                <Link
-                  className="primary-outline-btn min-width-inherit"
-                  variant="outlined"
-                  to={`${AUTH_PREFIX_PATH}/signin`}
-                >
-                  <i className="fa-solid fa-chevron-left"></i>
-                </Link>
+                <i className="fa-solid fa-chevron-left"></i>
               </Button>
               <span>Appkube</span>
             </Box>
