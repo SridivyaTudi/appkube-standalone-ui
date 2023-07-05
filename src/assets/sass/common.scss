@@ -243,9 +243,11 @@ button.secondary-btn {
   }
 }
 
-button.secondary-text-btn {
+button.secondary-text-btn{
   background: #ffffff;
   color: #8392a7;
+  border-color: #E1E1E1;
+  display: inline-block;
   border-radius: 5px;
   min-width: 80px;
   font-weight: 600;
@@ -258,7 +260,31 @@ button.secondary-text-btn {
 
   &:hover {
     background: #ffffff;
+    border-color: #E1E1E1;
     color: #8392a7;
+    box-shadow: none;
+  }
+}
+
+a.secondary-text-btn{
+  background: #ffffff;
+  color: #9A9AB0;
+  border-color: #E1E1E1;
+  border-radius: 5px;
+  min-width: 80px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 24px;
+  display: inline-block;
+  letter-spacing: 0;
+  box-shadow: none;
+  text-transform: none;
+  font-family: "Open Sans", sans-serif;
+
+  &:hover {
+    background: #ffffff;
+    border-color: #E1E1E1;
+    color: #9A9AB0;
     box-shadow: none;
   }
 }
@@ -282,6 +308,8 @@ button.light-btn {
     box-shadow: none;
   }
 }
+
+
 
 .asset-disabled {
   cursor: no-drop;

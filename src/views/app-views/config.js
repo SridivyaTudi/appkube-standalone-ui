@@ -9,7 +9,7 @@ const config = {
   GET_ALL_ENVIRONMENT_SUMMARY: `/query/organizations/#org-id#/cloud-environments/summary`,
   GET_ALL_ORG_WISE_DEPARTMENTS: `/organizations/#org-id#`,
   GET_DEPARTMENT_WISE_DATA: `/department-wise-analytics/get-data`,
-  GET_ACCOUNT_SERVICES: `/account-services/search`,
+  GET_ENVIRONMENT_DATA:  `${envsUrl}/query/organizations/#org-id#/landing-zone/#landing-zone-id#/infra-topology`,
   GET_DEPARTMENTS: `${envsUrl}/departments/search?organizationId=`,
   GET_ENVIRONMENTS: `/cloud-environments`,
   GET_ORG_WISE_DEPARTMENTS: `${envsUrl}/query/organizations/#org-id#/departments`,

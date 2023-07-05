@@ -1,13 +1,14 @@
+import { v4 as uuid } from 'uuid';
 export const getCurrentUser = () => {
   const user = localStorage.getItem("currentUser");
-  if(user){
+  if (user) {
     return JSON.parse(user);
   }
   return null;
 };
 
 export const setCurrentUser = (user) => {
-  if(user){
+  if (user) {
     localStorage.setItem("currentUser", JSON.stringify(user));
   }
 };
@@ -18,4 +19,22 @@ export const getCurrentOrgId = () => {
 
 export const setCurrentOrgId = (id) => {
   return localStorage.setItem("currentOrgId", id);
+};
+
+export const getRecentVisitedEnvironments = () => {
+  const recentEnvs = localStorage.getItem("recentEnv");
+  if (recentEnvs) {
+    return JSON.parse(recentEnvs);
+  }
+  return null;
+};
+
+export const setRecentVisitedEnvironments = (recentEnvs) => {
+  if (recentEnvs) {
+    localStorage.setItem("recentEnv", JSON.stringify(recentEnvs));
+  }
+};
+
+export const getUUID = () => {
+  return uuid();
 };
