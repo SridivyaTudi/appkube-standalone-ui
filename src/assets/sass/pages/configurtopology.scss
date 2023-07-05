@@ -53,18 +53,22 @@
     margin-top: 20px;
 
     .api-server {
-      margin-right: 20px;
+      margin-right: 2%;
       margin-bottom: 20px;
       display: inline-flex;
       align-items: flex-start;
       justify-content: center;
       flex-wrap: wrap;
-      width: 398px;
+      width: 32%;
       padding: 30px 30px;
       border-radius: 10px;
       background: #ffffff;
       min-height: 650px;
       box-shadow: 0px 100px 80px rgba(108, 73, 172, 0.07);
+
+      &.min-width {
+        width: 398px;
+      }
 
       &:last-child {
         margin-right: 0;
