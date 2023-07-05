@@ -65,7 +65,7 @@ class CommonFilterViewSearch extends Component {
         return (
           <ListItem key={innerKey}>
             <Link
-              to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${account.accountId}&cloudName=${account.cloud}`}
+              to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.accountId}&cloudName=${account.cloud}`}
               onClick={() => {
                 this.setState({ showServiceViewFilter: false });
                 this.props.updateAccountId(account.accountId);

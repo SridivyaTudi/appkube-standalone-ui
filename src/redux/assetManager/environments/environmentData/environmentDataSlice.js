@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getEnvironmentVpcs,getEnvironments,getDepartments } from "redux/assetManager/environments/environmentData/environmentDataThunk";
+import { getEnvironmentDataByLandingZone,getEnvironments,getDepartments } from "redux/assetManager/environments/environmentData/environmentDataThunk";
 import status from "redux/constants/commonDS";
 
 export const environmentDataSlice = createSlice({
   name: "environmentData",
   initialState: {
-    allVpcs:{
+    envDataByLandingZone:{
       status: null,
-      data:[]
+      data:{}
     },
     allEnv:{
       status: null,
@@ -19,29 +19,29 @@ export const environmentDataSlice = createSlice({
     }
   },
   extraReducers: {
-    [getEnvironmentVpcs.pending]: (state, action) => {
+    [getEnvironmentDataByLandingZone.pending]: (state, action) => {
       return {
         ...state,
-        allVpcs: {
+        envDataByLandingZone: {
           status: status.IN_PROGRESS,
         },
       };
     },
 
-    [getEnvironmentVpcs.fulfilled]: (state, {payload}) => {
+    [getEnvironmentDataByLandingZone.fulfilled]: (state, {payload}) => {
       return {
         ...state,
-        allVpcs: {
+        envDataByLandingZone: {
           status: status.SUCCESS,
           data: payload,
         },
       };
     },
 
-    [getEnvironmentVpcs.rejected]: (state, action) => {
+    [getEnvironmentDataByLandingZone.rejected]: (state, action) => {
       return {
         ...state,
-        allVpcs: {
+        envDataByLandingZone: {
           status: status.FAILURE,
         },
       };

@@ -15,11 +15,12 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import status from "redux/constants/commonDS";
 import {
-  getEnvironmentVpcs,
+  getEnvironmentDataByLandingZone,
   getEnvironments,
   getDepartments,
 } from "redux/assetManager/environments/environmentData/environmentDataThunk";
 import { connect } from "react-redux";
+import { getCurrentOrgId } from "utils";
 class EnvironmentList extends Component {
   tabMapping = [
     {
@@ -56,7 +57,7 @@ class EnvironmentList extends Component {
     this.state = {
       servicesPanelShow: false,
       activeTab: 0,
-      vpcs: [],
+      productEnclaveList: [],
       service: this.getCloudName(),
       departmentWiseData: {},
       accountList: {},
@@ -64,7 +65,7 @@ class EnvironmentList extends Component {
       searchedAccountList: {},
       vpcsDetails: [],
       vpcsDetailsBackUp: [],
-      accountId: null,
+      landingZone: null,
     };
   }
 
@@ -87,8 +88,8 @@ class EnvironmentList extends Component {
     if (this.state.service !== localStorage.getItem("serviceName")) {
       this.setState({ service: localStorage.getItem("serviceName") });
     }
+    this.setLandingZone();
     this.props.getEnvironments();
-    this.getCurrentAccountId();
   };
 
   getVpcsDetails(treeData) {
@@ -137,65 +138,34 @@ class EnvironmentList extends Component {
   }
 
   componentDidUpdate = async (prevProps, prevState) => {
-    if (this.state.accountId !== prevState.accountId) {
-      this.props.getDepartments(this.state.accountId);
+    if (this.state.landingZone !== prevState.landingZone) {
+      this.props.getDepartments(this.state.landingZone);
+      let currentOrgId = getCurrentOrgId();
+      let { landingZone } = this.state;
+      this.props.getEnvironmentDataByLandingZone({ landingZone, currentOrgId });
     }
 
-    if (
-      prevProps.environmentData.departments.status !==
-      this.props.environmentData.departments.status
-    ) {
+    if (prevProps.departments.status !== this.props.departments.status) {
       if (
-        this.props.environmentData.departments.status === status.SUCCESS &&
-        this.props.environmentData.departments.data
+        this.props.departments.status === status.SUCCESS &&
+        this.props.departments.data
       ) {
-        let depData = this.props.environmentData.departments.data;
+        let depData = this.props.departments.data;
         this.setState({
           departmentWiseData: depData,
         });
-        this.props.getEnvironmentVpcs({
-          accountId: this.state.accountId
+        this.props.getEnvironmentDataByLandingZone({
+          landingZone: this.state.landingZone,
         });
       }
     }
 
-    if (
-      prevProps.environmentData.allVpcs.status !==
-      this.props.environmentData.allVpcs.status
-    ) {
+    if (prevProps.allEnv.status !== this.props.allEnv.status) {
       if (
-        this.props.environmentData.allVpcs.status === status.SUCCESS &&
-        this.props.environmentData.allVpcs.data
+        this.props.allEnv.status === status.SUCCESS &&
+        this.props.allEnv.data
       ) {
-        let envData = this.props.environmentData.allVpcs.data;
-        let { vpcs } = this.state;
-        if (envData.length) {
-          this.setState({
-            vpcs:
-              (envData[0].account_services_json &&
-                envData[0].account_services_json.vpcs) ||
-              [],
-          });
-          this.getVpcsDetails(envData[0].account_services_json.vpcs);
-        } else if (vpcs.length) {
-          this.setState({
-            vpcs: [],
-            vpcsDetails: [],
-            vpcsDetailsBackUp: [],
-          });
-        }
-      }
-    }
-
-    if (
-      prevProps.environmentData.allEnv.status !==
-      this.props.environmentData.allEnv.status
-    ) {
-      if (
-        this.props.environmentData.allEnv.status === status.SUCCESS &&
-        this.props.environmentData.allEnv.data
-      ) {
-        let envs = this.props.environmentData.allEnv.data;
+        let envs = this.props.allEnv.data;
         if (envs.length) {
           const commonData = {};
           const accounts = {};
@@ -205,8 +175,8 @@ class EnvironmentList extends Component {
             commonData[account.cloud] = commonData[account.cloud]
               ? commonData[account.cloud]
               : {
-                totalBill: 0,
-              };
+                  totalBill: 0,
+                };
             commonData[account.cloud].totalBill += account.totalBilling || 0;
           });
           this.setState({
@@ -219,15 +189,15 @@ class EnvironmentList extends Component {
     }
   };
 
-  getCurrentAccountId = () => {
+  setLandingZone = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const accountId = urlParams.get("accountId");
-    this.setState({ accountId });
+    const landingZone = urlParams.get("landingZone");
+    this.setState({ landingZone });
   };
 
   updateCurrentAccountId = (id) => {
-    this.setState({ accountId: id });
+    this.setState({ landingZone: id });
   };
 
   renderEnvironmentBoxes = () => {
@@ -278,8 +248,9 @@ class EnvironmentList extends Component {
         </Box>
         <Box className="services-panel">
           <Box
-            className={`services-panel-title p-t-10 p-b-10 ${servicesPanelShow ? "bottom-border" : ""
-              }`}
+            className={`services-panel-title p-t-10 p-b-10 ${
+              servicesPanelShow ? "bottom-border" : ""
+            }`}
           >
             <Box className="image">
               <img
@@ -292,8 +263,9 @@ class EnvironmentList extends Component {
               onClick={() => this.toggleColumnSelect("filterShow")}
             >
               <i
-                className={`fa ${servicesPanelShow ? "fa-caret-down" : "fa-caret-right"
-                  }`}
+                className={`fa ${
+                  servicesPanelShow ? "fa-caret-down" : "fa-caret-right"
+                }`}
               ></i>
             </Box>
           </Box>
@@ -327,16 +299,16 @@ class EnvironmentList extends Component {
                   this.state.vpcsDetails.length && this.state.vpcsDetails
                 }
                 allVpcsDetails={
-                  this.state.vpcsDetailsBackUp.length && this.state.vpcsDetailsBackUp
+                  this.state.vpcsDetailsBackUp.length &&
+                  this.state.vpcsDetailsBackUp
                 }
-                vpcsData={this.state.vpcs}
-                updateCloudName={(service, accountId) => {
-                  this.setState({ service, accountId });
+                updateCloudName={(service, landingZone) => {
+                  this.setState({ service, landingZone });
                 }}
                 accountList={this.state.accountList}
                 updateCurrentAccountId={this.updateCurrentAccountId}
                 handleSearchVpcs={(vpcsDetails) => {
-                  this.setState({ vpcsDetails })
+                  this.setState({ vpcsDetails });
                 }}
               />
             ) : activeTab === 1 ? (
@@ -367,12 +339,12 @@ class EnvironmentList extends Component {
 }
 
 function mapStateToProps(state) {
-  const { environmentData } = state;
-  return { environmentData };
+  const {  departments, allEnv } = state.environmentData;
+  return {  departments, allEnv };
 }
 
 const mapDispatchToProps = {
-  getEnvironmentVpcs,
+  getEnvironmentDataByLandingZone,
   getEnvironments,
   getDepartments,
 };

@@ -1102,7 +1102,8 @@
       }
 
       .services-text-box {
-        display: inline-flex;
+        display: inline-grid;
+        //display: inline-flex;
         align-items: center;
         justify-content: center;
         text-align: center;
@@ -1135,6 +1136,7 @@
         //   content: "\f0da";
         //   font-family: "Font Awesome 5 Pro";
         // }
+        
       }
 
       .global-servies {

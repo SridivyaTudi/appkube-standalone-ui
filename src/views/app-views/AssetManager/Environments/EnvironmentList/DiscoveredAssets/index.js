@@ -14,7 +14,7 @@ import AllTable from "views/app-views/AssetManager/Environments/EnvironmentList/
 import AppTable from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/AppTable";
 import DataTable from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/DataTable";
 import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
-import { ArcherContainer, ArcherElement } from "react-archer";
+
 import EksCluster from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/EksCluster";
 import EcsCluster from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/EcsCluster";
 import WafResources from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/WafResources";
@@ -50,6 +50,9 @@ import {
 } from "@mui/material";
 import status from "redux/constants/commonDS";
 import { connect } from "react-redux";
+import { getUUID } from "utils";
+import TopologyView from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
+import { ArcherContainer, ArcherElement } from "react-archer";
 
 const servicesTreeCondition = {
   service: ["cluster", "product", "vpc", "clusterId", "vpcId", "productId"],
@@ -70,7 +73,15 @@ const nextTypes = {
   product: "",
 };
 let transformScale = 0;
-
+const TABLE_LEVEL_1 = {
+  APP: "App",
+  DATA: "Data",
+};
+const TOPOLOGY_VIEW_TYPE = {
+  VPC: "vpc",
+  CLUSTER: "cluster",
+  GLOBAL_SERVICE: "globalService",
+};
 class DiscoveredAssets extends Component {
   tableMapping = [
     {
@@ -107,7 +118,6 @@ class DiscoveredAssets extends Component {
       display_detail: true,
       displaygetEnvironmentData: null,
       cloudAssets: [],
-      treeDataNew: {},
       toggleNode: {
         vpc: true,
         cluster: false,
@@ -129,7 +139,7 @@ class DiscoveredAssets extends Component {
       showServiceViewFilter: false,
       activeTab: 0,
       searchString: "",
-      accountId: queryPrm.get("accountId"),
+      accountId: queryPrm.get("landingZone"),
       currentActiveCluster: "eksCluster",
 
       clusterServicesImages: [EKS, ECS],
@@ -146,8 +156,26 @@ class DiscoveredAssets extends Component {
         EMRStudio,
       ],
       GatewayServicesImages: [Waf, API, LB],
+      dataOfTableLevel1: [],
+      dataOfLevel1:{}
     };
   }
+
+  componentDidUpdate = async (prevProps, prevState) => {
+    if (
+      prevProps.envDataByLandingZone.status !==
+        this.props.envDataByLandingZone.status &&
+      this.props.envDataByLandingZone.status === status.SUCCESS
+    ) {
+      let { productEnclaveList, globalServiceList } = this.getEnvironmentDataByLandingZone();
+      if (productEnclaveList) {
+        this.prepareDataTableLevel1(productEnclaveList);
+        this.prepareDataTopologyViewComponent(productEnclaveList, globalServiceList);
+      }
+     
+     
+    }
+  };
 
   showHideDetail = () => {
     const { display_detail } = this.state;
@@ -300,72 +328,11 @@ class DiscoveredAssets extends Component {
     return retData;
   }
 
-  renderVPCData() {
-    if (this.props.vpcsData.length) {
-      return this.props.vpcsData.map((vpc, vpcIndex) => {
-        return (
-          <ArcherElement
-            id={`vpc_${vpcIndex}`}
-            relations={[
-              {
-                targetId:
-                  vpcIndex === this.state.toggleNode.vpcId &&
-                  this.state.toggleNode.clusterId >= 0
-                    ? `cluster_${this.state.toggleNode.clusterId}`
-                    : "",
-                targetAnchor: "left",
-                sourceAnchor: "right",
-                style: {
-                  strokeColor: "#a5a5d7",
-                  strokeWidth: 1.5,
-                  lineStyle: "curve",
-                },
-              },
-            ]}
-          >
-            <li
-              key={vpcIndex}
-              className={`${
-                vpcIndex === this.state.toggleNode.vpcId ? "active " : ""
-              }`}
-              id={`${
-                vpcIndex === this.state.toggleNode.vpcId &&
-                this.state.breadcrumbs.length === 2
-                  ? "custom_location"
-                  : ""
-              }`}
-              onClick={(e) => {
-                this.handleToggleNode(
-                  { vpcId: vpcIndex },
-                  vpc.name,
-                  "vpc",
-                  true,
-                  "cluster"
-                );
-              }}
-            >
-              <span id={`vpc_${vpcIndex}`}>
-                <img src={VpcServicesIcon} alt="" />
-              </span>
-              {this.getServiceName(vpc.name, "vpc")}
-            </li>
-          </ArcherElement>
-        );
-      });
-    }
-  }
-
   prepareBreadCrumbs(data, index, type) {
     let tempBreadData = [];
     let { breadcrumbs } = this.state;
-    if (
-      breadcrumbs.filter((breadcrumb) => breadcrumb.type === type)
-        .length
-    ) {
-      if (
-        breadcrumbs.filter((breadcrumb) => breadcrumb.id === index)
-          .length
-      ) {
+    if (breadcrumbs.filter((breadcrumb) => breadcrumb.type === type).length) {
+      if (breadcrumbs.filter((breadcrumb) => breadcrumb.id === index).length) {
         tempBreadData = breadcrumbs;
       } else {
         tempBreadData = breadcrumbs.filter(
@@ -382,114 +349,6 @@ class DiscoveredAssets extends Component {
       );
     });
     return tempBreadData;
-  }
-
-  renderClusters(index) {
-    if (
-      this.state.toggleNode.vpc &&
-      this.props.vpcsData[index].clusters &&
-      this.props.vpcsData[index].clusters.length
-    ) {
-      return this.props.vpcsData[index].clusters.map(
-        (cluster, clusterIndex) => {
-          return (
-            <ArcherElement
-              id={`cluster_${clusterIndex}`}
-              relations={[
-                {
-                  targetId:
-                    clusterIndex === this.state.toggleNode.clusterId &&
-                    this.state.toggleNode.productId >= 0
-                      ? `product_${this.state.toggleNode.productId}`
-                      : "",
-                  targetAnchor: "left",
-                  sourceAnchor: "right",
-                  style: {
-                    strokeColor: "#a5a5d7",
-                    strokeWidth: 1.5,
-                    lineStyle: "curve",
-                  },
-                },
-              ]}
-            >
-              <li
-                key={clusterIndex}
-                onClick={(e) => {
-                  this.handleToggleNode(
-                    { vpcId: index, clusterId: clusterIndex },
-                    cluster.name,
-                    "cluster",
-                    true,
-                    "product"
-                  );
-                }}
-                className={`${
-                  clusterIndex === this.state.toggleNode.clusterId
-                    ? "active"
-                    : ""
-                }`}
-                id={`${
-                  clusterIndex === this.state.toggleNode.clusterId &&
-                  this.state.breadcrumbs.length === 3
-                    ? "custom_location"
-                    : ""
-                }`}
-              >
-                <span id={`cluster_${clusterIndex}`}>
-                  <img src={ClusterIcon} alt="" />
-                </span>
-                {this.getServiceName(cluster.name, "cluster")}
-              </li>
-            </ArcherElement>
-          );
-        }
-      );
-    }
-  }
-
-  renderProducts(vpcIndex, clusterIndex) {
-    if (
-      this.state.toggleNode.cluster &&
-      this.props.vpcsData[vpcIndex].clusters[clusterIndex].products &&
-      this.props.vpcsData[vpcIndex].clusters[clusterIndex].products.length
-    ) {
-      return this.props.vpcsData[vpcIndex].clusters[clusterIndex].products.map(
-        (product, productIndex) => {
-          return (
-            <ArcherElement id={`product_${productIndex}`}>
-              <label
-                className={`${
-                  productIndex === this.state.toggleNode.productId
-                    ? "active"
-                    : ""
-                }`}
-                key={productIndex}
-                onClick={() => {
-                  this.handleToggleNode(
-                    {
-                      vpcId: vpcIndex,
-                      clusterId: clusterIndex,
-                      productId: productIndex,
-                    },
-                    product.name,
-                    "product",
-                    true
-                  );
-                }}
-                id={`${
-                  productIndex === this.state.toggleNode.productId &&
-                  this.state.breadcrumbs.length === 4
-                    ? "custom_location"
-                    : ""
-                }`}
-              >
-                {this.getServiceName(product.name, "product")}
-              </label>
-            </ArcherElement>
-          );
-        }
-      );
-    }
   }
 
   toggleColumnSelect = (drdName) => {
@@ -548,67 +407,9 @@ class DiscoveredAssets extends Component {
     });
   }
 
-  getServiceName(name, type) {
-    if (type === "vpc") {
-      return name ? name.toUpperCase() : "";
-    } else {
-      let firstChar = name ? name.charAt(0).toUpperCase() : "";
-      let otherStr = name ? name.toLowerCase().slice(1) : "";
-      let string = firstChar + otherStr;
-      return string;
-    }
-  }
-
-  handleToggleNode(
-    serviceIndexs,
-    name,
-    type,
-    isBreadCumbEdit = false,
-    nextType
-  ) {
-    let { toggleNode, breadcrumbs } = this.state;
-    servicesTreeCondition[type].forEach((key) => {
-      if (type === "service") {
-        toggleNode[key] = key.endsWith("Id")
-          ? null
-          : key.startsWith(name)
-          ? true
-          : false;
-      } else {
-        toggleNode[key] = key.endsWith("Id")
-          ? key in serviceIndexs
-            ? serviceIndexs[key]
-            : null
-          : key === type || key === nextType
-          ? true
-          : false;
-      }
-    });
-
-    if (isBreadCumbEdit) {
-      breadcrumbs = this.prepareBreadCrumbs(
-        {
-          id: type + "_" + serviceIndexs[`${type}Id`],
-          name: this.getServiceName(name, type),
-          type: type,
-          serviceIndexs: serviceIndexs,
-        },
-        type + "_" + serviceIndexs[`${type}Id`],
-        type
-      );
-    } else {
-      breadcrumbResetCondition[type].forEach((keyType) => {
-        breadcrumbs = breadcrumbs.filter(
-          (breadcrumb) => breadcrumb.type !== keyType
-        );
-      });
-    }
-    toggleNode["globalService"] = false;
-    this.setState({ toggleNode, breadcrumbs });
-  }
-
   renderVpcsDetails() {
-    return this.props.vpcsDetails.map((vpc, index) => {
+    let { dataOfTableLevel1 } = this.state;
+    return dataOfTableLevel1.map((vpc, index) => {
       return (
         <TableRow key={index}>
           <TableCell align="center">{vpc.name}</TableCell>
@@ -652,7 +453,9 @@ class DiscoveredAssets extends Component {
     });
   }
 
-  generateVpcDetailsTable() {
+  renderTableLevel1() {
+    let { dataOfTableLevel1 } = this.state;
+    if (!dataOfTableLevel1.length) return null;
     return (
       <Box
         className="environment-table-section discovered-table"
@@ -674,9 +477,7 @@ class DiscoveredAssets extends Component {
                   <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
-              <tbody>
-                {this.props.vpcsDetails.length && this.renderVpcsDetails()}
-              </tbody>
+              <tbody>{this.renderVpcsDetails()}</tbody>
             </Table>
           </TableContainer>
         </Box>
@@ -692,23 +493,112 @@ class DiscoveredAssets extends Component {
             vpc.name.toLowerCase().includes(searchString.toLowerCase())
           )
         : allVpcsDetails;
-    this.setState({ searchString});
-    this.props.handleSearchVpcs(vpcsDetails)
+    this.setState({ searchString });
+    this.props.handleSearchVpcs(vpcsDetails);
   }
 
   changeActiveCluster = (cluster) => {
     this.setState({ currentActiveCluster: cluster });
   };
 
+
+  getEnvironmentDataByLandingZone = () => {
+    const { envDataByLandingZone } = this.props;
+    let checkLengthEnvData = false;
+    try {
+      checkLengthEnvData =
+        envDataByLandingZone && Object.keys(envDataByLandingZone.data).length;
+    } catch (error) {
+      console.log(error);
+    }
+    return checkLengthEnvData
+      ? {
+          productEnclaveList: envDataByLandingZone.data.productEnclaveList,
+          globalServiceList: envDataByLandingZone.data.globalServiceList,
+        }
+      : {};
+  };
+
+  prepareDataTableLevel1 = (envData) => {
+    let vpcs = [];
+    for (let envIndex = 0; envIndex < envData.length; envIndex++) {
+      let details = {
+        name: "",
+        product_count: 0,
+        app_count: 0,
+        data_count: 0,
+      };
+      details.name = envData[envIndex].name;
+      const hostingTypeList = envData[envIndex].hostingTypeList;
+      hostingTypeList.forEach((hostingType) => {
+        const categories = hostingType.category;
+        categories.forEach((category) => {
+          if (category.category === TABLE_LEVEL_1.APP) {
+            details.app_count += category.elementList.length;
+          } else if (category.category === TABLE_LEVEL_1.DATA) {
+            details.data_count += category.elementList.length;
+          }
+        });
+      });
+      vpcs.push(details);
+    }
+    this.setState({
+      dataOfTableLevel1: vpcs,
+    });
+  };
+
+  prepareDataTopologyViewComponent = (envData,globalData = []) => {
+    let formatData = {
+      label: "Account ID",
+      subLabel: this.getLandingZone(),
+      image: "",
+      children: [[], []],
+    };
+    let prepareData = [];
+
+    for (let envIndex = 0; envIndex < envData.length; envIndex++) {
+      let obj = {
+        label: envData[envIndex].name,
+        id: envData[envIndex].id,
+        type: TOPOLOGY_VIEW_TYPE.VPC,
+        image: "",
+        children: [],
+      };
+      const hostingTypeList = envData[envIndex].hostingTypeList;
+      hostingTypeList.forEach((hostingType) => {
+        obj.children.push({
+          label: hostingType.hostingType,
+          id: "",
+          image: "",
+          type: TOPOLOGY_VIEW_TYPE.CLUSTER,
+          children: [],
+        });
+      });
+      prepareData.push(obj);
+    }
+    formatData.children = [prepareData,[]];
+    this.setState({ dataOfLevel1:formatData})
+  };
+
+  getLandingZone = () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const landingZone = urlParams.get("landingZone");
+    return landingZone;
+  };
+
+
   render() {
-    const { activeTab, currentActiveCluster, toggleNode } = this.state;
+    const { activeTab, currentActiveCluster, toggleNode, dataOfTableLevel1,dataOfLevel1 } =
+      this.state;
+    const { envDataByLandingZone, departments } = this.props;
     return (
       <Box className="discovered-assets">
         <Box className="discovered-assets-head">
           <CommonFilterViewSearch
-            data={{ vpcsDetails: this.state.vpcsDetails }}
+            data={{ dataOfTableLevel1 }}
             handleSearch={(string) => {
-              this.filterVpcsData(string);
+              // this.filterVpcsData(string);
             }}
             updateAccountId={(accountId) => {
               this.setState({ accountId });
@@ -722,7 +612,8 @@ class DiscoveredAssets extends Component {
           />
         </Box>
         <Box className="discovered-assets-body">
-          {(this.props.environmentData.allVpcs.status === status.IN_PROGRESS) || (this.props.environmentData.departments.status === status.IN_PROGRESS) ? (
+          {envDataByLandingZone.status === status.IN_PROGRESS ||
+          departments.status === status.IN_PROGRESS ? (
             <Box className="chart-spinner text-center width-100 p-t-20 p-b-20">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
@@ -733,248 +624,9 @@ class DiscoveredAssets extends Component {
                 rowSpacing={1}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
-                <Grid item xs={7}>
-                  <Box className="services-panel">
-                    <Box className="services-panel-title bottom-border">
-                      <Box className="name">Topology View</Box>
-                      <Box className="back-btn">
-                        <i className="fa-solid fa-arrow-left"></i>
-                      </Box>
-                    </Box>
-                    <Box className="services-panel-body">
-                      {this.props.vpcsData.length ? (
-                        <ArcherContainer
-                          style={{ width: "100%", height: "100%" }}
-                        >
-                          <TransformWrapper
-                            onTransformed={(instance) => {
-                              transformScale = instance && instance.state.scale;
-                              this.setState({ scale: true });
-                            }}
-                          >
-                            {({
-                              zoomIn,
-                              zoomOut,
-                              instance,
-                              zoomToElement,
-                              ...rest
-                            }) => {
-                              transformScale = instance.transformState.scale;
-                              return (
-                                <React.Fragment>
-                                  <div className="gmnoprint">
-                                    <div className="gmnoprint-plus-minus">
-                                      <button
-                                        className="btn btn-plus"
-                                        onClick={() => zoomIn()}
-                                      >
-                                        <i className="fa-solid fa-plus"></i>
-                                      </button>
-                                      <button
-                                        className="btn btn-minus"
-                                        onClick={() => zoomOut()}
-                                      >
-                                        <i className="fa-solid fa-minus"></i>
-                                      </button>
-                                    </div>
-                                    <div
-                                      className="gmnoprint-map"
-                                      onClick={() => {
-                                        zoomToElement(
-                                          "custom_location",
-                                          transformScale
-                                        );
-                                      }}
-                                    >
-                                      <button className="btn btn-map">
-                                        <i className="fa-solid fa-map-marker-alt"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                  <TransformComponent
-                                    wrapperStyle={{
-                                      width: "100%",
-                                      height: "100%",
-                                    }}
-                                    contentStyle={{
-                                      width: "100%",
-                                      height: "100%",
-                                      display: "block",
-                                      paddingTop: "120px",
-                                      // display: "flex",
-                                      // alignItems: "center",
-                                      // justifyContent: "flex-start",
-                                      transform: "translate(0px, 0px) scale(0)",
-                                    }}
-                                  >
-                                    <ArcherElement
-                                      id="root"
-                                      relations={[
-                                        {
-                                          targetId:
-                                            this.state.toggleNode.vpcId >= 0 &&
-                                            !this.state.toggleNode.globalService
-                                              ? `vpc_${this.state.toggleNode.vpcId}`
-                                              : this.state.toggleNode
-                                                  .globalService
-                                              ? "globalService"
-                                              : "",
-                                          targetAnchor: "left",
-                                          sourceAnchor: "right",
-                                          style: {
-                                            strokeColor: "#a5a5d7",
-                                            strokeWidth: 1.5,
-                                          },
-                                        },
-                                      ]}
-                                    >
-                                      <div
-                                        className="services-text-box active"
-                                        id={`${
-                                          this.state.breadcrumbs.length === 1
-                                            ? "custom_location"
-                                            : ""
-                                        }`}
-                                        onClick={(e) => {
-                                          this.handleToggleNode(
-                                            {},
-                                            "vpc",
-                                            "service",
-                                            false
-                                          );
-                                        }}
-                                      >
-                                        <span id="custom_location_1">
-                                          {this.getCloudName()}
-                                        </span>
-                                      </div>
-                                    </ArcherElement>
-                                    <div
-                                      className={` ${
-                                        this.props.vpcsData.length
-                                          ? "global-servies"
-                                          : ""
-                                      }`}
-                                    >
-                                      <ul>
-                                        {this.state.toggleNode.vpc && (
-                                          this.renderVPCData()
-                                        )}
-                                      </ul>
-                                      <ArcherElement id="globalService">
-                                        <div
-                                          className="global-servies-menu m-t-2"
-                                          onClick={(e) => {
-                                            this.handleToggleNode(
-                                              {},
-                                              "vpc",
-                                              "service",
-                                              false
-                                            );
-                                            this.setState({
-                                              toggleNode: {
-                                                ...this.state.toggleNode,
-                                                globalService:
-                                                  !this.state.toggleNode
-                                                    .globalService,
-                                              },
-                                            });
-                                          }}
-                                        >
-                                          <label
-                                            className={`${
-                                              this.state.toggleNode
-                                                .globalService
-                                                ? "active"
-                                                : ""
-                                            }`}
-                                          >
-                                            <span>
-                                              <img
-                                                src={VpcServicesIcon}
-                                                alt=""
-                                              />
-                                            </span>
-                                            Global servies
-                                          </label>
-                                        </div>
-                                      </ArcherElement>
-                                    </div>
-
-                                    <div
-                                      className={` ${
-                                        this.state.toggleNode.cluster
-                                          ? "global-servies cluster-servies"
-                                          : ""
-                                      }`}
-                                      style={{
-                                        marginTop: "0",
-                                        marginBottom: "0",
-                                        transform: "translateY(0%)",
-                                      }}
-                                    >
-                                      <ul>
-                                        {this.state.toggleNode.cluster && (
-                                          this.renderClusters(
-                                            this.state.toggleNode.vpcId
-                                          )
-                                        )}
-                                      </ul>
-                                      <div
-                                        className="global-servies-menu"
-                                        style={{ display: "none" }}
-                                      >
-                                        <label className="active">
-                                          Cloud Management Services
-                                        </label>
-                                        <label>Gateway Services</label>
-                                      </div>
-                                    </div>
-                                    <div
-                                      className={`${
-                                        this.state.toggleNode.product
-                                          ? "global-servies app-servies"
-                                          : ""
-                                      }`}
-                                    >
-                                      <div className="global-servies-menu">
-                                        {this.state.toggleNode.product && (
-                                          this.renderProducts(
-                                            this.state.toggleNode.vpcId,
-                                            this.state.toggleNode.clusterId
-                                          )
-                                        )}
-                                      </div>
-                                      <div
-                                        className="global-servies-menu "
-                                        style={{ display: "none" }}
-                                      >
-                                        <label className="active">
-                                          Cloud Management Services
-                                        </label>
-                                        <label>Gateway Services</label>
-                                      </div>
-                                    </div>
-                                  </TransformComponent>
-                                </React.Fragment>
-                              );
-                            }}
-                          </TransformWrapper>
-                        </ArcherContainer>
-                      ) : (
-                        <></>
-                      )}
-                    </Box>
-                  </Box>
-                </Grid>
+                <TopologyView data={dataOfLevel1} />
                 <Grid item xs={5}>
-                  {this.state.breadcrumbs.length === 1 &&
-                  this.props.vpcsDetails.length &&
-                  !this.state.toggleNode.globalService ? (
-                    this.generateVpcDetailsTable()
-                  ) : (
-                    <></>
-                  )}
+                  {this.renderTableLevel1()}
                   <Box
                     className="fliter-tabs"
                     style={{
@@ -1573,10 +1225,9 @@ class DiscoveredAssets extends Component {
 }
 
 function mapStateToProps(state) {
-  const { environmentData } = state;
-  return { environmentData };
+  const { envDataByLandingZone, departments } = state.environmentData;
+  return { envDataByLandingZone, departments };
 }
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 export default connect(mapStateToProps, mapDispatchToProps)(DiscoveredAssets);
