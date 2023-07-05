@@ -1,15 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import config from "views/app-views/config";
 import axios from "services";
+import { getCurrentOrgId } from "utils";
 
-export const getEnvironmentVpcs = createAsyncThunk(
-  "environmentData/getEnvironmentVpcs",
-  async (params) => {
-    const url = `${config.GET_ACCOUNT_SERVICES}`;
+export const getEnvironmentDataByLandingZone = createAsyncThunk(
+  "environmentData/getEnvironmentDataByLandingZone",
+  async ({landingZone,currentOrgId}) => {
+    const url = `${config.GET_ENVIRONMENT_DATA.replace('#org-id#',currentOrgId).replace('#landing-zone-id#',landingZone)}`;
     try {
-      const response = await axios.get(url, {params});
-      const vpcs = response.data;
-      return vpcs;
+      const response = await axios.get(url);
+      const productEnclaveList = response.data;
+      return productEnclaveList;
     } catch (error) {
       console.log(error);
     }

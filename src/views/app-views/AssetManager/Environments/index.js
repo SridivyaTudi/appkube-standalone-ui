@@ -205,7 +205,7 @@ class Environments extends Component {
               <TableRow key={`env-${accountIndex}-${envIndex}`}>
                 <TableCell align="left">
                   <Link
-                    to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${account.landingZone}&cloudName=${account.cloud}`}
+                    to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}`}
                     onClick={() =>
                       this.addAccountToRecentlyVisited({
                         accountType: account.cloud,
