@@ -44,6 +44,7 @@ class TopologyView extends Component {
       this.state.selectedView;
     return Object.keys(data).length ? (
       <ArcherContainer style={{ width: "100%", height: "100%" }}>
+      
         <TransformWrapper
           onTransformed={(instance) => {
             transformScale = instance && instance.state.scale;
@@ -109,7 +110,7 @@ class TopologyView extends Component {
                       <span >{data.subLabel}</span>
                     </div>
                   </ArcherElement>
-                  <div className={`global-servies`}>
+                  <div className={` ${data[0]?.length ? 'global-servies' : ''} `}>
                     <ul>{this.renderLevel1()}</ul>
                     {/* <ArcherElement id="globalService">
                       <div className="global-servies-menu m-t-2">
@@ -280,7 +281,7 @@ class TopologyView extends Component {
       selectedView: { level2Show, selectedLevel1Id, selectedLevel2Id },
     });
   };
-  
+
   render() {
     return (
       <>
