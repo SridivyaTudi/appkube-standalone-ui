@@ -6,7 +6,7 @@ import AccountAddedImage from "../../../../../../assets/img/assetmanager/account
 class CreateFromScratch extends Component {
   render() {
     return (
-      <div className="d-inline-block width-100 new-account-setup-tab-contents">
+      <Box className="d-inline-block width-100 new-account-setup-tab-contents">
         <Box sx={{ width: "100%" }}>
           <Grid
             container
@@ -92,14 +92,14 @@ class CreateFromScratch extends Component {
                 </Box>
                 <Box className="form-group">
                   <label>Custom URL</label>
-                  <div className="d-flex">
+                  <Box className="d-flex">
                     <input
                       className="custom-url"
                       type="text"
                       placeholder=""
                     />
                     <p>.appkube.com</p>
-                  </div>
+                  </Box>
                 </Box>
               </Box>
             </Grid>
@@ -110,7 +110,7 @@ class CreateFromScratch extends Component {
             </Grid>
           </Grid>
         </Box>
-      </div>
+      </Box>
     );
   }
 }
