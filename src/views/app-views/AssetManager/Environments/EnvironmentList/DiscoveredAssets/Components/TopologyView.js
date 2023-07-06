@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import { ArcherContainer, ArcherElement } from "react-archer";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Box, Grid } from "@mui/material";
-import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
 import ServicesNameLogo from "views/app-views/AssetManager/Environments/EnvironmentList/ServicesNameLogo";
 import { getUUID } from "utils";
 import ClusterIcon from "assets/img/assetmanager/cluster-icon.png";
-import Aws from "../../../../../../../assets/img/aws.png";
+import Aws from "assets/img/aws.png";
 let transformScale = 0;
 
 class TopologyView extends Component {
@@ -108,7 +107,7 @@ class TopologyView extends Component {
                     <div className="services-text-box active">
                       <div className="d-flex">
                         <div className="account-image">
-                          <img src={Aws} alt="aws image" />
+                          <img src={data.image} alt="aws image" />
                         </div>
                         <div className="account-id">
                           <span id="custom_location_1" className="d-block">{data.label}</span>
@@ -204,7 +203,7 @@ class TopologyView extends Component {
               }}
             >
               <span>
-                <img src={VpcServicesIcon} alt="" />
+                <img src={level1.image} alt="" />
               </span>
               {this.getServiceName(level1.label, "vpc")}
             </li>
@@ -251,7 +250,7 @@ class TopologyView extends Component {
               }`}
             >
               <span>
-                <img src={ClusterIcon} alt="" />
+                <img src={level2.image} alt="" />
               </span>
               {this.getServiceName(level2.label)}
             </li>

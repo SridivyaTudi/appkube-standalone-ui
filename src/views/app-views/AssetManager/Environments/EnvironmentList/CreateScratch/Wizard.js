@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { ToastMessage } from "Toast/ToastMessage";
 import { withRouter } from "views/app-views/AssetManager/NewAccountSetup/AccountPolicy/withRouter";
-import Button from "@mui/material/Button";
+import {Button, Box} from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { addCloudEnv } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
 import { connect } from "react-redux";
@@ -38,13 +38,13 @@ class Wizard extends Component {
       for (let i = 0; i < totalSteps; i++) {
         const step = steps[i];
         retData.push(
-          <div
+          <Box
             className={`wizard-step-button ${
               currentStep === i ? "active" : ""
             }`}
           >
             {step.name}
-          </div>
+          </Box>
         );
       }
     }
@@ -60,13 +60,13 @@ class Wizard extends Component {
       for (let i = 0; i < totalSteps; i++) {
         const step = steps[i];
         retData.push(
-          <div
+          <Box
             className={`wizard-step-component ${
               currentStep === i ? "" : "d-none"
             }`}
           >
             {step.component()}
-          </div>
+          </Box>
         );
       }
     }
@@ -114,15 +114,15 @@ class Wizard extends Component {
     const { steps } = this.props;
     return (
       <>
-        <div className="new-account-tab-container">
-          <div className="wizard-tab-line-container">
+        <Box className="new-account-tab-container">
+          <Box className="wizard-tab-line-container">
             {this.createStepLine()}
-          </div>
-          <div className="wizard-step-component-container">
+          </Box>
+          <Box className="wizard-step-component-container">
             {this.createStepContainer()}
-          </div>
-        </div>
-        <div className="text-center wizard-step-button">
+          </Box>
+        </Box>
+        <Box className="text-center wizard-step-button">
           {currentStep < steps.length - 1 && (
             <Button
               className="primary-outline-btn m-r-2"
@@ -207,7 +207,7 @@ class Wizard extends Component {
               </LoadingButton>
             </>
           )}
-        </div>
+        </Box>
       </>
     );
   }

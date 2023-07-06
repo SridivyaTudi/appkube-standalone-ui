@@ -4,122 +4,10 @@
   padding: 20px 20px 20px 20px;
   background-color: #f6f7fb;
 
-  .page-heading {
-    padding-top: 18px;
-    padding-left: 40px;
-    padding-right: 40px;
-
-    h3 {
-      margin: 0;
-      color: #383874;
-      font-size: 24px;
-      line-height: 26px;
-      font-weight: 400;
-    }
-  }
-
-  .opration-mode-section {
-    width: 74%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
-
-    .opration-head-section {
-      width: 100%;
-      display: block;
-      margin-bottom: 40px;
-
-      h4 {
-        font-size: 22px;
-        line-height: 24px;
-        font-weight: 500;
-        color: #344054;
-        margin: 0;
-      }
-
-      p {
-        font-size: 11px;
-        line-height: 14px;
-        font-weight: 400;
-        color: #667085;
-        margin: 10px 0 0 0;
-      }
-    }
-
-    .opration-cards {
-      width: 100%;
-      display: block;
-
-      .opration-card {
-        min-height: 340px;
-        border-radius: 10px;
-        background: #ffffff;
-        padding: 20px 30px;
-        border: 2px solid transparent;
-        cursor: pointer;
-
-        &.active {
-          border-color: #384cff;
-        }
-
-        .card-title {
-          font-size: 16px;
-          font-weight: 600;
-          line-height: 20px;
-          color: #344054;
-          margin-top: 10px;
-        }
-
-        p {
-          margin-top: 10px;
-          font-size: 11px;
-          font-weight: 400;
-          line-height: 14px;
-          color: #667085;
-        }
-
-        .available-features {
-          margin-left: 10%;
-          margin-right: 10%;
-
-          label {
-            display: block;
-            font-size: 14px;
-            line-height: 18px;
-            font-weight: 600;
-            color: #6a6a97;
-            margin-bottom: 5px;
-            text-align: left;
-          }
-
-          ul {
-            width: 100%;
-            padding: 0 0 0 15px;
-            margin: 0;
-
-            li {
-              text-align: left;
-              list-style: disc;
-              font-size: 11px;
-              font-weight: 400;
-              line-height: 13px;
-              color: #8b8b8b;
-              margin-bottom: 1px;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .get-started-button {
-    margin-top: 30px;
-  }
-
   .new-account-page-container {
     background: #ffffff;
     border-radius: 10px;
-    height: 575px;
+    height: 700px;
     padding: 50px 15px 15px 15px;
 
     .new-account-tab-container {
@@ -173,6 +61,7 @@
               font-size: 22px;
               line-height: 26px;
               color: #383874;
+              margin-bottom: 30px;
             }
 
             h4 {
@@ -290,10 +179,9 @@
             }
 
             .account-setup-right-contents {
-              width: 100%;
+              width: 80%;
               display: block;
-              padding-left: 15px;
-              padding-right: 45px;
+              margin: 0 0 0 auto;
 
               .form-group {
                 display: block;
@@ -330,9 +218,32 @@
                   font-size: 12px;
                   line-height: 16px;
                 }
-
+                .custom-url{
+                  height: 32px;
+                  padding: 2px 10px;
+                  border: none;
+                  border-radius: 5px;
+                  font-size: 13px;
+                  line-height: 26px;
+                  font-weight: 300;
+                  color: #344054;
+                }
+                p{
+                  font-size: 12px;
+                  line-height: 16px;
+                  color: #344054;
+                }
               }
-
+              .checkbox-group {
+                .service-check-box {
+                  span {
+                    margin-bottom: 5px;
+                    font-size: 12px;
+                    line-height: 16px;
+                    font-weight: 500;
+                  }
+                }
+              }
             }
 
             .organizational-box {
@@ -384,6 +295,7 @@
             .added-image {
               width: 100%;
               margin-top: 90px;
+              text-align: center;
 
               img {
                 max-width: 100%;
@@ -457,9 +369,7 @@
                   color: #383874;
                 }
               }
-
             }
-
           }
 
           .account-added-content {
@@ -499,14 +409,10 @@
                 color: #383874;
               }
             }
-
           }
-
         }
       }
-
     }
-
   }
 }
 
