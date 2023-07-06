@@ -4,6 +4,7 @@ import TopologyView from "views/app-views/AssetManager/Environments/EnvironmentL
 import Aws from "../../../../../../../assets/img/aws.png";
 import VpcServicesIcon from "../../../../../../../assets/img/assetmanager/vpc-services-icon.png";
 import ClusterIcon from "../../../../../../../assets/img/assetmanager/cluster-icon.png";
+import GatewayIcon from"../../../../../../../assets/img/assetmanager/gateway-icon.png";
 import {
   Box,
   Grid,
@@ -60,7 +61,7 @@ let Data = {
           {
             label: "gateway",
             id: "",
-            image: ClusterIcon,
+            image: GatewayIcon,
             type: "cluster",
             children: [],
           },
