@@ -477,7 +477,6 @@
             &:first-child {
               width: 200px;
               padding-left: 40px;
-
             }
 
             &.ou {
@@ -1102,27 +1101,38 @@
       }
 
       .services-text-box {
-        display: inline-grid;
-        //display: inline-flex;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         text-align: center;
         position: relative;
-        margin-right: 25px;
-        //margin-top: 20px;
+        margin-right: 80px;
+        margin-top: 25px;
         vertical-align: text-top;
-        width: 15%;
-        height: 70px;
+        width: 20%;
+        height: 55px;
         font-size: 12px;
         line-height: 16px;
         font-weight: 500;
-        color: #383874;
+        color: #ffffff;
+        background: #384cff;
         border-radius: 10px;
-        border: 1.5px solid #c7c7e8;
+        //border: 1.5px solid #c7c7e8;
         box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
 
         &.active {
           border-color: #00861b;
+        }
+        .account-image {
+          padding: 4px;
+          width: 30px;
+          height: 30px;
+          border-radius: 3px;
+          background: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 8px;
         }
 
         // &::after {
@@ -1136,14 +1146,13 @@
         //   content: "\f0da";
         //   font-family: "Font Awesome 5 Pro";
         // }
-        
       }
 
       .global-servies {
         display: inline-flex;
         width: 22%;
         flex-wrap: wrap;
-        margin-right: 25px;
+        margin-right: 80px;
 
         &.cluster-servies {
           width: 26%;
@@ -1233,8 +1242,8 @@
             line-height: 30px;
             font-weight: 600;
             color: #383874;
-            padding-left: 5px;
-            padding-right: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
             cursor: pointer;
             position: relative;
             border-bottom: 1px solid #a5a5d7;
@@ -1836,9 +1845,9 @@
                 border-radius: 50%;
                 text-align: center;
                 line-height: 20px;
-                color: #FFFFFF;
+                color: #ffffff;
                 font-size: 10px;
-                background: #FFBA69;
+                background: #ffba69;
                 cursor: pointer;
               }
             }

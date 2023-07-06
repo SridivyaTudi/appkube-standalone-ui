@@ -6,6 +6,7 @@ import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
 import ServicesNameLogo from "views/app-views/AssetManager/Environments/EnvironmentList/ServicesNameLogo";
 import { getUUID } from "utils";
 import ClusterIcon from "assets/img/assetmanager/cluster-icon.png";
+import Aws from "../../../../../../../assets/img/aws.png";
 let transformScale = 0;
 
 class TopologyView extends Component {
@@ -39,11 +40,11 @@ class TopologyView extends Component {
   }
 
   renderMainBody = () => {
-    const { data } = this.props
+    const { data } = this.props;
     let { level2Show, selectedLevel1Id, selectedLevel2Id, globalService } =
       this.state.selectedView;
-    return  Object.keys(data).length ? (
-      <ArcherContainer style={{ width: "100%", height: "100%" }}>    
+    return Object.keys(data).length ? (
+      <ArcherContainer style={{ width: "100%", height: "100%" }}>
         <TransformWrapper
           onTransformed={(instance) => {
             transformScale = instance && instance.state.scale;
@@ -105,11 +106,22 @@ class TopologyView extends Component {
                     ]}
                   >
                     <div className="services-text-box active">
-                      <span id="custom_location_1">{data.label}</span>
-                      <span >{data.subLabel}</span>
+                      <div className="d-flex">
+                        <div className="account-image">
+                          <img src={Aws} alt="aws image" />
+                        </div>
+                        <div className="account-id">
+                          <span id="custom_location_1" className="d-block">{data.label}</span>
+                          <span className="d-block">{data.subLabel}</span>
+                        </div>
+                      </div>
                     </div>
                   </ArcherElement>
-                  <div className={` ${data?.children[0].length ? 'global-servies' : ''} `}>
+                  <div
+                    className={` ${
+                      data?.children[0].length ? "global-servies" : ""
+                    } `}
+                  >
                     <ul>{this.renderLevel1()}</ul>
                     {/* <ArcherElement id="globalService">
                       <div className="global-servies-menu m-t-2">
@@ -151,7 +163,7 @@ class TopologyView extends Component {
       </ArcherContainer>
     ) : (
       ""
-    )
+    );
   };
 
   renderLevel1 = () => {
@@ -265,7 +277,7 @@ class TopologyView extends Component {
       this.state.selectedView;
     level2Show = true;
     selectedLevel1Id = id;
-    selectedLevel2Id =  null
+    selectedLevel2Id = null;
 
     this.setState({
       selectedView: { level2Show, selectedLevel1Id, selectedLevel2Id },
