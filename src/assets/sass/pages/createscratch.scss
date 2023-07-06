@@ -8,7 +8,7 @@
     background: #ffffff;
     border-radius: 10px;
     height: 700px;
-    padding: 50px 15px 15px 15px;
+    padding: 50px 15px 50px 15px;
 
     .new-account-tab-container {
       width: 100%;
@@ -16,7 +16,7 @@
       height: 93%;
 
       .wizard-tab-line-container {
-        margin-top: 13%;
+        margin-top: 16%;
         margin-left: 30px;
         padding: 0 15px;
         border-left: 2px solid #dcdae6;
@@ -218,20 +218,21 @@
                   font-size: 12px;
                   line-height: 16px;
                 }
-                .custom-url{
+                .custom-url {
                   height: 32px;
-                  padding: 2px 10px;
                   border: none;
-                  border-radius: 5px;
                   font-size: 13px;
                   line-height: 26px;
                   font-weight: 300;
                   color: #344054;
+                  border-bottom: 1px solid #344054;
+                  border-radius: 0;
                 }
-                p{
+                p {
                   font-size: 12px;
                   line-height: 16px;
                   color: #344054;
+                  margin-bottom: 0;
                 }
               }
               .checkbox-group {
@@ -294,7 +295,7 @@
 
             .added-image {
               width: 100%;
-              margin-top: 90px;
+              //margin-top: 90px;
               text-align: center;
 
               img {
@@ -411,6 +412,11 @@
             }
           }
         }
+      }
+    }
+    .wizard-step-button {
+      .primary-btn {
+        margin-right: 9%;
       }
     }
   }

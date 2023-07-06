@@ -45,13 +45,13 @@ class CreateFromScratch extends Component {
                   >
                     <Grid item xs={6}>
                       <FormControlLabel
-                        className="service-check-box d-flex;
+                        className="service-check-box m-b-0 m-r-0 d-flex
                   align-items-center"
                         control={<Checkbox size="small" />}
                         label="Development"
                       />
                       <FormControlLabel
-                        className="service-check-box service-check-box d-flex;
+                        className="service-check-box m-b-0 m-r-0 d-flex
                         align-items-center"
                         control={<Checkbox size="small" />}
                         label="Test"
@@ -59,13 +59,13 @@ class CreateFromScratch extends Component {
                     </Grid>
                     <Grid item xs={6}>
                       <FormControlLabel
-                        className="service-check-box service-check-box d-flex;
+                        className="service-check-box m-b-0 m-r-0 d-flex
                         align-items-center"
                         control={<Checkbox size="small" />}
                         label=" Stage"
                       />
                       <FormControlLabel
-                        className="service-check-box service-check-box d-flex;
+                        className="service-check-box m-b-0 m-r-0 d-flex
                         align-items-center"
                         control={<Checkbox size="small" />}
                         label="Production"
