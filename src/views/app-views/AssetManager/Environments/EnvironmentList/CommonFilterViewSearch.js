@@ -9,6 +9,10 @@ import Kubernetes from "assets/img/kubernetes.png";
 import { Box, Grid, List, ListItem } from "@mui/material";
 import { APP_PREFIX_PATH } from "configs/AppConfig";
 import Button from "@mui/material/Button";
+import { getEnvsSummary } from "redux/assetManager/environments/environmentsThunk";
+import status from "redux/constants/commonDS";
+import { connect } from "react-redux";
+import { ToastMessage } from "Toast/ToastMessage";
 
 const headers = [
   { label: "Service Name", key: "name" },
@@ -29,43 +33,18 @@ class CommonFilterViewSearch extends Component {
       showRecentFilter: false,
       showSelectFilter: false,
       showServiceViewFilter: false,
-      accountList: [],
+      allEnvs : [],
       ...props.data,
     };
   }
-  componentDidMount() {
-    // this.getAccountList();
-  }
-
-  getAccountList = () => {
-    fetch(config.GET_ENVIRONMENTS)
-      .then((response) => response.json())
-      .then((data) => {
-        const commonData = {};
-        const accounts = {};
-        data.forEach((account) => {
-          accounts[account.cloud] = accounts[account.cloud] || [];
-          accounts[account.cloud].push(account);
-          commonData[account.cloud] = commonData[account.cloud]
-            ? commonData[account.cloud]
-            : {
-                totalBill: 0,
-              };
-          commonData[account.cloud].totalBill += account.totalBilling || 0;
-        });
-        this.setState({
-          accountList: accounts,
-        });
-      });
-  };
-
+  
   renderAccountList = () => {
-    return Object.keys(this.props.accountList).map((key) => {
-      return this.props.accountList[key].map((account, innerKey) => {
+    return this.state.allEnvs.map((item) => {
+      return item.environmentSummaryList.map((account, innerKey) => {
         return (
           <ListItem key={innerKey}>
             <Link
-              to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.accountId}&cloudName=${account.cloud}`}
+              to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}`}
               onClick={() => {
                 this.setState({ showServiceViewFilter: false });
                 this.props.updateAccountId(account.accountId);
@@ -78,7 +57,7 @@ class CommonFilterViewSearch extends Component {
                   alt={account.cloud}
                 />
               </span>
-              <p>({account.accountId})</p>
+              <p>({account.landingZone})</p>
             </Link>
           </ListItem>
         );
@@ -86,12 +65,21 @@ class CommonFilterViewSearch extends Component {
     });
   };
 
-  componentDidUpdate = async (prevState, prevProps) => {
+  componentDidUpdate = async (prevProps,prevState) => {
     if (
       this.props.data.vpcsDetails !== null &&
       this.props.data.vpcsDetails !== this.state.vpcsDetails
     ) {
       this.setState({ vpcsDetails: this.props.data.vpcsDetails });
+    }
+    if (prevProps.envSummary.status !== this.props.envSummary.status) {
+      if (this.props.envSummary.status === status.SUCCESS && this.props.envSummary.data) {
+        this.setState({
+          allEnvs: this.props.envSummary.data
+        });
+      } else if (this.props.envSummary.status === status.FAILURE) {
+        ToastMessage.error("There is some issue.");
+      }
     }
   };
 
@@ -139,7 +127,7 @@ class CommonFilterViewSearch extends Component {
   };
 
   render() {
-    const { showSelectFilter, showServiceViewFilter, showRecentFilter } =
+    const { showSelectFilter, showServiceViewFilter, showRecentFilter,allEnvs } =
       this.state;
     return (
       <Box sx={{ width: "100%" }}>
@@ -240,8 +228,7 @@ class CommonFilterViewSearch extends Component {
                 }
               >
                 <List>
-                  {this.props.accountList &&
-                  Object.keys(this.props.accountList).length ? (
+                  {allEnvs.length ? (
                     this.renderAccountList()
                   ) : (
                     <></>
@@ -291,7 +278,7 @@ class CommonFilterViewSearch extends Component {
                           return (
                             <ListItem>
                               <Link
-                                to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
+                                to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}`}
                                 onClick={() => {
                                   this.setLocalRecentService(item);
                                   this.props.updateCurrentAccountId(
@@ -376,4 +363,15 @@ class CommonFilterViewSearch extends Component {
   }
 }
 
-export default CommonFilterViewSearch;
+function mapStateToProps(state) {
+  const { envSummary } = state.environments;
+  return { envSummary };
+}
+
+const mapDispatchToProps = {
+  getEnvsSummary,
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CommonFilterViewSearch);

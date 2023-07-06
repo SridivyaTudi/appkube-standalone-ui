@@ -17,20 +17,6 @@ export const getEnvironmentDataByLandingZone = createAsyncThunk(
   }
 );
 
-export const getEnvironments = createAsyncThunk(
-  "environmentData/getEnvironments",
-  async () => {
-    const url = `${config.GET_ENVIRONMENTS}`;
-    try {
-      const response = await axios.get(url);
-      const environments = response.data;
-      return environments;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
-
 export const getDepartments = createAsyncThunk(
   "environmentData/getDepartments",
   async (params) => {
