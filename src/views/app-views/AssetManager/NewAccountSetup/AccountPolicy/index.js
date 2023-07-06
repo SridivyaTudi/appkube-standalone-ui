@@ -78,6 +78,8 @@ class AccountPolicy extends Component {
     const { formData } = this.state;
     let isValid = true;
     let errors = {};
+    let regex =
+      /arn:aws:iam::([0-9]+(:user)+)\/[A-Za-z0-9]+/i;
     if (this.state.isSubmit) {
       if (!formData.displayName) {
         errors = { ...errors, displayName: "Display name is required!" };
@@ -87,6 +89,9 @@ class AccountPolicy extends Component {
       }
       if (!formData.roleArn) {
         errors.roleArn = "Role ARN is required!";
+        isValid = false;
+      } else if (!regex.test(formData.roleArn)) {
+        errors.roleArn = "Role ARN format is not valid!";
         isValid = false;
       } else {
         errors.roleArn = "";

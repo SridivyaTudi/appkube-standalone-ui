@@ -1,5 +1,5 @@
 // const envsUrl = `https://5jdezsz635.execute-api.us-east-1.amazonaws.com/dev`;
-const envsUrl = `https://34.199.12.114:6057/api`;
+const envsUrl = `http://34.199.12.114:6057/api`;
 const baseURL = "http://34.199.12.114:5057/api";
 const authUrl = "http://34.199.12.114:8094/security";
 

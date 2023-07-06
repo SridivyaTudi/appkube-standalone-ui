@@ -1,0 +1,210 @@
+.select-your-template-container {
+  width: 100%;
+  display: block;
+  padding: 20px 40px;
+  background-color: #f6f7fb;
+
+  .page-header {
+    .page-heading {
+      h3 {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 400;
+        color: #383874;
+        margin-bottom: 0px;
+      }
+    }
+
+    .top-search {
+      display: inline-flex;
+      width: 300px;
+      height: 30px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      background-color: #ffffff;
+      border-radius: 5px;
+
+      .input {
+        display: inline-flex;
+        width: 100%;
+        border: none;
+        background-color: transparent;
+        padding-left: 15px;
+        padding-right: 15px;
+        color: #000000;
+        font-size: 13px;
+        line-height: 30px;
+      }
+
+      .button {
+        display: inline-flex;
+        border: none;
+        background-color: transparent;
+        color: rgb(171 173 216);
+        padding: 3px 7px 0;
+
+        svg {
+          width: 20px;
+        }
+      }
+    }
+  }
+
+  .template-buttons-container {
+    display: block;
+    width: 100%;
+    padding-top: 20px;
+    .heading {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 24px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      background-color: #ffffff;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0px 100px 80px rgba(108, 73, 172, 0.07),
+        0px 41.7776px 33.4221px rgba(108, 73, 172, 0.0503198),
+        0px 22.3363px 17.869px rgba(108, 73, 172, 0.0417275),
+        0px 12.5216px 10.0172px rgba(108, 73, 172, 0.035),
+        0px 6.6501px 5.32008px rgba(108, 73, 172, 0.0282725),
+        0px 2.76726px 2.21381px rgba(108, 73, 172, 0.0196802);
+
+      button.primary-btn {
+        margin-left: 5px;
+        margin-right: 5px;
+      }
+
+      .primary-outline-btn {
+        margin-left: 5px;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .template-container {
+    padding-top: 30px;
+    .heading {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 20px;
+      margin-bottom: 10px;
+    }
+    .templates {
+      background-color: #ffffff;
+      padding: 15px 15px 30px;
+      border-radius: 10px;
+
+      .templates-boxs {
+        flex-wrap: wrap;
+
+        .template-box {
+          padding: 15px;
+          background-color: #ffffff;
+          box-shadow: 0px 100px 80px 0px rgba(108, 73, 172, 0.07);
+          width: 18.9%;
+          border-radius: 10px;
+          margin-right: 15px;
+          margin-bottom: 15px;
+          text-align: center;
+          &:nth-child(5n + 5) {
+            margin-right: 0;
+          }
+
+          .name {
+            font-size: 24px;
+            font-weight: 400;
+          }
+
+          .sub-name {
+            font-size: 18px;
+            font-weight: 400;
+          }
+
+          .buttons {
+            justify-content: center;
+
+            button.primary-btn {
+              padding-left: 20px;
+              padding-right: 20px;
+            }
+
+            .primary-outline-btn {
+              padding-left: 20px;
+              padding-right: 20px;
+            }
+          }
+        }
+      }
+
+      .back-btn {
+        justify-content: center;
+        display: flex;
+
+        button.primary-btn {
+          padding-left: 35px;
+          padding-right: 35px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1355px) {
+  .select-your-template-container {
+    .template-buttons-container {
+      .buttons {
+        button.primary-btn {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+        button.primary-outline-btn {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+      }
+    }
+    .template-container {
+      .templates {
+        .templates-boxs {
+          .template-box {
+            width: 23.9%;
+            &:nth-child(4n + 4) {
+              margin-right: 0px;
+            }
+            &:nth-child(5n + 5) {
+              margin-right: 15px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1210px) {
+  .select-your-template-container {
+    .template-container {
+      .templates {
+        .templates-boxs {
+          .template-box {
+            width: 31.9%;
+            &:nth-child(3n + 3) {
+              margin-right: 0px;
+            }
+            &:nth-child(4n + 4) {
+              margin-right: 15px;
+            }
+            &:nth-child(5n + 5) {
+              margin-right: 15px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

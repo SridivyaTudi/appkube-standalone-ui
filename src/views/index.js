@@ -21,6 +21,7 @@ import ProcurifyLogisticsTools from "views/app-views/AssetManager/Environments/E
 import DeployProject from "views/app-views/AssetManager/Environments/EnvironmentList/DeployProject";
 import ConfigurTopology from "views/app-views/AssetManager/Environments/EnvironmentList/ConfigurTopology";
 import CreateScratch from "./app-views/AssetManager/Environments/EnvironmentList/CreateScratch";
+import SelectYourTemplate from "./app-views/AssetManager/SelectYourTemplate";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { getCurrentUser } from "utils";
@@ -115,7 +116,10 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/environments/createscratch`}
             element={<CreateScratch />}
           />
-         
+         <Route
+            path={`${APP_PREFIX_PATH}/environments/SelectYourTemplate`}
+            element={<SelectYourTemplate />}
+          />
         </Routes>
       </div>
     );

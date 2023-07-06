@@ -90,23 +90,20 @@ class Wizard extends Component {
 
   createSubmit = () => {
     const { formData } = this.props;
+    // arn:aws:iam::893233071719:user/user
+    let accountId = formData.roleArn
+      .match(/arn:aws:iam::([0-9]+(:user)+)\/[A-Za-z0-9]+/i)[1]
+      .replace(":user", "");
     let sendData = {
       cloud: "AWS",
       displayName: formData.displayName,
       roleArn: formData.roleArn,
       externalId: formData.externalId,
       status: "active",
+      accountId: accountId,
       departmentId: Number(this.props.departmentId),
     };
     this.props.addCloudEnv(sendData);
-    // RestService.postData(config.ADD_CLOUD_ENV, sendData).then((response) => {
-    //   if (response.status === 500) {
-    //     ToastMessage.error(response.title);
-    //     return 1;
-    //   }
-    //   ToastMessage.success("Successfully new account created");
-    //   this.props.navigate("/app/environments");
-    // });
   };
 
   render() {

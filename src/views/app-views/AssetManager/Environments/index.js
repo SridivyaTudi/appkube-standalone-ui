@@ -79,7 +79,7 @@ class Environments extends Component {
       }
     }
     if (prevProps.envSummary.status !== this.props.envSummary.status) {
-      if (this.props.envSummary.status === status.SUCCESS) {
+      if (this.props.envSummary.status === status.SUCCESS && this.props.envSummary.data) {
         this.setState({
           envSummary: this.props.envSummary.data,
           searchedEnvSummary: JSON.parse(
@@ -103,7 +103,7 @@ class Environments extends Component {
     } else if (this.props.environmentCountData.status === status.SUCCESS) {
       const { environmentCountData } = this.state;
       let retData = [];
-      if (environmentCountData.length > 0) {
+      if (environmentCountData?.length > 0) {
         environmentCountData.map((env) => {
           retData.push(
             <Box className="environment-box" key={env.cloud}>

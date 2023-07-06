@@ -16,9 +16,9 @@ import ListItem from "@mui/material/ListItem";
 import status from "redux/constants/commonDS";
 import {
   getEnvironmentDataByLandingZone,
-  getEnvironments,
   getDepartments,
 } from "redux/assetManager/environments/environmentData/environmentDataThunk";
+import { getEnvsSummary } from "redux/assetManager/environments/environmentsThunk";
 import { connect } from "react-redux";
 import { getCurrentOrgId } from "utils";
 class EnvironmentList extends Component {
@@ -88,8 +88,9 @@ class EnvironmentList extends Component {
     if (this.state.service !== localStorage.getItem("serviceName")) {
       this.setState({ service: localStorage.getItem("serviceName") });
     }
+    let currentOrgId = getCurrentOrgId();
     this.setLandingZone();
-    this.props.getEnvironments();
+    this.props.getEnvsSummary({ orgId: currentOrgId });
   };
 
   getVpcsDetails(treeData) {
@@ -153,9 +154,6 @@ class EnvironmentList extends Component {
         let depData = this.props.departments.data;
         this.setState({
           departmentWiseData: depData,
-        });
-        this.props.getEnvironmentDataByLandingZone({
-          landingZone: this.state.landingZone,
         });
       }
     }
@@ -339,13 +337,13 @@ class EnvironmentList extends Component {
 }
 
 function mapStateToProps(state) {
-  const {  departments, allEnv } = state.environmentData;
-  return {  departments, allEnv };
+  const { departments, allEnv } = state.environmentData;
+  return { departments, allEnv };
 }
 
 const mapDispatchToProps = {
   getEnvironmentDataByLandingZone,
-  getEnvironments,
+  getEnvsSummary,
   getDepartments,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EnvironmentList);

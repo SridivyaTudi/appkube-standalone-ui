@@ -54,12 +54,6 @@ import { getUUID } from "utils";
 import TopologyView from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
 import { ArcherContainer, ArcherElement } from "react-archer";
 
-const servicesTreeCondition = {
-  service: ["cluster", "product", "vpc", "clusterId", "vpcId", "productId"],
-  vpc: ["vpcId", "cluster", "product", "clusterId", "productId"],
-  cluster: ["vpcId", "product", "clusterId", "productId"],
-  product: ["productId", "product"],
-};
 const breadcrumbResetCondition = {
   service: ["vpc", "cluster", "product"],
   vpc: ["cluster", "product"],
@@ -513,8 +507,8 @@ class DiscoveredAssets extends Component {
     }
     return checkLengthEnvData
       ? {
-          productEnclaveList: envDataByLandingZone.data.productEnclaveList,
-          globalServiceList: envDataByLandingZone.data.globalServiceList,
+          productEnclaveList: envDataByLandingZone.data?.productEnclaveList,
+          globalServiceList: envDataByLandingZone.data?.globalServiceList,
         }
       : {};
   };
@@ -548,10 +542,11 @@ class DiscoveredAssets extends Component {
   };
 
   prepareDataTopologyViewComponent = (envData,globalData = []) => {
+    const queryPrm = new URLSearchParams(document.location.search);
     let formatData = {
       label: "Account ID",
       subLabel: this.getLandingZone(),
-      image: "",
+      image: ServicesNameLogo.LOGOS[queryPrm.get("cloudName").toUpperCase()],
       children: [[], []],
     };
     let prepareData = [];
@@ -561,7 +556,7 @@ class DiscoveredAssets extends Component {
         label: envData[envIndex].name,
         id: envData[envIndex].id,
         type: TOPOLOGY_VIEW_TYPE.VPC,
-        image: "",
+        image: VpcServicesIcon,
         children: [],
       };
       const hostingTypeList = envData[envIndex].hostingTypeList;
@@ -569,7 +564,7 @@ class DiscoveredAssets extends Component {
         obj.children.push({
           label: hostingType.hostingType,
           id: "",
-          image: "",
+          image: ClusterIcon,
           type: TOPOLOGY_VIEW_TYPE.CLUSTER,
           children: [],
         });

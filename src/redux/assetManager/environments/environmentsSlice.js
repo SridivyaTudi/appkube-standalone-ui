@@ -12,10 +12,12 @@ export const environmentSlice = createSlice({
   name: "environments",
   initialState: {
     environmentCountData:{
-      status: null
+      status: null,
+      data:[]
     },
     envSummary: {
-      status: null
+      status: null,
+      data:[]
     },
     organizationWiseDepartments:{
       status: null
