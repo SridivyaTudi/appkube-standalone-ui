@@ -68,7 +68,7 @@ class CreateRole extends Component {
                     you set in the previous step, and click on it
                   </li>
                   <li>
-                    <span>10.</span> Copy the <strong>Role ARN</strong> and fill
+                    <span>10.</span>&nbsp;Copy the <strong>Role ARN</strong> and fill
                     it in the Role ARN field
                   </li>
                 </ul>
@@ -97,7 +97,7 @@ class CreateRole extends Component {
                   <input
                     className="form-control"
                     type="text"
-                    placeholder="Role ARN"
+                    placeholder="arn:aws:iam::893233071719:user/user"
                     name="roleArn"
                     value={this.state.role}
                     onChange={(e) => {
