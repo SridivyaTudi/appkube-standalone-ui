@@ -151,13 +151,13 @@ class SLAMetrics extends Component {
           </TableContainer>
           <Box className="metrics-performance">
             <Box className="performance-box green">
-              <span>❯</span>98%
+              <i class="fa-solid fa-angle-right"></i> 98%
             </Box>
             <Box className="performance-box orange">
-              <span>❯</span>90%
+              <i class="fa-solid fa-angle-right"></i> 90%
             </Box>
             <Box className="performance-box red">
-              <span>❮</span>90%
+            <i class="fa-solid fa-angle-left"></i> 90%
             </Box>
           </Box>
         </Box>
