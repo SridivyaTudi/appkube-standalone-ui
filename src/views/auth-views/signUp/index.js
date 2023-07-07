@@ -50,11 +50,11 @@ class SignUp extends Component {
   componentDidUpdate = (prevProps, prevState) => {
     if (this.props.signUpUser.status !== prevProps.signUpUser.status) {
       if (this.props.signUpUser.status === status.SUCCESS) {
-        if (this.props.signUpUser.data.status === 400) {
-          ToastMessage.error(this.props.signUpUser.data.message);
-        } else {
+        if (this.props.signUpUser.data.id) {
           ToastMessage.success("New user registered!");
           this.props.navigate(`${AUTH_PREFIX_PATH}/signin`);
+        } else {
+          ToastMessage.error(this.props.signUpUser.data.message);
         }
       } else if (this.props.signUpUser.status === status.FAILURE) {
         ToastMessage.error("User registration failed!");
@@ -184,15 +184,18 @@ class SignUp extends Component {
 
   signUpSubmit = () => {
     const { step1, step2 } = this.state;
-    const formData = new FormData();
-    formData.append("username", step1.userName);
-    formData.append("organization", step2.companyName);
-    formData.append("email", step1.email);
-    formData.append("password", step1.password);
-    if (step2.file) {
-      formData.append("file", step2.file);
-    }
-    this.props.signUp(formData);
+    //Right now file is not being sent.
+    const urlParms = `username=${step1.userName}&password=${step1.password}&organization=${step2.companyName}&email=${step1.email}`;
+    this.props.signUp(urlParms);
+    // const formData = new FormData();
+    // formData.append("username", step1.userName);
+    // formData.append("organization", step2.companyName);
+    // formData.append("email", step1.email);
+    // formData.append("password", step1.password);
+    // if (step2.file) {
+    //   formData.append("file", step2.file);
+    // }
+    // this.props.signUp(formData);
   };
 
   render() {
