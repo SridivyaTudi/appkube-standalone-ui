@@ -9,7 +9,6 @@ import Kubernetes from "assets/img/kubernetes.png";
 import { Box, Grid, List, ListItem } from "@mui/material";
 import { APP_PREFIX_PATH } from "configs/AppConfig";
 import Button from "@mui/material/Button";
-import { getEnvsSummary } from "redux/assetManager/environments/environmentsThunk";
 import status from "redux/constants/commonDS";
 import { connect } from "react-redux";
 import { ToastMessage } from "Toast/ToastMessage";
@@ -369,7 +368,6 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  getEnvsSummary,
 };
 export default connect(
   mapStateToProps,

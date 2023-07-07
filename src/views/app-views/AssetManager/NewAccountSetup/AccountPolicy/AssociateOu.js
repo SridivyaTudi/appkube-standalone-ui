@@ -6,7 +6,6 @@ import CreateNewOuPopup from "./CreateNewOuPopup";
 import SelectAccountPopup from "./SelectAccountPopup";
 import Button from "@mui/material/Button";
 import { connect } from "react-redux";
-import { getOrgWiseDepartments } from "redux/assetManager/environments/environmentsThunk";
 import status from "redux/constants/commonDS";
 import { getCurrentOrgId } from "utils";
 
@@ -190,7 +189,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  getOrgWiseDepartments,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssociateOu);

@@ -7,10 +7,7 @@ import CompliancePolicies from "views/app-views/AssetManager/Environments/Enviro
 import Alerts from "views/app-views/AssetManager/Environments/EnvironmentList/Alerts";
 import Inputs from "views/app-views/AssetManager/Environments/EnvironmentList/Inputs";
 import ServicesNameLogo from "views/app-views/AssetManager/Environments/EnvironmentList/ServicesNameLogo";
-import config from "views/app-views/config";
-import { RestService } from "views/app-views/Services/RestService";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import status from "redux/constants/commonDS";
@@ -88,9 +85,8 @@ class EnvironmentList extends Component {
     if (this.state.service !== localStorage.getItem("serviceName")) {
       this.setState({ service: localStorage.getItem("serviceName") });
     }
-    let currentOrgId = getCurrentOrgId();
     this.setLandingZone();
-    this.props.getEnvsSummary({ orgId: currentOrgId });
+    this.props.getEnvsSummary();
   };
 
   getVpcsDetails(treeData) {
@@ -141,9 +137,8 @@ class EnvironmentList extends Component {
   componentDidUpdate = async (prevProps, prevState) => {
     if (this.state.landingZone !== prevState.landingZone) {
       this.props.getDepartments(this.state.landingZone);
-      let currentOrgId = getCurrentOrgId();
       let { landingZone } = this.state;
-      this.props.getEnvironmentDataByLandingZone({ landingZone, currentOrgId });
+      this.props.getEnvironmentDataByLandingZone(landingZone);
     }
 
     if (prevProps.departments.status !== this.props.departments.status) {

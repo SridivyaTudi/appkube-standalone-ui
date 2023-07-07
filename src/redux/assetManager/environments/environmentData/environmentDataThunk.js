@@ -1,16 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import config from "views/app-views/config";
-import axios from "services";
+import { postLoginService } from "services";
 import { getCurrentOrgId } from "utils";
 
 export const getEnvironmentDataByLandingZone = createAsyncThunk(
   "environmentData/getEnvironmentDataByLandingZone",
-  async ({landingZone,currentOrgId}) => {
-    const url = `${config.GET_ENVIRONMENT_DATA.replace('#org-id#',currentOrgId).replace('#landing-zone-id#',landingZone)}`;
+  async (landingZone) => {
+    const url = config.GET_ENVIRONMENT_DATA.replace('#landing-zone-id#', landingZone);
     try {
-      const response = await axios.get(url);
-      const productEnclaveList = response.data;
-      return productEnclaveList;
+      const response = await postLoginService.get(url);
+      return response;
     } catch (error) {
       console.log(error);
     }
@@ -22,9 +21,8 @@ export const getDepartments = createAsyncThunk(
   async (params) => {
     const url = `${config.GET_DEPARTMENT_WISE_DATA}`;
     try {
-      const response = await axios.get(url, {params});
-      const departments = response.data;
-      return departments;
+      const response = await postLoginService.get(url, { params });
+      return response;
     } catch (error) {
       console.log(error);
     }

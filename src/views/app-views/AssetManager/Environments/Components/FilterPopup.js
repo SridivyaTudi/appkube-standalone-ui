@@ -35,9 +35,8 @@ class FilterPopup extends Component {
   }
 
   componentDidMount = () => {
-    let currentOrgId = getCurrentOrgId();
-    this.props.getOrgWiseDepartments(currentOrgId);
-    this.props.getDeploymentEnvs(currentOrgId);
+    this.props.getOrgWiseDepartments();
+    this.props.getDeploymentEnvs();
     const { selectedDepartment, selectedEnv, selectedProduct } = this.props.selectedFilters;
     this.setState({
       selectedDepartment,
@@ -45,7 +44,7 @@ class FilterPopup extends Component {
       selectedProduct
     });
     if (selectedDepartment !== -1) {
-      this.props.getProductsByDepId({ orgId: currentOrgId, depId: selectedDepartment });
+      this.props.getProductsByDepId(selectedDepartment);
     }
   };
 
@@ -89,8 +88,7 @@ class FilterPopup extends Component {
       selectedProduct: -1,
       selectedEnv: -1
     });
-    let currentOrgId = getCurrentOrgId();
-    this.props.getProductsByDepId({ orgId: currentOrgId, depId: departmentID });
+    this.props.getProductsByDepId(departmentID);
   };
 
   handleProductCheck = (product) => {
@@ -196,7 +194,6 @@ class FilterPopup extends Component {
 
   handleSubmit = () => {
     let { selectedDepartment, selectedProduct, selectedEnv } = this.state;
-    let currentOrgId = getCurrentOrgId();
     let params = {};
     if (selectedDepartment !== -1) {
       params = {
@@ -208,7 +205,7 @@ class FilterPopup extends Component {
           params.env = selectedEnv;
         }
       }
-      this.props.getEnvsSummary({ params, orgId: currentOrgId });
+      this.props.getEnvsSummary(params);
       this.props.handleSubmitFilter({
         selectedDepartment,
         selectedProduct,
@@ -220,8 +217,7 @@ class FilterPopup extends Component {
   handleClearFilters = () => {
     let { selectedDepartment } = this.props.selectedFilters;
     if(selectedDepartment !== -1){
-      let currentOrgId = getCurrentOrgId();
-      this.props.getEnvsSummary({ orgId: currentOrgId });
+      this.props.getEnvsSummary();
     } else {
       this.props.togglePopup();
     }

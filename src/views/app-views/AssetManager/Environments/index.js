@@ -61,11 +61,8 @@ class Environments extends Component {
   };
 
   componentDidMount = () => {
-    let currentOrgId = localStorage.getItem("currentOrgId");
-    if (currentOrgId !== "") {
-      this.props.getEnvironmentCount(currentOrgId);
-      this.props.getEnvsSummary({ orgId: currentOrgId });
-    }
+    this.props.getEnvironmentCount();
+    this.props.getEnvsSummary();
   };
 
   componentDidUpdate(prevProps, prevState) {

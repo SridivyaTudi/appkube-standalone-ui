@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import status from "redux/constants/commonDS";
 import {
   createNewOU,
-  getOrganizationalUnits,
   addCloudEnv,
 } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
 
@@ -44,31 +43,6 @@ export const organizationalUnitSlice = createSlice({
       return {
         ...state,
         createOu: {
-          status: status.FAILURE,
-        },
-      };
-    },
-    [getOrganizationalUnits.pending]: (state) => {
-      return {
-        ...state,
-        organizationalUnit: {
-          status: status.IN_PROGRESS,
-        },
-      };
-    },
-    [getOrganizationalUnits.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        organizationalUnit: {
-          status: status.SUCCESS,
-          data: action.payload,
-        },
-      };
-    },
-    [getOrganizationalUnits.rejected]: (state) => {
-      return {
-        ...state,
-        organizationalUnit: {
           status: status.FAILURE,
         },
       };
