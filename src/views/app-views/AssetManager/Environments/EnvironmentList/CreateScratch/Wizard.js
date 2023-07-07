@@ -145,7 +145,7 @@ class Wizard extends Component {
           )}
           {currentStep < steps.length - 1 && (
             <Button
-              className="primary-btn m-r-2"
+              className="primary-btn"
               onClick={() => {
                 if (this.state.currentStep === 1) {
                   //this.props.setIsSubmit(true);

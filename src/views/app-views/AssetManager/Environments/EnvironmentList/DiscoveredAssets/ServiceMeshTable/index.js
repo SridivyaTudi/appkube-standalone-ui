@@ -20,8 +20,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  List,
-  ListItem,
 } from "@mui/material";
 
 class ServiceMeshTable extends Component {
@@ -174,7 +172,6 @@ class ServiceMeshTable extends Component {
               </TableContainer>
             </Box>
           </Box>
-    
         </Box>
       </>
     );

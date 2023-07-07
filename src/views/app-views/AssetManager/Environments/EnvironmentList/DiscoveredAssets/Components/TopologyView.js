@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import { ArcherContainer, ArcherElement } from "react-archer";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Box, Grid } from "@mui/material";
-import ServicesNameLogo from "views/app-views/AssetManager/Environments/EnvironmentList/ServicesNameLogo";
+import ServicesNameLogo from "../../ServicesNameLogo";
 import { getUUID } from "utils";
-import ClusterIcon from "assets/img/assetmanager/cluster-icon.png";
-import Aws from "assets/img/aws.png";
 let transformScale = 0;
 
 class TopologyView extends Component {
@@ -40,8 +38,7 @@ class TopologyView extends Component {
 
   renderMainBody = () => {
     const { data } = this.props;
-    let { level2Show, selectedLevel1Id, selectedLevel2Id, globalService } =
-      this.state.selectedView;
+    let { level2Show, selectedLevel1Id } = this.state.selectedView;
     return Object.keys(data).length ? (
       <ArcherContainer style={{ width: "100%", height: "100%" }}>
         <TransformWrapper
@@ -110,7 +107,9 @@ class TopologyView extends Component {
                           <img src={data.image} alt="aws image" />
                         </div>
                         <div className="account-id">
-                          <span id="custom_location_1" className="d-block">{data.label}</span>
+                          <span id="custom_location_1" className="d-block">
+                            {data.label}
+                          </span>
                           <span className="d-block">{data.subLabel}</span>
                         </div>
                       </div>
@@ -122,16 +121,6 @@ class TopologyView extends Component {
                     } `}
                   >
                     <ul>{this.renderLevel1()}</ul>
-                    {/* <ArcherElement id="globalService">
-                      <div className="global-servies-menu m-t-2">
-                        <label className={`${globalService ? "active" : ""}`}>
-                          <span>
-                            <img src={VpcServicesIcon} alt="" />
-                          </span>
-                          Global servies
-                        </label>
-                      </div>
-                    </ArcherElement> */}
                   </div>
                   <div
                     className={` ${
@@ -144,15 +133,6 @@ class TopologyView extends Component {
                     }}
                   >
                     <ul>{level2Show && this.renderLevel2(selectedLevel1Id)}</ul>
-                    {/* <div
-                      className="global-servies-menu"
-                      style={{ display: "none" }}
-                    >
-                      <label className="active">
-                        Cloud Management Services
-                      </label>
-                      <label>Gateway Services</label>
-                    </div> */}
                   </div>
                 </TransformComponent>
               </React.Fragment>
@@ -167,8 +147,7 @@ class TopologyView extends Component {
 
   renderLevel1 = () => {
     const { children } = this.props.data;
-    const { level2Show, selectedLevel1Id, selectedLevel2Id } =
-      this.state.selectedView;
+    const { selectedLevel1Id, selectedLevel2Id } = this.state.selectedView;
     if (children.length) {
       return children[0].map((level1, level1Index) => {
         return (
@@ -198,8 +177,8 @@ class TopologyView extends Component {
                   ? "custom_location"
                   : ""
               }`}
-              onClick={(e) => {
-                this.onClickLevel1(level1Index);
+              onClick={() => {
+                this.onClickLevel1(level1Index, level1.label);
               }}
             >
               <span>
@@ -215,8 +194,7 @@ class TopologyView extends Component {
 
   renderLevel2(index) {
     const { children } = this.props.data;
-    const { level2Show, selectedLevel1Id, selectedLevel2Id } =
-      this.state.selectedView;
+    const { selectedLevel1Id, selectedLevel2Id } = this.state.selectedView;
     let data = children[0][index].children;
 
     if (data.length) {
@@ -239,8 +217,8 @@ class TopologyView extends Component {
             key={getUUID()}
           >
             <li
-              onClick={(e) => {
-                this.onClickLevel2(level2Index);
+              onClick={() => {
+                this.onClickLevel2(level2Index, level2.label);
               }}
               className={`${level2Index === selectedLevel2Id ? "active" : ""}`}
               id={`${
@@ -271,22 +249,23 @@ class TopologyView extends Component {
     }
   }
 
-  onClickLevel1 = (id) => {
+  onClickLevel1 = (id, label) => {
     let { level2Show, selectedLevel1Id, selectedLevel2Id } =
       this.state.selectedView;
     level2Show = true;
     selectedLevel1Id = id;
     selectedLevel2Id = null;
-
+    this.props.setLevel(label);
     this.setState({
       selectedView: { level2Show, selectedLevel1Id, selectedLevel2Id },
     });
   };
 
-  onClickLevel2 = (id) => {
+  onClickLevel2 = (id, label) => {
     let { level2Show, selectedLevel1Id, selectedLevel2Id } =
       this.state.selectedView;
     selectedLevel2Id = id;
+    this.props.setLevel(label);
     this.setState({
       selectedView: { level2Show, selectedLevel1Id, selectedLevel2Id },
     });
