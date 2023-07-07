@@ -5,6 +5,7 @@ import CreateFromScratch from "./CreateFromScratch";
 import SelectRegion from "./SelectRegion";
 import ConfigureNodes from "./ConfigureNodes";
 import ReviewConfigureCreation from "./ReviewConfigureCreation";
+import { Box } from "@mui/material";
 class CreateScratch extends Component {
   constructor(props) {
     super(props);
@@ -55,8 +56,8 @@ class CreateScratch extends Component {
   render() {
     const { formData } = this.state;
     return (
-      <div className="create-scratch-container">
-        <div className="new-account-page-container">
+      <Box className="create-scratch-container">
+        <Box className="new-account-page-container">
           <Wizard
             steps={this.steps}
             formData={formData}
@@ -73,8 +74,8 @@ class CreateScratch extends Component {
             }}
             finishPrevious={this.state.finishPrevious}
           />
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
   }
 }

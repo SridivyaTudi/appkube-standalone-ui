@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Box } from '@mui/material';
 
 class AccountPricing extends Component {
   render() {
     return (
-      <div>AccountPricing</div>
+      <Box>AccountPricing</Box>
     )
   }
 }
