@@ -2,22 +2,11 @@ import React, { Component } from "react";
 import Aws from "assets/img/aws.png";
 import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
 import ClusterIcon from "assets/img/assetmanager/cluster-icon.png";
-import GlobalIcon4 from "assets/img/assetmanager/global-icon4.png";
-import GlobalIcon5 from "assets/img/assetmanager/global-icon5.png";
 import CommonFilterViewSearch from "../CommonFilterViewSearch";
 import ServicesNameLogo from "../ServicesNameLogo";
-import DataLakeTable from "./DataLakeTable";
-import ServiceMeshTable from "./ServiceMeshTable";
-import AllTable from "./AllTable";
-import AppTable from "./AppTable";
-import DataTable from "./DataTable";
-import dummyData from "./dummy.json";
-import EksCluster from "./EksCluster";
-import EcsCluster from "./EcsCluster";
-import WafResources from "./WafResources";
 import GlobalSerivces from "./GlobalServices";
 import GatewayDetails from "./GatewayDetails";
-
+import CloudManagedDetails from "./CloudManagedDetails";
 import {
   IconButton,
   Box,
@@ -35,6 +24,7 @@ import status from "redux/constants/commonDS";
 import { connect } from "react-redux";
 import TopologyView from "./Components/TopologyView";
 import VpcDetails from "./VpcDetails";
+import ClusterDetails from "./ClusterDetails";
 
 const nextTypes = {
   service: "vpc",
@@ -55,40 +45,12 @@ const TOPOLOGY_VIEW_TYPE = {
 };
 
 class DiscoveredAssets extends Component {
-  tableMapping = [
-    {
-      name: "All",
-      dataKey: "all",
-      component: AllTable,
-    },
-    {
-      name: "App",
-      dataKey: "app",
-      component: AppTable,
-    },
-    {
-      name: "Data",
-      dataKey: "data",
-      component: DataTable,
-    },
-    {
-      name: "Datalake",
-      dataKey: "datalake",
-      component: DataLakeTable,
-    },
-    {
-      name: "ServiceMesh",
-      dataKey: "servicemesh",
-      component: ServiceMeshTable,
-    },
-  ];
   constructor(props) {
     super(props);
     const queryPrm = new URLSearchParams(document.location.search);
     const cloudName = queryPrm.get("cloudName");
     this.state = {
       display_detail: true,
-      displaygetEnvironmentData: null,
       cloudAssets: [],
       toggleNode: {
         vpc: true,
@@ -107,12 +69,8 @@ class DiscoveredAssets extends Component {
           serviceIndexs: {},
         },
       ],
-      showSelectFilter: false,
-      showServiceViewFilter: false,
-      activeTab: 0,
       searchString: "",
       accountId: queryPrm.get("landingZone"),
-      currentActiveCluster: "eksCluster",
       dataOfTableLevel1: [],
       dataOfLevel1: {},
       currentActiveNodeLabel: "",
@@ -148,10 +106,6 @@ class DiscoveredAssets extends Component {
     this.setState({
       showMenu: !this.state.showMenu,
     });
-  };
-
-  setActiveTab = (activeTab) => {
-    this.setState({ activeTab });
   };
 
   getBreadCrumbs() {
@@ -275,10 +229,6 @@ class DiscoveredAssets extends Component {
     this.props.handleSearchVpcs(vpcsDetails);
   }
 
-  changeActiveCluster = (cluster) => {
-    this.setState({ currentActiveCluster: cluster });
-  };
-
   getEnvironmentDataByLandingZone = () => {
     const { envDataByLandingZone } = this.props;
     let checkLengthEnvData = false;
@@ -371,7 +321,6 @@ class DiscoveredAssets extends Component {
 
   render() {
     const {
-      activeTab,
       currentActiveCluster,
       toggleNode,
       dataOfTableLevel1,
@@ -570,14 +519,7 @@ class DiscoveredAssets extends Component {
                       </Box>
                     </Box>
                   </Box>
-                  <Box
-                    className="fliter-tabs global-service-penal"
-                    style={{
-                      display: `${
-                        this.state.breadcrumbs.length === 3 ? "block" : "none"
-                      }`,
-                    }}
-                  >
+                  <Box className="fliter-tabs global-service-penal">
                     <Box className="global-services-fliter">
                       <Box className="heading">
                         <Box className="breadcrumbs">
@@ -585,132 +527,10 @@ class DiscoveredAssets extends Component {
                         </Box>
                       </Box>
                     </Box>
-                    {toggleNode.clusterId === 0 ? (
-                      <>
-                        <Box className="environment-boxs m-t-4">
-                          <Box
-                            className="environment-box"
-                            onClick={() =>
-                              this.changeActiveCluster("eksCluster")
-                            }
-                            style={{
-                              border:
-                                currentActiveCluster === "eksCluster"
-                                  ? "2px solid #416bff"
-                                  : "2px solid #fff",
-                            }}
-                          >
-                            <Box className="environment-title">
-                              <Box className="environment-image">
-                                <img src={GlobalIcon4} alt="" />
-                              </Box>
-                              <Box className="title-name">EKS-Cluster</Box>
-                            </Box>
-                            <Box className="data-contant">
-                              <List>
-                                {dummyData.eksCluster.map((item) => {
-                                  return (
-                                    <ListItem>
-                                      <Box className="data-text">
-                                        <span
-                                          style={{
-                                            backgroundColor:
-                                              item.backgroundColor,
-                                          }}
-                                        ></span>
-                                        <p>{item.name}</p>
-                                      </Box>
-                                      <label>{item.value}</label>
-                                    </ListItem>
-                                  );
-                                })}
-                              </List>
-                            </Box>
-                          </Box>
-                          <Box
-                            className="environment-box"
-                            onClick={() =>
-                              this.changeActiveCluster("ecsCluster")
-                            }
-                            style={{
-                              border:
-                                currentActiveCluster === "ecsCluster"
-                                  ? "2px solid #416bff"
-                                  : "2px solid #fff",
-                            }}
-                          >
-                            <Box className="environment-title">
-                              <Box className="environment-image">
-                                <img src={GlobalIcon5} alt="" />
-                              </Box>
-                              <Box className="title-name">ECS-Cluster</Box>
-                            </Box>
-                            <Box className="data-contant">
-                              <List>
-                                {dummyData.ecsCluster.map((item) => {
-                                  return (
-                                    <ListItem>
-                                      <Box className="data-text">
-                                        <span
-                                          style={{
-                                            backgroundColor:
-                                              item.backgroundColor,
-                                          }}
-                                        ></span>
-                                        <p>{item.name}</p>
-                                      </Box>
-                                      <label>{item.value}</label>
-                                    </ListItem>
-                                  );
-                                })}
-                              </List>
-                            </Box>
-                          </Box>
-                        </Box>
-                        {currentActiveCluster === "eksCluster" && (
-                          <EksCluster />
-                        )}
-                        {currentActiveCluster === "ecsCluster" && (
-                          <EcsCluster />
-                        )}
-                      </>
-                    ) : toggleNode.clusterId === 1 ? (
-                      <Box className="services-panel-tabs">
-                        <Box className="tabs-head">
-                          <List>
-                            {this.tableMapping.map((tabData, index) => {
-                              return (
-                                <ListItem
-                                  key={`ops-tab-${index}`}
-                                  className={
-                                    index === activeTab ? "active" : ""
-                                  }
-                                  onClick={() => this.setActiveTab(index)}
-                                >
-                                  {tabData.name}
-                                </ListItem>
-                              );
-                            })}
-                          </List>
-                        </Box>
-                        <Box className="tabs-content">
-                          {activeTab === 0 ? (
-                            <AllTable />
-                          ) : activeTab === 1 ? (
-                            <AppTable />
-                          ) : activeTab === 2 ? (
-                            <DataTable />
-                          ) : activeTab === 3 ? (
-                            <DataLakeTable />
-                          ) : activeTab === 4 ? (
-                            <ServiceMeshTable />
-                          ) : (
-                            <></>
-                          )}
-                        </Box>
-                      </Box>
+                    {currentActiveNodeLabel.includes("cluster") ? (
+                      <ClusterDetails />
                     ) : (
-                      <WafResources />
+                      <></>
                     )}
                   </Box>
 
@@ -718,6 +538,8 @@ class DiscoveredAssets extends Component {
                     <VpcDetails />
                   ) : currentActiveNodeLabel.includes("gateway") ? (
                     <GatewayDetails />
+                  ) : currentActiveNodeLabel.includes("cloudManaged") ? (
+                    <CloudManagedDetails />
                   ) : (
                     <></>
                   )}
