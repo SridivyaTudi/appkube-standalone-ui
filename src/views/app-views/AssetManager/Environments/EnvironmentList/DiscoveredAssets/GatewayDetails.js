@@ -15,7 +15,7 @@ import {
   TableRow,
 } from "@mui/material";
 
-class WafResources extends React.Component {
+class GatewayDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -163,4 +163,4 @@ class WafResources extends React.Component {
   }
 }
 
-export default WafResources;
+export default GatewayDetails;

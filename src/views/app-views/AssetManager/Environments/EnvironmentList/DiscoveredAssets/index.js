@@ -1,41 +1,24 @@
 import React, { Component } from "react";
-// import { images } from "../../../../../img";
 import Aws from "assets/img/aws.png";
 import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
 import ClusterIcon from "assets/img/assetmanager/cluster-icon.png";
 import GlobalIcon4 from "assets/img/assetmanager/global-icon4.png";
 import GlobalIcon5 from "assets/img/assetmanager/global-icon5.png";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import CommonFilterViewSearch from "views/app-views/AssetManager/Environments/EnvironmentList/CommonFilterViewSearch";
-import ServicesNameLogo from "views/app-views/AssetManager/Environments/EnvironmentList/ServicesNameLogo";
-import DataLakeTable from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/DataLakeTable";
-import ServiceMeshTable from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/ServiceMeshTable";
-import AllTable from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/AllTable";
-import AppTable from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/AppTable";
-import DataTable from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/DataTable";
-import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
+import CommonFilterViewSearch from "../CommonFilterViewSearch";
+import ServicesNameLogo from "../ServicesNameLogo";
+import DataLakeTable from "./DataLakeTable";
+import ServiceMeshTable from "./ServiceMeshTable";
+import AllTable from "./AllTable";
+import AppTable from "./AppTable";
+import DataTable from "./DataTable";
+import dummyData from "./dummy.json";
+import EksCluster from "./EksCluster";
+import EcsCluster from "./EcsCluster";
+import WafResources from "./WafResources";
+import GlobalSerivces from "./GlobalServices";
+import GatewayDetails from "./GatewayDetails";
 
-import EksCluster from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/EksCluster";
-import EcsCluster from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/EcsCluster";
-import WafResources from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/WafResources";
-import GlobalSerivces from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/GlobalServices";
-import EKS from "assets/img/assetmanager/global-icon4.png";
-import ECS from "assets/img/assetmanager/global-icon5.png";
-import Glue from "assets/img/assetmanager/cloud-managed-icon8.png";
-import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
-import Kinesys from "assets/img/assetmanager/cloud-managed-icon11.png";
-import Redshift from "assets/img/assetmanager/cloud-managed-icon12.png";
-import IAM from "assets/img/assetmanager/cloud-managed-icon13.png";
-import S3 from "assets/img/assetmanager/cloud-managed-icon2.png";
-import LakeFormation from "assets/img/assetmanager/cloud-managed-icon14.png";
-import Sagemaker from "assets/img/assetmanager/cloud-managed-icon15.png";
-import Quicksight from "assets/img/assetmanager/cloud-managed-icon16.png";
-import EMRStudio from "assets/img/assetmanager/cloud-managed-icon17.png";
-import Waf from "assets/img/assetmanager/global-icon6.png";
-import API from "assets/img/assetmanager/global-icon7.png";
-import LB from "assets/img/assetmanager/global-icon3.png";
 import {
-  Button,
   IconButton,
   Box,
   Grid,
@@ -50,32 +33,27 @@ import {
 } from "@mui/material";
 import status from "redux/constants/commonDS";
 import { connect } from "react-redux";
-import { getUUID } from "utils";
-import TopologyView from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
-import { ArcherContainer, ArcherElement } from "react-archer";
+import TopologyView from "./Components/TopologyView";
+import VpcDetails from "./VpcDetails";
 
-const breadcrumbResetCondition = {
-  service: ["vpc", "cluster", "product"],
-  vpc: ["cluster", "product"],
-  cluster: ["product"],
-  product: [],
-};
 const nextTypes = {
   service: "vpc",
   vpc: "cluster",
   cluster: "product",
   product: "",
 };
-let transformScale = 0;
+
 const TABLE_LEVEL_1 = {
   APP: "App",
   DATA: "Data",
 };
+
 const TOPOLOGY_VIEW_TYPE = {
   VPC: "vpc",
   CLUSTER: "cluster",
   GLOBAL_SERVICE: "globalService",
 };
+
 class DiscoveredAssets extends Component {
   tableMapping = [
     {
@@ -135,23 +113,9 @@ class DiscoveredAssets extends Component {
       searchString: "",
       accountId: queryPrm.get("landingZone"),
       currentActiveCluster: "eksCluster",
-
-      clusterServicesImages: [EKS, ECS],
-      managedServicesImages: [
-        Glue,
-        Athena,
-        Kinesys,
-        Redshift,
-        IAM,
-        S3,
-        LakeFormation,
-        Sagemaker,
-        Quicksight,
-        EMRStudio,
-      ],
-      GatewayServicesImages: [Waf, API, LB],
       dataOfTableLevel1: [],
-      dataOfLevel1:{}
+      dataOfLevel1: {},
+      currentActiveNodeLabel: "",
     };
   }
 
@@ -161,13 +125,15 @@ class DiscoveredAssets extends Component {
         this.props.envDataByLandingZone.status &&
       this.props.envDataByLandingZone.status === status.SUCCESS
     ) {
-      let { productEnclaveList, globalServiceList } = this.getEnvironmentDataByLandingZone();
+      let { productEnclaveList, globalServiceList } =
+        this.getEnvironmentDataByLandingZone();
       if (productEnclaveList) {
         this.prepareDataTableLevel1(productEnclaveList);
-        this.prepareDataTopologyViewComponent(productEnclaveList, globalServiceList);
+        this.prepareDataTopologyViewComponent(
+          productEnclaveList,
+          globalServiceList
+        );
       }
-     
-     
     }
   };
 
@@ -175,180 +141,6 @@ class DiscoveredAssets extends Component {
     const { display_detail } = this.state;
     this.setState({
       display_detail: !display_detail,
-    });
-  };
-
-  displayAwsData() {
-    const { displaygetEnvironmentData } = this.state;
-    let retData = [];
-    let row = displaygetEnvironmentData;
-    if (row.cloudType.toLowerCase() === "AWS".toLowerCase()) {
-      const { display_detail } = this.state;
-      retData.push(
-        <Box>
-          <Box className="heading">
-            <span>
-              <img src={"images.awsLogo"} alt="" />
-            </span>
-            <h2>Amazon Web Services</h2>
-            <Box className="icon float-right" onClick={this.showHideDetail}>
-              <i
-                className={display_detail ? "fa fa-minus" : "fa fa-plus"}
-                aria-hidden="true"
-              ></i>
-            </Box>
-          </Box>
-          {display_detail && (
-            <Box className="service-content">
-              <Box className="row">
-                <Box className="col-lg-6 col-md-6 col-sm-12">
-                  <Box className="row">
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">Account Holder Name</Box>
-                    </Box>
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">
-                        <span>{row.name}</span>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box className="col-lg-6 col-md-6 col-sm-12">
-                  <Box className="row">
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">Organisation</Box>
-                    </Box>
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">
-                        <span>
-                          {row.organizationName && row.organizationName}
-                        </span>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box className="col-lg-6 col-md-6 col-sm-12">
-                  <Box className="row">
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">Account Number</Box>
-                    </Box>
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">
-                        <span>{row.accountId}</span>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box className="col-lg-6 col-md-6 col-sm-12">
-                  <Box className="row">
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">Organisation Unit</Box>
-                    </Box>
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">
-                        <span>
-                          {row.organizationalUnit &&
-                            row.organizationalUnit.name}
-                        </span>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box className="col-lg-6 col-md-6 col-sm-12">
-                  <Box className="row">
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">
-                        Total Online Instances
-                      </Box>
-                    </Box>
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">0</Box>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box className="col-lg-6 col-md-6 col-sm-12">
-                  <Box className="row">
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">
-                        Full Protection Security Group
-                      </Box>
-                    </Box>
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">0</Box>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box className="col-lg-6 col-md-6 col-sm-12">
-                  <Box className="row">
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">Cloud Guard ID</Box>
-                    </Box>
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">
-                        e5b82995-c0fc-729d-a67b-926r81a5963d
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box className="col-lg-6 col-md-6 col-sm-12">
-                  <Box className="row">
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">
-                        Read Only Security Group
-                      </Box>
-                    </Box>
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">0</Box>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box className="col-lg-6 col-md-6 col-sm-12">
-                  <Box className="row">
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">Added At</Box>
-                    </Box>
-                    <Box className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                      <Box className="services-added">{row.createdOn}</Box>
-                    </Box>
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-          )}
-        </Box>
-      );
-    }
-
-    return retData;
-  }
-
-  prepareBreadCrumbs(data, index, type) {
-    let tempBreadData = [];
-    let { breadcrumbs } = this.state;
-    if (breadcrumbs.filter((breadcrumb) => breadcrumb.type === type).length) {
-      if (breadcrumbs.filter((breadcrumb) => breadcrumb.id === index).length) {
-        tempBreadData = breadcrumbs;
-      } else {
-        tempBreadData = breadcrumbs.filter(
-          (breadcrumb) => breadcrumb.type !== type
-        );
-        tempBreadData = [...tempBreadData, data];
-      }
-    } else {
-      tempBreadData = [...breadcrumbs, data];
-    }
-    breadcrumbResetCondition[type].forEach((keyType) => {
-      tempBreadData = tempBreadData.filter(
-        (breadcrumb) => breadcrumb.type !== keyType
-      );
-    });
-    return tempBreadData;
-  }
-
-  toggleColumnSelect = (drdName) => {
-    let current = this.state[drdName];
-    this.setState({
-      [drdName]: !current,
     });
   };
 
@@ -361,14 +153,6 @@ class DiscoveredAssets extends Component {
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
-
-  getCloudName() {
-    const queryPrm = new URLSearchParams(document.location.search);
-    return (
-      ServicesNameLogo.ServicesName[queryPrm.get("cloudName").toUpperCase()] ||
-      ""
-    );
-  }
 
   getBreadCrumbs() {
     return this.state.breadcrumbs.map((data, index) => {
@@ -495,7 +279,6 @@ class DiscoveredAssets extends Component {
     this.setState({ currentActiveCluster: cluster });
   };
 
-
   getEnvironmentDataByLandingZone = () => {
     const { envDataByLandingZone } = this.props;
     let checkLengthEnvData = false;
@@ -541,7 +324,7 @@ class DiscoveredAssets extends Component {
     });
   };
 
-  prepareDataTopologyViewComponent = (envData,globalData = []) => {
+  prepareDataTopologyViewComponent = (envData) => {
     const queryPrm = new URLSearchParams(document.location.search);
     let formatData = {
       label: "Account ID",
@@ -571,8 +354,8 @@ class DiscoveredAssets extends Component {
       });
       prepareData.push(obj);
     }
-    formatData.children = [prepareData,[]];
-    this.setState({ dataOfLevel1:formatData})
+    formatData.children = [prepareData, []];
+    this.setState({ dataOfLevel1: formatData });
   };
 
   getLandingZone = () => {
@@ -582,10 +365,19 @@ class DiscoveredAssets extends Component {
     return landingZone;
   };
 
+  getCurrentActiveTreeLevel = (label) => {
+    this.setState({ currentActiveNodeLabel: label });
+  };
 
   render() {
-    const { activeTab, currentActiveCluster, toggleNode, dataOfTableLevel1,dataOfLevel1 } =
-      this.state;
+    const {
+      activeTab,
+      currentActiveCluster,
+      toggleNode,
+      dataOfTableLevel1,
+      dataOfLevel1,
+      currentActiveNodeLabel,
+    } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
       <Box className="discovered-assets">
@@ -619,9 +411,12 @@ class DiscoveredAssets extends Component {
                 rowSpacing={1}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
-                <TopologyView data={dataOfLevel1} />
+                <TopologyView
+                  data={dataOfLevel1}
+                  setLevel={this.getCurrentActiveTreeLevel}
+                />
                 <Grid item xs={5}>
-                  {this.renderTableLevel1()}
+                  {!currentActiveNodeLabel ? this.renderTableLevel1() : <></>}
                   <Box
                     className="fliter-tabs"
                     style={{
@@ -919,122 +714,14 @@ class DiscoveredAssets extends Component {
                     )}
                   </Box>
 
-                  <Box
-                    className="fliter-tabs global-service-penal"
-                    style={{
-                      display: `${
-                        this.state.breadcrumbs.length === 2 ? "block" : "none"
-                      }`,
-                    }}
-                  >
-                    <Box className="cloud-managed-section">
-                      <h4>Cluster</h4>
-                      <Box className="cloud-managed-cards">
-                        <Box className="cloud-managed-cards-scroll">
-                          {dummyData.clusterServices.map((item, index) => {
-                            return (
-                              <Box className="service-card active">
-                                <Box className="service-icon">
-                                  <img
-                                    src={
-                                      this.state.clusterServicesImages[index]
-                                    }
-                                    alt="serviceicon"
-                                  />
-                                </Box>
-                                <Box className="service-contant">
-                                  <label>{item.name}</label>
-                                  <strong>{item.value}</strong>
-                                </Box>
-                              </Box>
-                            );
-                          })}
-                        </Box>
-                      </Box>
-                      <h4>Cloud Managed Services</h4>
-                      <Box className="cloud-managed-cards">
-                        <Box className="cloud-managed-cards-scroll">
-                          {dummyData.managedServices.map((item, index) => {
-                            return (
-                              <Box className="service-card active">
-                                <Box className="service-icon">
-                                  <img
-                                    src={
-                                      this.state.managedServicesImages[index]
-                                    }
-                                    alt="serviceicon"
-                                  />
-                                </Box>
-                                <Box className="service-contant">
-                                  <label>{item.name}</label>
-                                  <strong>{item.value}</strong>
-                                </Box>
-                              </Box>
-                            );
-                          })}
-                        </Box>
-                      </Box>
-                      <h4>Gateway Services</h4>
-                      <Box className="cloud-managed-cards">
-                        <Box className="cloud-managed-cards-scroll">
-                          {dummyData.GatewayServices.map((item, index) => {
-                            return (
-                              <Box className="service-card active">
-                                <Box className="service-icon">
-                                  <img
-                                    src={
-                                      this.state.GatewayServicesImages[index]
-                                    }
-                                    alt="serviceicon"
-                                  />
-                                </Box>
-                                <Box className="service-contant">
-                                  <label>{item.name}</label>
-                                  <strong>{item.value}</strong>
-                                </Box>
-                              </Box>
-                            );
-                          })}
-                        </Box>
-                      </Box>
-                    </Box>
+                  {currentActiveNodeLabel.includes("vpc") ? (
+                    <VpcDetails />
+                  ) : currentActiveNodeLabel.includes("gateway") ? (
+                    <GatewayDetails />
+                  ) : (
+                    <></>
+                  )}
 
-                    {/* <Box
-                      className="global-services-fliter"
-                      style={{
-                        height: "533px",
-                        boxShadow: "0px 10px 20px 0px rgba(0, 0, 0, 0.04)",
-                      }}>
-                      <Box className="heading">
-                        <Box className="breadcrumbs">
-                          <ul>{this.getBreadCrumbs()}</ul>
-                        </Box>
-                      </Box>
-                      <Box className="fliter-inputs">
-                        <Box className="search-control">
-                          <input
-                            type="text"
-                            className="input-group-text"
-                            placeholder=""
-                          />
-                        </Box>
-                        <Box className="search-control">
-                          <input
-                            type="text"
-                            className="input-group-text"
-                            placeholder=""
-                          />
-                        </Box>
-                        <Box className="search-control">
-                          <input
-                            type="text"
-                            className="input-group-text"
-                            placeholder=""
-                          />
-                        </Box>
-                      </Box>
-                    </Box> */}
-                  </Box>
                   {toggleNode.globalService && <GlobalSerivces />}
                   <Box className="fliter-tabs" style={{ display: "none" }}>
                     <Box className="global-services-fliter">
