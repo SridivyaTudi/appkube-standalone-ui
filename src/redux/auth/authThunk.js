@@ -3,14 +3,14 @@ import config from "views/auth-views/config";
 
 export const signUp = createAsyncThunk(
   "auth/signUp",
-  async (userData) => {
+  async (urlParams) => {
     const url = config.SIGN_UP;
     const options = {
       method: "POST",
-      body: userData,
+      body: {},
       redirect: "follow",
     };
-    const response = await fetch(`${url}`, options);
+    const response = await fetch(`${url}?${urlParams}`, options);
     if (response.ok) {
       const newUser = await response.json();
       return newUser;
