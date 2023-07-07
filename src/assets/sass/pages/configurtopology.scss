@@ -73,7 +73,7 @@
       &:last-child {
         margin-right: 0;
       }
-      
+
       h2 {
         font-weight: 500;
       }
@@ -164,7 +164,167 @@
           margin-left: 10px;
         }
       }
+    }
 
+    .balancing-container {
+      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 50px 30px;
+      border-radius: 10px;
+      background: #ffffff;
+      min-height: 312px;
+      box-shadow: 0px 100px 80px rgba(108, 73, 172, 0.07);
+
+      .balancing-content {
+        .image {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          min-height: 90px;
+          img {
+            max-height: 90px;
+            opacity: 0.7;
+          }
+        }
+        .name {
+          display: block;
+          color: #000000;
+          font-size: 18px;
+          line-height: 24px;
+          font-weight: 500;
+          padding-top: 20px;
+        }
+      }
+
+      .storage-content {
+        padding-bottom: 40px;
+        .image {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          min-height: 50px;
+          img {
+            max-height: 50px;
+          }
+        }
+        .name {
+          display: block;
+          color: #000000;
+          font-size: 16px;
+          line-height: 20px;
+          font-weight: 500;
+          padding-top: 15px;
+        }
+      }
+
+      .add-extra-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        .extra-btn {
+          width: 48px;
+          height: 48px;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 15px;
+          font-size: 24px;
+          line-height: 32px;
+          padding: 0;
+          min-width: auto;
+          color: #ffffff;
+          background-color: #384cff;
+        }
+        strong {
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          color: #000000;
+          font-size: 18px;
+          line-height: 24px;
+          font-weight: 600;
+          padding-top: 5px;
+        }
+      }
+    }
+    .application-servers-container {
+      display: inline-flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 15px 15px;
+      border-radius: 10px;
+      background: #ffffff;
+      min-height: 312px;
+      box-shadow: 0px 100px 80px rgba(108, 73, 172, 0.07);
+
+      .heading {
+        justify-content: center;
+        align-items: center;
+        color: #000000;
+        font-size: 26px;
+        line-height: 30px;
+        font-weight: 400;
+        i {
+          color: #a1a3d4;
+          margin-left: 10px;
+        }
+      }
+
+      .application-vertical-slider {
+        border-right: 2px dotted #000000;
+        .application-cards-slider {
+          width: 280px;
+          .reserved-card {
+            width: 130px;
+            margin-left: 10px;
+            margin-right: 10px;
+            &:first-child {
+              margin-left: 0;
+            }
+            &:last-child {
+              margin-right: 0;
+            }
+            &:after {
+              left: 65px;
+            }
+          }
+        }
+      }
+
+      .horizontal-add-node {
+        .primary-outline-btn {
+          font-size: 16px;
+          margin-right: 3px;
+        }
+
+        .node-box {
+          display: block;
+          text-align: center;
+          .image {
+            min-height: 80px;
+            img {
+              max-height: 80px;
+            }
+          }
+          .name {
+            display: inline-block;
+            padding-top: 10px;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 600;
+            color: #000000;
+          }
+        }
+      }
     }
   }
 
@@ -290,7 +450,7 @@
 
     .slider {
       .MuiSlider-rail {
-        color: #EAECF0;
+        color: #eaecf0;
         opacity: 1;
       }
 
@@ -324,5 +484,4 @@
       }
     }
   }
-
 }
