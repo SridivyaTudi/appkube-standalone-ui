@@ -10,7 +10,19 @@ import Kinesis from "assets/img/assetmanager/cloud-managed-icon8.png";
 import TimeSeries from "assets/img/assetmanager/cloud-managed-icon9.png";
 import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
 import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
-import {Button, Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
+import {
+  Button,
+  Box,
+  Grid,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  List,
+  ListItem,
+} from "@mui/material";
 
 class AllTable extends Component {
   constructor(props) {
@@ -31,7 +43,7 @@ class AllTable extends Component {
     };
   }
   render() {
-    const { } = this.state;
+    const {} = this.state;
     return (
       <>
         <Box className="cloud-managed-section">
@@ -143,8 +155,8 @@ class AllTable extends Component {
                 container
                 rowSpacing={1}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                justifyContent={'center'}
-                alignItems={'center'}
+                justifyContent={"center"}
+                alignItems={"center"}
               >
                 <Grid item lg={5} md={5} xs={12}>
                   <h4>Lambda Performance</h4>

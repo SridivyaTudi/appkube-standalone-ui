@@ -48,36 +48,38 @@ class CloudManagedDetails extends React.Component {
   render() {
     const { activeTab } = this.state;
     return (
-      <Box className="services-panel-tabs">
-        <Box className="tabs-head">
-          <List>
-            {this.tableMapping.map((tabData, index) => {
-              return (
-                <ListItem
-                  key={`ops-tab-${index}`}
-                  className={index === activeTab ? "active" : ""}
-                  onClick={() => this.setActiveTab(index)}
-                >
-                  {tabData.name}
-                </ListItem>
-              );
-            })}
-          </List>
-        </Box>
-        <Box className="tabs-content">
-          {activeTab === 0 ? (
-            <AllTable />
-          ) : activeTab === 1 ? (
-            <AppTable />
-          ) : activeTab === 2 ? (
-            <DataTable />
-          ) : activeTab === 3 ? (
-            <DataLakeTable />
-          ) : activeTab === 4 ? (
-            <ServiceMeshTable />
-          ) : (
-            <></>
-          )}
+      <Box className="global-service-penal">
+        <Box className="services-panel-tabs">
+          <Box className="tabs-head">
+            <List>
+              {this.tableMapping.map((tabData, index) => {
+                return (
+                  <ListItem
+                    key={`ops-tab-${index}`}
+                    className={index === activeTab ? "active" : ""}
+                    onClick={() => this.setActiveTab(index)}
+                  >
+                    {tabData.name}
+                  </ListItem>
+                );
+              })}
+            </List>
+          </Box>
+          <Box className="tabs-content">
+            {activeTab === 0 ? (
+              <AllTable />
+            ) : activeTab === 1 ? (
+              <AppTable />
+            ) : activeTab === 2 ? (
+              <DataTable />
+            ) : activeTab === 3 ? (
+              <DataLakeTable />
+            ) : activeTab === 4 ? (
+              <ServiceMeshTable />
+            ) : (
+              <></>
+            )}
+          </Box>
         </Box>
       </Box>
     );
