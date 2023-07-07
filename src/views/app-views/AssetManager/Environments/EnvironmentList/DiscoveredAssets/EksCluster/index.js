@@ -10,8 +10,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  List,
-  ListItem,
 } from "@mui/material";
 
 class EksCluster extends React.Component {
@@ -51,7 +49,7 @@ class EksCluster extends React.Component {
                 alignItems={"center"}
               >
                 <Grid item lg={5} md={5} xs={12}>
-                  <h4>Lambda Performance</h4>
+                  <h4>EKS Performance</h4>
                 </Grid>
                 <Grid item lg={7} md={7} xs={12}>
                   <Box className="head-right text-right">
