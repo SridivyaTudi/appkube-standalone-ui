@@ -3,7 +3,7 @@ import { Box, Grid } from "@mui/material/";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-export class SelectLanguagePopup extends Component {
+export class SelectTypePopup extends Component {
   render() {
     return (
       <Modal
@@ -17,7 +17,7 @@ export class SelectLanguagePopup extends Component {
             className="close"
             aria-label="Close"
             onClick={() => {
-              this.props.handleLanguagePopup();
+              this.props.handleTypePopup();
             }}
           >
             <i className="fa-solid fa-xmark"></i>
@@ -26,51 +26,55 @@ export class SelectLanguagePopup extends Component {
         <ModalBody
           style={{ overflowY: "auto", overflowX: "hidden", height: "90px" }}
         >
-          <h4 className="text-left m-b-1 m-t-0 ">Select Language</h4>
+          <h4 className="text-left m-b-1 m-t-0 ">Select type</h4>
           <Box className="checkbox-group">
             <Box className="d-flex align-items-center check-box">
               <input type="checkbox" name="all"  />
               <label>All</label>
             </Box>
             <Box className="d-flex align-items-center check-box">
-              <input type="checkbox" name="net" />
-              <label>.NET</label>
+              <input type="checkbox" name="Application" />
+              <label>Application</label>
             </Box>
             <Box className="d-flex align-items-center check-box">
-              <input type="checkbox" name="search" />
-              <label>Search</label>
+              <input type="checkbox" name="NET" />
+              <label>ASP.NET</label>
             </Box>
             <Box className="d-flex align-items-center check-box">
-              <input type="checkbox" name="go" />
-              <label>GO</label>
+              <input type="checkbox" name="Automation" />
+              <label>Automation</label>
             </Box>
             <Box className="d-flex align-items-center check-box">
-              <input type="checkbox" name="gttp" />
-              <label>HTTP</label>
+              <input type="checkbox" name="Eleventry" />
+              <label>Eleventry</label>
             </Box>
             <Box className="d-flex align-items-center check-box">
-              <input type="checkbox" name="java" />
-              <label>Java</label>
+              <input type="checkbox" name="Gatsby" />
+              <label>Gatsby</label>
             </Box>
             <Box className="d-flex align-items-center check-box">
-              <input type="checkbox" name="lisp" />
-              <label>LISP</label>
+              <input type="checkbox" name="API" />
+              <label>API</label>
             </Box>
             <Box className="d-flex align-items-center check-box">
-              <input type="checkbox" name="node" />
-              <label>Nodejs</label>
+              <input type="checkbox" name="Framework" />
+              <label>Framework</label>
             </Box>
             <Box className="d-flex align-items-center check-box">
-              <input type="checkbox" name="php" />
-              <label>PHP</label>
+              <input type="checkbox" name="Hugo" />
+              <label>Hugo</label>
             </Box>
             <Box className="d-flex align-items-center check-box">
-              <input type="checkbox" name="python" />
-              <label>Python</label>
+              <input type="checkbox" name="Pyramid" />
+              <label>Pyramid</label>
             </Box>
             <Box className="d-flex align-items-center check-box">
-              <input type="checkbox" name="ruby" />
-              <label>Ruby</label>
+              <input type="checkbox" name="Spring" />
+              <label>Spring</label>
+            </Box>
+            <Box className="d-flex align-items-center check-box">
+              <input type="checkbox" name="Microservices" />
+              <label>Microservices</label>
             </Box>
           </Box>
         </ModalBody>
@@ -93,4 +97,4 @@ export class SelectLanguagePopup extends Component {
   }
 }
 
-export default SelectLanguagePopup;
+export default SelectTypePopup;
