@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Route,
   Routes,
@@ -25,6 +25,7 @@ import SelectYourTemplate from "./app-views/AssetManager/SelectYourTemplate";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { getCurrentUser } from "utils";
+import titles from "./pathTitles.json";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -38,6 +39,11 @@ export function withRouter(Component) {
 }
 
 export const Views = (props) => {
+  useEffect(() => {
+    let title = props.router.location.pathname.split("/").pop();
+    document.title = titles[title];
+  });
+
   const user = getCurrentUser();
   if (user) {
     return (
@@ -116,7 +122,7 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/environments/createscratch`}
             element={<CreateScratch />}
           />
-         <Route
+          <Route
             path={`${APP_PREFIX_PATH}/environments/SelectYourTemplate`}
             element={<SelectYourTemplate />}
           />
