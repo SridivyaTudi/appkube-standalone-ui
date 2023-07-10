@@ -13,7 +13,6 @@ import {
   Grid,
   TableContainer,
   Table,
-  TableBody,
   TableCell,
   TableHead,
   TableRow,
@@ -52,15 +51,6 @@ class DiscoveredAssets extends Component {
     this.state = {
       display_detail: true,
       cloudAssets: [],
-      toggleNode: {
-        vpc: true,
-        cluster: false,
-        product: false,
-        vpcId: null,
-        clusterId: null,
-        productId: null,
-        globalService: false,
-      },
       breadcrumbs: [
         {
           id: "service",
@@ -320,13 +310,8 @@ class DiscoveredAssets extends Component {
   };
 
   render() {
-    const {
-      currentActiveCluster,
-      toggleNode,
-      dataOfTableLevel1,
-      dataOfLevel1,
-      currentActiveNodeLabel,
-    } = this.state;
+    const { dataOfTableLevel1, dataOfLevel1, currentActiveNodeLabel } =
+      this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
       <Box className="discovered-assets">
@@ -366,159 +351,6 @@ class DiscoveredAssets extends Component {
                 />
                 <Grid item xs={5}>
                   {!currentActiveNodeLabel ? this.renderTableLevel1() : <></>}
-                  <Box
-                    className="fliter-tabs"
-                    style={{
-                      display: `${
-                        this.state.breadcrumbs.length === 4 ? "block" : "none"
-                      }`,
-                    }}
-                  >
-                    <Box className="global-services-fliter">
-                      <Box className="heading">
-                        <Box className="breadcrumbs">
-                          <ul>{this.getBreadCrumbs()}</ul>
-                        </Box>
-                        <button type="button" className="btn btn-ellipsis">
-                          <i className="fa-solid fa-ellipsis-v"></i>
-                        </button>
-                      </Box>
-                      <Box className="fliter-inputs">
-                        <Box className="search-control">
-                          <input
-                            type="text"
-                            className="input-group-text"
-                            placeholder=""
-                          />
-                        </Box>
-                        <Box className="search-control">
-                          <input
-                            type="text"
-                            className="input-group-text"
-                            placeholder=""
-                          />
-                        </Box>
-                        <Box className="search-control">
-                          <input
-                            type="text"
-                            className="input-group-text"
-                            placeholder=""
-                          />
-                        </Box>
-                      </Box>
-                    </Box>
-                    <Box
-                      className="environment-table-section"
-                      style={{ height: "373px" }}
-                    >
-                      <Box className="table discovered-assets-table">
-                        <TableContainer>
-                          <Table className="overview">
-                            <TableHead>
-                              <TableRow>
-                                <TableCell>Name</TableCell>
-                                <TableCell align="center">
-                                  Performance
-                                </TableCell>
-                                <TableCell align="center">
-                                  Availability
-                                </TableCell>
-                                <TableCell align="center">Security</TableCell>
-                                <TableCell align="center">
-                                  Data Protection
-                                </TableCell>
-                                <TableCell align="center">User Exp</TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              <TableRow>
-                                <TableCell>
-                                  <strong>
-                                    <a href="#">EMS</a>
-                                  </strong>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Box className="box red">2</Box>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Box className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </Box>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Box className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </Box>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Box className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </Box>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Box className="box orange">3</Box>
-                                </TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell>
-                                  <strong>
-                                    <a href="#">Supply Chain</a>
-                                  </strong>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Box className="box red">2</Box>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Box className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </Box>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Box className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </Box>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Box className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </Box>
-                                </TableCell>
-                                <TableCell align="center"></TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell>
-                                  <strong>
-                                    <a href="#">Procurement</a>
-                                  </strong>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box red">2</div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box orange">3</div>
-                                </TableCell>
-                              </TableRow>
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-                      </Box>
-                    </Box>
-                  </Box>
                   <Box className="fliter-tabs global-service-penal">
                     <Box className="global-services-fliter">
                       <Box className="heading">
@@ -529,194 +361,17 @@ class DiscoveredAssets extends Component {
                     </Box>
                     {currentActiveNodeLabel.includes("cluster") ? (
                       <ClusterDetails />
+                    ) : currentActiveNodeLabel.includes("vpc") ? (
+                      <VpcDetails />
+                    ) : currentActiveNodeLabel.includes("gateway") ? (
+                      <GatewayDetails />
+                    ) : currentActiveNodeLabel.includes("cloudManaged") ? (
+                      <CloudManagedDetails />
+                    ) : currentActiveNodeLabel.includes("globalServices") ? (
+                      <GlobalSerivces />
                     ) : (
                       <></>
                     )}
-                  </Box>
-
-                  {currentActiveNodeLabel.includes("vpc") ? (
-                    <VpcDetails />
-                  ) : currentActiveNodeLabel.includes("gateway") ? (
-                    <GatewayDetails />
-                  ) : currentActiveNodeLabel.includes("cloudManaged") ? (
-                    <CloudManagedDetails />
-                  ) : (
-                    <></>
-                  )}
-
-                  {toggleNode.globalService && <GlobalSerivces />}
-                  <Box className="fliter-tabs" style={{ display: "none" }}>
-                    <Box className="global-services-fliter">
-                      <Box className="heading">
-                        <Box className="breadcrumbs">
-                          <List>
-                            <ListItem>
-                              <a href="#">AWS</a>
-                            </ListItem>
-                            <ListItem>
-                              <i className="fa-solid fa-chevron-right"></i>
-                            </ListItem>
-                            <ListItem>
-                              <a href="#">VPC 1</a>
-                            </ListItem>
-                            <ListItem>
-                              <i className="fa-solid fa-chevron-right"></i>
-                            </ListItem>
-                            <ListItem>
-                              <a href="#">Cluster 1</a>
-                            </ListItem>
-                            <ListItem>
-                              <i className="fa-solid fa-chevron-right"></i>
-                            </ListItem>
-                            <ListItem>
-                              <span>App Services</span>
-                            </ListItem>
-                          </List>
-                        </Box>
-                        <button type="button" className="btn btn-ellipsis">
-                          <i className="fa-solid fa-ellipsis-v"></i>
-                        </button>
-                      </Box>
-                      <Box className="fliter-inputs">
-                        <Box className="search-control">
-                          <input
-                            type="text"
-                            className="input-group-text"
-                            placeholder=""
-                          />
-                        </Box>
-                        <Box className="search-control">
-                          <input
-                            type="text"
-                            className="input-group-text"
-                            placeholder=""
-                          />
-                        </Box>
-                        <Box className="search-control">
-                          <input
-                            type="text"
-                            className="input-group-text"
-                            placeholder=""
-                          />
-                        </Box>
-                      </Box>
-                    </Box>
-                    <Box
-                      className="environment-table-section"
-                      style={{ height: "373px" }}
-                    >
-                      <Box className="table discovered-assets-table">
-                        <TableContainer>
-                          <Table className="overview">
-                            <TableHead>
-                              <TableRow>
-                                <TableCell>Name</TableCell>
-                                <TableCell align="center">
-                                  Performance
-                                </TableCell>
-                                <TableCell align="center">
-                                  Availability
-                                </TableCell>
-                                <TableCell align="center">Security</TableCell>
-                                <TableCell align="center">
-                                  Data Protection
-                                </TableCell>
-                                <TableCell align="center">User Exp</TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              <TableRow>
-                                <TableCell>
-                                  <strong>
-                                    <a href="#">EMS</a>
-                                  </strong>
-                                  <i className="fa-solid fa-caret-right m-l-1"></i>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box red">2</div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box orange">3</div>
-                                </TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell>
-                                  <strong>
-                                    <a href="#">Supply Chain</a>
-                                  </strong>
-                                  <i className="fa-solid fa-caret-right m-l-1"></i>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box red">2</div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box orange">3</div>
-                                </TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell>
-                                  <strong>
-                                    <a href="#">Procurement</a>
-                                  </strong>
-                                  <i className="fa-solid fa-caret-right m-l-1"></i>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box red">2</div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box green">
-                                    <i className="fa-solid fa-check"></i>
-                                  </div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div className="box orange">3</div>
-                                </TableCell>
-                              </TableRow>
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-                      </Box>
-                    </Box>
                   </Box>
                 </Grid>
               </Grid>
