@@ -18,21 +18,30 @@ import plainrubyicon from "assets/img/selectyourtemplate/plain-ruby-icon.png";
 import simpleiconsspringboot from "assets/img/selectyourtemplate/simple-icons_springboot.png";
 import jenkinsicon from "assets/img/selectyourtemplate/jenkins-icon.png";
 import SelectLanguagePopup from "./Components/SelectLanguagePopup";
+import InfoPopup from "./Components/InfoPopup";
 
 export class SelectYourTemplate extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showSelectLanguagePopup: false,
+      showInfoPopup: false,
     };
   }
   togglePopup = () => {
     this.setState({
       showSelectLanguagePopup: !this.state.showSelectLanguagePopup,
+     
     });
   };
+  handleInfoPopup = () => {
+    this.setState({
+      showInfoPopup: !this.state.showInfoPopup,
+    });
+  };
+ 
   render() {
-    const { showSelectLanguagePopup } = this.state;
+    const { showSelectLanguagePopup, showInfoPopup } = this.state;
     return (
       <Box className="select-your-template-container">
         <Box className="page-header">
@@ -145,7 +154,7 @@ export class SelectYourTemplate extends Component {
                 <span className="d-block name">Apache</span>
                 <span className="d-block sub-name">Tomcat</span>
                 <div className="d-flex m-t-3 buttons">
-                  <Button
+                  <Button onClick={this.handleInfoPopup}
                     className="primary-outline-btn min-width-inherit m-r-3"
                     variant="outlined"
                   >
@@ -383,6 +392,15 @@ export class SelectYourTemplate extends Component {
           <SelectLanguagePopup
             showModal={SelectLanguagePopup}
             togglePopup={this.togglePopup}
+           
+          />
+        ) : (
+          <></>
+        )}
+        {showInfoPopup ? (
+          <InfoPopup
+            showModal={InfoPopup}
+            handleInfoPopup={this.handleInfoPopup}
            
           />
         ) : (

@@ -11,8 +11,7 @@ export class SelectLanguagePopup extends Component {
         toggle={this.toggle}
         className="select-account-modal-container select-language-modal"
       >
-        <ModalHeader>
-          Select Language
+        <ModalHeader style={{borderBottom: "none"}}>
           <button
             type="button"
             className="close"
@@ -25,11 +24,12 @@ export class SelectLanguagePopup extends Component {
           </button>
         </ModalHeader>
         <ModalBody
-          style={{ overflowY: "auto", overflowX: "hidden", height: "70px" }}
+          style={{ overflowY: "auto", overflowX: "hidden", height: "90px" }}
         >
+          <h4 className="text-left m-b-1 m-t-0 ">Select Language</h4>
           <Box className="checkbox-group">
             <Box className="d-flex align-items-center check-box">
-              <input type="checkbox" name="all" />
+              <input type="checkbox" name="all"  />
               <label>All</label>
             </Box>
             <Box className="d-flex align-items-center check-box">
