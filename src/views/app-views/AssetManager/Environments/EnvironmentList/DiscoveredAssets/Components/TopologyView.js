@@ -39,7 +39,8 @@ class TopologyView extends Component {
   renderMainBody = () => {
     const { data } = this.props;
     let { level2Show, selectedLevel1Id } = this.state.selectedView;
-    return Object.keys(data).length ? (
+    return Object.keys(data).length &&
+      (data?.children[0].length || data?.children[1].length) ? (
       <ArcherContainer noCurves style={{ width: "100%", height: "100%" }}>
         <TransformWrapper
           onTransformed={(instance) => {
@@ -170,7 +171,7 @@ class TopologyView extends Component {
                       sourceAnchor: "right",
                       style: {
                         strokeColor: "#a5a5d7",
-                        strokeWidth: 2
+                        strokeWidth: 2,
                       },
                     },
                   ]
@@ -208,10 +209,7 @@ class TopologyView extends Component {
     if (data.length) {
       return data.map((level2, level2Index) => {
         return (
-          <ArcherElement
-            id={`level2_${level2Index}`}
-            key={getUUID()}
-          >
+          <ArcherElement id={`level2_${level2Index}`} key={getUUID()}>
             <li
               onClick={() => {
                 this.onClickLevel2(level2Index, level2.label);
@@ -278,7 +276,7 @@ class TopologyView extends Component {
                 <i className="fa-solid fa-arrow-left"></i>
               </Box>
             </Box>
-            <Box className="services-panel-body">{Object.keys(this.props.data).length ? this.renderMainBody() : null}</Box>
+            <Box className="services-panel-body">{this.renderMainBody()}</Box>
           </Box>
         </Grid>
       </>

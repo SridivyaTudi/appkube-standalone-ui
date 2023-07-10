@@ -4,8 +4,9 @@ import CostAnalysis from "views/app-views/AssetManager/Dashboard/costAnalysis";
 import SLAMetrics from "views/app-views/AssetManager/Dashboard/slaMetrics";
 import ProcessCentral from "views/app-views/AssetManager/Dashboard/processCentral";
 import Planet from "assets/img/dashboard/planet2.png";
-import {Box, List, ListItem} from "@mui/material";
-
+import { Box, List, ListItem } from "@mui/material";
+import { getCurrentHourSpendRate } from "redux/assetManager/dashboard/dashboardThunk";
+import { connect } from "react-redux";
 class Dashboard extends Component {
   tabMapping = [
     {
@@ -34,6 +35,11 @@ class Dashboard extends Component {
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
+
+  componentDidMount = () => {
+    this.props.getCurrentHourSpendRate();
+  };
+
   render() {
     const { activeTab } = this.state;
     return (
@@ -78,5 +84,8 @@ class Dashboard extends Component {
     );
   }
 }
-
-export default Dashboard;
+function mapStateToProps(state) {
+  
+}
+const mapDispatchToProps = { getCurrentHourSpendRate };
+export default connect(mapStateToProps,mapDispatchToProps)(Dashboard);

@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import status from "redux/constants/commonDS";
 import { connect } from "react-redux";
 import { ToastMessage } from "Toast/ToastMessage";
-
+import { getUUID } from "utils";
 const headers = [
   { label: "Service Name", key: "name" },
   { label: "Product", key: "product_count" },
@@ -36,12 +36,20 @@ class CommonFilterViewSearch extends Component {
       ...props.data,
     };
   }
-  
+
+  componentDidMount=()=>{
+    if (this.props.envSummary.data) {
+      this.setState({
+        allEnvs: this.props.envSummary.data
+      });
+    }
+  }
+
   renderAccountList = () => {
     return this.state.allEnvs.map((item) => {
       return item.environmentSummaryList.map((account, innerKey) => {
         return (
-          <ListItem key={innerKey}>
+          <ListItem key={getUUID()}>
             <Link
               to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}`}
               onClick={() => {
@@ -275,7 +283,7 @@ class CommonFilterViewSearch extends Component {
                       {JSON.parse(localStorage.getItem("recentEnv"))?.map(
                         (item) => {
                           return (
-                            <ListItem>
+                            <ListItem key={getUUID()}>
                               <Link
                                 to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}`}
                                 onClick={() => {

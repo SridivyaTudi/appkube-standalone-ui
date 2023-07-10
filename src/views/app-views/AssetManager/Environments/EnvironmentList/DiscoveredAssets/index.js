@@ -115,7 +115,7 @@ class DiscoveredAssets extends Component {
       return (
         <>
           {index > 0 ? (
-            <li>
+            <li  key={getUUID()}>
               <i className="fa-solid fa-chevron-right"></i>
             </li>
           ) : (
@@ -133,6 +133,7 @@ class DiscoveredAssets extends Component {
                 );
               }
             }}
+            key={getUUID()}
           >
             <a>{data.name}</a>
           </li>

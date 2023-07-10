@@ -387,7 +387,7 @@ class Environments extends Component {
         return (
           <ListItem>
             <Link
-              to={`${APP_PREFIX_PATH}/environments/environmentlist?accountId=${item.accountId}&cloudName=${item.accountType}`}
+              to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}`}
               onClick={() =>
                 this.addAccountToRecentlyVisited(item)
               }

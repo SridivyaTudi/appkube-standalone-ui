@@ -11,7 +11,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-
+import { getUUID } from "utils";
 class EksCluster extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +27,7 @@ class EksCluster extends React.Component {
             <Box className="account-list-conitant-scroll">
               {dummyData.eksResources.map((item) => {
                 return (
-                  <Box className="account-list-details">
+                  <Box className="account-list-details" key={getUUID()} >
                     <Box className="d-block">
                       <strong>{item.value}</strong>
                       <p>{item.title}</p>
@@ -85,7 +85,7 @@ class EksCluster extends React.Component {
                   <TableBody>
                     {dummyData.eksPerformance.map((item) => {
                       return (
-                        <TableRow>
+                        <TableRow key={getUUID()}>
                           <TableCell>
                             <strong>
                               <a href="#">{item.name}</a>

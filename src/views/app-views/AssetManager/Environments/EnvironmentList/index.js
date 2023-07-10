@@ -17,7 +17,7 @@ import {
 } from "redux/assetManager/environments/environmentData/environmentDataThunk";
 import { getEnvsSummary } from "redux/assetManager/environments/environmentsThunk";
 import { connect } from "react-redux";
-import { getCurrentOrgId } from "utils";
+import { getCurrentOrgId, getUUID } from "utils";
 class EnvironmentList extends Component {
   tabMapping = [
     {
@@ -190,7 +190,6 @@ class EnvironmentList extends Component {
   };
 
   updateCurrentAccountId = (id) => {
-    console.log(id)
     this.setState({ landingZone: id });
   };
 
@@ -199,7 +198,7 @@ class EnvironmentList extends Component {
     const currentEnv = accountList[this.getCloudName()];
     const retData = [];
     retData.push(
-      <List>
+      <List key={getUUID()}>
         <ListItem>
           <Box className="data-text">
             <span style={{ backgroundColor: "#ff9900" }}></span>
@@ -276,7 +275,7 @@ class EnvironmentList extends Component {
               {this.tabMapping.map((tabData, index) => {
                 return (
                   <ListItem
-                    key={`ops-tab-${index}`}
+                    key={getUUID()}
                     className={index === activeTab ? "active" : ""}
                     onClick={() => this.setActiveTab(index)}
                   >

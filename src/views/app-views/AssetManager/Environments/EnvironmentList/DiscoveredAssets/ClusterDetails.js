@@ -5,7 +5,7 @@ import EksCluster from "./EksCluster";
 import EcsCluster from "./EcsCluster";
 import GlobalIcon4 from "assets/img/assetmanager/global-icon4.png";
 import GlobalIcon5 from "assets/img/assetmanager/global-icon5.png";
-
+import { getUUID } from "utils";
 class ClusterDetails extends React.Component {
   constructor(props) {
     super(props);
@@ -43,7 +43,7 @@ class ClusterDetails extends React.Component {
               <List>
                 {dummyData.eksCluster.map((item) => {
                   return (
-                    <ListItem>
+                    <ListItem key={getUUID()}>
                       <Box className="data-text">
                         <span
                           style={{
@@ -79,7 +79,7 @@ class ClusterDetails extends React.Component {
               <List>
                 {dummyData.ecsCluster.map((item) => {
                   return (
-                    <ListItem>
+                    <ListItem key={getUUID()}>
                       <Box className="data-text">
                         <span
                           style={{

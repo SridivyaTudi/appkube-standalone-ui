@@ -4,6 +4,7 @@ import organizationsReducer from "redux/assetManager/organization/organizationSl
 import newAccountReducer from "redux/assetManager/newAccountSetup/newAccountSetupSlice";
 import authReducer from "redux/auth/authSlice";
 import environmentDataReducer from "redux/assetManager/environments/environmentData/environmentDataSlice";
+import dashboardReducer from "redux/assetManager/dashboard/dashboardSlice";
 
 const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
     environments: environmentReducer,
     organization: organizationsReducer,
     newAccountSetup: newAccountReducer,
-    environmentData:environmentDataReducer
+    environmentData:environmentDataReducer,
+    dashboard:dashboardReducer
   },
 });
 

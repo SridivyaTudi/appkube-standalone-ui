@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Box, Grid, List, ListItem } from "@mui/material";
 import UserIcon from "assets/img/dashboard/user-icon.png";
 import KingIcon from "assets/img/dashboard/kingicon.png";
-import annotationPlugin from 'chartjs-plugin-annotation';
+import annotationPlugin from "chartjs-plugin-annotation";
 
 import {
   Chart as ChartJS,
@@ -14,10 +14,10 @@ import {
   Tooltip,
   Legend,
   plugins,
-} from 'chart.js';
+} from "chart.js";
 
-import { Line } from 'react-chartjs-2';
-
+import { Line } from "react-chartjs-2";
+import { connect } from "react-redux";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -30,7 +30,20 @@ ChartJS.register(
 
 ChartJS.register(annotationPlugin);
 
-const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const labels = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 class SpendAnalytics extends Component {
   constructor(props) {
@@ -40,118 +53,157 @@ class SpendAnalytics extends Component {
         labels,
         datasets: [
           {
-            label: 'AWS',
-            data: ['600', '700', '420', '500', '780', '580', '600', '460', '450', '540', '750', '1000'],
-            backgroundColor: 'rgba(255, 153, 0, 1)',
-            borderColor: 'rgba(255, 153, 0, 1)',
+            label: "AWS",
+            data: [
+              "600",
+              "700",
+              "420",
+              "500",
+              "780",
+              "580",
+              "600",
+              "460",
+              "450",
+              "540",
+              "750",
+              "1000",
+            ],
+            backgroundColor: "rgba(255, 153, 0, 1)",
+            borderColor: "rgba(255, 153, 0, 1)",
             pointBorderWidth: 0,
             lineTension: 0.5,
             fill: false,
           },
           {
-            label: 'AZURE',
-            data: ['420', '250', '350', '450', '480', '700', '850', '650', '750', '800', '850', '800'],
-            backgroundColor: 'rgba(0, 137, 214, 1)',
-            borderColor: 'rgba(0, 137, 214, 1)',
+            label: "AZURE",
+            data: [
+              "420",
+              "250",
+              "350",
+              "450",
+              "480",
+              "700",
+              "850",
+              "650",
+              "750",
+              "800",
+              "850",
+              "800",
+            ],
+            backgroundColor: "rgba(0, 137, 214, 1)",
+            borderColor: "rgba(0, 137, 214, 1)",
             pointBorderWidth: 0,
             lineTension: 0.5,
             fill: false,
           },
           {
-            label: 'GCP',
-            data: ['230', '200', '240', '300', '320', '350', '300', '340', '350', '300', '500', '600'],
-            backgroundColor: 'rgba(218, 79, 68, 1)',
-            borderColor: 'rgba(218, 79, 68, 1)',
+            label: "GCP",
+            data: [
+              "230",
+              "200",
+              "240",
+              "300",
+              "320",
+              "350",
+              "300",
+              "340",
+              "350",
+              "300",
+              "500",
+              "600",
+            ],
+            backgroundColor: "rgba(218, 79, 68, 1)",
+            borderColor: "rgba(218, 79, 68, 1)",
             pointBorderWidth: 0,
             lineTension: 0.5,
             fill: false,
-          }
+          },
         ],
       },
       options: {
-        type: 'line',
+        type: "line",
         plugins: {
           legend: {
-            position: 'bottom',
+            position: "bottom",
             onClick: null,
             labels: {
               usePointStyle: true,
               boxHeight: 5,
               boxWidth: 50,
-              pointStyle: 'circle',
+              pointStyle: "circle",
               fontColor: "#383874",
               padding: 30,
               font: {
-                size: 12
+                size: 12,
               },
-            }
+            },
           },
           title: {
             display: true,
-            text: 'Cloud Wise Spend',
-            align: 'start',
+            text: "Cloud Wise Spend",
+            align: "start",
             padding: {
-              bottom: 25
+              bottom: 25,
             },
             font: {
-              size: '14',
+              size: "14",
               family: '"Poppins", sans-serif',
-              weight: '500',
+              weight: "500",
             },
-            color: '#383874'
+            color: "#383874",
           },
           annotation: {
             annotations: {
               box1: {
-                drawTime: 'beforeDatasetsDraw',
-                type: 'box',
+                drawTime: "beforeDatasetsDraw",
+                type: "box",
                 xMin: 0,
                 xMax: 1,
-                backgroundColor: 'rgba(244, 245, 251, 1)',
-                borderColor: 'transparent'
+                backgroundColor: "rgba(244, 245, 251, 1)",
+                borderColor: "transparent",
               },
               box2: {
-                drawTime: 'beforeDatasetsDraw',
-                type: 'box',
+                drawTime: "beforeDatasetsDraw",
+                type: "box",
                 xMin: 2,
                 xMax: 3,
-                backgroundColor: 'rgba(244, 245, 251, 1)',
-                borderColor: 'transparent'
+                backgroundColor: "rgba(244, 245, 251, 1)",
+                borderColor: "transparent",
               },
               box3: {
-                drawTime: 'beforeDatasetsDraw',
-                type: 'box',
+                drawTime: "beforeDatasetsDraw",
+                type: "box",
                 xMin: 4,
                 xMax: 5,
-                backgroundColor: 'rgba(244, 245, 251, 1)',
-                borderColor: 'transparent'
+                backgroundColor: "rgba(244, 245, 251, 1)",
+                borderColor: "transparent",
               },
               box4: {
-                drawTime: 'beforeDatasetsDraw',
-                type: 'box',
+                drawTime: "beforeDatasetsDraw",
+                type: "box",
                 xMin: 6,
                 xMax: 7,
-                backgroundColor: 'rgba(244, 245, 251, 1)',
-                borderColor: 'transparent'
+                backgroundColor: "rgba(244, 245, 251, 1)",
+                borderColor: "transparent",
               },
               box5: {
-                drawTime: 'beforeDatasetsDraw',
-                type: 'box',
+                drawTime: "beforeDatasetsDraw",
+                type: "box",
                 xMin: 8,
                 xMax: 9,
-                backgroundColor: 'rgba(244, 245, 251, 1)',
-                borderColor: 'transparent'
+                backgroundColor: "rgba(244, 245, 251, 1)",
+                borderColor: "transparent",
               },
               box6: {
-                drawTime: 'beforeDatasetsDraw',
-                type: 'box',
+                drawTime: "beforeDatasetsDraw",
+                type: "box",
                 xMin: 10,
                 xMax: 11,
-                backgroundColor: 'rgba(244, 245, 251, 1)',
-                borderColor: 'transparent'
-              }
-            }
-          }
+                backgroundColor: "rgba(244, 245, 251, 1)",
+                borderColor: "transparent",
+              },
+            },
+          },
         },
         scales: {
           x: {
@@ -159,39 +211,47 @@ class SpendAnalytics extends Component {
               drawOnChartArea: true,
             },
             ticks: {
-              color: '#9797b6',
+              color: "#9797b6",
               family: '"Poppins", sans-serif',
-            }
+            },
           },
           y: {
             beginAtZero: true,
             grid: {
-              drawOnChartArea: false
+              drawOnChartArea: false,
             },
             ticks: {
               callback: (value) => {
                 if (value % 200 === 0) {
-                  return `$${value}`
+                  return `$${value}`;
                 }
               },
-              color: '#9797b6',
+              color: "#9797b6",
               family: '"Poppins", sans-serif',
-            }
-          }
+            },
+          },
         },
         elements: {
           point: {
-            radius: 0
+            radius: 0,
           },
           line: {
-            tension: 0
-          }
+            tension: 0,
+          },
         },
       },
     };
   }
-
+  getCurrentHourSpendRate = ()=>{
+    let { currentHourSpendRate } = this.props
+    return currentHourSpendRate.data?.length && currentHourSpendRate.data[0].sumCurrentHour ? currentHourSpendRate.data[0].sumCurrentHour  : 0
+  }
+  getHourSumDifference =()=>{
+    let { currentHourSpendRate } = this.props
+    return currentHourSpendRate.data?.length && currentHourSpendRate.data[0].sum_difference ? currentHourSpendRate.data[0].sum_difference  : null
+  }
   render() {
+   
     return (
       <Box className="spend-analytics-container">
         <Box className="spend-analytics-inner-container">
@@ -293,8 +353,13 @@ class SpendAnalytics extends Component {
           </Box>
           <Box className="analytics-center">
             <Box className="analytics-line-chart">
-              <Box id="chart" style={{ height: '320px', width: '100%' }}>
-                <Line options={this.state.options} data={this.state.data} height={320} width={518} />
+              <Box id="chart" style={{ height: "320px", width: "100%" }}>
+                <Line
+                  options={this.state.options}
+                  data={this.state.data}
+                  height={320}
+                  width={518}
+                />
               </Box>
             </Box>
           </Box>
@@ -307,13 +372,16 @@ class SpendAnalytics extends Component {
                 <Grid container spacing={1} className="spend-time">
                   <Grid className="spend-time-details">
                     <Box className="user-profile">
-                      <img src={UserIcon} alt="" />
+                      <img src={UserIcon} className="red" alt="" />
                     </Box>
                     <Box className="spend-contant">
                       <label>Per Hour</label>
                       <Box className="spend-price">
-                        <strong>$2,340</strong>
-                        <span>145</span>
+                        <strong>{this.getCurrentHourSpendRate() ? `$${this.getCurrentHourSpendRate()}` : null}</strong>
+                        {
+                          this.getHourSumDifference() ? <span className={`${ this.getHourSumDifference() > 0 ? '' : 'red'}` }>{this.getHourSumDifference() ? `${this.getHourSumDifference()}` : null}</span> : <></>  
+                        }
+                        
                       </Box>
                     </Box>
                   </Grid>
@@ -409,4 +477,10 @@ class SpendAnalytics extends Component {
   }
 }
 
-export default SpendAnalytics;
+function mapStateToProps(state) {
+  const { currentHourSpendRate } = state.dashboard;
+  return { currentHourSpendRate };
+}
+
+const mapDispatchToProps = {};
+export default connect(mapStateToProps, mapDispatchToProps)(SpendAnalytics);

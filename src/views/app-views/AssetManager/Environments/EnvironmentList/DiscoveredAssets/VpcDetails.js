@@ -16,6 +16,7 @@ import EMRStudio from "assets/img/assetmanager/cloud-managed-icon17.png";
 import Waf from "assets/img/assetmanager/global-icon6.png";
 import API from "assets/img/assetmanager/global-icon7.png";
 import LB from "assets/img/assetmanager/global-icon3.png";
+import { getUUID } from "utils";
 
 class VpcDetails extends React.Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class VpcDetails extends React.Component {
     const clusterJSX = [];
     dummyData.clusterServices.map((item, index) => {
       clusterJSX.push(
-        <Box className="service-card active">
+        <Box className="service-card active" key={getUUID()}>
           <Box className="service-icon">
             <img
               src={this.state.clusterServicesImages[index]}
@@ -63,7 +64,7 @@ class VpcDetails extends React.Component {
     const JSX = [];
     dummyData.managedServices.map((item, index) => {
       JSX.push(
-        <Box className="service-card active">
+        <Box className="service-card active" key={getUUID()}>
           <Box className="service-icon">
             <img
               src={this.state.managedServicesImages[index]}
@@ -84,7 +85,7 @@ class VpcDetails extends React.Component {
     const JSX = [];
     dummyData.GatewayServices.map((item, index) => {
       JSX.push(
-        <Box className="service-card active">
+        <Box className="service-card active" key={getUUID()}>
           <Box className="service-icon">
             <img
               src={this.state.GatewayServicesImages[index]}
