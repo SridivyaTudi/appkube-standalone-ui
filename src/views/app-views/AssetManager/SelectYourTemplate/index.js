@@ -19,6 +19,7 @@ import simpleiconsspringboot from "assets/img/selectyourtemplate/simple-icons_sp
 import jenkinsicon from "assets/img/selectyourtemplate/jenkins-icon.png";
 import SelectLanguagePopup from "./Components/SelectLanguagePopup";
 import InfoPopup from "./Components/InfoPopup";
+import DeployPopup from "./Components/DeployPopup";
 
 export class SelectYourTemplate extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ export class SelectYourTemplate extends Component {
     this.state = {
       showSelectLanguagePopup: false,
       showInfoPopup: false,
+      showDeployoPopup: false,
     };
   }
   togglePopup = () => {
@@ -39,9 +41,14 @@ export class SelectYourTemplate extends Component {
       showInfoPopup: !this.state.showInfoPopup,
     });
   };
+  handleDeployoPopup = () => {
+    this.setState({
+      showDeployoPopup: !this.state.showDeployoPopup,
+    });
+  };
  
   render() {
-    const { showSelectLanguagePopup, showInfoPopup } = this.state;
+    const { showSelectLanguagePopup, showInfoPopup, showDeployoPopup } = this.state;
     return (
       <Box className="select-your-template-container">
         <Box className="page-header">
@@ -160,7 +167,7 @@ export class SelectYourTemplate extends Component {
                   >
                     Info
                   </Button>
-                  <Button
+                  <Button onClick={this.handleDeployoPopup}
                     className="primary-btn min-width-inherit"
                     variant="contained"
                   >
@@ -401,6 +408,15 @@ export class SelectYourTemplate extends Component {
           <InfoPopup
             showModal={InfoPopup}
             handleInfoPopup={this.handleInfoPopup}
+           
+          />
+        ) : (
+          <></>
+        )}
+        {showDeployoPopup ? (
+          <DeployPopup
+            showModal={DeployPopup}
+            handleDeployoPopup={this.handleDeployoPopup}
            
           />
         ) : (

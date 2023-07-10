@@ -1,23 +1,36 @@
-import { Box, FormControlLabel, Grid } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { Box, Grid, FormControlLabel } from "@mui/material/";
 import Checkbox from "@mui/material/Checkbox";
 import { Component } from "react";
-import AccountAddedImage from "../../../../../../assets/img/assetmanager/account-added-image.png";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
-class CreateFromScratch extends Component {
+export class DeployPopup extends Component {
   render() {
     return (
-      <Box className="d-inline-block width-100 new-account-setup-tab-contents">
-        <Box sx={{ width: "100%" }}>
-          <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            alignItems={"center"}
-            justifyContent={"flex-start"}
+      <Modal
+        isOpen={this.props.showModal}
+        toggle={this.toggle}
+        className="select-account-modal-container deploy-modal"
+      >
+        <ModalHeader style={{ borderBottom: "none" }}>
+          <h5>Deploy</h5>
+          <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={() => {
+              this.props.handleDeployoPopup();
+            }}
           >
-            <Grid item xs={6}>
-              <Box className="account-setup-right-contents">
-                <h3>Create From Scratch</h3>
+            <i className="fa-solid fa-xmark"></i>
+          </button>
+        </ModalHeader>
+        <ModalBody
+          style={{ overflowY: "auto", overflowX: "hidden", height: "350px" }}
+        >
+          <Box className="deploy-modal-contant">
+            <Grid container spacing={0}>
+              <Grid item xs={6}  className="border-right p-l-15 p-r-15">
                 <Box className="form-group">
                   <label>Department Name</label>
                   <input
@@ -73,6 +86,17 @@ class CreateFromScratch extends Component {
                     </Grid>
                   </Grid>
                 </Box>
+              </Grid>
+              <Grid item xs={6} className="p-l-15 p-r-15">
+                <Box className="form-group">
+                  <label>Select AWS Account</label>
+                  <select name="number" id="number" className="form-control">
+                    <option value="1234546547654">1234546547654</option>
+                    <option value="1234546547655">1234546547655</option>
+                    <option value="1234546547656">1234546547656</option>
+                    <option value="1234546547657">1234546547657</option>
+                  </select>
+                </Box>
                 <Box className="form-group">
                   <label>Select AWS Account</label>
                   <select name="number" id="number" className="form-control">
@@ -93,26 +117,31 @@ class CreateFromScratch extends Component {
                 <Box className="form-group">
                   <label>Custom URL</label>
                   <Box className="d-flex">
-                    <input
-                      className="custom-url"
-                      type="text"
-                      placeholder=""
-                    />
+                    <input className="custom-url" type="text" placeholder="" />
                     <p>.appkube.com</p>
                   </Box>
                 </Box>
-              </Box>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <Box className="added-image">
-                <img src={AccountAddedImage} alt="added image" />
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
+          </Box>
+        </ModalBody>
+        <ModalFooter className="footer-top-br">
+          <Box className="d-block text-center">
+            <LoadingButton className="secondary-btn m-r-2" variant="contained">
+              Cancel
+            </LoadingButton>
+            <LoadingButton
+              className="primary-btn min-width"
+              loadingPosition="start"
+              variant="contained"
+            >
+              Create
+            </LoadingButton>
+          </Box>
+        </ModalFooter>
+      </Modal>
     );
   }
 }
 
-export default CreateFromScratch;
+export default DeployPopup;
