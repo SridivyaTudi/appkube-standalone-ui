@@ -17,6 +17,7 @@ import simplepelicanicon from "assets/img/selectyourtemplate/simple-pelican-icon
 import plainrubyicon from "assets/img/selectyourtemplate/plain-ruby-icon.png";
 import simpleiconsspringboot from "assets/img/selectyourtemplate/simple-icons_springboot.png";
 import jenkinsicon from "assets/img/selectyourtemplate/jenkins-icon.png";
+import SelectTypePopup from "./Components/SelectTypePopup";
 import SelectLanguagePopup from "./Components/SelectLanguagePopup";
 import InfoPopup from "./Components/InfoPopup";
 import DeployPopup from "./Components/DeployPopup";
@@ -25,12 +26,19 @@ export class SelectYourTemplate extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showSelectTypePopup: false,
       showSelectLanguagePopup: false,
       showInfoPopup: false,
       showDeployoPopup: false,
     };
   }
-  togglePopup = () => {
+  handleTypePopup = () => {
+    this.setState({
+      showSelectTypePopup: !this.state.showSelectTypePopup,
+     
+    });
+  };
+  handleLanguagePopup = () => {
     this.setState({
       showSelectLanguagePopup: !this.state.showSelectLanguagePopup,
      
@@ -48,7 +56,7 @@ export class SelectYourTemplate extends Component {
   };
  
   render() {
-    const { showSelectLanguagePopup, showInfoPopup, showDeployoPopup } = this.state;
+    const { showSelectTypePopup, showSelectLanguagePopup, showInfoPopup, showDeployoPopup } = this.state;
     return (
       <Box className="select-your-template-container">
         <Box className="page-header">
@@ -102,7 +110,7 @@ export class SelectYourTemplate extends Component {
                 >
                   Express
                 </Button>
-                <Button onClick={this.togglePopup}
+                <Button onClick={this.handleTypePopup}
                   className="primary-outline-btn min-width-inherit"
                   variant="outlined"
                 >
@@ -141,7 +149,7 @@ export class SelectYourTemplate extends Component {
                   Flask
                 </Button>
                 <Button
-                  onClick={this.togglePopup}
+                  onClick={this.handleLanguagePopup}
                   className="primary-outline-btn min-width-inherit"
                   variant="outlined"
                 >
@@ -395,10 +403,19 @@ export class SelectYourTemplate extends Component {
             </Box>
           </Box>
         </Box>
+        {showSelectTypePopup ? (
+          <SelectTypePopup
+            showModal={SelectTypePopup}
+            handleTypePopup={this.handleTypePopup}
+           
+          />
+        ) : (
+          <></>
+        )}
         {showSelectLanguagePopup ? (
           <SelectLanguagePopup
             showModal={SelectLanguagePopup}
-            togglePopup={this.togglePopup}
+            handleLanguagePopup={this.handleLanguagePopup}
            
           />
         ) : (
