@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import tooltipImg from "assets/img/login/signup-banner1.png";
+import IamImg from "assets/img/login/iam-img.png";
+import PolicyImg from "assets/img/login/policy-img.png";
+import JsonImg from "assets/img/login/json-img.png";
+import PolicyDocumentImg from "assets/img/login/policy-document-img.png";
 
 class PreparePolicy extends Component {
   render() {
@@ -19,7 +22,7 @@ class PreparePolicy extends Component {
             <div className="tooltip">
               <i className="fas fa-question-circle"></i>
               <div className="tooltip-img">
-                <img src={tooltipImg} alt="" />
+                <img src={IamImg} alt="" />
               </div>
             </div>
           </li>
@@ -29,13 +32,18 @@ class PreparePolicy extends Component {
             <div className="tooltip">
               <i className="fas fa-question-circle"></i>
               <div className="tooltip-img">
-                <img src={tooltipImg} alt="" />
+                <img src={PolicyImg} alt="" />
               </div>
             </div>
           </li>
           <li>
             <span>4.</span> Select the <strong>'JSON'</strong> tab{" "}
-            <i className="fas fa-question-circle"></i>
+            <div className="tooltip">
+              <i className="fas fa-question-circle"></i>
+              <div className="tooltip-img">
+                <img src={JsonImg} alt="" />
+              </div>
+            </div>
           </li>
           <li>
             <span>5.</span> Review this <a href="#">Policy document</a> and
@@ -45,7 +53,7 @@ class PreparePolicy extends Component {
             <div className="tooltip">
               <i className="fas fa-question-circle"></i>
               <div className="tooltip-img">
-                <img src={tooltipImg} alt="" />
+                <img src={PolicyDocumentImg} alt="" />
               </div>
             </div>
           </li>
@@ -56,7 +64,7 @@ class PreparePolicy extends Component {
             <div className="tooltip">
               <i className="fas fa-question-circle"></i>
               <div className="tooltip-img">
-                <img src={tooltipImg} alt="" />
+                <img src={PolicyImg} alt="" />
               </div>
             </div>
           </li>

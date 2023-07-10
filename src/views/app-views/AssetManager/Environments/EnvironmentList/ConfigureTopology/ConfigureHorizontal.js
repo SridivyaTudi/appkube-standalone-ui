@@ -9,6 +9,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Slider from "@mui/material/Slider";
+import Switch from "@mui/material/Switch";
+import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
 
 let firstPointerPosition;
 let firstPointerInitWidth = 23.4444;
@@ -17,6 +20,47 @@ let firstPointerCurrentWidth = 23.4444;
 let secondPointerPosition;
 let secondPointerInitWidth = 77.1111;
 let secondPointerCurrentwidth = 77.1111;
+
+const AntSwitch = styled(Switch)(({ theme }) => ({
+  width: 32,
+  height: 18,
+  padding: 0,
+  display: "flex",
+  "&:active": {
+    "& .MuiSwitch-thumb": {
+      width: 16,
+    },
+    "& .MuiSwitch-switchBase.Mui-checked": {
+      transform: "translateX(9px)",
+    },
+  },
+  "& .MuiSwitch-switchBase": {
+    padding: 3,
+    "&.Mui-checked": {
+      transform: "translateX(12px)",
+      color: "#fff",
+      "& + .MuiSwitch-track": {
+        opacity: 1,
+        backgroundColor: "#384CFF",
+      },
+    },
+  },
+  "& .MuiSwitch-thumb": {
+    boxShadow: "0 2px 4px 0 rgb(0 35 11 / 20%)",
+    width: 12,
+    height: 12,
+    borderRadius: 8,
+    transition: theme.transitions.create(["width"], {
+      duration: 200,
+    }),
+  },
+  "& .MuiSwitch-track": {
+    borderRadius: 18 / 2,
+    opacity: 1,
+    backgroundColor: "#B7B7B7",
+    boxSizing: "border-box",
+  },
+}));
 
 class ConfigureHorizontal extends Component {
   constructor(props) {
@@ -174,7 +218,7 @@ class ConfigureHorizontal extends Component {
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                     alignItems="center"
                   >
-                    <Grid item xs={12} md={6} lg={4}>
+                    <Grid item xs={12} md={4} lg={4}>
                       <Box className="d-block widht-100 text-center storage-content">
                         <Box className="image">
                           <img src={NewSqlIcon} alt="" />
@@ -182,7 +226,7 @@ class ConfigureHorizontal extends Component {
                         <Box className="name">SQL</Box>
                       </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
+                    <Grid item xs={12} md={4} lg={4}>
                       <Box className="d-block widht-100 text-center storage-content">
                         <Box className="image">
                           <img src={NewSqlIcon} alt="" />
@@ -190,7 +234,7 @@ class ConfigureHorizontal extends Component {
                         <Box className="name">NOSQL</Box>
                       </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
+                    <Grid item xs={12} md={4} lg={4}>
                       <Box className="d-block widht-100 text-center storage-content">
                         <Box className="image">
                           <img src={NewSqlIcon} alt="" />
@@ -205,7 +249,7 @@ class ConfigureHorizontal extends Component {
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                     alignItems="center"
                   >
-                    <Grid item xs={12} md={6} lg={4}>
+                    <Grid item xs={12} md={4} lg={4}>
                       <Box className="d-block widht-100 text-center storage-content p-b-0">
                         <Box className="image">
                           <img src={StorageIcon} alt="" />
@@ -213,7 +257,7 @@ class ConfigureHorizontal extends Component {
                         <Box className="name">Storage</Box>
                       </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
+                    <Grid item xs={12} md={4} lg={4}>
                       <Box className="d-block widht-100 text-center storage-content p-b-0">
                         <Box className="image">
                           <img src={VpsIcon} alt="" />
@@ -221,7 +265,7 @@ class ConfigureHorizontal extends Component {
                         <Box className="name">VPS</Box>
                       </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
+                    <Grid item xs={12} md={4} lg={4}>
                       <Box className="d-block widht-100 text-center storage-content p-b-0">
                         <Box className="image">
                           <img src={BuildIcon} alt="" />
@@ -244,7 +288,7 @@ class ConfigureHorizontal extends Component {
             <Box className="application-servers-container">
               <Box className="d-flex width-100 heading">
                 <Box className="d-inline-flex">
-                  Application Servers{" "}
+                  Application Servers
                   <i className="fa-solid fa-circle-question"></i>
                 </Box>
                 <Box className="d-inline-flex"></Box>
@@ -254,7 +298,7 @@ class ConfigureHorizontal extends Component {
                 rowSpacing={1}
                 columnSpacing={{ xs: 1, sm: 1, md: 2 }}
               >
-                <Grid item xs={12} md={12} lg={5}>
+                <Grid item xs={12} md={5} lg={5}>
                   <Box className="d-block width-100 text-center application-vertical-slider">
                     <p>Vartical Scaling Per Node</p>
                     <Box className="application-cards-slider">
@@ -406,15 +450,15 @@ class ConfigureHorizontal extends Component {
                     </Box>
                   </Box>
                 </Grid>
-                <Grid item xs={12} md={12} lg={7}>
+                <Grid item xs={12} md={7} lg={7}>
                   <Box className="d-block width-100 application-horizontal-slider">
-                    <p className="text-center">Horizontal Scaling </p>
+                    <p className="text-center p-b-10">Horizontal Scaling </p>
                     <Grid
                       container
                       rowSpacing={1}
                       columnSpacing={{ xs: 1, sm: 1, md: 1 }}
                     >
-                      <Grid item xs={12} md={12} lg={5}>
+                      <Grid item xs={12} md={5} lg={5}>
                         <Box className="horizontal-add-node">
                           <Grid
                             container
@@ -423,12 +467,12 @@ class ConfigureHorizontal extends Component {
                             alignItems="center"
                             justifyContent="center"
                           >
-                            <Grid item xs={12} md={12} lg={3}>
+                            <Grid item xs={12} md={3} lg={3}>
                               <Button className="primary-outline-btn min-width-inherit p-0 float-right">
                                 <i className="fa-solid fa-circle-minus"></i>
                               </Button>
                             </Grid>
-                            <Grid item xs={12} md={12} lg={6}>
+                            <Grid item xs={12} md={6} lg={6}>
                               <Box className="node-box">
                                 <Box className="image">
                                   <img src={NodeImg} alt="" />
@@ -436,7 +480,7 @@ class ConfigureHorizontal extends Component {
                                 <Box className="name">1 node(s)</Box>
                               </Box>
                             </Grid>
-                            <Grid item xs={12} md={12} lg={3}>
+                            <Grid item xs={12} md={3} lg={3}>
                               <Button className="primary-outline-btn min-width-inherit p-0">
                                 <i className="fa-solid fa-circle-plus"></i>
                               </Button>
@@ -444,7 +488,7 @@ class ConfigureHorizontal extends Component {
                           </Grid>
                         </Box>
                       </Grid>
-                      <Grid item xs={12} md={12} lg={7}>
+                      <Grid item xs={12} md={7} lg={7}>
                         <Box className="scaling-contents">
                           <Box className="heading">
                             <Grid
@@ -485,6 +529,7 @@ class ConfigureHorizontal extends Component {
                               rowSpacing={1}
                               columnSpacing={{ xs: 0, sm: 0, md: 0 }}
                               justifyContent="center"
+                              alignItems="center"
                             >
                               <Grid item xs={12} md={6} lg={8}>
                                 <div className="d-block text-left text">
@@ -492,7 +537,21 @@ class ConfigureHorizontal extends Component {
                                 </div>
                               </Grid>
                               <Grid item xs={12} md={6} lg={4}>
-                                <div className="d-block text-right"></div>
+                                <div className="d-block text-right form-control">
+                                  <input
+                                    id="number"
+                                    type="text"
+                                    placeholder="2500 GB"
+                                  />
+                                  <Box className="dropdown-arrow">
+                                    <Box className="d-block">
+                                      <i className="fas fa-angle-up"></i>
+                                    </Box>
+                                    <Box className="d-block">
+                                      <i className="fas fa-angle-down"></i>
+                                    </Box>
+                                  </Box>
+                                </div>
                               </Grid>
                             </Grid>
                             <Grid
@@ -500,14 +559,30 @@ class ConfigureHorizontal extends Component {
                               rowSpacing={1}
                               columnSpacing={{ xs: 0, sm: 0, md: 0 }}
                               justifyContent="center"
+                              alignItems="center"
                             >
                               <Grid item xs={12} md={6} lg={8}>
                                 <div className="d-block text-left text">
                                   Sequential restart delay
+                                  <i className="fa-solid fa-circle-question"></i>
                                 </div>
                               </Grid>
                               <Grid item xs={12} md={6} lg={4}>
-                                <div className="d-block text-right"></div>
+                                <div className="d-block text-right form-control">
+                                  <input
+                                    id="number"
+                                    type="text"
+                                    placeholder="30 sec"
+                                  />
+                                  <Box className="dropdown-arrow">
+                                    <Box className="d-block">
+                                      <i className="fas fa-angle-up"></i>
+                                    </Box>
+                                    <Box className="d-block">
+                                      <i className="fas fa-angle-down"></i>
+                                    </Box>
+                                  </Box>
+                                </div>
                               </Grid>
                             </Grid>
                             <Grid
@@ -515,6 +590,7 @@ class ConfigureHorizontal extends Component {
                               rowSpacing={1}
                               columnSpacing={{ xs: 0, sm: 0, md: 0 }}
                               justifyContent="center"
+                              alignItems="center"
                             >
                               <Grid item xs={12} md={6} lg={8}>
                                 <div className="d-block text-left text">
@@ -522,7 +598,19 @@ class ConfigureHorizontal extends Component {
                                 </div>
                               </Grid>
                               <Grid item xs={12} md={6} lg={4}>
-                                <div className="d-block text-right"></div>
+                                <div className="d-block text-right form-control">
+                                  <Stack
+                                    direction="row"
+                                    spacing={1}
+                                    alignItems="center"
+                                  >
+                                    <AntSwitch
+                                      inputProps={{
+                                        "aria-label": "ant design",
+                                      }}
+                                    />
+                                  </Stack>
+                                </div>
                               </Grid>
                             </Grid>
                           </Box>
@@ -562,7 +650,10 @@ class ConfigureHorizontal extends Component {
             </Box>
           </Grid>
           <Grid item xs={12} md={12} lg={4}>
-            <Box className="api-server width-100">
+            <Box
+              className="api-server width-100"
+              style={{ minHeight: "718px" }}
+            >
               <Box className="d-block width-100 text-center">
                 <Box className="address-content">
                   <span>
