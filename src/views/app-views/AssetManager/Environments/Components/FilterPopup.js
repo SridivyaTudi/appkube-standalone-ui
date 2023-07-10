@@ -30,18 +30,19 @@ class FilterPopup extends Component {
       departments: [],
       selectedDepartment: -1,
       selectedProduct: -1,
-      selectedEnv: -1
+      selectedEnv: -1,
     };
   }
 
   componentDidMount = () => {
     this.props.getOrgWiseDepartments();
     this.props.getDeploymentEnvs();
-    const { selectedDepartment, selectedEnv, selectedProduct } = this.props.selectedFilters;
+    const { selectedDepartment, selectedEnv, selectedProduct } =
+      this.props.selectedFilters;
     this.setState({
       selectedDepartment,
       selectedEnv,
-      selectedProduct
+      selectedProduct,
     });
     if (selectedDepartment !== -1) {
       this.props.getProductsByDepId(selectedDepartment);
@@ -51,20 +52,20 @@ class FilterPopup extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.organizationWiseDepartments.status !==
-      this.props.organizationWiseDepartments.status && this.props.organizationWiseDepartments.status ===
-      status.SUCCESS
+        this.props.organizationWiseDepartments.status &&
+      this.props.organizationWiseDepartments.status === status.SUCCESS
     ) {
       this.setState({
         departments: this.sortDepartments(
-          JSON.parse(JSON.stringify(this.props.organizationWiseDepartments.data
-            .departments))
+          JSON.parse(
+            JSON.stringify(
+              this.props.organizationWiseDepartments.data.departments
+            )
+          )
         ),
       });
     }
-    if (
-      prevProps.deploymentEnvs.status !==
-      this.props.deploymentEnvs.status
-    ) {
+    if (prevProps.deploymentEnvs.status !== this.props.deploymentEnvs.status) {
       if (
         this.props.deploymentEnvs.status === status.SUCCESS &&
         this.props.deploymentEnvs.data
@@ -86,7 +87,7 @@ class FilterPopup extends Component {
     this.setState({
       selectedDepartment: departmentID,
       selectedProduct: -1,
-      selectedEnv: -1
+      selectedEnv: -1,
     });
     this.props.getProductsByDepId(departmentID);
   };
@@ -94,13 +95,13 @@ class FilterPopup extends Component {
   handleProductCheck = (product) => {
     this.setState({
       selectedProduct: product,
-      selectedEnv: -1
+      selectedEnv: -1,
     });
   };
 
   handleEnvCheck = (env) => {
     this.setState({
-      selectedEnv: env
+      selectedEnv: env,
     });
   };
 
@@ -116,9 +117,7 @@ class FilterPopup extends Component {
                 type="radio"
                 name="department"
                 checked={department.id === this.state.selectedDepartment}
-                onChange={(e) =>
-                  this.handleDepartmentCheck(department.id)
-                }
+                onChange={(e) => this.handleDepartmentCheck(department.id)}
               />
               <label
                 htmlFor={department.name}
@@ -136,11 +135,15 @@ class FilterPopup extends Component {
   renderProducts = () => {
     const { productsByDepId } = this.props;
     const { selectedDepartment } = this.state;
-    if (productsByDepId && productsByDepId.data && productsByDepId.data.depId === selectedDepartment) {
+    if (
+      productsByDepId &&
+      productsByDepId.data &&
+      productsByDepId.data.depId === selectedDepartment
+    ) {
       return productsByDepId.data.products.map((product, innerIndex) => {
         return (
           <Grid item lg={4} md={4} xs={12}>
-            <Box className="d-flex align-items-center" >
+            <Box className="d-flex align-items-center">
               <input
                 type="radio"
                 name="product"
@@ -148,8 +151,10 @@ class FilterPopup extends Component {
                 checked={product === this.state.selectedProduct}
                 onChange={(e) => this.handleProductCheck(product)}
               />
-              <label htmlFor={product} onClick=
-                {(e) => this.handleProductCheck(product)}>
+              <label
+                htmlFor={product}
+                onClick={(e) => this.handleProductCheck(product)}
+              >
                 {product}
               </label>
             </Box>
@@ -167,22 +172,16 @@ class FilterPopup extends Component {
         return (
           <Grid key={item.name} item lg={3} md={4} xs={12}>
             <Box
-              onClick={() =>
-                this.handleEnvCheck(item.name)
-              }
+              onClick={() => this.handleEnvCheck(item.name)}
               className={`
                 environment-box 
-                ${this.state.selectedEnv === item.name ? "active" : ""}`
-              }
+                ${this.state.selectedEnv === item.name ? "active" : ""}`}
             >
               <Box className="d-block">
                 <Box
-                  className={`envir-image ${deploymentImgs[item.name]
-                    }`}
+                  className={`envir-image ${deploymentImgs[item.name]}`}
                 ></Box>
-                <Box className="environment-title">
-                  {item.name}
-                </Box>
+                <Box className="environment-title">{item.name}</Box>
               </Box>
             </Box>
           </Grid>
@@ -197,7 +196,7 @@ class FilterPopup extends Component {
     let params = {};
     if (selectedDepartment !== -1) {
       params = {
-        departmentId: selectedDepartment
+        departmentId: selectedDepartment,
       };
       if (selectedProduct !== -1) {
         params.product = selectedProduct;
@@ -209,14 +208,14 @@ class FilterPopup extends Component {
       this.props.handleSubmitFilter({
         selectedDepartment,
         selectedProduct,
-        selectedEnv
+        selectedEnv,
       });
     }
   };
 
   handleClearFilters = () => {
     let { selectedDepartment } = this.props.selectedFilters;
-    if(selectedDepartment !== -1){
+    if (selectedDepartment !== -1) {
       this.props.getEnvsSummary();
     } else {
       this.props.togglePopup();
@@ -224,7 +223,7 @@ class FilterPopup extends Component {
     this.props.handleSubmitFilter({
       selectedDepartment: -1,
       selectedProduct: -1,
-      selectedEnv: -1
+      selectedEnv: -1,
     });
   };
 
@@ -249,14 +248,14 @@ class FilterPopup extends Component {
         toggle={this.toggle}
         className="select-account-modal-container"
       >
-        <ModalHeader>
+        <ModalHeader className="m-b-1 border-bottom">
           Filter
           <button
             type="button"
             className="close"
             aria-label="Close"
             onClick={() => {
-              this.props.togglePopup()
+              this.props.togglePopup();
             }}
           >
             <i className="fa-solid fa-xmark"></i>
@@ -265,15 +264,15 @@ class FilterPopup extends Component {
         <ModalBody
           style={{ overflowY: "auto", overflowX: "hidden", height: "300px" }}
         >
-          <h4 className="text-left m-b-1">Select Department</h4>
+          <h4 className="text-left m-b-1 m-t-0 ">Select Department</h4>
           {this.props.organizationWiseDepartments.status ===
-            status.IN_PROGRESS ? (
+          status.IN_PROGRESS ? (
             <Box className="text-center align-self-center p-t-20 p-b-20">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
           ) : (
             <>
-              <Box sx={{ width: "100%" }} className="border-bottom p-b-10">
+              <Box sx={{ width: "100%" }} className="p-b-10">
                 <Grid
                   container
                   rowSpacing={1}
@@ -286,42 +285,42 @@ class FilterPopup extends Component {
               </Box>
               {selectedDepartment !== -1 ? (
                 <>
-                  <h4 className="text-left m-b-1 m-t-2">Select Product</h4>
-                  <Box
-                    sx={{ width: "100%" }}
-                    className="border-bottom p-b-10"
-                  >
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                      alignItems={"center"}
-                      justifyContent={"flex-start"}
-                    >
-                      {this.renderProducts()}
-                    </Grid>
+                  <Box className="border-top m-t-1">
+                    <h4 className="text-left m-b-1 m-t-2">Select Product</h4>
+                    <Box sx={{ width: "100%" }} className=" p-b-10">
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                        alignItems={"center"}
+                        justifyContent={"flex-start"}
+                      >
+                        {this.renderProducts()}
+                      </Grid>
+                    </Box>
                   </Box>
                 </>
               ) : null}
-              {selectedProduct !== -1 ?
+              {selectedProduct !== -1 ? (
                 <>
-                  <h4 className="text-left m-b-1 m-t-2">
-                    Select Environment
-                  </h4>
-                  <Box sx={{ width: "100%" }}>
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                      alignItems={"center"}
-                      justifyContent={"flex-start"}
-                    >
-                      {this.renderEnvironments()}
-                    </Grid>
+                  <Box className="border-top m-t-1">
+                    <h4 className="text-left m-b-1 m-t-2">
+                      Select Environment
+                    </h4>
+                    <Box sx={{ width: "100%" }}>
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                        alignItems={"center"}
+                        justifyContent={"flex-start"}
+                      >
+                        {this.renderEnvironments()}
+                      </Grid>
+                    </Box>
                   </Box>
                 </>
-                : null
-              }
+              ) : null}
             </>
           )}
         </ModalBody>
@@ -331,21 +330,15 @@ class FilterPopup extends Component {
               className="secondary-btn m-r-2"
               variant="contained"
               onClick={this.handleClearFilters}
-              disabled={this.props.envSummary.status ===
-                status.IN_PROGRESS}
-              loading={
-                this.props.envSummary.status ===
-                status.IN_PROGRESS}
+              disabled={this.props.envSummary.status === status.IN_PROGRESS}
+              loading={this.props.envSummary.status === status.IN_PROGRESS}
             >
               Clear
             </LoadingButton>
-            {selectedDepartment !== -1 ?
+            {selectedDepartment !== -1 ? (
               <LoadingButton
-                disabled={this.props.envSummary.status ===
-                  status.IN_PROGRESS}
-                loading={
-                  this.props.envSummary.status ===
-                  status.IN_PROGRESS}
+                disabled={this.props.envSummary.status === status.IN_PROGRESS}
+                loading={this.props.envSummary.status === status.IN_PROGRESS}
                 className="primary-btn min-width"
                 loadingPosition="start"
                 variant="contained"
@@ -353,7 +346,7 @@ class FilterPopup extends Component {
               >
                 Submit
               </LoadingButton>
-              : null}
+            ) : null}
           </Box>
         </ModalFooter>
       </Modal>
@@ -362,12 +355,17 @@ class FilterPopup extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { organizationWiseDepartments, deploymentEnvs, productsByDepId, envSummary } = state.environments;
+  const {
+    organizationWiseDepartments,
+    deploymentEnvs,
+    productsByDepId,
+    envSummary,
+  } = state.environments;
   return {
     organizationWiseDepartments,
     deploymentEnvs,
     productsByDepId,
-    envSummary
+    envSummary,
   };
 };
 

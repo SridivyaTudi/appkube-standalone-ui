@@ -24,6 +24,7 @@ import { connect } from "react-redux";
 import TopologyView from "./Components/TopologyView";
 import VpcDetails from "./VpcDetails";
 import ClusterDetails from "./ClusterDetails";
+import { getUUID } from "utils";
 
 const nextTypes = {
   service: "vpc",
@@ -144,7 +145,7 @@ class DiscoveredAssets extends Component {
     let { dataOfTableLevel1 } = this.state;
     return dataOfTableLevel1.map((vpc, index) => {
       return (
-        <TableRow key={index}>
+        <TableRow key={getUUID()}>
           <TableCell align="center">{vpc.name}</TableCell>
           <TableCell align="center">{vpc.product_count}</TableCell>
           <TableCell align="center">{vpc.app_count}</TableCell>
@@ -189,6 +190,8 @@ class DiscoveredAssets extends Component {
   renderTableLevel1() {
     let { dataOfTableLevel1 } = this.state;
     if (!dataOfTableLevel1.length) return null;
+    const queryPrm = new URLSearchParams(document.location.search);
+    const cloudLogo = ServicesNameLogo.LOGOS[queryPrm.get("cloudName").toUpperCase()]
     return (
       <Box
         className="environment-table-section discovered-table"
@@ -201,7 +204,7 @@ class DiscoveredAssets extends Component {
                 <TableRow>
                   <TableCell>
                     <Box className="environment-image">
-                      <img src={Aws} />
+                      <img src={cloudLogo} alt={queryPrm.get("cloudName")} />
                     </Box>
                   </TableCell>
                   <TableCell>Products</TableCell>
@@ -333,10 +336,9 @@ class DiscoveredAssets extends Component {
               // this.filterVpcsData(string);
             }}
             updateAccountId={(accountId) => {
-              this.setState({ accountId });
-              this.props.updateCloudName(
+               this.props.updateCloudNameAndLandingZone(
                 new URLSearchParams(document.location.search).get("cloudName"),
-                accountId
+            accountId
               );
             }}
             accountList={this.props.accountList}

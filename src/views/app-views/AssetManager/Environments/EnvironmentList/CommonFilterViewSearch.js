@@ -46,7 +46,7 @@ class CommonFilterViewSearch extends Component {
               to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}`}
               onClick={() => {
                 this.setState({ showServiceViewFilter: false });
-                this.props.updateAccountId(account.accountId);
+                this.props.updateAccountId(account.landingZone);
                 localStorage.setItem("serviceName", account.cloud);
               }}
             >
