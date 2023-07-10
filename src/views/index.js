@@ -22,6 +22,7 @@ import DeployProject from "views/app-views/AssetManager/Environments/Environment
 import ConfigureTopology from "views/app-views/AssetManager/Environments/EnvironmentList/ConfigureTopology";
 import CreateScratch from "./app-views/AssetManager/Environments/EnvironmentList/CreateScratch";
 import SelectYourTemplate from "./app-views/AssetManager/SelectYourTemplate";
+import Setting from "./app-views/AssetManager/Setting";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { getCurrentUser } from "utils";
@@ -125,6 +126,10 @@ export const Views = (props) => {
           <Route
             path={`${APP_PREFIX_PATH}/environments/SelectYourTemplate`}
             element={<SelectYourTemplate />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/setting`}
+            element={<Setting />}
           />
         </Routes>
       </div>
