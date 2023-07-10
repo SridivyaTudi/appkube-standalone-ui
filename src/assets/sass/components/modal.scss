@@ -377,4 +377,15 @@
       }
     }
   }
+  &.appliction-successfully-modal{
+    .appliction-contant{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .successfully-logo{
+        width: 100px;
+        height: 100px;
+      }
+    }
+  }
 }

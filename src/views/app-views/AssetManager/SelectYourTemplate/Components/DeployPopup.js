@@ -3,9 +3,23 @@ import { Box, Grid, FormControlLabel } from "@mui/material/";
 import Checkbox from "@mui/material/Checkbox";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import ApplicationSuccessfullyPopup from "./ApplicationSuccessfullyPopup";
 
 export class DeployPopup extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showApplictionPopup: false,
+    };
+  }
+
+  handleApplictionPopup = () => {
+    this.setState({
+      showApplictionPopup: !this.state.showApplictionPopup,
+    });
+  };
   render() {
+    const { showApplictionPopup } = this.state;
     return (
       <Modal
         isOpen={this.props.showModal}
@@ -30,7 +44,7 @@ export class DeployPopup extends Component {
         >
           <Box className="deploy-modal-contant">
             <Grid container spacing={0}>
-              <Grid item xs={6}  className="border-right p-l-15 p-r-15">
+              <Grid item xs={6} className="border-right p-l-15 p-r-15">
                 <Box className="form-group">
                   <label>Department Name</label>
                   <input
@@ -130,7 +144,7 @@ export class DeployPopup extends Component {
             <LoadingButton className="secondary-btn m-r-2" variant="contained">
               Cancel
             </LoadingButton>
-            <LoadingButton
+            <LoadingButton  onClick={this.handleApplictionPopup}
               className="primary-btn min-width"
               loadingPosition="start"
               variant="contained"
@@ -138,6 +152,15 @@ export class DeployPopup extends Component {
               Create
             </LoadingButton>
           </Box>
+          {showApplictionPopup ? (
+          <ApplicationSuccessfullyPopup
+            showModal={ApplicationSuccessfullyPopup}
+            handleApplictionPopup={this.handleApplictionPopup}
+           
+          />
+        ) : (
+          <></>
+        )}
         </ModalFooter>
       </Modal>
     );
