@@ -67,6 +67,17 @@ class DiscoveredAssets extends Component {
     };
   }
 
+  componentDidMount = ()=>{
+    let { productEnclaveList, globalServiceList } =
+    this.getEnvironmentDataByLandingZone();
+  if (productEnclaveList?.length  || globalServiceList?.length) {
+    this.prepareDataTableLevel1(productEnclaveList);
+    this.prepareDataTopologyViewComponent(
+      productEnclaveList,
+      globalServiceList
+    );
+  }
+  }
   componentDidUpdate = async (prevProps, prevState) => {
     if (
       prevProps.envDataByLandingZone.status !==

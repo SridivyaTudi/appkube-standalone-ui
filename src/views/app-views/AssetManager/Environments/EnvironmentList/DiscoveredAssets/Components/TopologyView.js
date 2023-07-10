@@ -40,7 +40,7 @@ class TopologyView extends Component {
     const { data } = this.props;
     let { level2Show, selectedLevel1Id } = this.state.selectedView;
     return Object.keys(data).length ? (
-      <ArcherContainer style={{ width: "100%", height: "100%" }}>
+      <ArcherContainer noCurves style={{ width: "100%", height: "100%" }}>
         <TransformWrapper
           onTransformed={(instance) => {
             transformScale = instance && instance.state.scale;
@@ -86,20 +86,24 @@ class TopologyView extends Component {
                 >
                   <ArcherElement
                     id="root"
-                    relations={[
-                      {
-                        targetId:
-                          selectedLevel1Id >= 0
-                            ? `level1_${selectedLevel1Id}`
-                            : "",
-                        targetAnchor: "left",
-                        sourceAnchor: "right",
-                        style: {
-                          strokeColor: "#a5a5d7",
-                          strokeWidth: 1.5,
-                        },
-                      },
-                    ]}
+                    relations={
+                      selectedLevel1Id !== null && selectedLevel1Id >= 0
+                        ? [
+                            {
+                              targetId:
+                                selectedLevel1Id >= 0
+                                  ? `level1_${selectedLevel1Id}`
+                                  : "",
+                              targetAnchor: "left",
+                              sourceAnchor: "right",
+                              style: {
+                                strokeColor: "#a5a5d7",
+                                strokeWidth: 2,
+                              },
+                            },
+                          ]
+                        : []
+                    }
                   >
                     <div className="services-text-box active">
                       <div className="d-flex">
@@ -153,21 +157,25 @@ class TopologyView extends Component {
         return (
           <ArcherElement
             id={`level1_${level1Index}`}
-            relations={[
-              {
-                targetId:
-                  level1Index === selectedLevel1Id && selectedLevel2Id >= 0
-                    ? `level2_${selectedLevel2Id}`
-                    : "",
-                targetAnchor: "left",
-                sourceAnchor: "right",
-                style: {
-                  strokeColor: "#a5a5d7",
-                  strokeWidth: 1.5,
-                  lineStyle: "curve",
-                },
-              },
-            ]}
+            relations={
+              level1Index === selectedLevel1Id && selectedLevel2Id !== null
+                ? [
+                    {
+                      targetId:
+                        level1Index === selectedLevel1Id &&
+                        selectedLevel2Id >= 0
+                          ? `level2_${selectedLevel2Id}`
+                          : "",
+                      targetAnchor: "left",
+                      sourceAnchor: "right",
+                      style: {
+                        strokeColor: "#a5a5d7",
+                        strokeWidth: 2
+                      },
+                    },
+                  ]
+                : []
+            }
             key={getUUID()}
           >
             <li
@@ -202,18 +210,6 @@ class TopologyView extends Component {
         return (
           <ArcherElement
             id={`level2_${level2Index}`}
-            relations={[
-              {
-                targetId: "",
-                targetAnchor: "left",
-                sourceAnchor: "right",
-                style: {
-                  strokeColor: "#a5a5d7",
-                  strokeWidth: 1.5,
-                  lineStyle: "curve",
-                },
-              },
-            ]}
             key={getUUID()}
           >
             <li
@@ -282,7 +278,7 @@ class TopologyView extends Component {
                 <i className="fa-solid fa-arrow-left"></i>
               </Box>
             </Box>
-            <Box className="services-panel-body">{this.renderMainBody()}</Box>
+            <Box className="services-panel-body">{Object.keys(this.props.data).length ? this.renderMainBody() : null}</Box>
           </Box>
         </Grid>
       </>
