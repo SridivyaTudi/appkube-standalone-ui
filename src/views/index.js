@@ -19,7 +19,7 @@ import NewAccountSetup from "views/app-views/AssetManager/NewAccountSetup";
 import EnvironmentList from "views/app-views/AssetManager/Environments/EnvironmentList";
 import ProcurifyLogisticsTools from "views/app-views/AssetManager/Environments/EnvironmentList/ProcurifyLogisticsTools";
 import DeployProject from "views/app-views/AssetManager/Environments/EnvironmentList/DeployProject";
-import ConfigurTopology from "views/app-views/AssetManager/Environments/EnvironmentList/ConfigurTopology";
+import ConfigureTopology from "views/app-views/AssetManager/Environments/EnvironmentList/ConfigureTopology";
 import CreateScratch from "./app-views/AssetManager/Environments/EnvironmentList/CreateScratch";
 import SelectYourTemplate from "./app-views/AssetManager/SelectYourTemplate";
 import "react-toastify/dist/ReactToastify.css";
@@ -115,8 +115,8 @@ export const Views = (props) => {
             element={<DeployProject />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/configurtopology`}
-            element={<ConfigurTopology />}
+            path={`${APP_PREFIX_PATH}/environments/configuretopology`}
+            element={<ConfigureTopology />}
           />
           <Route
             path={`${APP_PREFIX_PATH}/environments/createscratch`}

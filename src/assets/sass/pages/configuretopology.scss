@@ -254,6 +254,7 @@
         }
       }
     }
+    
     .application-servers-container {
       display: inline-flex;
       align-items: flex-start;
@@ -282,9 +283,10 @@
       .application-vertical-slider {
         border-right: 2px dotted #000000;
         .application-cards-slider {
-          width: 280px;
+          width: 300px;
+          display: block;
           .reserved-card {
-            width: 130px;
+            width: 140px;
             margin-left: 10px;
             margin-right: 10px;
             &:first-child {
@@ -294,7 +296,7 @@
               margin-right: 0;
             }
             &:after {
-              left: 65px;
+              left: 70px;
             }
           }
         }
@@ -319,6 +321,50 @@
             display: inline-block;
             padding-top: 10px;
             font-size: 14px;
+            line-height: 20px;
+            font-weight: 600;
+            color: #000000;
+          }
+        }
+      }
+
+      .scaling-contents {
+        display: block;
+        width: 100%;
+        .heading {
+          display: block;
+          width: 100%;
+          padding-left: 10px;
+          padding-right: 10px;
+          border-radius: 3px;
+          background-color: #f2f3f7;
+
+          strong {
+            display: inline-block;
+            vertical-align: top;
+            font-size: 14px;
+            line-height: 30px;
+            font-weight: 600;
+            color: #000000;
+          }
+          i {
+            display: inline-block;
+            vertical-align: top;
+            font-size: 14px;
+            line-height: 30px;
+            font-weight: 600;
+            color: #1b4dff;
+          }
+        }
+        .contents {
+          display: block;
+          width: 100%;
+          padding-left: 10px;
+          padding-right: 10px;
+          .text {
+            display: inline-block;
+            vertical-align: top;
+            font-size: 12px;
             line-height: 20px;
             font-weight: 600;
             color: #000000;

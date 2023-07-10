@@ -3,6 +3,7 @@
   "signup": "Sign Up",
   "dashboard": "Dashboard",
   "environments": "Environments",
-  "environmentlist": "Topology View",
-  "newaccountsetup": "New Account Setup"
+  "environmentlist": "Environment View",
+  "newaccountsetup": "New Account Setup",
+  "configuretopology": "Configure Topology"
 }

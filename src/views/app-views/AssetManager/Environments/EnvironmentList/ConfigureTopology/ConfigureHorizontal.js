@@ -11,14 +11,14 @@ import Button from "@mui/material/Button";
 import Slider from "@mui/material/Slider";
 
 let firstPointerPosition;
-let firstPointerInitWidth = 23.3333;
-let firstPointerCurrentWidth = 23.3333;
+let firstPointerInitWidth = 23.4444;
+let firstPointerCurrentWidth = 23.4444;
 
 let secondPointerPosition;
-let secondPointerInitWidth = 77.1391;
-let secondPointerCurrentwidth = 77.1391;
+let secondPointerInitWidth = 77.1111;
+let secondPointerCurrentwidth = 77.1111;
 
-class ConfigurHorizontal extends Component {
+class ConfigureHorizontal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -445,20 +445,84 @@ class ConfigurHorizontal extends Component {
                         </Box>
                       </Grid>
                       <Grid item xs={12} md={12} lg={7}>
-                        <Box className="">
+                        <Box className="scaling-contents">
                           <Box className="heading">
                             <Grid
                               container
                               rowSpacing={1}
-                              columnSpacing={{ xs: 1, sm: 1, md: 1 }}
+                              columnSpacing={{ xs: 0, sm: 0, md: 0 }}
+                              justifyContent="center"
                             >
-                              <Grid item xs={12} md={6} lg={6}>
-                                <strong>Nginx 1.10.1</strong>
-                                <i class="fa-solid fa-angle-down"></i>
+                              <Grid
+                                item
+                                xs={12}
+                                md={6}
+                                lg={6}
+                                className="p-t-0"
+                              >
+                                <div className="d-block text-left">
+                                  <strong>Nginx 1.10.1</strong>
+                                  <i class="fa-solid fa-angle-down"></i>
+                                </div>
                               </Grid>
-                              <Grid item xs={12} md={6} lg={6}>
-                                <strong>PHP 7.1.0</strong>
-                                <i class="fa-solid fa-angle-down"></i>
+                              <Grid
+                                item
+                                xs={12}
+                                md={6}
+                                lg={6}
+                                className="p-t-0"
+                              >
+                                <div className="d-block text-right">
+                                  <strong>PHP 7.1.0</strong>
+                                  <i class="fa-solid fa-angle-down"></i>
+                                </div>
+                              </Grid>
+                            </Grid>
+                          </Box>
+                          <Box className="contents">
+                            <Grid
+                              container
+                              rowSpacing={1}
+                              columnSpacing={{ xs: 0, sm: 0, md: 0 }}
+                              justifyContent="center"
+                            >
+                              <Grid item xs={12} md={6} lg={8}>
+                                <div className="d-block text-left text">
+                                  Disk Limit
+                                </div>
+                              </Grid>
+                              <Grid item xs={12} md={6} lg={4}>
+                                <div className="d-block text-right"></div>
+                              </Grid>
+                            </Grid>
+                            <Grid
+                              container
+                              rowSpacing={1}
+                              columnSpacing={{ xs: 0, sm: 0, md: 0 }}
+                              justifyContent="center"
+                            >
+                              <Grid item xs={12} md={6} lg={8}>
+                                <div className="d-block text-left text">
+                                  Sequential restart delay
+                                </div>
+                              </Grid>
+                              <Grid item xs={12} md={6} lg={4}>
+                                <div className="d-block text-right"></div>
+                              </Grid>
+                            </Grid>
+                            <Grid
+                              container
+                              rowSpacing={1}
+                              columnSpacing={{ xs: 0, sm: 0, md: 0 }}
+                              justifyContent="center"
+                            >
+                              <Grid item xs={12} md={6} lg={8}>
+                                <div className="d-block text-left text">
+                                  Public IPv4
+                                </div>
+                              </Grid>
+                              <Grid item xs={12} md={6} lg={4}>
+                                <div className="d-block text-right"></div>
                               </Grid>
                             </Grid>
                           </Box>
@@ -516,4 +580,4 @@ class ConfigurHorizontal extends Component {
   }
 }
 
-export default ConfigurHorizontal;
+export default ConfigureHorizontal;

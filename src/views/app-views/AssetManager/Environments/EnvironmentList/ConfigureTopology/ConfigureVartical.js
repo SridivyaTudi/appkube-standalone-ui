@@ -17,7 +17,7 @@ let secondPointerPosition;
 let secondPointerInitWidth = 77.5391;
 let secondPointerCurrentwidth = 77.5391;
 
-class ConfigurVartical extends Component {
+class ConfigureVartical extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -403,4 +403,4 @@ class ConfigurVartical extends Component {
   }
 }
 
-export default ConfigurVartical;
+export default ConfigureVartical;

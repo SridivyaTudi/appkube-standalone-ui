@@ -7,10 +7,10 @@ import LangIcon from "assets/img/assetmanager/lang-icon.png";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import ConfigurVartical from "./ConfigurVartical";
-import ConfigurHorizontal from "./ConfigurHorizontal";
+import ConfigureVartical from "./ConfigureVartical";
+import ConfigureHorizontal from "./ConfigureHorizontal";
 
-class ConfigurTopology extends Component {
+class ConfigureTopology extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -78,11 +78,11 @@ class ConfigurTopology extends Component {
             </Grid>
           </Grid>
         </Box>
-        {/* <ConfigurVartical /> */}
-        <ConfigurHorizontal />
+        {/* <ConfigureVartical /> */}
+        <ConfigureHorizontal />
       </Box>
     );
   }
 }
 
-export default ConfigurTopology;
+export default ConfigureTopology;

@@ -9,3 +9,6 @@ https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube?type=design&node-id=1
 
 Open API data: 
 https://github.com/AppkubeCloud/appkube-cmdb-service/blob/main/core-service-api/src/main/resources/rest_api.yaml
+
+Figma Password
+BeyondSoft
