@@ -136,7 +136,7 @@ class EnvironmentList extends Component {
 
   componentDidUpdate = async (prevProps, prevState) => {
     if (this.state.landingZone !== prevState.landingZone) {
-      this.props.getDepartments(this.state.landingZone);
+       this.props.getDepartments(this.state.landingZone);
       let { landingZone } = this.state;
       this.props.getEnvironmentDataByLandingZone(landingZone);
     }
@@ -190,6 +190,7 @@ class EnvironmentList extends Component {
   };
 
   updateCurrentAccountId = (id) => {
+    console.log(id)
     this.setState({ landingZone: id });
   };
 
@@ -295,7 +296,7 @@ class EnvironmentList extends Component {
                   this.state.vpcsDetailsBackUp.length &&
                   this.state.vpcsDetailsBackUp
                 }
-                updateCloudName={(service, landingZone) => {
+                updateCloudNameAndLandingZone={(service, landingZone) => {
                   this.setState({ service, landingZone });
                 }}
                 accountList={this.state.accountList}
