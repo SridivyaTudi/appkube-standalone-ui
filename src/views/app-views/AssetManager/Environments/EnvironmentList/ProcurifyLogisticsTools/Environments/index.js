@@ -175,25 +175,25 @@ class Environments extends Component {
                                 </strong>
                               </TableCell>
                               <TableCell align="center">
-                                <div className="box red">2</div>
+                                <Box className="box red">2</Box>
                               </TableCell>
                               <TableCell align="center">
-                                <div className="box green">
+                                <Box className="box green">
                                   <i className="fa-solid fa-check"></i>
-                                </div>
+                                </Box>
                               </TableCell>
                               <TableCell align="center">
-                                <div className="box green">
+                                <Box className="box green">
                                   <i className="fa-solid fa-check"></i>
-                                </div>
+                                </Box>
                               </TableCell>
                               <TableCell align="center">
-                                <div className="box green">
+                                <Box className="box green">
                                   <i className="fa-solid fa-check"></i>
-                                </div>
+                                </Box>
                               </TableCell>
                               <TableCell align="center">
-                                <div className="box orange">3</div>
+                                <Box className="box orange">3</Box>
                               </TableCell>
                             </TableRow>
                           </TableBody>

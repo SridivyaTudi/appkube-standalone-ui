@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Box } from '@mui/material';
 
 class Database extends Component {
   render() {
     return (
-      <div>Database</div>
+      <Box>Database</Box>
     )
   }
 }

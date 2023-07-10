@@ -17,9 +17,22 @@ import simplepelicanicon from "assets/img/selectyourtemplate/simple-pelican-icon
 import plainrubyicon from "assets/img/selectyourtemplate/plain-ruby-icon.png";
 import simpleiconsspringboot from "assets/img/selectyourtemplate/simple-icons_springboot.png";
 import jenkinsicon from "assets/img/selectyourtemplate/jenkins-icon.png";
+import SelectLanguagePopup from "./Components/SelectLanguagePopup";
 
 export class SelectYourTemplate extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showSelectLanguagePopup: false,
+    };
+  }
+  togglePopup = () => {
+    this.setState({
+      showSelectLanguagePopup: !this.state.showSelectLanguagePopup,
+    });
+  };
   render() {
+    const { showSelectLanguagePopup } = this.state;
     return (
       <Box className="select-your-template-container">
         <Box className="page-header">
@@ -73,7 +86,7 @@ export class SelectYourTemplate extends Component {
                 >
                   Express
                 </Button>
-                <Button
+                <Button onClick={this.togglePopup}
                   className="primary-outline-btn min-width-inherit"
                   variant="outlined"
                 >
@@ -112,6 +125,7 @@ export class SelectYourTemplate extends Component {
                   Flask
                 </Button>
                 <Button
+                  onClick={this.togglePopup}
                   className="primary-outline-btn min-width-inherit"
                   variant="outlined"
                 >
@@ -365,6 +379,15 @@ export class SelectYourTemplate extends Component {
             </Box>
           </Box>
         </Box>
+        {showSelectLanguagePopup ? (
+          <SelectLanguagePopup
+            showModal={SelectLanguagePopup}
+            togglePopup={this.togglePopup}
+           
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }

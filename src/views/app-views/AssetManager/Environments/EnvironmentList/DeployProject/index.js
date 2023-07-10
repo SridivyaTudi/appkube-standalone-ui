@@ -33,7 +33,7 @@ class DeployProject extends Component {
                   <Box className="card-images">
                     <img src={DeploymentImg1} alt="opration" />
                   </Box>
-                  <div className="card-title">Use Pre-existing Template</div>
+                  <Box className="card-title">Use Pre-existing Template</Box>
                   <p>
                     choose from Pre-existing templates to start your products
                   </p>
@@ -45,7 +45,7 @@ class DeployProject extends Component {
                     <Box className="card-images">
                       <img src={DeploymentImg2} alt="opration" />
                     </Box>
-                    <div className="card-title">Create from Scratch</div>
+                    <Box className="card-title">Create from Scratch</Box>
                     <p>Create your own or migrate an existing products</p>
                   </Box>
                 </Link>

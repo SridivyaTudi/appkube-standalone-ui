@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SpendAnalytics from "views/app-views/AssetManager/Dashboard/spendAnalytics";
 import CostAnalysis from "views/app-views/AssetManager/Dashboard/costAnalysis";
-import SLMMetrics from "views/app-views/AssetManager/Dashboard/slmMetrics";
+import SLAMetrics from "views/app-views/AssetManager/Dashboard/slaMetrics";
 import ProcessCentral from "views/app-views/AssetManager/Dashboard/processCentral";
 import Planet from "assets/img/dashboard/planet2.png";
 import {Box, List, ListItem} from "@mui/material";
@@ -66,7 +66,7 @@ class Dashboard extends Component {
             ) : activeTab === 1 ? (
               <CostAnalysis />
             ) : activeTab === 2 ? (
-              <SLMMetrics />
+              <SLAMetrics />
             ) : activeTab === 3 ? (
               <ProcessCentral />
             ) : (

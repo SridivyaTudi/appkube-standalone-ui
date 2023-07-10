@@ -1,8 +1,3 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import EnvironmentsIcon from "assets/img/assetmanager/environments-icon1.png";
 import LineOfBusinessIcon from "assets/img/assetmanager/line-of-business-icon.png";
 import ProcurifyIcon from "assets/img/assetmanager/procurify-icon.png";
@@ -16,6 +11,8 @@ import AccountPricing from "./AccountPricing";
 import Container from "./Container";
 import Database from "./Database";
 import Environments from "./Environments";
+//import {  } from "reactstrap";
+import {Box, Button, FormControl, MenuItem, Select, List, ListItem } from "@mui/material";
 
 export class ProcurifyLogisticsTools extends Component {
   tabMapping = [
@@ -244,58 +241,58 @@ export class ProcurifyLogisticsTools extends Component {
                 </Button>
               </Box>
               <Box className="tags-contains">
-                <ul>
-                  <li>
+                <List>
+                  <ListItem>
                     <i className="fa-solid fa-circle"></i> Readme
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <i className="fa-solid fa-circle"></i> CI/CD Configuration
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <i className="fa-solid fa-circle"></i> Add License
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <i className="fa-solid fa-circle"></i> Add Changelog
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <i className="fa-solid fa-circle"></i> Add Contributing
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <i className="fa-solid fa-circle"></i> Auto DevOp Enabled
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <i className="fa-solid fa-circle"></i> Add Kubernetes
                     Cluster
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <i className="fa-solid fa-circle"></i> Add Wiki
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <i className="fa-solid fa-circle"></i> Configure Integration
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <i className="fa-solid fa-circle"></i> CI/CD Configuration
-                  </li>
-                </ul>
+                  </ListItem>
+                </List>
               </Box>
             </Box>
           </Box>
         </Box>
         <Box className="services-panel-tabs">
           <Box className="tabs-head">
-            <ul>
+            <List>
               {this.tabMapping.map((tabData, index) => {
                 return (
-                  <li
+                  <ListItem
                     key={`ops-tab-${index}`}
                     className={index === activeTab ? "active" : ""}
                     onClick={() => this.setActiveTab(index)}
                   >
                     {tabData.name}
-                  </li>
+                  </ListItem>
                 );
               })}
-            </ul>
+            </List>
           </Box>
           <Box className="tabs-content">
             {activeTab === 0 ? (
