@@ -1,0 +1,81 @@
+.setting-container {
+  width: 100%;
+  display: block;
+
+  .page-header {
+    padding: 30px 45px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    h3 {
+      display: inline-flex;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 500;
+      color: #383874;
+      margin-bottom: 0px;
+      margin-right: 30px;
+    }
+  }
+
+  .tabs {
+    display: block;
+    width: 100%;
+
+    .tabs-menu {
+      width: 100%;
+      padding-left: 60px;
+      padding-right: 60px;
+      padding-bottom: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      background-color: #ffffff;
+
+      li {
+        padding-bottom: 16px;
+        margin-right: 10px;
+        margin-left: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #383874;
+        cursor: pointer;
+        width: auto;
+        display: inline-flex;
+        position: relative;
+
+        &::after {
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 4px;
+          content: "";
+          opacity: 0;
+          position: absolute;
+          background-color: #8676ff;
+          border-top-left-radius: 50px;
+          border-top-right-radius: 50px;
+
+          box-shadow: 0px 100px 80px 0px #0f59ff5c;
+        }
+
+        &.active {
+          &::after {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    .tabs-content {
+      padding: 30px 60px;
+      background-color: #f6f7fb;
+    }
+  }
+}
+
+.account-container {
+    
+}
