@@ -526,6 +526,13 @@
                           color: #15c64c;
                           font-family: "FontAwesome";
                         }
+                        &.red {
+                          &::before {
+                            top: 2px;
+                            content: "\f0d7";
+                            color: #f93d3d;
+                          }
+                        }
                       }
                     }
                   }
