@@ -2654,6 +2654,14 @@
 @media only screen and (max-width: 1280px) {
   .environment-container {
     .services-panel-tabs {
+      .tabs-head {
+        ul {
+          li {
+            padding-left: 16px;
+            padding-right: 16px;
+          }
+        }
+      }
       .tabs-content {
         .discovered-assets {
           .logistics-cards {
@@ -2674,6 +2682,21 @@
         }
       }
     }
+    .services-panel {
+      .services-panel-body {
+        .services-text-box {
+          margin-right: 50px;
+          width: 25%;
+        }
+        .global-servies {
+          margin-right: 50px;
+          &.cluster-servies {
+            width: 30%;
+          }
+        }
+      }
+    }
+
     .procurify-cards {
       .procurify-card {
         margin-bottom: 15px;
