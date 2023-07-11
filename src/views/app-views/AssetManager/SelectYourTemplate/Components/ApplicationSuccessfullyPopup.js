@@ -26,7 +26,7 @@ export class ApplicationSuccessfullyPopup extends Component {
           </button>
         </ModalHeader>
         <ModalBody className="appliction-contant"
-          style={{ overflowY: "auto", overflowX: "hidden", height: "250px" }}
+          style={{ overflowY: "auto", overflowX: "hidden", height: "200px" }}
         >
          <Box className="body-contant">
           <Box className="successfully-logo text-center ">
