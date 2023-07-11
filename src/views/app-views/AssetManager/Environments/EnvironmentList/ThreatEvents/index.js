@@ -18,22 +18,6 @@ class ThreatEvents extends Component {
       [drdName]: !current,
     });
   };
-
-  setLocalRecentService = (account) => {
-    let recentEnv = JSON.parse(localStorage.getItem("recentEnv"));
-    recentEnv.map((item, index) => {
-      if (item.accountId === account.accountId) {
-        arrayMove(recentEnv, index, 0);
-      }
-    });
-
-    function arrayMove(arr, fromIndex, toIndex) {
-      var element = arr[fromIndex];
-      arr.splice(fromIndex, 1);
-      arr.splice(toIndex, 0, element);
-      localStorage.setItem("recentEnv", JSON.stringify(arr));
-    }
-  };
   
   filterVpcsData = (search)=>{}
   
