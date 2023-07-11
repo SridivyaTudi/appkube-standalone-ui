@@ -257,10 +257,8 @@ class Application extends Component {
                   >
                     <Link
                       style={{ color: "white" }}
-                      to={`${APP_PREFIX_PATH}/environments/deployproject`}
-                    >
-                      <i className="fa-solid fa-plus-square p-r-5"></i> Create
-                      New
+                      to={`${APP_PREFIX_PATH}/environments/deployproject`}>
+                      <i className="fa-solid fa-plus-square p-r-5"></i> Add New
                     </Link>
                   </Button>
                 </div>

@@ -64,7 +64,6 @@
         font-weight: 600;
         line-height: 20px;
         color: #344054;
-
       }
 
       p {
@@ -75,6 +74,15 @@
         color: #798294;
         width: 70%;
         margin: 10px auto 0;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 1280px) {
+  .deploy-project-container {
+    .opration-cards {
+      .opration-card {
+        width: 100%;
       }
     }
   }
