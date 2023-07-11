@@ -73,7 +73,7 @@ class CommonFilterViewSearch extends Component {
   };
 
   componentDidUpdate = async (prevProps,prevState) => {
-    if (
+    if (this.props.data &&
       this.props.data.vpcsDetails !== null &&
       this.props.data.vpcsDetails !== this.state.vpcsDetails
     ) {

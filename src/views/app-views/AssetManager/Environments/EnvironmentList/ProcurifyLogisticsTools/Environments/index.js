@@ -4,7 +4,7 @@ import TopologyView from "views/app-views/AssetManager/Environments/EnvironmentL
 import Aws from "../../../../../../../assets/img/aws.png";
 import VpcServicesIcon from "../../../../../../../assets/img/assetmanager/vpc-services-icon.png";
 import ClusterIcon from "../../../../../../../assets/img/assetmanager/cluster-icon.png";
-import GatewayIcon from"../../../../../../../assets/img/assetmanager/gateway-icon.png";
+import GatewayIcon from "../../../../../../../assets/img/assetmanager/gateway-icon.png";
 import {
   Box,
   Grid,
@@ -83,7 +83,7 @@ class Environments extends Component {
       <Box className="environmentlist-container">
         <Box className="discovered-assets">
           <Box className="discovered-assets-head">
-            <CommonFilterViewSearch />
+            <CommonFilterViewSearch handleSearch={() => {}} />
           </Box>
           <Box sx={{ width: "100%" }}>
             <Grid
@@ -91,7 +91,7 @@ class Environments extends Component {
               rowSpacing={1}
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
-              <TopologyView data={Data} />
+              <TopologyView data={Data} setLevel={() => {}} />
               <Grid item xs={5}>
                 <Box className="fliter-tabs">
                   <Box
