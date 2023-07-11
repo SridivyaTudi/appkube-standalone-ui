@@ -106,7 +106,12 @@ class TopologyView extends Component {
                         : []
                     }
                   >
-                    <div className="services-text-box active">
+                    <div
+                      className="services-text-box active"
+                      onClick={() => {
+                        this.onClickAccountId();
+                      }}
+                    >
                       <div className="d-flex">
                         <div className="account-image">
                           <img src={data.image} alt="aws image" />
@@ -260,6 +265,17 @@ class TopologyView extends Component {
       this.state.selectedView;
     selectedLevel2Id = id;
     this.props.setLevel(label);
+    this.setState({
+      selectedView: { level2Show, selectedLevel1Id, selectedLevel2Id },
+    });
+  };
+
+  onClickAccountId = () => {
+    let { level2Show, selectedLevel1Id, selectedLevel2Id } =
+      this.state.selectedView;
+    level2Show = false;
+    selectedLevel1Id = null;
+    selectedLevel2Id = null;
     this.setState({
       selectedView: { level2Show, selectedLevel1Id, selectedLevel2Id },
     });
