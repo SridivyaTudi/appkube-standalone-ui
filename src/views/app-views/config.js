@@ -18,7 +18,8 @@ const config = {
   GET_DEPLOYMENT_ENVIRONMENTS:`/deployment-environments`,
   GET_CURRENT_HOUR_SPEND_RATE:`/query/spend-current-rate/organization/#org-id#/hour/analytics`,
   GET_CURRENT_DAY_SPEND_RATE:`/query/spend-current-rate/organization/#org-id#/day/analytics`,
-  GET_TODAY_SPEND_ANALYTICS:`/query/spend-today/organization/#org-id#/analytics`
+  GET_TODAY_SPEND_ANALYTICS:`/query/spend-today/organization/#org-id#/analytics`,
+  GET_YESTERDAY_SPEND_ANALYTICS: `/query/spend-yesterday/organization/#org-id#/analytics`
   
 };
 

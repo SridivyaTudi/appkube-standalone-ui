@@ -11,7 +11,7 @@ export const getCurrentHourSpendRate = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 );
@@ -25,7 +25,7 @@ export const getCurrentDaySpendRate = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 );
@@ -39,7 +39,21 @@ export const getTodaySpendAnalytics = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(error);
+    }
+  }
+);
+
+export const getYesterdaySpendAnalytics = createAsyncThunk(
+  "dashboard/getYesterdaySpendAnalytics",
+  async () => {
+    try {
+      const response = await postLoginService.get(
+        config.GET_YESTERDAY_SPEND_ANALYTICS
+      );
+      return response;
+    } catch (error) {
+      console.error(error);
     }
   }
 );

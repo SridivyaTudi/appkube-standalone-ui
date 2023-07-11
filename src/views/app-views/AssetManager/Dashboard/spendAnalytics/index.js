@@ -249,21 +249,20 @@ class SpendAnalytics extends Component {
     let { currentHourSpendRate } = this.props;
     let spendRateData = currentHourSpendRate.data || [];
 
-    return spendRateData.length && spendRateData[0].sumCurrentHour ? (
-      <strong>${spendRateData[0].sumCurrentHour}</strong>
-    ) : null;
-  };
+    let renderHtml = [];
+    if (spendRateData.length && spendRateData[0].sumCurrentHour) {
+      renderHtml.push(<strong>${spendRateData[0].sumCurrentHour}</strong>);
+    }
 
-  /** Print the hour sum difference. */
-  renderHourSumDifference = () => {
-    let { currentHourSpendRate } = this.props;
-    let spendRateData = currentHourSpendRate.data || [];
+    if (spendRateData.length && spendRateData[0].sum_difference) {
+      renderHtml.push(
+        <span className={`${spendRateData[0].sum_difference > 0 ? "" : "red"}`}>
+          {Math.abs(spendRateData[0].sum_difference)}
+        </span>
+      );
+    }
 
-    return spendRateData.length && spendRateData[0].sum_difference ? (
-      <span className={`${spendRateData[0].sum_difference > 0 ? "" : "red"}`}>
-        {Math.abs(spendRateData[0].sum_difference)}
-      </span>
-    ) : null;
+    return renderHtml;
   };
 
   /** Print the current day spend rate. */
@@ -276,6 +275,7 @@ class SpendAnalytics extends Component {
     ) : null;
   };
 
+  /** Print the today spend analytics. */
   renderTodaySpendAnalytics = () => {
     let { todaySpendAnalytics } = this.props;
     let todaySpendAnalyticsData = todaySpendAnalytics.data || [];
@@ -306,9 +306,44 @@ class SpendAnalytics extends Component {
     return renderHtml;
   };
 
+  /** Print the yesterday spend analytics. */
+  renderYesterdaySpendAnalytics = () => {
+    let { yesterdaySpendAnalytics } = this.props;
+    let yesterdaySpendAnalyticsData = yesterdaySpendAnalytics.data || [];
+
+    let renderHtml = [];
+    if (
+      yesterdaySpendAnalyticsData.length &&
+      yesterdaySpendAnalyticsData[0].sumCurrentDate
+    ) {
+      renderHtml.push(
+        <strong>${yesterdaySpendAnalyticsData[0].sumCurrentDate}</strong>
+      );
+    }
+    if (
+      yesterdaySpendAnalyticsData.length &&
+      yesterdaySpendAnalyticsData[0].percentage
+    ) {
+      renderHtml.push(
+        <span
+          className={`${
+            yesterdaySpendAnalyticsData[0].percentage > 0 ? "" : "red"
+          }`}
+        >
+          {Math.abs(yesterdaySpendAnalyticsData[0].percentage)}%
+        </span>
+      );
+    }
+    return renderHtml;
+  };
+
   render() {
-    let { currentDaySpendRate, currentHourSpendRate, todaySpendAnalytics } =
-      this.props;
+    let {
+      currentDaySpendRate,
+      currentHourSpendRate,
+      todaySpendAnalytics,
+      yesterdaySpendAnalytics,
+    } = this.props;
     return (
       <Box className="spend-analytics-container">
         <Box className="spend-analytics-inner-container">
@@ -440,7 +475,6 @@ class SpendAnalytics extends Component {
                         <label>Per Hour</label>
                         <Box className="spend-price">
                           {this.renderCurrentHourSpendRate()}
-                          {this.renderHourSumDifference()}
                         </Box>
                       </Box>
                     )}
@@ -478,17 +512,22 @@ class SpendAnalytics extends Component {
                   <Grid className="spend-contant">
                     <label>Spends Today</label>
                     <Box className="spend-price">
-                     {this.renderTodaySpendAnalytics()}
+                      {this.renderTodaySpendAnalytics()}
                     </Box>
                   </Grid>
                 )}
-                <Grid className="spend-contant">
-                  <label>Spends Yesterday</label>
-                  <Box className="spend-price">
-                    <strong>$1,03,540</strong>
-                    <span>12%</span>
+                {yesterdaySpendAnalytics.status === status.IN_PROGRESS ? (
+                  <Box className="spend-contant">
+                    <i className="fa-solid fa-spinner fa-spin" /> Loading...
                   </Box>
-                </Grid>
+                ) : (
+                  <Grid className="spend-contant">
+                    <label>Spends Yesterday</label>
+                    <Box className="spend-price">
+                      {this.renderYesterdaySpendAnalytics()}
+                    </Box>
+                  </Grid>
+                )}
               </Grid>
             </Box>
             <Box className="monthly-statistics-card">
@@ -549,9 +588,18 @@ class SpendAnalytics extends Component {
 }
 
 function mapStateToProps(state) {
-  const { currentHourSpendRate, currentDaySpendRate, todaySpendAnalytics } =
-    state.dashboard;
-  return { currentHourSpendRate, currentDaySpendRate, todaySpendAnalytics };
+  const {
+    currentHourSpendRate,
+    currentDaySpendRate,
+    todaySpendAnalytics,
+    yesterdaySpendAnalytics,
+  } = state.dashboard;
+  return {
+    currentHourSpendRate,
+    currentDaySpendRate,
+    todaySpendAnalytics,
+    yesterdaySpendAnalytics,
+  };
 }
 
 const mapDispatchToProps = {};
