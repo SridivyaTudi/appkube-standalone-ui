@@ -242,16 +242,28 @@ class SpendAnalytics extends Component {
       },
     };
   }
-  getCurrentHourSpendRate = ()=>{
-    let { currentHourSpendRate } = this.props
-    return currentHourSpendRate.data?.length && currentHourSpendRate.data[0].sumCurrentHour ? currentHourSpendRate.data[0].sumCurrentHour  : 0
-  }
-  getHourSumDifference =()=>{
-    let { currentHourSpendRate } = this.props
-    return currentHourSpendRate.data?.length && currentHourSpendRate.data[0].sum_difference ? currentHourSpendRate.data[0].sum_difference  : null
-  }
+
+  /** Print the sumCurrentHour. */
+  renderSumCurrentHour = () => {
+    let { currentHourSpendRate } = this.props;
+    let spendRateData = currentHourSpendRate.data;
+    return spendRateData?.length && spendRateData[0].sumCurrentHour ? (
+      <strong>$ {spendRateData[0].sumCurrentHour}</strong>
+    ) : null;
+  };
+
+  /** Print the SumDifference. */
+  renderSumDifference = () => {
+    let { currentHourSpendRate } = this.props;
+    let spendRateData = currentHourSpendRate.data;
+    return spendRateData?.length && spendRateData[0].sum_difference ? (
+      <span className={`${spendRateData[0].sum_difference > 0 ? "" : "red"}`}>
+        {Math.abs(spendRateData[0].sum_difference)}
+      </span>
+    ) : null;
+  };
+
   render() {
-   
     return (
       <Box className="spend-analytics-container">
         <Box className="spend-analytics-inner-container">
@@ -377,11 +389,8 @@ class SpendAnalytics extends Component {
                     <Box className="spend-contant">
                       <label>Per Hour</label>
                       <Box className="spend-price">
-                        <strong>{this.getCurrentHourSpendRate() ? `$${this.getCurrentHourSpendRate()}` : null}</strong>
-                        {
-                          this.getHourSumDifference() ? <span className={`${ this.getHourSumDifference() > 0 ? '' : 'red'}` }>{this.getHourSumDifference() ? `${this.getHourSumDifference()}` : null}</span> : <></>  
-                        }
-                        
+                       {this.renderSumCurrentHour()}
+                        {this.renderSumDifference()}
                       </Box>
                     </Box>
                   </Grid>
