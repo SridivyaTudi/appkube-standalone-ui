@@ -4,6 +4,9 @@ import {
   getCurrentDaySpendRate,
   getTodaySpendAnalytics,
   getYesterdaySpendAnalytics,
+  getTotalSpend,
+  getTotalCloudWiseSpend,
+  getMonthlyCloudWiseSpend
 } from "redux/assetManager/dashboard/dashboardThunk";
 import status from "redux/constants/commonDS";
 
@@ -23,6 +26,18 @@ export const dashboardSlice = createSlice({
       data: [],
     },
     yesterdaySpendAnalytics: {
+      status: null,
+      data: [],
+    },
+    totalSpend: {
+      status: null,
+      data: [],
+    },
+    totalCloudWiseSpend: {
+      status: null,
+      data: [],
+    },
+    monthlyCloudWiseSpend: {
       status: null,
       data: [],
     },
@@ -135,6 +150,90 @@ export const dashboardSlice = createSlice({
       return {
         ...state,
         yesterdaySpendAnalytics: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [getTotalSpend.pending]: (state, action) => {
+      return {
+        ...state,
+        totalSpend: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getTotalSpend.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        totalSpend: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getTotalSpend.rejected]: (state, action) => {
+      return {
+        ...state,
+        totalSpend: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [getTotalCloudWiseSpend.pending]: (state, action) => {
+      return {
+        ...state,
+        totalCloudWiseSpend: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getTotalCloudWiseSpend.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        totalCloudWiseSpend: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getTotalCloudWiseSpend.rejected]: (state, action) => {
+      return {
+        ...state,
+        totalCloudWiseSpend: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [getMonthlyCloudWiseSpend.pending]: (state, action) => {
+      return {
+        ...state,
+        monthlyCloudWiseSpend: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getMonthlyCloudWiseSpend.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        monthlyCloudWiseSpend: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getMonthlyCloudWiseSpend.rejected]: (state, action) => {
+      return {
+        ...state,
+        monthlyCloudWiseSpend: {
           status: status.FAILURE,
           data: [],
         },

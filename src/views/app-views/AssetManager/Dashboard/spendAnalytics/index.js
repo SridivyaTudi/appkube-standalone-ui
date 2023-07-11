@@ -337,26 +337,48 @@ class SpendAnalytics extends Component {
     return renderHtml;
   };
 
+  /** Print the total spend. */
+  renderTotalSpend = () => {
+    let { totalSpend } = this.props;
+    let totalSpendData = totalSpend.data || [];
+
+    let renderHtml = [];
+    if (totalSpendData.length) {
+      renderHtml.push(
+        <h1>{totalSpendData[0] ? `$${totalSpendData[0]}` : ""}</h1>
+      );
+    }
+
+    return renderHtml;
+  };
+
   render() {
     let {
       currentDaySpendRate,
       currentHourSpendRate,
       todaySpendAnalytics,
       yesterdaySpendAnalytics,
+      totalSpend,
     } = this.props;
     return (
       <Box className="spend-analytics-container">
         <Box className="spend-analytics-inner-container">
           <Box className="analytics-left">
-            <Box className="total-spend">
-              <Box className="heading">
-                <label>Total Spend</label>
-                <span>
-                  DETAIL <i className="fas fa-angle-right"></i>
-                </span>
+            {totalSpend.status === status.IN_PROGRESS ? (
+              <Box className="total-spend">
+                <i className="fa-solid fa-spinner fa-spin" /> Loading...
               </Box>
-              <h1>$75,41,390</h1>
-            </Box>
+            ) : (
+              <Box className="total-spend">
+                <Box className="heading">
+                  <label>Total Spend</label>
+                  <span>
+                    DETAIL <i className="fas fa-angle-right"></i>
+                  </span>
+                </Box>
+                {this.renderTotalSpend()}
+              </Box>
+            )}
             <Box className="wise-spend-progress">
               <Box className="heading">Cloud Wise Spend</Box>
               <Box className="avrage-shape">
@@ -593,12 +615,14 @@ function mapStateToProps(state) {
     currentDaySpendRate,
     todaySpendAnalytics,
     yesterdaySpendAnalytics,
+    totalSpend,
   } = state.dashboard;
   return {
     currentHourSpendRate,
     currentDaySpendRate,
     todaySpendAnalytics,
     yesterdaySpendAnalytics,
+    totalSpend,
   };
 }
 
