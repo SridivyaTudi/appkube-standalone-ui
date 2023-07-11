@@ -10,6 +10,7 @@ import {
   getCurrentDaySpendRate,
   getTodaySpendAnalytics,
   getYesterdaySpendAnalytics,
+  getTotalSpend,
 } from "redux/assetManager/dashboard/dashboardThunk";
 import { connect } from "react-redux";
 class Dashboard extends Component {
@@ -46,6 +47,7 @@ class Dashboard extends Component {
     this.props.getCurrentDaySpendRate();
     this.props.getTodaySpendAnalytics();
     this.props.getYesterdaySpendAnalytics();
+    this.props.getTotalSpend();
   };
 
   render() {
@@ -100,6 +102,7 @@ const mapDispatchToProps = {
   getCurrentHourSpendRate,
   getCurrentDaySpendRate,
   getTodaySpendAnalytics,
-  getYesterdaySpendAnalytics
+  getYesterdaySpendAnalytics,
+  getTotalSpend,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

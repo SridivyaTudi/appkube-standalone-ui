@@ -19,7 +19,10 @@ const config = {
   GET_CURRENT_HOUR_SPEND_RATE:`/query/spend-current-rate/organization/#org-id#/hour/analytics`,
   GET_CURRENT_DAY_SPEND_RATE:`/query/spend-current-rate/organization/#org-id#/day/analytics`,
   GET_TODAY_SPEND_ANALYTICS:`/query/spend-today/organization/#org-id#/analytics`,
-  GET_YESTERDAY_SPEND_ANALYTICS: `/query/spend-yesterday/organization/#org-id#/analytics`
+  GET_YESTERDAY_SPEND_ANALYTICS: `/query/spend-yesterday/organization/#org-id#/analytics`,
+  GET_TOTAL_SPEND:`/query/spend-total/organization/#org-id#/analytics`,
+  GET_TOTAL_CLOUD_WISE_SPEND:`/query/cloud-wise/orgnaiztion/#org-id#/cloud-analytics`,
+  GET_MONTHLY_CLOUD_WISE_SPEND:`/query/cloud-wise/orgnaiztion/#org-id#/monthly-analytics`,
   
 };
 

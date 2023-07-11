@@ -57,3 +57,43 @@ export const getYesterdaySpendAnalytics = createAsyncThunk(
     }
   }
 );
+
+export const getTotalSpend = createAsyncThunk(
+  "dashboard/getTotalSpend",
+  async () => {
+    try {
+      const response = await postLoginService.get(config.GET_TOTAL_SPEND);
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+export const getTotalCloudWiseSpend = createAsyncThunk(
+  "dashboard/getTotalCloudWiseSpend",
+  async () => {
+    try {
+      const response = await postLoginService.get(
+        config.GET_TOTAL_CLOUD_WISE_SPEND
+      );
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+export const getMonthlyCloudWiseSpend = createAsyncThunk(
+  "dashboard/getMonthlyCloudWiseSpend",
+  async () => {
+    try {
+      const response = await postLoginService.get(
+        config.GET_MONTHLY_CLOUD_WISE_SPEND
+      );
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
