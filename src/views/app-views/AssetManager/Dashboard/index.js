@@ -8,6 +8,7 @@ import { Box, List, ListItem } from "@mui/material";
 import {
   getCurrentHourSpendRate,
   getCurrentDaySpendRate,
+  getTodaySpendAnalytics,
 } from "redux/assetManager/dashboard/dashboardThunk";
 import { connect } from "react-redux";
 class Dashboard extends Component {
@@ -42,6 +43,7 @@ class Dashboard extends Component {
   componentDidMount = () => {
     this.props.getCurrentHourSpendRate();
     this.props.getCurrentDaySpendRate();
+    this.props.getTodaySpendAnalytics();
   };
 
   render() {
@@ -92,5 +94,9 @@ function mapStateToProps(state) {
   const { currentHourSpendRate } = state.dashboard;
   return { currentHourSpendRate };
 }
-const mapDispatchToProps = { getCurrentHourSpendRate, getCurrentDaySpendRate };
+const mapDispatchToProps = {
+  getCurrentHourSpendRate,
+  getCurrentDaySpendRate,
+  getTodaySpendAnalytics,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

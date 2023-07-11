@@ -276,8 +276,39 @@ class SpendAnalytics extends Component {
     ) : null;
   };
 
+  renderTodaySpendAnalytics = () => {
+    let { todaySpendAnalytics } = this.props;
+    let todaySpendAnalyticsData = todaySpendAnalytics.data || [];
+
+    let renderHtml = [];
+    if (
+      todaySpendAnalyticsData.length &&
+      todaySpendAnalyticsData[0].sumCurrentDate
+    ) {
+      renderHtml.push(
+        <strong>${todaySpendAnalyticsData[0].sumCurrentDate}</strong>
+      );
+    }
+    if (
+      todaySpendAnalyticsData.length &&
+      todaySpendAnalyticsData[0].percentage
+    ) {
+      renderHtml.push(
+        <span
+          className={`${
+            todaySpendAnalyticsData[0].percentage > 0 ? "" : "red"
+          }`}
+        >
+          {Math.abs(todaySpendAnalyticsData[0].percentage)}%
+        </span>
+      );
+    }
+    return renderHtml;
+  };
+
   render() {
-    let { currentDaySpendRate, currentHourSpendRate } = this.props;
+    let { currentDaySpendRate, currentHourSpendRate, todaySpendAnalytics } =
+      this.props;
     return (
       <Box className="spend-analytics-container">
         <Box className="spend-analytics-inner-container">
@@ -439,13 +470,18 @@ class SpendAnalytics extends Component {
                 <label>Spend Analytics</label>
               </Box>
               <Grid container spacing={1} className="spend-analytics-time">
-                <Grid className="spend-contant">
-                  <label>Spends Today</label>
-                  <Box className="spend-price">
-                    <strong>$12,875</strong>
-                    <span>10%</span>
+                {todaySpendAnalytics.status === status.IN_PROGRESS ? (
+                  <Box className="spend-contant">
+                    <i className="fa-solid fa-spinner fa-spin" /> Loading...
                   </Box>
-                </Grid>
+                ) : (
+                  <Grid className="spend-contant">
+                    <label>Spends Today</label>
+                    <Box className="spend-price">
+                     {this.renderTodaySpendAnalytics()}
+                    </Box>
+                  </Grid>
+                )}
                 <Grid className="spend-contant">
                   <label>Spends Yesterday</label>
                   <Box className="spend-price">
@@ -513,8 +549,9 @@ class SpendAnalytics extends Component {
 }
 
 function mapStateToProps(state) {
-  const { currentHourSpendRate, currentDaySpendRate } = state.dashboard;
-  return { currentHourSpendRate, currentDaySpendRate };
+  const { currentHourSpendRate, currentDaySpendRate, todaySpendAnalytics } =
+    state.dashboard;
+  return { currentHourSpendRate, currentDaySpendRate, todaySpendAnalytics };
 }
 
 const mapDispatchToProps = {};
