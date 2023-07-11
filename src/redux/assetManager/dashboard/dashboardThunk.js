@@ -29,3 +29,17 @@ export const getCurrentDaySpendRate = createAsyncThunk(
     }
   }
 );
+
+export const getTodaySpendAnalytics = createAsyncThunk(
+  "dashboard/getTodaySpendAnalytics",
+  async () => {
+    try {
+      const response = await postLoginService.get(
+        config.GET_TODAY_SPEND_ANALYTICS
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

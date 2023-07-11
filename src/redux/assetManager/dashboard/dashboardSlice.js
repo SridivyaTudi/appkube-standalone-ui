@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getCurrentHourSpendRate,
   getCurrentDaySpendRate,
+  getTodaySpendAnalytics,
 } from "redux/assetManager/dashboard/dashboardThunk";
 import status from "redux/constants/commonDS";
 
@@ -13,6 +14,10 @@ export const dashboardSlice = createSlice({
       data: [],
     },
     currentDaySpendRate: {
+      status: null,
+      data: [],
+    },
+    todaySpendAnalytics: {
       status: null,
       data: [],
     },
@@ -69,6 +74,34 @@ export const dashboardSlice = createSlice({
       return {
         ...state,
         currentDaySpendRate: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [getTodaySpendAnalytics.pending]: (state, action) => {
+      return {
+        ...state,
+        todaySpendAnalytics: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getTodaySpendAnalytics.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        todaySpendAnalytics: {
+          status: status.SUCCESS,
+          data:payload,
+        },
+      };
+    },
+    [getTodaySpendAnalytics.rejected]: (state, action) => {
+      return {
+        ...state,
+        todaySpendAnalytics: {
           status: status.FAILURE,
           data: [],
         },
