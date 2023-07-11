@@ -80,9 +80,12 @@ class TopologyView extends Component {
                   contentStyle={{
                     width: "100%",
                     height: "100%",
-                    display: "block",
-                    paddingTop: "120px",
+                    //display: "block",
+                    //paddingTop: "120px",
                     transform: "translate(0px, 0px) scale(0)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
                   <ArcherElement

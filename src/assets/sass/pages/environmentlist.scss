@@ -1107,7 +1107,7 @@
         text-align: center;
         position: relative;
         margin-right: 80px;
-        margin-top: 25px;
+        //margin-top: 25px;
         vertical-align: text-top;
         width: 20%;
         height: 55px;
@@ -1156,7 +1156,6 @@
 
         &.cluster-servies {
           width: 26%;
-
           &::after {
             top: auto;
             bottom: 45px;
@@ -2703,7 +2702,7 @@
       }
     }
     .environment-table {
-      table{
+      table {
         width: 1000px;
       }
     }
@@ -2716,7 +2715,6 @@
       .global-services-fliter {
         .fliter-inputs {
           display: flex;
-
           .search-control {
             margin-left: 7.5px;
             margin-right: 7.5px;
