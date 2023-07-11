@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Aws from "assets/img/aws.png";
 import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
 import ClusterIcon from "assets/img/assetmanager/cluster-icon.png";
 import CommonFilterViewSearch from "../CommonFilterViewSearch";
@@ -65,20 +64,22 @@ class DiscoveredAssets extends Component {
       dataOfTableLevel1: [],
       dataOfLevel1: {},
       currentActiveNodeLabel: "",
+      currentVPC: {},
     };
   }
 
-  componentDidMount = ()=>{
+  componentDidMount = () => {
     let { productEnclaveList, globalServiceList } =
-    this.getEnvironmentDataByLandingZone();
-  if (productEnclaveList?.length  || globalServiceList?.length) {
-    this.prepareDataTableLevel1(productEnclaveList);
-    this.prepareDataTopologyViewComponent(
-      productEnclaveList,
-      globalServiceList
-    );
-  }
-  }
+      this.getEnvironmentDataByLandingZone();
+    if (productEnclaveList?.length || globalServiceList?.length) {
+      this.prepareDataTableLevel1(productEnclaveList);
+      this.prepareDataTopologyViewComponent(
+        productEnclaveList,
+        globalServiceList
+      );
+    }
+  };
+
   componentDidUpdate = async (prevProps, prevState) => {
     if (
       prevProps.envDataByLandingZone.status !==
@@ -115,7 +116,7 @@ class DiscoveredAssets extends Component {
       return (
         <>
           {index > 0 ? (
-            <li  key={getUUID()}>
+            <li key={getUUID()}>
               <i className="fa-solid fa-chevron-right"></i>
             </li>
           ) : (
@@ -192,7 +193,8 @@ class DiscoveredAssets extends Component {
     let { dataOfTableLevel1 } = this.state;
     if (!dataOfTableLevel1.length) return null;
     const queryPrm = new URLSearchParams(document.location.search);
-    const cloudLogo = ServicesNameLogo.LOGOS[queryPrm.get("cloudName").toUpperCase()]
+    const cloudLogo =
+      ServicesNameLogo.LOGOS[queryPrm.get("cloudName").toUpperCase()];
     return (
       <Box
         className="environment-table-section discovered-table"
@@ -322,11 +324,20 @@ class DiscoveredAssets extends Component {
 
   getCurrentActiveTreeLevel = (label) => {
     this.setState({ currentActiveNodeLabel: label });
+    const currentVPC =
+      this.props.envDataByLandingZone.data.productEnclaveList.filter(
+        (item) => item.name === label
+      );
+    this.setState({ currentVPC: currentVPC[0] });
   };
 
   render() {
-    const { dataOfTableLevel1, dataOfLevel1, currentActiveNodeLabel } =
-      this.state;
+    const {
+      dataOfTableLevel1,
+      dataOfLevel1,
+      currentActiveNodeLabel,
+      currentVPC,
+    } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
       <Box className="discovered-assets">
@@ -337,9 +348,9 @@ class DiscoveredAssets extends Component {
               // this.filterVpcsData(string);
             }}
             updateAccountId={(accountId) => {
-               this.props.updateCloudNameAndLandingZone(
+              this.props.updateCloudNameAndLandingZone(
                 new URLSearchParams(document.location.search).get("cloudName"),
-            accountId
+                accountId
               );
             }}
             accountList={this.props.accountList}
@@ -376,7 +387,7 @@ class DiscoveredAssets extends Component {
                     {currentActiveNodeLabel.includes("cluster") ? (
                       <ClusterDetails />
                     ) : currentActiveNodeLabel.includes("vpc") ? (
-                      <VpcDetails />
+                      <VpcDetails vpc={currentVPC} />
                     ) : currentActiveNodeLabel.includes("gateway") ? (
                       <GatewayDetails />
                     ) : currentActiveNodeLabel.includes("cloudManaged") ? (
