@@ -16,7 +16,9 @@ const config = {
   ADD_CLOUD_ENV: `/cloud-environments`,
   GET_PRODUCTS_BY_DEPID:`/query/organizations/#org-id#/departments/#dep-id#/products`,
   GET_DEPLOYMENT_ENVIRONMENTS:`/deployment-environments`,
-  GET_CURRENT_HOUR_SPEND_RATE:`/query/spend-current-rate/organization/#org-id#/hour/analytics`
+  GET_CURRENT_HOUR_SPEND_RATE:`/query/spend-current-rate/organization/#org-id#/hour/analytics`,
+  GET_CURRENT_DAY_SPEND_RATE:`/query/spend-current-rate/organization/#org-id#/day/analytics`
+  
 };
 
 export default config;
