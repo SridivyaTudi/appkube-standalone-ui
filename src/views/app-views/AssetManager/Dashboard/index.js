@@ -5,7 +5,10 @@ import SLAMetrics from "views/app-views/AssetManager/Dashboard/slaMetrics";
 import ProcessCentral from "views/app-views/AssetManager/Dashboard/processCentral";
 import Planet from "assets/img/dashboard/planet2.png";
 import { Box, List, ListItem } from "@mui/material";
-import { getCurrentHourSpendRate } from "redux/assetManager/dashboard/dashboardThunk";
+import {
+  getCurrentHourSpendRate,
+  getCurrentDaySpendRate,
+} from "redux/assetManager/dashboard/dashboardThunk";
 import { connect } from "react-redux";
 class Dashboard extends Component {
   tabMapping = [
@@ -38,6 +41,7 @@ class Dashboard extends Component {
 
   componentDidMount = () => {
     this.props.getCurrentHourSpendRate();
+    this.props.getCurrentDaySpendRate();
   };
 
   render() {
@@ -85,7 +89,8 @@ class Dashboard extends Component {
   }
 }
 function mapStateToProps(state) {
-  
+  const { currentHourSpendRate } = state.dashboard;
+  return { currentHourSpendRate };
 }
-const mapDispatchToProps = { getCurrentHourSpendRate };
-export default connect(mapStateToProps,mapDispatchToProps)(Dashboard);
+const mapDispatchToProps = { getCurrentHourSpendRate, getCurrentDaySpendRate };
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
