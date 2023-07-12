@@ -8,7 +8,7 @@ export class ChangePasswordModal extends Component {
     return (
       <Modal
         isOpen={this.props.showModal}
-        toggle={this.toggle}
+        toggle={this.props.handleChangePasswordModal}
         className="setting-modal-container"
       >
         <ModalHeader tag="div">

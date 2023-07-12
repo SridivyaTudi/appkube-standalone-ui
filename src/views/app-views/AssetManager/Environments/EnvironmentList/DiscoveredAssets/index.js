@@ -65,6 +65,7 @@ class DiscoveredAssets extends Component {
       dataOfLevel1: {},
       currentActiveNodeLabel: "",
       currentVPC: {},
+      showMenu: null,
       cloudName
     };
   }
@@ -106,10 +107,17 @@ class DiscoveredAssets extends Component {
     });
   };
 
-  toggleMenu = () => {
-    this.setState({
-      showMenu: !this.state.showMenu,
-    });
+  toggleMenu = (index) => {
+    const { showMenu } = this.state;
+    if (showMenu === null) {
+      this.setState({
+        showMenu: index,
+      });
+    } else {
+      this.setState({
+        showMenu: null,
+      });
+    }
   };
 
   getBreadCrumbs() {
@@ -157,13 +165,13 @@ class DiscoveredAssets extends Component {
             <IconButton
               aria-label="delete"
               size="small"
-              onClick={this.toggleMenu}
+              onClick={() => this.toggleMenu(index)}
               className="list-icon"
             >
               <i className="fas fa-ellipsis-v"></i>
             </IconButton>
             <Box className="open-create-menu-close"></Box>
-            {this.state.showMenu === true && (
+            {this.state.showMenu === index && (
               <Box className="menu-list">
                 <List>
                   <ListItem className="active">
