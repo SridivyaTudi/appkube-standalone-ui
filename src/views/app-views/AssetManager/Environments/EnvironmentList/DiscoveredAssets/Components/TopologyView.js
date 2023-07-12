@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { ArcherContainer, ArcherElement } from "react-archer";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Box, Grid } from "@mui/material";
-import ServicesNameLogo from "../../ServicesNameLogo";
 import { getUUID } from "utils";
 let transformScale = 0;
 
@@ -28,13 +27,6 @@ class TopologyView extends Component {
     };
   }
 
-  getCloudName() {
-    const queryPrm = new URLSearchParams(document.location.search);
-    return (
-      ServicesNameLogo.ServicesName[queryPrm.get("cloudName").toUpperCase()] ||
-      ""
-    );
-  }
 
   renderMainBody = () => {
     const { data } = this.props;

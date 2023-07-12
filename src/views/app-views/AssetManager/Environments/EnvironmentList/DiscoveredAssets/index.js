@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
 import ClusterIcon from "assets/img/assetmanager/cluster-icon.png";
 import CommonFilterViewSearch from "../CommonFilterViewSearch";
-import ServicesNameLogo from "../ServicesNameLogo";
 import GlobalSerivces from "./GlobalServices";
 import GatewayDetails from "./GatewayDetails";
 import CloudManagedDetails from "./CloudManagedDetails";
@@ -24,6 +23,7 @@ import TopologyView from "./Components/TopologyView";
 import VpcDetails from "./VpcDetails";
 import ClusterDetails from "./ClusterDetails";
 import { getUUID } from "utils";
+import { LOGOS } from 'commonData';
 
 const nextTypes = {
   service: "vpc",
@@ -66,6 +66,7 @@ class DiscoveredAssets extends Component {
       currentActiveNodeLabel: "",
       currentVPC: {},
       showMenu: null,
+      cloudName
     };
   }
 
@@ -84,7 +85,7 @@ class DiscoveredAssets extends Component {
   componentDidUpdate = async (prevProps, prevState) => {
     if (
       prevProps.envDataByLandingZone.status !==
-        this.props.envDataByLandingZone.status &&
+      this.props.envDataByLandingZone.status &&
       this.props.envDataByLandingZone.status === status.SUCCESS
     ) {
       let { productEnclaveList, globalServiceList } =
@@ -198,11 +199,10 @@ class DiscoveredAssets extends Component {
   }
 
   renderTableLevel1() {
-    let { dataOfTableLevel1 } = this.state;
+    let { dataOfTableLevel1, cloudName } = this.state;
     if (!dataOfTableLevel1.length) return null;
-    const queryPrm = new URLSearchParams(document.location.search);
     const cloudLogo =
-      ServicesNameLogo.LOGOS[queryPrm.get("cloudName").toUpperCase()];
+      LOGOS[cloudName.toUpperCase()];
     return (
       <Box
         className="environment-table-section discovered-table"
@@ -215,7 +215,7 @@ class DiscoveredAssets extends Component {
                 <TableRow>
                   <TableCell>
                     <Box className="environment-image">
-                      <img src={cloudLogo} alt={queryPrm.get("cloudName")} />
+                      <img src={cloudLogo} alt={cloudName} />
                     </Box>
                   </TableCell>
                   <TableCell>Products</TableCell>
@@ -237,8 +237,8 @@ class DiscoveredAssets extends Component {
     vpcsDetails =
       searchString != ""
         ? allVpcsDetails.filter((vpc) =>
-            vpc.name.toLowerCase().includes(searchString.toLowerCase())
-          )
+          vpc.name.toLowerCase().includes(searchString.toLowerCase())
+        )
         : allVpcsDetails;
     this.setState({ searchString });
     this.props.handleSearchVpcs(vpcsDetails);
@@ -255,9 +255,9 @@ class DiscoveredAssets extends Component {
     }
     return checkLengthEnvData
       ? {
-          productEnclaveList: envDataByLandingZone.data?.productEnclaveList,
-          globalServiceList: envDataByLandingZone.data?.globalServiceList,
-        }
+        productEnclaveList: envDataByLandingZone.data?.productEnclaveList,
+        globalServiceList: envDataByLandingZone.data?.globalServiceList,
+      }
       : {};
   };
 
@@ -290,11 +290,11 @@ class DiscoveredAssets extends Component {
   };
 
   prepareDataTopologyViewComponent = (envData) => {
-    const queryPrm = new URLSearchParams(document.location.search);
+    const { cloudName, accountId } = this.state;
     let formatData = {
       label: "Account ID",
-      subLabel: this.getLandingZone(),
-      image: ServicesNameLogo.LOGOS[queryPrm.get("cloudName").toUpperCase()],
+      subLabel: accountId,
+      image: LOGOS[cloudName.toUpperCase()],
       children: [[], []],
     };
     let prepareData = [];
@@ -347,6 +347,7 @@ class DiscoveredAssets extends Component {
       dataOfLevel1,
       currentActiveNodeLabel,
       currentVPC,
+      cloudName
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
@@ -359,7 +360,7 @@ class DiscoveredAssets extends Component {
             }}
             updateAccountId={(accountId) => {
               this.props.updateCloudNameAndLandingZone(
-                new URLSearchParams(document.location.search).get("cloudName"),
+                cloudName,
                 accountId
               );
             }}
@@ -369,7 +370,7 @@ class DiscoveredAssets extends Component {
         </Box>
         <Box className="discovered-assets-body">
           {envDataByLandingZone.status === status.IN_PROGRESS ||
-          departments.status === status.IN_PROGRESS ? (
+            departments.status === status.IN_PROGRESS ? (
             <Box className="chart-spinner text-center width-100 p-t-20 p-b-20">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>

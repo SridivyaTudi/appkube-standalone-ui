@@ -57,7 +57,6 @@ class CommonFilterViewSearch extends Component {
               onClick={() => {
                 this.setState({ showServiceViewFilter: false });
                 this.props.updateAccountId(account.landingZone);
-                localStorage.setItem("serviceName", account.cloud);
               }}
             >
               <span>
