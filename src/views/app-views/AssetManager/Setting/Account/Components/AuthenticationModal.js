@@ -77,7 +77,7 @@ export class AuthenticationModal extends Component {
     return (
       <Modal
         isOpen={this.props.showModal}
-        toggle={this.toggle}
+        toggle={this.props.handleAuthenticationModal}
         className="setting-modal-container"
       >
         {activeStep === this.steps.STEP1 && (
