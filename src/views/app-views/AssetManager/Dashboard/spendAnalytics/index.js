@@ -3,7 +3,6 @@ import { Box, Grid, List, ListItem } from "@mui/material";
 import UserIcon from "assets/img/dashboard/user-icon.png";
 import KingIcon from "assets/img/dashboard/kingicon.png";
 import annotationPlugin from "chartjs-plugin-annotation";
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,12 +12,11 @@ import {
   Title,
   Tooltip,
   Legend,
-  plugins,
 } from "chart.js";
-
 import { Line } from "react-chartjs-2";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -28,7 +26,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
 ChartJS.register(annotationPlugin);
 
 const labels = [
@@ -246,10 +243,10 @@ class SpendAnalytics extends Component {
 
   /** Print the current hour spend rate. */
   renderCurrentHourSpendRate = () => {
-    let { currentHourSpendRate } = this.props;
-    let spendRateData = currentHourSpendRate.data || [];
+    const { currentHourSpendRate } = this.props;
+    const spendRateData = currentHourSpendRate.data || [];
 
-    let renderHtml = [];
+    const renderHtml = [];
     if (spendRateData.length && spendRateData[0].sumCurrentHour) {
       renderHtml.push(<strong>${spendRateData[0].sumCurrentHour}</strong>);
     }
@@ -267,8 +264,8 @@ class SpendAnalytics extends Component {
 
   /** Print the current day spend rate. */
   renderCurrentDaySpendRate = () => {
-    let { currentDaySpendRate } = this.props;
-    let daySpendRateData = currentDaySpendRate.data || [];
+    const { currentDaySpendRate } = this.props;
+    const daySpendRateData = currentDaySpendRate.data || [];
 
     return daySpendRateData.length && daySpendRateData[0] ? (
       <strong> ${daySpendRateData[0]}</strong>
@@ -277,10 +274,10 @@ class SpendAnalytics extends Component {
 
   /** Print the today spend analytics. */
   renderTodaySpendAnalytics = () => {
-    let { todaySpendAnalytics } = this.props;
-    let todaySpendAnalyticsData = todaySpendAnalytics.data || [];
+    const { todaySpendAnalytics } = this.props;
+    const todaySpendAnalyticsData = todaySpendAnalytics.data || [];
 
-    let renderHtml = [];
+    const renderHtml = [];
     if (
       todaySpendAnalyticsData.length &&
       todaySpendAnalyticsData[0].sumCurrentDate
@@ -308,10 +305,10 @@ class SpendAnalytics extends Component {
 
   /** Print the yesterday spend analytics. */
   renderYesterdaySpendAnalytics = () => {
-    let { yesterdaySpendAnalytics } = this.props;
-    let yesterdaySpendAnalyticsData = yesterdaySpendAnalytics.data || [];
+    const { yesterdaySpendAnalytics } = this.props;
+    const yesterdaySpendAnalyticsData = yesterdaySpendAnalytics.data || [];
 
-    let renderHtml = [];
+    const renderHtml = [];
     if (
       yesterdaySpendAnalyticsData.length &&
       yesterdaySpendAnalyticsData[0].sumCurrentDate
@@ -339,10 +336,10 @@ class SpendAnalytics extends Component {
 
   /** Print the total spend. */
   renderTotalSpend = () => {
-    let { totalSpend } = this.props;
-    let totalSpendData = totalSpend.data || [];
+    const { totalSpend } = this.props;
+    const totalSpendData = totalSpend.data || [];
 
-    let renderHtml = [];
+    const renderHtml = [];
     if (totalSpendData.length) {
       renderHtml.push(
         <h1>{totalSpendData[0] ? `$${totalSpendData[0]}` : ""}</h1>

@@ -136,7 +136,7 @@ class EnvironmentList extends Component {
 
   componentDidUpdate = async (prevProps, prevState) => {
     if (this.state.landingZone !== prevState.landingZone) {
-       this.props.getDepartments(this.state.landingZone);
+      this.props.getDepartments(this.state.landingZone);
       let { landingZone } = this.state;
       this.props.getEnvironmentDataByLandingZone(landingZone);
     }
