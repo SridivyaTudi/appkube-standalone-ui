@@ -245,31 +245,14 @@ class SpendAnalytics extends Component {
   renderCurrentHourSpendRate = () => {
     const { currentHourSpendRate } = this.props;
     const spendRateData = currentHourSpendRate.data || [];
-
-    const renderHtml = [];
-    if (spendRateData.length && spendRateData[0].sumCurrentHour) {
-      renderHtml.push(<strong>${spendRateData[0].sumCurrentHour}</strong>);
-    }
-
-    if (spendRateData.length && spendRateData[0].sum_difference) {
-      renderHtml.push(
-        <span className={`${spendRateData[0].sum_difference > 0 ? "" : "red"}`}>
-          {Math.abs(spendRateData[0].sum_difference)}
-        </span>
-      );
-    }
-
-    return renderHtml;
+    return <strong>{spendRateData}</strong>;
   };
 
   /** Print the current day spend rate. */
   renderCurrentDaySpendRate = () => {
     const { currentDaySpendRate } = this.props;
     const daySpendRateData = currentDaySpendRate.data || [];
-
-    return daySpendRateData.length && daySpendRateData[0] ? (
-      <strong> ${daySpendRateData[0]}</strong>
-    ) : null;
+    return <strong>{daySpendRateData}</strong>;
   };
 
   /** Print the today spend analytics. */
