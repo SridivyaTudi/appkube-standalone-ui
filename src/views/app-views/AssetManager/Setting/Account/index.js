@@ -3,6 +3,7 @@ import { Box, Grid, Button } from "@mui/material";
 import ChangePasswordImg from "assets/img/setting/change-password.png";
 import TwoFactorImg from "assets/img/setting/two-factor.png";
 import ChangePasswordModal from "./Components/ChangePasswordModal";
+import AuthenticationModal from "./Components/AuthenticationModal";
 
 export class Account extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ export class Account extends Component {
     this.state = {
       service: "read_mode",
       showChangePasswordModal: false,
+      showAuthenticationModal: false,
     };
   }
 
@@ -19,8 +21,15 @@ export class Account extends Component {
     });
   };
 
+  handleAuthenticationModal = () => {
+    this.setState({
+      showAuthenticationModal: !this.state.showAuthenticationModal,
+    });
+  };
+
   render() {
-    const { service, showChangePasswordModal } = this.state;
+    const { service, showChangePasswordModal, showAuthenticationModal } =
+      this.state;
     return (
       <Box className="account-container">
         <Box className="head">
@@ -89,13 +98,26 @@ export class Account extends Component {
             </Button>
           )}
           {service == "automation_mode" && (
-            <Button className="primary-btn width-25">T2F Auth</Button>
+            <Button
+              className="primary-btn width-25"
+              onClick={this.handleAuthenticationModal}
+            >
+              T2F Auth
+            </Button>
           )}
         </Box>
         {showChangePasswordModal ? (
           <ChangePasswordModal
             showModal={ChangePasswordModal}
             handleChangePasswordModal={this.handleChangePasswordModal}
+          />
+        ) : (
+          <></>
+        )}
+        {showAuthenticationModal ? (
+          <AuthenticationModal
+            showModal={AuthenticationModal}
+            handleAuthenticationModal={this.handleAuthenticationModal}
           />
         ) : (
           <></>
