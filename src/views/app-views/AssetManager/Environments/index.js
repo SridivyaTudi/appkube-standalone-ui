@@ -25,13 +25,7 @@ import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
 import { getRecentVisitedEnvironments, setRecentVisitedEnvironments } from "utils";
 import { ToastMessage } from "Toast/ToastMessage";
-
-const LOGOS = {
-  aws: AWS,
-  azure: AZURE,
-  gcp: GCP,
-  kubernetes: Kubernetes,
-};
+import { LOGOS } from "commonData";
 
 class Environments extends Component {
   constructor(props) {
@@ -106,7 +100,7 @@ class Environments extends Component {
             <Box className="environment-box" key={env.cloud}>
               <Box className="environment-title">
                 <Box className="environment-image">
-                  <img src={LOGOS[env.cloud.toLowerCase()]} alt={env.cloud} />
+                  <img src={LOGOS[env.cloud.toUpperCase()]} alt={env.cloud} />
                 </Box>
                 <Box className="title-name">{env.cloud.toUpperCase()}</Box>
               </Box>
@@ -294,7 +288,7 @@ class Environments extends Component {
                           }}
                         ></i>
                         <Box className="environment-image">
-                          <img src={LOGOS[item.cloud.toLowerCase()]} alt="" />
+                          <img src={LOGOS[item.cloud.toUpperCase()]} alt="" />
                         </Box>
                         <strong>{item.cloud}</strong>
                       </TableCell>
@@ -394,7 +388,7 @@ class Environments extends Component {
             >
               <span>
                 <img
-                  src={LOGOS[item.accountType.toLowerCase()]} alt={item.accountType} />
+                  src={LOGOS[item.accountType.toUpperCase()]} alt={item.accountType} />
               </span>
               <p>{item.accountId}</p>
             </Link>

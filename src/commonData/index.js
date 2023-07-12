@@ -13,4 +13,5 @@ export const LOGOS = {
   AWS: Aws,
   AZURE: Microsoftazure,
   GCP: GoogleCloud,
+  KUBERNETES: Kubernetes,
 };
