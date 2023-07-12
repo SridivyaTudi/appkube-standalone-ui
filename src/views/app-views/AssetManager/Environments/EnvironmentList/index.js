@@ -6,7 +6,6 @@ import ThreatEvents from "views/app-views/AssetManager/Environments/EnvironmentL
 import CompliancePolicies from "views/app-views/AssetManager/Environments/EnvironmentList/CompliancePolicies";
 import Alerts from "views/app-views/AssetManager/Environments/EnvironmentList/Alerts";
 import Inputs from "views/app-views/AssetManager/Environments/EnvironmentList/Inputs";
-import ServicesNameLogo from "views/app-views/AssetManager/Environments/EnvironmentList/ServicesNameLogo";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -18,6 +17,8 @@ import {
 import { getEnvsSummary } from "redux/assetManager/environments/environmentsThunk";
 import { connect } from "react-redux";
 import { getCurrentOrgId, getUUID } from "utils";
+import { LOGOS } from 'commonData';
+
 class EnvironmentList extends Component {
   tabMapping = [
     {
@@ -49,13 +50,13 @@ class EnvironmentList extends Component {
       dataKey: "inputs",
     },
   ];
+
   constructor(props) {
     super(props);
     this.state = {
       servicesPanelShow: false,
       activeTab: 0,
       productEnclaveList: [],
-      service: this.getCloudName(),
       departmentWiseData: {},
       accountList: {},
       commonData: {},
@@ -63,6 +64,7 @@ class EnvironmentList extends Component {
       vpcsDetails: [],
       vpcsDetailsBackUp: [],
       landingZone: null,
+      cloudName: ""
     };
   }
 
@@ -76,15 +78,11 @@ class EnvironmentList extends Component {
     this.setState({ activeTab });
   };
 
-  getCloudName() {
-    const queryPrm = new URLSearchParams(document.location.search);
-    return queryPrm.get("cloudName");
-  }
-
   componentDidMount = async () => {
-    if (this.state.service !== localStorage.getItem("serviceName")) {
-      this.setState({ service: localStorage.getItem("serviceName") });
-    }
+    const queryPrm = new URLSearchParams(document.location.search);
+    this.setState({
+      cloudName: queryPrm.get("cloudName")
+    });
     this.setLandingZone();
     this.props.getEnvsSummary();
   };
@@ -136,7 +134,7 @@ class EnvironmentList extends Component {
 
   componentDidUpdate = async (prevProps, prevState) => {
     if (this.state.landingZone !== prevState.landingZone) {
-       this.props.getDepartments(this.state.landingZone);
+      this.props.getDepartments(this.state.landingZone);
       let { landingZone } = this.state;
       this.props.getEnvironmentDataByLandingZone(landingZone);
     }
@@ -168,8 +166,8 @@ class EnvironmentList extends Component {
             commonData[account.cloud] = commonData[account.cloud]
               ? commonData[account.cloud]
               : {
-                  totalBill: 0,
-                };
+                totalBill: 0,
+              };
             commonData[account.cloud].totalBill += account.totalBilling || 0;
           });
           this.setState({
@@ -194,8 +192,9 @@ class EnvironmentList extends Component {
   };
 
   renderEnvironmentBoxes = () => {
+    const { cloudName } = this.state;
     const { accountList, commonData } = this.state;
-    const currentEnv = accountList[this.getCloudName()];
+    const currentEnv = accountList[cloudName];
     const retData = [];
     retData.push(
       <List key={getUUID()}>
@@ -225,7 +224,7 @@ class EnvironmentList extends Component {
             <span style={{ backgroundColor: "#00b929" }}></span>
             <p>Total Alerts</p>
           </Box>
-          <label>&#65284;{commonData[this.getCloudName()]?.totalBill}</label>
+          <label>&#65284;{commonData[cloudName]?.totalBill}</label>
         </ListItem>
       </List>
     );
@@ -233,7 +232,7 @@ class EnvironmentList extends Component {
   };
 
   render() {
-    const { servicesPanelShow, activeTab } = this.state;
+    const { servicesPanelShow, activeTab, cloudName } = this.state;
     return (
       <Box className="environment-container environmentlist">
         <Box className="list-heading">
@@ -241,24 +240,22 @@ class EnvironmentList extends Component {
         </Box>
         <Box className="services-panel">
           <Box
-            className={`services-panel-title p-t-10 p-b-10 ${
-              servicesPanelShow ? "bottom-border" : ""
-            }`}
+            className={`services-panel-title p-t-10 p-b-10 ${servicesPanelShow ? "bottom-border" : ""
+              }`}
           >
             <Box className="image">
               <img
-                src={ServicesNameLogo.LOGOS[this.getCloudName()?.toUpperCase()]}
+                src={LOGOS[cloudName.toUpperCase()]}
               />
             </Box>
-            <Box className="name">{this.getCloudName()}</Box>
+            <Box className="name">{cloudName}</Box>
             <Box
               className="right-arrow"
               onClick={() => this.toggleColumnSelect("filterShow")}
             >
               <i
-                className={`fa ${
-                  servicesPanelShow ? "fa-caret-down" : "fa-caret-right"
-                }`}
+                className={`fa ${servicesPanelShow ? "fa-caret-down" : "fa-caret-right"
+                  }`}
               ></i>
             </Box>
           </Box>
