@@ -328,7 +328,9 @@ class DiscoveredAssets extends Component {
       this.props.envDataByLandingZone.data.productEnclaveList.filter(
         (item) => item.name === label
       );
-    this.setState({ currentVPC: currentVPC[0] });
+    if (currentVPC.length) {
+      this.setState({ currentVPC: currentVPC[0] });
+    }
   };
 
   render() {
@@ -389,7 +391,7 @@ class DiscoveredAssets extends Component {
                     ) : currentActiveNodeLabel.includes("vpc") ? (
                       <VpcDetails vpc={currentVPC} />
                     ) : currentActiveNodeLabel.includes("gateway") ? (
-                      <GatewayDetails />
+                      <GatewayDetails vpc={currentVPC} />
                     ) : currentActiveNodeLabel.includes("cloudManaged") ? (
                       <CloudManagedDetails />
                     ) : currentActiveNodeLabel.includes("globalServices") ? (

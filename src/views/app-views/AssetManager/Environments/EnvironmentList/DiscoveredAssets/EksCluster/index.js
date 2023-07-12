@@ -1,5 +1,5 @@
 import React from "react";
-import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
+import dummyData from "../dummy.json";
 import {
   Button,
   Box,
@@ -27,7 +27,7 @@ class EksCluster extends React.Component {
             <Box className="account-list-conitant-scroll">
               {dummyData.eksResources.map((item) => {
                 return (
-                  <Box className="account-list-details" key={getUUID()} >
+                  <Box className="account-list-details" key={getUUID()}>
                     <Box className="d-block">
                       <strong>{item.value}</strong>
                       <p>{item.title}</p>

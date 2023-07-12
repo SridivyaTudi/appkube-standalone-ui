@@ -2,7 +2,7 @@ import React from "react";
 import GlobalIcon6 from "assets/img/assetmanager/global-icon6.png";
 import GlobalIcon7 from "assets/img/assetmanager/global-icon7.png";
 import GlobalIcon3 from "assets/img/assetmanager/global-icon3.png";
-import dummyData from "views/app-views/AssetManager/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
+import dummyData from "./dummy.json";
 import {
   Button,
   Box,
@@ -19,10 +19,23 @@ import { getUUID } from "utils";
 class GatewayDetails extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      wafLength: "",
+    };
   }
 
+  componentDidMount = () => {
+    this.props.vpc.hostingTypeList.map((item) => {
+      item.category.map((category) => {
+        if (category.category === "WAF") {
+          this.setState({ wafLength: category.elementList.length });
+        }
+      });
+    });
+  };
+
   render() {
+    const { wafLength } = this.state;
     return (
       <>
         <Box className="global-service-penal">
@@ -33,7 +46,7 @@ class GatewayDetails extends React.Component {
               </Box>
               <Box className="service-contant">
                 <label>WAF-Service</label>
-                <strong>235</strong>
+                <strong>{wafLength}</strong>
               </Box>
             </Box>
             <Box className="service-card">
