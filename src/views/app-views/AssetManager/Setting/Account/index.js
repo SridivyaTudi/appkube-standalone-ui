@@ -108,7 +108,7 @@ export class Account extends Component {
         </Box>
         {showChangePasswordModal ? (
           <ChangePasswordModal
-            showModal={ChangePasswordModal}
+            showModal={showChangePasswordModal}
             handleChangePasswordModal={this.handleChangePasswordModal}
           />
         ) : (
@@ -116,7 +116,7 @@ export class Account extends Component {
         )}
         {showAuthenticationModal ? (
           <AuthenticationModal
-            showModal={AuthenticationModal}
+            showModal={showAuthenticationModal}
             handleAuthenticationModal={this.handleAuthenticationModal}
           />
         ) : (

@@ -2,6 +2,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { Box } from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { getUUID } from "utils";
 
 class ChangePasswordModal extends Component {
   constructor(props) {
@@ -20,7 +21,6 @@ class ChangePasswordModal extends Component {
   }
 
   /**
-   *
    * @param {string} field - Field name on which user clicked toggle switch
    */
   togglePasswordView = (field) => {
@@ -85,12 +85,11 @@ class ChangePasswordModal extends Component {
     const JSX = [];
     for (let i = 0; i < 4; i++) {
       if (pwdStrength <= 2 && i <= pwdStrength - 1) {
-        JSX.push(<span className={"good"}></span>);
-        continue;
+        JSX.push(<span key={getUUID()} className={"good"}></span>);
       } else if (pwdStrength > 2 && i <= pwdStrength - 1) {
-        JSX.push(<span className={"strong"}></span>);
+        JSX.push(<span key={getUUID()} className={"strong"}></span>);
       } else {
-        JSX.push(<span></span>);
+        JSX.push(<span key={getUUID()}></span>);
       }
     }
     return JSX;
@@ -113,102 +112,106 @@ class ChangePasswordModal extends Component {
           </p>
         </ModalHeader>
         <ModalBody>
-          <Box className="form-group">
-            <label for="CurrentPassword" className="form-label">
-              Current Password
-            </label>
-            <input
-              type={currentPasswordHidden ? "password" : "text"}
-              className="form-control"
-              id="currentPassword"
-              name="currentPassword"
-              value={formData.currentPassword}
-              onChange={this.handleInputChange}
-            />
-            <span
-              className="input-group-text"
-              onClick={() => this.togglePasswordView("currentPasswordHidden")}
-            >
-              <i
-                className={
-                  currentPasswordHidden
-                    ? "fa-regular fa-eye-slash"
-                    : "fa-sharp fa-regular fa-eye"
-                }
-              ></i>
-            </span>
-          </Box>
-          <Box className="form-group">
-            <label for="NewPassword" className="form-label">
-              New Password
-            </label>
-            <input
-              type={newPassword ? "password" : "text"}
-              className="form-control"
-              id="newPassword"
-              name="newPassword"
-              value={formData.newPassword}
-              onChange={(e) => {
-                this.handleInputChange(e);
-                this.checkPasswordStrength();
-              }}
-            />
-            <span
-              className="input-group-text rotate"
-              onClick={this.generateRandomPassword}
-            >
-              <i class="fa-solid fa-arrows-rotate"></i>
-            </span>
-            <span
-              className="input-group-text"
-              onClick={() => this.togglePasswordView("newPassword")}
-            >
-              <i
-                className={
-                  newPassword
-                    ? "fa-regular fa-eye-slash"
-                    : "fa-sharp fa-regular fa-eye"
-                }
-              ></i>
-            </span>
-          </Box>
-          <Box className="form-group">
-            <label for="Confirm Password" className="form-label">
-              Confirm Password
-            </label>
-            <input
-              type={confirmPassword ? "password" : "text"}
-              className="form-control"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={this.handleInputChange}
-            />
-            <span
-              className="input-group-text"
-              onClick={() => this.togglePasswordView("confirmPassword")}
-            >
-              <i
-                className={
-                  confirmPassword
-                    ? "fa-regular fa-eye-slash"
-                    : "fa-sharp fa-regular fa-eye"
-                }
-              ></i>
-            </span>
-          </Box>
-          <Box className="password-strength-group m-b-10">
-            {this.renderPasswordStrength()}
-          </Box>
-          <p className="strength-text">
-            We Strongly suggest that you create strong password
-          </p>
+          <form>
+            <Box className="form-group">
+              <label htmlFor="CurrentPassword" className="form-label">
+                Current Password
+              </label>
+              <input
+                type={currentPasswordHidden ? "password" : "text"}
+                className="form-control"
+                id="currentPassword"
+                name="currentPassword"
+                value={formData.currentPassword}
+                onChange={this.handleInputChange}
+                autoComplete="off"
+              />
+              <span
+                className="input-group-text"
+                onClick={() => this.togglePasswordView("currentPasswordHidden")}
+              >
+                <i
+                  className={
+                    currentPasswordHidden
+                      ? "fa-regular fa-eye-slash"
+                      : "fa-sharp fa-regular fa-eye"
+                  }
+                ></i>
+              </span>
+            </Box>
+            <Box className="form-group">
+              <label htmlFor="NewPassword" className="form-label">
+                New Password
+              </label>
+              <input
+                type={newPassword ? "password" : "text"}
+                className="form-control"
+                id="newPassword"
+                name="newPassword"
+                value={formData.newPassword}
+                autoComplete="off"
+                onChange={(e) => {
+                  this.handleInputChange(e);
+                  this.checkPasswordStrength();
+                }}
+              />
+              <span
+                className="input-group-text rotate"
+                onClick={this.generateRandomPassword}
+              >
+                <i className="fa-solid fa-arrows-rotate"></i>
+              </span>
+              <span
+                className="input-group-text"
+                onClick={() => this.togglePasswordView("newPassword")}
+              >
+                <i
+                  className={
+                    newPassword
+                      ? "fa-regular fa-eye-slash"
+                      : "fa-sharp fa-regular fa-eye"
+                  }
+                ></i>
+              </span>
+            </Box>
+            <Box className="form-group">
+              <label htmlFor="Confirm Password" className="form-label">
+                Confirm Password
+              </label>
+              <input
+                type={confirmPassword ? "password" : "text"}
+                className="form-control"
+                id="confirmPassword"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={this.handleInputChange}
+                autoComplete="off"
+              />
+              <span
+                className="input-group-text"
+                onClick={() => this.togglePasswordView("confirmPassword")}
+              >
+                <i
+                  className={
+                    confirmPassword
+                      ? "fa-regular fa-eye-slash"
+                      : "fa-sharp fa-regular fa-eye"
+                  }
+                ></i>
+              </span>
+            </Box>
+            <Box className="password-strength-group m-b-10">
+              {this.renderPasswordStrength()}
+            </Box>
+            <p className="strength-text">
+              We Strongly suggest that you create strong password
+            </p>
+          </form>
         </ModalBody>
         <ModalFooter className="footer-top-br">
           <Box className="d-block text-center">
             <LoadingButton
               className="primary-btn min-width"
-              loadingPosition="start"
               variant="contained"
               onClick={this.props.handleChangePasswordModal}
             >
