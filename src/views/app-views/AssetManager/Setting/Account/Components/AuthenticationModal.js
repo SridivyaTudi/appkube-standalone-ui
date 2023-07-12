@@ -9,7 +9,6 @@ import { styled } from "@mui/material/styles";
 import Scanner from "assets/img/setting/scanner.png";
 import Carrier from "assets/img/setting/carrier.png";
 
-
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 32,
   height: 18,
@@ -65,10 +64,9 @@ export class AuthenticationModal extends Component {
     };
   }
 
-  setActiveStep = () => {
-    const { activeStep } = this.state;
+  setActiveStep = (step) => {
     this.setState({
-      activeStep: activeStep,
+      activeStep: step,
     });
   };
 
@@ -179,7 +177,7 @@ export class AuthenticationModal extends Component {
                   className="primary-btn min-width"
                   loadingPosition="start"
                   variant="contained"
-                  onClick={() => this.setActiveStep(this.steps.STEP2, true)}
+                  onClick={() => this.setActiveStep(this.steps.STEP3)}
                 >
                   Next
                 </LoadingButton>
@@ -203,42 +201,42 @@ export class AuthenticationModal extends Component {
                     id="first"
                     className="form-control"
                     maxlength="1"
-                    value={'7'}
+                    value={"7"}
                   />
                   <input
                     type="text"
                     id="sec"
                     className="form-control"
                     maxlength="1"
-                    value={'2'}
+                    value={"2"}
                   />
                   <input
                     type="text"
                     id="third"
                     className="form-control"
                     maxlength="1"
-                    value={'1'}
+                    value={"1"}
                   />
                   <input
                     type="text"
                     id="fourth"
                     className="form-control"
                     maxlength="1"
-                    value={'3'}
+                    value={"3"}
                   />
                   <input
                     type="text"
                     id="fifth"
                     className="form-control"
                     maxlength="1"
-                    value={'0'}
+                    value={"0"}
                   />
                   <input
                     type="text"
                     id="six"
                     className="form-control"
                     maxlength="1"
-                    value={'9'}
+                    value={"9"}
                   />
                 </Box>
                 <Box className="d-block width-100 text-center">
@@ -246,7 +244,7 @@ export class AuthenticationModal extends Component {
                     className="primary-btn min-width"
                     loadingPosition="start"
                     variant="contained"
-                    onClick={() => this.setActiveStep(this.steps.STEP1, true)}
+                    onClick={() => this.setActiveStep(this.steps.STEP4)}
                   >
                     Validate
                   </LoadingButton>
@@ -269,7 +267,7 @@ export class AuthenticationModal extends Component {
                   className="secondary-btn min-width"
                   loadingPosition="start"
                   variant="contained"
-                  onClick={() => this.setActiveStep(this.steps.STEP1, true)}
+                  onClick={() => this.setActiveStep(this.steps.STEP2)}
                 >
                   Back
                 </LoadingButton>
