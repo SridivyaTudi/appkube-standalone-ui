@@ -526,30 +526,34 @@ class SpendAnalytics extends Component {
                 <label>Spend Analytics</label>
               </Box>
               <Grid container spacing={1} className="spend-analytics-time">
-                {todaySpendAnalytics.status === status.IN_PROGRESS ? (
-                  <Box className="spend-contant">
-                    <i className="fa-solid fa-spinner fa-spin" /> Loading...
-                  </Box>
-                ) : (
-                  <Grid className="spend-contant">
-                    <label>Spends Today</label>
-                    <Box className="spend-price">
-                      {this.renderTodaySpendAnalytics()}
-                    </Box>
-                  </Grid>
-                )}
-                {yesterdaySpendAnalytics.status === status.IN_PROGRESS ? (
-                  <Box className="spend-contant">
-                    <i className="fa-solid fa-spinner fa-spin" /> Loading...
-                  </Box>
-                ) : (
-                  <Grid className="spend-contant">
-                    <label>Spends Yesterday</label>
-                    <Box className="spend-price">
-                      {this.renderYesterdaySpendAnalytics()}
-                    </Box>
-                  </Grid>
-                )}
+                <Box className="spend-contant">
+                  {todaySpendAnalytics.status === status.IN_PROGRESS ? (
+                    <>
+                      <i className="fa-solid fa-spinner fa-spin" /> Loading...
+                    </>
+                  ) : (
+                    <>
+                      <label>Spends Today</label>
+                      <Box className="spend-price">
+                        {this.renderTodaySpendAnalytics()}
+                      </Box>
+                    </>
+                  )}
+                </Box>
+                <Box className="spend-contant">
+                  {yesterdaySpendAnalytics.status === status.IN_PROGRESS ? (
+                    <>
+                      <i className="fa-solid fa-spinner fa-spin" /> Loading...
+                    </>
+                  ) : (
+                    <>
+                      <label>Spends Yesterday</label>
+                      <Box className="spend-price">
+                        {this.renderYesterdaySpendAnalytics()}
+                      </Box>
+                    </>
+                  )}
+                </Box>
               </Grid>
             </Box>
             <Box className="monthly-statistics-card">
