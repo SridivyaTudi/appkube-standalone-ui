@@ -13,6 +13,8 @@ import status from "redux/constants/commonDS";
 import { connect } from "react-redux";
 import { ToastMessage } from "Toast/ToastMessage";
 import { getUUID } from "utils";
+import { getRecentVisitedEnvironments, setRecentVisitedEnvironments } from "utils";
+
 const headers = [
   { label: "Service Name", key: "name" },
   { label: "Product", key: "product_count" },
@@ -32,12 +34,12 @@ class CommonFilterViewSearch extends Component {
       showRecentFilter: false,
       showSelectFilter: false,
       showServiceViewFilter: false,
-      allEnvs : [],
+      allEnvs: [],
       ...props.data,
     };
   }
 
-  componentDidMount=()=>{
+  componentDidMount = () => {
     if (this.props.envSummary.data) {
       this.setState({
         allEnvs: this.props.envSummary.data
@@ -72,7 +74,7 @@ class CommonFilterViewSearch extends Component {
     });
   };
 
-  componentDidUpdate = async (prevProps,prevState) => {
+  componentDidUpdate = async (prevProps, prevState) => {
     if (this.props.data &&
       this.props.data.vpcsDetails !== null &&
       this.props.data.vpcsDetails !== this.state.vpcsDetails
@@ -90,51 +92,56 @@ class CommonFilterViewSearch extends Component {
     }
   };
 
-  setLocalRecentService = (account) => {
-    let recentEnv = JSON.parse(localStorage.getItem("recentEnv"));
-    let isDuplicate = false;
-
+  addAccountToRecentlyVisited = (account) => {
+    const newItem = { accountType: account.accountType, accountId: account.accountId };
+    let recentEnv = getRecentVisitedEnvironments();
     if (recentEnv !== null) {
       recentEnv.map((item, index) => {
         if (item.accountId === account.accountId) {
-          isDuplicate = true;
-          arrayMove(recentEnv, index, 0);
+          recentEnv.splice(index, 1);
         }
       });
-    }
-
-    function arrayMove(arr, fromIndex, toIndex) {
-      var element = arr[fromIndex];
-      arr.splice(fromIndex, 1);
-      arr.splice(toIndex, 0, element);
-      localStorage.setItem("recentEnv", JSON.stringify(arr));
-    }
-
-    if (localStorage.getItem("recentEnv") === null) {
-      let newItem = [
-        { accountType: account.cloud, accountId: account.accountId },
+      recentEnv.splice(0, 0, newItem);
+    } else {
+      recentEnv = [
+        newItem
       ];
-      localStorage.setItem("recentEnv", JSON.stringify(newItem));
-    } else if (recentEnv.length > 2 && isDuplicate === false) {
-      recentEnv.pop();
-      let newItem = {
-        accountType: account.cloud,
-        accountId: account.accountId,
-      };
-      recentEnv.unshift(newItem);
-      localStorage.setItem("recentEnv", JSON.stringify(recentEnv));
-    } else if (isDuplicate === false) {
-      let newItem = {
-        accountType: account.cloud,
-        accountId: account.accountId,
-      };
-      recentEnv.push(newItem);
-      localStorage.setItem("recentEnv", JSON.stringify(recentEnv));
     }
+    recentEnv.length = recentEnv.length > 5 ? 5 : recentEnv.length;
+    setRecentVisitedEnvironments(recentEnv);
+  };
+
+  renderRecentVisitedMenu = () => {
+    const recentEnvs = getRecentVisitedEnvironments();
+    if (recentEnvs) {
+      return recentEnvs.map((item) => {
+        return (
+          <ListItem>
+            <Link
+              to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}`}
+              onClick={() => {
+                  this.addAccountToRecentlyVisited(item);
+                  this.props.updateCurrentAccountId(
+                    item.accountId
+                  );
+                }
+              }
+            >
+              <span>
+                <img
+                  src={LOGOS[item.accountType.toLowerCase()]} alt={item.accountType} />
+              </span>
+              <p>{item.accountId}</p>
+            </Link>
+          </ListItem>
+        );
+      });
+    }
+    return null;
   };
 
   render() {
-    const { showSelectFilter, showServiceViewFilter, showRecentFilter,allEnvs } =
+    const { showSelectFilter, showServiceViewFilter, showRecentFilter, allEnvs } =
       this.state;
     return (
       <Box sx={{ width: "100%" }}>
@@ -258,7 +265,7 @@ class CommonFilterViewSearch extends Component {
           </Grid>
           <Grid item xs={6}>
             <Box className="d-inline-block width-100 text-right">
-              {JSON.parse(localStorage.getItem("recentEnv")) !== null && (
+              {getRecentVisitedEnvironments() !== null && (
                 <Box className="environment-fliter">
                   <Box
                     className="fliter-toggel"
@@ -280,37 +287,7 @@ class CommonFilterViewSearch extends Component {
                     }
                   >
                     <List>
-                      {JSON.parse(localStorage.getItem("recentEnv"))?.map(
-                        (item) => {
-                          return (
-                            <ListItem key={getUUID()}>
-                              <Link
-                                to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}`}
-                                onClick={() => {
-                                  this.setLocalRecentService(item);
-                                  this.props.updateCurrentAccountId(
-                                    item.accountId
-                                  );
-                                }}
-                              >
-                                <span>
-                                  <img
-                                    src={
-                                      item.accountType === "aws"
-                                        ? LOGOS.aws
-                                        : item.accountType === "gcp"
-                                        ? LOGOS.gcp
-                                        : LOGOS.azure
-                                    }
-                                    alt={item.accountType}
-                                  />
-                                </span>
-                                <p>({item.accountId})</p>
-                              </Link>
-                            </ListItem>
-                          );
-                        }
-                      )}
+                      {this.renderRecentVisitedMenu()}
                     </List>
                   </Box>
                   <div
