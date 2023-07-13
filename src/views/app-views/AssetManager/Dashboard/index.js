@@ -14,6 +14,7 @@ import {
   getMonthlyCloudWiseSpend,
 } from "redux/assetManager/dashboard/dashboardThunk";
 import { connect } from "react-redux";
+import { getUUID } from "utils";
 class Dashboard extends Component {
   tabMapping = [
     {
@@ -68,7 +69,7 @@ class Dashboard extends Component {
               {this.tabMapping.map((tabData, index) => {
                 return (
                   <ListItem
-                    key={`ops-tab-${index}`}
+                    key={getUUID()}
                     className={index === activeTab ? "active" : ""}
                     onClick={() => this.setActiveTab(index)}
                   >

@@ -48,7 +48,7 @@ const COMMON_STYLE_LINE_DIAGRAM = {
   lineTension: 0.5,
   fill: false,
 };
-const CLOUD_TYPE = {
+const CLOUD_TYPE_WITH_STYLE = {
   aws: {
     backgroundColor: "rgba(255, 153, 0, 1)",
     borderColor: "rgba(255, 153, 0, 1)",
@@ -229,28 +229,21 @@ class SpendAnalytics extends Component {
     const todaySpendAnalyticsData = todaySpendAnalytics.data || [];
 
     const renderHtml = [];
-    if (
+
+    let sumCurrentDate =
       todaySpendAnalyticsData.length &&
-      todaySpendAnalyticsData[0].sumCurrentDate
-    ) {
+      todaySpendAnalyticsData[0].sumCurrentDate;
+    if (sumCurrentDate) renderHtml.push(<strong>${sumCurrentDate}</strong>);
+
+    let percentage =
+      todaySpendAnalyticsData.length && todaySpendAnalyticsData[0].percentage;
+    if (percentage)
       renderHtml.push(
-        <strong>${todaySpendAnalyticsData[0].sumCurrentDate}</strong>
-      );
-    }
-    if (
-      todaySpendAnalyticsData.length &&
-      todaySpendAnalyticsData[0].percentage
-    ) {
-      renderHtml.push(
-        <span
-          className={`${
-            todaySpendAnalyticsData[0].percentage > 0 ? "" : "red"
-          }`}
-        >
-          {Math.abs(todaySpendAnalyticsData[0].percentage)}%
+        <span className={`${percentage > 0 ? "" : "red"}`}>
+          {Math.abs(percentage)}%
         </span>
       );
-    }
+
     return renderHtml;
   };
 
@@ -260,28 +253,22 @@ class SpendAnalytics extends Component {
     const yesterdaySpendAnalyticsData = yesterdaySpendAnalytics.data || [];
 
     const renderHtml = [];
-    if (
+    let yesterdaySumCurrentDate =
       yesterdaySpendAnalyticsData.length &&
-      yesterdaySpendAnalyticsData[0].sumCurrentDate
-    ) {
-      renderHtml.push(
-        <strong>${yesterdaySpendAnalyticsData[0].sumCurrentDate}</strong>
-      );
-    }
-    if (
+      yesterdaySpendAnalyticsData[0].sumCurrentDate;
+    if (yesterdaySumCurrentDate)
+      renderHtml.push(<strong>${yesterdaySumCurrentDate}</strong>);
+
+    let yesterdaySpendPercentage =
       yesterdaySpendAnalyticsData.length &&
-      yesterdaySpendAnalyticsData[0].percentage
-    ) {
+      yesterdaySpendAnalyticsData[0].percentage;
+    if (yesterdaySpendPercentage)
       renderHtml.push(
-        <span
-          className={`${
-            yesterdaySpendAnalyticsData[0].percentage > 0 ? "" : "red"
-          }`}
-        >
-          {Math.abs(yesterdaySpendAnalyticsData[0].percentage)}%
+        <span className={`${yesterdaySpendPercentage > 0 ? "" : "red"}`}>
+          {Math.abs(yesterdaySpendPercentage)}%
         </span>
       );
-    }
+
     return renderHtml;
   };
 
@@ -291,11 +278,10 @@ class SpendAnalytics extends Component {
     const totalSpendData = totalSpend.data || [];
 
     const renderHtml = [];
-    if (totalSpendData.length) {
+    if (totalSpendData.length)
       renderHtml.push(
         <h1>{totalSpendData[0] ? `$${totalSpendData[0]}` : ""}</h1>
       );
-    }
 
     return renderHtml;
   };
@@ -307,11 +293,11 @@ class SpendAnalytics extends Component {
 
     if (diagramData.length) {
       let datasets = [];
-      Object.keys(CLOUD_TYPE).forEach((cloud) => {
+      Object.keys(CLOUD_TYPE_WITH_STYLE).forEach((cloud) => {
         let cloudWiseData = {
           label: cloud.toUpperCase(),
           data: [],
-          ...{ ...CLOUD_TYPE[cloud], ...COMMON_STYLE_LINE_DIAGRAM },
+          ...{ ...CLOUD_TYPE_WITH_STYLE[cloud], ...COMMON_STYLE_LINE_DIAGRAM },
         };
 
         diagramData.forEach((diagramCloud) => {
