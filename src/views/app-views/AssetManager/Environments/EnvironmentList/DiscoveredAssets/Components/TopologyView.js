@@ -27,7 +27,6 @@ class TopologyView extends Component {
     };
   }
 
-
   renderMainBody = () => {
     const { data } = this.props;
     let { level2Show, selectedLevel1Id } = this.state.selectedView;
@@ -246,7 +245,12 @@ class TopologyView extends Component {
   onClickLevel1 = (id, label) => {
     let { level2Show, selectedLevel1Id, selectedLevel2Id } =
       this.state.selectedView;
-    level2Show = true;
+    const { children } = this.props.data;
+    let level2DataLength = children[0][id]?.children.length;
+
+    level2Show = false;
+    if (level2DataLength) level2Show = true;
+
     selectedLevel1Id = id;
     selectedLevel2Id = null;
     this.props.setLevel(label);
