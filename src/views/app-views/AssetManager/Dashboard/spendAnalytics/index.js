@@ -451,7 +451,9 @@ class SpendAnalytics extends Component {
             <Box className="analytics-line-chart">
               <Box id="chart" style={{ height: "320px", width: "100%" }}>
                 {monthlyCloudWiseSpend.status === status.IN_PROGRESS ? (
-                  <i className="fa-solid fa-spinner fa-spin"> Loading...</i>
+                  <Box className="loader">
+                    <i className="fa-solid fa-spinner fa-spin"></i> Loading...
+                  </Box>
                 ) : (
                   <Line
                     options={monthlyCloudWiseOptions}
