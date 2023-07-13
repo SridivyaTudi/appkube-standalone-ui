@@ -11,6 +11,7 @@ import {
   getTodaySpendAnalytics,
   getYesterdaySpendAnalytics,
   getTotalSpend,
+  getMonthlyCloudWiseSpend,
 } from "redux/assetManager/dashboard/dashboardThunk";
 import { connect } from "react-redux";
 class Dashboard extends Component {
@@ -48,6 +49,7 @@ class Dashboard extends Component {
     this.props.getTodaySpendAnalytics();
     this.props.getYesterdaySpendAnalytics();
     this.props.getTotalSpend();
+    this.props.getMonthlyCloudWiseSpend();
   };
 
   render() {
@@ -104,5 +106,6 @@ const mapDispatchToProps = {
   getTodaySpendAnalytics,
   getYesterdaySpendAnalytics,
   getTotalSpend,
+  getMonthlyCloudWiseSpend,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -16,6 +16,7 @@ import {
 import { Line } from "react-chartjs-2";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
+import { ToastMessage } from "Toast/ToastMessage";
 
 ChartJS.register(
   CategoryScale,
@@ -42,83 +43,32 @@ const labels = [
   "Nov",
   "Dec",
 ];
+const COMMON_STYLE_LINE_DIAGRAM = {
+  pointBorderWidth: 0,
+  lineTension: 0.5,
+  fill: false,
+};
+const CLOUD_TYPE = {
+  aws: {
+    backgroundColor: "rgba(255, 153, 0, 1)",
+    borderColor: "rgba(255, 153, 0, 1)",
+  },
+  azure: {
+    backgroundColor: "rgba(0, 137, 214, 1)",
+    borderColor: "rgba(0, 137, 214, 1)",
+  },
+  gcp: {
+    backgroundColor: "rgba(218, 79, 68, 1)",
+    borderColor: "rgba(218, 79, 68, 1)",
+  },
+};
 
 class SpendAnalytics extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {
-        labels,
-        datasets: [
-          {
-            label: "AWS",
-            data: [
-              "600",
-              "700",
-              "420",
-              "500",
-              "780",
-              "580",
-              "600",
-              "460",
-              "450",
-              "540",
-              "750",
-              "1000",
-            ],
-            backgroundColor: "rgba(255, 153, 0, 1)",
-            borderColor: "rgba(255, 153, 0, 1)",
-            pointBorderWidth: 0,
-            lineTension: 0.5,
-            fill: false,
-          },
-          {
-            label: "AZURE",
-            data: [
-              "420",
-              "250",
-              "350",
-              "450",
-              "480",
-              "700",
-              "850",
-              "650",
-              "750",
-              "800",
-              "850",
-              "800",
-            ],
-            backgroundColor: "rgba(0, 137, 214, 1)",
-            borderColor: "rgba(0, 137, 214, 1)",
-            pointBorderWidth: 0,
-            lineTension: 0.5,
-            fill: false,
-          },
-          {
-            label: "GCP",
-            data: [
-              "230",
-              "200",
-              "240",
-              "300",
-              "320",
-              "350",
-              "300",
-              "340",
-              "350",
-              "300",
-              "500",
-              "600",
-            ],
-            backgroundColor: "rgba(218, 79, 68, 1)",
-            borderColor: "rgba(218, 79, 68, 1)",
-            pointBorderWidth: 0,
-            lineTension: 0.5,
-            fill: false,
-          },
-        ],
-      },
-      options: {
+      monthlyCloudWiseData: { labels, datasets: [] },
+      monthlyCloudWiseOptions: {
         type: "line",
         plugins: {
           legend: {
@@ -241,6 +191,24 @@ class SpendAnalytics extends Component {
     };
   }
 
+  componentDidMount = () => {
+    if (this.props.monthlyCloudWiseSpend.data) {
+      this.lineDiagramDataPrepare();
+    }
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.monthlyCloudWiseSpend.status !==
+      this.props.monthlyCloudWiseSpend.status
+    ) {
+      if (this.props.monthlyCloudWiseSpend.status === status.SUCCESS) {
+        this.lineDiagramDataPrepare();
+      } else if (this.props.monthlyCloudWiseSpend.status === status.FAILURE) {
+        ToastMessage.error("There is some issue.");
+      }
+    }
+  }
   /** Print the current hour spend rate. */
   renderCurrentHourSpendRate = () => {
     const { currentHourSpendRate } = this.props;
@@ -332,6 +300,38 @@ class SpendAnalytics extends Component {
     return renderHtml;
   };
 
+  /** Line diagram data of monthly CloudWise spend. */
+  lineDiagramDataPrepare() {
+    let { monthlyCloudWiseSpend } = this.props;
+    let diagramData = monthlyCloudWiseSpend.data || [];
+
+    if (diagramData.length) {
+      let datasets = [];
+      Object.keys(CLOUD_TYPE).forEach((cloud) => {
+        let cloudWiseData = {
+          label: cloud.toUpperCase(),
+          data: [],
+          ...{ ...CLOUD_TYPE[cloud], ...COMMON_STYLE_LINE_DIAGRAM },
+        };
+
+        diagramData.forEach((diagramCloud) => {
+          if (cloud === diagramCloud.cloud.toLowerCase()) {
+            let monthIndex = labels.findIndex((label) =>
+              diagramCloud.month.startsWith(label)
+            );
+
+            if (monthIndex > -1)
+              cloudWiseData.data[monthIndex] = diagramCloud.sumValues;
+          }
+        });
+
+        if (cloudWiseData.data.length) datasets.push(cloudWiseData);
+      });
+
+      this.setState({ monthlyCloudWiseData: { labels, datasets } });
+    }
+  }
+
   render() {
     let {
       currentDaySpendRate,
@@ -340,6 +340,7 @@ class SpendAnalytics extends Component {
       yesterdaySpendAnalytics,
       totalSpend,
     } = this.props;
+    let { monthlyCloudWiseOptions, monthlyCloudWiseData } = this.state;
     return (
       <Box className="spend-analytics-container">
         <Box className="spend-analytics-inner-container">
@@ -449,8 +450,8 @@ class SpendAnalytics extends Component {
             <Box className="analytics-line-chart">
               <Box id="chart" style={{ height: "320px", width: "100%" }}>
                 <Line
-                  options={this.state.options}
-                  data={this.state.data}
+                  options={monthlyCloudWiseOptions}
+                  data={monthlyCloudWiseData}
                   height={320}
                   width={518}
                 />
@@ -600,6 +601,7 @@ function mapStateToProps(state) {
     todaySpendAnalytics,
     yesterdaySpendAnalytics,
     totalSpend,
+    monthlyCloudWiseSpend,
   } = state.dashboard;
   return {
     currentHourSpendRate,
@@ -607,6 +609,7 @@ function mapStateToProps(state) {
     todaySpendAnalytics,
     yesterdaySpendAnalytics,
     totalSpend,
+    monthlyCloudWiseSpend,
   };
 }
 
