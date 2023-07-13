@@ -1,5 +1,5 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box, Grid, FormControlLabel, ListItem } from "@mui/material/";
+import { Box, ListItem } from "@mui/material/";
 import { Component } from "react";
 import { List, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import Typography from "@mui/material/Typography";
@@ -8,6 +8,7 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Scanner from "assets/img/setting/scanner.png";
 import Carrier from "assets/img/setting/carrier.png";
+import OTPInput from "react-otp-input";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 32,
@@ -61,6 +62,7 @@ export class AuthenticationModal extends Component {
     super(props);
     this.state = {
       activeStep: this.steps.STEP1,
+      otp: "",
     };
   }
 
@@ -70,8 +72,12 @@ export class AuthenticationModal extends Component {
     });
   };
 
+  setOtp = (otp) => {
+    this.setState({ otp: otp });
+  };
+
   render() {
-    const { activeStep } = this.state;
+    const { activeStep, otp } = this.state;
     return (
       <Modal
         isOpen={this.props.showModal}
@@ -196,47 +202,13 @@ export class AuthenticationModal extends Component {
                   Enter the 6-digit code you see in the app
                 </p>
                 <Box class="digit-input">
-                  <input
-                    type="text"
-                    id="first"
-                    className="form-control"
-                    maxlength="1"
-                    value={"7"}
-                  />
-                  <input
-                    type="text"
-                    id="sec"
-                    className="form-control"
-                    maxlength="1"
-                    value={"2"}
-                  />
-                  <input
-                    type="text"
-                    id="third"
-                    className="form-control"
-                    maxlength="1"
-                    value={"1"}
-                  />
-                  <input
-                    type="text"
-                    id="fourth"
-                    className="form-control"
-                    maxlength="1"
-                    value={"3"}
-                  />
-                  <input
-                    type="text"
-                    id="fifth"
-                    className="form-control"
-                    maxlength="1"
-                    value={"0"}
-                  />
-                  <input
-                    type="text"
-                    id="six"
-                    className="form-control"
-                    maxlength="1"
-                    value={"9"}
+                  <OTPInput
+                    value={otp}
+                    onChange={this.setOtp}
+                    numInputs={6}
+                    renderSeparator={<span></span>}
+                    inputStyle="form-control"
+                    renderInput={(props) => <input {...props} />}
                   />
                 </Box>
                 <Box className="d-block width-100 text-center">
