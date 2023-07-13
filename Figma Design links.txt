@@ -7,6 +7,9 @@ https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube?page-id=6795%3A29886&
 Infra:
 https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube?type=design&node-id=11660-66102&scaling=scale-down-width&page-id=11036%3A61674&starting-point-node-id=11116%3A62213
 
+MFA: 
+https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube-DRS?page-id=11036%3A61674&type=design&node-id=12284-67810&viewport=796%2C-927%2C0.06&t=xUF2v4d1XVdTYFeZ-1&scaling=min-zoom&starting-point-node-id=12284%3A67810
+
 Open API data: 
 https://github.com/AppkubeCloud/appkube-cmdb-service/blob/main/core-service-api/src/main/resources/rest_api.yaml
 
