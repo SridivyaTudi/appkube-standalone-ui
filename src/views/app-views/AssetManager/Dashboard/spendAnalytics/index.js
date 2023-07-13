@@ -339,6 +339,7 @@ class SpendAnalytics extends Component {
       todaySpendAnalytics,
       yesterdaySpendAnalytics,
       totalSpend,
+      monthlyCloudWiseSpend,
     } = this.props;
     let { monthlyCloudWiseOptions, monthlyCloudWiseData } = this.state;
     return (
@@ -449,12 +450,16 @@ class SpendAnalytics extends Component {
           <Box className="analytics-center">
             <Box className="analytics-line-chart">
               <Box id="chart" style={{ height: "320px", width: "100%" }}>
-                <Line
-                  options={monthlyCloudWiseOptions}
-                  data={monthlyCloudWiseData}
-                  height={320}
-                  width={518}
-                />
+                {monthlyCloudWiseSpend.status === status.IN_PROGRESS ? (
+                  <i className="fa-solid fa-spinner fa-spin"> Loading...</i>
+                ) : (
+                  <Line
+                    options={monthlyCloudWiseOptions}
+                    data={monthlyCloudWiseData}
+                    height={320}
+                    width={518}
+                  />
+                )}
               </Box>
             </Box>
           </Box>
