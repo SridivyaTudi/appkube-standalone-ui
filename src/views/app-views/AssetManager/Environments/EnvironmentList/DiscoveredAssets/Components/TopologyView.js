@@ -72,8 +72,6 @@ class TopologyView extends Component {
                   contentStyle={{
                     width: "100%",
                     height: "100%",
-                    //display: "block",
-                    //paddingTop: "120px",
                     transform: "translate(0px, 0px) scale(0)",
                     display: "flex",
                     alignItems: "center",
@@ -234,7 +232,7 @@ class TopologyView extends Component {
     }
   }
 
-   /** Get name in form of capitalize. */
+  /** Get name in form of capitalize. */
   getServiceName(name, type) {
     if (type === "vpc") {
       return name ? name.toUpperCase() : "";
@@ -282,6 +280,7 @@ class TopologyView extends Component {
     level2Show = false;
     selectedLevel1Id = null;
     selectedLevel2Id = null;
+    this.props.setLevel("");
     this.setState({
       selectedView: { level2Show, selectedLevel1Id, selectedLevel2Id },
     });

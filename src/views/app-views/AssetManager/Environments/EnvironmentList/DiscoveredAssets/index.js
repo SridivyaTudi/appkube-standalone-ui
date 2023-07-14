@@ -23,7 +23,7 @@ import TopologyView from "./Components/TopologyView";
 import VpcDetails from "./VpcDetails";
 import ClusterDetails from "./ClusterDetails";
 import { getUUID } from "utils";
-import { LOGOS } from 'commonData';
+import { LOGOS } from "commonData";
 
 const nextTypes = {
   service: "vpc",
@@ -66,7 +66,7 @@ class DiscoveredAssets extends Component {
       currentActiveNodeLabel: "",
       currentVPC: {},
       showMenu: null,
-      cloudName
+      cloudName,
     };
   }
 
@@ -85,7 +85,7 @@ class DiscoveredAssets extends Component {
   componentDidUpdate = async (prevProps, prevState) => {
     if (
       prevProps.envDataByLandingZone.status !==
-      this.props.envDataByLandingZone.status &&
+        this.props.envDataByLandingZone.status &&
       this.props.envDataByLandingZone.status === status.SUCCESS
     ) {
       let { productEnclaveList, globalServiceList } =
@@ -201,8 +201,7 @@ class DiscoveredAssets extends Component {
   renderTableLevel1() {
     let { dataOfTableLevel1, cloudName } = this.state;
     if (!dataOfTableLevel1.length) return null;
-    const cloudLogo =
-      LOGOS[cloudName.toUpperCase()];
+    const cloudLogo = LOGOS[cloudName.toUpperCase()];
     return (
       <Box
         className="environment-table-section discovered-table"
@@ -237,8 +236,8 @@ class DiscoveredAssets extends Component {
     vpcsDetails =
       searchString != ""
         ? allVpcsDetails.filter((vpc) =>
-          vpc.name.toLowerCase().includes(searchString.toLowerCase())
-        )
+            vpc.name.toLowerCase().includes(searchString.toLowerCase())
+          )
         : allVpcsDetails;
     this.setState({ searchString });
     this.props.handleSearchVpcs(vpcsDetails);
@@ -255,9 +254,9 @@ class DiscoveredAssets extends Component {
     }
     return checkLengthEnvData
       ? {
-        productEnclaveList: envDataByLandingZone.data?.productEnclaveList,
-        globalServiceList: envDataByLandingZone.data?.globalServiceList,
-      }
+          productEnclaveList: envDataByLandingZone.data?.productEnclaveList,
+          globalServiceList: envDataByLandingZone.data?.globalServiceList,
+        }
       : {};
   };
 
@@ -339,6 +338,8 @@ class DiscoveredAssets extends Component {
     if (currentVPC.length) {
       this.setState({ currentVPC: currentVPC[0] });
     }
+
+    this.getBreadCrumbs();
   };
 
   render() {
@@ -347,7 +348,7 @@ class DiscoveredAssets extends Component {
       dataOfLevel1,
       currentActiveNodeLabel,
       currentVPC,
-      cloudName
+      cloudName,
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
@@ -359,10 +360,7 @@ class DiscoveredAssets extends Component {
               // this.filterVpcsData(string);
             }}
             updateAccountId={(accountId) => {
-              this.props.updateCloudNameAndLandingZone(
-                cloudName,
-                accountId
-              );
+              this.props.updateCloudNameAndLandingZone(cloudName, accountId);
             }}
             accountList={this.props.accountList}
             updateCurrentAccountId={this.props.updateCurrentAccountId}
@@ -370,7 +368,7 @@ class DiscoveredAssets extends Component {
         </Box>
         <Box className="discovered-assets-body">
           {envDataByLandingZone.status === status.IN_PROGRESS ||
-            departments.status === status.IN_PROGRESS ? (
+          departments.status === status.IN_PROGRESS ? (
             <Box className="chart-spinner text-center width-100 p-t-20 p-b-20">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
@@ -386,15 +384,15 @@ class DiscoveredAssets extends Component {
                   setLevel={this.getCurrentActiveTreeLevel}
                 />
                 <Grid item xs={5}>
-                  {!currentActiveNodeLabel ? this.renderTableLevel1() : <></>}
-                  <Box className="fliter-tabs global-service-penal">
-                    <Box className="global-services-fliter">
-                      <Box className="heading">
-                        <Box className="breadcrumbs">
-                          <ul>{this.getBreadCrumbs()}</ul>
-                        </Box>
+                  <Box className="global-services-fliter">
+                    <Box className="heading">
+                      <Box className="breadcrumbs">
+                        <ul>{this.getBreadCrumbs()}</ul>
                       </Box>
                     </Box>
+                  </Box>
+                  {!currentActiveNodeLabel ? this.renderTableLevel1() : <></>}
+                  <Box className="fliter-tabs global-service-penal">
                     {currentActiveNodeLabel.includes("cluster") ? (
                       <ClusterDetails />
                     ) : currentActiveNodeLabel.includes("vpc") ? (
