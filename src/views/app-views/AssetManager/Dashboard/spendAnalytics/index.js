@@ -222,14 +222,16 @@ class SpendAnalytics extends Component {
   renderCurrentHourSpendRate = () => {
     const { currentHourSpendRate } = this.props;
     const spendRateData = currentHourSpendRate.data || [];
-    return <strong>{spendRateData}</strong>;
+    if (spendRateData.length) {
+      return <strong>{spendRateData}</strong>;
+    }
   };
 
   /** Print the current day spend rate. */
   renderCurrentDaySpendRate = () => {
     const { currentDaySpendRate } = this.props;
     const daySpendRateData = currentDaySpendRate.data || [];
-    return <strong>{daySpendRateData}</strong>;
+    if (daySpendRateData.length) return <strong>{daySpendRateData}</strong>;
   };
 
   /** Print the today spend analytics. */
@@ -392,6 +394,7 @@ class SpendAnalytics extends Component {
       monthlyCloudWiseSpend,
       totalCloudWiseSpend,
     } = this.props;
+
     let { monthlyCloudWiseOptions, monthlyCloudWiseData } = this.state;
     return (
       <Box className="spend-analytics-container">
