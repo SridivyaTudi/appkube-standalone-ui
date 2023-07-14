@@ -17,6 +17,7 @@ import { Line } from "react-chartjs-2";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
 import { ToastMessage } from "Toast/ToastMessage";
+import { getUUID } from "utils";
 
 ChartJS.register(
   CategoryScale,
@@ -43,11 +44,13 @@ const labels = [
   "Nov",
   "Dec",
 ];
+
 const COMMON_STYLE_LINE_DIAGRAM = {
   pointBorderWidth: 0,
   lineTension: 0.5,
   fill: false,
 };
+
 const CLOUD_TYPE_WITH_STYLE = {
   aws: {
     backgroundColor: "rgba(255, 153, 0, 1)",
@@ -63,6 +66,11 @@ const CLOUD_TYPE_WITH_STYLE = {
   },
 };
 
+const TOTAL_CLOUD_WISE_SPEND_STYLE = {
+  aws: { backgroundColor: "#ff9900", progressBarClassName: "dark-orange" },
+  azure: { backgroundColor: "#0089d6", progressBarClassName: "blue-dress" },
+  gcp: { backgroundColor: "#da4f44", progressBarClassName: "dark-coral" },
+};
 class SpendAnalytics extends Component {
   constructor(props) {
     super(props);
@@ -231,16 +239,17 @@ class SpendAnalytics extends Component {
     const renderHtml = [];
 
     let sumCurrentDate =
-      todaySpendAnalyticsData.length &&
-      todaySpendAnalyticsData[0].sumCurrentDate;
+      Object.keys(todaySpendAnalyticsData).length &&
+      todaySpendAnalyticsData.sumCurrentDate;
     if (sumCurrentDate) renderHtml.push(<strong>${sumCurrentDate}</strong>);
 
     let percentage =
-      todaySpendAnalyticsData.length && todaySpendAnalyticsData[0].percentage;
+      Object.keys(todaySpendAnalyticsData).length &&
+      todaySpendAnalyticsData.percentage;
     if (percentage)
       renderHtml.push(
         <span className={`${percentage > 0 ? "" : "red"}`}>
-          {Math.abs(percentage)}%
+          {Math.abs(percentage).toFixed(2)}%
         </span>
       );
 
@@ -250,22 +259,22 @@ class SpendAnalytics extends Component {
   /** Print the yesterday spend analytics. */
   renderYesterdaySpendAnalytics = () => {
     const { yesterdaySpendAnalytics } = this.props;
-    const yesterdaySpendAnalyticsData = yesterdaySpendAnalytics.data || [];
+    const yesterdaySpendAnalyticsData = yesterdaySpendAnalytics.data || {};
 
     const renderHtml = [];
     let yesterdaySumCurrentDate =
-      yesterdaySpendAnalyticsData.length &&
-      yesterdaySpendAnalyticsData[0].sumCurrentDate;
+      Object.keys(yesterdaySpendAnalyticsData).length &&
+      yesterdaySpendAnalyticsData.sumCurrentDate;
     if (yesterdaySumCurrentDate)
       renderHtml.push(<strong>${yesterdaySumCurrentDate}</strong>);
 
     let yesterdaySpendPercentage =
-      yesterdaySpendAnalyticsData.length &&
-      yesterdaySpendAnalyticsData[0].percentage;
+      Object.keys(yesterdaySpendAnalyticsData).length &&
+      yesterdaySpendAnalyticsData.percentage;
     if (yesterdaySpendPercentage)
       renderHtml.push(
         <span className={`${yesterdaySpendPercentage > 0 ? "" : "red"}`}>
-          {Math.abs(yesterdaySpendPercentage)}%
+          {Math.abs(yesterdaySpendPercentage).toFixed(2)}%
         </span>
       );
 
@@ -318,6 +327,60 @@ class SpendAnalytics extends Component {
     }
   }
 
+  /** Get total cloudwise spend. */
+  renderTotalCloudwiseSpend = () => {
+    const { totalCloudWiseSpend } = this.props;
+    const totalCloudWiseSpendData = totalCloudWiseSpend.data || [];
+
+    if (totalCloudWiseSpendData.length) {
+      return totalCloudWiseSpendData.map((cloudSpend) => {
+        return (
+          <ListItem key={getUUID()}>
+            <Box className="data-text">
+              <span
+                style={{
+                  background:
+                    TOTAL_CLOUD_WISE_SPEND_STYLE[cloudSpend.cloud]
+                      ?.backgroundColor,
+                }}
+              ></span>
+              <p>{cloudSpend.cloud?.toUpperCase()}</p>
+            </Box>
+            <label>
+              {cloudSpend.sumValues > 0 ? `$${cloudSpend.sumValues}` : ""}
+              <strong>
+                {cloudSpend.percentage > 0 ? `${cloudSpend.percentage}%` : ""}
+              </strong>
+            </label>
+          </ListItem>
+        );
+      });
+    }
+  };
+
+  /** Progressbar total cloudwise spend. */
+  renderProgressBarTotalCloudwiseSpend = () => {
+    const { totalCloudWiseSpend } = this.props;
+    const totalCloudWiseSpendData = totalCloudWiseSpend.data || [];
+    if (totalCloudWiseSpendData.length) {
+      return totalCloudWiseSpendData.map((cloudSpend) => {
+        return (
+          <span
+            className={
+              TOTAL_CLOUD_WISE_SPEND_STYLE[cloudSpend.cloud]
+                ?.progressBarClassName
+            }
+            style={{
+              width: `${
+                cloudSpend.percentage > 0 ? `${cloudSpend.percentage}` : "0"
+              }%`,
+            }}
+            key={getUUID()}
+          ></span>
+        );
+      });
+    }
+  };
   render() {
     let {
       currentDaySpendRate,
@@ -326,6 +389,7 @@ class SpendAnalytics extends Component {
       yesterdaySpendAnalytics,
       totalSpend,
       monthlyCloudWiseSpend,
+      totalCloudWiseSpend,
     } = this.props;
     let { monthlyCloudWiseOptions, monthlyCloudWiseData } = this.state;
     return (
@@ -349,56 +413,20 @@ class SpendAnalytics extends Component {
             )}
             <Box className="wise-spend-progress">
               <Box className="heading">Cloud Wise Spend</Box>
-              <Box className="avrage-shape">
-                <span>
-                  <span className="dark-orange" style={{ width: "55%" }}></span>
-                  <span className="blue-dress" style={{ width: "25%" }}></span>
-                  <span className="dark-coral" style={{ width: "20%" }}></span>
-                </span>
-              </Box>
-
-              {/* <BorderLinearProgress
-                className="progress-bar"
-                variant="determinate"
-                value={50}
-                sx={{
-                  backgroundColor: `#0089d6`,
-                  "& .MuiLinearProgress-bar": {
-                    backgroundColor: `#ff9900`,
-                  },
-                }}
-              /> */}
-              <Box className="progress-bar-contant">
-                <List>
-                  <ListItem>
-                    <Box className="data-text">
-                      <span style={{ background: "#ff9900" }}></span>
-                      <p>AWS</p>
-                    </Box>
-                    <label>
-                      $4,504,210<strong>55%</strong>
-                    </label>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="data-text">
-                      <span style={{ background: "#0089d6" }}></span>
-                      <p>AZURE</p>
-                    </Box>
-                    <label>
-                      $2,100,950<strong>25%</strong>
-                    </label>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="data-text">
-                      <span style={{ background: "#da4f44" }}></span>
-                      <p>GCP</p>
-                    </Box>
-                    <label>
-                      $1,980,240<strong>20%</strong>
-                    </label>
-                  </ListItem>
-                </List>
-              </Box>
+              {totalCloudWiseSpend.status === status.IN_PROGRESS ? (
+                <Box className="loader">
+                  <i className="fa-solid fa-spinner fa-spin"></i> Loading...
+                </Box>
+              ) : (
+                <>
+                  <Box className="avrage-shape">
+                    <span>{this.renderProgressBarTotalCloudwiseSpend()}</span>
+                  </Box>
+                  <Box className="progress-bar-contant">
+                    <List>{this.renderTotalCloudwiseSpend()}</List>
+                  </Box>
+                </>
+              )}
             </Box>
             <Box className="dashboard-spent">
               <Box className="total-budget">
@@ -595,6 +623,7 @@ function mapStateToProps(state) {
     yesterdaySpendAnalytics,
     totalSpend,
     monthlyCloudWiseSpend,
+    totalCloudWiseSpend,
   } = state.dashboard;
   return {
     currentHourSpendRate,
@@ -603,6 +632,7 @@ function mapStateToProps(state) {
     yesterdaySpendAnalytics,
     totalSpend,
     monthlyCloudWiseSpend,
+    totalCloudWiseSpend,
   };
 }
 
