@@ -23,11 +23,11 @@ export const dashboardSlice = createSlice({
     },
     todaySpendAnalytics: {
       status: null,
-      data: [],
+      data: {},
     },
     yesterdaySpendAnalytics: {
       status: null,
-      data: [],
+      data: {},
     },
     totalSpend: {
       status: null,
@@ -133,7 +133,7 @@ export const dashboardSlice = createSlice({
         ...state,
         yesterdaySpendAnalytics: {
           status: status.IN_PROGRESS,
-          data: [],
+          data: {},
         },
       };
     },
@@ -151,7 +151,7 @@ export const dashboardSlice = createSlice({
         ...state,
         yesterdaySpendAnalytics: {
           status: status.FAILURE,
-          data: [],
+          data: {},
         },
       };
     },
