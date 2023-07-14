@@ -97,3 +97,27 @@ export const getMonthlyCloudWiseSpend = createAsyncThunk(
     }
   }
 );
+
+export const getTotalBudget = createAsyncThunk(
+  "dashboard/getTotalBudget",
+  async () => {
+    try {
+      const response = await postLoginService.get(config.GET_TOTAL_BUDGET);
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+export const getMonthlyStatistics = createAsyncThunk(
+  "dashboard/getMonthlyStatistics",
+  async () => {
+    try {
+      const response = await postLoginService.get(config.GET_MONTHLY_STATISTICS);
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);

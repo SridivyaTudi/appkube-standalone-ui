@@ -51,14 +51,12 @@ class DiscoveredAssets extends Component {
     this.state = {
       display_detail: true,
       cloudAssets: [],
-      breadcrumbs: [
-        {
-          id: "service",
-          name: cloudName,
-          type: "service",
-          serviceIndexs: {},
-        },
-      ],
+      breadcrumbs: {
+        cloudName: cloudName?.toUpperCase(),
+        selectedLevel1: "",
+        selectedLevel2: "",
+        breadcrumbId: getUUID(),
+      },
       searchString: "",
       accountId: queryPrm.get("landingZone"),
       dataOfTableLevel1: [],
@@ -121,34 +119,38 @@ class DiscoveredAssets extends Component {
   };
 
   getBreadCrumbs() {
-    return this.state.breadcrumbs.map((data, index) => {
-      return (
-        <>
-          {index > 0 ? (
-            <li key={getUUID()}>
-              <i className="fa-solid fa-chevron-right"></i>
+    let { breadcrumbs } = this.state;
+    let breadCrumbsData = Object.keys(breadcrumbs);
+    return breadCrumbsData.map((breadCrumb, index) => {
+      if (breadcrumbs[breadCrumb] && breadCrumb !== "breadcrumbId") {
+        return (
+          <>
+            {index > 0 ? (
+              <li key={getUUID()}>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+            ) : (
+              <></>
+            )}
+            <li
+              onClick={() => {
+                this.onClickBreadCrumbOfTopology(breadCrumb);
+              }}
+              key={getUUID()}
+            >
+              <a>
+                {index == 1
+                  ? breadcrumbs[breadCrumb]?.toUpperCase()
+                  : index == 2
+                  ? `${breadcrumbs[breadCrumb][0]?.toUpperCase()}${breadcrumbs[
+                      breadCrumb
+                    ].slice(1)}`
+                  : breadcrumbs[breadCrumb]}
+              </a>
             </li>
-          ) : (
-            <></>
-          )}
-          <li
-            onClick={() => {
-              if (this.state.breadcrumbs.length > 1) {
-                this.handleToggleNode(
-                  data.serviceIndexs,
-                  data.type === "service" ? "vpc" : "",
-                  data.type,
-                  data.type === "service" ? false : true,
-                  (data.type && nextTypes[data.type]) || ""
-                );
-              }
-            }}
-            key={getUUID()}
-          >
-            <a>{data.name}</a>
-          </li>
-        </>
-      );
+          </>
+        );
+      }
     });
   }
 
@@ -329,7 +331,7 @@ class DiscoveredAssets extends Component {
     return landingZone;
   };
 
-  getCurrentActiveTreeLevel = (label) => {
+  getCurrentActiveTreeLevel = (label, isLevel2Data = 0) => {
     this.setState({ currentActiveNodeLabel: label });
     const currentVPC =
       this.props.envDataByLandingZone.data.productEnclaveList.filter(
@@ -338,9 +340,48 @@ class DiscoveredAssets extends Component {
     if (currentVPC.length) {
       this.setState({ currentVPC: currentVPC[0] });
     }
-
-    this.getBreadCrumbs();
+    this.prepareBreadCrumbs(label, isLevel2Data);
   };
+
+  /**
+   * Prepare bread crumbs of Topology
+   * @param {string} label - The label of the level-1 or level-2.
+   * @param {boolean} isLevel2Data - It is checked level-2 data.
+   */
+  prepareBreadCrumbs(label, isLevel2Data) {
+    let { breadcrumbs, currentVPC } = this.state;
+    let { selectedLevel1, selectedLevel2, cloudName } = breadcrumbs;
+
+    if (isLevel2Data) {
+      selectedLevel2 = label;
+    } else {
+      selectedLevel1 = label;
+      selectedLevel2 = "";
+    }
+
+    this.setState({
+      breadcrumbs: { cloudName, selectedLevel1, selectedLevel2 },
+    });
+  }
+
+  /**
+   * Fire click event bread-crumb of Topology
+   * @param {string} type - type of data, it includes cloudName,level-1 or level-2 .
+   */
+  onClickBreadCrumbOfTopology(type) {
+    let { selectedLevel1, selectedLevel2, cloudName, breadcrumbId } =
+      this.state.breadcrumbs;
+
+    breadcrumbId = getUUID();
+    if (type === "cloudName") {
+      selectedLevel1 = "";
+      selectedLevel2 = "";
+    } else if (type === "selectedLevel1") selectedLevel2 = "";
+
+    this.setState({
+      breadcrumbs: { cloudName, selectedLevel1, selectedLevel2, breadcrumbId },
+    });
+  }
 
   render() {
     const {
@@ -349,6 +390,7 @@ class DiscoveredAssets extends Component {
       currentActiveNodeLabel,
       currentVPC,
       cloudName,
+      breadcrumbs,
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
@@ -382,6 +424,7 @@ class DiscoveredAssets extends Component {
                 <TopologyView
                   data={dataOfLevel1}
                   setLevel={this.getCurrentActiveTreeLevel}
+                  selectedBreadCrumbs={breadcrumbs}
                 />
                 <Grid item xs={5}>
                   <Box className="global-services-fliter">

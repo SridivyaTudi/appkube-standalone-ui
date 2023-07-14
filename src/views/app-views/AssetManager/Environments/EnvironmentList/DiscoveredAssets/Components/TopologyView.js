@@ -16,17 +16,21 @@ class TopologyView extends Component {
         selectedLevel1Id: null,
         selectedLevel2Id: null,
       },
-      breadcrumbs: [
-        {
-          id: "service",
-          name: cloudName,
-          type: "service",
-          serviceIndexs: {},
-        },
-      ],
     };
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.selectedBreadCrumbs.breadcrumbId !==
+      this.props.selectedBreadCrumbs.breadcrumbId
+    ) {
+      // let { cloudName,
+      //   selectedLevel1} = this.props.selectedBreadCrumbs
+      // if () {
+      //   console.log(this.props.selectedBreadCrumbs)
+      // }
+    }
+  }
   /** Render the main body including level-1 and level-2 data. */
   renderMainBody = () => {
     const { data } = this.props;
@@ -267,7 +271,7 @@ class TopologyView extends Component {
     let { level2Show, selectedLevel1Id, selectedLevel2Id } =
       this.state.selectedView;
     selectedLevel2Id = id;
-    this.props.setLevel(label);
+    this.props.setLevel(label, 1);
     this.setState({
       selectedView: { level2Show, selectedLevel1Id, selectedLevel2Id },
     });

@@ -16,13 +16,15 @@ const config = {
   ADD_CLOUD_ENV: `/cloud-environments`,
   GET_PRODUCTS_BY_DEPID:`/query/organizations/#org-id#/departments/#dep-id#/products`,
   GET_DEPLOYMENT_ENVIRONMENTS:`/deployment-environments`,
-  GET_CURRENT_HOUR_SPEND_RATE:`/query/spend-current-rate/organization/#org-id#/hour/analytics`,
-  GET_CURRENT_DAY_SPEND_RATE:`/query/spend-current-rate/organization/#org-id#/day/analytics`,
-  GET_TODAY_SPEND_ANALYTICS:`/query/spend-today/organization/#org-id#/analytics`,
-  GET_YESTERDAY_SPEND_ANALYTICS: `/query/spend-yesterday/organization/#org-id#/analytics`,
-  GET_TOTAL_SPEND:`/query/spend-total/organization/#org-id#/analytics`,
-  GET_TOTAL_CLOUD_WISE_SPEND:`/query/cloud-wise/orgnaiztion/#org-id#/cloud-analytics`,
-  GET_MONTHLY_CLOUD_WISE_SPEND:`/query/cloud-wise/orgnaiztion/#org-id#/monthly-analytics`,
+  GET_CURRENT_HOUR_SPEND_RATE:`/query/organizations/#org-id#/analytics/spend-analytics/spend-current-rate/avg-per-hour`,
+  GET_CURRENT_DAY_SPEND_RATE:`/query/organizations/#org-id#/analytics/spend-analytics/spend-current-rate/per-day`,
+  GET_TODAY_SPEND_ANALYTICS:`/query/organizations/#org-id#/analytics/spend-analytics/spend-today`,
+  GET_YESTERDAY_SPEND_ANALYTICS: `/query/organizations/#org-id#/analytics/spend-analytics/spend-yesterday`,
+  GET_TOTAL_SPEND:`/query/organizations/#org-id#/analytics/spend-analytics/spend-total`,
+  GET_TOTAL_CLOUD_WISE_SPEND:`/query/organizations/#org-id#/analytics/spend-analytics/cloud-wise-spend`,
+  GET_MONTHLY_CLOUD_WISE_SPEND:`/query/organizations/#org-id#/analytics/spend-analytics/monthly-cloud-wise-spend`,
+  GET_TOTAL_BUDGET:`/query/organizations/#org-id#/analytics/spend-analytics/total-budget`,
+  GET_MONTHLY_STATISTICS:`/query/organizations/#org-id#/analytics/spend-analytics/monthly-statistics`
   
 };
 

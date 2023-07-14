@@ -6,7 +6,8 @@ import {
   getYesterdaySpendAnalytics,
   getTotalSpend,
   getTotalCloudWiseSpend,
-  getMonthlyCloudWiseSpend
+  getMonthlyCloudWiseSpend,
+  getTotalBudget,getMonthlyStatistics
 } from "redux/assetManager/dashboard/dashboardThunk";
 import status from "redux/constants/commonDS";
 
@@ -41,6 +42,14 @@ export const dashboardSlice = createSlice({
       status: null,
       data: [],
     },
+    totalBudget:{
+      status:null,
+      data:{}
+    },
+    monthlyStatistics:{
+      status:null,
+      data:[]
+    }
   },
   reducers: {},
   extraReducers: {
@@ -234,6 +243,62 @@ export const dashboardSlice = createSlice({
       return {
         ...state,
         monthlyCloudWiseSpend: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [getTotalBudget.pending]: (state, action) => {
+      return {
+        ...state,
+        totalBudget: {
+          status: status.IN_PROGRESS,
+          data: {},
+        },
+      };
+    },
+    [getTotalBudget.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        totalBudget: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getTotalBudget.rejected]: (state, action) => {
+      return {
+        ...state,
+        totalBudget: {
+          status: status.FAILURE,
+          data: {},
+        },
+      };
+    },
+
+    [getMonthlyStatistics.pending]: (state, action) => {
+      return {
+        ...state,
+        monthlyStatistics: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getMonthlyStatistics.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        monthlyStatistics: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getMonthlyStatistics.rejected]: (state, action) => {
+      return {
+        ...state,
+        monthlyStatistics: {
           status: status.FAILURE,
           data: [],
         },

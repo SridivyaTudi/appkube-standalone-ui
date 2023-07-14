@@ -219,19 +219,48 @@ class SpendAnalytics extends Component {
     }
   }
   /** Print the current hour spend rate. */
-  renderCurrentHourSpendRate = () => {
+  currentHourSpendRate = () => {
     const { currentHourSpendRate } = this.props;
-    const spendRateData = currentHourSpendRate.data || [];
-    if (spendRateData.length) {
-      return <strong>{spendRateData}</strong>;
+    const spendRateData = currentHourSpendRate.data;
+    if (spendRateData > 0) {
+      return <strong>${spendRateData}</strong>;
     }
   };
 
+  renderCurrentHourSpendRateHtml = () => {
+    let currentHourSpendRateStatus = this.props.currentHourSpendRate.status;
+
+    return currentHourSpendRateStatus === status.IN_PROGRESS ? (
+      <Box className="spend-contant">
+        <i className="fa-solid fa-spinner fa-spin" /> Loading...
+      </Box>
+    ) : (
+      <Box className="spend-contant">
+        <label>Per Hour</label>
+        <Box className="spend-price">{this.currentHourSpendRate()}</Box>
+      </Box>
+    );
+  };
+
   /** Print the current day spend rate. */
-  renderCurrentDaySpendRate = () => {
+  getCurrentDaySpendRate = () => {
     const { currentDaySpendRate } = this.props;
-    const daySpendRateData = currentDaySpendRate.data || [];
-    if (daySpendRateData.length) return <strong>{daySpendRateData}</strong>;
+    const daySpendRateData = currentDaySpendRate.data;
+    if (daySpendRateData > 0) return <strong>${daySpendRateData}</strong>;
+  };
+
+  renderCurrentDaySpendRateHtml = () => {
+    let currentDaySpendRateStatus = this.props.currentDaySpendRate.status;
+    return currentDaySpendRateStatus === status.IN_PROGRESS ? (
+      <Box className="spend-contant">
+        <i className="fa-solid fa-spinner fa-spin" /> Loading...
+      </Box>
+    ) : (
+      <Box className="spend-contant">
+        <label>Per Day</label>
+        <Box className="spend-price">{this.getCurrentDaySpendRate()}</Box>
+      </Box>
+    );
   };
 
   /** Print the today spend analytics. */
@@ -259,8 +288,23 @@ class SpendAnalytics extends Component {
     return renderHtml;
   };
 
+  renderTodaySpendAnalyticsHtml = () => {
+    let todaySpendAnalyticsStatus = this.props.todaySpendAnalytics.status;
+
+    return todaySpendAnalyticsStatus === status.IN_PROGRESS ? (
+      <>
+        <i className="fa-solid fa-spinner fa-spin" /> Loading...
+      </>
+    ) : (
+      <>
+        <label>Spends Today</label>
+        <Box className="spend-price">{this.renderTodaySpendAnalytics()}</Box>
+      </>
+    );
+  };
+
   /** Print the yesterday spend analytics. */
-  renderYesterdaySpendAnalytics = () => {
+  getYesterdaySpendAnalytics = () => {
     const { yesterdaySpendAnalytics } = this.props;
     const yesterdaySpendAnalyticsData = yesterdaySpendAnalytics.data || {};
 
@@ -284,20 +328,50 @@ class SpendAnalytics extends Component {
     return renderHtml;
   };
 
+  renderYesterdaySpendAnalyticsHtml = () => {
+    let todaySpendAnalyticsStatus = this.props.yesterdaySpendAnalytics.status;
+    return todaySpendAnalyticsStatus === status.IN_PROGRESS ? (
+      <>
+        <i className="fa-solid fa-spinner fa-spin" /> Loading...
+      </>
+    ) : (
+      <>
+        <label>Spends Yesterday</label>
+        <Box className="spend-price">{this.getYesterdaySpendAnalytics()}</Box>
+      </>
+    );
+  };
+
   /** Print the total spend. */
-  renderTotalSpend = () => {
+  getTotalSpend = () => {
     const { totalSpend } = this.props;
-    const totalSpendData = totalSpend.data || [];
+    const totalSpendData = totalSpend.data;
 
     const renderHtml = [];
-    if (totalSpendData.length)
-      renderHtml.push(
-        <h1>{totalSpendData[0] ? `$${totalSpendData[0]}` : ""}</h1>
-      );
+    if (totalSpendData)
+      renderHtml.push(<h1>{totalSpendData ? `$${totalSpendData}` : ""}</h1>);
 
     return renderHtml;
   };
 
+  renderTotalSpendHtml = () => {
+    let totalSpendStatus = this.props.totalSpend.status;
+    return totalSpendStatus === status.IN_PROGRESS ? (
+      <Box className="total-spend">
+        <i className="fa-solid fa-spinner fa-spin" /> Loading...
+      </Box>
+    ) : (
+      <Box className="total-spend">
+        <Box className="heading">
+          <label>Total Spend</label>
+          <span>
+            DETAIL <i className="fas fa-angle-right"></i>
+          </span>
+        </Box>
+        {this.getTotalSpend()}
+      </Box>
+    );
+  };
   /** Line diagram data of monthly CloudWise spend. */
   lineDiagramDataPrepare() {
     let { monthlyCloudWiseSpend } = this.props;
@@ -330,6 +404,22 @@ class SpendAnalytics extends Component {
     }
   }
 
+  renderMonthlyCloudWiseSpendHtml = () => {
+    let monthlyCloudWiseSpendStatus = this.props.monthlyCloudWiseSpend.status;
+    let { monthlyCloudWiseOptions, monthlyCloudWiseData } = this.state;
+    return monthlyCloudWiseSpendStatus === status.IN_PROGRESS ? (
+      <Box className="loader">
+        <i className="fa-solid fa-spinner fa-spin"></i> Loading...
+      </Box>
+    ) : (
+      <Line
+        options={monthlyCloudWiseOptions}
+        data={monthlyCloudWiseData}
+        height={320}
+        width={518}
+      />
+    );
+  };
   /** Get total cloudwise spend. */
   renderTotalCloudwiseSpend = () => {
     const { totalCloudWiseSpend } = this.props;
@@ -384,102 +474,194 @@ class SpendAnalytics extends Component {
       });
     }
   };
-  render() {
-    let {
-      currentDaySpendRate,
-      currentHourSpendRate,
-      todaySpendAnalytics,
-      yesterdaySpendAnalytics,
-      totalSpend,
-      monthlyCloudWiseSpend,
-      totalCloudWiseSpend,
-    } = this.props;
 
-    let { monthlyCloudWiseOptions, monthlyCloudWiseData } = this.state;
+  renderTotalCloudWiseSpendHtml = () => {
+    let totalCloudWiseSpendStatus = this.props.totalCloudWiseSpend.status;
+    return totalCloudWiseSpendStatus === status.IN_PROGRESS ? (
+      <Box className="loader">
+        <i className="fa-solid fa-spinner fa-spin"></i> Loading...
+      </Box>
+    ) : (
+      <>
+        <Box className="avrage-shape">
+          <span>{this.renderProgressBarTotalCloudwiseSpend()}</span>
+        </Box>
+        <Box className="progress-bar-contant">
+          <List>{this.renderTotalCloudwiseSpend()}</List>
+        </Box>
+      </>
+    );
+  };
+  /** Get total budget information. */
+  getTotalBudget() {
+    let totalBudgetData = this.props.totalBudget.data || {};
+    if (Object.keys(totalBudgetData).length) {
+      let {
+        totalBudget,
+        budgetUsed,
+        remainingBudget,
+        remainingBudgetPercentage,
+      } = totalBudgetData;
+      return {
+        totalBudget: totalBudget > 0 ? `$${totalBudget}` : "",
+        budgetUsed: budgetUsed,
+        remainingBudget: remainingBudget > 0 ? `$${remainingBudget}` : "",
+        remainingBudgetPercentage:
+          remainingBudgetPercentage > 0
+            ? `${100 - remainingBudgetPercentage}`
+            : "",
+      };
+    } else {
+      return {
+        totalBudget: "",
+        budgetUsed: "",
+        remainingBudget: "",
+        remainingBudgetPercentage: "",
+      };
+    }
+  }
+
+  renderTotalBudgetHtml() {
+    let totalBudgetStatus = this.props.totalBudget.status;
+    return (
+      <Box className="total-budget">
+        <Box className="heading">
+          <label>Total Budget</label>
+          <Box className="total-budget">
+            <label>{this.getTotalBudget().totalBudget}</label>
+            {/* <span>10%</span> */}
+          </Box>
+        </Box>
+        {totalBudgetStatus === status.IN_PROGRESS ? (
+          <Box className="content ">
+            <i className="fa-solid fa-spinner fa-spin"></i> Loading...
+          </Box>
+        ) : (
+          <Box className="content">
+            <Box className="gauge">
+              <Box className="gauge--body">
+                <Box
+                  className="gauge--fill"
+                  style={{
+                    transform: `rotate(${
+                      this.getTotalBudget().remainingBudgetPercentage
+                        ? 1.8 * this.getTotalBudget().remainingBudgetPercentage
+                        : 0
+                    }deg)`,
+                  }}
+                ></Box>
+                <Box className="gauge--cover"></Box>
+                <Box className="gauge__center__center"></Box>
+                <Box className="gauge__center"></Box>
+                <Box
+                  className="gauge__needle"
+                  style={{ transform: "rotate(0.70turn)" }}
+                ></Box>
+              </Box>
+              <Box className="used-text">
+                {this.getTotalBudget().remainingBudgetPercentage}% Used
+              </Box>
+            </Box>
+            <Box className="remaining-text">
+              <span>Remaining {this.getTotalBudget().remainingBudget}</span>
+            </Box>
+          </Box>
+        )}
+      </Box>
+    );
+  }
+
+  getMonthlyStatistics() {
+    let monthlyStatisticsData = this.props.monthlyStatistics.data;
+    let totalStatistics = monthlyStatisticsData[0]?.sumAllValues;
+
+    return monthlyStatisticsData.map((statistics, statisticsIndex) => {
+      let monthIndex = labels.findIndex((label) =>
+        statistics.month.startsWith(label)
+      );
+
+      if (monthIndex > -1) {
+        return (
+          <ListItem key={getUUID()}>
+            <Box className="avrage-contant">
+              <label>{statistics.month}</label>
+              <strong>{statistics.sumAllValues}</strong>
+            </Box>
+            <span>
+              <span
+                className={`${
+                  statisticsIndex === 2
+                    ? "rosy-pink"
+                    : statisticsIndex === 3
+                    ? "saffron-mango"
+                    : "crocus-purple"
+                } `}
+                style={{
+                  width: `${
+                    (statistics.sumAllValues / totalStatistics) * 100
+                  }%`,
+                }}
+              ></span>
+            </span>
+          </ListItem>
+        );
+      }
+    });
+  }
+
+  renderMonthlyStatisticsHtml() {
+    let monthlyStatisticsData = this.props.monthlyStatistics.data || [];
+    let monthlyStatisticsStatus = this.props.monthlyStatistics.status;
+
+    if (monthlyStatisticsStatus === status.IN_PROGRESS) {
+      return (
+        <Box className="monthly-avrage">
+          <i className="fa-solid fa-spinner fa-spin"></i> Loading...
+        </Box>
+      );
+    } else {
+      return (
+        <>
+          <Box className="heading">
+            <label>Monthly Statistics</label>
+            <Box className="total-budget">
+              <label>
+                {(monthlyStatisticsData.length &&
+                  monthlyStatisticsData[0]?.sumAllValues) ||
+                  ""}
+              </label>
+              <span style={{ display: "none" }}>10%</span>
+            </Box>
+            <p style={{ display: "none" }}>Compared to 11,490 last year</p>
+          </Box>
+          <Box className="monthly-avrage">
+            <List>
+              {(monthlyStatisticsData.length && this.getMonthlyStatistics()) ||
+                ""}
+            </List>
+          </Box>
+        </>
+      );
+    }
+  }
+  render() {
     return (
       <Box className="spend-analytics-container">
         <Box className="spend-analytics-inner-container">
           <Box className="analytics-left">
-            {totalSpend.status === status.IN_PROGRESS ? (
-              <Box className="total-spend">
-                <i className="fa-solid fa-spinner fa-spin" /> Loading...
-              </Box>
-            ) : (
-              <Box className="total-spend">
-                <Box className="heading">
-                  <label>Total Spend</label>
-                  <span>
-                    DETAIL <i className="fas fa-angle-right"></i>
-                  </span>
-                </Box>
-                {this.renderTotalSpend()}
-              </Box>
-            )}
+            {this.renderTotalSpendHtml()}
             <Box className="wise-spend-progress">
               <Box className="heading">Cloud Wise Spend</Box>
-              {totalCloudWiseSpend.status === status.IN_PROGRESS ? (
-                <Box className="loader">
-                  <i className="fa-solid fa-spinner fa-spin"></i> Loading...
-                </Box>
-              ) : (
-                <>
-                  <Box className="avrage-shape">
-                    <span>{this.renderProgressBarTotalCloudwiseSpend()}</span>
-                  </Box>
-                  <Box className="progress-bar-contant">
-                    <List>{this.renderTotalCloudwiseSpend()}</List>
-                  </Box>
-                </>
-              )}
+              {this.renderTotalCloudWiseSpendHtml()}
             </Box>
             <Box className="dashboard-spent">
-              <Box className="total-budget">
-                <Box className="heading">
-                  <label>Total Budget(Q1)</label>
-                  <Box className="total-budget">
-                    <label>$12,875</label>
-                    <span>10%</span>
-                  </Box>
-                </Box>
-                <Box className="content">
-                  <Box className="gauge">
-                    <Box className="gauge--body">
-                      <Box
-                        className="gauge--fill"
-                        style={{ transform: "rotate(0.295turn)" }}
-                      ></Box>
-                      <Box className="gauge--cover"></Box>
-                      <Box className="gauge__center__center"></Box>
-                      <Box className="gauge__center"></Box>
-                      <Box
-                        className="gauge__needle"
-                        style={{ transform: "rotate(0.80turn)" }}
-                      ></Box>
-                    </Box>
-                    <Box className="used-text">75% Used</Box>
-                  </Box>
-                  <Box className="remaining-text">
-                    <span>Remaining $3,28,457</span>
-                  </Box>
-                </Box>
-              </Box>
+              {this.renderTotalBudgetHtml()}
             </Box>
           </Box>
           <Box className="analytics-center">
             <Box className="analytics-line-chart">
               <Box id="chart" style={{ height: "320px", width: "100%" }}>
-                {monthlyCloudWiseSpend.status === status.IN_PROGRESS ? (
-                  <Box className="loader">
-                    <i className="fa-solid fa-spinner fa-spin"></i> Loading...
-                  </Box>
-                ) : (
-                  <Line
-                    options={monthlyCloudWiseOptions}
-                    data={monthlyCloudWiseData}
-                    height={320}
-                    width={518}
-                  />
-                )}
+                {this.renderMonthlyCloudWiseSpendHtml()}
               </Box>
             </Box>
           </Box>
@@ -494,35 +676,13 @@ class SpendAnalytics extends Component {
                     <Box className="user-profile">
                       <img src={UserIcon} className="red" alt="" />
                     </Box>
-                    {currentHourSpendRate.status === status.IN_PROGRESS ? (
-                      <Box className="spend-contant">
-                        <i className="fa-solid fa-spinner fa-spin" /> Loading...
-                      </Box>
-                    ) : (
-                      <Box className="spend-contant">
-                        <label>Per Hour</label>
-                        <Box className="spend-price">
-                          {this.renderCurrentHourSpendRate()}
-                        </Box>
-                      </Box>
-                    )}
+                    {this.renderCurrentHourSpendRateHtml()}
                   </Grid>
                   <Grid className="spend-time-details">
                     <Box className="user-profile sky-blue">
                       <img src={KingIcon} alt="" />
                     </Box>
-                    {currentDaySpendRate.status === status.IN_PROGRESS ? (
-                      <Box className="spend-contant">
-                        <i className="fa-solid fa-spinner fa-spin" /> Loading...
-                      </Box>
-                    ) : (
-                      <Box className="spend-contant">
-                        <label>Per Day</label>
-                        <Box className="spend-price">
-                          {this.renderCurrentDaySpendRate()}
-                        </Box>
-                      </Box>
-                    )}
+                    {this.renderCurrentDaySpendRateHtml()}
                   </Grid>
                 </Grid>
               </Box>
@@ -533,84 +693,15 @@ class SpendAnalytics extends Component {
               </Box>
               <Grid container spacing={1} className="spend-analytics-time">
                 <Box className="spend-contant">
-                  {todaySpendAnalytics.status === status.IN_PROGRESS ? (
-                    <>
-                      <i className="fa-solid fa-spinner fa-spin" /> Loading...
-                    </>
-                  ) : (
-                    <>
-                      <label>Spends Today</label>
-                      <Box className="spend-price">
-                        {this.renderTodaySpendAnalytics()}
-                      </Box>
-                    </>
-                  )}
+                  {this.renderTodaySpendAnalyticsHtml()}
                 </Box>
                 <Box className="spend-contant">
-                  {yesterdaySpendAnalytics.status === status.IN_PROGRESS ? (
-                    <>
-                      <i className="fa-solid fa-spinner fa-spin" /> Loading...
-                    </>
-                  ) : (
-                    <>
-                      <label>Spends Yesterday</label>
-                      <Box className="spend-price">
-                        {this.renderYesterdaySpendAnalytics()}
-                      </Box>
-                    </>
-                  )}
+                  {this.renderYesterdaySpendAnalyticsHtml()}
                 </Box>
               </Grid>
             </Box>
             <Box className="monthly-statistics-card">
-              <Box className="heading">
-                <label>Monthly Statistics</label>
-                <Box className="total-budget">
-                  <label>16,073</label>
-                  <span>10%</span>
-                </Box>
-                <p>Compared to 11,490 last year</p>
-              </Box>
-              <Box className="monthly-avrage">
-                <List>
-                  <ListItem>
-                    <Box className="avrage-contant">
-                      <label>January</label>
-                      <strong>8,320</strong>
-                    </Box>
-                    <span>
-                      <span
-                        className="crocus-purple"
-                        style={{ width: "90%" }}
-                      ></span>
-                    </span>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="avrage-contant">
-                      <label>February</label>
-                      <strong>6,320</strong>
-                    </Box>
-                    <span>
-                      <span
-                        className="rosy-pink"
-                        style={{ width: "70%" }}
-                      ></span>
-                    </span>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="avrage-contant">
-                      <label>March</label>
-                      <strong>1,433</strong>
-                    </Box>
-                    <span>
-                      <span
-                        className="saffron-mango"
-                        style={{ width: "40%" }}
-                      ></span>
-                    </span>
-                  </ListItem>
-                </List>
-              </Box>
+              {this.renderMonthlyStatisticsHtml()}
             </Box>
           </Box>
         </Box>
@@ -628,6 +719,8 @@ function mapStateToProps(state) {
     totalSpend,
     monthlyCloudWiseSpend,
     totalCloudWiseSpend,
+    totalBudget,
+    monthlyStatistics,
   } = state.dashboard;
   return {
     currentHourSpendRate,
@@ -637,6 +730,8 @@ function mapStateToProps(state) {
     totalSpend,
     monthlyCloudWiseSpend,
     totalCloudWiseSpend,
+    totalBudget,
+    monthlyStatistics,
   };
 }
 

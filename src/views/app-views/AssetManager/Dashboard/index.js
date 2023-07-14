@@ -13,6 +13,8 @@ import {
   getTotalSpend,
   getMonthlyCloudWiseSpend,
   getTotalCloudWiseSpend,
+  getMonthlyStatistics,
+  getTotalBudget,
 } from "redux/assetManager/dashboard/dashboardThunk";
 import { connect } from "react-redux";
 import { getUUID } from "utils";
@@ -54,6 +56,8 @@ class Dashboard extends Component {
     this.props.getTotalSpend();
     this.props.getMonthlyCloudWiseSpend();
     this.props.getTotalCloudWiseSpend();
+    this.props.getMonthlyStatistics()
+    this.props.getTotalBudget()
   };
 
   render() {
@@ -112,5 +116,7 @@ const mapDispatchToProps = {
   getTotalSpend,
   getMonthlyCloudWiseSpend,
   getTotalCloudWiseSpend,
+  getMonthlyStatistics,
+  getTotalBudget,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
