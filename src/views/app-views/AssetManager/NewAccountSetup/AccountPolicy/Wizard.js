@@ -90,7 +90,6 @@ class Wizard extends Component {
 
   createSubmit = () => {
     const { formData } = this.props;
-    // arn:aws:iam::893233071719:user/user
     let accountId = formData.roleArn
       .match(/arn:aws:iam::([0-9]+(:user)+)\/[A-Za-z0-9]+/i)[1]
       .replace(":user", "");

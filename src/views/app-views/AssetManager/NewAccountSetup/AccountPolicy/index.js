@@ -78,8 +78,7 @@ class AccountPolicy extends Component {
     const { formData } = this.state;
     let isValid = true;
     let errors = {};
-    let regex =
-      /arn:aws:iam::([0-9]+(:user)+)\/[A-Za-z0-9]+/i;
+    let regex = /arn:aws:iam::([0-9]+(:user)+)\/[A-Za-z0-9]+/i;
     if (this.state.isSubmit) {
       if (!formData.displayName) {
         errors = { ...errors, displayName: "Display name is required!" };

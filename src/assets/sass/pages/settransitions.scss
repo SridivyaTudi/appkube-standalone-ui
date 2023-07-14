@@ -1,0 +1,145 @@
+.set-transitions-container {
+  width: 100%;
+  display: block;
+  padding: 30px 45px;
+  .heading {
+    width: 100%;
+    display: block;
+    margin-bottom: 50px;
+    .breadcrumbs {
+      display: inline-flex;
+
+      ul {
+        list-style: none;
+        display: flex;
+
+        li {
+          width: auto;
+          display: inline-block;
+          align-items: center;
+          padding: 0 10px 0 0;
+
+          a {
+            font-size: 24px;
+            line-height: 30px;
+            font-weight: 400;
+            color: #383874;
+          }
+
+          i {
+            font-size: 16px;
+            color: #383874;
+            line-height: 30px;
+          }
+
+          span {
+            display: inline-block;
+            font-size: 24px;
+            line-height: 30px;
+            font-weight: 400;
+            color: #383874;
+          }
+        }
+      }
+    }
+  }
+  .overview-cards {
+    width: 100%;
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    .overview-card {
+      border-radius: 7px;
+      padding: 20px;
+      cursor: pointer;
+      border-width: 2px;
+      border-style: solid;
+      border-color: transparent;
+      background-color: #ffffff;
+      h4 {
+        margin: 0 0 15px 0;
+        font-size: 20px;
+        line-height: 24px;
+        color: #383874;
+      }
+      p {
+        font-size: 14px;
+        line-height: 22px;
+        font-weight: 400;
+        color: #383874;
+      }
+    }
+  }
+  .policy-section {
+    h3 {
+      display: block;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 400;
+      color: #383874;
+    }
+    .policy-permission {
+      width: 100%;
+      display: block;
+      margin-top: 20px;
+      .policy-permission-head {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        border-radius: 7px;
+        padding: 15px 30px;
+        background-color: #ffffff;
+        .title {
+          width: 50%;
+          display: block;
+          font-size: 16px;
+          line-height: 20px;
+          font-weight: 500;
+          color: #383874;
+        }
+      }
+      .policy-permission-content {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        border-radius: 7px;
+        padding: 15px 30px;
+        background-color: #ffffff;
+        margin-top: 20px;
+        .policy-text {
+          width: 50%;
+          display: block;
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 400;
+          color: #383874;
+        }
+        .edit-policy {
+            width: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          ul {
+            display: block;
+            padding: 0;
+            margin: 0;
+            li {
+              display: inline-block;
+              padding: 0;
+              margin: 0;
+              list-style: none;
+              font-size: 14px;
+              line-height: 20px;
+              font-weight: 400;
+              color: #383874;
+              margin-right: 20px;
+            }
+          }
+          span{
+            color: #383874;
+          }
+        }
+      }
+    }
+  }
+}

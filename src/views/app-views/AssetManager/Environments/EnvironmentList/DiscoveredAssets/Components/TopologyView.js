@@ -27,7 +27,7 @@ class TopologyView extends Component {
     };
   }
 
-
+  /** Render the main body including level-1 and level-2 data. */
   renderMainBody = () => {
     const { data } = this.props;
     let { level2Show, selectedLevel1Id } = this.state.selectedView;
@@ -72,8 +72,6 @@ class TopologyView extends Component {
                   contentStyle={{
                     width: "100%",
                     height: "100%",
-                    //display: "block",
-                    //paddingTop: "120px",
                     transform: "translate(0px, 0px) scale(0)",
                     display: "flex",
                     alignItems: "center",
@@ -150,6 +148,7 @@ class TopologyView extends Component {
     );
   };
 
+  /** If level-1 data is exist, then Render the  level-1 html. */
   renderLevel1 = () => {
     const { children } = this.props.data;
     const { selectedLevel1Id, selectedLevel2Id } = this.state.selectedView;
@@ -201,6 +200,7 @@ class TopologyView extends Component {
     }
   };
 
+  /** If level-2 data is exist, then Render the  level-2 html. */
   renderLevel2(index) {
     const { children } = this.props.data;
     const { selectedLevel1Id, selectedLevel2Id } = this.state.selectedView;
@@ -232,6 +232,7 @@ class TopologyView extends Component {
     }
   }
 
+  /** Get name in form of capitalize. */
   getServiceName(name, type) {
     if (type === "vpc") {
       return name ? name.toUpperCase() : "";
@@ -243,10 +244,16 @@ class TopologyView extends Component {
     }
   }
 
+  /** Fire click event specific level-1. */
   onClickLevel1 = (id, label) => {
     let { level2Show, selectedLevel1Id, selectedLevel2Id } =
       this.state.selectedView;
-    level2Show = true;
+    const { children } = this.props.data;
+    let level2DataLength = children[0][id]?.children.length;
+
+    level2Show = false;
+    if (level2DataLength) level2Show = true;
+
     selectedLevel1Id = id;
     selectedLevel2Id = null;
     this.props.setLevel(label);
@@ -255,6 +262,7 @@ class TopologyView extends Component {
     });
   };
 
+  /** Fire click event specific level-2. */
   onClickLevel2 = (id, label) => {
     let { level2Show, selectedLevel1Id, selectedLevel2Id } =
       this.state.selectedView;
@@ -265,12 +273,14 @@ class TopologyView extends Component {
     });
   };
 
+  /** Fire click event AccountId. */
   onClickAccountId = () => {
     let { level2Show, selectedLevel1Id, selectedLevel2Id } =
       this.state.selectedView;
     level2Show = false;
     selectedLevel1Id = null;
     selectedLevel2Id = null;
+    this.props.setLevel("");
     this.setState({
       selectedView: { level2Show, selectedLevel1Id, selectedLevel2Id },
     });

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import {Box, List, ListItem} from "@mui/material";
+import { Box, List, ListItem } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -14,12 +14,7 @@ class CostAnalysis extends Component {
         datasets: [
           {
             data: [35, 18, 25, 22],
-            backgroundColor: [
-              '#8676FF',
-              '#42CD7E',
-              '#FF9066',
-              '#FFCC41',
-            ],
+            backgroundColor: ["#8676FF", "#42CD7E", "#FF9066", "#FFCC41"],
           },
         ],
       },
@@ -27,10 +22,7 @@ class CostAnalysis extends Component {
         datasets: [
           {
             data: [20, 80],
-            backgroundColor: [
-              '#ff9066',
-              '#8676FF',
-            ],
+            backgroundColor: ["#ff9066", "#8676FF"],
           },
         ],
       },
@@ -38,14 +30,13 @@ class CostAnalysis extends Component {
         datasets: [
           {
             data: [16, 4, 10, 70],
-            backgroundColor: [
-              "#FFCC41", "#FF9066", "#42CD7E", "#8676FF"
-            ],
+            backgroundColor: ["#FFCC41", "#FF9066", "#42CD7E", "#8676FF"],
           },
         ],
       },
     };
   }
+
   render() {
     return (
       <Box className="cost-analysis-container">
@@ -63,7 +54,7 @@ class CostAnalysis extends Component {
                       </Box>
                     </Box>
                     <Box className="chart-contant">
-                      <Box className="d-flex chart" style={{ width: '60%' }}>
+                      <Box className="d-flex chart" style={{ width: "60%" }}>
                         <Doughnut data={this.state.productData} />
                       </Box>
                       <Box className="d-block chart-details">
@@ -131,7 +122,7 @@ class CostAnalysis extends Component {
                       </Box>
                     </Box>
                     <Box className="chart-contant">
-                      <Box className="d-flex chart" style={{ width: '60%' }}>
+                      <Box className="d-flex chart" style={{ width: "60%" }}>
                         <Doughnut data={this.state.productionData} />
                       </Box>
                       <Box className="d-block chart-details">
@@ -175,7 +166,7 @@ class CostAnalysis extends Component {
                       </Box>
                     </Box>
                     <Box className="chart-contant">
-                      <Box className="d-flex chart" style={{ width: '60%' }}>
+                      <Box className="d-flex chart" style={{ width: "60%" }}>
                         <Doughnut data={this.state.serviceData} />
                       </Box>
                       <Box className="d-block chart-details">

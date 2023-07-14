@@ -11,8 +11,12 @@ import {
   getTodaySpendAnalytics,
   getYesterdaySpendAnalytics,
   getTotalSpend,
+  getMonthlyCloudWiseSpend,
+  getTotalCloudWiseSpend,
 } from "redux/assetManager/dashboard/dashboardThunk";
 import { connect } from "react-redux";
+import { getUUID } from "utils";
+
 class Dashboard extends Component {
   tabMapping = [
     {
@@ -48,6 +52,8 @@ class Dashboard extends Component {
     this.props.getTodaySpendAnalytics();
     this.props.getYesterdaySpendAnalytics();
     this.props.getTotalSpend();
+    this.props.getMonthlyCloudWiseSpend();
+    this.props.getTotalCloudWiseSpend();
   };
 
   render() {
@@ -66,7 +72,7 @@ class Dashboard extends Component {
               {this.tabMapping.map((tabData, index) => {
                 return (
                   <ListItem
-                    key={`ops-tab-${index}`}
+                    key={getUUID()}
                     className={index === activeTab ? "active" : ""}
                     onClick={() => this.setActiveTab(index)}
                   >
@@ -104,5 +110,7 @@ const mapDispatchToProps = {
   getTodaySpendAnalytics,
   getYesterdaySpendAnalytics,
   getTotalSpend,
+  getMonthlyCloudWiseSpend,
+  getTotalCloudWiseSpend,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

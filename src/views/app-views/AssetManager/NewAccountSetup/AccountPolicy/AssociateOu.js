@@ -7,7 +7,6 @@ import SelectAccountPopup from "./SelectAccountPopup";
 import Button from "@mui/material/Button";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
-import { getCurrentOrgId } from "utils";
 
 class AssociateOu extends Component {
   constructor(props) {
@@ -73,7 +72,7 @@ class AssociateOu extends Component {
   };
 
   render() {
-    const { selectAccountPopupShow, createNewOuPopupShow } = this.state;
+    const { selectAccountPopupShow } = this.state;
     return (
       <>
         {!this.state.isDepartmentCreated && !this.state.checkedId ? (
@@ -188,7 +187,6 @@ const mapStateToProps = (state) => {
   return environments;
 };
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssociateOu);
