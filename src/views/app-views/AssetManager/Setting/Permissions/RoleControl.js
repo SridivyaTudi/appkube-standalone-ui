@@ -11,6 +11,7 @@ import {
   Paper,
   IconButton,
   TablePagination,
+  Link
 } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -137,7 +138,7 @@ class RoleControl extends Component {
                   <TableCell>{row.name}</TableCell>
                   <TableCell>{row.content}</TableCell>
                   <TableCell>
-                    <a href="#">Set Transitions</a>
+                    <a href="/app/settransitions">Set Transitions</a>
                   </TableCell>
                   <TableCell align="center">
                     <IconButton
