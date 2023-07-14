@@ -4,7 +4,7 @@ import OprationMode2 from "assets/img/assetmanager/opration-mode2.png";
 import AccountPolicy from "views/app-views/AssetManager/NewAccountSetup/AccountPolicy";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 
 export class NewAccountSetup extends Component {
   constructor(props) {
@@ -14,6 +14,7 @@ export class NewAccountSetup extends Component {
       accountPolicy: false,
     };
   }
+
   render() {
     return this.state.accountPolicy ? (
       <AccountPolicy
@@ -122,12 +123,7 @@ export class NewAccountSetup extends Component {
                 this.setState({ accountPolicy: true });
               }}
             >
-              {/* <Link
-                style={{ color: "white" }}
-                to={"/assetmanager/pages/newaccountsetup/accountpolicy"}
-              > */}
               Get started
-              {/* </Link> */}
             </Button>
           </div>
         </div>

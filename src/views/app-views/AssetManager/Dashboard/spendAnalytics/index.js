@@ -71,6 +71,7 @@ const TOTAL_CLOUD_WISE_SPEND_STYLE = {
   azure: { backgroundColor: "#0089d6", progressBarClassName: "blue-dress" },
   gcp: { backgroundColor: "#da4f44", progressBarClassName: "dark-coral" },
 };
+
 class SpendAnalytics extends Component {
   constructor(props) {
     super(props);

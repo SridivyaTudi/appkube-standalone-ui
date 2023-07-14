@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import { getOrgWiseDepartments } from "redux/assetManager/environments/environmentsThunk";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
-import { getCurrentOrgId } from "utils";
 
 class SelectAccountPopup extends Component {
   constructor(props) {

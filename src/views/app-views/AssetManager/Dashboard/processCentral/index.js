@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
-import {Box, List, ListItem} from "@mui/material";
+import { Box, List, ListItem } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
 const mappingData = {
@@ -45,6 +45,7 @@ const mappingData = {
   usecaseDelivery: "Use Case Delivery",
   rateofReopenTickets: "Rate of Reopen Tickets",
 };
+
 const dummyData = {
   devcentral: {
     volume: {
@@ -126,6 +127,7 @@ class ProcessCentral extends Component {
       centralTable: {},
     };
   }
+
   componentDidMount = () => {
     this.setState({
       centralTable: dummyData,
@@ -214,6 +216,7 @@ class ProcessCentral extends Component {
     );
     return retData;
   };
+
   render() {
     const { centralTable } = this.state;
     return (

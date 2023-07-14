@@ -2,15 +2,12 @@ import React, { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
   Box,
-  Grid,
   TableContainer,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  List,
-  ListItem,
 } from "@mui/material";
 
 class SLAMetrics extends Component {
@@ -21,13 +18,6 @@ class SLAMetrics extends Component {
       dataLoaded: false,
     };
   }
-  // componentDidMount = () => {
-  //   fetch(Services.slaCentral)
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       this.setState({ slaData: result });
-  //     });
-  // };
 
   handletableColor = (number) => {
     let color = "";
@@ -96,7 +86,6 @@ class SLAMetrics extends Component {
                   <TableCell> End Usage </TableCell>
                 </TableRow>
               </TableHead>
-              {/* <TableBody>{this.showTableData()}</TableBody> */}
               <TableBody>
                 <TableRow>
                   <TableCell className="products">Product 1</TableCell>
@@ -157,7 +146,7 @@ class SLAMetrics extends Component {
               <i class="fa-solid fa-angle-right"></i> 90%
             </Box>
             <Box className="performance-box red">
-            <i class="fa-solid fa-angle-left"></i> 90%
+              <i class="fa-solid fa-angle-left"></i> 90%
             </Box>
           </Box>
         </Box>

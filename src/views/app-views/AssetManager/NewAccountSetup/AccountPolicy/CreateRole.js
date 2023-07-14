@@ -68,8 +68,8 @@ class CreateRole extends Component {
                     you set in the previous step, and click on it
                   </li>
                   <li>
-                    <span>10.</span>&nbsp;Copy the <strong>Role ARN</strong> and fill
-                    it in the Role ARN field
+                    <span>10.</span>&nbsp;Copy the <strong>Role ARN</strong> and
+                    fill it in the Role ARN field
                   </li>
                 </ul>
               </div>

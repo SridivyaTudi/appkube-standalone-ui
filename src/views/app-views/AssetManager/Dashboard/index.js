@@ -16,6 +16,7 @@ import {
 } from "redux/assetManager/dashboard/dashboardThunk";
 import { connect } from "react-redux";
 import { getUUID } from "utils";
+
 class Dashboard extends Component {
   tabMapping = [
     {
