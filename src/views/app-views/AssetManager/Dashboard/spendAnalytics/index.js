@@ -218,7 +218,8 @@ class SpendAnalytics extends Component {
       }
     }
   }
-  /** Print the current hour spend rate. */
+  
+  /** Calculate the current hour spend rate. */
   currentHourSpendRate = () => {
     const { currentHourSpendRate } = this.props;
     const spendRateData = currentHourSpendRate.data;
@@ -227,6 +228,7 @@ class SpendAnalytics extends Component {
     }
   };
 
+  /** Render the current hour spend rate. */
   renderCurrentHourSpendRateHtml = () => {
     let currentHourSpendRateStatus = this.props.currentHourSpendRate.status;
 
@@ -242,13 +244,14 @@ class SpendAnalytics extends Component {
     );
   };
 
-  /** Print the current day spend rate. */
+  /** Calculate the current day spend rate. */
   getCurrentDaySpendRate = () => {
     const { currentDaySpendRate } = this.props;
     const daySpendRateData = currentDaySpendRate.data;
     if (daySpendRateData > 0) return <strong>${daySpendRateData}</strong>;
   };
-
+  
+  /** Render the current day spend rate. */
   renderCurrentDaySpendRateHtml = () => {
     let currentDaySpendRateStatus = this.props.currentDaySpendRate.status;
     return currentDaySpendRateStatus === status.IN_PROGRESS ? (
@@ -263,8 +266,8 @@ class SpendAnalytics extends Component {
     );
   };
 
-  /** Print the today spend analytics. */
-  renderTodaySpendAnalytics = () => {
+  /** Calculate the today spend analytics. */
+  getTodaySpendAnalytics = () => {
     const { todaySpendAnalytics } = this.props;
     const todaySpendAnalyticsData = todaySpendAnalytics.data || [];
 
@@ -288,6 +291,7 @@ class SpendAnalytics extends Component {
     return renderHtml;
   };
 
+  /** Render the today spend analytics. */
   renderTodaySpendAnalyticsHtml = () => {
     let todaySpendAnalyticsStatus = this.props.todaySpendAnalytics.status;
 
@@ -298,12 +302,12 @@ class SpendAnalytics extends Component {
     ) : (
       <>
         <label>Spends Today</label>
-        <Box className="spend-price">{this.renderTodaySpendAnalytics()}</Box>
+        <Box className="spend-price">{this.getTodaySpendAnalytics()}</Box>
       </>
     );
   };
 
-  /** Print the yesterday spend analytics. */
+  /** Calculate the yesterday spend analytics. */
   getYesterdaySpendAnalytics = () => {
     const { yesterdaySpendAnalytics } = this.props;
     const yesterdaySpendAnalyticsData = yesterdaySpendAnalytics.data || {};
@@ -328,6 +332,7 @@ class SpendAnalytics extends Component {
     return renderHtml;
   };
 
+  /** Render the yesterday spend analytics. */
   renderYesterdaySpendAnalyticsHtml = () => {
     let todaySpendAnalyticsStatus = this.props.yesterdaySpendAnalytics.status;
     return todaySpendAnalyticsStatus === status.IN_PROGRESS ? (
@@ -342,7 +347,7 @@ class SpendAnalytics extends Component {
     );
   };
 
-  /** Print the total spend. */
+  /** Calculate the total spend. */
   getTotalSpend = () => {
     const { totalSpend } = this.props;
     const totalSpendData = totalSpend.data;
@@ -354,6 +359,7 @@ class SpendAnalytics extends Component {
     return renderHtml;
   };
 
+  /** Render the total spend. */
   renderTotalSpendHtml = () => {
     let totalSpendStatus = this.props.totalSpend.status;
     return totalSpendStatus === status.IN_PROGRESS ? (
@@ -372,7 +378,8 @@ class SpendAnalytics extends Component {
       </Box>
     );
   };
-  /** Line diagram data of monthly CloudWise spend. */
+
+  /** Calculate line diagram data of monthly CloudWise spend. */
   lineDiagramDataPrepare() {
     let { monthlyCloudWiseSpend } = this.props;
     let diagramData = monthlyCloudWiseSpend.data || [];
@@ -407,6 +414,7 @@ class SpendAnalytics extends Component {
     }
   }
 
+  /** Render the monthly CloudWise spend. */
   renderMonthlyCloudWiseSpendHtml = () => {
     let monthlyCloudWiseSpendStatus = this.props.monthlyCloudWiseSpend.status;
     let { monthlyCloudWiseOptions, monthlyCloudWiseData } = this.state;
@@ -423,8 +431,9 @@ class SpendAnalytics extends Component {
       />
     );
   };
-  /** Get total cloudwise spend. */
-  renderTotalCloudwiseSpend = () => {
+
+  /** Calculate total cloudwise spend. */
+  getTotalCloudwiseSpend = () => {
     const { totalCloudWiseSpend } = this.props;
     const totalCloudWiseSpendData = totalCloudWiseSpend.data || [];
 
@@ -454,8 +463,8 @@ class SpendAnalytics extends Component {
     }
   };
 
-  /** Progressbar total cloudwise spend. */
-  renderProgressBarTotalCloudwiseSpend = () => {
+  /** Calculate Progressbar total cloudwise spend. */
+  getProgressBarTotalCloudwiseSpend = () => {
     const { totalCloudWiseSpend } = this.props;
     const totalCloudWiseSpendData = totalCloudWiseSpend.data || [];
     if (totalCloudWiseSpendData.length) {
@@ -478,6 +487,7 @@ class SpendAnalytics extends Component {
     }
   };
 
+  /** Render total cloudwise spend. */
   renderTotalCloudWiseSpendHtml = () => {
     let totalCloudWiseSpendStatus = this.props.totalCloudWiseSpend.status;
     return totalCloudWiseSpendStatus === status.IN_PROGRESS ? (
@@ -487,15 +497,16 @@ class SpendAnalytics extends Component {
     ) : (
       <>
         <Box className="avrage-shape">
-          <span>{this.renderProgressBarTotalCloudwiseSpend()}</span>
+          <span>{this.getProgressBarTotalCloudwiseSpend()}</span>
         </Box>
         <Box className="progress-bar-contant">
-          <List>{this.renderTotalCloudwiseSpend()}</List>
+          <List>{this.getTotalCloudwiseSpend()}</List>
         </Box>
       </>
     );
   };
-  /** Get total budget information. */
+
+  /** Calculate total budget information. */
   getTotalBudget() {
     let totalBudgetData = this.props.totalBudget.data || {};
     if (Object.keys(totalBudgetData).length) {
@@ -524,6 +535,7 @@ class SpendAnalytics extends Component {
     }
   }
 
+  /** Render total budget information. */
   renderTotalBudgetHtml() {
     let totalBudgetStatus = this.props.totalBudget.status;
     return (
@@ -574,6 +586,7 @@ class SpendAnalytics extends Component {
     );
   }
 
+ /** Calculate Monthly Statistics. */
   getMonthlyStatistics() {
     let monthlyStatisticsData = this.props.monthlyStatistics.data;
     let totalStatistics = monthlyStatisticsData[0]?.sumAllValues;
@@ -612,6 +625,7 @@ class SpendAnalytics extends Component {
     });
   }
 
+  /** Render Monthly Statistics. */
   renderMonthlyStatisticsHtml() {
     let monthlyStatisticsData = this.props.monthlyStatistics.data || [];
     let monthlyStatisticsStatus = this.props.monthlyStatistics.status;
