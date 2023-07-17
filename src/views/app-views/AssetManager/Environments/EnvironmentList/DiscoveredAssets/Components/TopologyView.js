@@ -24,11 +24,15 @@ class TopologyView extends Component {
       prevProps.selectedBreadCrumbs.breadcrumbId !==
       this.props.selectedBreadCrumbs.breadcrumbId
     ) {
-      // let { cloudName,
-      //   selectedLevel1} = this.props.selectedBreadCrumbs
-      // if () {
-      //   console.log(this.props.selectedBreadCrumbs)
-      // }
+      let { cloudName, selectedLevel1, selectedLevel2 } =
+        this.props.selectedBreadCrumbs;
+      let { selectedLevel1Id } = this.state.selectedView;
+
+      if (!selectedLevel1 && !selectedLevel2) {
+        this.onClickAccountId();
+      } else if (selectedLevel1 && !selectedLevel2) {
+        this.onClickLevel1(selectedLevel1Id,selectedLevel1);
+      }
     }
   }
   /** Render the main body including level-1 and level-2 data. */
