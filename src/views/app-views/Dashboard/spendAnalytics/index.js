@@ -30,7 +30,7 @@ ChartJS.register(
 );
 ChartJS.register(annotationPlugin);
 
-const labels = [
+let labels = [
   "Jan",
   "Feb",
   "Mar",
@@ -71,7 +71,6 @@ const TOTAL_CLOUD_WISE_SPEND_STYLE = {
   azure: { backgroundColor: "#0089d6", progressBarClassName: "blue-dress" },
   gcp: { backgroundColor: "#da4f44", progressBarClassName: "dark-coral" },
 };
-
 class SpendAnalytics extends Component {
   constructor(props) {
     super(props);
@@ -218,7 +217,7 @@ class SpendAnalytics extends Component {
       }
     }
   }
-  
+
   /** Calculate the current hour spend rate. */
   currentHourSpendRate = () => {
     const { currentHourSpendRate } = this.props;
@@ -250,7 +249,7 @@ class SpendAnalytics extends Component {
     const daySpendRateData = currentDaySpendRate.data;
     if (daySpendRateData > 0) return <strong>${daySpendRateData}</strong>;
   };
-  
+
   /** Render the current day spend rate. */
   renderCurrentDaySpendRateHtml = () => {
     let currentDaySpendRateStatus = this.props.currentDaySpendRate.status;
@@ -534,6 +533,21 @@ class SpendAnalytics extends Component {
       };
     }
   }
+  /** Calculate percentage of Needle. */
+  calculateRemainingBudgetPercentage() {
+    let remainingBudgetPercentage =
+      this.getTotalBudget().remainingBudgetPercentage;
+
+    return remainingBudgetPercentage
+      ? remainingBudgetPercentage > 35 && remainingBudgetPercentage <= 45
+        ? 178 + 1.8 * remainingBudgetPercentage
+        : remainingBudgetPercentage > 45 && remainingBudgetPercentage < 66
+        ? 180 + 1.8 * remainingBudgetPercentage
+        : remainingBudgetPercentage > 50
+        ? 185 + 1.8 * remainingBudgetPercentage
+        : 175 + 1.8 * remainingBudgetPercentage
+      : 175;
+  }
 
   /** Render total budget information. */
   renderTotalBudgetHtml() {
@@ -570,7 +584,9 @@ class SpendAnalytics extends Component {
                 <Box className="gauge__center"></Box>
                 <Box
                   className="gauge__needle"
-                  style={{ transform: `rotate(0.87turn)` }}
+                  style={{
+                    transform: `rotate(${this.calculateRemainingBudgetPercentage()}deg)`,
+                  }}
                 ></Box>
               </Box>
               <Box className="used-text">
@@ -586,7 +602,7 @@ class SpendAnalytics extends Component {
     );
   }
 
- /** Calculate Monthly Statistics. */
+  /** Calculate Monthly Statistics. */
   getMonthlyStatistics() {
     let monthlyStatisticsData = this.props.monthlyStatistics.data;
     let totalStatistics = monthlyStatisticsData[0]?.sumAllValues;
