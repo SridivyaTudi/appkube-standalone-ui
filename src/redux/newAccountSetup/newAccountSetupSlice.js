@@ -3,7 +3,7 @@ import status from "redux/constants/commonDS";
 import {
   createNewOU,
   addCloudEnv,
-} from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
+} from "redux/newAccountSetup/newAccountSetupThunk";
 
 export const organizationalUnitSlice = createSlice({
   name: "organizationalUnit",

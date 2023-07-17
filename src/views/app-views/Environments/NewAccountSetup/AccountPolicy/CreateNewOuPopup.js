@@ -4,7 +4,7 @@ import { ToastMessage } from "../../../../../Toast/ToastMessage";
 import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { getCurrentOrgId } from "utils";
-import { createNewOU } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
+import { createNewOU } from "redux/newAccountSetup/newAccountSetupThunk";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
 

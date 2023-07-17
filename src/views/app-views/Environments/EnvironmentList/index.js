@@ -13,8 +13,8 @@ import status from "redux/constants/commonDS";
 import {
   getEnvironmentDataByLandingZone,
   getDepartments,
-} from "redux/assetManager/environments/environmentData/environmentDataThunk";
-import { getEnvsSummary } from "redux/assetManager/environments/environmentsThunk";
+} from "redux/environmentData/environmentDataThunk";
+import { getEnvsSummary } from "redux/environments/environmentsThunk";
 import { connect } from "react-redux";
 import { getCurrentOrgId, getUUID } from "utils";
 import { LOGOS } from "commonData";

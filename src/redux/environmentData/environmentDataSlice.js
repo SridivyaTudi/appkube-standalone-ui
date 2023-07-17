@@ -1,22 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getEnvironmentDataByLandingZone,getDepartments } from "redux/assetManager/environments/environmentData/environmentDataThunk";
+import {
+  getEnvironmentDataByLandingZone,
+  getDepartments,
+} from "redux/environmentData/environmentDataThunk";
 import status from "redux/constants/commonDS";
 
 export const environmentDataSlice = createSlice({
   name: "environmentData",
   initialState: {
-    envDataByLandingZone:{
+    envDataByLandingZone: {
       status: null,
-      data:{}
+      data: {},
     },
-    allEnv:{
+    allEnv: {
       status: null,
-      data:[]
+      data: [],
     },
-    departments:{
+    departments: {
       status: null,
-      data:[]
-    }
+      data: [],
+    },
   },
   extraReducers: {
     [getEnvironmentDataByLandingZone.pending]: (state, action) => {
@@ -28,7 +31,7 @@ export const environmentDataSlice = createSlice({
       };
     },
 
-    [getEnvironmentDataByLandingZone.fulfilled]: (state, {payload}) => {
+    [getEnvironmentDataByLandingZone.fulfilled]: (state, { payload }) => {
       return {
         ...state,
         envDataByLandingZone: {
@@ -56,7 +59,7 @@ export const environmentDataSlice = createSlice({
       };
     },
 
-    [getDepartments.fulfilled]: (state, {payload}) => {
+    [getDepartments.fulfilled]: (state, { payload }) => {
       return {
         ...state,
         departments: {

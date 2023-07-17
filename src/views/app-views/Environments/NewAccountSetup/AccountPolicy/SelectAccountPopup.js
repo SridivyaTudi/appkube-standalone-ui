@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { ToastMessage } from "../../../../../Toast/ToastMessage";
 import Button from "@mui/material/Button";
-import { getOrgWiseDepartments } from "redux/assetManager/environments/environmentsThunk";
+import { getOrgWiseDepartments } from "redux/environments/environmentsThunk";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
 

@@ -3,7 +3,7 @@ import { ToastMessage } from "Toast/ToastMessage";
 import { withRouter } from "views/app-views/Environments/NewAccountSetup/AccountPolicy/withRouter";
 import {Button, Box} from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { addCloudEnv } from "redux/assetManager/newAccountSetup/newAccountSetupThunk";
+import { addCloudEnv } from "redux/newAccountSetup/newAccountSetupThunk";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
 

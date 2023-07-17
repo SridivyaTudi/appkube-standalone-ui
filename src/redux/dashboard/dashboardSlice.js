@@ -12,7 +12,7 @@ import {
   getProductWiseCost,
   getProductionVsOther,
   getServiceTypeWiseCost,
-} from "redux/assetManager/dashboard/dashboardThunk";
+} from "redux/dashboard/dashboardThunk";
 import status from "redux/constants/commonDS";
 
 export const dashboardSlice = createSlice({
