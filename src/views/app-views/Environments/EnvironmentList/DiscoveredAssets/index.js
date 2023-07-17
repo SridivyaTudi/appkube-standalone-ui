@@ -22,7 +22,7 @@ import { connect } from "react-redux";
 import TopologyView from "./Components/TopologyView";
 import VpcDetails from "./VpcDetails";
 import ClusterDetails from "./ClusterDetails";
-import { getUUID } from "utils";
+import { v4  } from 'uuid';
 import { LOGOS } from "commonData";
 
 const nextTypes = {
@@ -55,7 +55,7 @@ class DiscoveredAssets extends Component {
         cloudName: cloudName?.toUpperCase(),
         selectedLevel1: "",
         selectedLevel2: "",
-        breadcrumbId: getUUID(),
+        breadcrumbId: v4(),
       },
       searchString: "",
       accountId: queryPrm.get("landingZone"),
@@ -126,7 +126,7 @@ class DiscoveredAssets extends Component {
         return (
           <>
             {index > 0 ? (
-              <li key={getUUID()}>
+              <li key={v4()}>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
             ) : (
@@ -136,7 +136,7 @@ class DiscoveredAssets extends Component {
               onClick={() => {
                 this.onClickBreadCrumbOfTopology(breadCrumb);
               }}
-              key={getUUID()}
+              key={v4()}
             >
               <a>
                 {index == 1
@@ -158,7 +158,7 @@ class DiscoveredAssets extends Component {
     let { dataOfTableLevel1 } = this.state;
     return dataOfTableLevel1.map((vpc, index) => {
       return (
-        <TableRow key={getUUID()}>
+        <TableRow key={v4()}>
           <TableCell align="center">{vpc.name}</TableCell>
           <TableCell align="center">{vpc.product_count}</TableCell>
           <TableCell align="center">{vpc.app_count}</TableCell>
@@ -372,7 +372,7 @@ class DiscoveredAssets extends Component {
     let { selectedLevel1, selectedLevel2, cloudName, breadcrumbId } =
       this.state.breadcrumbs;
 
-    breadcrumbId = getUUID();
+    breadcrumbId = v4();
     if (type === "cloudName") {
       selectedLevel1 = "";
       selectedLevel2 = "";

@@ -9,8 +9,9 @@ import {
   getServiceTypeWiseCost,
 } from "redux/dashboard/dashboardThunk";
 import { connect } from "react-redux";
-import { getCurrentOrgId, getUUID } from "utils";
+import { getCurrentOrgId } from "utils";
 import status from "redux/constants/commonDS";
+import { v4  } from 'uuid';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -120,7 +121,7 @@ class CostAnalysis extends Component {
     data.map((item, index) => {
       if (index !== data.length - 1) {
         JSX.push(
-          <ListItem key={getUUID()}>
+          <ListItem key={v4()}>
             <p>{item.name}</p>
             <Box className="d-block right-contant">
               <label>${item.total.toLocaleString()}</label>

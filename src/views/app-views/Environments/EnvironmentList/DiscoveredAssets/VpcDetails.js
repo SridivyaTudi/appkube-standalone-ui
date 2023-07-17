@@ -15,7 +15,7 @@ import Quicksight from "assets/img/assetmanager/cloud-managed-icon16.png";
 import Waf from "assets/img/assetmanager/global-icon6.png";
 import API from "assets/img/assetmanager/global-icon7.png";
 import LB from "assets/img/assetmanager/global-icon3.png";
-import { getUUID } from "utils";
+import { v4  } from 'uuid';
 
 const Images = {
   EKS: EKS,
@@ -82,7 +82,7 @@ class VpcDetails extends React.Component {
     const clusterJSX = [];
     categoryList.map((item) => {
       clusterJSX.push(
-        <Box className="service-card active" key={getUUID()}>
+        <Box className="service-card active" key={v4()}>
           <Box className="service-icon">
             <img src={Images[item.elementType]} alt="serviceicon" />
           </Box>
@@ -100,7 +100,7 @@ class VpcDetails extends React.Component {
     const JSX = [];
     dummyData.managedServices.map((item) => {
       JSX.push(
-        <Box className="service-card active" key={getUUID()}>
+        <Box className="service-card active" key={v4()}>
           <Box className="service-icon">
             <img src={Images[item.name]} alt="serviceicon" />
           </Box>
@@ -118,7 +118,7 @@ class VpcDetails extends React.Component {
     const JSX = [];
     dummyData.GatewayServices.map((item) => {
       JSX.push(
-        <Box className="service-card active" key={getUUID()}>
+        <Box className="service-card active" key={v4()}>
           <Box className="service-icon">
             <img src={Images[item.name]} alt="serviceicon" />
           </Box>

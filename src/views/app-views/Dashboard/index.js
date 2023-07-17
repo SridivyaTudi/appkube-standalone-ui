@@ -17,7 +17,7 @@ import {
   getTotalBudget,
 } from "redux/dashboard/dashboardThunk";
 import { connect } from "react-redux";
-import { getUUID } from "utils";
+import { v4  } from 'uuid';
 
 class Dashboard extends Component {
   tabMapping = [
@@ -76,7 +76,7 @@ class Dashboard extends Component {
               {this.tabMapping.map((tabData, index) => {
                 return (
                   <ListItem
-                    key={getUUID()}
+                    key={v4()}
                     className={index === activeTab ? "active" : ""}
                     onClick={() => this.setActiveTab(index)}
                   >

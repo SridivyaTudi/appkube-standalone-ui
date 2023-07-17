@@ -2,7 +2,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { Box } from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import { getUUID } from "utils";
+import { v4  } from 'uuid';
 
 class ChangePasswordModal extends Component {
   constructor(props) {
@@ -85,11 +85,11 @@ class ChangePasswordModal extends Component {
     const JSX = [];
     for (let i = 0; i < 4; i++) {
       if (pwdStrength <= 2 && i <= pwdStrength - 1) {
-        JSX.push(<span key={getUUID()} className={"good"}></span>);
+        JSX.push(<span key={v4()} className={"good"}></span>);
       } else if (pwdStrength > 2 && i <= pwdStrength - 1) {
-        JSX.push(<span key={getUUID()} className={"strong"}></span>);
+        JSX.push(<span key={v4()} className={"strong"}></span>);
       } else {
-        JSX.push(<span key={getUUID()}></span>);
+        JSX.push(<span key={v4()}></span>);
       }
     }
     return JSX;

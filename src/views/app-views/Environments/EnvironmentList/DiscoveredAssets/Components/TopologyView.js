@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ArcherContainer, ArcherElement } from "react-archer";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Box, Grid } from "@mui/material";
-import { getUUID } from "utils";
+import { v4 } from 'uuid';
 let transformScale = 0;
 
 class TopologyView extends Component {
@@ -184,7 +184,7 @@ class TopologyView extends Component {
                   ]
                 : []
             }
-            key={getUUID()}
+            key={v4()}
           >
             <li
               className={`${level1Index === selectedLevel1Id ? "active " : ""}`}
@@ -217,7 +217,7 @@ class TopologyView extends Component {
     if (data.length) {
       return data.map((level2, level2Index) => {
         return (
-          <ArcherElement id={`level2_${level2Index}`} key={getUUID()}>
+          <ArcherElement id={`level2_${level2Index}`} key={v4()}>
             <li
               onClick={() => {
                 this.onClickLevel2(level2Index, level2.label);

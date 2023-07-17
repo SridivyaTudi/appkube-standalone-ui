@@ -17,7 +17,7 @@ import { Line } from "react-chartjs-2";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
 import { ToastMessage } from "Toast/ToastMessage";
-import { getUUID } from "utils";
+import { v4  } from 'uuid';
 
 ChartJS.register(
   CategoryScale,
@@ -439,7 +439,7 @@ class SpendAnalytics extends Component {
     if (totalCloudWiseSpendData.length) {
       return totalCloudWiseSpendData.map((cloudSpend) => {
         return (
-          <ListItem key={getUUID()}>
+          <ListItem key={v4()}>
             <Box className="data-text">
               <span
                 style={{
@@ -479,7 +479,7 @@ class SpendAnalytics extends Component {
                 cloudSpend.percentage > 0 ? `${cloudSpend.percentage}` : "0"
               }%`,
             }}
-            key={getUUID()}
+            key={v4()}
           ></span>
         );
       });
@@ -533,7 +533,7 @@ class SpendAnalytics extends Component {
       };
     }
   }
-  /** Calculate percentage of Needle. */
+  /** Calculate Remaining Budget Percentage. */
   calculateRemainingBudgetPercentage() {
     let remainingBudgetPercentage =
       this.getTotalBudget().remainingBudgetPercentage;
@@ -614,7 +614,7 @@ class SpendAnalytics extends Component {
 
       if (monthIndex > -1) {
         return (
-          <ListItem key={getUUID()}>
+          <ListItem key={v4()}>
             <Box className="avrage-contant">
               <label>{statistics.month}</label>
               <strong>{statistics.sumAllValues}</strong>

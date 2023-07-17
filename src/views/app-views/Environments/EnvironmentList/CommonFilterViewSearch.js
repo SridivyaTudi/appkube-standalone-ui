@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import status from "redux/constants/commonDS";
 import { connect } from "react-redux";
 import { ToastMessage } from "Toast/ToastMessage";
-import { getUUID } from "utils";
+import { v4  } from 'uuid';
 import { getRecentVisitedEnvironments, setRecentVisitedEnvironments } from "utils";
 
 const headers = [
@@ -51,7 +51,7 @@ class CommonFilterViewSearch extends Component {
     return this.state.allEnvs.map((item) => {
       return item.environmentSummaryList.map((account, innerKey) => {
         return (
-          <ListItem key={getUUID()}>
+          <ListItem key={v4()}>
             <Link
               to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}`}
               onClick={() => {
