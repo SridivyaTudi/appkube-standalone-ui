@@ -376,7 +376,7 @@ class SpendAnalytics extends Component {
   lineDiagramDataPrepare() {
     let { monthlyCloudWiseSpend } = this.props;
     let diagramData = monthlyCloudWiseSpend.data || [];
-
+    let heighestMonth = 0;
     if (diagramData.length) {
       let datasets = [];
       Object.keys(CLOUD_TYPE_WITH_STYLE).forEach((cloud) => {
@@ -397,9 +397,12 @@ class SpendAnalytics extends Component {
           }
         });
 
-        if (cloudWiseData.data.length) datasets.push(cloudWiseData);
+        if (cloudWiseData.data.length) {
+          datasets.push(cloudWiseData);
+          heighestMonth = cloudWiseData.data.length;
+        }
       });
-
+      labels.length = heighestMonth;
       this.setState({ monthlyCloudWiseData: { labels, datasets } });
     }
   }
@@ -555,7 +558,7 @@ class SpendAnalytics extends Component {
                 <Box className="gauge__center"></Box>
                 <Box
                   className="gauge__needle"
-                  style={{ transform: "rotate(0.87turn)" }}
+                  style={{ transform: `rotate(0.87turn)` }}
                 ></Box>
               </Box>
               <Box className="used-text">
