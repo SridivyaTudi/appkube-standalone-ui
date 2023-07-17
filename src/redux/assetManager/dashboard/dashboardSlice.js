@@ -10,6 +10,8 @@ import {
   getTotalBudget,
   getMonthlyStatistics,
   getProductWiseCost,
+  getProductionVsOther,
+  getServiceTypeWiseCost,
 } from "redux/assetManager/dashboard/dashboardThunk";
 import status from "redux/constants/commonDS";
 
@@ -53,6 +55,14 @@ export const dashboardSlice = createSlice({
       data: [],
     },
     productWiseCost: {
+      status: null,
+      data: [],
+    },
+    productionVsOther: {
+      status: null,
+      data: [],
+    },
+    serviceTypeWiseCost: {
       status: null,
       data: [],
     },
@@ -333,6 +343,62 @@ export const dashboardSlice = createSlice({
       return {
         ...state,
         productWiseCost: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [getProductionVsOther.pending]: (state, action) => {
+      return {
+        ...state,
+        productionVsOther: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getProductionVsOther.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        productionVsOther: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getProductionVsOther.rejected]: (state, action) => {
+      return {
+        ...state,
+        productionVsOther: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [getServiceTypeWiseCost.pending]: (state, action) => {
+      return {
+        ...state,
+        serviceTypeWiseCost: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getServiceTypeWiseCost.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        serviceTypeWiseCost: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getServiceTypeWiseCost.rejected]: (state, action) => {
+      return {
+        ...state,
+        serviceTypeWiseCost: {
           status: status.FAILURE,
           data: [],
         },

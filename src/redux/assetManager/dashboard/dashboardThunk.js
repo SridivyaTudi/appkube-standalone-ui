@@ -137,3 +137,31 @@ export const getProductWiseCost = createAsyncThunk(
     }
   }
 );
+
+export const getProductionVsOther = createAsyncThunk(
+  "dashboard/getProductionVsOther",
+  async (orgId) => {
+    try {
+      const response = await postLoginService.get(
+        config.PRODUCTION_VS_OTHERS.replace("#org-id#", orgId)
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const getServiceTypeWiseCost = createAsyncThunk(
+  "dashboard/getServiceTypeWiseCost",
+  async (orgId) => {
+    try {
+      const response = await postLoginService.get(
+        config.SERVICE_TYPE_WISE_COST.replace("#org-id#", orgId)
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

@@ -3,7 +3,11 @@ import { Box, List, ListItem } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { getProductWiseCost } from "redux/assetManager/dashboard/dashboardThunk";
+import {
+  getProductWiseCost,
+  getProductionVsOther,
+  getServiceTypeWiseCost,
+} from "redux/assetManager/dashboard/dashboardThunk";
 import { connect } from "react-redux";
 import { getCurrentOrgId, getUUID } from "utils";
 import status from "redux/constants/commonDS";
@@ -16,36 +20,16 @@ class CostAnalysis extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // productWiseCost: {
-      //   datasets: [
-      //     {
-      //       data: [35, 18, 25, 22],
-      //       backgroundColor: ["#8676FF", "#42CD7E", "#FF9066", "#FFCC41"],
-      //     },
-      //   ],
-      // },
-      productionVsOthers: {
-        datasets: [
-          {
-            data: [20, 80],
-            backgroundColor: ["#ff9066", "#8676FF"],
-          },
-        ],
-      },
-      serviceTypeWiseCost: {
-        datasets: [
-          {
-            data: [16, 4, 10, 70],
-            backgroundColor: ["#FFCC41", "#FF9066", "#42CD7E", "#8676FF"],
-          },
-        ],
-      },
       productWiseCostData: [],
+      productionVsOthersData: [],
+      serviceTypeWiseCostData: [],
     };
   }
 
   componentDidMount = () => {
     this.props.getProductWiseCost(getCurrentOrgId());
+    this.props.getProductionVsOther(getCurrentOrgId());
+    this.props.getServiceTypeWiseCost(getCurrentOrgId());
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -55,29 +39,51 @@ class CostAnalysis extends Component {
     ) {
       this.setState({ productWiseCostData: this.props.productWiseCost.data });
     }
+
+    if (
+      prevProps.productionVsOther.status !==
+        this.props.productionVsOther.status &&
+      this.props.productionVsOther.status === status.SUCCESS
+    ) {
+      this.setState({
+        productionVsOthersData: this.props.productionVsOther.data,
+      });
+    }
+
+    if (
+      prevProps.serviceTypeWiseCost.status !==
+        this.props.serviceTypeWiseCost.status &&
+      this.props.serviceTypeWiseCost.status === status.SUCCESS
+    ) {
+      this.setState({
+        serviceTypeWiseCostData: this.props.serviceTypeWiseCost.data,
+      });
+    }
   };
 
   /** Calculates and returns total sum of all departments costs
    * @param {array} AllDepartmentsData - Entire data of all departments.
    */
-  showTotalCost = (data) => {
-    let total = 0;
-    data.map((item) => {
-      total += item.total;
-    });
-    return total.toLocaleString();
-  };
+  // showTotalCost = (data) => {
+  //   let total = 0;
+  //   data.map((item) => {
+  //     total += item.total;
+  //   });
+  //   return total.toLocaleString();
+  // };
 
   /** Calculates and returns width of a bar according to percentage of total cost
    * @param {number} departmentCost - Current department dost
    * @param {number} totalCost - Total cost of all departments
    */
-  calculateBarWidth = (departmentCost, totalCost) => {
-    let convertedTotalCost = parseFloat(totalCost.replace(/,/g, ""));
-    const percentage = (departmentCost / convertedTotalCost) * 100;
-    return percentage.toFixed(2);
-  };
+  // calculateBarWidth = (departmentCost, totalCost) => {
+  //   const percentage = (departmentCost / totalCost) * 100;
+  //   return percentage.toFixed(2);
+  // };
 
+  /** Gets API data and returns Dough chart acceptable data
+   * @param {array} data - API data.
+   */
   manipulateDoughData = (data) => {
     let doughData = {
       datasets: [
@@ -88,14 +94,48 @@ class CostAnalysis extends Component {
       ],
     };
     data.map((item, index) => {
-      doughData.datasets[0].data.push(item.total);
-      doughData.datasets[0].backgroundColor.push(colorPallate[index]);
+      if (index !== data.length - 1) {
+        doughData.datasets[0].data.push(item.total);
+        doughData.datasets[0].backgroundColor.push(colorPallate[index]);
+      }
     });
     return doughData;
   };
 
+  /** Gets API data and returns Bars JSX
+   * @param {array} data - API data.
+   */
+  renderBarsData = (data) => {
+    const JSX = [];
+    data.map((item, index) => {
+      if (index !== data.length - 1) {
+        JSX.push(
+          <ListItem key={getUUID()}>
+            <p>{item.name}</p>
+            <Box className="d-block right-contant">
+              <label>${item.total.toLocaleString()}</label>
+              <span>
+                <span
+                  style={{
+                    width: `${item.percentage}%`,
+                    background: `${colorPallate[index]}`,
+                  }}
+                ></span>
+              </span>
+            </Box>
+          </ListItem>
+        );
+      }
+    });
+    return JSX;
+  };
+
   render() {
-    const { productWiseCostData } = this.state;
+    const {
+      productWiseCostData,
+      productionVsOthersData,
+      serviceTypeWiseCostData,
+    } = this.state;
     return (
       <Box className="cost-analysis-container">
         <Box className="product-wise-inner-container">
@@ -107,9 +147,16 @@ class CostAnalysis extends Component {
                     <Box className="heading">
                       <h3>Product Wise Cost</h3>
                       <Box className="product-cost">
-                        <label>
-                          ${this.showTotalCost(productWiseCostData)}
-                        </label>
+                        {productWiseCostData.length ? (
+                          <label>
+                            $
+                            {productWiseCostData[
+                              productWiseCostData.length - 1
+                            ].total.toLocaleString()}
+                          </label>
+                        ) : (
+                          <></>
+                        )}
                         <span>10%</span>
                       </Box>
                     </Box>
@@ -124,31 +171,7 @@ class CostAnalysis extends Component {
                         )}
                       </Box>
                       <Box className="d-block chart-details">
-                        <List>
-                          {productWiseCostData.map((item, index) => {
-                            return (
-                              <ListItem key={getUUID()}>
-                                <p>{item.name}</p>
-                                <Box className="d-block right-contant">
-                                  <label>${item.total.toLocaleString()}</label>
-                                  <span>
-                                    <span
-                                      style={{
-                                        width: `${this.calculateBarWidth(
-                                          item.total,
-                                          this.showTotalCost(
-                                            productWiseCostData
-                                          )
-                                        )}%`,
-                                        background: `${colorPallate[index]}`,
-                                      }}
-                                    ></span>
-                                  </span>
-                                </Box>
-                              </ListItem>
-                            );
-                          })}
-                        </List>
+                        <List>{this.renderBarsData(productWiseCostData)}</List>
                       </Box>
                     </Box>
                   </Box>
@@ -158,40 +181,30 @@ class CostAnalysis extends Component {
                     <Box className="heading">
                       <h3>Production Vs Others</h3>
                       <Box className="product-cost">
-                        <label>$6,71,246</label>
+                        {productionVsOthersData.length ? (
+                          <label>
+                            $
+                            {productionVsOthersData[
+                              productionVsOthersData.length - 1
+                            ].total.toLocaleString()}
+                          </label>
+                        ) : (
+                          <></>
+                        )}
                         <span>10%</span>
                       </Box>
                     </Box>
                     <Box className="chart-contant">
                       <Box className="d-flex chart" style={{ width: "60%" }}>
-                        <Doughnut data={this.state.productionVsOthers} />
+                        <Doughnut
+                          data={this.manipulateDoughData(
+                            productionVsOthersData
+                          )}
+                        />
                       </Box>
                       <Box className="d-block chart-details">
                         <List>
-                          <ListItem>
-                            <p>Production</p>
-                            <Box className="d-block right-contant">
-                              <label>$571246</label>
-                              <span>
-                                <span
-                                  className="crocus-purple"
-                                  style={{ width: "75%" }}
-                                ></span>
-                              </span>
-                            </Box>
-                          </ListItem>
-                          <ListItem>
-                            <p>Others</p>
-                            <Box className="d-block right-contant">
-                              <label>$10000</label>
-                              <span>
-                                <span
-                                  className="yellow"
-                                  style={{ width: "25%" }}
-                                ></span>
-                              </span>
-                            </Box>
-                          </ListItem>
+                          {this.renderBarsData(productionVsOthersData)}
                         </List>
                       </Box>
                     </Box>
@@ -202,64 +215,30 @@ class CostAnalysis extends Component {
                     <Box className="heading">
                       <h3>Service Type Wise Cost </h3>
                       <Box className="product-cost">
-                        <label>$6,71,246</label>
+                        {serviceTypeWiseCostData.length ? (
+                          <label>
+                            $
+                            {serviceTypeWiseCostData[
+                              serviceTypeWiseCostData.length - 1
+                            ].total.toLocaleString()}
+                          </label>
+                        ) : (
+                          <></>
+                        )}
                         <span>10%</span>
                       </Box>
                     </Box>
                     <Box className="chart-contant">
                       <Box className="d-flex chart" style={{ width: "60%" }}>
-                        <Doughnut data={this.state.serviceTypeWiseCost} />
+                        <Doughnut
+                          data={this.manipulateDoughData(
+                            serviceTypeWiseCostData
+                          )}
+                        />
                       </Box>
                       <Box className="d-block chart-details">
                         <List>
-                          <ListItem>
-                            <p>App</p>
-                            <Box className="d-block right-contant">
-                              <label>$1,94,661</label>
-                              <span>
-                                <span
-                                  className="crocus-purple"
-                                  style={{ width: "80%" }}
-                                ></span>
-                              </span>
-                            </Box>
-                          </ListItem>
-                          <ListItem>
-                            <p>Data</p>
-                            <Box className="d-block right-contant">
-                              <label>$53971</label>
-                              <span>
-                                <span
-                                  className="yellow"
-                                  style={{ width: "30%" }}
-                                ></span>
-                              </span>
-                            </Box>
-                          </ListItem>
-                          <ListItem>
-                            <p>Network</p>
-                            <Box className="d-block right-contant">
-                              <label>$26846</label>
-                              <span>
-                                <span
-                                  className="orange"
-                                  style={{ width: "10%" }}
-                                ></span>
-                              </span>
-                            </Box>
-                          </ListItem>
-                          <ListItem>
-                            <p>Others</p>
-                            <Box className="d-block right-contant">
-                              <label>$15326</label>
-                              <span>
-                                <span
-                                  className="paris-green"
-                                  style={{ width: "15%" }}
-                                ></span>
-                              </span>
-                            </Box>
-                          </ListItem>
+                          {this.renderBarsData(serviceTypeWiseCostData)}
                         </List>
                       </Box>
                     </Box>
@@ -275,12 +254,15 @@ class CostAnalysis extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { productWiseCost } = state.dashboard;
-  return { productWiseCost };
+  const { productWiseCost, productionVsOther, serviceTypeWiseCost } =
+    state.dashboard;
+  return { productWiseCost, productionVsOther, serviceTypeWiseCost };
 };
 
 const mapDispatchToProps = {
   getProductWiseCost,
+  getProductionVsOther,
+  getServiceTypeWiseCost,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CostAnalysis);
