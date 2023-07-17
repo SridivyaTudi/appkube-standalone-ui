@@ -555,7 +555,7 @@ class SpendAnalytics extends Component {
                 <Box className="gauge__center"></Box>
                 <Box
                   className="gauge__needle"
-                  style={{ transform: "rotate(0.70turn)" }}
+                  style={{ transform: "rotate(0.87turn)" }}
                 ></Box>
               </Box>
               <Box className="used-text">
