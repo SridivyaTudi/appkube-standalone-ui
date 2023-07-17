@@ -7,7 +7,9 @@ import {
   getTotalSpend,
   getTotalCloudWiseSpend,
   getMonthlyCloudWiseSpend,
-  getTotalBudget,getMonthlyStatistics
+  getTotalBudget,
+  getMonthlyStatistics,
+  getProductWiseCost,
 } from "redux/assetManager/dashboard/dashboardThunk";
 import status from "redux/constants/commonDS";
 
@@ -42,14 +44,18 @@ export const dashboardSlice = createSlice({
       status: null,
       data: [],
     },
-    totalBudget:{
-      status:null,
-      data:{}
+    totalBudget: {
+      status: null,
+      data: {},
     },
-    monthlyStatistics:{
-      status:null,
-      data:[]
-    }
+    monthlyStatistics: {
+      status: null,
+      data: [],
+    },
+    productWiseCost: {
+      status: null,
+      data: [],
+    },
   },
   reducers: {},
   extraReducers: {
@@ -299,6 +305,34 @@ export const dashboardSlice = createSlice({
       return {
         ...state,
         monthlyStatistics: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [getProductWiseCost.pending]: (state, action) => {
+      return {
+        ...state,
+        productWiseCost: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getProductWiseCost.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        productWiseCost: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getProductWiseCost.rejected]: (state, action) => {
+      return {
+        ...state,
+        productWiseCost: {
           status: status.FAILURE,
           data: [],
         },

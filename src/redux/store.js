@@ -12,8 +12,8 @@ const store = configureStore({
     environments: environmentReducer,
     organization: organizationsReducer,
     newAccountSetup: newAccountReducer,
-    environmentData:environmentDataReducer,
-    dashboard:dashboardReducer
+    environmentData: environmentDataReducer,
+    dashboard: dashboardReducer,
   },
 });
 
