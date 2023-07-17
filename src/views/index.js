@@ -14,7 +14,7 @@ import ForgetPassword from "views/auth-views/forgetPassword";
 import TopBar from "components/topBar";
 import SideBar from "components/sideBar";
 import Environments from "views/app-views/AssetManager/Environments";
-import Dashboard from "views/app-views/AssetManager/Dashboard";
+import Dashboard from "views/app-views/Dashboard";
 import NewAccountSetup from "views/app-views/AssetManager/NewAccountSetup";
 import EnvironmentList from "views/app-views/AssetManager/Environments/EnvironmentList";
 import ProcurifyLogisticsTools from "views/app-views/AssetManager/Environments/EnvironmentList/ProcurifyLogisticsTools";

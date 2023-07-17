@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import SpendAnalytics from "views/app-views/AssetManager/Dashboard/spendAnalytics";
-import CostAnalysis from "views/app-views/AssetManager/Dashboard/costAnalysis";
-import SLAMetrics from "views/app-views/AssetManager/Dashboard/slaMetrics";
-import ProcessCentral from "views/app-views/AssetManager/Dashboard/processCentral";
+import SpendAnalytics from "./spendAnalytics";
+import CostAnalysis from "./costAnalysis";
+import SLAMetrics from "./slaMetrics";
+import ProcessCentral from "./processCentral";
 import Planet from "assets/img/dashboard/planet2.png";
 import { Box, List, ListItem } from "@mui/material";
 import {
@@ -56,8 +56,8 @@ class Dashboard extends Component {
     this.props.getTotalSpend();
     this.props.getMonthlyCloudWiseSpend();
     this.props.getTotalCloudWiseSpend();
-    this.props.getMonthlyStatistics()
-    this.props.getTotalBudget()
+    this.props.getMonthlyStatistics();
+    this.props.getTotalBudget();
   };
 
   render() {
