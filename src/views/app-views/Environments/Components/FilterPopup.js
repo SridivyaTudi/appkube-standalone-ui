@@ -9,7 +9,7 @@ import {
   getOrgWiseDepartments,
   getDeploymentEnvs,
   getEnvsSummary,
-} from "redux/assetManager/environments/environmentsThunk";
+} from "redux/environments/environmentsThunk";
 import { getCurrentOrgId } from "utils";
 import Button from "@mui/material/Button";
 import status from "redux/constants/commonDS";

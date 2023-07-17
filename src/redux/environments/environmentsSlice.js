@@ -5,31 +5,31 @@ import {
   getOrgWiseDepartments,
   getProductsByDepId,
   getDeploymentEnvs,
-} from "redux/assetManager/environments/environmentsThunk";
+} from "redux/environments/environmentsThunk";
 import status from "redux/constants/commonDS";
 
 export const environmentSlice = createSlice({
   name: "environments",
   initialState: {
-    environmentCountData:{
+    environmentCountData: {
       status: null,
-      data:[]
+      data: [],
     },
     envSummary: {
       status: null,
-      data:[]
+      data: [],
     },
-    organizationWiseDepartments:{
-      status: null
+    organizationWiseDepartments: {
+      status: null,
     },
     productsByDepId: {
       status: null,
-      data:[]
+      data: [],
     },
     deploymentEnvs: {
       status: null,
-      data:[]
-    }
+      data: [],
+    },
   },
   reducers: {},
   extraReducers: {
@@ -41,7 +41,7 @@ export const environmentSlice = createSlice({
         },
       };
     },
-    [getEnvironmentCount.fulfilled]: (state, {payload}) => {
+    [getEnvironmentCount.fulfilled]: (state, { payload }) => {
       return {
         ...state,
         environmentCountData: {
@@ -66,12 +66,12 @@ export const environmentSlice = createSlice({
         },
       };
     },
-    [getEnvsSummary.fulfilled]: (state, {payload}) => {
+    [getEnvsSummary.fulfilled]: (state, { payload }) => {
       return {
         ...state,
         envSummary: {
           status: status.SUCCESS,
-          data:payload
+          data: payload,
         },
       };
     },
@@ -91,7 +91,7 @@ export const environmentSlice = createSlice({
         },
       };
     },
-    [getOrgWiseDepartments.fulfilled]: (state, {payload}) => {
+    [getOrgWiseDepartments.fulfilled]: (state, { payload }) => {
       return {
         ...state,
         organizationWiseDepartments: {
@@ -115,13 +115,13 @@ export const environmentSlice = createSlice({
         productsByDepId: { status: status.IN_PROGRESS },
       };
     },
-    [getProductsByDepId.fulfilled]: (state, {payload}) => {
-      let { products,depId} = payload
+    [getProductsByDepId.fulfilled]: (state, { payload }) => {
+      let { products, depId } = payload;
       return {
         ...state,
         productsByDepId: {
           status: status.SUCCESS,
-          data: {products ,depId },
+          data: { products, depId },
         },
       };
     },
@@ -140,12 +140,12 @@ export const environmentSlice = createSlice({
         deploymentEnvs: { status: status.IN_PROGRESS },
       };
     },
-    [getDeploymentEnvs.fulfilled]: (state, {payload}) => {
+    [getDeploymentEnvs.fulfilled]: (state, { payload }) => {
       return {
         ...state,
         deploymentEnvs: {
           status: status.SUCCESS,
-          data: payload
+          data: payload,
         },
       };
     },

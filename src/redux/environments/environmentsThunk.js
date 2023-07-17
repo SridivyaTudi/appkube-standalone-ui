@@ -6,7 +6,9 @@ export const getEnvironmentCount = createAsyncThunk(
   "environments/getEnvironmentCount",
   async () => {
     try {
-      const response = await postLoginService.get(config.GET_ALL_ENVIRONMENT_COUNT);
+      const response = await postLoginService.get(
+        config.GET_ALL_ENVIRONMENT_COUNT
+      );
       return response;
     } catch (error) {
       console.log(error);
@@ -18,7 +20,10 @@ export const getEnvsSummary = createAsyncThunk(
   "environments/getEnvsSummary",
   async (params) => {
     try {
-      const response = await postLoginService.get(config.GET_ALL_ENVIRONMENT_SUMMARY, { params });
+      const response = await postLoginService.get(
+        config.GET_ALL_ENVIRONMENT_SUMMARY,
+        { params }
+      );
       return response;
     } catch (error) {
       console.log(error);
@@ -30,7 +35,9 @@ export const getOrgWiseDepartments = createAsyncThunk(
   "environments/getOrgWiseDepartments",
   async () => {
     try {
-      const response = await postLoginService.get(config.GET_ALL_ORG_WISE_DEPARTMENTS);
+      const response = await postLoginService.get(
+        config.GET_ALL_ORG_WISE_DEPARTMENTS
+      );
       return response;
     } catch (error) {
       console.log(error);

@@ -11,7 +11,7 @@ import FilterPopup from "views/app-views/Environments/Components/FilterPopup";
 import {
   getEnvironmentCount,
   getEnvsSummary,
-} from "redux/assetManager/environments/environmentsThunk";
+} from "redux/environments/environmentsThunk";
 import status from "redux/constants/commonDS";
 import { APP_PREFIX_PATH } from "configs/AppConfig";
 import Table from "@mui/material/Table";
