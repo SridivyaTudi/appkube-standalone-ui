@@ -154,104 +154,146 @@ class CostAnalysis extends Component {
               <Grid container spacing={3}>
                 <Grid item lg={4} md={6} xs={12}>
                   <Box id="chart" className="collapse-expand">
-                    <Box className="heading">
-                      <h3>Product Wise Cost</h3>
-                      <Box className="product-cost">
-                        {productWiseCostData.length ? (
-                          <label>
-                            $
-                            {productWiseCostData[
-                              productWiseCostData.length - 1
-                            ].total.toLocaleString()}
-                          </label>
-                        ) : (
-                          <></>
-                        )}
-                        <span>10%</span>
+                    {this.props.productWiseCost.status ===
+                    status.IN_PROGRESS ? (
+                      <Box className="spend-contant">
+                        <i className="fa-solid fa-spinner fa-spin" /> Loading...
                       </Box>
-                    </Box>
-                    <Box className="chart-contant">
-                      <Box className="d-flex chart" style={{ width: "60%" }}>
-                        {productWiseCostData.length ? (
-                          <Doughnut
-                            data={this.manipulateDoughData(productWiseCostData)}
-                          />
-                        ) : (
-                          <></>
-                        )}
-                      </Box>
-                      <Box className="d-block chart-details">
-                        <List>{this.renderBarsData(productWiseCostData)}</List>
-                      </Box>
-                    </Box>
+                    ) : (
+                      <>
+                        <Box className="heading">
+                          <h3>Product Wise Cost</h3>
+                          <Box className="product-cost">
+                            {productWiseCostData.length ? (
+                              <>
+                                <label>
+                                  $
+                                  {productWiseCostData[
+                                    productWiseCostData.length - 1
+                                  ].total.toLocaleString()}
+                                </label>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                            <span>10%</span>
+                          </Box>
+                        </Box>
+                        <Box className="chart-contant">
+                          <Box
+                            className="d-flex chart"
+                            style={{ width: "60%" }}
+                          >
+                            {productWiseCostData.length ? (
+                              <Doughnut
+                                data={this.manipulateDoughData(
+                                  productWiseCostData
+                                )}
+                              />
+                            ) : (
+                              <></>
+                            )}
+                          </Box>
+                          <Box className="d-block chart-details">
+                            <List>
+                              {this.renderBarsData(productWiseCostData)}
+                            </List>
+                          </Box>
+                        </Box>
+                      </>
+                    )}
                   </Box>
                 </Grid>
                 <Grid item lg={4} md={6} xs={12}>
                   <Box id="chart" className="collapse-expand">
-                    <Box className="heading">
-                      <h3>Production Vs Others</h3>
-                      <Box className="product-cost">
-                        {productionVsOthersData.length ? (
-                          <label>
-                            $
-                            {productionVsOthersData[
-                              productionVsOthersData.length - 1
-                            ].total.toLocaleString()}
-                          </label>
-                        ) : (
-                          <></>
-                        )}
-                        <span>10%</span>
+                    {this.props.productionVsOther.status ===
+                    status.IN_PROGRESS ? (
+                      <Box className="spend-contant">
+                        <i className="fa-solid fa-spinner fa-spin" /> Loading...
                       </Box>
-                    </Box>
-                    <Box className="chart-contant">
-                      <Box className="d-flex chart" style={{ width: "60%" }}>
-                        <Doughnut
-                          data={this.manipulateDoughData(
-                            productionVsOthersData
-                          )}
-                        />
-                      </Box>
-                      <Box className="d-block chart-details">
-                        <List>
-                          {this.renderBarsData(productionVsOthersData)}
-                        </List>
-                      </Box>
-                    </Box>
+                    ) : (
+                      <>
+                        <Box className="heading">
+                          <h3>Production Vs Others</h3>
+                          <Box className="product-cost">
+                            {productionVsOthersData.length ? (
+                              <label>
+                                $
+                                {productionVsOthersData[
+                                  productionVsOthersData.length - 1
+                                ].total.toLocaleString()}
+                              </label>
+                            ) : (
+                              <></>
+                            )}
+                            <span>10%</span>
+                          </Box>
+                        </Box>
+                        <Box className="chart-contant">
+                          <Box
+                            className="d-flex chart"
+                            style={{ width: "60%" }}
+                          >
+                            <Doughnut
+                              data={this.manipulateDoughData(
+                                productionVsOthersData
+                              )}
+                            />
+                          </Box>
+                          <Box className="d-block chart-details">
+                            <List>
+                              {this.renderBarsData(productionVsOthersData)}
+                            </List>
+                          </Box>
+                        </Box>
+                      </>
+                    )}
                   </Box>
                 </Grid>
                 <Grid item lg={4} md={6} xs={12}>
                   <Box id="chart" className="collapse-expand">
-                    <Box className="heading">
-                      <h3>Service Type Wise Cost </h3>
-                      <Box className="product-cost">
-                        {serviceTypeWiseCostData.length ? (
-                          <label>
-                            $
-                            {serviceTypeWiseCostData[
-                              serviceTypeWiseCostData.length - 1
-                            ].total.toLocaleString()}
-                          </label>
-                        ) : (
-                          <></>
-                        )}
-                        <span>10%</span>
+                    {this.props.serviceTypeWiseCost.status ===
+                    status.IN_PROGRESS ? (
+                      <Box className="spend-contant">
+                        <i className="fa-solid fa-spinner fa-spin" /> Loading...
                       </Box>
-                    </Box>
-                    <Box className="chart-contant">
-                      <Box className="d-flex chart" style={{ width: "60%" }}>
-                        <Doughnut
-                          data={this.manipulateDoughData(
-                            serviceTypeWiseCostData
-                          )}
-                        />
-                      </Box>
-                      <Box className="d-block chart-details">
-                        <List>
-                          {this.renderBarsData(serviceTypeWiseCostData)}
-                        </List>
-                      </Box>
-                    </Box>
+                    ) : (
+                      <>
+                        <Box className="heading">
+                          <h3>Service Type Wise Cost </h3>
+                          <Box className="product-cost">
+                            {serviceTypeWiseCostData.length ? (
+                              <label>
+                                $
+                                {serviceTypeWiseCostData[
+                                  serviceTypeWiseCostData.length - 1
+                                ].total.toLocaleString()}
+                              </label>
+                            ) : (
+                              <></>
+                            )}
+                            <span>10%</span>
+                          </Box>
+                        </Box>
+                        <Box className="chart-contant">
+                          <Box
+                            className="d-flex chart"
+                            style={{ width: "60%" }}
+                          >
+                            <Doughnut
+                              data={this.manipulateDoughData(
+                                serviceTypeWiseCostData
+                              )}
+                            />
+                          </Box>
+                          <Box className="d-block chart-details">
+                            <List>
+                              {this.renderBarsData(serviceTypeWiseCostData)}
+                            </List>
+                          </Box>
+                        </Box>
+                      </>
+                    )}
                   </Box>
                 </Grid>
               </Grid>
