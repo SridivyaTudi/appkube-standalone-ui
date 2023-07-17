@@ -14,7 +14,17 @@ import status from "redux/constants/commonDS";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const colorPallate = ["#8676FF", "#42CD7E", "#FF9066", "#FFCC41"];
+const colorPallate = [
+  "#8676FF",
+  "#42CD7E",
+  "#FF9066",
+  "#FFCC41",
+  "#FF97AA",
+  "#34A2C2",
+  "#FB4B93",
+  "#A04D4D",
+  "#608E7D",
+];
 
 class CostAnalysis extends Component {
   constructor(props) {
