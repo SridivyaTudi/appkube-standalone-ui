@@ -114,10 +114,26 @@ export const getMonthlyStatistics = createAsyncThunk(
   "dashboard/getMonthlyStatistics",
   async () => {
     try {
-      const response = await postLoginService.get(config.GET_MONTHLY_STATISTICS);
+      const response = await postLoginService.get(
+        config.GET_MONTHLY_STATISTICS
+      );
       return response;
     } catch (error) {
       console.error(error);
+    }
+  }
+);
+
+export const getProductWiseCost = createAsyncThunk(
+  "dashboard/getProductWiseCost",
+  async (orgId) => {
+    try {
+      const response = await postLoginService.get(
+        config.PRODUCT_WISE_COST.replace("#org-id#", orgId)
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
     }
   }
 );
