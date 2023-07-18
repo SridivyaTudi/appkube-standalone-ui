@@ -1,4 +1,4 @@
-import { Box, List, ListItem, Grid } from "@mui/material";
+import { Box, List, ListItem, Grid, Button } from "@mui/material";
 import { Component } from "react";
 
 class SetTransitions extends Component {
@@ -49,36 +49,48 @@ class SetTransitions extends Component {
               <Box className="policy-text">Environment</Box>
               <Box className="edit-policy">
                 <List>
-                    <ListItem>Delete</ListItem>
-                    <ListItem>Edit</ListItem>
-                    <ListItem>Delete</ListItem>
-                    <ListItem>Edit</ListItem>
+                  <ListItem>
+                    <Button>Delete</Button>
+                  </ListItem>
+                  <ListItem>
+                    <Button>Edit</Button>
+                  </ListItem>
                 </List>
-                <span><i className="fa-solid fa-angle-down"></i></span>
+                <span>
+                  <i className="fa-solid fa-angle-down"></i>
+                </span>
               </Box>
             </Box>
             <Box className="policy-permission-content">
               <Box className="policy-text">Product</Box>
               <Box className="edit-policy">
                 <List>
-                    <ListItem>Delete</ListItem>
-                    <ListItem>Edit</ListItem>
-                    <ListItem>Delete</ListItem>
-                    <ListItem>Edit</ListItem>
+                  <ListItem>
+                    <Button>Delete</Button>
+                  </ListItem>
+                  <ListItem>
+                    <Button>Edit</Button>
+                  </ListItem>
                 </List>
-                <span><i className="fa-solid fa-angle-down"></i></span>
+                <span>
+                  <i className="fa-solid fa-angle-down"></i>
+                </span>
               </Box>
             </Box>
             <Box className="policy-permission-content">
               <Box className="policy-text">SRE</Box>
               <Box className="edit-policy">
                 <List>
-                    <ListItem>Delete</ListItem>
-                    <ListItem>Edit</ListItem>
-                    <ListItem>Delete</ListItem>
-                    <ListItem>Edit</ListItem>
+                  <ListItem>
+                    <Button>Delete</Button>
+                  </ListItem>
+                  <ListItem>
+                    <Button>Edit</Button>
+                  </ListItem>
                 </List>
-                <span><i className="fa-solid fa-angle-down"></i></span>
+                <span>
+                  <i className="fa-solid fa-angle-down"></i>
+                </span>
               </Box>
             </Box>
             <Box className="policy-permission-content">

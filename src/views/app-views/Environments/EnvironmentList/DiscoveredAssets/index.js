@@ -22,7 +22,7 @@ import { connect } from "react-redux";
 import TopologyView from "./Components/TopologyView";
 import VpcDetails from "./VpcDetails";
 import ClusterDetails from "./ClusterDetails";
-import { v4  } from 'uuid';
+import { v4 } from "uuid";
 import { LOGOS } from "commonData";
 
 const nextTypes = {
@@ -234,15 +234,13 @@ class DiscoveredAssets extends Component {
   }
 
   filterVpcsData(searchString) {
-    let { allVpcsDetails, vpcsDetails } = this.props;
-    vpcsDetails =
-      searchString != ""
-        ? allVpcsDetails.filter((vpc) =>
-            vpc.name.toLowerCase().includes(searchString.toLowerCase())
-          )
-        : allVpcsDetails;
+    let { productEnclaveList, globalServiceList } =
+      this.getEnvironmentDataByLandingZone();
+
+    if (productEnclaveList) {
+      this.prepareDataTableLevel1(productEnclaveList, searchString);
+    }
     this.setState({ searchString });
-    this.props.handleSearchVpcs(vpcsDetails);
   }
 
   getEnvironmentDataByLandingZone = () => {
@@ -262,7 +260,7 @@ class DiscoveredAssets extends Component {
       : {};
   };
 
-  prepareDataTableLevel1 = (envData) => {
+  prepareDataTableLevel1 = (envData, searchStr = "") => {
     let vpcs = [];
     for (let envIndex = 0; envIndex < envData.length; envIndex++) {
       let details = {
@@ -284,6 +282,11 @@ class DiscoveredAssets extends Component {
         });
       });
       vpcs.push(details);
+    }
+    if (searchStr) {
+      vpcs = vpcs.filter((vpc) =>
+        vpc.name.toLowerCase().includes(searchStr.toLowerCase())
+      );
     }
     this.setState({
       dataOfTableLevel1: vpcs,
@@ -397,9 +400,9 @@ class DiscoveredAssets extends Component {
       <Box className="discovered-assets">
         <Box className="discovered-assets-head">
           <CommonFilterViewSearch
-            data={{ dataOfTableLevel1 }}
+            data={{vpcsDetails: dataOfTableLevel1}}
             handleSearch={(string) => {
-              // this.filterVpcsData(string);
+              this.filterVpcsData(string);
             }}
             updateAccountId={(accountId) => {
               this.props.updateCloudNameAndLandingZone(cloudName, accountId);
