@@ -13,17 +13,17 @@ import SignUp from "views/auth-views/signUp";
 import ForgetPassword from "views/auth-views/forgetPassword";
 import TopBar from "components/topBar";
 import SideBar from "components/sideBar";
-import Environments from "views/app-views/AssetManager/Environments";
-import Dashboard from "views/app-views/AssetManager/Dashboard";
-import NewAccountSetup from "views/app-views/AssetManager/NewAccountSetup";
-import EnvironmentList from "views/app-views/AssetManager/Environments/EnvironmentList";
-import ProcurifyLogisticsTools from "views/app-views/AssetManager/Environments/EnvironmentList/ProcurifyLogisticsTools";
-import DeployProject from "views/app-views/AssetManager/Environments/EnvironmentList/DeployProject";
-import ConfigureTopology from "views/app-views/AssetManager/Environments/EnvironmentList/ConfigureTopology";
-import CreateScratch from "./app-views/AssetManager/Environments/EnvironmentList/CreateScratch";
-import SelectYourTemplate from "./app-views/AssetManager/SelectYourTemplate";
-import Setting from "./app-views/AssetManager/Setting";
-import SetTransitions from "./app-views/AssetManager/Setting/SetTransitions";
+import Environments from "views/app-views/Environments";
+import Dashboard from "views/app-views/Dashboard";
+import NewAccountSetup from "views/app-views/Environments/NewAccountSetup";
+import EnvironmentList from "views/app-views/Environments/EnvironmentList";
+import ProcurifyLogisticsTools from "views/app-views/Environments/EnvironmentList/ProcurifyLogisticsTools";
+import DeployProject from "views/app-views/Environments/EnvironmentList/DeployProject";
+import ConfigureTopology from "views/app-views/Environments/EnvironmentList/ConfigureTopology";
+import CreateScratch from "./app-views/Environments/EnvironmentList/CreateScratch";
+import SelectYourTemplate from "./app-views/SelectYourTemplate";
+import Setting from "./app-views/Setting";
+import SetTransitions from "./app-views/Setting/SetTransitions";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { getCurrentUser } from "utils";
@@ -128,10 +128,7 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/environments/SelectYourTemplate`}
             element={<SelectYourTemplate />}
           />
-          <Route
-            path={`${APP_PREFIX_PATH}/setting`}
-            element={<Setting />}
-          />
+          <Route path={`${APP_PREFIX_PATH}/setting`} element={<Setting />} />
           <Route
             path={`${APP_PREFIX_PATH}/settransitions`}
             element={<SetTransitions />}

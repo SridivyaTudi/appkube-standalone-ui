@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 export const getCurrentUser = () => {
   const user = localStorage.getItem("currentUser");
   if (user) {
@@ -33,8 +32,4 @@ export const setRecentVisitedEnvironments = (recentEnvs) => {
   if (recentEnvs) {
     localStorage.setItem("recentEnv", JSON.stringify(recentEnvs));
   }
-};
-
-export const getUUID = () => {
-  return uuid();
 };
