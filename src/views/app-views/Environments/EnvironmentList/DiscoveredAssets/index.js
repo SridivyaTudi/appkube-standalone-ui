@@ -207,7 +207,7 @@ class DiscoveredAssets extends Component {
     return (
       <Box
         className="environment-table-section discovered-table"
-        style={{ height: "537px" }}
+        style={{ height: "465px" }}
       >
         <Box className="table discovered-assets-table">
           <TableContainer>
