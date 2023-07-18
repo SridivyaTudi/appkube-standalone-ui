@@ -17,7 +17,8 @@ import { Line } from "react-chartjs-2";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
 import { ToastMessage } from "Toast/ToastMessage";
-import { v4  } from 'uuid';
+import { v4 } from "uuid";
+import { cloudwiseSpendColor } from "utils";
 
 ChartJS.register(
   CategoryScale,
@@ -50,32 +51,11 @@ const COMMON_STYLE_LINE_DIAGRAM = {
   lineTension: 0.5,
   fill: false,
 };
-
-const CLOUD_TYPE_WITH_STYLE = {
-  aws: {
-    backgroundColor: "rgba(255, 153, 0, 1)",
-    borderColor: "rgba(255, 153, 0, 1)",
-  },
-  azure: {
-    backgroundColor: "rgba(0, 137, 214, 1)",
-    borderColor: "rgba(0, 137, 214, 1)",
-  },
-  gcp: {
-    backgroundColor: "rgba(218, 79, 68, 1)",
-    borderColor: "rgba(218, 79, 68, 1)",
-  },
-};
-
-const TOTAL_CLOUD_WISE_SPEND_STYLE = {
-  aws: { backgroundColor: "#ff9900", progressBarClassName: "dark-orange" },
-  azure: { backgroundColor: "#0089d6", progressBarClassName: "blue-dress" },
-  gcp: { backgroundColor: "#da4f44", progressBarClassName: "dark-coral" },
-};
 class SpendAnalytics extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      monthlyCloudWiseData: { labels, datasets: [] },
+      monthlyCloudWiseData: { labels: [], datasets: [] },
       monthlyCloudWiseOptions: {
         type: "line",
         plugins: {
@@ -385,11 +365,17 @@ class SpendAnalytics extends Component {
     let heighestMonth = 0;
     if (diagramData.length) {
       let datasets = [];
-      Object.keys(CLOUD_TYPE_WITH_STYLE).forEach((cloud) => {
+      Object.keys(cloudwiseSpendColor).forEach((cloud) => {
         let cloudWiseData = {
           label: cloud.toUpperCase(),
           data: [],
-          ...{ ...CLOUD_TYPE_WITH_STYLE[cloud], ...COMMON_STYLE_LINE_DIAGRAM },
+          ...{
+            ...{
+              backgroundColor: cloudwiseSpendColor[cloud],
+              borderColor: cloudwiseSpendColor[cloud],
+            },
+            ...COMMON_STYLE_LINE_DIAGRAM,
+          },
         };
 
         diagramData.forEach((diagramCloud) => {
@@ -443,9 +429,7 @@ class SpendAnalytics extends Component {
             <Box className="data-text">
               <span
                 style={{
-                  background:
-                    TOTAL_CLOUD_WISE_SPEND_STYLE[cloudSpend.cloud]
-                      ?.backgroundColor,
+                  background: cloudwiseSpendColor[cloudSpend.cloud],
                 }}
               ></span>
               <p>{cloudSpend.cloud?.toUpperCase()}</p>
@@ -470,14 +454,11 @@ class SpendAnalytics extends Component {
       return totalCloudWiseSpendData.map((cloudSpend) => {
         return (
           <span
-            className={
-              TOTAL_CLOUD_WISE_SPEND_STYLE[cloudSpend.cloud]
-                ?.progressBarClassName
-            }
             style={{
               width: `${
                 cloudSpend.percentage > 0 ? `${cloudSpend.percentage}` : "0"
               }%`,
+              background: cloudwiseSpendColor[cloudSpend.cloud],
             }}
             key={v4()}
           ></span>
