@@ -131,7 +131,12 @@ export class DeployPopup extends Component {
                 <Box className="form-group">
                   <label>Custom URL</label>
                   <Box className="d-flex">
-                    <input className="custom-url" type="text" placeholder="" />
+                    <input
+                      className="custom-url"
+                      type="text"
+                      placeholder=""
+                      style={{ width: 160 }}
+                    />
                     <p>.appkube.com</p>
                   </Box>
                 </Box>
@@ -141,10 +146,19 @@ export class DeployPopup extends Component {
         </ModalBody>
         <ModalFooter className="footer-top-br">
           <Box className="d-block text-center">
-            <LoadingButton className="secondary-btn m-r-2" variant="contained">
+            <LoadingButton
+              className="secondary-btn m-r-2"
+              variant="contained"
+              onClick={() => {
+                this.props.handleDeployoPopup();
+              }}
+            >
               Cancel
             </LoadingButton>
-            <LoadingButton  onClick={this.handleApplictionPopup}
+            <LoadingButton
+              onClick={() => {
+                this.props.handleDeployoPopup();
+              }}
               className="primary-btn min-width"
               loadingPosition="start"
               variant="contained"
@@ -153,14 +167,13 @@ export class DeployPopup extends Component {
             </LoadingButton>
           </Box>
           {showApplictionPopup ? (
-          <ApplicationSuccessfullyPopup
-            showModal={ApplicationSuccessfullyPopup}
-            handleApplictionPopup={this.handleApplictionPopup}
-           
-          />
-        ) : (
-          <></>
-        )}
+            <ApplicationSuccessfullyPopup
+              showModal={ApplicationSuccessfullyPopup}
+              handleApplictionPopup={this.handleApplictionPopup}
+            />
+          ) : (
+            <></>
+          )}
         </ModalFooter>
       </Modal>
     );

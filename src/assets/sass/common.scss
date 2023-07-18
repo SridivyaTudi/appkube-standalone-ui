@@ -75,7 +75,6 @@ img {
   vertical-align: middle;
 }
 
-
 input:focus-visible {
   outline: none;
 }
@@ -97,16 +96,16 @@ input:focus-visible {
 }
 
 .border-bottom {
-  border-bottom: 1px solid #D2CBCB;
+  border-bottom: 1px solid #d2cbcb;
 }
 .border-top {
-  border-top: 1px solid #D2CBCB;
+  border-top: 1px solid #d2cbcb;
 }
 .border-right {
-  border-right: 1px solid #D2CBCB;
+  border-right: 1px solid #d2cbcb;
 }
 .border-left {
-  border-left: 1px solid #D2CBCB;
+  border-left: 1px solid #d2cbcb;
 }
 
 button {
@@ -189,7 +188,6 @@ button.primary-outline-btn {
   &:hover {
     color: #384cff;
   }
-
 }
 
 button.primary-btn {
@@ -210,7 +208,6 @@ button.primary-btn {
     color: #ffffff;
     box-shadow: none;
   }
-
 }
 
 button.primary-text-btn {
@@ -254,10 +251,10 @@ button.secondary-btn {
   }
 }
 
-button.secondary-text-btn{
+button.secondary-text-btn {
   background: #ffffff;
   color: #8392a7;
-  border-color: #E1E1E1;
+  border-color: #e1e1e1;
   display: inline-block;
   border-radius: 5px;
   min-width: 80px;
@@ -271,16 +268,16 @@ button.secondary-text-btn{
 
   &:hover {
     background: #ffffff;
-    border-color: #E1E1E1;
+    border-color: #e1e1e1;
     color: #8392a7;
     box-shadow: none;
   }
 }
 
-a.secondary-text-btn{
+a.secondary-text-btn {
   background: #ffffff;
-  color: #9A9AB0;
-  border-color: #E1E1E1;
+  color: #9a9ab0;
+  border-color: #e1e1e1;
   border-radius: 5px;
   min-width: 80px;
   font-weight: 600;
@@ -294,14 +291,14 @@ a.secondary-text-btn{
 
   &:hover {
     background: #ffffff;
-    border-color: #E1E1E1;
-    color: #9A9AB0;
+    border-color: #e1e1e1;
+    color: #9a9ab0;
     box-shadow: none;
   }
 }
 
 button.light-btn {
-  background: #DDE1F8;
+  background: #dde1f8;
   color: #383874;
   border-radius: 5px;
   min-width: 80px;
@@ -314,13 +311,21 @@ button.light-btn {
   font-family: "Open Sans", sans-serif;
 
   &:hover {
-    background: #DDE1F8;
+    background: #dde1f8;
     color: #383874;
     box-shadow: none;
   }
 }
 
-
+.open-create-menu-close {
+  background-color: transparent;
+  z-index: 1;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
 
 .asset-disabled {
   cursor: no-drop;
