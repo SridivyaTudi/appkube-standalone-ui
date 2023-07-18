@@ -18,7 +18,7 @@ import { getEnvsSummary } from "redux/environments/environmentsThunk";
 import { connect } from "react-redux";
 import { getCurrentOrgId } from "utils";
 import { LOGOS } from "commonData";
-import { v4  } from 'uuid';
+import { v4 } from "uuid";
 class EnvironmentList extends Component {
   tabMapping = [
     {
@@ -285,21 +285,11 @@ class EnvironmentList extends Component {
           <Box className="tabs-content">
             {activeTab === 0 ? (
               <DiscoveredAssets
-                vpcsDetails={
-                  this.state.vpcsDetails.length && this.state.vpcsDetails
-                }
-                allVpcsDetails={
-                  this.state.vpcsDetailsBackUp.length &&
-                  this.state.vpcsDetailsBackUp
-                }
                 updateCloudNameAndLandingZone={(service, landingZone) => {
                   this.setState({ service, landingZone });
                 }}
                 accountList={this.state.accountList}
                 updateCurrentAccountId={this.updateCurrentAccountId}
-                handleSearchVpcs={(vpcsDetails) => {
-                  this.setState({ vpcsDetails });
-                }}
               />
             ) : activeTab === 1 ? (
               <Application
