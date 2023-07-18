@@ -13,5 +13,8 @@ https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube-DRS?page-id=11036%3A6
 Open API data: 
 https://github.com/AppkubeCloud/appkube-cmdb-service/blob/main/core-service-api/src/main/resources/rest_api.yaml
 
+Security API Collection:
+https://github.com/AppkubeCloud/appkube-architectures-doc/blob/main/postman-collection/security_latest.postman_collection.json
+
 Figma Password
 BeyondSoft
