@@ -51,7 +51,6 @@
     .overview-card {
       border-radius: 7px;
       padding: 20px;
-      cursor: pointer;
       border-width: 2px;
       border-style: solid;
       border-color: transparent;
@@ -63,8 +62,8 @@
         color: #383874;
       }
       p {
-        font-size: 14px;
-        line-height: 22px;
+        font-size: 12px;
+        line-height: 18px;
         font-weight: 400;
         color: #383874;
       }
@@ -115,7 +114,7 @@
           color: #383874;
         }
         .edit-policy {
-            width: 50%;
+          width: 50%;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -132,10 +131,14 @@
               line-height: 20px;
               font-weight: 400;
               color: #383874;
-              margin-right: 20px;
+              margin-right: 0px;
+              button {
+                text-transform: capitalize;
+                color: #383874;
+              }
             }
           }
-          span{
+          span {
             color: #383874;
           }
         }
