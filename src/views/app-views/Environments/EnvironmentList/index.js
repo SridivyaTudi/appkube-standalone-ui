@@ -54,9 +54,8 @@ class EnvironmentList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      servicesPanelShow: false,
+      showLandingZoneDetails: false,
       activeTab: 0,
-      productEnclaveList: [],
       departmentWiseData: {},
       accountList: {},
       commonData: {},
@@ -68,9 +67,9 @@ class EnvironmentList extends Component {
     };
   }
 
-  toggleColumnSelect = () => {
+  toggleLandingZoneDetails = () => {
     this.setState({
-      servicesPanelShow: !this.state.servicesPanelShow,
+      showLandingZoneDetails: !this.state.showLandingZoneDetails,
     });
   };
 
@@ -232,7 +231,7 @@ class EnvironmentList extends Component {
   };
 
   render() {
-    const { servicesPanelShow, activeTab, cloudName } = this.state;
+    const { showLandingZoneDetails, activeTab, cloudName } = this.state;
     return (
       <Box className="environment-container environmentlist">
         <Box className="list-heading">
@@ -241,7 +240,7 @@ class EnvironmentList extends Component {
         <Box className="services-panel">
           <Box
             className={`services-panel-title p-t-10 p-b-10 ${
-              servicesPanelShow ? "bottom-border" : ""
+              showLandingZoneDetails ? "bottom-border" : ""
             }`}
           >
             <Box className="image">
@@ -250,18 +249,18 @@ class EnvironmentList extends Component {
             <Box className="name">{cloudName}</Box>
             <Box
               className="right-arrow"
-              onClick={() => this.toggleColumnSelect("filterShow")}
+              onClick={() => this.toggleLandingZoneDetails("filterShow")}
             >
               <i
                 className={`fa ${
-                  servicesPanelShow ? "fa-caret-down" : "fa-caret-right"
+                  showLandingZoneDetails ? "fa-caret-down" : "fa-caret-right"
                 }`}
               ></i>
             </Box>
           </Box>
           <Box
             className="data-contant"
-            style={{ display: servicesPanelShow ? "" : "none" }}
+            style={{ display: showLandingZoneDetails ? "" : "none" }}
           >
             {this.renderEnvironmentBoxes()}
           </Box>
@@ -302,24 +301,17 @@ class EnvironmentList extends Component {
                 }}
               />
             ) : activeTab === 1 ? (
-              <Application
-                departmentWiseData={this.state?.departmentWiseData}
-                updateCurrentAccountId={this.updateCurrentAccountId}
-              />
+              <Application />
             ) : activeTab === 2 ? (
               <Billing />
             ) : activeTab === 3 ? (
-              <ThreatEvents
-                updateCurrentAccountId={this.updateCurrentAccountId}
-              />
+              <ThreatEvents />
             ) : activeTab === 4 ? (
-              <CompliancePolicies
-                updateCurrentAccountId={this.updateCurrentAccountId}
-              />
+              <CompliancePolicies />
             ) : activeTab === 5 ? (
-              <Alerts updateCurrentAccountId={this.updateCurrentAccountId} />
+              <Alerts />
             ) : (
-              <Inputs updateCurrentAccountId={this.updateCurrentAccountId} />
+              <Inputs />
             )}
           </Box>
         </Box>
