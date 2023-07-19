@@ -6,11 +6,12 @@ import Typography from "@mui/material/Typography";
 import Switch from "@mui/material/Switch";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-import Scanner from "assets/img/setting/scanner.png";
 import Carrier from "assets/img/setting/carrier.png";
 import OTPInput from "react-otp-input";
-import { getMFACode } from "redux/settings/settingsThunk";
+import { getMFACode, authMFACode } from "redux/settings/settingsThunk";
 import { connect } from "react-redux";
+import status from "redux/constants/commonDS";
+import { ToastMessage } from "Toast/ToastMessage";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 32,
@@ -72,8 +73,39 @@ class AuthenticationModal extends Component {
       },
       hidePassword: true,
       isSubmit: false,
+      mfaImage: "",
+      mfaKey: "",
+      twoFASwitch: false,
     };
   }
+
+  componentDidUpdate = (prevProps) => {
+    if (
+      prevProps.MFACode.status !== this.props.MFACode.status &&
+      this.props.MFACode.status === status.SUCCESS
+    ) {
+      if (this.props.MFACode.data.code === 200) {
+        this.setState({ activeStep: this.steps.STEP2 });
+        this.setState({
+          mfaImage: this.props.MFACode.data.object,
+          mfaKey: this.props.MFACode.data.mfaKey,
+        });
+      } else {
+        ToastMessage.error("Authentication Failed!");
+      }
+    }
+
+    if (
+      prevProps.mfaAuth.status !== this.props.mfaAuth.status &&
+      this.props.mfaAuth.status === status.SUCCESS
+    ) {
+      if (this.props.mfaAuth.data.code === 200) {
+        this.setActiveStep(this.steps.STEP4);
+      } else {
+        ToastMessage.error("Authentication Failed!");
+      }
+    }
+  };
 
   setActiveStep = (step) => {
     this.setState({
@@ -115,8 +147,40 @@ class AuthenticationModal extends Component {
     return { isValid, errors };
   };
 
+  handleUserCredSubmit = () => {
+    const { formData } = this.state;
+    this.setState({ isSubmit: true }, () => {
+      const { isValid } = this.validate(true);
+      if (isValid) {
+        this.props.getMFACode(formData);
+      }
+    });
+  };
+
+  handleOtpValidate = () => {
+    const params = {
+      userName: this.state.formData.userName,
+      token: this.state.otp,
+      mfaKey: this.state.mfaKey,
+    };
+
+    this.props.authMFACode(params);
+  };
+
+  toggle2FASwitch = (e) => {
+    this.setState({ twoFASwitch: e.target.checked });
+  };
+
   render() {
-    const { activeStep, otp, formData, hidePassword, isSubmit } = this.state;
+    const {
+      activeStep,
+      otp,
+      formData,
+      hidePassword,
+      isSubmit,
+      mfaImage,
+      twoFASwitch,
+    } = this.state;
     const { errors } = this.validate(isSubmit);
     return (
       <Modal
@@ -200,6 +264,8 @@ class AuthenticationModal extends Component {
                     inputProps={{
                       "aria-label": "ant design",
                     }}
+                    onChange={this.toggle2FASwitch}
+                    value={twoFASwitch}
                   />
                   <Typography>{"Off"}</Typography>
                 </Stack>
@@ -208,16 +274,13 @@ class AuthenticationModal extends Component {
                 <Box className="d-block text-center">
                   <LoadingButton
                     className="primary-btn min-width"
+                    disabled={
+                      this.props.MFACode.status === status.IN_PROGRESS ||
+                      !twoFASwitch
+                    }
+                    loading={this.props.MFACode.status === status.IN_PROGRESS}
                     variant="contained"
-                    onClick={() => {
-                      this.setState({ isSubmit: true }, () => {
-                        const { isValid } = this.validate(true);
-                        if (isValid) {
-                          this.props.getMFACode(formData);
-                          // this.setState({ activeStep: this.steps.STEP2 });
-                        }
-                      });
-                    }}
+                    onClick={this.handleUserCredSubmit}
                   >
                     Next
                   </LoadingButton>
@@ -233,11 +296,11 @@ class AuthenticationModal extends Component {
             </ModalHeader>
             <ModalBody>
               <Box className="scanner-image">
-                <img src={Scanner} alt="" />
+                <img src={"data:image/jpeg;base64," + mfaImage} alt="" />
               </Box>
               <List className="list-contents">
                 <ListItem>
-                  <span>1.</span> Get Authy from the <a href="#">App Store</a>
+                  <span>1.</span> Get Authy from the <a href="#">App Store </a>
                   or <a href="#">Play Store</a>
                 </ListItem>
                 <ListItem>
@@ -295,7 +358,9 @@ class AuthenticationModal extends Component {
                   <LoadingButton
                     className="primary-btn min-width"
                     variant="contained"
-                    onClick={() => this.setActiveStep(this.steps.STEP4)}
+                    disabled={this.props.mfaAuth.status === status.IN_PROGRESS}
+                    loading={this.props.mfaAuth.status === status.IN_PROGRESS}
+                    onClick={this.handleOtpValidate}
                   >
                     Validate
                   </LoadingButton>
@@ -346,12 +411,13 @@ class AuthenticationModal extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { MFACode } = state.settings;
-  return { MFACode };
+  const { MFACode, mfaAuth } = state.settings;
+  return { MFACode, mfaAuth };
 };
 
 const mapDispatchToProps = {
   getMFACode,
+  authMFACode,
 };
 
 export default connect(

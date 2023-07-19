@@ -16,3 +16,18 @@ export const getMFACode = createAsyncThunk(
     }
   }
 );
+
+export const authMFACode = createAsyncThunk(
+  "settings/authMFACode",
+  async (params) => {
+    try {
+      const response = await postLoginService.post(
+        `${config.AUTH_MFA}`,
+        params
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
