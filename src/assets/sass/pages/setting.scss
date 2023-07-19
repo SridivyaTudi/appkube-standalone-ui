@@ -201,6 +201,7 @@
           margin-right: 10px;
           border-radius: 50%;
           background-color: #f6f7fb;
+          color: #383874;
         }
 
         .content {
@@ -368,8 +369,8 @@
                 min-width: 100%;
                 text-align: left;
                 border-radius: 0;
+                color: #383874;
                 border-bottom: 1px solid #dbdff1;
-
                 &:last-child {
                   border-bottom: none;
                 }
@@ -380,6 +381,8 @@
                   line-height: 16px;
                   vertical-align: middle;
                   margin-right: 5px;
+                  color: #383874;
+                 
                 }
               }
             }
@@ -468,6 +471,7 @@
                 min-width: 100%;
                 text-align: left;
                 border-radius: 0;
+                color: #383874;
                 border-bottom: 1px solid #dbdff1;
 
                 &:last-child {
