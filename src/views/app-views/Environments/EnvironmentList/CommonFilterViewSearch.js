@@ -242,7 +242,7 @@ class CommonFilterViewSearch extends Component {
                 }
               >
                 <i className="far fa-eye fillter-icon"></i>
-                Service View
+                Go to Service View
                 <i className="fas fa-caret-down arrow-icon"></i>
               </Box>
               <Box

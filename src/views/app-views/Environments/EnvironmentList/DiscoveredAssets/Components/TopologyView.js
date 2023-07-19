@@ -306,7 +306,7 @@ class TopologyView extends Component {
         <Grid item xs={7}>
           <Box className="services-panel">
             <Box className="services-panel-title bottom-border">
-              <Box className="name">Topology View</Box>
+              <Box className="name">Infra Topology View</Box>
               <Box className="back-btn">
                 <i className="fa-solid fa-arrow-left"></i>
               </Box>
