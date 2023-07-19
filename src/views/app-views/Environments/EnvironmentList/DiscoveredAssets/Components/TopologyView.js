@@ -21,8 +21,8 @@ class TopologyView extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.selectedBreadCrumbs.breadcrumbId !==
-      this.props.selectedBreadCrumbs.breadcrumbId
+      prevProps.selectedBreadCrumbs?.breadcrumbId !==
+      this.props.selectedBreadCrumbs?.breadcrumbId
     ) {
       let { cloudName, selectedLevel1, selectedLevel2 } =
         this.props.selectedBreadCrumbs;

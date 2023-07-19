@@ -33,3 +33,9 @@ export const setRecentVisitedEnvironments = (recentEnvs) => {
     localStorage.setItem("recentEnv", JSON.stringify(recentEnvs));
   }
 };
+
+export const cloudwiseSpendColor = {
+  aws: "#ff9900",
+  azure: "#0089d6",
+  gcp: "#da4f44",
+};

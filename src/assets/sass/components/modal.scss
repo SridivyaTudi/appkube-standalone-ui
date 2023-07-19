@@ -22,8 +22,8 @@
 }
 
 .select-account-modal-container {
-  max-width: 550px !important;
-  width: 550px !important;
+  max-width: 600px !important;
+  width: 600px !important;
   -webkit-box-shadow: 0px 0px 16px #3b48593d;
   box-shadow: 0px 0px 16px #3b48593d;
   border-radius: 10px;
@@ -270,11 +270,11 @@
       display: flex;
       flex-wrap: wrap;
       .check-box {
-        width: 90px;
+        width: 105px;
         margin-bottom: 10px;
         margin-right: 5px;
         label {
-          width: 80px;
+          width: 95px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -369,10 +369,11 @@
       .checkbox-group {
         .service-check-box {
           span {
-            margin-bottom: 5px;
+            margin-bottom: 0;
             font-size: 12px;
             line-height: 16px;
-            font-weight: 500;
+            font-weight: 400;
+            font-family: "Poppins", sans-serif;
           }
         }
       }

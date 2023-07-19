@@ -12,8 +12,11 @@ import Button from "@mui/material/Button";
 import status from "redux/constants/commonDS";
 import { connect } from "react-redux";
 import { ToastMessage } from "Toast/ToastMessage";
-import { v4  } from 'uuid';
-import { getRecentVisitedEnvironments, setRecentVisitedEnvironments } from "utils";
+import { v4 } from "uuid";
+import {
+  getRecentVisitedEnvironments,
+  setRecentVisitedEnvironments,
+} from "utils";
 
 const headers = [
   { label: "Service Name", key: "name" },
@@ -42,10 +45,10 @@ class CommonFilterViewSearch extends Component {
   componentDidMount = () => {
     if (this.props.envSummary.data) {
       this.setState({
-        allEnvs: this.props.envSummary.data
+        allEnvs: this.props.envSummary.data,
       });
     }
-  }
+  };
 
   renderAccountList = () => {
     return this.state.allEnvs.map((item) => {
@@ -74,16 +77,20 @@ class CommonFilterViewSearch extends Component {
   };
 
   componentDidUpdate = async (prevProps, prevState) => {
-    if (this.props.data &&
+    if (
+      this.props.data &&
       this.props.data.vpcsDetails !== null &&
       this.props.data.vpcsDetails !== this.state.vpcsDetails
     ) {
       this.setState({ vpcsDetails: this.props.data.vpcsDetails });
     }
     if (prevProps.envSummary.status !== this.props.envSummary.status) {
-      if (this.props.envSummary.status === status.SUCCESS && this.props.envSummary.data) {
+      if (
+        this.props.envSummary.status === status.SUCCESS &&
+        this.props.envSummary.data
+      ) {
         this.setState({
-          allEnvs: this.props.envSummary.data
+          allEnvs: this.props.envSummary.data,
         });
       } else if (this.props.envSummary.status === status.FAILURE) {
         ToastMessage.error("There is some issue.");
@@ -92,7 +99,10 @@ class CommonFilterViewSearch extends Component {
   };
 
   addAccountToRecentlyVisited = (account) => {
-    const newItem = { accountType: account.accountType, accountId: account.accountId };
+    const newItem = {
+      accountType: account.accountType,
+      accountId: account.accountId,
+    };
     let recentEnv = getRecentVisitedEnvironments();
     if (recentEnv !== null) {
       recentEnv.map((item, index) => {
@@ -102,9 +112,7 @@ class CommonFilterViewSearch extends Component {
       });
       recentEnv.splice(0, 0, newItem);
     } else {
-      recentEnv = [
-        newItem
-      ];
+      recentEnv = [newItem];
     }
     recentEnv.length = recentEnv.length > 5 ? 5 : recentEnv.length;
     setRecentVisitedEnvironments(recentEnv);
@@ -119,16 +127,15 @@ class CommonFilterViewSearch extends Component {
             <Link
               to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}`}
               onClick={() => {
-                  this.addAccountToRecentlyVisited(item);
-                  this.props.updateCurrentAccountId(
-                    item.accountId
-                  );
-                }
-              }
+                this.addAccountToRecentlyVisited(item);
+                this.props.updateCurrentAccountId(item.accountId);
+              }}
             >
               <span>
                 <img
-                  src={LOGOS[item.accountType.toLowerCase()]} alt={item.accountType} />
+                  src={LOGOS[item.accountType.toLowerCase()]}
+                  alt={item.accountType}
+                />
               </span>
               <p>{item.accountId}</p>
             </Link>
@@ -140,8 +147,13 @@ class CommonFilterViewSearch extends Component {
   };
 
   render() {
-    const { showSelectFilter, showServiceViewFilter, showRecentFilter, allEnvs } =
-      this.state;
+    const {
+      showSelectFilter,
+      showServiceViewFilter,
+      showRecentFilter,
+      allEnvs,
+      vpcsDetails,
+    } = this.state;
     return (
       <Box sx={{ width: "100%" }}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -240,13 +252,7 @@ class CommonFilterViewSearch extends Component {
                     : "fliter-collapse"
                 }
               >
-                <List>
-                  {allEnvs.length ? (
-                    this.renderAccountList()
-                  ) : (
-                    <></>
-                  )}
-                </List>
+                <List>{allEnvs.length ? this.renderAccountList() : <></>}</List>
               </Box>
               <Box
                 className={
@@ -285,9 +291,7 @@ class CommonFilterViewSearch extends Component {
                         : "fliter-collapse"
                     }
                   >
-                    <List>
-                      {this.renderRecentVisitedMenu()}
-                    </List>
+                    <List>{this.renderRecentVisitedMenu()}</List>
                   </Box>
                   <div
                     className={
@@ -304,9 +308,9 @@ class CommonFilterViewSearch extends Component {
                 </Box>
               )}
 
-              {this.state.vpcsDetails && this.state.vpcsDetails.length ? (
+              {vpcsDetails && vpcsDetails.length ? (
                 <CSVLink
-                  data={this.state.vpcsDetails}
+                  data={vpcsDetails}
                   headers={headers}
                   filename={"vpcs.csv"}
                   target="_blank"
@@ -351,8 +355,7 @@ function mapStateToProps(state) {
   return { envSummary };
 }
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 export default connect(
   mapStateToProps,
   mapDispatchToProps

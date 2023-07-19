@@ -18,7 +18,7 @@ import { getEnvsSummary } from "redux/environments/environmentsThunk";
 import { connect } from "react-redux";
 import { getCurrentOrgId } from "utils";
 import { LOGOS } from "commonData";
-import { v4  } from 'uuid';
+import { v4 } from "uuid";
 class EnvironmentList extends Component {
   tabMapping = [
     {
@@ -85,52 +85,7 @@ class EnvironmentList extends Component {
     this.setLandingZone();
     this.props.getEnvsSummary();
   };
-
-  getVpcsDetails(treeData) {
-    let vpcs = [];
-    for (let vpcIndex = 0; vpcIndex < treeData.length; vpcIndex++) {
-      let details = {
-        name: "",
-        product_count: 0,
-        app_count: 0,
-        data_count: 0,
-      };
-      details.name = treeData[vpcIndex].name;
-      const clusters = treeData[vpcIndex].clusters;
-      clusters.forEach((cluster) => {
-        const products = cluster.products;
-        details.product_count += products.length;
-        products.forEach((product) => {
-          const { environments, name } = product;
-          environments.forEach((env) => {
-            const { services } = env;
-            services.common.forEach((appData) => {
-              if (appData.app) {
-                details.app_count += appData.app.length;
-              }
-              if (appData.data) {
-                details.data_count += appData.data.length;
-              }
-            });
-            services.business.forEach((appData) => {
-              if (appData.app && appData.app.length > 0) {
-                details.app_count += appData.app.length;
-              }
-              if (appData.data && appData.data.length > 0) {
-                details.data_count += appData.data.length;
-              }
-            });
-          });
-        });
-      });
-      vpcs.push(details);
-    }
-    this.setState({
-      vpcsDetails: vpcs,
-      vpcsDetailsBackUp: vpcs,
-    });
-  }
-
+  
   componentDidUpdate = async (prevProps, prevState) => {
     if (this.state.landingZone !== prevState.landingZone) {
       this.props.getDepartments(this.state.landingZone);
@@ -284,21 +239,11 @@ class EnvironmentList extends Component {
           <Box className="tabs-content">
             {activeTab === 0 ? (
               <DiscoveredAssets
-                vpcsDetails={
-                  this.state.vpcsDetails.length && this.state.vpcsDetails
-                }
-                allVpcsDetails={
-                  this.state.vpcsDetailsBackUp.length &&
-                  this.state.vpcsDetailsBackUp
-                }
                 updateCloudNameAndLandingZone={(service, landingZone) => {
                   this.setState({ service, landingZone });
                 }}
                 accountList={this.state.accountList}
                 updateCurrentAccountId={this.updateCurrentAccountId}
-                handleSearchVpcs={(vpcsDetails) => {
-                  this.setState({ vpcsDetails });
-                }}
               />
             ) : activeTab === 1 ? (
               <Application />
