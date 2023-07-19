@@ -1,10 +1,13 @@
 {
   "signin": "Sign In",
   "signup": "Sign Up",
+  "forgetpassword": "Forget Password",
   "dashboard": "Dashboard",
   "environments": "Environments",
   "environmentlist": "Environment View",
   "newaccountsetup": "New Account Setup",
   "configuretopology": "Configure Topology",
-  "setting": "Setting"
+  "procurifylogisticstools": "Procurify Logistics Tools",
+  "setting": "Setting",
+  "settransitions": "Set Transitions"
 }
