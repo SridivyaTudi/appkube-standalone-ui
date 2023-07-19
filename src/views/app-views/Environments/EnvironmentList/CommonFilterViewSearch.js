@@ -123,7 +123,7 @@ class CommonFilterViewSearch extends Component {
     if (recentEnvs) {
       return recentEnvs.map((item) => {
         return (
-          <ListItem>
+          <ListItem key={v4()}>
             <Link
               to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}`}
               onClick={() => {
@@ -185,35 +185,35 @@ class CommonFilterViewSearch extends Component {
                   <ListItem>
                     <input
                       type="checkbox"
-                      onChange={() => this.handleChecked()}
+                      // onChange={() => this.handleChecked()}
                     />
                     OU
                   </ListItem>
                   <ListItem>
                     <input
                       type="checkbox"
-                      onChange={() => this.handleChecked()}
+                      // onChange={() => this.handleChecked()}
                     />
                     Status
                   </ListItem>
                   <ListItem>
                     <input
                       type="checkbox"
-                      onChange={() => this.handleChecked()}
+                      // onChange={() => this.handleChecked()}
                     />
                     No of Assets
                   </ListItem>
                   <ListItem>
                     <input
                       type="checkbox"
-                      onChange={() => this.handleChecked()}
+                      // onChange={() => this.handleChecked()}
                     />
                     Logs
                   </ListItem>
                   <ListItem>
                     <input
                       type="checkbox"
-                      onChange={() => this.handleChecked()}
+                      // onChange={() => this.handleChecked()}
                     />
                     Performance & Availability
                   </ListItem>

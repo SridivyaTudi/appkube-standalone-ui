@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ArcherContainer, ArcherElement } from "react-archer";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Box, Grid } from "@mui/material";
-import { v4 } from 'uuid';
+import { v4 } from "uuid";
 let transformScale = 0;
 
 class TopologyView extends Component {
@@ -31,14 +31,15 @@ class TopologyView extends Component {
       if (!selectedLevel1 && !selectedLevel2) {
         this.onClickAccountId();
       } else if (selectedLevel1 && !selectedLevel2) {
-        this.onClickLevel1(selectedLevel1Id,selectedLevel1);
+        this.onClickLevel1(selectedLevel1Id, selectedLevel1);
       }
     }
   }
   /** Render the main body including level-1 and level-2 data. */
   renderMainBody = () => {
     const { data } = this.props;
-    let { level2Show, selectedLevel1Id } = this.state.selectedView;
+    let { level2Show, selectedLevel1Id, selectedLevel2Id } =
+      this.state.selectedView;
     return Object.keys(data).length &&
       (data?.children[0].length || data?.children[1].length) ? (
       <ArcherContainer noCurves style={{ width: "100%", height: "100%" }}>
@@ -112,6 +113,11 @@ class TopologyView extends Component {
                       onClick={() => {
                         this.onClickAccountId();
                       }}
+                      id={`${
+                        selectedLevel1Id === null && selectedLevel2Id === null
+                          ? "custom_location"
+                          : ""
+                      }`}
                     >
                       <div className="d-flex">
                         <div className="account-image">
@@ -187,7 +193,7 @@ class TopologyView extends Component {
             key={v4()}
           >
             <li
-              className={`${level1Index === selectedLevel1Id ? "active " : ""}`}
+              className={`${level1Index === selectedLevel1Id ? "active" : ""}`}
               id={`${
                 level1Index === selectedLevel1Id && selectedLevel2Id == null
                   ? "custom_location"

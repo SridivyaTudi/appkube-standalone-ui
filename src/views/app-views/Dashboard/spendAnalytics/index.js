@@ -202,7 +202,7 @@ class SpendAnalytics extends Component {
   currentHourSpendRate = () => {
     const { currentHourSpendRate } = this.props;
     const spendRateData = currentHourSpendRate.data;
-    if (spendRateData > 0) {
+    if (spendRateData >= 0) {
       return <strong>${spendRateData}</strong>;
     }
   };
@@ -227,7 +227,7 @@ class SpendAnalytics extends Component {
   getCurrentDaySpendRate = () => {
     const { currentDaySpendRate } = this.props;
     const daySpendRateData = currentDaySpendRate.data;
-    if (daySpendRateData > 0) return <strong>${daySpendRateData}</strong>;
+    if (daySpendRateData >= 0) return <strong>${daySpendRateData}</strong>;
   };
 
   /** Render the current day spend rate. */
@@ -391,7 +391,10 @@ class SpendAnalytics extends Component {
 
         if (cloudWiseData.data.length) {
           datasets.push(cloudWiseData);
-          heighestMonth = cloudWiseData.data.length;
+          heighestMonth =
+            heighestMonth > cloudWiseData.data.length
+              ? heighestMonth
+              : cloudWiseData.data.length;
         }
       });
       labels.length = heighestMonth;

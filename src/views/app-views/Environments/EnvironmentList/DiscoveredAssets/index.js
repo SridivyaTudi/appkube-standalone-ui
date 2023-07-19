@@ -24,14 +24,6 @@ import VpcDetails from "./VpcDetails";
 import ClusterDetails from "./ClusterDetails";
 import { v4 } from "uuid";
 import { LOGOS } from "commonData";
-
-const nextTypes = {
-  service: "vpc",
-  vpc: "cluster",
-  cluster: "product",
-  product: "",
-};
-
 const TABLE_LEVEL_1 = {
   APP: "App",
   DATA: "Data",
@@ -117,8 +109,8 @@ class DiscoveredAssets extends Component {
       });
     }
   };
-
-  getBreadCrumbs() {
+  /** Render the BreadCrumbs of Topologyview. */
+  renderBreadCrumbs() {
     let { breadcrumbs } = this.state;
     let breadCrumbsData = Object.keys(breadcrumbs);
     return breadCrumbsData.map((breadCrumb, index) => {
@@ -154,7 +146,8 @@ class DiscoveredAssets extends Component {
     });
   }
 
-  renderVpcsDetails() {
+  /** Render table level-1 data . */
+  renderTableLevel1Data() {
     let { dataOfTableLevel1 } = this.state;
     return dataOfTableLevel1.map((vpc, index) => {
       return (
@@ -206,7 +199,8 @@ class DiscoveredAssets extends Component {
     });
   }
 
-  renderTableLevel1() {
+  /** Render the table level-1 html. */
+  renderTableLevel1Html() {
     let { dataOfTableLevel1, cloudName } = this.state;
     if (!dataOfTableLevel1.length) return null;
     const cloudLogo = LOGOS[cloudName.toUpperCase()];
@@ -231,7 +225,7 @@ class DiscoveredAssets extends Component {
                   <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
-              <tbody>{this.renderVpcsDetails()}</tbody>
+              <tbody>{this.renderTableLevel1Data()}</tbody>
             </Table>
           </TableContainer>
         </Box>
@@ -239,6 +233,7 @@ class DiscoveredAssets extends Component {
     );
   }
 
+  /** Search vpcs data. */
   filterVpcsData(searchString) {
     let { productEnclaveList, globalServiceList } =
       this.getEnvironmentDataByLandingZone();
@@ -249,6 +244,7 @@ class DiscoveredAssets extends Component {
     this.setState({ searchString });
   }
 
+  /** Get productEnclaveList and globalServiceList using envDataByLandingZone. */
   getEnvironmentDataByLandingZone = () => {
     const { envDataByLandingZone } = this.props;
     let checkLengthEnvData = false;
@@ -266,6 +262,7 @@ class DiscoveredAssets extends Component {
       : {};
   };
 
+  /** Prepare specific format table level1 data. */
   prepareDataTableLevel1 = (envData, searchStr = "") => {
     let vpcs = [];
     for (let envIndex = 0; envIndex < envData.length; envIndex++) {
@@ -299,6 +296,7 @@ class DiscoveredAssets extends Component {
     });
   };
 
+  /** Prepare specific format data of topology view data. */
   prepareDataTopologyViewComponent = (envData) => {
     const { cloudName, accountId } = this.state;
     let formatData = {
@@ -333,6 +331,7 @@ class DiscoveredAssets extends Component {
     this.setState({ dataOfLevel1: formatData });
   };
 
+  /** Get landingZone from url. */
   getLandingZone = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -439,11 +438,15 @@ class DiscoveredAssets extends Component {
                   <Box className="global-services-fliter">
                     <Box className="heading">
                       <Box className="breadcrumbs">
-                        <ul>{this.getBreadCrumbs()}</ul>
+                        <ul>{this.renderBreadCrumbs()}</ul>
                       </Box>
                     </Box>
                   </Box>
-                  {!currentActiveNodeLabel ? this.renderTableLevel1() : <></>}
+                  {!currentActiveNodeLabel ? (
+                    this.renderTableLevel1Html()
+                  ) : (
+                    <></>
+                  )}
                   <Box className="fliter-tabs global-service-penal">
                     {currentActiveNodeLabel.includes("cluster") ? (
                       <ClusterDetails />
