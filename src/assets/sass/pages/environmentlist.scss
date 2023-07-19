@@ -1418,6 +1418,11 @@
         }
 
         .discovered-assets-body {
+          .discovered-loading{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
           .global-service-penal {
             .services-panel-tabs {
               .tabs-head {
