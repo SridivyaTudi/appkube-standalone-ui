@@ -115,8 +115,8 @@ class AccountPolicy extends Component {
   render() {
     const { formData } = this.state;
     return (
-      <div className="new-account-container">
-        <div className="new-account-page-container">
+      <Box className="new-account-container">
+        <Box className="new-account-page-container">
           <Wizard
             steps={this.steps}
             formData={formData}
@@ -133,8 +133,8 @@ class AccountPolicy extends Component {
             }}
             finishPrevious={this.state.finishPrevious}
           />
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
   }
 }

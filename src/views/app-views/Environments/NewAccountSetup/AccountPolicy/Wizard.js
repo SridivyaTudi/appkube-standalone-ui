@@ -110,15 +110,15 @@ class Wizard extends Component {
     const { steps } = this.props;
     return (
       <>
-        <div className="new-account-tab-container">
-          <div className="wizard-tab-line-container">
+        <Box className="new-account-tab-container">
+          <Box className="wizard-tab-line-container">
             {this.createStepLine()}
-          </div>
-          <div className="wizard-step-component-container">
+          </Box>
+          <Box className="wizard-step-component-container">
             {this.createStepContainer()}
-          </div>
-        </div>
-        <div className="d-flex justify-content-end align-items-center wizard-step-button">
+          </Box>
+        </Box>
+        <Box className="d-flex justify-content-end align-items-center wizard-step-button">
           {currentStep < steps.length - 1 && (
             <Button
               className="primary-outline-btn m-r-2"
@@ -201,7 +201,7 @@ class Wizard extends Component {
               </LoadingButton>
             </>
           )}
-        </div>
+        </Box>
       </>
     );
   }

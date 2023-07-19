@@ -7,7 +7,7 @@ import PolicyDocumentImg from "assets/img/login/policy-document-img.png";
 class PreparePolicy extends Component {
   render() {
     return (
-      <div className="d-block new-account-setup-tab-contents">
+      <Box className="d-block new-account-setup-tab-contents">
         <h3>Prepare IAM Policy For Appkube</h3>
         <ul>
           <li>
@@ -72,7 +72,7 @@ class PreparePolicy extends Component {
             <span>7.</span> Click on <a href="#">'NEXT'</a>
           </li>
         </ul>
-      </div>
+      </Box>
     );
   }
 }

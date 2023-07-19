@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { v4  } from 'uuid';
+
 class EksCluster extends React.Component {
   constructor(props) {
     super(props);
@@ -58,7 +59,7 @@ class EksCluster extends React.Component {
                       variant="contained"
                     >
                       <i className="fa-solid fa-stream p-r-10"></i>
-                      fillter
+                      Fillter
                     </Button>
                     <Button variant="outlined" className="primary-outline-btn">
                       Explore

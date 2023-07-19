@@ -105,7 +105,7 @@ class DataLakeTable extends Component {
                       variant="contained"
                     >
                       <i className="fa-solid fa-stream p-r-10"></i>
-                      fillter
+                      Fillter
                     </Button>
                     <Button variant="outlined" className="primary-outline-btn">
                       Explore
@@ -140,29 +140,29 @@ class DataLakeTable extends Component {
                             <i className="fa-solid fa-caret-right m-l-1"></i>
                           </TableCell>
                           <TableCell align="center">
-                            <div className="box green">
+                            <Box className="box green">
                               <i className="fa-solid fa-check"></i>
-                            </div>
+                            </Box>
                           </TableCell>
                           <TableCell align="center">
-                            <div className="box orange">
+                            <Box className="box orange">
                               <i className="fa-solid fa-sort-up"></i>
-                            </div>
+                            </Box>
                           </TableCell>
                           <TableCell align="center">
-                            <div className="box red">
+                            <Box className="box red">
                               <i className="fa-solid fa-stop-circle"></i>
-                            </div>
+                            </Box>
                           </TableCell>
                           <TableCell align="center">
-                            <div className="box red">
+                            <Box className="box red">
                               <i className="fa-solid fa-stop-circle"></i>
-                            </div>
+                            </Box>
                           </TableCell>
                           <TableCell align="center">
-                            <div className="box green">
+                            <Box className="box green">
                               <i className="fa-solid fa-check"></i>
-                            </div>
+                            </Box>
                           </TableCell>
                         </TableRow>
                       );
