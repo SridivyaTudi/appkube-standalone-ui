@@ -30,3 +30,21 @@ export const getDepartments = createAsyncThunk(
     }
   }
 );
+
+export const getEnvironmentBoxesData = createAsyncThunk(
+  "environmentData/getEnvironmentBoxesData",
+  async (params) => {
+    const url = config.GET_ALL_ENVIRONMENT_BOX_DATA.replace(
+      "#orgId#",
+      params.orgId
+    )
+      .replace("#cloud#", params.cloud)
+      .replace("#landingZone#", params.landingZone);
+    try {
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

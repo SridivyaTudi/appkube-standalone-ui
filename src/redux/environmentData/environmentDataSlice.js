@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getEnvironmentDataByLandingZone,
   getDepartments,
+  getEnvironmentBoxesData,
 } from "redux/environmentData/environmentDataThunk";
 import status from "redux/constants/commonDS";
 
@@ -17,6 +18,10 @@ export const environmentDataSlice = createSlice({
       data: [],
     },
     departments: {
+      status: null,
+      data: [],
+    },
+    environmentBoxesData: {
       status: null,
       data: [],
     },
@@ -73,6 +78,32 @@ export const environmentDataSlice = createSlice({
       return {
         ...state,
         departments: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getEnvironmentBoxesData.pending]: (state) => {
+      return {
+        ...state,
+        environmentBoxesData: {
+          status: status.initialState,
+        },
+      };
+    },
+    [getEnvironmentBoxesData.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        environmentBoxesData: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getEnvironmentBoxesData.rejected]: (state) => {
+      return {
+        ...state,
+        environmentBoxesData: {
           status: status.FAILURE,
         },
       };
