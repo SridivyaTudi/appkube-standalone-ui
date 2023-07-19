@@ -157,7 +157,7 @@ class CostAnalysis extends Component {
                   <Box id="chart" className="collapse-expand">
                     {this.props.productWiseCost.status ===
                     status.IN_PROGRESS ? (
-                      <Box className="spend-contant">
+                      <Box className="spend-loading">
                         <i className="fa-solid fa-spinner fa-spin" /> Loading...
                       </Box>
                     ) : (
@@ -209,7 +209,7 @@ class CostAnalysis extends Component {
                   <Box id="chart" className="collapse-expand">
                     {this.props.productionVsOther.status ===
                     status.IN_PROGRESS ? (
-                      <Box className="spend-contant">
+                      <Box className="spend-loading">
                         <i className="fa-solid fa-spinner fa-spin" /> Loading...
                       </Box>
                     ) : (
@@ -255,7 +255,7 @@ class CostAnalysis extends Component {
                   <Box id="chart" className="collapse-expand">
                     {this.props.serviceTypeWiseCost.status ===
                     status.IN_PROGRESS ? (
-                      <Box className="spend-contant">
+                      <Box className="spend-loading">
                         <i className="fa-solid fa-spinner fa-spin" /> Loading...
                       </Box>
                     ) : (

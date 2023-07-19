@@ -546,7 +546,7 @@ class SpendAnalytics extends Component {
           </Box>
         </Box>
         {totalBudgetStatus === status.IN_PROGRESS ? (
-          <Box className="content ">
+          <Box className="loading-text">
             <i className="fa-solid fa-spinner fa-spin"></i> Loading...
           </Box>
         ) : (
@@ -632,7 +632,7 @@ class SpendAnalytics extends Component {
 
     if (monthlyStatisticsStatus === status.IN_PROGRESS) {
       return (
-        <Box className="monthly-avrage">
+        <Box className="loading-text">
           <i className="fa-solid fa-spinner fa-spin"></i> Loading...
         </Box>
       );
