@@ -4,7 +4,7 @@ import AssociateOu from "views/app-views/Environments/NewAccountSetup/AccountPol
 import PreparePolicy from "views/app-views/Environments/NewAccountSetup/AccountPolicy/PreparePolicy";
 import CreateRole from "views/app-views/Environments/NewAccountSetup/AccountPolicy/CreateRole";
 import Finish from "views/app-views/Environments/NewAccountSetup/AccountPolicy/Finish";
-
+import Box from "@mui/material/Box";
 class AccountPolicy extends Component {
   constructor(props) {
     super(props);

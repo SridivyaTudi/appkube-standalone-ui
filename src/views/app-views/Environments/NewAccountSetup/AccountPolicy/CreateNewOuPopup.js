@@ -7,6 +7,7 @@ import { getCurrentOrgId } from "utils";
 import { createNewOU } from "redux/newAccountSetup/newAccountSetupThunk";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
+import Box from "@mui/material/Box";
 
 class CreateNewOuPopup extends Component {
   constructor(props) {
