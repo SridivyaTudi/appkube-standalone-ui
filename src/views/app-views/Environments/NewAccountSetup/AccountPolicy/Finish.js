@@ -32,30 +32,30 @@ class Finish extends Component {
             justifyContent={"flex-start"}
           >
             <Grid item xs={7}>
-              <div className="account-added-content">
+              <Box className="account-added-content">
                 <h3>Account Added</h3>
                 <h4 className="m-b-2">
                   Your AWS Account name will be added to Appkube and will
                   assocate with the OU's
                 </h4>
-                <div className="contents">
+                <Box className="contents">
                   <label>Display Name</label>
                   <p> {this.props.formData.displayName}</p>
-                </div>
-                <div className="contents">
+                </Box>
+                <Box className="contents">
                   <label>Role ARN</label>
                   <p> {this.props.formData.roleArn}</p>
-                </div>
-                <div className="contents">
+                </Box>
+                <Box className="contents">
                   <label>External ID</label>
                   <p> {this.props.formData.externalId}</p>
-                </div>
-              </div>
+                </Box>
+              </Box>
             </Grid>
             <Grid item xs={5}>
-              <div className="added-image">
+              <Box className="added-image">
                 <img src={AccountAddedImage} alt="added image" />
-              </div>
+              </Box>
             </Grid>
           </Grid>
         </Box>

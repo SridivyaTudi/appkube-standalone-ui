@@ -7,6 +7,7 @@ import SelectAccountPopup from "./SelectAccountPopup";
 import Button from "@mui/material/Button";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
+import { Box } from "@mui/material";
 
 class AssociateOu extends Component {
   constructor(props) {
@@ -76,39 +77,39 @@ class AssociateOu extends Component {
     return (
       <>
         {!this.state.isDepartmentCreated && !this.state.checkedId ? (
-          <div className="d-inline-block width-100 new-account-setup-tab-contents">
+          <Box className="d-inline-block width-100 new-account-setup-tab-contents">
             <h3>Associate OU</h3>
             <p>
               Select Organizational Unit to Associate with Cloud Account Or
               Create new
             </p>
-            <div className="organizational-box">
-              <div className="organizational-inner-boxs">
-                <div
+            <Box className="organizational-box">
+              <Box className="organizational-inner-boxs">
+                <Box
                   className="select-organizational"
                   onClick={() => this.toggleSelectAccountPopup()}
                 >
-                  <div className="organizational-image">
+                  <Box className="organizational-image">
                     <img src={SelectExisting} alt="" />
-                  </div>
+                  </Box>
                   <div className="organizational-title">
                     Select From Existing OU
                   </div>
-                </div>
-                <div
+                </Box>
+                <Box
                   className="select-organizational"
                   onClick={this.toggleCreateNewOuPopup}
                 >
-                  <div className="organizational-image">
+                  <Box className="organizational-image">
                     <img src={CreateFileIcon} alt="" />
-                  </div>
+                  </Box>
                   <div className="organizational-title">Create New OU</div>
-                </div>
-              </div>
-            </div>
-          </div>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
         ) : (
-          <div className="d-inline-block width-100 new-account-setup-tab-contents">
+          <Box className="d-inline-block width-100 new-account-setup-tab-contents">
             <h3>Great Job!!</h3>
             <p>
               Selected Organizational Unit
@@ -117,17 +118,17 @@ class AssociateOu extends Component {
               <strong>"Finished" </strong>
               button to move forward with the next step.
             </p>
-            <div className="associate-box">
+            <Box className="associate-box">
               <h3>Associate OU</h3>
-              <div className="contents">
+              <Box className="contents">
                 <label>Name</label>
                 <p>{this.props.roleDetails.departmentName}</p>
-              </div>
-              <div className="contents">
+              </Box>
+              <Box className="contents">
                 <label>Description</label>
                 <p>{this.state.description}</p>
-              </div>
-              <div
+              </Box>
+              <Box
                 className="d-flex width-100 align-items-center"
                 style={{ justifyContent: "space-between" }}
               >
@@ -146,9 +147,9 @@ class AssociateOu extends Component {
                 >
                   Create OU
                 </Button>
-              </div>
-            </div>
-          </div>
+              </Box>
+            </Box>
+          </Box>
         )}
         <AssociatedAccountPopup
           addModalOpen={() => {

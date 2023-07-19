@@ -136,7 +136,7 @@ class GlobalSerivces extends React.Component {
                         variant="contained"
                       >
                         <i className="fa-solid fa-stream p-r-10"></i>
-                        fillter
+                        Fillter
                       </Button>
                       <Button
                         variant="outlined"

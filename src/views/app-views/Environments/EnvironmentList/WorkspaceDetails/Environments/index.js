@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import CommonFilterViewSearch from "views/app-views/Environments/EnvironmentList/CommonFilterViewSearch";
+import { Box } from "@mui/material";
 
 class Environments extends Component {
   render() {
     return (
-      <div className="environmentlist-container">
-        <div className="discovered-assets">
-          <div className="discovered-assets-head">
+      <Box className="environmentlist-container">
+        <Box className="discovered-assets">
+          <Box className="discovered-assets-head">
             <CommonFilterViewSearch />
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
     );
   }
 }

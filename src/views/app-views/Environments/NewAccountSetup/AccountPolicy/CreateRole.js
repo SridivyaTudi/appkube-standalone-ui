@@ -11,7 +11,7 @@ class CreateRole extends Component {
   render() {
     const { isValid, errors } = this.props.validateCreateRoleForm();
     return (
-      <div className="d-inline-block width-100 new-account-setup-tab-contents">
+      <Box className="d-inline-block width-100 new-account-setup-tab-contents">
         <h3>Create Roles</h3>
         <Box sx={{ width: "100%" }}>
           <Grid
@@ -22,7 +22,7 @@ class CreateRole extends Component {
             justifyContent={"flex-start"}
           >
             <Grid item xs={7}>
-              <div className="create-role-border">
+              <Box className="create-role-border">
                 <h4>Create IAM Roles For Appkube</h4>
                 <ul>
                   <li>
@@ -72,11 +72,11 @@ class CreateRole extends Component {
                     fill it in the Role ARN field
                   </li>
                 </ul>
-              </div>
+              </Box>
             </Grid>
             <Grid item xs={5}>
-              <div className="account-setup-right-contents">
-                <div className="form-group">
+              <Box className="account-setup-right-contents">
+                <Box className="form-group">
                   <label>Display Name</label>
                   <input
                     className="form-control"
@@ -91,8 +91,8 @@ class CreateRole extends Component {
                   <span className="red">
                     {!isValid && errors.displayName ? errors.displayName : ""}
                   </span>
-                </div>
-                <div className="form-group">
+                </Box>
+                <Box className="form-group">
                   <label>Role ARN</label>
                   <input
                     className="form-control"
@@ -107,8 +107,8 @@ class CreateRole extends Component {
                   <span className="red">
                     {!isValid && errors.roleArn ? errors.roleArn : ""}
                   </span>
-                </div>
-                <div className="form-group">
+                </Box>
+                <Box className="form-group">
                   <label>External ID</label>
                   <input
                     className="form-control"
@@ -123,12 +123,12 @@ class CreateRole extends Component {
                   <span className="red">
                     {!isValid && errors.externalId ? errors.externalId : ""}
                   </span>
-                </div>
-              </div>
+                </Box>
+              </Box>
             </Grid>
           </Grid>
         </Box>
-      </div>
+      </Box>
     );
   }
 }

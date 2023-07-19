@@ -7,6 +7,7 @@ import { getCurrentOrgId } from "utils";
 import { createNewOU } from "redux/newAccountSetup/newAccountSetupThunk";
 import { connect } from "react-redux";
 import status from "redux/constants/commonDS";
+import Box from "@mui/material/Box";
 
 class CreateNewOuPopup extends Component {
   constructor(props) {
@@ -111,7 +112,7 @@ class CreateNewOuPopup extends Component {
           </button>
         </ModalHeader>
         <ModalBody>
-          <div className="form-group">
+          <Box className="form-group">
             <label className="label">Name</label>
             <input
               className="form-control"
@@ -124,8 +125,8 @@ class CreateNewOuPopup extends Component {
             <span className="red">
               {isSubmit && !isValid && errors.name ? errors.name : ""}
             </span>
-          </div>
-          <div className="form-group">
+          </Box>
+          <Box className="form-group">
             <label className="label">Description</label>
             <textarea
               className="form-control"
@@ -141,7 +142,7 @@ class CreateNewOuPopup extends Component {
                 ? errors.description
                 : ""}
             </span>
-          </div>
+          </Box>
         </ModalBody>
         <ModalFooter className="footer-top-bar">
           <div className="d-block text-right">

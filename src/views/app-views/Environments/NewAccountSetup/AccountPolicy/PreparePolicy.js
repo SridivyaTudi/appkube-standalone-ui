@@ -3,11 +3,11 @@ import IamImg from "assets/img/login/iam-img.png";
 import PolicyImg from "assets/img/login/policy-img.png";
 import JsonImg from "assets/img/login/json-img.png";
 import PolicyDocumentImg from "assets/img/login/policy-document-img.png";
-
+import Box from "@mui/material/Box";
 class PreparePolicy extends Component {
   render() {
     return (
-      <div className="d-block new-account-setup-tab-contents">
+      <Box className="d-block new-account-setup-tab-contents">
         <h3>Prepare IAM Policy For Appkube</h3>
         <ul>
           <li>
@@ -72,7 +72,7 @@ class PreparePolicy extends Component {
             <span>7.</span> Click on <a href="#">'NEXT'</a>
           </li>
         </ul>
-      </div>
+      </Box>
     );
   }
 }
