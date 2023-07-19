@@ -9,6 +9,8 @@ import { styled } from "@mui/material/styles";
 import Scanner from "assets/img/setting/scanner.png";
 import Carrier from "assets/img/setting/carrier.png";
 import OTPInput from "react-otp-input";
+import { getMFACode } from "redux/settings/settingsThunk";
+import { connect } from "react-redux";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 32,
@@ -58,14 +60,14 @@ class AuthenticationModal extends Component {
     STEP3: 2,
     STEP4: 3,
   };
-  
+
   constructor(props) {
     super(props);
     this.state = {
       activeStep: this.steps.STEP1,
       otp: "",
       formData: {
-        email: "",
+        userName: "",
         password: "",
       },
       hidePassword: true,
@@ -96,27 +98,15 @@ class AuthenticationModal extends Component {
     let errors;
     if (isSubmit) {
       isValid = true;
-      if (!formData.email) {
-        errors = { ...errors, email: "Email is required!" };
-        isValid = false;
-      } else if (
-        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(formData.email)
-      ) {
-        errors = { ...errors, email: "Please enter valid email!" };
+      if (!formData.userName) {
+        errors = { ...errors, userName: "Email or Username is required!" };
         isValid = false;
       } else {
-        errors = { ...errors, email: "" };
+        errors = { ...errors, userName: "" };
       }
 
       if (!formData.password) {
         errors = { ...errors, password: "Password is required!" };
-        isValid = false;
-      } else if (
-        !/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(
-          formData.password
-        )
-      ) {
-        errors = { ...errors, password: "Please enter strong password!" };
         isValid = false;
       } else {
         errors = { ...errors, password: "" };
@@ -142,15 +132,15 @@ class AuthenticationModal extends Component {
               </ModalHeader>
               <ModalBody>
                 <Box className="form-group m-b-15">
-                  <label htmlFor="email" className="form-label">
+                  <label htmlFor="userName" className="form-label">
                     Email
                   </label>
                   <input
-                    type="email"
+                    type="text"
                     className="form-control"
-                    id="email"
-                    name="email"
-                    value={FormData.email}
+                    id="userName"
+                    name="userName"
+                    value={FormData.userName}
                     onChange={this.handleChange}
                     autoComplete="off"
                   />
@@ -158,7 +148,9 @@ class AuthenticationModal extends Component {
                     className="red"
                     style={{ fontSize: "12px", marginTop: "5px" }}
                   >
-                    {isSubmit && errors && errors.email ? errors.email : ""}
+                    {isSubmit && errors && errors.userName
+                      ? errors.userName
+                      : ""}
                   </span>
                 </Box>
                 <Box className="form-group m-b-15">
@@ -221,7 +213,8 @@ class AuthenticationModal extends Component {
                       this.setState({ isSubmit: true }, () => {
                         const { isValid } = this.validate(true);
                         if (isValid) {
-                          this.setState({ activeStep: this.steps.STEP2 });
+                          this.props.getMFACode(formData);
+                          // this.setState({ activeStep: this.steps.STEP2 });
                         }
                       });
                     }}
@@ -244,7 +237,7 @@ class AuthenticationModal extends Component {
               </Box>
               <List className="list-contents">
                 <ListItem>
-                  <span>1.</span> Get Authy from the <a href="#">App Store</a>{" "}
+                  <span>1.</span> Get Authy from the <a href="#">App Store</a>
                   or <a href="#">Play Store</a>
                 </ListItem>
                 <ListItem>
@@ -352,4 +345,16 @@ class AuthenticationModal extends Component {
   }
 }
 
-export default AuthenticationModal;
+const mapStateToProps = (state) => {
+  const { MFACode } = state.settings;
+  return { MFACode };
+};
+
+const mapDispatchToProps = {
+  getMFACode,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AuthenticationModal);

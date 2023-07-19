@@ -16,7 +16,7 @@ const config = {
   GET_MONTHLY_CLOUD_WISE_SPEND: `/query/organizations/#org-id#/analytics/spend-analytics/monthly-cloud-wise-spend`,
   GET_TOTAL_BUDGET: `/query/organizations/#org-id#/analytics/spend-analytics/total-budget`,
   GET_MONTHLY_STATISTICS: `/query/organizations/#org-id#/analytics/spend-analytics/monthly-statistics`,
-  
+
   /* ASSETMANAGER SERVICES  */
   GET_ALL_ENVIRONMENT_COUNT: `/query/organizations/#org-id#/cloud-environments/count`,
   GET_ALL_ENVIRONMENT_SUMMARY: `/query/organizations/#org-id#/cloud-environments/summary`,
@@ -30,7 +30,6 @@ const config = {
   ADD_CLOUD_ENV: `/cloud-environments`,
   GET_PRODUCTS_BY_DEPID: `/query/organizations/#org-id#/departments/#dep-id#/products`,
   GET_DEPLOYMENT_ENVIRONMENTS: `/deployment-environments`,
-  
 };
 
 export default config;
