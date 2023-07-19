@@ -9,7 +9,8 @@ const config = {
   SIGN_UP: `${baseSecurityUrl}/users/create`,
 
   /* SETTINGS PAGE SECURITY URL */
-  GET_MFA_CODE: `${baseSecurityUrl}/users/mfa-code`,
+  GET_MFA_CODE: `${baseSecurityUrl}/users/mfaCode`,
+  AUTH_MFA: `${baseSecurityUrl}/users/authenticateMfa`,
 };
 
 export default config;

@@ -1,11 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import status from "redux/constants/commonDS";
-import { getMFACode } from "./settingsThunk";
+import { getMFACode, authMFACode } from "./settingsThunk";
 
 export const settingsSlice = createSlice({
   name: "getMFACode",
   initialState: {
     MFACode: {
+      status: null,
+      data: {},
+    },
+    mfaAuth: {
       status: null,
       data: {},
     },
@@ -33,6 +37,32 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         MFACode: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [authMFACode.pending]: (state) => {
+      return {
+        ...state,
+        mfaAuth: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [authMFACode.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        mfaAuth: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [authMFACode.rejected]: (state) => {
+      return {
+        ...state,
+        mfaAuth: {
           status: status.FAILURE,
         },
       };
