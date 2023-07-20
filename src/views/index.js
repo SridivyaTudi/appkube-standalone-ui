@@ -11,7 +11,7 @@ import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "configs/AppConfig";
 import Signin from "views/auth-views/signIn";
 import SignUp from "views/auth-views/signUp";
 import ForgetPassword from "views/auth-views/forgetPassword";
-import TopBar from "components/topBar";
+import TopBar from "components/TopBar";
 import SideBar from "components/sideBar";
 import Environments from "views/app-views/Environments";
 import Dashboard from "views/app-views/Dashboard";
