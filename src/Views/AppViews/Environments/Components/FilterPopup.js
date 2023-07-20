@@ -242,6 +242,7 @@ class FilterPopup extends Component {
 
   render() {
     const { selectedDepartment, selectedProduct } = this.state;
+    let { selectedFilters } = this.props;
     return (
       <Modal
         isOpen={this.props.showModal}
@@ -330,8 +331,14 @@ class FilterPopup extends Component {
               className="secondary-btn m-r-2"
               variant="contained"
               onClick={this.handleClearFilters}
-              disabled={this.props.envSummary.status === status.IN_PROGRESS}
-              loading={this.props.envSummary.status === status.IN_PROGRESS}
+              disabled={
+                selectedFilters.selectedDepartment === -1 &&
+                this.props.envSummary.status === status.IN_PROGRESS
+              }
+              loading={
+                selectedFilters.selectedDepartment === -1 &&
+                this.props.envSummary.status === status.IN_PROGRESS
+              }
             >
               Clear
             </LoadingButton>
