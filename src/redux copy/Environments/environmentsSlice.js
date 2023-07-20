@@ -5,8 +5,8 @@ import {
   getOrgWiseDepartments,
   getProductsByDepId,
   getDeploymentEnvs,
-} from "redux/Environments/environmentsThunk";
-import status from "redux/Constants/commonDS";
+} from "Redux/Environments/environmentsThunk";
+import status from "Redux/Constants/commonDS";
 
 export const environmentSlice = createSlice({
   name: "environments",

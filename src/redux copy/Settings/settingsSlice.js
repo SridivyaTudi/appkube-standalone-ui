@@ -1,72 +1,68 @@
 import { createSlice } from "@reduxjs/toolkit";
-import status from "redux/Constants/commonDS";
-import {
-  createNewOU,
-  addCloudEnv,
-} from "redux/NewAccountSetup/newAccountSetupThunk";
+import status from "Redux/Constants/commonDS";
+import { getMFACode, authMFACode } from "./settingsThunk";
 
-export const organizationalUnitSlice = createSlice({
-  name: "organizationalUnit",
+export const settingsSlice = createSlice({
+  name: "getMFACode",
   initialState: {
-    createOu: {
+    MFACode: {
       status: null,
       data: {},
     },
-    organizationalUnit: {
+    mfaAuth: {
       status: null,
       data: {},
-    },
-    addCloudEnvState: {
-      status: null,
     },
   },
   reducers: {},
   extraReducers: {
-    [createNewOU.pending]: (state) => {
+    [getMFACode.pending]: (state) => {
       return {
         ...state,
-        createOu: {
+        MFACode: {
           status: status.IN_PROGRESS,
         },
       };
     },
-    [createNewOU.fulfilled]: (state, action) => {
+    [getMFACode.fulfilled]: (state, action) => {
       return {
         ...state,
-        createOu: {
+        MFACode: {
           status: status.SUCCESS,
           data: action.payload,
         },
       };
     },
-    [createNewOU.rejected]: (state) => {
+    [getMFACode.rejected]: (state) => {
       return {
         ...state,
-        createOu: {
+        MFACode: {
           status: status.FAILURE,
         },
       };
     },
-    [addCloudEnv.pending]: (state) => {
+
+    [authMFACode.pending]: (state) => {
       return {
         ...state,
-        addCloudEnvState: {
+        mfaAuth: {
           status: status.IN_PROGRESS,
         },
       };
     },
-    [addCloudEnv.fulfilled]: (state) => {
+    [authMFACode.fulfilled]: (state, { payload }) => {
       return {
         ...state,
-        addCloudEnvState: {
+        mfaAuth: {
           status: status.SUCCESS,
+          data: payload,
         },
       };
     },
-    [addCloudEnv.rejected]: (state) => {
+    [authMFACode.rejected]: (state) => {
       return {
         ...state,
-        addCloudEnvState: {
+        mfaAuth: {
           status: status.FAILURE,
         },
       };
@@ -74,4 +70,4 @@ export const organizationalUnitSlice = createSlice({
   },
 });
 
-export default organizationalUnitSlice.reducer;
+export default settingsSlice.reducer;

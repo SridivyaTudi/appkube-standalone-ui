@@ -15,7 +15,7 @@ import {
   getTotalCloudWiseSpend,
   getMonthlyStatistics,
   getTotalBudget,
-} from "redux/Dashboard/dashboardThunk";
+} from "Redux/Dashboard/dashboardThunk";
 import { connect } from "react-redux";
 import { v4  } from 'uuid';
 

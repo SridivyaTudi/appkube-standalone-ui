@@ -9,13 +9,13 @@ import Inputs from "views/app-views/Environments/EnvironmentList/Inputs";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import status from "redux/Constants/commonDS";
+import status from "Redux/Constants/commonDS";
 import {
   getEnvironmentDataByLandingZone,
   getDepartments,
   getEnvironmentBoxesData,
-} from "redux/EnvironmentData/environmentDataThunk";
-import { getEnvsSummary } from "redux/Environments/environmentsThunk";
+} from "Redux/EnvironmentData/environmentDataThunk";
+import { getEnvsSummary } from "Redux/Environments/environmentsThunk";
 import { connect } from "react-redux";
 import { LOGOS } from "CommonData";
 import { v4 } from "uuid";

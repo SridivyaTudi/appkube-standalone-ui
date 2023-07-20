@@ -17,7 +17,7 @@ import {
   List,
   ListItem,
 } from "@mui/material";
-import status from "redux/Constants/commonDS";
+import status from "Redux/Constants/commonDS";
 import { connect } from "react-redux";
 import TopologyView from "./Components/TopologyView";
 import VpcDetails from "./VpcDetails";

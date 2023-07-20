@@ -4,9 +4,9 @@ import { ToastMessage } from "../../../../../Toast/ToastMessage";
 import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { getCurrentOrgId } from "utils";
-import { createNewOU } from "redux/NewAccountSetup/newAccountSetupThunk";
+import { createNewOU } from "Redux/NewAccountSetup/newAccountSetupThunk";
 import { connect } from "react-redux";
-import status from "redux/Constants/commonDS";
+import status from "Redux/Constants/commonDS";
 import Box from "@mui/material/Box";
 
 class CreateNewOuPopup extends Component {

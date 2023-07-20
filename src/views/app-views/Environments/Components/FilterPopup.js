@@ -9,10 +9,10 @@ import {
   getOrgWiseDepartments,
   getDeploymentEnvs,
   getEnvsSummary,
-} from "redux/Environments/environmentsThunk";
+} from "Redux/Environments/environmentsThunk";
 import { getCurrentOrgId } from "utils";
 import Button from "@mui/material/Button";
-import status from "redux/Constants/commonDS";
+import status from "Redux/Constants/commonDS";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 const deploymentImgs = {

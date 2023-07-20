@@ -3,9 +3,9 @@ import { ToastMessage } from "Toast/ToastMessage";
 import { withRouter } from "views/app-views/Environments/NewAccountSetup/AccountPolicy/withRouter";
 import {Button, Box} from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { addCloudEnv } from "redux/NewAccountSetup/newAccountSetupThunk";
+import { addCloudEnv } from "Redux/NewAccountSetup/newAccountSetupThunk";
 import { connect } from "react-redux";
-import status from "redux/Constants/commonDS";
+import status from "Redux/Constants/commonDS";
 
 class Wizard extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signUp, login } from "redux/Auth/authThunk";
-import status from "redux/Constants/commonDS";
+import { signUp, login } from "Redux/Auth/authThunk";
+import status from "Redux/Constants/commonDS";
 
 const authSlice = createSlice({
   name: "auth",
