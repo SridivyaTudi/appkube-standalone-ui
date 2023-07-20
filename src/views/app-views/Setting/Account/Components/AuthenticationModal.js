@@ -8,9 +8,9 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Carrier from "assets/img/setting/carrier.png";
 import OTPInput from "react-otp-input";
-import { getMFACode, authMFACode } from "redux/settings/settingsThunk";
+import { getMFACode, authMFACode } from "redux/Settings/settingsThunk";
 import { connect } from "react-redux";
-import status from "redux/constants/commonDS";
+import status from "redux/Constants/commonDS";
 import { ToastMessage } from "Toast/ToastMessage";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({

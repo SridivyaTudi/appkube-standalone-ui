@@ -6,7 +6,7 @@ import CreateNewOuPopup from "./CreateNewOuPopup";
 import SelectAccountPopup from "./SelectAccountPopup";
 import Button from "@mui/material/Button";
 import { connect } from "react-redux";
-import status from "redux/constants/commonDS";
+import status from "redux/Constants/commonDS";
 import { Box } from "@mui/material";
 
 class AssociateOu extends Component {

@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import environmentReducer from "redux/environments/environmentsSlice";
-import organizationsReducer from "redux/organization/organizationSlice";
-import newAccountReducer from "redux/newAccountSetup/newAccountSetupSlice";
-import authReducer from "redux/auth/authSlice";
-import environmentDataReducer from "redux/environmentData/environmentDataSlice";
-import dashboardReducer from "redux/dashboard/dashboardSlice";
-import settingsReducer from "redux/settings/settingsSlice";
+import environmentReducer from "redux/Environments/environmentsSlice";
+import organizationsReducer from "redux/Organization/organizationSlice";
+import newAccountReducer from "redux/NewAccountSetup/newAccountSetupSlice";
+import authReducer from "redux/Auth/authSlice";
+import environmentDataReducer from "redux/EnvironmentData/environmentDataSlice";
+import dashboardReducer from "redux/Dashboard/dashboardSlice";
+import settingsReducer from "redux/Settings/settingsSlice";
 
 const store = configureStore({
   reducer: {

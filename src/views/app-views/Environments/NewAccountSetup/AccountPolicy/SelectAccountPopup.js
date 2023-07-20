@@ -4,9 +4,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { ToastMessage } from "../../../../../Toast/ToastMessage";
 import Button from "@mui/material/Button";
-import { getOrgWiseDepartments } from "redux/environments/environmentsThunk";
+import { getOrgWiseDepartments } from "redux/Environments/environmentsThunk";
 import { connect } from "react-redux";
-import status from "redux/constants/commonDS";
+import status from "redux/Constants/commonDS";
 
 class SelectAccountPopup extends Component {
   constructor(props) {

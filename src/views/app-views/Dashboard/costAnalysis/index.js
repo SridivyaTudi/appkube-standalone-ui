@@ -7,10 +7,10 @@ import {
   getProductWiseCost,
   getProductionVsOther,
   getServiceTypeWiseCost,
-} from "redux/dashboard/dashboardThunk";
+} from "redux/Dashboard/dashboardThunk";
 import { connect } from "react-redux";
 import { getCurrentOrgId } from "utils";
-import status from "redux/constants/commonDS";
+import status from "redux/Constants/commonDS";
 import { v4  } from 'uuid';
 
 ChartJS.register(ArcElement, Tooltip, Legend);

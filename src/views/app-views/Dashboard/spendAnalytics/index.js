@@ -15,7 +15,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { connect } from "react-redux";
-import status from "redux/constants/commonDS";
+import status from "redux/Constants/commonDS";
 import { ToastMessage } from "Toast/ToastMessage";
 import { v4 } from "uuid";
 import { cloudwiseSpendColor } from "utils";

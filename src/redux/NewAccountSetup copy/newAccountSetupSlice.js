@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import status from "redux/constants/commonDS";
+import status from "redux/Constants/commonDS";
 import {
   createNewOU,
   addCloudEnv,
-} from "redux/newAccountSetup/newAccountSetupThunk";
+} from "redux/NewAccountSetup/newAccountSetupThunk";
 
 export const organizationalUnitSlice = createSlice({
   name: "organizationalUnit",

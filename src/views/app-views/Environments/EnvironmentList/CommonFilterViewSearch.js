@@ -9,7 +9,7 @@ import Kubernetes from "assets/img/kubernetes.png";
 import { Box, Grid, List, ListItem } from "@mui/material";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import Button from "@mui/material/Button";
-import status from "redux/constants/commonDS";
+import status from "redux/Constants/commonDS";
 import { connect } from "react-redux";
 import { ToastMessage } from "Toast/ToastMessage";
 import { v4 } from "uuid";

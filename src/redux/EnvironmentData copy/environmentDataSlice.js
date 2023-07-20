@@ -3,8 +3,8 @@ import {
   getEnvironmentDataByLandingZone,
   getDepartments,
   getEnvironmentBoxesData,
-} from "redux/environmentData/environmentDataThunk";
-import status from "redux/constants/commonDS";
+} from "redux/EnvironmentData/environmentDataThunk";
+import status from "redux/Constants/commonDS";
 
 export const environmentDataSlice = createSlice({
   name: "environmentData",
