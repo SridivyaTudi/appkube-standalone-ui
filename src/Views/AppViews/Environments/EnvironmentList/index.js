@@ -20,6 +20,9 @@ import { connect } from "react-redux";
 import { LOGOS } from "CommonData";
 import { v4 } from "uuid";
 import { getCurrentOrgId } from "Utils";
+import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class EnvironmentList extends Component {
   tabMapping = [
@@ -197,6 +200,14 @@ class EnvironmentList extends Component {
       <Box className="environment-container environmentlist">
         <Box className="list-heading">
           <h3>Environments</h3>
+          <Button
+            className="primary-btn min-width"
+            component={Link}
+            variant="contained"
+            to={`${APP_PREFIX_PATH}/environments`}
+          >
+            Back to Infra View
+          </Button>
         </Box>
         <Box className="services-panel">
           <Box

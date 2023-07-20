@@ -16,6 +16,8 @@ import {
   TableRow,
   List,
   ListItem,
+  Button,
+  TableBody,
 } from "@mui/material";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
@@ -57,6 +59,7 @@ class DiscoveredAssets extends Component {
       currentVPC: {},
       showMenu: null,
       cloudName,
+      activeTierTab: "3Tier",
     };
   }
 
@@ -155,6 +158,8 @@ class DiscoveredAssets extends Component {
           <TableCell align="center">{vpc.name}</TableCell>
           <TableCell align="center">{vpc.product_count}</TableCell>
           <TableCell align="center">{vpc.app_count}</TableCell>
+          <TableCell align="center">{vpc.app_count}</TableCell>
+          <TableCell align="center">{vpc.data_count}</TableCell>
           <TableCell align="center">{vpc.data_count}</TableCell>
           <TableCell align="center">
             <IconButton
@@ -174,7 +179,61 @@ class DiscoveredAssets extends Component {
                 ></Box>
                 <Box className="menu-list">
                   <List>
-                    <ListItem className="active">
+                    <ListItem>
+                      <a href="#">Add New datasource</a>
+                    </ListItem>
+                    <ListItem>
+                      <a href="#">Add Compliance</a>
+                    </ListItem>
+                    <ListItem>
+                      <a href="#">Associate to OU</a>
+                    </ListItem>
+                    <ListItem>
+                      <a href="#">Add New VPC</a>
+                    </ListItem>
+                    <ListItem>
+                      <a href="#">Add New Product</a>
+                    </ListItem>
+                  </List>
+                </Box>
+              </>
+            )}
+          </TableCell>
+        </TableRow>
+      );
+    });
+  }
+
+  /** Render table level-2 data . */
+  renderTableLevel2Data() {
+    let { dataOfTableLevel1 } = this.state;
+    return dataOfTableLevel1.map((vpc, index) => {
+      return (
+        <TableRow key={v4()}>
+          <TableCell align="center">{vpc.name}</TableCell>
+          <TableCell align="center">{vpc.product_count}</TableCell>
+          <TableCell align="center">{vpc.app_count}</TableCell>
+          <TableCell align="center">{vpc.data_count}</TableCell>
+          <TableCell align="center">{vpc.data_count}</TableCell>
+          <TableCell align="center">
+            <IconButton
+              aria-label="delete"
+              size="small"
+              onClick={() => this.toggleMenu(index)}
+              className="list-icon"
+            >
+              <i className="fas fa-ellipsis-v"></i>
+            </IconButton>
+
+            {this.state.showMenu === index && (
+              <>
+                <Box
+                  className="open-create-menu-close"
+                  onClick={() => this.toggleMenu(index)}
+                ></Box>
+                <Box className="menu-list">
+                  <List>
+                    <ListItem>
                       <a href="#">Add New datasource</a>
                     </ListItem>
                     <ListItem>
@@ -220,12 +279,49 @@ class DiscoveredAssets extends Component {
                     </Box>
                   </TableCell>
                   <TableCell>Products</TableCell>
-                  <TableCell>App Services</TableCell>
-                  <TableCell>Data Services</TableCell>
+                  <TableCell>Web Layer</TableCell>
+                  <TableCell>App Layer</TableCell>
+                  <TableCell>Data Layer</TableCell>
+                  <TableCell>Auxiliary</TableCell>
                   <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
-              <tbody>{this.renderTableLevel1Data()}</tbody>
+              <TableBody>{this.renderTableLevel1Data()}</TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </Box>
+    );
+  }
+
+  /** Render the table level-2 html. */
+  renderTableLevel2Html() {
+    let { dataOfTableLevel1, cloudName } = this.state;
+    if (!dataOfTableLevel1.length) return null;
+    const cloudLogo = LOGOS[cloudName.toUpperCase()];
+    return (
+      <Box
+        className="environment-table-section discovered-table"
+        style={{ height: "465px" }}
+      >
+        <Box className="table discovered-assets-table">
+          <TableContainer>
+            <Table className="overview">
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <Box className="environment-image">
+                      <img src={cloudLogo} alt={cloudName} />
+                    </Box>
+                  </TableCell>
+                  <TableCell>Products</TableCell>
+                  <TableCell>App Services</TableCell>
+                  <TableCell>Data Services</TableCell>
+                  <TableCell>Other Services</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{this.renderTableLevel2Data()}</TableBody>
             </Table>
           </TableContainer>
         </Box>
@@ -391,6 +487,10 @@ class DiscoveredAssets extends Component {
     });
   }
 
+  handleTierTabToggle = (type) => {
+    this.setState({ activeTierTab: type });
+  };
+
   render() {
     const {
       dataOfTableLevel1,
@@ -399,11 +499,12 @@ class DiscoveredAssets extends Component {
       currentVPC,
       cloudName,
       breadcrumbs,
+      activeTierTab,
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
       <Box className="discovered-assets">
-        <Box className="discovered-assets-head">
+        {/* <Box className="discovered-assets-head">
           <CommonFilterViewSearch
             data={{ vpcsDetails: dataOfTableLevel1 }}
             handleSearch={(string) => {
@@ -415,11 +516,11 @@ class DiscoveredAssets extends Component {
             accountList={this.props.accountList}
             updateCurrentAccountId={this.props.updateCurrentAccountId}
           />
-        </Box>
+        </Box> */}
         <Box className="discovered-assets-body">
           {envDataByLandingZone.status === status.IN_PROGRESS ||
           departments.status === status.IN_PROGRESS ? (
-            <Box className="chart-spinner discovered-loading  text-center width-100 p-t-20 p-b-20">
+            <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
           ) : (
@@ -435,6 +536,39 @@ class DiscoveredAssets extends Component {
                   selectedBreadCrumbs={breadcrumbs}
                 />
                 <Grid item xs={5}>
+                  {!currentActiveNodeLabel ? (
+                    <Box className="tier-buttons">
+                      <Button
+                        variant={
+                          activeTierTab === "3Tier" ? "contained" : "outlined"
+                        }
+                        className={
+                          activeTierTab === "3Tier"
+                            ? "primary-btn min-width"
+                            : "primary-outline-btn min-width"
+                        }
+                        onClick={() => this.handleTierTabToggle("3Tier")}
+                      >
+                        3 Tier
+                      </Button>
+                      <Button
+                        variant={
+                          activeTierTab === "Soa" ? "contained" : "outlined"
+                        }
+                        className={
+                          activeTierTab === "Soa"
+                            ? "primary-btn min-width"
+                            : "primary-outline-btn min-width"
+                        }
+                        onClick={() => this.handleTierTabToggle("Soa")}
+                      >
+                        SOA
+                      </Button>
+                    </Box>
+                  ) : (
+                    <></>
+                  )}
+
                   <Box className="global-services-fliter">
                     <Box className="heading">
                       <Box className="breadcrumbs">
@@ -442,11 +576,9 @@ class DiscoveredAssets extends Component {
                       </Box>
                     </Box>
                   </Box>
-                  {!currentActiveNodeLabel ? (
-                    this.renderTableLevel1Html()
-                  ) : (
-                    <></>
-                  )}
+                  {activeTierTab === "3Tier" && !currentActiveNodeLabel
+                    ? this.renderTableLevel1Html()
+                    : this.renderTableLevel2Html()}
                   <Box className="fliter-tabs global-service-penal">
                     {currentActiveNodeLabel.includes("cluster") ? (
                       <ClusterDetails />
