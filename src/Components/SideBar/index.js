@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { APP_PREFIX_PATH } from "configs/AppConfig";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import sideBarMenu from "Components/SideBar/SideMenu.json";
 import Parser from "html-react-parser";
 import Box from "@mui/material/Box";

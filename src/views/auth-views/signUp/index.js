@@ -7,7 +7,7 @@ import SigninBanner from "assets/img/login/signin-banner.png";
 import SignupBanner1 from "assets/img/login/signup-banner1.png";
 import SignupBanner2 from "assets/img/login/signup-banner2.png";
 import ProfileIcon from "assets/img/login/profile-icon.png";
-import { AUTH_PREFIX_PATH } from "configs/AppConfig";
+import { AUTH_PREFIX_PATH } from "Configs/AppConfig";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { navigateRouter } from "utils/navigate/navigateRouter";

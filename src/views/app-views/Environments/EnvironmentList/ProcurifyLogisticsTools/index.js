@@ -3,7 +3,7 @@ import LineOfBusinessIcon from "assets/img/assetmanager/line-of-business-icon.pn
 import ProcurifyIcon from "assets/img/assetmanager/procurify-icon.png";
 import SslIcon from "assets/img/assetmanager/ssl-icon.png";
 import UserCountIcon from "assets/img/assetmanager/user-count-icon.png";
-import { APP_PREFIX_PATH } from "configs/AppConfig";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import UsaFlag from "assets/img/assetmanager/usa-flag.png";

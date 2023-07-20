@@ -26,7 +26,7 @@ import {
   ListItem,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import { APP_PREFIX_PATH } from "configs/AppConfig";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class Application extends Component {
   tabMapping = [

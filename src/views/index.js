@@ -7,7 +7,7 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "configs/AppConfig";
+import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "Configs/AppConfig";
 import Signin from "views/auth-views/signIn";
 import SignUp from "views/auth-views/signUp";
 import ForgetPassword from "views/auth-views/forgetPassword";

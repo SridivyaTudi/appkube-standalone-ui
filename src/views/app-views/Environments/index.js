@@ -13,7 +13,7 @@ import {
   getEnvsSummary,
 } from "redux/environments/environmentsThunk";
 import status from "redux/constants/commonDS";
-import { APP_PREFIX_PATH } from "configs/AppConfig";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";

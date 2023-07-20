@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DeploymentImg1 from "assets/img/assetmanager/deployment-img1.png";
 import DeploymentImg2 from "assets/img/assetmanager/deployment-img2.png";
-import { APP_PREFIX_PATH } from "configs/AppConfig";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";

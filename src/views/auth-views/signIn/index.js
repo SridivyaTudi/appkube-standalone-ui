@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Link, Navigate } from "react-router-dom";
-import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "configs/AppConfig";
+import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "Configs/AppConfig";
 import { setCurrentUser, setCurrentOrgId } from "utils";
 import { login } from "redux/auth/authThunk";
 import { connect } from "react-redux";
