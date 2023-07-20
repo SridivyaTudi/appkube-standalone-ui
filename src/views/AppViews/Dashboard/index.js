@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import SpendAnalytics from "./spendAnalytics";
-import CostAnalysis from "./costAnalysis";
-import SLAMetrics from "./slaMetrics";
-import ProcessCentral from "./processCentral";
+import SpendAnalytics from "./SpendAnalytics";
+import CostAnalysis from "./CostAnalysis";
+import SLAMetrics from "./SlaMetrics";
+import ProcessCentral from "./ProcessCentral";
 import Planet from "assets/img/dashboard/planet2.png";
 import { Box, List, ListItem } from "@mui/material";
 import {
