@@ -344,8 +344,8 @@ class FilterPopup extends Component {
             </LoadingButton>
             {selectedDepartment !== -1 ? (
               <LoadingButton
-                disabled={this.props.envSummary.status === status.IN_PROGRESS}
-                loading={this.props.envSummary.status === status.IN_PROGRESS}
+                disabled={selectedFilters.selectedDepartment !== -1 && this.props.envSummary.status === status.IN_PROGRESS}
+                loading={selectedFilters.selectedDepartment !== -1 && this.props.envSummary.status === status.IN_PROGRESS}
                 className="primary-btn min-width"
                 loadingPosition="start"
                 variant="contained"
