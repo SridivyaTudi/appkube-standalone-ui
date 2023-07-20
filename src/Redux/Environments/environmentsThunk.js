@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import config from "views/app-views/config";
+import config from "views/AppViews/Config";
 import { postLoginService } from "Services";
 
 export const getEnvironmentCount = createAsyncThunk(

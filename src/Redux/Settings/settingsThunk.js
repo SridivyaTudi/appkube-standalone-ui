@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import config from "views/auth-views/Config";
+import config from "views/AuthViews/Config";
 import { postLoginService } from "Services";
 
 export const getMFACode = createAsyncThunk(
