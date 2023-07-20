@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import config from "views/app-views/config";
-import { postLoginService } from "services";
+import { postLoginService } from "Services";
 
 export const getCurrentHourSpendRate = createAsyncThunk(
   "dashboard/getCurrentHourSpendRate",
