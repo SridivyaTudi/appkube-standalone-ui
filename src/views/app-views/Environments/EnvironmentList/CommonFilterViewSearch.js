@@ -16,7 +16,7 @@ import { v4 } from "uuid";
 import {
   getRecentVisitedEnvironments,
   setRecentVisitedEnvironments,
-} from "utils";
+} from "Utils";
 
 const headers = [
   { label: "Service Name", key: "name" },

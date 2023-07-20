@@ -10,7 +10,7 @@ import {
   getDeploymentEnvs,
   getEnvsSummary,
 } from "Redux/Environments/environmentsThunk";
-import { getCurrentOrgId } from "utils";
+import { getCurrentOrgId } from "Utils";
 import Button from "@mui/material/Button";
 import status from "Redux/Constants/commonDS";
 import LoadingButton from "@mui/lab/LoadingButton";

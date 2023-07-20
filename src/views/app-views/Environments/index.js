@@ -23,7 +23,7 @@ import TableRow from "@mui/material/TableRow";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
-import { getRecentVisitedEnvironments, setRecentVisitedEnvironments } from "utils";
+import { getRecentVisitedEnvironments, setRecentVisitedEnvironments } from "Utils";
 import { ToastMessage } from "Toast/ToastMessage";
 import { LOGOS } from "CommonData";
 

@@ -18,7 +18,7 @@ import { connect } from "react-redux";
 import status from "Redux/Constants/commonDS";
 import { ToastMessage } from "Toast/ToastMessage";
 import { v4 } from "uuid";
-import { cloudwiseSpendColor } from "utils";
+import { cloudwiseSpendColor } from "Utils";
 
 ChartJS.register(
   CategoryScale,

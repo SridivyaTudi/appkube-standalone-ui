@@ -2,7 +2,7 @@ import axios from "axios";
 import postLoginConfig from "views/app-views/config";
 import authConfig from "views/auth-views/config";
 import { ToastMessage } from "Toast/ToastMessage";
-import { getCurrentOrgId } from "utils";
+import { getCurrentOrgId } from "Utils";
 
 const service = axios.create({
   baseURL: postLoginConfig.baseURL,

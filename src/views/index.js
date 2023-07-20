@@ -26,7 +26,7 @@ import Setting from "./app-views/Setting";
 import SetTransitions from "./app-views/Setting/SetTransitions";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { getCurrentUser } from "utils";
+import { getCurrentUser } from "Utils";
 import titles from "./pathTitles.json";
 
 export function withRouter(Component) {

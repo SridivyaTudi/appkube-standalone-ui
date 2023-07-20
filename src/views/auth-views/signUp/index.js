@@ -10,7 +10,7 @@ import ProfileIcon from "assets/img/login/profile-icon.png";
 import { AUTH_PREFIX_PATH } from "Configs/AppConfig";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { navigateRouter } from "utils/Navigate/navigateRouter";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { signUp } from "Redux/Auth/authThunk";
 import { connect } from "react-redux";
 import { ToastMessage } from "Toast/ToastMessage";

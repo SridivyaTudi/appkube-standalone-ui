@@ -19,7 +19,7 @@ import { getEnvsSummary } from "Redux/Environments/environmentsThunk";
 import { connect } from "react-redux";
 import { LOGOS } from "CommonData";
 import { v4 } from "uuid";
-import { getCurrentOrgId } from "utils";
+import { getCurrentOrgId } from "Utils";
 
 class EnvironmentList extends Component {
   tabMapping = [
