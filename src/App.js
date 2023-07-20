@@ -1,7 +1,7 @@
 import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Views from "views";
+import Views from "Views";
 
 function App() {
   return (

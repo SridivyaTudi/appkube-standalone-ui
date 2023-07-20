@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import config from "views/AuthViews/Config";
+import config from "Views/AuthViews/Config";
 import { preLoginService } from 'Services';
 
 export const signUp = createAsyncThunk(
