@@ -78,6 +78,12 @@
     .modal-body {
       padding: 0px 10px;
       color: #3b4859;
+      .filter-pop-loading{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 300px;
+      }
 
       &::-webkit-scrollbar {
         width: 16px;

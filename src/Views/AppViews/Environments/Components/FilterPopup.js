@@ -268,7 +268,7 @@ class FilterPopup extends Component {
           <h4 className="text-left m-b-1 m-t-0 ">Select Department</h4>
           {this.props.organizationWiseDepartments.status ===
           status.IN_PROGRESS ? (
-            <Box className="text-center align-self-center p-t-20 p-b-20">
+            <Box className="filter-pop-loading">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
           ) : (
