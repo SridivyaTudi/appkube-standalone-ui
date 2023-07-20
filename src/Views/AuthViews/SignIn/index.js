@@ -142,6 +142,7 @@ class Signin extends Component {
                           placeholder="Input your Username here"
                           value={formData.userName}
                           onChange={this.handleInputChange}
+                          onKeyUp={(e)=>e.key === 'Enter' ? this.handleSignIn() : <></>}
                         />
                         {errors.userName ? (
                           <p className="m-b-0">{errors.userName}</p>
@@ -167,6 +168,7 @@ class Signin extends Component {
                           value={formData.password}
                           onChange={this.handleInputChange}
                           autoComplete="on"
+                          onKeyUp={(e)=>e.key === 'Enter' ? this.handleSignIn() : <></>}
                         />
                         {errors.password ? (
                           <p className="m-b-0">{errors.password}</p>
