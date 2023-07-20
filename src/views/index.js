@@ -12,7 +12,7 @@ import Signin from "views/auth-views/signIn";
 import SignUp from "views/auth-views/signUp";
 import ForgetPassword from "views/auth-views/forgetPassword";
 import TopBar from "components/TopBar";
-import SideBar from "components/sideBar";
+import SideBar from "components/SideBar";
 import Environments from "views/app-views/Environments";
 import Dashboard from "views/app-views/Dashboard";
 import NewAccountSetup from "views/app-views/Environments/NewAccountSetup";
