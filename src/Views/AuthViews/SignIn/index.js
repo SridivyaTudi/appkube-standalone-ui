@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SigninBanner from "assets/img/login/signin-banner.png";
-import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -58,7 +58,8 @@ class Signin extends Component {
     this.setState({ rememberMe: e.target.checked });
   };
 
-  handleSignIn = () => {
+  handleSignIn = (e) => {
+    e.preventDefault();
     this.setState({ isSubmit: true });
     const { isValid } = this.validateForm(true);
     if (isValid) {
@@ -115,115 +116,117 @@ class Signin extends Component {
             </Box>
             <Box className="sign-right">
               <Box className="sign-right-content">
-                <Box className="d-flex width-100 heading">
-                  Sign up to <strong>Appkube</strong>
-                </Box>
-                <Box className="d-block width-100 google-btn">
-                  <Button className="primary-btn" variant="contained">
-                    Sign up with google
-                  </Button>
-                </Box>
-                <Box className="d-block width-100 or-contant text-center">
-                  <span>or</span>
-                </Box>
-                <Box sx={{ width: "100%" }}>
-                  <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
-                    <Grid item xs={12}>
-                      <Box className="input-group">
-                        <label className="d-block">Username</label>
-                        <input
-                          type="userName"
-                          className="form-control"
-                          name="userName"
-                          placeholder="Input your Username here"
-                          value={formData.userName}
-                          onChange={this.handleInputChange}
-                          onKeyUp={(e)=>e.key === 'Enter' ? this.handleSignIn() : <></>}
-                        />
-                        {errors.userName ? (
-                          <p className="m-b-0">{errors.userName}</p>
-                        ) : (
-                          <></>
-                        )}
-                      </Box>
-                    </Grid>
-                  </Grid>
-                  <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
-                    <Grid item xs={12}>
-                      <Box className="input-group">
-                        <label className="d-block">Password</label>
-                        <input
-                          type={showPassword ? "text" : "password"}
-                          className="form-control"
-                          name="password"
-                          placeholder="Input your password here"
-                          value={formData.password}
-                          onChange={this.handleInputChange}
-                          autoComplete="on"
-                          onKeyUp={(e)=>e.key === 'Enter' ? this.handleSignIn() : <></>}
-                        />
-                        {errors.password ? (
-                          <p className="m-b-0">{errors.password}</p>
-                        ) : (
-                          <></>
-                        )}
-                        <i
-                          className={`fa-sharp fa-regular fa-eye${showPassword ? "" : "-slash"
-                            }`}
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            this.setState({
-                              showPassword: !this.state.showPassword,
-                            });
-                          }}
-                        ></i>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Box>
-                <Box className="remember-content width-100">
-                  <Box className="d-flex width-100 align-items-center">
-                    <FormControlLabel
-                      control={<Checkbox />}
-                      label="Remember me"
-                      className="checkbox primary"
-                      size="small"
-                      onChange={this.handleCheckboxChange}
-                      value={rememberMe}
-                    />
-                    <Link to={`${AUTH_PREFIX_PATH}/forgetpassword`}>
-                      Forgot Password?
-                    </Link>
+                <form onSubmit={this.handleSignIn}>
+                  <Box className="d-flex width-100 heading">
+                    Sign up to <strong>Appkube</strong>
                   </Box>
-                </Box>
-                <Box className="d-flex width-100 next-step">
-                  <LoadingButton
-                    disabled={
-                      this.props.loggedInUser?.status === status.IN_PROGRESS
-                    }
-                    loading={
-                      this.props.loggedInUser?.status === status.IN_PROGRESS
-                    }
-                    loadingPosition="start"
-                    onClick={this.handleSignIn}
-                    className="primary-btn"
-                    variant="contained"
-                  >
-                    Sign In
-                  </LoadingButton>
-                  <p>
-                    Doesn't have on account?
-                    <Link to={`${AUTH_PREFIX_PATH}/signup`}>Sign up Now</Link>
-                  </p>
-                </Box>
+                  <Box className="d-block width-100 google-btn">
+                    <Button className="primary-btn" variant="contained">
+                      Sign up with google
+                    </Button>
+                  </Box>
+                  <Box className="d-block width-100 or-contant text-center">
+                    <span>or</span>
+                  </Box>
+                  <Box sx={{ width: "100%" }}>
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                      <Grid item xs={12}>
+                        <Box className="input-group">
+                          <label className="d-block">Username</label>
+                          <input
+                            type="userName"
+                            className="form-control"
+                            name="userName"
+                            placeholder="Input your Username here"
+                            value={formData.userName}
+                            onChange={this.handleInputChange}
+                          />
+                          {errors.userName ? (
+                            <p className="m-b-0">{errors.userName}</p>
+                          ) : (
+                            <></>
+                          )}
+                        </Box>
+                      </Grid>
+                    </Grid>
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                      <Grid item xs={12}>
+                        <Box className="input-group">
+                          <label className="d-block">Password</label>
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            className="form-control"
+                            name="password"
+                            placeholder="Input your password here"
+                            value={formData.password}
+                            onChange={this.handleInputChange}
+                            autoComplete="on"
+                          />
+                          {errors.password ? (
+                            <p className="m-b-0">{errors.password}</p>
+                          ) : (
+                            <></>
+                          )}
+                          <i
+                            className={`fa-sharp fa-regular fa-eye${
+                              showPassword ? "" : "-slash"
+                            }`}
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              this.setState({
+                                showPassword: !this.state.showPassword,
+                              });
+                            }}
+                          ></i>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                  <Box className="remember-content width-100">
+                    <Box className="d-flex width-100 align-items-center">
+                      <FormControlLabel
+                        control={<Checkbox />}
+                        label="Remember me"
+                        className="checkbox primary"
+                        size="small"
+                        onChange={this.handleCheckboxChange}
+                        value={rememberMe}
+                      />
+                      <Link to={`${AUTH_PREFIX_PATH}/forgetpassword`}>
+                        Forgot Password?
+                      </Link>
+                    </Box>
+                  </Box>
+                  <Box className="d-flex width-100 next-step">
+                    <LoadingButton
+                      disabled={
+                        this.props.loggedInUser?.status === status.IN_PROGRESS
+                      }
+                      loading={
+                        this.props.loggedInUser?.status === status.IN_PROGRESS
+                      }
+                      loadingPosition="start"
+                      onClick={this.handleSignIn}
+                      className="primary-btn"
+                      variant="contained"
+                      type="submit"
+                    >
+                      Sign In
+                    </LoadingButton>
+                    <p>
+                      Doesn't have on account?
+                      <Link to={`${AUTH_PREFIX_PATH}/signup`}>Sign up Now</Link>
+                    </p>
+                  </Box>
+                </form>
               </Box>
             </Box>
           </Box>
