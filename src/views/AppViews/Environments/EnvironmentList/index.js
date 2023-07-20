@@ -14,8 +14,8 @@ import {
   getEnvironmentDataByLandingZone,
   getDepartments,
   getEnvironmentBoxesData,
-} from "Redux/EnvironmentData/environmentDataThunk";
-import { getEnvsSummary } from "Redux/Environments/environmentsThunk";
+} from "Redux/EnvironmentData/EnvironmentDataThunk";
+import { getEnvsSummary } from "Redux/Environments/EnvironmentsThunk";
 import { connect } from "react-redux";
 import { LOGOS } from "CommonData";
 import { v4 } from "uuid";

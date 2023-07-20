@@ -8,7 +8,7 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Carrier from "assets/img/setting/carrier.png";
 import OTPInput from "react-otp-input";
-import { getMFACode, authMFACode } from "Redux/Settings/settingsThunk";
+import { getMFACode, authMFACode } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { ToastMessage } from "Toast/ToastMessage";

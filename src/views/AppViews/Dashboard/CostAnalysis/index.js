@@ -7,7 +7,7 @@ import {
   getProductWiseCost,
   getProductionVsOther,
   getServiceTypeWiseCost,
-} from "Redux/Dashboard/dashboardThunk";
+} from "Redux/Dashboard/DashboardThunk";
 import { connect } from "react-redux";
 import { getCurrentOrgId } from "Utils";
 import status from "Redux/Constants/CommonDS";

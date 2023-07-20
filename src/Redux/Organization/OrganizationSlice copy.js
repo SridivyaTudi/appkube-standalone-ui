@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { organizationsAsyncThunk } from "Redux/Organization/organizationThunk";
+import { organizationsAsyncThunk } from "Redux/Organization/OrganizationThunk";
 
 export const organizationsSlice = createSlice({
   name: "organizations",

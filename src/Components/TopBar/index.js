@@ -9,7 +9,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { organizationsAsyncThunk } from "Redux/Organization/organizationThunk";
+import { organizationsAsyncThunk } from "Redux/Organization/OrganizationThunk";
 import { getCurrentOrgId, setCurrentOrgId,getCurrentUser } from "Utils";
 
 function TopBar() {
