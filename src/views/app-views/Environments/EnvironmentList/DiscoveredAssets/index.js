@@ -23,7 +23,7 @@ import TopologyView from "./Components/TopologyView";
 import VpcDetails from "./VpcDetails";
 import ClusterDetails from "./ClusterDetails";
 import { v4 } from "uuid";
-import { LOGOS } from "commonData";
+import { LOGOS } from "CommonData";
 const TABLE_LEVEL_1 = {
   APP: "App",
   DATA: "Data",

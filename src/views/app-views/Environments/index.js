@@ -25,7 +25,7 @@ import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
 import { getRecentVisitedEnvironments, setRecentVisitedEnvironments } from "utils";
 import { ToastMessage } from "Toast/ToastMessage";
-import { LOGOS } from "commonData";
+import { LOGOS } from "CommonData";
 
 class Environments extends Component {
   constructor(props) {

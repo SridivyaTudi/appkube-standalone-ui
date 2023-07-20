@@ -17,7 +17,7 @@ import {
 } from "redux/environmentData/environmentDataThunk";
 import { getEnvsSummary } from "redux/environments/environmentsThunk";
 import { connect } from "react-redux";
-import { LOGOS } from "commonData";
+import { LOGOS } from "CommonData";
 import { v4 } from "uuid";
 import { getCurrentOrgId } from "utils";
 
