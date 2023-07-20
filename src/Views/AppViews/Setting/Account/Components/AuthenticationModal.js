@@ -267,7 +267,7 @@ class AuthenticationModal extends Component {
                     onChange={this.toggle2FASwitch}
                     value={twoFASwitch}
                   />
-                  <Typography>{"Off"}</Typography>
+                  {/* <Typography>{"Off"}</Typography> */}
                 </Stack>
               </ModalBody>
               <ModalFooter className="footer-top-br">
