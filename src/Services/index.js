@@ -1,6 +1,6 @@
 import axios from "axios";
 import postLoginConfig from "views/app-views/config";
-import authConfig from "views/auth-views/config";
+import authConfig from "views/auth-views/Config";
 import { ToastMessage } from "Toast/ToastMessage";
 import { getCurrentOrgId } from "Utils";
 

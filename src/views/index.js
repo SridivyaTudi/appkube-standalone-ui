@@ -8,9 +8,9 @@ import {
   useParams,
 } from "react-router-dom";
 import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "Configs/AppConfig";
-import Signin from "views/auth-views/signIn";
-import SignUp from "views/auth-views/signUp";
-import ForgetPassword from "views/auth-views/forgetPassword";
+import Signin from "views/auth-views/SignIn";
+import SignUp from "views/auth-views/SignUp";
+import ForgetPassword from "views/auth-views/ForgetPassword";
 import TopBar from "Components/TopBar";
 import SideBar from "Components/SideBar";
 import Environments from "views/app-views/Environments";
