@@ -9,7 +9,7 @@ import AppMesh from "assets/img/assetmanager/cloud-managed-icon7.png";
 import Kinesis from "assets/img/assetmanager/cloud-managed-icon8.png";
 import TimeSeries from "assets/img/assetmanager/cloud-managed-icon9.png";
 import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
-import dummyData from "views/app-views/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
+import dummyData from "views/AppViews/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import AllServices from "./AllServices";
 import NoSqldb from "./NoSqldb";
 import GitDb from "./GitDb";

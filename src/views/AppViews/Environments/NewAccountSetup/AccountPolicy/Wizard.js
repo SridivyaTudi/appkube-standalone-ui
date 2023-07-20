@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ToastMessage } from "Toast/ToastMessage";
-import { withRouter } from "views/app-views/Environments/NewAccountSetup/AccountPolicy/withRouter";
+import { withRouter } from "views/AppViews/Environments/NewAccountSetup/AccountPolicy/withRouter";
 import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { addCloudEnv } from "Redux/NewAccountSetup/newAccountSetupThunk";

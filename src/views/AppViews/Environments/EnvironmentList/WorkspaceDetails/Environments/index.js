@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CommonFilterViewSearch from "views/app-views/Environments/EnvironmentList/CommonFilterViewSearch";
+import CommonFilterViewSearch from "views/AppViews/Environments/EnvironmentList/CommonFilterViewSearch";
 import { Box } from "@mui/material";
 
 class Environments extends Component {

@@ -7,10 +7,10 @@ import EnvironmentsIcon from "assets/img/assetmanager/environments-icon.png";
 import LockIcon from "assets/img/assetmanager/lock-icon.png";
 import UsaFlag from "assets/img/assetmanager/usa-flag.png";
 import RunningIcon from "assets/img/assetmanager/running-icon.png";
-import Environments from "views/app-views/Environments/EnvironmentList/WorkspaceDetails/Environments/Environments";
-import Container from "views/app-views/Environments/EnvironmentList/WorkspaceDetails/Environments/Container";
-import Database from "views/app-views/Environments/EnvironmentList/WorkspaceDetails/Environments/Database";
-import AccountPricing from "views/app-views/Environments/EnvironmentList/WorkspaceDetails/Environments/AccountPricing";
+import Environments from "views/AppViews/Environments/EnvironmentList/WorkspaceDetails/Environments/Environments";
+import Container from "views/AppViews/Environments/EnvironmentList/WorkspaceDetails/Environments/Container";
+import Database from "views/AppViews/Environments/EnvironmentList/WorkspaceDetails/Environments/Database";
+import AccountPricing from "views/AppViews/Environments/EnvironmentList/WorkspaceDetails/Environments/AccountPricing";
 import { Box } from "@mui/material";
 
 class WorkspaceDetails extends Component {

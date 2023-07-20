@@ -2,7 +2,7 @@ import React from "react";
 import GlobalIcon1 from "assets/img/assetmanager/global-icon1.png";
 import GlobalIcon2 from "assets/img/assetmanager/global-icon2.png";
 import GlobalIcon3 from "assets/img/assetmanager/global-icon3.png";
-import dummyData from "views/app-views/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
+import dummyData from "views/AppViews/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import {
   Button,
   Box,

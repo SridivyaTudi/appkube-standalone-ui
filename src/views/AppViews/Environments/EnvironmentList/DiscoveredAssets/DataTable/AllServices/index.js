@@ -12,7 +12,7 @@ import TimeSeries from "assets/img/assetmanager/cloud-managed-icon9.png";
 import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
 import QLDB from "assets/img/assetmanager/global-icon1.png";
 import CodeCommit from "assets/img/assetmanager/cloud-managed-icon14.png";
-import dummyData from "views/app-views/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
+import dummyData from "views/AppViews/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 
 class AllServices extends Component {
   constructor(props) {

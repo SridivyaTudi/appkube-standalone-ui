@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import AccountAddedImage from "assets/img/assetmanager/account-added-image.png";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { withRouter } from "views/app-views/Environments/NewAccountSetup/AccountPolicy/withRouter";
+import { withRouter } from "views/AppViews/Environments/NewAccountSetup/AccountPolicy/withRouter";
 
 class Finish extends Component {
   constructor(props) {

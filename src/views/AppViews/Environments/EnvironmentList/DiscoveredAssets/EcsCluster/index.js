@@ -1,5 +1,5 @@
 import React from "react";
-import dummyData from "views/app-views/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
+import dummyData from "views/AppViews/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import {
   Button,
   Box,

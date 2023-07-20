@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Wizard from "views/app-views/Environments/NewAccountSetup/AccountPolicy/Wizard";
-import AssociateOu from "views/app-views/Environments/NewAccountSetup/AccountPolicy/AssociateOu";
-import PreparePolicy from "views/app-views/Environments/NewAccountSetup/AccountPolicy/PreparePolicy";
-import CreateRole from "views/app-views/Environments/NewAccountSetup/AccountPolicy/CreateRole";
-import Finish from "views/app-views/Environments/NewAccountSetup/AccountPolicy/Finish";
+import Wizard from "views/AppViews/Environments/NewAccountSetup/AccountPolicy/Wizard";
+import AssociateOu from "views/AppViews/Environments/NewAccountSetup/AccountPolicy/AssociateOu";
+import PreparePolicy from "views/AppViews/Environments/NewAccountSetup/AccountPolicy/PreparePolicy";
+import CreateRole from "views/AppViews/Environments/NewAccountSetup/AccountPolicy/CreateRole";
+import Finish from "views/AppViews/Environments/NewAccountSetup/AccountPolicy/Finish";
 import Box from "@mui/material/Box";
 class AccountPolicy extends Component {
   constructor(props) {

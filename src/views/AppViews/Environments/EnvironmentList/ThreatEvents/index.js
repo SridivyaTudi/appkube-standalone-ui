@@ -8,7 +8,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import CommonFilterViewSearch from "views/app-views/Environments/EnvironmentList/CommonFilterViewSearch";
+import CommonFilterViewSearch from "views/AppViews/Environments/EnvironmentList/CommonFilterViewSearch";
 
 class ThreatEvents extends Component {
   constructor(props) {

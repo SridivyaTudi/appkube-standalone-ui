@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { connect } from "react-redux";
-import FilterPopup from "views/app-views/Environments/Components/FilterPopup";
+import FilterPopup from "views/AppViews/Environments/Components/FilterPopup";
 import {
   getEnvironmentCount,
   getEnvsSummary,

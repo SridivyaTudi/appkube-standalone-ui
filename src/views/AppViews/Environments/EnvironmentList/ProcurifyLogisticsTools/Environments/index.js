@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import CommonFilterViewSearch from "../../CommonFilterViewSearch";
-import TopologyView from "views/app-views/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
+import TopologyView from "views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
 import Aws from "assets/img/aws.png";
 import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
 import ClusterIcon from "assets/img/assetmanager/cluster-icon.png";
