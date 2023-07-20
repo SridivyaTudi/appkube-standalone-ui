@@ -10,7 +10,7 @@ import Carrier from "assets/img/setting/carrier.png";
 import OTPInput from "react-otp-input";
 import { getMFACode, authMFACode } from "Redux/Settings/settingsThunk";
 import { connect } from "react-redux";
-import status from "Redux/Constants/commonDS";
+import status from "Redux/Constants/CommonDS";
 import { ToastMessage } from "Toast/ToastMessage";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({

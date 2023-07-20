@@ -14,7 +14,7 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { signUp } from "Redux/Auth/AuthThunk";
 import { connect } from "react-redux";
 import { ToastMessage } from "Toast/ToastMessage";
-import status from "Redux/Constants/commonDS";
+import status from "Redux/Constants/CommonDS";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";

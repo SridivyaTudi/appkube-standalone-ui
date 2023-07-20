@@ -5,7 +5,7 @@ import {Button, Box} from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { addCloudEnv } from "Redux/NewAccountSetup/newAccountSetupThunk";
 import { connect } from "react-redux";
-import status from "Redux/Constants/commonDS";
+import status from "Redux/Constants/CommonDS";
 
 class Wizard extends Component {
   constructor(props) {

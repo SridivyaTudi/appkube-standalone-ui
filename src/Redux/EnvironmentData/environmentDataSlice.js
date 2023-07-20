@@ -4,7 +4,7 @@ import {
   getDepartments,
   getEnvironmentBoxesData,
 } from "Redux/EnvironmentData/environmentDataThunk";
-import status from "Redux/Constants/commonDS";
+import status from "Redux/Constants/CommonDS";
 
 export const environmentDataSlice = createSlice({
   name: "environmentData",

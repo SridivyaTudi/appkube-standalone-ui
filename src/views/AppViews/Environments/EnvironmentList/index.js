@@ -9,7 +9,7 @@ import Inputs from "views/AppViews/Environments/EnvironmentList/Inputs";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import status from "Redux/Constants/commonDS";
+import status from "Redux/Constants/CommonDS";
 import {
   getEnvironmentDataByLandingZone,
   getDepartments,

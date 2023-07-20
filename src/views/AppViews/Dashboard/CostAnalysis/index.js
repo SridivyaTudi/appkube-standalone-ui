@@ -10,7 +10,7 @@ import {
 } from "Redux/Dashboard/dashboardThunk";
 import { connect } from "react-redux";
 import { getCurrentOrgId } from "Utils";
-import status from "Redux/Constants/commonDS";
+import status from "Redux/Constants/CommonDS";
 import { v4  } from 'uuid';
 
 ChartJS.register(ArcElement, Tooltip, Legend);

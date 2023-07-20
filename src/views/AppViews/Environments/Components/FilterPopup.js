@@ -12,7 +12,7 @@ import {
 } from "Redux/Environments/environmentsThunk";
 import { getCurrentOrgId } from "Utils";
 import Button from "@mui/material/Button";
-import status from "Redux/Constants/commonDS";
+import status from "Redux/Constants/CommonDS";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 const deploymentImgs = {

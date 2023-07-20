@@ -13,7 +13,7 @@ import {
   getProductionVsOther,
   getServiceTypeWiseCost,
 } from "Redux/Dashboard/dashboardThunk";
-import status from "Redux/Constants/commonDS";
+import status from "Redux/Constants/CommonDS";
 
 export const dashboardSlice = createSlice({
   name: "dashboard",

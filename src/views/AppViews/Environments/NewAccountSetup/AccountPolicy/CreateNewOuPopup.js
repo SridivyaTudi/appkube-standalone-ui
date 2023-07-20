@@ -6,7 +6,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { getCurrentOrgId } from "Utils";
 import { createNewOU } from "Redux/NewAccountSetup/newAccountSetupThunk";
 import { connect } from "react-redux";
-import status from "Redux/Constants/commonDS";
+import status from "Redux/Constants/CommonDS";
 import Box from "@mui/material/Box";
 
 class CreateNewOuPopup extends Component {

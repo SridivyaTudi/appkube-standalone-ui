@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import status from "Redux/Constants/commonDS";
+import status from "Redux/Constants/CommonDS";
 import { getMFACode, authMFACode } from "./settingsThunk";
 
 export const settingsSlice = createSlice({
