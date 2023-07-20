@@ -316,7 +316,7 @@ class CommonFilterViewSearch extends Component {
                   target="_blank"
                 >
                   <Button
-                    className="primary-btn min-width-inherit"
+                    className="primary-btn min-width-inherit m-r-3"
                     variant="contained"
                   >
                     <i className="fas fa-external-link-square-alt p-r-10"></i>
