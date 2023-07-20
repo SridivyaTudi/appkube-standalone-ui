@@ -9,7 +9,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { Link, Navigate } from "react-router-dom";
 import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "Configs/AppConfig";
 import { setCurrentUser, setCurrentOrgId } from "Utils";
-import { login } from "Redux/Auth/authThunk";
+import { login } from "Redux/Auth/AuthThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/commonDS";
 import { ToastMessage } from "Toast/ToastMessage";

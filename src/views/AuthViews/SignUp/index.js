@@ -11,7 +11,7 @@ import { AUTH_PREFIX_PATH } from "Configs/AppConfig";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
-import { signUp } from "Redux/Auth/authThunk";
+import { signUp } from "Redux/Auth/AuthThunk";
 import { connect } from "react-redux";
 import { ToastMessage } from "Toast/ToastMessage";
 import status from "Redux/Constants/commonDS";
