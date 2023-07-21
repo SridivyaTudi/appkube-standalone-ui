@@ -69,7 +69,7 @@ class AllTable extends Component {
             </Box>
           </Box>
         </Box>
-        <Box className="resources-section">
+        {/* <Box className="resources-section">
           <h4>Lambda Resources</h4>
           <Box className="account-list-conitant">
             <Box className="account-list-conitant-scroll">
@@ -330,7 +330,7 @@ class AllTable extends Component {
               </TableContainer>
             </Box>
           </Box>
-        </Box>
+        </Box> */}
       </>
     );
   }

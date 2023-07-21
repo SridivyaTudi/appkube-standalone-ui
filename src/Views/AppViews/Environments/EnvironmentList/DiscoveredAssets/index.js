@@ -19,13 +19,17 @@ import {
   Button,
   TableBody,
 } from "@mui/material";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import TopologyView from "./Components/TopologyView";
 import VpcDetails from "./VpcDetails";
 import ClusterDetails from "./ClusterDetails";
+import AssociateApp from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/AssociateApp";
 import { v4 } from "uuid";
 import { LOGOS } from "CommonData";
+
 const TABLE_LEVEL_1 = {
   APP: "App",
   DATA: "Data",
@@ -60,6 +64,7 @@ class DiscoveredAssets extends Component {
       showMenu: null,
       cloudName,
       activeTierTab: "3Tier",
+      isClusterShow:false
     };
   }
 
@@ -420,16 +425,7 @@ class DiscoveredAssets extends Component {
         image: VpcServicesIcon,
         children: [],
       };
-      const hostingTypeList = envData[envIndex].hostingTypeList;
-      hostingTypeList.forEach((hostingType) => {
-        obj.children.push({
-          label: hostingType.hostingType,
-          id: "",
-          image: ClusterIcon,
-          type: TOPOLOGY_VIEW_TYPE.CLUSTER,
-          children: [],
-        });
-      });
+    
       prepareData.push(obj);
     }
     formatData.children = [prepareData, []];
@@ -510,6 +506,7 @@ class DiscoveredAssets extends Component {
       cloudName,
       breadcrumbs,
       activeTierTab,
+      isClusterShow,
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
@@ -583,14 +580,37 @@ class DiscoveredAssets extends Component {
                     <Box className="heading">
                       <Box className="breadcrumbs">
                         <ul>{this.renderBreadCrumbs()}</ul>
+                        {currentActiveNodeLabel.includes("vpc") ? (
+                          <FormControlLabel
+                            control={<Checkbox />}
+                            label="Show cluster"
+                            className="checkbox primary"
+                            size="small"
+                            onChange={() => {
+                              this.setState({ isClusterShow: !isClusterShow });
+                            }}
+                            checked={isClusterShow}
+                          />
+                        ) : (
+                          <></>
+                        )}
                       </Box>
                     </Box>
                   </Box>
-                  {activeTierTab === "3Tier" && !currentActiveNodeLabel
-                    ? this.renderTableLevel1Html()
-                    : this.renderTableLevel2Html()}
+                  {currentActiveNodeLabel.includes("vpc") ? (
+                    <></>
+                  ) : activeTierTab === "3Tier" && !currentActiveNodeLabel ? (
+                    this.renderTableLevel1Html()
+                  ) : (
+                    this.renderTableLevel2Html()
+                  )}
                   <Box className="fliter-tabs global-service-penal">
-                    {currentActiveNodeLabel.includes("cluster") ? (
+                    {currentActiveNodeLabel.includes("vpc") ? (
+                     isClusterShow ? <ClusterDetails /> : <CloudManagedDetails />
+                    ) : (
+                      <VpcDetails vpc={currentVPC} />
+                    )}
+                    {/* {currentActiveNodeLabel.includes("cluster") ? (
                       <ClusterDetails />
                     ) : currentActiveNodeLabel.includes("vpc") ? (
                       <VpcDetails vpc={currentVPC} />
@@ -602,13 +622,15 @@ class DiscoveredAssets extends Component {
                       <GlobalSerivces />
                     ) : (
                       <></>
-                    )}
+                    )} */}
+                   
                   </Box>
                 </Grid>
               </Grid>
             </Box>
           )}
         </Box>
+        <AssociateApp /> 
       </Box>
     );
   }

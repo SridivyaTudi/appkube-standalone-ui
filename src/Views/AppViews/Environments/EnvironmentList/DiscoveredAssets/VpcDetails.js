@@ -57,7 +57,7 @@ class VpcDetails extends React.Component {
   renderData = () => {
     const { dataList } = this.state;
     const JSX = [];
-    if (dataList.length) {
+    if (dataList?.length) {
       dataList.map((item) => {
         const text = item.hostingType;
         const result = text.replace(/([A-Z])/g, " $1");
@@ -138,7 +138,7 @@ class VpcDetails extends React.Component {
         <Box className="fliter-tabs global-service-penal">
           <Box className="cloud-managed-section">
             {this.renderData()}
-            <h4>Cloud Managed Services</h4>
+            {/* <h4>Cloud Managed Services</h4>
             <Box className="cloud-managed-cards">
               <Box className="cloud-managed-cards-scroll">
                 {this.renderCloudManagedServices()}
@@ -149,7 +149,7 @@ class VpcDetails extends React.Component {
               <Box className="cloud-managed-cards-scroll">
                 {this.renderGatewayServices()}
               </Box>
-            </Box>
+            </Box> */}
           </Box>
         </Box>
       </>

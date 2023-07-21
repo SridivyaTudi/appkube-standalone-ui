@@ -96,8 +96,8 @@ class ClusterDetails extends React.Component {
             </Box>
           </Box>
         </Box>
-        {currentActiveCluster === "eksCluster" && <EksCluster />}
-        {currentActiveCluster === "ecsCluster" && <EcsCluster />}
+        {/* {currentActiveCluster === "eksCluster" && <EksCluster />}
+        {currentActiveCluster === "ecsCluster" && <EcsCluster />} */}
       </>
     );
   }
