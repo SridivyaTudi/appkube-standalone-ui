@@ -2,7 +2,6 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { Box, ListItem } from "@mui/material/";
 import { Component } from "react";
 import { List, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import Typography from "@mui/material/Typography";
 import Switch from "@mui/material/Switch";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
@@ -267,7 +266,6 @@ class AuthenticationModal extends Component {
                     onChange={this.toggle2FASwitch}
                     value={twoFASwitch}
                   />
-                  {/* <Typography>{"Off"}</Typography> */}
                 </Stack>
               </ModalBody>
               <ModalFooter className="footer-top-br">
