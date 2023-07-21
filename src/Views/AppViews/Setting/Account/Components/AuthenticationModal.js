@@ -99,10 +99,10 @@ class AuthenticationModal extends Component {
       prevProps.mfaAuth.status !== this.props.mfaAuth.status &&
       this.props.mfaAuth.status === status.SUCCESS
     ) {
-      if (this.props.mfaAuth.data.code === 200) {
+      if (this.props.mfaAuth.data.object === true) {
         this.setActiveStep(this.steps.STEP4);
       } else {
-        ToastMessage.error("Authentication Failed!");
+        ToastMessage.error("OTP validation failed!");
       }
     }
   };
