@@ -3,6 +3,9 @@ import AWS from "assets/img/aws.png";
 import AZURE from "assets/img/microsoftazure.png";
 import GCP from "assets/img/google-cloud.png";
 import Kubernetes from "assets/img/kubernetes.png";
+import isoImage from "assets/img/iso-img.png";
+import pciImage from "assets/img/pci-img.png";
+import hipaaImage from "assets/img/hipaa-img.png";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -23,7 +26,10 @@ import TableRow from "@mui/material/TableRow";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
-import { getRecentVisitedEnvironments, setRecentVisitedEnvironments } from "Utils";
+import {
+  getRecentVisitedEnvironments,
+  setRecentVisitedEnvironments,
+} from "Utils";
 import { ToastMessage } from "Toast/ToastMessage";
 import { LOGOS } from "CommonData";
 
@@ -39,12 +45,13 @@ class Environments extends Component {
       environmentCountData: [],
       envSummary: [],
       menuSummaryShowMenu: [null, null],
+      compliantShowMenu: [null, null],
       filters: {
         selectedDepartment: -1,
         selectedProduct: -1,
-        selectedEnv: -1
+        selectedEnv: -1,
       },
-      showFilterPopup: false
+      showFilterPopup: false,
     };
   }
 
@@ -60,23 +67,29 @@ class Environments extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.environmentCountData.status !== this.props.environmentCountData.status) {
+    if (
+      prevProps.environmentCountData.status !==
+      this.props.environmentCountData.status
+    ) {
       if (this.props.environmentCountData.status === status.SUCCESS) {
         this.setState({
-          environmentCountData: this.props.environmentCountData.data
+          environmentCountData: this.props.environmentCountData.data,
         });
       } else if (this.props.environmentCountData.status === status.FAILURE) {
         ToastMessage.error("There is some issue.");
       }
     }
     if (prevProps.envSummary.status !== this.props.envSummary.status) {
-      if (this.props.envSummary.status === status.SUCCESS && this.props.envSummary.data) {
+      if (
+        this.props.envSummary.status === status.SUCCESS &&
+        this.props.envSummary.data
+      ) {
         this.setState({
           envSummary: this.props.envSummary.data,
           searchedEnvSummary: JSON.parse(
             JSON.stringify(this.props.envSummary.data)
           ),
-          showFilterPopup: false
+          showFilterPopup: false,
         });
       } else if (this.props.envSummary.status === status.FAILURE) {
         ToastMessage.error("There is some issue.");
@@ -132,7 +145,9 @@ class Environments extends Component {
                       <span style={{ backgroundColor: "#00b929" }}></span>
                       <p>Total Billing</p>
                     </Box>
-                    <label>{env.totalBilling ? `&#65284;${env.totalBilling}` : ''}</label>
+                    <label>
+                      {env.totalBilling ? `&#65284;${env.totalBilling}` : ""}
+                    </label>
                   </ListItem>
                 </List>
               </Box>
@@ -165,6 +180,15 @@ class Environments extends Component {
     }
   };
 
+  handleComplianceToggle = (envKey, accountIndex) => {
+    const { compliantShowMenu } = this.state;
+    if (compliantShowMenu[0] !== null && compliantShowMenu[1] !== null) {
+      this.setState({ compliantShowMenu: [null, null] });
+    } else {
+      this.setState({ compliantShowMenu: [envKey, accountIndex] });
+    }
+  };
+
   handleTableToggle = (tableIndex) => {
     const { collapsedTableIndex } = this.state;
     const index = collapsedTableIndex.indexOf(tableIndex);
@@ -186,7 +210,13 @@ class Environments extends Component {
         </Box>
       );
     } else if (this.props.envSummary.status === status.SUCCESS) {
-      const { menuSummaryShowMenu, searchedEnvSummary, collapsedTableIndex, envSummary } = this.state;
+      const {
+        menuSummaryShowMenu,
+        compliantShowMenu,
+        searchedEnvSummary,
+        collapsedTableIndex,
+        envSummary,
+      } = this.state;
       let retData = [];
       if (envSummary.length > 0) {
         searchedEnvSummary.map((item, envIndex) => {
@@ -207,10 +237,57 @@ class Environments extends Component {
                     {account.cloud} ({account.landingZone})
                   </Link>
                 </TableCell>
-                <TableCell align="center">{account.productEnclave}</TableCell>
+                <TableCell align="center">
+                  {account.productEnclave} VPC
+                </TableCell>
                 <TableCell align="center">{account.product}</TableCell>
-                <TableCell align="center">{account.appService}</TableCell>
-                <TableCell align="center">{account.dataService}</TableCell>
+                <TableCell align="center">{account.productionEnv}</TableCell>
+                <TableCell align="center">${account.overallCost}</TableCell>
+                <TableCell align="center">
+                  <Button
+                    className="compliance-btn"
+                    onClick={(e) => {
+                      this.handleComplianceToggle(envIndex, accountIndex);
+                    }}
+                  >
+                    {account.compliance} Compliance
+                  </Button>
+                  {compliantShowMenu[0] === envIndex &&
+                  compliantShowMenu[1] === accountIndex ? (
+                    <>
+                      <div
+                        className="compliant-close"
+                        onClick={(e) => {
+                          this.handleComplianceToggle(envIndex, accountIndex);
+                        }}
+                      ></div>
+                      <Box className="compliant-list">
+                        <List>
+                          <ListItem>
+                            <span>
+                              <img src={isoImage} alt="" />
+                            </span>{" "}
+                            ISO 27001 Compliant
+                          </ListItem>
+                          <ListItem>
+                            <span>
+                              <img src={pciImage} alt="" />
+                            </span>{" "}
+                            PCI DSS Compliant
+                          </ListItem>
+                          <ListItem>
+                            <span>
+                              <img src={hipaaImage} alt="" />
+                            </span>{" "}
+                            HIPAA Compliant
+                          </ListItem>
+                        </List>
+                      </Box>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </TableCell>
                 <TableCell align="center">
                   <button
                     type="button"
@@ -222,7 +299,7 @@ class Environments extends Component {
                     <i className="fas fa-ellipsis-v"></i>
                   </button>
                   {menuSummaryShowMenu[0] === envIndex &&
-                    menuSummaryShowMenu[1] === accountIndex ? (
+                  menuSummaryShowMenu[1] === accountIndex ? (
                     <>
                       <div
                         className="open-create-menu-close"
@@ -232,12 +309,8 @@ class Environments extends Component {
                       ></div>
                       <Box className="menu-list">
                         <List>
-                          <ListItem className="active">
-                            <a
-                              href={`/assetmanager/pages/add-data-source?accountId=${account.landingZone}&cloudName=${account.cloud}`}
-                            >
-                              Add New datasource
-                            </a>
+                          <ListItem>
+                            <a href="#">Add New datasource</a>
                           </ListItem>
                           <ListItem>
                             <a href="#">Add CompListItemance</a>
@@ -262,7 +335,13 @@ class Environments extends Component {
             );
           });
           if (accountsJSX.length === 0) {
-            accountsJSX = <TableRow><TableCell align="center">There is no data with searched key.</TableCell></TableRow>
+            accountsJSX = (
+              <TableRow>
+                <TableCell align="center">
+                  There is no data with searched key.
+                </TableCell>
+              </TableRow>
+            );
           }
           retData.push(
             <div className="environment-table">
@@ -294,8 +373,9 @@ class Environments extends Component {
                       </TableCell>
                       <TableCell align="center">Product Enclave</TableCell>
                       <TableCell align="center">Products</TableCell>
-                      <TableCell align="center">App Services</TableCell>
-                      <TableCell align="center">Data Services</TableCell>
+                      <TableCell align="center">Production Env</TableCell>
+                      <TableCell align="center">Overall Cost</TableCell>
+                      <TableCell align="center">Compliance</TableCell>
                       <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
@@ -308,9 +388,11 @@ class Environments extends Component {
           );
         });
       } else {
-        retData = <Box className="chart-spinner d-flex text-center w-100 p-t-20 p-b-20">
-          No environments found.
-        </Box>;
+        retData = (
+          <Box className="chart-spinner d-flex text-center w-100 p-t-20 p-b-20">
+            No environments found.
+          </Box>
+        );
       }
       return retData;
     } else {
@@ -350,7 +432,10 @@ class Environments extends Component {
   };
 
   addAccountToRecentlyVisited = (account) => {
-    const newItem = { accountType: account.accountType, accountId: account.accountId };
+    const newItem = {
+      accountType: account.accountType,
+      accountId: account.accountId,
+    };
     let recentEnv = getRecentVisitedEnvironments();
     if (recentEnv !== null) {
       recentEnv.map((item, index) => {
@@ -360,9 +445,7 @@ class Environments extends Component {
       });
       recentEnv.splice(0, 0, newItem);
     } else {
-      recentEnv = [
-        newItem
-      ];
+      recentEnv = [newItem];
     }
     recentEnv.length = recentEnv.length > 5 ? 5 : recentEnv.length;
     setRecentVisitedEnvironments(recentEnv);
@@ -371,7 +454,7 @@ class Environments extends Component {
   toggleRecentEnvsMenu = () => {
     this.setState({
       isRecentVisitedEnvMenuOpen: !this.state.isRecentVisitedEnvMenuOpen,
-    })
+    });
   };
 
   renderRecentVisitedMenu = () => {
@@ -382,13 +465,13 @@ class Environments extends Component {
           <ListItem>
             <Link
               to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}`}
-              onClick={() =>
-                this.addAccountToRecentlyVisited(item)
-              }
+              onClick={() => this.addAccountToRecentlyVisited(item)}
             >
               <span>
                 <img
-                  src={LOGOS[item.accountType.toUpperCase()]} alt={item.accountType} />
+                  src={LOGOS[item.accountType.toUpperCase()]}
+                  alt={item.accountType}
+                />
               </span>
               <p>{item.accountId}</p>
             </Link>
@@ -402,52 +485,47 @@ class Environments extends Component {
   toggleAddNewEnvironmentMenu = () => {
     this.setState({
       isAddNewEnvironmentShown: !this.state.isAddNewEnvironmentShown,
-    })
+    });
   };
 
   renderAddNewEnvironmentList = () => {
-    return (<>
-      <ListItem>
-        <Link
-          to={`${APP_PREFIX_PATH}/environments/aws/newaccountsetup`}
-        >
-          <span className="image-box">
-            <img src={AWS} alt="AWS" />
-          </span>
-          <p>Amazon Web Services</p>
-        </Link>
-      </ListItem>
-      <ListItem>
-        <Link
-          to={`${APP_PREFIX_PATH}/environments/azure/newaccountsetup`}
-        >
-          <span className="image-box">
-            <img src={AZURE} alt="AZURE" />
-          </span>
-          <p>Azure Cloud</p>
-        </Link>
-      </ListItem>
-      <ListItem>
-        <Link
-          to={`${APP_PREFIX_PATH}/environments/gcp/newaccountsetup`}
-        >
-          <span className="image-box">
-            <img src={GCP} alt="GCP" />
-          </span>
-          <p>Google Cloud Platform</p>
-        </Link>
-      </ListItem>
-      <ListItem>
-        <Link
-          to={`${APP_PREFIX_PATH}/environments/kubernetes/newaccountsetup`}
-        >
-          <span className="image-box">
-            <img src={Kubernetes} alt="Kubernetes" />
-          </span>
-          <p>Kubernetes</p>
-        </Link>
-      </ListItem>
-    </>
+    return (
+      <>
+        <ListItem>
+          <Link to={`${APP_PREFIX_PATH}/environments/aws/newaccountsetup`}>
+            <span className="image-box">
+              <img src={AWS} alt="AWS" />
+            </span>
+            <p>Amazon Web Services</p>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link to={`${APP_PREFIX_PATH}/environments/azure/newaccountsetup`}>
+            <span className="image-box">
+              <img src={AZURE} alt="AZURE" />
+            </span>
+            <p>Azure Cloud</p>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link to={`${APP_PREFIX_PATH}/environments/gcp/newaccountsetup`}>
+            <span className="image-box">
+              <img src={GCP} alt="GCP" />
+            </span>
+            <p>Google Cloud Platform</p>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link
+            to={`${APP_PREFIX_PATH}/environments/kubernetes/newaccountsetup`}
+          >
+            <span className="image-box">
+              <img src={Kubernetes} alt="Kubernetes" />
+            </span>
+            <p>Kubernetes</p>
+          </Link>
+        </ListItem>
+      </>
     );
   };
 
@@ -458,7 +536,7 @@ class Environments extends Component {
       searchedKey,
       envSummary,
       showFilterPopup,
-      filters
+      filters,
     } = this.state;
     return (
       <div className="environment-container">
@@ -481,7 +559,7 @@ class Environments extends Component {
                 <Box className="environment-fliter">
                   <Box className="fliter-toggel" onClick={this.togglePopup}>
                     <i className="fa-solid fa-filter fillter-icon"></i>
-                    fillter
+                    Fillter
                   </Box>
                 </Box>
               </Grid>
@@ -498,8 +576,11 @@ class Environments extends Component {
                       <Box className="export-sction">
                         {getRecentVisitedEnvironments() !== null && (
                           <Box className="environment-fliter">
-                            <Box className="fliter-toggel" onClick={this.toggleRecentEnvsMenu}>
-                              <i className="fa-solid fa-alarm-clock fillter-icon"></i>
+                            <Box
+                              className="fliter-toggel"
+                              onClick={this.toggleRecentEnvsMenu}
+                            >
+                              <i className="far fa-clock fillter-icon"></i>
                               Recent
                               <i className="fa-solid fa-caret-down arrow-icon"></i>
                             </Box>
@@ -510,9 +591,7 @@ class Environments extends Component {
                                   : "fliter-collapse"
                               }
                             >
-                              <List>
-                                {this.renderRecentVisitedMenu()}
-                              </List>
+                              <List>{this.renderRecentVisitedMenu()}</List>
                             </Box>
                             <div
                               className={
@@ -539,9 +618,7 @@ class Environments extends Component {
                                 : "fliter-collapse"
                             }
                           >
-                            <List>
-                              {this.renderAddNewEnvironmentList()}
-                            </List>
+                            <List>{this.renderAddNewEnvironmentList()}</List>
                           </Box>
                           <div
                             className={
@@ -606,7 +683,8 @@ class Environments extends Component {
 function mapStateToProps(state) {
   const { environmentCountData, envSummary } = state.environments;
   return {
-    environmentCountData, envSummary
+    environmentCountData,
+    envSummary,
   };
 }
 
