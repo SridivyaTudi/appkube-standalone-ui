@@ -1314,8 +1314,8 @@
             line-height: 30px;
             font-weight: 600;
             color: #383874;
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 12px;
+            padding-right: 12px;
             cursor: pointer;
             position: relative;
             border-bottom: 1px solid #a5a5d7;
@@ -1332,6 +1332,10 @@
             }
 
             &.active {
+              color: #ffffff;
+              background-color: #384cff;
+              padding-left: 8px;
+              padding-right: 8px;
               span {
                 width: 20px;
                 height: 20px;
@@ -1342,10 +1346,6 @@
                 background: #ffffff;
                 border-radius: 50%;
               }
-
-              color: #ffffff;
-              background-color: #384cff;
-
               &::after {
                 opacity: 1;
               }
@@ -2240,11 +2240,23 @@
               padding-right: 5px;
               line-height: 32px;
               align-items: center;
+              &.active{
+                a{
+                  background: #416BFF33;
+                  color: #8676FF;
+                }
+               
+              }
+              &:first-child{
+                i{
+                  display: none;
+                }
+              }
 
               a {
                 display: block;
-                background: #416BFF33;
-                color: #8676FF;
+                //background: #416BFF33;
+                color: #384CFF;
                 font-size: 12px;
                 font-weight: 600;
                 cursor: pointer;
