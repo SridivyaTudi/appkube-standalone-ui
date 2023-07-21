@@ -9,5 +9,6 @@
   "configuretopology": "Configure Topology",
   "procurifylogisticstools": "Procurify Logistics Tools",
   "setting": "Setting",
-  "settransitions": "Set Transitions"
+  "settransitions": "Set Transitions",
+  "ecscluster": "ECS Cluster 01"
 }

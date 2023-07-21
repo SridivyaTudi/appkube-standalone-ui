@@ -190,6 +190,29 @@ button.primary-outline-btn {
   }
 }
 
+a.primary-outline-btn {
+  color: #384cff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #384cff;
+  background-color: transparent;
+  border-radius: 5px;
+  min-width: 180px;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 24px;
+  letter-spacing: 0;
+  box-shadow: none;
+  text-transform: none;
+  font-family: "Open Sans", sans-serif;
+
+  &:hover {
+    color: #384cff;
+    box-shadow: none;
+    background-color: transparent;
+  }
+}
+
 button.primary-btn {
   background: #384cff;
   color: #ffffff;
