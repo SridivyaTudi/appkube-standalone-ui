@@ -46,10 +46,11 @@ class DiscoveredAssets extends Component {
       display_detail: true,
       cloudAssets: [],
       breadcrumbs: {
+        breadcrumbId: v4(),
         cloudName: cloudName?.toUpperCase(),
         selectedLevel1: "",
         selectedLevel2: "",
-        breadcrumbId: v4(),
+        
       },
       searchString: "",
       accountId: queryPrm.get("landingZone"),
@@ -115,8 +116,16 @@ class DiscoveredAssets extends Component {
   /** Render the BreadCrumbs of Topologyview. */
   renderBreadCrumbs() {
     let { breadcrumbs } = this.state;
+    let { selectedLevel1, selectedLevel2, cloudName } = breadcrumbs;
+    let activeClassKey =
+      cloudName && selectedLevel1 && !selectedLevel2
+        ? 'selectedLevel1'
+        : selectedLevel1 && selectedLevel2
+        ? 'selectedLevel2'
+        : 'cloudName';
     let breadCrumbsData = Object.keys(breadcrumbs);
     return breadCrumbsData.map((breadCrumb, index) => {
+      console.log(breadCrumb, index);
       if (breadcrumbs[breadCrumb] && breadCrumb !== "breadcrumbId") {
         return (
           <>
@@ -131,12 +140,13 @@ class DiscoveredAssets extends Component {
               onClick={() => {
                 this.onClickBreadCrumbOfTopology(breadCrumb);
               }}
+              className={`${activeClassKey === breadCrumb ? "active" : ""}`}
               key={v4()}
             >
               <a>
-                {index == 1
+                {index === 1
                   ? breadcrumbs[breadCrumb]?.toUpperCase()
-                  : index == 2
+                  : index === 2
                   ? `${breadcrumbs[breadCrumb][0]?.toUpperCase()}${breadcrumbs[
                       breadCrumb
                     ].slice(1)}`
@@ -454,7 +464,7 @@ class DiscoveredAssets extends Component {
    */
   prepareBreadCrumbs(label, isLevel2Data) {
     let { breadcrumbs, currentVPC } = this.state;
-    let { selectedLevel1, selectedLevel2, cloudName } = breadcrumbs;
+    let { selectedLevel1, selectedLevel2, cloudName,breadcrumbId } = breadcrumbs;
 
     if (isLevel2Data) {
       selectedLevel2 = label;
@@ -464,7 +474,7 @@ class DiscoveredAssets extends Component {
     }
 
     this.setState({
-      breadcrumbs: { cloudName, selectedLevel1, selectedLevel2 },
+      breadcrumbs: {breadcrumbId, cloudName, selectedLevel1, selectedLevel2 },
     });
   }
 
@@ -483,7 +493,7 @@ class DiscoveredAssets extends Component {
     } else if (type === "selectedLevel1") selectedLevel2 = "";
 
     this.setState({
-      breadcrumbs: { cloudName, selectedLevel1, selectedLevel2, breadcrumbId },
+      breadcrumbs: { breadcrumbId, cloudName, selectedLevel1, selectedLevel2 },
     });
   }
 
