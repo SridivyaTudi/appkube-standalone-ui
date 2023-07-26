@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { AUTH_PREFIX_PATH } from "Configs/AppConfig";
 import Button from "@mui/material/Button";
 
-class ForgetPassword extends Component {
+class ResetPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -78,7 +78,7 @@ class ForgetPassword extends Component {
   render() {
     const { formData, formErrors } = this.state;
     return (
-      <Box className="forget-container">
+      <Box className="resetpassword-container">
         <Box className="forget-left">
           <Box className="forget-left-content">
             <Box className="d-block width-100 back-btn">
@@ -90,17 +90,17 @@ class ForgetPassword extends Component {
               >
                 <i className="fa-solid fa-chevron-left"></i>
               </Button>
-              <span>Appkube</span>
+              <span>Back to log in</span>
             </Box>
             <Box className="d-block width-100 forget-text">
-              <h2>Forget Password</h2>
+              <h2>Reset Password</h2>
               <p>
-                Enter the email address you used when you joines we'll send you
-                instructions to reset your password.
+                Forgotten your password? No problem! Quickly regain access to
+                your account with a secure password reset.
               </p>
               <p>
-                For security reasone, we do Not store your password. So rest
-                assured thet we will never send your password via email.
+                Get back to effortlessly monitoring your systems in just a few
+                clicks.
               </p>
             </Box>
             <Box sx={{ width: "100%" }}>
@@ -111,34 +111,41 @@ class ForgetPassword extends Component {
               >
                 <Grid item xs={12}>
                   <Box className="input-group">
-                    <label className="d-block">Email</label>
+                    <label className="d-block">Enter a New password </label>
                     <input
-                      type="email"
+                      type="password"
                       className="form-control"
-                      name="email"
-                      placeholder="Input your email here"
-                      value={formData.email}
+                      name="password"
+                      placeholder="Enter your New password here"
                       onChange={this.handleInputChange}
                       autoComplete="on"
                     />
-                    {formErrors.email ? (
-                      <p className="m-b-0">{formErrors.email}</p>
-                    ) : (
-                      <></>
-                    )}
+                    <i className="fa-sharp fa-regular fa-eye"></i>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box className="input-group">
+                    <label className="d-block">Re enter your password</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      placeholder="Re enter your password here"
+                      onChange={this.handleInputChange}
+                      autoComplete="on"
+                    />
+                    <i className="fa-sharp fa-regular fa-eye"></i>
                   </Box>
                 </Grid>
               </Grid>
             </Box>
             <Box className="d-flex width-100 next-step">
               <Button
-                className="primary-btn"
+                className="primary-btn min-width-inherit"
                 onClick={this.handleSignIn}
                 variant="contained"
               >
-                <Link  to={`${AUTH_PREFIX_PATH}/resetpassword`}>
-                  Reset your password
-                </Link>
+                Confirm
               </Button>
             </Box>
           </Box>
@@ -151,4 +158,4 @@ class ForgetPassword extends Component {
   }
 }
 
-export default ForgetPassword;
+export default ResetPassword;

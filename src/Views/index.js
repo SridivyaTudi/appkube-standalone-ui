@@ -11,6 +11,7 @@ import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "Configs/AppConfig";
 import Signin from "Views/AuthViews/SignIn";
 import SignUp from "Views/AuthViews/SignUp";
 import ForgetPassword from "Views/AuthViews/ForgetPassword";
+import ResetPassword from "./AuthViews/ResetPassword";
 import TopBar from "Components/TopBar";
 import SideBar from "Components/SideBar";
 import Environments from "Views/AppViews/Environments";
@@ -174,6 +175,10 @@ export const Views = (props) => {
           <Route
             path={`${AUTH_PREFIX_PATH}/forgetpassword`}
             element={<ForgetPassword />}
+          />
+          <Route
+            path={`${AUTH_PREFIX_PATH}/resetpassword`}
+            element={<ResetPassword />}
           />
           <Route path="*" element={<Navigate to={`${AUTH_PREFIX_PATH}`} />} />
         </Routes>
