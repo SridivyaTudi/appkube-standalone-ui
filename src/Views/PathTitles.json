@@ -10,5 +10,6 @@
   "procurifylogisticstools": "Procurify Logistics Tools",
   "setting": "Setting",
   "settransitions": "Set Transitions",
-  "ecscluster": "ECS Cluster 01"
+  "ecscluster": "ECS Cluster 01",
+  "associatechartapp": "Associate Chart App"
 }

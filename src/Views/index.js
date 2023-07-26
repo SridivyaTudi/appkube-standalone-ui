@@ -25,6 +25,7 @@ import SelectYourTemplate from "./AppViews/SelectYourTemplate";
 import Setting from "./AppViews/Setting";
 import SetTransitions from "./AppViews/Setting/SetTransitions";
 import EcsCluster from "./AppViews/Environments/EnvironmentList/DiscoveredAssets/EcsCluster";
+import AssociateChartApp from "./AppViews/Environments/EnvironmentList/DiscoveredAssets/AssociateChartApp";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { getCurrentUser } from "Utils";
@@ -137,6 +138,10 @@ export const Views = (props) => {
           <Route
             path={`${APP_PREFIX_PATH}/environments/ecscluster`}
             element={<EcsCluster />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/environments/associatechartapp`}
+            element={<AssociateChartApp />}
           />
         </Routes>
       </div>

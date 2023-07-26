@@ -2,6 +2,7 @@ import React from "react";
 import {
   Button,
   Box,
+  Grid,
   TableContainer,
   Table,
   TableBody,
@@ -15,6 +16,8 @@ import {
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import { Link } from "react-router-dom";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class EcsCluster extends React.Component {
   constructor(props) {
@@ -26,7 +29,7 @@ class EcsCluster extends React.Component {
           environment: "DEV",
           businessName: "Payroll",
           layer: "App Layer",
-          sle: "",
+          sle: "98",
           endUsage: "Medium",
           cost: "420",
         },
@@ -35,7 +38,7 @@ class EcsCluster extends React.Component {
           environment: "DEV",
           businessName: "Recruitment",
           layer: "Data Layer",
-          sle: "",
+          sle: "95",
           endUsage: "High",
           cost: "420",
         },
@@ -44,7 +47,7 @@ class EcsCluster extends React.Component {
           environment: "DEV",
           businessName: "Inventory",
           layer: "Auxiliary Layer",
-          sle: "",
+          sle: "96",
           endUsage: "Low",
           cost: "420",
         },
@@ -53,7 +56,7 @@ class EcsCluster extends React.Component {
           environment: "DEV",
           businessName: "Vendor request",
           layer: "Data Layer",
-          sle: "",
+          sle: "97",
           endUsage: "Medium",
           cost: "420",
         },
@@ -62,7 +65,7 @@ class EcsCluster extends React.Component {
           environment: "DEV",
           businessName: "A/C Payable",
           layer: "Data Layer",
-          sle: "",
+          sle: "94",
           endUsage: "High",
           cost: "420",
         },
@@ -71,7 +74,7 @@ class EcsCluster extends React.Component {
           environment: "DEV",
           businessName: "Agent request",
           layer: "Data Layer",
-          sle: "",
+          sle: "95",
           endUsage: "Low",
           cost: "420",
         },
@@ -80,7 +83,7 @@ class EcsCluster extends React.Component {
           environment: "DEV",
           businessName: "Inventory",
           layer: "App Layer",
-          sle: "",
+          sle: "92",
           endUsage: "Low",
           cost: "420",
         },
@@ -89,7 +92,7 @@ class EcsCluster extends React.Component {
           environment: "DEV",
           businessName: "Vendor request",
           layer: "App Layer",
-          sle: "",
+          sle: "98",
           endUsage: "Medium",
           cost: "420",
         },
@@ -98,7 +101,7 @@ class EcsCluster extends React.Component {
           environment: "DEV",
           businessName: "A/C Payable",
           layer: "Auxiliary Layer",
-          sle: "",
+          sle: "96",
           endUsage: "High",
           cost: "420",
         },
@@ -107,7 +110,7 @@ class EcsCluster extends React.Component {
           environment: "DEV",
           businessName: "Agent request",
           layer: "Auxiliary Layer",
-          sle: "",
+          sle: "93",
           endUsage: "Low",
           cost: "420",
         },
@@ -119,7 +122,7 @@ class EcsCluster extends React.Component {
           typeOfService: "APP Service",
           product: "HRMS",
           environment: "DEV",
-          sle: "",
+          sle: "97",
           endUsage: "Medium",
           cost: "420",
         },
@@ -129,7 +132,7 @@ class EcsCluster extends React.Component {
           typeOfService: "Data Service",
           product: "HRMS",
           environment: "DEV",
-          sle: "",
+          sle: "94",
           endUsage: "High",
           cost: "420",
         },
@@ -139,7 +142,7 @@ class EcsCluster extends React.Component {
           typeOfService: "Data Service",
           product: "Procurement",
           environment: "DEV",
-          sle: "",
+          sle: "96",
           endUsage: "Low",
           cost: "420",
         },
@@ -149,7 +152,7 @@ class EcsCluster extends React.Component {
           typeOfService: "Data Service",
           product: "Procurement",
           environment: "DEV",
-          sle: "",
+          sle: "97",
           endUsage: "Medium",
           cost: "420",
         },
@@ -159,7 +162,7 @@ class EcsCluster extends React.Component {
           typeOfService: "Data Service",
           product: "Procurement",
           environment: "DEV",
-          sle: "",
+          sle: "98",
           endUsage: "High",
           cost: "420",
         },
@@ -169,7 +172,7 @@ class EcsCluster extends React.Component {
           typeOfService: "Data Service",
           product: "Procurement",
           environment: "DEV",
-          sle: "",
+          sle: "94",
           endUsage: "Low",
           cost: "420",
         },
@@ -179,7 +182,7 @@ class EcsCluster extends React.Component {
           typeOfService: "Data Service",
           product: "Procurement",
           environment: "DEV",
-          sle: "",
+          sle: "96",
           endUsage: "Low",
           cost: "420",
         },
@@ -189,7 +192,7 @@ class EcsCluster extends React.Component {
           typeOfService: "Data Service",
           product: "Procurement",
           environment: "DEV",
-          sle: "",
+          sle: "95",
           endUsage: "Medium",
           cost: "420",
         },
@@ -199,7 +202,7 @@ class EcsCluster extends React.Component {
           typeOfService: "Data Service",
           product: "Procurement",
           environment: "DEV",
-          sle: "",
+          sle: "93",
           endUsage: "High",
           cost: "420",
         },
@@ -209,7 +212,7 @@ class EcsCluster extends React.Component {
           typeOfService: "Data Service",
           product: "Procurement",
           environment: "DEV",
-          sle: "",
+          sle: "96",
           endUsage: "Low",
           cost: "420",
         },
@@ -250,36 +253,50 @@ class EcsCluster extends React.Component {
     const { tierRows, soaRows, pg, rpg, actionButton, activeTierTab } =
       this.state;
     return (
-      <>
-        <Box className="resources-section">
-          <h4>ECS Resources</h4>
-          <Box className="tier-buttons">
+      <Box className="environment-container environmentlist cluster-container">
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item xs={8}>
+            <Box className="list-heading">
+              <h3>ECS Cluster 01</h3>
+            </Box>
+          </Grid>
+          <Grid item xs={4}>
             <Button
-              variant={activeTierTab === "3Tier" ? "contained" : "outlined"}
-              className={
-                activeTierTab === "3Tier"
-                  ? "primary-btn min-width"
-                  : "primary-outline-btn min-width"
-              }
-              onClick={() => this.handleTierTabToggle("3Tier")}
+              className="primary-btn min-width float-right"
+              component={Link}
+              variant="contained"
+              to={`${APP_PREFIX_PATH}/environments`}
             >
-              3 Tier
+              Back
             </Button>
-            <Button
-              variant={activeTierTab === "Soa" ? "contained" : "outlined"}
-              className={
-                activeTierTab === "Soa"
-                  ? "primary-btn min-width"
-                  : "primary-outline-btn min-width"
-              }
-              onClick={() => this.handleTierTabToggle("Soa")}
-            >
-              SOA
-            </Button>
-          </Box>
-        </Box>
+            <Box className="tier-buttons float-right">
+              <Button
+                variant={activeTierTab === "3Tier" ? "contained" : "outlined"}
+                className={
+                  activeTierTab === "3Tier"
+                    ? "primary-btn min-width"
+                    : "primary-outline-btn min-width"
+                }
+                onClick={() => this.handleTierTabToggle("3Tier")}
+              >
+                3 Tier
+              </Button>
+              <Button
+                variant={activeTierTab === "Soa" ? "contained" : "outlined"}
+                className={
+                  activeTierTab === "Soa"
+                    ? "primary-btn min-width"
+                    : "primary-outline-btn min-width"
+                }
+                onClick={() => this.handleTierTabToggle("Soa")}
+              >
+                SOA
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
         {activeTierTab === "3Tier" ? (
-          <>
+          <Box className="cluster-table">
             <TableContainer component={Paper} className="access-control-table">
               <Table
                 sx={{ minWidth: 500 }}
@@ -289,13 +306,13 @@ class EcsCluster extends React.Component {
                 <TableHead>
                   <TableRow>
                     <TableCell>Product</TableCell>
-                    <TableCell>Environment</TableCell>
+                    <TableCell align="center">Environment</TableCell>
                     <TableCell>Business Name</TableCell>
                     <TableCell>Layer</TableCell>
-                    <TableCell>SLE</TableCell>
-                    <TableCell>End-usage</TableCell>
-                    <TableCell>Cost</TableCell>
-                    <TableCell>Actions</TableCell>
+                    <TableCell align="center">SLE</TableCell>
+                    <TableCell align="center">End-usage</TableCell>
+                    <TableCell align="center">Cost</TableCell>
+                    <TableCell align="center">Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -304,12 +321,56 @@ class EcsCluster extends React.Component {
                     .map((row, index) => (
                       <TableRow key={index}>
                         <TableCell>{row.product}</TableCell>
-                        <TableCell>{row.environment}</TableCell>
+                        <TableCell align="center">{row.environment}</TableCell>
                         <TableCell>{row.businessName}</TableCell>
                         <TableCell>{row.layer}</TableCell>
-                        <TableCell>{row.sle}</TableCell>
-                        <TableCell>{row.endUsage}</TableCell>
-                        <TableCell>${row.cost}</TableCell>
+                        <TableCell align="center">
+                          <Box className="sle-box">
+                            <span>{row.sle}%</span>
+                            <div className="sle-hover-bg"></div>
+                            <Box className="sle-hover">
+                              <div className="heading">
+                                Location:{" "}
+                                <strong>US-East - EC2 657907747554</strong>
+                              </div>
+                              <Box className="location-text">
+                                <strong>SLA</strong>
+                                <ul>
+                                  <li>Performance</li>
+                                  <li>Availability</li>
+                                  <li>Security</li>
+                                  <li>Data Protection</li>
+                                  <li>User exp</li>
+                                </ul>
+                              </Box>
+                            </Box>
+                          </Box>
+                        </TableCell>
+                        <TableCell align="center">
+                          <div
+                            className={
+                              row.endUsage === "Medium"
+                                ? "medium"
+                                : "" || row.endUsage === "High"
+                                ? "high"
+                                : "" || row.endUsage === "Low"
+                                ? "low"
+                                : ""
+                            }
+                          >
+                            {row.endUsage === "Medium" && (
+                              <i className="fa-solid fa-grip-lines"></i>
+                            )}
+                            {row.endUsage === "High" && (
+                              <i className="fa-solid fa-angles-up"></i>
+                            )}
+                            {row.endUsage === "Low" && (
+                              <i className="fa-solid fa-angles-down"></i>
+                            )}{" "}
+                            {row.endUsage}
+                          </div>
+                        </TableCell>
+                        <TableCell align="center">${row.cost}</TableCell>
                         <TableCell align="center">
                           <IconButton
                             className="action-btn"
@@ -361,9 +422,9 @@ class EcsCluster extends React.Component {
               onPageChange={this.handleChangePage}
               onRowsPerPageChange={this.handleChangeRowsPerPage}
             />
-          </>
+          </Box>
         ) : (
-          <>
+          <Box className="cluster-table">
             <TableContainer component={Paper} className="access-control-table">
               <Table
                 sx={{ minWidth: 500 }}
@@ -375,12 +436,12 @@ class EcsCluster extends React.Component {
                     <TableCell>Service Name</TableCell>
                     <TableCell>Business Name</TableCell>
                     <TableCell>Type of service</TableCell>
-                    <TableCell>Product</TableCell>
-                    <TableCell>Environment</TableCell>
-                    <TableCell>SLE</TableCell>
-                    <TableCell>End-usage</TableCell>
-                    <TableCell>Cost</TableCell>
-                    <TableCell>Actions</TableCell>
+                    <TableCell align="center">Product</TableCell>
+                    <TableCell align="center">Environment</TableCell>
+                    <TableCell align="center">SLE</TableCell>
+                    <TableCell align="center">End-usage</TableCell>
+                    <TableCell align="center">Cost</TableCell>
+                    <TableCell align="center">Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -389,11 +450,55 @@ class EcsCluster extends React.Component {
                       <TableCell>{row.serviceName}</TableCell>
                       <TableCell>{row.businessName}</TableCell>
                       <TableCell>{row.typeOfService}</TableCell>
-                      <TableCell>{row.product}</TableCell>
-                      <TableCell>{row.environment}</TableCell>
-                      <TableCell>{row.sle}</TableCell>
-                      <TableCell>{row.endUsage}</TableCell>
-                      <TableCell>${row.cost}</TableCell>
+                      <TableCell align="center">{row.product}</TableCell>
+                      <TableCell align="center">{row.environment}</TableCell>
+                      <TableCell align="center">
+                        <Box className="sle-box">
+                          <span>{row.sle}%</span>
+                          <div className="sle-hover-bg"></div>
+                          <Box className="sle-hover">
+                            <div className="heading">
+                              Location:{" "}
+                              <strong>US-East - EC2 657907747554</strong>
+                            </div>
+                            <Box className="location-text">
+                              <strong>SLA</strong>
+                              <ul>
+                                <li>Performance</li>
+                                <li>Availability</li>
+                                <li>Security</li>
+                                <li>Data Protection</li>
+                                <li>User exp</li>
+                              </ul>
+                            </Box>
+                          </Box>
+                        </Box>
+                      </TableCell>
+                      <TableCell align="center">
+                        <div
+                          className={
+                            row.endUsage === "Medium"
+                              ? "medium"
+                              : "" || row.endUsage === "High"
+                              ? "high"
+                              : "" || row.endUsage === "Low"
+                              ? "low"
+                              : ""
+                          }
+                        >
+                          {row.endUsage === "Medium" && (
+                            <i className="fa-solid fa-grip-lines"></i>
+                          )}
+                          {row.endUsage === "High" && (
+                            <i className="fa-solid fa-angles-up"></i>
+                          )}
+                          {row.endUsage === "Low" && (
+                            <i className="fa-solid fa-angles-down"></i>
+                          )}{" "}
+                          {row.endUsage}
+                        </div>
+                      </TableCell>
+                      <TableCell align="center">${row.cost}</TableCell>
                       <TableCell align="center">
                         <IconButton
                           className="action-btn"
@@ -445,9 +550,9 @@ class EcsCluster extends React.Component {
               onPageChange={this.handleChangePage}
               onRowsPerPageChange={this.handleChangeRowsPerPage}
             />
-          </>
+          </Box>
         )}
-      </>
+      </Box>
     );
   }
 }
