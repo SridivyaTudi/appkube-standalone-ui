@@ -7,6 +7,9 @@ https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube?page-id=6795%3A29886&
 Infra:
 https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube-DRS?page-id=11036%3A61674&type=design&node-id=18252-126166&viewport=11703%2C-21232%2C0.42&t=pCBvoiqWsaTZB5Na-1&scaling=scale-down-width&starting-point-node-id=18252%3A132402
 
+Forgot password:
+https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube-DRS?page-id=11036%3A61674&type=design&node-id=12172-65221&viewport=5677%2C-7463%2C0.21&t=3GbaAQUZ7XizOqvy-1&scaling=min-zoom&starting-point-node-id=12172%3A65221
+
 MFA: 
 https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube-DRS?page-id=11036%3A61674&type=design&node-id=12284-67810&viewport=796%2C-927%2C0.06&t=xUF2v4d1XVdTYFeZ-1&scaling=min-zoom&starting-point-node-id=12284%3A67810
 
