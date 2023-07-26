@@ -12,6 +12,7 @@ import Signin from "Views/AuthViews/SignIn";
 import SignUp from "Views/AuthViews/SignUp";
 import ForgetPassword from "Views/AuthViews/ForgetPassword";
 import ResetPassword from "./AuthViews/ResetPassword";
+import ConfirmPassword from "./AuthViews/ResetPassword/ConfirmPassword";
 import TopBar from "Components/TopBar";
 import SideBar from "Components/SideBar";
 import Environments from "Views/AppViews/Environments";
@@ -180,6 +181,11 @@ export const Views = (props) => {
             path={`${AUTH_PREFIX_PATH}/resetpassword`}
             element={<ResetPassword />}
           />
+           <Route
+            path={`${AUTH_PREFIX_PATH}/confirmpassword`}
+            element={<ConfirmPassword />}
+          />
+          
           <Route path="*" element={<Navigate to={`${AUTH_PREFIX_PATH}`} />} />
         </Routes>
       </>

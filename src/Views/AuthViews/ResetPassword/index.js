@@ -145,7 +145,7 @@ class ResetPassword extends Component {
                 onClick={this.handleSignIn}
                 variant="contained"
               >
-                Confirm
+                <Link to={`${AUTH_PREFIX_PATH}/confirmpassword`}> Confirm</Link>
               </Button>
             </Box>
           </Box>
