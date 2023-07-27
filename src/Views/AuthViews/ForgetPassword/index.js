@@ -39,23 +39,19 @@ class ForgetPassword extends Component {
         formErrors[name] = "";
         formData[name] = value;
       }
-    } else {
-      if (!value) {
-        formErrors[name] = "Password is required!";
-        formData[name] = value;
-      } else {
-        formErrors[name] = "";
-        formData[name] = value;
-      }
-    }
+    } 
+    
 
     this.setState({ formData, formErrors });
   };
 
   handleSignIn = () => {
-    // const valid = this.validateForm();
-    // console.log(valid);
+    const valid = this.validateForm();
+    console.log(valid);
+    if(valid){
     this.setState({ toggleScreen: true });
+
+    }
   };
 
   validateForm = () => {
