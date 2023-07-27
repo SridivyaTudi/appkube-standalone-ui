@@ -3205,11 +3205,15 @@
       }
 
       .chart-container {
+        margin-top: 30px;
         width: 100%;
-        height: 285px;
+        height: 310px;
+        // padding-left: 15px;
+        // padding-right: 15px;
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        overflow-x: auto;
 
         > div {
           display: flex;
@@ -3221,20 +3225,20 @@
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          width: 120px;
-          height: 50px;
+          width: 130px;
+          height: 68px;
           padding-left: 5px;
           padding-right: 5px;
           border-radius: 15px;
           margin-right: 50px;
-          border: 1px solid #C7C7E8;
-          box-shadow: 0px 100px 80px 0px #6C49AC12;
+          border: 1px solid #c7c7e8;
+          box-shadow: 0px 41.7776px 33.4221px rgba(108, 73, 172, 0.0503198);
         }
 
         .global-servies {
           display: inline-flex;
           width: auto;
-          margin-right: 50px;
+          margin-right: 48px;
 
           ul {
             list-style: none;
@@ -3244,20 +3248,106 @@
             li {
               display: flex;
               align-items: center;
-              justify-content: center;
-              width: 140px;
-              font-size: 12px;
-              line-height: 16px;
-              color: #383874;
-              font-weight: 500;
+              justify-content: flex-start;
+              cursor: pointer;
+              width: 160px;
+              height: 52px;
               padding: 10px 10px;
               margin-bottom: 20px;
               border-radius: 15px;
-              border: 1px solid #C7C7E8;
+              border: 1px solid #c7c7e8;
+              box-shadow: 0px 41.7776px 33.4221px rgba(108, 73, 172, 0.0503198);
+
+              i {
+                display: inline-flex;
+                margin-top: -52px;
+                margin-left: 5px;
+                color: #c7c7e8;
+                font-size: 14px;
+                background-color: #3838748c;
+                border-radius: 50%;
+              }
+
+              span {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 26px;
+                height: 26px;
+                border-radius: 50px;
+                background-color: #dde1f8;
+                margin-right: 10px;
+                margin-left: -19px;
+              }
+
+              .content {
+                display: inline-flex;
+                flex-wrap: wrap;
+                width: calc(100% - 36px);
+                p {
+                  margin: 0;
+                  display: flex;
+                  width: 100%;
+                  font-size: 12px;
+                  line-height: 12px;
+                  color: #383874;
+                  font-weight: 400;
+                }
+
+                .box {
+                  display: inline-flex;
+                  justify-content: center;
+                  align-items: center;
+                  margin-top: 2px;
+                  width: auto;
+                  padding-left: 5px;
+                  padding-right: 5px;
+                  height: 16px;
+                  font-size: 10px;
+                  line-height: 16px;
+                  color: #ffffff;
+                  font-weight: 400;
+                  position: relative;
+                  text-transform: uppercase;
+
+                  &:after {
+                    content: "";
+                    position: absolute;
+                    right: -8px;
+                    top: 0px;
+                    border-top: 8px solid transparent;
+                    border-bottom: 8px solid transparent;
+                  }
+
+                  &.blue {
+                    background-color: #8676ff;
+                    &:after {
+                      border-left: 8px solid #8676ff;
+                    }
+                  }
+                  &.orange {
+                    background-color: #FFBA69;
+                    &:after {
+                      border-left: 8px solid #FFBA69;
+                    }
+                  }
+                }
+              }
+
+              &.active {
+                border-color: #53ca43;
+                i {
+                  color: #53ca43;
+                  background-color: #ffffff;
+                }
+              }
             }
           }
-        }
 
+          &:last-child {
+            margin-right: 0;
+          }
+        }
       }
     }
 
