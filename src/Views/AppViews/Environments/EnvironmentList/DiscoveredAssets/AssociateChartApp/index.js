@@ -11,7 +11,7 @@ import calendarMouseIcon from "assets/img/assetmanager/calendar-mouse-icon.png";
 import databaseIcon from "assets/img/assetmanager/database-icon.png";
 
 let Data = {
-  label: "",
+  label: "Synectiks",
   subLabel: "",
   image: chartLogo,
   children: [
@@ -237,63 +237,11 @@ export class AssociateChartApp extends Component {
     const queryPrm = new URLSearchParams(document.location.search);
     const cloudName = queryPrm.get("cloudName");
     this.state = {
-      breadcrumbs: {
-        breadcrumbId: v4(),
-        cloudName: cloudName?.toUpperCase(),
-        selectedLevel1: "",
-        selectedLevel2: "",
-      },
       isSelectDepartmentOpen: false,
       isSelectProductOpen: false,
-      selectedActiveLevels: {},
-      selectedHtml: [],
+      selectedActiveBAMLevels: {},
+      BAMData: [],
     };
-  }
-
-  /** Render the BreadCrumbs of Topologyview. */
-  renderBreadCrumbs() {
-    let { breadcrumbs } = this.state;
-    let { selectedLevel1, selectedLevel2, cloudName } = breadcrumbs;
-    let activeClassKey =
-      cloudName && selectedLevel1 && !selectedLevel2
-        ? "selectedLevel1"
-        : selectedLevel1 && selectedLevel2
-        ? "selectedLevel2"
-        : "cloudName";
-    let breadCrumbsData = Object.keys(breadcrumbs);
-
-    return breadCrumbsData.map((breadCrumb, index) => {
-      if (breadcrumbs[breadCrumb] && breadCrumb !== "breadcrumbId") {
-        return (
-          <>
-            {breadCrumb !== "cloudName" ? (
-              <li key={v4()}>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-            ) : (
-              <></>
-            )}
-            <li
-              onClick={() => {
-                this.onClickBreadCrumbOfTopology(breadCrumb);
-              }}
-              className={`${activeClassKey === breadCrumb ? "active" : ""}`}
-              key={v4()}
-            >
-              <a>
-                {breadCrumb === "cloudName" || breadCrumb === "selectedLevel1"
-                  ? breadcrumbs[breadCrumb]?.toUpperCase()
-                  : breadCrumb === "selectedLevel2"
-                  ? `${breadcrumbs[breadCrumb][0]?.toUpperCase()}${breadcrumbs[
-                      breadCrumb
-                    ].slice(1)}`
-                  : breadcrumbs[breadCrumb]}
-              </a>
-            </li>
-          </>
-        );
-      }
-    });
   }
 
   toggleSelectDepartment = () => {
@@ -308,16 +256,18 @@ export class AssociateChartApp extends Component {
     });
   };
 
-  /** Render the main body including level-1 and level-2 data. */
-  renderMainBody = () => {
-    // const { data } = Data;
-    let { selectedActiveLevels } = this.state;
+  /**
+   * BAM = Business Association Mapping
+   * Render the main body including all levels data.
+   */
+  renderBAMMainBody = () => {
+    let { selectedActiveBAMLevels } = this.state;
     return Object.keys(Data).length &&
       (Data?.children[0].length || Data?.children[1].length) ? (
-      <ArcherContainer className="chart-container">
+      <ArcherContainer className="chart-container" startMarker>
         <ArcherElement
           id="root"
-          relations={this.onClickLevelsThenDrawArrow()}
+          relations={this.onClickLevelsThenDrawLine()}
           // className="chart-container"
         >
           <div
@@ -329,54 +279,36 @@ export class AssociateChartApp extends Component {
             <img src={Data.image} alt="Logo" />
           </div>
         </ArcherElement>
-        {this.renderHtml()}
+        {this.renderAllBAMLevel()}
       </ArcherContainer>
     ) : (
       ""
     );
   };
 
-  /** Render specific level
+  /**
+   * BAM = Business Association Mapping
+   * Render specific level
    *  @param {Array} data - The data of the selected level.
    * @param {Number} selectedLevel - SelectedLevel.
+   *
    */
-  renderLevels = (data, selectedLevel) => {
-    let { selectedActiveLevels, selectedHtml } = this.state;
-
+  renderBAMLevel = (data, selectedLevel) => {
+    let { selectedActiveBAMLevels, BAMData } = this.state;
     if (data.length) {
       return data.map((level, currentLevelIndex) => {
         let isActive =
-          selectedActiveLevels[`selectedLevel_${selectedLevel}`]?.id ===
+          selectedActiveBAMLevels[`selectedLevel_${selectedLevel}`]?.id ===
           currentLevelIndex;
         let elementId = `selectedLevel_${selectedLevel}_${currentLevelIndex}`;
         return (
           <ArcherElement
             id={elementId}
             relations={
-              isActive ? this.onClickLevelsThenDrawArrow(selectedLevel) : []
+              isActive ? this.onClickLevelsThenDrawLine(selectedLevel) : []
             }
             key={v4()}
           >
-            {/* <li
-              className={`${
-                selectedLevels[`selectedLevel_${selectedLevel}`]?.id ===
-                currentLevelIndex
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() => {
-                this.onClickLevel({
-                  selectedLevel,
-                  currentLevelIndex,
-                  label: level.label,
-                });
-              }}
-            >
-              <span>
-                <img src={level.image} alt={level.label} />
-              </span>
-              {this.getServiceName(level.label, "vpc")}
-            </li> */}
             {staticHtml.selectedLevel({
               isActive,
               selectedLevel,
@@ -391,14 +323,20 @@ export class AssociateChartApp extends Component {
     }
   };
 
-  renderHtml = () => {
-    const { selectedHtml } = this.state;
-    if (selectedHtml.length) {
-      return selectedHtml.map((html, selectedLevel) => {
+  /** Render All BAM Levels
+   * BAM = Business Association Mapping
+   *  @param {Array} data - The data of the selected level.
+   * @param {Number} selectedLevel - SelectedLevel.
+   *
+   */
+  renderAllBAMLevel = () => {
+    const { BAMData } = this.state;
+    if (BAMData.length) {
+      return BAMData.map((html, selectedLevel) => {
         if (html.length) {
           return (
             <div className={` global-servies`} style={{ width: "160px" }}>
-              <ul>{this.renderLevels(html, selectedLevel)}</ul>
+              <ul>{this.renderBAMLevel(html, selectedLevel)}</ul>
             </div>
           );
         }
@@ -406,71 +344,85 @@ export class AssociateChartApp extends Component {
     }
   };
 
-  /** Get name in form of capitalize. */
-  getServiceName(name, type) {
-    if (type === "vpc") {
-      return name ? name.toUpperCase() : "";
-    } else {
-      let firstChar = name ? name.charAt(0).toUpperCase() : "";
-      let otherStr = name ? name.toLowerCase().slice(1) : "";
-      let string = firstChar + otherStr;
-      return string;
-    }
-  }
-
   onClickLevels(
     { selectedLevel, currentLevelIndex, label },
     isIntialClick = 0
   ) {
-    let { selectedActiveLevels, selectedHtml } = this.state;
+    let { selectedActiveBAMLevels, BAMData } = this.state;
     let currentSelectedLevelIndex = `selectedLevel_${selectedLevel}`;
 
     if (isIntialClick) {
       let { children } = Data;
-      selectedHtml = selectedHtml.length ? [] : [children[0]];
-      selectedActiveLevels = {};
-      this.setState({ selectedActiveLevels, selectedHtml });
+      BAMData = BAMData.length ? [] : [children[0]];
+      selectedActiveBAMLevels = {};
+      this.setState({ selectedActiveBAMLevels, BAMData });
     } else {
-      if (selectedActiveLevels[currentSelectedLevelIndex]) {
+      if (selectedActiveBAMLevels[currentSelectedLevelIndex]) {
         if (
-          selectedActiveLevels[currentSelectedLevelIndex]?.id ===
+          selectedActiveBAMLevels[currentSelectedLevelIndex]?.id ===
           currentLevelIndex
         ) {
-          delete selectedActiveLevels[currentSelectedLevelIndex];
-          selectedHtml.length = selectedLevel + 1;
+          // Remove all selected level greater than current selected level
+          Object.keys(selectedActiveBAMLevels).forEach((item, inIndex) => {
+            let level = item.split("_")[1];
+            if (level && selectedLevel <= level) {
+              delete selectedActiveBAMLevels[item];
+            }
+          });
+          BAMData.length = selectedLevel + 1;
           this.setState({
-            selectedHtml,
-            selectedActiveLevels,
+            BAMData,
+            selectedActiveBAMLevels,
           });
         } else {
-          this.pushData(selectedLevel, label, currentLevelIndex, 1);
+          this.replaceDataOnSpecificIndex(
+            selectedLevel,
+            label,
+            currentLevelIndex
+          );
         }
       } else {
-        this.pushData(selectedLevel, label, currentLevelIndex);
+        this.replaceDataOnSpecificIndex(
+          selectedLevel,
+          label,
+          currentLevelIndex
+        );
       }
     }
   }
 
-  pushData(selectedLevel, name, currentLevelIndex, isReplaceData = 0) {
-    let { selectedActiveLevels, selectedHtml } = this.state;
+  /** Replace data on specific index in selectedBAMHtml state
+   * BAM = Business Association Mapping
+   *  @param {Number} selectedLevel- The selectedLevel of BAM,
+   * @param {String} label - Current click label of BAM
+   * @param {Number} currentLevelIndex - Current click level index of BAM
+   */
+  replaceDataOnSpecificIndex(
+    selectedLevel,
+    label,
+    currentLevelIndex,
+    isReplaceData = 0
+  ) {
+    let { selectedActiveBAMLevels, BAMData } = this.state;
     let dataGet = Data.children[0];
     let currentSelectedLevelIndex = `selectedLevel_${selectedLevel}`;
-    selectedActiveLevels[currentSelectedLevelIndex] = {
+    selectedActiveBAMLevels[currentSelectedLevelIndex] = {
       id: currentLevelIndex,
+      label,
     };
     // Remove all selected level greater than current selected level
-    Object.keys(selectedActiveLevels).forEach((item, inIndex) => {
+    Object.keys(selectedActiveBAMLevels).forEach((item, inIndex) => {
       let level = item.split("_")[1];
       if (selectedLevel < level) {
-        delete selectedActiveLevels[item];
+        delete selectedActiveBAMLevels[item];
       }
     });
-    selectedHtml.length = selectedLevel + 1;
+    BAMData.length = selectedLevel + 1;
 
     // Get selected level data
-    Object.keys(selectedActiveLevels).forEach((item, inIndex) => {
-      if (dataGet[selectedActiveLevels[item].id]?.children) {
-        dataGet = dataGet[selectedActiveLevels[item].id]["children"];
+    Object.keys(selectedActiveBAMLevels).forEach((item, inIndex) => {
+      if (dataGet[selectedActiveBAMLevels[item].id]?.children) {
+        dataGet = dataGet[selectedActiveBAMLevels[item].id]["children"];
       } else {
         dataGet = [];
       }
@@ -478,17 +430,23 @@ export class AssociateChartApp extends Component {
 
     // Replace data on specific index
     if (dataGet.length) {
-      selectedHtml[selectedLevel + 1] = dataGet;
+      BAMData[selectedLevel + 1] = dataGet;
     }
-    this.setState({ selectedActiveLevels, selectedHtml });
+    this.setState({ selectedActiveBAMLevels, BAMData });
   }
 
-  onClickLevelsThenDrawArrow = (selectedLevel) => {
-    let { selectedHtml } = this.state;
+  /** Fire click event then draw
+   * BAM = Business Association Mapping
+   *  @param {Number} selectedLevel- The selectedLevel of BAM,
+   * @param {String} label - Current click label of BAM
+   * @param {Number} currentLevelIndex - Current click level index of BAM
+   */
+  onClickLevelsThenDrawLine = (selectedLevel) => {
+    let { BAMData } = this.state;
     let selectedLevelIndex = selectedLevel >= 0 ? selectedLevel + 1 : 0;
 
-    if (selectedHtml.length && selectedHtml[selectedLevelIndex]) {
-      return selectedHtml[selectedLevelIndex].map((item, index) => {
+    if (BAMData.length && BAMData[selectedLevelIndex]) {
+      return BAMData[selectedLevelIndex].map((item, index) => {
         let tempDrawArrow = Object.assign({}, drawArrow);
         tempDrawArrow[
           "targetId"
@@ -500,53 +458,71 @@ export class AssociateChartApp extends Component {
     }
   };
 
+  /** Render the BreadCrumbs. */
+  renderBreadCrumbs(isBreadCrumb = 1) {
+    let { selectedActiveBAMLevels } = this.state;
+
+    let activeBAM = Object.keys(selectedActiveBAMLevels);
+    let breadcrumbs = [
+      <li
+        className={`${activeBAM.length === 1 ? "active" : ""}`}
+        onClick={() => {
+          isBreadCrumb ? this.onClickLevels({}, 1) : <></>;
+        }}
+        key={v4()}
+      >
+        <a>{Data.label}</a>
+      </li>,
+    ];
+
+    if (activeBAM.length) {
+      activeBAM.map((bamItemKey, index) => {
+        let label = selectedActiveBAMLevels[bamItemKey]?.label;
+        let currentLevelIndex = selectedActiveBAMLevels[bamItemKey]?.id;
+        let selectedLevel = +bamItemKey.split("_")?.[1];
+        breadcrumbs.push(
+          <>
+            {isBreadCrumb ? (
+              <li key={v4()}>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+            ) : (
+              <></>
+            )}
+
+            <li
+              className={`${activeBAM.length === index ? "active" : ""}`}
+              onClick={() => {
+                isBreadCrumb ? (
+                  this.onClickLevels(
+                    {
+                      selectedLevel,
+                      currentLevelIndex,
+                      label,
+                    },
+                    bamItemKey === "root" ? 1 : 0
+                  )
+                ) : (
+                  <></>
+                );
+              }}
+              key={v4()}
+            >
+              <a>{label}</a>
+            </li>
+          </>
+        );
+      });
+    }
+    return breadcrumbs;
+  }
+
   render() {
     const { isSelectDepartmentOpen, isSelectProductOpen } = this.state;
     return (
       <Box className="environment-container associate-container">
         <Box className="breadcrumbs">
-          {/* <ul>{this.renderBreadCrumbs()}</ul> */}
-          <ul>
-            <li>
-              <a>Synectiks</a>
-            </li>
-            <li>
-              <i className="fa-solid fa-chevron-right"></i>
-            </li>
-            <li>
-              <a>Human Resource</a>
-            </li>
-            <li>
-              <i className="fa-solid fa-chevron-right"></i>
-            </li>
-            <li>
-              <a>Accounts</a>
-            </li>
-            <li>
-              <i className="fa-solid fa-chevron-right"></i>
-            </li>
-            <li>
-              <a>Production</a>
-            </li>
-            <li>
-              <i className="fa-solid fa-chevron-right"></i>
-            </li>
-            <li>
-              <a>Business</a>
-            </li>
-            <li>
-              <i className="fa-solid fa-chevron-right"></i>
-            </li>
-            <li>
-              <a>Fee</a>
-            </li>
-            <li>
-              <i className="fa-solid fa-chevron-right"></i>
-            </li>
-            <li className="active">
-              <a>DynamoDB</a>
-            </li>
-          </ul>
+          <ul>{this.renderBreadCrumbs()}</ul>
         </Box>
         <Box className="associate-chart-container">
           <Grid
@@ -689,20 +665,12 @@ export class AssociateChartApp extends Component {
               </Box>
             </Grid>
           </Grid>
-          {this.renderMainBody()}
+          {this.renderBAMMainBody()}
         </Box>
         <Box className="infra-existing">
           <div className="heading">Infra Existing tags of element</div>
           <Box className="breadcrumbs">
-            <ul>
-              <li>Synectiks</li>
-              <li>Human Resources</li>
-              <li>Accounts</li>
-              <li>Production</li>
-              <li>Business</li>
-              <li>Fees</li>
-              <li>Dynam DB</li>
-            </ul>
+            <ul>{this.renderBreadCrumbs(0)}</ul>
           </Box>
         </Box>
       </Box>
