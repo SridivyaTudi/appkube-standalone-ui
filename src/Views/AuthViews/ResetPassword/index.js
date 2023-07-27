@@ -25,6 +25,7 @@ class ResetPassword extends Component {
       imageVisibility: false,
       toggleScreen: false,
       showPassword: false,
+      showconfirmPassword: false
     };
   }
 
@@ -78,7 +79,7 @@ class ResetPassword extends Component {
   };
 
   render() {
-    const { formData, formErrors, toggleScreen, imageVisibility, errors, isSubmit, showPassword } =
+    const { formData, formErrors, toggleScreen, imageVisibility, errors, isSubmit, showPassword, showconfirmPassword } =
       this.state;
     const errorData = this.validateForm(isSubmit);
     return (
@@ -150,7 +151,7 @@ class ResetPassword extends Component {
                     <Box className="input-group">
                       <label className="d-block">Re enter your password</label>
                       <input
-                        type="password"
+                         type={showconfirmPassword ? "text" : "password"}
                         className="form-control"
                         name="confirmPassword"
                         placeholder="Re enter your password here"
@@ -161,18 +162,18 @@ class ResetPassword extends Component {
                       <p>{errorData.errors.confirmPassword}</p>
                          
                       {errorData.confirmPassword ? (
-                        <p className="m-b-0">{errors.password}</p>
+                        <p className="m-b-0">{errors.confirmPassword}</p>
                       ) : (
                         <></>
                       )}
                       <i
                         className={`fa-sharp fa-regular fa-eye${
-                          showPassword ? "" : "-slash"
+                          showconfirmPassword ? "" : "-slash"
                         }`}
                         style={{ cursor: "pointer" }}
                         onClick={() => {
                           this.setState({
-                            showPassword: !this.state.showPassword,
+                            showconfirmPassword: !this.state.showconfirmPassword,
                           });
                         }}
                       ></i>
