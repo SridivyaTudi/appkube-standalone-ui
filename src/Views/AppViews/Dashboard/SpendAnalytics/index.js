@@ -19,6 +19,17 @@ import status from "Redux/Constants/CommonDS";
 import { ToastMessage } from "Toast/ToastMessage";
 import { v4 } from "uuid";
 import { cloudwiseSpendColor } from "Utils";
+import {
+  getCurrentHourSpendRate,
+  getCurrentDaySpendRate,
+  getTodaySpendAnalytics,
+  getYesterdaySpendAnalytics,
+  getTotalSpend,
+  getMonthlyCloudWiseSpend,
+  getTotalCloudWiseSpend,
+  getMonthlyStatistics,
+  getTotalBudget,
+} from "Redux/Dashboard/DashboardThunk";
 
 ChartJS.register(
   CategoryScale,
@@ -180,21 +191,24 @@ class SpendAnalytics extends Component {
   }
 
   componentDidMount = () => {
-    if (this.props.monthlyCloudWiseSpend.data) {
-      this.lineDiagramDataPrepare();
-    }
+    this.props.getCurrentHourSpendRate();
+    this.props.getCurrentDaySpendRate();
+    this.props.getTodaySpendAnalytics();
+    this.props.getYesterdaySpendAnalytics();
+    this.props.getTotalSpend();
+    this.props.getMonthlyCloudWiseSpend();
+    this.props.getTotalCloudWiseSpend();
+    this.props.getMonthlyStatistics();
+    this.props.getTotalBudget();
   };
 
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.monthlyCloudWiseSpend.status !==
-      this.props.monthlyCloudWiseSpend.status
+        this.props.monthlyCloudWiseSpend.status &&
+      this.props.monthlyCloudWiseSpend.status === status.SUCCESS
     ) {
-      if (this.props.monthlyCloudWiseSpend.status === status.SUCCESS) {
-        this.lineDiagramDataPrepare();
-      } else if (this.props.monthlyCloudWiseSpend.status === status.FAILURE) {
-        ToastMessage.error("There is some issue.");
-      }
+      this.lineDiagramDataPrepare();
     }
   }
 
@@ -517,6 +531,7 @@ class SpendAnalytics extends Component {
       };
     }
   }
+
   /** Calculate Remaining Budget Percentage. */
   calculateRemainingBudgetPercentage() {
     let remainingBudgetPercentage =
@@ -661,6 +676,7 @@ class SpendAnalytics extends Component {
       );
     }
   }
+
   render() {
     return (
       <Box className="spend-analytics-container">
@@ -752,5 +768,16 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getCurrentHourSpendRate,
+  getCurrentDaySpendRate,
+  getTodaySpendAnalytics,
+  getYesterdaySpendAnalytics,
+  getTotalSpend,
+  getMonthlyCloudWiseSpend,
+  getTotalCloudWiseSpend,
+  getMonthlyStatistics,
+  getTotalBudget,
+};
+
 export default connect(mapStateToProps, mapDispatchToProps)(SpendAnalytics);
