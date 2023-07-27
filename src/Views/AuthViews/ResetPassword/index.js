@@ -12,76 +12,75 @@ class ResetPassword extends Component {
     super(props);
     this.state = {
       formData: {
-        email: "",
+        confirmPassword: "",
         password: "",
+        //showPassword: false,
       },
       formErrors: {
-        email: "",
+        confirmPassword: "",
         password: "",
       },
+      isSubmit: false,
       sendEmail: false,
       imageVisibility: false,
       toggleScreen: false,
+      showPassword: false,
     };
   }
 
   handleInputChange = (e) => {
     const { name, value } = e.target;
     const { formData, formErrors } = this.state;
-
-    if (name === "email") {
-      const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      if (!value) {
-        formErrors[name] = "Email is required!";
-        formData[name] = value;
-      } else if (!regex.test(value)) {
-        formErrors[name] = "Please enter valid email!";
-        formData[name] = value;
-      } else {
-        formErrors[name] = "";
-        formData[name] = value;
-      }
-    } else {
-      if (!value) {
-        formErrors[name] = "Password is required!";
-        formData[name] = value;
-      } else {
-        formErrors[name] = "";
-        formData[name] = value;
-      }
-    }
+   
+    
+      formData[name] = value;
+    
 
     this.setState({ formData, formErrors });
   };
 
   handleSignIn = () => {
-    // const valid = this.validateForm();
-    // console.log(valid);
-
-    this.setState({ toggleScreen: true, imageVisibility: true });
+    const valid = this.validateForm(true);
+    this.setState({
+      isSubmit: true,
+    });
+    if (valid.isValid) {
+      this.setState({ toggleScreen: true, imageVisibility: true });
+    }
   };
 
-  validateForm = () => {
-    const { formData, formErrors } = this.state;
-    let valid = true;
-    if (!formData.email) {
-      formErrors.email = "Email is required!";
-      valid = false;
-    } else if (
-      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(formData.email)
-    ) {
-      formErrors.email = "Please enter valid email!";
-      valid = false;
-    } else {
-      formErrors.email = "";
-      valid = true;
+  validateForm = (isSubmit) => {
+    const { formData } = this.state;
+    // debugger;
+    const errors = {
+      confirmPassword: "",
+      password: "",
+    };
+    let isValid = true;
+    if (isSubmit) {
+      
+
+      if (!formData.password) {
+        errors.password = "Please enter password";
+        isValid = false;
+      } else {
+        errors.password = "";
+      }
+
+      if (formData.confirmPassword !==formData.password) {
+        errors.confirmPassword = "Password does not matched";
+        isValid = false;
+      } else {
+        errors.confirmPassword = "";
+      }
     }
-    this.setState({ formErrors });
-    return valid;
+    return { isValid, errors };
   };
 
   render() {
-    const { formData, formErrors, toggleScreen, imageVisibility } = this.state;
+    const { formData, formErrors, toggleScreen, imageVisibility, errors, isSubmit, showPassword } =
+      this.state;
+    const errorData = this.validateForm(isSubmit);
     return (
       <Box className="resetpassword-container">
         <Box className="forget-left">
@@ -119,14 +118,32 @@ class ResetPassword extends Component {
                     <Box className="input-group">
                       <label className="d-block">Enter a New password </label>
                       <input
-                        type="password"
+                         type={showPassword ? "text" : "password"}
                         className="form-control"
                         name="password"
+                        value={formData.password}
                         placeholder="Enter your New password here"
                         onChange={this.handleInputChange}
                         autoComplete="on"
                       />
-                      <i className="fa-sharp fa-regular fa-eye"></i>
+                      <p> {errorData.errors.password}</p>
+                     
+                      {errorData.password ? (
+                        <p className="m-b-0">{errors.password}</p>
+                      ) : (
+                        <></>
+                      )}
+                      <i
+                        className={`fa-sharp fa-regular fa-eye${
+                          showPassword ? "" : "-slash"
+                        }`}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          this.setState({
+                            showPassword: !this.state.showPassword,
+                          });
+                        }}
+                      ></i>
                     </Box>
                   </Grid>
                   <Grid item xs={12}>
@@ -135,12 +152,30 @@ class ResetPassword extends Component {
                       <input
                         type="password"
                         className="form-control"
-                        name="password"
+                        name="confirmPassword"
                         placeholder="Re enter your password here"
+                        value={formData.confirmPassword}
                         onChange={this.handleInputChange}
                         autoComplete="on"
                       />
-                      <i className="fa-sharp fa-regular fa-eye"></i>
+                      <p>{errorData.errors.confirmPassword}</p>
+                         
+                      {errorData.confirmPassword ? (
+                        <p className="m-b-0">{errors.password}</p>
+                      ) : (
+                        <></>
+                      )}
+                      <i
+                        className={`fa-sharp fa-regular fa-eye${
+                          showPassword ? "" : "-slash"
+                        }`}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          this.setState({
+                            showPassword: !this.state.showPassword,
+                          });
+                        }}
+                      ></i>
                     </Box>
                   </Grid>
                 </Grid>
@@ -152,7 +187,6 @@ class ResetPassword extends Component {
                   variant="contained"
                 >
                   Confirm
-                  {/* <Link to={`${AUTH_PREFIX_PATH}/confirmpassword`}> </Link> */}
                 </Button>
               </Box>
             </Box>
@@ -179,11 +213,7 @@ class ResetPassword extends Component {
                     </p>
                   </Box>
                   <Box className="d-flex width-100 next-step">
-                    <Button
-                      className="primary-btn"
-                      onClick={this.handleSignIn}
-                      variant="contained"
-                    >
+                    <Button className="primary-btn" variant="contained">
                       Continue
                     </Button>
                   </Box>
