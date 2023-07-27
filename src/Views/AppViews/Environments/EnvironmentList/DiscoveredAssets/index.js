@@ -584,7 +584,7 @@ class DiscoveredAssets extends Component {
                           <FormControlLabel
                             control={<Checkbox />}
                             label="Show cluster"
-                            className="checkbox primary"
+                            className="checkbox primary m-l-auto m-r-0"
                             size="small"
                             onChange={() => {
                               this.setState({ isClusterShow: !isClusterShow });

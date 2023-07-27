@@ -223,12 +223,25 @@ export class AssociateApp extends Component {
           ],
         },
       ],
-      activeTierTab: "3Tier",
+      activeTierTabIndexes: [],
     };
   }
 
+  handleTierTabToggle = (index, type) => {
+    let { activeTierTabIndexes } = this.state;
+    if (activeTierTabIndexes.includes(index) && type !== "soa") {
+      activeTierTabIndexes = activeTierTabIndexes.filter(
+        (item) => item !== index
+      );
+    }
+    if (!activeTierTabIndexes.includes(index) && type !== "3Tier") {
+      activeTierTabIndexes.push(index);
+    }
+    this.setState({ activeTierTabIndexes });
+  };
+
   renderTierSoc() {
-    let { dataTierSoc, activeTierTab } = this.state;
+    let { dataTierSoc, activeTierTabIndexes } = this.state;
     const JSX = [];
     dataTierSoc.map((data, index) => {
       JSX.push(
@@ -240,49 +253,57 @@ export class AssociateApp extends Component {
               </span>{" "}
               EC2 ID: {data.ec2Id}
             </h3>
-            <Button>Associate App</Button>
+            <Button
+              className="primary-text-btn min-width"
+              component={Link}
+              variant="contained"
+              to={`${APP_PREFIX_PATH}/environments/associatechartapp`}
+            >
+              Associate App
+            </Button>
           </Box>
           <Box className="contents">
             <Box className="tier-buttons">
               <Button
-                className={activeTierTab === "3Tier" ? "active" : ""}
-                onClick={(index) => this.handleTierTabToggle("3Tier")}
+                className={
+                  !activeTierTabIndexes.includes(index) ? "active" : ""
+                }
+                onClick={() => this.handleTierTabToggle(index, "3Tier")}
               >
                 3 Tier
               </Button>
               <Button
-                className={activeTierTab === "Soa" ? "active" : ""}
-                onClick={(index) => this.handleTierTabToggle("Soa")}
+                className={activeTierTabIndexes.includes(index) ? "active" : ""}
+                onClick={() => this.handleTierTabToggle(index, "soa")}
               >
                 SOA
               </Button>
             </Box>
             <Box className="tier-contents">
               <ul>
-                {activeTierTab === "3Tier" &&
-                  data.tierData.map((item) => {
-                    return (
-                      <li key={item.layer}>
-                        <span>
-                          <img src={item.icon} alt="" />
-                        </span>
-                        <label>{item.label}</label>
-                        <strong>{item.layer}</strong>
-                      </li>
-                    );
-                  })}
-                {activeTierTab === "Soa" &&
-                  data.socData.map((item) => {
-                    return (
-                      <li key={item.layer}>
-                        <span>
-                          <img src={item.icon} alt="" />
-                        </span>
-                        <label>{item.label}</label>
-                        <strong>{item.layer}</strong>
-                      </li>
-                    );
-                  })}
+                {!activeTierTabIndexes.includes(index)
+                  ? data.tierData.map((item) => {
+                      return (
+                        <li key={item.layer}>
+                          <span>
+                            <img src={item.icon} alt="" />
+                          </span>
+                          <label>{item.label}</label>
+                          <strong>{item.layer}</strong>
+                        </li>
+                      );
+                    })
+                  : data.socData.map((item) => {
+                      return (
+                        <li key={item.layer}>
+                          <span>
+                            <img src={item.icon} alt="" />
+                          </span>
+                          <label>{item.label}</label>
+                          <strong>{item.layer}</strong>
+                        </li>
+                      );
+                    })}
               </ul>
             </Box>
           </Box>
@@ -304,10 +325,6 @@ export class AssociateApp extends Component {
     });
     return JSX;
   }
-
-  handleTierTabToggle = (type) => {
-    this.setState({ activeTierTab: type });
-  };
 
   render() {
     const {} = this.state;
