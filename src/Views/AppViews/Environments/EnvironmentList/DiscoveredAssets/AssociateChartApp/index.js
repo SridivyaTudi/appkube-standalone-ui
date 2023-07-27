@@ -27,6 +27,13 @@ let Data = {
             id: "",
             image: calendarMouseIcon,
             type: "Payroll",
+            children: [],
+          },
+          {
+            label: "Accounts",
+            id: "",
+            image: databaseIcon,
+            type: "Accounts",
             children: [
               {
                 label: "Production",
@@ -41,79 +48,60 @@ let Data = {
                     type: "Business",
                     children: [
                       {
-                        label: "sub 4",
+                        label: "Admission",
                         id: "",
-                        image: "",
-                        type: "cluster",
+                        image: calendarMouseIcon,
+                        type: "Admission",
+                        children: [],
+                      },
+                      {
+                        label: "Fees",
+                        id: "",
+                        image: databaseIcon,
+                        type: "Fees",
                         children: [
                           {
-                            label: "sub 5",
+                            label: "Java Spring boot",
                             id: "",
-                            image: "",
-                            type: "cluster",
-                            children: [
-                              {
-                                label: "sub 6",
-                                id: "",
-                                image: "",
-                                type: "cluster",
-                                children: [
-                                  {
-                                    label: "sub 7",
-                                    id: "",
-                                    image: "",
-                                    type: "cluster",
-                                    children: [
-                                      {
-                                        label: "sub 8",
-                                        id: "",
-                                        image: "",
-                                        type: "cluster",
-                                        children: [
-                                          {
-                                            label: "sub 9",
-                                            id: "",
-                                            image: "",
-                                            type: "cluster",
-                                            children: [
-                                              {
-                                                label: "sub 10",
-                                                id: "",
-                                                image: "",
-                                                type: "cluster",
-                                                children: [],
-                                              },
-                                            ],
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                  },
-                                  {
-                                    label: "sub 5",
-                                    id: "",
-                                    image: "",
-                                    type: "cluster",
-                                    children: [],
-                                  },
-                                ],
-                              },
-                            ],
+                            image: calendarMouseIcon,
+                            type: "JavaSpringboot",
+                            children: [],
                           },
                           {
-                            label: "sub 1",
+                            label: "Postgres SQL",
                             id: "",
-                            image: "",
-                            type: "cluster",
+                            image: databaseIcon,
+                            type: "PostgresSQL",
+                            children: [],
+                          },
+                          {
+                            label: "Redis",
+                            id: "",
+                            image: calendarMouseIcon,
+                            type: "Redis",
+                            children: [],
+                          },
+                          {
+                            label: "Dynamo DB",
+                            id: "",
+                            image: databaseIcon,
+                            type: "DynamoDB",
                             children: [],
                           },
                         ],
                       },
                       {
-                        label: "sub 1",
+                        label: "Canteen",
                         id: "",
-                        image: "",
-                        type: "cluster",
+                        image: calendarMouseIcon,
+                        type: "Canteen",
+                        children: [],
+                      },
+                      {
+                        label: "Library",
+                        id: "",
+                        image: databaseIcon,
+                        type: "Library",
                         children: [],
                       },
                     ],
@@ -151,13 +139,6 @@ let Data = {
             ],
           },
           {
-            label: "Accounts",
-            id: "",
-            image: databaseIcon,
-            type: "Accounts",
-            children: [],
-          },
-          {
             label: "HRMS",
             id: "",
             image: calendarMouseIcon,
@@ -178,45 +159,21 @@ let Data = {
         id: null,
         type: "Finance",
         image: databaseIcon,
-        children: [
-          {
-            label: "gateway",
-            id: "",
-            image: "",
-            type: "cluster",
-            children: [],
-          },
-        ],
+        children: [],
       },
       {
         label: "IT",
         id: null,
         type: "It",
         image: calendarMouseIcon,
-        children: [
-          {
-            label: "gateway",
-            id: "",
-            image: "",
-            type: "cluster",
-            children: [],
-          },
-        ],
+        children: [],
       },
       {
         label: "Admin",
         id: null,
         type: "Admin",
         image: databaseIcon,
-        children: [
-          {
-            label: "gateway",
-            id: "",
-            image: "",
-            type: "cluster",
-            children: [],
-          },
-        ],
+        children: [],
       },
     ],
     [],
@@ -233,7 +190,7 @@ let drawArrow = {
     strokeWidth: 2,
     endShape: {
       circle: {
-        radius: 2,
+        radius: 1.3,
         fillColor: "#6a6a9f",
         strokeColor: "#6a6a9f",
         strokeWidth: -1.8,
@@ -261,10 +218,14 @@ let staticHtml = {
           });
         }}
       >
+        <i className="fa-solid fa-circle-plus"></i>
         <span>
           <img src={image} alt={label} />
         </span>
-        {label}
+        <div className="content">
+          <p>{label}</p>
+          <div className="box blue orange">SOA</div>
+        </div>
       </li>
     );
   },
@@ -365,7 +326,7 @@ export class AssociateChartApp extends Component {
               this.onClickLevels({}, 1);
             }}
           >
-            <img src={Data.image} alt="aws image" />
+            <img src={Data.image} alt="Logo" />
           </div>
         </ArcherElement>
         {this.renderHtml()}
@@ -420,7 +381,7 @@ export class AssociateChartApp extends Component {
               isActive,
               selectedLevel,
               currentLevelIndex,
-              label: this.getServiceName(level.label, "vpc"),
+              label: level.label,
               image: level.image,
               onClickLevel: (arg) => this.onClickLevels(arg),
             })}
@@ -436,7 +397,7 @@ export class AssociateChartApp extends Component {
       return selectedHtml.map((html, selectedLevel) => {
         if (html.length) {
           return (
-            <div className={` global-servies`} style={{ width: "140px" }}>
+            <div className={` global-servies`} style={{ width: "160px" }}>
               <ul>{this.renderLevels(html, selectedLevel)}</ul>
             </div>
           );

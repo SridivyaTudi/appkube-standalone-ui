@@ -137,11 +137,8 @@ class ForgetPassword extends Component {
                 <Button
                   className="primary-btn"
                   onClick={this.handleSignIn}
-                  variant="contained"
-                >
-                  {/* <Link to={`${AUTH_PREFIX_PATH}/resetpassword`}> */}
+                  variant="contained">
                   Reset your password
-                  {/* </Link> */}
                 </Button>
               </Box>
             </Box>
