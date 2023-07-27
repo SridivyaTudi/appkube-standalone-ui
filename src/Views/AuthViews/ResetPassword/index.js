@@ -25,17 +25,15 @@ class ResetPassword extends Component {
       imageVisibility: false,
       toggleScreen: false,
       showPassword: false,
-      showconfirmPassword: false
+      showconfirmPassword: false,
     };
   }
 
   handleInputChange = (e) => {
     const { name, value } = e.target;
     const { formData, formErrors } = this.state;
-   
-    
-      formData[name] = value;
-    
+
+    formData[name] = value;
 
     this.setState({ formData, formErrors });
   };
@@ -59,8 +57,6 @@ class ResetPassword extends Component {
     };
     let isValid = true;
     if (isSubmit) {
-      
-
       if (!formData.password) {
         errors.password = "Please enter password";
         isValid = false;
@@ -68,7 +64,7 @@ class ResetPassword extends Component {
         errors.password = "";
       }
 
-      if (formData.confirmPassword !==formData.password) {
+      if (formData.confirmPassword !== formData.password) {
         errors.confirmPassword = "Password does not matched";
         isValid = false;
       } else {
@@ -79,8 +75,16 @@ class ResetPassword extends Component {
   };
 
   render() {
-    const { formData, formErrors, toggleScreen, imageVisibility, errors, isSubmit, showPassword, showconfirmPassword } =
-      this.state;
+    const {
+      formData,
+      formErrors,
+      toggleScreen,
+      imageVisibility,
+      errors,
+      isSubmit,
+      showPassword,
+      showconfirmPassword,
+    } = this.state;
     const errorData = this.validateForm(isSubmit);
     return (
       <Box className="resetpassword-container">
@@ -119,7 +123,7 @@ class ResetPassword extends Component {
                     <Box className="input-group">
                       <label className="d-block">Enter a New password </label>
                       <input
-                         type={showPassword ? "text" : "password"}
+                        type={showPassword ? "text" : "password"}
                         className="form-control"
                         name="password"
                         value={formData.password}
@@ -128,7 +132,7 @@ class ResetPassword extends Component {
                         autoComplete="on"
                       />
                       <p> {errorData.errors.password}</p>
-                     
+
                       {errorData.password ? (
                         <p className="m-b-0">{errors.password}</p>
                       ) : (
@@ -151,7 +155,7 @@ class ResetPassword extends Component {
                     <Box className="input-group">
                       <label className="d-block">Re enter your password</label>
                       <input
-                         type={showconfirmPassword ? "text" : "password"}
+                        type={showconfirmPassword ? "text" : "password"}
                         className="form-control"
                         name="confirmPassword"
                         placeholder="Re enter your password here"
@@ -160,7 +164,7 @@ class ResetPassword extends Component {
                         autoComplete="on"
                       />
                       <p>{errorData.errors.confirmPassword}</p>
-                         
+
                       {errorData.confirmPassword ? (
                         <p className="m-b-0">{errors.confirmPassword}</p>
                       ) : (
@@ -173,7 +177,8 @@ class ResetPassword extends Component {
                         style={{ cursor: "pointer" }}
                         onClick={() => {
                           this.setState({
-                            showconfirmPassword: !this.state.showconfirmPassword,
+                            showconfirmPassword:
+                              !this.state.showconfirmPassword,
                           });
                         }}
                       ></i>
@@ -215,7 +220,7 @@ class ResetPassword extends Component {
                   </Box>
                   <Box className="d-flex width-100 next-step">
                     <Button className="primary-btn" variant="contained">
-                      Continue
+                      <Link to={`${AUTH_PREFIX_PATH}/signin`}> Continue</Link>
                     </Button>
                   </Box>
                 </Box>

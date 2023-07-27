@@ -10,7 +10,11 @@ import ListItem from "@mui/material/ListItem";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { organizationsAsyncThunk } from "Redux/Organization/OrganizationThunk";
-import { getCurrentOrgId, setCurrentOrgId,getCurrentUser } from "Utils";
+import { getCurrentOrgId, setCurrentOrgId, getCurrentUser } from "Utils";
+import Button from "@mui/material/Button";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import { styled } from "@mui/material/styles";
 
 function TopBar() {
   const navigate = useNavigate();
@@ -20,14 +24,14 @@ function TopBar() {
   const [showNotification, setShowNotification] = useState(false);
 
   const onClickNotification = () => {
-    setShowNotification(!showNotification)
-    setShowProfile(false)
-  }
+    setShowNotification(!showNotification);
+    setShowProfile(false);
+  };
 
   const onClickProfile = () => {
-    setShowProfile(!showProfile)
-    setShowNotification(false)
-  }
+    setShowProfile(!showProfile);
+    setShowNotification(false);
+  };
 
   useEffect(() => {
     if (!getCurrentOrgId()) {
@@ -41,9 +45,24 @@ function TopBar() {
     }
   }, [orgs]);
 
-  const getCurrentUserInfo = ()=>{
-    return getCurrentUser() ? getCurrentUser()?.info?.user ? getCurrentUser().info.user : { username:'',email:'',profileImage:''} : {username:'',email:'',profileImage:''}
-  }
+  const getCurrentUserInfo = () => {
+    return getCurrentUser()
+      ? getCurrentUser()?.info?.user
+        ? getCurrentUser().info.user
+        : { username: "", email: "", profileImage: "" }
+      : { username: "", email: "", profileImage: "" };
+  };
+  const HtmlTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: "#f5f5f9",
+      color: "rgba(0, 0, 0, 0.87)",
+      maxWidth: 220,
+      fontSize: theme.typography.pxToRem(12),
+      border: "1px solid #dadde9",
+    },
+  }));
   return (
     <Box className="top-bar">
       <Box sx={{ width: "100%" }}>
@@ -71,7 +90,13 @@ function TopBar() {
                   <span></span>
                   <img src={notification} alt="" />
                 </Box>
-                <Box className={showNotification === true ? "notification-dropdown active" : "notification-dropdown"}>
+                <Box
+                  className={
+                    showNotification === true
+                      ? "notification-dropdown active"
+                      : "notification-dropdown"
+                  }
+                >
                   <Box className="d-flex align-items-center header">
                     4 New Notifications
                   </Box>
@@ -80,7 +105,9 @@ function TopBar() {
                       <i className="fa-regular fa-comment"></i>
                       <Box className="details">
                         <div className="name">New device detected</div>
-                        <div className="content">Login from a new device has been detected.</div>
+                        <div className="content">
+                          Login from a new device has been detected.
+                        </div>
                         <div className="time">2 hours ago</div>
                       </Box>
                     </ListItem>
@@ -88,7 +115,9 @@ function TopBar() {
                       <i className="fa-regular fa-comment"></i>
                       <Box className="details">
                         <div className="name">New device detected</div>
-                        <div className="content">Login from a new device has been detected.</div>
+                        <div className="content">
+                          Login from a new device has been detected.
+                        </div>
                         <div className="time">2 hours ago</div>
                       </Box>
                     </ListItem>
@@ -96,7 +125,9 @@ function TopBar() {
                       <i className="fa-regular fa-comment"></i>
                       <Box className="details">
                         <div className="name">New device detected</div>
-                        <div className="content">Login from a new device has been detected.</div>
+                        <div className="content">
+                          Login from a new device has been detected.
+                        </div>
                         <div className="time">2 hours ago</div>
                       </Box>
                     </ListItem>
@@ -104,35 +135,99 @@ function TopBar() {
                       <i className="fa-regular fa-comment"></i>
                       <Box className="details">
                         <div className="name">New device detected</div>
-                        <div className="content">Login from a new device has been detected.</div>
+                        <div className="content">
+                          Login from a new device has been detected.
+                        </div>
                         <div className="time">2 hours ago</div>
                       </Box>
                     </ListItem>
                   </List>
-                  <Box className="d-flex align-items-center show-notifications"><a href="#">Show all notifications</a></Box>
+                  <Box className="d-flex align-items-center show-notifications">
+                    <a href="#">Show all notifications</a>
+                  </Box>
                 </Box>
                 {showNotification === true ? (
-                  <div className="notification-bg" onClick={() => onClickNotification()}></div>
+                  <div
+                    className="notification-bg"
+                    onClick={() => onClickNotification()}
+                  ></div>
                 ) : (
                   <></>
                 )}
               </Box>
               <Box className="profile-box">
-                <Box
-                  className="profile"
-                  onClick={() => onClickProfile()}
-                >
-                  <img src={getCurrentUserInfo().profileImage ? `data:image/png;base64,${getCurrentUserInfo().profileImage}` : avatar} alt="" />
+                <Box className="profile" onClick={() => onClickProfile()}>
+                  <img
+                    src={
+                      getCurrentUserInfo().profileImage
+                        ? `data:image/png;base64,${
+                            getCurrentUserInfo().profileImage
+                          }`
+                        : avatar
+                    }
+                    alt=""
+                  />
                 </Box>
-                <Box className={showProfile === true ? "profile-dropdown active" : "profile-dropdown"}>
+                <Box
+                  className={
+                    showProfile === true
+                      ? "profile-dropdown active"
+                      : "profile-dropdown"
+                  }
+                >
                   <Box className="d-flex align-items-center header">
                     <Box className="user-img">
-                      <img src={getCurrentUserInfo().profileImage ? `data:image/png;base64,${getCurrentUserInfo().profileImage}` : avatar} alt="" />
+                      <img
+                        src={
+                          getCurrentUserInfo().profileImage
+                            ? `data:image/png;base64,${
+                                getCurrentUserInfo().profileImage
+                              }`
+                            : avatar
+                        }
+                        alt=""
+                      />
                     </Box>
                     <Box className="details">
-                      <div className="name">{getCurrentUserInfo().username}</div>
-                      <div className="email">{getCurrentUserInfo().email}</div>
-                    </Box>
+                    <HtmlTooltip
+                      title={
+                        <React.Fragment>
+                        <Box className="details">
+                        <div className="name">
+                          {getCurrentUserInfo().username}
+                        </div>
+                      </Box>
+                         
+                        </React.Fragment>
+                      }
+                    >
+                     <div className="name">
+                          {getCurrentUserInfo().username}
+                        </div>
+                    </HtmlTooltip>
+                    <HtmlTooltip
+                      title={
+                        <React.Fragment>
+                        <Box className="details">
+                        <div className="email">
+                          {getCurrentUserInfo().email}
+                        </div>
+                      </Box>
+                         
+                        </React.Fragment>
+                      }
+                    >
+                    <div className="email">
+                          {getCurrentUserInfo().email}
+                        </div>
+                    </HtmlTooltip>
+                        {/* <div className="name">
+                          {getCurrentUserInfo().username}
+                        </div> */}
+                        
+                      </Box>
+
+                    
                   </Box>
                   <List>
                     <ListItem>
@@ -160,7 +255,10 @@ function TopBar() {
                   </List>
                 </Box>
                 {showProfile === true ? (
-                  <div className="profile-bg" onClick={() => onClickProfile()}></div>
+                  <div
+                    className="profile-bg"
+                    onClick={() => onClickProfile()}
+                  ></div>
                 ) : (
                   <></>
                 )}
@@ -169,7 +267,7 @@ function TopBar() {
           </Grid>
         </Grid>
       </Box>
-    </Box >
+    </Box>
   );
 }
 
