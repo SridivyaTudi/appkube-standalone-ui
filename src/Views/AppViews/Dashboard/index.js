@@ -5,24 +5,7 @@ import SLAMetrics from "./SlaMetrics";
 import ProcessCentral from "./ProcessCentral";
 import Planet from "assets/img/dashboard/planet2.png";
 import { Box, List, ListItem } from "@mui/material";
-import {
-  getCurrentHourSpendRate,
-  getCurrentDaySpendRate,
-  getTodaySpendAnalytics,
-  getYesterdaySpendAnalytics,
-  getTotalSpend,
-  getMonthlyCloudWiseSpend,
-  getTotalCloudWiseSpend,
-  getMonthlyStatistics,
-  getTotalBudget,
-  getProductWiseCost,
-  getProductionVsOther,
-  getServiceTypeWiseCost,
-} from "Redux/Dashboard/DashboardThunk";
-import { connect } from "react-redux";
 import { v4 } from "uuid";
-import { getCurrentOrgId } from "Utils";
-import status from "Redux/Constants/CommonDS";
 
 class Dashboard extends Component {
   tabMapping = [
@@ -47,66 +30,14 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       activeTab: 0,
-      productWiseCostData: [],
-      productionVsOthersData: [],
-      serviceTypeWiseCostData: [],
     };
   }
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
 
-  componentDidMount = () => {
-    this.props.getCurrentHourSpendRate();
-    this.props.getCurrentDaySpendRate();
-    this.props.getTodaySpendAnalytics();
-    this.props.getYesterdaySpendAnalytics();
-    this.props.getTotalSpend();
-    this.props.getMonthlyCloudWiseSpend();
-    this.props.getTotalCloudWiseSpend();
-    this.props.getMonthlyStatistics();
-    this.props.getTotalBudget();
-    this.props.getProductWiseCost(getCurrentOrgId());
-    this.props.getProductionVsOther(getCurrentOrgId());
-    this.props.getServiceTypeWiseCost(getCurrentOrgId());
-  };
-
-  componentDidUpdate = (prevProps, prevState) => {
-    if (
-      prevProps.productWiseCost.status !== this.props.productWiseCost.status &&
-      this.props.productWiseCost.status === status.SUCCESS
-    ) {
-      this.setState({ productWiseCostData: this.props.productWiseCost.data });
-    }
-
-    if (
-      prevProps.productionVsOther.status !==
-        this.props.productionVsOther.status &&
-      this.props.productionVsOther.status === status.SUCCESS
-    ) {
-      this.setState({
-        productionVsOthersData: this.props.productionVsOther.data,
-      });
-    }
-
-    if (
-      prevProps.serviceTypeWiseCost.status !==
-        this.props.serviceTypeWiseCost.status &&
-      this.props.serviceTypeWiseCost.status === status.SUCCESS
-    ) {
-      this.setState({
-        serviceTypeWiseCostData: this.props.serviceTypeWiseCost.data,
-      });
-    }
-  };
-
   render() {
-    const {
-      activeTab,
-      productWiseCostData,
-      productionVsOthersData,
-      serviceTypeWiseCostData,
-    } = this.state;
+    const { activeTab } = this.state;
     return (
       <Box className="dashboard-container">
         <Box className="dashboard-inner">
@@ -132,53 +63,23 @@ class Dashboard extends Component {
             </List>
           </Box>
           <Box className="tabs-content">
-            {activeTab === 0 ? (
+            <div style={{ display: activeTab === 0 ? "block" : "none" }}>
               <SpendAnalytics />
-            ) : activeTab === 1 ? (
-              <CostAnalysis
-                productWiseCostData={productWiseCostData}
-                productionVsOthersData={productionVsOthersData}
-                serviceTypeWiseCostData={serviceTypeWiseCostData}
-              />
-            ) : activeTab === 2 ? (
+            </div>
+            <div style={{ display: activeTab === 1 ? "block" : "none" }}>
+              <CostAnalysis />
+            </div>
+            <div style={{ display: activeTab === 2 ? "block" : "none" }}>
               <SLAMetrics />
-            ) : activeTab === 3 ? (
+            </div>
+            <div style={{ display: activeTab === 3 ? "block" : "none" }}>
               <ProcessCentral />
-            ) : (
-              <></>
-            )}
+            </div>
           </Box>
         </Box>
       </Box>
     );
   }
 }
-function mapStateToProps(state) {
-  const {
-    currentHourSpendRate,
-    productWiseCost,
-    productionVsOther,
-    serviceTypeWiseCost,
-  } = state.dashboard;
-  return {
-    currentHourSpendRate,
-    productWiseCost,
-    productionVsOther,
-    serviceTypeWiseCost,
-  };
-}
-const mapDispatchToProps = {
-  getCurrentHourSpendRate,
-  getCurrentDaySpendRate,
-  getTodaySpendAnalytics,
-  getYesterdaySpendAnalytics,
-  getTotalSpend,
-  getMonthlyCloudWiseSpend,
-  getTotalCloudWiseSpend,
-  getMonthlyStatistics,
-  getTotalBudget,
-  getProductWiseCost,
-  getProductionVsOther,
-  getServiceTypeWiseCost,
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+
+export default Dashboard;

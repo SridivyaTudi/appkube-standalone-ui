@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
-import ClusterIcon from "assets/img/assetmanager/cluster-icon.png";
-import CommonFilterViewSearch from "../CommonFilterViewSearch";
-import GlobalSerivces from "./GlobalServices";
-import GatewayDetails from "./GatewayDetails";
 import CloudManagedDetails from "./CloudManagedDetails";
 import {
   IconButton,
@@ -64,7 +60,7 @@ class DiscoveredAssets extends Component {
       showMenu: null,
       cloudName,
       activeTierTab: "3Tier",
-      isClusterShow:false
+      isClusterShow: false,
     };
   }
 
@@ -425,7 +421,7 @@ class DiscoveredAssets extends Component {
         image: VpcServicesIcon,
         children: [],
       };
-    
+
       prepareData.push(obj);
     }
     formatData.children = [prepareData, []];
@@ -499,11 +495,9 @@ class DiscoveredAssets extends Component {
 
   render() {
     const {
-      dataOfTableLevel1,
       dataOfLevel1,
       currentActiveNodeLabel,
       currentVPC,
-      cloudName,
       breadcrumbs,
       activeTierTab,
       isClusterShow,
@@ -511,19 +505,6 @@ class DiscoveredAssets extends Component {
     const { envDataByLandingZone, departments } = this.props;
     return (
       <Box className="discovered-assets">
-        {/* <Box className="discovered-assets-head">
-          <CommonFilterViewSearch
-            data={{ vpcsDetails: dataOfTableLevel1 }}
-            handleSearch={(string) => {
-              this.filterVpcsData(string);
-            }}
-            updateAccountId={(accountId) => {
-              this.props.updateCloudNameAndLandingZone(cloudName, accountId);
-            }}
-            accountList={this.props.accountList}
-            updateCurrentAccountId={this.props.updateCurrentAccountId}
-          />
-        </Box> */}
         <Box className="discovered-assets-body">
           {envDataByLandingZone.status === status.IN_PROGRESS ||
           departments.status === status.IN_PROGRESS ? (
@@ -606,31 +587,21 @@ class DiscoveredAssets extends Component {
                   )}
                   <Box className="fliter-tabs global-service-penal">
                     {currentActiveNodeLabel.includes("vpc") ? (
-                     isClusterShow ? <ClusterDetails /> : <CloudManagedDetails />
+                      isClusterShow ? (
+                        <ClusterDetails />
+                      ) : (
+                        <CloudManagedDetails />
+                      )
                     ) : (
                       <VpcDetails vpc={currentVPC} />
                     )}
-                    {/* {currentActiveNodeLabel.includes("cluster") ? (
-                      <ClusterDetails />
-                    ) : currentActiveNodeLabel.includes("vpc") ? (
-                      <VpcDetails vpc={currentVPC} />
-                    ) : currentActiveNodeLabel.includes("gateway") ? (
-                      <GatewayDetails vpc={currentVPC} />
-                    ) : currentActiveNodeLabel.includes("cloudManaged") ? (
-                      <CloudManagedDetails />
-                    ) : currentActiveNodeLabel.includes("globalServices") ? (
-                      <GlobalSerivces />
-                    ) : (
-                      <></>
-                    )} */}
-                   
                   </Box>
                 </Grid>
               </Grid>
             </Box>
           )}
         </Box>
-        <AssociateApp /> 
+        {currentActiveNodeLabel.includes("vpc") ? <AssociateApp /> : <></>}
       </Box>
     );
   }
