@@ -263,49 +263,53 @@ export class AssociateApp extends Component {
             </Button>
           </Box>
           <Box className="contents">
-            <Box className="tier-buttons">
-              <Button
-                className={
-                  !activeTierTabIndexes.includes(index) ? "active" : ""
-                }
-                onClick={() => this.handleTierTabToggle(index, "3Tier")}
-              >
-                3 Tier
-              </Button>
-              <Button
-                className={activeTierTabIndexes.includes(index) ? "active" : ""}
-                onClick={() => this.handleTierTabToggle(index, "soa")}
-              >
-                SOA
-              </Button>
-            </Box>
-            <Box className="tier-contents">
-              <ul>
-                {!activeTierTabIndexes.includes(index)
-                  ? data.tierData.map((item) => {
-                      return (
-                        <li key={item.layer}>
-                          <span>
-                            <img src={item.icon} alt="" />
-                          </span>
-                          <label>{item.label}</label>
-                          <strong>{item.layer}</strong>
-                        </li>
-                      );
-                    })
-                  : data.socData.map((item) => {
-                      return (
-                        <li key={item.layer}>
-                          <span>
-                            <img src={item.icon} alt="" />
-                          </span>
-                          <label>{item.label}</label>
-                          <strong>{item.layer}</strong>
-                        </li>
-                      );
-                    })}
-              </ul>
-            </Box>
+            <div className="d-block width-100">
+              <Box className="tier-buttons">
+                <Button
+                  className={
+                    !activeTierTabIndexes.includes(index) ? "active" : ""
+                  }
+                  onClick={() => this.handleTierTabToggle(index, "3Tier")}
+                >
+                  3 Tier
+                </Button>
+                <Button
+                  className={
+                    activeTierTabIndexes.includes(index) ? "active" : ""
+                  }
+                  onClick={() => this.handleTierTabToggle(index, "soa")}
+                >
+                  SOA
+                </Button>
+              </Box>
+              <Box className="tier-contents">
+                <ul>
+                  {!activeTierTabIndexes.includes(index)
+                    ? data.tierData.map((item) => {
+                        return (
+                          <li key={item.layer}>
+                            <span>
+                              <img src={item.icon} alt="" />
+                            </span>
+                            <label>{item.label}</label>
+                            <strong>{item.layer}</strong>
+                          </li>
+                        );
+                      })
+                    : data.socData.map((item) => {
+                        return (
+                          <li key={item.layer}>
+                            <span>
+                              <img src={item.icon} alt="" />
+                            </span>
+                            <label>{item.label}</label>
+                            <strong>{item.layer}</strong>
+                          </li>
+                        );
+                      })}
+                </ul>
+              </Box>
+            </div>
           </Box>
           <Box className="buttons">
             <Button

@@ -5,7 +5,7 @@ import EksCluster from "./EksCluster";
 import EcsCluster from "./EcsCluster";
 import GlobalIcon4 from "assets/img/assetmanager/global-icon4.png";
 import GlobalIcon5 from "assets/img/assetmanager/global-icon5.png";
-import { v4 } from 'uuid';
+import { v4 } from "uuid";
 class ClusterDetails extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +22,7 @@ class ClusterDetails extends React.Component {
     const { currentActiveCluster } = this.state;
     return (
       <>
+        <Box className="cluster-heading">Cluster</Box>
         <Box className="environment-boxs m-t-4">
           <Box
             className="environment-box"

@@ -276,7 +276,7 @@ class DiscoveredAssets extends Component {
     return (
       <Box
         className="environment-table-section discovered-table"
-        style={{ height: "465px" }}
+        style={{ height: "415px" }}
       >
         <Box className="table discovered-assets-table">
           <TableContainer>
@@ -312,7 +312,7 @@ class DiscoveredAssets extends Component {
     return (
       <Box
         className="environment-table-section discovered-table"
-        style={{ height: "465px" }}
+        style={{ height: "415px" }}
       >
         <Box className="table discovered-assets-table">
           <TableContainer>
@@ -523,7 +523,7 @@ class DiscoveredAssets extends Component {
                   setLevel={this.getCurrentActiveTreeLevel}
                   selectedBreadCrumbs={breadcrumbs}
                 />
-                <Grid item xs={5}>
+                <Grid item xs={6}>
                   {!currentActiveNodeLabel ? (
                     <Box className="tier-buttons">
                       <Button

@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
+import { Button, Box, Grid, List, ListItem } from "@mui/material";
 import { ArcherContainer, ArcherElement } from "react-archer";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
@@ -672,6 +669,11 @@ export class AssociateChartApp extends Component {
           <Box className="breadcrumbs">
             <ul>{this.renderBreadCrumbs(0)}</ul>
           </Box>
+        </Box>
+        <Box className="d-block width-100 text-center m-t-4">
+          <Button className="primary-btn min-width" variant="contained">
+            Submit
+          </Button>
         </Box>
       </Box>
     );
