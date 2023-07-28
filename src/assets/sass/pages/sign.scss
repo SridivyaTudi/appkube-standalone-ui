@@ -367,6 +367,9 @@
 
       .back-btn {
         margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
 
         // a {
         //   font-size: 13px;
