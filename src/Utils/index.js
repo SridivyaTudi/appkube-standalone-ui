@@ -16,6 +16,10 @@ export const getCurrentOrgId = () => {
   return localStorage.getItem("currentOrgId");
 };
 
+export const getSavedUserName = () => {
+  return localStorage.getItem("rememberUserName");
+};
+
 export const setCurrentOrgId = (id) => {
   return localStorage.setItem("currentOrgId", id);
 };

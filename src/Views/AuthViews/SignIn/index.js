@@ -13,6 +13,7 @@ import { login } from "Redux/Auth/AuthThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { ToastMessage } from "Toast/ToastMessage";
+import { getSavedUserName } from "Utils";
 
 class Signin extends Component {
   constructor(props) {
@@ -28,6 +29,15 @@ class Signin extends Component {
       isSubmit: false,
     };
   }
+
+  componentDidMount = () => {
+    const { formData } = this.state;
+    let savedUserName = getSavedUserName();
+    if (savedUserName) {
+      formData.userName = savedUserName;
+    }
+    this.setState({ formData });
+  };
 
   componentDidUpdate = (prevProps, prevState) => {
     if (this.props.loggedInUser.status !== prevProps.loggedInUser.status) {
@@ -65,9 +75,12 @@ class Signin extends Component {
     const { isValid } = this.validateForm(true);
 
     if (isValid) {
-      if (rememberMe && !localStorage.getItem("rememberUser")) {
+      if (rememberMe) {
         localStorage.setItem("rememberUserName", formData.userName);
+      } else {
+        localStorage.removeItem("rememberUserName");
       }
+
       const { userName, password } = this.state.formData;
       this.props.login({ userName, password });
     }
