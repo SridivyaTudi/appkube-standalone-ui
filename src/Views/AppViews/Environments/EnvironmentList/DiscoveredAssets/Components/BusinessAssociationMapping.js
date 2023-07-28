@@ -18,6 +18,17 @@ let drawArrow = {
       },
     },
   },
+  orient:""
+};
+let blueOrOrangeBoxElement = {
+  Payroll: { label: "3 TIER", className: "blue" },
+  HRMS: { label: "3 TIER", className: "blue" },
+  Procurement: { label: "3 TIER", className: "blue" },
+  "Postgres SQL": { label: "Data", className: "blue" },
+  Redis: { label: "Data", className: "blue" },
+  "Dynamo DB": { label: "Data", className: "blue" },
+  "Java Spring boot": { label: "APP", className: "orange" },
+  Accounts: { label: "SOA", className: "orange" },
 };
 
 class BusinessAssociationMapping extends Component {
@@ -51,12 +62,13 @@ class BusinessAssociationMapping extends Component {
   renderBAMMainBody = () => {
     let { data } = this.props;
     let { selectedActiveBAMLevels } = this.state;
+
     return Object.keys(data).length &&
       (data?.children[0].length || data?.children[1].length) ? (
       <ArcherContainer className="chart-container" startMarker>
         <ArcherElement
           id="root"
-          relations={this.onClickLevelsThenDrawLine()}
+          relations={this.makeActiveLine(this.onClickLevelsThenDrawLine())}
           // className="chart-container"
         >
           <div
@@ -90,14 +102,12 @@ class BusinessAssociationMapping extends Component {
           selectedActiveBAMLevels[`selectedLevel_${selectedLevel}`]?.id ===
           currentLevelIndex;
         let elementId = `selectedLevel_${selectedLevel}_${currentLevelIndex}`;
+        let relationsData = isActive
+          ? this.makeActiveLine(this.onClickLevelsThenDrawLine(selectedLevel))
+          : [];
+        let blueOrOrangeBoxEle = blueOrOrangeBoxElement[level.label];
         return (
-          <ArcherElement
-            id={elementId}
-            relations={
-              isActive ? this.onClickLevelsThenDrawLine(selectedLevel) : []
-            }
-            key={v4()}
-          >
+          <ArcherElement id={elementId} relations={relationsData} key={v4()}>
             <li
               className={`${isActive ? "active" : ""}`}
               onClick={() => {
@@ -114,9 +124,21 @@ class BusinessAssociationMapping extends Component {
               </span>
               <div className="content">
                 <p>{level.label}</p>
-                {/* <div className="box blue orange">SOA</div> */}
+                {blueOrOrangeBoxEle ? (
+                  <div className={`box ${blueOrOrangeBoxEle?.className}`}>
+                    {blueOrOrangeBoxEle?.label}
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
-              {/* <i className="fa-solid fa-circle-plus"></i> */}
+              {isActive &&
+              level.children.length === 0 &&
+              BAMData.length === selectedLevel + 1 ? (
+                <i className="fa-solid fa-circle-plus"></i>
+              ) : (
+                <></>
+              )}
             </li>
           </ArcherElement>
         );
@@ -271,6 +293,40 @@ class BusinessAssociationMapping extends Component {
     }
   };
 
+  /** Make active line
+   *  @param {Array} relationsData- line formatted Data,
+   */
+  makeActiveLine = (relationsData) => {
+    if (relationsData.length) {
+      let { selectedActiveBAMLevels } = this.state;
+      let activeBAMKeys = Object.keys(selectedActiveBAMLevels);
+
+      return relationsData.map((relation, index) => {
+        let tempRelation = JSON.parse(JSON.stringify(relation));
+        let targetId = tempRelation["targetId"].split("_");
+
+        let activeIndex = activeBAMKeys.indexOf(
+          `${targetId[0]}_${targetId[1]}`
+        );
+
+        if (activeIndex >= 0) {
+          let currentLevelIndex =
+            selectedActiveBAMLevels[activeBAMKeys[activeIndex]]?.id;
+          if (currentLevelIndex === +targetId[2]) {
+            tempRelation["style"]["strokeColor"] = "#53ca43";
+            tempRelation["style"]["endShape"]["circle"]["strokeColor"] =
+              "#53ca43";
+            tempRelation["style"]["endShape"]["circle"]["fillColor"] =
+              "#53ca43";
+          }
+        }
+
+        return tempRelation;
+      });
+    } else {
+      return []
+    }
+  };
   render() {
     return this.renderBAMMainBody();
   }
