@@ -132,15 +132,15 @@ class BusinessAssociationMapping extends Component {
   renderAllBAMLevel = () => {
     const { BAMData } = this.state;
     if (BAMData.length) {
-      return BAMData.map((html, selectedLevel) => {
-        if (html.length) {
+      return BAMData.map((levelData, selectedLevel) => {
+        if (levelData.length) {
           return (
             <div
               className={` global-servies`}
               style={{ width: "160px" }}
               key={v4()}
             >
-              <ul>{this.renderBAMLevel(html, selectedLevel)}</ul>
+              <ul>{this.renderBAMLevel(levelData, selectedLevel)}</ul>
             </div>
           );
         }
@@ -164,7 +164,7 @@ class BusinessAssociationMapping extends Component {
       let { children } = this.props.data;
       BAMData = BAMData.length ? [] : [children[0]];
       selectedActiveBAMLevels = {};
-      this.props.setBreadCrumbs(selectedActiveBAMLevels);
+      this.props.setBreadCrumbs(selectedActiveBAMLevels, BAMData);
       this.setState({ selectedActiveBAMLevels, BAMData });
     } else {
       if (selectedActiveBAMLevels[currentSelectedLevelIndex]) {
@@ -180,7 +180,7 @@ class BusinessAssociationMapping extends Component {
             }
           });
           BAMData.length = selectedLevel + 1;
-          this.props.setBreadCrumbs(selectedActiveBAMLevels);
+          this.props.setBreadCrumbs(selectedActiveBAMLevels, BAMData);
           this.setState({
             BAMData,
             selectedActiveBAMLevels,
@@ -243,7 +243,7 @@ class BusinessAssociationMapping extends Component {
     if (dataGet.length) {
       BAMData[selectedLevel + 1] = dataGet;
     }
-    this.props.setBreadCrumbs(selectedActiveBAMLevels);
+    this.props.setBreadCrumbs(selectedActiveBAMLevels, BAMData);
     this.setState({ selectedActiveBAMLevels, BAMData });
   }
 

@@ -183,6 +183,7 @@ export class AssociateChartApp extends Component {
       isSelectProductOpen: false,
       selectedActiveBAMLevels: {},
       clickBreadCrumbDetails: {},
+      BAMData: [],
     };
   }
 
@@ -200,26 +201,37 @@ export class AssociateChartApp extends Component {
 
   /** Render the BreadCrumbs. */
   renderBreadCrumbs(isBreadCrumb = 1) {
-    let { selectedActiveBAMLevels } = this.state;
+    let { selectedActiveBAMLevels, BAMData } = this.state;
 
     let activeBAM = Object.keys(selectedActiveBAMLevels);
-    console.log(activeBAM.length);
     let breadcrumbs = [
-      <li
-        className={`${activeBAM.length === 1 ? "active" : ""}`}
-        onClick={() => {
-          isBreadCrumb ? (
-            this.setState({
-              clickBreadCrumbDetails: { isIntialClick: 1, breadcrumbId: v4() },
-            })
-          ) : (
-            <></>
-          );
-        }}
-        key={v4()}
-      >
-        <a>{Data.label}</a>
-      </li>,
+      <>
+        <li
+          className={`${BAMData.length === 1 ? "active" : ""}`}
+          onClick={() => {
+            isBreadCrumb ? (
+              this.setState({
+                clickBreadCrumbDetails: {
+                  isIntialClick: 1,
+                  breadcrumbId: v4(),
+                },
+              })
+            ) : (
+              <></>
+            );
+          }}
+          key={v4()}
+        >
+          <a>{Data.label}</a>
+        </li>
+        {isBreadCrumb && !BAMData.length   ? (
+          <li key={v4()}>
+            <i className="fa-solid fa-chevron-right"></i>
+          </li>
+        ) : (
+          <></>
+        )}
+      </>,
     ];
 
     if (activeBAM.length) {
@@ -420,8 +432,8 @@ export class AssociateChartApp extends Component {
           </Grid>
           <BusinessAssociationMapping
             data={Data}
-            setBreadCrumbs={(selectedActiveBAMLevels) => {
-              this.setState({ selectedActiveBAMLevels });
+            setBreadCrumbs={(selectedActiveBAMLevels, BAMData) => {
+              this.setState({ selectedActiveBAMLevels, BAMData });
             }}
             clickBreadCrumbDetails={clickBreadCrumbDetails}
           />
