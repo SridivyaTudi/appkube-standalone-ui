@@ -8,8 +8,6 @@ let transformScale = 0;
 class TopologyView extends Component {
   constructor(props) {
     super(props);
-    const queryPrm = new URLSearchParams(document.location.search);
-    const cloudName = queryPrm.get("cloudName");
     this.state = {
       selectedView: {
         level2Show: false,
@@ -24,8 +22,7 @@ class TopologyView extends Component {
       prevProps.selectedBreadCrumbs?.breadcrumbId !==
       this.props.selectedBreadCrumbs?.breadcrumbId
     ) {
-      let { cloudName, selectedLevel1, selectedLevel2 } =
-        this.props.selectedBreadCrumbs;
+      let { selectedLevel1, selectedLevel2 } = this.props.selectedBreadCrumbs;
       let { selectedLevel1Id } = this.state.selectedView;
 
       if (!selectedLevel1 && !selectedLevel2) {
@@ -35,13 +32,13 @@ class TopologyView extends Component {
       }
     }
   }
+
   /** Render the main body including level-1 and level-2 data. */
   renderMainBody = () => {
     const { data } = this.props;
     let { level2Show, selectedLevel1Id, selectedLevel2Id } =
       this.state.selectedView;
-    return Object.keys(data).length &&
-      (data?.children[0].length || data?.children[1].length) ? (
+    return (
       <ArcherContainer noCurves style={{ width: "100%", height: "100%" }}>
         <TransformWrapper
           onTransformed={(instance) => {
@@ -157,8 +154,6 @@ class TopologyView extends Component {
           }}
         </TransformWrapper>
       </ArcherContainer>
-    ) : (
-      ""
     );
   };
 
@@ -301,6 +296,7 @@ class TopologyView extends Component {
   };
 
   render() {
+    const { data } = this.props;
     return (
       <>
         <Grid item xs={6}>
@@ -311,7 +307,9 @@ class TopologyView extends Component {
                 <i className="fa-solid fa-arrow-left"></i>
               </Box>
             </Box>
-            <Box className="services-panel-body">{this.renderMainBody()}</Box>
+            <Box className="services-panel-body">
+              {Object.keys(data).length ? this.renderMainBody() : <></>}
+            </Box>
           </Box>
         </Grid>
       </>
