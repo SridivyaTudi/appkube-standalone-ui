@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { ArcherContainer, ArcherElement } from "react-archer";
-import { Box, Grid } from "@mui/material";
 import { v4 } from "uuid";
+
 let drawArrow = {
   targetId: "",
   targetAnchor: "left",
@@ -19,6 +19,7 @@ let drawArrow = {
     },
   },
 };
+
 class BusinessAssociationMapping extends Component {
   constructor(props) {
     super(props);
@@ -59,7 +60,7 @@ class BusinessAssociationMapping extends Component {
           // className="chart-container"
         >
           <div
-            className="chart-box active"
+            className={"chart-box active"}
             onClick={() => {
               this.onClickLevels({}, 1);
             }}
@@ -108,14 +109,14 @@ class BusinessAssociationMapping extends Component {
               }}
               key={v4()}
             >
-              <i className="fa-solid fa-circle-plus"></i>
               <span>
                 <img src={level.image} alt={level.label} />
               </span>
               <div className="content">
                 <p>{level.label}</p>
-                <div className="box blue orange">SOA</div>
+                {/* <div className="box blue orange">SOA</div> */}
               </div>
+              {/* <i className="fa-solid fa-circle-plus"></i> */}
             </li>
           </ArcherElement>
         );
