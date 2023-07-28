@@ -64,7 +64,7 @@
     .sign-right-content {
       width: 70%;
       flex-wrap: wrap;
-      display: inline-flex;
+      //display: inline-flex;
 
       .steps-container {
         display: flex;
@@ -310,6 +310,9 @@
 
       .next-step {
         margin-top: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
         p {
           margin: 0;

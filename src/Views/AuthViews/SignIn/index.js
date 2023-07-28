@@ -215,8 +215,7 @@ class Signin extends Component {
                       }
                       loadingPosition="start"
                       onClick={this.handleSignIn}
-                      className="primary-btn"
-                      variant="contained"
+                      className="primary-btn" variant="contained"
                       type="submit"
                     >
                       Sign In
