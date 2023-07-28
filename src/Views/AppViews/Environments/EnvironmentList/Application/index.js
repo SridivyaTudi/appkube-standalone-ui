@@ -1,21 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import RunningIcon from "assets/img/assetmanager/running-icon.png";
-import AirAsiaIcon from "assets/img/assetmanager/air-asia-icon.png";
-import UpdatingIcon from "assets/img/assetmanager/updating-icon.png";
-import StopIcon from "assets/img/assetmanager/stop-icon.png";
-import ProcurifyIcon from "assets/img/assetmanager/procurify-icon.png";
-import ProcurifyIcon1 from "assets/img/assetmanager/procurify-icon1.png";
-import FlipkartIcon from "assets/img/assetmanager/flipkart-icon.png";
-import HdfcIcon from "assets/img/assetmanager/hdfc-icon.png";
-import WalmartIcon from "assets/img/assetmanager/walmart-icon.png";
-import AdobeIcon from "assets/img/assetmanager/adobe-icon.png";
-import AppleIcon from "assets/img/assetmanager/apple-icon.png";
-import forbeseToolsIcon from "assets/img/assetmanager/forbese-tools-icon.png";
-import slackInventoryIcon from "assets/img/assetmanager/slack-inventory-icon.png";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import clusterIcon from "assets/img/assetmanager/cluster-icon.png";
+import webLayerIcon from "assets/img/assetmanager/web-layer-icon.png";
+import dataLayerIcon from "assets/img/assetmanager/data-layer-icon.png";
+import appLayerIcon from "assets/img/assetmanager/app-layer-icon.png";
+
 import {
   Box,
-  Grid,
   TableContainer,
   Table,
   TableBody,
@@ -24,9 +16,8 @@ import {
   TableRow,
   List,
   ListItem,
+  Button,
 } from "@mui/material";
-import Button from "@mui/material/Button";
-import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class Application extends Component {
   tabMapping = [
@@ -41,213 +32,135 @@ class Application extends Component {
       dataKey: "GridView",
     },
   ];
+
   constructor(props) {
     super(props);
     this.state = {
-      showSelectFilter: false,
-      showServiceViewFilter: false,
-      showRecentFilter: false,
-      currentAccountId: null,
-      showMenuIndex: null,
       activeTab: 0,
-      procurifyIconStatus: false,
-      flipkartIconStatus: false,
-      appleDataIconStatus: false,
+      dataTierSoc: [
+        {
+          name: "Majesco",
+        },
+        {
+          name: "Xuber",
+        },
+        {
+          name: "Insurity",
+        },
+        {
+          name: "Vertafore",
+        },
+        {
+          name: "Guidewire",
+        },
+        {
+          name: "Duck Creek",
+        },
+        {
+          name: "eBaoTech",
+        },
+      ],
+      activeTierTabIndexes: [],
     };
   }
-
-  toggleColumnSelect = (drdName) => {
-    let current = this.state[drdName];
-    this.setState({
-      [drdName]: !current,
-    });
-  };
-
-  toggleMenu = (index) => {
-    if (this.state.showMenuIndex === null) {
-      this.setState({
-        showMenuIndex: index,
-      });
-    } else {
-      this.setState({
-        showMenuIndex: null,
-      });
-    }
-  };
-
-  getAppServicesCount = (product) => {
-    let count = 0;
-    product.deploymentEnvironmentList.map((env) => {
-      env.serviceCategoryList.map((serviceCategory) => {
-        serviceCategory.serviceNameList.map((serviceName) => {
-          serviceName.tagList[0].serviceList?.map((service) => {
-            count++;
-          });
-        });
-      });
-    });
-    return count;
-  };
-
-  getDataServicesCount = (product) => {
-    let count = 0;
-    product.deploymentEnvironmentList.map((env) => {
-      env.serviceCategoryList.map((serviceCategory) => {
-        serviceCategory.serviceNameList.map((serviceName) => {
-          serviceName.tagList[1].serviceList?.map((service) => {
-            count++;
-          });
-        });
-      });
-    });
-    return count;
-  };
 
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
 
-  
+  handleTierTabToggle = (index, type) => {
+    let { activeTierTabIndexes } = this.state;
+    if (activeTierTabIndexes.includes(index) && type !== "soa") {
+      activeTierTabIndexes = activeTierTabIndexes.filter(
+        (item) => item !== index
+      );
+    }
+    if (!activeTierTabIndexes.includes(index) && type !== "3Tier") {
+      activeTierTabIndexes.push(index);
+    }
+    this.setState({ activeTierTabIndexes });
+  };
+
+  renderLogistics() {
+    let { dataTierSoc, activeTierTabIndexes } = this.state;
+    const JSX = [];
+    dataTierSoc.map((data, index) => {
+      JSX.push(
+        <Box className="logistics-card" key={data.ec2Id}>
+          <Box className="heading">{data.name}</Box>
+          <Box className="contents">
+            <div className="d-block width-100">
+              <Box className="tier-buttons">
+                <Button
+                  className={
+                    !activeTierTabIndexes.includes(index) ? "active" : ""
+                  }
+                  onClick={() => this.handleTierTabToggle(index, "Dev")}
+                >
+                  Dev
+                </Button>
+                <Button
+                  className={
+                    activeTierTabIndexes.includes(index) ? "active" : ""
+                  }
+                  onClick={() => this.handleTierTabToggle(index, "Test")}
+                >
+                  Test
+                </Button>
+                <Button
+                  className={
+                    !activeTierTabIndexes.includes(index) ? "active" : ""
+                  }
+                  onClick={() => this.handleTierTabToggle(index, "Stage")}
+                >
+                  Stage
+                </Button>
+                <Button
+                  className={
+                    activeTierTabIndexes.includes(index) ? "active" : ""
+                  }
+                  onClick={() => this.handleTierTabToggle(index, "Prod")}
+                >
+                  Prod
+                </Button>
+              </Box>
+              <Box className="tier-contents">
+                <ul></ul>
+              </Box>
+            </div>
+          </Box>
+        </Box>
+      );
+    });
+    return JSX;
+  }
+
   render() {
-    const {
-      showSelectFilter,
-      showServiceViewFilter,
-      showRecentFilter,
-      activeTab,
-      procurifyIconStatus,
-      flipkartIconStatus,
-      appleDataIconStatus
-    } = this.state;
+    const { activeTab } = this.state;
     return (
       <Box className="discovered-assets">
         <Box className="discovered-assets-head">
           <h3 className="m-b-4">My Workspace</h3>
-          <Box sx={{ width: "100%" }}>
-            <Grid
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              alignItems={"center"}
-              justifyContent={"flex-start"}
-            >
-              <Grid item lg={8} md={8} xs={10}>
-                <Box className="d-flex justify-content-center align-items-center">
-                  <Box className="lest-view">
-                    <List>
-                      {this.tabMapping.map((tabData, index) => {
-                        return (
-                          <ListItem
-                            key={`${index}`}
-                            className={index === activeTab ? "active" : ""}
-                            onClick={() => this.setActiveTab(index)}
-                            style={{ cursor: "pointer" }}
-                          >
-                            <a style={{ cursor: "pointer" }}>
-                              <i className={tabData.iconName}></i>
-                              {tabData.name}
-                            </a>
-                          </ListItem>
-                        );
-                      })}
-                    </List>
-                  </Box>
-                  <Box className="environment-fliter">
-                    <Box
-                      className="fliter-toggel"
-                      onClick={() =>
-                        this.setState({
-                          showSelectFilter: !showSelectFilter,
-                        })
-                      }
+          <Box className="d-flex justify-content-center align-items-center">
+            <Box className="lest-view">
+              <List>
+                {this.tabMapping.map((tabData, index) => {
+                  return (
+                    <ListItem
+                      key={`${index}`}
+                      className={index === activeTab ? "active" : ""}
+                      onClick={() => this.setActiveTab(index)}
+                      style={{ cursor: "pointer" }}
                     >
-                      <i className="fa-solid fa-filter fillter-icon"></i>
-                      Fillter
-                      <i className="fa-solid fa-caret-down arrow-icon"></i>
-                    </Box>
-                    <Box
-                      className={
-                        showSelectFilter === true
-                          ? "fliter-collapse active"
-                          : "fliter-collapse"
-                      }
-                    >
-                      <Box className="search-bar">
-                        <input type="text" placeholder="Search...." />
-                      </Box>
-                      <List>
-                        <ListItem>
-                          <input
-                            type="checkbox"
-                            onChange={() => this.handleChecked()}
-                          />
-                          OU
-                        </ListItem>
-                        <ListItem>
-                          <input
-                            type="checkbox"
-                            onChange={() => this.handleChecked()}
-                          />
-                          Status
-                        </ListItem>
-                        <ListItem>
-                          <input
-                            type="checkbox"
-                            onChange={() => this.handleChecked()}
-                          />
-                          No of Assets
-                        </ListItem>
-                        <ListItem>
-                          <input
-                            type="checkbox"
-                            onChange={() => this.handleChecked()}
-                          />
-                          Logs
-                        </ListItem>
-                        <ListItem>
-                          <input
-                            type="checkbox"
-                            onChange={() => this.handleChecked()}
-                          />
-                          Performance & Availability
-                        </ListItem>
-                      </List>
-                    </Box>
-                    <div
-                      className={
-                        showSelectFilter === true
-                          ? "fliters-collapse-bg active"
-                          : "fliters-collapse-bg"
-                      }
-                      onClick={() =>
-                        this.setState({
-                          showSelectFilter: !showSelectFilter,
-                        })
-                      }
-                    />
-                  </Box>
-                  <Button
-                    className="primary-btn min-width-inherit m-r-3"
-                    variant="contained"
-                  >
-                    <i className="fa-solid fa-history p-r-5"></i> Recent
-                  </Button>
-                </Box>
-              </Grid>
-              <Grid item lg={4} md={4} xs={10}>
-                <div className="d-inline-block width-100 text-right">
-                  <Button
-                    className="primary-btn min-width-inherit"
-                    variant="contained"
-                  >
-                    <Link
-                      style={{ color: "white" }}
-                      to={`${APP_PREFIX_PATH}/environments/deployproject`}>
-                      <i className="fa-solid fa-plus-square p-r-5"></i> Add New
-                    </Link>
-                  </Button>
-                </div>
-              </Grid>
-            </Grid>
+                      <a style={{ cursor: "pointer" }}>
+                        <i className={tabData.iconName}></i>
+                        {tabData.name}
+                      </a>
+                    </ListItem>
+                  );
+                })}
+              </List>
+            </Box>
           </Box>
         </Box>
         {activeTab === 0 && (
@@ -256,280 +169,718 @@ class Application extends Component {
               <Table className="overview">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="left">
-                      <strong>Workspace</strong>
-                    </TableCell>
-                    <TableCell align="center">Status</TableCell>
-                    <TableCell align="center">Client</TableCell>
-                    <TableCell align="center" className="ou">
-                      Line Of Business
-                    </TableCell>
-                    <TableCell align="center">Tags</TableCell>
-                    <TableCell align="center">User Count</TableCell>
-                    <TableCell align="center">Usage</TableCell>
-                    <TableCell align="center">App Services</TableCell>
-                    <TableCell align="center">Data Services</TableCell>
+                    <TableCell align="left">Application</TableCell>
+                    <TableCell align="center">LOB</TableCell>
+                    <TableCell align="center">Environment</TableCell>
+                    <TableCell align="center">RPO</TableCell>
+                    <TableCell align="center">RTO</TableCell>
+                    <TableCell align="center">Web Layer</TableCell>
+                    <TableCell align="center">App Layer</TableCell>
+                    <TableCell align="center">Data Layer</TableCell>
+                    <TableCell align="center">Auxiliary</TableCell>
+                    <TableCell align="center">DR Status</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
                     <TableCell align="left">
-                      <Link
-                        to={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
-                      >
-                        HRMS
-                      </Link>
+                      <Link to={`#`}>Majesco</Link>
+                    </TableCell>
+                    <TableCell align="center">Claims</TableCell>
+                    <TableCell align="center">Dev</TableCell>
+                    <TableCell align="center">5 min</TableCell>
+                    <TableCell align="center">2 hrs</TableCell>
+                    <TableCell align="center">
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <span>
-                        <img
-                          src={RunningIcon}
-                          alt=""
-                          style={{ maxWidth: "16px" }}
-                        />
-                      </span>
-                      Running
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <span>
-                        <img
-                          src={ProcurifyIcon}
-                          alt=""
-                          style={{ maxWidth: "18px" }}
-                        />
-                      </span>
-                      Procurify
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <div className="business-btn"> Logistics</div>
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
-                    <TableCell align="center">13</TableCell>
-                    <TableCell align="center">500</TableCell>
-                    <TableCell align="center">33%</TableCell>
-                    <TableCell align="center">41</TableCell>
-                    <TableCell align="center">29</TableCell>
+                    <TableCell align="center">
+                      <span className="done">Done</span>
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">
-                      <Link
-                        to={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
-                      >
-                        EMS
-                      </Link>
+                      <Link to={`#`}>Xuber</Link>
+                    </TableCell>
+                    <TableCell align="center">Finance</TableCell>
+                    <TableCell align="center">Test</TableCell>
+                    <TableCell align="center">8 min</TableCell>
+                    <TableCell align="center">4 hrs</TableCell>
+                    <TableCell align="center">
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <span>
-                        <img
-                          src={RunningIcon}
-                          alt=""
-                          style={{ maxWidth: "16px" }}
-                        />
-                      </span>
-                      Running
+                      <Box className="availability-box">
+                        <span className="orange"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <span>
-                        <img
-                          src={HdfcIcon}
-                          alt=""
-                          style={{ maxWidth: "18px" }}
-                        />
-                      </span>
-                      HDFC bank
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <div className="business-btn"> Transaction</div>
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
-                    <TableCell align="center">13</TableCell>
-                    <TableCell align="center">500</TableCell>
-                    <TableCell align="center">33%</TableCell>
-                    <TableCell align="center">41</TableCell>
-                    <TableCell align="center">29</TableCell>
+                    <TableCell align="center">
+                      <div className="done">Done</div>
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">
-                      <Link
-                        to={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
-                      >
-                        PROCUREMENT
-                      </Link>
+                      <Link to={`#`}>Insurity</Link>
+                    </TableCell>
+                    <TableCell align="center">Legal</TableCell>
+                    <TableCell align="center">Stage</TableCell>
+                    <TableCell align="center">5 min</TableCell>
+                    <TableCell align="center">5 hrs</TableCell>
+                    <TableCell align="center">
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <span>
-                        <img
-                          src={UpdatingIcon}
-                          alt=""
-                          style={{ maxWidth: "16px" }}
-                        />
-                      </span>
-                      Updating
+                      <Box className="availability-box">
+                        <span className="orange"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <span>
-                        <img
-                          src={AirAsiaIcon}
-                          alt=""
-                          style={{ maxWidth: "18px" }}
-                        />
-                      </span>
-                      Air Asia
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <div className="business-btn"> Fleets</div>
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
-                    <TableCell align="center">13</TableCell>
-                    <TableCell align="center">500</TableCell>
-                    <TableCell align="center">33%</TableCell>
-                    <TableCell align="center">41</TableCell>
-                    <TableCell align="center">29</TableCell>
+                    <TableCell align="center">
+                      <div className="error">Error</div>
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">
-                      <Link
-                        to={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
-                      >
-                        APPCUBE
-                      </Link>
+                      <Link to={`#`}>Vertafore</Link>
+                    </TableCell>
+                    <TableCell align="center">Reimbursement</TableCell>
+                    <TableCell align="center">Prod</TableCell>
+                    <TableCell align="center">10 min</TableCell>
+                    <TableCell align="center">2 hrs</TableCell>
+                    <TableCell align="center">
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <span>
-                        <img
-                          src={StopIcon}
-                          alt=""
-                          style={{ maxWidth: "16px" }}
-                        />
-                      </span>
-                      Stop
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <span>
-                        <img
-                          src={WalmartIcon}
-                          alt=""
-                          style={{ maxWidth: "18px" }}
-                        />
-                      </span>
-                      Walmart
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <div className="business-btn"> Logistics</div>
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
-                    <TableCell align="center">13</TableCell>
-                    <TableCell align="center">500</TableCell>
-                    <TableCell align="center">33%</TableCell>
-                    <TableCell align="center">41</TableCell>
-                    <TableCell align="center">29</TableCell>
+                    <TableCell align="center">
+                      <div className="done">Done</div>
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">
-                      <Link
-                        to={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
-                      >
-                        HRMS
-                      </Link>
+                      <Link to={`#`}>Guidewire</Link>
+                    </TableCell>
+                    <TableCell align="center">Claims</TableCell>
+                    <TableCell align="center">Prod</TableCell>
+                    <TableCell align="center">2 min</TableCell>
+                    <TableCell align="center">3 hrs</TableCell>
+                    <TableCell align="center">
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <span>
-                        <img
-                          src={UpdatingIcon}
-                          alt=""
-                          style={{ maxWidth: "16px" }}
-                        />
-                      </span>
-                      Updating
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <span>
-                        <img
-                          src={AdobeIcon}
-                          alt=""
-                          style={{ maxWidth: "18px" }}
-                        />
-                      </span>
-                      Adobe
+                      <Box className="availability-box">
+                        <span className="orange"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <div className="business-btn"> Frames</div>
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
-                    <TableCell align="center">13</TableCell>
-                    <TableCell align="center">500</TableCell>
-                    <TableCell align="center">33%</TableCell>
-                    <TableCell align="center">41</TableCell>
-                    <TableCell align="center">29</TableCell>
+                    <TableCell align="center">
+                      <div className="inprogress">Inprogress</div>
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">
-                      <Link
-                        to={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
-                      >
-                        EMS
-                      </Link>
+                      <Link to={`#`}>Duck Creek</Link>
+                    </TableCell>
+                    <TableCell align="center">Legal</TableCell>
+                    <TableCell align="center">Test</TableCell>
+                    <TableCell align="center">5 min</TableCell>
+                    <TableCell align="center">2.5 hrs</TableCell>
+                    <TableCell align="center">
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <span>
-                        <img
-                          src={RunningIcon}
-                          alt=""
-                          style={{ maxWidth: "16px" }}
-                        />
-                      </span>
-                      Running
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <span>
-                        <img
-                          src={ProcurifyIcon1}
-                          alt=""
-                          style={{ maxWidth: "18px" }}
-                        />
-                      </span>
-                      Procurify
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <div className="business-btn"> Banking</div>
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
-                    <TableCell align="center">13</TableCell>
-                    <TableCell align="center">500</TableCell>
-                    <TableCell align="center">33%</TableCell>
-                    <TableCell align="center">41</TableCell>
-                    <TableCell align="center">29</TableCell>
+                    <TableCell align="center">
+                      <div className="done">Done</div>
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">
-                      <Link
-                        to={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
-                      >
-                        PROCUREMENT
-                      </Link>
+                      <Link to={`#`}>eBaoTech</Link>
+                    </TableCell>
+                    <TableCell align="center">Cashless</TableCell>
+                    <TableCell align="center">Prod</TableCell>
+                    <TableCell align="center">3 min</TableCell>
+                    <TableCell align="center">2 hrs</TableCell>
+                    <TableCell align="center">
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <span>
-                        <img
-                          src={RunningIcon}
-                          alt=""
-                          style={{ maxWidth: "16px" }}
-                        />
-                      </span>
-                      Running
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <span>
-                        <img
-                          src={FlipkartIcon}
-                          alt=""
-                          style={{ maxWidth: "14px" }}
-                        />
-                      </span>
-                      Flipkart
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <div className="business-btn"> Client</div>
+                      <Box className="availability-box">
+                        <span className="green"></span>
+                        <div className="availability-hover-bg"></div>
+                        <Box className="availability-hover">
+                          <p>
+                            Primary Location:{" "}
+                            <strong>US-East - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Location:{" "}
+                            <strong>US-West - EC2 657907747554</strong>
+                          </p>
+                          <p>
+                            DR Status: <strong>Provisioned</strong>
+                          </p>
+                          <p>
+                            Last Failover: <strong>07/07/2023 12.15PM</strong>
+                          </p>
+                        </Box>
+                      </Box>
                     </TableCell>
-                    <TableCell align="center">13</TableCell>
-                    <TableCell align="center">500</TableCell>
-                    <TableCell align="center">33%</TableCell>
-                    <TableCell align="center">41</TableCell>
-                    <TableCell align="center">29</TableCell>
+                    <TableCell align="center">
+                      <div className="done">Done</div>
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -537,497 +888,8 @@ class Application extends Component {
           </Box>
         )}
         {activeTab === 1 && (
-          <Box className="logistics-cards">
-            <Box className="logistics-card">
-              <Box className="d-flex width-100 top-content">
-                <Box className="image">
-                  <img src={ProcurifyIcon} alt="" />
-                </Box>
-                <Box className="content">
-                  <Box className="d-flex width-100 title">
-                    Procurify-Logistics
-                  </Box>
-                  <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">
-                      Status : <strong>Running</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      App Services : <strong>96</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      Data Services : <strong>96</strong>
-                    </span>
-                  </Box>
-                </Box>
-              </Box>
-              <Box className="d-block width-100 bottom-content">
-                <Box className="content">
-                  <label>Client</label>
-                  <p>Forbese</p>
-                </Box>
-                <Box className="content">
-                  <label>Usage</label>
-                  <p>33%</p>
-                </Box>
-                <Box className="content">
-                  <label>User Count</label>
-                  <p>241</p>
-                </Box>
-                <Box className="content">
-                  <label>Tags</label>
-                  <span className="outline">Logistics</span>
-                </Box>
-                <Box className="content">
-                  <label>L.O.B</label>
-                  <span>Customs</span>
-                </Box>
-              </Box>
-            </Box>
-            <Box className="logistics-card">
-              <Box className="d-flex width-100 top-content">
-                <Box className="image">
-                  <img src={ProcurifyIcon} alt="" />
-                </Box>
-                <Box className="content">
-                  <Box className="d-flex width-100 title">
-                    Procurify-Logistics
-                  </Box>
-                  <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">
-                      Status : <strong>Running</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      App Services : <strong>96</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      Data Services : <strong>96</strong>
-                    </span>
-                  </Box>
-                </Box>
-              </Box>
-              <Box className="d-block width-100 bottom-content">
-                <Box className="content">
-                  <label>Client</label>
-                  <p>Forbese</p>
-                </Box>
-                <Box className="content">
-                  <label>Usage</label>
-                  <p>33%</p>
-                </Box>
-                <Box className="content">
-                  <label>User Count</label>
-                  <p>241</p>
-                </Box>
-                <Box className="content">
-                  <label>Tags</label>
-                  <span className="outline">Logistics</span>
-                </Box>
-                <Box className="content">
-                  <label>L.O.B</label>
-                  <span>Customs</span>
-                </Box>
-              </Box>
-            </Box>
-            <Box className="logistics-card">
-              <Box className="d-flex width-100 top-content">
-                <Box className="image">
-                  <img src={ProcurifyIcon} alt="" />
-                </Box>
-                <Box className="content">
-                  <Box className="d-flex width-100 title">
-                    Procurify-Logistics
-                  </Box>
-                  <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">
-                      Status : <strong>Running</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      App Services : <strong>96</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      Data Services : <strong>96</strong>
-                    </span>
-                  </Box>
-                </Box>
-              </Box>
-              <Box className="d-block width-100 bottom-content">
-                <Box className="content">
-                  <label>Client</label>
-                  <p>Forbese</p>
-                </Box>
-                <Box className="content">
-                  <label>Usage</label>
-                  <p>33%</p>
-                </Box>
-                <Box className="content">
-                  <label>User Count</label>
-                  <p>241</p>
-                </Box>
-                <Box className="content">
-                  <label>Tags</label>
-                  <span className="outline">Logistics</span>
-                </Box>
-                <Box className="content">
-                  <label>L.O.B</label>
-                  <span>Customs</span>
-                </Box>
-              </Box>
-            </Box>
-            <Box className="logistics-card">
-              <Box className="d-flex width-100 top-content">
-                <Box className="image">
-                  <img src={ProcurifyIcon} alt="" />
-                </Box>
-                <Box className="content">
-                  <Box className="d-flex width-100 title">
-                    Procurify-Logistics
-                  </Box>
-                  <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">
-                      Status : <strong>Running</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      App Services : <strong>96</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      Data Services : <strong>96</strong>
-                    </span>
-                  </Box>
-                </Box>
-              </Box>
-              <Box className="d-block width-100 bottom-content">
-                <Box className="content">
-                  <label>Client</label>
-                  <p>Forbese</p>
-                </Box>
-                <Box className="content">
-                  <label>Usage</label>
-                  <p>33%</p>
-                </Box>
-                <Box className="content">
-                  <label>User Count</label>
-                  <p>241</p>
-                </Box>
-                <Box className="content">
-                  <label>Tags</label>
-                  <span className="outline">Logistics</span>
-                </Box>
-                <Box className="content">
-                  <label>L.O.B</label>
-                  <span>Customs</span>
-                </Box>
-              </Box>
-            </Box>
-            <Box className="logistics-card">
-              <Box className="d-flex width-100 top-content">
-                <Box className="image">
-                  <img src={ProcurifyIcon} alt="" />
-                </Box>
-                <Box className="content">
-                  <Box className="d-flex width-100 title">
-                    Procurify-Logistics
-                  </Box>
-                  <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">
-                      Status : <strong>Running</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      App Services : <strong>96</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      Data Services : <strong>96</strong>
-                    </span>
-                  </Box>
-                </Box>
-              </Box>
-              <Box className="d-block width-100 bottom-content">
-                <Box className="content">
-                  <label>Client</label>
-                  <p>Forbese</p>
-                </Box>
-                <Box className="content">
-                  <label>Usage</label>
-                  <p>33%</p>
-                </Box>
-                <Box className="content">
-                  <label>User Count</label>
-                  <p>241</p>
-                </Box>
-                <Box className="content">
-                  <label>Tags</label>
-                  <span className="outline">Logistics</span>
-                </Box>
-                <Box className="content">
-                  <label>L.O.B</label>
-                  <span>Customs</span>
-                </Box>
-              </Box>
-            </Box>
-            <Box className="logistics-card">
-              <Box className="d-flex width-100 top-content">
-                <Box className="image">
-                  <img src={ProcurifyIcon} alt="" />
-                </Box>
-                <Box className="content">
-                  <Box className="d-flex width-100 title">
-                    Procurify-Logistics
-                  </Box>
-                  <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">
-                      Status : <strong>Running</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      App Services : <strong>96</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      Data Services : <strong>96</strong>
-                    </span>
-                  </Box>
-                </Box>
-              </Box>
-              <Box className="d-block width-100 bottom-content">
-                <Box className="content">
-                  <label>Client</label>
-                  <p>Forbese</p>
-                </Box>
-                <Box className="content">
-                  <label>Usage</label>
-                  <p>33%</p>
-                </Box>
-                <Box className="content">
-                  <label>User Count</label>
-                  <p>241</p>
-                </Box>
-                <Box className="content">
-                  <label>Tags</label>
-                  <span className="outline">Logistics</span>
-                </Box>
-                <Box className="content">
-                  <label>L.O.B</label>
-                  <span>Customs</span>
-                </Box>
-              </Box>
-            </Box>
-            <Box className="logistics-card">
-              <Box className="d-flex width-100 top-content">
-                <Box className="image">
-                  <img src={ProcurifyIcon} alt="" />
-                </Box>
-                <Box className="content">
-                  <Box className="d-flex width-100 title">
-                    Procurify-Logistics
-                  </Box>
-                  <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">
-                      Status : <strong>Running</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      App Services : <strong>96</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      Data Services : <strong>96</strong>
-                    </span>
-                  </Box>
-                </Box>
-              </Box>
-              <Box className="d-block width-100 bottom-content">
-                <Box className="content">
-                  <label>Client</label>
-                  <p>Forbese</p>
-                </Box>
-                <Box className="content">
-                  <label>Usage</label>
-                  <p>33%</p>
-                </Box>
-                <Box className="content">
-                  <label>User Count</label>
-                  <p>241</p>
-                </Box>
-                <Box className="content">
-                  <label>Tags</label>
-                  <span className="outline">Logistics</span>
-                </Box>
-                <Box className="content">
-                  <label>L.O.B</label>
-                  <span>Customs</span>
-                </Box>
-              </Box>
-            </Box>
-            <Box className="logistics-card">
-              <Box className="d-flex width-100 top-content">
-                <Box className="image">
-                  <img src={ProcurifyIcon} alt="" />
-                </Box>
-                <Box className="content">
-                  <Box className="d-flex width-100 title">
-                    Procurify-Logistics
-                  </Box>
-                  <Box className="d-flex width-100 status-content">
-                    <span className="d-flex width-100">
-                      Status : <strong>Running</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      App Services : <strong>96</strong>
-                    </span>
-                    <span className="d-flex width-100">
-                      Data Services : <strong>96</strong>
-                    </span>
-                  </Box>
-                </Box>
-              </Box>
-              <Box className="d-block width-100 bottom-content">
-                <Box className="content">
-                  <label>Client</label>
-                  <p>Forbese</p>
-                </Box>
-                <Box className="content">
-                  <label>Usage</label>
-                  <p>33%</p>
-                </Box>
-                <Box className="content">
-                  <label>User Count</label>
-                  <p>241</p>
-                </Box>
-                <Box className="content">
-                  <label>Tags</label>
-                  <span className="outline">Logistics</span>
-                </Box>
-                <Box className="content">
-                  <label>L.O.B</label>
-                  <span>Customs</span>
-                </Box>
-              </Box>
-            </Box>
-          </Box>
+          <Box className="logistics-cards">{this.renderLogistics()}</Box>
         )}
-
-        <Box className="recently-viewed-section">
-          <h3>Recently Viewed</h3>
-          <Box className="recently-cards">
-            <Box className="recently-card">
-              <Box className="recently-image">
-                <img src={ProcurifyIcon} alt="" />
-              </Box>
-              <Box className="recently-content">
-                <div className="title">Procurify</div>
-                <Box className="refund-content">
-                  <span>Logistics-Tool</span>
-                </Box>
-              </Box>
-            </Box>
-            <Box className="recently-card">
-              <Box className="recently-image">
-                <img src={FlipkartIcon} alt="" />
-              </Box>
-              <Box className="recently-content">
-                <div className="title">Flipkart-App</div>
-                <Box className="refund-content">
-                  <span>Order</span>
-                  <span>Refunds</span>
-                </Box>
-              </Box>
-            </Box>
-            <Box className="recently-card">
-              <Box className="recently-image">
-                <img src={AppleIcon} alt="" />
-              </Box>
-              <Box className="recently-content">
-                <div className="title">Apple-Data</div>
-                <Box className="refund-content">
-                  <span>Security-Databese</span>
-                </Box>
-              </Box>
-            </Box>
-            <Box className="recently-card">
-              <Box className="recently-image">
-                <img src={forbeseToolsIcon} alt="" />
-              </Box>
-              <Box className="recently-content">
-                <div className="title">Forbese-Tools</div>
-                <Box className="refund-content">
-                  <span>Automation</span>
-                </Box>
-              </Box>
-            </Box>
-            <Box className="recently-card">
-              <Box className="recently-image">
-                <img src={slackInventoryIcon} alt="" />
-              </Box>
-              <Box className="recently-content">
-                <div className="title">Slack Inventory</div>
-                <Box className="refund-content">
-                  <span>Order</span>
-                  <span>Refund</span>
-                </Box>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-        <Box className="recently-viewed-section">
-          <h3>Favorites</h3>
-          <Box className="recently-cards">
-            <Box className="recently-card">
-              <Box className="recently-image">
-                <img src={ProcurifyIcon} alt="" />
-              </Box>
-              <Box className="recently-content">
-                <div className="title">Procurify</div>
-                <Box className="refund-content">
-                  <span>Logistics-Tool</span>
-                </Box>
-              </Box>
-              <Box
-                className={
-                  procurifyIconStatus ? "favorites-star" : "favorites-check"
-                }
-                onClick={() => this.setState({ procurifyIconStatus: !procurifyIconStatus })
-              }
-              >
-                <i className="fas fa-star"></i>
-              </Box>
-            </Box>
-            <Box className="recently-card">
-              <Box className="recently-image">
-                <img src={FlipkartIcon} alt="" />
-              </Box>
-              <Box className="recently-content">
-                <div className="title">Flipkart-App</div>
-                <Box className="refund-content">
-                  <span>Order</span>
-                  <span>Refunds</span>
-                </Box>
-              </Box>
-              <Box
-                className={
-                  flipkartIconStatus ? "favorites-star" : "favorites-check"
-                }
-                onClick={() => {this.setState({flipkartIconStatus:!flipkartIconStatus})}}
-              >
-                <i className="fas fa-star"></i>
-              </Box>
-            </Box>
-            <Box className="recently-card">
-              <Box className="recently-image">
-                <img src={AppleIcon} alt="" />
-              </Box>
-              <Box className="recently-content">
-                <div className="title">Apple-Data</div>
-                <Box className="refund-content">
-                  <span>Security-Databese</span>
-                </Box>
-              </Box>
-              <Box 
-              
-              className={
-                appleDataIconStatus ? "favorites-star" : "favorites-check"
-              }
-              onClick={() => {this.setState({appleDataIconStatus:!appleDataIconStatus})}}
-              >
-                <i className="fas fa-star"></i>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
       </Box>
     );
   }
