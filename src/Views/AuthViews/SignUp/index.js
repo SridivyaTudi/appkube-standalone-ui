@@ -62,7 +62,8 @@ class SignUp extends Component {
     }
   };
 
-  setActiveStep = (newStep, dontValidate) => {
+  setActiveStep = (e, newStep, dontValidate) => {
+    e.preventDefault();
     const { submittedSteps, activeStep } = this.state;
     submittedSteps[activeStep] = true;
     this.setState({
@@ -243,7 +244,9 @@ class SignUp extends Component {
                   <Button
                     className="secondary-text-btn min-width-inherit"
                     variant="outlined"
-                    onClick={() => this.setActiveStep(this.steps.STEP1, true)}
+                    onClick={(e) =>
+                      this.setActiveStep(e, this.steps.STEP1, true)
+                    }
                   >
                     <i className="fa-solid fa-chevron-left"></i>
                   </Button>
@@ -252,7 +255,9 @@ class SignUp extends Component {
                   <Button
                     className="secondary-text-btn min-width-inherit"
                     variant="outlined"
-                    onClick={() => this.setActiveStep(this.steps.STEP2, true)}
+                    onClick={(e) =>
+                      this.setActiveStep(e, this.steps.STEP2, true)
+                    }
                   >
                     <i className="fa-solid fa-chevron-left"></i>
                   </Button>
@@ -315,237 +320,260 @@ class SignUp extends Component {
                   </>
                 )}
               </Box>
-              {activeStep === this.steps.STEP1 && (
-                <>
-                  <Box className="d-block width-100 google-btn">
-                    <Button className="primary-btn" variant="contained">
-                      Sign up with google
-                    </Button>
-                  </Box>
-                  <Box className="d-block width-100 or-contant text-center">
-                    <span>or</span>
-                  </Box>
-                  <Box sx={{ width: "100%" }}>
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    >
-                      <Grid item xs={6}>
-                        <Box className="input-group">
-                          <label className="d-block">Full Name</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Input your full name here"
-                            name="fullName"
-                            value={step1.fullName}
-                            onChange={this.handleStep1Changes}
-                          />
-                          {submittedSteps[this.steps.STEP1] &&
-                          errors.fullName ? (
-                            <p className="m-b-0">{errors.fullName}</p>
-                          ) : (
-                            <></>
-                          )}
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box className="input-group">
-                          <label className="d-block">Username</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Input your username here"
-                            name="userName"
-                            value={step1.userName}
-                            onChange={this.handleStep1Changes}
-                          />
-                          {submittedSteps[this.steps.STEP1] &&
-                          errors.userName ? (
-                            <p className="m-b-0">{errors.userName}</p>
-                          ) : (
-                            <></>
-                          )}
-                        </Box>
-                      </Grid>
-                    </Grid>
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    >
-                      <Grid item xs={12}>
-                        <Box className="input-group">
-                          <label className="d-block">Email</label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            placeholder="Input your email here"
-                            name="email"
-                            value={step1.email}
-                            onChange={this.handleStep1Changes}
-                          />
-                          {submittedSteps[this.steps.STEP1] && errors.email ? (
-                            <p className="m-b-0">{errors.email}</p>
-                          ) : (
-                            <></>
-                          )}
-                        </Box>
-                      </Grid>
-                    </Grid>
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    >
-                      <Grid item xs={12}>
-                        <Box className="input-group">
-                          <label className="d-block">Password</label>
-                          <input
-                            type={passwordView ? "password" : "text"}
-                            className="form-control"
-                            placeholder="Input your password here"
-                            name="password"
-                            value={step1.password}
-                            onChange={this.handleStep1Changes}
-                          />
-                          {submittedSteps[this.steps.STEP1] &&
-                          errors.password ? (
-                            <p className="m-b-0">{errors.password}</p>
-                          ) : (
-                            <></>
-                          )}
-                          <i
-                            className={`fa-sharp fa-regular fa-eye${
-                              passwordView ? "-slash" : ""
-                            }`}
-                            style={{ cursor: "pointer" }}
-                            onClick={() => {
-                              this.setState({
-                                passwordView: !this.state.passwordView,
-                              });
-                            }}
-                          ></i>
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                  <Box className="remember-content">
-                    <Box className="d-flex align-items-center">
-                      <Checkbox
-                        className="checkbox primary"
-                        size="small"
-                        checked={step1.termsOfService}
-                        onChange={this.handleTermsChange}
-                      />
-                      <p>I have read and agree to the trems of Service</p>
+              <form onSubmit={this.setActiveStep}>
+                {activeStep === this.steps.STEP1 && (
+                  <>
+                    <Box className="d-block width-100 google-btn">
+                      <Button className="primary-btn" variant="contained">
+                        Sign up with google
+                      </Button>
                     </Box>
-                    {submittedSteps[this.steps.STEP1] &&
-                    errors.termsOfService ? (
-                      <p className="m-b-0 error-text">
-                        {errors.termsOfService}
+                    <Box className="d-block width-100 or-contant text-center">
+                      <span>or</span>
+                    </Box>
+                    <Box sx={{ width: "100%" }}>
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                      >
+                        <Grid item xs={6}>
+                          <Box className="input-group">
+                            <label className="d-block" htmlFor="fullName">
+                              Full Name
+                            </label>
+                            <input
+                              id="fullName"
+                              type="text"
+                              className="form-control"
+                              placeholder="Input your full name here"
+                              name="fullName"
+                              value={step1.fullName}
+                              onChange={this.handleStep1Changes}
+                            />
+                            {submittedSteps[this.steps.STEP1] &&
+                            errors.fullName ? (
+                              <p className="m-b-0">{errors.fullName}</p>
+                            ) : (
+                              <></>
+                            )}
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box className="input-group">
+                            <label className="d-block" htmlFor="userName">
+                              Username
+                            </label>
+                            <input
+                              id="userName"
+                              type="text"
+                              className="form-control"
+                              placeholder="Input your username here"
+                              name="userName"
+                              value={step1.userName}
+                              onChange={this.handleStep1Changes}
+                            />
+                            {submittedSteps[this.steps.STEP1] &&
+                            errors.userName ? (
+                              <p className="m-b-0">{errors.userName}</p>
+                            ) : (
+                              <></>
+                            )}
+                          </Box>
+                        </Grid>
+                      </Grid>
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                      >
+                        <Grid item xs={12}>
+                          <Box className="input-group">
+                            <label className="d-block" htmlFor="email">
+                              Email
+                            </label>
+                            <input
+                              id="email"
+                              type="email"
+                              className="form-control"
+                              placeholder="Input your email here"
+                              name="email"
+                              value={step1.email}
+                              onChange={this.handleStep1Changes}
+                            />
+                            {submittedSteps[this.steps.STEP1] &&
+                            errors.email ? (
+                              <p className="m-b-0">{errors.email}</p>
+                            ) : (
+                              <></>
+                            )}
+                          </Box>
+                        </Grid>
+                      </Grid>
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                      >
+                        <Grid item xs={12}>
+                          <Box className="input-group">
+                            <label className="d-block" htmlFor="passwordView">
+                              Password
+                            </label>
+                            <input
+                              id="passwordView"
+                              type={passwordView ? "password" : "text"}
+                              className="form-control"
+                              placeholder="Input your password here"
+                              name="password"
+                              value={step1.password}
+                              onChange={this.handleStep1Changes}
+                            />
+                            {submittedSteps[this.steps.STEP1] &&
+                            errors.password ? (
+                              <p className="m-b-0">{errors.password}</p>
+                            ) : (
+                              <></>
+                            )}
+                            <i
+                              className={`fa-sharp fa-regular fa-eye${
+                                passwordView ? "-slash" : ""
+                              }`}
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                this.setState({
+                                  passwordView: !this.state.passwordView,
+                                });
+                              }}
+                            ></i>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                    <Box className="remember-content">
+                      <Box className="d-flex align-items-center">
+                        <Checkbox
+                          className="checkbox primary"
+                          size="small"
+                          checked={step1.termsOfService}
+                          onChange={this.handleTermsChange}
+                        />
+                        <p>I have read and agree to the trems of Service</p>
+                      </Box>
+                      {submittedSteps[this.steps.STEP1] &&
+                      errors.termsOfService ? (
+                        <p className="m-b-0 error-text">
+                          {errors.termsOfService}
+                        </p>
+                      ) : (
+                        <></>
+                      )}
+                    </Box>
+                    <Box className="d-flex width-100 next-step">
+                      <Button
+                        className="primary-btn"
+                        onClick={(e) => this.setActiveStep(e, this.steps.STEP2)}
+                        variant="contained"
+                        type="submit"
+                      >
+                        Next
+                      </Button>
+                      <p>
+                        Already have on account?
+                        <Link to={`${AUTH_PREFIX_PATH}/signin`}>
+                          Sign In Now
+                        </Link>
                       </p>
-                    ) : (
-                      <></>
-                    )}
-                  </Box>
-                  <Box className="d-flex width-100 next-step">
-                    <Button
-                      className="primary-btn"
-                      onClick={() => this.setActiveStep(this.steps.STEP2)}
-                      variant="contained"
-                    >
-                      Next
-                    </Button>
-                    <p>
-                      Already have on account?
-                      <Link to={`${AUTH_PREFIX_PATH}/signin`}>Sign In Now</Link>
-                    </p>
-                  </Box>
-                </>
-              )}
-              {activeStep === this.steps.STEP2 && (
-                <>
-                  <Box className="select-profile">
-                    <Box className="profile-image">
-                      <img src={step2.profileImg} alt="profile" />
                     </Box>
-                    <Box className="company-content">
-                      <p>Select your company profile picture</p>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        name="image-upload"
-                        id="input"
-                        onChange={this.onChangeCompanyProfileImage}
-                        hidden
-                      />
-                      <Box className="label">
-                        <label className="image-upload" htmlFor="input">
-                          <a className="width-25 blue-button">Browse</a>
-                        </label>
+                  </>
+                )}
+                {activeStep === this.steps.STEP2 && (
+                  <>
+                    <Box className="select-profile">
+                      <Box className="profile-image">
+                        <img src={step2.profileImg} alt="profile" />
+                      </Box>
+                      <Box className="company-content">
+                        <p>Select your company profile picture</p>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          name="image-upload"
+                          id="input"
+                          onChange={this.onChangeCompanyProfileImage}
+                          hidden
+                        />
+                        <Box className="label">
+                          <label className="image-upload" htmlFor="input">
+                            <a className="width-25 blue-button">Browse</a>
+                          </label>
+                        </Box>
                       </Box>
                     </Box>
-                  </Box>
-                  <Box sx={{ width: "100%" }}>
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    >
-                      <Grid item xs={12}>
-                        <Box className="input-group">
-                          <label className="d-block">Your Company Name</label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            placeholder="Input your name here"
-                            name="companyName"
-                            value={step2.companyName}
-                            onChange={this.handleStep2Changes}
-                          />
-                          {submittedSteps[this.steps.STEP2] &&
-                          errors.companyName ? (
-                            <p className="m-b-0">{errors.companyName}</p>
-                          ) : (
-                            <></>
-                          )}
-                        </Box>
+                    <Box sx={{ width: "100%" }}>
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                      >
+                        <Grid item xs={12}>
+                          <Box className="input-group">
+                            <label className="d-block" htmlFor="companyName">
+                              Your Company Name
+                            </label>
+                            <input
+                              id="companyName"
+                              type="email"
+                              className="form-control"
+                              placeholder="Input your name here"
+                              name="companyName"
+                              value={step2.companyName}
+                              onChange={this.handleStep2Changes}
+                            />
+                            {submittedSteps[this.steps.STEP2] &&
+                            errors.companyName ? (
+                              <p className="m-b-0">{errors.companyName}</p>
+                            ) : (
+                              <></>
+                            )}
+                          </Box>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </Box>
-                  <Box className="d-flex width-100 next-step">
-                    <Button
-                      className="primary-btn"
-                      onClick={() => this.setActiveStep(this.steps.STEP3)}
-                      variant="contained"
-                    >
-                      Next
-                    </Button>
-                  </Box>
-                </>
-              )}
-              {activeStep === this.steps.STEP3 && (
-                <>
-                  <Box className="d-flex width-100 next-step">
-                    <LoadingButton
-                      onClick={this.signUpSubmit}
-                      className="primary-btn"
-                      variant="contained"
-                      disabled={
-                        this.props.signUpUser.status === status.IN_PROGRESS
-                      }
-                      loading={
-                        this.props.signUpUser.status === status.IN_PROGRESS
-                      }
-                      loadingPosition="start"
-                    >
-                      Continue To Sign In
-                    </LoadingButton>
-                  </Box>
-                </>
-              )}
+                    </Box>
+                    <Box className="d-flex width-100 next-step">
+                      <Button
+                        className="primary-btn"
+                        onClick={(e) => this.setActiveStep(e, this.steps.STEP3)}
+                        variant="contained"
+                        type="submit"
+                      >
+                        Next
+                      </Button>
+                    </Box>
+                  </>
+                )}
+                {activeStep === this.steps.STEP3 && (
+                  <>
+                    <Box className="d-flex width-100 next-step">
+                      <LoadingButton
+                        type="submit"
+                        onClick={this.signUpSubmit}
+                        className="primary-btn"
+                        variant="contained"
+                        disabled={
+                          this.props.signUpUser.status === status.IN_PROGRESS
+                        }
+                        loading={
+                          this.props.signUpUser.status === status.IN_PROGRESS
+                        }
+                        loadingPosition="start"
+                      >
+                        Continue To Sign In
+                      </LoadingButton>
+                    </Box>
+                  </>
+                )}
+              </form>
             </Box>
           </Box>
         </Box>

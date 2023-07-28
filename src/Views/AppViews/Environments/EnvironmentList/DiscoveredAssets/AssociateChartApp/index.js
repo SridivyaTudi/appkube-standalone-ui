@@ -6,6 +6,7 @@ import chartLogo from "assets/img/assetmanager/chart-logo.png";
 import calendarMouseIcon from "assets/img/assetmanager/calendar-mouse-icon.png";
 import databaseIcon from "assets/img/assetmanager/database-icon.png";
 import BusinessAssociationMapping from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/BusinessAssociationMapping";
+
 let Data = {
   label: "Synectiks",
   subLabel: "",
@@ -139,7 +140,65 @@ let Data = {
             id: "",
             image: calendarMouseIcon,
             type: "HRMS",
-            children: [],
+            children: [
+              {
+                label: "Production",
+                id: "",
+                image: calendarMouseIcon,
+                type: "Production",
+                children: [
+                  {
+                    label: "Web Layer",
+                    id: "",
+                    image: calendarMouseIcon,
+                    type: "Web Layer",
+                    children: [],
+                  },
+                  {
+                    label: "App Layer",
+                    id: "",
+                    image: databaseIcon,
+                    type: "App Layer",
+                    children: [],
+                  },
+                  {
+                    label: "data Layer",
+                    id: "",
+                    image: calendarMouseIcon,
+                    type: "data Layer",
+                    children: [],
+                  },
+                  {
+                    label: "Auxilary Layer",
+                    id: "",
+                    image: databaseIcon,
+                    type: "Auxilary Layer",
+                    children: [],
+                  },
+                ],
+              },
+              {
+                label: "Test",
+                id: "",
+                image: databaseIcon,
+                type: "Test",
+                children: [],
+              },
+              {
+                label: "Stage",
+                id: "",
+                image: calendarMouseIcon,
+                type: "Stage",
+                children: [],
+              },
+              {
+                label: "Development",
+                id: "",
+                image: databaseIcon,
+                type: "Development",
+                children: [],
+              },
+            ],
           },
           {
             label: "Procurement",
@@ -224,7 +283,7 @@ export class AssociateChartApp extends Component {
         >
           <a>{Data.label}</a>
         </li>
-        {isBreadCrumb && !BAMData.length   ? (
+        {isBreadCrumb && !BAMData.length ? (
           <li key={v4()}>
             <i className="fa-solid fa-chevron-right"></i>
           </li>

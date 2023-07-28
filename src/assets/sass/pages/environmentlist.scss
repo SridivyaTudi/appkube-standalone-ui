@@ -1431,6 +1431,18 @@
       width: 100%;
       margin-top: 25px;
 
+      .cloud-all-services {
+        .cloud-managed-cards {
+          max-height: 358px !important;
+          height: 358px;
+          .cloud-managed-cards-scroll {
+            .service-card {
+              padding: 27px 10px !important;
+            }
+          }
+        }
+      }
+
       .discovered-assets {
         .discovered-assets-head {
           .lest-view {
@@ -1518,7 +1530,6 @@
             justify-content: center;
           }
           .global-service-penal {
-
             .environment-boxs {
               .environment-box {
                 width: 296px;
@@ -3256,6 +3267,10 @@
           justify-content: flex-start;
         }
 
+        svg {
+          z-index: 1;
+        }
+
         .chart-box {
           display: inline-flex;
           align-items: center;
@@ -3268,6 +3283,11 @@
           margin-right: 50px;
           border: 1px solid #c7c7e8;
           box-shadow: 0px 41.7776px 33.4221px rgba(108, 73, 172, 0.0503198);
+
+          &.active {
+            border-color: #53ca43;
+            border-width: 2px;
+          }
         }
 
         .global-servies {
@@ -3285,6 +3305,7 @@
               align-items: center;
               justify-content: flex-start;
               cursor: pointer;
+              position: relative;
               width: 160px;
               height: 52px;
               padding: 10px 10px;
@@ -3293,10 +3314,23 @@
               border: 1px solid #c7c7e8;
               box-shadow: 0px 41.7776px 33.4221px rgba(108, 73, 172, 0.0503198);
 
+              &::before {
+                position: absolute;
+                width: 162px;
+                height: 54px;
+                left: -2px;
+                top: -2px;
+                content: "";
+                border-radius: 15px;
+                border-width: 1px;
+                border-style: solid;
+                border-color: transparent;
+              }
+
               i {
-                display: inline-flex;
-                margin-top: -52px;
-                margin-left: 5px;
+                position: absolute;
+                right: -7px;
+                top: 17px;
                 color: #c7c7e8;
                 font-size: 14px;
                 background-color: #3838748c;
@@ -3312,7 +3346,6 @@
                 border-radius: 50px;
                 background-color: #dde1f8;
                 margin-right: 10px;
-                margin-left: -19px;
               }
 
               .content {
@@ -3371,6 +3404,9 @@
 
               &.active {
                 border-color: #53ca43;
+                &::before {
+                  border-color: #53ca43;
+                }
                 i {
                   color: #53ca43;
                   background-color: #ffffff;

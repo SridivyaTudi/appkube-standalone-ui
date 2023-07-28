@@ -189,45 +189,40 @@ function TopBar() {
                       />
                     </Box>
                     <Box className="details">
-                    <HtmlTooltip
-                      title={
-                        <React.Fragment>
-                        <Box className="details">
+                      <HtmlTooltip
+                        title={
+                          <React.Fragment>
+                            <Box className="details">
+                              <div className="name">
+                                {getCurrentUserInfo().username}
+                              </div>
+                            </Box>
+                          </React.Fragment>
+                        }
+                      >
                         <div className="name">
                           {getCurrentUserInfo().username}
                         </div>
-                      </Box>
-                         
-                        </React.Fragment>
-                      }
-                    >
-                     <div className="name">
-                          {getCurrentUserInfo().username}
-                        </div>
-                    </HtmlTooltip>
-                    <HtmlTooltip
-                      title={
-                        <React.Fragment>
-                        <Box className="details">
+                      </HtmlTooltip>
+                      <HtmlTooltip
+                        title={
+                          <React.Fragment>
+                            <Box className="details">
+                              <div className="email">
+                                {getCurrentUserInfo().email}
+                              </div>
+                            </Box>
+                          </React.Fragment>
+                        }
+                      >
                         <div className="email">
                           {getCurrentUserInfo().email}
                         </div>
-                      </Box>
-                         
-                        </React.Fragment>
-                      }
-                    >
-                    <div className="email">
-                          {getCurrentUserInfo().email}
-                        </div>
-                    </HtmlTooltip>
-                        {/* <div className="name">
+                      </HtmlTooltip>
+                      {/* <div className="name">
                           {getCurrentUserInfo().username}
                         </div> */}
-                        
-                      </Box>
-
-                    
+                    </Box>
                   </Box>
                   <List>
                     <ListItem>
@@ -241,7 +236,8 @@ function TopBar() {
                         <a
                           className="item"
                           onClick={() => {
-                            localStorage.clear();
+                            localStorage.removeItem("currentUser");
+                            localStorage.removeItem("currentOrgId");
                             navigate("/auth");
                           }}
                         >

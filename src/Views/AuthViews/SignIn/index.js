@@ -60,9 +60,14 @@ class Signin extends Component {
 
   handleSignIn = (e) => {
     e.preventDefault();
+    const { rememberMe, formData } = this.state;
     this.setState({ isSubmit: true });
     const { isValid } = this.validateForm(true);
+
     if (isValid) {
+      if (rememberMe && !localStorage.getItem("rememberUser")) {
+        localStorage.setItem("rememberUserName", formData.userName);
+      }
       const { userName, password } = this.state.formData;
       this.props.login({ userName, password });
     }
@@ -136,14 +141,20 @@ class Signin extends Component {
                     >
                       <Grid item xs={12}>
                         <Box className="input-group">
-                          <label className="d-block">Username</label>
+                          <label className="d-block" htmlFor="userName">
+                            Username
+                          </label>
                           <input
                             type="userName"
                             className="form-control"
                             name="userName"
                             placeholder="Input your Username here"
-                            value={formData.userName}
+                            value={
+                              formData.userName ||
+                              localStorage.getItem("rememberUserName")
+                            }
                             onChange={this.handleInputChange}
+                            id="userName"
                           />
                           {errors.userName ? (
                             <p className="m-b-0">{errors.userName}</p>
@@ -160,7 +171,9 @@ class Signin extends Component {
                     >
                       <Grid item xs={12}>
                         <Box className="input-group">
-                          <label className="d-block">Password</label>
+                          <label className="d-block" htmlFor="password">
+                            Password
+                          </label>
                           <input
                             type={showPassword ? "text" : "password"}
                             className="form-control"
@@ -169,6 +182,7 @@ class Signin extends Component {
                             value={formData.password}
                             onChange={this.handleInputChange}
                             autoComplete="on"
+                            id="password"
                           />
                           {errors.password ? (
                             <p className="m-b-0">{errors.password}</p>
@@ -215,7 +229,8 @@ class Signin extends Component {
                       }
                       loadingPosition="start"
                       onClick={this.handleSignIn}
-                      className="primary-btn" variant="contained"
+                      className="primary-btn"
+                      variant="contained"
                       type="submit"
                     >
                       Sign In
