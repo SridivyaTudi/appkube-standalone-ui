@@ -17,8 +17,7 @@ let drawArrow = {
         strokeWidth: -1.8,
       },
     },
-  },
-  orient:""
+  }
 };
 let blueOrOrangeBoxElement = {
   Payroll: { label: "3 TIER", className: "blue" },
@@ -65,10 +64,10 @@ class BusinessAssociationMapping extends Component {
 
     return Object.keys(data).length &&
       (data?.children[0].length || data?.children[1].length) ? (
-      <ArcherContainer className="chart-container" startMarker >
+      <ArcherContainer className="chart-container" startMarker>
         <ArcherElement
           id="root"
-          relations={this.makeActiveLine(this.onClickLevelsThenDrawLine())}
+          relations={this.onClickLevelsThenDrawLine()}
           // className="chart-container"
         >
           <div
@@ -103,7 +102,7 @@ class BusinessAssociationMapping extends Component {
           currentLevelIndex;
         let elementId = `selectedLevel_${selectedLevel}_${currentLevelIndex}`;
         let relationsData = isActive
-          ? this.makeActiveLine(this.onClickLevelsThenDrawLine(selectedLevel))
+          ? this.onClickLevelsThenDrawLine(selectedLevel)
           : [];
         let blueOrOrangeBoxEle = blueOrOrangeBoxElement[level.label];
         return (
@@ -148,9 +147,6 @@ class BusinessAssociationMapping extends Component {
 
   /** Render All BAM Levels
    * BAM = Business Association Mapping
-   *  @param {Array} data - The data of the selected level.
-   * @param {Number} selectedLevel - SelectedLevel.
-   *
    */
   renderAllBAMLevel = () => {
     const { BAMData } = this.state;
@@ -185,8 +181,10 @@ class BusinessAssociationMapping extends Component {
 
     if (isIntialClick) {
       let { children } = this.props.data;
+
       BAMData = BAMData.length ? [] : [children[0]];
       selectedActiveBAMLevels = {};
+
       this.props.setBreadCrumbs(selectedActiveBAMLevels, BAMData);
       this.setState({ selectedActiveBAMLevels, BAMData });
     } else {
@@ -231,34 +229,31 @@ class BusinessAssociationMapping extends Component {
    * @param {String} label - Current click label of BAM
    * @param {Number} currentLevelIndex - Current click level index of BAM
    */
-  replaceDataOnSpecificIndex(
-    selectedLevel,
-    label,
-    currentLevelIndex,
-    isReplaceData = 0
-  ) {
+  replaceDataOnSpecificIndex(selectedLevel, label, currentLevelIndex) {
     let { selectedActiveBAMLevels, BAMData } = this.state;
     let dataGet = this.props.data.children[0];
     let currentSelectedLevelIndex = `selectedLevel_${selectedLevel}`;
+
     selectedActiveBAMLevels[currentSelectedLevelIndex] = {
       id: currentLevelIndex,
       label,
     };
-    // Remove all selected level greater than current selected level
-    Object.keys(selectedActiveBAMLevels).forEach((item, inIndex) => {
-      let level = item.split("_")[1];
-      if (selectedLevel < level) {
-        delete selectedActiveBAMLevels[item];
-      }
-    });
     BAMData.length = selectedLevel + 1;
 
-    // Get selected level data
     Object.keys(selectedActiveBAMLevels).forEach((item, inIndex) => {
-      if (dataGet[selectedActiveBAMLevels[item].id]?.children) {
-        dataGet = dataGet[selectedActiveBAMLevels[item].id]["children"];
+      let level = item.split("_")[1];
+
+      // If - Remove all selected level greater than current selected level
+      // else - Get selected level data
+
+      if (selectedLevel < level) {
+        delete selectedActiveBAMLevels[item];
       } else {
-        dataGet = [];
+        if (dataGet[selectedActiveBAMLevels[item].id]?.children) {
+          dataGet = dataGet[selectedActiveBAMLevels[item].id]["children"];
+        } else {
+          dataGet = [];
+        }
       }
     });
 
@@ -266,6 +261,7 @@ class BusinessAssociationMapping extends Component {
     if (dataGet.length) {
       BAMData[selectedLevel + 1] = dataGet;
     }
+
     this.props.setBreadCrumbs(selectedActiveBAMLevels, BAMData);
     this.setState({ selectedActiveBAMLevels, BAMData });
   }
@@ -273,19 +269,33 @@ class BusinessAssociationMapping extends Component {
   /** Fire click event then draw
    * BAM = Business Association Mapping
    *  @param {Number} selectedLevel- The selectedLevel of BAM,
-   * @param {String} label - Current click label of BAM
-   * @param {Number} currentLevelIndex - Current click level index of BAM
    */
   onClickLevelsThenDrawLine = (selectedLevel) => {
-    let { BAMData } = this.state;
+    let { BAMData, selectedActiveBAMLevels } = this.state;
     let selectedLevelIndex = selectedLevel >= 0 ? selectedLevel + 1 : 0;
+    let activeBAMKeys = Object.keys(selectedActiveBAMLevels);
 
     if (BAMData.length && BAMData[selectedLevelIndex]) {
       return BAMData[selectedLevelIndex].map((item, index) => {
-        let tempDrawArrow = Object.assign({}, drawArrow);
-        tempDrawArrow[
-          "targetId"
-        ] = `selectedLevel_${selectedLevelIndex}_${index}`;
+        let tempDrawArrow = JSON.parse(JSON.stringify(drawArrow));
+        let currentId = `selectedLevel_${selectedLevelIndex}`;
+
+        tempDrawArrow["targetId"] = `${currentId}_${index}`;
+
+        let activeIndex = activeBAMKeys.indexOf(currentId);
+
+        if (activeIndex >= 0) {
+          let currentLevelIndex =
+            selectedActiveBAMLevels[activeBAMKeys[activeIndex]]?.id;
+          if (currentLevelIndex === index) {
+            tempDrawArrow["style"]["strokeColor"] = "#53ca43";
+            tempDrawArrow["style"]["endShape"]["circle"]["strokeColor"] =
+              "#53ca43";
+            tempDrawArrow["style"]["endShape"]["circle"]["fillColor"] =
+              "#53ca43";
+            tempDrawArrow["order"] = 1;
+          }
+        }
         return tempDrawArrow;
       });
     } else {
@@ -293,42 +303,6 @@ class BusinessAssociationMapping extends Component {
     }
   };
 
-  /** Make active line
-   *  @param {Array} relationsData- line formatted Data,
-   */
-  makeActiveLine = (relationsData) => {
-    if (relationsData.length) {
-      let { selectedActiveBAMLevels } = this.state;
-      let activeBAMKeys = Object.keys(selectedActiveBAMLevels);
-
-      return relationsData.map((relation, index) => {
-        let tempRelation = JSON.parse(JSON.stringify(relation));
-        let targetId = tempRelation["targetId"].split("_");
-
-        let activeIndex = activeBAMKeys.indexOf(
-          `${targetId[0]}_${targetId[1]}`
-        );
-
-        if (activeIndex >= 0) {
-          let currentLevelIndex =
-            selectedActiveBAMLevels[activeBAMKeys[activeIndex]]?.id;
-          if (currentLevelIndex === +targetId[2]) {
-            tempRelation["style"]["strokeColor"] = "#53ca43";
-            tempRelation["style"]["endShape"]["circle"]["strokeColor"] =
-              "#53ca43";
-            tempRelation["style"]["endShape"]["circle"]["fillColor"] =
-              "#53ca43";
-            tempRelation['order'] = 1;  
-              
-          }
-        }
-
-        return tempRelation;
-      });
-    } else {
-      return []
-    }
-  };
   render() {
     return this.renderBAMMainBody();
   }
