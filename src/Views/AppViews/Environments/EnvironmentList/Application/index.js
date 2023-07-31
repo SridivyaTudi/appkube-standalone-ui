@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-import clusterIcon from "assets/img/assetmanager/cluster-icon.png";
-import webLayerIcon from "assets/img/assetmanager/web-layer-icon.png";
-import dataLayerIcon from "assets/img/assetmanager/data-layer-icon.png";
-import appLayerIcon from "assets/img/assetmanager/app-layer-icon.png";
 
 import {
   Box,
@@ -59,8 +55,11 @@ class Application extends Component {
         {
           name: "eBaoTech",
         },
+        {
+          name: "eBaoTech",
+        },
       ],
-      activeTierTabIndexes: [],
+      activeTierTabIndexes: "Dev",
     };
   }
 
@@ -68,17 +67,27 @@ class Application extends Component {
     this.setState({ activeTab });
   };
 
-  handleTierTabToggle = (index, type) => {
-    let { activeTierTabIndexes } = this.state;
-    if (activeTierTabIndexes.includes(index) && type !== "soa") {
-      activeTierTabIndexes = activeTierTabIndexes.filter(
-        (item) => item !== index
-      );
-    }
-    if (!activeTierTabIndexes.includes(index) && type !== "3Tier") {
-      activeTierTabIndexes.push(index);
-    }
-    this.setState({ activeTierTabIndexes });
+  // handleTierTabToggle = (index, type) => {
+  //   let { activeTierTabIndexes } = this.state;
+  //   if (activeTierTabIndexes.includes(index) && type !== "Dev") {
+  //     activeTierTabIndexes = activeTierTabIndexes.filter(
+  //       (item) => item !== index
+  //     );
+  //   }
+  //   if (!activeTierTabIndexes.includes(index) && type !== "Test") {
+  //     activeTierTabIndexes.push(index);
+  //   }
+  //   if (!activeTierTabIndexes.includes(index) && type !== "Stage") {
+  //     activeTierTabIndexes.push(index);
+  //   }
+  //   if (!activeTierTabIndexes.includes(index) && type !== "Prod") {
+  //     activeTierTabIndexes.push(index);
+  //   }
+  //   this.setState({ activeTierTabIndexes });
+  // };
+
+  handleTierTabToggle = (type) => {
+    this.setState({ activeTierTabIndexes: type });
   };
 
   renderLogistics() {
@@ -92,40 +101,210 @@ class Application extends Component {
             <div className="d-block width-100">
               <Box className="tier-buttons">
                 <Button
-                  className={
-                    !activeTierTabIndexes.includes(index) ? "active" : ""
-                  }
-                  onClick={() => this.handleTierTabToggle(index, "Dev")}
+                  className={activeTierTabIndexes === "Dev" ? "active" : ""}
+                  onClick={() => this.handleTierTabToggle("Dev")}
                 >
                   Dev
                 </Button>
                 <Button
-                  className={
-                    activeTierTabIndexes.includes(index) ? "active" : ""
-                  }
-                  onClick={() => this.handleTierTabToggle(index, "Test")}
+                  className={activeTierTabIndexes === "Test" ? "active" : ""}
+                  onClick={() => this.handleTierTabToggle("Test")}
                 >
                   Test
                 </Button>
                 <Button
-                  className={
-                    !activeTierTabIndexes.includes(index) ? "active" : ""
-                  }
-                  onClick={() => this.handleTierTabToggle(index, "Stage")}
+                  className={activeTierTabIndexes === "Stage" ? "active" : ""}
+                  onClick={() => this.handleTierTabToggle("Stage")}
                 >
                   Stage
                 </Button>
                 <Button
-                  className={
-                    activeTierTabIndexes.includes(index) ? "active" : ""
-                  }
-                  onClick={() => this.handleTierTabToggle(index, "Prod")}
+                  className={activeTierTabIndexes === "Prod" ? "active" : ""}
+                  onClick={() => this.handleTierTabToggle("Prod")}
                 >
                   Prod
                 </Button>
               </Box>
               <Box className="tier-contents">
-                <ul></ul>
+                {activeTierTabIndexes === "Dev" ? (
+                  <TableContainer className="table">
+                    <Table className="overview">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="left">Application</TableCell>
+                          <TableCell align="center">Status</TableCell>
+                          <TableCell align="center">DR Status</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell align="left">Web Layer :</TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="left">App Layer :</TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="left">Data Layer :</TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="left">
+                            Auxiliary services :
+                          </TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                ) : activeTierTabIndexes === "Test" ? (
+                  <TableContainer className="table">
+                    <Table className="overview">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="left">Application</TableCell>
+                          <TableCell align="center">Status</TableCell>
+                          <TableCell align="center">DR Status</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell align="left">Web Layer :</TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="left">Data Layer :</TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="left">App Layer :</TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="left">
+                            Auxiliary services :
+                          </TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                ) : activeTierTabIndexes === "Stage" ? (
+                  <TableContainer className="table">
+                    <Table className="overview">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="left">Application</TableCell>
+                          <TableCell align="center">Status</TableCell>
+                          <TableCell align="center">DR Status</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell align="left">Web Layer :</TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="left">App Layer :</TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="left">
+                            Auxiliary services :
+                          </TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="left">Data Layer :</TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                ) : activeTierTabIndexes === "Prod" ? (
+                  <TableContainer className="table">
+                    <Table className="overview">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="left">Application</TableCell>
+                          <TableCell align="center">Status</TableCell>
+                          <TableCell align="center">DR Status</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell align="left">Web Layer :</TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="left">
+                            Auxiliary services :
+                          </TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="left">App Layer :</TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="left">Data Layer :</TableCell>
+                          <TableCell align="center">Running</TableCell>
+                          <TableCell align="center">
+                            <div className="active">Active</div>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                ) : (
+                  <></>
+                )}
               </Box>
             </div>
           </Box>
