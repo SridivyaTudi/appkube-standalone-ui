@@ -11,5 +11,6 @@
   "setting": "Setting",
   "settransitions": "Set Transitions",
   "ecscluster": "ECS Cluster 01",
-  "associatechartapp": "Associate Chart App"
+  "associatechartapp": "Associate Chart App",
+  "disasterrecovery": "Disaster Recovery"
 }
