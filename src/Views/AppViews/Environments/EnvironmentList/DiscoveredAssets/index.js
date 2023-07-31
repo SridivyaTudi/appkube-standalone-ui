@@ -272,7 +272,7 @@ class DiscoveredAssets extends Component {
   renderTableLevel1Html() {
     let { dataOfTableLevel1, cloudName } = this.state;
     if (!dataOfTableLevel1.length) return null;
-    const cloudLogo = LOGOS[cloudName.toUpperCase()];
+    const cloudLogo = LOGOS[cloudName?.toUpperCase()];
     return (
       <Box
         className="environment-table-section discovered-table"
@@ -408,7 +408,7 @@ class DiscoveredAssets extends Component {
     let formatData = {
       label: "Account ID",
       subLabel: accountId,
-      image: LOGOS[cloudName.toUpperCase()],
+      image: LOGOS?.[cloudName?.toUpperCase()],
       children: [[], []],
     };
     let prepareData = [];
