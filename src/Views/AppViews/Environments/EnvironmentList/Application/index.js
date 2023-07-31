@@ -5,6 +5,8 @@ import clusterIcon from "assets/img/assetmanager/cluster-icon.png";
 import webLayerIcon from "assets/img/assetmanager/web-layer-icon.png";
 import dataLayerIcon from "assets/img/assetmanager/data-layer-icon.png";
 import appLayerIcon from "assets/img/assetmanager/app-layer-icon.png";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 
 import {
   Box,
@@ -137,6 +139,20 @@ class Application extends Component {
 
   render() {
     const { activeTab } = this.state;
+    const HtmlTooltip = styled(({ className, ...props }) => (
+      <Tooltip {...props} arrow classes={{ popper: className }} />
+    ))(({ theme }) => ({
+      [`& .${tooltipClasses.arrow}`]: {
+        color: "#f5f5f9",
+      },
+      [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: "#f5f5f9",
+        color: "rgba(0, 0, 0, 0.87)",
+        maxWidth: 300,
+        fontSize: theme.typography.pxToRem(12),
+        border: "1px solid #dadde9",
+      },
+    }));
     return (
       <Box className="discovered-assets">
         <Box className="discovered-assets-head">
@@ -192,90 +208,122 @@ class Application extends Component {
                     <TableCell align="center">2 hrs</TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
@@ -292,90 +340,122 @@ class Application extends Component {
                     <TableCell align="center">4 hrs</TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="orange"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
@@ -392,90 +472,122 @@ class Application extends Component {
                     <TableCell align="center">5 hrs</TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="orange"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
@@ -492,90 +604,122 @@ class Application extends Component {
                     <TableCell align="center">2 hrs</TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
@@ -592,90 +736,122 @@ class Application extends Component {
                     <TableCell align="center">3 hrs</TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="orange"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
@@ -692,90 +868,122 @@ class Application extends Component {
                     <TableCell align="center">2.5 hrs</TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
@@ -792,90 +1000,122 @@ class Application extends Component {
                     <TableCell align="center">2 hrs</TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <Box className="availability-box">
-                        <span className="green"></span>
-                        <div className="availability-hover-bg"></div>
-                        <Box className="availability-hover">
-                          <p>
-                            Primary Location:{" "}
-                            <strong>US-East - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Location:{" "}
-                            <strong>US-West - EC2 657907747554</strong>
-                          </p>
-                          <p>
-                            DR Status: <strong>Provisioned</strong>
-                          </p>
-                          <p>
-                            Last Failover: <strong>07/07/2023 12.15PM</strong>
-                          </p>
-                        </Box>
+                    <Box className="availability-box">
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={
+                            <React.Fragment>
+                              <Box className="availability-inner">
+                                <p>
+                                  Primary Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Location:{" "}
+                                  <strong>US-West - EC2 657907747554</strong>
+                                </p>
+                                <p>
+                                  DR Status: <strong>Provisioned</strong>
+                                </p>
+                                <p>
+                                  Last Failover:{" "}
+                                  <strong>07/07/2023 12.15PM</strong>
+                                </p>
+                              </Box>
+                            </React.Fragment>
+                          }
+                        >
+                          <span className="green"></span>
+                        </HtmlTooltip>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
