@@ -65,7 +65,7 @@ class BusinessAssociationMapping extends Component {
 
     return Object.keys(data).length &&
       (data?.children[0].length || data?.children[1].length) ? (
-      <ArcherContainer className="chart-container" startMarker>
+      <ArcherContainer className="chart-container" startMarker >
         <ArcherElement
           id="root"
           relations={this.makeActiveLine(this.onClickLevelsThenDrawLine())}
@@ -318,6 +318,8 @@ class BusinessAssociationMapping extends Component {
               "#53ca43";
             tempRelation["style"]["endShape"]["circle"]["fillColor"] =
               "#53ca43";
+            tempRelation['order'] = 1;  
+              
           }
         }
 
