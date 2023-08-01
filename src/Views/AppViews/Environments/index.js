@@ -290,57 +290,10 @@ class Environments extends Component {
                     }
                   >
                     <Button
-                    className="compliance-btn"
-                    onClick={(e) => {
-                      this.handleComplianceToggle(envIndex, accountIndex);
-                    }}
-                  >
+                    className="compliance-btn">
                     {account.compliance} Compliance
                   </Button>
                   </HtmlTooltip>
-                  {/* <Button
-                    className="compliance-btn"
-                    onClick={(e) => {
-                      this.handleComplianceToggle(envIndex, accountIndex);
-                    }}
-                  >
-                    {account.compliance} Compliance
-                  </Button> */}
-                  {/* {compliantShowMenu[0] === envIndex &&
-                  compliantShowMenu[1] === accountIndex ? (
-                    <>
-                      <div
-                        className="compliant-close"
-                        onClick={(e) => {
-                          this.handleComplianceToggle(envIndex, accountIndex);
-                        }}
-                      ></div>
-                      <Box className="compliant-list">
-                        <List>
-                          <ListItem>
-                            <span>
-                              <img src={isoImage} alt="" />
-                            </span>{" "}
-                            ISO 27001 Compliant
-                          </ListItem>
-                          <ListItem>
-                            <span>
-                              <img src={pciImage} alt="" />
-                            </span>{" "}
-                            PCI DSS Compliant
-                          </ListItem>
-                          <ListItem>
-                            <span>
-                              <img src={hipaaImage} alt="" />
-                            </span>{" "}
-                            HIPAA Compliant
-                          </ListItem>
-                        </List>
-                      </Box>
-                    </>
-                  ) : (
-                    <></>
-                  )} */}
                 </TableCell>
                 <TableCell align="center">
                   <button

@@ -556,7 +556,7 @@ class Application extends Component {
                             </React.Fragment>
                           }
                         >
-                          <span className="green"></span>
+                          <span className="orange"></span>
                         </HtmlTooltip>
                       </Box>
                     </TableCell>
@@ -586,7 +586,7 @@ class Application extends Component {
                             </React.Fragment>
                           }
                         >
-                          <span className="green"></span>
+                          <span className="orange"></span>
                         </HtmlTooltip>
                       </Box>
                     </TableCell>
