@@ -1135,7 +1135,7 @@
         margin-right: 80px;
         //margin-top: 25px;
         vertical-align: text-top;
-        width: 20%;
+        width: 30%;
         height: 55px;
         font-size: 12px;
         line-height: 16px;
@@ -1176,9 +1176,9 @@
 
       .global-servies {
         display: inline-flex;
-        width: 22%;
+        width: 25%;
         flex-wrap: wrap;
-        margin-right: 80px;
+        margin-right: 0px;
 
         &.cluster-servies {
           width: 26%;
@@ -1502,16 +1502,16 @@
               margin-top: 30px;
               font-weight: 500;
             }
-            .services-panel-tabs {
-              .tabs-head {
-                ul {
-                  display: inline-block;
-                  width: 100%;
-                  border-radius: 30px;
-                  background-color: #dbdff1;
-                }
-              }
-            }
+            // .services-panel-tabs {
+            //   .tabs-head {
+            //     ul {
+            //       display: inline-block;
+            //       width: 100%;
+            //       border-radius: 30px;
+            //       background-color: #dbdff1;
+            //     }
+            //   }
+            // }
 
             .global-services-fliter {
               display: block;

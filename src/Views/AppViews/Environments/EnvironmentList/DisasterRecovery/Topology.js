@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
-import CloudManagedDetails from "./CloudManagedDetails";
+// import CloudManagedDetails from "./CloudManagedDetails";
 import {
   IconButton,
   Box,
@@ -19,15 +19,12 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
-import TopologyView from "./Components/TopologyView";
-import VpcDetails from "./VpcDetails";
-import ClusterDetails from "./ClusterDetails";
-import AssociateApp from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/AssociateApp";
+import TopologyView from "./TopologyView";
+// import VpcDetails from "./VpcDetails";
+// import ClusterDetails from "./ClusterDetails";
+// import AssociateApp from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/AssociateApp";
 import { v4 } from "uuid";
 import { LOGOS } from "CommonData";
-import {
-  getEnvironmentDataByLandingZone,
-} from "Redux/EnvironmentData/EnvironmentDataThunk";
 
 const TABLE_LEVEL_1 = {
   APP: "App",
@@ -40,7 +37,7 @@ const TOPOLOGY_VIEW_TYPE = {
   GLOBAL_SERVICE: "globalService",
 };
 
-class DiscoveredAssets extends Component {
+class Topology extends Component {
   constructor(props) {
     super(props);
     const queryPrm = new URLSearchParams(document.location.search);
@@ -68,14 +65,21 @@ class DiscoveredAssets extends Component {
   }
 
   componentDidMount = () => {
-    const queryPrm = new URLSearchParams(document.location.search);
-    this.props.getEnvironmentDataByLandingZone(queryPrm.get("landingZone"));
+    let { productEnclaveList, globalServiceList } =
+      this.getEnvironmentDataByLandingZone();
+    if (productEnclaveList?.length || globalServiceList?.length) {
+      this.prepareDataTableLevel1(productEnclaveList);
+      this.prepareDataTopologyViewComponent(
+        productEnclaveList,
+        globalServiceList
+      );
+    }
   };
 
   componentDidUpdate = async (prevProps, prevState) => {
     if (
       prevProps.envDataByLandingZone.status !==
-      this.props.envDataByLandingZone.status &&
+        this.props.envDataByLandingZone.status &&
       this.props.envDataByLandingZone.status === status.SUCCESS
     ) {
       let { productEnclaveList, globalServiceList } =
@@ -117,8 +121,8 @@ class DiscoveredAssets extends Component {
       cloudName && selectedLevel1 && !selectedLevel2
         ? "selectedLevel1"
         : selectedLevel1 && selectedLevel2
-          ? "selectedLevel2"
-          : "cloudName";
+        ? "selectedLevel2"
+        : "cloudName";
     let breadCrumbsData = Object.keys(breadcrumbs);
 
     return breadCrumbsData.map((breadCrumb, index) => {
@@ -143,10 +147,10 @@ class DiscoveredAssets extends Component {
                 {breadCrumb === "cloudName" || breadCrumb === "selectedLevel1"
                   ? breadcrumbs[breadCrumb]?.toUpperCase()
                   : breadCrumb === "selectedLevel2"
-                    ? `${breadcrumbs[breadCrumb][0]?.toUpperCase()}${breadcrumbs[
+                  ? `${breadcrumbs[breadCrumb][0]?.toUpperCase()}${breadcrumbs[
                       breadCrumb
                     ].slice(1)}`
-                    : breadcrumbs[breadCrumb]}
+                  : breadcrumbs[breadCrumb]}
               </a>
             </li>
           </>
@@ -358,9 +362,9 @@ class DiscoveredAssets extends Component {
     }
     return checkLengthEnvData
       ? {
-        productEnclaveList: envDataByLandingZone.data?.productEnclaveList,
-        globalServiceList: envDataByLandingZone.data?.globalServiceList,
-      }
+          productEnclaveList: envDataByLandingZone.data?.productEnclaveList,
+          globalServiceList: envDataByLandingZone.data?.globalServiceList,
+        }
       : {};
   };
 
@@ -500,104 +504,15 @@ class DiscoveredAssets extends Component {
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
-      <Box className="discovered-assets">
-        <Box className="discovered-assets-body">
-          {envDataByLandingZone.status === status.IN_PROGRESS ||
-            departments.status === status.IN_PROGRESS ? (
-            <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20">
-              <i className="fa-solid fa-spinner fa-spin" /> Loading...
-            </Box>
-          ) : (
-            <Box sx={{ width: "100%" }}>
-              <Grid
-                container
-                rowSpacing={1}
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              >
-                <TopologyView
-                  data={dataOfLevel1}
-                  setLevel={this.getCurrentActiveTreeLevel}
-                  selectedBreadCrumbs={breadcrumbs}
-                />
-                <Grid item xs={7}>
-                  {!currentActiveNodeLabel ? (
-                    <Box className="tier-buttons">
-                      <Button
-                        variant={
-                          activeTierTab === "3Tier" ? "contained" : "outlined"
-                        }
-                        className={
-                          activeTierTab === "3Tier"
-                            ? "primary-btn min-width"
-                            : "primary-outline-btn min-width"
-                        }
-                        onClick={() => this.handleTierTabToggle("3Tier")}
-                      >
-                        3 Tier
-                      </Button>
-                      <Button
-                        variant={
-                          activeTierTab === "Soa" ? "contained" : "outlined"
-                        }
-                        className={
-                          activeTierTab === "Soa"
-                            ? "primary-btn min-width"
-                            : "primary-outline-btn min-width"
-                        }
-                        onClick={() => this.handleTierTabToggle("Soa")}
-                      >
-                        SOA
-                      </Button>
-                    </Box>
-                  ) : (
-                    <></>
-                  )}
-
-                  <Box className="global-services-fliter">
-                    <Box className="heading">
-                      <Box className="breadcrumbs">
-                        <ul>{this.renderBreadCrumbs()}</ul>
-                        {currentActiveNodeLabel.includes("vpc") ? (
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label="Show cluster"
-                            className="checkbox primary m-l-auto m-r-0"
-                            size="small"
-                            onChange={() => {
-                              this.setState({ isClusterShow: !isClusterShow });
-                            }}
-                            checked={isClusterShow}
-                          />
-                        ) : (
-                          <></>
-                        )}
-                      </Box>
-                    </Box>
-                  </Box>
-                  {currentActiveNodeLabel.includes("vpc") ? (
-                    <></>
-                  ) : activeTierTab === "3Tier" && !currentActiveNodeLabel ? (
-                    this.renderTableLevel1Html()
-                  ) : (
-                    this.renderTableLevel2Html()
-                  )}
-                  <Box className="fliter-tabs global-service-penal">
-                    {currentActiveNodeLabel.includes("vpc") ? (
-                      isClusterShow ? (
-                        <ClusterDetails />
-                      ) : (
-                        <CloudManagedDetails />
-                      )
-                    ) : (
-                      <VpcDetails vpc={currentVPC} />
-                    )}
-                  </Box>
-                </Grid>
-              </Grid>
-            </Box>
-          )}
-        </Box>
-        {currentActiveNodeLabel.includes("vpc") ? <AssociateApp /> : <></>}
+      <Box sx={{ width: "100%" }}>
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <TopologyView
+            data={dataOfLevel1}
+            setLevel={this.getCurrentActiveTreeLevel}
+            selectedBreadCrumbs={breadcrumbs}
+          />
+          <Grid item xs={6}></Grid>
+        </Grid>
       </Box>
     );
   }
@@ -608,7 +523,5 @@ function mapStateToProps(state) {
   return { envDataByLandingZone, departments };
 }
 
-const mapDispatchToProps = {
-  getEnvironmentDataByLandingZone
-};
-export default connect(mapStateToProps, mapDispatchToProps)(DiscoveredAssets);
+const mapDispatchToProps = {};
+export default connect(mapStateToProps, mapDispatchToProps)(Topology);

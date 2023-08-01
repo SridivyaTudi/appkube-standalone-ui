@@ -14,10 +14,10 @@ let drawArrow = {
         radius: 1.3,
         fillColor: "#6a6a9f",
         strokeColor: "#6a6a9f",
-        strokeWidth: -1.8,
+        strokeWidth: -1.2,
       },
     },
-  }
+  },
 };
 let blueOrOrangeBoxElement = {
   Payroll: { label: "3 TIER", className: "blue" },
