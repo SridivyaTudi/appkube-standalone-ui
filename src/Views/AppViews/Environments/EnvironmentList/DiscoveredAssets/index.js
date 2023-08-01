@@ -68,8 +68,7 @@ class DiscoveredAssets extends Component {
   }
 
   componentDidMount = () => {
-    const queryPrm = new URLSearchParams(document.location.search);
-    this.props.getEnvironmentDataByLandingZone(queryPrm.get("landingZone"));
+    this.props.getEnvironmentDataByLandingZone(this.state.accountId);
   };
 
   componentDidUpdate = async (prevProps, prevState) => {
