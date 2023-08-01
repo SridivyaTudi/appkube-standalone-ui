@@ -1398,53 +1398,23 @@
 
       .discovered-assets {
         .discovered-assets-head {
-          .lest-view {
-            ul {
-              display: flex;
-
-              li {
-                display: inline-block;
-                margin-right: 15px;
-                padding: 10px 15px;
-                position: relative;
-                white-space: nowrap;
-
-                a {
-                  font-size: 14px;
-                  line-height: 18px;
-                  font-weight: 600;
-                  color: #383874;
-                }
-
-                &::after {
-                  content: "";
-                  top: 42px;
-                  left: 0;
-                  position: absolute;
-                  background: #c9cedb;
-                  height: 2px;
-                  width: 100%;
-                  display: block;
-                }
-
-                &.active {
-                  &::after {
-                    content: "";
-                    top: 40px;
-                    left: 0;
-                    position: absolute;
-                    background: #416bff;
-                    height: 4px;
-                    border-radius: 5px 5px 0 0;
-                    width: 100%;
-                    display: block;
-                    box-shadow: rgba(65, 107, 255, 0.15) 0px 2px 1px,
-                      rgba(65, 107, 255, 0.15) 0px 4px 2px,
-                      rgba(65, 107, 255, 0.15) 0px 8px 4px,
-                      rgba(65, 107, 255, 0.15) 0px 16px 8px,
-                      rgba(65, 107, 255, 0.15) 0px 32px 16px;
-                  }
-                }
+          .radio-group{
+            padding: 8px 10px; 
+            border-radius: 3px;
+            border: 1px solid #384CFF;
+            .checkbox{
+              margin-right: 15px;
+              &:last-child{
+                margin-right: 0;
+              }
+              label{
+                font-size: 12px;
+                line-height: 15px;
+                font-weight: 400;
+                color: #000000;
+              }
+              .checkbox-input{
+                margin-top: 0;
               }
             }
           }
@@ -1645,19 +1615,19 @@
                 .cloud-managed-cards-scroll {
                   display: flex;
                   flex-wrap: wrap;
-                  width: 600px;
+                  width: 700px;
                   margin: 10px;
 
                   .service-card {
                     margin: 0 5px 10px;
-                    width: 140px;
+                    width: 165px;
                     display: flex;
                     align-items: center;
                     justify-content: flex-start;
                     background: #ffffff;
                     border-radius: 5px;
                     padding: 20px 10px;
-                    border: 1px solid #f4f4f4;
+                    border: 1px solid #F4F4F4;
 
                     .service-icon {
                       display: flex;
@@ -1696,8 +1666,8 @@
                     }
 
                     &.active {
-                      border: none;
-                      box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.04);
+                      // border: none;
+                      // box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.04);
                     }
                   }
                 }
