@@ -25,6 +25,9 @@ import ClusterDetails from "./ClusterDetails";
 import AssociateApp from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/AssociateApp";
 import { v4 } from "uuid";
 import { LOGOS } from "CommonData";
+import {
+  getEnvironmentDataByLandingZone,
+} from "Redux/EnvironmentData/EnvironmentDataThunk";
 
 const TABLE_LEVEL_1 = {
   APP: "App",
@@ -65,21 +68,14 @@ class DiscoveredAssets extends Component {
   }
 
   componentDidMount = () => {
-    let { productEnclaveList, globalServiceList } =
-      this.getEnvironmentDataByLandingZone();
-    if (productEnclaveList?.length || globalServiceList?.length) {
-      this.prepareDataTableLevel1(productEnclaveList);
-      this.prepareDataTopologyViewComponent(
-        productEnclaveList,
-        globalServiceList
-      );
-    }
+    const queryPrm = new URLSearchParams(document.location.search);
+    this.props.getEnvironmentDataByLandingZone(queryPrm.get("landingZone"));
   };
 
   componentDidUpdate = async (prevProps, prevState) => {
     if (
       prevProps.envDataByLandingZone.status !==
-        this.props.envDataByLandingZone.status &&
+      this.props.envDataByLandingZone.status &&
       this.props.envDataByLandingZone.status === status.SUCCESS
     ) {
       let { productEnclaveList, globalServiceList } =
@@ -121,8 +117,8 @@ class DiscoveredAssets extends Component {
       cloudName && selectedLevel1 && !selectedLevel2
         ? "selectedLevel1"
         : selectedLevel1 && selectedLevel2
-        ? "selectedLevel2"
-        : "cloudName";
+          ? "selectedLevel2"
+          : "cloudName";
     let breadCrumbsData = Object.keys(breadcrumbs);
 
     return breadCrumbsData.map((breadCrumb, index) => {
@@ -147,10 +143,10 @@ class DiscoveredAssets extends Component {
                 {breadCrumb === "cloudName" || breadCrumb === "selectedLevel1"
                   ? breadcrumbs[breadCrumb]?.toUpperCase()
                   : breadCrumb === "selectedLevel2"
-                  ? `${breadcrumbs[breadCrumb][0]?.toUpperCase()}${breadcrumbs[
+                    ? `${breadcrumbs[breadCrumb][0]?.toUpperCase()}${breadcrumbs[
                       breadCrumb
                     ].slice(1)}`
-                  : breadcrumbs[breadCrumb]}
+                    : breadcrumbs[breadCrumb]}
               </a>
             </li>
           </>
@@ -362,9 +358,9 @@ class DiscoveredAssets extends Component {
     }
     return checkLengthEnvData
       ? {
-          productEnclaveList: envDataByLandingZone.data?.productEnclaveList,
-          globalServiceList: envDataByLandingZone.data?.globalServiceList,
-        }
+        productEnclaveList: envDataByLandingZone.data?.productEnclaveList,
+        globalServiceList: envDataByLandingZone.data?.globalServiceList,
+      }
       : {};
   };
 
@@ -507,7 +503,7 @@ class DiscoveredAssets extends Component {
       <Box className="discovered-assets">
         <Box className="discovered-assets-body">
           {envDataByLandingZone.status === status.IN_PROGRESS ||
-          departments.status === status.IN_PROGRESS ? (
+            departments.status === status.IN_PROGRESS ? (
             <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20">
               <i className="fa-solid fa-spinner fa-spin" /> Loading...
             </Box>
@@ -612,5 +608,7 @@ function mapStateToProps(state) {
   return { envDataByLandingZone, departments };
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getEnvironmentDataByLandingZone
+};
 export default connect(mapStateToProps, mapDispatchToProps)(DiscoveredAssets);

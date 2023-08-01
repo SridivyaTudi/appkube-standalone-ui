@@ -30,7 +30,7 @@ const config = {
   ADD_CLOUD_ENV: `/cloud-environments`,
   GET_PRODUCTS_BY_DEPID: `/query/organizations/#org-id#/departments/#dep-id#/products`,
   GET_DEPLOYMENT_ENVIRONMENTS: `/deployment-environments`,
-  GET_ALL_ENVIRONMENT_BOX_DATA: `${baseURL}/query/organizations/#orgId#/cloud/#cloud#/landing-zone/#landingZone#/cloud-environments/count`,
+  GET_SINGLE_ENVIRONMENT_COUNT_DATA: `${baseURL}/query/organizations/#orgId#/cloud/#cloud#/landing-zone/#landingZone#/cloud-environments/count`,
 };
 
 export default config;

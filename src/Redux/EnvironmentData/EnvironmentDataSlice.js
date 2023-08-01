@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getEnvironmentDataByLandingZone,
   getDepartments,
-  getEnvironmentBoxesData,
+  getSingleEnvironmentCountData,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -13,15 +13,11 @@ export const environmentDataSlice = createSlice({
       status: null,
       data: {},
     },
-    allEnv: {
-      status: null,
-      data: [],
-    },
     departments: {
       status: null,
       data: [],
     },
-    environmentBoxesData: {
+    singleEnvironmentCountData: {
       status: null,
       data: [],
     },
@@ -83,27 +79,27 @@ export const environmentDataSlice = createSlice({
       };
     },
 
-    [getEnvironmentBoxesData.pending]: (state) => {
+    [getSingleEnvironmentCountData.pending]: (state) => {
       return {
         ...state,
-        environmentBoxesData: {
+        singleEnvironmentCountData: {
           status: status.initialState,
         },
       };
     },
-    [getEnvironmentBoxesData.fulfilled]: (state, { payload }) => {
+    [getSingleEnvironmentCountData.fulfilled]: (state, { payload }) => {
       return {
         ...state,
-        environmentBoxesData: {
+        singleEnvironmentCountData: {
           status: status.SUCCESS,
           data: payload,
         },
       };
     },
-    [getEnvironmentBoxesData.rejected]: (state) => {
+    [getSingleEnvironmentCountData.rejected]: (state) => {
       return {
         ...state,
-        environmentBoxesData: {
+        singleEnvironmentCountData: {
           status: status.FAILURE,
         },
       };

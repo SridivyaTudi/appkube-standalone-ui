@@ -11,11 +11,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import status from "Redux/Constants/CommonDS";
 import {
-  getEnvironmentDataByLandingZone,
-  getDepartments,
-  getEnvironmentBoxesData,
+  getSingleEnvironmentCountData,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
-import { getEnvsSummary } from "Redux/Environments/EnvironmentsThunk";
 import { connect } from "react-redux";
 import { LOGOS } from "CommonData";
 import { v4 } from "uuid";
@@ -62,14 +59,8 @@ class EnvironmentList extends Component {
     this.state = {
       showLandingZoneDetails: false,
       activeTab: 0,
-      accountList: {},
-      commonData: {},
-      searchedAccountList: {},
-      vpcsDetails: [],
-      vpcsDetailsBackUp: [],
-      landingZone: null,
       cloudName: "",
-      environmentBoxesData: {},
+      singleEnvironmentCountData: {},
     };
   }
 
@@ -85,109 +76,63 @@ class EnvironmentList extends Component {
 
   componentDidMount = () => {
     const queryPrm = new URLSearchParams(document.location.search);
-    this.setState(
-      {
-        cloudName: queryPrm.get("cloudName"),
-        landingZone: queryPrm.get("landingZone"),
-      },
-      () => {
-        const params = {
-          orgId: getCurrentOrgId(),
-          cloud: this.state.cloudName,
-          landingZone: this.state.landingZone,
-        };
-        this.props.getEnvironmentBoxesData(params);
-      }
-    );
-    this.props.getEnvsSummary();
+    this.setState({
+      cloudName: queryPrm.get("cloudName"),
+    });
+    const params = {
+      orgId: getCurrentOrgId(),
+      cloud: queryPrm.get("cloudName"),
+      landingZone: queryPrm.get("landingZone")
+    };
+    this.props.getSingleEnvironmentCountData(params);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.state.landingZone !== prevState.landingZone) {
-      this.props.getDepartments(this.state.landingZone);
-      let { landingZone } = this.state;
-      this.props.getEnvironmentDataByLandingZone(landingZone);
-    }
-
-    if (prevProps.allEnv.status !== this.props.allEnv.status) {
-      if (
-        this.props.allEnv.status === status.SUCCESS &&
-        this.props.allEnv.data
-      ) {
-        let envs = this.props.allEnv.data;
-        if (envs.length) {
-          const commonData = {};
-          const accounts = {};
-          envs.forEach((account) => {
-            accounts[account.cloud] = accounts[account.cloud] || [];
-            accounts[account.cloud].push(account);
-            commonData[account.cloud] = commonData[account.cloud]
-              ? commonData[account.cloud]
-              : {
-                  totalBill: 0,
-                };
-            commonData[account.cloud].totalBill += account.totalBilling || 0;
-          });
-          this.setState({
-            accountList: accounts,
-            commonData,
-            searchedAccountList: JSON.parse(JSON.stringify(accounts)),
-          });
-        }
-      }
-    }
-
     if (
-      prevProps.environmentBoxesData.status !==
-        this.props.environmentBoxesData.status &&
-      this.props.environmentBoxesData.status === status.SUCCESS
+      prevProps.singleEnvironmentCountData.status !==
+      this.props.singleEnvironmentCountData.status &&
+      this.props.singleEnvironmentCountData.status === status.SUCCESS
     ) {
       this.setState({
-        environmentBoxesData: this.props.environmentBoxesData.data,
+        singleEnvironmentCountData: this.props.singleEnvironmentCountData.data,
       });
     }
   };
 
-  updateCurrentAccountId = (id) => {
-    this.setState({ landingZone: id });
-  };
-
-  renderEnvironmentBoxes = () => {
-    const { environmentBoxesData } = this.state;
-    const retData = [];
-    retData.push(
-      <List key={v4()}>
+  renderLandingZoneData = () => {
+    const { singleEnvironmentCountData } = this.state;
+    return (
+      <List>
         <ListItem>
           <Box className="data-text">
             <span style={{ backgroundColor: "#ff9900" }}></span>
             <p>Environments</p>
           </Box>
-          <label>{environmentBoxesData.environments}</label>
+          <label>{singleEnvironmentCountData.environments}</label>
         </ListItem>
         <ListItem>
           <Box className="data-text">
             <span style={{ backgroundColor: "#0089d6" }}></span>
             <p>Assets</p>
           </Box>
-          <label>{environmentBoxesData.assets}</label>
+          <label>{singleEnvironmentCountData.assets}</label>
         </ListItem>
         <ListItem>
           <Box className="data-text">
             <span style={{ backgroundColor: "#da4f44" }}></span>
             <p>Alerts</p>
           </Box>
-          <label>{environmentBoxesData.alerts}</label>
+          <label>{singleEnvironmentCountData.alerts}</label>
         </ListItem>
         <ListItem>
           <Box className="data-text">
             <span style={{ backgroundColor: "#00b929" }}></span>
             <p>Total Billing</p>
           </Box>
-          <label>{environmentBoxesData.totalbilling}</label>
+          <label>{singleEnvironmentCountData.totalbilling}</label>
         </ListItem>
       </List>
     );
-    return retData;
   };
 
   render() {
@@ -195,7 +140,7 @@ class EnvironmentList extends Component {
       showLandingZoneDetails,
       activeTab,
       cloudName,
-      environmentBoxesData,
+      singleEnvironmentCountData,
     } = this.state;
     return (
       <Box className="environment-container environmentlist">
@@ -212,12 +157,11 @@ class EnvironmentList extends Component {
         </Box>
         <Box className="services-panel">
           <Box
-            className={`services-panel-title p-t-10 p-b-10 ${
-              showLandingZoneDetails ? "bottom-border" : ""
-            }`}
+            className={`services-panel-title p-t-10 p-b-10 ${showLandingZoneDetails ? "bottom-border" : ""
+              }`}
           >
             <Box className="image">
-              <img src={LOGOS[environmentBoxesData.cloud?.toUpperCase()]} />
+              <img src={LOGOS[singleEnvironmentCountData.cloud?.toUpperCase()]} />
             </Box>
             <Box className="name">{cloudName}</Box>
             <Box
@@ -225,9 +169,8 @@ class EnvironmentList extends Component {
               onClick={() => this.toggleLandingZoneDetails("filterShow")}
             >
               <i
-                className={`fa ${
-                  showLandingZoneDetails ? "fa-caret-down" : "fa-caret-right"
-                }`}
+                className={`fa ${showLandingZoneDetails ? "fa-caret-down" : "fa-caret-right"
+                  }`}
               ></i>
             </Box>
           </Box>
@@ -235,7 +178,7 @@ class EnvironmentList extends Component {
             className="data-contant"
             style={{ display: showLandingZoneDetails ? "" : "none" }}
           >
-            {environmentBoxesData ? this.renderEnvironmentBoxes() : <></>}
+            {singleEnvironmentCountData ? this.renderLandingZoneData() : <></>}
           </Box>
         </Box>
         <Box className="services-panel-tabs">
@@ -256,13 +199,7 @@ class EnvironmentList extends Component {
           </Box>
           <Box className="tabs-content">
             {activeTab === 0 ? (
-              <DiscoveredAssets
-                updateCloudNameAndLandingZone={(service, landingZone) => {
-                  this.setState({ service, landingZone });
-                }}
-                accountList={this.state.accountList}
-                updateCurrentAccountId={this.updateCurrentAccountId}
-              />
+              <DiscoveredAssets />
             ) : activeTab === 1 ? (
               <Application />
             ) : activeTab === 2 ? (
@@ -284,14 +221,11 @@ class EnvironmentList extends Component {
 }
 
 function mapStateToProps(state) {
-  const { departments, allEnv, environmentBoxesData } = state.environmentData;
-  return { departments, allEnv, environmentBoxesData };
+  const { singleEnvironmentCountData } = state.environmentData;
+  return { singleEnvironmentCountData };
 }
 
 const mapDispatchToProps = {
-  getEnvironmentDataByLandingZone,
-  getEnvsSummary,
-  getDepartments,
-  getEnvironmentBoxesData,
+  getSingleEnvironmentCountData,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EnvironmentList);
