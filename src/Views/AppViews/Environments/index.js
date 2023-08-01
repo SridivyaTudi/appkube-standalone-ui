@@ -32,6 +32,8 @@ import {
 } from "Utils";
 import { ToastMessage } from "Toast/ToastMessage";
 import { LOGOS } from "CommonData";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 
 class Environments extends Component {
   constructor(props) {
@@ -210,6 +212,20 @@ class Environments extends Component {
         </Box>
       );
     } else if (this.props.envSummary.status === status.SUCCESS) {
+      const HtmlTooltip = styled(({ className, ...props }) => (
+        <Tooltip {...props} arrow classes={{ popper: className }} />
+      ))(({ theme }) => ({
+        [`& .${tooltipClasses.arrow}`]: {
+          color: "#f5f5f9",
+        },
+        [`& .${tooltipClasses.tooltip}`]: {
+          backgroundColor: "#f5f5f9",
+          color: "rgba(0, 0, 0, 0.87)",
+          maxWidth: 300,
+          fontSize: theme.typography.pxToRem(12),
+          border: "1px solid #dadde9",
+        },
+      }));
       const {
         menuSummaryShowMenu,
         compliantShowMenu,
@@ -244,24 +260,11 @@ class Environments extends Component {
                 <TableCell align="center">{account.productionEnv}</TableCell>
                 <TableCell align="center">${account.overallCost}</TableCell>
                 <TableCell align="center">
-                  <Button
-                    className="compliance-btn"
-                    onClick={(e) => {
-                      this.handleComplianceToggle(envIndex, accountIndex);
-                    }}
-                  >
-                    {account.compliance} Compliance
-                  </Button>
-                  {compliantShowMenu[0] === envIndex &&
-                  compliantShowMenu[1] === accountIndex ? (
-                    <>
-                      <div
-                        className="compliant-close"
-                        onClick={(e) => {
-                          this.handleComplianceToggle(envIndex, accountIndex);
-                        }}
-                      ></div>
-                      <Box className="compliant-list">
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={
+                      <React.Fragment>
+                        <Box className="compliant-list">
                         <List>
                           <ListItem>
                             <span>
@@ -283,10 +286,14 @@ class Environments extends Component {
                           </ListItem>
                         </List>
                       </Box>
-                    </>
-                  ) : (
-                    <></>
-                  )}
+                      </React.Fragment>
+                    }
+                  >
+                    <Button
+                    className="compliance-btn">
+                    {account.compliance} Compliance
+                  </Button>
+                  </HtmlTooltip>
                 </TableCell>
                 <TableCell align="center">
                   <button
@@ -530,6 +537,7 @@ class Environments extends Component {
   };
 
   render() {
+    
     const {
       isRecentVisitedEnvMenuOpen,
       isAddNewEnvironmentShown,
@@ -538,6 +546,7 @@ class Environments extends Component {
       showFilterPopup,
       filters,
     } = this.state;
+    
     return (
       <div className="environment-container">
         <Box className="list-heading">

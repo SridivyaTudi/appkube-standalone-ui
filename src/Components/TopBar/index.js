@@ -11,9 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { organizationsAsyncThunk } from "Redux/Organization/OrganizationThunk";
 import { getCurrentOrgId, setCurrentOrgId, getCurrentUser } from "Utils";
-import Button from "@mui/material/Button";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 
 function TopBar() {
@@ -53,8 +51,11 @@ function TopBar() {
       : { username: "", email: "", profileImage: "" };
   };
   const HtmlTooltip = styled(({ className, ...props }) => (
-    <Tooltip {...props} classes={{ popper: className }} />
+    <Tooltip {...props} arrow classes={{ popper: className }} />
   ))(({ theme }) => ({
+    [`& .${tooltipClasses.arrow}`]: {
+      color: "#f5f5f9",
+    },
     [`& .${tooltipClasses.tooltip}`]: {
       backgroundColor: "#f5f5f9",
       color: "rgba(0, 0, 0, 0.87)",
@@ -189,7 +190,7 @@ function TopBar() {
                       />
                     </Box>
                     <Box className="details">
-                      <HtmlTooltip
+                      <HtmlTooltip className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="details">
@@ -204,7 +205,7 @@ function TopBar() {
                           {getCurrentUserInfo().username}
                         </div>
                       </HtmlTooltip>
-                      <HtmlTooltip
+                      <HtmlTooltip className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="details">

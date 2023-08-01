@@ -18,6 +18,8 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 
 class EcsCluster extends React.Component {
   constructor(props) {
@@ -252,6 +254,20 @@ class EcsCluster extends React.Component {
   render() {
     const { tierRows, soaRows, pg, rpg, actionButton, activeTierTab } =
       this.state;
+    const HtmlTooltip = styled(({ className, ...props }) => (
+      <Tooltip {...props} arrow classes={{ popper: className }} />
+    ))(({ theme }) => ({
+      [`& .${tooltipClasses.arrow}`]: {
+        color: "#f5f5f9",
+      },
+      [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: "#f5f5f9",
+        color: "rgba(0, 0, 0, 0.87)",
+        maxWidth: 400,
+        fontSize: theme.typography.pxToRem(12),
+        border: "1px solid #dadde9",
+      },
+    }));
     return (
       <Box className="environment-container environmentlist cluster-container">
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -326,24 +342,33 @@ class EcsCluster extends React.Component {
                         <TableCell>{row.layer}</TableCell>
                         <TableCell align="center">
                           <Box className="sle-box">
-                            <span>{row.sle}%</span>
-                            <div className="sle-hover-bg"></div>
-                            <Box className="sle-hover">
-                              <div className="heading">
-                                Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </div>
-                              <Box className="location-text">
-                                <strong>SLA</strong>
-                                <ul>
-                                  <li>Performance</li>
-                                  <li>Availability</li>
-                                  <li>Security</li>
-                                  <li>Data Protection</li>
-                                  <li>User exp</li>
-                                </ul>
-                              </Box>
-                            </Box>
+                            <HtmlTooltip
+                              className="table-tooltip"
+                              title={
+                                <React.Fragment>
+                                  <Box className="availability-inner">
+                                    <div className="heading">
+                                      Location:{" "}
+                                      <strong>
+                                        US-East - EC2 657907747554
+                                      </strong>
+                                    </div>
+                                    <Box className="location-text">
+                                      <strong>SLA</strong>
+                                      <ul>
+                                        <li>Performance</li>
+                                        <li>Availability</li>
+                                        <li>Security</li>
+                                        <li>Data Protection</li>
+                                        <li>User exp</li>
+                                      </ul>
+                                    </Box>
+                                  </Box>
+                                </React.Fragment>
+                              }
+                            >
+                              <span>{row.sle}%</span>
+                            </HtmlTooltip>
                           </Box>
                         </TableCell>
                         <TableCell align="center">
@@ -454,24 +479,31 @@ class EcsCluster extends React.Component {
                       <TableCell align="center">{row.environment}</TableCell>
                       <TableCell align="center">
                         <Box className="sle-box">
-                          <span>{row.sle}%</span>
-                          <div className="sle-hover-bg"></div>
-                          <Box className="sle-hover">
-                            <div className="heading">
-                              Location:{" "}
-                              <strong>US-East - EC2 657907747554</strong>
-                            </div>
-                            <Box className="location-text">
-                              <strong>SLA</strong>
-                              <ul>
-                                <li>Performance</li>
-                                <li>Availability</li>
-                                <li>Security</li>
-                                <li>Data Protection</li>
-                                <li>User exp</li>
-                              </ul>
-                            </Box>
-                          </Box>
+                          <HtmlTooltip
+                            className="table-tooltip"
+                            title={
+                              <React.Fragment>
+                                <Box className="availability-inner">
+                                  <div className="heading">
+                                    Location:{" "}
+                                    <strong>US-East - EC2 657907747554</strong>
+                                  </div>
+                                  <Box className="location-text">
+                                    <strong>SLA</strong>
+                                    <ul>
+                                      <li>Performance</li>
+                                      <li>Availability</li>
+                                      <li>Security</li>
+                                      <li>Data Protection</li>
+                                      <li>User exp</li>
+                                    </ul>
+                                  </Box>
+                                </Box>
+                              </React.Fragment>
+                            }
+                          >
+                            <span>{row.sle}%</span>
+                          </HtmlTooltip>
                         </Box>
                       </TableCell>
                       <TableCell align="center">
