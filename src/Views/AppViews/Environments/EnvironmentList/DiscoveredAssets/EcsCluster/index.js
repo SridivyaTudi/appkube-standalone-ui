@@ -478,35 +478,33 @@ class EcsCluster extends React.Component {
                       <TableCell align="center">{row.product}</TableCell>
                       <TableCell align="center">{row.environment}</TableCell>
                       <TableCell align="center">
-                      <Box className="sle-box">
-                            <HtmlTooltip
-                              className="table-tooltip"
-                              title={
-                                <React.Fragment>
-                                  <Box className="availability-inner">
-                                    <div className="heading">
-                                      Location:{" "}
-                                      <strong>
-                                        US-East - EC2 657907747554
-                                      </strong>
-                                    </div>
-                                    <Box className="location-text">
-                                      <strong>SLA</strong>
-                                      <ul>
-                                        <li>Performance</li>
-                                        <li>Availability</li>
-                                        <li>Security</li>
-                                        <li>Data Protection</li>
-                                        <li>User exp</li>
-                                      </ul>
-                                    </Box>
+                        <Box className="sle-box">
+                          <HtmlTooltip
+                            className="table-tooltip"
+                            title={
+                              <React.Fragment>
+                                <Box className="availability-inner">
+                                  <div className="heading">
+                                    Location:{" "}
+                                    <strong>US-East - EC2 657907747554</strong>
+                                  </div>
+                                  <Box className="location-text">
+                                    <strong>SLA</strong>
+                                    <ul>
+                                      <li>Performance</li>
+                                      <li>Availability</li>
+                                      <li>Security</li>
+                                      <li>Data Protection</li>
+                                      <li>User exp</li>
+                                    </ul>
                                   </Box>
-                                </React.Fragment>
-                              }
-                            >
-                              <span>{row.sle}%</span>
-                            </HtmlTooltip>
-                          </Box>
+                                </Box>
+                              </React.Fragment>
+                            }
+                          >
+                            <span>{row.sle}%</span>
+                          </HtmlTooltip>
+                        </Box>
                       </TableCell>
                       <TableCell align="center">
                         <div
