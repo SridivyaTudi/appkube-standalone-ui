@@ -53,32 +53,32 @@ class Application extends Component {
             <Grid item lg={6} md={6} xs={12}>
               <Box className="radio-group d-flex float-right ">
                 <Box className="d-flex align-items-center checkbox">
-                  <label htmlFor={"#"}>DRS</label>
-                  <input
+                  <label htmlFor={"radio"}>DRS</label>
+                  <input id="radio"
                     className="checkbox-input"
                     type="radio"
                     name="department"
                   />
                 </Box>
                 <Box className="d-flex align-items-center checkbox">
-                  <label htmlFor={"#"}>IOT</label>
-                  <input
+                  <label htmlFor={"radio"}>IOT</label>
+                  <input id="radio"
                     className="checkbox-input"
                     type="radio"
                     name="department"
                   />
                 </Box>
                 <Box className="d-flex align-items-center checkbox">
-                  <label htmlFor={"#"}>Mesh</label>
-                  <input
+                  <label htmlFor={"radio"}>Mesh</label>
+                  <input id="radio"
                     className="checkbox-input"
                     type="radio"
                     name="department"
                   />
                 </Box>
                 <Box className="d-flex align-items-center checkbox">
-                  <label htmlFor={"#"}>Lake</label>
-                  <input
+                  <label htmlFor={"radio"}>Lake</label>
+                  <input id="radio"
                     className="checkbox-input"
                     type="radio"
                     name="department"
