@@ -59,16 +59,6 @@ class TopologyView extends Component {
                       <i className="fa-solid fa-minus"></i>
                     </button>
                   </div>
-                  <div
-                    className="gmnoprint-map"
-                    onClick={() => {
-                      zoomToElement("custom_location", transformScale);
-                    }}
-                  >
-                    <button className="btn btn-map">
-                      <i className="fa-solid fa-map-marker-alt"></i>
-                    </button>
-                  </div>
                 </div>
                 <TransformComponent
                   wrapperStyle={{
@@ -81,7 +71,7 @@ class TopologyView extends Component {
                     transform: "translate(0px, 0px) scale(0)",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                   }}
                 >
                   <ArcherElement
@@ -106,7 +96,7 @@ class TopologyView extends Component {
                     }
                   >
                     <div
-                      className="services-text-box active"
+                      className="topology-text-box active"
                       onClick={() => {
                         this.onClickAccountId();
                       }}
@@ -116,7 +106,7 @@ class TopologyView extends Component {
                           : ""
                       }`}
                     >
-                      <div className="d-flex">
+                      <div className="d-flex align-items-center">
                         <div className="account-image">
                           <img src={data.image} alt="aws image" />
                         </div>
@@ -124,7 +114,6 @@ class TopologyView extends Component {
                           <span id="custom_location_1" className="d-block">
                             {data.label}
                           </span>
-                          <span className="d-block">{data.subLabel}</span>
                         </div>
                       </div>
                     </div>
@@ -244,9 +233,9 @@ class TopologyView extends Component {
   /** Get name in form of capitalize. */
   getServiceName(name, type) {
     if (type === "vpc") {
-      return name ? name.toUpperCase() : "";
+      return name ? name : "";
     } else {
-      let firstChar = name ? name.charAt(0).toUpperCase() : "";
+      let firstChar = name ? name.charAt(0) : "";
       let otherStr = name ? name.toLowerCase().slice(1) : "";
       let string = firstChar + otherStr;
       return string;
@@ -300,11 +289,11 @@ class TopologyView extends Component {
     return (
       <>
         <Grid item xs={5}>
-          <Box className="services-panel">
-            <Box className="services-panel-title bottom-border">
+          <Box className="topology-panel">
+            <Box className="topology-panel-title">
               <Box className="name">App Topology</Box>
             </Box>
-            <Box className="services-panel-body">
+            <Box className="topology-panel-body">
               {Object.keys(data).length ? this.renderMainBody() : <></>}
             </Box>
           </Box>

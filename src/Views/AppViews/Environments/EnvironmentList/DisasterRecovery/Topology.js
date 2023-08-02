@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
-// import CloudManagedDetails from "./CloudManagedDetails";
+import Hrms from "assets/img/assetmanager/hrms.png";
+import chartWebLayerIcon from "assets/img/assetmanager/chart-web-layer-icon.png";
+import chartAppLayerIcon from "assets/img/assetmanager/chart-app-layer-icon.png";
+import dataServiceSvgrepo from "assets/img/assetmanager/data-service-svgrepo.png";
+import chartAuxiliaryLayerIcon from "assets/img/assetmanager/chart-auxiliary-layer-icon.png";
+import balancingIcon from "assets/img/assetmanager/balancing-icon.png";
+import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
+import amazonEc2 from "assets/img/assetmanager/amazon-ec2.png";
+
 import {
   IconButton,
   Box,
@@ -12,11 +20,9 @@ import {
   TableRow,
   List,
   ListItem,
-  Button,
   TableBody,
+  Button
 } from "@mui/material";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import TopologyView from "./TopologyView";
@@ -38,60 +44,38 @@ const TOPOLOGY_VIEW_TYPE = {
 };
 
 let dummyData = {
-  "label": "Account ID",
-  "subLabel": "456262908",
-  "image": "",
-  "children": [
-      [
-          {
-              "label": "vpc-218",
-              "id": null,
-              "type": "vpc",
-              "image": "",
-              "children": [
-                  {
-                      "label": "cloudManaged",
-                      "id": "",
-                      "image": "",
-                      "type": "cluster",
-                      "children": []
-                  }
-              ]
-          },
-          {
-              "label": "vpc-224",
-              "id": null,
-              "type": "vpc",
-              "image": "",
-              "children": [
-                  {
-                      "label": "gateway",
-                      "id": "",
-                      "image": "",
-                      "type": "cluster",
-                      "children": []
-                  }
-              ]
-          },
-          {
-              "label": "vpc-223",
-              "id": null,
-              "type": "vpc",
-              "image": "",
-              "children": [
-                  {
-                      "label": "gateway",
-                      "id": "",
-                      "image": "",
-                      "type": "cluster",
-                      "children": []
-                  }
-              ]
-          }
-      ],
-      []
-  ]
-}
+  label: "HRMS",
+  image: Hrms,
+  children: [
+    [
+      {
+        label: "Web Layer",
+        id: null,
+        type: "WebLayer",
+        image: chartWebLayerIcon,
+      },
+      {
+        label: "App Layer",
+        id: null,
+        type: "AppLayer",
+        image: chartAppLayerIcon,
+      },
+      {
+        label: "Data Layer",
+        id: null,
+        type: "DataLayer",
+        image: dataServiceSvgrepo,
+      },
+      {
+        label: "Auxiliary Layer",
+        id: null,
+        type: "AuxiliaryLayer",
+        image: chartAuxiliaryLayerIcon,
+      },
+    ],
+    [],
+  ],
+};
 
 class Topology extends Component {
   constructor(props) {
@@ -130,6 +114,7 @@ class Topology extends Component {
         globalServiceList
       );
     }
+    this.setState({ dataOfLevel1: dummyData });
   };
 
   componentDidUpdate = async (prevProps, prevState) => {
@@ -560,16 +545,155 @@ class Topology extends Component {
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
-      <Box sx={{ width: "100%" }}>
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <TopologyView
-            data={dataOfLevel1}
-            setLevel={this.getCurrentActiveTreeLevel}
-            selectedBreadCrumbs={breadcrumbs}
-          />
-          <Grid item xs={6}></Grid>
-        </Grid>
-      </Box>
+      <>
+        <Box sx={{ width: "100%" }}>
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <TopologyView
+              data={dataOfLevel1}
+              setLevel={this.getCurrentActiveTreeLevel}
+              selectedBreadCrumbs={breadcrumbs}
+            />
+            <Grid item xs={7}>
+              <Box className="cloud-managed-cards">
+                {/* <Box className="cloud-managed-cards-scroll">
+                  <Box className="service-card active">
+                    <Box className="service-icon">
+                      <img src={chartWebLayerIcon} alt="serviceicon" />
+                    </Box>
+                    <Box className="service-contant">
+                      <label>Web layer</label>
+                      <strong>01</strong>
+                    </Box>
+                  </Box>
+                  <Box className="service-card active">
+                    <Box className="service-icon">
+                      <img src={chartWebLayerIcon} alt="serviceicon" />
+                    </Box>
+                    <Box className="service-contant">
+                      <label>App layer</label>
+                      <strong>05</strong>
+                    </Box>
+                  </Box>
+                  <Box className="service-card active">
+                    <Box className="service-icon">
+                      <img src={chartWebLayerIcon} alt="serviceicon" />
+                    </Box>
+                    <Box className="service-contant">
+                      <label>Data layer</label>
+                      <strong>02</strong>
+                    </Box>
+                  </Box>
+                  <Box className="service-card active">
+                    <Box className="service-icon">
+                      <img src={chartWebLayerIcon} alt="serviceicon" />
+                    </Box>
+                    <Box className="service-contant">
+                      <label>Auxiliary layer</label>
+                      <strong>03</strong>
+                    </Box>
+                  </Box>
+                </Box> */}
+                <Box className="application-balancer">
+                  <Button
+                    className="primary-btn min-width"
+                    variant="contained"
+                  >
+                    <p><img src={balancingIcon} alt="" /> </p> Application Load Balancer
+                  </Button>
+                  <Box className="balancer-boxs">
+                    <Box className="balancer-box">
+                      <span><img src={bottomArrow} alt=""/></span>
+                      <Box className="icon"><img src={amazonEc2} alt=""/></Box>
+                      <p>EC2</p>
+                    </Box>
+                    <Box className="balancer-box">
+                      <span><img src={bottomArrow} alt=""/></span>
+                      <Box className="icon"><img src={amazonEc2} alt=""/></Box>
+                      <p>EC2</p>
+                    </Box>
+                    <Box className="balancer-box">
+                      <span><img src={bottomArrow} alt=""/></span>
+                      <Box className="icon"><img src={amazonEc2} alt=""/></Box>
+                      <p>EC2</p>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box className="resources-cards">
+          <div className="heading">Selected EC2 Resources</div>
+          <Box className="resources">
+            <Box className="resources-inner">
+              <Box className="card-box">
+                <Box className="d-block text-center width-100">
+                  <strong>44%</strong>
+                  <span>CPU Utilization</span>
+                </Box>
+              </Box>
+              <Box className="card-box">
+                <Box className="d-block text-center width-100">
+                  <strong>1000 MB</strong>
+                  <span>Network In</span>
+                </Box>
+              </Box>
+              <Box className="card-box">
+                <Box className="d-block text-center width-100">
+                  <strong>500 MB</strong>
+                  <span>Network Out</span>
+                </Box>
+              </Box>
+              <Box className="card-box">
+                <Box className="d-block text-center width-100">
+                  <strong>500 MB</strong>
+                  <span>Disk Read Bytes</span>
+                </Box>
+              </Box>
+              <Box className="card-box">
+                <Box className="d-block text-center width-100">
+                  <strong>100 MB</strong>
+                  <span>Disk Write Bytes</span>
+                </Box>
+              </Box>
+              <Box className="card-box">
+                <Box className="d-block text-center width-100">
+                  <strong>142</strong>
+                  <span>Status Check Failed</span>
+                </Box>
+              </Box>
+              <Box className="card-box">
+                <Box className="d-block text-center width-100">
+                  <strong>142</strong>
+                  <span>Status Check Failed Instance</span>
+                </Box>
+              </Box>
+              <Box className="card-box">
+                <Box className="d-block text-center width-100">
+                  <strong>142</strong>
+                  <span>Status Check Failed System</span>
+                </Box>
+              </Box>
+              <Box className="card-box">
+                <Box className="d-block text-center width-100">
+                  <strong>100</strong>
+                  <span>CPU Credit Balance</span>
+                </Box>
+              </Box>
+              <Box className="card-box">
+                <Box className="d-block text-center width-100">
+                  <strong>10</strong>
+                  <span>CPU Credit Usage</span>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </>
     );
   }
 }

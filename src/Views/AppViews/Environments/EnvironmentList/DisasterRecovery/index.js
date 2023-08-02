@@ -8,16 +8,24 @@ import { Box, List, ListItem, Button } from "@mui/material";
 class DisasterRecovery extends Component {
   tabMapping = [
     {
-      name: "DR Topology",
-      dataKey: "DRTopology",
-    },
-    {
       name: "Topology",
       dataKey: "Topology",
     },
     {
-      name: "Health",
-      dataKey: "Health",
+      name: "DR Topology",
+      dataKey: "DRTopology",
+    },
+    {
+      name: "IOT Topology",
+      dataKey: "IotTopology",
+    },
+    {
+      name: "Lake Topology",
+      dataKey: "LakeTopology",
+    },
+    {
+      name: "Mesh Topology",
+      dataKey: "MeshTopology",
     },
   ];
 
@@ -38,6 +46,7 @@ class DisasterRecovery extends Component {
       <Box className="disaster-recovery-container">
         <Box className="services-panel-tabs">
           <Box className="tabs-head">
+            <h3>HRMS</h3>
             <List>
               {this.tabMapping.map((tabData, index) => {
                 return (
@@ -51,11 +60,21 @@ class DisasterRecovery extends Component {
                 );
               })}
             </List>
+            <Button
+              className="primary-btn min-width"
+              component={Link}
+              variant="contained"
+              to={`${APP_PREFIX_PATH}/environments`}
+            >
+              Back to Infra View
+            </Button>
           </Box>
           <Box className="tabs-content">
-            {activeTab === 0 && <DrTopology />}
-            {activeTab === 1 && <Topology />}
-            {activeTab === 2 && <Box>Health</Box>}
+            {activeTab === 0 && <Topology />}
+            {activeTab === 1 && <DrTopology />}
+            {activeTab === 2 && <Box>IOT Topology</Box>}
+            {activeTab === 3 && <Box>Lake Topology</Box>}
+            {activeTab === 4 && <Box>Mesh Topology</Box>}
           </Box>
         </Box>
       </Box>
