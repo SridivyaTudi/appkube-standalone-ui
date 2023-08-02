@@ -40,10 +40,11 @@ class AllTable extends Component {
         TimeSeries,
         Athena,
       ],
+      activeService:0
     };
   }
   render() {
-    const {} = this.state;
+    const {activeService} = this.state;
     return (
       <>
         <Box className="cloud-managed-section">
@@ -52,7 +53,9 @@ class AllTable extends Component {
             <Box className="cloud-managed-cards-scroll">
               {dummyData.cloudManagedServices.map((item, index) => {
                 return (
-                  <Box className="service-card active">
+                  <Box className={`service-card ${activeService === index ? 'active' : ''}`} onClick={()=>{
+                    this.setState({activeService:index})
+                  }}>
                     <Box className="service-icon">
                       <img
                         src={this.state.serivceImages[index]}
