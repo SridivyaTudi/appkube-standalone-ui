@@ -16,6 +16,7 @@ class ForgetPassword extends Component {
       sendEmail: false,
       toggleScreen: false,
       isSubmit: false,
+      showPassword: false,
     };
   }
 
@@ -58,7 +59,7 @@ class ForgetPassword extends Component {
   };
 
   render() {
-    const { formData, toggleScreen, isSubmit } = this.state;
+    const { formData, toggleScreen, isSubmit, showPassword } = this.state;
     const { formErrors } = this.validateForm(isSubmit);
     return (
       <Box className="forget-container">
@@ -87,7 +88,7 @@ class ForgetPassword extends Component {
                   assured thet we will never send your password via email.
                 </p>
               </Box>
-              <form onSubmit={this.handleSignIn}>
+              <form className="width-100" onSubmit={this.handleSignIn}>
                 <Box sx={{ width: "100%" }}>
                   <Grid
                     container
@@ -114,6 +115,17 @@ class ForgetPassword extends Component {
                         ) : (
                           <></>
                         )}
+                        <i
+                          className={`fa-sharp fa-regular fa-eye${
+                            showPassword ? "" : "-slash"
+                          }`}
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            this.setState({
+                              showPassword: !this.state.showPassword,
+                            });
+                          }}
+                        ></i>
                       </Box>
                     </Grid>
                   </Grid>
