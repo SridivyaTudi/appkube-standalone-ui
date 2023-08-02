@@ -11,10 +11,23 @@
         border: none;
         background-color: #eef0fa;
       }
+      ::placeholder {
+        color: #8676FF;
+        opacity: 1; /* Firefox */
+      }
+      
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+       color: #8676FF;
+      }
+      
+      ::-ms-input-placeholder { /* Microsoft Edge */
+       color: #8676FF;
+      }
 
       .search-btn {
         right: 0px;
         left: auto;
+        color: #A1A3D4;
       }
     }
   }
