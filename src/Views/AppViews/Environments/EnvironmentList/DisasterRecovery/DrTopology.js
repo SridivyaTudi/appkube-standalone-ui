@@ -17,7 +17,56 @@ import {
   Button,
   Grid,
 } from "@mui/material";
-
+import DisasterRecoveryMode from "Views/AppViews/Environments/EnvironmentList/DisasterRecovery/Components/DisasterRecoveryMode";
+import calendarMouseIcon from "assets/img/assetmanager/calendar-mouse-icon.png";
+let Data = {
+  subData: [
+    {
+      label: "DepartMent",
+      id: null,
+      image: calendarMouseIcon,
+      subLabel: "Claims",
+    },
+    {
+      label: "Product",
+      id: null,
+      image: calendarMouseIcon,
+      subLabel: "Xuber",
+    },
+    {
+      label: "Environemt",
+      id: null,
+      image: calendarMouseIcon,
+      subLabel: "Production",
+    },
+  ],
+  children: [
+    {
+      label: "Web Layer",
+      id: null,
+      image: calendarMouseIcon,
+      children: [],
+    },
+    {
+      label: "App Layer",
+      id: null,
+      image: calendarMouseIcon,
+      children: [],
+    },
+    {
+      label: "Data Layer",
+      id: null,
+      image: calendarMouseIcon,
+      children: [],
+    },
+    {
+      label: "Auxiliary Layer",
+      id: null,
+      image: calendarMouseIcon,
+      children: [],
+    },
+  ],
+};
 class DrTopology extends Component {
   constructor(props) {
     super(props);
@@ -57,6 +106,7 @@ class DrTopology extends Component {
                     Application FailOver
                   </Button>
                 </Box>
+                <DisasterRecoveryMode data={Data} />
               </Box>
             </Grid>
             <Grid item xs={3}>

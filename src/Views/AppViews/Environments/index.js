@@ -258,7 +258,7 @@ class Environments extends Component {
                 </TableCell>
                 <TableCell align="center">{account.product}</TableCell>
                 <TableCell align="center">{account.productionEnv}</TableCell>
-                <TableCell align="center">${account.overallCost}</TableCell>
+                <TableCell align="center">{account.overallCost ? `$${account.overallCost}` : ''}</TableCell>
                 <TableCell align="center">
                   <HtmlTooltip
                     className="table-tooltip"
