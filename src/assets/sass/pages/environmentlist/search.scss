@@ -1,0 +1,29 @@
+.environment-container {
+  .search-box {
+    float: right;
+    width: 250px;
+
+    .search-control-group {
+      position: relative;
+
+      .input-group-text {
+        padding: 5px 30px 5px 12px;
+        border: none;
+        background-color: #eef0fa;
+      }
+
+      .search-btn {
+        right: 0px;
+        left: auto;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .environmentlist-container {
+    .search-box {
+      width: 100%;
+    }
+  }
+}

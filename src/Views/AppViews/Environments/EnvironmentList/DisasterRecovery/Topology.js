@@ -37,6 +37,62 @@ const TOPOLOGY_VIEW_TYPE = {
   GLOBAL_SERVICE: "globalService",
 };
 
+let dummyData = {
+  "label": "Account ID",
+  "subLabel": "456262908",
+  "image": "",
+  "children": [
+      [
+          {
+              "label": "vpc-218",
+              "id": null,
+              "type": "vpc",
+              "image": "",
+              "children": [
+                  {
+                      "label": "cloudManaged",
+                      "id": "",
+                      "image": "",
+                      "type": "cluster",
+                      "children": []
+                  }
+              ]
+          },
+          {
+              "label": "vpc-224",
+              "id": null,
+              "type": "vpc",
+              "image": "",
+              "children": [
+                  {
+                      "label": "gateway",
+                      "id": "",
+                      "image": "",
+                      "type": "cluster",
+                      "children": []
+                  }
+              ]
+          },
+          {
+              "label": "vpc-223",
+              "id": null,
+              "type": "vpc",
+              "image": "",
+              "children": [
+                  {
+                      "label": "gateway",
+                      "id": "",
+                      "image": "",
+                      "type": "cluster",
+                      "children": []
+                  }
+              ]
+          }
+      ],
+      []
+  ]
+}
+
 class Topology extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +110,7 @@ class Topology extends Component {
       searchString: "",
       accountId: queryPrm.get("landingZone"),
       dataOfTableLevel1: [],
-      dataOfLevel1: {},
+      dataOfLevel1: dummyData,
       currentActiveNodeLabel: "",
       currentVPC: {},
       showMenu: null,

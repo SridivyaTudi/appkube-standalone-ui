@@ -299,13 +299,10 @@ class TopologyView extends Component {
     const { data } = this.props;
     return (
       <>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <Box className="services-panel">
             <Box className="services-panel-title bottom-border">
-              <Box className="name">Infra Topology View</Box>
-              <Box className="back-btn">
-                <i className="fa-solid fa-arrow-left"></i>
-              </Box>
+              <Box className="name">App Topology</Box>
             </Box>
             <Box className="services-panel-body">
               {Object.keys(data).length ? this.renderMainBody() : <></>}
