@@ -502,17 +502,36 @@ class EcsCluster extends React.Component {
                               <React.Fragment>
                                 <Box className="availability-inner">
                                   <div className="heading">
-                                    Location:{" "}
-                                    <strong>US-East - EC2 657907747554</strong>
+                                    <strong>SLA</strong>
                                   </div>
                                   <Box className="location-text">
-                                    <strong>SLA</strong>
+                                    <Box className="location-add">
+                                      Location:{" "}
+                                      <strong>
+                                        US-East - EC2 657907747554
+                                      </strong>
+                                    </Box>
                                     <ul>
-                                      <li>Performance</li>
-                                      <li>Availability</li>
-                                      <li>Security</li>
-                                      <li>Data Protection</li>
-                                      <li>User exp</li>
+                                      <li>
+                                        <p>Performance</p>
+                                        <span></span>
+                                      </li>
+                                      <li>
+                                        <p>Availability</p>
+                                        <span></span>
+                                      </li>
+                                      <li>
+                                        <p>Security</p>
+                                        <span></span>
+                                      </li>
+                                      <li>
+                                        <p>Data Protection</p>
+                                        <span></span>
+                                      </li>
+                                      <li>
+                                        <p>User exp</p>
+                                        <span></span>
+                                      </li>
                                     </ul>
                                   </Box>
                                 </Box>
