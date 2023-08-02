@@ -109,7 +109,7 @@ class DataTable extends Component {
               rowSpacing={1}
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <Box className="cloud-managed-tab">
                   <Box>
                     <List>
@@ -156,7 +156,7 @@ class DataTable extends Component {
                   </List>
                 </Box> */}
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={9}>
                 <Box className="tabs-content m-t-0">
                   {activeTab === 0 ? (
                     <AllServices />

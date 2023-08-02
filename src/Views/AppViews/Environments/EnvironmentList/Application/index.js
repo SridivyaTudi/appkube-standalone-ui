@@ -26,12 +26,12 @@ class Application extends Component {
       <Tooltip {...props} arrow classes={{ popper: className }} />
     ))(({ theme }) => ({
       [`& .${tooltipClasses.arrow}`]: {
-        color: "#f5f5f9",
+        color: "#ffffffff",
       },
       [`& .${tooltipClasses.tooltip}`]: {
-        backgroundColor: "#f5f5f9",
+        backgroundColor: "#ffffffff",
         color: "rgba(0, 0, 0, 0.87)",
-        maxWidth: 300,
+        maxWidth: 200,
         fontSize: theme.typography.pxToRem(12),
         border: "1px solid #dadde9",
       },
@@ -108,7 +108,11 @@ class Application extends Component {
               <TableBody>
                 <TableRow>
                   <TableCell align="left">
-                    <Link to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}>Majesco</Link>
+                    <Link
+                      to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}
+                    >
+                      Majesco
+                    </Link>
                   </TableCell>
                   <TableCell align="center">Claims</TableCell>
                   <TableCell align="center">Dev</TableCell>
@@ -121,21 +125,37 @@ class Application extends Component {
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -146,26 +166,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -176,26 +212,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -206,26 +258,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -248,26 +316,42 @@ class Application extends Component {
                   <TableCell align="center">4 hrs</TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -278,26 +362,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -308,26 +408,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -338,26 +454,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -380,26 +512,42 @@ class Application extends Component {
                   <TableCell align="center">5 hrs</TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -410,26 +558,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -440,26 +604,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -470,26 +650,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -512,26 +708,42 @@ class Application extends Component {
                   <TableCell align="center">2 hrs</TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -542,26 +754,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -572,26 +800,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -602,26 +846,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -644,26 +904,42 @@ class Application extends Component {
                   <TableCell align="center">3 hrs</TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -674,26 +950,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -704,26 +996,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -734,26 +1042,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -776,26 +1100,42 @@ class Application extends Component {
                   <TableCell align="center">2.5 hrs</TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -806,26 +1146,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -836,26 +1192,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -866,26 +1238,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -908,26 +1296,42 @@ class Application extends Component {
                   <TableCell align="center">2 hrs</TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -938,26 +1342,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -968,26 +1388,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }
@@ -998,26 +1434,42 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                      <HtmlTooltip
+                    <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="availability-inner">
-                              <p>
-                                Primary Location:{" "}
-                                <strong>US-East - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Location:{" "}
-                                <strong>US-West - EC2 657907747554</strong>
-                              </p>
-                              <p>
-                                DR Status: <strong>Provisioned</strong>
-                              </p>
-                              <p>
-                                Last Failover:{" "}
-                                <strong>07/07/2023 12.15PM</strong>
-                              </p>
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
                             </Box>
                           </React.Fragment>
                         }

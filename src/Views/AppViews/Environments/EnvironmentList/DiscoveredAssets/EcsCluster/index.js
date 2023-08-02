@@ -258,12 +258,12 @@ class EcsCluster extends React.Component {
       <Tooltip {...props} arrow classes={{ popper: className }} />
     ))(({ theme }) => ({
       [`& .${tooltipClasses.arrow}`]: {
-        color: "#f5f5f9",
+        color: "#ffffffff",
       },
       [`& .${tooltipClasses.tooltip}`]: {
-        backgroundColor: "#f5f5f9",
+        backgroundColor: "#ffffffff",
         color: "rgba(0, 0, 0, 0.87)",
-        maxWidth: 400,
+        maxWidth: 200,
         fontSize: theme.typography.pxToRem(12),
         border: "1px solid #dadde9",
       },
@@ -348,19 +348,36 @@ class EcsCluster extends React.Component {
                                 <React.Fragment>
                                   <Box className="availability-inner">
                                     <div className="heading">
-                                      Location:{" "}
-                                      <strong>
-                                        US-East - EC2 657907747554
-                                      </strong>
+                                      <strong>SLA</strong>
                                     </div>
                                     <Box className="location-text">
-                                      <strong>SLA</strong>
+                                      <Box className="location-add">
+                                        Location:{" "}
+                                        <strong>
+                                          US-East - EC2 657907747554
+                                        </strong>
+                                      </Box>
                                       <ul>
-                                        <li>Performance</li>
-                                        <li>Availability</li>
-                                        <li>Security</li>
-                                        <li>Data Protection</li>
-                                        <li>User exp</li>
+                                        <li>
+                                          <p>Performance</p>
+                                          <span></span>
+                                        </li>
+                                        <li>
+                                          <p>Availability</p>
+                                          <span></span>
+                                        </li>
+                                        <li>
+                                          <p>Security</p>
+                                          <span></span>
+                                        </li>
+                                        <li>
+                                          <p>Data Protection</p>
+                                          <span></span>
+                                        </li>
+                                        <li>
+                                          <p>User exp</p>
+                                          <span></span>
+                                        </li>
                                       </ul>
                                     </Box>
                                   </Box>
