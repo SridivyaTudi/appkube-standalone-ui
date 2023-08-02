@@ -3,6 +3,7 @@ import { ArcherContainer, ArcherElement } from "react-archer";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Box, Grid } from "@mui/material";
 import { v4 } from "uuid";
+import fakeData from "./fakeData.json";
 let transformScale = 0;
 
 class TopologyView extends Component {
@@ -157,6 +158,167 @@ class TopologyView extends Component {
     );
   };
 
+  renderBody = () => {
+    // const { data } = this.props;
+    const data = fakeData;
+    const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
+    return (
+      <ArcherContainer noCurves style={{ width: "100%", height: "100%" }}>
+        <TransformWrapper
+          onTransformed={(instance) => {
+            transformScale = instance && instance.state.scale;
+            this.setState({ scale: true });
+          }}
+        >
+          {({ zoomIn, zoomOut, instance, zoomToElement, ...rest }) => {
+            transformScale = instance.transformState.scale;
+            return (
+              <>
+                <div className="gmnoprint">
+                  <div className="gmnoprint-plus-minus">
+                    <button className="btn btn-plus" onClick={() => zoomIn()}>
+                      <i className="fa-solid fa-plus"></i>
+                    </button>
+                    <button className="btn btn-minus" onClick={() => zoomOut()}>
+                      <i className="fa-solid fa-minus"></i>
+                    </button>
+                  </div>
+                  <div
+                    className="gmnoprint-map"
+                    onClick={() => {
+                      zoomToElement("custom_location", transformScale);
+                    }}
+                  >
+                    <button className="btn btn-map">
+                      <i className="fa-solid fa-map-marker-alt"></i>
+                    </button>
+                  </div>
+                </div>
+                <TransformComponent
+                  wrapperStyle={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  contentStyle={{
+                    width: "100%",
+                    height: "100%",
+                    transform: "translate(0px, 0px) scale(0)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ArcherElement
+                    id="root"
+                    relations={[
+                      {
+                        targetId: "vpc-292",
+                        targetAnchor: "left",
+                        sourceAnchor: "right",
+                        style: {
+                          strokeStyles,
+                        },
+                      },
+                    ]}
+                  >
+                    <div
+                      className="services-text-box active"
+                      onClick={() => {
+                        this.onClickAccountId();
+                      }}
+                      id={`${"custom_location"}`}
+                    >
+                      <div className="d-flex">
+                        <div className="account-image">
+                          <img src={data.image} alt="aws image" />
+                        </div>
+                        <div className="account-id">
+                          <span id="custom_location_1" className="d-block">
+                            {data.label}
+                          </span>
+                          <span className="d-block">{data.subLabel}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </ArcherElement>
+                  {data.children.length ? (
+                    this.renderChildNodes(data.children)
+                  ) : (
+                    <></>
+                  )}
+                </TransformComponent>
+              </>
+            );
+          }}
+        </TransformWrapper>
+      </ArcherContainer>
+    );
+  };
+
+  renderChildNodes = (children, currentJSX) => {
+    let JSX;
+    if (!currentJSX) {
+      JSX = [];
+    } else {
+      JSX = currentJSX;
+    }
+    children.map((item) => {
+      JSX.push(
+        <>
+          <div className="global-servies">
+            <ul>
+              {item.length
+                ? item.map((item) => {
+                    if (item.children.length > 0) {
+                      return this.renderChildNodes(item.children, JSX);
+                    } else {
+                      return (
+                        <>
+                          <ArcherElement
+                            id={item.label}
+                            relations={[
+                              {
+                                targetId:
+                                  item.children[0] && item.children[0][0].label,
+                                targetAnchor: "right",
+                                sourceAnchor: "left",
+                                style: {
+                                  strokeColor: "#a5a5d7",
+                                  strokeWidth: 2,
+                                },
+                              },
+                            ]}
+                          >
+                            <li
+                              onClick={() =>
+                                this.handleArcherBoxClick(item.label)
+                              }
+                            >
+                              <img
+                                style={{ marginRight: "10px" }}
+                                src={item.image}
+                                alt={item.label}
+                              />
+                              {this.getServiceName(item.label)}
+                            </li>
+                          </ArcherElement>
+                        </>
+                      );
+                    }
+                  })
+                : ""}
+            </ul>
+          </div>
+        </>
+      );
+    });
+    return JSX;
+  };
+
+  handleArcherBoxClick = (label) => {
+    console.log(label);
+  };
+
   /** If level-1 data is exist, then Render the  level-1 html. */
   renderLevel1 = () => {
     const { children } = this.props.data;
@@ -308,7 +470,7 @@ class TopologyView extends Component {
               </Box>
             </Box>
             <Box className="services-panel-body">
-              {Object.keys(data).length ? this.renderMainBody() : <></>}
+              {Object.keys(data).length ? this.renderBody() : <></>}
             </Box>
           </Box>
         </Grid>
