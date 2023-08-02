@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-import clusterIcon from "assets/img/assetmanager/cluster-icon.png";
-import webLayerIcon from "assets/img/assetmanager/web-layer-icon.png";
-import dataLayerIcon from "assets/img/assetmanager/data-layer-icon.png";
-import appLayerIcon from "assets/img/assetmanager/app-layer-icon.png";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import {
@@ -15,130 +11,17 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  List,
-  ListItem,
-  Button,
-  Grid
+  Grid,
 } from "@mui/material";
 
 class Application extends Component {
-  tabMapping = [
-    {
-      name: "List View",
-      iconName: "fas fa-list p-r-5",
-      dataKey: "ListView",
-    },
-    {
-      name: "Grid View",
-      iconName: "fas fa-th-large p-r-5",
-      dataKey: "GridView",
-    },
-  ];
-
   constructor(props) {
     super(props);
-    this.state = {
-      activeTab: 0,
-      dataTierSoc: [
-        {
-          name: "Majesco",
-        },
-        {
-          name: "Xuber",
-        },
-        {
-          name: "Insurity",
-        },
-        {
-          name: "Vertafore",
-        },
-        {
-          name: "Guidewire",
-        },
-        {
-          name: "Duck Creek",
-        },
-        {
-          name: "eBaoTech",
-        },
-      ],
-      activeTierTabIndexes: [],
-    };
-  }
-
-  setActiveTab = (activeTab) => {
-    this.setState({ activeTab });
-  };
-
-  handleTierTabToggle = (index, type) => {
-    let { activeTierTabIndexes } = this.state;
-    if (activeTierTabIndexes.includes(index) && type !== "soa") {
-      activeTierTabIndexes = activeTierTabIndexes.filter(
-        (item) => item !== index
-      );
-    }
-    if (!activeTierTabIndexes.includes(index) && type !== "3Tier") {
-      activeTierTabIndexes.push(index);
-    }
-    this.setState({ activeTierTabIndexes });
-  };
-
-  renderLogistics() {
-    let { dataTierSoc, activeTierTabIndexes } = this.state;
-    const JSX = [];
-    dataTierSoc.map((data, index) => {
-      JSX.push(
-        <Box className="logistics-card" key={data.ec2Id}>
-          <Box className="heading">{data.name}</Box>
-          <Box className="contents">
-            <div className="d-block width-100">
-              <Box className="tier-buttons">
-                <Button
-                  className={
-                    !activeTierTabIndexes.includes(index) ? "active" : ""
-                  }
-                  onClick={() => this.handleTierTabToggle(index, "Dev")}
-                >
-                  Dev
-                </Button>
-                <Button
-                  className={
-                    activeTierTabIndexes.includes(index) ? "active" : ""
-                  }
-                  onClick={() => this.handleTierTabToggle(index, "Test")}
-                >
-                  Test
-                </Button>
-                <Button
-                  className={
-                    !activeTierTabIndexes.includes(index) ? "active" : ""
-                  }
-                  onClick={() => this.handleTierTabToggle(index, "Stage")}
-                >
-                  Stage
-                </Button>
-                <Button
-                  className={
-                    activeTierTabIndexes.includes(index) ? "active" : ""
-                  }
-                  onClick={() => this.handleTierTabToggle(index, "Prod")}
-                >
-                  Prod
-                </Button>
-              </Box>
-              <Box className="tier-contents">
-                <ul></ul>
-              </Box>
-            </div>
-          </Box>
-        </Box>
-      );
-    });
-    return JSX;
+    this.state = {};
   }
 
   render() {
-    const { activeTab } = this.state;
+    const {} = this.state;
     const HtmlTooltip = styled(({ className, ...props }) => (
       <Tooltip {...props} arrow classes={{ popper: className }} />
     ))(({ theme }) => ({
@@ -204,8 +87,6 @@ class Application extends Component {
               </Box>
             </Grid>
           </Grid>
-
-          
         </Box>
         <Box className="environment-table-section">
           <TableContainer className="table">
@@ -227,7 +108,7 @@ class Application extends Component {
               <TableBody>
                 <TableRow>
                   <TableCell align="left">
-                    <Link to={`#`}>Majesco</Link>
+                    <Link to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}>Majesco</Link>
                   </TableCell>
                   <TableCell align="center">Claims</TableCell>
                   <TableCell align="center">Dev</TableCell>
