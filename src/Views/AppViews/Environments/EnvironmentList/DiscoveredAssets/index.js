@@ -46,8 +46,6 @@ class DiscoveredAssets extends Component {
     const queryPrm = new URLSearchParams(document.location.search);
     const cloudName = queryPrm.get("cloudName");
     this.state = {
-      display_detail: true,
-      cloudAssets: [],
       breadcrumbs: {
         breadcrumbId: v4(),
         cloudName: cloudName?.toUpperCase(),
@@ -87,13 +85,6 @@ class DiscoveredAssets extends Component {
         );
       }
     }
-  };
-
-  showHideDetail = () => {
-    const { display_detail } = this.state;
-    this.setState({
-      display_detail: !display_detail,
-    });
   };
 
   toggleMenu = (index) => {
