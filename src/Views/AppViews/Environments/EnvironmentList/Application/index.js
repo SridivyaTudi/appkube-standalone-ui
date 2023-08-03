@@ -31,6 +31,7 @@ class Application extends Component {
       [`& .${tooltipClasses.tooltip}`]: {
         backgroundColor: "#ffffffff",
         color: "rgba(0, 0, 0, 0.87)",
+        boxShadow: theme.shadows[2],
         maxWidth: 200,
         fontSize: theme.typography.pxToRem(12),
         border: "1px solid #dadde9",
@@ -53,32 +54,36 @@ class Application extends Component {
             <Grid item lg={6} md={6} xs={12}>
               <Box className="radio-group d-flex float-right ">
                 <Box className="d-flex align-items-center checkbox">
-                  <label htmlFor={"radio"}>DRS</label>
-                  <input id="radio"
+                  <label htmlFor={"DRS"}>DRS</label>
+                  <input
+                    id="DRS"
                     className="checkbox-input"
                     type="radio"
                     name="department"
                   />
                 </Box>
                 <Box className="d-flex align-items-center checkbox">
-                  <label htmlFor={"radio"}>IOT</label>
-                  <input id="radio"
+                  <label htmlFor={"IOT"}>IOT</label>
+                  <input
+                    id="IOT"
                     className="checkbox-input"
                     type="radio"
                     name="department"
                   />
                 </Box>
                 <Box className="d-flex align-items-center checkbox">
-                  <label htmlFor={"radio"}>Mesh</label>
-                  <input id="radio"
+                  <label htmlFor={"Mesh"}>Mesh</label>
+                  <input
+                    id="Mesh"
                     className="checkbox-input"
                     type="radio"
                     name="department"
                   />
                 </Box>
                 <Box className="d-flex align-items-center checkbox">
-                  <label htmlFor={"radio"}>Lake</label>
-                  <input id="radio"
+                  <label htmlFor={"Lake"}>Lake</label>
+                  <input
+                    id="Lake"
                     className="checkbox-input"
                     type="radio"
                     name="department"
@@ -96,13 +101,11 @@ class Application extends Component {
                   <TableCell align="left">Application</TableCell>
                   <TableCell align="center">LOB</TableCell>
                   <TableCell align="center">Environment</TableCell>
-                  <TableCell align="center">RPO</TableCell>
-                  <TableCell align="center">RTO</TableCell>
-                  <TableCell align="center">Web Layer</TableCell>
-                  <TableCell align="center">App Layer</TableCell>
-                  <TableCell align="center">Data Layer</TableCell>
-                  <TableCell align="center">Auxiliary</TableCell>
-                  <TableCell align="center">DR Status</TableCell>
+                  <TableCell align="center">App Type</TableCell>
+                  <TableCell align="center">SLE</TableCell>
+                  <TableCell align="center">End Usage</TableCell>
+                  <TableCell align="center">Cost</TableCell>
+                  <TableCell align="center">Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -111,13 +114,12 @@ class Application extends Component {
                     <Link
                       to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}
                     >
-                      Majesco
+                      HRMS
                     </Link>
                   </TableCell>
                   <TableCell align="center">Claims</TableCell>
-                  <TableCell align="center">Dev</TableCell>
-                  <TableCell align="center">5 min</TableCell>
-                  <TableCell align="center">2 hrs</TableCell>
+                  <TableCell align="center">Development</TableCell>
+                  <TableCell align="center">3 Tier</TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
                       <HtmlTooltip
@@ -166,7 +168,7 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                    <HtmlTooltip
+                      <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
@@ -210,701 +212,27 @@ class Application extends Component {
                       </HtmlTooltip>
                     </Box>
                   </TableCell>
+                  <TableCell align="center">$ 400</TableCell>
                   <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="done">Done</span>
+                    <button type="button" className="list-icon">
+                      <i className="fas fa-ellipsis-v"></i>
+                    </button>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell align="left">
-                    <Link to={`#`}>Xuber</Link>
-                  </TableCell>
-                  <TableCell align="center">Finance</TableCell>
-                  <TableCell align="center">Test</TableCell>
-                  <TableCell align="center">8 min</TableCell>
-                  <TableCell align="center">4 hrs</TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <div className="done">Done</div>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">
-                    <Link to={`#`}>Insurity</Link>
-                  </TableCell>
-                  <TableCell align="center">Legal</TableCell>
-                  <TableCell align="center">Stage</TableCell>
-                  <TableCell align="center">5 min</TableCell>
-                  <TableCell align="center">5 hrs</TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="orange"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="orange"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <div className="error">Error</div>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">
-                    <Link to={`#`}>Vertafore</Link>
-                  </TableCell>
-                  <TableCell align="center">Reimbursement</TableCell>
-                  <TableCell align="center">Prod</TableCell>
-                  <TableCell align="center">10 min</TableCell>
-                  <TableCell align="center">2 hrs</TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <div className="done">Done</div>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">
-                    <Link to={`#`}>Guidewire</Link>
+                    <Link
+                      to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}
+                    >
+                      Xuber
+                    </Link>
                   </TableCell>
                   <TableCell align="center">Claims</TableCell>
-                  <TableCell align="center">Prod</TableCell>
-                  <TableCell align="center">2 min</TableCell>
-                  <TableCell align="center">3 hrs</TableCell>
+                  <TableCell align="center">Development</TableCell>
+                  <TableCell align="center">SOA</TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                    <HtmlTooltip
+                      <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
@@ -950,7 +278,7 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                    <HtmlTooltip
+                      <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
@@ -994,113 +322,27 @@ class Application extends Component {
                       </HtmlTooltip>
                     </Box>
                   </TableCell>
+                  <TableCell align="center">$ 400</TableCell>
                   <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <div className="inprogress">Inprogress</div>
+                    <button type="button" className="list-icon">
+                      <i className="fas fa-ellipsis-v"></i>
+                    </button>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell align="left">
-                    <Link to={`#`}>Duck Creek</Link>
+                    <Link
+                      to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}
+                    >
+                      HMS
+                    </Link>
                   </TableCell>
-                  <TableCell align="center">Legal</TableCell>
-                  <TableCell align="center">Test</TableCell>
-                  <TableCell align="center">5 min</TableCell>
-                  <TableCell align="center">2.5 hrs</TableCell>
+                  <TableCell align="center">Claims</TableCell>
+                  <TableCell align="center">Development</TableCell>
+                  <TableCell align="center">3 Tier</TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                    <HtmlTooltip
+                      <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
@@ -1146,7 +388,7 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                    <HtmlTooltip
+                      <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
@@ -1190,113 +432,27 @@ class Application extends Component {
                       </HtmlTooltip>
                     </Box>
                   </TableCell>
+                  <TableCell align="center">$ 400</TableCell>
                   <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="availability-box">
-                    <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <Box className="availability-inner">
-                              <div className="heading">
-                                <strong>SLA</strong>
-                              </div>
-                              <Box className="location-text">
-                                <Box className="location-add">
-                                  Location:{" "}
-                                  <strong>US-East - EC2 657907747554</strong>
-                                </Box>
-                                <ul>
-                                  <li>
-                                    <p>Performance</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Availability</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Security</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>Data Protection</p>
-                                    <span></span>
-                                  </li>
-                                  <li>
-                                    <p>User exp</p>
-                                    <span></span>
-                                  </li>
-                                </ul>
-                              </Box>
-                            </Box>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className="green"></span>
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <div className="done">Done</div>
+                    <button type="button" className="list-icon">
+                      <i className="fas fa-ellipsis-v"></i>
+                    </button>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell align="left">
-                    <Link to={`#`}>eBaoTech</Link>
+                    <Link
+                      to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}
+                    >
+                      Vertafore
+                    </Link>
                   </TableCell>
-                  <TableCell align="center">Cashless</TableCell>
-                  <TableCell align="center">Prod</TableCell>
-                  <TableCell align="center">3 min</TableCell>
-                  <TableCell align="center">2 hrs</TableCell>
+                  <TableCell align="center">Claims</TableCell>
+                  <TableCell align="center">Development</TableCell>
+                  <TableCell align="center">3 Tier</TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                    <HtmlTooltip
+                      <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
@@ -1342,7 +498,71 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                    <HtmlTooltip
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={
+                          <React.Fragment>
+                            <Box className="availability-inner">
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
+                            </Box>
+                          </React.Fragment>
+                        }
+                      >
+                        <span className="green"></span>
+                      </HtmlTooltip>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">$ 400</TableCell>
+                  <TableCell align="center">
+                    <button type="button" className="list-icon">
+                      <i className="fas fa-ellipsis-v"></i>
+                    </button>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">
+                    <Link
+                      to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}
+                    >
+                      Guidewire
+                    </Link>
+                  </TableCell>
+                  <TableCell align="center">Claims</TableCell>
+                  <TableCell align="center">Development</TableCell>
+                  <TableCell align="center">3 Tier</TableCell>
+                  <TableCell align="center">
+                    <Box className="availability-box">
+                      <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
@@ -1388,7 +608,71 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                    <HtmlTooltip
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={
+                          <React.Fragment>
+                            <Box className="availability-inner">
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
+                            </Box>
+                          </React.Fragment>
+                        }
+                      >
+                        <span className="green"></span>
+                      </HtmlTooltip>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">$ 400</TableCell>
+                  <TableCell align="center">
+                    <button type="button" className="list-icon">
+                      <i className="fas fa-ellipsis-v"></i>
+                    </button>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">
+                    <Link
+                      to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}
+                    >
+                      Duck Creek
+                    </Link>
+                  </TableCell>
+                  <TableCell align="center">Claims</TableCell>
+                  <TableCell align="center">Development</TableCell>
+                  <TableCell align="center">3 Tier</TableCell>
+                  <TableCell align="center">
+                    <Box className="availability-box">
+                      <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
@@ -1434,7 +718,71 @@ class Application extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box className="availability-box">
-                    <HtmlTooltip
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={
+                          <React.Fragment>
+                            <Box className="availability-inner">
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
+                            </Box>
+                          </React.Fragment>
+                        }
+                      >
+                        <span className="green"></span>
+                      </HtmlTooltip>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">$ 400</TableCell>
+                  <TableCell align="center">
+                    <button type="button" className="list-icon">
+                      <i className="fas fa-ellipsis-v"></i>
+                    </button>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">
+                    <Link
+                      to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}
+                    >
+                      eBaoTech
+                    </Link>
+                  </TableCell>
+                  <TableCell align="center">Claims</TableCell>
+                  <TableCell align="center">Development</TableCell>
+                  <TableCell align="center">3 Tier</TableCell>
+                  <TableCell align="center">
+                    <Box className="availability-box">
+                      <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
@@ -1479,7 +827,386 @@ class Application extends Component {
                     </Box>
                   </TableCell>
                   <TableCell align="center">
-                    <div className="done">Done</div>
+                    <Box className="availability-box">
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={
+                          <React.Fragment>
+                            <Box className="availability-inner">
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
+                            </Box>
+                          </React.Fragment>
+                        }
+                      >
+                        <span className="green"></span>
+                      </HtmlTooltip>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">$ 400</TableCell>
+                  <TableCell align="center">
+                    <button type="button" className="list-icon">
+                      <i className="fas fa-ellipsis-v"></i>
+                    </button>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">
+                    <Link
+                      to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}
+                    >
+                      Xuber
+                    </Link>
+                  </TableCell>
+                  <TableCell align="center">Claims</TableCell>
+                  <TableCell align="center">Development</TableCell>
+                  <TableCell align="center">3 Tier</TableCell>
+                  <TableCell align="center">
+                    <Box className="availability-box">
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={
+                          <React.Fragment>
+                            <Box className="availability-inner">
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
+                            </Box>
+                          </React.Fragment>
+                        }
+                      >
+                        <span className="green"></span>
+                      </HtmlTooltip>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box className="availability-box">
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={
+                          <React.Fragment>
+                            <Box className="availability-inner">
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
+                            </Box>
+                          </React.Fragment>
+                        }
+                      >
+                        <span className="green"></span>
+                      </HtmlTooltip>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">$ 400</TableCell>
+                  <TableCell align="center">
+                    <button type="button" className="list-icon">
+                      <i className="fas fa-ellipsis-v"></i>
+                    </button>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">
+                    <Link
+                      to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}
+                    >
+                      SCM
+                    </Link>
+                  </TableCell>
+                  <TableCell align="center">Claims</TableCell>
+                  <TableCell align="center">Development</TableCell>
+                  <TableCell align="center">3 Tier</TableCell>
+                  <TableCell align="center">
+                    <Box className="availability-box">
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={
+                          <React.Fragment>
+                            <Box className="availability-inner">
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
+                            </Box>
+                          </React.Fragment>
+                        }
+                      >
+                        <span className="green"></span>
+                      </HtmlTooltip>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box className="availability-box">
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={
+                          <React.Fragment>
+                            <Box className="availability-inner">
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
+                            </Box>
+                          </React.Fragment>
+                        }
+                      >
+                        <span className="green"></span>
+                      </HtmlTooltip>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">$ 400</TableCell>
+                  <TableCell align="center">
+                    <button type="button" className="list-icon">
+                      <i className="fas fa-ellipsis-v"></i>
+                    </button>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">
+                    <Link
+                      to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}
+                    >
+                      Procurement
+                    </Link>
+                  </TableCell>
+                  <TableCell align="center">Claims</TableCell>
+                  <TableCell align="center">Development</TableCell>
+                  <TableCell align="center">3 Tier</TableCell>
+                  <TableCell align="center">
+                    <Box className="availability-box">
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={
+                          <React.Fragment>
+                            <Box className="availability-inner">
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
+                            </Box>
+                          </React.Fragment>
+                        }
+                      >
+                        <span className="green"></span>
+                      </HtmlTooltip>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box className="availability-box">
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={
+                          <React.Fragment>
+                            <Box className="availability-inner">
+                              <div className="heading">
+                                <strong>SLA</strong>
+                              </div>
+                              <Box className="location-text">
+                                <Box className="location-add">
+                                  Location:{" "}
+                                  <strong>US-East - EC2 657907747554</strong>
+                                </Box>
+                                <ul>
+                                  <li>
+                                    <p>Performance</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Availability</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Security</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>Data Protection</p>
+                                    <span></span>
+                                  </li>
+                                  <li>
+                                    <p>User exp</p>
+                                    <span></span>
+                                  </li>
+                                </ul>
+                              </Box>
+                            </Box>
+                          </React.Fragment>
+                        }
+                      >
+                        <span className="green"></span>
+                      </HtmlTooltip>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">$ 400</TableCell>
+                  <TableCell align="center">
+                    <button type="button" className="list-icon">
+                      <i className="fas fa-ellipsis-v"></i>
+                    </button>
                   </TableCell>
                 </TableRow>
               </TableBody>

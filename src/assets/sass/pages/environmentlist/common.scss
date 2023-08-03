@@ -53,11 +53,11 @@
   //   0px 12.5216px 10.0172px rgba(108, 73, 172, 0.035),
   //   0px 6.6501px 5.32008px rgba(108, 73, 172, 0.0282725),
   //   0px 2.76726px 2.21381px rgba(108, 73, 172, 0.0196802);
-  //border-radius: 6px;
-  // .MuiTooltip-tooltip {
-  //   margin-bottom: 0;
-  //   border-radius: 6px;
-  // }
+  border-radius: 6px;
+  .MuiTooltip-tooltip {
+    margin-bottom: 0!important;
+    border-radius: 6px;
+  }
   .availability-inner {
     display: block;
     p {

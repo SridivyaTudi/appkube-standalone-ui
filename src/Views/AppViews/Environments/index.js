@@ -221,6 +221,7 @@ class Environments extends Component {
         [`& .${tooltipClasses.tooltip}`]: {
           backgroundColor: "#ffffffff",
           color: "rgba(0, 0, 0, 0.87)",
+          boxShadow: theme.shadows[2],
           maxWidth: 250,
           fontSize: theme.typography.pxToRem(12),
           border: "1px solid #dadde9",

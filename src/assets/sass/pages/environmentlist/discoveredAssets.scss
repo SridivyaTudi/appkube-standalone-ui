@@ -47,6 +47,7 @@
                 padding-right: 15px;
                 width: auto;
                 white-space: nowrap;
+                
                 .availability-box {
                   display: inline-block;
                   cursor: pointer;
@@ -64,32 +65,33 @@
                       background-color: #ffba69;
                     }
                   }
+                  
                 }
 
-                .done {
-                  display: inline-block;
-                  vertical-align: middle;
-                  color: #00b929;
-                  border-radius: 25px;
-                  padding: 3px 10px;
-                  background-color: #cfffda;
-                }
-                .error {
-                  display: inline-block;
-                  vertical-align: middle;
-                  color: #ffba69;
-                  border-radius: 25px;
-                  padding: 3px 10px;
-                  background-color: #ffba6947;
-                }
-                .inprogress {
-                  display: inline-block;
-                  vertical-align: middle;
-                  color: #8676ff;
-                  border-radius: 25px;
-                  padding: 3px 10px;
-                  background-color: #e5e1ff;
-                }
+                // .done {
+                //   display: inline-block;
+                //   vertical-align: middle;
+                //   color: #00b929;
+                //   border-radius: 25px;
+                //   padding: 3px 10px;
+                //   background-color: #cfffda;
+                // }
+                // .error {
+                //   display: inline-block;
+                //   vertical-align: middle;
+                //   color: #ffba69;
+                //   border-radius: 25px;
+                //   padding: 3px 10px;
+                //   background-color: #ffba6947;
+                // }
+                // .inprogress {
+                //   display: inline-block;
+                //   vertical-align: middle;
+                //   color: #8676ff;
+                //   border-radius: 25px;
+                //   padding: 3px 10px;
+                //   background-color: #e5e1ff;
+                // }
               }
             }
           }
