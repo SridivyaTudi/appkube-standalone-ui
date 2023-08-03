@@ -1,4 +1,183 @@
 .environment-container {
+  .discovered-table {
+    display: block;
+    background-color: #ffffff;
+    margin-top: 20px;
+    padding: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: 415px;
+    box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+    table {
+      width: 718px;
+      thead {
+        padding-top: 0px;
+        padding-bottom: 0px;
+        display: table;
+        width: calc(100% - 0.1em)
+          /* scrollbar is average 1em/16px width, remove it from thead width */;
+
+        &.active {
+          th {
+            border-bottom: 1px dashed #b3b3b3;
+          }
+        }
+
+        tr {
+          display: inline-table;
+          width: 100%;
+          table-layout: fixed;
+
+          th {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+            font-size: 13px;
+            line-height: 25px;
+            font-weight: 500;
+            width: auto;
+            white-space: nowrap;
+            text-align: center;
+            strong {
+              color: #383874;
+              font-weight: 600;
+              font-size: 15px;
+              text-transform: uppercase;
+            }
+            &:first-child {
+              text-align: left;
+            }
+
+            i {
+              cursor: pointer;
+            }
+
+            &.ou {
+              text-align: left;
+            }
+
+            .environment-image {
+              display: inline-block;
+              width: 30px;
+              height: 30px;
+              background: #ffffff;
+              padding: 5px;
+              margin: 0 15px;
+              border-radius: 5px;
+              box-shadow: 0px 100px 80px rgba(108, 73, 172, 0.07),
+                0px 41.7776px 33.4221px rgba(108, 73, 172, 0.0503198),
+                0px 22.3363px 17.869px rgba(108, 73, 172, 0.0417275),
+                0px 12.5216px 10.0172px rgba(108, 73, 172, 0.035),
+                0px 6.6501px 5.32008px rgba(108, 73, 172, 0.0282725),
+                0px 2.76726px 2.21381px rgba(108, 73, 172, 0.0196802);
+            }
+          }
+        }
+      }
+      tbody {
+        display: block;
+        height: 350px;
+        overflow: auto;
+        width: calc(100% - 0.1em);
+
+        tr {
+          display: table;
+          width: 100%;
+          table-layout: fixed;
+
+          &:last-child {
+            border-bottom: none;
+
+            td {
+              border: none;
+
+              .menu-list {
+                top: auto;
+                bottom: 40px;
+              }
+            }
+          }
+
+          td {
+            padding: 12px 15px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #101828;
+            position: relative;
+            border-bottom: 1px solid #eaecf0;
+            font-family: "Poppins", sans-serif;
+
+            .list-icon {
+              background: transparent;
+              width: 25px;
+              height: 25px;
+              border: none;
+              color: #1b4dff;
+              position: relative;
+              cursor: pointer;
+
+              &:hover {
+                background: #e5e1ff;
+                color: #1b4dff;
+                width: 25px;
+                height: 25px;
+                border-radius: 3px;
+              }
+            }
+
+            .menu-list {
+              position: absolute;
+              width: 160px;
+              top: 35px;
+              padding: 5px;
+              z-index: 12;
+              right: 47%;
+              border-radius: 5px;
+              background: #ffffff;
+              box-shadow: -1px 2px 10px 5px rgba(0, 0, 0, 0.05);
+
+              ul {
+                display: block;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+
+                li {
+                  display: block;
+                  list-style: none;
+                  text-align: left;
+                  border-radius: 3px;
+                  padding: 5px 10px;
+
+                  &.active {
+                    background: #dde1f8;
+                  }
+
+                  a {
+                    font-size: 10px;
+                    line-height: 14px;
+                    font-weight: 600;
+                    color: #383874;
+                  }
+                }
+              }
+            }
+
+            a {
+              font-weight: 600;
+              color: #384cff;
+            }
+
+            &:nth-child(1) {
+              text-align: left;
+            }
+          }
+        }
+      }
+    }
+  }
   .environment-table-section {
     display: block;
     background-color: #ffffff;
@@ -139,13 +318,13 @@
                 width: 25px;
                 height: 25px;
                 border: none;
-                color: #1B4DFF;
+                color: #1b4dff;
                 position: relative;
                 cursor: pointer;
 
                 &:hover {
-                  background: #E5E1FF;
-                  color: #1B4DFF;
+                  background: #e5e1ff;
+                  color: #1b4dff;
                   width: 25px;
                   height: 25px;
                   border-radius: 3px;
