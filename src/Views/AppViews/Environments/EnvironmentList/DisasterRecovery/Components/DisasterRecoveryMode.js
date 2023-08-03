@@ -37,9 +37,8 @@ class DisasterRecoveryMode extends Component {
         <ArcherElement
           id="root"
           relations={this.drawLineLevel1DisasterRecovery()}
-          // className="chart-container"
         >
-          <>{this.renderLevel1DisasterRecovery()}</>
+          <div className="chart-left">{this.renderLevel1DisasterRecovery()}</div>
         </ArcherElement>
         {this.renderLevel2DisasterRecovery()}
       </ArcherContainer>
@@ -55,10 +54,14 @@ class DisasterRecoveryMode extends Component {
     if (subData.length) {
       return subData.map((level1) => {
         return (
-          <div className={"chart-box active"} key={v4()}>
-            <img src={level1.image} alt="Logo" />
-            <span>{level1.label}</span>
-            <span>{level1.subLabel}</span>
+          <div className={"chart-box"} key={v4()}>
+            <div className="icon">
+              <img src={level1.image} alt="Logo" />
+            </div>
+            <div className="contents">
+              <span>{level1.label}</span>
+              <span>{level1.subLabel}</span>
+            </div>
           </div>
         );
       });
@@ -74,14 +77,14 @@ class DisasterRecoveryMode extends Component {
         let elementId = `selectedLevel_${index}`;
         return (
           <ArcherElement id={elementId} key={v4()}>
-            <li key={v4()}>
+            <div key={v4()}>
               <span>
                 <img src={level.image} alt={level.label} />
               </span>
               <div className="content">
                 <p>{level.label}</p>
               </div>
-            </li>
+            </div>
           </ArcherElement>
         );
       });

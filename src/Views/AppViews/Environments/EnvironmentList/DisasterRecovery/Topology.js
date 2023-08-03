@@ -8,7 +8,7 @@ import chartAuxiliaryLayerIcon from "assets/img/assetmanager/chart-auxiliary-lay
 import balancingIcon from "assets/img/assetmanager/balancing-icon.png";
 import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
 import amazonEc2 from "assets/img/assetmanager/amazon-ec2.png";
-
+import amazonEc3 from "assets/img/assetmanager/amazon-ec3.png";
 import {
   IconButton,
   Box,
@@ -59,9 +59,9 @@ let topologyData = {
         children: [],
       },
       {
-        label: "Auxiliary Layer",
+        label: "Auxiliary",
         id: null,
-        type: "AuxiliaryLayer",
+        type: "Auxiliary",
         image: chartAuxiliaryLayerIcon,
         children: [],
       },
@@ -203,12 +203,16 @@ class Topology extends Component {
     this.state = {
       dataOfLevel1: topologyData,
       resources: resourceData,
-      selectedResource: "",
+      selectedResource: "web",
     };
   }
 
   componentDidMount = () => {
-    this.setState({ dataOfLevel1: topologyData, resources: resourceData });
+    this.setState({
+      dataOfLevel1: topologyData,
+      resources: resourceData,
+      selectedResource: "web",
+    });
   };
 
   getCurrentActiveTreeLevel = (label, isLevel2Data = 0) => {
@@ -226,10 +230,8 @@ class Topology extends Component {
       resources[`${selectedResource}_layer`].map((resource) => {
         return (
           <Box className="card-box">
-            <Box className="d-block text-center width-100">
-              <strong>{resource.number}</strong>
-              <span>{resource.name}</span>
-            </Box>
+            <strong>{resource.number}</strong>
+            <span>{resource.name}</span>
           </Box>
         );
       })
@@ -271,57 +273,16 @@ class Topology extends Component {
               setLevel={this.getCurrentActiveTreeLevel}
               selectedBreadCrumbs={breadcrumbs}
             />
-            <Grid item xs={7}>
+            <Grid item xs={8}>
               <Box className="cloud-managed-cards">
-                {!selectedResource ? (
-                  <Box className="cloud-managed-cards-scroll">
-                    <Box className="service-card active">
-                      <Box className="service-icon">
-                        <img src={chartWebLayerIcon} alt="serviceicon" />
-                      </Box>
-                      <Box className="service-contant">
-                        <label>Web layer</label>
-                        <strong>01</strong>
-                      </Box>
-                    </Box>
-                    <Box className="service-card active">
-                      <Box className="service-icon">
-                        <img src={chartWebLayerIcon} alt="serviceicon" />
-                      </Box>
-                      <Box className="service-contant">
-                        <label>App layer</label>
-                        <strong>05</strong>
-                      </Box>
-                    </Box>
-                    <Box className="service-card active">
-                      <Box className="service-icon">
-                        <img src={chartWebLayerIcon} alt="serviceicon" />
-                      </Box>
-                      <Box className="service-contant">
-                        <label>Data layer</label>
-                        <strong>02</strong>
-                      </Box>
-                    </Box>
-                    <Box className="service-card active">
-                      <Box className="service-icon">
-                        <img src={chartWebLayerIcon} alt="serviceicon" />
-                      </Box>
-                      <Box className="service-contant">
-                        <label>Auxiliary layer</label>
-                        <strong>03</strong>
-                      </Box>
-                    </Box>
-                  </Box>
-                ) : (
+                {selectedResource === "web" && (
                   <Box className="application-balancer">
                     <Button
                       className="primary-btn min-width"
                       variant="contained"
                     >
-                      <p>
-                        <img src={balancingIcon} alt="" />{" "}
-                      </p>{" "}
-                      Application Load Balancer
+                      <img src={balancingIcon} alt="" /> Application Load
+                      Balancer
                     </Button>
                     <Box className="balancer-boxs">
                       <Box className="balancer-box">
@@ -354,11 +315,111 @@ class Topology extends Component {
                     </Box>
                   </Box>
                 )}
+                {selectedResource === "app" && (
+                  <Box className="application-balancer">
+                    <Button
+                      className="primary-btn min-width"
+                      variant="contained"
+                    >
+                      <img src={balancingIcon} alt="" /> Application Load
+                      Balancer
+                    </Button>
+                    <Box className="balancer-boxs">
+                      <Box className="balancer-box">
+                        <span>
+                          <img src={bottomArrow} alt="" />
+                        </span>
+                        <Box className="icon">
+                          <img src={amazonEc2} alt="" />
+                        </Box>
+                        <p>EC2</p>
+                      </Box>
+                      <Box className="balancer-box">
+                        <span>
+                          <img src={bottomArrow} alt="" />
+                        </span>
+                        <Box className="icon">
+                          <img src={amazonEc2} alt="" />
+                        </Box>
+                        <p>EC2</p>
+                      </Box>
+                      <Box className="balancer-box">
+                        <span>
+                          <img src={bottomArrow} alt="" />
+                        </span>
+                        <Box className="icon">
+                          <img src={amazonEc2} alt="" />
+                        </Box>
+                        <p>EC2</p>
+                      </Box>
+                    </Box>
+                  </Box>
+                )}
+                {selectedResource === "data" && (
+                  <Box className="application-balancer">
+                    <Button
+                      className="primary-btn min-width"
+                      variant="contained"
+                    >
+                      <img src={amazonEc3} alt="" /> Relational Database Service
+                    </Button>
+                    <Box className="balancer-boxs">
+                      <Box className="balancer-box">
+                        <span>
+                          <img src={bottomArrow} alt="" />
+                        </span>
+                        <Box className="icon">
+                          <img src={amazonEc3} alt="" />
+                        </Box>
+                        <p>RDS</p>
+                      </Box>
+                      <Box className="balancer-box">
+                        <span>
+                          <img src={bottomArrow} alt="" />
+                        </span>
+                        <Box className="icon">
+                          <img src={amazonEc3} alt="" />
+                        </Box>
+                        <p>RDS</p>
+                      </Box>
+                    </Box>
+                  </Box>
+                )}
+                {selectedResource === "auxiliary" && (
+                  <Box className="application-balancer">
+                    <Button
+                      className="primary-btn min-width"
+                      variant="contained"
+                    >
+                      <img src={amazonEc3} alt="" /> Auxiliary
+                    </Button>
+                    <Box className="balancer-boxs">
+                      <Box className="balancer-box">
+                        <span>
+                          <img src={bottomArrow} alt="" />
+                        </span>
+                        <Box className="icon">
+                          <img src={amazonEc3} alt="" />
+                        </Box>
+                        <p>SNS</p>
+                      </Box>
+                      <Box className="balancer-box">
+                        <span>
+                          <img src={bottomArrow} alt="" />
+                        </span>
+                        <Box className="icon">
+                          <img src={amazonEc3} alt="" />
+                        </Box>
+                        <p>SQS</p>
+                      </Box>
+                    </Box>
+                  </Box>
+                )}
               </Box>
+              {this.renderResourcesWrapper()}
             </Grid>
           </Grid>
         </Box>
-        {this.renderResourcesWrapper()}
       </>
     );
   }
