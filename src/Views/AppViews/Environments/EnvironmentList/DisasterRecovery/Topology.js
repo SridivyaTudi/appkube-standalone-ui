@@ -21,7 +21,7 @@ import {
   List,
   ListItem,
   TableBody,
-  Button
+  Button,
 } from "@mui/material";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
@@ -43,7 +43,7 @@ const TOPOLOGY_VIEW_TYPE = {
   GLOBAL_SERVICE: "globalService",
 };
 
-let dummyData = {
+let topologyData = {
   label: "HRMS",
   image: Hrms,
   children: [
@@ -53,30 +53,161 @@ let dummyData = {
         id: null,
         type: "WebLayer",
         image: chartWebLayerIcon,
+        children: [],
       },
       {
         label: "App Layer",
         id: null,
         type: "AppLayer",
         image: chartAppLayerIcon,
+        children: [],
       },
       {
         label: "Data Layer",
         id: null,
         type: "DataLayer",
         image: dataServiceSvgrepo,
+        children: [],
       },
       {
         label: "Auxiliary Layer",
         id: null,
         type: "AuxiliaryLayer",
         image: chartAuxiliaryLayerIcon,
+        children: [],
       },
     ],
     [],
   ],
 };
-
+let resourceData = {
+  web_layer: [
+    {
+      name: "CPU Utilization",
+      number: "44%",
+    },
+    {
+      name: "Network In",
+      number: "1000 MB",
+    },
+    {
+      name: "Network Out",
+      number: "1000 MB",
+    },
+    {
+      name: "Disk Read Bytes",
+      number: "500 MB",
+    },
+    {
+      name: "Disk Write Bytes",
+      number: "100 MB",
+    },
+    {
+      name: "Status Check Failed",
+      number: "142",
+    },
+    {
+      name: "Status Check Failed Instance",
+      number: "142",
+    },
+    {
+      name: "Status Check Failed System",
+      number: "142",
+    },
+    {
+      name: "CPU Credit Balance",
+      number: "100",
+    },
+    {
+      name: "CPU Credit Usage",
+      number: "10",
+    },
+  ],
+  data_layer: [
+    {
+      name: "CPU Utilization",
+      number: "50%",
+    },
+    {
+      name: "Data Connections",
+      number: "100",
+    },
+    {
+      name: "Free Storage Space",
+      number: "50 GB",
+    },
+    {
+      name: "ReadOPS",
+      number: "500 IOPS",
+    },
+    {
+      name: "Write OPS",
+      number: "300 OPS",
+    },
+    {
+      name: "Read latency",
+      number: "5 ms",
+    },
+    {
+      name: "Write latency",
+      number: "3 MS",
+    },
+    {
+      name: "NR Throughput",
+      number: "10 MB/s",
+    },
+    {
+      name: "NT Throughput",
+      number: "5 MB/s",
+    },
+    {
+      name: "Replica lag",
+      number: "0 sec",
+    },
+  ],
+  auxiliary_layer: [
+    {
+      name: "No. Of Messages Published",
+      number: "1000",
+    },
+    {
+      name: "No. Of Notification Delivered",
+      number: "900",
+    },
+    {
+      name: "No. Of Notification Failed",
+      number: "20",
+    },
+    {
+      name: "No. Of Notification Filtered",
+      number: "50",
+    },
+    {
+      name: "Public Size",
+      number: "1 KB",
+    },
+    {
+      name: "Publish Throughput",
+      number: "10 M/s",
+    },
+    {
+      name: "No Of  Subs Confirmed",
+      number: "50",
+    },
+    {
+      name: "No Of  Subs Pending",
+      number: "5",
+    },
+    {
+      name: "No Of  Subs Deleted",
+      number: "10",
+    },
+    {
+      name: "Sms month to date spent USD",
+      number: "$5.00",
+    },
+  ],
+};
 class Topology extends Component {
   constructor(props) {
     super(props);
@@ -94,13 +225,15 @@ class Topology extends Component {
       searchString: "",
       accountId: queryPrm.get("landingZone"),
       dataOfTableLevel1: [],
-      dataOfLevel1: dummyData,
+      dataOfLevel1: topologyData,
       currentActiveNodeLabel: "",
       currentVPC: {},
       showMenu: null,
       cloudName,
       activeTierTab: "3Tier",
       isClusterShow: false,
+      resources: resourceData,
+      selectedResource: "",
     };
   }
 
@@ -114,7 +247,7 @@ class Topology extends Component {
         globalServiceList
       );
     }
-    this.setState({ dataOfLevel1: dummyData });
+    this.setState({ dataOfLevel1: topologyData, resources: resourceData });
   };
 
   componentDidUpdate = async (prevProps, prevState) => {
@@ -478,15 +611,9 @@ class Topology extends Component {
   };
 
   getCurrentActiveTreeLevel = (label, isLevel2Data = 0) => {
-    this.setState({ currentActiveNodeLabel: label });
-    const currentVPC =
-      this.props.envDataByLandingZone.data.productEnclaveList.filter(
-        (item) => item.name === label
-      );
-    if (currentVPC.length) {
-      this.setState({ currentVPC: currentVPC[0] });
-    }
-    this.prepareBreadCrumbs(label, isLevel2Data);
+    this.setState({
+      selectedResource: label?.toLowerCase().replace(" layer", ""),
+    });
   };
 
   /**
@@ -534,16 +661,41 @@ class Topology extends Component {
     this.setState({ activeTierTab: type });
   };
 
+  renderResources = () => {
+    let { resources, selectedResource } = this.state;
+    selectedResource = selectedResource === "app" ? "web" : selectedResource;
+    return (
+      resources[`${selectedResource}_layer`]?.length &&
+      resources[`${selectedResource}_layer`].map((resource) => {
+        return (
+          <Box className="card-box">
+            <Box className="d-block text-center width-100">
+              <strong>{resource.number}</strong>
+              <span>{resource.name}</span>
+            </Box>
+          </Box>
+        );
+      })
+    );
+  };
+
+  renderResourcesContainer = () => {
+    let { selectedResource } = this.state;
+    let resourceName = selectedResource === 'data' ? 'RDS' : selectedResource === 'auxiliary' ? 'SNS' : 'EC2'
+    return (
+      selectedResource && (
+        <Box className="resources-cards">
+          <div className="heading">Selected {resourceName} Resources</div>
+          <Box className="resources">
+            <Box className="resources-inner">{this.renderResources()}</Box>
+          </Box>
+        </Box>
+      )
+    );
+  };
   render() {
-    const {
-      dataOfLevel1,
-      currentActiveNodeLabel,
-      currentVPC,
-      breadcrumbs,
-      activeTierTab,
-      isClusterShow,
-    } = this.state;
-    const { envDataByLandingZone, departments } = this.props;
+    const { dataOfLevel1, breadcrumbs, selectedResource } = this.state;
+
     return (
       <>
         <Box sx={{ width: "100%" }}>
@@ -559,140 +711,92 @@ class Topology extends Component {
             />
             <Grid item xs={7}>
               <Box className="cloud-managed-cards">
-                {/* <Box className="cloud-managed-cards-scroll">
-                  <Box className="service-card active">
-                    <Box className="service-icon">
-                      <img src={chartWebLayerIcon} alt="serviceicon" />
+                {!selectedResource ? (
+                  <Box className="cloud-managed-cards-scroll">
+                    <Box className="service-card active">
+                      <Box className="service-icon">
+                        <img src={chartWebLayerIcon} alt="serviceicon" />
+                      </Box>
+                      <Box className="service-contant">
+                        <label>Web layer</label>
+                        <strong>01</strong>
+                      </Box>
                     </Box>
-                    <Box className="service-contant">
-                      <label>Web layer</label>
-                      <strong>01</strong>
+                    <Box className="service-card active">
+                      <Box className="service-icon">
+                        <img src={chartWebLayerIcon} alt="serviceicon" />
+                      </Box>
+                      <Box className="service-contant">
+                        <label>App layer</label>
+                        <strong>05</strong>
+                      </Box>
                     </Box>
-                  </Box>
-                  <Box className="service-card active">
-                    <Box className="service-icon">
-                      <img src={chartWebLayerIcon} alt="serviceicon" />
+                    <Box className="service-card active">
+                      <Box className="service-icon">
+                        <img src={chartWebLayerIcon} alt="serviceicon" />
+                      </Box>
+                      <Box className="service-contant">
+                        <label>Data layer</label>
+                        <strong>02</strong>
+                      </Box>
                     </Box>
-                    <Box className="service-contant">
-                      <label>App layer</label>
-                      <strong>05</strong>
-                    </Box>
-                  </Box>
-                  <Box className="service-card active">
-                    <Box className="service-icon">
-                      <img src={chartWebLayerIcon} alt="serviceicon" />
-                    </Box>
-                    <Box className="service-contant">
-                      <label>Data layer</label>
-                      <strong>02</strong>
-                    </Box>
-                  </Box>
-                  <Box className="service-card active">
-                    <Box className="service-icon">
-                      <img src={chartWebLayerIcon} alt="serviceicon" />
-                    </Box>
-                    <Box className="service-contant">
-                      <label>Auxiliary layer</label>
-                      <strong>03</strong>
-                    </Box>
-                  </Box>
-                </Box> */}
-                <Box className="application-balancer">
-                  <Button
-                    className="primary-btn min-width"
-                    variant="contained"
-                  >
-                    <p><img src={balancingIcon} alt="" /> </p> Application Load Balancer
-                  </Button>
-                  <Box className="balancer-boxs">
-                    <Box className="balancer-box">
-                      <span><img src={bottomArrow} alt=""/></span>
-                      <Box className="icon"><img src={amazonEc2} alt=""/></Box>
-                      <p>EC2</p>
-                    </Box>
-                    <Box className="balancer-box">
-                      <span><img src={bottomArrow} alt=""/></span>
-                      <Box className="icon"><img src={amazonEc2} alt=""/></Box>
-                      <p>EC2</p>
-                    </Box>
-                    <Box className="balancer-box">
-                      <span><img src={bottomArrow} alt=""/></span>
-                      <Box className="icon"><img src={amazonEc2} alt=""/></Box>
-                      <p>EC2</p>
+                    <Box className="service-card active">
+                      <Box className="service-icon">
+                        <img src={chartWebLayerIcon} alt="serviceicon" />
+                      </Box>
+                      <Box className="service-contant">
+                        <label>Auxiliary layer</label>
+                        <strong>03</strong>
+                      </Box>
                     </Box>
                   </Box>
-                </Box>
+                ) : (
+                  <Box className="application-balancer">
+                    <Button
+                      className="primary-btn min-width"
+                      variant="contained"
+                    >
+                      <p>
+                        <img src={balancingIcon} alt="" />{" "}
+                      </p>{" "}
+                      Application Load Balancer
+                    </Button>
+                    <Box className="balancer-boxs">
+                      <Box className="balancer-box">
+                        <span>
+                          <img src={bottomArrow} alt="" />
+                        </span>
+                        <Box className="icon">
+                          <img src={amazonEc2} alt="" />
+                        </Box>
+                        <p>EC2</p>
+                      </Box>
+                      <Box className="balancer-box">
+                        <span>
+                          <img src={bottomArrow} alt="" />
+                        </span>
+                        <Box className="icon">
+                          <img src={amazonEc2} alt="" />
+                        </Box>
+                        <p>EC2</p>
+                      </Box>
+                      <Box className="balancer-box">
+                        <span>
+                          <img src={bottomArrow} alt="" />
+                        </span>
+                        <Box className="icon">
+                          <img src={amazonEc2} alt="" />
+                        </Box>
+                        <p>EC2</p>
+                      </Box>
+                    </Box>
+                  </Box>
+                )}
               </Box>
             </Grid>
           </Grid>
         </Box>
-        <Box className="resources-cards">
-          <div className="heading">Selected EC2 Resources</div>
-          <Box className="resources">
-            <Box className="resources-inner">
-              <Box className="card-box">
-                <Box className="d-block text-center width-100">
-                  <strong>44%</strong>
-                  <span>CPU Utilization</span>
-                </Box>
-              </Box>
-              <Box className="card-box">
-                <Box className="d-block text-center width-100">
-                  <strong>1000 MB</strong>
-                  <span>Network In</span>
-                </Box>
-              </Box>
-              <Box className="card-box">
-                <Box className="d-block text-center width-100">
-                  <strong>500 MB</strong>
-                  <span>Network Out</span>
-                </Box>
-              </Box>
-              <Box className="card-box">
-                <Box className="d-block text-center width-100">
-                  <strong>500 MB</strong>
-                  <span>Disk Read Bytes</span>
-                </Box>
-              </Box>
-              <Box className="card-box">
-                <Box className="d-block text-center width-100">
-                  <strong>100 MB</strong>
-                  <span>Disk Write Bytes</span>
-                </Box>
-              </Box>
-              <Box className="card-box">
-                <Box className="d-block text-center width-100">
-                  <strong>142</strong>
-                  <span>Status Check Failed</span>
-                </Box>
-              </Box>
-              <Box className="card-box">
-                <Box className="d-block text-center width-100">
-                  <strong>142</strong>
-                  <span>Status Check Failed Instance</span>
-                </Box>
-              </Box>
-              <Box className="card-box">
-                <Box className="d-block text-center width-100">
-                  <strong>142</strong>
-                  <span>Status Check Failed System</span>
-                </Box>
-              </Box>
-              <Box className="card-box">
-                <Box className="d-block text-center width-100">
-                  <strong>100</strong>
-                  <span>CPU Credit Balance</span>
-                </Box>
-              </Box>
-              <Box className="card-box">
-                <Box className="d-block text-center width-100">
-                  <strong>10</strong>
-                  <span>CPU Credit Usage</span>
-                </Box>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
+        {this.renderResourcesContainer()}
       </>
     );
   }

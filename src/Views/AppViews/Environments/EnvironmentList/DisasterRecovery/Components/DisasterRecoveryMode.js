@@ -12,7 +12,7 @@ let drawArrow = {
     endShape: {
       circle: {
         radius: 1.3,
-        fillColor: "#6a6a9f",
+        fillColor: "#53ca43",
         strokeColor: "#6a6a9f",
         strokeWidth: -1.2,
       },
