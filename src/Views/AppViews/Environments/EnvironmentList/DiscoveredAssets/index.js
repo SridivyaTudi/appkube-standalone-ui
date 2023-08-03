@@ -260,7 +260,7 @@ class DiscoveredAssets extends Component {
     return (
       <Box className="discovered-table" style={{ height: "415px" }}>
         <TableContainer className="table">
-          <Table>
+          <Table className="discovered-table-inner">
             <TableHead className="active">
               <TableRow>
                 <TableCell>
@@ -291,7 +291,7 @@ class DiscoveredAssets extends Component {
     return (
       <Box className="discovered-table" style={{ height: "415px" }}>
         <TableContainer className="table">
-            <Table>
+            <Table className="discovered-table-inner">
               <TableHead className="active">
                 <TableRow>
                   <TableCell>
