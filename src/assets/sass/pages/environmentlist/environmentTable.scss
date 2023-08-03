@@ -110,6 +110,25 @@
             position: relative;
             border-bottom: 1px solid #eaecf0;
             font-family: "Poppins", sans-serif;
+            .availability-box {
+              display: inline-block;
+              cursor: pointer;
+              span {
+                display: inline-block;
+                border-radius: 50%;
+
+                vertical-align: middle;
+                width: 20px;
+                height: 20px;
+                &.green {
+                  background-color: #00b929;
+                }
+                &.orange {
+                  background-color: #ffba69;
+                }
+              }
+              
+            }
 
             &:last-child {
               overflow: unset;
@@ -141,14 +160,19 @@
 
             .list-icon {
               background: transparent;
+              width: 25px;
+              height: 25px;
               border: none;
-              color: #98a2b3;
+              color: #1B4DFF;
               position: relative;
-              z-index: 11;
               cursor: pointer;
 
               &:hover {
-                color: #101828;
+                background: #E5E1FF;
+                color: #1B4DFF;
+                width: 25px;
+                height: 25px;
+                border-radius: 3px;
               }
             }
 

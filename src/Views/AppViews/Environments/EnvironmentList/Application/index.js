@@ -92,10 +92,10 @@ class Application extends Component {
             </Grid>
           </Grid>
         </Box>
-        <Box className="environment-table-section">
+        <Box className="environment-table">
           <TableContainer className="table">
-            <Table className="overview">
-              <TableHead>
+            <Table>
+              <TableHead className="active">
                 <TableRow>
                   <TableCell align="left">Application</TableCell>
                   <TableCell align="center">LOB</TableCell>

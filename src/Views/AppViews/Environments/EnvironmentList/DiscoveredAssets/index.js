@@ -260,10 +260,7 @@ class DiscoveredAssets extends Component {
     if (!dataOfTableLevel1.length) return null;
     const cloudLogo = LOGOS[cloudName?.toUpperCase()];
     return (
-      <Box
-        className="environment-table-section discovered-table"
-        style={{ height: "415px" }}
-      >
+      <Box className="environment-table-section discovered-table" style={{ height: "415px" }}>
         <Box className="table discovered-assets-table">
           <TableContainer>
             <Table className="overview">
