@@ -11,7 +11,7 @@ class TopologyView extends Component {
     this.state = {
       selectedView: {
         level2Show: false,
-        selectedLevel1Id: null,
+        selectedLevel1Id: 0,
         selectedLevel2Id: null,
       },
     };
@@ -288,7 +288,7 @@ class TopologyView extends Component {
     const { data } = this.props;
     return (
       <>
-        <Grid item xs={5}>
+        <Grid item xs={4}>
           <Box className="topology-panel">
             <Box className="topology-panel-title">
               <Box className="name">App Topology</Box>

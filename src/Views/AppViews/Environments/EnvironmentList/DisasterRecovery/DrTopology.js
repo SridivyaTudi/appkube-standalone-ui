@@ -457,7 +457,6 @@ class DrTopology extends Component {
                   </ListItem>
                   
                 </List> */}
-
                 <Box className="no-avaliable-box">
                   <div className="image">
                     <img src={noAvaliableBox} alt="" />{" "}
