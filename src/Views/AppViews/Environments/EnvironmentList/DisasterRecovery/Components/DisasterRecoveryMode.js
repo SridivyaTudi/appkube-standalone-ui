@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { ArcherContainer, ArcherElement } from "react-archer";
+import { Button } from "@mui/material";
 import { v4 } from "uuid";
 
 let drawArrow = {
@@ -12,8 +13,8 @@ let drawArrow = {
     endShape: {
       circle: {
         radius: 1.3,
-        fillColor: "#53ca43",
-        strokeColor: "#6a6a9f",
+        fillColor: "#00B929",
+        strokeColor: "#00B929",
         strokeWidth: -1.2,
       },
     },
@@ -38,9 +39,11 @@ class DisasterRecoveryMode extends Component {
           id="root"
           relations={this.drawLineLevel1DisasterRecovery()}
         >
-          <div className="chart-left">{this.renderLevel1DisasterRecovery()}</div>
+          <div className="chart-left">
+            {this.renderLevel1DisasterRecovery()}
+          </div>
         </ArcherElement>
-        {this.renderLevel2DisasterRecovery()}
+        <div className="chart-right">{this.renderLevel2DisasterRecovery()}</div>
       </ArcherContainer>
     ) : (
       ""
@@ -60,7 +63,7 @@ class DisasterRecoveryMode extends Component {
             </div>
             <div className="contents">
               <span>{level1.label}</span>
-              <span>{level1.subLabel}</span>
+              <strong>{level1.subLabel}</strong>
             </div>
           </div>
         );
@@ -77,12 +80,58 @@ class DisasterRecoveryMode extends Component {
         let elementId = `selectedLevel_${index}`;
         return (
           <ArcherElement id={elementId} key={v4()}>
-            <div key={v4()}>
-              <span>
-                <img src={level.image} alt={level.label} />
-              </span>
-              <div className="content">
+            <div className="primary-box" key={v4()}>
+              <div className="button-box">
+                <span>
+                  <img src={level.image} alt={level.label} />
+                </span>
+                <div className="content">
+                  <p>{level.label}</p>
+                </div>
+              </div>
+              <div className="provision">
+                <ul>
+                  <li>Provision</li>
+                  <li>Replication</li>
+                  <li>Failover Ready</li>
+                </ul>
+              </div>
+              <div className="button-box green">
+                <span>
+                  <img src={level.image} alt={level.label} />
+                </span>
                 <p>{level.label}</p>
+              </div>
+              <div className="buttons-box">
+                <ul>
+                  <li>
+                    <Button
+                      className="primary-outline-btn min-width"
+                      variant="outlined"
+                    >
+                      <i className="fa-solid fa-play"></i>
+                    </Button>
+                    <span>Start</span>
+                  </li>
+                  <li>
+                    <Button
+                      className="primary-outline-btn min-width"
+                      variant="outlined"
+                    >
+                      <i className="fa-solid fa-bore-hole"></i>
+                    </Button>
+                    <span>Drill</span>
+                  </li>
+                  <li>
+                    <Button
+                      className="primary-outline-btn min-width"
+                      variant="outlined"
+                    >
+                      <i className="fa-solid fa-repeat"></i>
+                    </Button>
+                    <span>Provision</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </ArcherElement>
