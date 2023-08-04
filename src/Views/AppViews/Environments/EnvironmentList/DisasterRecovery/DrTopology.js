@@ -53,74 +53,115 @@ let Data = {
       label: "Web Layer",
       id: null,
       image: internetIcon,
-      className:'',
-      children: [
-        {
-          label:'Provision',
-          status:'Success'
-        }, {
-          label:'Replication',
-          status:'Success'
-        }, {
-          label:'Failover Ready',
-          status:'Success'
-        }
-      ],
-      
+
+      steps: {
+        stepData: [
+          {
+            label: "Provision",
+            status: "Success",
+          },
+          {
+            label: "Replication",
+            status: "Success",
+          },
+          {
+            label: "Failover Ready",
+            status: "Success",
+          },
+        ],
+        children: {
+          label: "Web Layer",
+          id: null,
+          image: departmentIcon,
+          subLabel: "Claims",
+          className: "",
+        },
+      },
     },
     {
       label: "App Layer",
       id: null,
       image: calendarMouseIcon,
-      className:'red',
-      children: [
-        {
-          label:'Provision',
-          status:'Success'
-        }, {
-          label:'Replication',
-          status:'Success'
-        }, {
-          label:'Failover Ready',
-          status:'Success'
-        }
-      ]
+      steps: {
+        stepData: [
+          {
+            label: "Provision",
+            status: "Success",
+          },
+          {
+            label: "Replication",
+            status: "Success",
+          },
+          {
+            label: "Failover Ready",
+            status: "Success",
+          },
+        ],
+        children: {
+          label: "App Layer",
+          id: null,
+          image: departmentIcon,
+          subLabel: "Claims",
+          className: "red",
+        },
+      },
     },
     {
       label: "Data Layer",
       id: null,
       image: databaseIcon,
-      children: [
-        {
-          label:'Provision',
-          status:'Success'
-        }, {
-          label:'Replication',
-          status:'Success'
-        }, {
-          label:'Failover Ready',
-          status:'Success'
-        }
-      ],
-      className:'blue',
+      steps: {
+        stepData: [
+          {
+            label: "Provision",
+            status: "Success",
+          },
+          {
+            label: "Replication",
+            status: "Success",
+          },
+          {
+            label: "Failover Ready",
+            status: "Success",
+          },
+        ],
+        children: {
+          label: "Data Layer",
+          id: null,
+          image: departmentIcon,
+          subLabel: "Claims",
+          className: "blue",
+        },
+      },
     },
     {
       label: "Auxiliary Layer",
       id: null,
       image: archiveIcon,
-      children: [
-        {
-          label:'Provision',
-          status:'Success'
-        }, {
-          label:'Replication',
-          status:'Success'
-        }, {
-          label:'Failover Ready',
-          status:'Success'
-        }
-      ],
-      className:''
+      steps: {
+        stepData: [
+          {
+            label: "Provision",
+            status: "Success",
+          },
+          {
+            label: "Replication",
+            status: "Success",
+          },
+          {
+            label: "Failover Ready",
+            status: "Success",
+          },
+        ],
+        children: {
+          label: "Auxiliary Layer",
+          id: null,
+          image: departmentIcon,
+          subLabel: "Claims",
+          className: "",
+        },
+       
+      },
     },
   ],
 };
@@ -213,7 +254,11 @@ class DrTopology extends Component {
             </div>
           </TableCell>
           <TableCell align="left">
-            <Button className="secondary-btn" variant="contained">
+            <Button
+              className="secondary-btn"
+              variant="contained"
+              onClick={this.props.redirectViewDetails}
+            >
               View Details
             </Button>
           </TableCell>

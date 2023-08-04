@@ -94,6 +94,8 @@ class DisasterRecoveryMode extends Component {
             border: "1px solid #16161E",
           },
         }));
+
+        let { steps:{stepData,children}}= level
         return (
           <ArcherElement id={elementId} key={v4()}>
             <div className="primary-box">
@@ -121,20 +123,18 @@ class DisasterRecoveryMode extends Component {
               </HtmlTooltip>
               <div className="provision">
                 <ul>
-                  <li>Provision</li>
-                  <li>Replication</li>
-                  <li>Failover Ready</li>
+                  {this.renderEventTypeLines(stepData)}
                 </ul>
               </div>
               <div
                 className={`button-box ${
-                  level.className ? level.className : "green"
+                  children.className ? children.className : "green"
                 }`}
               >
                 <span>
-                  <img src={level.image} alt={level.label} />
+                  <img src={children.image} alt={children.label} />
                 </span>
-                <p>{level.label}</p>
+                <p>{children.label}</p>
               </div>
               <div className="buttons-box">
                 <ul>
@@ -186,6 +186,15 @@ class DisasterRecoveryMode extends Component {
       });
     } else {
       return [];
+    }
+  };
+
+  /** Event types render
+   * * @param {array} EventTypes - data of Event types.
+   */
+  renderEventTypeLines = (EventTypes) => {
+    if (EventTypes.length) {
+      return EventTypes.map(({ label }) => <li key={v4()}>{label}</li>);
     }
   };
   render() {
