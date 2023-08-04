@@ -269,7 +269,7 @@ class TopologyView extends Component {
   };
 
   renderChildNodes = (nodes, currentLevel, activeView) => {
-    const retData = [];
+    let retData = [];
     const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
     if (activeView.length > currentLevel) {
       let activeSublevel = -1;
@@ -282,46 +282,43 @@ class TopologyView extends Component {
       nodes.map((item, sublevelIndex) => {
         if (item.length > 0) {
           retData.push(
-            <>
-              <div className="global-servies">
-                <ul>
-                  {item.map((item, nodeIndex) => {
-                    if (item.children.length > 0) {
-                      if (activeSublevel === sublevelIndex && activeNode === nodeIndex) {
-                        childJSX.push(this.renderChildNodes(item.children, currentLevel + 1, activeView));
-                      }
-                    }
-                    return (
-                      <ArcherElement
-                        id={item.label}
-                        relations={[
-                          {
-                            targetId: (activeSublevel === sublevelIndex && activeNode === nodeIndex) ? this.getTargetId(currentLevel + 1) : "",
-                            targetAnchor: "left",
-                            sourceAnchor: "right",
-                            style: {
-                              strokeStyles,
-                            },
-                          },
-                        ]}
-                      >
-                        <li className={(activeSublevel === sublevelIndex && activeNode === nodeIndex) ? "active" : ""} onClick={() => this.handleNodeClick(currentLevel, sublevelIndex, nodeIndex)}>
-                          <img
-                            style={{ marginRight: "10px" }}
-                            src={item.image}
-                            alt={item.label}
-                          />
-                          {this.getServiceName(item.label)}
-                        </li>
-                      </ArcherElement>
-                    );
-                  })}
-                </ul>
-              </div>
-            </>
+            <ul>
+              {item.map((item, nodeIndex) => {
+                if (item.children.length > 0) {
+                  if (activeSublevel === sublevelIndex && activeNode === nodeIndex) {
+                    childJSX.push(this.renderChildNodes(item.children, currentLevel + 1, activeView));
+                  }
+                }
+                return (
+                  <ArcherElement
+                    id={item.label}
+                    relations={[
+                      {
+                        targetId: (activeSublevel === sublevelIndex && activeNode === nodeIndex) ? this.getTargetId(currentLevel + 1) : "",
+                        targetAnchor: "left",
+                        sourceAnchor: "right",
+                        style: {
+                          strokeStyles,
+                        },
+                      },
+                    ]}
+                  >
+                    <li className={(activeSublevel === sublevelIndex && activeNode === nodeIndex) ? "active" : ""} onClick={() => this.handleNodeClick(currentLevel, sublevelIndex, nodeIndex)}>
+                      <img
+                        style={{ marginRight: "10px" }}
+                        src={item.image}
+                        alt={item.label}
+                      />
+                      {this.getServiceName(item.label)}
+                    </li>
+                  </ArcherElement>
+                );
+              })}
+            </ul>
           );
         }
       });
+      retData = [<div className="global-servies">{retData}</div>];
       if (childJSX.length > 0) {
         retData.push(childJSX);
       }
