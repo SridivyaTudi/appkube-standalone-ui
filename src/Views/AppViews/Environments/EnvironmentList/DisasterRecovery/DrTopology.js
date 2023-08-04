@@ -50,25 +50,74 @@ let Data = {
       label: "Web Layer",
       id: null,
       image: internetIcon,
-      children: [],
+      className:'',
+      children: [
+        {
+          label:'Provision',
+          status:'Success'
+        }, {
+          label:'Replication',
+          status:'Success'
+        }, {
+          label:'Failover Ready',
+          status:'Success'
+        }
+      ],
+      
     },
     {
       label: "App Layer",
       id: null,
       image: calendarMouseIcon,
-      children: [],
+      className:'red',
+      children: [
+        {
+          label:'Provision',
+          status:'Success'
+        }, {
+          label:'Replication',
+          status:'Success'
+        }, {
+          label:'Failover Ready',
+          status:'Success'
+        }
+      ]
     },
     {
       label: "Data Layer",
       id: null,
       image: databaseIcon,
-      children: [],
+      children: [
+        {
+          label:'Provision',
+          status:'Success'
+        }, {
+          label:'Replication',
+          status:'Success'
+        }, {
+          label:'Failover Ready',
+          status:'Success'
+        }
+      ],
+      className:'blue',
     },
     {
       label: "Auxiliary Layer",
       id: null,
       image: archiveIcon,
-      children: [],
+      children: [
+        {
+          label:'Provision',
+          status:'Success'
+        }, {
+          label:'Replication',
+          status:'Success'
+        }, {
+          label:'Failover Ready',
+          status:'Success'
+        }
+      ],
+      className:''
     },
   ],
 };

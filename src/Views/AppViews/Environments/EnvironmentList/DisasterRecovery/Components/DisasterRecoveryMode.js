@@ -78,6 +78,7 @@ class DisasterRecoveryMode extends Component {
     if (children.length) {
       return children.map((level, index) => {
         let elementId = `selectedLevel_${index}`;
+
         return (
           <ArcherElement id={elementId} key={v4()}>
             <div className="primary-box" key={v4()}>
@@ -90,13 +91,13 @@ class DisasterRecoveryMode extends Component {
                 </div>
               </div>
               <div className="provision">
-                <ul>
-                  <li>Provision</li>
-                  <li>Replication</li>
-                  <li>Failover Ready</li>
-                </ul>
+                <ul>{this.renderEventTypeLines(level.children)}</ul>
               </div>
-              <div className="button-box green">
+              <div
+                className={`button-box ${
+                  level.className ? level.className : "green"
+                }`}
+              >
                 <span>
                   <img src={level.image} alt={level.label} />
                 </span>
@@ -152,6 +153,15 @@ class DisasterRecoveryMode extends Component {
       });
     } else {
       return [];
+    }
+  };
+
+  /** Event types render
+   * * @param {array} EventTypes - data of Event types.
+   */
+  renderEventTypeLines = (EventTypes) => {
+    if (EventTypes.length) {
+      return EventTypes.map(({ label }) => <li key={v4()}>{label}</li>);
     }
   };
   render() {
