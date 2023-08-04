@@ -23,7 +23,8 @@ class TopologyView extends Component {
       // there will not be any active node.
       // it would also contain sublevel. if at index 2, value is 0.1, that means, 
       // at level 2, sublevel 0, index 1 is active.
-      activeView: [0, -1]
+      activeView: [0, -1],
+      data: fakeData
     };
   }
 
@@ -224,7 +225,7 @@ class TopologyView extends Component {
                     id="root"
                     relations={[
                       {
-                        targetId: currentActiveNodes[1],
+                        targetId: this.getTargetId(1),
                         targetAnchor: "left",
                         sourceAnchor: "right",
                         style: {
@@ -269,6 +270,7 @@ class TopologyView extends Component {
 
   renderChildNodes = (nodes, currentLevel, activeView) => {
     const retData = [];
+    const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
     if (activeView.length > currentLevel) {
       let activeSublevel = -1;
       let activeNode = -1;
@@ -278,33 +280,31 @@ class TopologyView extends Component {
       }
       const childJSX = [];
       nodes.map((item, sublevelIndex) => {
-        retData.push(
-          <>
-            <div className="global-servies">
-              <ul>
-                {item.length
-                  ? item.map((item, nodeIndex) => {
-                    let targets = [];
+        if (item.length > 0) {
+          retData.push(
+            <>
+              <div className="global-servies">
+                <ul>
+                  {item.map((item, nodeIndex) => {
                     if (item.children.length > 0) {
-                      item.children.map((childArr) => {
-                        childArr.map((child) => {
-                          targets.push({
-                            targetId: childArr[0].label,
-                            targetAnchor: "right",
-                            sourceAnchor: "left",
-                            style: {
-                              strokeColor: "#a5a5d7",
-                              strokeWidth: 2,
-                            },
-                          });
-                        });
-                      });
                       if (activeSublevel === sublevelIndex && activeNode === nodeIndex) {
                         childJSX.push(this.renderChildNodes(item.children, currentLevel + 1, activeView));
                       }
                     }
                     return (
-                      <ArcherElement id={item.label} relations={targets}>
+                      <ArcherElement
+                        id={item.label}
+                        relations={[
+                          {
+                            targetId: (activeSublevel === sublevelIndex && activeNode === nodeIndex) ? this.getTargetId(currentLevel + 1) : "",
+                            targetAnchor: "left",
+                            sourceAnchor: "right",
+                            style: {
+                              strokeStyles,
+                            },
+                          },
+                        ]}
+                      >
                         <li className={(activeSublevel === sublevelIndex && activeNode === nodeIndex) ? "active" : ""} onClick={() => this.handleNodeClick(currentLevel, sublevelIndex, nodeIndex)}>
                           <img
                             style={{ marginRight: "10px" }}
@@ -315,15 +315,43 @@ class TopologyView extends Component {
                         </li>
                       </ArcherElement>
                     );
-                  })
-                  : ""}
-              </ul>
-            </div>
-          </>
-        );
+                  })}
+                </ul>
+              </div>
+            </>
+          );
+        }
       });
       if (childJSX.length > 0) {
         retData.push(childJSX);
+      }
+    }
+    return retData;
+  };
+
+  getTargetId = (currentLevel) => {
+    const activeNode = this.getChild(currentLevel);
+    if (activeNode) {
+      return activeNode.label;
+    }
+    return "";
+  };
+
+  getChild = (level) => {
+    const { data, activeView } = this.state;
+    let retData = data;
+    for (let i = 0; i <= level; i++) {
+      if (i === 0) {
+        retData = data;
+      } else {
+        if (activeView[i] && activeView[i] !== -1) {
+          let activeSublevel = parseInt(activeView[i].split(".")[0]);
+          let activeNode = parseInt(activeView[i].split(".")[1]);
+          retData = retData.children[activeSublevel][activeNode];
+        } else {
+          retData = null;
+          break;
+        }
       }
     }
     return retData;
