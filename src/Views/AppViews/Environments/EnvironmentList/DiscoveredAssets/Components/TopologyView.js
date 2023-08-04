@@ -6,6 +6,9 @@ import { v4 } from "uuid";
 import fakeData from "./fakeData.json";
 let transformScale = 0;
 
+let currentActiveNodes = [];
+let currentNodeLevel = 0;
+
 class TopologyView extends Component {
   constructor(props) {
     super(props);
@@ -90,19 +93,19 @@ class TopologyView extends Component {
                     relations={
                       selectedLevel1Id !== null && selectedLevel1Id >= 0
                         ? [
-                          {
-                            targetId:
-                              selectedLevel1Id >= 0
-                                ? `level1_${selectedLevel1Id}`
-                                : "",
-                            targetAnchor: "left",
-                            sourceAnchor: "right",
-                            style: {
-                              strokeColor: "#a5a5d7",
-                              strokeWidth: 2,
+                            {
+                              targetId:
+                                selectedLevel1Id >= 0
+                                  ? `level1_${selectedLevel1Id}`
+                                  : "",
+                              targetAnchor: "left",
+                              sourceAnchor: "right",
+                              style: {
+                                strokeColor: "#a5a5d7",
+                                strokeWidth: 2,
+                              },
                             },
-                          },
-                        ]
+                          ]
                         : []
                     }
                   >
@@ -111,10 +114,11 @@ class TopologyView extends Component {
                       onClick={() => {
                         this.onClickAccountId();
                       }}
-                      id={`${selectedLevel1Id === null && selectedLevel2Id === null
-                        ? "custom_location"
-                        : ""
-                        }`}
+                      id={`${
+                        selectedLevel1Id === null && selectedLevel2Id === null
+                          ? "custom_location"
+                          : ""
+                      }`}
                     >
                       <div className="d-flex">
                         <div className="account-image">
@@ -130,14 +134,16 @@ class TopologyView extends Component {
                     </div>
                   </ArcherElement>
                   <div
-                    className={` ${data?.children[0].length ? "global-servies" : ""
-                      } `}
+                    className={` ${
+                      data?.children[0].length ? "global-servies" : ""
+                    } `}
                   >
                     <ul>{this.renderLevel1()}</ul>
                   </div>
                   <div
-                    className={` ${level2Show ? "global-servies cluster-servies" : ""
-                      }`}
+                    className={` ${
+                      level2Show ? "global-servies cluster-servies" : ""
+                    }`}
                     style={{
                       marginTop: "0",
                       marginBottom: "0",
@@ -158,6 +164,11 @@ class TopologyView extends Component {
   renderBody = () => {
     // const { data } = this.props;
     const data = fakeData;
+    if (currentActiveNodes.length < 1) {
+      currentActiveNodes.push(fakeData.label);
+      currentActiveNodes.push(fakeData.children[0][0].label);
+      currentNodeLevel = 1;
+    }
     const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
     return (
       <ArcherContainer noCurves style={{ width: "100%", height: "100%" }}>
@@ -209,7 +220,7 @@ class TopologyView extends Component {
                     id="root"
                     relations={[
                       {
-                        targetId: "vpc-292",
+                        targetId: currentActiveNodes[1],
                         targetAnchor: "left",
                         sourceAnchor: "right",
                         style: {
@@ -262,44 +273,41 @@ class TopologyView extends Component {
             <ul>
               {item.length
                 ? item.map((item) => {
-                  let targets = [];
-                  if (item.children.length > 0) {
-                    item.children.map(childArr => {
-                      childArr.map(child => {
-                        targets.push({
-                          targetId:
-                            child.label,
-                          targetAnchor: "right",
-                          sourceAnchor: "left",
-                          style: {
-                            strokeColor: "#a5a5d7",
-                            strokeWidth: 2,
-                          },
+                    let targets = [];
+                    if (
+                      item.children.length > 0 &&
+                      currentActiveNodes.includes(item.label)
+                    ) {
+                      item.children.map((childArr) => {
+                        childArr.map((child) => {
+                          targets.push({
+                            targetId:
+                              currentActiveNodes[currentNodeLevel + 1] ||
+                              childArr[0].label,
+                            targetAnchor: "right",
+                            sourceAnchor: "left",
+                            style: {
+                              strokeColor: "#a5a5d7",
+                              strokeWidth: 2,
+                            },
+                          });
                         });
                       });
-                    });
-                    childJSX.push(this.renderChildNodes(item.children));
-                  }
-                  return (
-                    <ArcherElement
-                      id={item.label}
-                      relations={targets}
-                    >
-                      <li
-                        onClick={() =>
-                          this.handleArcherBoxClick(item.label)
-                        }
-                      >
-                        <img
-                          style={{ marginRight: "10px" }}
-                          src={item.image}
-                          alt={item.label}
-                        />
-                        {this.getServiceName(item.label)}
-                      </li>
-                    </ArcherElement>
-                  );
-                })
+                      childJSX.push(this.renderChildNodes(item.children));
+                    }
+                    return (
+                      <ArcherElement id={item.label} relations={targets}>
+                        <li onClick={() => this.handleArcherBoxClick(item)}>
+                          <img
+                            style={{ marginRight: "10px" }}
+                            src={item.image}
+                            alt={item.label}
+                          />
+                          {this.getServiceName(item.label)}
+                        </li>
+                      </ArcherElement>
+                    );
+                  })
                 : ""}
             </ul>
           </div>
@@ -312,8 +320,44 @@ class TopologyView extends Component {
     return retData;
   };
 
-  handleArcherBoxClick = (label) => {
-    console.log(label);
+  handleArcherBoxClick = (item) => {
+    // const getElementDepth = (id) => {
+    //   depth++;
+    //   data.map((childArr) => {
+    //     childArr.map((item) => {
+    //       if (item.label === id) {
+    //         return;
+    //       }
+    //       getElementDepth(id);
+    //     });
+    //   });
+    // };
+
+    if (item.children.length > 0) {
+      currentActiveNodes[currentNodeLevel] = item.label;
+      currentActiveNodes.push(item.label);
+      currentNodeLevel++;
+    } else {
+      currentActiveNodes[currentNodeLevel] = item.label;
+    }
+    let targets = [];
+    if (item.children.length > 0) {
+      item.children.map((childArr) => {
+        childArr.map((child) => {
+          targets.push({
+            targetId:
+              currentActiveNodes[currentNodeLevel + 1] || childArr[0].label,
+            targetAnchor: "right",
+            sourceAnchor: "left",
+            style: {
+              strokeColor: "#a5a5d7",
+              strokeWidth: 2,
+            },
+          });
+        });
+      });
+      this.renderChildNodes(item.children);
+    }
   };
 
   /** If level-1 data is exist, then Render the  level-1 html. */
@@ -328,30 +372,31 @@ class TopologyView extends Component {
             relations={
               level1Index === selectedLevel1Id && selectedLevel2Id !== null
                 ? [
-                  {
-                    targetId:
-                      level1Index === selectedLevel1Id &&
+                    {
+                      targetId:
+                        level1Index === selectedLevel1Id &&
                         selectedLevel2Id >= 0
-                        ? `level2_${selectedLevel2Id}`
-                        : "",
-                    targetAnchor: "left",
-                    sourceAnchor: "right",
-                    style: {
-                      strokeColor: "#a5a5d7",
-                      strokeWidth: 2,
+                          ? `level2_${selectedLevel2Id}`
+                          : "",
+                      targetAnchor: "left",
+                      sourceAnchor: "right",
+                      style: {
+                        strokeColor: "#a5a5d7",
+                        strokeWidth: 2,
+                      },
                     },
-                  },
-                ]
+                  ]
                 : []
             }
             key={v4()}
           >
             <li
               className={`${level1Index === selectedLevel1Id ? "active" : ""}`}
-              id={`${level1Index === selectedLevel1Id && selectedLevel2Id == null
-                ? "custom_location"
-                : ""
-                }`}
+              id={`${
+                level1Index === selectedLevel1Id && selectedLevel2Id == null
+                  ? "custom_location"
+                  : ""
+              }`}
               onClick={() => {
                 this.onClickLevel1(level1Index, level1.label);
               }}
@@ -382,10 +427,11 @@ class TopologyView extends Component {
                 this.onClickLevel2(level2Index, level2.label);
               }}
               className={`${level2Index === selectedLevel2Id ? "active" : ""}`}
-              id={`${level2Index === selectedLevel2Id && selectedLevel1Id >= 0
-                ? "custom_location"
-                : ""
-                }`}
+              id={`${
+                level2Index === selectedLevel2Id && selectedLevel1Id >= 0
+                  ? "custom_location"
+                  : ""
+              }`}
             >
               <span>
                 <img src={level2.image} alt="" />
