@@ -126,7 +126,11 @@ class DisasterRecoveryMode extends Component {
                   <li>Failover Ready</li>
                 </ul>
               </div>
-              <div className="button-box green">
+              <div
+                className={`button-box ${
+                  level.className ? level.className : "green"
+                }`}
+              >
                 <span>
                   <img src={level.image} alt={level.label} />
                 </span>
