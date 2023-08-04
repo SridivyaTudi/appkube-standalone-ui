@@ -516,7 +516,9 @@ class TopologyView extends Component {
               </Box>
             </Box>
             <Box className="services-panel-body">
-              {Object.keys(data).length ? this.renderBody() : <></>}
+              <div className={`${this.props.parentCssClass} topology-view`}>
+                {Object.keys(data).length ? this.renderBody() : <></>}
+              </div>
             </Box>
           </Box>
         </Grid>

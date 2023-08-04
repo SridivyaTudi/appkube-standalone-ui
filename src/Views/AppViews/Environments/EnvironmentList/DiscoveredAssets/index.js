@@ -496,6 +496,7 @@ class DiscoveredAssets extends Component {
                   data={dataOfLevel1}
                   setLevel={this.getCurrentActiveTreeLevel}
                   selectedBreadCrumbs={breadcrumbs}
+                  parentCssClass="infra-toplogy-view"
                 />
                 <Grid item xs={7}>
                   {!currentActiveNodeLabel ? (
