@@ -118,7 +118,6 @@
           }
           .global-service-penal {
             .environment-boxs {
-             
               .environment-box {
                 width: 296px;
                 min-height: 360px;
@@ -912,6 +911,7 @@
   .environment-container {
     .services-panel-tabs {
       .tabs-head {
+        margin-bottom: 50px;
         ul {
           li {
             padding-left: 16px;
@@ -921,6 +921,11 @@
       }
       .tabs-content {
         .discovered-assets {
+          .discovered-assets-body {
+            .tier-buttons {
+              top: -30px;
+            }
+          }
           .logistics-cards {
             .logistics-card {
               width: 284px;

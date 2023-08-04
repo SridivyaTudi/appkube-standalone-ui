@@ -581,7 +581,7 @@ class Environments extends Component {
                     alignItems={"center"}
                     justifyContent={"flex-start"}
                   >
-                    <Grid item lg={8} md={12} xs={12}>
+                    <Grid item lg={8} md={7} xs={12}>
                       <Box className="export-sction">
                         {getRecentVisitedEnvironments() !== null && (
                           <Box className="environment-fliter">
@@ -647,7 +647,7 @@ class Environments extends Component {
                         </Button>
                       </Box>
                     </Grid>
-                    <Grid item lg={4} md={12} xs={12}>
+                    <Grid item lg={4} md={5} xs={12}>
                       <Box className="search-box">
                         <Box className="form-group search-control-group m-b-0">
                           <input
