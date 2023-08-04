@@ -100,7 +100,7 @@ let Data = {
         children: {
           label: "App Layer",
           id: null,
-          image: departmentIcon,
+          image: calendarMouseIcon,
           subLabel: "Claims",
           className: "red",
         },
@@ -128,7 +128,7 @@ let Data = {
         children: {
           label: "Data Layer",
           id: null,
-          image: departmentIcon,
+          image: databaseIcon,
           subLabel: "Claims",
           className: "blue",
         },
@@ -156,7 +156,7 @@ let Data = {
         children: {
           label: "Auxiliary Layer",
           id: null,
-          image: departmentIcon,
+          image: archiveIcon,
           subLabel: "Claims",
           className: "",
         },
