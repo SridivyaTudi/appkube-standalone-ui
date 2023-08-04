@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { ArcherContainer, ArcherElement } from "react-archer";
-import { Button } from "@mui/material";
+import { Button, Box, List, ListItem } from "@mui/material";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 import { v4 } from "uuid";
 
 let drawArrow = {
@@ -78,17 +80,45 @@ class DisasterRecoveryMode extends Component {
     if (children.length) {
       return children.map((level, index) => {
         let elementId = `selectedLevel_${index}`;
+        const HtmlTooltip = styled(({ className, ...props }) => (
+          <Tooltip {...props} arrow classes={{ popper: className }} />
+        ))(({ theme }) => ({
+          [`& .${tooltipClasses.arrow}`]: {
+            color: "#16161E",
+          },
+          [`& .${tooltipClasses.tooltip}`]: {
+            backgroundColor: "#16161E",
+            color: "#FFFFFF",
+            maxWidth: 250,
+            fontSize: theme.typography.pxToRem(12),
+            border: "1px solid #16161E",
+          },
+        }));
         return (
           <ArcherElement id={elementId} key={v4()}>
-            <div className="primary-box" key={v4()}>
-              <div className="button-box">
-                <span>
-                  <img src={level.image} alt={level.label} />
-                </span>
-                <div className="content">
-                  <p>{level.label}</p>
+            <div className="primary-box">
+              <HtmlTooltip
+                className="primary-tooltip"
+                title={
+                  <React.Fragment>
+                    <List>
+                      <ListItem>Hosted : EC2</ListItem>
+                      <ListItem>EC2 ID : 1513646</ListItem>
+                      <ListItem>RPO Status : 1.5 hr</ListItem>
+                      <ListItem>RTO Status : 2.5 min</ListItem>
+                    </List>
+                  </React.Fragment>
+                }
+              >
+                <div className="button-box">
+                  <span>
+                    <img src={level.image} alt={level.label} />
+                  </span>
+                  <div className="content">
+                    <p>{level.label}</p>
+                  </div>
                 </div>
-              </div>
+              </HtmlTooltip>
               <div className="provision">
                 <ul>
                   <li>Provision</li>
