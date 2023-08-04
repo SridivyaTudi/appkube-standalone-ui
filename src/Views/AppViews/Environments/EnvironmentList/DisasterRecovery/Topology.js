@@ -246,7 +246,7 @@ class Topology extends Component {
         ? "RDS"
         : selectedResource === "auxiliary"
         ? "SNS"
-        : "EC2";
+        : "EC2"
     return (
       selectedResource && (
         <Box className="resources-cards">
