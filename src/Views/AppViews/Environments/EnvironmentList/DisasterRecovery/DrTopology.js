@@ -14,6 +14,8 @@ import {
   TableRow,
   Button,
   Grid,
+  List,
+  ListItem,
 } from "@mui/material";
 import DisasterRecoveryMode from "Views/AppViews/Environments/EnvironmentList/DisasterRecovery/Components/DisasterRecoveryMode";
 import calendarMouseIcon from "assets/img/assetmanager/calendar-mouse-icon.png";
@@ -23,6 +25,7 @@ import archiveIcon from "assets/img/assetmanager/archive-icon.png";
 import departmentIcon from "assets/img/assetmanager/department-icon.png";
 import productIcon from "assets/img/assetmanager/product-icon.png";
 import environemtIcon from "assets/img/assetmanager/environemt-icon.png";
+import { v4 } from "uuid";
 
 let Data = {
   subData: [
@@ -50,74 +53,115 @@ let Data = {
       label: "Web Layer",
       id: null,
       image: internetIcon,
-      className:'',
-      children: [
-        {
-          label:'Provision',
-          status:'Success'
-        }, {
-          label:'Replication',
-          status:'Success'
-        }, {
-          label:'Failover Ready',
-          status:'Success'
-        }
-      ],
-      
+
+      steps: {
+        stepData: [
+          {
+            label: "Provision",
+            status: "Success",
+          },
+          {
+            label: "Replication",
+            status: "Success",
+          },
+          {
+            label: "Failover Ready",
+            status: "Success",
+          },
+        ],
+        children: {
+          label: "Web Layer",
+          id: null,
+          image: departmentIcon,
+          subLabel: "Claims",
+          className: "",
+        },
+      },
     },
     {
       label: "App Layer",
       id: null,
       image: calendarMouseIcon,
-      className:'red',
-      children: [
-        {
-          label:'Provision',
-          status:'Success'
-        }, {
-          label:'Replication',
-          status:'Success'
-        }, {
-          label:'Failover Ready',
-          status:'Success'
-        }
-      ]
+      steps: {
+        stepData: [
+          {
+            label: "Provision",
+            status: "Success",
+          },
+          {
+            label: "Replication",
+            status: "Success",
+          },
+          {
+            label: "Failover Ready",
+            status: "Success",
+          },
+        ],
+        children: {
+          label: "App Layer",
+          id: null,
+          image: calendarMouseIcon,
+          subLabel: "Claims",
+          className: "red",
+        },
+      },
     },
     {
       label: "Data Layer",
       id: null,
       image: databaseIcon,
-      children: [
-        {
-          label:'Provision',
-          status:'Success'
-        }, {
-          label:'Replication',
-          status:'Success'
-        }, {
-          label:'Failover Ready',
-          status:'Success'
-        }
-      ],
-      className:'blue',
+      steps: {
+        stepData: [
+          {
+            label: "Provision",
+            status: "Success",
+          },
+          {
+            label: "Replication",
+            status: "Success",
+          },
+          {
+            label: "Failover Ready",
+            status: "Success",
+          },
+        ],
+        children: {
+          label: "Data Layer",
+          id: null,
+          image: databaseIcon,
+          subLabel: "Claims",
+          className: "blue",
+        },
+      },
     },
     {
       label: "Auxiliary Layer",
       id: null,
       image: archiveIcon,
-      children: [
-        {
-          label:'Provision',
-          status:'Success'
-        }, {
-          label:'Replication',
-          status:'Success'
-        }, {
-          label:'Failover Ready',
-          status:'Success'
-        }
-      ],
-      className:''
+      steps: {
+        stepData: [
+          {
+            label: "Provision",
+            status: "Success",
+          },
+          {
+            label: "Replication",
+            status: "Success",
+          },
+          {
+            label: "Failover Ready",
+            status: "Success",
+          },
+        ],
+        children: {
+          label: "Auxiliary Layer",
+          id: null,
+          image: archiveIcon,
+          subLabel: "Claims",
+          className: "",
+        },
+       
+      },
     },
   ],
 };
@@ -125,17 +169,112 @@ let Data = {
 class DrTopology extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      dataOfTableLevel1: [
+        {
+          eventType: "Failover",
+          entity: "Full App",
+          time: "10:07:24",
+          status: "Success",
+        },
+        {
+          eventType: "Drill",
+          entity: "Data Layer",
+          time: "06:17:34",
+          status: "Failed",
+        },
+        {
+          eventType: "Drill",
+          entity: "Data Layer",
+          time: "21:28:45",
+          status: "Failed",
+        },
+        {
+          eventType: "Drill",
+          entity: "Data Layer",
+          time: "08:39:56",
+          status: "Success",
+        },
+        {
+          eventType: "Drill",
+          entity: "Data Layer",
+          time: "07:40:57",
+          status: "Success",
+        },
+        {
+          eventType: "Drill",
+          entity: "Data Layer",
+          time: "01:23:45",
+          status: "Failed",
+        },
+        {
+          eventType: "Drill",
+          entity: "Data Layer",
+          time: "16:29:46",
+          status: "Failed",
+        },
+        {
+          eventType: "Drill",
+          entity: "Data Layer",
+          time: "09:12:29",
+          status: "Failed",
+        },
+      ],
+    };
+  }
+
+  /** Render table level-1 data . */
+  renderTableLevel1Data() {
+    let { dataOfTableLevel1 } = this.state;
+    return dataOfTableLevel1.map((vpc, index) => {
+      return (
+        <TableRow key={v4()}>
+          <TableCell align="left">{vpc.eventType}</TableCell>
+          <TableCell align="left">
+            <div className="icon">
+              {vpc.entity === "Full App" && <img src={fullAppIcon} alt="" />}
+              {vpc.entity === "Data Layer" && (
+                <img src={dataLayerTableIcon} alt="" />
+              )}
+            </div>{" "}
+            {vpc.entity}
+          </TableCell>
+          <TableCell align="left">{vpc.time}</TableCell>
+          <TableCell align="left">
+            <div
+              className={`status ${
+                vpc.status === "Success"
+                  ? "success"
+                  : "" || vpc.status === "Failed"
+                  ? "failed"
+                  : ""
+              }`}
+            >
+              <i className="fa-solid fa-circle-check"></i> {vpc.status}
+            </div>
+          </TableCell>
+          <TableCell align="left">
+            <Button
+              className="secondary-btn"
+              variant="contained"
+              onClick={this.props.redirectViewDetails}
+            >
+              View Details
+            </Button>
+          </TableCell>
+        </TableRow>
+      );
+    });
   }
 
   render() {
     const {} = this.state;
     return (
       <>
-        {/* <Box className="generated-box">
+        <Box className="generated-box">
           <i className="fa-solid fa-check"></i> Your Request Number Has been
           Generated # <strong>5336412</strong>
-        </Box> */}
+        </Box>
         <Box className="disaster-recovery-chart">
           <Grid
             container
@@ -167,7 +306,14 @@ class DrTopology extends Component {
                 <Box className="heading">
                   <h3>Failover Activity Status</h3>
                 </Box>
-                {/* <Box className="item-generated">
+                {/* <Box className="no-avaliable-box">
+                  <div className="image">
+                    <img src={noAvaliableBox} alt="" />{" "}
+                  </div>
+                  <strong>No Activity Avaliable</strong>
+                  <p>Status will be displayed based on the request</p>
+                </Box> */}
+                <Box className="item-generated">
                   Today <span>#5336412</span>
                 </Box>
                 <List className="steps">
@@ -243,126 +389,10 @@ class DrTopology extends Component {
                       </Grid>
                     </Grid>
                   </ListItem>
-                  <ListItem>
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    >
-                      <Grid item xs={2}>
-                        <div className="icon approved">
-                          <i className="fa-solid fa-check"></i>
-                        </div>
-                      </Grid>
-                      <Grid item xs={10} className="p-l-10">
-                        <Box className="contents">
-                          <div className="heaing">
-                            <strong>William</strong> Approved the request
-                          </div>
-                          <div className="status approved">Approved</div>
-                          <div className="time-date">10 mins ago</div>
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  </ListItem>
-                  <ListItem>
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    >
-                      <Grid item xs={2}>
-                        <div className="icon approved">
-                          <i className="fa-solid fa-check"></i>
-                        </div>
-                      </Grid>
-                      <Grid item xs={10} className="p-l-10">
-                        <Box className="contents">
-                          <div className="heaing">
-                            <strong>William</strong> Approved the request
-                          </div>
-                          <div className="status approved">Approved</div>
-                          <div className="time-date">10 mins ago</div>
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  </ListItem>
-                  <ListItem>
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    >
-                      <Grid item xs={2}>
-                        <div className="icon approved">
-                          <i className="fa-solid fa-check"></i>
-                        </div>
-                      </Grid>
-                      <Grid item xs={10} className="p-l-10">
-                        <Box className="contents">
-                          <div className="heaing">
-                            <strong>William</strong> Approved the request
-                          </div>
-                          <div className="status approved">Approved</div>
-                          <div className="time-date">10 mins ago</div>
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  </ListItem>
-                  <ListItem>
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    >
-                      <Grid item xs={2}>
-                        <div className="icon approved">
-                          <i className="fa-solid fa-check"></i>
-                        </div>
-                      </Grid>
-                      <Grid item xs={10} className="p-l-10">
-                        <Box className="contents">
-                          <div className="heaing">
-                            <strong>William</strong> Approved the request
-                          </div>
-                          <div className="status approved">Approved</div>
-                          <div className="time-date">10 mins ago</div>
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  </ListItem>
-                  <ListItem>
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    >
-                      <Grid item xs={2}>
-                        <div className="icon approved">
-                          <i className="fa-solid fa-check"></i>
-                        </div>
-                      </Grid>
-                      <Grid item xs={10} className="p-l-10">
-                        <Box className="contents">
-                          <div className="heaing">
-                            <strong>William</strong> Approved the request
-                          </div>
-                          <div className="status approved">Approved</div>
-                          <div className="time-date">10 mins ago</div>
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  </ListItem>
-                </List> */}
-                <Box className="no-avaliable-box">
-                  <div className="image">
-                    <img src={noAvaliableBox} alt="" />{" "}
-                  </div>
-                  <strong>No Activity Avaliable</strong>
-                  <p>Status will be displayed based on the request</p>
-                </Box>
+                </List>
               </Box>
             </Grid>
+
             <Grid item xs={12}>
               <Box className="activity-logs-table">
                 <Box className="heading">
@@ -379,152 +409,7 @@ class DrTopology extends Component {
                         <TableCell align="left">Details</TableCell>
                       </TableRow>
                     </TableHead>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell align="left">Failover</TableCell>
-                        <TableCell align="left">
-                          <div className="icon">
-                            <img src={fullAppIcon} alt="" />
-                          </div>{" "}
-                          Full App
-                        </TableCell>
-                        <TableCell align="left">10:07:24</TableCell>
-                        <TableCell align="left">
-                          <div className="status success">
-                            <i className="fa-solid fa-circle-check"></i> Success
-                          </div>
-                        </TableCell>
-                        <TableCell align="left">
-                          <Button className="secondary-btn" variant="contained">
-                            View Details
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell align="left">Drill</TableCell>
-                        <TableCell align="left">
-                          <div className="icon">
-                            <img src={dataLayerTableIcon} alt="" />
-                          </div>{" "}
-                          Data Layer
-                        </TableCell>
-                        <TableCell align="left">06:17:34</TableCell>
-                        <TableCell align="left">
-                          <div className="status failed">
-                            <i class="fa-solid fa-triangle-exclamation"></i>{" "}
-                            Failed
-                          </div>
-                        </TableCell>
-                        <TableCell align="left">
-                          <Button className="secondary-btn" variant="contained">
-                            View Details
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell align="left">Drill</TableCell>
-                        <TableCell align="left">
-                          <div className="icon">
-                            <img src={dataLayerTableIcon} alt="" />
-                          </div>{" "}
-                          Data Layer
-                        </TableCell>
-                        <TableCell align="left">06:17:34</TableCell>
-                        <TableCell align="left">
-                          <div className="status failed">
-                            <i class="fa-solid fa-triangle-exclamation"></i>{" "}
-                            Failed
-                          </div>
-                        </TableCell>
-                        <TableCell align="left">
-                          <Button className="secondary-btn" variant="contained">
-                            View Details
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell align="left">Drill</TableCell>
-                        <TableCell align="left">
-                          <div className="icon">
-                            <img src={dataLayerTableIcon} alt="" />
-                          </div>{" "}
-                          Data Layer
-                        </TableCell>
-                        <TableCell align="left">06:17:34</TableCell>
-                        <TableCell align="left">
-                          <div className="status success">
-                            <i className="fa-solid fa-circle-check"></i> Success
-                          </div>
-                        </TableCell>
-                        <TableCell align="left">
-                          <Button className="secondary-btn" variant="contained">
-                            View Details
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell align="left">Drill</TableCell>
-                        <TableCell align="left">
-                          <div className="icon">
-                            <img src={dataLayerTableIcon} alt="" />
-                          </div>{" "}
-                          Data Layer
-                        </TableCell>
-                        <TableCell align="left">06:17:34</TableCell>
-                        <TableCell align="left">
-                          <div className="status success">
-                            <i className="fa-solid fa-circle-check"></i> Success
-                          </div>
-                        </TableCell>
-                        <TableCell align="left">
-                          <Button className="secondary-btn" variant="contained">
-                            View Details
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell align="left">Drill</TableCell>
-                        <TableCell align="left">
-                          <div className="icon">
-                            <img src={dataLayerTableIcon} alt="" />
-                          </div>{" "}
-                          Data Layer
-                        </TableCell>
-                        <TableCell align="left">06:17:34</TableCell>
-                        <TableCell align="left">
-                          <div className="status failed">
-                            <i class="fa-solid fa-triangle-exclamation"></i>{" "}
-                            Failed
-                          </div>
-                        </TableCell>
-                        <TableCell align="left">
-                          <Button className="secondary-btn" variant="contained">
-                            View Details
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell align="left">Drill</TableCell>
-                        <TableCell align="left">
-                          <div className="icon">
-                            <img src={dataLayerTableIcon} alt="" />
-                          </div>{" "}
-                          Data Layer
-                        </TableCell>
-                        <TableCell align="left">06:17:34</TableCell>
-                        <TableCell align="left">
-                          <div className="status failed">
-                            <i class="fa-solid fa-triangle-exclamation"></i>{" "}
-                            Failed
-                          </div>
-                        </TableCell>
-                        <TableCell align="left">
-                          <Button className="secondary-btn" variant="contained">
-                            View Details
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
+                    <TableBody>{this.renderTableLevel1Data()}</TableBody>
                   </Table>
                 </TableContainer>
               </Box>
