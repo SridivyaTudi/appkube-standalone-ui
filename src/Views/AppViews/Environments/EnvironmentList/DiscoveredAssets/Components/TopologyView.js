@@ -18,6 +18,12 @@ class TopologyView extends Component {
         selectedLevel1Id: null,
         selectedLevel2Id: null,
       },
+      // active view maintains the current active node on the given level.
+      // at index 0, 0 node will be by default active. -1 indicates that that level would render but 
+      // there will not be any active node.
+      // it would also contain sublevel. if at index 2, value is 0.1, that means, 
+      // at level 2, sublevel 0, index 1 is active.
+      activeView: [0, -1]
     };
   }
 
@@ -93,19 +99,19 @@ class TopologyView extends Component {
                     relations={
                       selectedLevel1Id !== null && selectedLevel1Id >= 0
                         ? [
-                            {
-                              targetId:
-                                selectedLevel1Id >= 0
-                                  ? `level1_${selectedLevel1Id}`
-                                  : "",
-                              targetAnchor: "left",
-                              sourceAnchor: "right",
-                              style: {
-                                strokeColor: "#a5a5d7",
-                                strokeWidth: 2,
-                              },
+                          {
+                            targetId:
+                              selectedLevel1Id >= 0
+                                ? `level1_${selectedLevel1Id}`
+                                : "",
+                            targetAnchor: "left",
+                            sourceAnchor: "right",
+                            style: {
+                              strokeColor: "#a5a5d7",
+                              strokeWidth: 2,
                             },
-                          ]
+                          },
+                        ]
                         : []
                     }
                   >
@@ -114,11 +120,10 @@ class TopologyView extends Component {
                       onClick={() => {
                         this.onClickAccountId();
                       }}
-                      id={`${
-                        selectedLevel1Id === null && selectedLevel2Id === null
-                          ? "custom_location"
-                          : ""
-                      }`}
+                      id={`${selectedLevel1Id === null && selectedLevel2Id === null
+                        ? "custom_location"
+                        : ""
+                        }`}
                     >
                       <div className="d-flex">
                         <div className="account-image">
@@ -134,16 +139,14 @@ class TopologyView extends Component {
                     </div>
                   </ArcherElement>
                   <div
-                    className={` ${
-                      data?.children[0].length ? "global-servies" : ""
-                    } `}
+                    className={` ${data?.children[0].length ? "global-servies" : ""
+                      } `}
                   >
                     <ul>{this.renderLevel1()}</ul>
                   </div>
                   <div
-                    className={` ${
-                      level2Show ? "global-servies cluster-servies" : ""
-                    }`}
+                    className={` ${level2Show ? "global-servies cluster-servies" : ""
+                      }`}
                     style={{
                       marginTop: "0",
                       marginBottom: "0",
@@ -164,12 +167,13 @@ class TopologyView extends Component {
   renderBody = () => {
     // const { data } = this.props;
     const data = fakeData;
-    if (currentActiveNodes.length < 1) {
-      currentActiveNodes.push(fakeData.label);
-      currentActiveNodes.push(fakeData.children[0][0].label);
-      currentNodeLevel = 1;
-    }
+    // if (currentActiveNodes.length < 1) {
+    //   currentActiveNodes.push(fakeData.label);
+    //   currentActiveNodes.push(fakeData.children[0][0].label);
+    //   currentNodeLevel = 1;
+    // }
     const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
+    const { activeView } = this.state;
     return (
       <ArcherContainer noCurves style={{ width: "100%", height: "100%" }}>
         <TransformWrapper
@@ -250,7 +254,7 @@ class TopologyView extends Component {
                     </div>
                   </ArcherElement>
                   {data.children.length ? (
-                    this.renderChildNodes(data.children)
+                    this.renderChildNodes(data.children, 1, activeView)
                   ) : (
                     <></>
                   )}
@@ -263,27 +267,29 @@ class TopologyView extends Component {
     );
   };
 
-  renderChildNodes = (children) => {
+  renderChildNodes = (nodes, currentLevel, activeView) => {
     const retData = [];
-    const childJSX = [];
-    children.map((item) => {
-      retData.push(
-        <>
-          <div className="global-servies">
-            <ul>
-              {item.length
-                ? item.map((item) => {
+    if (activeView.length > currentLevel) {
+      let activeSublevel = -1;
+      let activeNode = -1;
+      if (activeView[currentLevel] !== -1) {
+        activeSublevel = parseInt(activeView[currentLevel].split(".")[0]);
+        activeNode = parseInt(activeView[currentLevel].split(".")[1]);
+      }
+      const childJSX = [];
+      nodes.map((item, sublevelIndex) => {
+        retData.push(
+          <>
+            <div className="global-servies">
+              <ul>
+                {item.length
+                  ? item.map((item, nodeIndex) => {
                     let targets = [];
-                    if (
-                      item.children.length > 0 &&
-                      currentActiveNodes.includes(item.label)
-                    ) {
+                    if (item.children.length > 0) {
                       item.children.map((childArr) => {
                         childArr.map((child) => {
                           targets.push({
-                            targetId:
-                              currentActiveNodes[currentNodeLevel + 1] ||
-                              childArr[0].label,
+                            targetId: childArr[0].label,
                             targetAnchor: "right",
                             sourceAnchor: "left",
                             style: {
@@ -293,11 +299,13 @@ class TopologyView extends Component {
                           });
                         });
                       });
-                      childJSX.push(this.renderChildNodes(item.children));
+                      if (activeSublevel === sublevelIndex && activeNode === nodeIndex) {
+                        childJSX.push(this.renderChildNodes(item.children, currentLevel + 1, activeView));
+                      }
                     }
                     return (
                       <ArcherElement id={item.label} relations={targets}>
-                        <li onClick={() => this.handleArcherBoxClick(item)}>
+                        <li className={(activeSublevel === sublevelIndex && activeNode === nodeIndex) ? "active" : ""} onClick={() => this.handleNodeClick(currentLevel, sublevelIndex, nodeIndex)}>
                           <img
                             style={{ marginRight: "10px" }}
                             src={item.image}
@@ -308,56 +316,30 @@ class TopologyView extends Component {
                       </ArcherElement>
                     );
                   })
-                : ""}
-            </ul>
-          </div>
-        </>
-      );
-    });
-    if (childJSX.length > 0) {
-      retData.push(childJSX);
+                  : ""}
+              </ul>
+            </div>
+          </>
+        );
+      });
+      if (childJSX.length > 0) {
+        retData.push(childJSX);
+      }
     }
     return retData;
   };
 
-  handleArcherBoxClick = (item) => {
-    // const getElementDepth = (id) => {
-    //   depth++;
-    //   data.map((childArr) => {
-    //     childArr.map((item) => {
-    //       if (item.label === id) {
-    //         return;
-    //       }
-    //       getElementDepth(id);
-    //     });
-    //   });
-    // };
-
-    if (item.children.length > 0) {
-      currentActiveNodes[currentNodeLevel] = item.label;
-      currentActiveNodes.push(item.label);
-      currentNodeLevel++;
-    } else {
-      currentActiveNodes[currentNodeLevel] = item.label;
-    }
-    let targets = [];
-    if (item.children.length > 0) {
-      item.children.map((childArr) => {
-        childArr.map((child) => {
-          targets.push({
-            targetId:
-              currentActiveNodes[currentNodeLevel + 1] || childArr[0].label,
-            targetAnchor: "right",
-            sourceAnchor: "left",
-            style: {
-              strokeColor: "#a5a5d7",
-              strokeWidth: 2,
-            },
-          });
-        });
-      });
-      this.renderChildNodes(item.children);
-    }
+  handleNodeClick = (currentLevel, activeSublevel, activeIndex) => {
+    const { activeView } = this.state;
+    // active view length will alway be added by 2 than current level.
+    // suppose current level is 1. so active view lenght should be 3.
+    // it would contain [index-of-root-active-node, root-of-level1-active-node, -1]
+    activeView.length = currentLevel + 2;
+    activeView[currentLevel] = activeSublevel + "." + activeIndex;
+    activeView[currentLevel + 1] = -1;
+    this.setState({
+      activeView
+    });
   };
 
   /** If level-1 data is exist, then Render the  level-1 html. */
@@ -372,31 +354,30 @@ class TopologyView extends Component {
             relations={
               level1Index === selectedLevel1Id && selectedLevel2Id !== null
                 ? [
-                    {
-                      targetId:
-                        level1Index === selectedLevel1Id &&
+                  {
+                    targetId:
+                      level1Index === selectedLevel1Id &&
                         selectedLevel2Id >= 0
-                          ? `level2_${selectedLevel2Id}`
-                          : "",
-                      targetAnchor: "left",
-                      sourceAnchor: "right",
-                      style: {
-                        strokeColor: "#a5a5d7",
-                        strokeWidth: 2,
-                      },
+                        ? `level2_${selectedLevel2Id}`
+                        : "",
+                    targetAnchor: "left",
+                    sourceAnchor: "right",
+                    style: {
+                      strokeColor: "#a5a5d7",
+                      strokeWidth: 2,
                     },
-                  ]
+                  },
+                ]
                 : []
             }
             key={v4()}
           >
             <li
               className={`${level1Index === selectedLevel1Id ? "active" : ""}`}
-              id={`${
-                level1Index === selectedLevel1Id && selectedLevel2Id == null
-                  ? "custom_location"
-                  : ""
-              }`}
+              id={`${level1Index === selectedLevel1Id && selectedLevel2Id == null
+                ? "custom_location"
+                : ""
+                }`}
               onClick={() => {
                 this.onClickLevel1(level1Index, level1.label);
               }}
@@ -427,11 +408,10 @@ class TopologyView extends Component {
                 this.onClickLevel2(level2Index, level2.label);
               }}
               className={`${level2Index === selectedLevel2Id ? "active" : ""}`}
-              id={`${
-                level2Index === selectedLevel2Id && selectedLevel1Id >= 0
-                  ? "custom_location"
-                  : ""
-              }`}
+              id={`${level2Index === selectedLevel2Id && selectedLevel1Id >= 0
+                ? "custom_location"
+                : ""
+                }`}
             >
               <span>
                 <img src={level2.image} alt="" />
