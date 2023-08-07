@@ -490,8 +490,7 @@ class DiscoveredAssets extends Component {
               <Grid
                 container
                 rowSpacing={1}
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              >
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 <Grid item xs={5} >
                   <Box className="services-panel">
                     <Box className="services-panel-title bottom-border">

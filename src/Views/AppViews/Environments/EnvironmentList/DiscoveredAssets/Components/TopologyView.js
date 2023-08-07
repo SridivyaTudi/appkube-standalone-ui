@@ -27,7 +27,7 @@ class TopologyView extends Component {
 
   renderBody = () => {
     const data = fakeData;
-    const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
+    const strokeStyles = { strokeColor: "#a5a5d7",   strokeWidth: 2 };
     const { activeView } = this.state;
     return (
       <ArcherContainer
@@ -201,7 +201,7 @@ class TopologyView extends Component {
         }
       });
       retData = [
-        <div className="global-servies" style={{ marginLeft: "30px" }}>
+        <div className="global-servies" style={{ marginLeft: "50px" }}>
           {retData}
         </div>,
       ];
