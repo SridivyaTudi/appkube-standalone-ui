@@ -3,6 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Grid, Button, Box, List, ListItem } from "@mui/material";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import profileImg from "assets/img/assetmanager/profile-img.png";
 
 class CreateFailoverPopup extends Component {
   constructor(props) {
@@ -14,14 +15,7 @@ class CreateFailoverPopup extends Component {
   }
 
   toggle = () => {
-    this.props.toggleStepsStartedPopup();
-  };
-
-  setDateRange = () => {
-    // const { dateUpdate } = this.state;
-    // this.setState({
-    //   dateUpdate: dateUpdate,
-    // });
+    this.props.toggleCreateFailoverPopup();
   };
 
   render() {
@@ -40,7 +34,7 @@ class CreateFailoverPopup extends Component {
               className="close"
               aria-label="Close"
               onClick={() => {
-                this.props.toggleStepsStartedPopup();
+                this.props.toggleCreateFailoverPopup();
               }}
             >
               <i className="fa-solid fa-xmark"></i>
@@ -60,13 +54,11 @@ class CreateFailoverPopup extends Component {
               <Box className="form-group">
                 <label>DR schedule</label>
                 <DatePicker
-                  className="form-control"
-                  selectsRange={false}
-                  // value={dateUpdate}
-                  // onChange={this.setDateUpdate()}
-                  timeFormat="HH:mm"
-                  timeIntervals={15}
-                  timeCaption="time"
+                  withPortal
+                  showTimeSelect
+                  selected={false}
+                  className="form-control date widht-100"
+                  dateFormat="MMMM d, yyyy h:mm aa"
                 />
               </Box>
               <Box className="form-group">
@@ -79,6 +71,35 @@ class CreateFailoverPopup extends Component {
               </Box>
               <Box className="form-group">
                 <label>Initial Status</label>
+                <Grid
+                  container
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 2, sm: 2, md: 2 }}
+                  alignItems="flex-start"
+                >
+                  <Grid item xs={6}>
+                    <Box className="status-box">
+                      <div className="icon">
+                        <i className="fa-solid fa-sort-up"></i>
+                      </div>
+                      <span>New</span>
+                      <div className="arrows">
+                        <i className="fa-solid fa-sort-up"></i>
+                        <i className="fa-solid fa-sort-down"></i>
+                      </div>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box className="status-box">
+                      <div className="image">
+                        <img src={profileImg} alt="Robert William" />
+                      </div>
+                      <span>
+                        Robert William <strong>(you)</strong>
+                      </span>
+                    </Box>
+                  </Grid>
+                </Grid>
               </Box>
             </div>
           </ModalBody>
