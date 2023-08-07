@@ -26,19 +26,20 @@ class TopologyView extends Component {
   }
 
   renderBody = () => {
-    // const { data } = this.props;
     const data = fakeData;
-    // if (currentActiveNodes.length < 1) {
-    //   currentActiveNodes.push(fakeData.label);
-    //   currentActiveNodes.push(fakeData.children[0][0].label);
-    //   currentNodeLevel = 1;
-    // }
     const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
     const { activeView } = this.state;
     return (
-      <ArcherContainer noCurves style={{ width: "100%", height: "100%" }}>
+      <ArcherContainer
+        noCurves
+        style={{
+          width: `100%`,
+          height: "100%",
+        }}
+      >
         <TransformWrapper
           onTransformed={(instance) => {
+            console.log(instance);
             transformScale = instance && instance.state.scale;
             this.setState({ scale: true });
           }}
@@ -69,11 +70,11 @@ class TopologyView extends Component {
                 </div>
                 <TransformComponent
                   wrapperStyle={{
-                    width: "100%",
+                    width: `100%`,
                     height: "100%",
                   }}
                   contentStyle={{
-                    width: "100%",
+                    width: `${this.state.activeView.length * 200}px`,
                     height: "100%",
                     transform: "translate(0px, 0px) scale(0)",
                     display: "flex",
@@ -96,9 +97,6 @@ class TopologyView extends Component {
                   >
                     <div
                       className="services-text-box active"
-                      onClick={() => {
-                        this.onClickAccountId();
-                      }}
                       id={`${"custom_location"}`}
                     >
                       <div className="d-flex">
@@ -203,7 +201,11 @@ class TopologyView extends Component {
           );
         }
       });
-      retData = [<div className="global-servies">{retData}</div>];
+      retData = [
+        <div className="global-servies" style={{ marginLeft: "30px" }}>
+          {retData}
+        </div>,
+      ];
       if (childJSX.length > 0) {
         retData.push(childJSX);
       }
