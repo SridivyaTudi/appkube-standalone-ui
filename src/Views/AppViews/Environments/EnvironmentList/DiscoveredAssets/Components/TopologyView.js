@@ -39,7 +39,6 @@ class TopologyView extends Component {
       >
         <TransformWrapper
           onTransformed={(instance) => {
-            console.log(instance);
             transformScale = instance && instance.state.scale;
             this.setState({ scale: true });
           }}
