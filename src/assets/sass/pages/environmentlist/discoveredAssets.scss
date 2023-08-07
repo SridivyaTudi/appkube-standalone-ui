@@ -1,13 +1,5 @@
 .environment-container {
   .discovered-assets {
-    .services-panel {
-      .services-panel-title {
-        .name {
-          margin-left: 0;
-        }
-      }
-    }
-
     .infra-toplogy-view {
       .gmnoprint {
         position: absolute;
@@ -219,7 +211,7 @@
                 opacity: 1;
               }
             }
-
+            
             // &::after {
             //   opacity: 0;
             //   position: absolute;
