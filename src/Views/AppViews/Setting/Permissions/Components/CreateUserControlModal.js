@@ -21,7 +21,7 @@ class CreateUserControlModal extends Component {
           <h5>
             Add New User
             <button onClick={this.props.handleCreateUserControlModal}>
-              <i class="fa-solid fa-xmark"></i>
+              <i className="fa-solid fa-xmark"></i>
             </button>
           </h5>
         </ModalHeader>

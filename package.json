@@ -22,6 +22,7 @@
     "react-archer": "^4.2.3",
     "react-chartjs-2": "^5.2.0",
     "react-csv": "^2.2.2",
+    "react-datepicker": "^4.16.0",
     "react-dom": "^18.2.0",
     "react-otp-input": "^3.0.2",
     "react-redux": "^8.0.7",

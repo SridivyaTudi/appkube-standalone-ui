@@ -361,7 +361,7 @@ class Topology extends Component {
                       className="primary-btn min-width"
                       variant="contained"
                     >
-                      <img src={amazonEc3} alt="" /> Relational Database Service
+                      <p><img src={amazonEc3} alt="" /></p> Relational Database Service
                     </Button>
                     <Box className="balancer-boxs">
                       <Box className="balancer-box">
@@ -391,7 +391,7 @@ class Topology extends Component {
                       className="primary-btn min-width"
                       variant="contained"
                     >
-                      <img src={amazonEc3} alt="" /> Auxiliary
+                      <p><img src={amazonEc3} alt="" /></p> Auxiliary
                     </Button>
                     <Box className="balancer-boxs">
                       <Box className="balancer-box">

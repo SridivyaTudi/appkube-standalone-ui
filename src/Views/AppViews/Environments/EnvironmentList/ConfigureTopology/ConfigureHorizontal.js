@@ -506,7 +506,7 @@ class ConfigureHorizontal extends Component {
                               >
                                 <div className="d-block text-left">
                                   <strong>Nginx 1.10.1</strong>
-                                  <i class="fa-solid fa-angle-down"></i>
+                                  <i className="fa-solid fa-angle-down"></i>
                                 </div>
                               </Grid>
                               <Grid
@@ -518,7 +518,7 @@ class ConfigureHorizontal extends Component {
                               >
                                 <div className="d-block text-right">
                                   <strong>PHP 7.1.0</strong>
-                                  <i class="fa-solid fa-angle-down"></i>
+                                  <i className="fa-solid fa-angle-down"></i>
                                 </div>
                               </Grid>
                             </Grid>

@@ -25,6 +25,7 @@ import archiveIcon from "assets/img/assetmanager/archive-icon.png";
 import departmentIcon from "assets/img/assetmanager/department-icon.png";
 import productIcon from "assets/img/assetmanager/product-icon.png";
 import environemtIcon from "assets/img/assetmanager/environemt-icon.png";
+import CreateFailoverPopup from "./Components/CreateFailoverPopup";
 import { v4 } from "uuid";
 
 let Data = {
@@ -160,7 +161,6 @@ let Data = {
           subLabel: "Claims",
           className: "",
         },
-       
       },
     },
   ],
@@ -220,6 +220,7 @@ class DrTopology extends Component {
           status: "Failed",
         },
       ],
+      showCreateFailoverPopup: false,
     };
   }
 
@@ -267,8 +268,14 @@ class DrTopology extends Component {
     });
   }
 
+  toggleCreateFailoverPopup = () => {
+    this.setState({
+      showCreateFailoverPopup: !this.state.showCreateFailoverPopup,
+    });
+  };
+
   render() {
-    const {} = this.state;
+    const { showCreateFailoverPopup } = this.state;
     return (
       <>
         <Box className="generated-box">
@@ -286,7 +293,11 @@ class DrTopology extends Component {
               <Box className="chart">
                 <Box className="heading">
                   <h3>Realtime Disaster Recovery Mode</h3>
-                  <Button className="primary-btn min-width" variant="contained">
+                  <Button
+                    className="primary-btn min-width"
+                    variant="contained"
+                    onClick={this.toggleCreateFailoverPopup}
+                  >
                     Application FailOver
                   </Button>
                 </Box>
@@ -392,7 +403,6 @@ class DrTopology extends Component {
                 </List>
               </Box>
             </Grid>
-
             <Grid item xs={12}>
               <Box className="activity-logs-table">
                 <Box className="heading">
@@ -416,6 +426,14 @@ class DrTopology extends Component {
             </Grid>
           </Grid>
         </Box>
+        {showCreateFailoverPopup ? (
+          <CreateFailoverPopup
+            showModal={showCreateFailoverPopup}
+            toggleCreateFailoverPopup={this.toggleCreateFailoverPopup}
+          />
+        ) : (
+          <></>
+        )}
       </>
     );
   }

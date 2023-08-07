@@ -21,7 +21,7 @@ class CreateGroupControlModal extends Component {
           <h5>
             Add New Group
             <button onClick={this.props.handleCreateGroupControlModal}>
-              <i class="fa-solid fa-xmark"></i>
+              <i className="fa-solid fa-xmark"></i>
             </button>
           </h5>
         </ModalHeader>

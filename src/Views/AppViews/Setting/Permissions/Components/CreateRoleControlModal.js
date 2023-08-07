@@ -21,7 +21,7 @@ class CreateRoleControlModal extends Component {
           <h5>
             Add New Role
             <button onClick={this.props.handleCreateRoleControlModal}>
-              <i class="fa-solid fa-xmark"></i>
+              <i className="fa-solid fa-xmark"></i>
             </button>
           </h5>
         </ModalHeader>

@@ -3,6 +3,7 @@ import { ArcherContainer, ArcherElement } from "react-archer";
 import { Button, Box, List, ListItem } from "@mui/material";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import StepsStartedPopup from "./StepsStartedPopup";
 import { v4 } from "uuid";
 
 let drawArrow = {
@@ -26,7 +27,9 @@ let drawArrow = {
 class DisasterRecoveryMode extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      showStepsStartedPopup: false,
+    };
   }
 
   /**
@@ -73,6 +76,12 @@ class DisasterRecoveryMode extends Component {
     }
   };
 
+  toggleStepsStartedPopup = () => {
+    this.setState({
+      showStepsStartedPopup: !this.state.showStepsStartedPopup,
+    });
+  };
+
   /** Render Level-2 DisasterRecovery
    */
   renderLevel2DisasterRecovery = () => {
@@ -95,7 +104,9 @@ class DisasterRecoveryMode extends Component {
           },
         }));
 
-        let { steps:{stepData,children}}= level
+        let {
+          steps: { stepData, children },
+        } = level;
         return (
           <ArcherElement id={elementId} key={v4()}>
             <div className="primary-box">
@@ -122,9 +133,7 @@ class DisasterRecoveryMode extends Component {
                 </div>
               </HtmlTooltip>
               <div className="provision">
-                <ul>
-                  {this.renderEventTypeLines(stepData)}
-                </ul>
+                <ul>{this.renderEventTypeLines(stepData)}</ul>
               </div>
               <div
                 className={`button-box ${
@@ -142,6 +151,7 @@ class DisasterRecoveryMode extends Component {
                     <Button
                       className="primary-outline-btn min-width"
                       variant="outlined"
+                      onClick={this.toggleStepsStartedPopup}
                     >
                       <i className="fa-solid fa-play"></i>
                     </Button>
@@ -198,7 +208,20 @@ class DisasterRecoveryMode extends Component {
     }
   };
   render() {
-    return this.renderDisasterRecoveryMainBody();
+    const { showStepsStartedPopup } = this.state;
+    return (
+      <>
+        {this.renderDisasterRecoveryMainBody()}
+        {showStepsStartedPopup ? (
+          <StepsStartedPopup
+            showModal={showStepsStartedPopup}
+            toggleStepsStartedPopup={this.toggleStepsStartedPopup}
+          />
+        ) : (
+          <></>
+        )}
+      </>
+    );
   }
 }
 
