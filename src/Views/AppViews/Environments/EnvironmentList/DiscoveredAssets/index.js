@@ -291,24 +291,24 @@ class DiscoveredAssets extends Component {
     return (
       <Box className="discovered-table" style={{ height: "415px" }}>
         <TableContainer className="table">
-            <Table className="discovered-table-inner">
-              <TableHead className="active">
-                <TableRow>
-                  <TableCell>
-                    <Box className="environment-image">
-                      <img src={cloudLogo} alt={cloudName} />
-                    </Box>
-                  </TableCell>
-                  <TableCell>Products</TableCell>
-                  <TableCell>App Services</TableCell>
-                  <TableCell>Data Services</TableCell>
-                  <TableCell>Other Services</TableCell>
-                  <TableCell>Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>{this.renderTableLevel2Data()}</TableBody>
-            </Table>
-          </TableContainer>
+          <Table className="discovered-table-inner">
+            <TableHead className="active">
+              <TableRow>
+                <TableCell>
+                  <Box className="environment-image">
+                    <img src={cloudLogo} alt={cloudName} />
+                  </Box>
+                </TableCell>
+                <TableCell>Products</TableCell>
+                <TableCell>App Services</TableCell>
+                <TableCell>Data Services</TableCell>
+                <TableCell>Other Services</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>{this.renderTableLevel2Data()}</TableBody>
+          </Table>
+        </TableContainer>
       </Box>
     );
   }
@@ -492,12 +492,24 @@ class DiscoveredAssets extends Component {
                 rowSpacing={1}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
-                <TopologyView
-                  data={dataOfLevel1}
-                  setLevel={this.getCurrentActiveTreeLevel}
-                  selectedBreadCrumbs={breadcrumbs}
-                  parentCssClass="infra-toplogy-view"
-                />
+                <Grid item xs={5}>
+                  <Box className="services-panel">
+                    <Box className="services-panel-title bottom-border">
+                      <Box className="name">Infra Topology View</Box>
+                      <Box className="back-btn">
+                        <i className="fa-solid fa-arrow-left"></i>
+                      </Box>
+                    </Box>
+                    <Box className="services-panel-body">
+                      <TopologyView
+                        data={dataOfLevel1}
+                        setLevel={this.getCurrentActiveTreeLevel}
+                        selectedBreadCrumbs={breadcrumbs}
+                        parentCssClass="infra-toplogy-view"
+                      />
+                    </Box>
+                  </Box>
+                </Grid>
                 <Grid item xs={7}>
                   {!currentActiveNodeLabel ? (
                     <Box className="tier-buttons">
