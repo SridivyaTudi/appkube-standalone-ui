@@ -12,24 +12,22 @@ class TopologyView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedView: {
-        level2Show: false,
-        selectedLevel1Id: null,
-        selectedLevel2Id: null,
-      },
       // active view maintains the current active node on the given level.
       // at index 0, 0 node will be by default active. -1 indicates that that level would render but
       // there will not be any active node.
       // it would also contain sublevel. if at index 2, value is 0.1, that means,
       // at level 2, sublevel 0, index 1 is active.
       activeView: [0, -1],
-      data: fakeData,
       currentActiveNode: "",
     };
   }
 
-  zoomToElementCallback = () => {
-    zoomElement(this.state.currentActiveNode, transformScale, 0);
+  zoomToElementCallback = (animationTime) => {
+    zoomElement(
+      this.state.currentActiveNode,
+      transformScale,
+      animationTime ? animationTime : 0
+    );
   };
 
   renderBody = () => {
@@ -67,7 +65,7 @@ class TopologyView extends Component {
                   <div
                     className="gmnoprint-map"
                     onClick={() => {
-                      this.zoomToElementCallback();
+                      this.zoomToElementCallback(300);
                     }}
                   >
                     <button className="btn btn-map">
@@ -263,15 +261,8 @@ class TopologyView extends Component {
   };
 
   /** Get name in form of capitalize. */
-  getServiceName(name, type) {
-    if (type === "vpc") {
-      return name ? name.toUpperCase() : "";
-    } else {
-      let firstChar = name ? name.charAt(0).toUpperCase() : "";
-      let otherStr = name ? name.toLowerCase().slice(1) : "";
-      let string = firstChar + otherStr;
-      return string;
-    }
+  getServiceName(name) {
+    return name ? name.toUpperCase() : "";
   }
 
   render() {

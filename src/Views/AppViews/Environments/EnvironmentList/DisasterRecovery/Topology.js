@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
 import Hrms from "assets/img/assetmanager/hrms.png";
 import chartWebLayerIcon from "assets/img/assetmanager/chart-web-layer-icon.png";
 import chartAppLayerIcon from "assets/img/assetmanager/chart-app-layer-icon.png";
@@ -9,28 +8,9 @@ import balancingIcon from "assets/img/assetmanager/balancing-icon.png";
 import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
 import amazonEc2 from "assets/img/assetmanager/amazon-ec2.png";
 import amazonEc3 from "assets/img/assetmanager/amazon-ec3.png";
-import {
-  IconButton,
-  Box,
-  Grid,
-  TableContainer,
-  Table,
-  TableCell,
-  TableHead,
-  TableRow,
-  List,
-  ListItem,
-  TableBody,
-  Button,
-} from "@mui/material";
-import status from "Redux/Constants/CommonDS";
+import { Box, Grid, Button } from "@mui/material";
 import { connect } from "react-redux";
 import TopologyView from "./TopologyView";
-// import VpcDetails from "./VpcDetails";
-// import ClusterDetails from "./ClusterDetails";
-// import AssociateApp from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/AssociateApp";
-import { v4 } from "uuid";
-import { LOGOS } from "CommonData";
 
 let topologyData = {
   label: "HRMS",
@@ -197,6 +177,7 @@ let resourceData = {
     },
   ],
 };
+
 class Topology extends Component {
   constructor(props) {
     super(props);
@@ -246,7 +227,7 @@ class Topology extends Component {
         ? "RDS"
         : selectedResource === "auxiliary"
         ? "SNS"
-        : "EC2"
+        : "EC2";
     return (
       selectedResource && (
         <Box className="resources-cards">
@@ -361,7 +342,10 @@ class Topology extends Component {
                       className="primary-btn min-width"
                       variant="contained"
                     >
-                      <p><img src={amazonEc3} alt="" /></p> Relational Database Service
+                      <p>
+                        <img src={amazonEc3} alt="" />
+                      </p>{" "}
+                      Relational Database Service
                     </Button>
                     <Box className="balancer-boxs">
                       <Box className="balancer-box">
@@ -391,7 +375,10 @@ class Topology extends Component {
                       className="primary-btn min-width"
                       variant="contained"
                     >
-                      <p><img src={amazonEc3} alt="" /></p> Auxiliary
+                      <p>
+                        <img src={amazonEc3} alt="" />
+                      </p>{" "}
+                      Auxiliary
                     </Button>
                     <Box className="balancer-boxs">
                       <Box className="balancer-box">
