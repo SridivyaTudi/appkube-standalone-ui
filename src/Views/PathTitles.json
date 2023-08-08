@@ -12,5 +12,6 @@
   "settransitions": "Set Transitions",
   "ecscluster": "ECS Cluster 01",
   "associatechartapp": "Associate Chart App",
-  "disasterrecovery": "Disaster Recovery"
+  "disasterrecovery": "Disaster Recovery",
+  "application-status-dashboard": "Application Status Dashboard"
 }
