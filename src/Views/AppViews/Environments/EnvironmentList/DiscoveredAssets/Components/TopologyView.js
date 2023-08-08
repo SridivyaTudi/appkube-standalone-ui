@@ -89,7 +89,7 @@ class TopologyView extends Component {
                         targetAnchor: "left",
                         sourceAnchor: "right",
                         style: {
-                          strokeStyles,
+                          strokeColor: "#a5a5d7",
                         },
                       },
                     ]}
