@@ -289,7 +289,7 @@ class DrTopology extends Component {
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             alignItems="flex-start"
           >
-            <Grid item xs={9}>
+            <Grid item lg={9} md={8}>
               <Box className="chart">
                 <Box className="heading">
                   <h3>Realtime Disaster Recovery Mode</h3>
@@ -301,18 +301,20 @@ class DrTopology extends Component {
                     Application FailOver
                   </Button>
                 </Box>
-                <Box className="primary-label">
-                  <label>
-                    Primary <span>(US. East)</span>
-                  </label>
-                  <label>
-                    DR <span>(US. West)</span>
-                  </label>
+                <Box className="realtime-chart">
+                  <Box className="primary-label">
+                    <label>
+                      Primary <span>(US. East)</span>
+                    </label>
+                    <label>
+                      DR <span>(US. West)</span>
+                    </label>
+                  </Box>
+                  <DisasterRecoveryMode data={Data} />
                 </Box>
-                <DisasterRecoveryMode data={Data} />
               </Box>
             </Grid>
-            <Grid item xs={3} mdOffset={0}>
+            <Grid item lg={3} md={4}>
               <Box className="failover-box">
                 <Box className="heading">
                   <h3>Failover Activity Status</h3>
@@ -403,28 +405,26 @@ class DrTopology extends Component {
                 </List>
               </Box>
             </Grid>
-            <Grid item xs={12}>
-              <Box className="activity-logs-table">
-                <Box className="heading">
-                  <h3>Activity Logs</h3>
-                </Box>
-                <TableContainer className="table">
-                  <Table className="overview">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align="left">Event Type</TableCell>
-                        <TableCell align="left">Entity</TableCell>
-                        <TableCell align="left">Time</TableCell>
-                        <TableCell align="left">Status</TableCell>
-                        <TableCell align="left">Details</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>{this.renderTableLevel1Data()}</TableBody>
-                  </Table>
-                </TableContainer>
-              </Box>
-            </Grid>
           </Grid>
+        </Box>
+        <Box className="activity-logs-table">
+          <Box className="heading">
+            <h3>Activity Logs</h3>
+          </Box>
+          <TableContainer className="table">
+            <Table className="overview">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="left">Event Type</TableCell>
+                  <TableCell align="left">Entity</TableCell>
+                  <TableCell align="left">Time</TableCell>
+                  <TableCell align="left">Status</TableCell>
+                  <TableCell align="left">Details</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{this.renderTableLevel1Data()}</TableBody>
+            </Table>
+          </TableContainer>
         </Box>
         {showCreateFailoverPopup ? (
           <CreateFailoverPopup
