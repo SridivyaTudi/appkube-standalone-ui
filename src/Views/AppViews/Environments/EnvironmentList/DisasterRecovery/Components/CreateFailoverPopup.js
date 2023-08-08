@@ -23,7 +23,10 @@ class CreateFailoverPopup extends Component {
   toggle = () => {
     this.props.toggleCreateFailoverPopup();
   };
-
+  /**
+   * handle date changes
+   * @param {Date Object} schedule - Receive Date Object
+   */
   handleDatechange = (schedule) => {
     let { formData } = this.state;
     formData["schedule"] = schedule;
@@ -32,13 +35,22 @@ class CreateFailoverPopup extends Component {
     });
   };
 
-  handleChange = (e) => {
-    const { name, value } = e.target;
+  /**
+   * handle date changes
+   * @param {Object} event - Event Object
+   */
+  handleChange = (event) => {
+    const { name, value } = event.target;
     const { formData } = this.state;
     formData[name] = value;
     this.setState({ formData });
   };
 
+  /**
+   * Validate form
+   * @param {Object} event - Event Object
+   * @param {Boolean} isSubmit - When submit btn,then receive 1 else 0
+   */
   validate = (isSubmit) => {
     const { formData } = this.state;
     let isValid;
@@ -70,7 +82,10 @@ class CreateFailoverPopup extends Component {
     return { isValid, errors };
   };
 
-  handleSubmit = (e) => {
+  /**
+   * Create request submit
+   */
+  handleSubmit = () => {
     this.setState({ isSubmit: true }, () => {
       const { isValid } = this.validate(true);
       if (isValid) {
