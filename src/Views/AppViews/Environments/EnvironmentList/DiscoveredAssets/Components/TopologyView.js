@@ -6,8 +6,6 @@ import { v4 } from "uuid";
 import fakeData from "./fakeData.json";
 let transformScale = 0;
 
-let zoomElement = () => {};
-
 class TopologyView extends Component {
   constructor(props) {
     super(props);
@@ -24,17 +22,12 @@ class TopologyView extends Component {
       // at level 2, sublevel 0, index 1 is active.
       activeView: [0, -1],
       data: fakeData,
-      currentActiveNode: "",
     };
   }
 
-  zoomToElementCallback = () => {
-    zoomElement(this.state.currentActiveNode, transformScale, 0);
-  };
-
   renderBody = () => {
     const data = fakeData;
-    const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
+    const strokeStyles = { strokeColor: "#a5a5d7",   strokeWidth: 2 };
     const { activeView } = this.state;
     return (
       <ArcherContainer
@@ -52,7 +45,6 @@ class TopologyView extends Component {
         >
           {({ zoomIn, zoomOut, instance, zoomToElement, ...rest }) => {
             transformScale = instance.transformState.scale;
-            zoomElement = zoomToElement;
             return (
               <>
                 <div className="gmnoprint">
@@ -67,7 +59,7 @@ class TopologyView extends Component {
                   <div
                     className="gmnoprint-map"
                     onClick={() => {
-                      this.zoomToElementCallback();
+                      zoomToElement("custom_location", transformScale);
                     }}
                   >
                     <button className="btn btn-map">
@@ -96,13 +88,15 @@ class TopologyView extends Component {
                         targetId: this.getTargetId(1),
                         targetAnchor: "left",
                         sourceAnchor: "right",
-                        style: strokeStyles,
+                        style: {
+                          strokeColor: "#a5a5d7",
+                        },
                       },
                     ]}
                   >
                     <div
                       className="services-text-box active"
-                      id={`${data.label}`}
+                      id={`${"custom_location"}`}
                     >
                       <div className="d-flex">
                         <div className="account-image">
@@ -163,7 +157,6 @@ class TopologyView extends Component {
                 }
                 return (
                   <ArcherElement
-                    key={v4()}
                     id={item.label}
                     relations={[
                       {
@@ -174,7 +167,9 @@ class TopologyView extends Component {
                             : "",
                         targetAnchor: "left",
                         sourceAnchor: "right",
-                        style: strokeStyles,
+                        style: {
+                          strokeStyles,
+                        },
                       },
                     ]}
                   >
@@ -185,17 +180,13 @@ class TopologyView extends Component {
                           ? "active"
                           : ""
                       }
-                      id={item.label}
-                      onClick={() => {
-                        this.setState({ currentActiveNode: item.label }, () => {
-                          this.zoomToElementCallback();
-                        });
+                      onClick={() =>
                         this.handleNodeClick(
                           currentLevel,
                           sublevelIndex,
                           nodeIndex
-                        );
-                      }}
+                        )
+                      }
                     >
                       <span>
                         <img src={item.image} alt={item.label} />
