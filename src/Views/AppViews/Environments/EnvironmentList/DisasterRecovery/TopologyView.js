@@ -294,7 +294,9 @@ class TopologyView extends Component {
               <Box className="name">App Topology</Box>
             </Box>
             <Box className="topology-panel-body">
-              {Object.keys(data).length ? this.renderMainBody() : <></>}
+              <Box className="app-topology-chart">
+                {Object.keys(data).length ? this.renderMainBody() : <></>}
+              </Box>
             </Box>
           </Box>
         </Grid>
