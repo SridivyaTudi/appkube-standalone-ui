@@ -23,16 +23,16 @@ class AccountStepsPopup extends Component {
         region: "",
       },
       step2FormData: {
-        accountPermission: [],
+        accountPermission: ["Primary Account: 1234", "Failover Account: 7890"],
       },
       step3FormData: {
         account: "",
         region: "",
-        resources: [],
+        resources: ["Web Layer"],
       },
       step4FormData: {
         application: "",
-        resources: [],
+        resources: ["Web Layer"],
         resourcesByTag: "",
       },
       isSubmit: false,
@@ -74,14 +74,18 @@ class AccountStepsPopup extends Component {
   };
 
   /**
-   * Step3 form data changes
-   *  @param {Object} event - Event object of step3 checkbox or text input
+   * Step3 or Step4 form data changes
+   *  @param {Object} event - Event object of Step3 or Step4 checkbox or text input
    * @param {Boolean} isCheckBox - If input is checkbox,then receive 1 else 0
    */
-  handleStep3 = (e, isCheckBox = 0) => {
+  handleStep3Or4 = (e, isCheckBox = 0) => {
     const { name, value } = e.target;
-    let { step3FormData } = this.state;
-    let { resources } = step3FormData;
+
+    let { step3FormData, step4FormData, activeStep } = this.state;
+    let { STEP4 } = this.steps;
+
+    let checkStep4 = activeStep === STEP4 ? true : false;
+    let { resources } = checkStep4 ? step4FormData : step3FormData;
 
     if (isCheckBox) {
       if (resources.filter((resource) => resource === name).length) {
@@ -89,36 +93,21 @@ class AccountStepsPopup extends Component {
       } else {
         resources.push(name);
       }
-      step3FormData["resources"] = resources;
-    } else {
-      step3FormData[name] = value;
-    }
 
-    this.setState({ step3FormData });
-  };
-
-  /**
-   * Step4 form data changes
-   *  @param {Object} event - Event object of step4 checkbox or text input
-   * @param {Boolean} isCheckBox - If input is checkbox,then receive 1 else 0
-   */
-  handleStep4 = (e, isCheckBox = 0) => {
-    const { name, value } = e.target;
-    let { step4FormData } = this.state;
-    let { resources } = step4FormData;
-
-    if (isCheckBox) {
-      if (resources.filter((resource) => resource === name).length) {
-        resources = resources.filter((resource) => resource !== name);
+      if (checkStep4) {
+        step4FormData["resources"] = resources;
       } else {
-        resources.push(name);
+        step3FormData["resources"] = resources;
       }
-      step4FormData["resources"] = resources;
     } else {
-      step4FormData[name] = value;
+      if (checkStep4) {
+        step4FormData[name] = value;
+      } else {
+        step3FormData[name] = value;
+      }
     }
 
-    this.setState({ step4FormData });
+    this.setState({ step3FormData, step4FormData });
   };
 
   /**
@@ -333,7 +322,7 @@ class AccountStepsPopup extends Component {
                 resources.filter((resourceName) => resourceName === resource)
                   .length
               }
-              onChange={(e) => this.handleStep3(e, 1)}
+              onChange={(e) => this.handleStep3Or4(e, 1)}
             />
             <label for={`${resource}_${resourceIndex}`}>{resource}</label>
           </Box>
@@ -362,7 +351,7 @@ class AccountStepsPopup extends Component {
                 resources.filter((resourceName) => resourceName === resource)
                   .length
               }
-              onChange={(e) => this.handleStep4(e, 1)}
+              onChange={(e) => this.handleStep3Or4(e, 1)}
             />
             <label for={`${resource}_${resourceIndex}`}>{resource}</label>
           </Box>
@@ -370,15 +359,375 @@ class AccountStepsPopup extends Component {
       );
     });
   };
-  
-  render() {
+
+  //  Render line steps
+  renderSteps = () => {
+    let { activeStep } = this.state;
+    let { STEP2, STEP3, STEP4 } = this.steps;
+    return (
+      <List className="steps">
+        <ListItem
+          className={
+            activeStep === STEP2 || activeStep === STEP3 || activeStep === STEP4
+              ? "active"
+              : ""
+          }
+        >
+          <span></span>
+          <p>Select your Failover AWS Account</p>
+        </ListItem>
+        <ListItem
+          className={
+            activeStep === STEP2
+              ? "active-25"
+              : activeStep === STEP3
+              ? "active-auto"
+              : activeStep === STEP4
+              ? "active"
+              : ""
+          }
+        >
+          <span></span>
+          <p>Let’s Connect / Mirror your account</p>
+        </ListItem>
+        <ListItem className={activeStep === STEP4 ? "active" : ""}>
+          <span></span>
+          <p>Select AWS resources to mirror</p>
+        </ListItem>
+      </List>
+    );
+  };
+
+  //  Render back and continue buttons
+  renderFooterBtns = () => {
+    let { STEP1, STEP2 } = this.steps;
+    let { activeStep } = this.state;
+    return (
+      <div className="text-center d-block">
+        {activeStep !== STEP1 ? (
+          <Button
+            className="primary-outline-btn m-r-2"
+            variant="outlined"
+            onClick={this.onClickBackBtn}
+          >
+            Back
+          </Button>
+        ) : (
+          <></>
+        )}
+
+        <Button
+          className="primary-btn"
+          variant="contained"
+          onClick={this.onClickContinueBtn}
+        >
+          Continue
+        </Button>
+      </div>
+    );
+  };
+
+  //  Fire click event on continue button
+  onClickContinueBtn = () => {
+    let { STEP1, STEP2, STEP3, STEP4 } = this.steps;
+    let { activeStep } = this.state;
+
+    this.setState({ isSubmit: true }, () => {
+      const { isValid } =
+        activeStep === STEP1
+          ? this.validateStep1(true)
+          : activeStep === STEP2
+          ? this.validateStep2(true)
+          : activeStep === STEP3
+          ? this.validateStep3(true)
+          : activeStep === STEP4
+          ? this.validateStep4(true)
+          : false;
+
+      if (isValid) {
+        let nextStep =
+          activeStep === STEP1
+            ? STEP2
+            : activeStep === STEP2
+            ? STEP3
+            : activeStep === STEP3
+            ? STEP4
+            : 0;
+        if (activeStep === STEP4) {
+          this.toggle()
+        }    
+        this.setState({
+          isSubmit: false,
+          activeStep: nextStep,
+        });
+      }
+    });
+  };
+
+  //  Fire click event on back button
+  onClickBackBtn = () => {
+    let { STEP1, STEP2, STEP3, STEP4 } = this.steps;
+    let { activeStep } = this.state;
+
+    activeStep =
+      activeStep === STEP2
+        ? STEP1
+        : activeStep === STEP3
+        ? STEP2
+        : activeStep === STEP4
+        ? STEP3
+        : 0;
+    this.setState({ activeStep,isSubmit:false });
+  };
+
+  /**
+   *  Render step-1 form
+   * @param {Number} errorLength - Give the error length
+   * @param {Object} stepErrors - Give the errors object
+   */
+  renderStep1Form = (errorLength, stepErrors) => {
     const {
       activeStep,
-      isSubmit,
       step1FormData: { account: step1Account, region: step1Region },
+    } = this.state;
+    let { STEP1 } = this.steps;
+
+    return (
+      activeStep === STEP1 && (
+        <>
+          <div className="contents">
+            <p className="text-center">
+              Selected AWS Account & region details will displayed
+            </p>
+            <p className="text-center">
+              Where Do you want to failover your application?
+            </p>
+          </div>
+          <div className="account-form">
+            <Box className="form-group">
+              <label htmlFor="step1Account">Select AWS Account</label>
+              <input
+                className="form-control"
+                type="text"
+                name="account"
+                id="step1Account"
+                onChange={this.handleStep1}
+                value={step1Account}
+              />
+              <span
+                className="red"
+                style={{ fontSize: "12px", marginTop: "5px" }}
+              >
+                {errorLength && stepErrors.account ? stepErrors.account : ""}
+              </span>
+            </Box>
+            <Box className="form-group">
+              <label htmlFor="step1Region">Select Region</label>
+              <input
+                className="form-control"
+                type="text"
+                name="region"
+                id="step1Region"
+                onChange={this.handleStep1}
+                value={step1Region}
+              />
+              <span
+                className="red"
+                style={{ fontSize: "12px", marginTop: "5px" }}
+              >
+                {errorLength && stepErrors.region ? stepErrors.region : ""}
+              </span>
+            </Box>
+          </div>
+          {this.renderFooterBtns()}
+        </>
+      )
+    );
+  };
+
+  /**
+   *  Render step-2 form
+   * @param {Number} errorLength - Give the error length
+   * @param {Object} stepErrors - Give the errors object
+   */
+  renderStep2Form = (errorLength, stepErrors) => {
+    const { activeStep } = this.state;
+    let { STEP1, STEP2, STEP3 } = this.steps;
+
+    return (
+      activeStep === STEP2 && (
+        <>
+          <div className="contents">
+            <p className="text-center">
+              Account permission access using cloud formation template
+            </p>
+          </div>
+          <div className="account-form">
+            {this.renderCheckBoxStep2()}
+            <span
+              className="red"
+              style={{ fontSize: "12px", marginTop: "5px" }}
+            >
+              {errorLength && stepErrors.accountPermission
+                ? stepErrors.accountPermission
+                : ""}
+            </span>
+          </div>
+          {this.renderFooterBtns()}
+        </>
+      )
+    );
+  };
+
+  /**
+   *  Render step-3 form
+   * @param {Number} errorLength - Give the error length
+   * @param {Object} stepErrors - Give the errors object
+   */
+  renderStep3Form = (errorLength, stepErrors) => {
+    const {
+      activeStep,
       step3FormData: { account: step3Account, region: step3Region },
+    } = this.state;
+    let { STEP2, STEP3, STEP4 } = this.steps;
+
+    return (
+      activeStep === STEP3 && (
+        <>
+          <div className="contents">
+            <p className="text-center">
+              Account permission access using cloud formation template
+            </p>
+          </div>
+          <div className="account-form">
+            <Box className="form-group">
+              <label htmlFor="step3Account">Select AWS Account</label>
+              <input
+                className="form-control"
+                type="text"
+                name="account"
+                onChange={this.handleStep3Or4}
+                value={step3Account}
+                id="step3Account"
+              />
+              <span
+                className="red"
+                style={{ fontSize: "12px", marginTop: "5px" }}
+              >
+                {errorLength && stepErrors.account ? stepErrors.account : ""}
+              </span>
+            </Box>
+            <Box className="form-group">
+              <label htmlFor="step3Region">Select Region</label>
+              <input
+                className="form-control"
+                type="text"
+                name="region"
+                id="step3Region"
+                value={step3Region}
+                onChange={this.handleStep3Or4}
+              />
+              <span
+                className="red"
+                style={{ fontSize: "12px", marginTop: "5px" }}
+              >
+                {errorLength && stepErrors.region ? stepErrors.region : ""}
+              </span>
+            </Box>
+            <Box className="form-group">
+              <label>Select specific resources</label>
+              <ul>{this.renderCheckBoxStep3()}</ul>
+              <span
+                className="red"
+                style={{ fontSize: "12px", marginTop: "5px" }}
+              >
+                {errorLength && stepErrors.resources
+                  ? stepErrors.resources
+                  : ""}
+              </span>
+            </Box>
+          </div>
+          {this.renderFooterBtns()}
+        </>
+      )
+    );
+  };
+
+  /**
+   *  Render step-4 form
+   * @param {Number} errorLength - Give the error length
+   * @param {Object} stepErrors - Give the errors object
+   */
+  renderStep4Form = (errorLength, stepErrors) => {
+    const {
+      activeStep,
       step4FormData: { application, resourcesByTag },
     } = this.state;
+    let { STEP3, STEP4 } = this.steps;
+
+    return (
+      activeStep === STEP4 && (
+        <>
+          <div className="account-form">
+            <Box className="form-group">
+              <label htmlFor="application">Define your resourcesByTag</label>
+              <input
+                className="form-control"
+                type="text"
+                name="application"
+                id="application"
+                onChange={this.handleStep3Or4}
+                value={application}
+              />
+              <span
+                className="red"
+                style={{ fontSize: "12px", marginTop: "5px" }}
+              >
+                {errorLength && stepErrors.application
+                  ? stepErrors.application
+                  : ""}
+              </span>
+            </Box>
+            <Box className="form-group">
+              <label htmlFor="resourcesByTag">Select resources by tag</label>
+              <input
+                className="form-control"
+                type="text"
+                name="resourcesByTag"
+                id="resourcesByTag"
+                onChange={this.handleStep3Or4}
+                value={resourcesByTag}
+              />
+              <span
+                className="red"
+                style={{ fontSize: "12px", marginTop: "5px" }}
+              >
+                {errorLength && stepErrors.resourcesByTag
+                  ? stepErrors.resourcesByTag
+                  : ""}
+              </span>
+            </Box>
+            <Box className="form-group">
+              <label>Select specific resources</label>
+              <ul>{this.renderCheckBoxStep4()}</ul>
+              <span
+                className="red"
+                style={{ fontSize: "12px", marginTop: "5px" }}
+              >
+                {errorLength && stepErrors.resources
+                  ? stepErrors.resources
+                  : ""}
+              </span>
+            </Box>
+          </div>
+          {this.renderFooterBtns()}
+        </>
+      )
+    );
+  };
+
+  render() {
+    const { activeStep, isSubmit } = this.state;
     const stepErrors = this.validateFormSteps(isSubmit);
     const errorLength = stepErrors && Object.keys(stepErrors).length;
 
@@ -390,374 +739,11 @@ class AccountStepsPopup extends Component {
           className="account-steps-modal-container"
         >
           <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
-            {activeStep === this.steps.STEP1 && (
-              <>
-                <List className="steps">
-                  <ListItem
-                    className={activeStep === this.steps.STEP2 ? "active" : ""}
-                  >
-                    <span></span>
-                    <p>Select your Failover AWS Account</p>
-                  </ListItem>
-                  <ListItem>
-                    <span></span>
-                    <p>Let’s Connect / Mirror your account</p>
-                  </ListItem>
-                  <ListItem>
-                    <span></span>
-                    <p>Select AWS resources to mirror</p>
-                  </ListItem>
-                </List>
-                <div className="contents">
-                  <p className="text-center">
-                    Selected AWS Account & region details will displayed
-                  </p>
-                  <p className="text-center">
-                    Where Do you want to failover your application?
-                  </p>
-                </div>
-                <div className="account-form">
-                  <Box className="form-group">
-                    <label htmlFor="step1Account">Select AWS Account</label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="account"
-                      id="step1Account"
-                      onChange={this.handleStep1}
-                      value={step1Account}
-                    />
-                    <span
-                      className="red"
-                      style={{ fontSize: "12px", marginTop: "5px" }}
-                    >
-                      {errorLength && stepErrors.account
-                        ? stepErrors.account
-                        : ""}
-                    </span>
-                  </Box>
-                  <Box className="form-group">
-                    <label htmlFor="step1Region">Select Region</label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="region"
-                      id="step1Region"
-                      onChange={this.handleStep1}
-                      value={step1Region}
-                    />
-                    <span
-                      className="red"
-                      style={{ fontSize: "12px", marginTop: "5px" }}
-                    >
-                      {errorLength && stepErrors.region
-                        ? stepErrors.region
-                        : ""}
-                    </span>
-                  </Box>
-                </div>
-                <div className="text-center d-block">
-                  <Button
-                    className="primary-btn"
-                    variant="contained"
-                    onClick={(e) => {
-                      this.setState({ isSubmit: true }, () => {
-                        const { isValid } = this.validateStep1(true);
-                        if (isValid) {
-                          this.setState({
-                            isSubmit: false,
-                            activeStep: this.steps.STEP2,
-                          });
-                        }
-                      });
-                    }}
-                  >
-                    Continue
-                  </Button>
-                </div>
-              </>
-            )}
-            {activeStep === this.steps.STEP2 && (
-              <>
-                <List className="steps">
-                  <ListItem
-                    className={activeStep === this.steps.STEP2 ? "active" : ""}
-                  >
-                    <span></span>
-                    <p>Select your Failover AWS Account</p>
-                  </ListItem>
-                  <ListItem
-                    className={
-                      activeStep === this.steps.STEP2 ? "active-25" : ""
-                    }
-                  >
-                    <span></span>
-                    <p>Let’s Connect / Mirror your account</p>
-                  </ListItem>
-                  <ListItem>
-                    <span></span>
-                    <p>Select AWS resources to mirror</p>
-                  </ListItem>
-                </List>
-                <div className="contents">
-                  <p className="text-center">
-                    Account permission access using cloud formation template
-                  </p>
-                </div>
-                <div className="account-form">
-                  {this.renderCheckBoxStep2()}
-                  <span
-                    className="red"
-                    style={{ fontSize: "12px", marginTop: "5px" }}
-                  >
-                    {errorLength && stepErrors.accountPermission
-                      ? stepErrors.accountPermission
-                      : ""}
-                  </span>
-                </div>
-
-                <div className="text-center d-block">
-                  <Button
-                    className="primary-outline-btn m-r-2"
-                    variant="outlined"
-                    onClick={(e) =>
-                      this.setState({ activeStep: this.steps.STEP1 })
-                    }
-                  >
-                    Back
-                  </Button>
-                  <Button
-                    className="primary-btn"
-                    variant="contained"
-                    onClick={(e) => {
-                      this.setState({ isSubmit: true }, () => {
-                        const { isValid } = this.validateStep2(true);
-                        if (isValid) {
-                          this.setState({
-                            isSubmit: false,
-                            activeStep: this.steps.STEP3,
-                          });
-                        }
-                      });
-                    }}
-                  >
-                    Continue
-                  </Button>
-                </div>
-              </>
-            )}
-            {activeStep === this.steps.STEP3 && (
-              <>
-                <List className="steps">
-                  <ListItem
-                    className={activeStep === this.steps.STEP3 ? "active" : ""}
-                  >
-                    <span></span>
-                    <p>Select your Failover AWS Account</p>
-                  </ListItem>
-                  <ListItem
-                    className={
-                      activeStep === this.steps.STEP2
-                        ? "active"
-                        : "" || activeStep === this.steps.STEP3
-                        ? "active-auto"
-                        : ""
-                    }
-                  >
-                    <span></span>
-                    <p>Let’s Connect / Mirror your account</p>
-                  </ListItem>
-                  <ListItem>
-                    <span></span>
-                    <p>Select AWS resources to mirror</p>
-                  </ListItem>
-                </List>
-                <div className="contents">
-                  <p className="text-center">
-                    Account permission access using cloud formation template
-                  </p>
-                </div>
-                <div className="account-form">
-                  <Box className="form-group">
-                    <label htmlFor="step3Account">Select AWS Account</label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="account"
-                      onChange={this.handleStep3}
-                      value={step3Account}
-                      id="step3Account"
-                    />
-                    <span
-                      className="red"
-                      style={{ fontSize: "12px", marginTop: "5px" }}
-                    >
-                      {errorLength && stepErrors.account
-                        ? stepErrors.account
-                        : ""}
-                    </span>
-                  </Box>
-                  <Box className="form-group">
-                    <label htmlFor="step3Region">Select Region</label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="region"
-                      id="step3Region"
-                      value={step3Region}
-                      onChange={this.handleStep3}
-                    />
-                    <span
-                      className="red"
-                      style={{ fontSize: "12px", marginTop: "5px" }}
-                    >
-                      {errorLength && stepErrors.region
-                        ? stepErrors.region
-                        : ""}
-                    </span>
-                  </Box>
-                  <Box className="form-group">
-                    <label>Select specific resources</label>
-                    <ul>{this.renderCheckBoxStep3()}</ul>
-                    <span
-                      className="red"
-                      style={{ fontSize: "12px", marginTop: "5px" }}
-                    >
-                      {errorLength && stepErrors.resources
-                        ? stepErrors.resources
-                        : ""}
-                    </span>
-                  </Box>
-                </div>
-                <div className="text-center d-block">
-                  <Button
-                    className="primary-outline-btn m-r-2"
-                    variant="outlined"
-                    onClick={(e) =>
-                      this.setState({ activeStep: this.steps.STEP2 })
-                    }
-                  >
-                    Back
-                  </Button>
-                  <Button
-                    className="primary-btn"
-                    variant="contained"
-                    onClick={(e) => {
-                      this.setState({ isSubmit: true }, () => {
-                        const { isValid } = this.validateStep3(true);
-                        if (isValid) {
-                          this.setState({
-                            isSubmit: false,
-                            activeStep: this.steps.STEP4,
-                          });
-                        }
-                      });
-                    }}
-                  >
-                    Continue
-                  </Button>
-                </div>
-              </>
-            )}
-            {activeStep === this.steps.STEP4 && (
-              <>
-                <List className="steps">
-                  <ListItem className="active">
-                    <span></span>
-                    <p>Select your Failover AWS Account</p>
-                  </ListItem>
-                  <ListItem className="active">
-                    <span></span>
-                    <p>Let’s Connect / Mirror your account</p>
-                  </ListItem>
-                  <ListItem className="active">
-                    <span></span>
-                    <p>Select AWS resources to mirror</p>
-                  </ListItem>
-                </List>
-                <div className="account-form">
-                  <Box className="form-group">
-                    <label htmlFor="application">
-                      Define your resourcesByTag
-                    </label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="application"
-                      id="application"
-                      onChange={this.handleStep4}
-                      value={application}
-                    />
-                    <span
-                      className="red"
-                      style={{ fontSize: "12px", marginTop: "5px" }}
-                    >
-                      {errorLength && stepErrors.application
-                        ? stepErrors.application
-                        : ""}
-                    </span>
-                  </Box>
-                  <Box className="form-group">
-                    <label htmlFor="resourcesByTag">
-                      Select resources by tag
-                    </label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="resourcesByTag"
-                      id="resourcesByTag"
-                      onChange={this.handleStep4}
-                      value={resourcesByTag}
-                    />
-                    <span
-                      className="red"
-                      style={{ fontSize: "12px", marginTop: "5px" }}
-                    >
-                      {errorLength && stepErrors.resourcesByTag
-                        ? stepErrors.resourcesByTag
-                        : ""}
-                    </span>
-                  </Box>
-                  <Box className="form-group">
-                    <label>Select specific resources</label>
-                    <ul>{this.renderCheckBoxStep4()}</ul>
-                    <span
-                      className="red"
-                      style={{ fontSize: "12px", marginTop: "5px" }}
-                    >
-                      {errorLength && stepErrors.resources
-                        ? stepErrors.resources
-                        : ""}
-                    </span>
-                  </Box>
-                </div>
-                <div className="text-center d-block">
-                  <Button
-                    className="primary-outline-btn m-r-2"
-                    variant="outlined"
-                    onClick={(e) =>
-                      this.setState({ activeStep: this.steps.STEP3 })
-                    }
-                  >
-                    Back
-                  </Button>
-                  <Button
-                    className="primary-btn"
-                    variant="contained"
-                    onClick={(e) => {
-                      this.setState({ isSubmit: true }, () => {
-                        const { isValid } = this.validateStep4(true);
-                        if (isValid) {
-                          this.props.toggleAccountStepsPopup();
-                        }
-                      });
-                    }}
-                  >
-                    Continue
-                  </Button>
-                </div>
-              </>
-            )}
+            {this.renderSteps()}
+            {this.renderStep1Form(errorLength, stepErrors)}
+            {this.renderStep2Form(errorLength, stepErrors)}
+            {this.renderStep3Form(errorLength, stepErrors)}
+            {this.renderStep4Form(errorLength, stepErrors)}
           </ModalBody>
         </Modal>
       </>
