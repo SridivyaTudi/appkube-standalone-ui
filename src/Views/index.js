@@ -47,8 +47,8 @@ export function withRouter(Component) {
 }
 
 export const Views = (props) => {
+  const title = props.router.location.pathname.split("/").pop();
   useEffect(() => {
-    let title = props.router.location.pathname.split("/").pop();
     document.title = titles[title];
   });
 
@@ -155,10 +155,7 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/application-status-dashboard`}
             element={<ApplicationStatusDashboard />}
           />
-          <Route
-            path={`${APP_PREFIX_PATH}/error`}
-            element={<Error />}
-          />
+          <Route path={`/error`} element={<Error />} />
         </Routes>
       </div>
     );
@@ -196,6 +193,7 @@ export const Views = (props) => {
             element={<ResetPassword />}
           />
           <Route path="*" element={<Navigate to={`${AUTH_PREFIX_PATH}`} />} />
+          <Route path={`/error`} element={<Error />} />
         </Routes>
       </>
     );

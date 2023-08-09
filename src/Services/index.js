@@ -43,6 +43,9 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   (response) => {
+    if (response.data.status === 404) {
+      document.location.replace(document.location.origin + "/error");
+    }
     return response.data;
   },
   (error) => {
@@ -77,9 +80,11 @@ const authService = axios.create({
   timeout: 60000,
 });
 
-
 authService.interceptors.response.use(
   (response) => {
+    if (response.data.status === 404) {
+      document.location.replace(document.location.origin + "/error");
+    }
     return response.data;
   },
   (error) => {
