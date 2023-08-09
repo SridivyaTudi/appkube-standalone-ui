@@ -33,6 +33,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { getCurrentUser } from "Utils";
 import titles from "./PathTitles.json";
+import Error from "./AppViews/Error";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -153,6 +154,10 @@ export const Views = (props) => {
           <Route
             path={`${APP_PREFIX_PATH}/application-status-dashboard`}
             element={<ApplicationStatusDashboard />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/error`}
+            element={<Error />}
           />
         </Routes>
       </div>
