@@ -53,7 +53,7 @@ class FilterPopup extends Component {
     if (
       prevProps.organizationWiseDepartments.status !==
         this.props.organizationWiseDepartments.status &&
-      this.props.organizationWiseDepartments.status === status.SUCCESS
+      this.props.organizationWiseDepartments.status === status.SUCCESS && this.props.organizationWiseDepartments.data?.departments
     ) {
       this.setState({
         departments: this.sortDepartments(
