@@ -104,7 +104,7 @@ class CostAnalysis extends Component {
           <ListItem key={v4()}>
             <p>{item.name}</p>
             <Box className="d-block right-contant">
-              <label>${item.total.toLocaleString()}</label>
+              <label>${item.total?.toLocaleString()}</label>
               <span>
                 <span
                   style={{
@@ -151,7 +151,7 @@ class CostAnalysis extends Component {
                                   $
                                   {productWiseCostData[
                                     productWiseCostData.length - 1
-                                  ].total.toLocaleString()}
+                                  ]?.total?.toLocaleString()}
                                 </label>
                               </>
                             ) : (
@@ -202,7 +202,7 @@ class CostAnalysis extends Component {
                                 $
                                 {productionVsOthersData[
                                   productionVsOthersData.length - 1
-                                ].total.toLocaleString()}
+                                ].total?.toLocaleString()}
                               </label>
                             ) : (
                               <></>
@@ -248,7 +248,7 @@ class CostAnalysis extends Component {
                                 $
                                 {serviceTypeWiseCostData[
                                   serviceTypeWiseCostData.length - 1
-                                ].total.toLocaleString()}
+                                ]?.total?.toLocaleString()}
                               </label>
                             ) : (
                               <></>

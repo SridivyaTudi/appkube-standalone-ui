@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Grid, Button, Box, List, ListItem } from "@mui/material";
 import { v4 } from "uuid";
-import { tab } from "@testing-library/user-event/dist/tab";
+
 
 class AccountStepsPopup extends Component {
   steps = {
@@ -361,7 +361,7 @@ class AccountStepsPopup extends Component {
   };
 
   //  Render line steps
-  renderSteps = () => {
+  renderStepsProgress = () => {
     let { activeStep } = this.state;
     let { STEP2, STEP3, STEP4 } = this.steps;
     return (
@@ -400,7 +400,7 @@ class AccountStepsPopup extends Component {
 
   //  Render back and continue buttons
   renderFooterBtns = () => {
-    let { STEP1, STEP2 } = this.steps;
+    let { STEP1 } = this.steps;
     let { activeStep } = this.state;
     return (
       <div className="text-center d-block">
@@ -454,8 +454,8 @@ class AccountStepsPopup extends Component {
             ? STEP4
             : 0;
         if (activeStep === STEP4) {
-          this.toggle()
-        }    
+          this.toggle();
+        }
         this.setState({
           isSubmit: false,
           activeStep: nextStep,
@@ -477,7 +477,7 @@ class AccountStepsPopup extends Component {
         : activeStep === STEP4
         ? STEP3
         : 0;
-    this.setState({ activeStep,isSubmit:false });
+    this.setState({ activeStep, isSubmit: false });
   };
 
   /**
@@ -552,7 +552,7 @@ class AccountStepsPopup extends Component {
    */
   renderStep2Form = (errorLength, stepErrors) => {
     const { activeStep } = this.state;
-    let { STEP1, STEP2, STEP3 } = this.steps;
+    let { STEP2 } = this.steps;
 
     return (
       activeStep === STEP2 && (
@@ -589,8 +589,7 @@ class AccountStepsPopup extends Component {
       activeStep,
       step3FormData: { account: step3Account, region: step3Region },
     } = this.state;
-    let { STEP2, STEP3, STEP4 } = this.steps;
-
+    let { STEP3 } = this.steps;
     return (
       activeStep === STEP3 && (
         <>
@@ -663,7 +662,7 @@ class AccountStepsPopup extends Component {
       activeStep,
       step4FormData: { application, resourcesByTag },
     } = this.state;
-    let { STEP3, STEP4 } = this.steps;
+    let { STEP4 } = this.steps;
 
     return (
       activeStep === STEP4 && (
@@ -727,7 +726,7 @@ class AccountStepsPopup extends Component {
   };
 
   render() {
-    const { activeStep, isSubmit } = this.state;
+    const { isSubmit } = this.state;
     const stepErrors = this.validateFormSteps(isSubmit);
     const errorLength = stepErrors && Object.keys(stepErrors).length;
 
@@ -739,7 +738,7 @@ class AccountStepsPopup extends Component {
           className="account-steps-modal-container"
         >
           <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
-            {this.renderSteps()}
+            {this.renderStepsProgress()}
             {this.renderStep1Form(errorLength, stepErrors)}
             {this.renderStep2Form(errorLength, stepErrors)}
             {this.renderStep3Form(errorLength, stepErrors)}
