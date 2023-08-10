@@ -11,15 +11,95 @@ class CreateFailoverPopup extends Component {
     this.state = {
       modal: false,
       dateUpdate: false,
+      formData: {
+        title: "",
+        schedule: "",
+        description: "",
+      },
+      isSubmit: false,
     };
   }
 
   toggle = () => {
     this.props.toggleCreateFailoverPopup();
   };
+  /**
+   * handle date changes
+   * @param {Date Object} schedule - Receive Date Object
+   */
+  handleDatechange = (schedule) => {
+    let { formData } = this.state;
+    formData["schedule"] = schedule;
+    this.setState({
+      formData,
+    });
+  };
 
+  /**
+   * handle date changes
+   * @param {Object} event - Event Object
+   */
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    const { formData } = this.state;
+    formData[name] = value;
+    this.setState({ formData });
+  };
+
+  /**
+   * Validate form
+   * @param {Object} event - Event Object
+   * @param {Boolean} isSubmit - When submit btn,then receive 1 else 0
+   */
+  validate = (isSubmit) => {
+    const { formData } = this.state;
+    let isValid;
+    let errors;
+    if (isSubmit) {
+      isValid = true;
+
+      if (!formData.title) {
+        errors = { ...errors, title: "Request title is required!" };
+        isValid = false;
+      } else {
+        errors = { ...errors, title: "" };
+      }
+
+      if (!formData.schedule) {
+        errors = { ...errors, schedule: "DR schedule is required!" };
+        isValid = false;
+      } else {
+        errors = { ...errors, schedule: "" };
+      }
+
+      if (!formData.description) {
+        errors = { ...errors, description: "Description is required!" };
+        isValid = false;
+      } else {
+        errors = { ...errors, description: "" };
+      }
+    }
+    return { isValid, errors };
+  };
+
+  /**
+   * Create request submit
+   */
+  handleSubmit = () => {
+    this.setState({ isSubmit: true }, () => {
+      const { isValid } = this.validate(true);
+      if (isValid) {
+        this.toggle();
+      }
+    });
+  };
   render() {
-    const { dateUpdate } = this.state;
+    const {
+      dateUpdate,
+      formData: { title, schedule, description },
+      isSubmit,
+    } = this.state;
+    const { errors } = this.validate(isSubmit);
     return (
       <>
         <Modal
@@ -43,31 +123,61 @@ class CreateFailoverPopup extends Component {
           <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
             <div className="account-form">
               <Box className="form-group">
-                <label>Title</label>
+                <label htmlFor="title">Title</label>
                 <input
                   className="form-control"
                   type="text"
                   name="title"
                   placeholder="Write Request Title"
+                  value={title}
+                  onChange={this.handleChange}
+                  id="title"
                 />
+                <span
+                  className="red"
+                  style={{ fontSize: "12px", marginTop: "5px" }}
+                >
+                  {isSubmit && errors && errors.title ? errors.title : ""}
+                </span>
               </Box>
               <Box className="form-group">
-                <label>DR schedule</label>
+                <label htmlFor="schedule">DR schedule</label>
                 <DatePicker
                   withPortal
                   showTimeSelect
-                  selected={false}
+                  selected={schedule}
                   className="form-control date widht-100"
-                  dateFormat="MMMM d, yyyy h:mm aa"
+                  dateFormat="hh:mm:ss dd/MM/yyyy"
+                  id="schedule"
+                  onChange={this.handleDatechange}
+                  placeholderText="08:00:00 10/07/2013"
                 />
+                <span
+                  className="red"
+                  style={{ fontSize: "12px", marginTop: "5px" }}
+                >
+                  {isSubmit && errors && errors.schedule ? errors.schedule : ""}
+                </span>
               </Box>
               <Box className="form-group">
-                <label>Description</label>
+                <label htmlFor="description">Description</label>
                 <textarea
                   className="form-control textarea"
                   name="description"
                   placeholder="Write Description"
-                />
+                  id="description"
+                  onChange={this.handleChange}
+                >
+                  {description}
+                </textarea>
+                <span
+                  className="red"
+                  style={{ fontSize: "12px", marginTop: "5px" }}
+                >
+                  {isSubmit && errors && errors.description
+                    ? errors.description
+                    : ""}
+                </span>
               </Box>
               <Box className="form-group">
                 <label>Initial Status</label>
@@ -115,7 +225,7 @@ class CreateFailoverPopup extends Component {
               <Button
                 className="primary-btn min-width"
                 variant="contained"
-                onClick={this.props.toggleCreateFailoverPopup}
+                onClick={this.handleSubmit}
               >
                 Create Request
               </Button>

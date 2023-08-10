@@ -195,7 +195,7 @@ export const dashboardSlice = createSlice({
         ...state,
         totalSpend: {
           status: status.SUCCESS,
-          data: payload,
+          data: payload.status === 404 ? 0 : payload,
         },
       };
     },
@@ -335,7 +335,7 @@ export const dashboardSlice = createSlice({
         ...state,
         productWiseCost: {
           status: status.SUCCESS,
-          data: payload,
+          data: payload.status === 404 ? [] : payload,
         },
       };
     },
@@ -363,7 +363,7 @@ export const dashboardSlice = createSlice({
         ...state,
         productionVsOther: {
           status: status.SUCCESS,
-          data: payload,
+          data: payload.status === 404 ? [] : payload,
         },
       };
     },
@@ -391,7 +391,7 @@ export const dashboardSlice = createSlice({
         ...state,
         serviceTypeWiseCost: {
           status: status.SUCCESS,
-          data: payload,
+          data: payload.status === 404 ? [] : payload,
         },
       };
     },

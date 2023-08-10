@@ -6,28 +6,33 @@ import { v4 } from "uuid";
 import fakeData from "./fakeData.json";
 let transformScale = 0;
 
+let zoomElement = () => {};
+
 class TopologyView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedView: {
-        level2Show: false,
-        selectedLevel1Id: null,
-        selectedLevel2Id: null,
-      },
       // active view maintains the current active node on the given level.
       // at index 0, 0 node will be by default active. -1 indicates that that level would render but
       // there will not be any active node.
       // it would also contain sublevel. if at index 2, value is 0.1, that means,
       // at level 2, sublevel 0, index 1 is active.
       activeView: [0, -1],
-      data: fakeData,
+      currentActiveNode: "",
     };
   }
 
+  zoomToElementCallback = (animationTime) => {
+    zoomElement(
+      this.state.currentActiveNode,
+      transformScale,
+      animationTime ? animationTime : 0
+    );
+  };
+
   renderBody = () => {
     const data = fakeData;
-    const strokeStyles = { strokeColor: "#a5a5d7",   strokeWidth: 2 };
+    const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
     const { activeView } = this.state;
     return (
       <ArcherContainer
@@ -45,6 +50,7 @@ class TopologyView extends Component {
         >
           {({ zoomIn, zoomOut, instance, zoomToElement, ...rest }) => {
             transformScale = instance.transformState.scale;
+            zoomElement = zoomToElement;
             return (
               <>
                 <div className="gmnoprint">
@@ -59,7 +65,7 @@ class TopologyView extends Component {
                   <div
                     className="gmnoprint-map"
                     onClick={() => {
-                      zoomToElement("custom_location", transformScale);
+                      this.zoomToElementCallback(300);
                     }}
                   >
                     <button className="btn btn-map">
@@ -88,15 +94,13 @@ class TopologyView extends Component {
                         targetId: this.getTargetId(1),
                         targetAnchor: "left",
                         sourceAnchor: "right",
-                        style: {
-                          strokeColor: "#a5a5d7",
-                        },
+                        style: strokeStyles,
                       },
                     ]}
                   >
                     <div
                       className="services-text-box active"
-                      id={`${"custom_location"}`}
+                      id={`${data.label}`}
                     >
                       <div className="d-flex">
                         <div className="account-image">
@@ -157,6 +161,7 @@ class TopologyView extends Component {
                 }
                 return (
                   <ArcherElement
+                    key={v4()}
                     id={item.label}
                     relations={[
                       {
@@ -167,9 +172,7 @@ class TopologyView extends Component {
                             : "",
                         targetAnchor: "left",
                         sourceAnchor: "right",
-                        style: {
-                          strokeStyles,
-                        },
+                        style: strokeStyles,
                       },
                     ]}
                   >
@@ -180,13 +183,17 @@ class TopologyView extends Component {
                           ? "active"
                           : ""
                       }
-                      onClick={() =>
+                      id={item.label}
+                      onClick={() => {
+                        this.setState({ currentActiveNode: item.label }, () => {
+                          this.zoomToElementCallback();
+                        });
                         this.handleNodeClick(
                           currentLevel,
                           sublevelIndex,
                           nodeIndex
-                        )
-                      }
+                        );
+                      }}
                     >
                       <span>
                         <img src={item.image} alt={item.label} />
@@ -254,15 +261,8 @@ class TopologyView extends Component {
   };
 
   /** Get name in form of capitalize. */
-  getServiceName(name, type) {
-    if (type === "vpc") {
-      return name ? name.toUpperCase() : "";
-    } else {
-      let firstChar = name ? name.charAt(0).toUpperCase() : "";
-      let otherStr = name ? name.toLowerCase().slice(1) : "";
-      let string = firstChar + otherStr;
-      return string;
-    }
+  getServiceName(name) {
+    return name ? name.toUpperCase() : "";
   }
 
   render() {

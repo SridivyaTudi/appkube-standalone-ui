@@ -80,13 +80,20 @@
         }
         .topology-panel-body {
           height: 450px;
-          display: flex;
-          align-items: center;
+          display: block;
           width: 100%;
           padding: 20px 20px;
           position: relative;
           overflow: hidden;
-          overflow-y: auto;
+          overflow-x: auto;
+
+          .app-topology-chart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 358px;
+          }
 
           .gmnoprint {
             position: absolute;
@@ -534,15 +541,17 @@
           display: block;
           width: 100%;
           height: auto;
+          overflow: hidden;
+          overflow-x: auto;
           box-shadow: 0px 41.7776px 33.4221px rgba(108, 73, 172, 0.0503198);
 
           .resources-inner {
             display: flex;
             flex-wrap: wrap;
-            width: 100%;
-            margin: 10px 8px;
+            width: 800px;
+            margin: 10px;
             .card-box {
-              margin: 0 10px 20px;
+              margin: 0 10px 15px;
               width: 140px;
               height: 90px;
               display: inline-flex;
@@ -606,6 +615,8 @@
           background: #ffffff 0% 0% no-repeat padding-box;
           box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
           border-radius: 10px;
+          overflow: hidden;
+          overflow-x: auto;
           .heading {
             display: block;
             width: 100%;
@@ -623,6 +634,12 @@
               float: right;
             }
           }
+
+          .realtime-chart {
+            display: block;
+            width: 927px;
+          }
+
           .primary-label {
             display: block;
             width: 100%;
