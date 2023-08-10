@@ -446,7 +446,7 @@ class SpendAnalytics extends Component {
             <Box className="data-text">
               <span
                 style={{
-                  background: cloudwiseSpendColor[cloudSpend.cloud],
+                  background: cloudwiseSpendColor[cloudSpend.cloud.toLowerCase()],
                 }}
               ></span>
               <p>{cloudSpend.cloud?.toUpperCase()}</p>
@@ -475,7 +475,7 @@ class SpendAnalytics extends Component {
               width: `${
                 cloudSpend.percentage > 0 ? `${cloudSpend.percentage}` : "0"
               }%`,
-              background: cloudwiseSpendColor[cloudSpend.cloud],
+              backgroundColor: cloudwiseSpendColor[cloudSpend.cloud.toLowerCase()],
             }}
             key={v4()}
           ></span>

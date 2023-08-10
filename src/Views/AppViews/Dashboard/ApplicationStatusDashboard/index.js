@@ -99,7 +99,7 @@ class ApplicationStatusDashboard extends Component {
   }
 
   /** Render table level-1 data . */
-  renderTableLevel1Data() {
+  renderTableData() {
     let { data } = this.state;
     return data.map((datas, index) => {
       return (
@@ -186,7 +186,7 @@ class ApplicationStatusDashboard extends Component {
                   <TableCell align="center">Status</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>{this.renderTableLevel1Data()}</TableBody>
+              <TableBody>{this.renderTableData()}</TableBody>
             </Table>
           </TableContainer>
         </Box>
