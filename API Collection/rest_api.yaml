@@ -2,7 +2,7 @@ openapi: 3.0.3 # version of the specification
 info:
   title: CMDB-OPEN-API-COLLECTION
   version: 1.0.0
-  description: Service API specification to support Database operations
+  description: CMDB Service API specification
 
 servers:
   - url: '{protocol}://{ip}:{port}/{base-api}'
@@ -30,20 +30,28 @@ servers:
 tags:
   - name: Organization
     description: perform CRUD operations on organization table
-  - name: Department
-    description: perform CRUD operations on department table
-  - name: CloudEnvironment
-    description: perform CRUD operations on cloud_environment table
-  - name: CloudElementSummary
-    description: perform CRUD operations on cloud_element_summary table
-  - name: CloudElement
-    description: perform CRUD operations on cloud_element table
-  - name: MicroService
-    description: perform CRUD operations on micro_service table
-  - name: DeploymentEnvironment
-    description: perform CRUD operations on deployment_environment table
   - name: DbCategory
     description: perform CRUD operations on db_category table
+  - name: Budget
+    description: perform CRUD operations on budget table
+  - name: Department
+    description: perform CRUD operations on department table
+  - name: Product
+    description: perform CRUD operations on product table
+  - name: Landingzone
+    description: perform CRUD operations on landingzone table
+  - name: ProductEnclave
+    description: perform CRUD operations on product_enclave table
+  - name: ProductEnv
+    description: perform CRUD operations on product_env table
+  - name: CloudElement
+    description: perform CRUD operations on cloud_element table
+  - name: CloudElementSummary
+    description: perform CRUD operations on cloud_element_summary table
+  - name: Module
+    description: perform CRUD operations on module table
+  - name: BusinessElement
+    description: perform CRUD operations on business_element table
   - name: OrgWiseQuery
     description: get organization wise data
   - name: OrgDepWiseQuery
@@ -76,10 +84,14 @@ tags:
     description: get infrastructure topology wise data
   - name: SpendAnalyticsQuery
     description: spend analytics
+  - name: CostAnalyticsQuery
+    description: cost analytics
+  - name: BillingAnalyticsQuery
+    description: billing  cost analytics
 
 
 paths:
-  /organizations:
+  /organization:
     get:
       tags:
         - Organization
@@ -154,7 +166,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /organizations/{id}:
+  /organization/{id}:
     parameters:
       - in: path
         name: id
@@ -178,7 +190,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /organizations/search:
+  /organization/search:
     get:
       tags:
         - Organization
@@ -205,7 +217,259 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /departments:
+  /db-category:
+    get:
+      tags:
+        - DbCategory
+      summary: Fetch list of db-category
+      operationId: getDbCategoryList
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DbCategoryDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+    post:
+      tags:
+        - DbCategory
+      summary: Add db-category
+      operationId: addDbCategory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DbCategoryDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DbCategoryDTO'
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DbCategoryDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+    patch:
+      tags:
+        - DbCategory
+      summary: Update db-category
+      operationId: updateDbCategory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DbCategoryDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DbCategoryDTO'
+        201:
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DbCategoryDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /db-category/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+          format: int64
+        required: true
+    get:
+      tags:
+        - DbCategory
+      summary: Fetch db-category of a given id
+      operationId: getDbCategory
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DbCategoryDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /db-category/search:
+    get:
+      tags:
+        - DbCategory
+      summary: Search db-category data
+      operationId: searchDbCategory
+      parameters:
+        - name: dbCategoryDTO
+          in: query
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DbCategoryDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DbCategoryDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /budget:
+    get:
+      tags:
+        - Budget
+      summary: Fetch list of budget
+      operationId: getBudgetList
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BudgetDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+    post:
+      tags:
+        - Budget
+      summary: Add budget
+      operationId: addBudget
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BudgetDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetDTO'
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+    patch:
+      tags:
+        - Budget
+      summary: Update budget
+      operationId: updateBudget
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BudgetDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetDTO'
+        201:
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /budget/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+          format: int64
+        required: true
+    get:
+      tags:
+        - Budget
+      summary: Fetch a budget of given id
+      operationId: getBudget
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /budget/search:
+    get:
+      tags:
+        - Budget
+      summary: Search budget data
+      operationId: searchBudget
+      parameters:
+        - name: budgetDTO
+          in: query
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BudgetDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /department:
     get:
       tags:
         - Department
@@ -280,7 +544,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /departments/{id}:
+  /department/{id}:
     parameters:
       - in: path
         name: id
@@ -304,7 +568,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /departments/search:
+  /department/search:
     get:
       tags:
         - Department
@@ -331,12 +595,12 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /cloud-environments:
+  /product:
     get:
       tags:
-        - CloudEnvironment
-      summary: Fetch list of cloud-environments
-      operationId: getCloudEnvironmentList
+        - Product
+      summary: Fetch list of products
+      operationId: getProductList
       responses:
         200:
           description: OK
@@ -345,68 +609,68 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CloudEnvironmentDTO'
+                  $ref: '#/components/schemas/ProductDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
     post:
       tags:
-        - CloudEnvironment
-      summary: Add cloud-environment
-      operationId: addCloudEnvironment
+        - Product
+      summary: Add product
+      operationId: addProduct
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CloudEnvironmentDTO'
+              $ref: '#/components/schemas/ProductDTO'
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CloudEnvironmentDTO'
+                $ref: '#/components/schemas/ProductDTO'
         201:
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CloudEnvironmentDTO'
+                $ref: '#/components/schemas/ProductDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
     patch:
       tags:
-        - CloudEnvironment
-      summary: Update cloud-environment
-      operationId: updateCloudEnvironment
+        - Product
+      summary: Update product
+      operationId: updateProduct
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CloudEnvironmentDTO'
+              $ref: '#/components/schemas/ProductDTO'
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CloudEnvironmentDTO'
+                $ref: '#/components/schemas/ProductDTO'
         201:
           description: Updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CloudEnvironmentDTO'
+                $ref: '#/components/schemas/ProductDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /cloud-environments/{id}:
+  /product/{id}:
     parameters:
       - in: path
         name: id
@@ -416,34 +680,34 @@ paths:
         required: true
     get:
       tags:
-        - CloudEnvironment
-      summary: Fetch a cloud-environment of given id
-      operationId: getCloudEnvironment
+        - Product
+      summary: Fetch a product of a given id
+      operationId: getProduct
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CloudEnvironmentDTO'
+                $ref: '#/components/schemas/ProductDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /cloud-environments/search:
+  /product/search:
     get:
       tags:
-        - CloudEnvironment
-      summary: Search cloud-environments data
-      operationId: searchCloudEnvironment
+        - Product
+      summary: Search products
+      operationId: searchProduct
       parameters:
-        - name: cloudEnvironmentDTO
+        - name: productDTO
           in: query
           required: false
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CloudEnvironmentDTO'
+                $ref: '#/components/schemas/ProductDTO'
       responses:
         200:
           description: OK
@@ -452,7 +716,421 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CloudEnvironmentDTO'
+                  $ref: '#/components/schemas/ProductDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /landingzone:
+    get:
+      tags:
+        - Landingzone
+      summary: Fetch list of landingzones
+      operationId: getLandingzoneList
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LandingzoneDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+    post:
+      tags:
+        - Landingzone
+      summary: Add landingzone
+      operationId: addLandingzone
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LandingzoneDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LandingzoneDTO'
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LandingzoneDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+    patch:
+      tags:
+        - Landingzone
+      summary: Update landingzone
+      operationId: updateLandingzone
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LandingzoneDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LandingzoneDTO'
+        201:
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LandingzoneDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /landingzone/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+          format: int64
+        required: true
+    get:
+      tags:
+        - Landingzone
+      summary: Fetch a landingzone of given id
+      operationId: getLandingzone
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LandingzoneDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /landingzone/search:
+    get:
+      tags:
+        - Landingzone
+      summary: Search landingzone
+      operationId: searchLandingzone
+      parameters:
+        - name: landingzoneDTO
+          in: query
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LandingzoneDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LandingzoneDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /product-enclave:
+    get:
+      tags:
+        - ProductEnclave
+      summary: Fetch list of product-enclave
+      operationId: getProductEnclaveList
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductEnclaveDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+    post:
+      tags:
+        - ProductEnclave
+      summary: Add product-enclave
+      operationId: addProductEnclave
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductEnclaveDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductEnclaveDTO'
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductEnclaveDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+    patch:
+      tags:
+        - ProductEnclave
+      summary: Update product-enclave
+      operationId: updateProductEnclave
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductEnclaveDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductEnclaveDTO'
+        201:
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductEnclaveDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /product-enclave/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+          format: int64
+        required: true
+    get:
+      tags:
+        - ProductEnclave
+      summary: Fetch a product-enclave of given id
+      operationId: getProductEnclave
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductEnclaveDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /product-enclave/search:
+    get:
+      tags:
+        - ProductEnclave
+      summary: Search product-enclave
+      operationId: searchProductEnclave
+      parameters:
+        - name: productEnclaveDTO
+          in: query
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductEnclaveDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductEnclaveDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /product-env:
+    get:
+      tags:
+        - ProductEnv
+      summary: Fetch list of product-env
+      operationId: getProductEnvList
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductEnvDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+    post:
+      tags:
+        - ProductEnv
+      summary: Add product-env
+      operationId: addProductEnv
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductEnvDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductEnvDTO'
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductEnvDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+    patch:
+      tags:
+        - ProductEnv
+      summary: Update product-env
+      operationId: updateProductEnv
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductEnvDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductEnvDTO'
+        201:
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductEnvDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /product-env/bulk-add:
+    post:
+      tags:
+        - ProductEnv
+      summary: Bulk Add all environments of a product in product-env
+      operationId: bulkAddProductEnv
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                productId: 6
+                envs: ["DEV", "TEST", "STAGE", "PROD"]
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductEnvDTO'
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductEnvDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /product-env/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+          format: int64
+        required: true
+    get:
+      tags:
+        - ProductEnv
+      summary: Fetch a product-env of given id
+      operationId: getProductEnv
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductEnvDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /product-env/search:
+    get:
+      tags:
+        - ProductEnv
+      summary: Search product-env data
+      operationId: searchProductEnv
+      parameters:
+        - name: productEnvDTO
+          in: query
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductEnvDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductEnvDTO'
         404:
           description: "Service Not found"
         500:
@@ -583,7 +1261,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /cloud-elements:
+  /cloud-element:
     get:
       tags:
         - CloudElement
@@ -658,7 +1336,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /cloud-elements/{id}:
+  /cloud-element/{id}:
     parameters:
       - in: path
         name: id
@@ -682,7 +1360,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /cloud-elements/search:
+  /cloud-element/search:
     get:
       tags:
         - CloudElement
@@ -709,12 +1387,12 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /micro-services:
+  /module:
     get:
       tags:
-        - MicroService
-      summary: Fetch list of micro-services
-      operationId: getMicroServiceList
+        - Module
+      summary: Fetch list of modules
+      operationId: getModuleList
       responses:
         200:
           description: OK
@@ -723,68 +1401,68 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/MicroServiceDTO'
+                  $ref: '#/components/schemas/ModuleDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
     post:
       tags:
-        - MicroService
-      summary: Add micro-service
-      operationId: addMicroService
+        - Module
+      summary: Add module
+      operationId: addModule
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MicroServiceDTO'
+              $ref: '#/components/schemas/ModuleDTO'
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MicroServiceDTO'
+                $ref: '#/components/schemas/ModuleDTO'
         201:
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MicroServiceDTO'
+                $ref: '#/components/schemas/ModuleDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
     patch:
       tags:
-        - MicroService
-      summary: Update micro-service
-      operationId: updateMicroService
+        - Module
+      summary: Update module
+      operationId: updateModule
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MicroServiceDTO'
+              $ref: '#/components/schemas/ModuleDTO'
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MicroServiceDTO'
+                $ref: '#/components/schemas/ModuleDTO'
         201:
           description: Updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MicroServiceDTO'
+                $ref: '#/components/schemas/ModuleDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /micro-services/{id}:
+  /module/{id}:
     parameters:
       - in: path
         name: id
@@ -794,34 +1472,34 @@ paths:
         required: true
     get:
       tags:
-        - MicroService
-      summary: Fetch a micro-service of given id
-      operationId: getMicroService
+        - Module
+      summary: Fetch a module of given id
+      operationId: getModule
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MicroServiceDTO'
+                $ref: '#/components/schemas/ModuleDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /micro-services/search:
+  /module/search:
     get:
       tags:
-        - MicroService
-      summary: Search micro-service data
-      operationId: searchMicroService
+        - Module
+      summary: Search module
+      operationId: searchModule
       parameters:
-        - name: MicroServiceDTO
+        - name: moduleDTO
           in: query
           required: false
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MicroServiceDTO'
+                $ref: '#/components/schemas/ModuleDTO'
       responses:
         200:
           description: OK
@@ -830,17 +1508,26 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/MicroServiceDTO'
+                  $ref: '#/components/schemas/ModuleDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /deployment-environments:
-    get:
+  /module/bulk-add:
+    post:
       tags:
-        - DeploymentEnvironment
-      summary: Fetch list of deployment-environments
-      operationId: getDeploymentEnvironmentList
+        - Module
+      summary: Bulk Add all modules of a product and product-env
+      operationId: bulkAddModule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                productId: 6
+                envs: [ {"id": 1, "modules":[{"name":"Admission","moduleNature":"Business"}, {"name":"Attendance","moduleNature":"Business"}]},{"id": 2, "modules":[{"name":"Admission","moduleNature":"Business"}, {"name":"Attendance","moduleNature":"Business"}]}]
       responses:
         200:
           description: OK
@@ -849,68 +1536,95 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/DeploymentEnvironmentDTO'
+                  $ref: '#/components/schemas/ModuleDTO'
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /business-element:
+    get:
+      tags:
+        - BusinessElement
+      summary: Fetch list of business_elements
+      operationId: getBusinessElementList
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BusinessElementDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
     post:
       tags:
-        - DeploymentEnvironment
-      summary: Add deployment-environment
-      operationId: addDeploymentEnvironment
+        - BusinessElement
+      summary: Add business_element
+      operationId: addBusinessElement
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeploymentEnvironmentDTO'
+              $ref: '#/components/schemas/BusinessElementDTO'
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeploymentEnvironmentDTO'
+                $ref: '#/components/schemas/BusinessElementDTO'
         201:
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeploymentEnvironmentDTO'
+                $ref: '#/components/schemas/BusinessElementDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
     patch:
       tags:
-        - DeploymentEnvironment
-      summary: Update deployment-environment
-      operationId: updateDeploymentEnvironment
+        - BusinessElement
+      summary: Update business_element
+      operationId: updateBusinessElement
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeploymentEnvironmentDTO'
+              $ref: '#/components/schemas/BusinessElementDTO'
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeploymentEnvironmentDTO'
+                $ref: '#/components/schemas/BusinessElementDTO'
         201:
           description: Updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeploymentEnvironmentDTO'
+                $ref: '#/components/schemas/BusinessElementDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /deployment-environments/{id}:
+  /business-element/{id}:
     parameters:
       - in: path
         name: id
@@ -920,34 +1634,34 @@ paths:
         required: true
     get:
       tags:
-        - DeploymentEnvironment
-      summary: Fetch a deployment-environment of given id
-      operationId: getDeploymentEnvironment
+        - BusinessElement
+      summary: Fetch a business_element of a given id
+      operationId: getBusinessElement
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeploymentEnvironmentDTO'
+                $ref: '#/components/schemas/BusinessElementDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /deployment-environments/search:
+  /business-element/search:
     get:
       tags:
-        - DeploymentEnvironment
-      summary: Search deployment-environment data
-      operationId: searchDeploymentEnvironment
+        - BusinessElement
+      summary: Search business_element data
+      operationId: searchBusinessElement
       parameters:
-        - name: deploymentEnvironmentDTO
+        - name: businessElementDTO
           in: query
           required: false
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeploymentEnvironmentDTO'
+                $ref: '#/components/schemas/BusinessElementDTO'
       responses:
         200:
           description: OK
@@ -956,144 +1670,53 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/DeploymentEnvironmentDTO'
+                  $ref: '#/components/schemas/BusinessElementDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /db-category:
-    get:
-      tags:
-        - DbCategory
-      summary: Fetch list of db-category
-      operationId: getDbCategoryList
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DbCategoryDTO'
-        404:
-          description: "Service Not found"
-        500:
-          description: "Internal Server Error"
+  /business-element/bulk-add:
     post:
       tags:
-        - DbCategory
-      summary: Add db-category
-      operationId: addDbCategory
+        - BusinessElement
+      summary: Bulk Add all services of a product, product-env and module
+      operationId: bulkAddBusinessService
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DbCategoryDTO'
+              type: object
+              example:
+                productId: 3
+                envs: [ {"id": 9, "modules":[{"name":"Admission","moduleNature":"Business","businessServices":[{"serviceName":"Bidding Springboot API service","serviceNature":"Business","serviceType":"App"},{"serviceName":"Bidding React UI service","serviceNature":"Business","serviceType":"Web"},{"serviceName":"Bidding Postgres database service", "serviceNature":"Business","serviceType":"Data"}]}]}]
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DbCategoryDTO'
+                type: array
+                items:
+                  $ref: '#/components/schemas/BusinessElementDTO'
         201:
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DbCategoryDTO'
-        404:
-          description: "Service Not found"
-        500:
-          description: "Internal Server Error"
-    patch:
-      tags:
-        - DbCategory
-      summary: Update db-category
-      operationId: updateDbCategory
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DbCategoryDTO'
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DbCategoryDTO'
-        201:
-          description: Updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DbCategoryDTO'
-        404:
-          description: "Service Not found"
-        500:
-          description: "Internal Server Error"
-  /db-category/{id}:
-    parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-          format: int64
-        required: true
-    get:
-      tags:
-        - DbCategory
-      summary: Fetch a db-category of given id
-      operationId: getDbCategory
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DbCategoryDTO'
-        404:
-          description: "Service Not found"
-        500:
-          description: "Internal Server Error"
-  /db-category/search:
-    get:
-      tags:
-        - DbCategory
-      summary: Search db-category data
-      operationId: searchDbCategory
-      parameters:
-        - name: dbCategoryDTO
-          in: query
-          required: false
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DbCategoryDTO'
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/DbCategoryDTO'
+                  $ref: '#/components/schemas/BusinessElementDTO'
         404:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-
-  /query/organizations/{orgId}/cloud-environments/count:
+  /query/organization/{orgId}/environment/count:
     get:
       tags:
         - OrgWiseQuery
-      summary: Get organization wise account's resource counts
-      operationId: getResourceCountsByOrg
+      summary: Get organization wise account's stats
+      operationId: getEnvStatsByOrg
       parameters:
         - in: path
           name: orgId
@@ -1114,12 +1737,12 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/cloud/{cloud}/cloud-environments/count:
+  /query/organization/{orgId}/environment/cloud/{cloud}/count:
     get:
       tags:
         - OrgWiseQuery
-      summary: Get organization and cloud wise account's resource counts
-      operationId: getResourceCountsByOrgAndCloud
+      summary: Get organization and cloud wise account's stats
+      operationId: getEnvStatsByOrgCloud
       parameters:
         - in: path
           name: orgId
@@ -1143,12 +1766,46 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/cloud-environments/summary:
+  /query/organization/{orgId}/environment/cloud/{cloud}/landing-zone/{landingZone}/count:
     get:
       tags:
         - OrgWiseQuery
-      summary: Get organization wise account's resource summary
-      operationId: getResourceSummaryByOrg
+      summary: Get organization, cloud and landing-zone wise account's stats
+      operationId: getEnvStatsByOrgCloudLandingZone
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: path
+          name: cloud
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: landingZone
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentCountQueryDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /query/organization/{orgId}/environment/summary-list:
+    get:
+      tags:
+        - OrgWiseQuery
+      summary: Get environment summary list
+      operationId: getEnvironmentSummaryList
       parameters:
         - in: path
           name: orgId
@@ -1163,46 +1820,21 @@ paths:
             format: int64
           required: false
         - in: query
-          name: product
+          name: productId
           schema:
-            type: string
+            type: integer
+            format: int64
           required: false
         - in: query
           name: env
           schema:
             type: string
           required: false
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/EnvironmentQueryDTO'
-        404:
-          description: "Service Not found"
-        500:
-          description: "Internal Server Error"
-  /query/organizations/{orgId}/cloud/{cloud}/cloud-environments/summary:
-    get:
-      tags:
-        - OrgWiseQuery
-      summary: Get organization and cloud wise account's resource summary
-      operationId: getResourceSummaryByOrgAndCloud
-      parameters:
-        - in: path
-          name: orgId
-          schema:
-            type: integer
-            format: int64
-          required: true
-        - in: path
+        - in: query
           name: cloud
           schema:
             type: string
-          required: true
+          required: false
       responses:
         200:
           description: OK
@@ -1216,7 +1848,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/products:
+  /query/organization/{orgId}/products:
     get:
       tags:
         - OrgWiseQuery
@@ -1242,7 +1874,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/landing-zone:
+  /query/organization/{orgId}/landing-zone:
     get:
       tags:
         - OrgWiseQuery
@@ -1268,7 +1900,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/product-enclave:
+  /query/organization/{orgId}/product-enclave:
     get:
       tags:
         - OrgWiseQuery
@@ -1294,7 +1926,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/services:
+  /query/organization/{orgId}/services:
     get:
       tags:
         - OrgWiseQuery
@@ -1320,7 +1952,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/products:
+  /query/organization/{orgId}/department/{depId}/products:
     get:
       tags:
         - OrgDepWiseQuery
@@ -1352,7 +1984,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/landing-zone:
+  /query/organization/{orgId}/department/{depId}/landing-zone:
     get:
       tags:
         - OrgDepWiseQuery
@@ -1384,7 +2016,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/product-enclave:
+  /query/organization/{orgId}/department/{depId}/product-enclave:
     get:
       tags:
         - OrgDepWiseQuery
@@ -1416,7 +2048,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/services:
+  /query/organization/{orgId}/department/{depId}/services:
     get:
       tags:
         - OrgDepWiseQuery
@@ -1448,7 +2080,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/products/{product}/services:
+  /query/organization/{orgId}/products/{product}/services:
     get:
       tags:
         - OrgProductWiseQuery
@@ -1479,7 +2111,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/environments/{env}/services:
+  /query/organization/{orgId}/environments/{env}/services:
     get:
       tags:
         - OrgEnvironmentWiseQuery
@@ -1511,7 +2143,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/products/{product}/environments/{env}/services:
+  /query/organization/{orgId}/products/{product}/environments/{env}/services:
     get:
       tags:
         - OrgProductEnvironmentWiseQuery
@@ -1548,7 +2180,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/service-type/{serviceType}/services:
+  /query/organization/{orgId}/service-type/{serviceType}/services:
     get:
       tags:
         - OrgServiceWiseQuery
@@ -1579,7 +2211,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/services/{serviceName}/service-cost:
+  /query/organization/{orgId}/services/{serviceName}/service-cost:
     get:
       tags:
         - OrgServiceWiseQuery
@@ -1610,7 +2242,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/services/{serviceName}/service-cost/daily:
+  /query/organization/{orgId}/services/{serviceName}/service-cost/daily:
     get:
       tags:
         - OrgServiceWiseQuery
@@ -1641,7 +2273,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/services/{serviceName}/service-cost/weekly:
+  /query/organization/{orgId}/services/{serviceName}/service-cost/weekly:
     get:
       tags:
         - OrgServiceWiseQuery
@@ -1672,7 +2304,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/services/{serviceName}/service-cost/monthly:
+  /query/organization/{orgId}/services/{serviceName}/service-cost/monthly:
     get:
       tags:
         - OrgServiceWiseQuery
@@ -1703,7 +2335,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/landing-zone/{landingZone}/services:
+  /query/organization/{orgId}/landing-zone/{landingZone}/services:
     get:
       tags:
         - OrgLandingZoneWiseQuery
@@ -1734,7 +2366,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/landing-zone/{landingZone}/products:
+  /query/organization/{orgId}/landing-zone/{landingZone}/products:
     get:
       tags:
         - OrgLandingZoneWiseQuery
@@ -1765,7 +2397,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/services/{name}/service-sla:
+  /query/organization/{orgId}/services/{name}/service-sla:
     get:
       tags:
         - OrgServiceSlaWiseQuery
@@ -1796,7 +2428,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/services/{serviceName}/service/cureent-sla:
+  /query/organization/{orgId}/services/{serviceName}/service/cureent-sla:
     get:
       tags:
         - OrgServiceSlaWiseQuery
@@ -1827,7 +2459,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/services/{serviceName}/service/weekly-sla:
+  /query/organization/{orgId}/services/{serviceName}/service/weekly-sla:
     get:
       tags:
         - OrgServiceSlaWiseQuery
@@ -1858,7 +2490,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/services/{serviceName}/service/monthly-sla:
+  /query/organization/{orgId}/services/{serviceName}/service/monthly-sla:
     get:
       tags:
         - OrgServiceSlaWiseQuery
@@ -1889,7 +2521,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/products/{product}/services:
+  /query/organization/{orgId}/department/{depId}/products/{product}/services:
     get:
       tags:
         - OrgDepProductWiseQuery
@@ -1926,7 +2558,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/environments/{env}/services:
+  /query/organization/{orgId}/department/{depId}/environments/{env}/services:
     get:
       tags:
         - OrgDepProductEnvironmentWiseQuery
@@ -1964,7 +2596,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/products/{product}/environments/{env}/services:
+  /query/organization/{orgId}/department/{depId}/products/{product}/environments/{env}/services:
     get:
       tags:
         - OrgDepProductEnvironmentWiseQuery
@@ -2007,7 +2639,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/service-type/{serviceType}/services:
+  /query/organization/{orgId}/department/{depId}/service-type/{serviceType}/services:
     get:
       tags:
         - OrgDepServiceWiseQuery
@@ -2044,7 +2676,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/services/{serviceName}/service-cost:
+  /query/organization/{orgId}/department/{depId}/services/{serviceName}/service-cost:
     get:
       tags:
         - OrgDepServiceWiseQuery
@@ -2081,7 +2713,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/services/{serviceName}/service-cost/daily:
+  /query/organization/{orgId}/department/{depId}/services/{serviceName}/service-cost/daily:
     get:
       tags:
         - OrgDepServiceWiseQuery
@@ -2118,7 +2750,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/services/{serviceName}/service-cost/weekly:
+  /query/organization/{orgId}/department/{depId}/services/{serviceName}/service-cost/weekly:
     get:
       tags:
         - OrgDepServiceWiseQuery
@@ -2155,7 +2787,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/services/{serviceName}/service-cost/monthly:
+  /query/organization/{orgId}/department/{depId}/services/{serviceName}/service-cost/monthly:
     get:
       tags:
         - OrgDepServiceWiseQuery
@@ -2192,7 +2824,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/landing-zone/{landingZone}/services:
+  /query/organization/{orgId}/department/{depId}/landing-zone/{landingZone}/services:
     get:
       tags:
         - OrgDepLandingZoneWiseQuery
@@ -2229,7 +2861,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/landing-zone/{landingZone}/products:
+  /query/organization/{orgId}/department/{depId}/landing-zone/{landingZone}/products:
     get:
       tags:
         - OrgDepLandingZoneWiseQuery
@@ -2266,7 +2898,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/services/{name}/service-sla:
+  /query/organization/{orgId}/department/{depId}/services/{name}/service-sla:
     get:
       tags:
         - OrgDepServiceSlaWiseQuery
@@ -2303,7 +2935,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/services/{serviceName}/service/cureent-sla:
+  /query/organization/{orgId}/department/{depId}/services/{serviceName}/service/cureent-sla:
     get:
       tags:
         - OrgDepServiceSlaWiseQuery
@@ -2340,7 +2972,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/services/{serviceName}/service/weekly-sla:
+  /query/organization/{orgId}/department/{depId}/services/{serviceName}/service/weekly-sla:
     get:
       tags:
         - OrgDepServiceSlaWiseQuery
@@ -2377,7 +3009,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/services/{serviceName}/service/monthly-sla:
+  /query/organization/{orgId}/department/{depId}/services/{serviceName}/service/monthly-sla:
     get:
       tags:
         - OrgDepServiceSlaWiseQuery
@@ -2414,7 +3046,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/landing-zone/{landingZone}/product-enclave:
+  /query/organization/{orgId}/landing-zone/{landingZone}/product-enclave:
     get:
       tags:
         - OrgLandingZoneWiseQuery
@@ -2445,7 +3077,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/departments/{depId}/landing-zone/{landingZone}/product-enclave:
+  /query/organization/{orgId}/department/{depId}/landing-zone/{landingZone}/product-enclave:
     get:
       tags:
         - OrgDepLandingZoneWiseQuery
@@ -2482,7 +3114,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/landing-zone/{landingZone}/product-enclave/{product}/vpc-summary:
+  /query/organization/{orgId}/landing-zone/{landingZone}/product-enclave/{product}/vpc-summary:
     get:
       tags:
         - OrgLandingZoneVpceQuery
@@ -2518,7 +3150,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/landing-zone/{landingZone}/infra-topology:
+  /query/organization/{orgId}/landing-zone/{landingZone}/infra-topology:
     get:
       tags:
         - InfraTopologyQuery
@@ -2547,7 +3179,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/landing-zone/{landingZone}/product-enclave/{productEnclave}/infra-topology-summary:
+  /query/organization/{orgId}/landing-zone/{landingZone}/product-enclave/{productEnclave}/infra-topology-summary:
     get:
       tags:
         - InfraTopologyQuery
@@ -2583,7 +3215,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/analytics/spend-analytics/spend-today:
+  /query/organization/{orgId}/analytics/spend-analytics/spend-today:
     get:
       tags:
         - SpendAnalyticsQuery
@@ -2607,7 +3239,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/analytics/spend-analytics/spend-yesterday:
+  /query/organization/{orgId}/analytics/spend-analytics/spend-yesterday:
     get:
       tags:
         - SpendAnalyticsQuery
@@ -2631,7 +3263,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/analytics/spend-analytics/spend-current-rate/avg-per-hour:
+  /query/organization/{orgId}/analytics/spend-analytics/spend-current-rate/avg-per-hour:
     get:
       tags:
         - SpendAnalyticsQuery
@@ -2656,7 +3288,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/analytics/spend-analytics/spend-current-rate/per-day:
+  /query/organization/{orgId}/analytics/spend-analytics/spend-current-rate/per-day:
     get:
       tags:
         - SpendAnalyticsQuery
@@ -2681,7 +3313,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/analytics/spend-analytics/spend-total:
+  /query/organization/{orgId}/analytics/spend-analytics/spend-total:
     get:
       tags:
         - SpendAnalyticsQuery
@@ -2706,7 +3338,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/analytics/spend-analytics/cloud-wise-spend:
+  /query/organization/{orgId}/analytics/spend-analytics/cloud-wise-spend:
     get:
       tags:
         - SpendAnalyticsQuery
@@ -2732,7 +3364,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/analytics/spend-analytics/monthly-cloud-wise-spend:
+  /query/organization/{orgId}/analytics/spend-analytics/monthly-cloud-wise-spend:
     get:
       tags:
         - SpendAnalyticsQuery
@@ -2758,7 +3390,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/analytics/spend-analytics/monthly-statistics:
+  /query/organization/{orgId}/analytics/spend-analytics/monthly-statistics:
     get:
       tags:
         - SpendAnalyticsQuery
@@ -2784,7 +3416,7 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organizations/{orgId}/analytics/spend-analytics/total-budget:
+  /query/organization/{orgId}/analytics/spend-analytics/total-budget:
     get:
       tags:
         - SpendAnalyticsQuery
@@ -2808,7 +3440,231 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
+  /query/organization/{orgId}/analytics/cost-analytics/product-wise-cost:
+    get:
+      tags:
+        - CostAnalyticsQuery
+      summary: get product wise cost of an organization
+      operationId: getProductWiseCost
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CostAnalyticDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /query/organization/{orgId}/analytics/cost-analytics/production-vs-others:
+    get:
+      tags:
+        - CostAnalyticsQuery
+      summary: get production vs others cost of an organization
+      operationId: getProductionVsOthersCost
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CostAnalyticDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /query/organization/{orgId}/analytics/cost-analytics/service-type-wise-cost:
+    get:
+      tags:
+        - CostAnalyticsQuery
+      summary: get service type wise cost of an organization
+      operationId: getServiceTypeWiseCost
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CostAnalyticDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /query/organization/{orgId}/billing/cloud-element/entity/{entity}/organization-wise-billing:
+    get:
+      tags:
+        - BillingAnalyticsQuery
+      summary: get billing cost of an organization
+      operationId: DataGeneratorOrgBilling
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: path
+          name: entity
+          schema:
+            type: string
+          required: true
 
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CostBillingDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /query/organization/{orgId}/billing/cloud-element/entity/{entity}/element-name/{elementName}/element-wise-billing:
+    get:
+      tags:
+        - BillingAnalyticsQuery
+      summary: get billing cost of an element-name of an organization
+      operationId: OrgAndElementNameBilling
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: path
+          name: elementName
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: entity
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CostBillingDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /query/organization/{orgId}/billing/cloud-element/entity/{entity}/landingzone/{landingZone}/landingzone-wise-billing:
+    get:
+      tags:
+        - BillingAnalyticsQuery
+      summary: get billing cost of an landingzone an organization
+      operationId: OrgAndLandingZoneBilling
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: path
+          name: landingZone
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: path
+          name: entity
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CostBillingDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /query/organization/{orgId}/billing/cloud-element/element-name/entity/{entity}/{elementName}/landingzone/{landingZone}/landingzone-element-wise-billing:
+    get:
+      tags:
+        - BillingAnalyticsQuery
+      summary: get billing cost of a landingzone and an element name on an organization
+      operationId: OrgAndElementNameAndLandingZoneBilling
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: path
+          name: elementName
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: landingZone
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: path
+          name: entity
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CostBillingDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
 components:
   schemas:
     OrganizationDTO:
@@ -2855,7 +3711,86 @@ components:
         organizationId:
           type: integer
           format: int64
-    CloudEnvironmentDTO:
+    ProductDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        type:
+          type: string
+        organizationId:
+          type: integer
+          format: int64
+        departmentId:
+          type: integer
+          format: int64
+        status:
+          type: string
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+        createdOn:
+          type: string
+        updatedOn:
+          type: string
+    ProductEnclaveDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        instanceName:
+          type: string
+        instanceId:
+          type: string
+        landingZone:
+          type: string
+        state:
+          type: string
+        metadata:
+          type: object
+        status:
+          type: string
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+        createdOn:
+          type: string
+        updatedOn:
+          type: string
+        departmentId:
+          type: integer
+          format: int64
+    BudgetDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        allocatedBudget:
+          type: integer
+          format: int64
+        budgetJson:
+          type: object
+        organizationId:
+          type: integer
+          format: int64
+        status:
+          type: string
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+        createdOn:
+          type: string
+        updatedOn:
+          type: string
+    LandingzoneDTO:
       type: object
       properties:
         id:
@@ -2863,7 +3798,7 @@ components:
           format: int64
         description:
           type: string
-        accountId:
+        landingZone:
           type: string
         cloud:
           type: string
@@ -2894,6 +3829,8 @@ components:
           format: int64
         summaryJson:
           type: object
+        status:
+          type: string
         createdBy:
           type: string
         updatedBy:
@@ -2902,7 +3839,7 @@ components:
           type: string
         updatedOn:
           type: string
-        cloudEnvironmentId:
+        landingzoneId:
           type: integer
           format: int64
     CloudElementDTO:
@@ -2911,18 +3848,18 @@ components:
         id:
           type: integer
           format: int64
-        instanceId:
-          type: string
         elementType:
           type: string
-        arn:
-          type: string
-        cloudEntity:
-          type: object
-        hardwareLocation:
-          type: object
         hostedServices:
           type: object
+        arn:
+          type: string
+        instanceId:
+          type: string
+        instanceName:
+          type: string
+        category:
+          type: string
         slaJson:
           type: object
         costJson:
@@ -2933,8 +3870,6 @@ components:
           type: object
         complianceJson:
           type: object
-        tagStatus:
-          type: string
         status:
           type: string
         createdBy:
@@ -2945,10 +3880,16 @@ components:
           type: string
         updatedOn:
           type: string
-        cloudEnvironmentId:
+        landingzoneId:
           type: integer
           format: int64
-    MicroServiceDTO:
+        dbCategoryId:
+          type: integer
+          format: int64
+        productEnclaveId:
+          type: integer
+          format: int64
+    ModuleDTO:
       type: object
       properties:
         id:
@@ -2956,18 +3897,57 @@ components:
           format: int64
         name:
           type: string
-        department:
-          type: string
-        product:
-          type: string
-        environment:
-          type: string
-        serviceType:
+        productId:
+          type: integer
+          format: int64
+        productEnvId:
+          type: integer
+          format: int64
+        moduleNature:
           type: string
         serviceTopology:
           type: object
-        businessLocation:
+        metadata:
           type: object
+        status:
+          type: string
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+        createdOn:
+          type: string
+        updatedOn:
+          type: string
+    BusinessElementDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        serviceName:
+          type: string
+        serviceNature:
+          type: string
+        serviceType:
+          type: string
+        metadata:
+          type: object
+        cloudElementId:
+          type: integer
+          format: int64
+        departmentId:
+          type: integer
+          format: int64
+        productId:
+          type: integer
+          format: int64
+        moduleId:
+          type: integer
+          format: int64
+        productEnvId:
+          type: integer
+          format: int64
         slaJson:
           type: object
         costJson:
@@ -2975,8 +3955,6 @@ components:
         viewJson:
           type: object
         configJson:
-          type: object
-        service:
           type: object
         complianceJson:
           type: object
@@ -2990,13 +3968,7 @@ components:
           type: string
         updatedOn:
           type: string
-        departmentId:
-          type: integer
-          format: int64
-        deploymentEnvironmentId:
-          type: integer
-          format: int64
-    DeploymentEnvironmentDTO:
+    ProductEnvDTO:
       type: object
       properties:
         id:
@@ -3014,6 +3986,9 @@ components:
           type: string
         updatedOn:
           type: string
+        productId:
+          type: integer
+          format: int64
     DbCategoryDTO:
       type: object
       properties:
@@ -3032,6 +4007,9 @@ components:
           type: string
         updatedOn:
           type: string
+        organizationId:
+          type: integer
+          format: int64
     EnvironmentCountQueryDTO:
       type: object
       properties:
@@ -3049,6 +4027,9 @@ components:
           format: int64
         cloud:
           type: string
+        landingZone:
+          type: integer
+          format: int64
     EnvironmentSummaryQueryDTO:
       type: object
       properties:
@@ -3059,15 +4040,14 @@ components:
         productEnclave:
           type: integer
           format: int64
-        product:
+        totalProduct:
           type: integer
           format: int64
-        appService:
+        totalProductProdEnv:
           type: integer
           format: int64
-        dataService:
-          type: integer
-          format: int64
+        overallCost:
+          $ref: '#/components/schemas/BillingDTO'
     CloudElementVpcDTO:
       type: object
       properties:
@@ -3242,3 +4222,36 @@ components:
         totalElements:
           type: integer
           format: int64
+    CostAnalyticDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        total:
+          type: integer
+          format: int64
+        percentage:
+          type: string
+    CostBillingDTO:
+      type: object
+      properties:
+        landingZone:
+          type: integer
+          format: int64
+        elementName:
+          type: string
+        costJson:
+          type: string
+    BillingDTO:
+      type: object
+      properties:
+        landingZone:
+          type: string
+        countryCode:
+          type: string
+        currencyCode:
+          type: string
+        currencySymbol:
+          type: string
+        total:
+          type: string
