@@ -115,9 +115,9 @@ class Environments extends Component {
             <Box className="environment-box" key={env.cloud}>
               <Box className="environment-title">
                 <Box className="environment-image">
-                  <img src={LOGOS[env.cloud.toUpperCase()]} alt={env.cloud} />
+                  <img src={LOGOS[env?.cloud?.toUpperCase()]} alt={env.cloud} />
                 </Box>
-                <Box className="title-name">{env.cloud.toUpperCase()}</Box>
+                <Box className="title-name">{env?.cloud?.toUpperCase()}</Box>
               </Box>
               <Box className="data-contant">
                 <List>
@@ -374,9 +374,9 @@ class Environments extends Component {
                           }}
                         ></i>
                         <Box className="environment-image">
-                          <img src={LOGOS[item.cloud.toUpperCase()]} alt="" />
+                          <img src={LOGOS[item?.cloud?.toUpperCase()]} alt="" />
                         </Box>
-                        <strong>{item.cloud}</strong>
+                        <strong>{item?.cloud}</strong>
                       </TableCell>
                       <TableCell align="center">Product Enclave</TableCell>
                       <TableCell align="center">Products</TableCell>
@@ -422,7 +422,7 @@ class Environments extends Component {
           (item) => {
             if (
               item.landingZone.includes(value) ||
-              item.cloud.includes(value.toLowerCase())
+              item?.cloud?.includes(value.toLowerCase())
             ) {
               return item;
             }

@@ -97,10 +97,10 @@ class BusinessAssociationMapping extends Component {
     let { selectedActiveBAMLevels, BAMData } = this.state;
     if (data.length) {
       return data.map((level, currentLevelIndex) => {
+        let currentLevel = `selectedLevel_${selectedLevel}`;
         let isActive =
-          selectedActiveBAMLevels[`selectedLevel_${selectedLevel}`]?.id ===
-          currentLevelIndex;
-        let elementId = `selectedLevel_${selectedLevel}_${currentLevelIndex}`;
+          selectedActiveBAMLevels[currentLevel]?.id === currentLevelIndex;
+        let elementId = `${currentLevel}_${currentLevelIndex}`;
         let relationsData = isActive
           ? this.onClickLevelsThenDrawLine(selectedLevel)
           : [];
@@ -188,11 +188,10 @@ class BusinessAssociationMapping extends Component {
       this.props.setBreadCrumbs(selectedActiveBAMLevels, BAMData);
       this.setState({ selectedActiveBAMLevels, BAMData });
     } else {
-      if (selectedActiveBAMLevels[currentSelectedLevelIndex]) {
-        if (
-          selectedActiveBAMLevels[currentSelectedLevelIndex]?.id ===
-          currentLevelIndex
-        ) {
+      let activeBAMLevel = selectedActiveBAMLevels[currentSelectedLevelIndex];
+
+      if (activeBAMLevel) {
+        if (activeBAMLevel?.id === currentLevelIndex) {
           // Remove all selected level greater than current selected level
           Object.keys(selectedActiveBAMLevels).forEach((item, inIndex) => {
             let level = item.split("_")[1];

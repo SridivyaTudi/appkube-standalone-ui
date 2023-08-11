@@ -393,7 +393,7 @@ class SpendAnalytics extends Component {
         };
 
         diagramData.forEach((diagramCloud) => {
-          if (cloud === diagramCloud.cloud.toLowerCase()) {
+          if (cloud === diagramCloud?.cloud?.toLowerCase()) {
             let monthIndex = labels.findIndex((label) =>
               diagramCloud.month.startsWith(label)
             );

@@ -98,7 +98,7 @@ class CostAnalysis extends Component {
    */
   renderBarsData = (data) => {
     const JSX = [];
-    data.map((item, index) => {
+    data && data.map((item, index) => {
       if (index !== data.length - 1) {
         JSX.push(
           <ListItem key={v4()}>
@@ -145,7 +145,7 @@ class CostAnalysis extends Component {
                         <Box className="heading">
                           <h3>Product Wise Cost</h3>
                           <Box className="product-cost">
-                            {productWiseCostData.length ? (
+                            {productWiseCostData && productWiseCostData.length ? (
                               <>
                                 <label>
                                   $
@@ -165,7 +165,7 @@ class CostAnalysis extends Component {
                             className="d-flex chart"
                             style={{ width: "60%" }}
                           >
-                            {productWiseCostData.length ? (
+                            {productWiseCostData && productWiseCostData.length ? (
                               <Doughnut
                                 data={this.manipulateDoughData(
                                   productWiseCostData
@@ -197,7 +197,7 @@ class CostAnalysis extends Component {
                         <Box className="heading">
                           <h3>Production Vs Others</h3>
                           <Box className="product-cost">
-                            {productionVsOthersData.length ? (
+                            {productionVsOthersData && productionVsOthersData.length ? (
                               <label>
                                 $
                                 {productionVsOthersData[
@@ -243,7 +243,8 @@ class CostAnalysis extends Component {
                         <Box className="heading">
                           <h3>Service Type Wise Cost </h3>
                           <Box className="product-cost">
-                            {serviceTypeWiseCostData.length ? (
+                            {serviceTypeWiseCostData &&
+                            serviceTypeWiseCostData.length ? (
                               <label>
                                 $
                                 {serviceTypeWiseCostData[
