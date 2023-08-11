@@ -3,7 +3,6 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Grid, Button, Box, List, ListItem } from "@mui/material";
 import { v4 } from "uuid";
 
-
 class AccountStepsPopup extends Component {
   steps = {
     STEP1: 0,
@@ -106,7 +105,6 @@ class AccountStepsPopup extends Component {
         step3FormData[name] = value;
       }
     }
-
     this.setState({ step3FormData, step4FormData });
   };
 
@@ -244,32 +242,10 @@ class AccountStepsPopup extends Component {
    */
   validateFormSteps = (isSubmit) => {
     let { activeStep } = this.state;
-    let { STEP1, STEP2, STEP3, STEP4 } = this.steps;
 
-    let { isValid: isValidStep1, errors: step1Errors } =
-      this.validateStep1(isSubmit);
-    if (!isValidStep1 && activeStep === STEP1) {
-      return step1Errors;
-    }
+    let { isValid, errors } = this[`validateStep${activeStep + 1}`](isSubmit);
+    if (!isValid) return errors;
 
-    let { isValid: isValidStep2, errors: step2Errors } =
-      this.validateStep2(isSubmit);
-    if (!isValidStep2 && activeStep === STEP2) {
-      return step2Errors;
-    }
-
-    let { isValid: isValidStep3, errors: step3Errors } =
-      this.validateStep3(isSubmit);
-    if (!isValidStep3 && activeStep === STEP3) {
-      return step3Errors;
-    }
-
-    let { isValid: isValidStep4, errors: step4Errors } =
-      this.validateStep4(isSubmit);
-
-    if (!isValidStep4 && activeStep === STEP4) {
-      return step4Errors;
-    }
     return {};
   };
 
@@ -303,41 +279,14 @@ class AccountStepsPopup extends Component {
   };
 
   /**
-   * Checkbox html render of step3 form
+   * Checkbox html render of step - 3 or 4form
    */
-  renderCheckBoxStep3 = () => {
-    let {
-      step3FormData: { resources },
-    } = this.state;
-    return this.resources.map((resource, resourceIndex) => {
-      return (
-        <li key={v4()}>
-          <Box className="d-flex align-items-center checkbox">
-            <input
-              className="checkbox-input"
-              type="checkbox"
-              name={resource}
-              id={`${resource}_${resourceIndex}`}
-              checked={
-                resources.filter((resourceName) => resourceName === resource)
-                  .length
-              }
-              onChange={(e) => this.handleStep3Or4(e, 1)}
-            />
-            <label for={`${resource}_${resourceIndex}`}>{resource}</label>
-          </Box>
-        </li>
-      );
-    });
-  };
+  renderCheckBoxStep3Or4 = () => {
+    let { step3FormData, step4FormData, activeStep } = this.state;
+    let { STEP4 } = this.steps;
 
-  /**
-   * Checkbox html render of step4 form
-   */
-  renderCheckBoxStep4 = () => {
-    let {
-      step4FormData: { resources },
-    } = this.state;
+    let { resources } = activeStep === STEP4 ? step4FormData : step3FormData;
+
     return this.resources.map((resource, resourceIndex) => {
       return (
         <li key={v4()}>
@@ -364,29 +313,22 @@ class AccountStepsPopup extends Component {
   renderStepsProgress = () => {
     let { activeStep } = this.state;
     let { STEP2, STEP3, STEP4 } = this.steps;
+    let step1ActiveClass = [STEP2, STEP3, STEP4];
+    let step2ActiveClass = {
+      [STEP2]: "active-25",
+      [STEP3]: "active-auto",
+      [STEP4]: "active",
+    };
+
     return (
       <List className="steps">
         <ListItem
-          className={
-            activeStep === STEP2 || activeStep === STEP3 || activeStep === STEP4
-              ? "active"
-              : ""
-          }
+          className={step1ActiveClass.includes(activeStep) ? "active" : ""}
         >
           <span></span>
           <p>Select your Failover AWS Account</p>
         </ListItem>
-        <ListItem
-          className={
-            activeStep === STEP2
-              ? "active-25"
-              : activeStep === STEP3
-              ? "active-auto"
-              : activeStep === STEP4
-              ? "active"
-              : ""
-          }
-        >
+        <ListItem className={step2ActiveClass[activeStep] || ""}>
           <span></span>
           <p>Let’s Connect / Mirror your account</p>
         </ListItem>
@@ -429,36 +371,19 @@ class AccountStepsPopup extends Component {
 
   //  Fire click event on continue button
   onClickContinueBtn = () => {
-    let { STEP1, STEP2, STEP3, STEP4 } = this.steps;
     let { activeStep } = this.state;
 
     this.setState({ isSubmit: true }, () => {
-      const { isValid } =
-        activeStep === STEP1
-          ? this.validateStep1(true)
-          : activeStep === STEP2
-          ? this.validateStep2(true)
-          : activeStep === STEP3
-          ? this.validateStep3(true)
-          : activeStep === STEP4
-          ? this.validateStep4(true)
-          : false;
+      activeStep = activeStep + 1;
+      const { isValid } = this[`validateStep${activeStep}`](true);
 
       if (isValid) {
-        let nextStep =
-          activeStep === STEP1
-            ? STEP2
-            : activeStep === STEP2
-            ? STEP3
-            : activeStep === STEP3
-            ? STEP4
-            : 0;
-        if (activeStep === STEP4) {
+        if (activeStep === 4) {
           this.toggle();
         }
         this.setState({
           isSubmit: false,
-          activeStep: nextStep,
+          activeStep,
         });
       }
     });
@@ -466,17 +391,8 @@ class AccountStepsPopup extends Component {
 
   //  Fire click event on back button
   onClickBackBtn = () => {
-    let { STEP1, STEP2, STEP3, STEP4 } = this.steps;
     let { activeStep } = this.state;
-
-    activeStep =
-      activeStep === STEP2
-        ? STEP1
-        : activeStep === STEP3
-        ? STEP2
-        : activeStep === STEP4
-        ? STEP3
-        : 0;
+    activeStep = activeStep - 1;
     this.setState({ activeStep, isSubmit: false });
   };
 
@@ -635,7 +551,7 @@ class AccountStepsPopup extends Component {
             </Box>
             <Box className="form-group">
               <label>Select specific resources</label>
-              <ul>{this.renderCheckBoxStep3()}</ul>
+              <ul>{this.renderCheckBoxStep3Or4()}</ul>
               <span
                 className="red"
                 style={{ fontSize: "12px", marginTop: "5px" }}
@@ -669,7 +585,7 @@ class AccountStepsPopup extends Component {
         <>
           <div className="account-form">
             <Box className="form-group">
-              <label htmlFor="application">Define your resourcesByTag</label>
+              <label htmlFor="application">Define your application</label>
               <input
                 className="form-control"
                 type="text"
@@ -708,7 +624,7 @@ class AccountStepsPopup extends Component {
             </Box>
             <Box className="form-group">
               <label>Select specific resources</label>
-              <ul>{this.renderCheckBoxStep4()}</ul>
+              <ul>{this.renderCheckBoxStep3Or4()}</ul>
               <span
                 className="red"
                 style={{ fontSize: "12px", marginTop: "5px" }}
