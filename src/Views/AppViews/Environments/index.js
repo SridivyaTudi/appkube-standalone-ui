@@ -228,11 +228,11 @@ class Environments extends Component {
       }));
       const {
         menuSummaryShowMenu,
-        compliantShowMenu,
         searchedEnvSummary,
         collapsedTableIndex,
         envSummary,
       } = this.state;
+      console.log(envSummary);
       let retData = [];
       if (envSummary.length > 0) {
         searchedEnvSummary.map((item, envIndex) => {
@@ -256,43 +256,46 @@ class Environments extends Component {
                 <TableCell align="center">
                   {account.productEnclave} VPC
                 </TableCell>
-                <TableCell align="center">{account.product}</TableCell>
-                <TableCell align="center">{account.productionEnv}</TableCell>
-                <TableCell align="center">{account.overallCost ? `$${account.overallCost}` : ''}</TableCell>
+                <TableCell align="center">{account.totalProduct}</TableCell>
+                <TableCell align="center">
+                  {account.totalProductProdEnv}
+                </TableCell>
+                <TableCell align="center">
+                  {account.overallCost ? `$${account.overallCost.total}` : ""}
+                </TableCell>
                 <TableCell align="center">
                   <HtmlTooltip
                     className="table-tooltip"
                     title={
                       <React.Fragment>
                         <Box className="compliant-list">
-                        <List>
-                          <ListItem>
-                            <span>
-                              <img src={isoImage} alt="" />
-                            </span>{" "}
-                            ISO 27001 Compliant
-                          </ListItem>
-                          <ListItem>
-                            <span>
-                              <img src={pciImage} alt="" />
-                            </span>{" "}
-                            PCI DSS Compliant
-                          </ListItem>
-                          <ListItem>
-                            <span>
-                              <img src={hipaaImage} alt="" />
-                            </span>{" "}
-                            HIPAA Compliant
-                          </ListItem>
-                        </List>
-                      </Box>
+                          <List>
+                            <ListItem>
+                              <span>
+                                <img src={isoImage} alt="" />
+                              </span>{" "}
+                              ISO 27001 Compliant
+                            </ListItem>
+                            <ListItem>
+                              <span>
+                                <img src={pciImage} alt="" />
+                              </span>{" "}
+                              PCI DSS Compliant
+                            </ListItem>
+                            <ListItem>
+                              <span>
+                                <img src={hipaaImage} alt="" />
+                              </span>{" "}
+                              HIPAA Compliant
+                            </ListItem>
+                          </List>
+                        </Box>
                       </React.Fragment>
                     }
                   >
-                    <Button
-                    className="compliance-btn">
-                    {account.compliance} Compliance
-                  </Button>
+                    <Button className="compliance-btn">
+                      {account.compliance} Compliance
+                    </Button>
                   </HtmlTooltip>
                 </TableCell>
                 <TableCell align="center">
@@ -537,7 +540,6 @@ class Environments extends Component {
   };
 
   render() {
-    
     const {
       isRecentVisitedEnvMenuOpen,
       isAddNewEnvironmentShown,
@@ -546,7 +548,7 @@ class Environments extends Component {
       showFilterPopup,
       filters,
     } = this.state;
-    
+
     return (
       <div className="environment-container">
         <Box className="list-heading">

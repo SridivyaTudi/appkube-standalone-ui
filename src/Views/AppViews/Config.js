@@ -18,8 +18,8 @@ const config = {
   GET_MONTHLY_STATISTICS: `/query/organization/#org-id#/analytics/spend-analytics/monthly-statistics`,
 
   /* ENVIRONMENT SERVICES  */
-  GET_ALL_ENVIRONMENT_COUNT: `/query/organization/#org-id#/cloud-environments/count`,
-  GET_ALL_ENVIRONMENT_SUMMARY: `/query/organization/#org-id#/cloud-environments/summary`,
+  GET_ALL_ENVIRONMENT_COUNT: `/query/organization/#org-id#/environment/count`,
+  GET_ALL_ENVIRONMENT_SUMMARY: `/query/organization/#org-id#/environment/summary-list`,
   GET_ALL_ORG_WISE_DEPARTMENTS: `/organization/#org-id#`,
   GET_DEPARTMENT_WISE_DATA: `/department-wise-analytics/get-data`,
   GET_ENVIRONMENT_DATA: `${baseURL}/query/organization/#org-id#/landing-zone/#landing-zone-id#/infra-topology`,
