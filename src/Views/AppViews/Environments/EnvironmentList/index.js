@@ -161,7 +161,7 @@ class EnvironmentList extends Component {
               }`}
           >
             <Box className="image">
-              <img src={LOGOS[singleEnvironmentCountData.cloud?.toUpperCase()]} />
+              <img src={LOGOS[singleEnvironmentCountData?.cloud?.toUpperCase()]} />
             </Box>
             <Box className="name">{cloudName}</Box>
             <Box

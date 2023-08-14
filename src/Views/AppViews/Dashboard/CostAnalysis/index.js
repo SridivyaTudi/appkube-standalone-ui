@@ -84,7 +84,7 @@ class CostAnalysis extends Component {
         },
       ],
     };
-    data.map((item, index) => {
+    data && data.map((item, index) => {
       if (index !== data.length - 1) {
         doughData.datasets[0].data.push(item.total);
         doughData.datasets[0].backgroundColor.push(colorPallate[index]);
