@@ -9,7 +9,7 @@ export class Error extends Component {
         <Box className="error-left">
           <Box className="error-contant-left">
             <h1>404</h1>
-            <h3>OPPS! PAGE NOT FOUND</h3>
+            <h3>OPPS! PAGE NOT FOUND</h3> 
             <p>
               Sorry. the page you're looking for doesn't exit. if you think
               something is broken. report a problem.
