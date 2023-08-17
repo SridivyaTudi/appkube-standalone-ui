@@ -143,18 +143,19 @@ class DiscoveredAssets extends Component {
     });
   }
 
-  /** Render table level-1 data . */
-  renderTableLevel1Data() {
-    let { dataOfTableLevel1 } = this.state;
-    return dataOfTableLevel1.map((vpc, index) => {
-      return (
+  /** Render Table for 3 Tier Tab */
+  render3TierTableData() {
+    let { data } = this.state;
+    const tableBodyJSX = [];
+    data.productEnclaveList.map((vpc, index) => {
+      tableBodyJSX.push(
         <TableRow key={v4()}>
-          <TableCell align="center">{vpc.name}</TableCell>
-          <TableCell align="center">{vpc.product_count}</TableCell>
-          <TableCell align="center">{vpc.app_count}</TableCell>
-          <TableCell align="center">{vpc.app_count}</TableCell>
-          <TableCell align="center">{vpc.data_count}</TableCell>
-          <TableCell align="center">{vpc.data_count}</TableCell>
+          <TableCell align="center">{vpc.id}</TableCell>
+          <TableCell align="center">{vpc.threeTier.productCount}</TableCell>
+          <TableCell align="center">{vpc.threeTier.webCount}</TableCell>
+          <TableCell align="center">{vpc.threeTier.appCount}</TableCell>
+          <TableCell align="center">{vpc.threeTier.dataCount}</TableCell>
+          <TableCell align="center">{vpc.threeTier.auxiliaryCount}</TableCell>
           <TableCell align="center">
             <IconButton
               aria-label="delete"
@@ -196,68 +197,7 @@ class DiscoveredAssets extends Component {
         </TableRow>
       );
     });
-  }
-
-  /** Render table level-2 data . */
-  renderTableLevel2Data() {
-    let { dataOfTableLevel1 } = this.state;
-    return dataOfTableLevel1.map((vpc, index) => {
-      return (
-        <TableRow key={v4()}>
-          <TableCell align="center">{vpc.name}</TableCell>
-          <TableCell align="center">{vpc.product_count}</TableCell>
-          <TableCell align="center">{vpc.app_count}</TableCell>
-          <TableCell align="center">{vpc.data_count}</TableCell>
-          <TableCell align="center">{vpc.data_count}</TableCell>
-          <TableCell align="center">
-            <IconButton
-              aria-label="delete"
-              size="small"
-              onClick={() => this.toggleMenu(index)}
-              className="list-icon"
-            >
-              <i className="fas fa-ellipsis-v"></i>
-            </IconButton>
-
-            {this.state.showMenu === index && (
-              <>
-                <Box
-                  className="open-create-menu-close"
-                  onClick={() => this.toggleMenu(index)}
-                ></Box>
-                <Box className="menu-list">
-                  <List>
-                    <ListItem>
-                      <a href="#">Add New datasource</a>
-                    </ListItem>
-                    <ListItem>
-                      <a href="#">Add Compliance</a>
-                    </ListItem>
-                    <ListItem>
-                      <a href="#">Associate to OU</a>
-                    </ListItem>
-                    <ListItem>
-                      <a href="#">Add New VPC</a>
-                    </ListItem>
-                    <ListItem>
-                      <a href="#">Add New Product</a>
-                    </ListItem>
-                  </List>
-                </Box>
-              </>
-            )}
-          </TableCell>
-        </TableRow>
-      );
-    });
-  }
-
-  /** Render the table level-1 html. */
-  renderTableLevel1Html() {
-    let { dataOfTableLevel1, cloudName } = this.state;
-    if (!dataOfTableLevel1.length) return null;
-    const cloudLogo = LOGOS[cloudName?.toUpperCase()];
-    return (
+    const TableJSX = [
       <Box className="discovered-table" style={{ height: "415px" }}>
         <TableContainer className="table">
           <Table className="discovered-table-inner">
@@ -265,7 +205,7 @@ class DiscoveredAssets extends Component {
               <TableRow>
                 <TableCell>
                   <Box className="environment-image">
-                    <img src={cloudLogo} alt={cloudName} />
+                    <img src={LOGOS["aws".toUpperCase()]} alt={"aws"} />
                   </Box>
                 </TableCell>
                 <TableCell>Products</TableCell>
@@ -276,19 +216,68 @@ class DiscoveredAssets extends Component {
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>{this.renderTableLevel1Data()}</TableBody>
+            <TableBody>{tableBodyJSX}</TableBody>
           </Table>
         </TableContainer>
-      </Box>
-    );
+      </Box>,
+    ];
+    return TableJSX;
   }
 
-  /** Render the table level-2 html. */
-  renderTableLevel2Html() {
-    let { dataOfTableLevel1, cloudName } = this.state;
-    if (!dataOfTableLevel1.length) return null;
-    const cloudLogo = LOGOS[cloudName.toUpperCase()];
-    return (
+  /**Render Table for Soa Tab */
+  renderSoaTableData() {
+    let { data } = this.state;
+    const tableBodyJSX = [];
+    data.productEnclaveList.map((vpc, index) => {
+      tableBodyJSX.push(
+        <TableRow key={v4()}>
+          <TableCell align="center">{vpc.id}</TableCell>
+          <TableCell align="center">{vpc.soa.productCount}</TableCell>
+          <TableCell align="center">{vpc.soa.appCount}</TableCell>
+          <TableCell align="center">{vpc.soa.dataCount}</TableCell>
+          <TableCell align="center">{vpc.soa.otherCount}</TableCell>
+          <TableCell align="center">
+            <IconButton
+              aria-label="delete"
+              size="small"
+              onClick={() => this.toggleMenu(index)}
+              className="list-icon"
+            >
+              <i className="fas fa-ellipsis-v"></i>
+            </IconButton>
+
+            {this.state.showMenu === index && (
+              <>
+                <Box
+                  className="open-create-menu-close"
+                  onClick={() => this.toggleMenu(index)}
+                ></Box>
+                <Box className="menu-list">
+                  <List>
+                    <ListItem>
+                      <a href="#">Add New datasource</a>
+                    </ListItem>
+                    <ListItem>
+                      <a href="#">Add Compliance</a>
+                    </ListItem>
+                    <ListItem>
+                      <a href="#">Associate to OU</a>
+                    </ListItem>
+                    <ListItem>
+                      <a href="#">Add New VPC</a>
+                    </ListItem>
+                    <ListItem>
+                      <a href="#">Add New Product</a>
+                    </ListItem>
+                  </List>
+                </Box>
+              </>
+            )}
+          </TableCell>
+        </TableRow>
+      );
+    });
+    const TableJSX = [
       <Box className="discovered-table" style={{ height: "415px" }}>
         <TableContainer className="table">
           <Table className="discovered-table-inner">
@@ -296,7 +285,7 @@ class DiscoveredAssets extends Component {
               <TableRow>
                 <TableCell>
                   <Box className="environment-image">
-                    <img src={cloudLogo} alt={cloudName} />
+                    <img src={LOGOS.AWS} alt={"aws".toUpperCase()} />
                   </Box>
                 </TableCell>
                 <TableCell>Products</TableCell>
@@ -306,21 +295,12 @@ class DiscoveredAssets extends Component {
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>{this.renderTableLevel2Data()}</TableBody>
+            <TableBody>{tableBodyJSX}</TableBody>
           </Table>
         </TableContainer>
-      </Box>
-    );
-  }
-
-  /** Search vpcs data. */
-  filterVpcsData(searchString) {
-    // let { productEnclaveList, globalServiceList } =
-    //   this.getEnvironmentDataByLandingZone();
-    // if (productEnclaveList) {
-    //   this.prepareDataTableLevel1(productEnclaveList, searchString);
-    // }
-    // this.setState({ searchString });
+      </Box>,
+    ];
+    return TableJSX;
   }
 
   /** Get productEnclaveList and globalServiceList using envDataByLandingZone. */
@@ -339,74 +319,6 @@ class DiscoveredAssets extends Component {
           globalServiceList: envDataByLandingZone.data?.globalServiceList,
         }
       : {};
-  };
-
-  /** Prepare specific format table level1 data. */
-  prepareDataTableLevel1 = (envData, searchStr = "") => {
-    let vpcs = [];
-    for (let envIndex = 0; envIndex < envData.length; envIndex++) {
-      let details = {
-        name: "",
-        product_count: 0,
-        app_count: 0,
-        data_count: 0,
-      };
-      details.name = envData[envIndex].name;
-      const hostingTypeList = envData[envIndex].hostingTypeList;
-      hostingTypeList.forEach((hostingType) => {
-        const categories = hostingType.category;
-        categories.forEach((category) => {
-          if (category.category === TABLE_LEVEL_1.APP) {
-            details.app_count += category.elementList.length;
-          } else if (category.category === TABLE_LEVEL_1.DATA) {
-            details.data_count += category.elementList.length;
-          }
-        });
-      });
-      vpcs.push(details);
-    }
-    if (searchStr) {
-      vpcs = vpcs.filter((vpc) =>
-        vpc.name.toLowerCase().includes(searchStr.toLowerCase())
-      );
-    }
-    this.setState({
-      dataOfTableLevel1: vpcs,
-    });
-  };
-
-  /** Prepare specific format data of topology view data. */
-  prepareDataTopologyViewComponent = (envData) => {
-    const { cloudName, accountId } = this.state;
-    let formatData = {
-      label: "Account ID",
-      subLabel: accountId,
-      image: LOGOS?.[cloudName?.toUpperCase()],
-      children: [[], []],
-    };
-    let prepareData = [];
-
-    for (let envIndex = 0; envIndex < envData.length; envIndex++) {
-      let obj = {
-        label: envData[envIndex].name,
-        id: envData[envIndex].id,
-        type: TOPOLOGY_VIEW_TYPE.VPC,
-        image: VpcServicesIcon,
-        children: [],
-      };
-
-      prepareData.push(obj);
-    }
-    formatData.children = [prepareData, []];
-    this.setState({ dataOfLevel1: formatData });
-  };
-
-  /** Get landingZone from url. */
-  getLandingZone = () => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const landingZone = urlParams.get("landingZone");
-    return landingZone;
   };
 
   getCurrentActiveTreeLevel = (label, isLevel2Data = 0) => {
@@ -569,12 +481,13 @@ class DiscoveredAssets extends Component {
                       </Box>
                     </Box>
                   </Box>
-                  {currentActiveNodeLabel.includes("vpc") ? (
-                    <></>
-                  ) : activeTierTab === "3Tier" && !currentActiveNodeLabel ? (
-                    this.renderTableLevel1Html()
+                  {activeTierTab === "3Tier" && Object.keys(data).length > 0 ? (
+                    this.render3TierTableData()
+                  ) : activeTierTab === "Soa" &&
+                    Object.keys(data).length > 0 ? (
+                    this.renderSoaTableData()
                   ) : (
-                    this.renderTableLevel2Html()
+                    <></>
                   )}
                   <Box className="fliter-tabs global-service-penal">
                     {currentActiveNodeLabel.includes("vpc") ? (
