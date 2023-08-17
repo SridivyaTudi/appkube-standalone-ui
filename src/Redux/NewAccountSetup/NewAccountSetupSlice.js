@@ -3,6 +3,7 @@ import status from "Redux/Constants/CommonDS";
 import {
   createNewOU,
   addCloudEnv,
+  addLandingZone,
 } from "Redux/NewAccountSetup/NewAccountSetupThunk";
 
 export const organizationalUnitSlice = createSlice({
@@ -19,6 +20,9 @@ export const organizationalUnitSlice = createSlice({
     addCloudEnvState: {
       status: null,
     },
+    addLandingZoneState: {
+      status: null,
+    }
   },
   reducers: {},
   extraReducers: {
@@ -67,6 +71,30 @@ export const organizationalUnitSlice = createSlice({
       return {
         ...state,
         addCloudEnvState: {
+          status: status.FAILURE,
+        },
+      };
+    },
+    [addLandingZone.pending]: (state) => {
+      return {
+        ...state,
+        addLandingZoneState: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [addLandingZone.fulfilled]: (state) => {
+      return {
+        ...state,
+        addLandingZoneState: {
+          status: status.SUCCESS,
+        },
+      };
+    },
+    [addLandingZone.rejected]: (state) => {
+      return {
+        ...state,
+        addLandingZoneState: {
           status: status.FAILURE,
         },
       };

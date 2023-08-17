@@ -30,3 +30,18 @@ export const addCloudEnv = createAsyncThunk(
     }
   }
 );
+
+export const addLandingZone = createAsyncThunk(
+  "organizationalUnitThunk/addLandingZone",
+  async (params) => {
+    const url = config.ADD_LANDING_ZONE;
+    try {
+      const response = await postLoginService.post(url, params, {
+        headers: { "Content-Type": "application/json" },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
