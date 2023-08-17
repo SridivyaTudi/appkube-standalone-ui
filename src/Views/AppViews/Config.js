@@ -23,6 +23,7 @@ const config = {
   GET_ALL_ORG_WISE_DEPARTMENTS: `/organization/#org-id#`,
   GET_DEPARTMENT_WISE_DATA: `/department-wise-analytics/get-data`,
   GET_ENVIRONMENT_DATA: `${baseURL}/query/organization/#org-id#/landing-zone/#landing-zone-id#/infra-topology`,
+  GET_INFRA_TOPOLOGY_DATA: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone/#landing-zone-id#`,
   GET_DEPARTMENTS: `${baseURL}/departments/search?organizationId=`,
   GET_ENVIRONMENTS: `/cloud-environments`,
   GET_ORG_WISE_DEPARTMENTS: `${baseURL}/query/organization/#org-id#/departments`,

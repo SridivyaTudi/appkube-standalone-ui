@@ -10,9 +10,7 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import status from "Redux/Constants/CommonDS";
-import {
-  getSingleEnvironmentCountData,
-} from "Redux/EnvironmentData/EnvironmentDataThunk";
+import { getSingleEnvironmentCountData } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { connect } from "react-redux";
 import { LOGOS } from "CommonData";
 import { v4 } from "uuid";
@@ -20,7 +18,6 @@ import { getCurrentOrgId } from "Utils";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-
 
 class EnvironmentList extends Component {
   tabMapping = [
@@ -82,15 +79,15 @@ class EnvironmentList extends Component {
     const params = {
       orgId: getCurrentOrgId(),
       cloud: queryPrm.get("cloudName"),
-      landingZone: queryPrm.get("landingZone")
+      landingZone: queryPrm.get("landingZone"),
     };
-    this.props.getSingleEnvironmentCountData(params);
+    // this.props.getSingleEnvironmentCountData(params);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
     if (
       prevProps.singleEnvironmentCountData.status !==
-      this.props.singleEnvironmentCountData.status &&
+        this.props.singleEnvironmentCountData.status &&
       this.props.singleEnvironmentCountData.status === status.SUCCESS
     ) {
       this.setState({
@@ -157,11 +154,14 @@ class EnvironmentList extends Component {
         </Box>
         <Box className="services-panel">
           <Box
-            className={`services-panel-title p-t-10 p-b-10 ${showLandingZoneDetails ? "bottom-border" : ""
-              }`}
+            className={`services-panel-title p-t-10 p-b-10 ${
+              showLandingZoneDetails ? "bottom-border" : ""
+            }`}
           >
             <Box className="image">
-              <img src={LOGOS[singleEnvironmentCountData?.cloud?.toUpperCase()]} />
+              <img
+                src={LOGOS[singleEnvironmentCountData?.cloud?.toUpperCase()]}
+              />
             </Box>
             <Box className="name">{cloudName}</Box>
             <Box
@@ -169,8 +169,9 @@ class EnvironmentList extends Component {
               onClick={() => this.toggleLandingZoneDetails("filterShow")}
             >
               <i
-                className={`fa ${showLandingZoneDetails ? "fa-caret-down" : "fa-caret-right"
-                  }`}
+                className={`fa ${
+                  showLandingZoneDetails ? "fa-caret-down" : "fa-caret-right"
+                }`}
               ></i>
             </Box>
           </Box>

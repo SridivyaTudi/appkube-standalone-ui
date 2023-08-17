@@ -19,6 +19,7 @@ class TopologyView extends Component {
       // at level 2, sublevel 0, index 1 is active.
       activeView: [0, -1],
       currentActiveNode: "",
+      topologyData: this.props.data,
     };
   }
 
@@ -31,7 +32,7 @@ class TopologyView extends Component {
   };
 
   renderBody = () => {
-    const data = fakeData;
+    const data = this.state.topologyData;
     const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
     const { activeView } = this.state;
     return (
@@ -104,19 +105,23 @@ class TopologyView extends Component {
                     >
                       <div className="d-flex">
                         <div className="account-image">
-                          <img src={data.image} alt="aws image" />
+                          {/* <img src={data.image} alt="aws image" /> */}
                         </div>
                         <div className="account-id">
                           <span id="custom_location_1" className="d-block">
-                            {data.label}
+                            {data.landingZone}
                           </span>
                           <span className="d-block">{data.subLabel}</span>
                         </div>
                       </div>
                     </div>
                   </ArcherElement>
-                  {data.children.length ? (
-                    this.renderChildNodes(data.children, 1, activeView)
+                  {data.productEnclaveList.length ? (
+                    this.renderChildNodes(
+                      data.productEnclaveList,
+                      1,
+                      activeView
+                    )
                   ) : (
                     <></>
                   )}
@@ -141,18 +146,19 @@ class TopologyView extends Component {
       }
       const childJSX = [];
       nodes.map((item, sublevelIndex) => {
+        item = [item];
         if (item.length > 0) {
           retData.push(
             <ul>
               {item.map((item, nodeIndex) => {
-                if (item.children.length > 0) {
+                if (item.productEnclaveList?.length > 0) {
                   if (
                     activeSublevel === sublevelIndex &&
                     activeNode === nodeIndex
                   ) {
                     childJSX.push(
                       this.renderChildNodes(
-                        item.children,
+                        item.productEnclaveList,
                         currentLevel + 1,
                         activeView
                       )
@@ -162,7 +168,7 @@ class TopologyView extends Component {
                 return (
                   <ArcherElement
                     key={v4()}
-                    id={item.label}
+                    id={item.id}
                     relations={[
                       {
                         targetId:
@@ -183,9 +189,9 @@ class TopologyView extends Component {
                           ? "active"
                           : ""
                       }
-                      id={item.label}
+                      id={item.id}
                       onClick={() => {
-                        this.setState({ currentActiveNode: item.label }, () => {
+                        this.setState({ currentActiveNode: item.id }, () => {
                           this.zoomToElementCallback();
                         });
                         this.handleNodeClick(
@@ -196,9 +202,9 @@ class TopologyView extends Component {
                       }}
                     >
                       <span>
-                        <img src={item.image} alt={item.label} />
+                        {/* <img src={item.image} alt={item.id} /> */}
                       </span>
-                      {this.getServiceName(item.label)}
+                      {this.getServiceName(item.id)}
                     </li>
                   </ArcherElement>
                 );
@@ -219,25 +225,117 @@ class TopologyView extends Component {
     return retData;
   };
 
+  // renderChildNodes = (nodes, currentLevel, activeView) => {
+  //   let retData = [];
+  //   const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
+  //   if (activeView.length > currentLevel) {
+  //     let activeSublevel = -1;
+  //     let activeNode = -1;
+  //     if (activeView[currentLevel] !== -1) {
+  //       activeSublevel = parseInt(activeView[currentLevel].split(".")[0]);
+  //       activeNode = parseInt(activeView[currentLevel].split(".")[1]);
+  //     }
+  //     const childJSX = [];
+  //     nodes.map((item, sublevelIndex) => {
+  //       if (item.length > 0) {
+  //         retData.push(
+  //           <ul>
+  //             {item.map((item, nodeIndex) => {
+  //               if (item.children.length > 0) {
+  //                 if (
+  //                   activeSublevel === sublevelIndex &&
+  //                   activeNode === nodeIndex
+  //                 ) {
+  //                   childJSX.push(
+  //                     this.renderChildNodes(
+  //                       item.children,
+  //                       currentLevel + 1,
+  //                       activeView
+  //                     )
+  //                   );
+  //                 }
+  //               }
+  //               return (
+  //                 <ArcherElement
+  //                   key={v4()}
+  //                   id={item.label}
+  //                   relations={[
+  //                     {
+  //                       targetId:
+  //                         activeSublevel === sublevelIndex &&
+  //                         activeNode === nodeIndex
+  //                           ? this.getTargetId(currentLevel + 1)
+  //                           : "",
+  //                       targetAnchor: "left",
+  //                       sourceAnchor: "right",
+  //                       style: strokeStyles,
+  //                     },
+  //                   ]}
+  //                 >
+  //                   <li
+  //                     className={
+  //                       activeSublevel === sublevelIndex &&
+  //                       activeNode === nodeIndex
+  //                         ? "active"
+  //                         : ""
+  //                     }
+  //                     id={item.label}
+  //                     onClick={() => {
+  //                       this.setState({ currentActiveNode: item.label }, () => {
+  //                         this.zoomToElementCallback();
+  //                       });
+  //                       this.handleNodeClick(
+  //                         currentLevel,
+  //                         sublevelIndex,
+  //                         nodeIndex
+  //                       );
+  //                     }}
+  //                   >
+  //                     <span>
+  //                       <img src={item.image} alt={item.label} />
+  //                     </span>
+  //                     {this.getServiceName(item.label)}
+  //                   </li>
+  //                 </ArcherElement>
+  //               );
+  //             })}
+  //           </ul>
+  //         );
+  //       }
+  //     });
+  //     retData = [
+  //       <div className="global-servies" style={{ marginLeft: "50px" }}>
+  //         {retData}
+  //       </div>,
+  //     ];
+  //     if (childJSX.length > 0) {
+  //       retData.push(childJSX);
+  //     }
+  //   }
+  //   return retData;
+  // };
+
   getTargetId = (currentLevel) => {
     const activeNode = this.getChild(currentLevel);
     if (activeNode) {
-      return activeNode.label;
+      return activeNode.id;
     }
     return "";
   };
 
   getChild = (level) => {
-    const { data, activeView } = this.state;
-    let retData = data;
+    const { activeView } = this.state;
+    let retData = JSON.parse(JSON.stringify(this.state.topologyData));
     for (let i = 0; i <= level; i++) {
       if (i === 0) {
-        retData = data;
+        retData = JSON.parse(JSON.stringify(this.state.topologyData));
       } else {
         if (activeView[i] && activeView[i] !== -1) {
           let activeSublevel = parseInt(activeView[i].split(".")[0]);
           let activeNode = parseInt(activeView[i].split(".")[1]);
-          retData = retData.children[activeSublevel][activeNode];
+          let newArray = [retData.productEnclaveList[activeSublevel]];
+          retData.productEnclaveList[activeSublevel] = newArray;
+          retData = retData.productEnclaveList[activeSublevel][activeNode];
         } else {
           retData = null;
           break;

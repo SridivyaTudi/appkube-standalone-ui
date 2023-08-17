@@ -4,11 +4,12 @@ import { postLoginService } from "Services";
 
 export const getEnvironmentDataByLandingZone = createAsyncThunk(
   "environmentData/getEnvironmentDataByLandingZone",
-  async (landingZone) => {
-    const url = config.GET_ENVIRONMENT_DATA.replace(
+  async (params) => {
+    let url = config.GET_INFRA_TOPOLOGY_DATA.replace(
       "#landing-zone-id#",
-      landingZone
+      params.landingZone
     );
+    url = url.replace("#org-id#", params.orgID);
     try {
       const response = await postLoginService.get(url);
       return response;

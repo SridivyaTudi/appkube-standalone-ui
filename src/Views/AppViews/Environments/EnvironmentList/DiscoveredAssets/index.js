@@ -26,6 +26,7 @@ import AssociateApp from "Views/AppViews/Environments/EnvironmentList/Discovered
 import { v4 } from "uuid";
 import { LOGOS } from "CommonData";
 import { getEnvironmentDataByLandingZone } from "Redux/EnvironmentData/EnvironmentDataThunk";
+import { getCurrentOrgId } from "Utils";
 
 const TABLE_LEVEL_1 = {
   APP: "App",
@@ -50,6 +51,7 @@ class DiscoveredAssets extends Component {
         selectedLevel1: "",
         selectedLevel2: "",
       },
+      data: {},
       searchString: "",
       accountId: queryPrm.get("landingZone"),
       dataOfTableLevel1: [],
@@ -64,7 +66,12 @@ class DiscoveredAssets extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getEnvironmentDataByLandingZone(this.state.accountId);
+    const queryPrm = new URLSearchParams(document.location.search);
+    const landingZone = queryPrm.get("landingZone");
+    this.props.getEnvironmentDataByLandingZone({
+      orgID: getCurrentOrgId(),
+      landingZone: landingZone,
+    });
   };
 
   componentDidUpdate = async (prevProps, prevState) => {
@@ -73,15 +80,7 @@ class DiscoveredAssets extends Component {
         this.props.envDataByLandingZone.status &&
       this.props.envDataByLandingZone.status === status.SUCCESS
     ) {
-      let { productEnclaveList, globalServiceList } =
-        this.getEnvironmentDataByLandingZone();
-      if (productEnclaveList) {
-        this.prepareDataTableLevel1(productEnclaveList);
-        this.prepareDataTopologyViewComponent(
-          productEnclaveList,
-          globalServiceList
-        );
-      }
+      this.setState({ data: this.props.envDataByLandingZone.data });
     }
   };
 
@@ -97,6 +96,7 @@ class DiscoveredAssets extends Component {
       });
     }
   };
+
   /** Render the BreadCrumbs of Topologyview. */
   renderBreadCrumbs() {
     let { breadcrumbs } = this.state;
@@ -315,13 +315,12 @@ class DiscoveredAssets extends Component {
 
   /** Search vpcs data. */
   filterVpcsData(searchString) {
-    let { productEnclaveList, globalServiceList } =
-      this.getEnvironmentDataByLandingZone();
-
-    if (productEnclaveList) {
-      this.prepareDataTableLevel1(productEnclaveList, searchString);
-    }
-    this.setState({ searchString });
+    // let { productEnclaveList, globalServiceList } =
+    //   this.getEnvironmentDataByLandingZone();
+    // if (productEnclaveList) {
+    //   this.prepareDataTableLevel1(productEnclaveList, searchString);
+    // }
+    // this.setState({ searchString });
   }
 
   /** Get productEnclaveList and globalServiceList using envDataByLandingZone. */
@@ -475,6 +474,7 @@ class DiscoveredAssets extends Component {
       breadcrumbs,
       activeTierTab,
       isClusterShow,
+      data,
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
@@ -490,8 +490,9 @@ class DiscoveredAssets extends Component {
               <Grid
                 container
                 rowSpacing={1}
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={5} >
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={5}>
                   <Box className="services-panel">
                     <Box className="services-panel-title bottom-border">
                       <Box className="name">Infra Topology View</Box>
@@ -500,12 +501,16 @@ class DiscoveredAssets extends Component {
                       </Box>
                     </Box>
                     <Box className="services-panel-body">
-                      <TopologyView
-                        data={dataOfLevel1}
-                        setLevel={this.getCurrentActiveTreeLevel}
-                        selectedBreadCrumbs={breadcrumbs}
-                        parentCssClass="infra-toplogy-view"
-                      />
+                      {Object.keys(data).length > 0 ? (
+                        <TopologyView
+                          data={data}
+                          setLevel={this.getCurrentActiveTreeLevel}
+                          selectedBreadCrumbs={breadcrumbs}
+                          parentCssClass="infra-toplogy-view"
+                        />
+                      ) : (
+                        <></>
+                      )}
                     </Box>
                   </Box>
                 </Grid>
