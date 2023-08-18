@@ -267,7 +267,7 @@ export class AssociateApp extends Component {
               className="primary-text-btn min-width"
               component={Link}
               variant="contained"
-              to={`${APP_PREFIX_PATH}/environments/associatechartapp`}
+              to={`${APP_PREFIX_PATH}/environments/associatechartapp?elementType=${data.elementType}&elementId=${data.id}`}
             >
               Associate App
             </Button>

@@ -6,6 +6,7 @@ import authReducer from "Redux/Auth/AuthSlice";
 import environmentDataReducer from "Redux/EnvironmentData/EnvironmentDataSlice";
 import dashboardReducer from "Redux/Dashboard/DashboardSlice";
 import settingsReducer from "Redux/Settings/SettingsSlice";
+import associateAppReducer from "Redux/AssociateApp/AssociateAppSlice";
 
 const store = configureStore({
   reducer: {
@@ -15,7 +16,9 @@ const store = configureStore({
     newAccountSetup: newAccountReducer,
     environmentData: environmentDataReducer,
     dashboard: dashboardReducer,
-    settings: settingsReducer
+    settings: settingsReducer,
+    associateApp:associateAppReducer
+
   },
 });
 

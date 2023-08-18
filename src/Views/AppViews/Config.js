@@ -35,6 +35,12 @@ const config = {
   ADD_LANDING_ZONE: `${baseURL}/landingzone`,
   INFRA_TOPOLOGY_CLOUD_ELEMENT_LIST: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone/#landing-zone-id#/product-enclave/#product-enclave#/cloud-elements`,
   INFRA_TOPOLOGY_CATEGORY_WISE_VIEW: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone/#landing-zone-id#/product-enclave/#product-enclave#/category-wise-summary`,
+
+  /* AssociateApp  */
+  GET_ASSOCIATE_DEPARTMENTS:`${baseURL}/organization/search?organizationDTO=#org-id#`,
+  GET_ASSOCIATE_PRODUCT_LIST:`${baseURL}/product/search?departmentId=#department-id#`,
+  GET_ASSOCIATE_PRODUCT_ENV:`${baseURL}/product-env/search?productId=#product-id#`
+
 };
 
 export default config;

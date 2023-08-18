@@ -336,6 +336,14 @@ export class AssociateChartApp extends Component {
     return breadcrumbs;
   }
 
+  getAssociateIdOrType() {
+    const queryPrm = new URLSearchParams(document.location.search);
+    const elementType = queryPrm.get("elementType");
+    const elementId = queryPrm.get("elementId");
+
+    return { elementId, elementType };
+  }
+
   render() {
     const {
       isSelectDepartmentOpen,
@@ -355,7 +363,7 @@ export class AssociateChartApp extends Component {
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
             <Grid item xs={8}>
-              <h4>Business Association Mapping (ECS:123D569Y)</h4>
+              <h4>Business Association Mapping ({this.getAssociateIdOrType().elementType}:{this.getAssociateIdOrType().elementId})</h4>
             </Grid>
             <Grid item xs={4}>
               <Box className="text-right">
