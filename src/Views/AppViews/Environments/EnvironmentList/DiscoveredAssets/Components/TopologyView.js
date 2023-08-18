@@ -80,12 +80,12 @@ class TopologyView extends Component {
                     height: "100%",
                   }}
                   contentStyle={{
-                    width: `${this.state.activeView.length * 200}px`,
+                    width: `464px`,
                     height: "100%",
                     transform: "translate(0px, 0px) scale(0)",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                   }}
                 >
                   <ArcherElement
@@ -105,7 +105,9 @@ class TopologyView extends Component {
                     >
                       <div className="d-flex">
                         <div className="account-image">
-                          {/* <img src={data.image} alt="aws image" /> */}
+                          {data.image && (
+                            <img src={data.image} alt="aws image" />
+                          )}
                         </div>
                         <div className="account-id">
                           <span id="custom_location_1" className="d-block">

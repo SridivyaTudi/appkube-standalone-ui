@@ -53,7 +53,7 @@ class TopologyView extends Component {
                       <i className="fa-solid fa-minus"></i>
                     </button>
                   </div>
-                  <div
+                  {/* <div
                     className="gmnoprint-map"
                     onClick={() => {
                       this.zoomToElementCallback(300);
@@ -62,7 +62,7 @@ class TopologyView extends Component {
                     <button className="btn btn-map">
                       <i className="fa-solid fa-map-marker-alt"></i>
                     </button>
-                  </div>
+                  </div> */}
                 </div>
                 <TransformComponent
                   wrapperStyle={{
@@ -75,7 +75,7 @@ class TopologyView extends Component {
                     transform: "translate(0px, 0px) scale(0)",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                   }}
                 >
                   <ArcherElement
@@ -90,20 +90,15 @@ class TopologyView extends Component {
                     ]}
                   >
                     <div
-                      className="services-text-box active"
+                      className="topology-text-box active"
                       id={`${data.label}`}
                     >
-                      <div className="d-flex">
-                        <div className="account-image">
-                          <img src={data.image} alt="aws image" />
-                        </div>
-                        <div className="account-id">
-                          <span id="custom_location_1" className="d-block">
-                            {data.label}
-                          </span>
-                          <span className="d-block">{data.subLabel}</span>
-                        </div>
+                      <div className="account-image">
+                        <img src={data.image} alt="aws image" />
                       </div>
+                      <span id="custom_location_1" className="d-inline-flex">
+                        {data.label}
+                      </span>
                     </div>
                   </ArcherElement>
                   {data.children.length ? (
@@ -205,9 +200,9 @@ class TopologyView extends Component {
                       }
                       id={item.label}
                       onClick={() => {
-                        this.setState({ currentActiveNode: item.label }, () => {
-                          this.zoomToElementCallback();
-                        });
+                        // this.setState({ currentActiveNode: item.label }, () => {
+                        //   this.zoomToElementCallback();
+                        // });
                         this.handleNodeClick(
                           currentLevel,
                           sublevelIndex,
@@ -228,7 +223,7 @@ class TopologyView extends Component {
         }
       });
       retData = [
-        <div className="global-servies" style={{ marginLeft: "50px" }}>
+        <div className="global-servies">
           {retData}
         </div>,
       ];
@@ -252,13 +247,13 @@ class TopologyView extends Component {
     });
   };
 
-  zoomToElementCallback = (animationTime) => {
-    zoomElement(
-      this.state.currentActiveNode,
-      transformScale,
-      animationTime ? animationTime : 0
-    );
-  };
+  // zoomToElementCallback = (animationTime) => {
+  //   zoomElement(
+  //     this.state.currentActiveNode,
+  //     transformScale,
+  //     animationTime ? animationTime : 0
+  //   );
+  // };
 
   /** Get name in form of capitalize. */
   getServiceName(name) {

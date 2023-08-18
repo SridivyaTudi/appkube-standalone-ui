@@ -139,7 +139,7 @@
             position: relative;
             margin-right: 70px;
             vertical-align: text-top;
-            width: 28%;
+            width: 100px;
             height: 48px;
             font-size: 14px;
             line-height: 18px;
@@ -168,7 +168,7 @@
 
           .global-servies {
             display: inline-flex;
-            width: 40%;
+            width: 160px;
             flex-wrap: wrap;
             margin-right: 0px;
 
@@ -449,12 +449,12 @@
           flex-wrap: wrap;
           margin-top: 20px;
           .primary-btn {
-            p {
-              display: inline-block;
-              margin: 0 5px 0 0;
-              img {
-                max-width: 16px;
-              }
+            img {
+              max-width: 16px;
+              padding: 2px;
+              border-radius: 2px;
+              margin-right: 5px;
+              background-color: #ffffff;
             }
           }
           .balancer-boxs {
