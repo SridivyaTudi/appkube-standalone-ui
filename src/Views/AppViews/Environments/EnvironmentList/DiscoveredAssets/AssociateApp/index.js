@@ -3,227 +3,12 @@ import { Button, Box } from "@mui/material";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { Link } from "react-router-dom";
 import clusterIcon from "assets/img/assetmanager/cluster-icon.png";
-import webLayerIcon from "assets/img/assetmanager/web-layer-icon.png";
-import dataLayerIcon from "assets/img/assetmanager/data-layer-icon.png";
-import appLayerIcon from "assets/img/assetmanager/app-layer-icon.png";
 import { v4 } from "uuid";
 
 export class AssociateApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataTierSoc: [
-        {
-          ec2Id: "125636",
-          tierData: [
-            {
-              icon: webLayerIcon,
-              label: "Web Layer",
-              layer: "01",
-            },
-            {
-              icon: appLayerIcon,
-              label: "App Layer",
-              layer: "04",
-            },
-            {
-              icon: dataLayerIcon,
-              label: "Data Layer",
-              layer: "03",
-            },
-            {
-              icon: dataLayerIcon,
-              label: "Auxiliary Layer",
-              layer: "03",
-            },
-          ],
-          socData: [
-            {
-              icon: webLayerIcon,
-              label: "App Service",
-              layer: "01",
-            },
-            {
-              icon: appLayerIcon,
-              label: "Data Service",
-              layer: "04",
-            },
-            {
-              icon: dataLayerIcon,
-              label: "Other Service",
-              layer: "03",
-            },
-          ],
-        },
-        {
-          ec2Id: "125268",
-          tierData: [
-            {
-              icon: webLayerIcon,
-              label: "Web Layer",
-              layer: "01",
-            },
-            {
-              icon: appLayerIcon,
-              label: "App Layer",
-              layer: "04",
-            },
-            {
-              icon: appLayerIcon,
-              label: "Data Layer",
-              layer: "03",
-            },
-            {
-              icon: dataLayerIcon,
-              label: "Auxiliary Layer",
-              layer: "03",
-            },
-          ],
-          socData: [
-            {
-              icon: webLayerIcon,
-              label: "App Service",
-              layer: "01",
-            },
-            {
-              icon: appLayerIcon,
-              label: "Data Service",
-              layer: "04",
-            },
-            {
-              icon: appLayerIcon,
-              label: "Other Service",
-              layer: "03",
-            },
-          ],
-        },
-        {
-          ec2Id: "416495",
-          tierData: [
-            {
-              icon: webLayerIcon,
-              label: "Web Layer",
-              layer: "01",
-            },
-            {
-              icon: appLayerIcon,
-              label: "App Layer",
-              layer: "04",
-            },
-            {
-              icon: appLayerIcon,
-              label: "Data Layer",
-              layer: "03",
-            },
-            {
-              icon: dataLayerIcon,
-              label: "Auxiliary Layer",
-              layer: "03",
-            },
-          ],
-          socData: [
-            {
-              icon: webLayerIcon,
-              label: "App Service",
-              layer: "01",
-            },
-            {
-              icon: appLayerIcon,
-              label: "Data Service",
-              layer: "04",
-            },
-            {
-              icon: appLayerIcon,
-              label: "Other Service",
-              layer: "03",
-            },
-          ],
-        },
-        {
-          ec2Id: "253614",
-          tierData: [
-            {
-              icon: webLayerIcon,
-              label: "Web Layer",
-              layer: "01",
-            },
-            {
-              icon: appLayerIcon,
-              label: "App Layer",
-              layer: "04",
-            },
-            {
-              icon: appLayerIcon,
-              label: "Data Layer",
-              layer: "03",
-            },
-            {
-              icon: dataLayerIcon,
-              label: "Auxiliary Layer",
-              layer: "03",
-            },
-          ],
-          socData: [
-            {
-              icon: webLayerIcon,
-              label: "App Service",
-              layer: "01",
-            },
-            {
-              icon: appLayerIcon,
-              label: "Data Service",
-              layer: "04",
-            },
-            {
-              icon: appLayerIcon,
-              label: "Other Service",
-              layer: "03",
-            },
-          ],
-        },
-        {
-          ec2Id: "778965",
-          tierData: [
-            {
-              icon: webLayerIcon,
-              label: "Web Layer",
-              layer: "01",
-            },
-            {
-              icon: appLayerIcon,
-              label: "App Layer",
-              layer: "04",
-            },
-            {
-              icon: appLayerIcon,
-              label: "Data Layer",
-              layer: "03",
-            },
-            {
-              icon: dataLayerIcon,
-              label: "Auxiliary Layer",
-              layer: "03",
-            },
-          ],
-          socData: [
-            {
-              icon: webLayerIcon,
-              label: "App Service",
-              layer: "01",
-            },
-            {
-              icon: appLayerIcon,
-              label: "Data Service",
-              layer: "04",
-            },
-            {
-              icon: appLayerIcon,
-              label: "Other Service",
-              layer: "03",
-            },
-          ],
-        },
-      ],
       activeTierTabIndexes: [],
     };
   }
@@ -261,7 +46,7 @@ export class AssociateApp extends Component {
               <span>
                 <img src={clusterIcon} alt="" />
               </span>
-              EC2 ID: {data.id}
+              {data.elementType} ID: {data.id}
             </h3>
             <Button
               className="primary-text-btn min-width"
@@ -314,7 +99,9 @@ export class AssociateApp extends Component {
                             <span>
                               <img src={item.icon} alt="" />
                             </span>
-                            <label>{item[0]}</label>
+                            <label>
+                              {this.convertStringToCapCase(item[0])}
+                            </label>
                             <strong>{item[1]}</strong>
                           </li>
                         );

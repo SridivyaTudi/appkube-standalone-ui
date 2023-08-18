@@ -9,7 +9,6 @@ import AppMesh from "assets/img/assetmanager/cloud-managed-icon7.png";
 import Kinesis from "assets/img/assetmanager/cloud-managed-icon8.png";
 import TimeSeries from "assets/img/assetmanager/cloud-managed-icon9.png";
 import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
-import dummyData from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/dummy.json";
 import AllServices from "./AllServices";
 import NoSqldb from "./NoSqldb";
 import GitDb from "./GitDb";
@@ -18,20 +17,7 @@ import LedgerDb from "./LedgerDb";
 import CacheDb from "./CacheDb";
 import ObjectDb from "./ObjectDb";
 import MetricsDb from "./MetricsDb";
-
-import {
-  Button,
-  Box,
-  Grid,
-  TableContainer,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  List,
-  ListItem,
-} from "@mui/material";
+import { Box, Grid, List, ListItem } from "@mui/material";
 
 class DataTable extends Component {
   tableMapping = [
@@ -127,34 +113,6 @@ class DataTable extends Component {
                     </List>
                   </Box>
                 </Box>
-                {/* <Box className="cloud-managed-tab">
-                  <List>
-                    <ListItem className="active">
-                      <a>All Services</a>
-                    </ListItem>
-                    <ListItem>
-                      <a>No SQLDB</a>
-                    </ListItem>
-                    <ListItem>
-                      <a>Git DB</a>
-                    </ListItem>
-                    <ListItem>
-                      <a>Search DB</a>
-                    </ListItem>
-                    <ListItem>
-                      <a>Ledger DB</a>
-                    </ListItem>
-                    <ListItem>
-                      <a>Cache DB</a>
-                    </ListItem>
-                    <ListItem>
-                      <a>Object DB</a>
-                    </ListItem>
-                    <ListItem>
-                      <a>Metrics DB</a>
-                    </ListItem>
-                  </List>
-                </Box> */}
               </Grid>
               <Grid item xs={9}>
                 <Box className="tabs-content m-t-0">
@@ -179,28 +137,6 @@ class DataTable extends Component {
                   )}
                 </Box>
               </Grid>
-              {/* <Grid item xs={8}>
-                <Box className="cloud-managed-cards">
-                  <Box className="cloud-managed-cards-scroll">
-                    {dummyData.cloudManagedServices.map((item, index) => {
-                      return (
-                        <Box className="service-card active">
-                          <Box className="service-icon">
-                            <img
-                              src={this.state.serivceImages[index]}
-                              alt="serviceicon"
-                            />
-                          </Box>
-                          <Box className="service-contant">
-                            <label>{item.name}</label>
-                            <strong>{item.value}</strong>
-                          </Box>
-                        </Box>
-                      );
-                    })}
-                  </Box>
-                </Box>
-              </Grid> */}
             </Grid>
           </Box>
         </Box>

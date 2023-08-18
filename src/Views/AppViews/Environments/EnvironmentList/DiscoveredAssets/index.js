@@ -54,6 +54,9 @@ class DiscoveredAssets extends Component {
       isClusterShow: false,
       currentActiveNode: "",
       cloudElementsData: [],
+      topologyCategoryWiseData: [],
+      currentActiveTopologyCategory: "",
+      selectedCategoryCloudElementsData: [],
     };
   }
 
@@ -84,11 +87,11 @@ class DiscoveredAssets extends Component {
         landingZone: landingZone,
         productEnclave: this.state.currentActiveNode,
       });
-      // this.props.getInfraTopologyCategoryWiseViewData({
-      //   orgID: orgId,
-      //   landingZone: landingZone,
-      //   productEnclave: this.state.currentActiveNode,
-      // });
+      this.props.getInfraTopologyCategoryWiseViewData({
+        orgID: orgId,
+        landingZone: landingZone,
+        productEnclave: this.state.currentActiveNode,
+      });
     }
 
     if (
@@ -96,10 +99,41 @@ class DiscoveredAssets extends Component {
         this.props.infraTopologyCloudElementList.status &&
       this.props.infraTopologyCloudElementList.status === status.SUCCESS
     ) {
+      this.setState(
+        {
+          cloudElementsData: this.props.infraTopologyCloudElementList.data,
+        },
+        () => {
+          this.setCurrentTopologyCategory(
+            this.props.infraTopologyCloudElementList.data[0].elementType
+          );
+        }
+      );
+    }
+
+    if (
+      prevProps.infraTopologyCategoryWiseData.status !==
+        this.props.infraTopologyCategoryWiseData.status &&
+      this.props.infraTopologyCategoryWiseData.status === status.SUCCESS
+    ) {
       this.setState({
-        cloudElementsData: this.props.infraTopologyCloudElementList.data,
+        topologyCategoryWiseData: this.props.infraTopologyCategoryWiseData.data,
+        currentActiveTopologyCategory:
+          this.props.infraTopologyCategoryWiseData.data[0].elementType,
       });
     }
+  };
+
+  setCurrentTopologyCategory = (category) => {
+    const { cloudElementsData } = this.state;
+    this.setState({ currentActiveTopologyCategory: category });
+    const newArray = [];
+    cloudElementsData.map((item) => {
+      if (item.elementType === category) {
+        newArray.push(item);
+      }
+    });
+    this.setState({ selectedCategoryCloudElementsData: newArray });
   };
 
   toggleMenu = (index) => {
@@ -160,6 +194,33 @@ class DiscoveredAssets extends Component {
       }
     });
   }
+
+  /**
+   * Fire click event bread-crumb of Topology
+   * @param {string} type - type of data, it includes cloudName,level-1 or level-2 .
+   */
+  onClickBreadCrumbOfTopology(type) {
+    let { selectedLevel1, selectedLevel2, cloudName, breadcrumbId } =
+      this.state.breadcrumbs;
+
+    breadcrumbId = v4();
+    if (type === "cloudName") {
+      selectedLevel1 = "";
+      selectedLevel2 = "";
+    } else if (type === "selectedLevel1") selectedLevel2 = "";
+
+    this.setState({
+      breadcrumbs: { breadcrumbId, cloudName, selectedLevel1, selectedLevel2 },
+    });
+  }
+
+  handleTierTabToggle = (type) => {
+    this.setState({ activeTierTab: type });
+  };
+
+  setCurrentActiveNode = (node) => {
+    this.setState({ currentActiveNode: node });
+  };
 
   /** Render Table for 3 Tier Tab */
   render3TierTableData() {
@@ -321,83 +382,15 @@ class DiscoveredAssets extends Component {
     return TableJSX;
   }
 
-  // /** Get productEnclaveList and globalServiceList using envDataByLandingZone. */
-  // getEnvironmentDataByLandingZone = () => {
-  //   const { envDataByLandingZone } = this.props;
-  //   let checkLengthEnvData = false;
-  //   try {
-  //     checkLengthEnvData =
-  //       envDataByLandingZone && Object.keys(envDataByLandingZone.data).length;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   return checkLengthEnvData
-  //     ? {
-  //         productEnclaveList: envDataByLandingZone.data?.productEnclaveList,
-  //         globalServiceList: envDataByLandingZone.data?.globalServiceList,
-  //       }
-  //     : {};
-  // };
-
-  /**
-   * Prepare bread crumbs of Topology
-   * @param {string} label - The label of the level-1 or level-2.
-   * @param {boolean} isLevel2Data - It is checked level-2 data.
-   */
-  prepareBreadCrumbs(label, isLevel2Data) {
-    let { breadcrumbs, currentVPC } = this.state;
-    let { selectedLevel1, selectedLevel2, cloudName, breadcrumbId } =
-      breadcrumbs;
-
-    if (isLevel2Data) {
-      selectedLevel2 = label;
-    } else {
-      selectedLevel1 = label;
-      selectedLevel2 = "";
-    }
-
-    this.setState({
-      breadcrumbs: { breadcrumbId, cloudName, selectedLevel1, selectedLevel2 },
-    });
-  }
-
-  /**
-   * Fire click event bread-crumb of Topology
-   * @param {string} type - type of data, it includes cloudName,level-1 or level-2 .
-   */
-  onClickBreadCrumbOfTopology(type) {
-    let { selectedLevel1, selectedLevel2, cloudName, breadcrumbId } =
-      this.state.breadcrumbs;
-
-    breadcrumbId = v4();
-    if (type === "cloudName") {
-      selectedLevel1 = "";
-      selectedLevel2 = "";
-    } else if (type === "selectedLevel1") selectedLevel2 = "";
-
-    this.setState({
-      breadcrumbs: { breadcrumbId, cloudName, selectedLevel1, selectedLevel2 },
-    });
-  }
-
-  handleTierTabToggle = (type) => {
-    this.setState({ activeTierTab: type });
-  };
-
-  setCurrentActiveNode = (node) => {
-    this.setState({ currentActiveNode: node });
-  };
-
   render() {
     const {
       currentActiveNodeLabel,
-      currentVPC,
-      breadcrumbs,
       activeTierTab,
       isClusterShow,
       data,
       currentActiveNode,
-      cloudElementsData,
+      topologyCategoryWiseData,
+      selectedCategoryCloudElementsData,
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
@@ -496,14 +489,24 @@ class DiscoveredAssets extends Component {
                   !currentActiveNode ? (
                     this.render3TierTableData()
                   ) : activeTierTab === "Soa" &&
-                    Object.keys(data).length > 0 ? (
+                    Object.keys(data).length > 0 &&
+                    !currentActiveNode ? (
                     this.renderSoaTableData()
                   ) : (
                     <></>
                   )}
                   <Box className="fliter-tabs global-service-penal">
                     {/* <ClusterDetails /> */}
-                    {currentActiveNode ? <CloudManagedDetails /> : <></>}
+                    {currentActiveNode ? (
+                      <CloudManagedDetails
+                        categoryData={topologyCategoryWiseData}
+                        setCurrentTopologyCategory={
+                          this.setCurrentTopologyCategory
+                        }
+                      />
+                    ) : (
+                      <></>
+                    )}
                     {/* <VpcDetails vpc={currentVPC} /> */}
                   </Box>
                 </Grid>
@@ -511,8 +514,8 @@ class DiscoveredAssets extends Component {
             </Box>
           )}
         </Box>
-        {cloudElementsData.length ? (
-          <AssociateApp data={cloudElementsData} />
+        {selectedCategoryCloudElementsData.length ? (
+          <AssociateApp data={selectedCategoryCloudElementsData} />
         ) : (
           <></>
         )}
