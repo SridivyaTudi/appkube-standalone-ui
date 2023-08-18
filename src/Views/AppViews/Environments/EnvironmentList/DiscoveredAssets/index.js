@@ -27,11 +27,10 @@ import { LOGOS } from "CommonData";
 import {
   getEnvironmentDataByLandingZone,
   GetInfraTopologyCloudElementList,
+  getInfraTopologyCategoryWiseViewData,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { getCurrentOrgId } from "Utils";
 
-const queryPrm = new URLSearchParams(document.location.search);
-const landingZone = queryPrm.get("landingZone");
 const orgId = getCurrentOrgId();
 
 class DiscoveredAssets extends Component {
@@ -59,6 +58,8 @@ class DiscoveredAssets extends Component {
   }
 
   componentDidMount = () => {
+    const queryPrm = new URLSearchParams(document.location.search);
+    const landingZone = queryPrm.get("landingZone");
     this.props.getEnvironmentDataByLandingZone({
       orgID: orgId,
       landingZone: landingZone,
@@ -66,6 +67,9 @@ class DiscoveredAssets extends Component {
   };
 
   componentDidUpdate = async (prevProps, prevState) => {
+    const queryPrm = new URLSearchParams(document.location.search);
+    const landingZone = queryPrm.get("landingZone");
+
     if (
       prevProps.envDataByLandingZone.status !==
         this.props.envDataByLandingZone.status &&
@@ -80,6 +84,11 @@ class DiscoveredAssets extends Component {
         landingZone: landingZone,
         productEnclave: this.state.currentActiveNode,
       });
+      // this.props.getInfraTopologyCategoryWiseViewData({
+      //   orgID: orgId,
+      //   landingZone: landingZone,
+      //   productEnclave: this.state.currentActiveNode,
+      // });
     }
 
     if (
@@ -312,23 +321,23 @@ class DiscoveredAssets extends Component {
     return TableJSX;
   }
 
-  /** Get productEnclaveList and globalServiceList using envDataByLandingZone. */
-  getEnvironmentDataByLandingZone = () => {
-    const { envDataByLandingZone } = this.props;
-    let checkLengthEnvData = false;
-    try {
-      checkLengthEnvData =
-        envDataByLandingZone && Object.keys(envDataByLandingZone.data).length;
-    } catch (error) {
-      console.log(error);
-    }
-    return checkLengthEnvData
-      ? {
-          productEnclaveList: envDataByLandingZone.data?.productEnclaveList,
-          globalServiceList: envDataByLandingZone.data?.globalServiceList,
-        }
-      : {};
-  };
+  // /** Get productEnclaveList and globalServiceList using envDataByLandingZone. */
+  // getEnvironmentDataByLandingZone = () => {
+  //   const { envDataByLandingZone } = this.props;
+  //   let checkLengthEnvData = false;
+  //   try {
+  //     checkLengthEnvData =
+  //       envDataByLandingZone && Object.keys(envDataByLandingZone.data).length;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   return checkLengthEnvData
+  //     ? {
+  //         productEnclaveList: envDataByLandingZone.data?.productEnclaveList,
+  //         globalServiceList: envDataByLandingZone.data?.globalServiceList,
+  //       }
+  //     : {};
+  // };
 
   /**
    * Prepare bread crumbs of Topology
@@ -513,13 +522,24 @@ class DiscoveredAssets extends Component {
 }
 
 function mapStateToProps(state) {
-  const { envDataByLandingZone, departments, infraTopologyCloudElementList } =
-    state.environmentData;
-  return { envDataByLandingZone, departments, infraTopologyCloudElementList };
+  const {
+    envDataByLandingZone,
+    departments,
+    infraTopologyCloudElementList,
+    infraTopologyCategoryWiseData,
+  } = state.environmentData;
+  return {
+    envDataByLandingZone,
+    departments,
+    infraTopologyCloudElementList,
+    infraTopologyCategoryWiseData,
+  };
 }
 
 const mapDispatchToProps = {
   getEnvironmentDataByLandingZone,
   GetInfraTopologyCloudElementList,
+  getInfraTopologyCategoryWiseViewData,
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(DiscoveredAssets);
