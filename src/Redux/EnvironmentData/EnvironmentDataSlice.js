@@ -3,6 +3,7 @@ import {
   getEnvironmentDataByLandingZone,
   getDepartments,
   getSingleEnvironmentCountData,
+  GetInfraTopologyCloudElementList,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -21,7 +22,12 @@ export const environmentDataSlice = createSlice({
       status: null,
       data: [],
     },
+    infraTopologyCloudElementList: {
+      status: null,
+      data: {},
+    },
   },
+
   extraReducers: {
     [getEnvironmentDataByLandingZone.pending]: (state, action) => {
       return {
@@ -100,6 +106,32 @@ export const environmentDataSlice = createSlice({
       return {
         ...state,
         singleEnvironmentCountData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [GetInfraTopologyCloudElementList.pending]: (state) => {
+      return {
+        ...state,
+        infraTopologyCloudElementList: {
+          status: status.initialState,
+        },
+      };
+    },
+    [GetInfraTopologyCloudElementList.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        infraTopologyCloudElementList: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [GetInfraTopologyCloudElementList.rejected]: (state) => {
+      return {
+        ...state,
+        infraTopologyCloudElementList: {
           status: status.FAILURE,
         },
       };

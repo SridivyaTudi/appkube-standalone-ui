@@ -49,3 +49,21 @@ export const getSingleEnvironmentCountData = createAsyncThunk(
     }
   }
 );
+
+export const GetInfraTopologyCloudElementList = createAsyncThunk(
+  "environmentData/getInfraTopologyCloudElementList",
+  async (params) => {
+    const url = config.INFRA_TOPOLOGY_CLOUD_ELEMENT_LIST.replace(
+      "#org-id#",
+      params.orgID
+    )
+      .replace("#landing-zone-id#", params.landingZone)
+      .replace("#product-enclave#", params.productEnclave);
+    try {
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

@@ -6,6 +6,7 @@ import clusterIcon from "assets/img/assetmanager/cluster-icon.png";
 import webLayerIcon from "assets/img/assetmanager/web-layer-icon.png";
 import dataLayerIcon from "assets/img/assetmanager/data-layer-icon.png";
 import appLayerIcon from "assets/img/assetmanager/app-layer-icon.png";
+import { v4 } from "uuid";
 
 export class AssociateApp extends Component {
   constructor(props) {
@@ -240,18 +241,27 @@ export class AssociateApp extends Component {
     this.setState({ activeTierTabIndexes });
   };
 
+  convertStringToCapCase = (string) => {
+    const result = string.replace(/([A-Z])/g, " $1");
+    const finalResult = result.charAt(0).toUpperCase() + result.slice(1);
+    return finalResult;
+  };
+
   renderTierSoc() {
-    let { dataTierSoc, activeTierTabIndexes } = this.state;
+    const { activeTierTabIndexes } = this.state;
+    const dataTierSoc = this.props.data;
     const JSX = [];
     dataTierSoc.map((data, index) => {
+      const tier3Data = Object.entries(data.threeTier);
+      const soaData = Object.entries(data.soa);
       JSX.push(
-        <Box className="tiersoc-box" key={data.ec2Id}>
+        <Box className="tiersoc-box" key={data.id}>
           <Box className="heading">
             <h3>
               <span>
                 <img src={clusterIcon} alt="" />
-              </span>{" "}
-              EC2 ID: {data.ec2Id}
+              </span>
+              EC2 ID: {data.id}
             </h3>
             <Button
               className="primary-text-btn min-width"
@@ -285,25 +295,27 @@ export class AssociateApp extends Component {
               <Box className="tier-contents">
                 <ul>
                   {!activeTierTabIndexes.includes(index)
-                    ? data.tierData.map((item) => {
+                    ? tier3Data.map((item) => {
                         return (
-                          <li key={item.layer}>
+                          <li key={v4()}>
                             <span>
                               <img src={item.icon} alt="" />
                             </span>
-                            <label>{item.label}</label>
-                            <strong>{item.layer}</strong>
+                            <label>
+                              {this.convertStringToCapCase(item[0])}
+                            </label>
+                            <strong>{item[1]}</strong>
                           </li>
                         );
                       })
-                    : data.socData.map((item) => {
+                    : soaData.map((item) => {
                         return (
-                          <li key={item.layer}>
+                          <li key={v4()}>
                             <span>
                               <img src={item.icon} alt="" />
                             </span>
-                            <label>{item.label}</label>
-                            <strong>{item.layer}</strong>
+                            <label>{item[0]}</label>
+                            <strong>{item[1]}</strong>
                           </li>
                         );
                       })}
@@ -331,8 +343,11 @@ export class AssociateApp extends Component {
   }
 
   render() {
-    const {} = this.state;
-    return <Box className="tiersoc-boxs">{this.renderTierSoc()}</Box>;
+    return (
+      <Box className="tiersoc-boxs">
+        {this.props.data.length ? this.renderTierSoc() : <></>}
+      </Box>
+    );
   }
 }
 export default AssociateApp;

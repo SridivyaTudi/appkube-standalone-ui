@@ -194,6 +194,7 @@ class TopologyView extends Component {
                         this.setState({ currentActiveNode: item.id }, () => {
                           this.zoomToElementCallback();
                         });
+                        this.props.setCurrentActiveNode(item.id);
                         this.handleNodeClick(
                           currentLevel,
                           sublevelIndex,

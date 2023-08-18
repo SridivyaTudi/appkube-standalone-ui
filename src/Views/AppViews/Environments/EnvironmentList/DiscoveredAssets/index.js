@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
 import CloudManagedDetails from "./CloudManagedDetails";
 import {
   IconButton,
@@ -25,19 +24,15 @@ import ClusterDetails from "./ClusterDetails";
 import AssociateApp from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/AssociateApp";
 import { v4 } from "uuid";
 import { LOGOS } from "CommonData";
-import { getEnvironmentDataByLandingZone } from "Redux/EnvironmentData/EnvironmentDataThunk";
+import {
+  getEnvironmentDataByLandingZone,
+  GetInfraTopologyCloudElementList,
+} from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { getCurrentOrgId } from "Utils";
 
-const TABLE_LEVEL_1 = {
-  APP: "App",
-  DATA: "Data",
-};
-
-const TOPOLOGY_VIEW_TYPE = {
-  VPC: "vpc",
-  CLUSTER: "cluster",
-  GLOBAL_SERVICE: "globalService",
-};
+const queryPrm = new URLSearchParams(document.location.search);
+const landingZone = queryPrm.get("landingZone");
+const orgId = getCurrentOrgId();
 
 class DiscoveredAssets extends Component {
   constructor(props) {
@@ -52,24 +47,20 @@ class DiscoveredAssets extends Component {
         selectedLevel2: "",
       },
       data: {},
-      searchString: "",
-      accountId: queryPrm.get("landingZone"),
-      dataOfTableLevel1: [],
-      dataOfLevel1: {},
       currentActiveNodeLabel: "",
       currentVPC: {},
       showMenu: null,
       cloudName,
       activeTierTab: "3Tier",
       isClusterShow: false,
+      currentActiveNode: "",
+      cloudElementsData: [],
     };
   }
 
   componentDidMount = () => {
-    const queryPrm = new URLSearchParams(document.location.search);
-    const landingZone = queryPrm.get("landingZone");
     this.props.getEnvironmentDataByLandingZone({
-      orgID: getCurrentOrgId(),
+      orgID: orgId,
       landingZone: landingZone,
     });
   };
@@ -81,6 +72,24 @@ class DiscoveredAssets extends Component {
       this.props.envDataByLandingZone.status === status.SUCCESS
     ) {
       this.setState({ data: this.props.envDataByLandingZone.data });
+    }
+
+    if (prevState.currentActiveNode !== this.state.currentActiveNode) {
+      this.props.GetInfraTopologyCloudElementList({
+        orgID: orgId,
+        landingZone: landingZone,
+        productEnclave: this.state.currentActiveNode,
+      });
+    }
+
+    if (
+      prevProps.infraTopologyCloudElementList.status !==
+        this.props.infraTopologyCloudElementList.status &&
+      this.props.infraTopologyCloudElementList.status === status.SUCCESS
+    ) {
+      this.setState({
+        cloudElementsData: this.props.infraTopologyCloudElementList.data,
+      });
     }
   };
 
@@ -321,18 +330,6 @@ class DiscoveredAssets extends Component {
       : {};
   };
 
-  getCurrentActiveTreeLevel = (label, isLevel2Data = 0) => {
-    this.setState({ currentActiveNodeLabel: label });
-    const currentVPC =
-      this.props.envDataByLandingZone.data.productEnclaveList.filter(
-        (item) => item.name === label
-      );
-    if (currentVPC.length) {
-      this.setState({ currentVPC: currentVPC[0] });
-    }
-    this.prepareBreadCrumbs(label, isLevel2Data);
-  };
-
   /**
    * Prepare bread crumbs of Topology
    * @param {string} label - The label of the level-1 or level-2.
@@ -378,15 +375,20 @@ class DiscoveredAssets extends Component {
     this.setState({ activeTierTab: type });
   };
 
+  setCurrentActiveNode = (node) => {
+    this.setState({ currentActiveNode: node });
+  };
+
   render() {
     const {
-      dataOfLevel1,
       currentActiveNodeLabel,
       currentVPC,
       breadcrumbs,
       activeTierTab,
       isClusterShow,
       data,
+      currentActiveNode,
+      cloudElementsData,
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
@@ -416,9 +418,8 @@ class DiscoveredAssets extends Component {
                       {Object.keys(data).length > 0 ? (
                         <TopologyView
                           data={data}
-                          setLevel={this.getCurrentActiveTreeLevel}
-                          selectedBreadCrumbs={breadcrumbs}
                           parentCssClass="infra-toplogy-view"
+                          setCurrentActiveNode={this.setCurrentActiveNode}
                         />
                       ) : (
                         <></>
@@ -481,7 +482,9 @@ class DiscoveredAssets extends Component {
                       </Box>
                     </Box>
                   </Box>
-                  {activeTierTab === "3Tier" && Object.keys(data).length > 0 ? (
+                  {activeTierTab === "3Tier" &&
+                  Object.keys(data).length > 0 &&
+                  !currentActiveNode ? (
                     this.render3TierTableData()
                   ) : activeTierTab === "Soa" &&
                     Object.keys(data).length > 0 ? (
@@ -490,33 +493,33 @@ class DiscoveredAssets extends Component {
                     <></>
                   )}
                   <Box className="fliter-tabs global-service-penal">
-                    {currentActiveNodeLabel.includes("vpc") ? (
-                      isClusterShow ? (
-                        <ClusterDetails />
-                      ) : (
-                        <CloudManagedDetails />
-                      )
-                    ) : (
-                      <VpcDetails vpc={currentVPC} />
-                    )}
+                    {/* <ClusterDetails /> */}
+                    {currentActiveNode ? <CloudManagedDetails /> : <></>}
+                    {/* <VpcDetails vpc={currentVPC} /> */}
                   </Box>
                 </Grid>
               </Grid>
             </Box>
           )}
         </Box>
-        {currentActiveNodeLabel.includes("vpc") ? <AssociateApp /> : <></>}
+        {cloudElementsData.length ? (
+          <AssociateApp data={cloudElementsData} />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const { envDataByLandingZone, departments } = state.environmentData;
-  return { envDataByLandingZone, departments };
+  const { envDataByLandingZone, departments, infraTopologyCloudElementList } =
+    state.environmentData;
+  return { envDataByLandingZone, departments, infraTopologyCloudElementList };
 }
 
 const mapDispatchToProps = {
   getEnvironmentDataByLandingZone,
+  GetInfraTopologyCloudElementList,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DiscoveredAssets);
