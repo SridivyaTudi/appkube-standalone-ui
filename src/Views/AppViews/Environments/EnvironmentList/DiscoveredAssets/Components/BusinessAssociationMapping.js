@@ -14,6 +14,9 @@ import { connect } from "react-redux";
 import calendarMouseIcon from "assets/img/assetmanager/calendar-mouse-icon.png";
 import chartLogo from "assets/img/assetmanager/chart-logo.png";
 import Box from "@mui/material/Box";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 
 const orgId = getCurrentOrgId();
 
@@ -39,6 +42,7 @@ const productCategory = {
   ["3 Tier"]: ["Web Layer", "App Layer", "Data Layer", "Auxilary Layer"],
   SOA: ["BUSINESS", "COMMON"],
 };
+let transformScale = 0;
 
 class BusinessAssociationMapping extends Component {
   constructor(props) {
@@ -246,21 +250,51 @@ class BusinessAssociationMapping extends Component {
     }
     return departmentLength ? (
       <ArcherContainer className="chart-container" startMarker>
-        <ArcherElement
-          id="root"
-          relations={this.onClickLevelsThenDrawLine()}
-          // className="chart-container"
+        <TransformWrapper
+          onTransformed={(instance) => {
+            transformScale = instance && instance.state.scale;
+            this.setState({ scale: true });
+          }}
         >
-          <div
-            className={"chart-box active"}
-            onClick={() => {
-              this.onClickSynectiks();
-            }}
-          >
-            <img src={chartLogo} alt="Logo" />
-          </div>
-        </ArcherElement>
-        {this.renderChildBody()}
+          {({ zoomIn, zoomOut, instance, zoomToElement, ...rest }) => {
+            transformScale = instance.transformState.scale;
+
+            return (
+              <>
+                <TransformComponent
+                  wrapperStyle={{
+                    width: `100%`,
+                    height: "100%",
+                  }}
+                  contentStyle={{
+                    // width: `464px`,
+                    // height: "100%",
+                    transform: "translate(0px, 0px) scale(0)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  <ArcherElement
+                    id="root"
+                    relations={this.onClickLevelsThenDrawLine()}
+                    // className="chart-container"
+                  >
+                    <div
+                      className={"chart-box active"}
+                      onClick={() => {
+                        this.onClickSynectiks();
+                      }}
+                    >
+                      <img src={chartLogo} alt="Logo" />
+                    </div>
+                  </ArcherElement>
+                  {this.renderChildBody()}
+                </TransformComponent>
+              </>
+            );
+          }}
+        </TransformWrapper>
       </ArcherContainer>
     ) : (
       ""
@@ -284,6 +318,20 @@ class BusinessAssociationMapping extends Component {
         let relationsData = isActive
           ? this.onClickLevelsThenDrawLine(selectedLevel)
           : [];
+        const HtmlTooltip = styled(({ className, ...props }) => (
+          <Tooltip {...props} arrow classes={{ popper: className }} />
+        ))(({ theme }) => ({
+          [`& .${tooltipClasses.arrow}`]: {
+            color: "#ffffffff",
+          },
+          [`& .${tooltipClasses.tooltip}`]: {
+            backgroundColor: "#ffffffff",
+            color: "rgba(0, 0, 0, 0.87)",
+            maxWidth: 200,
+            fontSize: theme.typography.pxToRem(12),
+            border: "1px solid #dadde9",
+          },
+        }));
         return (
           <ArcherElement id={elementId} relations={relationsData} key={v4()}>
             <li
@@ -307,7 +355,12 @@ class BusinessAssociationMapping extends Component {
                 <img src={level.image} alt={level.label} />
               </span>
               <div className="content">
-                <p>{level.label}</p>
+                <HtmlTooltip
+                 className="primary-tooltip"
+                  title={<React.Fragment>{level.label}</React.Fragment>}
+                >
+                  <p>{level.label}</p>
+                </HtmlTooltip>
                 {level.type === "Product" ? (
                   <div
                     className={`box ${
@@ -326,7 +379,7 @@ class BusinessAssociationMapping extends Component {
                 <i className="fa-solid fa-circle-plus"></i>
               ) : (
                 <></>
-              )}
+              )}{" "}
             </li>
           </ArcherElement>
         );
@@ -662,7 +715,7 @@ class BusinessAssociationMapping extends Component {
     } = selectedActiveBAMLevels;
 
     if (activeBAMLevel && activeBAMLevel?.id === moduleId) {
-      BAMData.length = 5;
+      BAMData.length = 6;
       selectedActiveBAMLevels = {
         selectedLevel_0,
         selectedLevel_1,
@@ -728,6 +781,20 @@ class BusinessAssociationMapping extends Component {
   };
 
   render() {
+    const HtmlTooltip = styled(({ className, ...props }) => (
+      <Tooltip {...props} arrow classes={{ popper: className }} />
+    ))(({ theme }) => ({
+      [`& .${tooltipClasses.arrow}`]: {
+        color: "#ffffffff",
+      },
+      [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: "#ffffffff",
+        color: "rgba(0, 0, 0, 0.87)",
+        maxWidth: 200,
+        fontSize: theme.typography.pxToRem(12),
+        border: "1px solid #dadde9",
+      },
+    }));
     return this.renderBAMMainBody();
   }
 }
