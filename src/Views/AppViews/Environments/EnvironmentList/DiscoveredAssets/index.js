@@ -478,7 +478,7 @@ class DiscoveredAssets extends Component {
                     <Box className="heading">
                       <Box className="breadcrumbs">
                         <ul>{this.renderBreadCrumbs()}</ul>
-                        {currentActiveNodeLabel.includes("vpc") ? (
+                        {currentActiveNode ? (
                           <FormControlLabel
                             control={<Checkbox />}
                             label="Show cluster"
@@ -507,8 +507,8 @@ class DiscoveredAssets extends Component {
                     <></>
                   )}
                   <Box className="fliter-tabs global-service-penal">
-                    {/* <ClusterDetails /> */}
-                    {currentActiveNode ? (
+                    {isClusterShow ? <ClusterDetails /> : <></>}
+                    {currentActiveNode && !isClusterShow ? (
                       this.renderCloudManagedDetails()
                     ) : (
                       <></>

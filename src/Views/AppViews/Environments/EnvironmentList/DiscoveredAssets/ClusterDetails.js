@@ -6,6 +6,7 @@ import EcsCluster from "./EcsCluster";
 import GlobalIcon4 from "assets/img/assetmanager/global-icon4.png";
 import GlobalIcon5 from "assets/img/assetmanager/global-icon5.png";
 import { v4 } from "uuid";
+
 class ClusterDetails extends React.Component {
   constructor(props) {
     super(props);
@@ -96,10 +97,9 @@ class ClusterDetails extends React.Component {
               </List>
             </Box>
           </Box>
-          
         </Box>
-        {/* {currentActiveCluster === "eksCluster" && <EksCluster />}
-        {currentActiveCluster === "ecsCluster" && <EcsCluster />} */}
+        {/* {currentActiveCluster === "eksCluster" && <EksCluster />} */}
+        {/* {currentActiveCluster === "ecsCluster" && <EcsCluster />} */}
       </>
     );
   }

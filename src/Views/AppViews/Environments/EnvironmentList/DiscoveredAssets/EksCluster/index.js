@@ -11,7 +11,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { v4  } from 'uuid';
+import { v4 } from "uuid";
 
 class EksCluster extends React.Component {
   constructor(props) {
@@ -39,7 +39,7 @@ class EksCluster extends React.Component {
             </Box>
           </Box>
         </Box>
-        <Box className="performance-section">
+        {/* <Box className="performance-section">
           <Box className="performance-head">
             <Box sx={{ width: "100%" }}>
               <Grid
@@ -126,7 +126,7 @@ class EksCluster extends React.Component {
               </TableContainer>
             </Box>
           </Box>
-        </Box>
+        </Box> */}
       </>
     );
   }
