@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getDepartments,
-  getProductList,getProductEnv
+  getProductList,
+  getProductEnv,
+  getModules,
+  getModuleElements,
 } from "Redux/AssociateApp/AssociateAppThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -17,7 +20,15 @@ export const AssociateAppSlice = createSlice({
       data: [],
     },
     productEnv: {
-      status:null,
+      status: null,
+      data: [],
+    },
+    modules: {
+      status: null,
+      data: [],
+    },
+    moduleElements: {
+      status: null,
       data: [],
     },
   },
@@ -101,6 +112,62 @@ export const AssociateAppSlice = createSlice({
       return {
         ...state,
         productEnv: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [getModules.pending]: (state, action) => {
+      return {
+        ...state,
+        modules: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getModules.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        modules: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getModules.rejected]: (state, action) => {
+      return {
+        ...state,
+        modules: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [getModuleElements.pending]: (state, action) => {
+      return {
+        ...state,
+        moduleElements: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getModuleElements.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        moduleElements: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getModuleElements.rejected]: (state, action) => {
+      return {
+        ...state,
+        moduleElements: {
           status: status.FAILURE,
           data: [],
         },
