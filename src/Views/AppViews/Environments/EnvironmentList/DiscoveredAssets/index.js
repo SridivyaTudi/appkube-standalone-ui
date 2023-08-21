@@ -28,6 +28,7 @@ import {
   getEnvironmentDataByLandingZone,
   GetInfraTopologyCloudElementList,
   getInfraTopologyCategoryWiseViewData,
+  getInfraTopologyDbCategories,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { getCurrentOrgId } from "Utils";
 
@@ -67,6 +68,7 @@ class DiscoveredAssets extends Component {
       orgID: orgId,
       landingZone: landingZone,
     });
+    this.props.getInfraTopologyDbCategories();
   };
 
   componentDidUpdate = async (prevProps, prevState) => {
@@ -543,6 +545,7 @@ const mapDispatchToProps = {
   getEnvironmentDataByLandingZone,
   GetInfraTopologyCloudElementList,
   getInfraTopologyCategoryWiseViewData,
+  getInfraTopologyDbCategories,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiscoveredAssets);

@@ -84,3 +84,17 @@ export const getInfraTopologyCategoryWiseViewData = createAsyncThunk(
     }
   }
 );
+
+export const getInfraTopologyDbCategories = createAsyncThunk(
+  "environmentData/getInfraTopologyDbCategories",
+  async () => {
+    const url = config.INFRA_TOPOLOGY_DB_CATEGORIES;
+
+    try {
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

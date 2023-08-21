@@ -80,6 +80,7 @@ class DataTable extends Component {
       ],
     };
   }
+
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };

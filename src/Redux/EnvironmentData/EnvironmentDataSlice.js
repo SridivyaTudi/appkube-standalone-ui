@@ -5,6 +5,7 @@ import {
   getSingleEnvironmentCountData,
   GetInfraTopologyCloudElementList,
   getInfraTopologyCategoryWiseViewData,
+  getInfraTopologyDbCategories,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -28,6 +29,10 @@ export const environmentDataSlice = createSlice({
       data: {},
     },
     infraTopologyCategoryWiseData: {
+      status: null,
+      data: {},
+    },
+    infraTopologyDbCategories: {
       status: null,
       data: {},
     },
@@ -163,6 +168,32 @@ export const environmentDataSlice = createSlice({
       return {
         ...state,
         infraTopologyCategoryWiseData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getInfraTopologyDbCategories.pending]: (state) => {
+      return {
+        ...state,
+        infraTopologyDbCategories: {
+          status: status.initialState,
+        },
+      };
+    },
+    [getInfraTopologyDbCategories.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        infraTopologyDbCategories: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getInfraTopologyDbCategories.rejected]: (state) => {
+      return {
+        ...state,
+        infraTopologyDbCategories: {
           status: status.FAILURE,
         },
       };
