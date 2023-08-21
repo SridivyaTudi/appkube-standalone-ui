@@ -1,10 +1,5 @@
 import React from "react";
 import { Box, List, ListItem } from "@mui/material";
-import AllTable from "./AllTable";
-import AppTable from "./AppTable";
-import DataTable from "./DataTable";
-import DataLakeTable from "./DataLakeTable";
-import ServiceMeshTable from "./ServiceMeshTable";
 import Lambda from "assets/img/assetmanager/cloud-managed-icon1.png";
 import S3 from "assets/img/assetmanager/cloud-managed-icon2.png";
 import SQS from "assets/img/assetmanager/cloud-managed-icon3.png";
