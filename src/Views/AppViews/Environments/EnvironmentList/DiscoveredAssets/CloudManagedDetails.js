@@ -17,6 +17,14 @@ import TimeSeries from "assets/img/assetmanager/cloud-managed-icon9.png";
 import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
 import { connect } from "react-redux";
 import { Grid } from "@mui/material";
+import status from "Redux/Constants/CommonDS";
+
+const filterTabs = {
+  1: "App",
+  2: "Data",
+  3: "dataLake",
+  4: "serviceMesh",
+};
 
 class CloudManagedDetails extends React.Component {
   tableMapping = [
@@ -44,7 +52,7 @@ class CloudManagedDetails extends React.Component {
   dbMapping = [
     {
       name: "All",
-      dataKey: "all",
+      dataKey: "0",
     },
   ];
   constructor(props) {
@@ -65,6 +73,7 @@ class CloudManagedDetails extends React.Component {
       activeTab: 0,
       activeCategory: 0,
       activeDbTab: 0,
+      activeDbTabId: 0,
     };
   }
 
@@ -72,37 +81,92 @@ class CloudManagedDetails extends React.Component {
     if (this.props.infraTopologyDbCategories.data) {
       const data = this.props.infraTopologyDbCategories.data;
       data.map((item) => {
-        this.dbMapping.push({ name: item.name, dataKey: item.name });
+        this.dbMapping.push({ name: item.name, dataKey: item.id });
       });
     }
   };
 
-  setActiveTab = (activeTab) => {
-    this.setState({ activeTab });
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      prevProps.infraTopologyCategoryWiseData.data !==
+        this.props.infraTopologyCategoryWiseData.data &&
+      this.props.infraTopologyCategoryWiseData.status === status.SUCCESS
+    ) {
+      this.setState({
+        activeTab: 0,
+        activeCategory: 0,
+        activeDbTabId: 0,
+        activeDbTab: 0,
+      });
+    }
+
+    if (prevProps.currentActiveNode !== this.props.currentActiveNode) {
+      this.setState({ activeTab: 0, activeCategory: 0, activeDbTab: 0 });
+    }
+
+    if (prevState.activeDbTab !== this.state.activeDbTab) {
+      let data = this.filterCloudManagedData(
+        this.props.infraTopologyCategoryWiseData.data,
+        filterTabs[this.state.activeTab]
+      );
+      data = this.filterCloudDatabyDB(data);
+      if (data.length) {
+        this.props.setCurrentTopologyCategory(data[0].elementType);
+      } else {
+        this.props.setCurrentTopologyCategory("");
+      }
+    }
+
+    if (prevState.activeTab !== this.state.activeTab) {
+      const data = this.filterCloudManagedData(
+        this.props.infraTopologyCategoryWiseData.data,
+        filterTabs[this.state.activeTab]
+      );
+      if (data.length) {
+        this.props.setCurrentTopologyCategory(data[0].elementType);
+      } else {
+        this.props.setCurrentTopologyCategory("");
+      }
+    }
   };
 
-  setActiveDbTab = (activeDbTab) => {
-    this.setState({ activeDbTab });
+  setActiveTab = (activeTab) => {
+    this.setState({
+      activeTab,
+      activeCategory: 0,
+      activeDbTabId: 0,
+      activeDbTab: 0,
+    });
+  };
+
+  setActiveDbTab = (tab, activeDbTab) => {
+    this.setState({
+      activeDbTab,
+      activeDbTabId: tab.dataKey,
+      activeCategory: 0,
+    });
   };
 
   filterCloudManagedData = (data, filterTab) => {
     if (!filterTab) {
       return data;
     }
-    const tempData = data.filter((item) => item.category === filterTab);
-    return tempData;
+    return data.filter((item) => item.category === filterTab);
+  };
+
+  filterCloudDatabyDB = (data) => {
+    const { activeDbTabId } = this.state;
+    return data.filter((item) => item.dbCategoryId === activeDbTabId);
   };
 
   renderTable = (data) => {
     const { activeCategory, activeTab, activeDbTab } = this.state;
-    const filterTabs = {
-      1: "App",
-      2: "Data",
-      3: "dataLake",
-      4: "serviceMesh",
-    };
     let cloudData = this.filterCloudManagedData(data, filterTabs[activeTab]);
+    if (activeDbTab) {
+      cloudData = this.filterCloudDatabyDB(cloudData);
+    }
     const JSX = [];
+    const childJSX = [];
     if (activeTab === 2) {
       JSX.push(
         <Box sx={{ width: "100%" }}>
@@ -120,7 +184,7 @@ class CloudManagedDetails extends React.Component {
                         <ListItem
                           key={`ops-tab-${index}`}
                           className={index === activeDbTab ? "active" : ""}
-                          onClick={() => this.setActiveDbTab(index)}
+                          onClick={() => this.setActiveDbTab(tabData, index)}
                         >
                           {tabData.name}
                         </ListItem>
@@ -134,8 +198,8 @@ class CloudManagedDetails extends React.Component {
               <Box className="tabs-content m-t-0">
                 <Box className="cloud-managed-cards">
                   <Box className="cloud-managed-cards-scroll">
-                    {cloudData.map((item, index) => {
-                      JSX.push(
+                    {cloudData?.map((item, index) => {
+                      childJSX.push(
                         <Box
                           className={`service-card ${
                             activeCategory === index ? "active" : ""
@@ -160,6 +224,19 @@ class CloudManagedDetails extends React.Component {
                         </Box>
                       );
                     })}
+                    {childJSX.length ? (
+                      childJSX
+                    ) : (
+                      <p
+                        style={{
+                          fontSize: "16px",
+                          margin: "0 auto",
+                          color: "#000",
+                        }}
+                      >
+                        No Data Available!
+                      </p>
+                    )}
                   </Box>
                 </Box>
               </Box>
@@ -190,8 +267,15 @@ class CloudManagedDetails extends React.Component {
         );
       });
     }
-
-    return JSX;
+    if (JSX.length) {
+      return JSX;
+    } else {
+      return [
+        <p style={{ fontSize: "16px", margin: "0 auto", color: "#000" }}>
+          No Data Available!
+        </p>,
+      ];
+    }
   };
 
   render() {
@@ -227,19 +311,6 @@ class CloudManagedDetails extends React.Component {
                     <></>
                   )}
                 </Box>
-                {activeTab === 0 ? (
-                  <></>
-                ) : activeTab === 1 ? (
-                  <></>
-                ) : activeTab === 2 ? (
-                  <></>
-                ) : activeTab === 3 ? (
-                  <></>
-                ) : activeTab === 4 ? (
-                  <></>
-                ) : (
-                  <></>
-                )}
               </Box>
             </Box>
           </Box>

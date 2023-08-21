@@ -232,7 +232,6 @@ class Environments extends Component {
         collapsedTableIndex,
         envSummary,
       } = this.state;
-      console.log(envSummary);
       let retData = [];
       if (envSummary.length > 0) {
         searchedEnvSummary.map((item, envIndex) => {

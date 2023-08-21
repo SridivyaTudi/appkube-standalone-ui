@@ -222,6 +222,7 @@ class DiscoveredAssets extends Component {
 
   setCurrentActiveNode = (node) => {
     this.setState({ currentActiveNode: node });
+    this.renderCloudManagedDetails();
   };
 
   /** Render Table for 3 Tier Tab */
@@ -384,6 +385,14 @@ class DiscoveredAssets extends Component {
     return TableJSX;
   }
 
+  renderCloudManagedDetails = () => {
+    return (
+      <CloudManagedDetails
+        setCurrentTopologyCategory={this.setCurrentTopologyCategory}
+      />
+    );
+  };
+
   render() {
     const {
       currentActiveNodeLabel,
@@ -500,12 +509,7 @@ class DiscoveredAssets extends Component {
                   <Box className="fliter-tabs global-service-penal">
                     {/* <ClusterDetails /> */}
                     {currentActiveNode ? (
-                      <CloudManagedDetails
-                        categoryData={topologyCategoryWiseData}
-                        setCurrentTopologyCategory={
-                          this.setCurrentTopologyCategory
-                        }
-                      />
+                      this.renderCloudManagedDetails()
                     ) : (
                       <></>
                     )}
