@@ -7,233 +7,6 @@ import calendarMouseIcon from "assets/img/assetmanager/calendar-mouse-icon.png";
 import databaseIcon from "assets/img/assetmanager/database-icon.png";
 import BusinessAssociationMapping from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/BusinessAssociationMapping";
 
-let Data = {
-  label: "Synectiks",
-  subLabel: "",
-  image: chartLogo,
-  children: [
-    [
-      {
-        label: "Human Resources",
-        id: null,
-        type: "HumanResources",
-        image: calendarMouseIcon,
-        children: [
-          {
-            label: "Payroll",
-            id: "",
-            image: calendarMouseIcon,
-            type: "Payroll",
-            children: [],
-          },
-          {
-            label: "Accounts",
-            id: "",
-            image: databaseIcon,
-            type: "Accounts",
-            children: [
-              {
-                label: "Production",
-                id: "",
-                image: calendarMouseIcon,
-                type: "Production",
-                children: [
-                  {
-                    label: "Business",
-                    id: "",
-                    image: calendarMouseIcon,
-                    type: "Business",
-                    children: [
-                      {
-                        label: "Admission",
-                        id: "",
-                        image: calendarMouseIcon,
-                        type: "Admission",
-                        children: [],
-                      },
-                      {
-                        label: "Fees",
-                        id: "",
-                        image: databaseIcon,
-                        type: "Fees",
-                        children: [
-                          {
-                            label: "Java Spring boot",
-                            id: "",
-                            image: calendarMouseIcon,
-                            type: "JavaSpringboot",
-                            children: [],
-                          },
-                          {
-                            label: "Postgres SQL",
-                            id: "",
-                            image: databaseIcon,
-                            type: "PostgresSQL",
-                            children: [],
-                          },
-                          {
-                            label: "Redis",
-                            id: "",
-                            image: calendarMouseIcon,
-                            type: "Redis",
-                            children: [],
-                          },
-                          {
-                            label: "Dynamo DB",
-                            id: "",
-                            image: databaseIcon,
-                            type: "DynamoDB",
-                            children: [],
-                          },
-                        ],
-                      },
-                      {
-                        label: "Canteen",
-                        id: "",
-                        image: calendarMouseIcon,
-                        type: "Canteen",
-                        children: [],
-                      },
-                      {
-                        label: "Library",
-                        id: "",
-                        image: databaseIcon,
-                        type: "Library",
-                        children: [],
-                      },
-                    ],
-                  },
-                  {
-                    label: "Common",
-                    id: "",
-                    image: databaseIcon,
-                    type: "Common",
-                    children: [],
-                  },
-                ],
-              },
-              {
-                label: "Test",
-                id: "",
-                image: databaseIcon,
-                type: "Test",
-                children: [],
-              },
-              {
-                label: "Stage",
-                id: "",
-                image: calendarMouseIcon,
-                type: "Stage",
-                children: [],
-              },
-              {
-                label: "Development",
-                id: "",
-                image: databaseIcon,
-                type: "Development",
-                children: [],
-              },
-            ],
-          },
-          {
-            label: "HRMS",
-            id: "",
-            image: calendarMouseIcon,
-            type: "HRMS",
-            children: [
-              {
-                label: "Production",
-                id: "",
-                image: calendarMouseIcon,
-                type: "Production",
-                children: [
-                  {
-                    label: "Web Layer",
-                    id: "",
-                    image: calendarMouseIcon,
-                    type: "Web Layer",
-                    children: [],
-                  },
-                  {
-                    label: "App Layer",
-                    id: "",
-                    image: databaseIcon,
-                    type: "App Layer",
-                    children: [],
-                  },
-                  {
-                    label: "data Layer",
-                    id: "",
-                    image: calendarMouseIcon,
-                    type: "data Layer",
-                    children: [],
-                  },
-                  {
-                    label: "Auxilary Layer",
-                    id: "",
-                    image: databaseIcon,
-                    type: "Auxilary Layer",
-                    children: [],
-                  },
-                ],
-              },
-              {
-                label: "Test",
-                id: "",
-                image: databaseIcon,
-                type: "Test",
-                children: [],
-              },
-              {
-                label: "Stage",
-                id: "",
-                image: calendarMouseIcon,
-                type: "Stage",
-                children: [],
-              },
-              {
-                label: "Development",
-                id: "",
-                image: databaseIcon,
-                type: "Development",
-                children: [],
-              },
-            ],
-          },
-          {
-            label: "Procurement",
-            id: "",
-            image: databaseIcon,
-            type: "Procurement",
-            children: [],
-          },
-        ],
-      },
-      {
-        label: "Finance",
-        id: null,
-        type: "Finance",
-        image: databaseIcon,
-        children: [],
-      },
-      {
-        label: "IT",
-        id: null,
-        type: "It",
-        image: calendarMouseIcon,
-        children: [],
-      },
-      {
-        label: "Admin",
-        id: null,
-        type: "Admin",
-        image: databaseIcon,
-        children: [],
-      },
-    ],
-    [],
-  ],
-};
 export class AssociateChartApp extends Component {
   constructor(props) {
     super(props);
@@ -260,42 +33,48 @@ export class AssociateChartApp extends Component {
 
   /** Render the BreadCrumbs. */
   renderBreadCrumbs(isBreadCrumb = 1) {
-    let { selectedActiveBAMLevels, BAMData } = this.state;
+    let { selectedActiveBAMLevels, BAMData, initailOrganization } = this.state;
 
     let activeBAM = Object.keys(selectedActiveBAMLevels);
-    let breadcrumbs = [
-      <>
-        <li
-          className={`${BAMData.length === 1 ? "active" : ""}`}
-          onClick={() => {
-            isBreadCrumb ? (
-              this.setState({
-                clickBreadCrumbDetails: {
-                  isIntialClick: 1,
-                  breadcrumbId: v4(),
-                },
-              })
+
+    let breadcrumbs = initailOrganization
+      ? [
+          <>
+            <li
+              className={`${BAMData.length === 1 ? "active" : ""}`}
+              onClick={() => {
+                isBreadCrumb ? (
+                  this.setState({
+                    clickBreadCrumbDetails: {
+                      type: "Synectiks",
+                      breadcrumbId: v4(),
+                    },
+                  })
+                ) : (
+                  <></>
+                );
+              }}
+              key={v4()}
+            >
+              <a>{initailOrganization}</a>
+            </li>
+            {isBreadCrumb && !BAMData.length ? (
+              <li key={v4()}>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
             ) : (
               <></>
-            );
-          }}
-          key={v4()}
-        >
-          <a>{Data.label}</a>
-        </li>
-        {isBreadCrumb && !BAMData.length ? (
-          <li key={v4()}>
-            <i className="fa-solid fa-chevron-right"></i>
-          </li>
-        ) : (
-          <></>
-        )}
-      </>,
-    ];
+            )}
+          </>,
+        ]
+      : [];
 
     if (activeBAM.length) {
       activeBAM.map((bamItemKey, index) => {
         let label = selectedActiveBAMLevels[bamItemKey]?.label;
+        let type = selectedActiveBAMLevels[bamItemKey]?.type;
+        let productType =
+          selectedActiveBAMLevels[bamItemKey]?.productType || "";
         let currentLevelIndex = selectedActiveBAMLevels[bamItemKey]?.id;
         let selectedLevel = +bamItemKey.split("_")?.[1];
         breadcrumbs.push(
@@ -317,7 +96,8 @@ export class AssociateChartApp extends Component {
                       selectedLevel,
                       currentLevelIndex,
                       label,
-                      isIntialClick: 0,
+                      type,
+                      productType,
                       breadcrumbId: v4(),
                     },
                   })
@@ -336,12 +116,50 @@ export class AssociateChartApp extends Component {
     return breadcrumbs;
   }
 
+  /** Get associateId Or Type. */
   getAssociateIdOrType() {
     const queryPrm = new URLSearchParams(document.location.search);
     const elementType = queryPrm.get("elementType");
     const elementId = queryPrm.get("elementId");
 
     return { elementId, elementType };
+  }
+  /**
+   * Render Department or Product list
+   *  @param {Number} isProduct - 1 if it is products, else 0 .
+   *
+   */
+  renderDepartmentsOrProducts(isProduct = 0) {
+    let { BAMData } = this.state;
+    if (BAMData.length) {
+      return (
+        BAMData[isProduct] &&
+        BAMData[isProduct].map((item) => {
+          let productType = item.productType || "";
+          return (
+            <ListItem key={v4()}>
+              <Link
+                onClick={() => {
+                  this.setState({
+                    clickBreadCrumbDetails: {
+                      selectedLevel: isProduct,
+                      currentLevelIndex: item.id,
+                      label: item.label,
+                      type: isProduct ? "Product" : "Department",
+                      productType,
+                      breadcrumbId: v4(),
+                    },
+                  });
+                }}
+              >
+                <i className="fa-solid fa-circle-dot"></i>
+                {item.label}
+              </Link>
+            </ListItem>
+          );
+        })
+      );
+    }
   }
 
   render() {
@@ -351,6 +169,12 @@ export class AssociateChartApp extends Component {
       clickBreadCrumbDetails,
       selectedActiveBAMLevels,
     } = this.state;
+    const departmentName = selectedActiveBAMLevels["selectedLevel_0"]
+      ? selectedActiveBAMLevels["selectedLevel_0"].label
+      : "";
+    const productName = selectedActiveBAMLevels["selectedLevel_1"]
+      ? selectedActiveBAMLevels["selectedLevel_1"].label
+      : "";
     return (
       <Box className="environment-container associate-container">
         <Box className="breadcrumbs">
@@ -363,7 +187,11 @@ export class AssociateChartApp extends Component {
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
             <Grid item xs={8}>
-              <h4>Business Association Mapping ({this.getAssociateIdOrType().elementType}:{this.getAssociateIdOrType().elementId})</h4>
+              <h4>
+                Business Association Mapping (
+                {this.getAssociateIdOrType().elementType}:
+                {this.getAssociateIdOrType().elementId})
+              </h4>
             </Grid>
             <Grid item xs={4}>
               <Box className="text-right">
@@ -372,7 +200,7 @@ export class AssociateChartApp extends Component {
                     className="fliter-toggel"
                     onClick={this.toggleSelectDepartment}
                   >
-                    Select Department
+                    {departmentName ? departmentName : "Select Department"}
                     <i className="fa-solid fa-caret-down arrow-icon"></i>
                   </Box>
                   <Box
@@ -382,44 +210,7 @@ export class AssociateChartApp extends Component {
                         : "fliter-collapse"
                     }
                   >
-                    <List>
-                      <ListItem>
-                        <Link to={`#`}>
-                          <i className="fa-solid fa-circle-dot"></i>
-                          Human Resources
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                          <i className="fa-solid fa-circle-dot"></i>
-                          Account
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                          <i className="fa-solid fa-circle-dot"></i>
-                          Digital Auction
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                          <i className="fa-solid fa-circle-dot"></i>
-                          Admin
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                          <i className="fa-solid fa-circle-dot"></i>
-                          Finance
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                          <i className="fa-solid fa-circle-dot"></i>
-                          IT
-                        </Link>
-                      </ListItem>
-                    </List>
+                    <List>{this.renderDepartmentsOrProducts()}</List>
                   </Box>
                   <div
                     className={
@@ -435,7 +226,7 @@ export class AssociateChartApp extends Component {
                     className="fliter-toggel"
                     onClick={this.toggleSelectProduct}
                   >
-                    Select Product
+                        {productName ? productName : "Select Product"} 
                     <i className="fa-solid fa-caret-down arrow-icon"></i>
                   </Box>
                   <Box
@@ -446,44 +237,7 @@ export class AssociateChartApp extends Component {
                     }
                     style={{ right: 0, left: "auto" }}
                   >
-                    <List>
-                      <ListItem>
-                        <Link to={`#`}>
-                          <i className="fa-solid fa-circle-dot"></i>
-                          Payroll
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                          <i className="fa-solid fa-circle-dot"></i>
-                          Account
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                          <i className="fa-solid fa-circle-dot"></i>
-                          HRMS
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                          <i className="fa-solid fa-circle-dot"></i>
-                          IT
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                          <i className="fa-solid fa-circle-dot"></i>
-                          Leave Management
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                          <i className="fa-solid fa-circle-dot"></i>
-                          Support
-                        </Link>
-                      </ListItem>
-                    </List>
+                    <List>{this.renderDepartmentsOrProducts(1)}</List>
                   </Box>
                   <div
                     className={
@@ -498,9 +252,16 @@ export class AssociateChartApp extends Component {
             </Grid>
           </Grid>
           <BusinessAssociationMapping
-            data={Data}
-            setBreadCrumbs={(selectedActiveBAMLevels, BAMData) => {
-              this.setState({ selectedActiveBAMLevels, BAMData });
+            setBreadCrumbs={(
+              selectedActiveBAMLevels,
+              BAMData,
+              initailOrganization
+            ) => {
+              this.setState({
+                selectedActiveBAMLevels,
+                BAMData,
+                initailOrganization,
+              });
             }}
             clickBreadCrumbDetails={clickBreadCrumbDetails}
           />
