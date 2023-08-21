@@ -239,7 +239,7 @@ class BusinessAssociationMapping extends Component {
       moduleElements.status === inprogressStatus
     ) {
       return (
-        <Box className="">
+        <Box className="d-flex align-items-center width-100 loading">
           <i className="fa-solid fa-spinner fa-spin" /> Loading...
         </Box>
       );
@@ -653,8 +653,13 @@ class BusinessAssociationMapping extends Component {
 
     let activeBAMLevel = selectedActiveBAMLevels[preFix + selectedLevel];
 
-    let { selectedLevel_0, selectedLevel_1, selectedLevel_2, selectedLevel_3,selectedLevel_4 } =
-      selectedActiveBAMLevels;
+    let {
+      selectedLevel_0,
+      selectedLevel_1,
+      selectedLevel_2,
+      selectedLevel_3,
+      selectedLevel_4,
+    } = selectedActiveBAMLevels;
 
     if (activeBAMLevel && activeBAMLevel?.id === moduleId) {
       BAMData.length = 5;
@@ -662,7 +667,8 @@ class BusinessAssociationMapping extends Component {
         selectedLevel_0,
         selectedLevel_1,
         selectedLevel_2,
-        selectedLevel_3,selectedLevel_4
+        selectedLevel_3,
+        selectedLevel_4,
       };
     } else {
       selectedActiveBAMLevels = {

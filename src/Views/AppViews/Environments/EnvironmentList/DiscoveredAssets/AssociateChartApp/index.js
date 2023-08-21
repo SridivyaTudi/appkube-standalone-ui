@@ -137,24 +137,23 @@ export class AssociateChartApp extends Component {
         BAMData[isProduct].map((item) => {
           let productType = item.productType || "";
           return (
-            <ListItem key={v4()}>
-              <Link
-                onClick={() => {
-                  this.setState({
-                    clickBreadCrumbDetails: {
-                      selectedLevel: isProduct,
-                      currentLevelIndex: item.id,
-                      label: item.label,
-                      type: isProduct ? "Product" : "Department",
-                      productType,
-                      breadcrumbId: v4(),
-                    },
-                  });
-                }}
-              >
-                <i className="fa-solid fa-circle-dot"></i>
-                {item.label}
-              </Link>
+            <ListItem
+              key={v4()}
+              onClick={() => {
+                this.setState({
+                  clickBreadCrumbDetails: {
+                    selectedLevel: isProduct,
+                    currentLevelIndex: item.id,
+                    label: item.label,
+                    type: isProduct ? "Product" : "Department",
+                    productType,
+                    breadcrumbId: v4(),
+                  },
+                });
+              }}
+            >
+              <i className="fa-solid fa-circle-dot"></i>
+              {item.label}
             </ListItem>
           );
         })
@@ -226,7 +225,7 @@ export class AssociateChartApp extends Component {
                     className="fliter-toggel"
                     onClick={this.toggleSelectProduct}
                   >
-                        {productName ? productName : "Select Product"} 
+                    {productName ? productName : "Select Product"}
                     <i className="fa-solid fa-caret-down arrow-icon"></i>
                   </Box>
                   <Box
