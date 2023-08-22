@@ -306,7 +306,6 @@ class CloudManagedDetails extends React.Component {
           </Box>
           <Box className="tabs-content">
             <Box className="cloud-managed-section">
-              <h4>Cloud Managed Services</h4>
               {this.props.infraTopologyCategoryWiseData.data?.length ? (
                 this.renderTable(this.props.infraTopologyCategoryWiseData.data)
               ) : (

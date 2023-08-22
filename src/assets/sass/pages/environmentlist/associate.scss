@@ -193,9 +193,10 @@
         }
 
         .react-transform-wrapper { 
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
+          overflow: inherit;
+          // display: flex;
+          // align-items: center;
+          // justify-content: flex-start;
 
           .react-transform-component {
             flex-wrap: nowrap;
