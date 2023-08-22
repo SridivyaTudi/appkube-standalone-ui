@@ -346,6 +346,18 @@
                   }
                 }
               }
+
+              .data-cloud-managed {
+                .cloud-managed-cards {
+                  .cloud-managed-cards-scroll {
+                    width: 510px;
+                    .service-card {
+                      width: 160px;
+                    }
+                  }
+                }
+              }
+
             }
 
             .global-service-cards {

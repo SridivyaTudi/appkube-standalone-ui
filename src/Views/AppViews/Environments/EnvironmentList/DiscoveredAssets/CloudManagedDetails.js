@@ -164,7 +164,7 @@ class CloudManagedDetails extends React.Component {
     const childJSX = [];
     if (activeTab === 2) {
       JSX.push(
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%" }} className="data-cloud-managed">
           <Grid
             container
             rowSpacing={1}
@@ -275,7 +275,7 @@ class CloudManagedDetails extends React.Component {
       return [
         <Box className="cloud-managed-cards">
           <Box className="cloud-managed-cards-scroll">
-            <p style={{ fontSize: "16px", margin: "0 auto", color: "#000" }}>
+            <p style={{ fontSize: "16px", margin: "22% auto", color: "#000" }}>
               No Data Available!
             </p>
           </Box>
