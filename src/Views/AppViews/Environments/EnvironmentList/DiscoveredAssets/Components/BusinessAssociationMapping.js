@@ -249,8 +249,18 @@ class BusinessAssociationMapping extends Component {
       );
     }
     return departmentLength ? (
-      <ArcherContainer className="chart-container" startMarker>
+      <ArcherContainer
+        className="chart-container"
+        // style={{
+        //   width: `1500px`,
+        //   height: "100%",
+        // }}
+        startMarker
+      >
         <TransformWrapper
+          wrapperStyle={{
+            width: "100%",
+          }}
           onTransformed={(instance) => {
             transformScale = instance && instance.state.scale;
             this.setState({ scale: true });
@@ -262,18 +272,8 @@ class BusinessAssociationMapping extends Component {
             return (
               <>
                 <TransformComponent
-                  wrapperStyle={{
-                    width: `100%`,
-                    height: "100%",
-                  }}
                   contentStyle={{
-                    // width: `464px`,
-                    // height: "100%",
-                    transform: "translate(0px, 0px) scale(0)",
-                    display: "flex",
                     alignItems: "center",
-                    justifyContent: "flex-start",
-                    marginTop: "30px",
                   }}
                 >
                   <ArcherElement
@@ -292,6 +292,16 @@ class BusinessAssociationMapping extends Component {
                   </ArcherElement>
                   {this.renderChildBody()}
                 </TransformComponent>
+                <div className="gmnoprint">
+                  <div className="gmnoprint-plus-minus">
+                    <button className="btn btn-plus" onClick={() => zoomIn()}>
+                      <i className="fa-solid fa-plus"></i>
+                    </button>
+                    <button className="btn btn-minus" onClick={() => zoomOut()}>
+                      <i className="fa-solid fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
               </>
             );
           }}
@@ -356,9 +366,7 @@ class BusinessAssociationMapping extends Component {
                 <img src={level.image} alt={level.label} />
               </span>
               <div className="content">
-                <HtmlTooltip className="primary-tooltip" title={level.label}>
-                  <p>{level.label}</p>
-                </HtmlTooltip>
+                <p title={level.label}>{level.label}</p>
                 {level.type === "Product" ? (
                   <div
                     className={`box ${
@@ -718,7 +726,7 @@ class BusinessAssociationMapping extends Component {
 
     let activeLevel = {};
 
-    totalLevels.slice(0,level+1).map((levelNumber) => {
+    totalLevels.slice(0, level + 1).map((levelNumber) => {
       let key = `selectedLevel_${levelNumber}`;
       activeLevel = { ...activeLevel, [key]: selectedActiveBAMLevels[key] };
     });
@@ -726,20 +734,6 @@ class BusinessAssociationMapping extends Component {
   }
 
   render() {
-    const HtmlTooltip = styled(({ className, ...props }) => (
-      <Tooltip {...props} arrow classes={{ popper: className }} />
-    ))(({ theme }) => ({
-      [`& .${tooltipClasses.arrow}`]: {
-        color: "#ffffffff",
-      },
-      [`& .${tooltipClasses.tooltip}`]: {
-        backgroundColor: "#ffffffff",
-        color: "rgba(0, 0, 0, 0.87)",
-        maxWidth: 200,
-        fontSize: theme.typography.pxToRem(12),
-        border: "1px solid #dadde9",
-      },
-    }));
     return this.renderBAMMainBody();
   }
 }
