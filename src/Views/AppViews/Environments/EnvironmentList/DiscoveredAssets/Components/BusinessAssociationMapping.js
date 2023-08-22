@@ -43,7 +43,21 @@ const productCategory = {
   SOA: ["BUSINESS", "COMMON"],
 };
 let transformScale = 0;
-
+let maxNodeLength = 0;
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 200,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 class BusinessAssociationMapping extends Component {
   constructor(props) {
     super(props);
@@ -224,7 +238,8 @@ class BusinessAssociationMapping extends Component {
    * Render the main body including all levels data.
    */
   renderBAMMainBody = () => {
-    let { selectedActiveBAMLevels, departments } = this.state;
+    let { selectedActiveBAMLevels, departments, positionX, positionY } =
+      this.state;
     let departmentLength =
       departments?.length && departments[0].departments?.length;
     const {
@@ -235,28 +250,14 @@ class BusinessAssociationMapping extends Component {
       moduleElements,
     } = this.props;
     const inprogressStatus = status.IN_PROGRESS;
-    if (
+    const lodingData =
       organization.status === inprogressStatus ||
       products.status === inprogressStatus ||
       productEnv.status === inprogressStatus ||
       modules.status === inprogressStatus ||
-      moduleElements.status === inprogressStatus
-    ) {
-      return (
-        <Box className="d-flex align-items-center width-100 loading">
-          <i className="fa-solid fa-spinner fa-spin" /> Loading...
-        </Box>
-      );
-    }
+      moduleElements.status === inprogressStatus;
     return departmentLength ? (
-      <ArcherContainer
-        className="chart-container"
-        // style={{
-        //   width: `1500px`,
-        //   height: "100%",
-        // }}
-        startMarker
-      >
+      <ArcherContainer className="chart-container" startMarker>
         <TransformWrapper
           wrapperStyle={{
             width: "100%",
@@ -268,18 +269,21 @@ class BusinessAssociationMapping extends Component {
         >
           {({ zoomIn, zoomOut, instance, zoomToElement, ...rest }) => {
             transformScale = instance.transformState.scale;
-
+            let maxWidth =
+              document.getElementById(`maxNode_${maxNodeLength}`)
+                ?.offsetHeight || 0;
             return (
               <>
                 <TransformComponent
                   contentStyle={{
                     alignItems: "center",
+                    width: "2000px",
+                    height: `${maxWidth ? 2 * maxWidth : 1200}px`,
                   }}
                 >
                   <ArcherElement
                     id="root"
                     relations={this.onClickLevelsThenDrawLine()}
-                    // className="chart-container"
                   >
                     <div
                       className={"chart-box active"}
@@ -291,14 +295,32 @@ class BusinessAssociationMapping extends Component {
                     </div>
                   </ArcherElement>
                   {this.renderChildBody()}
+                  {lodingData ? (
+                    <Box className="d-flex align-items-center  loading">
+                      <i className="fa-solid fa-spinner fa-spin" /> Loading...
+                    </Box>
+                  ) : (
+                    <></>
+                  )}
                 </TransformComponent>
                 <div className="gmnoprint">
                   <div className="gmnoprint-plus-minus">
                     <button className="btn btn-plus" onClick={() => zoomIn()}>
+                   
                       <i className="fa-solid fa-plus"></i>
                     </button>
                     <button className="btn btn-minus" onClick={() => zoomOut()}>
                       <i className="fa-solid fa-minus"></i>
+                    </button>
+                  </div>
+                  <div
+                    className="gmnoprint-map"
+                    onClick={() => {
+                      zoomToElement("lastNodeActive", transformScale);
+                    }}
+                  >
+                    <button className="btn btn-map">
+                      <i className="fa-solid fa-map-marker-alt"></i>
                     </button>
                   </div>
                 </div>
@@ -321,6 +343,7 @@ class BusinessAssociationMapping extends Component {
    */
   renderChildNodes = (data, selectedLevel) => {
     let { selectedActiveBAMLevels, BAMData } = this.state;
+   
     if (data.length) {
       return data.map((level, currentLevelIndex) => {
         let currentLevel = `selectedLevel_${selectedLevel}`;
@@ -329,20 +352,8 @@ class BusinessAssociationMapping extends Component {
         let relationsData = isActive
           ? this.onClickLevelsThenDrawLine(selectedLevel)
           : [];
-        const HtmlTooltip = styled(({ className, ...props }) => (
-          <Tooltip {...props} arrow classes={{ popper: className }} />
-        ))(({ theme }) => ({
-          [`& .${tooltipClasses.arrow}`]: {
-            color: "#ffffffff",
-          },
-          [`& .${tooltipClasses.tooltip}`]: {
-            backgroundColor: "#ffffffff",
-            color: "rgba(0, 0, 0, 0.87)",
-            maxWidth: 200,
-            fontSize: theme.typography.pxToRem(12),
-            border: "1px solid #dadde9",
-          },
-        }));
+       
+        let activeNodeLength = Object.keys(selectedActiveBAMLevels).length - 1;
         return (
           <ArcherElement id={elementId} relations={relationsData} key={v4()}>
             <li
@@ -361,12 +372,22 @@ class BusinessAssociationMapping extends Component {
                 )
               }
               key={v4()}
+              id={`${
+                isActive && activeNodeLength === selectedLevel
+                  ? "lastNodeActive"
+                  : ""
+              }`}
             >
               <span>
                 <img src={level.image} alt={level.label} />
               </span>
               <div className="content">
-                <p title={level.label}>{level.label}</p>
+                <HtmlTooltip  className="primary-tooltip" title={level.label}>
+                  <>
+                    <p >{level.label}</p>
+                  </>
+                </HtmlTooltip>
+
                 {level.type === "Product" ? (
                   <div
                     className={`box ${
@@ -400,12 +421,16 @@ class BusinessAssociationMapping extends Component {
     const { BAMData } = this.state;
     if (BAMData.length) {
       return BAMData.map((levelData, selectedLevel) => {
+        maxNodeLength =
+          levelData.length > maxNodeLength ? levelData.length : maxNodeLength;
+
         if (levelData.length) {
           return (
             <div
               className={` global-servies`}
               style={{ width: "160px" }}
               key={v4()}
+              id={`maxNode_${levelData.length}`}
             >
               <ul>{this.renderChildNodes(levelData, selectedLevel)}</ul>
             </div>
@@ -633,9 +658,8 @@ class BusinessAssociationMapping extends Component {
     const productId = selectedLevel_1.id;
     const productEnvId = selectedLevel_2.id;
     selectedActiveBAMLevels = this.getPreviousSelectedLevels(3);
-
+    BAMData.length = 5;
     if (activeBAMLevel && activeBAMLevel?.id === moduleId) {
-      BAMData.length = 5;
     } else {
       if (productType === "SOA") {
         this.props.getModuleElements({
