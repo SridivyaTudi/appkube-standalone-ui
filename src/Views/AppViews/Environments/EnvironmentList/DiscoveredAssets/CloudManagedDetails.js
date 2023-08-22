@@ -241,7 +241,7 @@ class CloudManagedDetails extends React.Component {
       );
     } else {
       cloudData.map((item, index) => {
-        JSX.push(
+        childJSX.push(
           <Box
             className={`service-card ${
               activeCategory === index ? "active" : ""
@@ -261,14 +261,25 @@ class CloudManagedDetails extends React.Component {
           </Box>
         );
       });
+      if (cloudData.length) {
+        JSX.push(
+          <Box className="cloud-managed-cards">
+            <Box className="cloud-managed-cards-scroll">{childJSX}</Box>
+          </Box>
+        );
+      }
     }
     if (JSX.length) {
       return JSX;
     } else {
       return [
-        <p style={{ fontSize: "16px", margin: "0 auto", color: "#000" }}>
-          No Data Available!
-        </p>,
+        <Box className="cloud-managed-cards">
+          <Box className="cloud-managed-cards-scroll">
+            <p style={{ fontSize: "16px", margin: "0 auto", color: "#000" }}>
+              No Data Available!
+            </p>
+          </Box>
+        </Box>,
       ];
     }
   };
@@ -296,17 +307,11 @@ class CloudManagedDetails extends React.Component {
           <Box className="tabs-content">
             <Box className="cloud-managed-section">
               <h4>Cloud Managed Services</h4>
-              <Box className="cloud-managed-cards">
-                <Box className="cloud-managed-cards-scroll">
-                  {this.props.infraTopologyCategoryWiseData.data?.length ? (
-                    this.renderTable(
-                      this.props.infraTopologyCategoryWiseData.data
-                    )
-                  ) : (
-                    <></>
-                  )}
-                </Box>
-              </Box>
+              {this.props.infraTopologyCategoryWiseData.data?.length ? (
+                this.renderTable(this.props.infraTopologyCategoryWiseData.data)
+              ) : (
+                <></>
+              )}
             </Box>
           </Box>
         </Box>
