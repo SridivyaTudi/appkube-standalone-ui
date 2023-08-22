@@ -286,6 +286,7 @@
                     margin: 0 5px 10px;
                     width: 164px;
                     cursor: pointer;
+                    display: flex;
                     align-items: center;
                     justify-content: flex-start;
                     background: #ffffff;
@@ -293,7 +294,6 @@
                     padding: 26px 10px;
                     border: 1px solid #f4f4f4;
                     outline: 1px solid transparent;
-                    flex: 1 0 0;
 
                     .service-icon {
                       display: flex;
