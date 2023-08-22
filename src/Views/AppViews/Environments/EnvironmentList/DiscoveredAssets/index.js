@@ -53,6 +53,8 @@ class DiscoveredAssets extends Component {
       topologyCategoryWiseData: [],
       currentActiveTopologyCategory: "",
       selectedCategoryCloudElementsData: [],
+      ecsMetaData: {},
+      eksMetaData: {},
     };
   }
 
@@ -113,10 +115,22 @@ class DiscoveredAssets extends Component {
         this.props.infraTopologyCategoryWiseData.status &&
       this.props.infraTopologyCategoryWiseData.status === status.SUCCESS
     ) {
+      let eksData;
+      let ecsData;
+      this.props.infraTopologyCategoryWiseData.data.map((item) => {
+        if (item.elementType === "ECS") {
+          ecsData = item.metadata;
+        }
+        if (item.elementType === "EKS") {
+          eksData = item.metadata;
+        }
+      });
       this.setState({
         topologyCategoryWiseData: this.props.infraTopologyCategoryWiseData.data,
         currentActiveTopologyCategory:
           this.props.infraTopologyCategoryWiseData.data[0].elementType,
+        ecsMetaData: ecsData,
+        eksMetaData: eksData,
       });
     }
   };
@@ -367,6 +381,8 @@ class DiscoveredAssets extends Component {
       data,
       currentActiveNode,
       selectedCategoryCloudElementsData,
+      eksMetaData,
+      ecsMetaData,
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
@@ -472,7 +488,14 @@ class DiscoveredAssets extends Component {
                     <></>
                   )}
                   <Box className="fliter-tabs global-service-penal">
-                    {isClusterShow ? <ClusterDetails /> : <></>}
+                    {isClusterShow ? (
+                      <ClusterDetails
+                        eksData={eksMetaData}
+                        ecsData={ecsMetaData}
+                      />
+                    ) : (
+                      <></>
+                    )}
                     {currentActiveNode && !isClusterShow ? (
                       this.renderCloudManagedDetails()
                     ) : (
