@@ -3,7 +3,6 @@ import { ArcherContainer, ArcherElement } from "react-archer";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Box } from "@mui/material";
 import { v4 } from "uuid";
-import fakeData from "./fakeData.json";
 let transformScale = 0;
 
 let zoomElement = () => {};
@@ -196,7 +195,10 @@ class TopologyView extends Component {
                         this.setState({ currentActiveNode: item.id }, () => {
                           this.zoomToElementCallback();
                         });
-                        this.props.setCurrentActiveNode(item.id);
+                        this.props.setCurrentActiveNode(
+                          item.id,
+                          this.state.activeView
+                        );
                         this.handleNodeClick(
                           currentLevel,
                           sublevelIndex,
@@ -227,96 +229,6 @@ class TopologyView extends Component {
     }
     return retData;
   };
-
-  // renderChildNodes = (nodes, currentLevel, activeView) => {
-  //   let retData = [];
-  //   const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
-  //   if (activeView.length > currentLevel) {
-  //     let activeSublevel = -1;
-  //     let activeNode = -1;
-  //     if (activeView[currentLevel] !== -1) {
-  //       activeSublevel = parseInt(activeView[currentLevel].split(".")[0]);
-  //       activeNode = parseInt(activeView[currentLevel].split(".")[1]);
-  //     }
-  //     const childJSX = [];
-  //     nodes.map((item, sublevelIndex) => {
-  //       if (item.length > 0) {
-  //         retData.push(
-  //           <ul>
-  //             {item.map((item, nodeIndex) => {
-  //               if (item.children.length > 0) {
-  //                 if (
-  //                   activeSublevel === sublevelIndex &&
-  //                   activeNode === nodeIndex
-  //                 ) {
-  //                   childJSX.push(
-  //                     this.renderChildNodes(
-  //                       item.children,
-  //                       currentLevel + 1,
-  //                       activeView
-  //                     )
-  //                   );
-  //                 }
-  //               }
-  //               return (
-  //                 <ArcherElement
-  //                   key={v4()}
-  //                   id={item.label}
-  //                   relations={[
-  //                     {
-  //                       targetId:
-  //                         activeSublevel === sublevelIndex &&
-  //                         activeNode === nodeIndex
-  //                           ? this.getTargetId(currentLevel + 1)
-  //                           : "",
-  //                       targetAnchor: "left",
-  //                       sourceAnchor: "right",
-  //                       style: strokeStyles,
-  //                     },
-  //                   ]}
-  //                 >
-  //                   <li
-  //                     className={
-  //                       activeSublevel === sublevelIndex &&
-  //                       activeNode === nodeIndex
-  //                         ? "active"
-  //                         : ""
-  //                     }
-  //                     id={item.label}
-  //                     onClick={() => {
-  //                       this.setState({ currentActiveNode: item.label }, () => {
-  //                         this.zoomToElementCallback();
-  //                       });
-  //                       this.handleNodeClick(
-  //                         currentLevel,
-  //                         sublevelIndex,
-  //                         nodeIndex
-  //                       );
-  //                     }}
-  //                   >
-  //                     <span>
-  //                       <img src={item.image} alt={item.label} />
-  //                     </span>
-  //                     {this.getServiceName(item.label)}
-  //                   </li>
-  //                 </ArcherElement>
-  //               );
-  //             })}
-  //           </ul>
-  //         );
-  //       }
-  //     });
-  //     retData = [
-  //       <div className="global-servies" style={{ marginLeft: "50px" }}>
-  //         {retData}
-  //       </div>,
-  //     ];
-  //     if (childJSX.length > 0) {
-  //       retData.push(childJSX);
-  //     }
-  //   }
-  //   return retData;
-  // };
 
   getTargetId = (currentLevel) => {
     const activeNode = this.getChild(currentLevel);

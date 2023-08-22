@@ -40,12 +40,7 @@ class DiscoveredAssets extends Component {
     const queryPrm = new URLSearchParams(document.location.search);
     const cloudName = queryPrm.get("cloudName");
     this.state = {
-      breadcrumbs: {
-        breadcrumbId: v4(),
-        cloudName: cloudName?.toUpperCase(),
-        selectedLevel1: "",
-        selectedLevel2: "",
-      },
+      breadcrumbs: [{ level: -1, name: "AWS" }],
       data: {},
       currentActiveNodeLabel: "",
       currentVPC: {},
@@ -154,65 +149,24 @@ class DiscoveredAssets extends Component {
   /** Render the BreadCrumbs of Topologyview. */
   renderBreadCrumbs() {
     let { breadcrumbs } = this.state;
-    let { selectedLevel1, selectedLevel2, cloudName } = breadcrumbs;
-    let activeClassKey =
-      cloudName && selectedLevel1 && !selectedLevel2
-        ? "selectedLevel1"
-        : selectedLevel1 && selectedLevel2
-        ? "selectedLevel2"
-        : "cloudName";
-    let breadCrumbsData = Object.keys(breadcrumbs);
-
-    return breadCrumbsData.map((breadCrumb, index) => {
-      if (breadcrumbs[breadCrumb] && breadCrumb !== "breadcrumbId") {
-        return (
-          <>
-            {breadCrumb !== "cloudName" ? (
-              <li key={v4()}>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-            ) : (
-              <></>
-            )}
-            <li
-              onClick={() => {
-                this.onClickBreadCrumbOfTopology(breadCrumb);
-              }}
-              className={`${activeClassKey === breadCrumb ? "active" : ""}`}
-              key={v4()}
-            >
-              <a>
-                {breadCrumb === "cloudName" || breadCrumb === "selectedLevel1"
-                  ? breadcrumbs[breadCrumb]?.toUpperCase()
-                  : breadCrumb === "selectedLevel2"
-                  ? `${breadcrumbs[breadCrumb][0]?.toUpperCase()}${breadcrumbs[
-                      breadCrumb
-                    ].slice(1)}`
-                  : breadcrumbs[breadCrumb]}
-              </a>
+    return breadcrumbs.map((item, index) => {
+      return (
+        <>
+          <li
+            className={`${index === breadcrumbs.length - 1 ? "active" : ""}`}
+            key={v4()}
+          >
+            <a>{item.name.toUpperCase()}</a>
+          </li>
+          {index !== breadcrumbs.length - 1 ? (
+            <li key={v4()}>
+              <i className="fa-solid fa-chevron-right"></i>
             </li>
-          </>
-        );
-      }
-    });
-  }
-
-  /**
-   * Fire click event bread-crumb of Topology
-   * @param {string} type - type of data, it includes cloudName,level-1 or level-2 .
-   */
-  onClickBreadCrumbOfTopology(type) {
-    let { selectedLevel1, selectedLevel2, cloudName, breadcrumbId } =
-      this.state.breadcrumbs;
-
-    breadcrumbId = v4();
-    if (type === "cloudName") {
-      selectedLevel1 = "";
-      selectedLevel2 = "";
-    } else if (type === "selectedLevel1") selectedLevel2 = "";
-
-    this.setState({
-      breadcrumbs: { breadcrumbId, cloudName, selectedLevel1, selectedLevel2 },
+          ) : (
+            <></>
+          )}
+        </>
+      );
     });
   }
 
@@ -220,8 +174,21 @@ class DiscoveredAssets extends Component {
     this.setState({ activeTierTab: type });
   };
 
-  setCurrentActiveNode = (node) => {
-    this.setState({ currentActiveNode: node });
+  setCurrentActiveNode = (node, nodeLevelData) => {
+    const { breadcrumbs } = this.state;
+    let dupIndex = null;
+    breadcrumbs.map((item, index) => {
+      if (item.level === nodeLevelData[0]) {
+        dupIndex = index;
+      }
+    });
+    if (dupIndex) {
+      breadcrumbs[dupIndex].name = node;
+      breadcrumbs[dupIndex].level = nodeLevelData[0];
+    } else {
+      breadcrumbs.push({ level: nodeLevelData[0], name: node });
+    }
+    this.setState({ currentActiveNode: node, breadcrumbs });
     this.renderCloudManagedDetails();
   };
 
@@ -395,12 +362,10 @@ class DiscoveredAssets extends Component {
 
   render() {
     const {
-      currentActiveNodeLabel,
       activeTierTab,
       isClusterShow,
       data,
       currentActiveNode,
-      topologyCategoryWiseData,
       selectedCategoryCloudElementsData,
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
@@ -441,7 +406,7 @@ class DiscoveredAssets extends Component {
                   </Box>
                 </Grid>
                 <Grid item xs={7}>
-                  {!currentActiveNodeLabel ? (
+                  {!currentActiveNode ? (
                     <Box className="tier-buttons">
                       <Button
                         variant={
