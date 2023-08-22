@@ -413,10 +413,11 @@ class BusinessAssociationMapping extends Component {
   onClickSynectiks() {
     let { selectedActiveBAMLevels, BAMData, departments, initailOrganization } =
       this.state;
+    selectedActiveBAMLevels = {};
 
     if (!BAMData.length) {
       BAMData = [
-        departments[0].departments.map((department, index) => {
+        departments[0]?.departments.map((department, index) => {
           let { name: label, id } = department;
           return { label, id, image: calendarMouseIcon, type: "Department" };
         }),
@@ -425,14 +426,7 @@ class BusinessAssociationMapping extends Component {
       BAMData = [];
     }
 
-    selectedActiveBAMLevels = {};
-
-    this.props.setBreadCrumbs(
-      selectedActiveBAMLevels,
-      BAMData,
-      initailOrganization
-    );
-    this.setState({ selectedActiveBAMLevels, BAMData });
+    this.setStateOrProps(selectedActiveBAMLevels, BAMData, initailOrganization);
   }
 
   /**
@@ -447,10 +441,9 @@ class BusinessAssociationMapping extends Component {
       type,
       productType,
     } = data;
-    let { selectedActiveBAMLevels, BAMData, initailOrganization } = this.state;
-    let currentSelectedLevelIndex = `selectedLevel_${selectedLevel}`;
 
-    let activeBAMLevel = selectedActiveBAMLevels[currentSelectedLevelIndex];
+    let { selectedActiveBAMLevels, BAMData, initailOrganization } = this.state;
+    let activeBAMLevel = selectedActiveBAMLevels[`selectedLevel_0`];
     BAMData.length = selectedLevel + 1;
 
     if (activeBAMLevel && activeBAMLevel?.id === departmentId) {
@@ -492,14 +485,14 @@ class BusinessAssociationMapping extends Component {
       productType,
     } = data;
     let { selectedActiveBAMLevels, BAMData, initailOrganization } = this.state;
-    let preFix = `selectedLevel_`;
 
-    let activeBAMLevel = selectedActiveBAMLevels[preFix + selectedLevel];
+    let activeBAMLevel = selectedActiveBAMLevels[`selectedLevel_1`];
     let { selectedLevel_0 } = selectedActiveBAMLevels;
+
     BAMData.length = selectedLevel + 1;
+    selectedActiveBAMLevels = this.getPreviousSelectedLevels(0);
 
     if (activeBAMLevel && activeBAMLevel?.id === productId) {
-      selectedActiveBAMLevels = { selectedLevel_0 };
       productType = "";
       this.props.setBreadCrumbs(
         selectedActiveBAMLevels,
@@ -507,9 +500,10 @@ class BusinessAssociationMapping extends Component {
         initailOrganization
       );
     } else {
-      selectedActiveBAMLevels = {
-        selectedLevel_0,
-        selectedLevel_1: { id: productId, label, type },
+      selectedActiveBAMLevels["selectedLevel_1"] = {
+        id: productId,
+        label,
+        type,
       };
       this.props.getProductEnv(productId);
     }
@@ -534,17 +528,13 @@ class BusinessAssociationMapping extends Component {
       type,
     } = data;
     let { BAMData, selectedActiveBAMLevels, initailOrganization } = this.state;
-    let preFix = `selectedLevel_`;
+    let activeBAMLevel = selectedActiveBAMLevels[`selectedLevel_2`];
 
-    let activeBAMLevel = selectedActiveBAMLevels[preFix + selectedLevel];
     let { selectedLevel_0, selectedLevel_1 } = selectedActiveBAMLevels;
     BAMData.length = 3;
+    selectedActiveBAMLevels = this.getPreviousSelectedLevels(1);
 
     if (activeBAMLevel && activeBAMLevel?.id === envId) {
-      selectedActiveBAMLevels = {
-        selectedLevel_0,
-        selectedLevel_1,
-      };
     } else {
       BAMData[selectedLevel + 1] = productCategory[productType]
         ? productCategory[productType].map((name, index) => {
@@ -569,12 +559,7 @@ class BusinessAssociationMapping extends Component {
         },
       };
     }
-    this.props.setBreadCrumbs(
-      selectedActiveBAMLevels,
-      BAMData,
-      initailOrganization
-    );
-    this.setState({ BAMData, selectedActiveBAMLevels });
+    this.setStateOrProps(selectedActiveBAMLevels, BAMData, initailOrganization);
   }
 
   /**
@@ -595,18 +580,13 @@ class BusinessAssociationMapping extends Component {
       initailOrganization,
       productType: selectedType,
     } = this.state;
-    let preFix = `selectedLevel_`;
 
-    let activeBAMLevel = selectedActiveBAMLevels[preFix + selectedLevel];
+    let activeBAMLevel = selectedActiveBAMLevels[`selectedLevel_3`];
     let { selectedLevel_0, selectedLevel_1, selectedLevel_2 } =
       selectedActiveBAMLevels;
 
     BAMData.length = 4;
-    selectedActiveBAMLevels = {
-      selectedLevel_0,
-      selectedLevel_1,
-      selectedLevel_2,
-    };
+    selectedActiveBAMLevels = this.getPreviousSelectedLevels(2);
 
     if (activeBAMLevel && activeBAMLevel?.id === categoryId) {
     } else {
@@ -625,12 +605,7 @@ class BusinessAssociationMapping extends Component {
         productType,
       };
     }
-    this.props.setBreadCrumbs(
-      selectedActiveBAMLevels,
-      BAMData,
-      initailOrganization
-    );
-    this.setState({ selectedActiveBAMLevels, BAMData });
+    this.setStateOrProps(selectedActiveBAMLevels, BAMData, initailOrganization);
   }
 
   /**
@@ -641,21 +616,15 @@ class BusinessAssociationMapping extends Component {
     let { currentLevelIndex: moduleId, label, selectedLevel, type } = data;
     let { BAMData, selectedActiveBAMLevels, initailOrganization, productType } =
       this.state;
-    let preFix = `selectedLevel_`;
 
-    let activeBAMLevel = selectedActiveBAMLevels[preFix + selectedLevel];
+    let activeBAMLevel = selectedActiveBAMLevels[`selectedLevel_4`];
     let { selectedLevel_0, selectedLevel_1, selectedLevel_2, selectedLevel_3 } =
       selectedActiveBAMLevels;
 
     const departmentId = selectedLevel_0.id;
     const productId = selectedLevel_1.id;
     const productEnvId = selectedLevel_2.id;
-    selectedActiveBAMLevels = {
-      selectedLevel_0,
-      selectedLevel_1,
-      selectedLevel_2,
-      selectedLevel_3,
-    };
+    selectedActiveBAMLevels = this.getPreviousSelectedLevels(3);
 
     if (activeBAMLevel && activeBAMLevel?.id === moduleId) {
       BAMData.length = 5;
@@ -676,37 +645,15 @@ class BusinessAssociationMapping extends Component {
         type,
       };
     }
-    this.props.setBreadCrumbs(
-      selectedActiveBAMLevels,
-      BAMData,
-      initailOrganization
-    );
-    this.setState({ BAMData, selectedActiveBAMLevels });
+    this.setStateOrProps(selectedActiveBAMLevels, BAMData, initailOrganization);
   }
 
   onClickModuleElement(data) {
     let { currentLevelIndex: moduleId, label, selectedLevel, type } = data;
     let { BAMData, selectedActiveBAMLevels, initailOrganization, productType } =
       this.state;
-    let preFix = `selectedLevel_`;
-
-    let activeBAMLevel = selectedActiveBAMLevels[preFix + selectedLevel];
-
-    let {
-      selectedLevel_0,
-      selectedLevel_1,
-      selectedLevel_2,
-      selectedLevel_3,
-      selectedLevel_4,
-    } = selectedActiveBAMLevels;
-
-    selectedActiveBAMLevels = {
-      selectedLevel_0,
-      selectedLevel_1,
-      selectedLevel_2,
-      selectedLevel_3,
-      selectedLevel_4,
-    };
+    let activeBAMLevel = selectedActiveBAMLevels[`selectedLevel_5`];
+    selectedActiveBAMLevels = this.getPreviousSelectedLevels(4);
 
     if (activeBAMLevel && activeBAMLevel?.id === moduleId) {
       BAMData.length = 6;
@@ -717,12 +664,8 @@ class BusinessAssociationMapping extends Component {
         type,
       };
     }
-    this.props.setBreadCrumbs(
-      selectedActiveBAMLevels,
-      BAMData,
-      initailOrganization
-    );
-    this.setState({ BAMData, selectedActiveBAMLevels });
+
+    this.setStateOrProps(selectedActiveBAMLevels, BAMData, initailOrganization);
   }
   /** Fire click event then draw
    *  @param {Number} selectedLevel- The selectedLevel of BAM,
@@ -759,6 +702,28 @@ class BusinessAssociationMapping extends Component {
       return [];
     }
   };
+
+  setStateOrProps(selectedActiveBAMLevels, BAMData, initailOrganization) {
+    this.props.setBreadCrumbs(
+      selectedActiveBAMLevels,
+      BAMData,
+      initailOrganization
+    );
+    this.setState({ BAMData, selectedActiveBAMLevels });
+  }
+
+  getPreviousSelectedLevels(level) {
+    let totalLevels = [0, 1, 2, 3, 4];
+    const { selectedActiveBAMLevels } = this.state;
+
+    let activeLevel = {};
+
+    totalLevels.slice(0,level+1).map((levelNumber) => {
+      let key = `selectedLevel_${levelNumber}`;
+      activeLevel = { ...activeLevel, [key]: selectedActiveBAMLevels[key] };
+    });
+    return activeLevel;
+  }
 
   render() {
     const HtmlTooltip = styled(({ className, ...props }) => (
