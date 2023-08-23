@@ -59,9 +59,9 @@ export class AssociateApp extends Component {
         <Box className="tiersoc-box" key={data.id}>
           <Box className="heading">
             <h3>
-              <span>
+              <p>
                 <img src={clusterIcon} alt="" />
-              </span>
+              </p>
               {data.elementType} ID:
               <HtmlTooltip title={data.instanceId}>
                 {data.instanceId}

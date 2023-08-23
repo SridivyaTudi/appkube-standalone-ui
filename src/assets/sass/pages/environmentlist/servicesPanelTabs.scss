@@ -357,7 +357,6 @@
                   }
                 }
               }
-
             }
 
             .global-service-cards {
@@ -754,11 +753,13 @@
                 color: #383874;
                 margin-bottom: 0;
 
-                span {
+                p {
                   display: inline-flex;
                   width: 16px;
                   height: 16px;
                   padding: 3px;
+                  margin: 0;
+
                   margin-right: 5px;
                   border-radius: 50%;
                   background-color: #f6f7fb;
@@ -767,6 +768,14 @@
                     max-width: 100%;
                     height: auto;
                   }
+                }
+                span {
+                  width: 60px;
+                  margin-left: 5px;
+                  display: inline-flex;
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
                 }
               }
               a {
@@ -908,12 +917,12 @@
     width: 100%;
     display: block;
     padding: 20px 0;
-  
+
     .heading {
       display: block;
       width: 100%;
       padding: 0 0 10px 0;
-  
+
       h3 {
         display: block;
         color: #000000;
@@ -923,11 +932,11 @@
         margin-bottom: 0;
       }
     }
-  
+
     .lambda-functions-table-section {
       display: block;
       width: 100%;
-  
+
       .lambda-functions-table {
         overflow: hidden;
         border-radius: 7px;
@@ -939,7 +948,7 @@
             font-size: 13px;
             font-weight: 600;
             padding: 10px;
-  
+
             &:last-child {
               border-right: none;
             }
@@ -957,7 +966,6 @@
       }
     }
   }
-  
 }
 @media only screen and (max-width: 1200px) {
   .environmentlist-container {
