@@ -1,5 +1,5 @@
-// const baseURL = `https://5jdezsz635.execute-api.us-east-1.amazonaws.com/dev`;
-export const baseURL = `http://34.199.12.114:6057/api`;
+const baseURL = `https://5jdezsz635.execute-api.us-east-1.amazonaws.com/dev`;
+// export const baseURL = `http://34.199.12.114:6057/api`;
 
 const config = {
   baseURL,
@@ -43,6 +43,7 @@ const config = {
   GET_ASSOCIATE_PRODUCT_ENV: `${baseURL}/product-env/search?productId=#product-id#`,
   GET_ASSOCIATE_MODULES: `${baseURL}/module/search-by-filters?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&serviceNature=#service-nature#`,
   GET_ASSOCIATE_MODULE_ELEMENTS: `${baseURL}/business-element/search-by-filters?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&moduleId=#module-id#&serviceNature=#service-nature#`,
+  CREATE_ASSOCIATE:`${baseURL}/cloud-element/associate`
 };
 
 export default config;

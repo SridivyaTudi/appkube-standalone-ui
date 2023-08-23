@@ -15,6 +15,7 @@ service.interceptors.request.use(
     if (currentOrg) {
       config.url = config.url.replace("#org-id#", currentOrg);
     }
+
     // const jwtToken = localStorage.getItem(AUTH_TOKEN);
 
     // if (jwtToken) {
@@ -114,5 +115,5 @@ authService.interceptors.response.use(
   }
 );
 
-export {service as postLoginService};
-export {authService as preLoginService};
+export { service as postLoginService };
+export { authService as preLoginService };

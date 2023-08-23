@@ -6,7 +6,13 @@ import chartLogo from "assets/img/assetmanager/chart-logo.png";
 import calendarMouseIcon from "assets/img/assetmanager/calendar-mouse-icon.png";
 import databaseIcon from "assets/img/assetmanager/database-icon.png";
 import BusinessAssociationMapping from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/BusinessAssociationMapping";
-
+import { createAssociate } from "Redux/AssociateApp/AssociateAppThunk";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { withRouter } from "Views/AppViews/Environments/NewAccountSetup/AccountPolicy/withRouter";
+import { ToastMessage } from "Toast/ToastMessage";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 export class AssociateChartApp extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +23,28 @@ export class AssociateChartApp extends Component {
       clickBreadCrumbDetails: {},
       BAMData: [],
     };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.associateCreation.status !== this.props.associateCreation.status
+    ) {
+      if (
+        this.props.associateCreation.status === status.SUCCESS &&
+        this.props.associateCreation?.data?.id
+      ) {
+        const landingZone = localStorage.getItem("landingZone");
+        const cloudName = localStorage.getItem("cloudName");
+        this.props.navigate(
+          `${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}`
+        );
+        ToastMessage.success("Service tagged successfully.");
+        localStorage.removeItem("landingZone");
+        localStorage.removeItem("cloudName");
+      } else if (this.props.associateCreation.status === status.FAILURE) {
+        ToastMessage.error("Service is not tag  successfully.");
+      }
+    }
   }
 
   toggleSelectDepartment = () => {
@@ -120,14 +148,13 @@ export class AssociateChartApp extends Component {
   getAssociateIdOrType() {
     const queryPrm = new URLSearchParams(document.location.search);
     const elementType = queryPrm.get("elementType");
-    const elementId = queryPrm.get("elementId");
+    const instanceId = queryPrm.get("instanceId");
 
-    return { elementId, elementType };
+    return { instanceId, elementType };
   }
   /**
    * Render Department or Product list
    *  @param {Number} isProduct - 1 if it is products, else 0 .
-   *
    */
   renderDepartmentsOrProducts(isProduct = 0) {
     let { BAMData } = this.state;
@@ -161,6 +188,15 @@ export class AssociateChartApp extends Component {
     }
   }
 
+  onClickSubmit = () => {
+    const { instanceId } = this.getAssociateIdOrType();
+    const {
+      selectedActiveBAMLevels: {
+        selectedLevel_5: { id: serviceId },
+      },
+    } = this.state;
+    this.props.createAssociate(JSON.stringify({ instanceId, serviceId }));
+  };
   render() {
     const {
       isSelectDepartmentOpen,
@@ -174,6 +210,7 @@ export class AssociateChartApp extends Component {
     const productName = selectedActiveBAMLevels["selectedLevel_1"]
       ? selectedActiveBAMLevels["selectedLevel_1"].label
       : "";
+    const { associateCreation } = this.props;
     return (
       <Box className="environment-container associate-container">
         <Box className="breadcrumbs">
@@ -189,7 +226,7 @@ export class AssociateChartApp extends Component {
               <h4>
                 Business Association Mapping (
                 {this.getAssociateIdOrType().elementType}:
-                {this.getAssociateIdOrType().elementId})
+                {this.getAssociateIdOrType().instanceId})
               </h4>
             </Grid>
             <Grid item xs={4}>
@@ -273,9 +310,20 @@ export class AssociateChartApp extends Component {
         </Box>
         <Box className="d-block width-100 text-center m-t-4">
           {Object.keys(selectedActiveBAMLevels).length === 6 ? (
-            <Button className="primary-btn min-width" variant="contained">
+            <LoadingButton
+              className="primary-btn min-width"
+              onClick={this.onClickSubmit}
+              disabled={
+                associateCreation.status === status.IN_PROGRESS ? true : false
+              }
+              loading={
+                associateCreation.status === status.IN_PROGRESS ? true : false
+              }
+              loadingPosition="start"
+              variant="contained"
+            >
               Submit
-            </Button>
+            </LoadingButton>
           ) : (
             <></>
           )}
@@ -284,4 +332,17 @@ export class AssociateChartApp extends Component {
     );
   }
 }
-export default AssociateChartApp;
+function mapStateToProps(state) {
+  const { associateCreation } = state.associateApp;
+  return {
+    associateCreation,
+  };
+}
+
+const mapDispatchToProps = {
+  createAssociate,
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(AssociateChartApp)
+);

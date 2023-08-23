@@ -277,6 +277,7 @@ class BusinessAssociationMapping extends Component {
                 <TransformComponent
                   contentStyle={{
                     alignItems: "center",
+                    width:"2000px"
                   }}
                 >
                   <ArcherElement
@@ -375,7 +376,7 @@ class BusinessAssociationMapping extends Component {
                   : ""
               }`}
             >
-              <HtmlTooltip title={level.label}>
+              <HtmlTooltip title={level.label?.length > 13 ? level.label : ""}>
                 <Box className="tooltip-content">
                   <span>
                     <img src={level.image} alt={level.label} />
