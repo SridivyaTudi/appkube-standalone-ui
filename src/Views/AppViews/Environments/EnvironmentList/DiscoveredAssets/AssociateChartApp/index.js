@@ -222,14 +222,14 @@ export class AssociateChartApp extends Component {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid item xs={8}>
+            <Grid item xs={6}>
               <h4>
                 Business Association Mapping (
                 {this.getAssociateIdOrType().elementType}:
                 {this.getAssociateIdOrType().instanceId})
               </h4>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <Box className="text-right">
                 <Box className="mapping-fliter">
                   <Box
