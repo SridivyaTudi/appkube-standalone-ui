@@ -1387,6 +1387,38 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
+  /cloud-element/associate:
+    post:
+      tags:
+        - CloudElement
+      summary: Associate cloud-element with business element
+      operationId: associateCloudElement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                instanceId: "asdf"
+                serviceId: 1
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudElementDTO'
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudElementDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
   /module:
     get:
       tags:
@@ -1500,6 +1532,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ModuleDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /module/search-by-filters:
+    get:
+      tags:
+        - Module
+      summary: Search module by filters
+      operationId: searchModuleByFilter
+      parameters:
+        - in: query
+          name: departmentId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: query
+          name: productId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: query
+          name: productEnvId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: query
+          name: serviceNature
+          schema:
+            type: string
+          required: true
       responses:
         200:
           description: OK
@@ -1662,6 +1737,55 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BusinessElementDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BusinessElementDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /business-element/search-by-filters:
+    get:
+      tags:
+        - BusinessElement
+      summary: Search business_element by filters
+      operationId: searchBusinessElementByFilter
+      parameters:
+        - in: query
+          name: departmentId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: query
+          name: productId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: query
+          name: productEnvId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: query
+          name: moduleId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: query
+          name: serviceNature
+          schema:
+            type: string
+          required: true
       responses:
         200:
           description: OK
@@ -4112,6 +4236,8 @@ components:
       properties:
         elementType:
           type: string
+        metadata:
+          type: object
         category:
           type: string
         dbCategoryId:
