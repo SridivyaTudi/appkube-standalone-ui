@@ -78,7 +78,7 @@
     .modal-body {
       padding: 0px 10px;
       color: #3b4859;
-      .filter-pop-loading{
+      .filter-pop-loading {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -132,6 +132,9 @@
         margin-top: 0px;
         margin-bottom: 0px;
         cursor: pointer;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .form-group {
@@ -386,9 +389,9 @@
       }
     }
   }
-  &.appliction-successfully-modal{
+  &.appliction-successfully-modal {
     margin: 85px auto;
-    .appliction-contant{
+    .appliction-contant {
       display: flex;
       align-items: center;
       justify-content: center;
