@@ -62,9 +62,8 @@ export class AssociateApp extends Component {
               <p>
                 <img src={clusterIcon} alt="" />
               </p>
-              {data.elementType} ID:
               <HtmlTooltip title={data.instanceId}>
-                {data.instanceId}
+                {data.elementType} ID: {data.instanceId}
               </HtmlTooltip>
             </h3>
             <Button
