@@ -43,7 +43,7 @@ const productCategory = {
   SOA: ["BUSINESS", "COMMON"],
 };
 let transformScale = 0;
-let maxNodeLength = 0;
+
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -266,19 +266,17 @@ class BusinessAssociationMapping extends Component {
             transformScale = instance && instance.state.scale;
             this.setState({ scale: true });
           }}
+          minScale={0.3}
+          limitToBounds={false}
         >
           {({ zoomIn, zoomOut, instance, zoomToElement, ...rest }) => {
             transformScale = instance.transformState.scale;
-            let maxWidth =
-              document.getElementById(`maxNode_${maxNodeLength}`)
-                ?.offsetHeight || 0;
+
             return (
               <>
                 <TransformComponent
                   contentStyle={{
                     alignItems: "center",
-                    width: "2000px",
-                    height: `${maxWidth ? 2 * maxWidth : 1200}px`,
                   }}
                 >
                   <ArcherElement
@@ -420,16 +418,12 @@ class BusinessAssociationMapping extends Component {
     const { BAMData } = this.state;
     if (BAMData.length) {
       return BAMData.map((levelData, selectedLevel) => {
-        maxNodeLength =
-          levelData.length > maxNodeLength ? levelData.length : maxNodeLength;
-
         if (levelData.length) {
           return (
             <div
               className={` global-servies`}
               style={{ width: "160px" }}
               key={v4()}
-              id={`maxNode_${levelData.length}`}
             >
               <ul>{this.renderChildNodes(levelData, selectedLevel)}</ul>
             </div>
