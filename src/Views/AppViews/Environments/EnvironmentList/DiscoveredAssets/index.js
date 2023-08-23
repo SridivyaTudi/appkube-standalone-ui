@@ -31,6 +31,7 @@ import {
   getInfraTopologyDbCategories,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { getCurrentOrgId } from "Utils";
+import LambdaTable from "./LambdaTable";
 
 const orgId = getCurrentOrgId();
 
@@ -119,10 +120,16 @@ class DiscoveredAssets extends Component {
       let ecsData;
       this.props.infraTopologyCategoryWiseData.data.map((item) => {
         if (item.elementType === "ECS") {
-          ecsData = item.metadata;
+          const newKey = "noOfEcs";
+          const newValue = item.totalRecord;
+          const newObject = { [newKey]: newValue, ...item.metadata };
+          ecsData = newObject;
         }
         if (item.elementType === "EKS") {
-          eksData = item.metadata;
+          const newKey = "noOfEks";
+          const newValue = item.totalRecord;
+          const newObject = { [newKey]: newValue, ...item.metadata };
+          eksData = newObject;
         }
       });
       this.setState({
@@ -138,13 +145,17 @@ class DiscoveredAssets extends Component {
   setCurrentTopologyCategory = (category) => {
     const { cloudElementsData } = this.state;
     this.setState({ currentActiveTopologyCategory: category });
-    const newArray = [];
-    cloudElementsData.map((item) => {
-      if (item.elementType === category) {
-        newArray.push(item);
-      }
-    });
-    this.setState({ selectedCategoryCloudElementsData: newArray });
+    if (category === "Lambda") {
+      this.setState({ selectedCategoryCloudElementsData: [] });
+    } else {
+      const newArray = [];
+      cloudElementsData.map((item) => {
+        if (item.elementType === category) {
+          newArray.push(item);
+        }
+      });
+      this.setState({ selectedCategoryCloudElementsData: newArray });
+    }
   };
 
   toggleMenu = (index) => {
@@ -383,6 +394,7 @@ class DiscoveredAssets extends Component {
       selectedCategoryCloudElementsData,
       eksMetaData,
       ecsMetaData,
+      currentActiveTopologyCategory,
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
@@ -508,10 +520,10 @@ class DiscoveredAssets extends Component {
             </Box>
           )}
         </Box>
-        {selectedCategoryCloudElementsData.length ? (
-          <AssociateApp data={selectedCategoryCloudElementsData} />
+        {currentActiveTopologyCategory === "Lambda" ? (
+          <LambdaTable />
         ) : (
-          <></>
+          <AssociateApp data={selectedCategoryCloudElementsData} />
         )}
       </Box>
     );
