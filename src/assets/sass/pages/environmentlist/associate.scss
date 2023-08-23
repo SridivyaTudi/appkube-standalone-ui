@@ -192,7 +192,7 @@
           justify-content: flex-start;
         }
 
-        .react-transform-wrapper { 
+        .react-transform-wrapper {
           display: flex;
           align-items: center;
           justify-content: flex-start;
@@ -229,6 +229,27 @@
               border: none;
               cursor: pointer;
               padding: 0;
+              text-align: center;
+              background-color: #ffffff;
+            }
+          }
+
+          .gmnoprint-map {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+
+            .btn {
+              display: block;
+              color: #023aff;
+              font-size: 14px;
+              line-height: 30px;
+              width: 30px;
+              height: 30px;
+              border: none;
+              padding: 0;
+              cursor: pointer;
               text-align: center;
               background-color: #ffffff;
             }
@@ -272,7 +293,7 @@
               position: relative;
               width: 160px;
               height: 52px;
-              padding: 10px 10px;
+              padding: 0px;
               margin-bottom: 20px;
               border-radius: 15px;
               border: 1px solid #c7c7e8;
@@ -299,6 +320,17 @@
                 font-size: 14px;
                 background-color: #3838748c;
                 border-radius: 50%;
+              }
+
+              .tooltip-content {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                cursor: pointer;
+                position: relative;
+                width: 160px;
+                height: 52px;
+                padding: 10px 10px;
               }
 
               span {
@@ -382,7 +414,7 @@
           }
 
           &:last-child {
-            margin-right: 0;
+            margin-right: 15px;
           }
         }
       }

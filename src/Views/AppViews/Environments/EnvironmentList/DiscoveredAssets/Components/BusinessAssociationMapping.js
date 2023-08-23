@@ -306,7 +306,6 @@ class BusinessAssociationMapping extends Component {
                 <div className="gmnoprint">
                   <div className="gmnoprint-plus-minus">
                     <button className="btn btn-plus" onClick={() => zoomIn()}>
-                   
                       <i className="fa-solid fa-plus"></i>
                     </button>
                     <button className="btn btn-minus" onClick={() => zoomOut()}>
@@ -343,7 +342,7 @@ class BusinessAssociationMapping extends Component {
    */
   renderChildNodes = (data, selectedLevel) => {
     let { selectedActiveBAMLevels, BAMData } = this.state;
-   
+
     if (data.length) {
       return data.map((level, currentLevelIndex) => {
         let currentLevel = `selectedLevel_${selectedLevel}`;
@@ -352,7 +351,7 @@ class BusinessAssociationMapping extends Component {
         let relationsData = isActive
           ? this.onClickLevelsThenDrawLine(selectedLevel)
           : [];
-       
+
         let activeNodeLength = Object.keys(selectedActiveBAMLevels).length - 1;
         return (
           <ArcherElement id={elementId} relations={relationsData} key={v4()}>
@@ -378,35 +377,35 @@ class BusinessAssociationMapping extends Component {
                   : ""
               }`}
             >
-              <span>
-                <img src={level.image} alt={level.label} />
-              </span>
-              <div className="content">
-                <HtmlTooltip  className="primary-tooltip" title={level.label}>
-                  <>
-                    <p >{level.label}</p>
-                  </>
-                </HtmlTooltip>
+              <HtmlTooltip title={level.label}>
+                <Box className="tooltip-content">
+                  <span>
+                    <img src={level.image} alt={level.label} />
+                  </span>
+                  <div className="content">
+                    <p>{level.label}</p>
 
-                {level.type === "Product" ? (
-                  <div
-                    className={`box ${
-                      level.productType === "SOA" ? "orange" : "blue"
-                    }`}
-                  >
-                    {level.productType}
+                    {level.type === "Product" ? (
+                      <div
+                        className={`box ${
+                          level.productType === "SOA" ? "orange" : "blue"
+                        }`}
+                      >
+                        {level.productType}
+                      </div>
+                    ) : (
+                      <></>
+                    )}
                   </div>
-                ) : (
-                  <></>
-                )}
-              </div>
+                </Box>
+              </HtmlTooltip>
               {isActive &&
               // level.children.length === 0 &&
               BAMData.length === selectedLevel + 1 ? (
                 <i className="fa-solid fa-circle-plus"></i>
               ) : (
                 <></>
-              )}{" "}
+              )}
             </li>
           </ArcherElement>
         );
