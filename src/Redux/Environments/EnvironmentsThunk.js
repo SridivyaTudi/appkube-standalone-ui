@@ -48,24 +48,11 @@ export const getOrgWiseDepartments = createAsyncThunk(
 export const getProductsByDepId = createAsyncThunk(
   "environments/getProductsByDepId",
   async (depId) => {
-    const url = config.GET_PRODUCTS_BY_DEPID.replace("#dep-id#", depId);
+    const url = config.GET_ASSOCIATE_PRODUCT_LIST.replace("#dep-id#", depId);
     try {
       const response = await postLoginService.get(`${url}`);
       const products = response;
       return { products, depId };
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
-
-export const getDeploymentEnvs = createAsyncThunk(
-  "environments/getDeploymentEnvs",
-  async () => {
-    const url = config.GET_DEPLOYMENT_ENVIRONMENTS;
-    try {
-      const response = await postLoginService.get(url);
-      return response;
     } catch (error) {
       console.log(error);
     }

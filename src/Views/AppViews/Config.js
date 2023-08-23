@@ -22,15 +22,9 @@ const config = {
   GET_ALL_ENVIRONMENT_SUMMARY: `/query/organization/#org-id#/environment/summary-list`,
   GET_ALL_ORG_WISE_DEPARTMENTS: `/organization/#org-id#`,
   GET_DEPARTMENT_WISE_DATA: `/department-wise-analytics/get-data`,
-  GET_ENVIRONMENT_DATA: `${baseURL}/query/organization/#org-id#/landing-zone/#landing-zone-id#/infra-topology`,
   GET_INFRA_TOPOLOGY_DATA: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone/#landing-zone-id#`,
-  GET_DEPARTMENTS: `${baseURL}/departments/search?organizationId=`,
-  GET_ENVIRONMENTS: `/cloud-environments`,
-  GET_ORG_WISE_DEPARTMENTS: `${baseURL}/query/organization/#org-id#/departments`,
-  DEPARTMENTS: `/departments`,
+  DEPARTMENTS: `${baseURL}/department`,
   ADD_CLOUD_ENV: `/cloud-environments`,
-  GET_PRODUCTS_BY_DEPID: `/query/organization/#org-id#/departments/#dep-id#/products`,
-  GET_DEPLOYMENT_ENVIRONMENTS: `/deployment-environments`,
   GET_SINGLE_ENVIRONMENT_COUNT_DATA: `${baseURL}/query/organization/#orgId#/cloud/#cloud#/landing-zone/#landingZone#/cloud-environments/count`,
   ADD_LANDING_ZONE: `${baseURL}/landingzone`,
   INFRA_TOPOLOGY_CLOUD_ELEMENT_LIST: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone/#landing-zone-id#/product-enclave/#product-enclave#/cloud-elements`,
@@ -43,7 +37,7 @@ const config = {
   GET_ASSOCIATE_PRODUCT_ENV: `${baseURL}/product-env/search?productId=#product-id#`,
   GET_ASSOCIATE_MODULES: `${baseURL}/module/search-by-filters?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&serviceNature=#service-nature#`,
   GET_ASSOCIATE_MODULE_ELEMENTS: `${baseURL}/business-element/search-by-filters?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&moduleId=#module-id#&serviceNature=#service-nature#`,
-  CREATE_ASSOCIATE:`${baseURL}/cloud-element/associate`
+  CREATE_ASSOCIATE: `${baseURL}/cloud-element/associate`,
 };
 
 export default config;

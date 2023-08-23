@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -7,11 +6,8 @@ import { connect } from "react-redux";
 import {
   getProductsByDepId,
   getOrgWiseDepartments,
-  getDeploymentEnvs,
   getEnvsSummary,
 } from "Redux/Environments/EnvironmentsThunk";
-import { getCurrentOrgId } from "Utils";
-import Button from "@mui/material/Button";
 import status from "Redux/Constants/CommonDS";
 import LoadingButton from "@mui/lab/LoadingButton";
 
@@ -36,7 +32,6 @@ class FilterPopup extends Component {
 
   componentDidMount = () => {
     this.props.getOrgWiseDepartments();
-    this.props.getDeploymentEnvs();
     const { selectedDepartment, selectedEnv, selectedProduct } =
       this.props.selectedFilters;
     this.setState({
@@ -53,7 +48,8 @@ class FilterPopup extends Component {
     if (
       prevProps.organizationWiseDepartments.status !==
         this.props.organizationWiseDepartments.status &&
-      this.props.organizationWiseDepartments.status === status.SUCCESS && this.props.organizationWiseDepartments.data?.departments
+      this.props.organizationWiseDepartments.status === status.SUCCESS &&
+      this.props.organizationWiseDepartments.data?.departments
     ) {
       this.setState({
         departments: this.sortDepartments(
@@ -81,15 +77,24 @@ class FilterPopup extends Component {
 
   toggle = () => {
     this.props.togglePopup();
-  };
-
-  handleDepartmentCheck = (departmentID) => {
     this.setState({
-      selectedDepartment: departmentID,
+      selectedDepartment: -1,
       selectedProduct: -1,
       selectedEnv: -1,
     });
-    this.props.getProductsByDepId(departmentID);
+  };
+
+  handleDepartmentCheck = (departmentID) => {
+    this.setState(
+      {
+        selectedDepartment: departmentID,
+        selectedProduct: -1,
+        selectedEnv: -1,
+      },
+      () => {
+        this.props.getProductsByDepId(this.state.selectedDepartment);
+      }
+    );
   };
 
   handleProductCheck = (product) => {
@@ -147,15 +152,15 @@ class FilterPopup extends Component {
               <input
                 type="radio"
                 name="product"
-                value={product}
-                checked={product === this.state.selectedProduct}
-                onChange={(e) => this.handleProductCheck(product)}
+                value={product.name}
+                checked={product.name === this.state.selectedProduct}
+                onChange={(e) => this.handleProductCheck(product.name)}
               />
               <label
-                htmlFor={product}
-                onClick={(e) => this.handleProductCheck(product)}
+                htmlFor={product.name}
+                onClick={(e) => this.handleProductCheck(product.name)}
               >
-                {product}
+                {product.name}
               </label>
             </Box>
           </Grid>
@@ -210,6 +215,7 @@ class FilterPopup extends Component {
         selectedProduct,
         selectedEnv,
       });
+      this.handleClearFilters();
     }
   };
 
@@ -241,7 +247,7 @@ class FilterPopup extends Component {
   };
 
   render() {
-    const { selectedDepartment, selectedProduct } = this.state;
+    const { selectedDepartment } = this.state;
     let { selectedFilters } = this.props;
     return (
       <Modal
@@ -302,26 +308,6 @@ class FilterPopup extends Component {
                   </Box>
                 </>
               ) : null}
-              {selectedProduct !== -1 ? (
-                <>
-                  <Box className="border-top m-t-1">
-                    <h4 className="text-left m-b-1 m-t-2">
-                      Select Environment
-                    </h4>
-                    <Box sx={{ width: "100%" }}>
-                      <Grid
-                        container
-                        rowSpacing={1}
-                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                        alignItems={"center"}
-                        justifyContent={"flex-start"}
-                      >
-                        {this.renderEnvironments()}
-                      </Grid>
-                    </Box>
-                  </Box>
-                </>
-              ) : null}
             </>
           )}
         </ModalBody>
@@ -344,8 +330,14 @@ class FilterPopup extends Component {
             </LoadingButton>
             {selectedDepartment !== -1 ? (
               <LoadingButton
-                disabled={selectedFilters.selectedDepartment !== -1 && this.props.envSummary.status === status.IN_PROGRESS}
-                loading={selectedFilters.selectedDepartment !== -1 && this.props.envSummary.status === status.IN_PROGRESS}
+                disabled={
+                  selectedFilters.selectedDepartment !== -1 &&
+                  this.props.envSummary.status === status.IN_PROGRESS
+                }
+                loading={
+                  selectedFilters.selectedDepartment !== -1 &&
+                  this.props.envSummary.status === status.IN_PROGRESS
+                }
                 className="primary-btn min-width"
                 loadingPosition="start"
                 variant="contained"
@@ -379,7 +371,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   getProductsByDepId,
   getOrgWiseDepartments,
-  getDeploymentEnvs,
   getEnvsSummary,
 };
 

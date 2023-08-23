@@ -4,7 +4,6 @@ import {
   getEnvsSummary,
   getOrgWiseDepartments,
   getProductsByDepId,
-  getDeploymentEnvs,
 } from "Redux/Environments/EnvironmentsThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -129,30 +128,6 @@ export const environmentSlice = createSlice({
       return {
         ...state,
         productsByDepId: {
-          status: status.FAILURE,
-        },
-      };
-    },
-
-    [getDeploymentEnvs.pending]: (state, action) => {
-      return {
-        ...state,
-        deploymentEnvs: { status: status.IN_PROGRESS },
-      };
-    },
-    [getDeploymentEnvs.fulfilled]: (state, { payload }) => {
-      return {
-        ...state,
-        deploymentEnvs: {
-          status: status.SUCCESS,
-          data: payload,
-        },
-      };
-    },
-    [getDeploymentEnvs.rejected]: (state, action) => {
-      return {
-        ...state,
-        deploymentEnvs: {
           status: status.FAILURE,
         },
       };
