@@ -22,6 +22,7 @@ export class AssociateChartApp extends Component {
       selectedActiveBAMLevels: {},
       clickBreadCrumbDetails: {},
       BAMData: [],
+      resetBreadCrumb:''
     };
   }
 
@@ -61,11 +62,11 @@ export class AssociateChartApp extends Component {
 
   /** Render the BreadCrumbs. */
   renderBreadCrumbs(isBreadCrumb = 1) {
-    let { selectedActiveBAMLevels, BAMData, initailOrganization } = this.state;
+    let { selectedActiveBAMLevels, BAMData, serviceName } = this.state;
 
     let activeBAM = Object.keys(selectedActiveBAMLevels);
 
-    let breadcrumbs = initailOrganization
+    let breadcrumbs = serviceName
       ? [
           <>
             <li
@@ -84,7 +85,7 @@ export class AssociateChartApp extends Component {
               }}
               key={v4()}
             >
-              <a>{initailOrganization}</a>
+              <a>{serviceName}</a>
             </li>
             {isBreadCrumb && !BAMData.length ? (
               <li key={v4()}>
@@ -202,7 +203,7 @@ export class AssociateChartApp extends Component {
       isSelectDepartmentOpen,
       isSelectProductOpen,
       clickBreadCrumbDetails,
-      selectedActiveBAMLevels,
+      selectedActiveBAMLevels,resetBreadCrumb
     } = this.state;
     const departmentName = selectedActiveBAMLevels["selectedLevel_0"]
       ? selectedActiveBAMLevels["selectedLevel_0"].label
@@ -291,22 +292,34 @@ export class AssociateChartApp extends Component {
             setBreadCrumbs={(
               selectedActiveBAMLevels,
               BAMData,
-              initailOrganization
+              serviceName
             ) => {
               this.setState({
                 selectedActiveBAMLevels,
                 BAMData,
-                initailOrganization,
+                serviceName,
               });
             }}
             clickBreadCrumbDetails={clickBreadCrumbDetails}
+            resetBreadCrumbId={resetBreadCrumb}
           />
         </Box>
         <Box className="infra-existing">
           <div className="heading">Infra Existing tags of element</div>
           <Box className="breadcrumbs">
             <ul>{this.renderBreadCrumbs(0)}</ul>
+            <button
+            type="button"
+            className="close"
+            aria-label="Close"
+            onClick={() => {
+              this.setState({resetBreadCrumb:v4()})
+            }}
+          >
+            <i className="fa-solid fa-xmark"></i>
+          </button>
           </Box>
+          
         </Box>
         <Box className="d-block width-100 text-center m-t-4">
           {Object.keys(selectedActiveBAMLevels).length === 6 ? (
@@ -322,7 +335,7 @@ export class AssociateChartApp extends Component {
               loadingPosition="start"
               variant="contained"
             >
-              Submit
+              Add Service
             </LoadingButton>
           ) : (
             <></>
