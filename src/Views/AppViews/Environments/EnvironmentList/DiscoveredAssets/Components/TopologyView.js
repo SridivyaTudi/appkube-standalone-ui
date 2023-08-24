@@ -3,8 +3,8 @@ import { ArcherContainer, ArcherElement } from "react-archer";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Box } from "@mui/material";
 import { v4 } from "uuid";
-import aws from "../../../../../../assets/img/aws.png";
-import vpcServicesIcon from "../../../../../../assets/img/assetmanager/vpc-services-icon.png";
+import aws from "assets/img/aws.png";
+import vpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
 let transformScale = 0;
 
 let zoomElement = () => {};

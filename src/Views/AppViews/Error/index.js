@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Box, Grid } from "@mui/material";
-import ErrorImg from "../../../assets/img/error-img.png";
+import ErrorImg from "assets/img/error-img.png";
 
 export class Error extends Component {
   render() {

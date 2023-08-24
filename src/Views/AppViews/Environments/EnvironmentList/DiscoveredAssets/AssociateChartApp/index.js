@@ -5,6 +5,7 @@ import { v4 } from "uuid";
 import chartLogo from "assets/img/assetmanager/chart-logo.png";
 import calendarMouseIcon from "assets/img/assetmanager/calendar-mouse-icon.png";
 import databaseIcon from "assets/img/assetmanager/database-icon.png";
+import topBottomArrow from "assets/img/assetmanager/top-bottom-arrow.png";
 import BusinessAssociationMapping from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/BusinessAssociationMapping";
 import { createAssociate } from "Redux/AssociateApp/AssociateAppThunk";
 import { connect } from "react-redux";
@@ -319,6 +320,9 @@ export class AssociateChartApp extends Component {
             clickBreadCrumbDetails={clickBreadCrumbDetails}
             resetBreadCrumbId={resetBreadCrumb}
           />
+        </Box>
+        <Box className="d-block width-100 text-center top-bottom-arrow">
+          <img src={topBottomArrow} alt="" />
         </Box>
         <Box className="infra-existing">
           <div className="heading">Infra Existing tags of element</div>

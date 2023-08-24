@@ -18,7 +18,7 @@ import { getCurrentOrgId } from "Utils";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-import aws from "../../../../assets/img/aws.png";
+import aws from "assets/img/aws.png";
 
 class EnvironmentList extends Component {
   tabMapping = [
