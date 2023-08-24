@@ -19,9 +19,9 @@ export class AssociateChartApp extends Component {
     this.state = {
       isSelectDepartmentOpen: false,
       isSelectProductOpen: false,
-      selectedActiveBAMLevels: {},
+      activeLevels: {},
       clickBreadCrumbDetails: {},
-      BAMData: [],
+      levelsData: [],
       resetBreadCrumb: "",
     };
   }
@@ -62,17 +62,16 @@ export class AssociateChartApp extends Component {
 
   /** Render the BreadCrumbs. */
   renderBreadCrumbs(isBreadCrumb = 1) {
-    let { selectedActiveBAMLevels, BAMData, serviceName } = this.state;
-
-    let activeBAM = Object.keys(selectedActiveBAMLevels);
+    let { activeLevels, levelsData, serviceName } = this.state;
+    let activeBAM = Object.keys(activeLevels);
 
     let breadcrumbs = serviceName
       ? [
           <>
             <li
-              className={`${BAMData.length === 1 ? "active" : ""}`}
+              className={`${levelsData.length === 1 ? "active" : ""}`}
               onClick={() => {
-                isBreadCrumb ? (
+                isBreadCrumb && levelsData.length ? (
                   this.setState({
                     clickBreadCrumbDetails: {
                       type: "Synectiks",
@@ -87,7 +86,7 @@ export class AssociateChartApp extends Component {
             >
               <a>{serviceName}</a>
             </li>
-            {isBreadCrumb && !BAMData.length ? (
+            {isBreadCrumb && !levelsData.length ? (
               <li key={v4()}>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
@@ -100,11 +99,10 @@ export class AssociateChartApp extends Component {
 
     if (activeBAM.length) {
       activeBAM.map((bamItemKey, index) => {
-        let label = selectedActiveBAMLevels[bamItemKey]?.label;
-        let type = selectedActiveBAMLevels[bamItemKey]?.type;
-        let productType =
-          selectedActiveBAMLevels[bamItemKey]?.productType || "";
-        let currentLevelIndex = selectedActiveBAMLevels[bamItemKey]?.id;
+        let label = activeLevels[bamItemKey]?.label;
+        let type = activeLevels[bamItemKey]?.type;
+        let productType = activeLevels[bamItemKey]?.productType || "";
+        let currentLevelIndex = activeLevels[bamItemKey]?.id;
         let selectedLevel = +bamItemKey.split("_")?.[1];
         breadcrumbs.push(
           <>
@@ -158,11 +156,11 @@ export class AssociateChartApp extends Component {
    *  @param {Number} isProduct - 1 if it is products, else 0 .
    */
   renderDepartmentsOrProducts(isProduct = 0) {
-    let { BAMData } = this.state;
-    if (BAMData.length) {
+    let { levelsData } = this.state;
+    if (levelsData.length) {
       return (
-        BAMData[isProduct] &&
-        BAMData[isProduct].map((item) => {
+        levelsData[isProduct] &&
+        levelsData[isProduct].map((item) => {
           let productType = item.productType || "";
           return (
             <ListItem
@@ -192,7 +190,7 @@ export class AssociateChartApp extends Component {
   onClickSubmit = () => {
     const { instanceId } = this.getAssociateIdOrType();
     const {
-      selectedActiveBAMLevels: {
+      activeLevels: {
         selectedLevel_5: { id: serviceId },
       },
     } = this.state;
@@ -203,14 +201,14 @@ export class AssociateChartApp extends Component {
       isSelectDepartmentOpen,
       isSelectProductOpen,
       clickBreadCrumbDetails,
-      selectedActiveBAMLevels,
+      activeLevels,
       resetBreadCrumb,
     } = this.state;
-    const departmentName = selectedActiveBAMLevels["selectedLevel_0"]
-      ? selectedActiveBAMLevels["selectedLevel_0"].label
+    const departmentName = activeLevels["selectedLevel_0"]
+      ? activeLevels["selectedLevel_0"].label
       : "";
-    const productName = selectedActiveBAMLevels["selectedLevel_1"]
-      ? selectedActiveBAMLevels["selectedLevel_1"].label
+    const productName = activeLevels["selectedLevel_1"]
+      ? activeLevels["selectedLevel_1"].label
       : "";
     const { associateCreation } = this.props;
     return (
@@ -311,10 +309,10 @@ export class AssociateChartApp extends Component {
             </Grid>
           </Grid>
           <BusinessAssociationMapping
-            setBreadCrumbs={(selectedActiveBAMLevels, BAMData, serviceName) => {
+            setBreadCrumbs={(activeLevels, levelsData, serviceName) => {
               this.setState({
-                selectedActiveBAMLevels,
-                BAMData,
+                activeLevels,
+                levelsData,
                 serviceName,
               });
             }}
@@ -339,7 +337,7 @@ export class AssociateChartApp extends Component {
           </Box>
         </Box>
         <Box className="d-block width-100 text-center m-t-4">
-          {Object.keys(selectedActiveBAMLevels).length === 6 ? (
+          {Object.keys(activeLevels).length === 6 ? (
             <LoadingButton
               className="primary-btn min-width"
               onClick={this.onClickSubmit}
