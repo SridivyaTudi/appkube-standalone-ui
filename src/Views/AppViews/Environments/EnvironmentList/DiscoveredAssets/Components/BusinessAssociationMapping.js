@@ -236,101 +236,101 @@ class BusinessAssociationMapping extends Component {
     const inprogressStatus = status.IN_PROGRESS;
 
     const lodingData = [
-      organization.status,
       products.status,
       productEnv.status,
       modules.status,
       moduleElements.status,
     ].includes(inprogressStatus);
 
-    return departmentLength ? (
-      <ArcherContainer className="chart-container" startMarker>
-        <TransformWrapper
-          wrapperStyle={{
-            width: "100%",
-          }}
-          onTransformed={(instance) => {
-            transformScale = instance && instance.state.scale;
-            let { positionX, positionY } = instance.state;
-            this.setState({ scale: true, positionX, positionY });
-          }}
-          minScale={0.3}
-          limitToBounds={false}
-        >
-          {({
-            zoomIn,
-            zoomOut,
-            instance,
-            zoomToElement,
-            setTransform,
-            ...rest
-          }) => {
-            transformScale = instance.transformState.scale;
-            handleSetTransform = setTransform;
+    if (organization.status === inprogressStatus) {
+      return this.renderLoder("h-100");
+    } else {
+      return departmentLength ? (
+        <ArcherContainer className="chart-container" startMarker>
+          <TransformWrapper
+            wrapperStyle={{
+              width: "100%",
+            }}
+            onTransformed={(instance) => {
+              transformScale = instance && instance.state.scale;
+              let { positionX, positionY } = instance.state;
+              this.setState({ scale: true, positionX, positionY });
+            }}
+            minScale={0.3}
+            limitToBounds={false}
+          >
+            {({
+              zoomIn,
+              zoomOut,
+              instance,
+              zoomToElement,
+              setTransform,
+              ...rest
+            }) => {
+              transformScale = instance.transformState.scale;
+              handleSetTransform = setTransform;
 
-            return (
-              <>
-                <TransformComponent
-                  contentStyle={{
-                    alignItems: "center",
-                    width: "2000px",
-                  }}
-                >
-                  <ArcherElement
-                    id="root"
-                    relations={this.onClickLevelsThenDrawLine()}
-                  >
-                    <div
-                      className={"chart-box active"}
-                      onClick={() => {
-                        this.onClickSynectiks();
-                      }}
-                      id={`${
-                        Object.keys(activeLevels).length === 0
-                          ? "lastNodeActive"
-                          : ""
-                      }`}
-                    >
-                      <img src={chartLogo} alt="Logo" />
-                    </div>
-                  </ArcherElement>
-                  {this.renderChildBody()}
-                  {lodingData ? (
-                    <Box className="d-flex align-items-center  loading">
-                      <i className="fa-solid fa-spinner fa-spin" /> Loading...
-                    </Box>
-                  ) : (
-                    <></>
-                  )}
-                </TransformComponent>
-                <div className="gmnoprint">
-                  <div className="gmnoprint-plus-minus">
-                    <button className="btn btn-plus" onClick={() => zoomIn()}>
-                      <i className="fa-solid fa-plus"></i>
-                    </button>
-                    <button className="btn btn-minus" onClick={() => zoomOut()}>
-                      <i className="fa-solid fa-minus"></i>
-                    </button>
-                  </div>
-                  <div
-                    className="gmnoprint-map"
-                    onClick={() => {
-                      zoomToElement("lastNodeActive", transformScale);
+              return (
+                <>
+                  <TransformComponent
+                    contentStyle={{
+                      alignItems: "center",
+                      width: "2000px",
                     }}
                   >
-                    <button className="btn btn-map">
-                      <i className="fa-solid fa-map-marker-alt"></i>
-                    </button>
+                    <ArcherElement
+                      id="root"
+                      relations={this.onClickLevelsThenDrawLine()}
+                    >
+                      <div
+                        className={"chart-box active"}
+                        onClick={() => {
+                          this.onClickSynectiks();
+                        }}
+                        id={`${
+                          Object.keys(activeLevels).length === 0
+                            ? "lastNodeActive"
+                            : ""
+                        }`}
+                      >
+                        <img src={chartLogo} alt="Logo" />
+                      </div>
+                    </ArcherElement>
+                    {this.renderChildBody()}
+                    {lodingData ? this.renderLoder() : <></>}
+                  </TransformComponent>
+                  <div className="gmnoprint">
+                    <div className="gmnoprint-plus-minus">
+                      <button className="btn btn-plus" onClick={() => zoomIn()}>
+                        <i className="fa-solid fa-plus"></i>
+                      </button>
+                      <button
+                        className="btn btn-minus"
+                        onClick={() => zoomOut()}
+                      >
+                        <i className="fa-solid fa-minus"></i>
+                      </button>
+                    </div>
+                    <div
+                      className="gmnoprint-map"
+                      onClick={() => {
+                        zoomToElement("lastNodeActive", transformScale);
+                      }}
+                    >
+                      <button className="btn btn-map">
+                        <i className="fa-solid fa-map-marker-alt"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </>
-            );
-          }}
-        </TransformWrapper>
-      </ArcherContainer>
-    ) : (
-      ""
-    );
+                </>
+              );
+            }}
+          </TransformWrapper>
+        </ArcherContainer>
+      ) : (
+        ""
+      );
+    }
   };
 
   /**
@@ -773,6 +773,14 @@ class BusinessAssociationMapping extends Component {
         this.setState({ lastLevelsWidth: levelsWidth });
       }
     }
+  }
+
+  renderLoder(widthClass) {
+    return (
+      <Box className={`d-flex align-items-center ${widthClass} loading`}>
+        <i className="fa-solid fa-spinner fa-spin" /> Loading...
+      </Box>
+    );
   }
 
   render() {
