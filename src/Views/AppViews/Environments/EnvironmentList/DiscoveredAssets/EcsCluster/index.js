@@ -270,47 +270,50 @@ class EcsCluster extends React.Component {
     }));
     return (
       <Box className="environment-container environmentlist cluster-container">
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs={8}>
-            <Box className="list-heading">
-              <h3>ECS Cluster 01</h3>
-            </Box>
-          </Grid>
-          <Grid item xs={4}>
-            <Button
-              className="primary-btn min-width float-right"
-              component={Link}
-              variant="contained"
-              to={`${APP_PREFIX_PATH}/environments`}
-            >
-              Back
-            </Button>
-            <Box className="tier-buttons float-right">
-              <Button
-                variant={activeTierTab === "3Tier" ? "contained" : "outlined"}
-                className={
-                  activeTierTab === "3Tier"
-                    ? "primary-btn min-width"
-                    : "primary-outline-btn min-width"
-                }
-                onClick={() => this.handleTierTabToggle("3Tier")}
-              >
-                3 Tier
-              </Button>
-              <Button
-                variant={activeTierTab === "Soa" ? "contained" : "outlined"}
-                className={
-                  activeTierTab === "Soa"
-                    ? "primary-btn min-width"
-                    : "primary-outline-btn min-width"
-                }
-                onClick={() => this.handleTierTabToggle("Soa")}
-              >
-                SOA
-              </Button>
-            </Box>
-          </Grid>
-        </Grid>
+        <Box className="list-heading">
+          <h3>ECS Cluster 01</h3>
+          <Box className="breadcrumbs">
+            <ul>
+              <li>Environments</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li>Environments List</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li>AWS</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active">VPC2</li>
+            </ul>
+          </Box>
+        </Box>
+        <Box className="tier-buttons float-right">
+          <Button
+            variant={activeTierTab === "3Tier" ? "contained" : "outlined"}
+            className={
+              activeTierTab === "3Tier"
+                ? "primary-btn min-width"
+                : "primary-outline-btn min-width"
+            }
+            onClick={() => this.handleTierTabToggle("3Tier")}
+          >
+            3 Tier
+          </Button>
+          <Button
+            variant={activeTierTab === "Soa" ? "contained" : "outlined"}
+            className={
+              activeTierTab === "Soa"
+                ? "primary-btn min-width"
+                : "primary-outline-btn min-width"
+            }
+            onClick={() => this.handleTierTabToggle("Soa")}
+          >
+            SOA
+          </Button>
+        </Box>
         {activeTierTab === "3Tier" ? (
           <Box className="cluster-table">
             <TableContainer component={Paper} className="access-control-table">

@@ -144,14 +144,31 @@ class EnvironmentList extends Component {
       <Box className="environment-container environmentlist">
         <Box className="list-heading">
           <h3>Environments</h3>
-          <Button
+          {/* <Button
             className="primary-btn min-width"
             component={Link}
             variant="contained"
             to={`${APP_PREFIX_PATH}/environments`}
           >
             Back to Infra View
-          </Button>
+          </Button> */}
+          <Box className="breadcrumbs">
+            <ul>
+              <li>Environments</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li>Environments List</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li>AWS</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active">VPC2</li>
+            </ul>
+          </Box>
         </Box>
         <Box className="services-panel">
           <Box

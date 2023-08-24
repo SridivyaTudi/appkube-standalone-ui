@@ -225,7 +225,7 @@ class CloudManagedDetails extends React.Component {
                       <p
                         style={{
                           fontSize: "16px",
-                          margin: "0 auto",
+                          margin: "30% auto",
                           color: "#000",
                         }}
                       >
