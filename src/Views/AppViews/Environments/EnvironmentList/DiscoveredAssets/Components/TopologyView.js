@@ -3,6 +3,9 @@ import { ArcherContainer, ArcherElement } from "react-archer";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Box } from "@mui/material";
 import { v4 } from "uuid";
+import GlobalIcon4 from "assets/img/assetmanager/global-icon4.png";
+import GlobalIcon5 from "assets/img/assetmanager/global-icon5.png";
+
 let transformScale = 0;
 
 let zoomElement = () => {};
@@ -104,9 +107,7 @@ class TopologyView extends Component {
                     >
                       <div className="d-flex">
                         <div className="account-image">
-                          {data.image && (
-                            <img src={data.image} alt="aws image" />
-                          )}
+                          <img src={GlobalIcon4} alt="aws image" />
                         </div>
                         <div className="account-id">
                           <span id="custom_location_1" className="d-block">
@@ -207,7 +208,7 @@ class TopologyView extends Component {
                       }}
                     >
                       <span>
-                        {/* <img src={item.image} alt={item.id} /> */}
+                        <img src={GlobalIcon5} alt={item.id} />
                       </span>
                       {this.getServiceName(item.id)}
                     </li>
