@@ -230,7 +230,13 @@ export class AssociateChartApp extends Component {
               </li>
               <li>
                 <Link
-                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=1234&cloudName=AWS`}
+                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${localStorage.getItem(
+                    "landingZone"
+                  )}&cloudName=${localStorage.getItem("cloudName")}`}
+                  onClick={() => {
+                    localStorage.removeItem("landingZone");
+                    localStorage.removeItem("cloudName");
+                  }}
                 >
                   Environments List
                 </Link>

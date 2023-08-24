@@ -59,6 +59,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 let handleSetTransform = () => {};
+
 let chartContainer = document.getElementsByClassName("chart-container");
 let transformContainer = document.getElementsByClassName(
   "react-transform-component"
@@ -266,6 +267,7 @@ class BusinessAssociationMapping extends Component {
           }) => {
             transformScale = instance.transformState.scale;
             handleSetTransform = setTransform;
+
             return (
               <>
                 <TransformComponent
@@ -493,16 +495,7 @@ class BusinessAssociationMapping extends Component {
       };
       this.props.getProductList(departmentId);
     }
-    this.props.setBreadCrumbs(activeLevels, levelsData, serviceName);
-    this.setState(
-      {
-        levelsData,
-        activeLevels,
-      },
-      () => {
-        this.levelsMoveToLeftSide();
-      }
-    );
+    this.setStateOrProps(activeLevels, levelsData, serviceName);
   }
 
   /**
@@ -540,16 +533,11 @@ class BusinessAssociationMapping extends Component {
       this.props.getProductEnv(productId);
     }
 
-    this.setState(
-      {
-        levelsData,
-        activeLevels,
-        productType,
-      },
-      () => {
-        this.levelsMoveToLeftSide();
-      }
-    );
+    this.setState({
+      levelsData,
+      activeLevels,
+      productType,
+    });
   }
 
   /**
@@ -597,7 +585,7 @@ class BusinessAssociationMapping extends Component {
         },
       };
     }
-    this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
+    this.setStateOrProps(activeLevels, levelsData, serviceName);
   }
 
   /**
@@ -688,9 +676,9 @@ class BusinessAssociationMapping extends Component {
   /**
    * Fired event on click ModuleElement
    *  @param {Object} data - get moduleId, selectedLevel and label
-  *  @param {Boolean} isClickBreadCrumb - 1 if it is click on breadcrumb else 0
+   *  @param {Boolean} isClickBreadCrumb - 1 if it is click on breadcrumb else 0
    */
-  onClickModuleElement(data,isClickBreadCrumb = 0) {
+  onClickModuleElement(data, isClickBreadCrumb = 0) {
     let { currentLevelIndex: moduleId, label, selectedLevel, type } = data;
     let { levelsData, activeLevels, serviceName, productType } = this.state;
     let activeBAMLevel = activeLevels[`selectedLevel_5`];
@@ -762,7 +750,7 @@ class BusinessAssociationMapping extends Component {
    *  @param {Number} level- number of level
    */
   getPreviousSelectedLevels(level) {
-    let totalLevels = [0, 1, 2, 3, 4,5];
+    let totalLevels = [0, 1, 2, 3, 4, 5];
     const { activeLevels } = this.state;
     let activeLevel = {};
     totalLevels.slice(0, level + 1).map((levelNumber) => {

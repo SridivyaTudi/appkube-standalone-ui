@@ -273,7 +273,7 @@ class EcsCluster extends React.Component {
         <Box className="list-heading">
           <h3>ECS Cluster 01</h3>
           <Box className="breadcrumbs">
-          <ul>
+            <ul>
               <li>
                 <Link to={`${APP_PREFIX_PATH}/environments`}>Environments</Link>
               </li>
@@ -282,7 +282,13 @@ class EcsCluster extends React.Component {
               </li>
               <li>
                 <Link
-                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=1234&cloudName=AWS`}
+                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${localStorage.getItem(
+                    "landingZone"
+                  )}&cloudName=${localStorage.getItem("cloudName")}`}
+                  onClick={()=>{
+                    localStorage.removeItem("landingZone")
+                    localStorage.removeItem("cloudName")
+                  }}
                 >
                   Environments List
                 </Link>

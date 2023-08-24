@@ -71,12 +71,7 @@ export class AssociateApp extends Component {
               component={Link}
               variant="contained"
               onClick={() => {
-                const queryPrm = new URLSearchParams(document.location.search);
-                localStorage.setItem(
-                  "landingZone",
-                  queryPrm.get("landingZone")
-                );
-                localStorage.setItem("cloudName", queryPrm.get("cloudName"));
+                this.setTypeOrIdOnLocalStorage();
               }}
               to={`${APP_PREFIX_PATH}/environments/associatechartapp?elementType=${data.elementType}&instanceId=${data.instanceId}`}
             >
@@ -142,6 +137,9 @@ export class AssociateApp extends Component {
               component={Link}
               variant="contained"
               to={`${APP_PREFIX_PATH}/environments/ecscluster`}
+              onClick={() => {
+                this.setTypeOrIdOnLocalStorage();
+              }}
             >
               View Services
             </Button>
@@ -155,6 +153,11 @@ export class AssociateApp extends Component {
     return JSX;
   }
 
+  setTypeOrIdOnLocalStorage() {
+    const queryPrm = new URLSearchParams(document.location.search);
+    localStorage.setItem("landingZone", queryPrm.get("landingZone"));
+    localStorage.setItem("cloudName", queryPrm.get("cloudName"));
+  }
   render() {
     return (
       <Box className="tiersoc-boxs">
