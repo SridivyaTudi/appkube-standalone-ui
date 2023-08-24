@@ -3,9 +3,8 @@ import { ArcherContainer, ArcherElement } from "react-archer";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Box } from "@mui/material";
 import { v4 } from "uuid";
-import GlobalIcon4 from "assets/img/assetmanager/global-icon4.png";
-import GlobalIcon5 from "assets/img/assetmanager/global-icon5.png";
-
+import aws from "../../../../../../assets/img/aws.png";
+import vpcServicesIcon from "../../../../../../assets/img/assetmanager/vpc-services-icon.png";
 let transformScale = 0;
 
 let zoomElement = () => {};
@@ -107,13 +106,17 @@ class TopologyView extends Component {
                     >
                       <div className="d-flex">
                         <div className="account-image">
-                          <img src={GlobalIcon4} alt="aws image" />
+                          <img
+                            src={data.image ? data.image : aws}
+                            alt="aws image"
+                          />
                         </div>
                         <div className="account-id">
+                          <span className="d-block">Account ID</span>
                           <span id="custom_location_1" className="d-block">
                             {data.landingZone}
                           </span>
-                          <span className="d-block">{data.subLabel}</span>
+                          {/* <span className="d-block">{data.subLabel}</span> */}
                         </div>
                       </div>
                     </div>
@@ -208,7 +211,10 @@ class TopologyView extends Component {
                       }}
                     >
                       <span>
-                        <img src={GlobalIcon5} alt={item.id} />
+                        <img
+                          src={item.image ? item.image : vpcServicesIcon}
+                          alt={item.id}
+                        />
                       </span>
                       {this.getServiceName(item.id)}
                     </li>

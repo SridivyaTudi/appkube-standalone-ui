@@ -269,7 +269,7 @@ class FilterPopup extends Component {
           </button>
         </ModalHeader>
         <ModalBody
-          style={{ overflowY: "auto", overflowX: "hidden", height: "300px" }}
+          style={{ overflowY: "auto", overflowX: "hidden", maxHeight: "300px" }}
         >
           <h4 className="text-left m-b-1 m-t-0 ">Select Department</h4>
           {this.props.organizationWiseDepartments.status ===

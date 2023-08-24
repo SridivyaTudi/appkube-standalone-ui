@@ -445,7 +445,7 @@
         padding: 12px 15px;
         border: 1px solid #8676ff;
         ul {
-          display: flex;
+          display: inline-flex;
           padding: 0;
           margin: 0;
           li {
@@ -543,6 +543,10 @@
               }
             }
           }
+        }
+        button {
+          display: inline-flex;
+          min-width: auto;
         }
       }
     }

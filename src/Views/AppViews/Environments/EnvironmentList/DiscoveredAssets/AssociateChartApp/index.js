@@ -22,7 +22,7 @@ export class AssociateChartApp extends Component {
       selectedActiveBAMLevels: {},
       clickBreadCrumbDetails: {},
       BAMData: [],
-      resetBreadCrumb:''
+      resetBreadCrumb: "",
     };
   }
 
@@ -203,7 +203,8 @@ export class AssociateChartApp extends Component {
       isSelectDepartmentOpen,
       isSelectProductOpen,
       clickBreadCrumbDetails,
-      selectedActiveBAMLevels,resetBreadCrumb
+      selectedActiveBAMLevels,
+      resetBreadCrumb,
     } = this.state;
     const departmentName = selectedActiveBAMLevels["selectedLevel_0"]
       ? selectedActiveBAMLevels["selectedLevel_0"].label
@@ -289,11 +290,7 @@ export class AssociateChartApp extends Component {
             </Grid>
           </Grid>
           <BusinessAssociationMapping
-            setBreadCrumbs={(
-              selectedActiveBAMLevels,
-              BAMData,
-              serviceName
-            ) => {
+            setBreadCrumbs={(selectedActiveBAMLevels, BAMData, serviceName) => {
               this.setState({
                 selectedActiveBAMLevels,
                 BAMData,
@@ -308,18 +305,17 @@ export class AssociateChartApp extends Component {
           <div className="heading">Infra Existing tags of element</div>
           <Box className="breadcrumbs">
             <ul>{this.renderBreadCrumbs(0)}</ul>
-            <button
-            type="button"
-            className="close"
-            aria-label="Close"
-            onClick={() => {
-              this.setState({resetBreadCrumb:v4()})
-            }}
-          >
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+            <Button
+              type="button"
+              className="close"
+              aria-label="Close"
+              onClick={() => {
+                this.setState({ resetBreadCrumb: v4() });
+              }}
+            >
+              <i className="fa-solid fa-xmark"></i>
+            </Button>
           </Box>
-          
         </Box>
         <Box className="d-block width-100 text-center m-t-4">
           {Object.keys(selectedActiveBAMLevels).length === 6 ? (
