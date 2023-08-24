@@ -58,6 +58,11 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     border: "1px solid #dadde9",
   },
 }));
+let handleSetTransform = () => {};
+let chartContainer = document.getElementsByClassName("chart-container");
+let transformContainer = document.getElementsByClassName(
+  "react-transform-component"
+);
 class BusinessAssociationMapping extends Component {
   constructor(props) {
     super(props);
@@ -66,6 +71,9 @@ class BusinessAssociationMapping extends Component {
       BAMData: [],
       productType: "",
       serviceName: "",
+      positionX: "",
+      positionY: "",
+      lastLevelsWidth: 0,
     };
   }
 
@@ -97,8 +105,7 @@ class BusinessAssociationMapping extends Component {
       this.props.products.status === status.SUCCESS &&
       this.props.products?.data?.length
     ) {
-      let { BAMData, selectedActiveBAMLevels, serviceName } =
-        this.state;
+      let { BAMData, selectedActiveBAMLevels, serviceName } = this.state;
 
       BAMData.push(
         this.props.products.data.map((product) => {
@@ -112,15 +119,7 @@ class BusinessAssociationMapping extends Component {
           };
         })
       );
-
-      this.setState({
-        BAMData,
-      });
-      this.props.setBreadCrumbs(
-        selectedActiveBAMLevels,
-        BAMData,
-        serviceName
-      );
+      this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName);
     }
 
     if (
@@ -128,12 +127,8 @@ class BusinessAssociationMapping extends Component {
       this.props.productEnv.status === status.SUCCESS &&
       this.props.productEnv.data?.length
     ) {
-      let {
-        BAMData,
-        selectedActiveBAMLevels,
-        productType,
-        serviceName,
-      } = this.state;
+      let { BAMData, selectedActiveBAMLevels, productType, serviceName } =
+        this.state;
 
       BAMData.push(
         this.props.productEnv.data.map((env) => {
@@ -148,14 +143,7 @@ class BusinessAssociationMapping extends Component {
         })
       );
 
-      this.setState({
-        BAMData,
-      });
-      this.props.setBreadCrumbs(
-        selectedActiveBAMLevels,
-        BAMData,
-        serviceName
-      );
+      this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName);
     }
 
     if (
@@ -163,8 +151,7 @@ class BusinessAssociationMapping extends Component {
       this.props.modules.status === status.SUCCESS &&
       this.props.modules.data?.length
     ) {
-      let { BAMData, selectedActiveBAMLevels, serviceName } =
-        this.state;
+      let { BAMData, selectedActiveBAMLevels, serviceName } = this.state;
 
       BAMData[4] = this.props.modules.data.map((module) => {
         let { name: label, id } = module;
@@ -176,14 +163,7 @@ class BusinessAssociationMapping extends Component {
         };
       });
 
-      this.setState({
-        BAMData,
-      });
-      this.props.setBreadCrumbs(
-        selectedActiveBAMLevels,
-        BAMData,
-        serviceName
-      );
+      this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName);
     }
 
     if (
@@ -191,8 +171,7 @@ class BusinessAssociationMapping extends Component {
       this.props.moduleElements.status === status.SUCCESS &&
       this.props.moduleElements.data?.length
     ) {
-      let { BAMData, selectedActiveBAMLevels, serviceName } =
-        this.state;
+      let { BAMData, selectedActiveBAMLevels, serviceName } = this.state;
 
       BAMData[5] = this.props.moduleElements.data.map((module) => {
         let { serviceName: label, id } = module;
@@ -204,14 +183,7 @@ class BusinessAssociationMapping extends Component {
         };
       });
 
-      this.setState({
-        BAMData,
-      });
-      this.props.setBreadCrumbs(
-        selectedActiveBAMLevels,
-        BAMData,
-        serviceName
-      );
+      this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName);
     }
 
     if (
@@ -233,16 +205,10 @@ class BusinessAssociationMapping extends Component {
     }
 
     if (prevProps.resetBreadCrumbId !== this.props.resetBreadCrumbId) {
-      let { selectedActiveBAMLevels, BAMData, serviceName } =
-        this.state;
+      let { selectedActiveBAMLevels, BAMData, serviceName } = this.state;
       selectedActiveBAMLevels = {};
       BAMData = [];
-      this.setState({ selectedActiveBAMLevels, BAMData, serviceName });
-      this.props.setBreadCrumbs(
-        selectedActiveBAMLevels,
-        BAMData,
-        serviceName
-      );
+      this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName);
     }
   }
 
@@ -250,10 +216,12 @@ class BusinessAssociationMapping extends Component {
    * BAM = Business Association Mapping
    * Render the main body including all levels data.
    */
-  renderBAMMainBody = () => {
+  renderBody = () => {
     let { selectedActiveBAMLevels, departments } = this.state;
+
     let departmentLength =
       departments?.length && departments[0].departments?.length;
+
     const {
       departments: organization,
       products,
@@ -261,7 +229,9 @@ class BusinessAssociationMapping extends Component {
       modules,
       moduleElements,
     } = this.props;
+
     const inprogressStatus = status.IN_PROGRESS;
+
     const lodingData = [
       organization.status,
       products.status,
@@ -278,13 +248,22 @@ class BusinessAssociationMapping extends Component {
           }}
           onTransformed={(instance) => {
             transformScale = instance && instance.state.scale;
-            this.setState({ scale: true });
+            let { positionX, positionY } = instance.state;
+            this.setState({ scale: true, positionX, positionY });
           }}
           minScale={0.3}
           limitToBounds={false}
         >
-          {({ zoomIn, zoomOut, instance, zoomToElement, ...rest }) => {
+          {({
+            zoomIn,
+            zoomOut,
+            instance,
+            zoomToElement,
+            setTransform,
+            ...rest
+          }) => {
             transformScale = instance.transformState.scale;
+            handleSetTransform = setTransform;
             return (
               <>
                 <TransformComponent
@@ -302,6 +281,11 @@ class BusinessAssociationMapping extends Component {
                       onClick={() => {
                         this.onClickSynectiks();
                       }}
+                      id={`${
+                        Object.keys(selectedActiveBAMLevels).length === 0
+                          ? "lastNodeActive"
+                          : ""
+                      }`}
                     >
                       <img src={chartLogo} alt="Logo" />
                     </div>
@@ -346,7 +330,6 @@ class BusinessAssociationMapping extends Component {
   };
 
   /**
-   * BAM = Business Association Mapping
    * Render specific level
    *  @param {Array} data - The data of the selected level.
    * @param {Number} selectedLevel - SelectedLevel.
@@ -358,13 +341,16 @@ class BusinessAssociationMapping extends Component {
     if (data.length) {
       return data.map((level, currentLevelIndex) => {
         let currentLevel = `selectedLevel_${selectedLevel}`;
-        let isActive = selectedActiveBAMLevels[currentLevel]?.id === level.id;
         let elementId = `${currentLevel}_${level.id}`;
+
+        let isActive = selectedActiveBAMLevels[currentLevel]?.id === level.id;
+
         let relationsData = isActive
           ? this.onClickLevelsThenDrawLine(selectedLevel)
           : [];
 
         let activeNodeLength = Object.keys(selectedActiveBAMLevels).length - 1;
+
         return (
           <ArcherElement id={elementId} relations={relationsData} key={v4()}>
             <li
@@ -435,7 +421,7 @@ class BusinessAssociationMapping extends Component {
         if (levelData.length) {
           return (
             <div
-              className={` global-servies`}
+              className={`global-servies`}
               style={{ width: "160px" }}
               key={v4()}
             >
@@ -466,7 +452,7 @@ class BusinessAssociationMapping extends Component {
       BAMData = [];
     }
 
-    this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName);
+    this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName, 0);
   }
 
   /**
@@ -489,11 +475,7 @@ class BusinessAssociationMapping extends Component {
     if (activeBAMLevel && activeBAMLevel?.id === departmentId) {
       selectedActiveBAMLevels = {};
 
-      this.props.setBreadCrumbs(
-        selectedActiveBAMLevels,
-        BAMData,
-        serviceName
-      );
+      this.props.setBreadCrumbs(selectedActiveBAMLevels, BAMData, serviceName);
     } else {
       selectedActiveBAMLevels = {
         selectedLevel_0: {
@@ -506,10 +488,15 @@ class BusinessAssociationMapping extends Component {
       this.props.getProductList(departmentId);
     }
 
-    this.setState({
-      BAMData,
-      selectedActiveBAMLevels,
-    });
+    this.setState(
+      {
+        BAMData,
+        selectedActiveBAMLevels,
+      },
+      () => {
+        this.levelsMoveToLeftSide();
+      }
+    );
   }
 
   /**
@@ -534,11 +521,7 @@ class BusinessAssociationMapping extends Component {
 
     if (activeBAMLevel && activeBAMLevel?.id === productId) {
       productType = "";
-      this.props.setBreadCrumbs(
-        selectedActiveBAMLevels,
-        BAMData,
-        serviceName
-      );
+      this.props.setBreadCrumbs(selectedActiveBAMLevels, BAMData, serviceName);
     } else {
       selectedActiveBAMLevels["selectedLevel_1"] = {
         id: productId,
@@ -548,11 +531,16 @@ class BusinessAssociationMapping extends Component {
       this.props.getProductEnv(productId);
     }
 
-    this.setState({
-      BAMData,
-      selectedActiveBAMLevels,
-      productType,
-    });
+    this.setState(
+      {
+        BAMData,
+        selectedActiveBAMLevels,
+        productType,
+      },
+      () => {
+        this.levelsMoveToLeftSide();
+      }
+    );
   }
 
   /**
@@ -599,7 +587,7 @@ class BusinessAssociationMapping extends Component {
         },
       };
     }
-    this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName);
+    this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName, 0);
   }
 
   /**
@@ -645,7 +633,7 @@ class BusinessAssociationMapping extends Component {
         productType,
       };
     }
-    this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName);
+    this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName, 0);
   }
 
   /**
@@ -684,9 +672,13 @@ class BusinessAssociationMapping extends Component {
         type,
       };
     }
-    this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName);
+    this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName, 0);
   }
 
+  /**
+   * Fired event on click ModuleElement
+   *  @param {Object} data - get moduleId, selectedLevel and label
+   */
   onClickModuleElement(data) {
     let { currentLevelIndex: moduleId, label, selectedLevel, type } = data;
     let { BAMData, selectedActiveBAMLevels, serviceName, productType } =
@@ -704,8 +696,9 @@ class BusinessAssociationMapping extends Component {
       };
     }
 
-    this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName);
+    this.setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName, 0);
   }
+
   /** Fire click event then draw
    *  @param {Number} selectedLevel- The selectedLevel of BAM,
    */
@@ -742,15 +735,28 @@ class BusinessAssociationMapping extends Component {
     }
   };
 
-  setStateOrProps(selectedActiveBAMLevels, BAMData, serviceName) {
-    this.props.setBreadCrumbs(
-      selectedActiveBAMLevels,
-      BAMData,
-      serviceName
-    );
-    this.setState({ BAMData, selectedActiveBAMLevels });
+  /** Set State or Props
+   *  @param {Object} selectedActiveBAMLevels- The active levels of BAM
+   *  @param {Array} BAMData- Levels data of BAM
+   *  @param {string} serviceName- service name of BAM
+   */
+  setStateOrProps(
+    selectedActiveBAMLevels,
+    BAMData,
+    serviceName,
+    isMoveToLeftSide = 1
+  ) {
+    this.props.setBreadCrumbs(selectedActiveBAMLevels, BAMData, serviceName);
+    this.setState({ BAMData, selectedActiveBAMLevels, serviceName }, () => {
+      if (isMoveToLeftSide) {
+        this.levelsMoveToLeftSide();
+      }
+    });
   }
 
+  /** get Previous levels
+   *  @param {Number} level- number of level
+   */
   getPreviousSelectedLevels(level) {
     let totalLevels = [0, 1, 2, 3, 4];
     const { selectedActiveBAMLevels } = this.state;
@@ -762,8 +768,23 @@ class BusinessAssociationMapping extends Component {
     return activeLevel;
   }
 
+  // Move levels left side
+  levelsMoveToLeftSide() {
+    let { positionX, positionY, lastLevelsWidth } = this.state;
+
+    let chartWidth = chartContainer[0].offsetWidth;
+    let levelsWidth = transformContainer[0].offsetWidth;
+
+    if (chartWidth < levelsWidth && transformScale === 1) {
+      if (levelsWidth > lastLevelsWidth) {
+        handleSetTransform(positionX - 230, positionY, transformScale);
+        this.setState({ lastLevelsWidth: levelsWidth });
+      }
+    }
+  }
+
   render() {
-    return this.renderBAMMainBody();
+    return this.renderBody();
   }
 }
 
