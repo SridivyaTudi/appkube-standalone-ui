@@ -273,20 +273,24 @@ class EcsCluster extends React.Component {
         <Box className="list-heading">
           <h3>ECS Cluster 01</h3>
           <Box className="breadcrumbs">
-            <ul>
-              <li>Environments</li>
+          <ul>
+              <li>
+                <Link to={`${APP_PREFIX_PATH}/environments`}>Environments</Link>
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li>Environments List</li>
+              <li>
+                <Link
+                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=1234&cloudName=AWS`}
+                >
+                  Environments List
+                </Link>
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li>AWS</li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li className="active">VPC2</li>
+              <li className="active">AWS</li>
             </ul>
           </Box>
         </Box>

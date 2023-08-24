@@ -154,11 +154,20 @@ class EnvironmentList extends Component {
           </Button> */}
           <Box className="breadcrumbs">
             <ul>
-              <li>Environments</li>
+              <li>
+                <Link to={`${APP_PREFIX_PATH}/environments`}>Environments</Link>
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li>Environments List</li>
+              <li className="active">Environments List</li>
+              {/* <li>
+                <Link
+                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=1234&cloudName=AWS`}
+                >
+                  Environments List
+                </Link>
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
@@ -166,7 +175,7 @@ class EnvironmentList extends Component {
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">VPC2</li>
+              <li className="active">VPC2</li> */}
             </ul>
           </Box>
         </Box>

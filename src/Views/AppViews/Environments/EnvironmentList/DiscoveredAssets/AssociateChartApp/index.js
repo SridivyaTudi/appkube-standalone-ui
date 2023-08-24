@@ -223,19 +223,23 @@ export class AssociateChartApp extends Component {
           </h3>
           <Box className="breadcrumbs">
             <ul>
-              <li>Environments</li>
+              <li>
+                <Link to={`${APP_PREFIX_PATH}/environments`}>Environments</Link>
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li>Environments List</li>
+              <li>
+                <Link
+                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=1234&cloudName=AWS`}
+                >
+                  Environments List
+                </Link>
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li>AWS</li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li className="active">VPC2</li>
+              <li className="active">AWS</li>
             </ul>
           </Box>
         </Box>
@@ -248,7 +252,6 @@ export class AssociateChartApp extends Component {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            
             <Grid item xs={12}>
               <Box className="text-right">
                 <Box className="mapping-fliter">
