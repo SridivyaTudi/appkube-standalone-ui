@@ -24,7 +24,7 @@ class SetTransitions extends Component {
           <Grid container>
             <Grid item xs={6}>
               <Box className="overview-card">
-                <h4>Overview</h4>
+                <h5>Overview</h5>
                 <p>
                   The super admin is the highest level of administrative
                   authority within a system or platform, possessing unparalleled
