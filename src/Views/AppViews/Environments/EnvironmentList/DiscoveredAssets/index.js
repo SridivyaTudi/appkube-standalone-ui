@@ -477,8 +477,16 @@ class DiscoveredAssets extends Component {
                             label="Show cluster"
                             className="checkbox primary m-l-auto m-r-0"
                             size="small"
-                            onChange={() => {
+                            onChange={(e) => {
                               this.setState({ isClusterShow: !isClusterShow });
+                              if (e.target.checked) {
+                                this.setCurrentTopologyCategory("EKS");
+                              } else {
+                                this.setCurrentTopologyCategory(
+                                  this.props.infraTopologyCloudElementList
+                                    .data[0].elementType
+                                );
+                              }
                             }}
                             checked={isClusterShow}
                           />
@@ -504,6 +512,7 @@ class DiscoveredAssets extends Component {
                       <ClusterDetails
                         eksData={eksMetaData}
                         ecsData={ecsMetaData}
+                        setCategory={this.setCurrentTopologyCategory}
                       />
                     ) : (
                       <></>

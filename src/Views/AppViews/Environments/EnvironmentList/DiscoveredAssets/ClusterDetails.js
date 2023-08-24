@@ -21,12 +21,13 @@ class ClusterDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentActiveCluster: "eksCluster",
+      currentActiveCluster: "EKS",
     };
   }
 
   changeActiveCluster = (cluster) => {
     this.setState({ currentActiveCluster: cluster });
+    this.props.setCategory(cluster);
   };
 
   convertToCapitalCase = (text) => {
@@ -65,10 +66,10 @@ class ClusterDetails extends React.Component {
         <Box className="environment-boxs m-t-4">
           <Box
             className="environment-box"
-            onClick={() => this.changeActiveCluster("eksCluster")}
+            onClick={() => this.changeActiveCluster("EKS")}
             style={{
               border:
-                currentActiveCluster === "eksCluster"
+                currentActiveCluster === "EKS"
                   ? "2px solid #416bff"
                   : "2px solid #fff",
             }}
@@ -85,10 +86,10 @@ class ClusterDetails extends React.Component {
           </Box>
           <Box
             className="environment-box"
-            onClick={() => this.changeActiveCluster("ecsCluster")}
+            onClick={() => this.changeActiveCluster("ECS")}
             style={{
               border:
-                currentActiveCluster === "ecsCluster"
+                currentActiveCluster === "ECS"
                   ? "2px solid #416bff"
                   : "2px solid #fff",
             }}
@@ -104,8 +105,8 @@ class ClusterDetails extends React.Component {
             </Box>
           </Box>
         </Box>
-        {/* {currentActiveCluster === "eksCluster" && <EksCluster />} */}
-        {/* {currentActiveCluster === "ecsCluster" && <EcsCluster />} */}
+        {/* {currentActiveCluster === "EKS" && <EksCluster />} */}
+        {/* {currentActiveCluster === "ECS" && <EcsCluster />} */}
       </>
     );
   }
