@@ -104,44 +104,55 @@ class BusinessAssociationMapping extends Component {
     if (
       prevProps.products.status !== this.props.products.status &&
       this.props.products.status === status.SUCCESS &&
-      this.props.products?.data?.length
+      this.props.products?.data
     ) {
       let { levelsData, activeLevels, serviceName } = this.state;
+      let products = this.props.products?.data;
 
-      levelsData.push(
-        this.props.products.data.map((product) => {
-          let { name: label, id } = product;
-          return {
-            label,
-            id,
-            image: calendarMouseIcon,
-            type: "Product",
-            productType: product.type,
-          };
-        })
-      );
+      levelsData.length = 1;
+
+      if (products.length) {
+        levelsData.push(
+          products.map((product) => {
+            let { name: label, id } = product;
+            return {
+              label,
+              id,
+              image: calendarMouseIcon,
+              type: "Product",
+              productType: product.type,
+            };
+          })
+        );
+      }
+
       this.setStateOrProps(activeLevels, levelsData, serviceName);
     }
 
     if (
       prevProps.productEnv.status !== this.props.productEnv.status &&
       this.props.productEnv.status === status.SUCCESS &&
-      this.props.productEnv.data?.length
+      this.props.productEnv?.data
     ) {
       let { levelsData, activeLevels, productType, serviceName } = this.state;
+      let productEnvs = this.props.productEnv.data;
 
-      levelsData.push(
-        this.props.productEnv.data.map((env) => {
-          let { name: label, id } = env;
-          return {
-            label,
-            id,
-            image: calendarMouseIcon,
-            type: "ProductEnv",
-            productType,
-          };
-        })
-      );
+      levelsData.length = 2;
+
+      if (productEnvs?.length) {
+        levelsData.push(
+          productEnvs.map((env) => {
+            let { name: label, id } = env;
+            return {
+              label,
+              id,
+              image: calendarMouseIcon,
+              type: "ProductEnv",
+              productType,
+            };
+          })
+        );
+      }
 
       this.setStateOrProps(activeLevels, levelsData, serviceName);
     }
@@ -149,19 +160,25 @@ class BusinessAssociationMapping extends Component {
     if (
       prevProps.modules.status !== this.props.modules.status &&
       this.props.modules.status === status.SUCCESS &&
-      this.props.modules.data?.length
+      this.props.modules.data
     ) {
       let { levelsData, activeLevels, serviceName } = this.state;
 
-      levelsData[4] = this.props.modules.data.map((module) => {
-        let { name: label, id } = module;
-        return {
-          label,
-          id,
-          image: calendarMouseIcon,
-          type: "Module",
-        };
-      });
+      let modules = this.props.modules.data;
+
+      levelsData.length = 4;
+
+      if (modules?.length) {
+        levelsData[4] = modules.map((module) => {
+          let { name: label, id } = module;
+          return {
+            label,
+            id,
+            image: calendarMouseIcon,
+            type: "Module",
+          };
+        });
+      }
 
       this.setStateOrProps(activeLevels, levelsData, serviceName);
     }
@@ -169,19 +186,24 @@ class BusinessAssociationMapping extends Component {
     if (
       prevProps.moduleElements.status !== this.props.moduleElements.status &&
       this.props.moduleElements.status === status.SUCCESS &&
-      this.props.moduleElements.data?.length
+      this.props.moduleElements.data
     ) {
       let { levelsData, activeLevels, serviceName } = this.state;
+      let moduleElements = this.props.moduleElements.data;
 
-      levelsData[5] = this.props.moduleElements.data.map((module) => {
-        let { serviceName: label, id } = module;
-        return {
-          label,
-          id,
-          image: calendarMouseIcon,
-          type: "ModuleElement",
-        };
-      });
+      levelsData.length = 5;
+
+      if (moduleElements?.length) {
+        levelsData[5] = this.props.moduleElements.data.map((module) => {
+          let { serviceName: label, id } = module;
+          return {
+            label,
+            id,
+            image: calendarMouseIcon,
+            type: "ModuleElement",
+          };
+        });
+      }
 
       this.setStateOrProps(activeLevels, levelsData, serviceName);
     }
@@ -379,7 +401,7 @@ class BusinessAssociationMapping extends Component {
                   : ""
               }`}
             >
-              <HtmlTooltip title={level.label?.length > 13 ? level.label : ""}>
+              <HtmlTooltip title={level.label}>
                 <Box className="tooltip-content">
                   <span>
                     <img src={level.image} alt={level.label} />

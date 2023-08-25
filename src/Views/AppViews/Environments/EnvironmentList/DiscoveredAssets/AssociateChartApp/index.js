@@ -211,12 +211,12 @@ export class AssociateChartApp extends Component {
       activeLevels,
       resetBreadCrumb,
     } = this.state;
-    const departmentName = activeLevels["selectedLevel_0"]
-      ? activeLevels["selectedLevel_0"].label
-      : "";
-    const productName = activeLevels["selectedLevel_1"]
-      ? activeLevels["selectedLevel_1"].label
-      : "";
+
+    const { selectedLevel_0, selectedLevel_1 } = activeLevels;
+
+    const departmentName = selectedLevel_0?.label || "";
+    const productName = selectedLevel_1?.label || "";
+
     const {
       serviceCreation: { status: serviceCreationStatus },
     } = this.props;
