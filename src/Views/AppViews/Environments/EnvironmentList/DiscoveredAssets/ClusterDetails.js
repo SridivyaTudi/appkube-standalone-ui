@@ -62,7 +62,7 @@ class ClusterDetails extends React.Component {
     const { currentActiveCluster } = this.state;
     return (
       <>
-        <Box className="cluster-heading">Cluster</Box>
+        <Box className="cluster-heading m-t-4">Cluster</Box>
         <Box className="environment-boxs m-t-4">
           <Box
             className="environment-box"
