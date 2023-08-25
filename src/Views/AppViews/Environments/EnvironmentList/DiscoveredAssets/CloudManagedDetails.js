@@ -13,6 +13,23 @@ import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
 import { connect } from "react-redux";
 import { Grid } from "@mui/material";
 import status from "Redux/Constants/CommonDS";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 200,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 const filterTabs = {
   1: "App",
@@ -213,7 +230,13 @@ class CloudManagedDetails extends React.Component {
                             />
                           </Box>
                           <Box className="service-contant">
-                            <label>{item.elementType}</label>
+                            <HtmlTooltip
+                              className="table-tooltip"
+                              title={item.elementType}
+                            >
+                              <label>{item.elementType}</label>
+                            </HtmlTooltip>
+
                             <strong>{item.totalRecord}</strong>
                           </Box>
                         </Box>
@@ -255,7 +278,9 @@ class CloudManagedDetails extends React.Component {
               <img src={this.state.serivceImages[index]} alt="serviceicon" />
             </Box>
             <Box className="service-contant">
-              <label>{item.elementType}</label>
+              <HtmlTooltip className="table-tooltip" title={item.elementType}>
+                <label>{item.elementType}</label>
+              </HtmlTooltip>
               <strong>{item.totalRecord}</strong>
             </Box>
           </Box>

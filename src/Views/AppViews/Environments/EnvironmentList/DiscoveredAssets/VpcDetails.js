@@ -15,7 +15,24 @@ import Quicksight from "assets/img/assetmanager/cloud-managed-icon16.png";
 import Waf from "assets/img/assetmanager/global-icon6.png";
 import API from "assets/img/assetmanager/global-icon7.png";
 import LB from "assets/img/assetmanager/global-icon3.png";
-import { v4  } from 'uuid';
+import { v4 } from "uuid";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 200,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 const Images = {
   EKS: EKS,
@@ -87,7 +104,9 @@ class VpcDetails extends React.Component {
             <img src={Images[item.elementType]} alt="serviceicon" />
           </Box>
           <Box className="service-contant">
+            <HtmlTooltip className="table-tooltip" title={item.elementType}>
             <label>{item.elementType}</label>
+            </HtmlTooltip>
             <strong>{item.elementList.length}</strong>
           </Box>
         </Box>
