@@ -2,47 +2,63 @@
   "menu": [
     {
       "link": "/dashboard",
-      "item": "<span className='sidebar-icon icon1'></span>"
-    },
-    {
-      "link": "#",
-      "item": "<span className='sidebar-icon icon2'></span>"
+      "icon": "dashboard",
+      "name": "Dashboard"
     },
     {
       "link": "/environments",
-      "item": "<span className='sidebar-icon icon3 active'></span>"
+      "icon": "asset",
+      "name": "Asset",
+      "subMenu": [
+        {
+          "link": "/environments",
+          "name": "Environments"
+        },
+        {
+          "link": "#",
+          "name": "Dept Wise Product"
+        },
+        {
+          "link": "#",
+          "name": "All Service"
+        },
+        {
+          "link": "#",
+          "name": "Discovered Assets"
+        },
+        {
+          "link": "#",
+          "name": "Monitored Assets"
+        },
+        {
+          "link": "#",
+          "name": "Org Unit"
+        },
+        {
+          "link": "#",
+          "name": "Custom Resources"
+        }
+      ]
     },
     {
       "link": "#",
-      "item": "<span className='sidebar-icon icon4'></span>"
+      "icon": "dashboard",
+      "name": "App Catalogue"
     },
     {
       "link": "#",
-      "item": "<span className='sidebar-icon icon5'></span>"
+      "icon": "dashboard",
+      "name": "Alerts"
     },
     {
       "link": "#",
-      "item": "<span className='sidebar-icon icon6'></span>"
-    },
-    {
-      "link": "#",
-      "item": "<span className='sidebar-icon icon7'></span>"
-    },
-    {
-      "link": "#",
-      "item": "<span className='sidebar-icon icon8'></span>"
-    },
-    {
-      "link": "#",
-      "item": "<span className='sidebar-icon icon9'></span>"
+      "icon": "dashboard",
+      "name": "Preference"
     },
     {
       "link": "/setting",
-      "item": "<span className='sidebar-icon icon10'></span>"
-    },
-    {
-      "link": "#",
-      "item": "<span className='sidebar-icon icon11'></span>"
+      "icon": "setting",
+      "name": "Setting"
     }
   ]
 }

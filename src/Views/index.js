@@ -58,20 +58,6 @@ export const Views = (props) => {
       <div className="standalone-container">
         <TopBar />
         <SideBar />
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
-        {/* Same as */}
-        <ToastContainer />
         {/* APP LAYOUT ROUTES */}
         <Routes>
           <Route
@@ -157,6 +143,20 @@ export const Views = (props) => {
           />
           <Route path={`/error`} element={<Error />} />
         </Routes>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+        {/* Same as */}
+        <ToastContainer />
       </div>
     );
   } else {
