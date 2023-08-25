@@ -495,6 +495,7 @@ class BusinessAssociationMapping extends Component {
       };
       this.props.getProductList(departmentId);
     }
+
     this.setStateOrProps(activeLevels, levelsData, serviceName);
   }
 
@@ -514,7 +515,6 @@ class BusinessAssociationMapping extends Component {
     let { activeLevels, levelsData, serviceName } = this.state;
 
     let activeBAMLevel = activeLevels[`selectedLevel_1`];
-    let { selectedLevel_0 } = activeLevels;
 
     levelsData.length = isClickBreadCrumb
       ? selectedLevel + 2
@@ -556,7 +556,6 @@ class BusinessAssociationMapping extends Component {
     let { levelsData, activeLevels, serviceName } = this.state;
     let activeBAMLevel = activeLevels[`selectedLevel_2`];
 
-    let { selectedLevel_0, selectedLevel_1 } = activeLevels;
     levelsData.length = isClickBreadCrumb ? 4 : 3;
     activeLevels = this.getPreviousSelectedLevels(isClickBreadCrumb ? 2 : 1);
 
@@ -574,17 +573,14 @@ class BusinessAssociationMapping extends Component {
           })
         : [];
 
-      activeLevels = {
-        selectedLevel_0,
-        selectedLevel_1,
-        selectedLevel_2: {
-          id: envId,
-          label,
-          type,
-          productType,
-        },
+      activeLevels["selectedLevel_2"] = {
+        id: envId,
+        label,
+        type,
+        productType,
       };
     }
+
     this.setStateOrProps(activeLevels, levelsData, serviceName);
   }
 
@@ -631,6 +627,7 @@ class BusinessAssociationMapping extends Component {
         productType,
       };
     }
+
     this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
   }
 
@@ -640,25 +637,23 @@ class BusinessAssociationMapping extends Component {
    *  @param {Boolean} isClickBreadCrumb - 1 if it is click on breadcrumb else 0
    */
   onClickModule(data, isClickBreadCrumb = 0) {
-    let { currentLevelIndex: moduleId, label, selectedLevel, type } = data;
+    let { currentLevelIndex: moduleId, label, type } = data;
     let { levelsData, activeLevels, serviceName, productType } = this.state;
 
     let activeBAMLevel = activeLevels[`selectedLevel_4`];
     let { selectedLevel_0, selectedLevel_1, selectedLevel_2, selectedLevel_3 } =
       activeLevels;
 
-    const departmentId = selectedLevel_0.id;
-    const productId = selectedLevel_1.id;
-    const productEnvId = selectedLevel_2.id;
     activeLevels = this.getPreviousSelectedLevels(isClickBreadCrumb ? 4 : 3);
     levelsData.length = isClickBreadCrumb ? 6 : 5;
+
     if (activeBAMLevel && activeBAMLevel?.id === moduleId) {
     } else {
       if (productType === "SOA") {
         this.props.getModuleElements({
-          departmentId,
-          productId,
-          productEnvId,
+          departmentId: selectedLevel_0.id,
+          productId: selectedLevel_1.id,
+          productEnvId: selectedLevel_2.id,
           moduleId,
           serviceNature: selectedLevel_3.label?.toLowerCase(),
         });
@@ -670,6 +665,7 @@ class BusinessAssociationMapping extends Component {
         type,
       };
     }
+
     this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
   }
 
@@ -716,6 +712,7 @@ class BusinessAssociationMapping extends Component {
 
         if (activeIndex >= 0) {
           let currentLevelIndex = activeLevels[activeBAMKeys[activeIndex]]?.id;
+
           if (currentLevelIndex === item.id) {
             tempDrawArrow["style"]["strokeColor"] = "#53ca43";
             tempDrawArrow["style"]["endShape"]["circle"]["strokeColor"] =
@@ -751,12 +748,15 @@ class BusinessAssociationMapping extends Component {
    */
   getPreviousSelectedLevels(level) {
     let totalLevels = [0, 1, 2, 3, 4, 5];
+
     const { activeLevels } = this.state;
     let activeLevel = {};
+
     totalLevels.slice(0, level + 1).map((levelNumber) => {
       let key = `selectedLevel_${levelNumber}`;
       activeLevel = { ...activeLevel, [key]: activeLevels[key] };
     });
+
     return activeLevel;
   }
 
@@ -774,7 +774,7 @@ class BusinessAssociationMapping extends Component {
       }
     }
   }
-
+  // Render Loder
   renderLoder(widthClass) {
     return (
       <Box className={`d-flex align-items-center ${widthClass} loading`}>
