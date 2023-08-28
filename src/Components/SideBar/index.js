@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import sideBarMenu from "Components/SideBar/SideMenu.json";
@@ -16,8 +16,14 @@ function SideBar() {
   let location = useLocation();
   let currentLocation = location.pathname;
   let currentSubMenuLocation = location.pathname;
+
   const [isActive, setActive] = useState(false);
   const [isActiveSubMenu, setActiveSubMenu] = useState(true);
+  const [documentTitle, setDocumentTitle] = useState("");
+
+  useEffect(() => {
+    setDocumentTitle(document.title);
+  }, []);
 
   const toggleOpenclose = () => {
     setActive(!isActive);
@@ -85,7 +91,7 @@ function SideBar() {
                           <ListItem
                             key={subItem.name}
                             className={`${
-                              document.title === subItem.name ? "active" : ""
+                              documentTitle === subItem.name ? "active" : ""
                             }`}
                           >
                             <Link to={`${APP_PREFIX_PATH + subItem.link}`}>
