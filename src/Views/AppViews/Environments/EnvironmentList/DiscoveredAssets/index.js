@@ -29,6 +29,7 @@ import {
   GetInfraTopologyCloudElementList,
   getInfraTopologyCategoryWiseViewData,
   getInfraTopologyDbCategories,
+  getInfraTopologyLambdaTableData,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { getCurrentOrgId } from "Utils";
 import LambdaTable from "./LambdaTable";
@@ -50,12 +51,14 @@ class DiscoveredAssets extends Component {
       activeTierTab: "3Tier",
       isClusterShow: false,
       currentActiveNode: "",
+      currentActiveNodeId: "",
       cloudElementsData: [],
       topologyCategoryWiseData: [],
       currentActiveTopologyCategory: "",
       selectedCategoryCloudElementsData: [],
       ecsMetaData: {},
       eksMetaData: {},
+      lambdaTableData: [],
     };
   }
 
@@ -140,13 +143,49 @@ class DiscoveredAssets extends Component {
         eksMetaData: eksData,
       });
     }
+
+    if (
+      prevProps.infraTopologyLambdaTable.status !==
+        this.props.infraTopologyLambdaTable.status &&
+      this.props.infraTopologyLambdaTable.status === status.SUCCESS
+    ) {
+      const lambdaData = [];
+      this.props.infraTopologyLambdaTable.data.map((item) => {
+        lambdaData.push({
+          functionName: item.configJson?.FunctionName,
+          responseTime: item.configJson?.responseTime,
+          duration: item.configJson?.duration,
+          invocations: item.configJson?.invocations,
+          throttles: item.configJson?.throttles,
+          errors: item.configJson?.errors,
+          latency: item.configJson?.latency,
+          networkReceived: item.configJson?.networkReceived,
+          requests: item.configJson?.requests,
+          product: item.configJson?.product,
+          environment: item.configJson?.environment,
+          actions: "",
+        });
+      });
+      this.setState({ lambdaTableData: lambdaData });
+    }
+  };
+
+  manipulateLambdaData = () => {
+    const { lambdaTableData } = this.state;
   };
 
   setCurrentTopologyCategory = (category) => {
-    const { cloudElementsData } = this.state;
+    const { cloudElementsData, currentActiveNodeId } = this.state;
     this.setState({ currentActiveTopologyCategory: category });
     if (category === "Lambda") {
       this.setState({ selectedCategoryCloudElementsData: [] });
+      const queryPrm = new URLSearchParams(document.location.search);
+      const landingZone = queryPrm.get("landingZone");
+      this.props.getInfraTopologyLambdaTableData({
+        elementType: category,
+        landingZone: landingZone,
+        productEnclave: currentActiveNodeId,
+      });
     } else {
       const newArray = [];
       cloudElementsData.map((item) => {
@@ -199,7 +238,7 @@ class DiscoveredAssets extends Component {
     this.setState({ activeTierTab: type });
   };
 
-  setCurrentActiveNode = (node, nodeLevelData) => {
+  setCurrentActiveNode = (node, nodeLevelData, nodeID) => {
     const { breadcrumbs } = this.state;
     let dupIndex = null;
     breadcrumbs.map((item, index) => {
@@ -213,7 +252,11 @@ class DiscoveredAssets extends Component {
     } else {
       breadcrumbs.push({ level: nodeLevelData[0], name: node });
     }
-    this.setState({ currentActiveNode: node, breadcrumbs });
+    this.setState({
+      currentActiveNode: node,
+      currentActiveNodeId: nodeID,
+      breadcrumbs,
+    });
     this.renderCloudManagedDetails();
   };
 
@@ -530,7 +573,16 @@ class DiscoveredAssets extends Component {
           )}
         </Box>
         {currentActiveTopologyCategory === "Lambda" ? (
-          <LambdaTable />
+          <>
+            {this.props.infraTopologyLambdaTable.status ===
+            status.IN_PROGRESS ? (
+              <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20">
+                <i className="fa-solid fa-spinner fa-spin" /> Loading...
+              </Box>
+            ) : (
+              <LambdaTable tableData={this.state.lambdaTableData} />
+            )}
+          </>
         ) : (
           <AssociateApp data={selectedCategoryCloudElementsData} />
         )}
@@ -545,12 +597,14 @@ function mapStateToProps(state) {
     departments,
     infraTopologyCloudElementList,
     infraTopologyCategoryWiseData,
+    infraTopologyLambdaTable,
   } = state.environmentData;
   return {
     envDataByLandingZone,
     departments,
     infraTopologyCloudElementList,
     infraTopologyCategoryWiseData,
+    infraTopologyLambdaTable,
   };
 }
 
@@ -559,6 +613,7 @@ const mapDispatchToProps = {
   GetInfraTopologyCloudElementList,
   getInfraTopologyCategoryWiseViewData,
   getInfraTopologyDbCategories,
+  getInfraTopologyLambdaTableData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiscoveredAssets);

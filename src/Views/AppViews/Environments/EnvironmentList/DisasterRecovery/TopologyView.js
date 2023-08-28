@@ -222,11 +222,7 @@ class TopologyView extends Component {
           );
         }
       });
-      retData = [
-        <div className="global-servies">
-          {retData}
-        </div>,
-      ];
+      retData = [<div className="global-servies">{retData}</div>];
       if (childJSX.length > 0) {
         retData.push(childJSX);
       }

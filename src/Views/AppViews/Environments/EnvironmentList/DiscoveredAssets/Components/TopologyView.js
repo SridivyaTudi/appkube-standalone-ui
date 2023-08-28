@@ -194,14 +194,18 @@ class TopologyView extends Component {
                           ? "active"
                           : ""
                       }
-                      id={item.id}
+                      id={item.instanceId}
                       onClick={() => {
-                        this.setState({ currentActiveNode: item.id }, () => {
-                          this.zoomToElementCallback();
-                        });
+                        this.setState(
+                          { currentActiveNode: item.instanceId },
+                          () => {
+                            this.zoomToElementCallback();
+                          }
+                        );
                         this.props.setCurrentActiveNode(
-                          item.id,
-                          this.state.activeView
+                          item.instanceId,
+                          this.state.activeView,
+                          item.id
                         );
                         this.handleNodeClick(
                           currentLevel,
@@ -213,10 +217,10 @@ class TopologyView extends Component {
                       <span>
                         <img
                           src={item.image ? item.image : vpcServicesIcon}
-                          alt={item.id}
+                          alt={item.instanceId}
                         />
                       </span>
-                      {this.getServiceName(item.id)}
+                      {this.getServiceName(item.instanceId)}
                     </li>
                   </ArcherElement>
                 );

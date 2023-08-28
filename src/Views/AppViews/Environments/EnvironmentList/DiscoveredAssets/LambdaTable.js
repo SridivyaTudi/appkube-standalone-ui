@@ -10,9 +10,6 @@ import {
   TablePagination,
 } from "@mui/material";
 import { v4 } from "uuid";
-import { getInfraTopologyLambdaTableData } from "Redux/EnvironmentData/EnvironmentDataThunk";
-import { connect } from "react-redux";
-import status from "Redux/Constants/CommonDS";
 
 class LambdaTable extends Component {
   constructor(props) {
@@ -305,27 +302,6 @@ class LambdaTable extends Component {
     };
   }
 
-  componentDidMount = () => {
-    const queryPrm = new URLSearchParams(document.location.search);
-    const landingZone = queryPrm.get("landingZone");
-
-    this.props.getInfraTopologyLambdaTableData({
-      elementType: "Lambda",
-      landingZone: landingZone,
-      productEnclave: 1,
-    });
-  };
-
-  componentDidUpdate = (prevProps, prevState) => {
-    if (
-      prevProps.infraTopologyLambdaTable.status !==
-        this.props.infraTopologyLambdaTable.status &&
-      this.props.infraTopologyLambdaTable.status === status.SUCCESS
-    ) {
-      console.log(this.props.infraTopologyLambdaTable.data);
-    }
-  };
-
   handleChangePage = (event, newpage) => {
     this.setState({ pg: newpage });
   };
@@ -354,6 +330,7 @@ class LambdaTable extends Component {
 
   render() {
     const { lambdaFunctionsData, pg, rpg } = this.state;
+    const { tableData } = this.props;
     return (
       <Box className="lambda-functions-container">
         <Box className="heading">Lambda Functions</Box>
@@ -377,33 +354,29 @@ class LambdaTable extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {lambdaFunctionsData
-                  .slice(pg * rpg, pg * rpg + rpg)
-                  .map((row, index) => (
-                    <TableRow key={v4()}>
-                      <TableCell align="center">{row.functionName}</TableCell>
-                      <TableCell align="center">{row.responseTime}</TableCell>
-                      <TableCell align="center">{row.duration}</TableCell>
-                      <TableCell align="center">{row.invocations}</TableCell>
-                      <TableCell align="center">{row.throttles}</TableCell>
-                      <TableCell align="center">{row.errors}</TableCell>
-                      <TableCell align="center">{row.latency}</TableCell>
-                      <TableCell align="center">
-                        {row.networkReceived}
-                      </TableCell>
-                      <TableCell align="center">{row.requests}</TableCell>
-                      <TableCell align="center">{row.product}</TableCell>
-                      <TableCell align="center">{row.environment}</TableCell>
-                      <TableCell align="center">{row.actions}</TableCell>
-                    </TableRow>
-                  ))}
+                {tableData.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
+                  <TableRow key={v4()}>
+                    <TableCell align="center">{row.functionName}</TableCell>
+                    <TableCell align="center">{row.responseTime}</TableCell>
+                    <TableCell align="center">{row.duration}</TableCell>
+                    <TableCell align="center">{row.invocations}</TableCell>
+                    <TableCell align="center">{row.throttles}</TableCell>
+                    <TableCell align="center">{row.errors}</TableCell>
+                    <TableCell align="center">{row.latency}</TableCell>
+                    <TableCell align="center">{row.networkReceived}</TableCell>
+                    <TableCell align="center">{row.requests}</TableCell>
+                    <TableCell align="center">{row.product}</TableCell>
+                    <TableCell align="center">{row.environment}</TableCell>
+                    <TableCell align="center">{row.actions}</TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
           <TablePagination
             rowsPerPageOptions={[10, 20, 30]}
             component="div"
-            count={lambdaFunctionsData.length}
+            count={tableData.length}
             rowsPerPage={rpg}
             page={pg}
             className="access-control-pagination"
@@ -416,13 +389,4 @@ class LambdaTable extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { infraTopologyLambdaTable } = state.environmentData;
-  return { infraTopologyLambdaTable };
-};
-
-const mapDispatchToProps = {
-  getInfraTopologyLambdaTableData,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LambdaTable);
+export default LambdaTable;
