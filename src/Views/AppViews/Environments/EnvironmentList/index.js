@@ -133,12 +133,20 @@ class EnvironmentList extends Component {
     );
   };
 
+  getLandingZoneOrCloudName = () => {
+    const queryPrm = new URLSearchParams(document.location.search);
+    const landingZone = queryPrm.get("landingZone");
+    const cloudName = queryPrm.get("cloudName");
+    return { cloudName, landingZone };
+  };
+
   render() {
     const {
       showLandingZoneDetails,
       activeTab,
       cloudName,
       singleEnvironmentCountData,
+      landingZone,
     } = this.state;
     return (
       <Box className="environment-container environmentlist">
@@ -160,7 +168,9 @@ class EnvironmentList extends Component {
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">Environments List</li>
+              <li className="active">
+                {this.getLandingZoneOrCloudName().cloudName} &nbsp; ({this.getLandingZoneOrCloudName().landingZone})
+              </li>
               {/* <li>
                 <Link
                   to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=1234&cloudName=AWS`}

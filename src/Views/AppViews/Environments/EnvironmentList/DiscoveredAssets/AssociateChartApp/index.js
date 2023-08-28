@@ -246,13 +246,15 @@ export class AssociateChartApp extends Component {
                     localStorage.removeItem("cloudName");
                   }}
                 >
-                  Environments List
+                  {localStorage.getItem("cloudName")} &nbsp;(
+                  {localStorage.getItem("landingZone")})
                 </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">{localStorage.getItem("cloudName")}</li>
+              <li className="active">{this.getAssociateIdOrType().elementType}:
+            {this.getAssociateIdOrType().instanceId}</li>
             </ul>
           </Box>
         </Box>

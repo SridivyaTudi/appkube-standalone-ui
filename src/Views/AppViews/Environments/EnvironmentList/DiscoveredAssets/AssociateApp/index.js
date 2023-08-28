@@ -70,9 +70,7 @@ export class AssociateApp extends Component {
               className="primary-text-btn min-width"
               component={Link}
               variant="contained"
-              onClick={() => {
-                this.setTypeOrIdOnLocalStorage();
-              }}
+              onClick={this.setTypeOrIdOnLocalStorage}
               to={`${APP_PREFIX_PATH}/environments/associatechartapp?elementType=${data.elementType}&instanceId=${data.instanceId}`}
             >
               Associate App
@@ -137,9 +135,7 @@ export class AssociateApp extends Component {
               component={Link}
               variant="contained"
               to={`${APP_PREFIX_PATH}/environments/ecscluster`}
-              onClick={() => {
-                this.setTypeOrIdOnLocalStorage();
-              }}
+              onClick={this.setTypeOrIdOnLocalStorage}
             >
               View Services
             </Button>

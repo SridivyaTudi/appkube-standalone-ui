@@ -285,18 +285,19 @@ class EcsCluster extends React.Component {
                   to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${localStorage.getItem(
                     "landingZone"
                   )}&cloudName=${localStorage.getItem("cloudName")}`}
-                  onClick={()=>{
-                    localStorage.removeItem("landingZone")
-                    localStorage.removeItem("cloudName")
+                  onClick={() => {
+                    localStorage.removeItem("landingZone");
+                    localStorage.removeItem("cloudName");
                   }}
                 >
-                  Environments List
+                  {localStorage.getItem("cloudName")} &nbsp;(
+                  {localStorage.getItem("landingZone")})
                 </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">{localStorage.getItem("cloudName")}</li>
+              <li className="active">ECS Cluster 01</li>
             </ul>
           </Box>
         </Box>

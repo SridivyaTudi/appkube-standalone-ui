@@ -39,7 +39,7 @@ let drawArrow = {
 };
 
 const productCategory = {
-  ["3 Tier"]: ["Web Layer", "App Layer", "Data Layer", "Auxilary Layer"],
+  "3 Tier": ["Web Layer", "App Layer", "Data Layer", "Auxilary Layer"],
   SOA: ["BUSINESS", "COMMON"],
 };
 let transformScale = 0;
@@ -194,7 +194,7 @@ class BusinessAssociationMapping extends Component {
       levelsData.length = 5;
 
       if (moduleElements?.length) {
-        levelsData[5] = this.props.moduleElements.data.map((module) => {
+        levelsData[5] = moduleElements.map((module) => {
           let { serviceName: label, id } = module;
           return {
             label,
@@ -242,7 +242,7 @@ class BusinessAssociationMapping extends Component {
    * Render the main body including all levels data.
    */
   renderBody = () => {
-    let { activeLevels, departments,levelsData } = this.state;
+    let { activeLevels, departments, levelsData } = this.state;
 
     let departmentLength =
       departments?.length && departments[0].departments?.length;
@@ -305,9 +305,11 @@ class BusinessAssociationMapping extends Component {
                       relations={this.onClickLevelsThenDrawLine()}
                     >
                       <div
-                        className={`chart-box ${levelsData[0]?.length ? 'active' : ''}`}
+                        className={`chart-box ${
+                          levelsData[0]?.length ? "active" : ""
+                        }`}
                         onClick={() => {
-                          this.onClickSynectiks();
+                          this.onClickSynectiks();                        
                         }}
                         id={`${
                           Object.keys(activeLevels).length === 0
@@ -496,6 +498,7 @@ class BusinessAssociationMapping extends Component {
 
     let { activeLevels, levelsData, serviceName } = this.state;
     let activeBAMLevel = activeLevels[`selectedLevel_0`];
+
     levelsData.length = isClickBreadCrumb
       ? selectedLevel + 2
       : selectedLevel + 1;
@@ -612,13 +615,7 @@ class BusinessAssociationMapping extends Component {
    *  @param {Boolean} isClickBreadCrumb - 1 if it is click on breadcrumb else 0
    */
   onClickCategory(data, isClickBreadCrumb = 0) {
-    let {
-      currentLevelIndex: categoryId,
-      label,
-      selectedLevel,
-      type,
-      productType,
-    } = data;
+    let { currentLevelIndex: categoryId, label, type, productType } = data;
     let {
       levelsData,
       activeLevels,
@@ -697,8 +694,9 @@ class BusinessAssociationMapping extends Component {
    *  @param {Boolean} isClickBreadCrumb - 1 if it is click on breadcrumb else 0
    */
   onClickModuleElement(data, isClickBreadCrumb = 0) {
-    let { currentLevelIndex: moduleId, label, selectedLevel, type } = data;
-    let { levelsData, activeLevels, serviceName, productType } = this.state;
+    let { currentLevelIndex: moduleId, label, type } = data;
+    let { levelsData, activeLevels, serviceName } = this.state;
+
     let activeBAMLevel = activeLevels[`selectedLevel_5`];
     activeLevels = this.getPreviousSelectedLevels(isClickBreadCrumb ? 5 : 4);
 
@@ -774,7 +772,7 @@ class BusinessAssociationMapping extends Component {
     const { activeLevels } = this.state;
     let activeLevel = {};
 
-    totalLevels.slice(0, level + 1).map((levelNumber) => {
+    totalLevels.slice(0, level + 1).forEach((levelNumber) => {
       let key = `selectedLevel_${levelNumber}`;
       activeLevel = { ...activeLevel, [key]: activeLevels[key] };
     });
