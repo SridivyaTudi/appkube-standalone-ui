@@ -242,7 +242,7 @@ class BusinessAssociationMapping extends Component {
    * Render the main body including all levels data.
    */
   renderBody = () => {
-    let { activeLevels, departments } = this.state;
+    let { activeLevels, departments,levelsData } = this.state;
 
     let departmentLength =
       departments?.length && departments[0].departments?.length;
@@ -305,7 +305,7 @@ class BusinessAssociationMapping extends Component {
                       relations={this.onClickLevelsThenDrawLine()}
                     >
                       <div
-                        className={"chart-box active"}
+                        className={`chart-box ${levelsData[0]?.length ? 'active' : ''}`}
                         onClick={() => {
                           this.onClickSynectiks();
                         }}
