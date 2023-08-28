@@ -151,20 +151,22 @@ class DiscoveredAssets extends Component {
     ) {
       const lambdaData = [];
       this.props.infraTopologyLambdaTable.data.map((item) => {
-        lambdaData.push({
-          functionName: item.configJson?.FunctionName,
-          responseTime: item.configJson?.responseTime,
-          duration: item.configJson?.duration,
-          invocations: item.configJson?.invocations,
-          throttles: item.configJson?.throttles,
-          errors: item.configJson?.errors,
-          latency: item.configJson?.latency,
-          networkReceived: item.configJson?.networkReceived,
-          requests: item.configJson?.requests,
-          product: item.configJson?.product,
-          environment: item.configJson?.environment,
-          actions: "",
-        });
+        if (item.configJson) {
+          lambdaData.push({
+            functionName: item.configJson?.FunctionName,
+            responseTime: item.configJson?.responseTime,
+            duration: item.configJson?.duration,
+            invocations: item.configJson?.invocations,
+            throttles: item.configJson?.throttles,
+            errors: item.configJson?.errors,
+            latency: item.configJson?.latency,
+            networkReceived: item.configJson?.networkReceived,
+            requests: item.configJson?.requests,
+            product: item.configJson?.product,
+            environment: item.configJson?.environment,
+            actions: "",
+          });
+        }
       });
       this.setState({ lambdaTableData: lambdaData });
     }
