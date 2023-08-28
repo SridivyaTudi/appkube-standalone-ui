@@ -71,7 +71,7 @@
               0px 2.76726px 2.21381px rgba(108, 73, 172, 0.0196802);
             > li {
               display: block;
-              margin-bottom: 0;
+              margin-bottom: 2px;
               a {
                 font-size: 12px;
                 line-height: 16px;
@@ -255,6 +255,16 @@
 
           > ul {
             > li {
+              &.active {
+                a {
+                  color: #383874;
+                  background-color: #dbdff1;
+                  span {
+                    display: inline-flex;
+                    vertical-align: middle;
+                  }
+                }
+              }
               a {
                 color: #b8b4cc;
                 background-color: #ffffff;
