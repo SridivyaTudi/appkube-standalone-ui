@@ -97,8 +97,8 @@ export const getModuleElements = createAsyncThunk(
   }
 );
 
-export const createAssociate = createAsyncThunk(
-  "associateApp/createAssociate",
+export const addService = createAsyncThunk(
+  "associateApp/addService",
   async (params) => {
     try {
       let url = config.CREATE_ASSOCIATE;

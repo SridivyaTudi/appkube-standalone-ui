@@ -4,7 +4,8 @@ import {
   getProductList,
   getProductEnv,
   getModules,
-  getModuleElements,createAssociate
+  getModuleElements,
+  addService,
 } from "Redux/AssociateApp/AssociateAppThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -31,7 +32,7 @@ export const AssociateAppSlice = createSlice({
       status: null,
       data: [],
     },
-    associateCreation: {
+    serviceCreation: {
       status: null,
       data: [],
     },
@@ -178,28 +179,28 @@ export const AssociateAppSlice = createSlice({
       };
     },
 
-    [createAssociate.pending]: (state, action) => {
+    [addService.pending]: (state, action) => {
       return {
         ...state,
-        associateCreation: {
+        serviceCreation: {
           status: status.IN_PROGRESS,
           data: [],
         },
       };
     },
-    [createAssociate.fulfilled]: (state, { payload }) => {
+    [addService.fulfilled]: (state, { payload }) => {
       return {
         ...state,
-        associateCreation: {
+        serviceCreation: {
           status: status.SUCCESS,
           data: payload,
         },
       };
     },
-    [createAssociate.rejected]: (state, action) => {
+    [addService.rejected]: (state, action) => {
       return {
         ...state,
-        associateCreation: {
+        serviceCreation: {
           status: status.FAILURE,
           data: [],
         },

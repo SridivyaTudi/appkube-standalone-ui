@@ -7,13 +7,18 @@ import calendarMouseIcon from "assets/img/assetmanager/calendar-mouse-icon.png";
 import databaseIcon from "assets/img/assetmanager/database-icon.png";
 import topBottomArrow from "assets/img/assetmanager/top-bottom-arrow.png";
 import BusinessAssociationMapping from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/BusinessAssociationMapping";
-import { createAssociate } from "Redux/AssociateApp/AssociateAppThunk";
+import { addService } from "Redux/AssociateApp/AssociateAppThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { withRouter } from "Views/AppViews/Environments/NewAccountSetup/AccountPolicy/withRouter";
 import { ToastMessage } from "Toast/ToastMessage";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
+const inprogressStatus = status.IN_PROGRESS;
+const successStatus = status.SUCCESS;
+const failureStatus = status.FAILURE;
+
 export class AssociateChartApp extends Component {
   constructor(props) {
     super(props);
@@ -29,11 +34,11 @@ export class AssociateChartApp extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.associateCreation.status !== this.props.associateCreation.status
+      prevProps.serviceCreation.status !== this.props.serviceCreation.status
     ) {
       if (
-        this.props.associateCreation.status === status.SUCCESS &&
-        this.props.associateCreation?.data?.id
+        this.props.serviceCreation.status === successStatus &&
+        this.props.serviceCreation?.data?.id
       ) {
         const landingZone = localStorage.getItem("landingZone");
         const cloudName = localStorage.getItem("cloudName");
@@ -43,7 +48,7 @@ export class AssociateChartApp extends Component {
         ToastMessage.success("Service tagged successfully.");
         localStorage.removeItem("landingZone");
         localStorage.removeItem("cloudName");
-      } else if (this.props.associateCreation.status === status.FAILURE) {
+      } else if (this.props.serviceCreation.status === failureStatus) {
         ToastMessage.error("Service is not tag  successfully.");
       }
     }
@@ -188,14 +193,15 @@ export class AssociateChartApp extends Component {
     }
   }
 
-  onClickSubmit = () => {
+  // Add service API call
+  onClickAddService = () => {
     const { instanceId } = this.getAssociateIdOrType();
     const {
       activeLevels: {
         selectedLevel_5: { id: serviceId },
       },
     } = this.state;
-    this.props.createAssociate(JSON.stringify({ instanceId, serviceId }));
+    this.props.addService(JSON.stringify({ instanceId, serviceId }));
   };
   render() {
     const {
@@ -205,13 +211,15 @@ export class AssociateChartApp extends Component {
       activeLevels,
       resetBreadCrumb,
     } = this.state;
-    const departmentName = activeLevels["selectedLevel_0"]
-      ? activeLevels["selectedLevel_0"].label
-      : "";
-    const productName = activeLevels["selectedLevel_1"]
-      ? activeLevels["selectedLevel_1"].label
-      : "";
-    const { associateCreation } = this.props;
+
+    const { selectedLevel_0, selectedLevel_1 } = activeLevels;
+
+    const departmentName = selectedLevel_0?.label || "";
+    const productName = selectedLevel_1?.label || "";
+
+    const {
+      serviceCreation: { status: serviceCreationStatus },
+    } = this.props;
     return (
       <Box className="environment-container associate-container">
         <Box className="list-heading">
@@ -244,7 +252,7 @@ export class AssociateChartApp extends Component {
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">AWS</li>
+              <li className="active">{localStorage.getItem("cloudName")}</li>
             </ul>
           </Box>
         </Box>
@@ -350,13 +358,9 @@ export class AssociateChartApp extends Component {
           {Object.keys(activeLevels).length === 6 ? (
             <LoadingButton
               className="primary-btn min-width"
-              onClick={this.onClickSubmit}
-              disabled={
-                associateCreation.status === status.IN_PROGRESS ? true : false
-              }
-              loading={
-                associateCreation.status === status.IN_PROGRESS ? true : false
-              }
+              onClick={this.onClickAddService}
+              disabled={serviceCreationStatus === inprogressStatus}
+              loading={serviceCreationStatus === inprogressStatus}
               loadingPosition="start"
               variant="contained"
             >
@@ -371,14 +375,14 @@ export class AssociateChartApp extends Component {
   }
 }
 function mapStateToProps(state) {
-  const { associateCreation } = state.associateApp;
+  const { serviceCreation } = state.associateApp;
   return {
-    associateCreation,
+    serviceCreation,
   };
 }
 
 const mapDispatchToProps = {
-  createAssociate,
+  addService,
 };
 
 export default withRouter(

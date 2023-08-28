@@ -104,44 +104,55 @@ class BusinessAssociationMapping extends Component {
     if (
       prevProps.products.status !== this.props.products.status &&
       this.props.products.status === status.SUCCESS &&
-      this.props.products?.data?.length
+      this.props.products?.data
     ) {
       let { levelsData, activeLevels, serviceName } = this.state;
+      let products = this.props.products?.data;
 
-      levelsData.push(
-        this.props.products.data.map((product) => {
-          let { name: label, id } = product;
-          return {
-            label,
-            id,
-            image: calendarMouseIcon,
-            type: "Product",
-            productType: product.type,
-          };
-        })
-      );
+      levelsData.length = 1;
+
+      if (products.length) {
+        levelsData.push(
+          products.map((product) => {
+            let { name: label, id } = product;
+            return {
+              label,
+              id,
+              image: calendarMouseIcon,
+              type: "Product",
+              productType: product.type,
+            };
+          })
+        );
+      }
+
       this.setStateOrProps(activeLevels, levelsData, serviceName);
     }
 
     if (
       prevProps.productEnv.status !== this.props.productEnv.status &&
       this.props.productEnv.status === status.SUCCESS &&
-      this.props.productEnv.data?.length
+      this.props.productEnv?.data
     ) {
       let { levelsData, activeLevels, productType, serviceName } = this.state;
+      let productEnvs = this.props.productEnv.data;
 
-      levelsData.push(
-        this.props.productEnv.data.map((env) => {
-          let { name: label, id } = env;
-          return {
-            label,
-            id,
-            image: calendarMouseIcon,
-            type: "ProductEnv",
-            productType,
-          };
-        })
-      );
+      levelsData.length = 2;
+
+      if (productEnvs?.length) {
+        levelsData.push(
+          productEnvs.map((env) => {
+            let { name: label, id } = env;
+            return {
+              label,
+              id,
+              image: calendarMouseIcon,
+              type: "ProductEnv",
+              productType,
+            };
+          })
+        );
+      }
 
       this.setStateOrProps(activeLevels, levelsData, serviceName);
     }
@@ -149,19 +160,25 @@ class BusinessAssociationMapping extends Component {
     if (
       prevProps.modules.status !== this.props.modules.status &&
       this.props.modules.status === status.SUCCESS &&
-      this.props.modules.data?.length
+      this.props.modules.data
     ) {
       let { levelsData, activeLevels, serviceName } = this.state;
 
-      levelsData[4] = this.props.modules.data.map((module) => {
-        let { name: label, id } = module;
-        return {
-          label,
-          id,
-          image: calendarMouseIcon,
-          type: "Module",
-        };
-      });
+      let modules = this.props.modules.data;
+
+      levelsData.length = 4;
+
+      if (modules?.length) {
+        levelsData[4] = modules.map((module) => {
+          let { name: label, id } = module;
+          return {
+            label,
+            id,
+            image: calendarMouseIcon,
+            type: "Module",
+          };
+        });
+      }
 
       this.setStateOrProps(activeLevels, levelsData, serviceName);
     }
@@ -169,19 +186,24 @@ class BusinessAssociationMapping extends Component {
     if (
       prevProps.moduleElements.status !== this.props.moduleElements.status &&
       this.props.moduleElements.status === status.SUCCESS &&
-      this.props.moduleElements.data?.length
+      this.props.moduleElements.data
     ) {
       let { levelsData, activeLevels, serviceName } = this.state;
+      let moduleElements = this.props.moduleElements.data;
 
-      levelsData[5] = this.props.moduleElements.data.map((module) => {
-        let { serviceName: label, id } = module;
-        return {
-          label,
-          id,
-          image: calendarMouseIcon,
-          type: "ModuleElement",
-        };
-      });
+      levelsData.length = 5;
+
+      if (moduleElements?.length) {
+        levelsData[5] = this.props.moduleElements.data.map((module) => {
+          let { serviceName: label, id } = module;
+          return {
+            label,
+            id,
+            image: calendarMouseIcon,
+            type: "ModuleElement",
+          };
+        });
+      }
 
       this.setStateOrProps(activeLevels, levelsData, serviceName);
     }
@@ -220,7 +242,7 @@ class BusinessAssociationMapping extends Component {
    * Render the main body including all levels data.
    */
   renderBody = () => {
-    let { activeLevels, departments } = this.state;
+    let { activeLevels, departments,levelsData } = this.state;
 
     let departmentLength =
       departments?.length && departments[0].departments?.length;
@@ -236,101 +258,101 @@ class BusinessAssociationMapping extends Component {
     const inprogressStatus = status.IN_PROGRESS;
 
     const lodingData = [
-      organization.status,
       products.status,
       productEnv.status,
       modules.status,
       moduleElements.status,
     ].includes(inprogressStatus);
 
-    return departmentLength ? (
-      <ArcherContainer className="chart-container" startMarker>
-        <TransformWrapper
-          wrapperStyle={{
-            width: "100%",
-          }}
-          onTransformed={(instance) => {
-            transformScale = instance && instance.state.scale;
-            let { positionX, positionY } = instance.state;
-            this.setState({ scale: true, positionX, positionY });
-          }}
-          minScale={0.3}
-          limitToBounds={false}
-        >
-          {({
-            zoomIn,
-            zoomOut,
-            instance,
-            zoomToElement,
-            setTransform,
-            ...rest
-          }) => {
-            transformScale = instance.transformState.scale;
-            handleSetTransform = setTransform;
+    if (organization.status === inprogressStatus) {
+      return this.renderLoder("h-100");
+    } else {
+      return departmentLength ? (
+        <ArcherContainer className="chart-container" startMarker>
+          <TransformWrapper
+            wrapperStyle={{
+              width: "100%",
+            }}
+            onTransformed={(instance) => {
+              transformScale = instance && instance.state.scale;
+              let { positionX, positionY } = instance.state;
+              this.setState({ scale: true, positionX, positionY });
+            }}
+            minScale={0.3}
+            limitToBounds={false}
+          >
+            {({
+              zoomIn,
+              zoomOut,
+              instance,
+              zoomToElement,
+              setTransform,
+              ...rest
+            }) => {
+              transformScale = instance.transformState.scale;
+              handleSetTransform = setTransform;
 
-            return (
-              <>
-                <TransformComponent
-                  contentStyle={{
-                    alignItems: "center",
-                    width: "2000px",
-                  }}
-                >
-                  <ArcherElement
-                    id="root"
-                    relations={this.onClickLevelsThenDrawLine()}
-                  >
-                    <div
-                      className={"chart-box active"}
-                      onClick={() => {
-                        this.onClickSynectiks();
-                      }}
-                      id={`${
-                        Object.keys(activeLevels).length === 0
-                          ? "lastNodeActive"
-                          : ""
-                      }`}
-                    >
-                      <img src={chartLogo} alt="Logo" />
-                    </div>
-                  </ArcherElement>
-                  {this.renderChildBody()}
-                  {lodingData ? (
-                    <Box className="d-flex align-items-center  loading">
-                      <i className="fa-solid fa-spinner fa-spin" /> Loading...
-                    </Box>
-                  ) : (
-                    <></>
-                  )}
-                </TransformComponent>
-                <div className="gmnoprint">
-                  <div className="gmnoprint-plus-minus">
-                    <button className="btn btn-plus" onClick={() => zoomIn()}>
-                      <i className="fa-solid fa-plus"></i>
-                    </button>
-                    <button className="btn btn-minus" onClick={() => zoomOut()}>
-                      <i className="fa-solid fa-minus"></i>
-                    </button>
-                  </div>
-                  <div
-                    className="gmnoprint-map"
-                    onClick={() => {
-                      zoomToElement("lastNodeActive", transformScale);
+              return (
+                <>
+                  <TransformComponent
+                    contentStyle={{
+                      alignItems: "center",
+                      width: "2000px",
                     }}
                   >
-                    <button className="btn btn-map">
-                      <i className="fa-solid fa-map-marker-alt"></i>
-                    </button>
+                    <ArcherElement
+                      id="root"
+                      relations={this.onClickLevelsThenDrawLine()}
+                    >
+                      <div
+                        className={`chart-box ${levelsData[0]?.length ? 'active' : ''}`}
+                        onClick={() => {
+                          this.onClickSynectiks();
+                        }}
+                        id={`${
+                          Object.keys(activeLevels).length === 0
+                            ? "lastNodeActive"
+                            : ""
+                        }`}
+                      >
+                        <img src={chartLogo} alt="Logo" />
+                      </div>
+                    </ArcherElement>
+                    {this.renderChildBody()}
+                    {lodingData ? this.renderLoder() : <></>}
+                  </TransformComponent>
+                  <div className="gmnoprint">
+                    <div className="gmnoprint-plus-minus">
+                      <button className="btn btn-plus" onClick={() => zoomIn()}>
+                        <i className="fa-solid fa-plus"></i>
+                      </button>
+                      <button
+                        className="btn btn-minus"
+                        onClick={() => zoomOut()}
+                      >
+                        <i className="fa-solid fa-minus"></i>
+                      </button>
+                    </div>
+                    <div
+                      className="gmnoprint-map"
+                      onClick={() => {
+                        zoomToElement("lastNodeActive", transformScale);
+                      }}
+                    >
+                      <button className="btn btn-map">
+                        <i className="fa-solid fa-map-marker-alt"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </>
-            );
-          }}
-        </TransformWrapper>
-      </ArcherContainer>
-    ) : (
-      ""
-    );
+                </>
+              );
+            }}
+          </TransformWrapper>
+        </ArcherContainer>
+      ) : (
+        ""
+      );
+    }
   };
 
   /**
@@ -379,7 +401,7 @@ class BusinessAssociationMapping extends Component {
                   : ""
               }`}
             >
-              <HtmlTooltip title={level.label?.length > 13 ? level.label : ""}>
+              <HtmlTooltip title={level.label}>
                 <Box className="tooltip-content">
                   <span>
                     <img src={level.image} alt={level.label} />
@@ -495,6 +517,7 @@ class BusinessAssociationMapping extends Component {
       };
       this.props.getProductList(departmentId);
     }
+
     this.setStateOrProps(activeLevels, levelsData, serviceName);
   }
 
@@ -514,7 +537,6 @@ class BusinessAssociationMapping extends Component {
     let { activeLevels, levelsData, serviceName } = this.state;
 
     let activeBAMLevel = activeLevels[`selectedLevel_1`];
-    let { selectedLevel_0 } = activeLevels;
 
     levelsData.length = isClickBreadCrumb
       ? selectedLevel + 2
@@ -556,7 +578,6 @@ class BusinessAssociationMapping extends Component {
     let { levelsData, activeLevels, serviceName } = this.state;
     let activeBAMLevel = activeLevels[`selectedLevel_2`];
 
-    let { selectedLevel_0, selectedLevel_1 } = activeLevels;
     levelsData.length = isClickBreadCrumb ? 4 : 3;
     activeLevels = this.getPreviousSelectedLevels(isClickBreadCrumb ? 2 : 1);
 
@@ -574,17 +595,14 @@ class BusinessAssociationMapping extends Component {
           })
         : [];
 
-      activeLevels = {
-        selectedLevel_0,
-        selectedLevel_1,
-        selectedLevel_2: {
-          id: envId,
-          label,
-          type,
-          productType,
-        },
+      activeLevels["selectedLevel_2"] = {
+        id: envId,
+        label,
+        type,
+        productType,
       };
     }
+
     this.setStateOrProps(activeLevels, levelsData, serviceName);
   }
 
@@ -631,6 +649,7 @@ class BusinessAssociationMapping extends Component {
         productType,
       };
     }
+
     this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
   }
 
@@ -640,25 +659,23 @@ class BusinessAssociationMapping extends Component {
    *  @param {Boolean} isClickBreadCrumb - 1 if it is click on breadcrumb else 0
    */
   onClickModule(data, isClickBreadCrumb = 0) {
-    let { currentLevelIndex: moduleId, label, selectedLevel, type } = data;
+    let { currentLevelIndex: moduleId, label, type } = data;
     let { levelsData, activeLevels, serviceName, productType } = this.state;
 
     let activeBAMLevel = activeLevels[`selectedLevel_4`];
     let { selectedLevel_0, selectedLevel_1, selectedLevel_2, selectedLevel_3 } =
       activeLevels;
 
-    const departmentId = selectedLevel_0.id;
-    const productId = selectedLevel_1.id;
-    const productEnvId = selectedLevel_2.id;
     activeLevels = this.getPreviousSelectedLevels(isClickBreadCrumb ? 4 : 3);
     levelsData.length = isClickBreadCrumb ? 6 : 5;
+
     if (activeBAMLevel && activeBAMLevel?.id === moduleId) {
     } else {
       if (productType === "SOA") {
         this.props.getModuleElements({
-          departmentId,
-          productId,
-          productEnvId,
+          departmentId: selectedLevel_0.id,
+          productId: selectedLevel_1.id,
+          productEnvId: selectedLevel_2.id,
           moduleId,
           serviceNature: selectedLevel_3.label?.toLowerCase(),
         });
@@ -670,6 +687,7 @@ class BusinessAssociationMapping extends Component {
         type,
       };
     }
+
     this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
   }
 
@@ -716,6 +734,7 @@ class BusinessAssociationMapping extends Component {
 
         if (activeIndex >= 0) {
           let currentLevelIndex = activeLevels[activeBAMKeys[activeIndex]]?.id;
+
           if (currentLevelIndex === item.id) {
             tempDrawArrow["style"]["strokeColor"] = "#53ca43";
             tempDrawArrow["style"]["endShape"]["circle"]["strokeColor"] =
@@ -751,12 +770,15 @@ class BusinessAssociationMapping extends Component {
    */
   getPreviousSelectedLevels(level) {
     let totalLevels = [0, 1, 2, 3, 4, 5];
+
     const { activeLevels } = this.state;
     let activeLevel = {};
+
     totalLevels.slice(0, level + 1).map((levelNumber) => {
       let key = `selectedLevel_${levelNumber}`;
       activeLevel = { ...activeLevel, [key]: activeLevels[key] };
     });
+
     return activeLevel;
   }
 
@@ -773,6 +795,14 @@ class BusinessAssociationMapping extends Component {
         this.setState({ lastLevelsWidth: levelsWidth });
       }
     }
+  }
+  // Render Loder
+  renderLoder(widthClass) {
+    return (
+      <Box className={`d-flex align-items-center ${widthClass} loading`}>
+        <i className="fa-solid fa-spinner fa-spin" /> Loading...
+      </Box>
+    );
   }
 
   render() {

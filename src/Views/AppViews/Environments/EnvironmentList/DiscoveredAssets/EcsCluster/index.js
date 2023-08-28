@@ -296,7 +296,7 @@ class EcsCluster extends React.Component {
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">AWS</li>
+              <li className="active">{localStorage.getItem("cloudName")}</li>
             </ul>
           </Box>
         </Box>
