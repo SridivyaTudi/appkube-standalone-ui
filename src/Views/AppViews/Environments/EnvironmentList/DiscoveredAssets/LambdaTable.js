@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {
   Box,
-  Grid,
-  Button,
   TableContainer,
   Table,
   TableBody,
@@ -12,6 +10,9 @@ import {
   TablePagination,
 } from "@mui/material";
 import { v4 } from "uuid";
+import { getInfraTopologyLambdaTableData } from "Redux/EnvironmentData/EnvironmentDataThunk";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
 
 class LambdaTable extends Component {
   constructor(props) {
@@ -304,6 +305,27 @@ class LambdaTable extends Component {
     };
   }
 
+  componentDidMount = () => {
+    const queryPrm = new URLSearchParams(document.location.search);
+    const landingZone = queryPrm.get("landingZone");
+
+    this.props.getInfraTopologyLambdaTableData({
+      elementType: "Lambda",
+      landingZone: landingZone,
+      productEnclave: 1,
+    });
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      prevProps.infraTopologyLambdaTable.status !==
+        this.props.infraTopologyLambdaTable.status &&
+      this.props.infraTopologyLambdaTable.status === status.SUCCESS
+    ) {
+      console.log(this.props.infraTopologyLambdaTable.data);
+    }
+  };
+
   handleChangePage = (event, newpage) => {
     this.setState({ pg: newpage });
   };
@@ -394,4 +416,13 @@ class LambdaTable extends Component {
   }
 }
 
-export default LambdaTable;
+const mapStateToProps = (state) => {
+  const { infraTopologyLambdaTable } = state.environmentData;
+  return { infraTopologyLambdaTable };
+};
+
+const mapDispatchToProps = {
+  getInfraTopologyLambdaTableData,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LambdaTable);

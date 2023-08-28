@@ -98,3 +98,22 @@ export const getInfraTopologyDbCategories = createAsyncThunk(
     }
   }
 );
+
+export const getInfraTopologyLambdaTableData = createAsyncThunk(
+  "environments/getInfraTopologyLambdaTableData",
+  async (params) => {
+    const url = config.INFRA_TOPOLOGY_LAMBDA_TABLE_DATA.replace(
+      "#element-type#",
+      params.elementType
+    )
+      .replace("#landing-zone#", params.landingZone)
+      .replace("#product-enclave#", params.productEnclave);
+
+    try {
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

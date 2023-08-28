@@ -30,6 +30,7 @@ const config = {
   INFRA_TOPOLOGY_CLOUD_ELEMENT_LIST: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone/#landing-zone-id#/product-enclave/#product-enclave#/cloud-elements`,
   INFRA_TOPOLOGY_CATEGORY_WISE_VIEW: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone/#landing-zone-id#/product-enclave/#product-enclave#/category-wise-summary`,
   INFRA_TOPOLOGY_DB_CATEGORIES: `${baseURL}/db-category`,
+  INFRA_TOPOLOGY_LAMBDA_TABLE_DATA: `${baseURL}/cloud-element/search?elementType=#element-type#&landingzoneId=#landing-zone#&productEnclaveId=#product-enclave#`,
 
   /* AssociateApp  */
   GET_ASSOCIATE_DEPARTMENTS: `${baseURL}/organization/search?organizationDTO=#org-id#`,

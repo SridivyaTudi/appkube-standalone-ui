@@ -6,6 +6,7 @@ import {
   GetInfraTopologyCloudElementList,
   getInfraTopologyCategoryWiseViewData,
   getInfraTopologyDbCategories,
+  getInfraTopologyLambdaTableData,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -33,6 +34,10 @@ export const environmentDataSlice = createSlice({
       data: {},
     },
     infraTopologyDbCategories: {
+      status: null,
+      data: {},
+    },
+    infraTopologyLambdaTable: {
       status: null,
       data: {},
     },
@@ -194,6 +199,32 @@ export const environmentDataSlice = createSlice({
       return {
         ...state,
         infraTopologyDbCategories: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getInfraTopologyLambdaTableData.pending]: (state) => {
+      return {
+        ...state,
+        infraTopologyLambdaTable: {
+          status: status.initialState,
+        },
+      };
+    },
+    [getInfraTopologyLambdaTableData.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        infraTopologyLambdaTable: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getInfraTopologyLambdaTableData.rejected]: (state) => {
+      return {
+        ...state,
+        infraTopologyLambdaTable: {
           status: status.FAILURE,
         },
       };
