@@ -153,7 +153,7 @@ class DiscoveredAssets extends Component {
       this.props.infraTopologyLambdaTable.data.map((item) => {
         if (item.configJson) {
           lambdaData.push({
-            functionName: item.configJson?.FunctionName,
+            functionName: item.instanceName,
             responseTime: item.configJson?.responseTime,
             duration: item.configJson?.duration,
             invocations: item.configJson?.invocations,
