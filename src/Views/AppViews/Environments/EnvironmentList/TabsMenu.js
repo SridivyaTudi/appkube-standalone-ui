@@ -34,7 +34,7 @@ class TabsMenu extends Component {
   }
 
   render() {
-    if (this.state.width > 992) {
+    if (this.state.width > this.props.breakWidth) {
       return (
         <List>
           {this.props.tabs.map((tabData, index) => {
@@ -53,10 +53,10 @@ class TabsMenu extends Component {
     } else {
       return (
         <Select
-          labelId="demo-select-small-label"
-          id="demo-select-small"
+          labelId="tabs-menu-small-label"
+          id="tabs-menu-small"
+          className="tabs-menu"
           value={this.props.activeTab}
-          label="Age"
           onChange={(e) => this.props.setActiveTab(e.target.value)}
         >
           {this.props.tabs.map((item, index) => {

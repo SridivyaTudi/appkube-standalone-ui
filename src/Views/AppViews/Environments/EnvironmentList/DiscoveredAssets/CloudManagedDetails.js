@@ -315,6 +315,7 @@ class CloudManagedDetails extends React.Component {
               tabs={this.tableMapping}
               setActiveTab={this.setActiveTab}
               activeTab={activeTab}
+              breakWidth={767}
             />
           </Box>
           <Box className="tabs-content">

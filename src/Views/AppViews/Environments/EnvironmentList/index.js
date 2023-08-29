@@ -221,6 +221,7 @@ class EnvironmentList extends Component {
               tabs={this.tabMapping}
               setActiveTab={this.setActiveTab}
               activeTab={activeTab}
+              breakWidth={992}
             />
           </Box>
           <Box className="tabs-content">
