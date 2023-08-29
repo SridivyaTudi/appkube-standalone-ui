@@ -22,31 +22,24 @@ class EnvironmentList extends Component {
   tabMapping = [
     {
       name: "Discovered Assets",
-      dataKey: "discovered",
     },
     {
       name: "Application",
-      dataKey: "application",
     },
     {
       name: "Billing",
-      dataKey: "billing",
     },
     {
       name: "Threat and security Events",
-      dataKey: "threat",
     },
     {
       name: "Compliance Policies",
-      dataKey: "compliance",
     },
     {
       name: "Alerts",
-      dataKey: "alerts",
     },
     {
       name: "Inputs",
-      dataKey: "inputs",
     },
   ];
 

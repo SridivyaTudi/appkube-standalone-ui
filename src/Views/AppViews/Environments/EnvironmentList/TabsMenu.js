@@ -34,7 +34,7 @@ class TabsMenu extends Component {
   }
 
   render() {
-    if (this.state.width > 800) {
+    if (this.state.width > 992) {
       return (
         <List>
           {this.props.tabs.map((tabData, index) => {
