@@ -182,7 +182,7 @@ class DiscoveredAssets extends Component {
     if (category === "Lambda") {
       this.setState({ selectedCategoryCloudElementsData: [] });
       const queryPrm = new URLSearchParams(document.location.search);
-      const landingZone = queryPrm.get("landingZone");
+      const landingZone = queryPrm.get("landingZoneId");
       this.props.getInfraTopologyLambdaTableData({
         elementType: category,
         landingZone: landingZone,
