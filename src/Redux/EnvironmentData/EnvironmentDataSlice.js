@@ -104,7 +104,7 @@ export const environmentDataSlice = createSlice({
       return {
         ...state,
         singleEnvironmentCountData: {
-          status: status.initialState,
+          status: status.IN_PROGRESS,
         },
       };
     },
@@ -130,7 +130,7 @@ export const environmentDataSlice = createSlice({
       return {
         ...state,
         infraTopologyCloudElementList: {
-          status: status.initialState,
+          status: status.IN_PROGRESS,
         },
       };
     },
@@ -156,7 +156,7 @@ export const environmentDataSlice = createSlice({
       return {
         ...state,
         infraTopologyCategoryWiseData: {
-          status: status.initialState,
+          status: status.IN_PROGRESS,
         },
       };
     },
@@ -182,7 +182,7 @@ export const environmentDataSlice = createSlice({
       return {
         ...state,
         infraTopologyDbCategories: {
-          status: status.initialState,
+          status: status.IN_PROGRESS,
         },
       };
     },
@@ -208,7 +208,7 @@ export const environmentDataSlice = createSlice({
       return {
         ...state,
         infraTopologyLambdaTable: {
-          status: status.initialState,
+          status: status.IN_PROGRESS,
         },
       };
     },

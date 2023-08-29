@@ -563,7 +563,17 @@ class DiscoveredAssets extends Component {
                       <></>
                     )}
                     {currentActiveNode && !isClusterShow ? (
-                      this.renderCloudManagedDetails()
+                      <>
+                        {this.props.infraTopologyCloudElementList.status ===
+                        status.IN_PROGRESS ? (
+                          <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20">
+                            <i className="fa-solid fa-spinner fa-spin" />
+                            Loading...
+                          </Box>
+                        ) : (
+                          this.renderCloudManagedDetails()
+                        )}
+                      </>
                     ) : (
                       <></>
                     )}
