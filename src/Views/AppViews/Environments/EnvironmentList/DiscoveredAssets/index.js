@@ -587,7 +587,9 @@ class DiscoveredAssets extends Component {
         {currentActiveTopologyCategory === "Lambda" ? (
           <>
             {this.props.infraTopologyLambdaTable.status ===
-            status.IN_PROGRESS ? (
+              status.IN_PROGRESS ||
+            this.props.infraTopologyCloudElementList.status ===
+              status.IN_PROGRESS ? (
               <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20">
                 <i className="fa-solid fa-spinner fa-spin" /> Loading...
               </Box>
@@ -595,6 +597,12 @@ class DiscoveredAssets extends Component {
               <LambdaTable tableData={this.state.lambdaTableData} />
             )}
           </>
+        ) : this.props.infraTopologyCloudElementList.status ===
+          status.IN_PROGRESS ? (
+          <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20">
+            <i className="fa-solid fa-spinner fa-spin" />
+            Loading...
+          </Box>
         ) : (
           <AssociateApp data={selectedCategoryCloudElementsData} />
         )}
