@@ -42,7 +42,7 @@ class DiscoveredAssets extends Component {
     const queryPrm = new URLSearchParams(document.location.search);
     const cloudName = queryPrm.get("cloudName");
     this.state = {
-      breadcrumbs: [{ level: -1, name: "AWS" }],
+      breadcrumbs: [{ level: -1, name: cloudName }],
       data: {},
       currentActiveNodeLabel: "",
       currentVPC: {},
@@ -153,7 +153,7 @@ class DiscoveredAssets extends Component {
       this.props.infraTopologyLambdaTable.data.map((item) => {
         if (item.configJson) {
           lambdaData.push({
-            functionName: item.configJson?.FunctionName,
+            functionName: item.instanceName,
             responseTime: item.configJson?.responseTime,
             duration: item.configJson?.duration,
             invocations: item.configJson?.invocations,
@@ -182,7 +182,7 @@ class DiscoveredAssets extends Component {
     if (category === "Lambda") {
       this.setState({ selectedCategoryCloudElementsData: [] });
       const queryPrm = new URLSearchParams(document.location.search);
-      const landingZone = queryPrm.get("landingZone");
+      const landingZone = queryPrm.get("landingZoneId");
       this.props.getInfraTopologyLambdaTableData({
         elementType: category,
         landingZone: landingZone,
@@ -215,6 +215,7 @@ class DiscoveredAssets extends Component {
   /** Render the BreadCrumbs of Topologyview. */
   renderBreadCrumbs() {
     let { breadcrumbs } = this.state;
+
     return breadcrumbs.map((item, index) => {
       return (
         <>
@@ -324,7 +325,14 @@ class DiscoveredAssets extends Component {
               <TableRow>
                 <TableCell>
                   <Box className="environment-image">
-                    <img src={LOGOS["aws".toUpperCase()]} alt={"aws"} />
+                    <img
+                      src={
+                        LOGOS[this.getLandingZoneOrCloudName().cloudName]
+                          ? LOGOS[this.getLandingZoneOrCloudName().cloudName]
+                          : ""
+                      }
+                      alt={this.getLandingZoneOrCloudName().cloudName}
+                    />
                   </Box>
                 </TableCell>
                 <TableCell>Products</TableCell>
@@ -430,6 +438,12 @@ class DiscoveredAssets extends Component {
     );
   };
 
+  getLandingZoneOrCloudName = () => {
+    const queryPrm = new URLSearchParams(document.location.search);
+    const landingZone = queryPrm.get("landingZone");
+    const cloudName = queryPrm.get("cloudName")?.toUpperCase();
+    return { cloudName, landingZone };
+  };
   render() {
     const {
       activeTierTab,

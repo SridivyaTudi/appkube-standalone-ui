@@ -136,7 +136,7 @@ class EnvironmentList extends Component {
   getLandingZoneOrCloudName = () => {
     const queryPrm = new URLSearchParams(document.location.search);
     const landingZone = queryPrm.get("landingZone");
-    const cloudName = queryPrm.get("cloudName");
+    const cloudName = queryPrm.get("cloudName")?.toUpperCase();;
     return { cloudName, landingZone };
   };
 
@@ -198,9 +198,9 @@ class EnvironmentList extends Component {
             <Box className="image">
               <img
                 src={
-                  LOGOS[singleEnvironmentCountData?.cloud?.toUpperCase()]
-                    ? LOGOS[singleEnvironmentCountData?.cloud?.toUpperCase()]
-                    : aws
+                  LOGOS[this.getLandingZoneOrCloudName().cloudName]
+                    ? LOGOS[this.getLandingZoneOrCloudName().cloudName]
+                    : ''
                 }
               />
             </Box>

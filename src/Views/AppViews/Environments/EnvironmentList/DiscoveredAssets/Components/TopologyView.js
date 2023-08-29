@@ -5,6 +5,7 @@ import { Box } from "@mui/material";
 import { v4 } from "uuid";
 import aws from "assets/img/aws.png";
 import vpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
+import { LOGOS } from "CommonData";
 let transformScale = 0;
 
 let zoomElement = () => {};
@@ -107,8 +108,18 @@ class TopologyView extends Component {
                       <div className="d-flex">
                         <div className="account-image">
                           <img
-                            src={data.image ? data.image : aws}
-                            alt="aws image"
+                            src={
+                              LOGOS[
+                                this.getLandingZoneOrCloudName().cloudName
+                              ]
+                                ? LOGOS[
+                                    this.getLandingZoneOrCloudName().cloudName
+                                  ]
+                                : ""
+                            }
+                            alt={`${
+                              this.getLandingZoneOrCloudName().cloudName
+                            }`}
                           />
                         </div>
                         <div className="account-id">
@@ -288,6 +299,12 @@ class TopologyView extends Component {
   getServiceName(name) {
     return name ? name.toUpperCase() : "";
   }
+  getLandingZoneOrCloudName = () => {
+    const queryPrm = new URLSearchParams(document.location.search);
+    const landingZone = queryPrm.get("landingZone");
+    const cloudName = queryPrm.get("cloudName")?.toUpperCase();
+    return { cloudName, landingZone };
+  };
 
   render() {
     const { data } = this.props;
