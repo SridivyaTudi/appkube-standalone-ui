@@ -83,6 +83,9 @@
         align-items: center;
         justify-content: center;
         height: 300px;
+        i{
+          margin-right: 8px;
+        }
       }
 
       &::-webkit-scrollbar {
