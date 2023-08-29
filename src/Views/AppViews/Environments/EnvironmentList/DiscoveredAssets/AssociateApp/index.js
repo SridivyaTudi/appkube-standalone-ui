@@ -153,6 +153,7 @@ export class AssociateApp extends Component {
     const queryPrm = new URLSearchParams(document.location.search);
     localStorage.setItem("landingZone", queryPrm.get("landingZone"));
     localStorage.setItem("cloudName", queryPrm.get("cloudName"));
+    localStorage.setItem("landingZoneId", queryPrm.get("landingZoneId"));
   }
   render() {
     return (
