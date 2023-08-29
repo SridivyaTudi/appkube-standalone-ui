@@ -19,11 +19,6 @@ function SideBar() {
 
   const [isActive, setActive] = useState(false);
   const [isActiveSubMenu, setActiveSubMenu] = useState(true);
-  const [documentTitle, setDocumentTitle] = useState("");
-
-  useEffect(() => {
-    setDocumentTitle(document.title);
-  }, []);
 
   const toggleOpenclose = () => {
     setActive(!isActive);
@@ -91,7 +86,9 @@ function SideBar() {
                           <ListItem
                             key={subItem.name}
                             className={`${
-                              documentTitle === subItem.name ? "active" : ""
+                              currentLocation.includes(subItem.link)
+                                ? "active"
+                                : ""
                             }`}
                           >
                             <Link to={`${APP_PREFIX_PATH + subItem.link}`}>
