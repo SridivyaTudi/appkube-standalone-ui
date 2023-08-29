@@ -15,6 +15,7 @@ import { Grid } from "@mui/material";
 import status from "Redux/Constants/CommonDS";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import TabsMenu from "../TabsMenu";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -42,23 +43,18 @@ class CloudManagedDetails extends React.Component {
   tableMapping = [
     {
       name: "All",
-      dataKey: "all",
     },
     {
       name: "App",
-      dataKey: "app",
     },
     {
       name: "Data",
-      dataKey: "data",
     },
     {
       name: "Datalake",
-      dataKey: "datalake",
     },
     {
       name: "ServiceMesh",
-      dataKey: "servicemesh",
     },
   ];
   dbMapping = [
@@ -315,19 +311,11 @@ class CloudManagedDetails extends React.Component {
       <Box className="global-service-penal">
         <Box className="services-panel-tabs">
           <Box className="tabs-head">
-            <List>
-              {this.tableMapping.map((tabData, index) => {
-                return (
-                  <ListItem
-                    key={`ops-tab-${index}`}
-                    className={index === activeTab ? "active" : ""}
-                    onClick={() => this.setActiveTab(index)}
-                  >
-                    {tabData.name}
-                  </ListItem>
-                );
-              })}
-            </List>
+            <TabsMenu
+              tabs={this.tableMapping}
+              setActiveTab={this.setActiveTab}
+              activeTab={activeTab}
+            />
           </Box>
           <Box className="tabs-content">
             <Box className="cloud-managed-section">

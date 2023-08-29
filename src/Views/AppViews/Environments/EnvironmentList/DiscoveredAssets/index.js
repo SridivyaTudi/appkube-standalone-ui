@@ -172,10 +172,6 @@ class DiscoveredAssets extends Component {
     }
   };
 
-  manipulateLambdaData = () => {
-    const { lambdaTableData } = this.state;
-  };
-
   setCurrentTopologyCategory = (category) => {
     const { cloudElementsData, currentActiveNodeId } = this.state;
     this.setState({ currentActiveTopologyCategory: category });
@@ -444,6 +440,7 @@ class DiscoveredAssets extends Component {
     const cloudName = queryPrm.get("cloudName")?.toUpperCase();
     return { cloudName, landingZone };
   };
+
   render() {
     const {
       activeTierTab,

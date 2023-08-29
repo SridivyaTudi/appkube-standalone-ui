@@ -13,12 +13,10 @@ import status from "Redux/Constants/CommonDS";
 import { getSingleEnvironmentCountData } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { connect } from "react-redux";
 import { LOGOS } from "CommonData";
-import { v4 } from "uuid";
 import { getCurrentOrgId } from "Utils";
-import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-import aws from "assets/img/aws.png";
+import TabsMenu from "./TabsMenu";
 
 class EnvironmentList extends Component {
   tabMapping = [
@@ -136,7 +134,7 @@ class EnvironmentList extends Component {
   getLandingZoneOrCloudName = () => {
     const queryPrm = new URLSearchParams(document.location.search);
     const landingZone = queryPrm.get("landingZone");
-    const cloudName = queryPrm.get("cloudName")?.toUpperCase();;
+    const cloudName = queryPrm.get("cloudName")?.toUpperCase();
     return { cloudName, landingZone };
   };
 
@@ -169,7 +167,8 @@ class EnvironmentList extends Component {
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li className="active">
-                {this.getLandingZoneOrCloudName().cloudName} &nbsp; ({this.getLandingZoneOrCloudName().landingZone})
+                {this.getLandingZoneOrCloudName().cloudName} &nbsp; (
+                {this.getLandingZoneOrCloudName().landingZone})
               </li>
               {/* <li>
                 <Link
@@ -200,7 +199,7 @@ class EnvironmentList extends Component {
                 src={
                   LOGOS[this.getLandingZoneOrCloudName().cloudName]
                     ? LOGOS[this.getLandingZoneOrCloudName().cloudName]
-                    : ''
+                    : ""
                 }
               />
             </Box>
@@ -225,19 +224,11 @@ class EnvironmentList extends Component {
         </Box>
         <Box className="services-panel-tabs">
           <Box className="tabs-head">
-            <List>
-              {this.tabMapping.map((tabData, index) => {
-                return (
-                  <ListItem
-                    key={v4()}
-                    className={index === activeTab ? "active" : ""}
-                    onClick={() => this.setActiveTab(index)}
-                  >
-                    {tabData.name}
-                  </ListItem>
-                );
-              })}
-            </List>
+            <TabsMenu
+              tabs={this.tabMapping}
+              setActiveTab={this.setActiveTab}
+              activeTab={activeTab}
+            />
           </Box>
           <Box className="tabs-content">
             {activeTab === 0 ? (
