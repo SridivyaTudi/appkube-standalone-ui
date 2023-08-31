@@ -30,6 +30,7 @@ import {
   getMonthlyStatistics,
   getTotalBudget,
 } from "Redux/Dashboard/DashboardThunk";
+import Loader from "Components/Loader";
 
 ChartJS.register(
   CategoryScale,
@@ -226,9 +227,7 @@ class SpendAnalytics extends Component {
     let currentHourSpendRateStatus = this.props.currentHourSpendRate.status;
 
     return currentHourSpendRateStatus === status.IN_PROGRESS ? (
-      <Box className="spend-contant">
-        <i className="fa-solid fa-spinner fa-spin" /> Loading...
-      </Box>
+      <Loader className={'small-loader'} />
     ) : (
       <Box className="spend-contant">
         <label>Per Hour</label>
@@ -248,9 +247,7 @@ class SpendAnalytics extends Component {
   renderCurrentDaySpendRateHtml = () => {
     let currentDaySpendRateStatus = this.props.currentDaySpendRate.status;
     return currentDaySpendRateStatus === status.IN_PROGRESS ? (
-      <Box className="spend-contant">
-        <i className="fa-solid fa-spinner fa-spin" /> Loading...
-      </Box>
+      <Loader className={'small-loader'} />
     ) : (
       <Box className="spend-contant">
         <label>Per Day</label>
@@ -289,9 +286,7 @@ class SpendAnalytics extends Component {
     let todaySpendAnalyticsStatus = this.props.todaySpendAnalytics.status;
 
     return todaySpendAnalyticsStatus === status.IN_PROGRESS ? (
-      <Box className="spend-contant">
-        <i className="fa-solid fa-spinner fa-spin" /> Loading...
-      </Box>
+      <Loader className={'small-loader'} />
     ) : (
       <>
         <label>Spends Today</label>
@@ -329,9 +324,7 @@ class SpendAnalytics extends Component {
   renderYesterdaySpendAnalyticsHtml = () => {
     let todaySpendAnalyticsStatus = this.props.yesterdaySpendAnalytics.status;
     return todaySpendAnalyticsStatus === status.IN_PROGRESS ? (
-      <Box className="total-spend">
-        <i className="fa-solid fa-spinner fa-spin" /> Loading...
-      </Box>
+      <Loader />
     ) : (
       <>
         <label>Spends Yesterday</label>
@@ -356,9 +349,7 @@ class SpendAnalytics extends Component {
   renderTotalSpendHtml = () => {
     let totalSpendStatus = this.props.totalSpend.status;
     return totalSpendStatus === status.IN_PROGRESS ? (
-      <Box className="total-spend">
-        <i className="fa-solid fa-spinner fa-spin" /> Loading...
-      </Box>
+      <Loader />
     ) : (
       <Box className="total-spend">
         <Box className="heading">
@@ -421,9 +412,7 @@ class SpendAnalytics extends Component {
     let monthlyCloudWiseSpendStatus = this.props.monthlyCloudWiseSpend.status;
     let { monthlyCloudWiseOptions, monthlyCloudWiseData } = this.state;
     return monthlyCloudWiseSpendStatus === status.IN_PROGRESS ? (
-      <Box className="loader total-spend">
-        <i className="fa-solid fa-spinner fa-spin"></i> Loading...
-      </Box>
+      <Loader />
     ) : (
       <Line
         options={monthlyCloudWiseOptions}
@@ -446,7 +435,8 @@ class SpendAnalytics extends Component {
             <Box className="data-text">
               <span
                 style={{
-                  background: cloudwiseSpendColor[cloudSpend.cloud.toLowerCase()],
+                  background:
+                    cloudwiseSpendColor[cloudSpend.cloud.toLowerCase()],
                 }}
               ></span>
               <p>{cloudSpend.cloud?.toUpperCase()}</p>
@@ -475,7 +465,8 @@ class SpendAnalytics extends Component {
               width: `${
                 cloudSpend.percentage > 0 ? `${cloudSpend.percentage}` : "0"
               }%`,
-              backgroundColor: cloudwiseSpendColor[cloudSpend.cloud.toLowerCase()],
+              backgroundColor:
+                cloudwiseSpendColor[cloudSpend.cloud.toLowerCase()],
             }}
             key={v4()}
           ></span>
@@ -488,9 +479,7 @@ class SpendAnalytics extends Component {
   renderTotalCloudWiseSpendHtml = () => {
     let totalCloudWiseSpendStatus = this.props.totalCloudWiseSpend.status;
     return totalCloudWiseSpendStatus === status.IN_PROGRESS ? (
-      <Box className="loader total-spend">
-        <i className="fa-solid fa-spinner fa-spin"></i> Loading...
-      </Box>
+      <Loader />
     ) : (
       <>
         <Box className="avrage-shape">
@@ -561,9 +550,7 @@ class SpendAnalytics extends Component {
           </Box>
         </Box>
         {totalBudgetStatus === status.IN_PROGRESS ? (
-          <Box className="loading-text total-spend">
-            <i className="fa-solid fa-spinner fa-spin"></i> Loading...
-          </Box>
+          <Loader />
         ) : (
           <Box className="content">
             <Box className="gauge">
@@ -646,11 +633,7 @@ class SpendAnalytics extends Component {
     let monthlyStatisticsStatus = this.props.monthlyStatistics.status;
 
     if (monthlyStatisticsStatus === status.IN_PROGRESS) {
-      return (
-        <Box className="loading-text total-spend">
-          <i className="fa-solid fa-spinner fa-spin"></i> Loading...
-        </Box>
-      );
+      return <Loader />;
     } else {
       return (
         <>
