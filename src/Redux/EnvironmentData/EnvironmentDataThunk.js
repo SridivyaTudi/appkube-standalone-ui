@@ -7,7 +7,7 @@ export const getEnvironmentDataByLandingZone = createAsyncThunk(
   async (params) => {
     let url = config.GET_INFRA_TOPOLOGY_DATA.replace(
       "#landing-zone-id#",
-      params.landingZone
+      params.landingZoneId
     ).replace("#org-id#", params.orgID);
     try {
       const response = await postLoginService.get(url);

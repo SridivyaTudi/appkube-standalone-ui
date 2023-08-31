@@ -22,7 +22,7 @@ const config = {
   GET_ALL_ENVIRONMENT_SUMMARY: `/query/organization/#org-id#/environment/summary-list`,
   GET_ALL_ORG_WISE_DEPARTMENTS: `/organization/#org-id#`,
   GET_DEPARTMENT_WISE_DATA: `/department-wise-analytics/get-data`,
-  GET_INFRA_TOPOLOGY_DATA: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone/#landing-zone-id#`,
+  GET_INFRA_TOPOLOGY_DATA: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone-id/#landing-zone-id#`,
   DEPARTMENTS: `${baseURL}/department`,
   ADD_CLOUD_ENV: `/cloud-environments`,
   GET_SINGLE_ENVIRONMENT_COUNT_DATA: `${baseURL}/query/organization/#orgId#/cloud/#cloud#/landing-zone/#landingZone#/cloud-environments/count`,

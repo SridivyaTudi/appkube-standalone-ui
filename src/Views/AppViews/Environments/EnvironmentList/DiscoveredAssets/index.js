@@ -64,10 +64,10 @@ class DiscoveredAssets extends Component {
 
   componentDidMount = () => {
     const queryPrm = new URLSearchParams(document.location.search);
-    const landingZone = queryPrm.get("landingZone");
+    const landingZoneId = queryPrm.get("landingZoneId");
     this.props.getEnvironmentDataByLandingZone({
       orgID: orgId,
-      landingZone: landingZone,
+      landingZoneId: landingZoneId,
     });
     this.props.getInfraTopologyDbCategories();
   };
