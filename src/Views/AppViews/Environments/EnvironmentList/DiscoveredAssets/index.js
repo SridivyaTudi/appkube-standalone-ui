@@ -266,7 +266,7 @@ class DiscoveredAssets extends Component {
     data.productEnclaveList.map((vpc, index) => {
       tableBodyJSX.push(
         <TableRow key={v4()}>
-          <TableCell align="center">{vpc.id}</TableCell>
+          <TableCell align="center">{vpc.instanceId}</TableCell>
           <TableCell align="center">{vpc.threeTier.productCount}</TableCell>
           <TableCell align="center">{vpc.threeTier.webCount}</TableCell>
           <TableCell align="center">{vpc.threeTier.appCount}</TableCell>
