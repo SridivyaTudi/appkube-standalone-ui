@@ -972,29 +972,10 @@
   .environment-container {
     .services-panel-tabs {
       .tabs-head {
-        text-align: left;
         ul {
           li {
             padding-left: 10px;
             padding-right: 10px;
-          }
-        }
-        .tabs-menu {
-          
-          > div {
-            padding: 0;
-            font-size: 11px;
-            line-height: 28px;
-            padding-left: 15px;
-            padding-right: 25px;
-            color: #384cff;
-          }
-          > svg {
-            right: 2px !important;
-            color: #384cff;
-          }
-          > fieldset {
-            border-color: #384cff;
           }
         }
       }
@@ -1023,6 +1004,37 @@
                 margin-right: 20px;
               }
             }
+          }
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 992px) {
+  .environment-container {
+    .services-panel-tabs {
+      .tabs-head {
+        .tabs-break-width {
+          display: block;
+          text-align: left;
+          width: 100%;
+        }
+        .tabs-menu {
+          display: inline-flex;
+          > div {
+            padding: 0;
+            font-size: 11px;
+            line-height: 28px;
+            padding-left: 15px;
+            padding-right: 25px;
+            color: #384cff;
+          }
+          > svg {
+            right: 2px !important;
+            color: #384cff;
+          }
+          > fieldset {
+            border-color: #384cff;
           }
         }
       }

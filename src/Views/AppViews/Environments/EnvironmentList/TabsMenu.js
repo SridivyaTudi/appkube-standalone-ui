@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import { v4 } from "uuid";
-import { MenuItem } from "@mui/material";
-import { Select } from "@mui/material";
+import { List, ListItem, Select, MenuItem, Box } from "@mui/material";
 
 class TabsMenu extends Component {
   constructor(props) {
@@ -52,17 +49,19 @@ class TabsMenu extends Component {
       );
     } else {
       return (
-        <Select
-          labelId="tabs-menu-small-label"
-          id="tabs-menu-small"
-          className="tabs-menu"
-          value={this.props.activeTab}
-          onChange={(e) => this.props.setActiveTab(e.target.value)}
-        >
-          {this.props.tabs.map((item, index) => {
-            return <MenuItem value={index}>{item.name}</MenuItem>;
-          })}
-        </Select>
+        <Box className="tabs-break-width">
+          <Select
+            labelId="tabs-menu-small-label"
+            id="tabs-menu-small"
+            className="tabs-menu"
+            value={this.props.activeTab}
+            onChange={(e) => this.props.setActiveTab(e.target.value)}
+          >
+            {this.props.tabs.map((item, index) => {
+              return <MenuItem value={index}>{item.name}</MenuItem>;
+            })}
+          </Select>
+        </Box>
       );
     }
   }
