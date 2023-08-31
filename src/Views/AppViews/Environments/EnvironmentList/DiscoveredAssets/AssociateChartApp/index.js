@@ -14,11 +14,24 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { withRouter } from "Views/AppViews/Environments/NewAccountSetup/AccountPolicy/withRouter";
 import { ToastMessage } from "Toast/ToastMessage";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-
+import {
+  getCurrentOrgId,
+  getCurrentOrgName,
+  setCurrentOrgName,
+  getCurrentUser,
+} from "Utils";
 const inprogressStatus = status.IN_PROGRESS;
 const successStatus = status.SUCCESS;
 const failureStatus = status.FAILURE;
-
+const addServiceKeys = [
+  "tag",
+  "org",
+  "dep",
+  "product",
+  "type",
+  "module",
+  "service",
+];
 export class AssociateChartApp extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +42,7 @@ export class AssociateChartApp extends Component {
       clickBreadCrumbDetails: {},
       levelsData: [],
       resetBreadCrumb: "",
+      productType: "",
     };
   }
 
@@ -196,13 +210,70 @@ export class AssociateChartApp extends Component {
   // Add service API call
   onClickAddService = () => {
     const { instanceId } = this.getAssociateIdOrType();
+    const { productType: type } = this.state;
     const {
       activeLevels: {
-        selectedLevel_5: { id: serviceId },
+        selectedLevel_0,
+        selectedLevel_1,
+        selectedLevel_2,
+        selectedLevel_3,
+        selectedLevel_4,
+        selectedLevel_5: { id: serviceId, label: serviceName },
       },
     } = this.state;
-    this.props.addService(JSON.stringify({ instanceId, serviceId }));
+    let paramsObj = {};
+
+    paramsObj = {
+      instanceId,
+      serviceId,
+      tag: {
+        type,
+        org: {
+          id: getCurrentOrgId(),
+          name: getCurrentOrgName()
+            ? getCurrentOrgName()
+            : this.setCurrentorganizationName(),
+          dep: {
+            id: selectedLevel_0.id,
+            name: selectedLevel_0.label,
+            product: {
+              id: selectedLevel_1.id,
+              name: selectedLevel_1.label,
+              productEnv: {
+                id: selectedLevel_2.id,
+                name: selectedLevel_2.label,
+                type: {
+                  name:selectedLevel_3.label,
+                  module: {
+                    id: selectedLevel_4.id,
+                    name: selectedLevel_4.label,
+                    service: {
+                      id: serviceId,
+                      name: serviceName,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    };
+
+    this.props.addService(JSON.stringify(paramsObj));
   };
+
+  setCurrentorganizationName() {
+    let currentUser = getCurrentUser();
+    if (currentUser) {
+      try {
+        setCurrentOrgName(currentUser.info.user.organization.name);
+        return currentUser.info.user.organization.name;
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }
   render() {
     const {
       isSelectDepartmentOpen,
@@ -240,12 +311,13 @@ export class AssociateChartApp extends Component {
                 <Link
                   to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${localStorage.getItem(
                     "landingZone"
-                  )}&cloudName=${localStorage.getItem("cloudName")}&landingZoneId=${localStorage.getItem("landingZoneId")}`}
+                  )}&cloudName=${localStorage.getItem(
+                    "cloudName"
+                  )}&landingZoneId=${localStorage.getItem("landingZoneId")}`}
                   onClick={() => {
                     localStorage.removeItem("landingZone");
                     localStorage.removeItem("cloudName");
                     localStorage.removeItem("landingZoneId");
-
                   }}
                 >
                   {localStorage.getItem("cloudName")} &nbsp;(
@@ -255,8 +327,10 @@ export class AssociateChartApp extends Component {
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">{this.getAssociateIdOrType().elementType}:
-            {this.getAssociateIdOrType().instanceId}</li>
+              <li className="active">
+                {this.getAssociateIdOrType().elementType}:
+                {this.getAssociateIdOrType().instanceId}
+              </li>
             </ul>
           </Box>
         </Box>
@@ -328,11 +402,17 @@ export class AssociateChartApp extends Component {
             </Grid>
           </Grid>
           <BusinessAssociationMapping
-            setBreadCrumbs={(activeLevels, levelsData, serviceName) => {
+            setBreadCrumbs={(
+              activeLevels,
+              levelsData,
+              serviceName,
+              productType
+            ) => {
               this.setState({
                 activeLevels,
                 levelsData,
                 serviceName,
+                productType,
               });
             }}
             clickBreadCrumbDetails={clickBreadCrumbDetails}

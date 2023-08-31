@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Link, Navigate } from "react-router-dom";
 import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "Configs/AppConfig";
-import { setCurrentUser, setCurrentOrgId } from "Utils";
+import { setCurrentUser, setCurrentOrgId,setCurrentOrgName } from "Utils";
 import { login } from "Redux/Auth/AuthThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
@@ -44,9 +44,11 @@ class Signin extends Component {
       if (this.props.loggedInUser.status === status.SUCCESS) {
         if (this.props.loggedInUser.data.info) {
           setCurrentUser(this.props.loggedInUser.data);
+          console.log(this.props.loggedInUser.data.info.user.organization)
           setCurrentOrgId(
             this.props.loggedInUser.data.info.user.organization.cmdbOrgId
           );
+          setCurrentOrgName( this.props.loggedInUser.data.info.user.organization.name)
           this.setState({
             userLoggedIn: true,
           });

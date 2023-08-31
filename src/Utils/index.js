@@ -43,3 +43,11 @@ export const cloudwiseSpendColor = {
   azure: "#0089d6",
   gcp: "#da4f44",
 };
+
+export const setCurrentOrgName = (name) => {
+  return localStorage.setItem("currentOrgName", name);
+};
+
+export const getCurrentOrgName = () => {
+  return localStorage.getItem("currentOrgName");
+};

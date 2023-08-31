@@ -88,7 +88,7 @@ class BusinessAssociationMapping extends Component {
       this.props.departments.status === status.SUCCESS &&
       this.props.departments?.data?.length
     ) {
-      let { activeLevels, levelsData } = this.state;
+      let { activeLevels, levelsData, productType } = this.state;
       const initailDepartment = this.props.departments.data;
       this.setState({
         departments: initailDepartment,
@@ -97,7 +97,8 @@ class BusinessAssociationMapping extends Component {
       this.props.setBreadCrumbs(
         activeLevels,
         levelsData,
-        initailDepartment[0]?.name
+        initailDepartment[0]?.name,
+        productType
       );
     }
 
@@ -106,7 +107,7 @@ class BusinessAssociationMapping extends Component {
       this.props.products.status === status.SUCCESS &&
       this.props.products?.data
     ) {
-      let { levelsData, activeLevels, serviceName } = this.state;
+      let { levelsData, activeLevels, serviceName, productType } = this.state;
       let products = this.props.products?.data;
 
       levelsData.length = 1;
@@ -126,7 +127,7 @@ class BusinessAssociationMapping extends Component {
         );
       }
 
-      this.setStateOrProps(activeLevels, levelsData, serviceName);
+      this.setStateOrProps(activeLevels, levelsData, serviceName, productType);
     }
 
     if (
@@ -154,7 +155,7 @@ class BusinessAssociationMapping extends Component {
         );
       }
 
-      this.setStateOrProps(activeLevels, levelsData, serviceName);
+      this.setStateOrProps(activeLevels, levelsData, serviceName, productType);
     }
 
     if (
@@ -162,7 +163,7 @@ class BusinessAssociationMapping extends Component {
       this.props.modules.status === status.SUCCESS &&
       this.props.modules.data
     ) {
-      let { levelsData, activeLevels, serviceName } = this.state;
+      let { levelsData, activeLevels, serviceName, productType } = this.state;
 
       let modules = this.props.modules.data;
 
@@ -180,7 +181,7 @@ class BusinessAssociationMapping extends Component {
         });
       }
 
-      this.setStateOrProps(activeLevels, levelsData, serviceName);
+      this.setStateOrProps(activeLevels, levelsData, serviceName, productType);
     }
 
     if (
@@ -188,7 +189,7 @@ class BusinessAssociationMapping extends Component {
       this.props.moduleElements.status === status.SUCCESS &&
       this.props.moduleElements.data
     ) {
-      let { levelsData, activeLevels, serviceName } = this.state;
+      let { levelsData, activeLevels, serviceName, productType } = this.state;
       let moduleElements = this.props.moduleElements.data;
 
       levelsData.length = 5;
@@ -205,7 +206,7 @@ class BusinessAssociationMapping extends Component {
         });
       }
 
-      this.setStateOrProps(activeLevels, levelsData, serviceName);
+      this.setStateOrProps(activeLevels, levelsData, serviceName, productType);
     }
 
     if (
@@ -230,10 +231,10 @@ class BusinessAssociationMapping extends Component {
     }
 
     if (prevProps.resetBreadCrumbId !== this.props.resetBreadCrumbId) {
-      let { activeLevels, levelsData, serviceName } = this.state;
+      let { activeLevels, levelsData, serviceName, productType } = this.state;
       activeLevels = {};
       levelsData = [];
-      this.setStateOrProps(activeLevels, levelsData, serviceName);
+      this.setStateOrProps(activeLevels, levelsData, serviceName, productType);
     }
   }
 
@@ -309,7 +310,7 @@ class BusinessAssociationMapping extends Component {
                           levelsData[0]?.length ? "active" : ""
                         }`}
                         onClick={() => {
-                          this.onClickSynectiks();                        
+                          this.onClickSynectiks();
                         }}
                         id={`${
                           Object.keys(activeLevels).length === 0
@@ -548,7 +549,7 @@ class BusinessAssociationMapping extends Component {
 
     if (activeBAMLevel && activeBAMLevel?.id === productId) {
       productType = "";
-      this.props.setBreadCrumbs(activeLevels, levelsData, serviceName);
+      this.props.setBreadCrumbs(activeLevels, levelsData, serviceName,productType);
     } else {
       activeLevels["selectedLevel_1"] = {
         id: productId,
@@ -755,7 +756,13 @@ class BusinessAssociationMapping extends Component {
    *  @param {string} serviceName- service name of BAM
    */
   setStateOrProps(activeLevels, levelsData, serviceName, isMoveToLeftSide = 1) {
-    this.props.setBreadCrumbs(activeLevels, levelsData, serviceName);
+    let { productType } = this.state;
+    this.props.setBreadCrumbs(
+      activeLevels,
+      levelsData,
+      serviceName,
+      productType
+    );
     this.setState({ levelsData, activeLevels, serviceName }, () => {
       if (isMoveToLeftSide) {
         this.levelsMoveToLeftSide();
