@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { getCurrentOrgId } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import { v4 } from "uuid";
+import Loader from "Components/Loader";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -84,12 +85,13 @@ class CostAnalysis extends Component {
         },
       ],
     };
-    data && data.map((item, index) => {
-      if (index !== data.length - 1) {
-        doughData.datasets[0].data.push(item.total);
-        doughData.datasets[0].backgroundColor.push(colorPallate[index]);
-      }
-    });
+    data &&
+      data.map((item, index) => {
+        if (index !== data.length - 1) {
+          doughData.datasets[0].data.push(item.total);
+          doughData.datasets[0].backgroundColor.push(colorPallate[index]);
+        }
+      });
     return doughData;
   };
 
@@ -98,26 +100,27 @@ class CostAnalysis extends Component {
    */
   renderBarsData = (data) => {
     const JSX = [];
-    data && data.map((item, index) => {
-      if (index !== data.length - 1) {
-        JSX.push(
-          <ListItem key={v4()}>
-            <p>{item.name}</p>
-            <Box className="d-block right-contant">
-              <label>${item.total?.toLocaleString()}</label>
-              <span>
-                <span
-                  style={{
-                    width: `${item.percentage}%`,
-                    background: `${colorPallate[index]}`,
-                  }}
-                ></span>
-              </span>
-            </Box>
-          </ListItem>
-        );
-      }
-    });
+    data &&
+      data.map((item, index) => {
+        if (index !== data.length - 1) {
+          JSX.push(
+            <ListItem key={v4()}>
+              <p>{item.name}</p>
+              <Box className="d-block right-contant">
+                <label>${item.total?.toLocaleString()}</label>
+                <span>
+                  <span
+                    style={{
+                      width: `${item.percentage}%`,
+                      background: `${colorPallate[index]}`,
+                    }}
+                  ></span>
+                </span>
+              </Box>
+            </ListItem>
+          );
+        }
+      });
     return JSX;
   };
 
@@ -137,15 +140,14 @@ class CostAnalysis extends Component {
                   <Box id="chart" className="collapse-expand">
                     {this.props.productWiseCost.status ===
                     status.IN_PROGRESS ? (
-                      <Box className="spend-loading">
-                        <i className="fa-solid fa-spinner fa-spin" /> Loading...
-                      </Box>
+                      <Loader className="spend-loading" />
                     ) : (
                       <>
                         <Box className="heading">
                           <h3>Product Wise Cost</h3>
                           <Box className="product-cost">
-                            {productWiseCostData && productWiseCostData.length ? (
+                            {productWiseCostData &&
+                            productWiseCostData.length ? (
                               <>
                                 <label>
                                   $
@@ -165,7 +167,8 @@ class CostAnalysis extends Component {
                             className="d-flex chart"
                             style={{ width: "60%" }}
                           >
-                            {productWiseCostData && productWiseCostData.length ? (
+                            {productWiseCostData &&
+                            productWiseCostData.length ? (
                               <Doughnut
                                 data={this.manipulateDoughData(
                                   productWiseCostData
@@ -189,15 +192,14 @@ class CostAnalysis extends Component {
                   <Box id="chart" className="collapse-expand">
                     {this.props.productionVsOther.status ===
                     status.IN_PROGRESS ? (
-                      <Box className="spend-loading">
-                        <i className="fa-solid fa-spinner fa-spin" /> Loading...
-                      </Box>
+                      <Loader className="spend-loading" />
                     ) : (
                       <>
                         <Box className="heading">
                           <h3>Production Vs Others</h3>
                           <Box className="product-cost">
-                            {productionVsOthersData && productionVsOthersData.length ? (
+                            {productionVsOthersData &&
+                            productionVsOthersData.length ? (
                               <label>
                                 $
                                 {productionVsOthersData[
@@ -235,9 +237,7 @@ class CostAnalysis extends Component {
                   <Box id="chart" className="collapse-expand">
                     {this.props.serviceTypeWiseCost.status ===
                     status.IN_PROGRESS ? (
-                      <Box className="spend-loading">
-                        <i className="fa-solid fa-spinner fa-spin" /> Loading...
-                      </Box>
+                      <Loader className="spend-loading" />
                     ) : (
                       <>
                         <Box className="heading">

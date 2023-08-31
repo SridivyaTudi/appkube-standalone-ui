@@ -10,6 +10,7 @@ import {
 } from "Redux/Environments/EnvironmentsThunk";
 import status from "Redux/Constants/CommonDS";
 import LoadingButton from "@mui/lab/LoadingButton";
+import Loader from "Components/Loader";
 
 const deploymentImgs = {
   DEV: "department",
@@ -274,9 +275,7 @@ class FilterPopup extends Component {
           <h4 className="text-left m-b-1 m-t-0 ">Select Department</h4>
           {this.props.organizationWiseDepartments.status ===
           status.IN_PROGRESS ? (
-            <Box className="filter-pop-loading">
-              <i className="fa-solid fa-spinner fa-spin" /> Loading...
-            </Box>
+            <Loader className="filter-pop-loading" />
           ) : (
             <>
               <Box sx={{ width: "100%" }} className="p-b-10">

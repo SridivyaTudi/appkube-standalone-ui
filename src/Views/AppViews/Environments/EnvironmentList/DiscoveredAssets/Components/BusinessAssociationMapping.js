@@ -17,6 +17,7 @@ import Box from "@mui/material/Box";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import Loader from "Components/Loader";
 
 const orgId = getCurrentOrgId();
 
@@ -804,9 +805,7 @@ class BusinessAssociationMapping extends Component {
   // Render Loder
   renderLoder(widthClass) {
     return (
-      <Box className={`d-flex align-items-center ${widthClass} loading`}>
-        <i className="fa-solid fa-spinner fa-spin" /> Loading...
-      </Box>
+      <Loader className={`d-flex align-items-center ${widthClass} loading`} />
     );
   }
 

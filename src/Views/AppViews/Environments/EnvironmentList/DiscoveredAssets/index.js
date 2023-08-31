@@ -33,6 +33,7 @@ import {
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { getCurrentOrgId } from "Utils";
 import LambdaTable from "./LambdaTable";
+import Loader from "Components/Loader";
 
 const orgId = getCurrentOrgId();
 
@@ -458,9 +459,7 @@ class DiscoveredAssets extends Component {
         <Box className="discovered-assets-body">
           {envDataByLandingZone.status === status.IN_PROGRESS ||
           departments.status === status.IN_PROGRESS ? (
-            <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20">
-              <i className="fa-solid fa-spinner fa-spin" /> Loading...
-            </Box>
+            <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
           ) : (
             <Box sx={{ width: "100%" }}>
               <Grid
@@ -577,10 +576,7 @@ class DiscoveredAssets extends Component {
                       <>
                         {this.props.infraTopologyCloudElementList.status ===
                         status.IN_PROGRESS ? (
-                          <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20">
-                            <i className="fa-solid fa-spinner fa-spin" />
-                            Loading...
-                          </Box>
+                          <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
                         ) : (
                           this.renderCloudManagedDetails()
                         )}
@@ -601,19 +597,14 @@ class DiscoveredAssets extends Component {
               status.IN_PROGRESS ||
             this.props.infraTopologyCloudElementList.status ===
               status.IN_PROGRESS ? (
-              <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20">
-                <i className="fa-solid fa-spinner fa-spin" /> Loading...
-              </Box>
+              <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
             ) : (
               <LambdaTable tableData={this.state.lambdaTableData} />
             )}
           </>
         ) : this.props.infraTopologyCloudElementList.status ===
           status.IN_PROGRESS ? (
-          <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20">
-            <i className="fa-solid fa-spinner fa-spin" />
-            Loading...
-          </Box>
+          <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
         ) : (
           <AssociateApp data={selectedCategoryCloudElementsData} />
         )}

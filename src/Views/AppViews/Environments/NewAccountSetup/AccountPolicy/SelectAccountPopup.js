@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import { getOrgWiseDepartments } from "Redux/Environments/EnvironmentsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
+import Loader from "Components/Loader";
 
 class SelectAccountPopup extends Component {
   constructor(props) {
@@ -96,9 +97,7 @@ class SelectAccountPopup extends Component {
           <h4 className="text-left m-b-1">Select OU</h4>
           {this.props?.organizationWiseDepartments?.status ===
           status.IN_PROGRESS ? (
-            <Box className="text-center align-self-center p-t-20 p-b-20">
-              <i className="fa-solid fa-spinner fa-spin" /> Loading...
-            </Box>
+            <Loader className="text-center align-self-center p-t-20 p-b-20" />
           ) : (
             <Box sx={{ width: "100%" }}>
               <Grid

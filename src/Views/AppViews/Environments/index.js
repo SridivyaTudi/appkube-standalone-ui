@@ -34,6 +34,7 @@ import { ToastMessage } from "Toast/ToastMessage";
 import { LOGOS } from "CommonData";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import Loader from "Components/Loader";
 
 class Environments extends Component {
   constructor(props) {
@@ -101,11 +102,7 @@ class Environments extends Component {
 
   renderEnvironmentCountData = () => {
     if (this.props.environmentCountData.status === status.IN_PROGRESS) {
-      return (
-        <Box className="environment-loader w-100">
-          <i className="fa-solid fa-spinner fa-spin" /> Loading...
-        </Box>
-      );
+      return <Loader className={"environment-loader w-100"} />;
     } else if (this.props.environmentCountData.status === status.SUCCESS) {
       const { environmentCountData } = this.state;
       let retData = [];
@@ -207,9 +204,11 @@ class Environments extends Component {
   renderEnvironmentTable() {
     if (this.props.envSummary.status === status.IN_PROGRESS) {
       return (
-        <Box className="new-environment-loader text-center align-self-center p-t-20 p-b-20">
-          <i className="fa-solid fa-spinner fa-spin" /> Loading...
-        </Box>
+        <Loader
+          className={
+            "new-environment-loader text-center align-self-center p-t-20 p-b-20"
+          }
+        />
       );
     } else if (this.props.envSummary.status === status.SUCCESS) {
       const HtmlTooltip = styled(({ className, ...props }) => (
