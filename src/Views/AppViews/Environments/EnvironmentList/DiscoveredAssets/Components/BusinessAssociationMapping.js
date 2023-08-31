@@ -75,6 +75,7 @@ class BusinessAssociationMapping extends Component {
       serviceName: "",
       positionX: "",
       positionY: "",
+      lastPositionX: "",
       lastLevelsWidth: 0,
     };
   }
@@ -244,7 +245,7 @@ class BusinessAssociationMapping extends Component {
    * Render the main body including all levels data.
    */
   renderBody = () => {
-    let { activeLevels, departments, levelsData } = this.state;
+    let { activeLevels, departments, levelsData, positionX } = this.state;
 
     let departmentLength =
       departments?.length && departments[0].departments?.length;
@@ -550,7 +551,12 @@ class BusinessAssociationMapping extends Component {
 
     if (activeBAMLevel && activeBAMLevel?.id === productId) {
       productType = "";
-      this.props.setBreadCrumbs(activeLevels, levelsData, serviceName,productType);
+      this.props.setBreadCrumbs(
+        activeLevels,
+        levelsData,
+        serviceName,
+        productType
+      );
     } else {
       activeLevels["selectedLevel_1"] = {
         id: productId,
@@ -790,15 +796,32 @@ class BusinessAssociationMapping extends Component {
 
   // Move levels left side
   levelsMoveToLeftSide() {
-    let { positionX, positionY, lastLevelsWidth } = this.state;
+    let {
+      positionX,
+      positionY,
+      lastLevelsWidth,
+      lastPositionX,
+      positionXDifferce,
+    } = this.state;
 
     let chartWidth = chartContainer[0].offsetWidth;
     let levelsWidth = transformContainer[0].offsetWidth;
+    console.log(chartWidth, levelsWidth, positionX);
+    if (chartWidth < levelsWidth) {
+      //  || positionX !== lastPositionX - 20
+      positionX = positionX - 230 * transformScale;
+      let tempPositionXDiff = positionX - lastPositionX - 230 * transformScale;
 
-    if (chartWidth < levelsWidth && transformScale === 1) {
-      if (levelsWidth > lastLevelsWidth) {
-        handleSetTransform(positionX - 230, positionY, transformScale);
-        this.setState({ lastLevelsWidth: levelsWidth });
+      if (
+        levelsWidth > lastLevelsWidth ||
+        tempPositionXDiff !== positionXDifferce
+      ) {
+        handleSetTransform(positionX, positionY, transformScale);
+        this.setState({
+          lastLevelsWidth: levelsWidth,
+          lastPositionX: positionX,
+          positionXDifferce: tempPositionXDiff,
+        });
       }
     }
   }
