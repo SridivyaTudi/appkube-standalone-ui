@@ -70,8 +70,11 @@ export class AssociateApp extends Component {
               className="primary-text-btn min-width"
               component={Link}
               variant="contained"
-              onClick={this.setTypeOrIdOnLocalStorage}
-              to={`${APP_PREFIX_PATH}/environments/associatechartapp?elementType=${data.elementType}&instanceId=${data.instanceId}`}
+              to={`${APP_PREFIX_PATH}/environments/associatechartapp?landingZone=${
+                this.getUrlDetails().landingZone
+              }&cloudName=${this.getUrlDetails().cloudName}&landingZoneId=${
+                this.getUrlDetails().landingZoneId
+              }&elementType=${data.elementType}&instanceId=${data.instanceId}`}
             >
               Associate App
             </Button>
@@ -134,8 +137,11 @@ export class AssociateApp extends Component {
               className="primary-outline-btn min-width"
               component={Link}
               variant="contained"
-              to={`${APP_PREFIX_PATH}/environments/ecscluster`}
-              onClick={this.setTypeOrIdOnLocalStorage}
+              to={`${APP_PREFIX_PATH}/environments/ecscluster?landingZone=${
+                this.getUrlDetails().landingZone
+              }&cloudName=${this.getUrlDetails().cloudName}&landingZoneId=${
+                this.getUrlDetails().landingZoneId
+              }`}
             >
               View Services
             </Button>
@@ -149,11 +155,13 @@ export class AssociateApp extends Component {
     return JSX;
   }
 
-  setTypeOrIdOnLocalStorage() {
+  getUrlDetails() {
     const queryPrm = new URLSearchParams(document.location.search);
-    localStorage.setItem("landingZone", queryPrm.get("landingZone"));
-    localStorage.setItem("cloudName", queryPrm.get("cloudName"));
-    localStorage.setItem("landingZoneId", queryPrm.get("landingZoneId"));
+    const landingZone = queryPrm.get("landingZone");
+    const cloudName = queryPrm.get("cloudName");
+    const landingZoneId = queryPrm.get("landingZoneId");
+
+    return { landingZone, landingZoneId, cloudName };
   }
   render() {
     return (
