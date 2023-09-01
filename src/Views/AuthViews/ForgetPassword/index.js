@@ -115,17 +115,6 @@ class ForgetPassword extends Component {
                         ) : (
                           <></>
                         )}
-                        <i
-                          className={`fa-sharp fa-regular fa-eye${
-                            showPassword ? "" : "-slash"
-                          }`}
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            this.setState({
-                              showPassword: !this.state.showPassword,
-                            });
-                          }}
-                        ></i>
                       </Box>
                     </Grid>
                   </Grid>
