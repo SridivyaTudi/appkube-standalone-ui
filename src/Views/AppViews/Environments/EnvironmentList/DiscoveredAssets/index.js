@@ -226,7 +226,7 @@ class DiscoveredAssets extends Component {
             className={`${index === breadcrumbs.length - 1 ? "active" : ""}`}
             key={v4()}
           >
-            <a>{item.name.toUpperCase()}</a>
+            <a>{item?.name?.toUpperCase()}</a>
           </li>
           {index !== breadcrumbs.length - 1 ? (
             <li key={v4()}>
@@ -626,8 +626,10 @@ class DiscoveredAssets extends Component {
         ) : this.props.infraTopologyCloudElementList.status ===
           status.IN_PROGRESS ? (
           <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
-        ) : (
+        ) : currentActiveNode ? (
           <AssociateApp data={selectedCategoryCloudElementsData} />
+        ) : (
+          <></>
         )}
       </Box>
     );
