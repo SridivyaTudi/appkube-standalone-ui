@@ -54,10 +54,12 @@ export class AssociateChartApp extends Component {
         this.props.serviceCreation.status === successStatus &&
         this.props.serviceCreation?.data?.id
       ) {
-        const landingZone = localStorage.getItem("landingZone");
-        const cloudName = localStorage.getItem("cloudName");
         this.props.navigate(
-          `${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}`
+          `${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${
+            this.getUrlDetails().landingZone
+          }&cloudName=${this.getUrlDetails().cloudName}&landingZoneId=${
+            this.getUrlDetails().landingZoneId
+          }`
         );
         ToastMessage.success("Service tagged successfully.");
         localStorage.removeItem("landingZone");
@@ -221,12 +223,37 @@ export class AssociateChartApp extends Component {
         selectedLevel_2,
         selectedLevel_3,
         selectedLevel_4,
-        selectedLevel_5: { id: serviceId, label: serviceName },
+        selectedLevel_5,
       },
     } = this.state;
-    let paramsObj = {};
+    let serviceId;
 
-    paramsObj = {
+    let typeJson = {
+      name: selectedLevel_3.label,
+    };
+
+    if (type === "SOA") {
+      typeJson = {
+        ...typeJson,
+        module: {
+          id: selectedLevel_4?.id,
+          name: selectedLevel_4?.label,
+          service: {
+            id: selectedLevel_5?.id,
+            name: selectedLevel_5?.label,
+          },
+        },
+      };
+      serviceId = selectedLevel_5?.id;
+    } else if (type === "3 Tier") {
+      typeJson = {
+        ...typeJson,
+        service: { id: selectedLevel_4?.id, name: selectedLevel_4?.label },
+      };
+      serviceId = selectedLevel_4?.id;
+    }
+
+    let paramsObj = {
       instanceId,
       serviceId,
       tag: {
@@ -245,17 +272,7 @@ export class AssociateChartApp extends Component {
               productEnv: {
                 id: selectedLevel_2.id,
                 name: selectedLevel_2.label,
-                type: {
-                  name: selectedLevel_3.label,
-                  module: {
-                    id: selectedLevel_4.id,
-                    name: selectedLevel_4.label,
-                    service: {
-                      id: serviceId,
-                      name: serviceName,
-                    },
-                  },
-                },
+                type: typeJson,
               },
             },
           },
@@ -284,16 +301,21 @@ export class AssociateChartApp extends Component {
       clickBreadCrumbDetails,
       activeLevels,
       resetBreadCrumb,
+      productType,
     } = this.state;
 
     const { selectedLevel_0, selectedLevel_1 } = activeLevels;
 
     const departmentName = selectedLevel_0?.label || "";
     const productName = selectedLevel_1?.label || "";
-
+    const activeLevelLength = Object.keys(activeLevels).length;
+    const showBtn =
+      (activeLevelLength === 6 && productType === "SOA") ||
+      (activeLevelLength === 5 && productType === "3 Tier");
     const {
       serviceCreation: { status: serviceCreationStatus },
     } = this.props;
+
     return (
       <Box className="environment-container associate-container">
         <Box className="list-heading">
@@ -436,7 +458,7 @@ export class AssociateChartApp extends Component {
           </Box>
         </Box>
         <Box className="d-block width-100 text-center m-t-4">
-          {Object.keys(activeLevels).length === 6 ? (
+          {showBtn ? (
             <LoadingButton
               className="primary-btn min-width"
               onClick={this.onClickAddService}

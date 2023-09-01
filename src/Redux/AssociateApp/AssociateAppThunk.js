@@ -102,9 +102,28 @@ export const addService = createAsyncThunk(
   async (params) => {
     try {
       let url = config.CREATE_ASSOCIATE;
-      const response = await postLoginService.post(url,params, {
+      const response = await postLoginService.post(url, params, {
         headers: { "Content-Type": "application/json" },
       });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+export const getModulesOf3Tier = createAsyncThunk(
+  "associateApp/getModulesOf3Tier",
+  async ({ departmentId, productId, productEnvId, serviceType }) => {
+    try {
+      let url = config.GET_ASSOCIATE_MODULES_3_TIER.replace(
+        "#department-id#",
+        departmentId
+      )
+        .replace("#product-id#", productId)
+        .replace("#product-env-id#", productEnvId)
+        .replace("#service-type#", serviceType);
+      const response = await postLoginService.get(url);
       return response;
     } catch (error) {
       console.error(error);

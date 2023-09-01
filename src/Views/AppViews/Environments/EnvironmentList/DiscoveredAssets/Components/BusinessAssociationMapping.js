@@ -7,6 +7,7 @@ import {
   getProductEnv,
   getModules,
   getModuleElements,
+  getModulesOf3Tier,
 } from "Redux/AssociateApp/AssociateAppThunk";
 import { getCurrentOrgId } from "Utils";
 import status from "Redux/Constants/CommonDS";
@@ -179,6 +180,33 @@ class BusinessAssociationMapping extends Component {
             id,
             image: calendarMouseIcon,
             type: "Module",
+          };
+        });
+      }
+
+      this.setStateOrProps(activeLevels, levelsData, serviceName, productType);
+    }
+
+    if (
+      prevProps.threeTierModules.status !==
+        this.props.threeTierModules.status &&
+      this.props.threeTierModules.status === status.SUCCESS &&
+      this.props.threeTierModules.data
+    ) {
+      let { levelsData, activeLevels, serviceName, productType } = this.state;
+
+      let threeTierModules = this.props.threeTierModules.data;
+
+      levelsData.length = 4;
+
+      if (threeTierModules?.length) {
+        levelsData[4] = threeTierModules.map((module) => {
+          let { serviceName: label, id } = module;
+          return {
+            label,
+            id,
+            image: calendarMouseIcon,
+            type: "ThreeTierModule",
           };
         });
       }
@@ -646,6 +674,13 @@ class BusinessAssociationMapping extends Component {
           productEnvId: selectedLevel_2.id,
           serviceNature: label?.toLowerCase(),
         });
+      } else if (selectedType === "3 Tier") {
+        this.props.getModulesOf3Tier({
+          departmentId: selectedLevel_0.id,
+          productId: selectedLevel_1.id,
+          productEnvId: selectedLevel_2.id,
+          serviceType: label.replace(" Layer", "")?.toLowerCase(),
+        });
       }
       activeLevels["selectedLevel_3"] = {
         id: categoryId,
@@ -696,6 +731,30 @@ class BusinessAssociationMapping extends Component {
     this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
   }
 
+  /**
+   * Fired event on click category, then get three-tier modules
+   *  @param {Object} data - get moduleId, selectedLevel and label
+   *  @param {Boolean} isClickBreadCrumb - 1 if it is click on breadcrumb else 0
+   */
+  onClickThreeTierModule(data, isClickBreadCrumb = 0) {
+    let { currentLevelIndex: moduleId, label, type } = data;
+    let { levelsData, activeLevels, serviceName } = this.state;
+
+    let activeBAMLevel = activeLevels[`selectedLevel_4`];
+    activeLevels = this.getPreviousSelectedLevels(isClickBreadCrumb ? 4 : 3);
+    levelsData.length = isClickBreadCrumb ? 6 : 5;
+
+    if (activeBAMLevel && activeBAMLevel?.id === moduleId) {
+    } else {
+      activeLevels["selectedLevel_4"] = {
+        id: moduleId,
+        label,
+        type,
+      };
+    }
+
+    this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
+  }
   /**
    * Fired event on click ModuleElement
    *  @param {Object} data - get moduleId, selectedLevel and label
@@ -806,9 +865,8 @@ class BusinessAssociationMapping extends Component {
 
     let chartWidth = chartContainer[0].offsetWidth;
     let levelsWidth = transformContainer[0].offsetWidth;
-    console.log(chartWidth, levelsWidth, positionX);
+
     if (chartWidth < levelsWidth) {
-      //  || positionX !== lastPositionX - 20
       positionX = positionX - 230 * transformScale;
       let tempPositionXDiff = positionX - lastPositionX - 230 * transformScale;
 
@@ -838,14 +896,21 @@ class BusinessAssociationMapping extends Component {
 }
 
 function mapStateToProps(state) {
-  const { departments, products, productEnv, modules, moduleElements } =
-    state.associateApp;
+  const {
+    departments,
+    products,
+    productEnv,
+    modules,
+    moduleElements,
+    threeTierModules,
+  } = state.associateApp;
   return {
     departments,
     products,
     productEnv,
     modules,
     moduleElements,
+    threeTierModules,
   };
 }
 
@@ -855,6 +920,7 @@ const mapDispatchToProps = {
   getProductEnv,
   getModules,
   getModuleElements,
+  getModulesOf3Tier,
 };
 
 export default connect(

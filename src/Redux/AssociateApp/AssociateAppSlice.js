@@ -6,6 +6,7 @@ import {
   getModules,
   getModuleElements,
   addService,
+  getModulesOf3Tier,
 } from "Redux/AssociateApp/AssociateAppThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -33,6 +34,10 @@ export const AssociateAppSlice = createSlice({
       data: [],
     },
     serviceCreation: {
+      status: null,
+      data: [],
+    },
+    threeTierModules: {
       status: null,
       data: [],
     },
@@ -201,6 +206,34 @@ export const AssociateAppSlice = createSlice({
       return {
         ...state,
         serviceCreation: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [getModulesOf3Tier.pending]: (state, action) => {
+      return {
+        ...state,
+        threeTierModules: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getModulesOf3Tier.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        threeTierModules: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getModulesOf3Tier.rejected]: (state, action) => {
+      return {
+        ...state,
+        threeTierModules: {
           status: status.FAILURE,
           data: [],
         },
