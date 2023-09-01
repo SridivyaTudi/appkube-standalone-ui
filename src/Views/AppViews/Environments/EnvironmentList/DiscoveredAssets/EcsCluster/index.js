@@ -251,6 +251,15 @@ class EcsCluster extends React.Component {
     this.setState({ activeTierTab: type });
   };
 
+  getUrlDetails() {
+    const queryPrm = new URLSearchParams(document.location.search);
+
+    const cloudName = queryPrm.get("cloudName");
+    const landingZoneId = queryPrm.get("landingZoneId");
+    const landingZone = queryPrm.get("landingZone");
+
+    return { landingZone, landingZoneId, cloudName };
+  }
   render() {
     const { tierRows, soaRows, pg, rpg, actionButton, activeTierTab } =
       this.state;
@@ -282,17 +291,14 @@ class EcsCluster extends React.Component {
               </li>
               <li>
                 <Link
-                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${localStorage.getItem(
-                    "landingZone"
-                  )}&cloudName=${localStorage.getItem("cloudName")}&landingZoneId=${localStorage.getItem("landingZoneId")}`}
-                  onClick={() => {
-                    localStorage.removeItem("landingZone");
-                    localStorage.removeItem("cloudName");
-                    localStorage.removeItem("landingZoneId");
-                  }}
+                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${
+                    this.getUrlDetails().landingZone
+                  }&cloudName=${this.getUrlDetails().cloudName}&landingZoneId=${
+                    this.getUrlDetails().landingZoneId
+                  }`}
                 >
-                  {localStorage.getItem("cloudName")} &nbsp;(
-                  {localStorage.getItem("landingZone")})
+                  {this.getUrlDetails().cloudName} &nbsp;(
+                  {this.getUrlDetails().landingZone})
                 </Link>
               </li>
               <li>

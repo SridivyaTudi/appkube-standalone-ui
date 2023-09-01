@@ -164,12 +164,15 @@ export class AssociateChartApp extends Component {
   }
 
   /** Get associateId Or Type. */
-  getAssociateIdOrType() {
+  getUrlDetails() {
     const queryPrm = new URLSearchParams(document.location.search);
     const elementType = queryPrm.get("elementType");
     const instanceId = queryPrm.get("instanceId");
+    const cloudName = queryPrm.get("cloudName");
+    const landingZoneId = queryPrm.get("landingZoneId");
+    const landingZone = queryPrm.get("landingZone");
 
-    return { instanceId, elementType };
+    return { instanceId, elementType, landingZone, landingZoneId, cloudName };
   }
   /**
    * Render Department or Product list
@@ -209,7 +212,7 @@ export class AssociateChartApp extends Component {
 
   // Add service API call
   onClickAddService = () => {
-    const { instanceId } = this.getAssociateIdOrType();
+    const { instanceId } = this.getUrlDetails();
     const { productType: type } = this.state;
     const {
       activeLevels: {
@@ -243,7 +246,7 @@ export class AssociateChartApp extends Component {
                 id: selectedLevel_2.id,
                 name: selectedLevel_2.label,
                 type: {
-                  name:selectedLevel_3.label,
+                  name: selectedLevel_3.label,
                   module: {
                     id: selectedLevel_4.id,
                     name: selectedLevel_4.label,
@@ -295,9 +298,8 @@ export class AssociateChartApp extends Component {
       <Box className="environment-container associate-container">
         <Box className="list-heading">
           <h3>
-            Business Association Mapping (
-            {this.getAssociateIdOrType().elementType}:
-            {this.getAssociateIdOrType().instanceId})
+            Business Association Mapping ({this.getUrlDetails().elementType}:
+            {this.getUrlDetails().instanceId})
           </h3>
           <Box className="breadcrumbs">
             <ul>
@@ -309,27 +311,22 @@ export class AssociateChartApp extends Component {
               </li>
               <li>
                 <Link
-                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${localStorage.getItem(
-                    "landingZone"
-                  )}&cloudName=${localStorage.getItem(
-                    "cloudName"
-                  )}&landingZoneId=${localStorage.getItem("landingZoneId")}`}
-                  onClick={() => {
-                    localStorage.removeItem("landingZone");
-                    localStorage.removeItem("cloudName");
-                    localStorage.removeItem("landingZoneId");
-                  }}
+                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${
+                    this.getUrlDetails().landingZone
+                  }&cloudName=${this.getUrlDetails().cloudName}&landingZoneId=${
+                    this.getUrlDetails().landingZoneId
+                  }`}
                 >
-                  {localStorage.getItem("cloudName")} &nbsp;(
-                  {localStorage.getItem("landingZone")})
+                  {this.getUrlDetails().cloudName} &nbsp;(
+                  {this.getUrlDetails().landingZone})
                 </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li className="active">
-                {this.getAssociateIdOrType().elementType}:
-                {this.getAssociateIdOrType().instanceId}
+                {this.getUrlDetails().elementType}:
+                {this.getUrlDetails().instanceId}
               </li>
             </ul>
           </Box>
