@@ -108,9 +108,11 @@ class DiscoveredAssets extends Component {
           cloudElementsData: this.props.infraTopologyCloudElementList.data,
         },
         () => {
-          this.setCurrentTopologyCategory(
-            this.props.infraTopologyCloudElementList.data[0].elementType
-          );
+          if (this.props.infraTopologyCloudElementList.data.length) {
+            this.setCurrentTopologyCategory(
+              this.props.infraTopologyCloudElementList.data[0].elementType
+            );
+          }
         }
       );
     }
@@ -136,10 +138,14 @@ class DiscoveredAssets extends Component {
           eksData = newObject;
         }
       });
+      if (this.props.infraTopologyCategoryWiseData.data.length) {
+        this.setState({
+          currentActiveTopologyCategory:
+            this.props.infraTopologyCategoryWiseData.data[0].elementType,
+        });
+      }
       this.setState({
         topologyCategoryWiseData: this.props.infraTopologyCategoryWiseData.data,
-        currentActiveTopologyCategory:
-          this.props.infraTopologyCategoryWiseData.data[0].elementType,
         ecsMetaData: ecsData,
         eksMetaData: eksData,
       });
@@ -428,6 +434,21 @@ class DiscoveredAssets extends Component {
   }
 
   renderCloudManagedDetails = () => {
+    if (!this.props.infraTopologyCategoryWiseData.data?.length) {
+      return (
+        <div
+          style={{
+            height: "400px",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <h4>No Data Found!</h4>
+        </div>
+      );
+    }
     return (
       <CloudManagedDetails
         setCurrentTopologyCategory={this.setCurrentTopologyCategory}
