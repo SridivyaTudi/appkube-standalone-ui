@@ -406,7 +406,7 @@ class BusinessAssociationMapping extends Component {
                   : ""
               }`}
             >
-              <HtmlTooltip title={level.label}>
+              <HtmlTooltip className="table-tooltip" title={level.label}>
                 <Box className="tooltip-content">
                   <span>
                     <img src={level.image} alt={level.label} />
