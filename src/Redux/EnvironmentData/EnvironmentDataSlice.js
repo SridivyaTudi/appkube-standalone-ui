@@ -7,6 +7,7 @@ import {
   getInfraTopologyCategoryWiseViewData,
   getInfraTopologyDbCategories,
   getInfraTopologyLambdaTableData,
+  getGlobalServiceCategoryWiseSummary,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -40,6 +41,10 @@ export const environmentDataSlice = createSlice({
     infraTopologyLambdaTable: {
       status: null,
       data: {},
+    },
+    globalServiceData: {
+      status: null,
+      data: [],
     },
   },
 
@@ -225,6 +230,32 @@ export const environmentDataSlice = createSlice({
       return {
         ...state,
         infraTopologyLambdaTable: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getGlobalServiceCategoryWiseSummary.pending]: (state) => {
+      return {
+        ...state,
+        globalServiceData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getGlobalServiceCategoryWiseSummary.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        globalServiceData: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getGlobalServiceCategoryWiseSummary.rejected]: (state) => {
+      return {
+        ...state,
+        globalServiceData: {
           status: status.FAILURE,
         },
       };

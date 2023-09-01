@@ -21,7 +21,8 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     border: "1px solid #dadde9",
   },
 }));
-export class AssociateApp extends Component {
+
+class AssociateApp extends Component {
   constructor(props) {
     super(props);
     this.state = {

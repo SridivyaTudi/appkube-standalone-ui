@@ -30,10 +30,12 @@ import {
   getInfraTopologyCategoryWiseViewData,
   getInfraTopologyDbCategories,
   getInfraTopologyLambdaTableData,
+  getGlobalServiceCategoryWiseSummary,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { getCurrentOrgId } from "Utils";
 import LambdaTable from "./LambdaTable";
 import Loader from "Components/Loader";
+import GlobalServicesSummaryTable from "./GlobalServicesSummaryTable";
 
 const orgId = getCurrentOrgId();
 
@@ -60,6 +62,7 @@ class DiscoveredAssets extends Component {
       ecsMetaData: {},
       eksMetaData: {},
       lambdaTableData: [],
+      globalServicesSummaryData: [],
     };
   }
 
@@ -76,6 +79,7 @@ class DiscoveredAssets extends Component {
   componentDidUpdate = async (prevProps, prevState) => {
     const queryPrm = new URLSearchParams(document.location.search);
     const landingZone = queryPrm.get("landingZone");
+    const landingZoneId = queryPrm.get("landingZoneId");
 
     if (
       prevProps.envDataByLandingZone.status !==
@@ -86,16 +90,23 @@ class DiscoveredAssets extends Component {
     }
 
     if (prevState.currentActiveNode !== this.state.currentActiveNode) {
-      this.props.GetInfraTopologyCloudElementList({
-        orgID: orgId,
-        landingZone: landingZone,
-        productEnclave: this.state.currentActiveNode,
-      });
-      this.props.getInfraTopologyCategoryWiseViewData({
-        orgID: orgId,
-        landingZone: landingZone,
-        productEnclave: this.state.currentActiveNode,
-      });
+      if (this.state.currentActiveNode === null) {
+        this.props.getGlobalServiceCategoryWiseSummary({
+          orgId: getCurrentOrgId(),
+          landingZoneId: landingZoneId,
+        });
+      } else {
+        this.props.GetInfraTopologyCloudElementList({
+          orgID: orgId,
+          landingZone: landingZone,
+          productEnclave: this.state.currentActiveNode,
+        });
+        this.props.getInfraTopologyCategoryWiseViewData({
+          orgID: orgId,
+          landingZone: landingZone,
+          productEnclave: this.state.currentActiveNode,
+        });
+      }
     }
 
     if (
@@ -176,6 +187,16 @@ class DiscoveredAssets extends Component {
         }
       });
       this.setState({ lambdaTableData: lambdaData });
+    }
+
+    if (
+      prevProps.globalServiceData.status !==
+        this.props.globalServiceData.status &&
+      this.props.globalServiceData.status === status.SUCCESS
+    ) {
+      this.setState({
+        globalServicesSummaryData: this.props.globalServiceData.data,
+      });
     }
   };
 
@@ -473,6 +494,7 @@ class DiscoveredAssets extends Component {
       eksMetaData,
       ecsMetaData,
       currentActiveTopologyCategory,
+      cloudElementsData,
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
@@ -574,11 +596,13 @@ class DiscoveredAssets extends Component {
                   </Box>
                   {activeTierTab === "3Tier" &&
                   Object.keys(data).length > 0 &&
-                  !currentActiveNode ? (
+                  !currentActiveNode &&
+                  currentActiveNode !== null ? (
                     this.render3TierTableData()
                   ) : activeTierTab === "Soa" &&
                     Object.keys(data).length > 0 &&
-                    !currentActiveNode ? (
+                    !currentActiveNode &&
+                    currentActiveNode !== null ? (
                     this.renderSoaTableData()
                   ) : (
                     <></>
@@ -593,15 +617,25 @@ class DiscoveredAssets extends Component {
                     ) : (
                       <></>
                     )}
-                    {currentActiveNode && !isClusterShow ? (
+                    {currentActiveNode &&
+                    currentActiveNode !== null &&
+                    !isClusterShow ? (
                       <>
                         {this.props.infraTopologyCloudElementList.status ===
                         status.IN_PROGRESS ? (
                           <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
                         ) : (
-                          this.renderCloudManagedDetails()
+                          this.renderCloudManagedDetails(cloudElementsData)
                         )}
                       </>
+                    ) : (
+                      <></>
+                    )}
+                    {currentActiveNode === null &&
+                    this.state.globalServicesSummaryData.length ? (
+                      <GlobalServicesSummaryTable
+                        data={this.state.globalServicesSummaryData}
+                      />
                     ) : (
                       <></>
                     )}
@@ -626,7 +660,8 @@ class DiscoveredAssets extends Component {
         ) : this.props.infraTopologyCloudElementList.status ===
           status.IN_PROGRESS ? (
           <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
-        ) : currentActiveNode ? (
+        ) : this.state.currentActiveNode &&
+          this.state.currentActiveNode !== null ? (
           <AssociateApp data={selectedCategoryCloudElementsData} />
         ) : (
           <></>
@@ -643,6 +678,7 @@ function mapStateToProps(state) {
     infraTopologyCloudElementList,
     infraTopologyCategoryWiseData,
     infraTopologyLambdaTable,
+    globalServiceData,
   } = state.environmentData;
   return {
     envDataByLandingZone,
@@ -650,6 +686,7 @@ function mapStateToProps(state) {
     infraTopologyCloudElementList,
     infraTopologyCategoryWiseData,
     infraTopologyLambdaTable,
+    globalServiceData,
   };
 }
 
@@ -659,6 +696,7 @@ const mapDispatchToProps = {
   getInfraTopologyCategoryWiseViewData,
   getInfraTopologyDbCategories,
   getInfraTopologyLambdaTableData,
+  getGlobalServiceCategoryWiseSummary,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiscoveredAssets);
