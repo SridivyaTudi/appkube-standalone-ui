@@ -62,8 +62,6 @@ export class AssociateChartApp extends Component {
           }`
         );
         ToastMessage.success("Service tagged successfully.");
-        localStorage.removeItem("landingZone");
-        localStorage.removeItem("cloudName");
       } else if (this.props.serviceCreation.status === failureStatus) {
         ToastMessage.error("Service is not tag  successfully.");
       }
@@ -308,10 +306,12 @@ export class AssociateChartApp extends Component {
 
     const departmentName = selectedLevel_0?.label || "";
     const productName = selectedLevel_1?.label || "";
+
     const activeLevelLength = Object.keys(activeLevels).length;
+
     const showBtn =
-      (activeLevelLength === 6 && productType === "SOA") ||
-      (activeLevelLength === 5 && productType === "3 Tier");
+      productType === "SOA" ? activeLevelLength === 6 : activeLevelLength === 5;
+
     const {
       serviceCreation: { status: serviceCreationStatus },
     } = this.props;
