@@ -8,6 +8,7 @@ import {
   getInfraTopologyDbCategories,
   getInfraTopologyLambdaTableData,
   getGlobalServiceCategoryWiseSummary,
+  getGlobalServiceCloudElements,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -43,6 +44,10 @@ export const environmentDataSlice = createSlice({
       data: {},
     },
     globalServiceData: {
+      status: null,
+      data: [],
+    },
+    globalServicesCloudElements: {
       status: null,
       data: [],
     },
@@ -256,6 +261,32 @@ export const environmentDataSlice = createSlice({
       return {
         ...state,
         globalServiceData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getGlobalServiceCloudElements.pending]: (state) => {
+      return {
+        ...state,
+        globalServicesCloudElements: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getGlobalServiceCloudElements.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        globalServicesCloudElements: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getGlobalServiceCloudElements.rejected]: (state) => {
+      return {
+        ...state,
+        globalServicesCloudElements: {
           status: status.FAILURE,
         },
       };

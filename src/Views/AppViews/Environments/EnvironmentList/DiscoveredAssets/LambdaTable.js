@@ -330,10 +330,13 @@ class LambdaTable extends Component {
 
   render() {
     const { lambdaFunctionsData, pg, rpg } = this.state;
+    const { title } = this.props;
     const { tableData } = this.props;
     return (
       <Box className="lambda-functions-container">
-        <Box className="heading">Lambda Functions</Box>
+        <Box className="heading">
+          {title ? `${title} Functions` : "Lambda Functions"}
+        </Box>
         <Box className="lambda-functions-table-section">
           <TableContainer className="table">
             <Table className="lambda-functions-table">

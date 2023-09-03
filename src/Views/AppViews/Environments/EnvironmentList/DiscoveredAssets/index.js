@@ -31,6 +31,7 @@ import {
   getInfraTopologyDbCategories,
   getInfraTopologyLambdaTableData,
   getGlobalServiceCategoryWiseSummary,
+  getGlobalServiceCloudElements,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { getCurrentOrgId } from "Utils";
 import LambdaTable from "./LambdaTable";
@@ -63,6 +64,8 @@ class DiscoveredAssets extends Component {
       eksMetaData: {},
       lambdaTableData: [],
       globalServicesSummaryData: [],
+      currentActiveGlobalServiceCategory: "",
+      selectedCategoryGlobalServicesData: [],
     };
   }
 
@@ -196,13 +199,45 @@ class DiscoveredAssets extends Component {
     ) {
       this.setState({
         globalServicesSummaryData: this.props.globalServiceData.data,
+        currentActiveGlobalServiceCategory:
+          this.props.globalServiceData.data[0].elementType,
       });
+    }
+
+    if (
+      prevProps.globalServicesCloudElements.status !==
+        this.props.globalServicesCloudElements.status &&
+      this.props.globalServicesCloudElements.status === status.SUCCESS
+    ) {
+      const lambdaData = [];
+      this.props.globalServicesCloudElements.data.map((item) => {
+        if (item.configJson) {
+          lambdaData.push({
+            functionName: item.instanceName,
+            responseTime: item.configJson?.responseTime,
+            duration: item.configJson?.duration,
+            invocations: item.configJson?.invocations,
+            throttles: item.configJson?.throttles,
+            errors: item.configJson?.errors,
+            latency: item.configJson?.latency,
+            networkReceived: item.configJson?.networkReceived,
+            requests: item.configJson?.requests,
+            product: item.configJson?.product,
+            environment: item.configJson?.environment,
+            actions: "",
+          });
+        }
+      });
+      this.setState({ lambdaTableData: lambdaData });
     }
   };
 
   setCurrentTopologyCategory = (category) => {
     const { cloudElementsData, currentActiveNodeId } = this.state;
-    this.setState({ currentActiveTopologyCategory: category });
+    this.setState({
+      currentActiveTopologyCategory: category,
+      currentActiveGlobalServiceCategory: "",
+    });
     if (category === "Lambda") {
       this.setState({ selectedCategoryCloudElementsData: [] });
       const queryPrm = new URLSearchParams(document.location.search);
@@ -221,6 +256,14 @@ class DiscoveredAssets extends Component {
       });
       this.setState({ selectedCategoryCloudElementsData: newArray });
     }
+  };
+
+  setCurrentGlobalDataCategory = (category) => {
+    this.setState({
+      currentActiveGlobalServiceCategory: category,
+      currentActiveTopologyCategory: "",
+    });
+    this.props.getGlobalServiceCloudElements({ elementType: category });
   };
 
   toggleMenu = (index) => {
@@ -495,6 +538,7 @@ class DiscoveredAssets extends Component {
       ecsMetaData,
       currentActiveTopologyCategory,
       cloudElementsData,
+      currentActiveGlobalServiceCategory,
     } = this.state;
     const { envDataByLandingZone, departments } = this.props;
     return (
@@ -635,6 +679,9 @@ class DiscoveredAssets extends Component {
                     this.state.globalServicesSummaryData.length ? (
                       <GlobalServicesSummaryTable
                         data={this.state.globalServicesSummaryData}
+                        setCurrentGlobalDataCategory={
+                          this.setCurrentGlobalDataCategory
+                        }
                       />
                     ) : (
                       <></>
@@ -666,6 +713,19 @@ class DiscoveredAssets extends Component {
         ) : (
           <></>
         )}
+        {currentActiveGlobalServiceCategory ? (
+          this.props.globalServicesCloudElements.status ===
+          status.IN_PROGRESS ? (
+            <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
+          ) : (
+            <LambdaTable
+              tableData={this.state.lambdaTableData}
+              title={currentActiveGlobalServiceCategory}
+            />
+          )
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }
@@ -679,6 +739,7 @@ function mapStateToProps(state) {
     infraTopologyCategoryWiseData,
     infraTopologyLambdaTable,
     globalServiceData,
+    globalServicesCloudElements,
   } = state.environmentData;
   return {
     envDataByLandingZone,
@@ -687,6 +748,7 @@ function mapStateToProps(state) {
     infraTopologyCategoryWiseData,
     infraTopologyLambdaTable,
     globalServiceData,
+    globalServicesCloudElements,
   };
 }
 
@@ -697,6 +759,7 @@ const mapDispatchToProps = {
   getInfraTopologyDbCategories,
   getInfraTopologyLambdaTableData,
   getGlobalServiceCategoryWiseSummary,
+  getGlobalServiceCloudElements,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiscoveredAssets);

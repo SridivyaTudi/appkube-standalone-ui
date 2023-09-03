@@ -48,6 +48,10 @@ class GlobalServicesSummaryTable extends React.Component {
     };
   }
 
+  componentDidMount = () => {
+    this.props.setCurrentGlobalDataCategory(this.props.data[0].elementType);
+  };
+
   renderTable = (data) => {
     const { activeCategory } = this.state;
     const JSX = [];
@@ -58,6 +62,7 @@ class GlobalServicesSummaryTable extends React.Component {
           className={`service-card ${activeCategory === index ? "active" : ""}`}
           onClick={() => {
             this.setState({ activeCategory: index });
+            this.props.setCurrentGlobalDataCategory(item.elementType);
           }}
         >
           <Box className="service-icon">
