@@ -38,6 +38,7 @@ class SLAMetrics extends Component {
     }
   }
 
+  // It  return class based on condition
   handletableColor = (number) => {
     let color = "";
     if (number > 98) {
@@ -50,6 +51,7 @@ class SLAMetrics extends Component {
     return color;
   };
 
+  // Render SLA Metrics table
   renderSlaMetricsTable = () => {
     const { slaData: products } = this.state;
     let tableHTML = [];
