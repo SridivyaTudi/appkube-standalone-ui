@@ -86,6 +86,8 @@ tags:
     description: spend analytics
   - name: CostAnalyticsQuery
     description: cost analytics
+  - name: SlaAnalyticsQuery
+    description: sla analytics
   - name: BillingAnalyticsQuery
     description: billing  cost analytics
 
@@ -843,6 +845,21 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/LandingzoneDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /landingzone/addall-to-vault:
+    post:
+      tags:
+        - Landingzone
+      summary: Add all landingzones to vault
+      operationId: addAllLandingzonesToVault
+      responses:
+        200:
+          description: OK
+        201:
+          description: Created
         404:
           description: "Service Not found"
         500:
@@ -1780,12 +1797,17 @@ paths:
           schema:
             type: integer
             format: int64
-          required: true
+          required: false
         - in: query
           name: serviceNature
           schema:
             type: string
-          required: true
+          required: false
+        - in: query
+          name: serviceType
+          schema:
+            type: string
+          required: false
       responses:
         200:
           description: OK
@@ -3274,12 +3296,12 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organization/{orgId}/infra-topology/landing-zone/{landingZone}:
+  /query/organization/{orgId}/infra-topology/landing-zone-id/{landingZoneId}:
     get:
       tags:
         - InfraTopologyQuery
-      summary: Infra topology view
-      operationId: getInfraTopology
+      summary: Infra-topology view by landing-zone-id
+      operationId: getInfraTopologyByLandingZoneId
       parameters:
         - in: path
           name: orgId
@@ -3288,9 +3310,10 @@ paths:
             format: int64
           required: true
         - in: path
-          name: landingZone
+          name: landingZoneId
           schema:
-            type: string
+            type: integer
+            format: int64
           required: true
       responses:
         200:
@@ -3335,6 +3358,38 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/InfraTopologyCategoryWiseViewDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /query/organization/{orgId}/infra-topology/landing-zone-id/{landingZoneId}/global-service-category-wise-summary:
+    get:
+      tags:
+        - InfraTopologyQuery
+      summary: Infra topology global service category-wise view
+      operationId: getInfraTopologyGlobalServiceCategoryWiseSummary
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: path
+          name: landingZoneId
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InfraTopologyGlobalServiceCategoryWiseViewDTO'
         404:
           description: "Service Not found"
         500:
@@ -3600,12 +3655,12 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organization/{orgId}/analytics/cost-analytics/product-wise-cost:
+  /query/organization/{orgId}/analytics/cost-analytics/product-wise-cost/non-associated:
     get:
       tags:
         - CostAnalyticsQuery
-      summary: get product wise cost of an organization
-      operationId: getProductWiseCost
+      summary: get product wise cost non-associated with cloud-element
+      operationId: getProductWiseCostNonAassociate
       parameters:
         - in: path
           name: orgId
@@ -3626,12 +3681,12 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organization/{orgId}/analytics/cost-analytics/production-vs-others:
+  /query/organization/{orgId}/analytics/cost-analytics/product-wise-cost/associated:
     get:
       tags:
         - CostAnalyticsQuery
-      summary: get production vs others cost of an organization
-      operationId: getProductionVsOthersCost
+      summary: get product wise cost associated with cloud-element
+      operationId: getProductWiseCostAassociate
       parameters:
         - in: path
           name: orgId
@@ -3652,12 +3707,12 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
-  /query/organization/{orgId}/analytics/cost-analytics/service-type-wise-cost:
+  /query/organization/{orgId}/analytics/cost-analytics/production-vs-others/non-associated:
     get:
       tags:
         - CostAnalyticsQuery
-      summary: get service type wise cost of an organization
-      operationId: getServiceTypeWiseCost
+      summary: get production vs others cost non-associated with cloud-element
+      operationId: getProductionVsOthersCostNonAssociate
       parameters:
         - in: path
           name: orgId
@@ -3674,6 +3729,136 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CostAnalyticDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /query/organization/{orgId}/analytics/cost-analytics/production-vs-others/associated:
+    get:
+      tags:
+        - CostAnalyticsQuery
+      summary: get production vs others cost associated with cloud-element
+      operationId: getProductionVsOthersCostAssociate
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CostAnalyticDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /query/organization/{orgId}/analytics/cost-analytics/service-type-wise-cost/non-associated:
+    get:
+      tags:
+        - CostAnalyticsQuery
+      summary: get service type wise cost non-associated with cloud-element
+      operationId: getServiceTypeWiseCostNonAssociate
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CostAnalyticDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /query/organization/{orgId}/analytics/cost-analytics/service-type-wise-cost/associated:
+    get:
+      tags:
+        - CostAnalyticsQuery
+      summary: get service type wise cost associated with cloud-element
+      operationId: getServiceTypeWiseCostAssociate
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CostAnalyticDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /query/organization/{orgId}/analytics/sla-analytics/product-wise-sla/non-associated:
+    get:
+      tags:
+        - SlaAnalyticsQuery
+      summary: get product wise sla non-associated with cloud-element
+      operationId: getSlaWiseCostNonAssociate
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SlaAnalyticDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /query/organization/{orgId}/analytics/sla-analytics/product-wise-sla/associated:
+    get:
+      tags:
+        - SlaAnalyticsQuery
+      summary: get product wise sla associated with cloud-element
+      operationId: getSlaWiseCostAssociate
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SlaAnalyticDTO'
         404:
           description: "Service Not found"
         500:
@@ -3907,8 +4092,6 @@ components:
           type: string
         instanceId:
           type: string
-        landingZone:
-          type: string
         state:
           type: string
         metadata:
@@ -3924,6 +4107,9 @@ components:
         updatedOn:
           type: string
         departmentId:
+          type: integer
+          format: int64
+        landingzoneId:
           type: integer
           format: int64
     BudgetDTO:
@@ -4197,6 +4383,9 @@ components:
           type: string
         landingZone:
           type: string
+        landingZoneId:
+          type: integer
+          format: int64
         productEnclave:
           type: integer
           format: int64
@@ -4246,12 +4435,25 @@ components:
         totalRecord:
           type: integer
           format: int64
+    InfraTopologyGlobalServiceCategoryWiseViewDTO:
+      type: object
+      properties:
+        elementType:
+          type: string
+        metadata:
+          type: object
+        totalRecord:
+          type: integer
+          format: int64
     InfraTopologyProductEnclaveDTO:
       type: object
       properties:
-        name:
-          type: string
         id:
+          type: integer
+          format: int64
+        instanceName:
+          type: string
+        instanceId:
           type: string
         threeTier:
           $ref: '#/components/schemas/ThreeTierDTO'
@@ -4266,10 +4468,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InfraTopologyProductEnclaveDTO'
-        # globalServiceList:
-        #   type: array
-        #   items:
-        #     type : string
+        globalServiceList:
+          type: array
+          items:
+            $ref: '#/components/schemas/InfraTopologyProductEnclaveDTO'
     CloudElementSpendAnalyticsDTO:
       type: object
       properties:
@@ -4439,6 +4641,24 @@ components:
         auxiliaryCount:
           type: integer
           format: int64
+    SlaAnalyticDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        performance:
+          type: string
+        availability:
+          type: string
+        reliability:
+          type: string
+        security:
+          type: string
+        endUsage:
+          type: string
     InfraTopologySOAStatsDTO:
       type: object
       properties:
