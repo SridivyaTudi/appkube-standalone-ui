@@ -54,12 +54,9 @@ export class AssociateChartApp extends Component {
         this.props.serviceCreation.status === successStatus &&
         this.props.serviceCreation?.data?.id
       ) {
+        const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
         this.props.navigate(
-          `${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${
-            this.getUrlDetails().landingZone
-          }&cloudName=${this.getUrlDetails().cloudName}&landingZoneId=${
-            this.getUrlDetails().landingZoneId
-          }`
+          `${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`
         );
         ToastMessage.success("Service tagged successfully.");
       } else if (this.props.serviceCreation.status === failureStatus) {
@@ -315,13 +312,13 @@ export class AssociateChartApp extends Component {
     const {
       serviceCreation: { status: serviceCreationStatus },
     } = this.props;
-
+    const { instanceId, elementType, landingZone, landingZoneId, cloudName } =
+      this.getUrlDetails();
     return (
       <Box className="environment-container associate-container">
         <Box className="list-heading">
           <h3>
-            Business Association Mapping ({this.getUrlDetails().elementType}:
-            {this.getUrlDetails().instanceId})
+            Business Association Mapping ({elementType}:{instanceId})
           </h3>
           <Box className="breadcrumbs">
             <ul>
@@ -333,22 +330,17 @@ export class AssociateChartApp extends Component {
               </li>
               <li>
                 <Link
-                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${
-                    this.getUrlDetails().landingZone
-                  }&cloudName=${this.getUrlDetails().cloudName}&landingZoneId=${
-                    this.getUrlDetails().landingZoneId
-                  }`}
+                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
                 >
-                  {this.getUrlDetails().cloudName} &nbsp;(
-                  {this.getUrlDetails().landingZone})
+                  {cloudName} &nbsp;(
+                  {landingZone})
                 </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li className="active">
-                {this.getUrlDetails().elementType}:
-                {this.getUrlDetails().instanceId}
+                {elementType}:{instanceId}
               </li>
             </ul>
           </Box>

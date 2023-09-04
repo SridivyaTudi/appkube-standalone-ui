@@ -277,6 +277,7 @@ class EcsCluster extends React.Component {
         border: "1px solid #dadde9",
       },
     }));
+    const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
     return (
       <Box className="environment-container environmentlist cluster-container">
         <Box className="list-heading">
@@ -291,14 +292,10 @@ class EcsCluster extends React.Component {
               </li>
               <li>
                 <Link
-                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${
-                    this.getUrlDetails().landingZone
-                  }&cloudName=${this.getUrlDetails().cloudName}&landingZoneId=${
-                    this.getUrlDetails().landingZoneId
-                  }`}
+                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
                 >
-                  {this.getUrlDetails().cloudName} &nbsp;(
-                  {this.getUrlDetails().landingZone})
+                  {cloudName} &nbsp;(
+                  {landingZone})
                 </Link>
               </li>
               <li>

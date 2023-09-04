@@ -37,6 +37,7 @@ class TopologyView extends Component {
     const data = this.state.topologyData;
     const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
     const { activeView } = this.state;
+    const { cloudName } = this.getLandingZoneOrCloudName();
     return (
       <ArcherContainer
         noCurves
@@ -108,16 +109,8 @@ class TopologyView extends Component {
                       <div className="d-flex">
                         <div className="account-image">
                           <img
-                            src={
-                              LOGOS[this.getLandingZoneOrCloudName().cloudName]
-                                ? LOGOS[
-                                    this.getLandingZoneOrCloudName().cloudName
-                                  ]
-                                : ""
-                            }
-                            alt={`${
-                              this.getLandingZoneOrCloudName().cloudName
-                            }`}
+                            src={LOGOS[cloudName] ? LOGOS[cloudName] : ""}
+                            alt={cloudName}
                           />
                         </div>
                         <div className="account-id">
