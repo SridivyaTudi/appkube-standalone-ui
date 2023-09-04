@@ -42,17 +42,17 @@
     },
     {
       "link": "#",
-      "icon": "dashboard",
+      "icon": "appcatalogue",
       "name": "App Catalogue"
     },
     {
       "link": "#",
-      "icon": "dashboard",
+      "icon": "alert",
       "name": "Alerts"
     },
     {
       "link": "#",
-      "icon": "dashboard",
+      "icon": "preferences",
       "name": "Preference"
     },
     {
