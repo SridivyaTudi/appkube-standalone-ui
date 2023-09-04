@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import LoadingButton from "@mui/lab/LoadingButton";
 import ResetPassword from "../ResetPassword";
+import { ToastMessage } from "Toast/ToastMessage";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -44,6 +45,9 @@ class ForgetPassword extends Component {
     ) {
       if (this.props.forgotPwd.data.code === 200) {
         this.setState({ toggleScreen: !this.state.toggleScreen });
+      }
+      if (this.props.forgotPwd.data.code === 417) {
+        ToastMessage.error("User not found!");
       }
     }
   };

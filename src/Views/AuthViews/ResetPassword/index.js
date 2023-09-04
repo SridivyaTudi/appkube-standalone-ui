@@ -10,6 +10,7 @@ import { resetPassword } from "Redux/Auth/AuthThunk";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { ToastMessage } from "Toast/ToastMessage";
 
 class ResetPassword extends Component {
   constructor(props) {
@@ -39,7 +40,12 @@ class ResetPassword extends Component {
       prevProps.resetPwd.status !== this.props.resetPwd.status &&
       this.props.resetPwd.status === status.SUCCESS
     ) {
-      this.setState({ toggleScreen: true, imageVisibility: true });
+      if (this.props.resetPwd.data.code === 200) {
+        this.setState({ toggleScreen: true, imageVisibility: true });
+      }
+      if (this.props.resetPwd.data.code === 417) {
+        ToastMessage.error("Invalid OTP!");
+      }
     }
   };
 
