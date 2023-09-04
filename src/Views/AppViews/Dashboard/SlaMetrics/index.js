@@ -12,7 +12,7 @@ import {
 import { getSlaMetrics } from "Redux/Dashboard/DashboardThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
-
+import Loader from "Components/Loader";
 class SLAMetrics extends Component {
   constructor(props) {
     super(props);
@@ -54,8 +54,12 @@ class SLAMetrics extends Component {
   // Render SLA Metrics table
   renderSlaMetricsTable = () => {
     const { slaData: products } = this.state;
+    const { status: slaMetricsStatus } = this.props.slaMetrics;
     let tableHTML = [];
-    if (products?.length) {
+
+    if (slaMetricsStatus === status.IN_PROGRESS) {
+      return <Loader />;
+    } else if (products.length) {
       products.forEach((productData, index) => {
         tableHTML.push(
           <TableRow key={uuidv4()}>
