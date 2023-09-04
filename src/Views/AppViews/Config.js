@@ -4,9 +4,9 @@ const baseURL = `https://5jdezsz635.execute-api.us-east-1.amazonaws.com/dev`;
 const config = {
   baseURL,
   /* DASHBOARD SERVICES */
-  PRODUCT_WISE_COST: `${baseURL}/query/organization/#org-id#/analytics/cost-analytics/product-wise-cost`,
-  PRODUCTION_VS_OTHERS: `${baseURL}/query/organization/#org-id#/analytics/cost-analytics/production-vs-others`,
-  SERVICE_TYPE_WISE_COST: `${baseURL}/query/organization/#org-id#/analytics/cost-analytics/service-type-wise-cost`,
+  PRODUCT_WISE_COST: `${baseURL}/query/organization/#org-id#/analytics/cost-analytics/product-wise-cost/associated`,
+  PRODUCTION_VS_OTHERS: `${baseURL}/query/organization/#org-id#/analytics/cost-analytics/production-vs-others/associated`,
+  SERVICE_TYPE_WISE_COST: `${baseURL}/query/organization/#org-id#/analytics/cost-analytics/service-type-wise-cost/associated`,
   GET_CURRENT_HOUR_SPEND_RATE: `/query/organization/#org-id#/analytics/spend-analytics/spend-current-rate/avg-per-hour`,
   GET_CURRENT_DAY_SPEND_RATE: `/query/organization/#org-id#/analytics/spend-analytics/spend-current-rate/per-day`,
   GET_TODAY_SPEND_ANALYTICS: `/query/organization/#org-id#/analytics/spend-analytics/spend-today`,
