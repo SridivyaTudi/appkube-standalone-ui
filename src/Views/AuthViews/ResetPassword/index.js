@@ -123,6 +123,41 @@ class ResetPassword extends Component {
                   >
                     <Grid item xs={12}>
                       <Box className="input-group">
+                        <label className="d-block" htmlFor="otp">
+                          Enter OTP{" "}
+                        </label>
+                        <input
+                          id="otp"
+                          type={showPassword ? "text" : "password"}
+                          className="form-control"
+                          name="otp"
+                          //value={formData.password}
+                          placeholder="Enter OTP received in your email"
+                          onChange={this.handleInputChange}
+                          autoComplete="on"
+                        />
+                        {/* <p> {errorData.errors.password}</p> */}
+
+                        {errorData.password ? (
+                          <p className="m-b-0">{errors.password}</p>
+                        ) : (
+                          <></>
+                        )}
+                        <i
+                          className={`fa-sharp fa-regular fa-eye${
+                            showPassword ? "" : "-slash"
+                          }`}
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            this.setState({
+                              showPassword: !this.state.showPassword,
+                            });
+                          }}
+                        ></i>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Box className="input-group">
                         <label className="d-block" htmlFor="password">
                           Enter a New password{" "}
                         </label>

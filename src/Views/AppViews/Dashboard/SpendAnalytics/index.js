@@ -63,6 +63,7 @@ const COMMON_STYLE_LINE_DIAGRAM = {
   lineTension: 0.5,
   fill: false,
 };
+const BUDGET_PERCENTAGE_MULTIPLY_DIGIT = 1.8;
 class SpendAnalytics extends Component {
   constructor(props) {
     super(props);
@@ -215,19 +216,21 @@ class SpendAnalytics extends Component {
 
   /** Calculate the current hour spend rate. */
   currentHourSpendRate = () => {
-    const { currentHourSpendRate } = this.props;
-    const spendRateData = currentHourSpendRate.data;
-    if (spendRateData >= 0) {
-      return <strong>${spendRateData}</strong>;
+    const {
+      currentHourSpendRate: { data },
+    } = this.props;
+
+    if (data >= 0) {
+      return <strong>${data}</strong>;
     }
   };
 
   /** Render the current hour spend rate. */
   renderCurrentHourSpendRateHtml = () => {
-    let currentHourSpendRateStatus = this.props.currentHourSpendRate.status;
+    let { status: hourStatus } = this.props.currentHourSpendRate;
 
-    return currentHourSpendRateStatus === status.IN_PROGRESS ? (
-      <Loader className={'small-loader'} />
+    return hourStatus === status.IN_PROGRESS ? (
+      <Loader className={"small-loader"} />
     ) : (
       <Box className="spend-contant">
         <label>Per Hour</label>
@@ -238,16 +241,18 @@ class SpendAnalytics extends Component {
 
   /** Calculate the current day spend rate. */
   getCurrentDaySpendRate = () => {
-    const { currentDaySpendRate } = this.props;
-    const daySpendRateData = currentDaySpendRate.data;
-    if (daySpendRateData >= 0) return <strong>${daySpendRateData}</strong>;
+    const {
+      currentDaySpendRate: { data },
+    } = this.props;
+
+    if (data >= 0) return <strong>${data}</strong>;
   };
 
   /** Render the current day spend rate. */
   renderCurrentDaySpendRateHtml = () => {
-    let currentDaySpendRateStatus = this.props.currentDaySpendRate.status;
-    return currentDaySpendRateStatus === status.IN_PROGRESS ? (
-      <Loader className={'small-loader'} />
+    let { status: dayStatus } = this.props.currentDaySpendRate;
+    return dayStatus === status.IN_PROGRESS ? (
+      <Loader className={"small-loader"} />
     ) : (
       <Box className="spend-contant">
         <label>Per Day</label>
@@ -258,35 +263,34 @@ class SpendAnalytics extends Component {
 
   /** Calculate the today spend analytics. */
   getTodaySpendAnalytics = () => {
-    const { todaySpendAnalytics } = this.props;
-    const todaySpendAnalyticsData = todaySpendAnalytics.data || [];
+    const {
+      todaySpendAnalytics: { data },
+    } = this.props;
 
     const renderHtml = [];
 
-    let sumCurrentDate =
-      Object.keys(todaySpendAnalyticsData).length &&
-      todaySpendAnalyticsData.sumCurrentDate;
-    if (sumCurrentDate) renderHtml.push(<strong>${sumCurrentDate}</strong>);
+    if (data && Object.keys(data).length) {
+      let { sumCurrentDate, percentage } = data;
 
-    let percentage =
-      Object.keys(todaySpendAnalyticsData).length &&
-      todaySpendAnalyticsData.percentage;
-    if (percentage)
-      renderHtml.push(
-        <span className={`${percentage > 0 ? "" : "red"}`}>
-          {Math.abs(percentage).toFixed(2)}%
-        </span>
-      );
+      if (sumCurrentDate) renderHtml.push(<strong>${sumCurrentDate}</strong>);
+
+      if (percentage)
+        renderHtml.push(
+          <span className={`${percentage > 0 ? "" : "red"}`}>
+            {Math.abs(percentage).toFixed(2)}%
+          </span>
+        );
+    }
 
     return renderHtml;
   };
 
   /** Render the today spend analytics. */
   renderTodaySpendAnalyticsHtml = () => {
-    let todaySpendAnalyticsStatus = this.props.todaySpendAnalytics.status;
+    let { status: todayStatus } = this.props.todaySpendAnalytics;
 
-    return todaySpendAnalyticsStatus === status.IN_PROGRESS ? (
-      <Loader className={'small-loader'} />
+    return todayStatus === status.IN_PROGRESS ? (
+      <Loader className={"small-loader"} />
     ) : (
       <>
         <label>Spends Today</label>
@@ -297,33 +301,32 @@ class SpendAnalytics extends Component {
 
   /** Calculate the yesterday spend analytics. */
   getYesterdaySpendAnalytics = () => {
-    const { yesterdaySpendAnalytics } = this.props;
-    const yesterdaySpendAnalyticsData = yesterdaySpendAnalytics.data || {};
+    const {
+      yesterdaySpendAnalytics: { data },
+    } = this.props;
 
     const renderHtml = [];
-    let yesterdaySumCurrentDate =
-      Object.keys(yesterdaySpendAnalyticsData).length &&
-      yesterdaySpendAnalyticsData.sumCurrentDate;
-    if (yesterdaySumCurrentDate)
-      renderHtml.push(<strong>${yesterdaySumCurrentDate}</strong>);
 
-    let yesterdaySpendPercentage =
-      Object.keys(yesterdaySpendAnalyticsData).length &&
-      yesterdaySpendAnalyticsData.percentage;
-    if (yesterdaySpendPercentage)
-      renderHtml.push(
-        <span className={`${yesterdaySpendPercentage > 0 ? "" : "red"}`}>
-          {Math.abs(yesterdaySpendPercentage).toFixed(2)}%
-        </span>
-      );
+    if (data && Object.keys(data).length) {
+      let { sumCurrentDate, percentage } = data;
+
+      if (sumCurrentDate) renderHtml.push(<strong>${sumCurrentDate}</strong>);
+
+      if (percentage)
+        renderHtml.push(
+          <span className={`${percentage > 0 ? "" : "red"}`}>
+            {Math.abs(percentage).toFixed(2)}%
+          </span>
+        );
+    }
 
     return renderHtml;
   };
 
   /** Render the yesterday spend analytics. */
   renderYesterdaySpendAnalyticsHtml = () => {
-    let todaySpendAnalyticsStatus = this.props.yesterdaySpendAnalytics.status;
-    return todaySpendAnalyticsStatus === status.IN_PROGRESS ? (
+    let yesterdayStatus = this.props.yesterdaySpendAnalytics.status;
+    return yesterdayStatus === status.IN_PROGRESS ? (
       <Loader />
     ) : (
       <>
@@ -335,12 +338,12 @@ class SpendAnalytics extends Component {
 
   /** Calculate the total spend. */
   getTotalSpend = () => {
-    const { totalSpend } = this.props;
-    const totalSpendData = totalSpend.data;
+    const {
+      totalSpend: { data },
+    } = this.props;
 
     const renderHtml = [];
-    if (totalSpendData)
-      renderHtml.push(<h1>{totalSpendData ? `$${totalSpendData}` : ""}</h1>);
+    if (data) renderHtml.push(<h1>{data ? `$${data}` : ""}</h1>);
 
     return renderHtml;
   };
@@ -425,11 +428,12 @@ class SpendAnalytics extends Component {
 
   /** Calculate total cloudwise spend. */
   getTotalCloudwiseSpend = () => {
-    const { totalCloudWiseSpend } = this.props;
-    const totalCloudWiseSpendData = totalCloudWiseSpend.data || [];
+    const {
+      totalCloudWiseSpend: { data },
+    } = this.props;
 
-    if (totalCloudWiseSpendData.length) {
-      return totalCloudWiseSpendData.map((cloudSpend) => {
+    if (data?.length) {
+      return data.map((cloudSpend) => {
         return (
           <ListItem key={v4()}>
             <Box className="data-text">
@@ -455,10 +459,12 @@ class SpendAnalytics extends Component {
 
   /** Calculate Progressbar total cloudwise spend. */
   getProgressBarTotalCloudwiseSpend = () => {
-    const { totalCloudWiseSpend } = this.props;
-    const totalCloudWiseSpendData = totalCloudWiseSpend.data || [];
-    if (totalCloudWiseSpendData.length) {
-      return totalCloudWiseSpendData.map((cloudSpend) => {
+    const {
+      totalCloudWiseSpend: { data },
+    } = this.props;
+
+    if (data?.length) {
+      return data.map((cloudSpend) => {
         return (
           <span
             style={{
@@ -495,57 +501,52 @@ class SpendAnalytics extends Component {
   /** Calculate total budget information. */
   getTotalBudget() {
     let totalBudgetData = this.props.totalBudget.data || {};
-    if (Object.keys(totalBudgetData).length) {
-      let {
-        totalBudget,
-        budgetUsed,
-        remainingBudget,
-        remainingBudgetPercentage,
-      } = totalBudgetData;
-      return {
-        totalBudget: totalBudget > 0 ? `$${totalBudget}` : "",
-        budgetUsed: budgetUsed,
-        remainingBudget: remainingBudget > 0 ? `$${remainingBudget}` : "",
-        remainingBudgetPercentage:
-          remainingBudgetPercentage > 0
-            ? `${100 - remainingBudgetPercentage}`
-            : "",
-      };
-    } else {
-      return {
-        totalBudget: "",
-        budgetUsed: "",
-        remainingBudget: "",
-        remainingBudgetPercentage: "",
-      };
-    }
+    let {
+      totalBudget,
+      budgetUsed,
+      remainingBudget,
+      remainingBudgetPercentage,
+    } = totalBudgetData;
+
+    totalBudget = totalBudget > 0 ? `$${totalBudget}` : "";
+    remainingBudget = remainingBudget > 0 ? `$${remainingBudget}` : "";
+    remainingBudgetPercentage =
+      remainingBudgetPercentage > 0 ? `${100 - remainingBudgetPercentage}` : "";
+
+    return {
+      totalBudget,
+      budgetUsed,
+      remainingBudget,
+      remainingBudgetPercentage,
+    };
   }
 
   /** Calculate Remaining Budget Percentage. */
   calculateRemainingBudgetPercentage() {
-    let remainingBudgetPercentage =
-      this.getTotalBudget().remainingBudgetPercentage;
+    let { remainingBudgetPercentage } = this.getTotalBudget();
 
     return remainingBudgetPercentage
       ? remainingBudgetPercentage > 35 && remainingBudgetPercentage <= 45
-        ? 178 + 1.8 * remainingBudgetPercentage
+        ? 178 + BUDGET_PERCENTAGE_MULTIPLY_DIGIT * remainingBudgetPercentage
         : remainingBudgetPercentage > 45 && remainingBudgetPercentage < 66
-        ? 180 + 1.8 * remainingBudgetPercentage
+        ? 180 + BUDGET_PERCENTAGE_MULTIPLY_DIGIT * remainingBudgetPercentage
         : remainingBudgetPercentage > 50
-        ? 185 + 1.8 * remainingBudgetPercentage
-        : 175 + 1.8 * remainingBudgetPercentage
+        ? 185 + BUDGET_PERCENTAGE_MULTIPLY_DIGIT * remainingBudgetPercentage
+        : 175 + BUDGET_PERCENTAGE_MULTIPLY_DIGIT * remainingBudgetPercentage
       : 175;
   }
 
   /** Render total budget information. */
   renderTotalBudgetHtml() {
     let totalBudgetStatus = this.props.totalBudget.status;
+    const { totalBudget, remainingBudgetPercentage, remainingBudget } =
+      this.getTotalBudget();
     return (
       <Box className="total-budget">
         <Box className="heading">
           <label>Total Budget</label>
           <Box className="total-budget">
-            <label>{this.getTotalBudget().totalBudget}</label>
+            <label>{totalBudget}</label>
             {/* <span>10%</span> */}
           </Box>
         </Box>
@@ -559,8 +560,9 @@ class SpendAnalytics extends Component {
                   className="gauge--fill"
                   style={{
                     transform: `rotate(${
-                      this.getTotalBudget().remainingBudgetPercentage
-                        ? 1.8 * this.getTotalBudget().remainingBudgetPercentage
+                      remainingBudgetPercentage
+                        ? BUDGET_PERCENTAGE_MULTIPLY_DIGIT *
+                          remainingBudgetPercentage
                         : 0
                     }deg)`,
                   }}
@@ -575,12 +577,10 @@ class SpendAnalytics extends Component {
                   }}
                 ></Box>
               </Box>
-              <Box className="used-text">
-                {this.getTotalBudget().remainingBudgetPercentage}% Used
-              </Box>
+              <Box className="used-text">{remainingBudgetPercentage}% Used</Box>
             </Box>
             <Box className="remaining-text">
-              <span>Remaining {this.getTotalBudget().remainingBudget}</span>
+              <span>Remaining {remainingBudget}</span>
             </Box>
           </Box>
         )}
@@ -629,10 +629,10 @@ class SpendAnalytics extends Component {
 
   /** Render Monthly Statistics. */
   renderMonthlyStatisticsHtml() {
-    let monthlyStatisticsData = this.props.monthlyStatistics.data || [];
-    let monthlyStatisticsStatus = this.props.monthlyStatistics.status;
+    let { data: monthlyData, status: monthlyStatus } =
+      this.props.monthlyStatistics;
 
-    if (monthlyStatisticsStatus === status.IN_PROGRESS) {
+    if (monthlyStatus === status.IN_PROGRESS) {
       return <Loader />;
     } else {
       return (
@@ -641,9 +641,7 @@ class SpendAnalytics extends Component {
             <label>Monthly Statistics</label>
             <Box className="total-budget">
               <label>
-                {(monthlyStatisticsData.length &&
-                  monthlyStatisticsData[0]?.sumAllValues) ||
-                  ""}
+                {(monthlyData?.length && monthlyData[0]?.sumAllValues) || ""}
               </label>
               <span style={{ display: "none" }}>10%</span>
             </Box>
@@ -651,8 +649,7 @@ class SpendAnalytics extends Component {
           </Box>
           <Box className="monthly-avrage">
             <List>
-              {(monthlyStatisticsData.length && this.getMonthlyStatistics()) ||
-                ""}
+              {(monthlyData?.length && this.getMonthlyStatistics()) || ""}
             </List>
           </Box>
         </>

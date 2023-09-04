@@ -132,13 +132,9 @@ class EnvironmentList extends Component {
   };
 
   render() {
-    const {
-      showLandingZoneDetails,
-      activeTab,
-      cloudName,
-      singleEnvironmentCountData,
-      landingZone,
-    } = this.state;
+    const { showLandingZoneDetails, activeTab, singleEnvironmentCountData } =
+      this.state;
+    const { cloudName, landingZone } = this.getLandingZoneOrCloudName();
     return (
       <Box className="environment-container environmentlist">
         <Box className="list-heading">
@@ -160,8 +156,7 @@ class EnvironmentList extends Component {
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li className="active">
-                {this.getLandingZoneOrCloudName().cloudName} &nbsp; (
-                {this.getLandingZoneOrCloudName().landingZone})
+                {cloudName} &nbsp; ({landingZone})
               </li>
               {/* <li>
                 <Link
@@ -188,13 +183,7 @@ class EnvironmentList extends Component {
             }`}
           >
             <Box className="image">
-              <img
-                src={
-                  LOGOS[this.getLandingZoneOrCloudName().cloudName]
-                    ? LOGOS[this.getLandingZoneOrCloudName().cloudName]
-                    : ""
-                }
-              />
+              <img src={LOGOS[cloudName] ? LOGOS[cloudName] : ""} />
             </Box>
             <Box className="name">{cloudName}</Box>
             <Box
