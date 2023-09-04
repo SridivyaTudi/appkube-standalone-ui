@@ -56,9 +56,10 @@ class SLAMetrics extends Component {
     const { slaData: products } = this.state;
     const { status: slaMetricsStatus } = this.props.slaMetrics;
     let tableHTML = [];
-
+    
     if (slaMetricsStatus === status.IN_PROGRESS) {
-      return <Loader />;
+      
+      return <Loader className="metrics-loading" />;
     } else if (products.length) {
       products.forEach((productData, index) => {
         tableHTML.push(
@@ -108,6 +109,7 @@ class SLAMetrics extends Component {
                   <TableCell> End Usage </TableCell>
                 </TableRow>
               </TableHead>
+
               <TableBody>{this.renderSlaMetricsTable()}</TableBody>
             </Table>
           </TableContainer>
