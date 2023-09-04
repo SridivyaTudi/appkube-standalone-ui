@@ -283,7 +283,7 @@ class BusinessAssociationMapping extends Component {
       products,
       productEnv,
       modules,
-      moduleElements,
+      moduleElements,threeTierModules
     } = this.props;
 
     const inprogressStatus = status.IN_PROGRESS;
@@ -293,6 +293,7 @@ class BusinessAssociationMapping extends Component {
       productEnv.status,
       modules.status,
       moduleElements.status,
+      threeTierModules.status
     ].includes(inprogressStatus);
 
     if (organization.status === inprogressStatus) {

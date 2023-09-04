@@ -85,7 +85,7 @@ class CostAnalysis extends Component {
         },
       ],
     };
-    data &&
+    data?.length &&
       data.map((item, index) => {
         if (index !== data.length - 1) {
           doughData.datasets[0].data.push(item.total);
@@ -100,7 +100,7 @@ class CostAnalysis extends Component {
    */
   renderBarsData = (data) => {
     const JSX = [];
-    data &&
+    data?.length &&
       data.map((item, index) => {
         if (index !== data.length - 1) {
           JSX.push(

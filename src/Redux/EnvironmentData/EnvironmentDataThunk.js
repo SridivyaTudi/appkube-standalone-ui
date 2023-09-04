@@ -117,3 +117,38 @@ export const getInfraTopologyLambdaTableData = createAsyncThunk(
     }
   }
 );
+
+export const getGlobalServiceCategoryWiseSummary = createAsyncThunk(
+  "environments/getGlobalServiceCategoryWiseSummary",
+  async (params) => {
+    const url = config.INFRA_TOPOLOGY_GLOBAL_SERVICES_DATA.replace(
+      "#org-id#",
+      params.orgId
+    ).replace("#landing-zone-id#", params.landingZoneId);
+
+    try {
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const getGlobalServiceCloudElements = createAsyncThunk(
+  "environments/getGlobalServiceCloudElements",
+  async (params) => {
+    const url =
+      config.INFRA_TOPOLOGY_GLOBAL_SERVICES_CLOUD_ELEMENT_SEARCH.replace(
+        "#element-type#",
+        params.elementType
+      );
+
+    try {
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

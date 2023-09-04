@@ -31,13 +31,15 @@ const config = {
   INFRA_TOPOLOGY_CATEGORY_WISE_VIEW: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone/#landing-zone-id#/product-enclave/#product-enclave#/category-wise-summary`,
   INFRA_TOPOLOGY_DB_CATEGORIES: `${baseURL}/db-category`,
   INFRA_TOPOLOGY_LAMBDA_TABLE_DATA: `${baseURL}/cloud-element/search?elementType=#element-type#&landingzoneId=#landing-zone#&productEnclaveId=#product-enclave#`,
+  INFRA_TOPOLOGY_GLOBAL_SERVICES_DATA: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone-id/#landing-zone-id#/global-service-category-wise-summary`,
+  INFRA_TOPOLOGY_GLOBAL_SERVICES_CLOUD_ELEMENT_SEARCH: `${baseURL}/cloud-element/search?elementType=#element-type#`,
 
   /* AssociateApp  */
   GET_ASSOCIATE_DEPARTMENTS: `${baseURL}/organization/search?organizationDTO=#org-id#`,
   GET_ASSOCIATE_PRODUCT_LIST: `${baseURL}/product/search?departmentId=#department-id#`,
   GET_ASSOCIATE_PRODUCT_ENV: `${baseURL}/product-env/search?productId=#product-id#`,
   GET_ASSOCIATE_MODULES: `${baseURL}/module/search-by-filters?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&serviceNature=#service-nature#`,
-  GET_ASSOCIATE_MODULES_3_TIER: `${baseURL}/business-element/search-by-filters?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&serviceType=#service-type#`,
+  GET_ASSOCIATE_MODULES_3_TIER: `${baseURL}//business-element/search-by-filters?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&serviceType=#service-type#`,
   GET_ASSOCIATE_MODULE_ELEMENTS: `${baseURL}/business-element/search-by-filters?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&moduleId=#module-id#&serviceNature=#service-nature#`,
   CREATE_ASSOCIATE: `${baseURL}/cloud-element/associate`,
 };

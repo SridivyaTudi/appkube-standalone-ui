@@ -109,9 +109,7 @@ class TopologyView extends Component {
                         <div className="account-image">
                           <img
                             src={
-                              LOGOS[
-                                this.getLandingZoneOrCloudName().cloudName
-                              ]
+                              LOGOS[this.getLandingZoneOrCloudName().cloudName]
                                 ? LOGOS[
                                     this.getLandingZoneOrCloudName().cloudName
                                   ]
@@ -134,7 +132,7 @@ class TopologyView extends Component {
                   </ArcherElement>
                   {data.productEnclaveList.length ? (
                     this.renderChildNodes(
-                      data.productEnclaveList,
+                      [data.productEnclaveList, data.globalServiceList],
                       1,
                       activeView
                     )
@@ -162,8 +160,8 @@ class TopologyView extends Component {
       }
       const childJSX = [];
       nodes.map((item, sublevelIndex) => {
-        item = [item];
-        if (item.length > 0) {
+        // item = [item];
+        if (item?.length > 0) {
           retData.push(
             <ul>
               {item.map((item, nodeIndex) => {
@@ -174,7 +172,7 @@ class TopologyView extends Component {
                   ) {
                     childJSX.push(
                       this.renderChildNodes(
-                        item.productEnclaveList,
+                        [item.productEnclaveList, item.globalServiceList],
                         currentLevel + 1,
                         activeView
                       )
@@ -262,17 +260,25 @@ class TopologyView extends Component {
 
   getChild = (level) => {
     const { activeView } = this.state;
-    let retData = JSON.parse(JSON.stringify(this.state.topologyData));
+    let retData = [
+      JSON.parse(JSON.stringify(this.state.topologyData.productEnclaveList)),
+      JSON.parse(JSON.stringify(this.state.topologyData.globalServiceList)),
+    ];
     for (let i = 0; i <= level; i++) {
       if (i === 0) {
-        retData = JSON.parse(JSON.stringify(this.state.topologyData));
+        retData = [
+          JSON.parse(
+            JSON.stringify(this.state.topologyData.productEnclaveList)
+          ),
+          JSON.parse(JSON.stringify(this.state.topologyData.globalServiceList)),
+        ];
       } else {
         if (activeView[i] && activeView[i] !== -1) {
           let activeSublevel = parseInt(activeView[i].split(".")[0]);
           let activeNode = parseInt(activeView[i].split(".")[1]);
-          let newArray = [retData.productEnclaveList[activeSublevel]];
-          retData.productEnclaveList[activeSublevel] = newArray;
-          retData = retData.productEnclaveList[activeSublevel][activeNode];
+          // let newArray = [retData.productEnclaveList[activeSublevel]];
+          // retData.productEnclaveList[activeSublevel] = newArray;
+          retData = retData[activeSublevel][activeNode];
         } else {
           retData = null;
           break;
