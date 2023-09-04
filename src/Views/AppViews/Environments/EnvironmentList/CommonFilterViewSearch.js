@@ -30,6 +30,7 @@ const LOGOS = {
   gcp: GoogleCloud,
   kubernetes: Kubernetes,
 };
+
 class CommonFilterViewSearch extends Component {
   constructor(props) {
     super(props);
@@ -56,10 +57,10 @@ class CommonFilterViewSearch extends Component {
         return (
           <ListItem key={v4()}>
             <Link
-              to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}`}
+              to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}&landingZoneId=${account.landingZoneId}`}
               onClick={() => {
                 this.setState({ showServiceViewFilter: false });
-                this.props.updateAccountId(account.landingZone);
+                // this.props.updateAccountId(account.landingZone);
               }}
             >
               <span>
@@ -102,6 +103,7 @@ class CommonFilterViewSearch extends Component {
     const newItem = {
       accountType: account.accountType,
       accountId: account.accountId,
+      landingZoneId: account.landingZoneId,
     };
     let recentEnv = getRecentVisitedEnvironments();
     if (recentEnv !== null) {
@@ -125,10 +127,10 @@ class CommonFilterViewSearch extends Component {
         return (
           <ListItem key={v4()}>
             <Link
-              to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}`}
+              to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}&landingZoneId=${item.landingZoneId}`}
               onClick={() => {
                 this.addAccountToRecentlyVisited(item);
-                this.props.updateCurrentAccountId(item.accountId);
+                // this.props.updateCurrentAccountId(item.accountId);
               }}
             >
               <span>

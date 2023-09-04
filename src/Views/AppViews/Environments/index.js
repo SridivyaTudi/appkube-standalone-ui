@@ -245,6 +245,7 @@ class Environments extends Component {
                       this.addAccountToRecentlyVisited({
                         accountType: account.cloud,
                         accountId: account.landingZone,
+                        landingZoneId: account.landingZoneId,
                       })
                     }
                   >
@@ -443,6 +444,7 @@ class Environments extends Component {
     const newItem = {
       accountType: account.accountType,
       accountId: account.accountId,
+      landingZoneId: account.landingZoneId,
     };
     let recentEnv = getRecentVisitedEnvironments();
     if (recentEnv !== null) {
@@ -472,7 +474,7 @@ class Environments extends Component {
         return (
           <ListItem>
             <Link
-              to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}`}
+              to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}&landingZoneId=${item.landingZoneId}`}
               onClick={() => this.addAccountToRecentlyVisited(item)}
             >
               <span>
