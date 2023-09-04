@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signUp, login } from "Redux/Auth/AuthThunk";
+import {
+  signUp,
+  login,
+  forgotPassword,
+  resetPassword,
+} from "Redux/Auth/AuthThunk";
 import status from "Redux/Constants/CommonDS";
 
 const authSlice = createSlice({
@@ -9,6 +14,12 @@ const authSlice = createSlice({
       status: null,
     },
     loggedInUser: {
+      status: null,
+    },
+    forgotPwd: {
+      status: null,
+    },
+    resetPwd: {
       status: null,
     },
   },
@@ -39,6 +50,7 @@ const authSlice = createSlice({
         },
       };
     },
+
     [login.pending]: (state, action) => {
       return {
         ...state,
@@ -60,6 +72,58 @@ const authSlice = createSlice({
       return {
         ...state,
         loggedInUser: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [forgotPassword.pending]: (state, action) => {
+      return {
+        ...state,
+        forgotPwd: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [forgotPassword.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        forgotPwd: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [forgotPassword.rejected]: (state, { payload }) => {
+      return {
+        ...state,
+        forgotPwd: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [resetPassword.pending]: (state, action) => {
+      return {
+        ...state,
+        resetPwd: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [resetPassword.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        resetPwd: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [resetPassword.rejected]: (state, { payload }) => {
+      return {
+        ...state,
+        resetPwd: {
           status: status.FAILURE,
         },
       };
