@@ -229,7 +229,9 @@ class TopologyView extends Component {
                           alt={item.instanceId}
                         />
                       </span>
-                      {this.getServiceName(item.instanceId)}
+                      {this.getServiceName(
+                        item.instanceId ? item.instanceId : "Global Services"
+                      )}
                     </li>
                   </ArcherElement>
                 );
