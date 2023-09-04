@@ -8,6 +8,10 @@ const config = {
   LOGIN: `${baseSecurityUrl}/public/login`,
   SIGN_UP: `${baseSecurityUrl}/users/create`,
 
+  /* FORGET PASSWORD SERVICES */
+  FORGET_PWD: `${baseSecurityUrl}/users/forgot-password`,
+  RESET_PWD: `${baseSecurityUrl}/users/reset-password`,
+
   /* SETTINGS PAGE SECURITY URL */
   GET_MFA_CODE: `${baseSecurityUrl}/users/mfaCode`,
   AUTH_MFA: `${baseSecurityUrl}/users/authenticateMfa`,

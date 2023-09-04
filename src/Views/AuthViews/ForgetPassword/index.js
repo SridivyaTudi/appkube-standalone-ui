@@ -5,13 +5,30 @@ import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
 import { AUTH_PREFIX_PATH } from "Configs/AppConfig";
 import Button from "@mui/material/Button";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { forgotPassword } from "Redux/Auth/AuthThunk";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import LoadingButton from "@mui/lab/LoadingButton";
+import ResetPassword from "../ResetPassword";
+
+export function withRouter(Component) {
+  function ComponentWithRouterProp(props) {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const params = useParams();
+
+    return <Component {...props} router={{ location, navigate, params }} />;
+  }
+  return ComponentWithRouterProp;
+}
 
 class ForgetPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       formData: {
-        email: "",
+        username: "",
       },
       sendEmail: false,
       toggleScreen: false,
@@ -19,6 +36,17 @@ class ForgetPassword extends Component {
       showPassword: false,
     };
   }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      prevProps.forgotPwd.status !== this.props.forgotPwd.status &&
+      this.props.forgotPwd.status === status.SUCCESS
+    ) {
+      if (this.props.forgotPwd.data.code === 200) {
+        this.setState({ toggleScreen: !this.state.toggleScreen });
+      }
+    }
+  };
 
   handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +60,8 @@ class ForgetPassword extends Component {
     this.setState({ isSubmit: true });
     const { valid } = this.validateForm(true);
     if (valid) {
-      this.setState({ toggleScreen: true });
+      // this.props.router.navigate(`${AUTH_PREFIX_PATH}/resetpassword`);
+      this.props.forgotPassword(this.state.formData.username);
     }
   };
 
@@ -41,16 +70,11 @@ class ForgetPassword extends Component {
     let valid;
     let formErrors = {};
     if (isSubmit) {
-      if (!formData.email) {
-        formErrors.email = "Email is required!";
-        valid = false;
-      } else if (
-        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(formData.email)
-      ) {
-        formErrors.email = "Email format is not valid!";
+      if (!formData.username) {
+        formErrors.username = "Username is required!";
         valid = false;
       } else {
-        formErrors.email = "";
+        formErrors.username = "";
         valid = true;
       }
     }
@@ -59,85 +83,106 @@ class ForgetPassword extends Component {
   };
 
   render() {
-    const { formData, toggleScreen, isSubmit, showPassword } = this.state;
+    const { formData, isSubmit, toggleScreen } = this.state;
     const { formErrors } = this.validateForm(isSubmit);
     return (
-      <Box className="forget-container">
-        <Box className="forget-left">
-          <Box className="forget-left-content">
-            <Box className="d-block width-100 back-btn">
-              <Button
-                className="secondary-text-btn min-width-inherit"
-                to={`${AUTH_PREFIX_PATH}/signin`}
-                variant="outlined"
-                component={Link}
-              >
-                <i className="fa-solid fa-chevron-left"></i>
-              </Button>
-              <span>Appkube</span>
-            </Box>
-            <Box className="d-block width-100 forget-text">
-              <h2>Forget Password</h2>
-              <p>
-                Enter the email address you used when you joines we'll send you
-                instructions to reset your password.
-              </p>
-              <p>
-                For security reasone, we do Not store your password. So rest
-                assured thet we will never send your password via email.
-              </p>
-            </Box>
-            <form className="width-100" onSubmit={this.handleSignIn}>
-              <Box sx={{ width: "100%" }}>
-                <Grid
-                  container
-                  rowSpacing={1}
-                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                >
-                  <Grid item xs={12}>
-                    <Box className="input-group">
-                      <label className="d-block" htmlFor="email">
-                        Email
-                      </label>
-                      <input
-                        id="email"
-                        type="text"
-                        className="form-control"
-                        name="email"
-                        placeholder="Input your email here"
-                        value={formData.email}
-                        onChange={this.handleInputChange}
-                        autoComplete="on"
-                      />
-                      {formErrors.email ? (
-                        <p className="m-b-0">{formErrors.email}</p>
-                      ) : (
-                        <></>
-                      )}
-                    </Box>
-                  </Grid>
-                </Grid>
+      <>
+        {!toggleScreen ? (
+          <Box className="forget-container">
+            <Box className="forget-left">
+              <Box className="forget-left-content">
+                <Box className="d-block width-100 back-btn">
+                  <Button
+                    className="secondary-text-btn min-width-inherit"
+                    to={`${AUTH_PREFIX_PATH}/signin`}
+                    variant="outlined"
+                    component={Link}
+                  >
+                    <i className="fa-solid fa-chevron-left"></i>
+                  </Button>
+                  <span>Appkube</span>
+                </Box>
+                <Box className="d-block width-100 forget-text">
+                  <h2>Forget Password</h2>
+                  <p>
+                    Enter the username address you used when you joines we'll
+                    send you instructions to reset your password.
+                  </p>
+                  <p>
+                    For security reasone, we do Not store your password. So rest
+                    assured thet we will never send your password via email.
+                  </p>
+                </Box>
+                <form className="width-100" onSubmit={this.handleSignIn}>
+                  <Box sx={{ width: "100%" }}>
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                      <Grid item xs={12}>
+                        <Box className="input-group">
+                          <label className="d-block" htmlFor="username">
+                            Username
+                          </label>
+                          <input
+                            id="username"
+                            type="text"
+                            className="form-control"
+                            name="username"
+                            placeholder="Input your username here"
+                            value={formData.username}
+                            onChange={this.handleInputChange}
+                            autoComplete="on"
+                          />
+                          {formErrors.username ? (
+                            <p className="m-b-0">{formErrors.username}</p>
+                          ) : (
+                            <></>
+                          )}
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                  <Box className="d-flex width-100 next-step">
+                    <LoadingButton
+                      loading={
+                        this.props.forgotPwd.status === status.IN_PROGRESS
+                          ? true
+                          : false
+                      }
+                      className="primary-btn"
+                      onClick={this.handleSignIn}
+                      variant="contained"
+                    >
+                      Reset your password
+                    </LoadingButton>
+                  </Box>
+                </form>
               </Box>
-              <Box className="d-flex width-100 next-step">
-                <Button
-                  className="primary-btn"
-                  onClick={this.handleSignIn}
-                  variant="contained"
-                >
-                  <Link to={`${AUTH_PREFIX_PATH}/resetpassword`}>
-                    Reset your password
-                  </Link>
-                </Button>
-              </Box>
-            </form>
+            </Box>
+            <Box className="forget-right">
+              <img src={ForgotPasswordImage} alt="forget-image" />
+            </Box>
           </Box>
-        </Box>
-        <Box className="forget-right">
-          <img src={ForgotPasswordImage} alt="forget-image" />
-        </Box>
-      </Box>
+        ) : (
+          <ResetPassword userName={this.state.formData.username} />
+        )}
+      </>
     );
   }
 }
 
-export default ForgetPassword;
+const mapStateToProps = (state) => {
+  const { forgotPwd } = state.auth;
+  return { forgotPwd };
+};
+
+const mapDispatchToProps = {
+  forgotPassword,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(ForgetPassword));

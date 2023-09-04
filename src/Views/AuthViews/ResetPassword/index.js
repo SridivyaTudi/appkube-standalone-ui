@@ -6,19 +6,23 @@ import { Link } from "react-router-dom";
 import { AUTH_PREFIX_PATH } from "Configs/AppConfig";
 import Button from "@mui/material/Button";
 import ConfirmPasswordImage from "assets/img/login/confirm-password-image.png";
+import { resetPassword } from "Redux/Auth/AuthThunk";
+import status from "Redux/Constants/CommonDS";
+import { connect } from "react-redux";
 
 class ResetPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       formData: {
-        confirmPassword: "",
+        otp: "",
+        newPassword: "",
         password: "",
-        //showPassword: false,
       },
       formErrors: {
-        confirmPassword: "",
+        newPassword: "",
         password: "",
+        otp: "",
       },
       isSubmit: false,
       sendEmail: false,
@@ -29,56 +33,84 @@ class ResetPassword extends Component {
     };
   }
 
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      prevProps.resetPwd.status !== this.props.resetPwd.status &&
+      this.props.resetPwd.status === status.SUCCESS
+    ) {
+      this.setState({ toggleScreen: true, imageVisibility: true });
+    }
+  };
+
   handleInputChange = (e) => {
     const { name, value } = e.target;
     const { formData, formErrors } = this.state;
-
     formData[name] = value;
-
     this.setState({ formData, formErrors });
   };
 
   handleSignIn = (e) => {
     e.preventDefault();
+    const { formData } = this.state;
     const valid = this.validateForm(true);
     this.setState({
       isSubmit: true,
     });
     if (valid.isValid) {
-      this.setState({ toggleScreen: true, imageVisibility: true });
+      const data = {
+        userName: this.props.userName,
+        token: formData.otp,
+        oldPassword: formData.password,
+        newPassword: formData.newPassword,
+      };
+      this.props.resetPassword(data);
     }
   };
 
   validateForm = (isSubmit) => {
     const { formData } = this.state;
-    // debugger;
     const errors = {
-      confirmPassword: "",
+      newPassword: "",
       password: "",
+      otp: "",
     };
     let isValid = true;
     if (isSubmit) {
+      if (!formData.otp) {
+        errors.otp = "Please enter OTP!";
+        isValid = false;
+      } else {
+        errors.otp = "";
+      }
+
       if (!formData.password) {
         errors.password = "Please enter password";
+        isValid = false;
+      } else if (
+        !/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(
+          formData.password
+        )
+      ) {
+        errors.password = "Please enter strong password";
         isValid = false;
       } else {
         errors.password = "";
       }
 
-      if (formData.confirmPassword !== formData.password) {
-        errors.confirmPassword = "Password does not matched";
+      if (formData.newPassword !== formData.password) {
+        errors.newPassword = "Password does not matched";
         isValid = false;
       } else {
-        errors.confirmPassword = "";
+        errors.newPassword = "";
       }
     }
+
     return { isValid, errors };
   };
 
   render() {
     const {
       formData,
-      formErrors,
       toggleScreen,
       imageVisibility,
       errors,
@@ -124,36 +156,24 @@ class ResetPassword extends Component {
                     <Grid item xs={12}>
                       <Box className="input-group">
                         <label className="d-block" htmlFor="otp">
-                          Enter OTP{" "}
+                          Enter OTP
                         </label>
                         <input
                           id="otp"
-                          type={showPassword ? "text" : "password"}
+                          type="text"
                           className="form-control"
                           name="otp"
-                          //value={formData.password}
+                          value={formData.otp}
                           placeholder="Enter OTP received in your email"
                           onChange={this.handleInputChange}
                           autoComplete="on"
                         />
-                        {/* <p> {errorData.errors.password}</p> */}
-
-                        {errorData.password ? (
-                          <p className="m-b-0">{errors.password}</p>
+                        <p> {errorData.errors.otp}</p>
+                        {errorData.otp ? (
+                          <p className="m-b-0">{errors.otp}</p>
                         ) : (
                           <></>
                         )}
-                        <i
-                          className={`fa-sharp fa-regular fa-eye${
-                            showPassword ? "" : "-slash"
-                          }`}
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            this.setState({
-                              showPassword: !this.state.showPassword,
-                            });
-                          }}
-                        ></i>
                       </Box>
                     </Grid>
                     <Grid item xs={12}>
@@ -193,23 +213,23 @@ class ResetPassword extends Component {
                     </Grid>
                     <Grid item xs={12}>
                       <Box className="input-group">
-                        <label className="d-block" htmlFor="confirmPassword">
+                        <label className="d-block" htmlFor="newPassword">
                           Re enter your password
                         </label>
                         <input
-                          id="confirmPassword"
+                          id="newPassword"
                           type={showconfirmPassword ? "text" : "password"}
                           className="form-control"
-                          name="confirmPassword"
+                          name="newPassword"
                           placeholder="Re enter your password here"
-                          value={formData.confirmPassword}
+                          value={formData.newPassword}
                           onChange={this.handleInputChange}
                           autoComplete="on"
                         />
-                        <p>{errorData.errors.confirmPassword}</p>
+                        <p>{errorData.errors.newPassword}</p>
 
-                        {errorData.confirmPassword ? (
-                          <p className="m-b-0">{errors.confirmPassword}</p>
+                        {errorData.newPassword ? (
+                          <p className="m-b-0">{errors.newPassword}</p>
                         ) : (
                           <></>
                         )}
@@ -265,7 +285,7 @@ class ResetPassword extends Component {
                   </Box>
                   <Box className="d-flex width-100 next-step">
                     <Button className="primary-btn" variant="contained">
-                      <Link to={`${AUTH_PREFIX_PATH}/signin`}> Continue</Link>
+                      <Link to={`${AUTH_PREFIX_PATH}/signin`}>Continue</Link>
                     </Button>
                   </Box>
                 </Box>
@@ -289,4 +309,13 @@ class ResetPassword extends Component {
   }
 }
 
-export default ResetPassword;
+const mapStateToProps = (state) => {
+  const { resetPwd } = state.auth;
+  return { resetPwd };
+};
+
+const mapDispatchToProps = {
+  resetPassword,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);
