@@ -64,108 +64,73 @@ class ForgetPassword extends Component {
     return (
       <Box className="forget-container">
         <Box className="forget-left">
-          {!toggleScreen ? (
-            <Box className="forget-left-content">
-              <Box className="d-block width-100 back-btn">
-                <Button
-                  className="secondary-text-btn min-width-inherit"
-                  to={`${AUTH_PREFIX_PATH}/signin`}
-                  variant="outlined"
-                  component={Link}
-                >
-                  <i className="fa-solid fa-chevron-left"></i>
-                </Button>
-                <span>Appkube</span>
-              </Box>
-              <Box className="d-block width-100 forget-text">
-                <h2>Forget Password</h2>
-                <p>
-                  Enter the email address you used when you joines we'll send
-                  you instructions to reset your password.
-                </p>
-                <p>
-                  For security reasone, we do Not store your password. So rest
-                  assured thet we will never send your password via email.
-                </p>
-              </Box>
-              <form className="width-100" onSubmit={this.handleSignIn}>
-                <Box sx={{ width: "100%" }}>
-                  <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
-                    <Grid item xs={12}>
-                      <Box className="input-group">
-                        <label className="d-block" htmlFor="email">
-                          Email
-                        </label>
-                        <input
-                          id="email"
-                          type="text"
-                          className="form-control"
-                          name="email"
-                          placeholder="Input your email here"
-                          value={formData.email}
-                          onChange={this.handleInputChange}
-                          autoComplete="on"
-                        />
-                        {formErrors.email ? (
-                          <p className="m-b-0">{formErrors.email}</p>
-                        ) : (
-                          <></>
-                        )}
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Box>
-                <Box className="d-flex width-100 next-step">
-                  <Button
-                    className="primary-btn"
-                    onClick={this.handleSignIn}
-                    variant="contained"
-                  >
-                    Reset your password
-                  </Button>
-                </Box>
-              </form>
+          <Box className="forget-left-content">
+            <Box className="d-block width-100 back-btn">
+              <Button
+                className="secondary-text-btn min-width-inherit"
+                to={`${AUTH_PREFIX_PATH}/signin`}
+                variant="outlined"
+                component={Link}
+              >
+                <i className="fa-solid fa-chevron-left"></i>
+              </Button>
+              <span>Appkube</span>
             </Box>
-          ) : (
-            <Box className="forget-left-content">
-              <Box className="d-block width-100 back-btn">
-                <Button
-                  className="secondary-text-btn min-width-inherit"
-                  to={`${AUTH_PREFIX_PATH}/signin`}
-                  variant="outlined"
-                  component={Link}
+            <Box className="d-block width-100 forget-text">
+              <h2>Forget Password</h2>
+              <p>
+                Enter the email address you used when you joines we'll send you
+                instructions to reset your password.
+              </p>
+              <p>
+                For security reasone, we do Not store your password. So rest
+                assured thet we will never send your password via email.
+              </p>
+            </Box>
+            <form className="width-100" onSubmit={this.handleSignIn}>
+              <Box sx={{ width: "100%" }}>
+                <Grid
+                  container
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                 >
-                  <i className="fa-solid fa-chevron-left"></i>
-                </Button>
-                <span>Back to log in</span>
-              </Box>
-              <Box className="d-block width-100 forget-text m-b-0">
-                <h2>Check Your Email</h2>
-                <p>
-                  A password reset link has just been sent to your registered
-                  email address. This link will remain valid for the next few
-                  minutes. To proceed with resetting your password, simply click
-                  on the link provided and reset your password.
-                </p>
+                  <Grid item xs={12}>
+                    <Box className="input-group">
+                      <label className="d-block" htmlFor="email">
+                        Email
+                      </label>
+                      <input
+                        id="email"
+                        type="text"
+                        className="form-control"
+                        name="email"
+                        placeholder="Input your email here"
+                        value={formData.email}
+                        onChange={this.handleInputChange}
+                        autoComplete="on"
+                      />
+                      {formErrors.email ? (
+                        <p className="m-b-0">{formErrors.email}</p>
+                      ) : (
+                        <></>
+                      )}
+                    </Box>
+                  </Grid>
+                </Grid>
               </Box>
               <Box className="d-flex width-100 next-step">
-                <Button className="primary-btn" variant="contained">
+                <Button
+                  className="primary-btn"
+                  onClick={this.handleSignIn}
+                  variant="contained"
+                >
                   <Link to={`${AUTH_PREFIX_PATH}/resetpassword`}>
-                    Open email app
+                    Reset your password
                   </Link>
                 </Button>
               </Box>
-              <Box className="open-email-bottom-content">
-                <p>
-                  Didn’t receive the email? <a href="#">Click to resend</a>
-                </p>
-              </Box>
-            </Box>
-          )}
+            </form>
+          </Box>
         </Box>
         <Box className="forget-right">
           <img src={ForgotPasswordImage} alt="forget-image" />
