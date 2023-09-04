@@ -9,6 +9,7 @@ import ConfirmPasswordImage from "assets/img/login/confirm-password-image.png";
 import { resetPassword } from "Redux/Auth/AuthThunk";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 class ResetPassword extends Component {
   constructor(props) {
@@ -250,14 +251,19 @@ class ResetPassword extends Component {
                   </Grid>
                 </Box>
                 <Box className="d-flex width-100 next-step">
-                  <Button
+                  <LoadingButton
+                    loading={
+                      this.props.resetPwd.status === status.IN_PROGRESS
+                        ? true
+                        : false
+                    }
                     className="primary-btn min-width-inherit"
                     onClick={this.handleSignIn}
                     variant="contained"
                     type="submit"
                   >
                     Confirm
-                  </Button>
+                  </LoadingButton>
                 </Box>
               </Box>
             </form>
@@ -284,8 +290,13 @@ class ResetPassword extends Component {
                     </p>
                   </Box>
                   <Box className="d-flex width-100 next-step">
-                    <Button className="primary-btn" variant="contained">
-                      <Link to={`${AUTH_PREFIX_PATH}/signin`}>Continue</Link>
+                    <Button
+                      className="primary-btn"
+                      variant="contained"
+                      to={`${AUTH_PREFIX_PATH}/signin`}
+                      component={Link}
+                    >
+                      Continue
                     </Button>
                   </Box>
                 </Box>
