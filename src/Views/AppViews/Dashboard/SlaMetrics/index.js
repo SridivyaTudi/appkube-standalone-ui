@@ -9,21 +9,40 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { getSlaMetrics } from "Redux/Dashboard/DashboardThunk";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
 
 class SLAMetrics extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      slaData: undefined,
-      dataLoaded: false,
+      slaData: [],
     };
+  }
+
+  componentDidMount = () => {
+    this.props.getSlaMetrics();
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.slaMetrics.status !== this.props.slaMetrics.status &&
+      this.props.slaMetrics.status === status.SUCCESS &&
+      this.props.slaMetrics.data
+    ) {
+      const slaData = this.props.slaMetrics.data.length
+        ? this.props.slaMetrics.data
+        : [];
+      this.setState({ slaData });
+    }
   }
 
   handletableColor = (number) => {
     let color = "";
     if (number > 98) {
       color = "green";
-    } else if (number > 75 && number < 90) {
+    } else if (number > 90 && number < 98) {
       color = "orange";
     } else {
       color = "red";
@@ -31,38 +50,34 @@ class SLAMetrics extends Component {
     return color;
   };
 
-  showTableData = () => {
-    const { slaData } = this.state;
+  renderSlaMetricsTable = () => {
+    const { slaData: products } = this.state;
     let tableHTML = [];
-    if (slaData) {
-      let products = Object.keys(slaData);
-      products.forEach((product, index) => {
-        const productData = slaData[product];
+    if (products?.length) {
+      products.forEach((productData, index) => {
         tableHTML.push(
           <TableRow key={uuidv4()}>
-            <TableCell className="products"> {product} </TableCell>
+            <TableCell className="products"> {productData.name} </TableCell>
             <TableCell
-              className={this.handletableColor(productData.Performance)}
+              className={this.handletableColor(productData.performance)}
             >
-              {productData.Performance}%
+              {productData.performance}%
             </TableCell>
             <TableCell
-              className={this.handletableColor(productData.Availability)}
+              className={this.handletableColor(productData.availability)}
             >
-              {productData.Availability}%
+              {productData.availability}%
             </TableCell>
             <TableCell
-              className={this.handletableColor(productData.Reliability)}
+              className={this.handletableColor(productData.reliability)}
             >
-              {productData.Reliability}%
+              {productData.reliability}%
             </TableCell>
-            <TableCell className={this.handletableColor(productData.Security)}>
-              {productData.Security}%
+            <TableCell className={this.handletableColor(productData.security)}>
+              {productData.security}%
             </TableCell>
-            <TableCell
-              className={this.handletableColor(productData["End Usage"])}
-            >
-              {productData["End Usage"]}%
+            <TableCell className={this.handletableColor(productData.endUsage)}>
+              {productData.endUsage}%
             </TableCell>
           </TableRow>
         );
@@ -70,6 +85,7 @@ class SLAMetrics extends Component {
       return tableHTML;
     }
   };
+
   render() {
     return (
       <Box className="metrics-container">
@@ -86,56 +102,7 @@ class SLAMetrics extends Component {
                   <TableCell> End Usage </TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell className="products">Product 1</TableCell>
-                  <TableCell className="orange">89%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="red">67%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="products">Product 2</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="products">Product 3</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="orange">83%</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="products">Product 4</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="orange">86%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="products">Product 5</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="products">Product 6</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="orange">85%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                  <TableCell className="green">99%</TableCell>
-                </TableRow>
-              </TableBody>
+              <TableBody>{this.renderSlaMetricsTable()}</TableBody>
             </Table>
           </TableContainer>
           <Box className="metrics-performance">
@@ -154,5 +121,13 @@ class SLAMetrics extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  const { slaMetrics } = state.dashboard;
+  return { slaMetrics };
+}
 
-export default SLAMetrics;
+const mapDispatchToProps = {
+  getSlaMetrics,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SLAMetrics);

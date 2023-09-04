@@ -165,3 +165,15 @@ export const getServiceTypeWiseCost = createAsyncThunk(
     }
   }
 );
+
+export const getSlaMetrics = createAsyncThunk(
+  "dashboard/getSlaMetrics",
+  async () => {
+    try {
+      const response = await postLoginService.get(config.SLA_METRICS);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

@@ -12,6 +12,7 @@ import {
   getProductWiseCost,
   getProductionVsOther,
   getServiceTypeWiseCost,
+  getSlaMetrics,
 } from "Redux/Dashboard/DashboardThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -66,6 +67,10 @@ export const dashboardSlice = createSlice({
       status: null,
       data: [],
     },
+    slaMetrics: {
+      status: null,
+      data: [],
+    }
   },
   reducers: {},
   extraReducers: {
@@ -399,6 +404,34 @@ export const dashboardSlice = createSlice({
       return {
         ...state,
         serviceTypeWiseCost: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [getSlaMetrics.pending]: (state, action) => {
+      return {
+        ...state,
+        slaMetrics: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getSlaMetrics.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        slaMetrics: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getSlaMetrics.rejected]: (state, action) => {
+      return {
+        ...state,
+        slaMetrics: {
           status: status.FAILURE,
           data: [],
         },

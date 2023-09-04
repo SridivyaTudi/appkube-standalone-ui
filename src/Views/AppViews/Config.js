@@ -16,6 +16,7 @@ const config = {
   GET_MONTHLY_CLOUD_WISE_SPEND: `/query/organization/#org-id#/analytics/spend-analytics/monthly-cloud-wise-spend`,
   GET_TOTAL_BUDGET: `/query/organization/#org-id#/analytics/spend-analytics/total-budget`,
   GET_MONTHLY_STATISTICS: `/query/organization/#org-id#/analytics/spend-analytics/monthly-statistics`,
+  SLA_METRICS:`${baseURL}/query/organization/#org-id#/analytics/sla-analytics/product-wise-sla/associated`,
 
   /* ENVIRONMENT SERVICES  */
   GET_ALL_ENVIRONMENT_COUNT: `/query/organization/#org-id#/environment/count`,
