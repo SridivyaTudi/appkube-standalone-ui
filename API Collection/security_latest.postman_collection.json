@@ -40,7 +40,7 @@
 							"formdata": [
 								{
 									"key": "username",
-									"value": "home_test",
+									"value": "ss_test",
 									"type": "default"
 								},
 								{
@@ -50,12 +50,12 @@
 								},
 								{
 									"key": "password",
-									"value": "home_test",
+									"value": "ss_test",
 									"type": "default"
 								},
 								{
 									"key": "email",
-									"value": "home_test\n@yy.com",
+									"value": "ss_test@yy.com",
 									"type": "default"
 								}
 							],
@@ -320,6 +320,57 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "forgotPassword",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseSecurityUrl}}/users/forgot-password?userName=ABCD",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"users",
+								"forgot-password"
+							],
+							"query": [
+								{
+									"key": "userName",
+									"value": "ABCD"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"ABCD\",\r\n    \"token\":\"AoobjV\",\r\n    \"oldPassword\":\"password\",\r\n    \"newPassword\":\"abcd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/users/reset-password",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"users",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -512,9 +563,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base}}/public/login?username=test&password=password",
+							"raw": "{{baseSecurityUrl}}/public/login?username=home_test&password=home_test",
 							"host": [
-								"{{base}}"
+								"{{baseSecurityUrl}}"
 							],
 							"path": [
 								"public",
@@ -523,11 +574,11 @@
 							"query": [
 								{
 									"key": "username",
-									"value": "test"
+									"value": "home_test"
 								},
 								{
 									"key": "password",
-									"value": "password"
+									"value": "home_test"
 								}
 							]
 						}
@@ -645,13 +696,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseSecurityUrl}}/public/logout",
+							"raw": "{{baseSecurityUrl}}/public/logout?userName=home_test",
 							"host": [
 								"{{baseSecurityUrl}}"
 							],
 							"path": [
 								"public",
 								"logout"
+							],
+							"query": [
+								{
+									"key": "userName",
+									"value": "home_test"
+								}
 							]
 						}
 					},
@@ -688,6 +745,33 @@
 							"path": [
 								"public",
 								"authenticateGoogleMfa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "authenticateSession",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"home_test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/public/authenticateSession",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"public",
+								"authenticateSession"
 							]
 						}
 					},
@@ -1334,13 +1418,19 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseSecurityUrl}}/users/mfa-code",
+							"raw": "https://40fglalyd0.execute-api.us-east-1.amazonaws.com/dev/users/mfaCode",
+							"protocol": "https",
 							"host": [
-								"{{baseSecurityUrl}}"
+								"40fglalyd0",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
 							],
 							"path": [
+								"dev",
 								"users",
-								"mfa-code"
+								"mfaCode"
 							],
 							"query": [
 								{
@@ -1365,7 +1455,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\":\"home_test\",\r\n    \"token\":\"164387\",\r\n    \"mfaKey\":\"G4MQ6EAST4AGDN7JVIBACC6FC7MTSJVU\"\r\n}",
+							"raw": "{\r\n    \"userName\":\"home_test\",\r\n    \"token\":\"115151\",\r\n    \"mfaKey\":\"####################\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1392,7 +1482,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\":\"home_test\",\r\n    \"token\":\"618530\"\r\n}",
+							"raw": "{\r\n    \"userName\":\"home_test\",\r\n    \"token\":\"739674\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
