@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 
 export class Notification extends Component {
   constructor(props) {

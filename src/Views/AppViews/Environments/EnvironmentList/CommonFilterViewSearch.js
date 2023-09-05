@@ -3,7 +3,6 @@ import Aws from "assets/img/aws.png";
 import { CSVLink } from "react-csv";
 import { Link } from "react-router-dom";
 import Microsoftazure from "assets/img/microsoftazure.png";
-import config from "Views/AppViews/Config";
 import GoogleCloud from "assets/img/google-cloud.png";
 import Kubernetes from "assets/img/kubernetes.png";
 import { Box, Grid, List, ListItem } from "@mui/material";
@@ -53,14 +52,13 @@ class CommonFilterViewSearch extends Component {
 
   renderAccountList = () => {
     return this.state.allEnvs.map((item) => {
-      return item.environmentSummaryList.map((account, innerKey) => {
+      return item.environmentSummaryList.map((account) => {
         return (
           <ListItem key={v4()}>
             <Link
               to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}&landingZoneId=${account.landingZoneId}`}
               onClick={() => {
                 this.setState({ showServiceViewFilter: false });
-                // this.props.updateAccountId(account.landingZone);
               }}
             >
               <span>
@@ -85,11 +83,11 @@ class CommonFilterViewSearch extends Component {
     ) {
       this.setState({ vpcsDetails: this.props.data.vpcsDetails });
     }
-    if (prevProps.envSummary.status !== this.props.envSummary.status) {
-      if (
-        this.props.envSummary.status === status.SUCCESS &&
-        this.props.envSummary.data
-      ) {
+    if (
+      prevProps.envSummary.status !== this.props.envSummary.status &&
+      this.props.envSummary.status === status.SUCCESS
+    ) {
+      if (this.props.envSummary.data) {
         this.setState({
           allEnvs: this.props.envSummary.data,
         });
@@ -130,7 +128,6 @@ class CommonFilterViewSearch extends Component {
               to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}&landingZoneId=${item.landingZoneId}`}
               onClick={() => {
                 this.addAccountToRecentlyVisited(item);
-                // this.props.updateCurrentAccountId(item.accountId);
               }}
             >
               <span>
@@ -185,38 +182,23 @@ class CommonFilterViewSearch extends Component {
                 </Box>
                 <List>
                   <ListItem>
-                    <input
-                      type="checkbox"
-                      // onChange={() => this.handleChecked()}
-                    />
+                    <input type="checkbox" />
                     OU
                   </ListItem>
                   <ListItem>
-                    <input
-                      type="checkbox"
-                      // onChange={() => this.handleChecked()}
-                    />
+                    <input type="checkbox" />
                     Status
                   </ListItem>
                   <ListItem>
-                    <input
-                      type="checkbox"
-                      // onChange={() => this.handleChecked()}
-                    />
+                    <input type="checkbox" />
                     No of Assets
                   </ListItem>
                   <ListItem>
-                    <input
-                      type="checkbox"
-                      // onChange={() => this.handleChecked()}
-                    />
+                    <input type="checkbox" />
                     Logs
                   </ListItem>
                   <ListItem>
-                    <input
-                      type="checkbox"
-                      // onChange={() => this.handleChecked()}
-                    />
+                    <input type="checkbox" />
                     Performance & Availability
                   </ListItem>
                 </List>

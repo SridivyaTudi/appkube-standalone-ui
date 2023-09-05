@@ -544,7 +544,6 @@ class Environments extends Component {
       isRecentVisitedEnvMenuOpen,
       isAddNewEnvironmentShown,
       searchedKey,
-      envSummary,
       showFilterPopup,
       filters,
     } = this.state;

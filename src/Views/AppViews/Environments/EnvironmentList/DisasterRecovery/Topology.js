@@ -49,6 +49,7 @@ let topologyData = {
     [],
   ],
 };
+
 let resourceData = {
   web_layer: [
     {
@@ -239,6 +240,7 @@ class Topology extends Component {
       )
     );
   };
+
   render() {
     const { dataOfLevel1, breadcrumbs, selectedResource } = this.state;
     return (

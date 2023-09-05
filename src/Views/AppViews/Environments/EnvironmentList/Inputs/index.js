@@ -2,15 +2,12 @@ import React, { Component } from "react";
 import CommonFilterViewSearch from "Views/AppViews/Environments/EnvironmentList/CommonFilterViewSearch";
 import {
   Box,
-  Grid,
   TableContainer,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  List,
-  ListItem,
 } from "@mui/material";
 
 class Inputs extends Component {

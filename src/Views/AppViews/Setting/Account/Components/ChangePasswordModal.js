@@ -2,7 +2,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { Box } from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import { v4  } from 'uuid';
+import { v4 } from "uuid";
 
 class ChangePasswordModal extends Component {
   constructor(props) {

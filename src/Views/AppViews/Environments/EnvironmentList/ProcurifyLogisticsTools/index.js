@@ -11,8 +11,15 @@ import AccountPricing from "./AccountPricing";
 import Container from "./Container";
 import Database from "./Database";
 import Environments from "./Environments";
-//import {  } from "reactstrap";
-import {Box, Button, FormControl, MenuItem, Select, List, ListItem } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  MenuItem,
+  Select,
+  List,
+  ListItem,
+} from "@mui/material";
 
 export class ProcurifyLogisticsTools extends Component {
   tabMapping = [
@@ -40,15 +47,17 @@ export class ProcurifyLogisticsTools extends Component {
       country: "",
     };
   }
+
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
+
   handleChange = (event) => {
     this.setState({
       country: event.target.value,
     });
-    //    setAge(event.target.value);
   };
+
   render() {
     const { activeTab } = this.state;
     return (
@@ -142,14 +151,14 @@ export class ProcurifyLogisticsTools extends Component {
                 className="primary-outline-btn min-width-inherit"
                 variant="outlined"
               >
-                <i className="fa-solid fa-code-commit"></i> <span>02</span>{" "}
+                <i className="fa-solid fa-code-commit"></i> <span>02</span>
                 Commits
               </Button>
               <Button
                 className="primary-outline-btn min-width-inherit"
                 variant="outlined"
               >
-                <i className="fa-solid fa-code-branch"></i> <span>01</span>{" "}
+                <i className="fa-solid fa-code-branch"></i> <span>01</span>
                 Branch
               </Button>
               <Button
@@ -195,13 +204,12 @@ export class ProcurifyLogisticsTools extends Component {
                       inputProps={{ "aria-label": "Without label" }}
                     >
                       <MenuItem value="">
-                        <img  src={UsaFlag} alt="" className="p-r-5" /> USA
+                        <img src={UsaFlag} alt="" className="p-r-5" /> USA
                       </MenuItem>
                       <MenuItem value={10}>
                         <img src={UsaFlag} alt="" className="p-r-5" /> India
                       </MenuItem>
                       <MenuItem value={20}>
-                        {" "}
                         <img src={UsaFlag} alt="" className="p-r-5" /> china
                       </MenuItem>
                     </Select>
@@ -215,7 +223,7 @@ export class ProcurifyLogisticsTools extends Component {
                 <p>
                   <span>
                     <i className="fa-solid fa-gear"></i>
-                  </span>{" "}
+                  </span>
                   Running
                 </p>
               </Box>

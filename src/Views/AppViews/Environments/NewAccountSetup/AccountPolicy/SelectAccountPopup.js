@@ -92,7 +92,12 @@ class SelectAccountPopup extends Component {
           </button>
         </ModalHeader>
         <ModalBody
-          style={{ overflow: "hidden", overflowY: "auto", maxHeight: "300px", minHeight: "100px" }}
+          style={{
+            overflow: "hidden",
+            overflowY: "auto",
+            maxHeight: "300px",
+            minHeight: "100px",
+          }}
         >
           <h4 className="text-left m-b-1">Select OU</h4>
           {this.props?.organizationWiseDepartments?.status ===

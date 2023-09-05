@@ -190,7 +190,8 @@ function TopBar() {
                       />
                     </Box>
                     <Box className="details">
-                      <HtmlTooltip className="table-tooltip"
+                      <HtmlTooltip
+                        className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="details">
@@ -205,7 +206,8 @@ function TopBar() {
                           {getCurrentUserInfo().username}
                         </div>
                       </HtmlTooltip>
-                      <HtmlTooltip className="table-tooltip"
+                      <HtmlTooltip
+                        className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="details">

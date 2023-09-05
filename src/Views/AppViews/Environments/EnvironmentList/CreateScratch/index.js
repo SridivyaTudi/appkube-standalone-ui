@@ -6,6 +6,7 @@ import SelectRegion from "./SelectRegion";
 import ConfigureNodes from "./ConfigureNodes";
 import ReviewConfigureCreation from "./ReviewConfigureCreation";
 import { Box } from "@mui/material";
+
 class CreateScratch extends Component {
   constructor(props) {
     super(props);
@@ -26,32 +27,22 @@ class CreateScratch extends Component {
       },
       {
         name: "Select Region",
-        component: () => (
-          <SelectRegion/>
-        ),
+        component: () => <SelectRegion />,
       },
       {
         name: "Configure Topology",
-        component: () => (
-          <ConfigureTopology/>
-        ),
+        component: () => <ConfigureTopology />,
       },
       {
         name: "Configure Nodes",
-        component: () => (
-          <ConfigureNodes/>
-        ),
+        component: () => <ConfigureNodes />,
       },
       {
         name: "Review & Configure Creation",
-        component: () => (
-          <ReviewConfigureCreation/>
-        ),
+        component: () => <ReviewConfigureCreation />,
       },
     ];
   }
-
-  
 
   render() {
     const { formData } = this.state;

@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import fullAppIcon from "assets/img/assetmanager/full-app-icon.png";
-import noAvaliableBox from "assets/img/assetmanager/no-avaliable-box.png";
 import dataLayerTableIcon from "assets/img/assetmanager/data-layer-table-icon.png";
 import {
   Box,
@@ -227,7 +224,7 @@ class DrTopology extends Component {
   /** Render table level-1 data . */
   renderTableLevel1Data() {
     let { dataOfTableLevel1 } = this.state;
-    return dataOfTableLevel1.map((vpc, index) => {
+    return dataOfTableLevel1.map((vpc) => {
       return (
         <TableRow key={v4()}>
           <TableCell align="left">{vpc.eventType}</TableCell>
@@ -319,13 +316,6 @@ class DrTopology extends Component {
                 <Box className="heading">
                   <h3>Failover Activity Status</h3>
                 </Box>
-                {/* <Box className="no-avaliable-box">
-                  <div className="image">
-                    <img src={noAvaliableBox} alt="" />{" "}
-                  </div>
-                  <strong>No Activity Avaliable</strong>
-                  <p>Status will be displayed based on the request</p>
-                </Box> */}
                 <Box className="item-generated">
                   Today <span>#5336412</span>
                 </Box>

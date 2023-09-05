@@ -47,9 +47,11 @@ class DisasterRecovery extends Component {
     return (
       <Box className="disaster-recovery-container">
         {isActivityViewDetails ? (
-          <ActivityLogViewDetails backToDRS={()=>{
-            this.setState({isActivityViewDetails:false})
-          }} />
+          <ActivityLogViewDetails
+            backToDRS={() => {
+              this.setState({ isActivityViewDetails: false });
+            }}
+          />
         ) : (
           <Box className="services-panel-tabs">
             <Box className="tabs-head">
@@ -78,9 +80,13 @@ class DisasterRecovery extends Component {
             </Box>
             <Box className="tabs-content">
               {activeTab === 0 && <Topology />}
-              {activeTab === 1 && <DrTopology redirectViewDetails={()=>{
-                this.setState({isActivityViewDetails:true})
-              }} />}
+              {activeTab === 1 && (
+                <DrTopology
+                  redirectViewDetails={() => {
+                    this.setState({ isActivityViewDetails: true });
+                  }}
+                />
+              )}
               {activeTab === 2 && <Box>IOT Topology</Box>}
               {activeTab === 3 && <Box>Lake Topology</Box>}
               {activeTab === 4 && <Box>Mesh Topology</Box>}

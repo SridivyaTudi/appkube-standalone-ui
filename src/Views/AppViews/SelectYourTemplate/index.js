@@ -32,31 +32,38 @@ export class SelectYourTemplate extends Component {
       showDeployoPopup: false,
     };
   }
+
   handleTypePopup = () => {
     this.setState({
       showSelectTypePopup: !this.state.showSelectTypePopup,
-     
     });
   };
+
   handleLanguagePopup = () => {
     this.setState({
       showSelectLanguagePopup: !this.state.showSelectLanguagePopup,
-     
     });
   };
+
   handleInfoPopup = () => {
     this.setState({
       showInfoPopup: !this.state.showInfoPopup,
     });
   };
+
   handleDeployoPopup = () => {
     this.setState({
       showDeployoPopup: !this.state.showDeployoPopup,
     });
   };
- 
+
   render() {
-    const { showSelectTypePopup, showSelectLanguagePopup, showInfoPopup, showDeployoPopup } = this.state;
+    const {
+      showSelectTypePopup,
+      showSelectLanguagePopup,
+      showInfoPopup,
+      showDeployoPopup,
+    } = this.state;
     return (
       <Box className="select-your-template-container">
         <Box className="page-header">
@@ -110,7 +117,8 @@ export class SelectYourTemplate extends Component {
                 >
                   Express
                 </Button>
-                <Button onClick={this.handleTypePopup}
+                <Button
+                  onClick={this.handleTypePopup}
                   className="primary-outline-btn min-width-inherit"
                   variant="outlined"
                 >
@@ -169,13 +177,15 @@ export class SelectYourTemplate extends Component {
                 <span className="d-block name">Apache</span>
                 <span className="d-block sub-name">Tomcat</span>
                 <div className="d-flex m-t-3 buttons">
-                  <Button onClick={this.handleInfoPopup}
+                  <Button
+                    onClick={this.handleInfoPopup}
                     className="primary-outline-btn min-width-inherit m-r-3"
                     variant="outlined"
                   >
                     Info
                   </Button>
-                  <Button onClick={this.handleDeployoPopup}
+                  <Button
+                    onClick={this.handleDeployoPopup}
                     className="primary-btn min-width-inherit"
                     variant="contained"
                   >
@@ -407,7 +417,6 @@ export class SelectYourTemplate extends Component {
           <SelectTypePopup
             showModal={SelectTypePopup}
             handleTypePopup={this.handleTypePopup}
-           
           />
         ) : (
           <></>
@@ -416,7 +425,6 @@ export class SelectYourTemplate extends Component {
           <SelectLanguagePopup
             showModal={SelectLanguagePopup}
             handleLanguagePopup={this.handleLanguagePopup}
-           
           />
         ) : (
           <></>
@@ -425,7 +433,6 @@ export class SelectYourTemplate extends Component {
           <InfoPopup
             showModal={InfoPopup}
             handleInfoPopup={this.handleInfoPopup}
-           
           />
         ) : (
           <></>
@@ -434,7 +441,6 @@ export class SelectYourTemplate extends Component {
           <DeployPopup
             showModal={DeployPopup}
             handleDeployoPopup={this.handleDeployoPopup}
-           
           />
         ) : (
           <></>

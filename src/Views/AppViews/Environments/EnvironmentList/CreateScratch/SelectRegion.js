@@ -8,7 +8,6 @@ class SelectRegion extends Component {
   }
 
   render() {
-    const {  } = this.state;
     return (
       <Box>
         <h4>Select Region page</h4>

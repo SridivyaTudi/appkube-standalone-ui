@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 
 export class Billing extends Component {
   constructor(props) {

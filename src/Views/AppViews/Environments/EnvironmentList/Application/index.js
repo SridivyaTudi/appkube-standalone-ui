@@ -219,7 +219,7 @@ class Application extends Component {
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="left" className="p-l-15" >
+                  <TableCell align="left" className="p-l-15">
                     <Link
                       to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}
                     >

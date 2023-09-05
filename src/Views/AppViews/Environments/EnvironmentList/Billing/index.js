@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Box, Grid, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, List, ListItem } from "@mui/material";
+import {
+  Box,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 
 class Billing extends Component {
   constructor(props) {
@@ -8,7 +16,7 @@ class Billing extends Component {
   }
 
   render() {
-    const { } = this.state;
+    const {} = this.state;
     return (
       <Box className="environment-table-section">
         <TableContainer className="table">

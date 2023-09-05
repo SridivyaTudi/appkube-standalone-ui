@@ -93,11 +93,7 @@ class CreateFromScratch extends Component {
                 <Box className="form-group">
                   <label>Custom URL</label>
                   <Box className="d-flex">
-                    <input
-                      className="custom-url"
-                      type="text"
-                      placeholder=""
-                    />
+                    <input className="custom-url" type="text" placeholder="" />
                     <p>.appkube.com</p>
                   </Box>
                 </Box>

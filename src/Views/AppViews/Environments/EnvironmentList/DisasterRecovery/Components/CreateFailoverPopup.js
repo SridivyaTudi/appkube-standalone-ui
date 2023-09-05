@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Grid, Button, Box, List, ListItem } from "@mui/material";
+import { Grid, Button, Box } from "@mui/material";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import profileImg from "assets/img/assetmanager/profile-img.png";
@@ -93,9 +93,9 @@ class CreateFailoverPopup extends Component {
       }
     });
   };
+
   render() {
     const {
-      dateUpdate,
       formData: { title, schedule, description },
       isSubmit,
     } = this.state;

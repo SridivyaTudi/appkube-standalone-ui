@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { Button, Box, Grid, List, ListItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
-import chartLogo from "assets/img/assetmanager/chart-logo.png";
-import calendarMouseIcon from "assets/img/assetmanager/calendar-mouse-icon.png";
-import databaseIcon from "assets/img/assetmanager/database-icon.png";
 import topBottomArrow from "assets/img/assetmanager/top-bottom-arrow.png";
 import BusinessAssociationMapping from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/BusinessAssociationMapping";
 import { addService } from "Redux/AssociateApp/AssociateAppThunk";
@@ -20,18 +17,7 @@ import {
   setCurrentOrgName,
   getCurrentUser,
 } from "Utils";
-const inprogressStatus = status.IN_PROGRESS;
-const successStatus = status.SUCCESS;
-const failureStatus = status.FAILURE;
-const addServiceKeys = [
-  "tag",
-  "org",
-  "dep",
-  "product",
-  "type",
-  "module",
-  "service",
-];
+
 export class AssociateChartApp extends Component {
   constructor(props) {
     super(props);
@@ -48,18 +34,16 @@ export class AssociateChartApp extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.serviceCreation.status !== this.props.serviceCreation.status
+      prevProps.serviceCreation.status !== this.props.serviceCreation.status &&
+      this.props.serviceCreation.status === status.SUCCESS
     ) {
-      if (
-        this.props.serviceCreation.status === successStatus &&
-        this.props.serviceCreation?.data?.id
-      ) {
+      if (this.props.serviceCreation.data.id) {
         const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
         this.props.navigate(
           `${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`
         );
         ToastMessage.success("Service tagged successfully.");
-      } else if (this.props.serviceCreation.status === failureStatus) {
+      } else if (this.props.serviceCreation.status === status.FAILURE) {
         ToastMessage.error("Service is not tag  successfully.");
       }
     }
@@ -81,7 +65,6 @@ export class AssociateChartApp extends Component {
   renderBreadCrumbs(isBreadCrumb = 1) {
     let { activeLevels, levelsData, serviceName } = this.state;
     let activeBAM = Object.keys(activeLevels);
-
     let breadcrumbs = serviceName
       ? [
           <>
@@ -171,6 +154,7 @@ export class AssociateChartApp extends Component {
 
     return { instanceId, elementType, landingZone, landingZoneId, cloudName };
   }
+
   /**
    * Render Department or Product list
    *  @param {Number} isProduct - 1 if it is products, else 0 .
@@ -298,17 +282,12 @@ export class AssociateChartApp extends Component {
       resetBreadCrumb,
       productType,
     } = this.state;
-
     const { selectedLevel_0, selectedLevel_1 } = activeLevels;
-
     const departmentName = selectedLevel_0?.label || "";
     const productName = selectedLevel_1?.label || "";
-
     const activeLevelLength = Object.keys(activeLevels).length;
-
     const showBtn =
       productType === "SOA" ? activeLevelLength === 6 : activeLevelLength === 5;
-
     const {
       serviceCreation: { status: serviceCreationStatus },
     } = this.props;
@@ -454,8 +433,8 @@ export class AssociateChartApp extends Component {
             <LoadingButton
               className="primary-btn min-width"
               onClick={this.onClickAddService}
-              disabled={serviceCreationStatus === inprogressStatus}
-              loading={serviceCreationStatus === inprogressStatus}
+              disabled={serviceCreationStatus === status.IN_PROGRESS}
+              loading={serviceCreationStatus === status.IN_PROGRESS}
               loadingPosition="start"
               variant="contained"
             >

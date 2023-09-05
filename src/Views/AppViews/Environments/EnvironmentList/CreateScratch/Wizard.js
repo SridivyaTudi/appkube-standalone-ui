@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { ToastMessage } from "Toast/ToastMessage";
 import { withRouter } from "Views/AppViews/Environments/NewAccountSetup/AccountPolicy/withRouter";
-import {Button, Box} from "@mui/material";
+import { Button, Box } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { addCloudEnv } from "Redux/NewAccountSetup/NewAccountSetupThunk";
 import { connect } from "react-redux";
@@ -99,14 +99,6 @@ class Wizard extends Component {
       departmentId: Number(this.props.departmentId),
     };
     this.props.addCloudEnv(sendData);
-    // RestService.postData(config.ADD_CLOUD_ENV, sendData).then((response) => {
-    //   if (response.status === 500) {
-    //     ToastMessage.error(response.title);
-    //     return 1;
-    //   }
-    //   ToastMessage.success("Successfully new account created");
-    //   this.props.navigate("/app/environments");
-    // });
   };
 
   render() {
@@ -148,25 +140,13 @@ class Wizard extends Component {
               className="primary-btn"
               onClick={() => {
                 if (this.state.currentStep === 1) {
-                  //this.props.setIsSubmit(true);
                   this.setState({ isSubmit: true }, () => {
                     if (this.state.isSubmit) {
-                      //let { isValid } = this.props.validateCreateRoleForm();
-                      // if (isValid) {
-                        this.onClickStepButton(currentStep + 1);
-                      // }
+                      this.onClickStepButton(currentStep + 1);
                     }
                   });
                 } else if (this.state.currentStep === 2) {
                   this.onClickStepButton(currentStep + 1);
-                
-                  // if (!this.props.departmentId) {
-                  //   ToastMessage.error(
-                  //     "Please select any Organizational Unit."
-                  //   );
-                  // } else {
-                  //   this.onClickStepButton(currentStep + 1);
-                  // }
                 } else {
                   this.onClickStepButton(currentStep + 1);
                 }

@@ -105,7 +105,7 @@ class VpcDetails extends React.Component {
           </Box>
           <Box className="service-contant">
             <HtmlTooltip className="table-tooltip" title={item.elementType}>
-            <label>{item.elementType}</label>
+              <label>{item.elementType}</label>
             </HtmlTooltip>
             <strong>{item.elementList.length}</strong>
           </Box>
@@ -155,21 +155,7 @@ class VpcDetails extends React.Component {
     return (
       <>
         <Box className="fliter-tabs global-service-penal">
-          <Box className="cloud-managed-section">
-            {this.renderData()}
-            {/* <h4>Cloud Managed Services</h4>
-            <Box className="cloud-managed-cards">
-              <Box className="cloud-managed-cards-scroll">
-                {this.renderCloudManagedServices()}
-              </Box>
-            </Box>
-            <h4>Gateway Services</h4>
-            <Box className="cloud-managed-cards">
-              <Box className="cloud-managed-cards-scroll">
-                {this.renderGatewayServices()}
-              </Box>
-            </Box> */}
-          </Box>
+          <Box className="cloud-managed-section">{this.renderData()}</Box>
         </Box>
       </>
     );

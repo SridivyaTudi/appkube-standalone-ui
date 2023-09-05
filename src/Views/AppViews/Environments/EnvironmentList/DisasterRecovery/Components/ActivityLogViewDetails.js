@@ -12,6 +12,7 @@ class ActivityLogViewDetails extends Component {
     super(props);
     this.state = {};
   }
+
   // Render activity log steps
   renderSteps = () => {
     return (
@@ -133,7 +134,6 @@ class ActivityLogViewDetails extends Component {
                       <Button
                         className="primary-btn min-width"
                         variant="contained"
-                        
                       >
                         Switch DNS
                       </Button>
@@ -142,7 +142,10 @@ class ActivityLogViewDetails extends Component {
                       </span>
                     </li>
                     <li className="end">
-                      <Button className="primary-btn min-width" variant="contained">
+                      <Button
+                        className="primary-btn min-width"
+                        variant="contained"
+                      >
                         End
                       </Button>
                     </li>

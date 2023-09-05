@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Grid, Button, Box, List, ListItem } from "@mui/material";
+import { Modal, ModalBody } from "reactstrap";
+import { Button, Box, List, ListItem } from "@mui/material";
 import { v4 } from "uuid";
 
 class AccountStepsPopup extends Component {

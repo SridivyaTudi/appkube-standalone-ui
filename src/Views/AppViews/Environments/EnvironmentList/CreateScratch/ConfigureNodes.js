@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import { Component } from "react";
 
-class ConfigureNodes  extends Component {
+class ConfigureNodes extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -16,4 +16,4 @@ class ConfigureNodes  extends Component {
   }
 }
 
-export default ConfigureNodes ;
+export default ConfigureNodes;

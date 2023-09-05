@@ -118,16 +118,7 @@ class SignUp extends Component {
       if (!step1.password.trim()) {
         errors.password = "Password is required!";
         isValid = false;
-      }
-      // else if (
-      //   !/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(
-      //     step1.password
-      //   )
-      // ) {
-      //   errors.password = "Please enter valid password!";
-      //   isValid = false;
-      // }
-      else {
+      } else {
         errors.password = "";
       }
 
@@ -188,15 +179,6 @@ class SignUp extends Component {
     //Right now file is not being sent.
     const urlParms = `username=${step1.userName}&password=${step1.password}&organization=${step2.companyName}&email=${step1.email}`;
     this.props.signUp(urlParms);
-    // const formData = new FormData();
-    // formData.append("username", step1.userName);
-    // formData.append("organization", step2.companyName);
-    // formData.append("email", step1.email);
-    // formData.append("password", step1.password);
-    // if (step2.file) {
-    //   formData.append("file", step2.file);
-    // }
-    // this.props.signUp(formData);
   };
 
   render() {

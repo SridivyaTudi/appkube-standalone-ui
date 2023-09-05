@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ArcherContainer, ArcherElement } from "react-archer";
-import { Button, Box, List, ListItem } from "@mui/material";
+import { Button, List, ListItem } from "@mui/material";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import StepsStartedPopup from "./StepsStartedPopup";

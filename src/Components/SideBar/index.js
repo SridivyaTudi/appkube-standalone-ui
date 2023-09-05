@@ -15,7 +15,6 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 function SideBar() {
   let location = useLocation();
   let currentLocation = location.pathname;
-  let currentSubMenuLocation = location.pathname;
 
   const [isActive, setActive] = useState(false);
   const [isActiveSubMenu, setActiveSubMenu] = useState(true);

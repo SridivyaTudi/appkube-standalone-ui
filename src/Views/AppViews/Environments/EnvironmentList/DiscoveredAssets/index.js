@@ -19,7 +19,6 @@ import Checkbox from "@mui/material/Checkbox";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import TopologyView from "./Components/TopologyView";
-import VpcDetails from "./VpcDetails";
 import ClusterDetails from "./ClusterDetails";
 import AssociateApp from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/AssociateApp";
 import { v4 } from "uuid";
@@ -686,7 +685,6 @@ class DiscoveredAssets extends Component {
                     ) : (
                       <></>
                     )}
-                    {/* <VpcDetails vpc={currentVPC} /> */}
                   </Box>
                 </Grid>
               </Grid>

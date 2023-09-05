@@ -243,14 +243,6 @@ class TopologyView extends Component {
     });
   };
 
-  // zoomToElementCallback = (animationTime) => {
-  //   zoomElement(
-  //     this.state.currentActiveNode,
-  //     transformScale,
-  //     animationTime ? animationTime : 0
-  //   );
-  // };
-
   /** Get name in form of capitalize. */
   getServiceName(name) {
     let firstChar = name ? name.charAt(0) : "";

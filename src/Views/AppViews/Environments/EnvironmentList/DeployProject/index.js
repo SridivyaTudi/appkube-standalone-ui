@@ -29,17 +29,16 @@ class DeployProject extends Component {
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
               <Grid item xs={6}>
-              <Link to={`${APP_PREFIX_PATH}/environments/SelectYourTemplate`}>
-                <Box className="opration-card">
-                  <Box className="card-images">
-                    <img src={DeploymentImg1} alt="opration" />
+                <Link to={`${APP_PREFIX_PATH}/environments/SelectYourTemplate`}>
+                  <Box className="opration-card">
+                    <Box className="card-images">
+                      <img src={DeploymentImg1} alt="opration" />
+                    </Box>
+                    <Box className="card-title">Use Pre-existing Template</Box>
+                    <p>
+                      choose from Pre-existing templates to start your products
+                    </p>
                   </Box>
-                  <Box className="card-title">Use Pre-existing Template</Box>
-                  <p>
-                    choose from Pre-existing templates to start your products
-                  </p>
-                  
-                </Box>
                 </Link>
               </Grid>
               <Grid item xs={6}>

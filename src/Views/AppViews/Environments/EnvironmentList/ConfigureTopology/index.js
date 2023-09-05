@@ -7,7 +7,6 @@ import LangIcon from "assets/img/assetmanager/lang-icon.png";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import ConfigureVartical from "./ConfigureVartical";
 import ConfigureHorizontal from "./ConfigureHorizontal";
 
 class ConfigureTopology extends Component {

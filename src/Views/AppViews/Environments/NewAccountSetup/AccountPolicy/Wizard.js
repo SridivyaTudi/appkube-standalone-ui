@@ -82,7 +82,7 @@ class Wizard extends Component {
       ToastMessage.success("Successfully new account created");
       this.props.navigate("/app/environments");
     }
-    
+
     if (this.props.finishPrevious && this.state.currentStep === 3) {
       this.onClickStepButton(this.state.currentStep - 1);
       this.props.previousStep("finishPrevStep");
