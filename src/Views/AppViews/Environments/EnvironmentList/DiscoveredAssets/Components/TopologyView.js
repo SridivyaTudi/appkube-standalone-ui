@@ -38,7 +38,7 @@ class TopologyView extends Component {
       topologyData: { data },
       activeView,
     } = this.state;
-    const { productEnclaveList, globalServiceList } = data;
+   
 
     const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
     const { cloudName } = this.getLandingZoneOrCloudName();
@@ -109,7 +109,7 @@ class TopologyView extends Component {
                   >
                     <div
                       className="services-text-box active"
-                      id={`${data.label}`}
+                      id={`${data && data.label}`}
                     >
                       <div className="d-flex">
                         <div className="account-image">
@@ -121,16 +121,16 @@ class TopologyView extends Component {
                         <div className="account-id">
                           <span className="d-block">Account ID</span>
                           <span id="custom_location_1" className="d-block">
-                            {data.landingZone}
+                            {data && data.landingZone}
                           </span>
                           {/* <span className="d-block">{data.subLabel}</span> */}
                         </div>
                       </div>
                     </div>
                   </ArcherElement>
-                  {productEnclaveList.length ? (
+                  {data && data.productEnclaveList.length ? (
                     this.renderChildNodes(
-                      [productEnclaveList, globalServiceList],
+                      [data.productEnclaveList, data.globalServiceList],
                       1,
                       activeView
                     )
