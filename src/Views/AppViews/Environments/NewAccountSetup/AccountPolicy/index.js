@@ -75,27 +75,32 @@ class AccountPolicy extends Component {
   };
 
   validateCreateRoleForm = () => {
-    const { formData } = this.state;
+    const {
+      formData: { displayName, roleArn, externalId },
+      isSubmit,
+    } = this.state;
     let isValid = true;
     let errors = {};
+
     let regex = /arn:aws:iam::([0-9]+(:user)+)\/[A-Za-z0-9]+/i;
-    if (this.state.isSubmit) {
-      if (!formData.displayName) {
+
+    if (isSubmit) {
+      if (!displayName) {
         errors = { ...errors, displayName: "Display name is required!" };
         isValid = false;
       } else {
         errors.displayName = "";
       }
-      if (!formData.roleArn) {
+      if (!roleArn) {
         errors.roleArn = "Role ARN is required!";
         isValid = false;
-      } else if (!regex.test(formData.roleArn)) {
+      } else if (!regex.test(roleArn)) {
         errors.roleArn = "Role ARN format is not valid!";
         isValid = false;
       } else {
         errors.roleArn = "";
       }
-      if (!formData.externalId) {
+      if (!externalId) {
         errors.externalId = "External ID is required!";
         isValid = false;
       } else {
@@ -113,7 +118,7 @@ class AccountPolicy extends Component {
   };
 
   render() {
-    const { formData } = this.state;
+    const { formData, isSubmit, checkedId, finishPrevious } = this.state;
     return (
       <Box className="new-account-container">
         <Box className="new-account-page-container">
@@ -122,8 +127,8 @@ class AccountPolicy extends Component {
             formData={formData}
             validateCreateRoleForm={this.validateCreateRoleForm}
             setIsSubmit={this.setIsSubmit}
-            isSubmit={this.state.isSubmit}
-            departmentId={this.state.checkedId}
+            isSubmit={isSubmit}
+            departmentId={checkedId}
             previousStep={(finishPrevStep) => {
               if (finishPrevStep === "finishPrevStep") {
                 this.setState({ finishPrevious: false });
@@ -131,7 +136,7 @@ class AccountPolicy extends Component {
                 this.props.previousStep();
               }
             }}
-            finishPrevious={this.state.finishPrevious}
+            finishPrevious={finishPrevious}
           />
         </Box>
       </Box>

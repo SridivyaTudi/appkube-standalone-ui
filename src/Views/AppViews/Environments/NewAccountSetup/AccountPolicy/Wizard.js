@@ -90,25 +90,31 @@ class Wizard extends Component {
   }
 
   createSubmit = () => {
-    const { formData } = this.props;
-    let accountId = formData.roleArn
+    const {
+      formData: { displayName, roleArn, externalId },
+    } = this.props;
+    let accountId = roleArn
       .match(/arn:aws:iam::([0-9]+(:user)+)\/[A-Za-z0-9]+/i)[1]
       .replace(":user", "");
     let sendData = {
       cloud: "AWS",
-      displayName: formData.displayName,
-      roleArn: formData.roleArn,
-      externalId: formData.externalId,
+      displayName,
+      roleArn,
+      externalId,
       status: "active",
-      accountId: accountId,
+      accountId,
       departmentId: Number(this.props.departmentId),
     };
     this.props.addLandingZone(sendData);
   };
 
   render() {
-    const { currentStep } = this.state;
-    const { steps } = this.props;
+    const { currentStep, isSubmit } = this.state;
+    const {
+      steps,
+      departmentId,
+      addLandingZoneState: { status: addLandingZoneStateStatus },
+    } = this.props;
     return (
       <>
         <Box className="new-account-tab-container">
@@ -144,18 +150,18 @@ class Wizard extends Component {
             <Button
               className="primary-btn m-r-2"
               onClick={() => {
-                if (this.state.currentStep === 1) {
+                if (currentStep === 1) {
                   this.props.setIsSubmit(true);
                   this.setState({ isSubmit: true }, () => {
-                    if (this.state.isSubmit) {
+                    if (isSubmit) {
                       let { isValid } = this.props.validateCreateRoleForm();
                       if (isValid) {
                         this.onClickStepButton(currentStep + 1);
                       }
                     }
                   });
-                } else if (this.state.currentStep === 2) {
-                  if (!this.props.departmentId) {
+                } else if (currentStep === 2) {
+                  if (!departmentId) {
                     ToastMessage.error(
                       "Please select any Organizational Unit."
                     );
@@ -184,16 +190,8 @@ class Wizard extends Component {
               </Button>
               <LoadingButton
                 onClick={this.createSubmit}
-                disabled={
-                  this.props.addLandingZoneState.status === status.IN_PROGRESS
-                    ? true
-                    : false
-                }
-                loading={
-                  this.props.addLandingZoneState.status === status.IN_PROGRESS
-                    ? true
-                    : false
-                }
+                disabled={addLandingZoneStateStatus === status.IN_PROGRESS}
+                loading={addLandingZoneStateStatus === status.IN_PROGRESS}
                 loadingPosition="start"
                 className="primary-btn"
                 variant="contained"

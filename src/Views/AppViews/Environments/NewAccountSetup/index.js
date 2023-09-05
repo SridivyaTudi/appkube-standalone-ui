@@ -16,9 +16,10 @@ export class NewAccountSetup extends Component {
   }
 
   render() {
-    return this.state.accountPolicy ? (
+    const { accountPolicy, service } = this.state;
+    return accountPolicy ? (
       <AccountPolicy
-        service={this.state.service}
+        service={service}
         previousStep={() => {
           this.setState({ accountPolicy: false });
         }}
@@ -48,7 +49,7 @@ export class NewAccountSetup extends Component {
                 <Grid item xs={6}>
                   <Box
                     className={`opration-card ${
-                      this.state.service == "read_mode" ? "active" : ""
+                      service == "read_mode" ? "active" : ""
                     }`}
                     onClick={() => {
                       this.setState({ service: "read_mode" });
@@ -81,7 +82,7 @@ export class NewAccountSetup extends Component {
                 <Grid item xs={6}>
                   <Box
                     className={`opration-card ${
-                      this.state.service == "automation_mode" ? "active" : ""
+                      service == "automation_mode" ? "active" : ""
                     }`}
                     onClick={() => {
                       this.setState({ service: "automation_mode" });

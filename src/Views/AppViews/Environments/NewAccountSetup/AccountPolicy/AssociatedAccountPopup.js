@@ -61,7 +61,7 @@ class AssociatedAccountPopup extends Component {
               </Button>
               <Button
                 className="primary-btn"
-                onClick={() => this.onClickCreateNewOu()}
+                onClick={this.onClickCreateNewOu}
                 variant="contained"
               >
                 Create New OU

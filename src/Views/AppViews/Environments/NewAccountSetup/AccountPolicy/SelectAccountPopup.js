@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { ToastMessage } from "../../../../../Toast/ToastMessage";
+import { ToastMessage } from "Toast/ToastMessage";
 import Button from "@mui/material/Button";
 import { getOrgWiseDepartments } from "Redux/Environments/EnvironmentsThunk";
 import { connect } from "react-redux";
@@ -39,13 +39,12 @@ class SelectAccountPopup extends Component {
   };
 
   handleCheck = (e) => {
-    const { currentSelectedDepId } = this.state;
+    let { currentSelectedDepId } = this.state;
     const { id } = e.target;
-    if (currentSelectedDepId === id) {
-      this.setState({ currentSelectedDepId: undefined });
-    } else {
-      this.setState({ currentSelectedDepId: id });
-    }
+    
+    this.setState({
+      currentSelectedDepId: currentSelectedDepId === id ? undefined : id,
+    });
   };
 
   renderDepartments() {
@@ -74,10 +73,12 @@ class SelectAccountPopup extends Component {
   }
 
   render() {
+    const { selectAccountPopupShow } = this.props;
+    const { departments, currentSelectedDepId } = this.state;
     return (
       <Modal
-        isOpen={this.props.selectAccountPopupShow}
-        toggle={() => this.props.toggleSelectAccountPopup()}
+        isOpen={selectAccountPopupShow}
+        toggle={this.props.toggleSelectAccountPopup}
         className="select-account-modal-container"
       >
         <ModalHeader>
@@ -86,7 +87,7 @@ class SelectAccountPopup extends Component {
             type="button"
             className="close"
             aria-label="Close"
-            onClick={() => this.props.toggleSelectAccountPopup()}
+            onClick={this.props.toggleSelectAccountPopup}
           >
             <i className="fa-solid fa-xmark"></i>
           </button>
@@ -112,7 +113,7 @@ class SelectAccountPopup extends Component {
                 alignItems={"center"}
                 justifyContent={"flex-start"}
               >
-                {this.state.departments && this.state.departments.length ? (
+                {departments && departments.length ? (
                   this.renderDepartments()
                 ) : (
                   <></>
@@ -136,10 +137,10 @@ class SelectAccountPopup extends Component {
             </Button>
             <Button
               onClick={() => {
-                if (!this.state.currentSelectedDepId) {
+                if (!currentSelectedDepId) {
                   ToastMessage.error("Please select any Organizational Unit.");
                 } else {
-                  this.props.setID(this.state.currentSelectedDepId);
+                  this.props.setID(currentSelectedDepId);
                   this.props.toggleSelectAccountPopup();
                 }
               }}
@@ -156,8 +157,8 @@ class SelectAccountPopup extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { environments } = state;
-  return environments;
+  const { organizationWiseDepartments } = state.environments;
+  return { organizationWiseDepartments };
 };
 
 const mapDispatchToProps = {

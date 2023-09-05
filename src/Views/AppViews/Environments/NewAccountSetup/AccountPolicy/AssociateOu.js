@@ -73,10 +73,18 @@ class AssociateOu extends Component {
   };
 
   render() {
-    const { selectAccountPopupShow } = this.state;
+    const {
+      selectAccountPopupShow,
+      isDepartmentCreated,
+      checkedId,
+      description,createNewOuPopupShow
+    } = this.state;
+    const {
+      roleDetails: { departmentName },
+    } = this.props;
     return (
       <>
-        {!this.state.isDepartmentCreated && !this.state.checkedId ? (
+        {!isDepartmentCreated && !checkedId ? (
           <Box className="d-inline-block width-100 new-account-setup-tab-contents">
             <h3>Associate OU</h3>
             <p>
@@ -87,7 +95,7 @@ class AssociateOu extends Component {
               <Box className="organizational-inner-boxs">
                 <Box
                   className="select-organizational"
-                  onClick={() => this.toggleSelectAccountPopup()}
+                  onClick={this.toggleSelectAccountPopup}
                 >
                   <Box className="organizational-image">
                     <img src={SelectExisting} alt="" />
@@ -113,8 +121,8 @@ class AssociateOu extends Component {
             <h3>Great Job!!</h3>
             <p>
               Selected Organizational Unit
-              <strong> {this.props.roleDetails.departmentName}</strong>. All you
-              need to do <br /> now is click on that
+              <strong> {departmentName}</strong>. All you need to do <br /> now
+              is click on that
               <strong>"Finished" </strong>
               button to move forward with the next step.
             </p>
@@ -122,11 +130,11 @@ class AssociateOu extends Component {
               <h3>Associate OU</h3>
               <Box className="contents">
                 <label>Name</label>
-                <p>{this.props.roleDetails.departmentName}</p>
+                <p>{departmentName}</p>
               </Box>
               <Box className="contents">
                 <label>Description</label>
-                <p>{this.state.description}</p>
+                <p>{description}</p>
               </Box>
               <Box
                 className="d-flex width-100 align-items-center"
@@ -136,7 +144,7 @@ class AssociateOu extends Component {
                   className="primary-text-btn min-width"
                   variant="contained"
                   style={{ paddingLeft: 0, textDecoration: "underline" }}
-                  onClick={() => this.toggleSelectAccountPopup()}
+                  onClick={this.toggleSelectAccountPopup}
                 >
                   Change ou
                 </Button>
@@ -152,21 +160,19 @@ class AssociateOu extends Component {
           </Box>
         )}
         <AssociatedAccountPopup
-          addModalOpen={() => {
-            this.toggleSelectAccountPopup();
-          }}
+          addModalOpen={this.toggleSelectAccountPopup}
           newDepartmentAppend={this.newDepartmentAppend}
         />
         <CreateNewOuPopup
-          toggleCreateNewOuPopupShow={this.state.createNewOuPopupShow}
+          toggleCreateNewOuPopupShow={createNewOuPopupShow}
           toggleCreateNewOuPopup={this.toggleCreateNewOuPopup}
           newDepartmentAppend={this.newDepartmentAppend}
         />
         {selectAccountPopupShow ? (
           <SelectAccountPopup
-            selectAccountPopupShow={this.state.selectAccountPopupShow}
+            selectAccountPopupShow={selectAccountPopupShow}
             toggleSelectAccountPopup={this.toggleSelectAccountPopup}
-            checkedId={this.state.checkedId}
+            checkedId={checkedId}
             setID={(checkedId) => {
               this.setState({ checkedId });
               this.props.setDepartment(

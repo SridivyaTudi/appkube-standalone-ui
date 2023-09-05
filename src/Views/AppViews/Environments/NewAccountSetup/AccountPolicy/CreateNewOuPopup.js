@@ -72,17 +72,19 @@ class CreateNewOuPopup extends Component {
 
   validate = (isSubmit) => {
     let isValid = true;
-    const { formData } = this.state;
+    const {
+      formData: { name, description },
+    } = this.state;
     let errors = {};
     if (isSubmit) {
-      if (!formData.name) {
+      if (!name) {
         isValid = false;
         errors = { ...errors, name: "OU Name is required!" };
       } else {
         errors = { ...errors, name: "" };
       }
 
-      if (!formData.description) {
+      if (!description) {
         isValid = false;
         errors = { ...errors, description: "OU Description is required!" };
       } else {
@@ -93,11 +95,19 @@ class CreateNewOuPopup extends Component {
   };
 
   render() {
-    const { formData, isSubmit } = this.state;
+    const {
+      formData: { name, description },
+      isSubmit,
+    } = this.state;
     const { isValid, errors } = this.validate(isSubmit);
+    const {
+      toggleCreateNewOuPopupShow,
+      createOu: { status: createOuStatus },
+    } = this.props;
+
     return (
       <Modal
-        isOpen={this.props.toggleCreateNewOuPopupShow}
+        isOpen={toggleCreateNewOuPopupShow}
         toggle={this.props.toggleCreateNewOuPopup}
         className="select-account-modal-container"
       >
@@ -120,7 +130,7 @@ class CreateNewOuPopup extends Component {
               type="text"
               name="name"
               placeholder="Synectiks01"
-              value={formData.name}
+              value={name}
               onChange={this.handleInput}
             />
             <span className="red">
@@ -133,7 +143,7 @@ class CreateNewOuPopup extends Component {
               className="form-control"
               name="description"
               placeholder="director is a senior exqcutive responsible for overseeing the strategic department."
-              value={formData.description}
+              value={description}
               onChange={this.handleInput}
             >
               {this.state.description}
@@ -155,12 +165,8 @@ class CreateNewOuPopup extends Component {
               Cancel
             </Button>
             <LoadingButton
-              disabled={
-                this.props.createOu.status === status.IN_PROGRESS ? true : false
-              }
-              loading={
-                this.props.createOu.status === status.IN_PROGRESS ? true : false
-              }
+              disabled={createOuStatus === status.IN_PROGRESS}
+              loading={createOuStatus === status.IN_PROGRESS}
               className="primary-btn"
               loadingPosition="start"
               variant="contained"
