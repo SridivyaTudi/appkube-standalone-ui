@@ -74,36 +74,34 @@ class Environments extends Component {
       prevProps.environmentCountData.status !==
       this.props.environmentCountData.status
     ) {
-      if (this.props.environmentCountData.status === status.SUCCESS) {
+      const environmentCountData = this.props.environmentCountData;
+      if (environmentCountData.status === status.SUCCESS) {
         this.setState({
-          environmentCountData: this.props.environmentCountData.data,
+          environmentCountData: environmentCountData.data,
         });
-      } else if (this.props.environmentCountData.status === status.FAILURE) {
+      } else if (environmentCountData.status === status.FAILURE) {
         ToastMessage.error("There is some issue.");
       }
     }
     if (prevProps.envSummary.status !== this.props.envSummary.status) {
-      if (
-        this.props.envSummary.status === status.SUCCESS &&
-        this.props.envSummary.data
-      ) {
+      const envSummary = this.props.envSummary;
+      if (envSummary.status === status.SUCCESS && envSummary.data) {
         this.setState({
-          envSummary: this.props.envSummary.data,
-          searchedEnvSummary: JSON.parse(
-            JSON.stringify(this.props.envSummary.data)
-          ),
+          envSummary: envSummary.data,
+          searchedEnvSummary: JSON.parse(JSON.stringify(envSummary.data)),
           showFilterPopup: false,
         });
-      } else if (this.props.envSummary.status === status.FAILURE) {
+      } else if (envSummary.status === status.FAILURE) {
         ToastMessage.error("There is some issue.");
       }
     }
   }
 
   renderEnvironmentCountData = () => {
-    if (this.props.environmentCountData.status === status.IN_PROGRESS) {
+    const environmentCount = this.props.environmentCountData;
+    if (environmentCount.status === status.IN_PROGRESS) {
       return <Loader className={"environment-loader w-100"} />;
-    } else if (this.props.environmentCountData.status === status.SUCCESS) {
+    } else if (environmentCount.status === status.SUCCESS) {
       const { environmentCountData } = this.state;
       let retData = [];
       if (environmentCountData?.length > 0) {
@@ -202,7 +200,8 @@ class Environments extends Component {
   };
 
   renderEnvironmentTable() {
-    if (this.props.envSummary.status === status.IN_PROGRESS) {
+    const envSummaryStatus = this.props.envSummary.status;
+    if (envSummaryStatus === status.IN_PROGRESS) {
       return (
         <Loader
           className={
@@ -210,7 +209,7 @@ class Environments extends Component {
           }
         />
       );
-    } else if (this.props.envSummary.status === status.SUCCESS) {
+    } else if (envSummaryStatus === status.SUCCESS) {
       const HtmlTooltip = styled(({ className, ...props }) => (
         <Tooltip {...props} arrow classes={{ popper: className }} />
       ))(({ theme }) => ({

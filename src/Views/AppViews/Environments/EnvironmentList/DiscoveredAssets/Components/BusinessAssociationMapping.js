@@ -264,7 +264,8 @@ class BusinessAssociationMapping extends Component {
       let { activeLevels, levelsData, serviceName, productType } = this.state;
       activeLevels = {};
       levelsData = [];
-      this.setStateOrProps(activeLevels, levelsData, serviceName, productType);
+      handleSetTransform(0, 0, 1);
+      this.setStateOrProps(activeLevels, levelsData, serviceName);
     }
   }
 
@@ -320,17 +321,18 @@ class BusinessAssociationMapping extends Component {
               instance,
               zoomToElement,
               setTransform,
+              resetTransform,
               ...rest
             }) => {
               transformScale = instance.transformState.scale;
               handleSetTransform = setTransform;
-
               return (
                 <>
                   <TransformComponent
                     contentStyle={{
                       alignItems: "center",
                       width: "2000px",
+                      minHeight: "300px",
                     }}
                   >
                     <ArcherElement
