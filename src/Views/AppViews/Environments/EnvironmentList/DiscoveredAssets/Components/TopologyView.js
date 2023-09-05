@@ -34,10 +34,15 @@ class TopologyView extends Component {
   };
 
   renderBody = () => {
-    const data = this.state.topologyData;
+    const {
+      topologyData: { data },
+      activeView,
+    } = this.state;
+    const { productEnclaveList, globalServiceList } = data;
+
     const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
-    const { activeView } = this.state;
     const { cloudName } = this.getLandingZoneOrCloudName();
+
     return (
       <ArcherContainer
         noCurves
@@ -123,9 +128,9 @@ class TopologyView extends Component {
                       </div>
                     </div>
                   </ArcherElement>
-                  {data.productEnclaveList.length ? (
+                  {productEnclaveList.length ? (
                     this.renderChildNodes(
-                      [data.productEnclaveList, data.globalServiceList],
+                      [productEnclaveList, globalServiceList],
                       1,
                       activeView
                     )
@@ -148,8 +153,9 @@ class TopologyView extends Component {
       let activeSublevel = -1;
       let activeNode = -1;
       if (activeView[currentLevel] !== -1) {
-        activeSublevel = parseInt(activeView[currentLevel].split(".")[0]);
-        activeNode = parseInt(activeView[currentLevel].split(".")[1]);
+        const activeViewArr = activeView[currentLevel].split(".");
+        activeSublevel = parseInt(activeViewArr[0]);
+        activeNode = parseInt(activeViewArr[1]);
       }
       const childJSX = [];
       nodes.map((item, sublevelIndex) => {
@@ -254,18 +260,19 @@ class TopologyView extends Component {
   };
 
   getChild = (level) => {
-    const { activeView } = this.state;
+    const {
+      topologyData: { productEnclaveList, globalServiceList },
+      activeView,
+    } = this.state;
     let retData = [
-      JSON.parse(JSON.stringify(this.state.topologyData.productEnclaveList)),
-      JSON.parse(JSON.stringify(this.state.topologyData.globalServiceList)),
+      JSON.parse(JSON.stringify(productEnclaveList)),
+      JSON.parse(JSON.stringify(globalServiceList)),
     ];
     for (let i = 0; i <= level; i++) {
       if (i === 0) {
         retData = [
-          JSON.parse(
-            JSON.stringify(this.state.topologyData.productEnclaveList)
-          ),
-          JSON.parse(JSON.stringify(this.state.topologyData.globalServiceList)),
+          JSON.parse(JSON.stringify(productEnclaveList)),
+          JSON.parse(JSON.stringify(globalServiceList)),
         ];
       } else {
         if (activeView[i] && activeView[i] !== -1) {
@@ -308,10 +315,10 @@ class TopologyView extends Component {
   };
 
   render() {
-    const { data } = this.props;
+    const { data, parentCssClass } = this.props;
     return (
       <>
-        <Box className={`${this.props.parentCssClass} topology-view`}>
+        <Box className={`${parentCssClass} topology-view`}>
           {Object.keys(data).length ? this.renderBody() : <></>}
         </Box>
       </>

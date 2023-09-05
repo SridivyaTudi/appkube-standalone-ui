@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CloudManagedDetails from "./CloudManagedDetails";
+import CloudManagedDetails from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/CloudManagedDetails";
 import {
   IconButton,
   Box,
@@ -18,8 +18,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
-import TopologyView from "./Components/TopologyView";
-import ClusterDetails from "./ClusterDetails";
+import TopologyView from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
+import ClusterDetails from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/ClusterDetails";
 import AssociateApp from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/AssociateApp";
 import { v4 } from "uuid";
 import { LOGOS } from "CommonData";
@@ -33,9 +33,9 @@ import {
   getGlobalServiceCloudElements,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { getCurrentOrgId } from "Utils";
-import LambdaTable from "./LambdaTable";
+import LambdaTable from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/LambdaTable";
 import Loader from "Components/Loader";
-import GlobalServicesSummaryTable from "./GlobalServicesSummaryTable";
+import GlobalServicesSummaryTable from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/GlobalServicesSummaryTable";
 
 const orgId = getCurrentOrgId();
 
@@ -69,8 +69,7 @@ class DiscoveredAssets extends Component {
   }
 
   componentDidMount = () => {
-    const queryPrm = new URLSearchParams(document.location.search);
-    const landingZoneId = queryPrm.get("landingZoneId");
+    const { landingZoneId } = this.getUrlDetails();
     this.props.getEnvironmentDataByLandingZone({
       orgID: orgId,
       landingZoneId: landingZoneId,
@@ -79,10 +78,7 @@ class DiscoveredAssets extends Component {
   };
 
   componentDidUpdate = async (prevProps, prevState) => {
-    const queryPrm = new URLSearchParams(document.location.search);
-    const landingZone = queryPrm.get("landingZone");
-    const landingZoneId = queryPrm.get("landingZoneId");
-
+    const { landingZone, landingZoneId } = this.getUrlDetails();
     if (
       prevProps.envDataByLandingZone.status !==
         this.props.envDataByLandingZone.status &&
@@ -94,19 +90,20 @@ class DiscoveredAssets extends Component {
     if (prevState.currentActiveNode !== this.state.currentActiveNode) {
       if (this.state.currentActiveNode === null) {
         this.props.getGlobalServiceCategoryWiseSummary({
-          orgId: getCurrentOrgId(),
-          landingZoneId: landingZoneId,
+          orgId,
+          landingZoneId,
         });
       } else {
+        const { currentActiveNode: productEnclave } = this.state;
         this.props.GetInfraTopologyCloudElementList({
           orgID: orgId,
-          landingZone: landingZone,
-          productEnclave: this.state.currentActiveNode,
+          landingZone,
+          productEnclave,
         });
         this.props.getInfraTopologyCategoryWiseViewData({
           orgID: orgId,
-          landingZone: landingZone,
-          productEnclave: this.state.currentActiveNode,
+          landingZone,
+          productEnclave,
         });
       }
     }
@@ -116,15 +113,14 @@ class DiscoveredAssets extends Component {
         this.props.infraTopologyCloudElementList.status &&
       this.props.infraTopologyCloudElementList.status === status.SUCCESS
     ) {
+      const { data } = this.props.infraTopologyCloudElementList;
       this.setState(
         {
-          cloudElementsData: this.props.infraTopologyCloudElementList.data,
+          cloudElementsData: data,
         },
         () => {
-          if (this.props.infraTopologyCloudElementList.data.length) {
-            this.setCurrentTopologyCategory(
-              this.props.infraTopologyCloudElementList.data[0].elementType
-            );
+          if (data.length) {
+            this.setCurrentTopologyCategory(data[0].elementType);
           }
         }
       );
@@ -135,32 +131,32 @@ class DiscoveredAssets extends Component {
         this.props.infraTopologyCategoryWiseData.status &&
       this.props.infraTopologyCategoryWiseData.status === status.SUCCESS
     ) {
-      let eksData;
-      let ecsData;
-      this.props.infraTopologyCategoryWiseData.data.map((item) => {
+      let eksMetaData;
+      let ecsMetaData;
+      const { data } = this.props.infraTopologyCategoryWiseData;
+      data.map((item) => {
         if (item.elementType === "ECS") {
           const newKey = "noOfEcs";
           const newValue = item.totalRecord;
           const newObject = { [newKey]: newValue, ...item.metadata };
-          ecsData = newObject;
+          ecsMetaData = newObject;
         }
         if (item.elementType === "EKS") {
           const newKey = "noOfEks";
           const newValue = item.totalRecord;
           const newObject = { [newKey]: newValue, ...item.metadata };
-          eksData = newObject;
+          eksMetaData = newObject;
         }
       });
-      if (this.props.infraTopologyCategoryWiseData.data.length) {
+      if (data.length) {
         this.setState({
-          currentActiveTopologyCategory:
-            this.props.infraTopologyCategoryWiseData.data[0].elementType,
+          currentActiveTopologyCategory: data[0].elementType,
         });
       }
       this.setState({
-        topologyCategoryWiseData: this.props.infraTopologyCategoryWiseData.data,
-        ecsMetaData: ecsData,
-        eksMetaData: eksData,
+        topologyCategoryWiseData: data,
+        ecsMetaData,
+        eksMetaData,
       });
     }
 
@@ -169,10 +165,10 @@ class DiscoveredAssets extends Component {
         this.props.infraTopologyLambdaTable.status &&
       this.props.infraTopologyLambdaTable.status === status.SUCCESS
     ) {
-      const lambdaData = [];
+      const lambdaTableData = [];
       this.props.infraTopologyLambdaTable.data.map((item) => {
         if (item.configJson) {
-          lambdaData.push({
+          lambdaTableData.push({
             functionName: item.instanceName,
             responseTime: item.configJson?.responseTime,
             duration: item.configJson?.duration,
@@ -188,7 +184,7 @@ class DiscoveredAssets extends Component {
           });
         }
       });
-      this.setState({ lambdaTableData: lambdaData });
+      this.setState({ lambdaTableData });
     }
 
     if (
@@ -196,10 +192,10 @@ class DiscoveredAssets extends Component {
         this.props.globalServiceData.status &&
       this.props.globalServiceData.status === status.SUCCESS
     ) {
+      const { data } = this.props.globalServiceData;
       this.setState({
-        globalServicesSummaryData: this.props.globalServiceData.data,
-        currentActiveGlobalServiceCategory:
-          this.props.globalServiceData.data[0].elementType,
+        globalServicesSummaryData: data,
+        currentActiveGlobalServiceCategory: data[0].elementType,
       });
     }
 
@@ -208,10 +204,10 @@ class DiscoveredAssets extends Component {
         this.props.globalServicesCloudElements.status &&
       this.props.globalServicesCloudElements.status === status.SUCCESS
     ) {
-      const lambdaData = [];
+      const lambdaTableData = [];
       this.props.globalServicesCloudElements.data.map((item) => {
         if (item.configJson) {
-          lambdaData.push({
+          lambdaTableData.push({
             functionName: item.instanceName,
             responseTime: item.configJson?.responseTime,
             duration: item.configJson?.duration,
@@ -227,34 +223,39 @@ class DiscoveredAssets extends Component {
           });
         }
       });
-      this.setState({ lambdaTableData: lambdaData });
+      this.setState({ lambdaTableData });
     }
   };
 
   setCurrentTopologyCategory = (category) => {
-    const { cloudElementsData, currentActiveNodeId } = this.state;
+    let {
+      cloudElementsData,
+      currentActiveNodeId: productEnclave,
+      selectedCategoryCloudElementsData,
+    } = this.state;
+    const { landingZoneId: landingZone } = this.getUrlDetails();
+
+    selectedCategoryCloudElementsData = [];
+
+    if (category === "Lambda") {
+      this.props.getInfraTopologyLambdaTableData({
+        elementType: category,
+        landingZone,
+        productEnclave,
+      });
+    } else {
+      cloudElementsData.map((item) => {
+        if (item.elementType === category) {
+          selectedCategoryCloudElementsData.push(item);
+        }
+      });
+    }
+
     this.setState({
+      selectedCategoryCloudElementsData,
       currentActiveTopologyCategory: category,
       currentActiveGlobalServiceCategory: "",
     });
-    if (category === "Lambda") {
-      this.setState({ selectedCategoryCloudElementsData: [] });
-      const queryPrm = new URLSearchParams(document.location.search);
-      const landingZone = queryPrm.get("landingZoneId");
-      this.props.getInfraTopologyLambdaTableData({
-        elementType: category,
-        landingZone: landingZone,
-        productEnclave: currentActiveNodeId,
-      });
-    } else {
-      const newArray = [];
-      cloudElementsData.map((item) => {
-        if (item.elementType === category) {
-          newArray.push(item);
-        }
-      });
-      this.setState({ selectedCategoryCloudElementsData: newArray });
-    }
   };
 
   setCurrentGlobalDataCategory = (category) => {
@@ -266,16 +267,9 @@ class DiscoveredAssets extends Component {
   };
 
   toggleMenu = (index) => {
-    const { showMenu } = this.state;
-    if (showMenu === null) {
-      this.setState({
-        showMenu: index,
-      });
-    } else {
-      this.setState({
-        showMenu: null,
-      });
-    }
+    let { showMenu } = this.state;
+    showMenu = showMenu === null ? index : null;
+    this.setState({ showMenu });
   };
 
   /** Render the BreadCrumbs of Topologyview. */
@@ -303,8 +297,8 @@ class DiscoveredAssets extends Component {
     });
   }
 
-  handleTierTabToggle = (type) => {
-    this.setState({ activeTierTab: type });
+  handleTierTabToggle = (activeTierTab) => {
+    this.setState({ activeTierTab });
   };
 
   setCurrentActiveNode = (node, nodeLevelData, nodeID) => {
@@ -331,9 +325,14 @@ class DiscoveredAssets extends Component {
 
   /** Render Table for 3 Tier Tab */
   render3TierTableData() {
-    let { data } = this.state;
+    let {
+      data: { productEnclaveList },
+      showMenu,
+    } = this.state;
+    const { cloudName } = this.getUrlDetails();
+
     const tableBodyJSX = [];
-    data.productEnclaveList.map((vpc, index) => {
+    productEnclaveList.map((vpc, index) => {
       tableBodyJSX.push(
         <TableRow key={v4()}>
           <TableCell align="center">{vpc.instanceId}</TableCell>
@@ -352,7 +351,7 @@ class DiscoveredAssets extends Component {
               <i className="fas fa-ellipsis-v"></i>
             </IconButton>
 
-            {this.state.showMenu === index && (
+            {showMenu === index && (
               <>
                 <Box
                   className="open-create-menu-close"
@@ -392,12 +391,8 @@ class DiscoveredAssets extends Component {
                 <TableCell>
                   <Box className="environment-image">
                     <img
-                      src={
-                        LOGOS[this.getLandingZoneOrCloudName().cloudName]
-                          ? LOGOS[this.getLandingZoneOrCloudName().cloudName]
-                          : ""
-                      }
-                      alt={this.getLandingZoneOrCloudName().cloudName}
+                      src={LOGOS[cloudName] ? LOGOS[cloudName] : ""}
+                      alt={cloudName}
                     />
                   </Box>
                 </TableCell>
@@ -419,9 +414,13 @@ class DiscoveredAssets extends Component {
 
   /**Render Table for Soa Tab */
   renderSoaTableData() {
-    let { data } = this.state;
+    let {
+      data: { productEnclaveList },
+      showMenu,
+    } = this.state;
+    const { cloudName } = this.getUrlDetails();
     const tableBodyJSX = [];
-    data.productEnclaveList.map((vpc, index) => {
+    productEnclaveList.map((vpc, index) => {
       tableBodyJSX.push(
         <TableRow key={v4()}>
           <TableCell align="center">{vpc.id}</TableCell>
@@ -439,7 +438,7 @@ class DiscoveredAssets extends Component {
               <i className="fas fa-ellipsis-v"></i>
             </IconButton>
 
-            {this.state.showMenu === index && (
+            {showMenu === index && (
               <>
                 <Box
                   className="open-create-menu-close"
@@ -478,7 +477,10 @@ class DiscoveredAssets extends Component {
               <TableRow>
                 <TableCell>
                   <Box className="environment-image">
-                    <img src={LOGOS.AWS} alt={"aws".toUpperCase()} />
+                    <img
+                      src={LOGOS[cloudName] ? LOGOS[cloudName] : ""}
+                      alt={cloudName}
+                    />
                   </Box>
                 </TableCell>
                 <TableCell>Products</TableCell>
@@ -519,11 +521,12 @@ class DiscoveredAssets extends Component {
     );
   };
 
-  getLandingZoneOrCloudName = () => {
+  getUrlDetails = () => {
     const queryPrm = new URLSearchParams(document.location.search);
     const landingZone = queryPrm.get("landingZone");
     const cloudName = queryPrm.get("cloudName")?.toUpperCase();
-    return { cloudName, landingZone };
+    const landingZoneId = queryPrm.get("landingZoneId");
+    return { cloudName, landingZone, landingZoneId };
   };
 
   render() {
@@ -538,13 +541,29 @@ class DiscoveredAssets extends Component {
       currentActiveTopologyCategory,
       cloudElementsData,
       currentActiveGlobalServiceCategory,
+      globalServicesSummaryData,
+      lambdaTableData,
     } = this.state;
-    const { envDataByLandingZone, departments } = this.props;
+    const {
+      envDataByLandingZone,
+      departments,
+      infraTopologyCloudElementList,
+      infraTopologyLambdaTable,
+      globalServicesCloudElements,
+    } = this.props;
+
+    const dataObjLength = data && Object.keys(data).length;
+    const currentActiveNodeNotNull =
+      !currentActiveNode && currentActiveNode !== null;
+
+    const soa3TierBtnCondition = dataObjLength && currentActiveNodeNotNull;
+
     return (
       <Box className="discovered-assets">
         <Box className="discovered-assets-body">
-          {envDataByLandingZone.status === status.IN_PROGRESS ||
-          departments.status === status.IN_PROGRESS ? (
+          {[envDataByLandingZone.status, departments.status].includes(
+            status.IN_PROGRESS
+          ) ? (
             <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
           ) : (
             <Box sx={{ width: "100%" }}>
@@ -562,7 +581,7 @@ class DiscoveredAssets extends Component {
                       </Box>
                     </Box>
                     <Box className="services-panel-body">
-                      {Object.keys(data).length > 0 ? (
+                      {dataObjLength ? (
                         <TopologyView
                           data={data}
                           parentCssClass="infra-toplogy-view"
@@ -620,14 +639,12 @@ class DiscoveredAssets extends Component {
                             size="small"
                             onChange={(e) => {
                               this.setState({ isClusterShow: !isClusterShow });
-                              if (e.target.checked) {
-                                this.setCurrentTopologyCategory("EKS");
-                              } else {
-                                this.setCurrentTopologyCategory(
-                                  this.props.infraTopologyCloudElementList
-                                    .data[0].elementType
-                                );
-                              }
+                              this.setCurrentTopologyCategory(
+                                e.target.checked
+                                  ? "EKS"
+                                  : infraTopologyCloudElementList.data[0]
+                                      .elementType
+                              );
                             }}
                             checked={isClusterShow}
                           />
@@ -637,16 +654,14 @@ class DiscoveredAssets extends Component {
                       </Box>
                     </Box>
                   </Box>
-                  {activeTierTab === "3Tier" &&
-                  Object.keys(data).length > 0 &&
-                  !currentActiveNode &&
-                  currentActiveNode !== null ? (
-                    this.render3TierTableData()
-                  ) : activeTierTab === "Soa" &&
-                    Object.keys(data).length > 0 &&
-                    !currentActiveNode &&
-                    currentActiveNode !== null ? (
-                    this.renderSoaTableData()
+                  {soa3TierBtnCondition ? (
+                    activeTierTab === "3Tier" ? (
+                      this.render3TierTableData()
+                    ) : activeTierTab === "Soa" ? (
+                      this.renderSoaTableData()
+                    ) : (
+                      <></>
+                    )
                   ) : (
                     <></>
                   )}
@@ -664,7 +679,7 @@ class DiscoveredAssets extends Component {
                     currentActiveNode !== null &&
                     !isClusterShow ? (
                       <>
-                        {this.props.infraTopologyCloudElementList.status ===
+                        {infraTopologyCloudElementList.status ===
                         status.IN_PROGRESS ? (
                           <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
                         ) : (
@@ -675,9 +690,9 @@ class DiscoveredAssets extends Component {
                       <></>
                     )}
                     {currentActiveNode === null &&
-                    this.state.globalServicesSummaryData.length ? (
+                    globalServicesSummaryData.length ? (
                       <GlobalServicesSummaryTable
-                        data={this.state.globalServicesSummaryData}
+                        data={globalServicesSummaryData}
                         setCurrentGlobalDataCategory={
                           this.setCurrentGlobalDataCategory
                         }
@@ -693,31 +708,28 @@ class DiscoveredAssets extends Component {
         </Box>
         {currentActiveTopologyCategory === "Lambda" ? (
           <>
-            {this.props.infraTopologyLambdaTable.status ===
-              status.IN_PROGRESS ||
-            this.props.infraTopologyCloudElementList.status ===
-              status.IN_PROGRESS ? (
+            {[
+              infraTopologyLambdaTable.status,
+              infraTopologyCloudElementList.status,
+            ].includes(status.IN_PROGRESS) ? (
               <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
             ) : (
-              <LambdaTable tableData={this.state.lambdaTableData} />
+              <LambdaTable tableData={lambdaTableData} />
             )}
           </>
-        ) : this.props.infraTopologyCloudElementList.status ===
-          status.IN_PROGRESS ? (
+        ) : infraTopologyCloudElementList.status === status.IN_PROGRESS ? (
           <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
-        ) : this.state.currentActiveNode &&
-          this.state.currentActiveNode !== null ? (
+        ) : currentActiveNode && currentActiveNode !== null ? (
           <AssociateApp data={selectedCategoryCloudElementsData} />
         ) : (
           <></>
         )}
         {currentActiveGlobalServiceCategory ? (
-          this.props.globalServicesCloudElements.status ===
-          status.IN_PROGRESS ? (
+          globalServicesCloudElements.status === status.IN_PROGRESS ? (
             <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
           ) : (
             <LambdaTable
-              tableData={this.state.lambdaTableData}
+              tableData={lambdaTableData}
               title={currentActiveGlobalServiceCategory}
             />
           )

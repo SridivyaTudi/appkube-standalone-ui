@@ -20,8 +20,9 @@ class SelectAccountPopup extends Component {
 
   componentDidMount = () => {
     this.props.getOrgWiseDepartments();
-    if (Number(this.props.checkedId)) {
-      this.setState({ currentSelectedDepId: Number(this.props.checkedId) });
+    const { checkedId } = this.props;
+    if (Number(checkedId)) {
+      this.setState({ currentSelectedDepId: Number(checkedId) });
     }
   };
 
@@ -41,7 +42,7 @@ class SelectAccountPopup extends Component {
   handleCheck = (e) => {
     let { currentSelectedDepId } = this.state;
     const { id } = e.target;
-    
+
     this.setState({
       currentSelectedDepId: currentSelectedDepId === id ? undefined : id,
     });
