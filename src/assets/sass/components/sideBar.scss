@@ -246,6 +246,15 @@
               &.setting {
                 background-image: url("../../img/sidebar/setting-h.png");
               }
+              &.alert {
+                background-image: url("../../img/sidebar/alert-h.png");
+              }
+              &.appcatalogue {
+                background-image: url("../../img/sidebar/appcatalogue-h.png");
+              }
+              &.preferences {
+                background-image: url("../../img/sidebar/preferences-h.png");
+              }
             }
           }
         }
@@ -264,6 +273,15 @@
             }
             &.setting {
               background-image: url("../../img/sidebar/setting-h.png");
+            }
+            &.alert {
+              background-image: url("../../img/sidebar/alert-h.png");
+            }
+            &.appcatalogue {
+              background-image: url("../../img/sidebar/appcatalogue-h.png");
+            }
+            &.preferences {
+              background-image: url("../../img/sidebar/preferences-h.png");
             }
           }
 
