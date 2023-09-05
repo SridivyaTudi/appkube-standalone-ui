@@ -164,6 +164,9 @@ class CloudManagedDetails extends React.Component {
 
   filterCloudDatabyDB = (data) => {
     const { activeDbTabId } = this.state;
+    if (activeDbTabId === 0 || activeDbTabId === "0") {
+      return data;
+    }
     return data.filter((item) => item.dbCategoryId === activeDbTabId);
   };
 
