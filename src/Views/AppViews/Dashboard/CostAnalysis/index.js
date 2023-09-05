@@ -9,7 +9,6 @@ import {
   getServiceTypeWiseCost,
 } from "Redux/Dashboard/DashboardThunk";
 import { connect } from "react-redux";
-import { getCurrentOrgId } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import { v4 } from "uuid";
 import Loader from "Components/Loader";
@@ -39,9 +38,9 @@ class CostAnalysis extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getProductWiseCost(getCurrentOrgId());
-    this.props.getProductionVsOther(getCurrentOrgId());
-    this.props.getServiceTypeWiseCost(getCurrentOrgId());
+    this.props.getProductWiseCost();
+    this.props.getProductionVsOther();
+    this.props.getServiceTypeWiseCost();
   };
 
   componentDidUpdate = (prevProps, prevState) => {

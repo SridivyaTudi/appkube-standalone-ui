@@ -53,6 +53,8 @@ class AssociateApp extends Component {
     const { activeTierTabIndexes } = this.state;
     const dataTierSoc = this.props.data;
     const JSX = [];
+    const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
+
     dataTierSoc.map((data, index) => {
       const tier3Data = Object.entries(data.threeTier);
       const soaData = Object.entries(data.soa);
@@ -71,11 +73,7 @@ class AssociateApp extends Component {
               className="primary-text-btn min-width"
               component={Link}
               variant="contained"
-              to={`${APP_PREFIX_PATH}/environments/associatechartapp?landingZone=${
-                this.getUrlDetails().landingZone
-              }&cloudName=${this.getUrlDetails().cloudName}&landingZoneId=${
-                this.getUrlDetails().landingZoneId
-              }&elementType=${data.elementType}&instanceId=${data.instanceId}`}
+              to={`${APP_PREFIX_PATH}/environments/associatechartapp?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&elementType=${data.elementType}&instanceId=${data.instanceId}`}
             >
               Associate App
             </Button>
@@ -138,11 +136,7 @@ class AssociateApp extends Component {
               className="primary-outline-btn min-width"
               component={Link}
               variant="contained"
-              to={`${APP_PREFIX_PATH}/environments/ecscluster?landingZone=${
-                this.getUrlDetails().landingZone
-              }&cloudName=${this.getUrlDetails().cloudName}&landingZoneId=${
-                this.getUrlDetails().landingZoneId
-              }`}
+              to={`${APP_PREFIX_PATH}/environments/ecscluster?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
             >
               View Services
             </Button>

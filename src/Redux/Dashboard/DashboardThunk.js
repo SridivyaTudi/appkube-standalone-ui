@@ -126,11 +126,9 @@ export const getMonthlyStatistics = createAsyncThunk(
 
 export const getProductWiseCost = createAsyncThunk(
   "dashboard/getProductWiseCost",
-  async (orgId) => {
+  async () => {
     try {
-      const response = await postLoginService.get(
-        config.PRODUCT_WISE_COST.replace("#org-id#", orgId)
-      );
+      const response = await postLoginService.get(config.PRODUCT_WISE_COST);
       return response;
     } catch (error) {
       console.log(error);
@@ -140,11 +138,9 @@ export const getProductWiseCost = createAsyncThunk(
 
 export const getProductionVsOther = createAsyncThunk(
   "dashboard/getProductionVsOther",
-  async (orgId) => {
+  async () => {
     try {
-      const response = await postLoginService.get(
-        config.PRODUCTION_VS_OTHERS.replace("#org-id#", orgId)
-      );
+      const response = await postLoginService.get(config.PRODUCTION_VS_OTHERS);
       return response;
     } catch (error) {
       console.log(error);
@@ -154,10 +150,10 @@ export const getProductionVsOther = createAsyncThunk(
 
 export const getServiceTypeWiseCost = createAsyncThunk(
   "dashboard/getServiceTypeWiseCost",
-  async (orgId) => {
+  async () => {
     try {
       const response = await postLoginService.get(
-        config.SERVICE_TYPE_WISE_COST.replace("#org-id#", orgId)
+        config.SERVICE_TYPE_WISE_COST
       );
       return response;
     } catch (error) {
