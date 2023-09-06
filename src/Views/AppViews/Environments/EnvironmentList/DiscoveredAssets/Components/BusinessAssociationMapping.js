@@ -60,12 +60,10 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     border: "1px solid #dadde9",
   },
 }));
-let handleSetTransform = () => {};
 
-let chartContainer = document.getElementsByClassName("chart-container");
-let transformContainer = document.getElementsByClassName(
-  "react-transform-component"
-);
+let handleSetTransform = () => {};
+let handleZoomToElement = () => {};
+
 class BusinessAssociationMapping extends Component {
   constructor(props) {
     super(props);
@@ -74,10 +72,6 @@ class BusinessAssociationMapping extends Component {
       levelsData: [],
       productType: "",
       serviceName: "",
-      positionX: "",
-      positionY: "",
-      lastPositionX: "",
-      lastLevelsWidth: 0,
     };
   }
 
@@ -264,8 +258,9 @@ class BusinessAssociationMapping extends Component {
       let { activeLevels, levelsData, serviceName, productType } = this.state;
       activeLevels = {};
       levelsData = [];
+
+      this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
       handleSetTransform(0, 0, 1);
-      this.setStateOrProps(activeLevels, levelsData, serviceName);
     }
   }
 
@@ -274,7 +269,7 @@ class BusinessAssociationMapping extends Component {
    * Render the main body including all levels data.
    */
   renderBody = () => {
-    let { activeLevels, departments, levelsData, positionX } = this.state;
+    let { activeLevels, departments, levelsData } = this.state;
 
     let departmentLength =
       departments?.length && departments[0].departments?.length;
@@ -309,8 +304,8 @@ class BusinessAssociationMapping extends Component {
             }}
             onTransformed={(instance) => {
               transformScale = instance && instance.state.scale;
-              let { positionX, positionY } = instance.state;
-              this.setState({ scale: true, positionX, positionY });
+
+              this.setState({ scale: true });
             }}
             minScale={0.3}
             limitToBounds={false}
@@ -321,11 +316,13 @@ class BusinessAssociationMapping extends Component {
               instance,
               zoomToElement,
               setTransform,
-              resetTransform,
+              centerView,
               ...rest
             }) => {
               transformScale = instance.transformState.scale;
+
               handleSetTransform = setTransform;
+              handleZoomToElement = zoomToElement;
               return (
                 <>
                   <TransformComponent
@@ -781,7 +778,7 @@ class BusinessAssociationMapping extends Component {
       };
     }
 
-    this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
+    this.setStateOrProps(activeLevels, levelsData, serviceName);
   }
 
   /** Fire click event then draw
@@ -835,7 +832,7 @@ class BusinessAssociationMapping extends Component {
     );
     this.setState({ levelsData, activeLevels, serviceName }, () => {
       if (isMoveToLeftSide) {
-        this.levelsMoveToLeftSide();
+        handleZoomToElement("lastNodeActive", transformScale);
       }
     });
   }
@@ -857,36 +854,6 @@ class BusinessAssociationMapping extends Component {
     return activeLevel;
   }
 
-  // Move levels left side
-  levelsMoveToLeftSide() {
-    let {
-      positionX,
-      positionY,
-      lastLevelsWidth,
-      lastPositionX,
-      positionXDifferce,
-    } = this.state;
-
-    let chartWidth = chartContainer[0].offsetWidth;
-    let levelsWidth = transformContainer[0].offsetWidth;
-
-    if (chartWidth < levelsWidth) {
-      positionX = positionX - 230 * transformScale;
-      let tempPositionXDiff = positionX - lastPositionX - 230 * transformScale;
-
-      if (
-        levelsWidth > lastLevelsWidth ||
-        tempPositionXDiff !== positionXDifferce
-      ) {
-        handleSetTransform(positionX, positionY, transformScale);
-        this.setState({
-          lastLevelsWidth: levelsWidth,
-          lastPositionX: positionX,
-          positionXDifferce: tempPositionXDiff,
-        });
-      }
-    }
-  }
   // Render Loder
   renderLoder(widthClass) {
     return (
