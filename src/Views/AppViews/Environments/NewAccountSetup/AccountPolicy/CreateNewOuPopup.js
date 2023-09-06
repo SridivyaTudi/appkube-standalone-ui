@@ -43,7 +43,8 @@ class CreateNewOuPopup extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.createOu.status !== this.props.createOu.status) {
-      if (this.props.createOu.status === status.SUCCESS) {
+      if (this.props.createOu.status === status.SUCCESS && this.props.createOu.data) {
+        
         ToastMessage.success("Organizational Unit Successfully created!");
         this.props.newDepartmentAppend(
           this.props.createOu.data,

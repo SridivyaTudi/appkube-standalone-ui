@@ -206,6 +206,7 @@ class SpendAnalytics extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
+    
     if (
       prevProps.monthlyCloudWiseSpend.status !==
         this.props.monthlyCloudWiseSpend.status &&
@@ -218,7 +219,7 @@ class SpendAnalytics extends Component {
       prevProps.totalSpend.status !== this.props.totalSpend.status &&
       this.props.totalSpend.status === status.SUCCESS
     ) {
-      if (!this.props.totalSpend.data.status) {
+      if (!this.props.totalSpend?.data?.status) {
         this.setState({ totalSpend: this.props.totalSpend.data });
       }
     }

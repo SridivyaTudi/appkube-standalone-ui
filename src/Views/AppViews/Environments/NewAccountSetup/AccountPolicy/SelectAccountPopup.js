@@ -31,10 +31,10 @@ class SelectAccountPopup extends Component {
       this.props.organizationWiseDepartments &&
       this.props.organizationWiseDepartments.status !==
         prevProps.organizationWiseDepartments.status &&
-      this.props.organizationWiseDepartments.status === status.SUCCESS
+      this.props.organizationWiseDepartments.status === status.SUCCESS && this.props.organizationWiseDepartments.data
     ) {
       this.setState({
-        departments: this.props.organizationWiseDepartments.data.departments,
+        departments: this.props.organizationWiseDepartments?.data?.departments || [],
       });
     }
   };

@@ -27,7 +27,7 @@ class AssociateOu extends Component {
     if (
       prevProps.organizationWiseDepartments.status !==
         this.props.organizationWiseDepartments.status &&
-      this.props.organizationWiseDepartments.status === status.SUCCESS
+      this.props.organizationWiseDepartments.status === status.SUCCESS && this.props.organizationWiseDepartments.data
     ) {
       this.setState({
         departments: this.props.organizationWiseDepartments.data.departments,
@@ -36,14 +36,19 @@ class AssociateOu extends Component {
   };
 
   newDepartmentAppend = (department, description) => {
-    this.setState({
-      departments: [department].concat(this.state.departments),
-      checkedId: department.id,
-      isDepartmentCreated: true,
-      name: department.name,
-      description: description,
-    });
-    this.props.setDepartment(department.id, department.name, description);
+    try {
+      this.setState({
+        departments: [department].concat(this.state.departments),
+        checkedId: department.id,
+        isDepartmentCreated: true,
+        name: department.name,
+        description: description,
+      });
+      this.props.setDepartment(department.id, department.name, description);  
+    } catch (error) {
+      console.error(error);
+    }
+    
   };
 
   getDepartmentName = (id) => {

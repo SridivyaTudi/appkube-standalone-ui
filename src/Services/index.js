@@ -4,6 +4,7 @@ import authConfig from "Views/AuthViews/Config";
 import { ToastMessage } from "Toast/ToastMessage";
 import { getCurrentOrgId } from "Utils";
 
+
 const service = axios.create({
   baseURL: postLoginConfig.baseURL,
   timeout: 60000,
@@ -11,9 +12,13 @@ const service = axios.create({
 
 service.interceptors.request.use(
   (config) => {
-    const currentOrg = getCurrentOrgId();
+    const currentOrg = +getCurrentOrgId();
+
     if (currentOrg) {
       config.url = config.url.replace("#org-id#", currentOrg);
+    } else {
+      ToastMessage.error("Organization is not available!");
+      throw new Error("Organization is not available!");
     }
 
     // const jwtToken = localStorage.getItem(AUTH_TOKEN);
