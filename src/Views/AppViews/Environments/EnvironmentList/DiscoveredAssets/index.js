@@ -332,7 +332,7 @@ class DiscoveredAssets extends Component {
     const { cloudName } = this.getUrlDetails();
 
     const tableBodyJSX = [];
-    productEnclaveList.map((vpc, index) => {
+    productEnclaveList?.map((vpc, index) => {
       tableBodyJSX.push(
         <TableRow key={v4()}>
           <TableCell align="center">{vpc.instanceId}</TableCell>
@@ -420,7 +420,7 @@ class DiscoveredAssets extends Component {
     } = this.state;
     const { cloudName } = this.getUrlDetails();
     const tableBodyJSX = [];
-    productEnclaveList.map((vpc, index) => {
+    productEnclaveList?.map((vpc, index) => {
       tableBodyJSX.push(
         <TableRow key={v4()}>
           <TableCell align="center">{vpc.id}</TableCell>
