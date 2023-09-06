@@ -304,7 +304,6 @@ class BusinessAssociationMapping extends Component {
             }}
             onTransformed={(instance) => {
               transformScale = instance && instance.state.scale;
-
               this.setState({ scale: true });
             }}
             minScale={0.3}
@@ -340,9 +339,7 @@ class BusinessAssociationMapping extends Component {
                         className={`chart-box ${
                           levelsData[0]?.length ? "active" : ""
                         }`}
-                        onClick={() => {
-                          this.onClickSynectiks();
-                        }}
+                        onClick={this.onClickSynectiks}
                         id={`${
                           Object.keys(activeLevels).length === 0
                             ? "lastNodeActive"
@@ -496,7 +493,7 @@ class BusinessAssociationMapping extends Component {
   /**
    * Fired event on click synectiks, then get departments
    */
-  onClickSynectiks() {
+  onClickSynectiks = () => {
     let { activeLevels, levelsData, departments, serviceName } = this.state;
     activeLevels = {};
 
@@ -512,7 +509,7 @@ class BusinessAssociationMapping extends Component {
     }
 
     this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
-  }
+  };
 
   /**
    * Fired event on click Department, then get products

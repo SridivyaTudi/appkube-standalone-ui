@@ -8,7 +8,7 @@ export const getEnvironmentDataByLandingZone = createAsyncThunk(
     let url = config.GET_INFRA_TOPOLOGY_DATA.replace(
       "#landing-zone-id#",
       params.landingZoneId
-    ).replace("#org-id#", params.orgID);
+    );
     try {
       const response = await postLoginService.get(url);
       return response;
@@ -53,11 +53,9 @@ export const GetInfraTopologyCloudElementList = createAsyncThunk(
   "environmentData/getInfraTopologyCloudElementList",
   async (params) => {
     const url = config.INFRA_TOPOLOGY_CLOUD_ELEMENT_LIST.replace(
-      "#org-id#",
-      params.orgID
-    )
-      .replace("#landing-zone-id#", params.landingZone)
-      .replace("#product-enclave#", params.productEnclave);
+      "#landing-zone-id#",
+      params.landingZone
+    ).replace("#product-enclave#", params.productEnclave);
     try {
       const response = await postLoginService.get(url);
       return response;
@@ -71,11 +69,9 @@ export const getInfraTopologyCategoryWiseViewData = createAsyncThunk(
   "environmentData/getInfraTopologyCategoryWiseViewData",
   async (params) => {
     const url = config.INFRA_TOPOLOGY_CATEGORY_WISE_VIEW.replace(
-      "#org-id#",
-      params.orgID
-    )
-      .replace("#landing-zone-id#", params.landingZone)
-      .replace("#product-enclave#", params.productEnclave);
+      "#landing-zone-id#",
+      params.landingZone
+    ).replace("#product-enclave#", params.productEnclave);
     try {
       const response = await postLoginService.get(url);
       return response;
@@ -122,9 +118,9 @@ export const getGlobalServiceCategoryWiseSummary = createAsyncThunk(
   "environments/getGlobalServiceCategoryWiseSummary",
   async (params) => {
     const url = config.INFRA_TOPOLOGY_GLOBAL_SERVICES_DATA.replace(
-      "#org-id#",
-      params.orgId
-    ).replace("#landing-zone-id#", params.landingZoneId);
+      "#landing-zone-id#",
+      params.landingZoneId
+    );
 
     try {
       const response = await postLoginService.get(url);
