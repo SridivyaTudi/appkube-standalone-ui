@@ -13,6 +13,24 @@ import { getSlaMetrics } from "Redux/Dashboard/DashboardThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 200,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
+
 class SLAMetrics extends Component {
   constructor(props) {
     super(props);
@@ -56,15 +74,18 @@ class SLAMetrics extends Component {
     const { slaData: products } = this.state;
     const { status: slaMetricsStatus } = this.props.slaMetrics;
     let tableHTML = [];
-    
+
     if (slaMetricsStatus === status.IN_PROGRESS) {
-      
       return <Loader className="metrics-loading" />;
     } else if (products.length) {
       products.forEach((productData, index) => {
         tableHTML.push(
           <TableRow key={uuidv4()}>
-            <TableCell className="products"> {productData.name} </TableCell>
+            <TableCell className="products">
+              <HtmlTooltip className="table-tooltip" title={productData.name}>
+                {productData.name}
+              </HtmlTooltip>
+            </TableCell>
             <TableCell
               className={this.handletableColor(productData.performance)}
             >

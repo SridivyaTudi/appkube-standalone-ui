@@ -1997,16 +1997,15 @@
 
           .table {
             width: 100%;
-           
 
             thead {
               width: 100%;
             }
 
             tbody {
-             min-width: 100%;
+              min-width: 100%;
               .metrics-loading {
-               width: 100%;
+                width: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -2070,12 +2069,16 @@
               text-align: center;
               border-bottom: 1px solid #000000;
               border-right: 1px solid #000000;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
 
               &.products {
                 background-color: #ffffff;
                 font-weight: 400;
                 color: #383874;
                 text-align: left;
+                max-width: 250px;
               }
 
               &.orange {

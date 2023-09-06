@@ -140,9 +140,14 @@ class AssociateApp extends Component {
             >
               View Services
             </Button>
-            <Button className="primary-btn min-width" variant="contained">
-              EC2 Explorer
-            </Button>
+            <HtmlTooltip
+              className="table-tooltip"
+              title={`${data.elementType} Explorer`}
+            >
+              <Button className="primary-btn min-width" variant="contained">
+                <p>{data.elementType} Explorer</p>
+              </Button>
+            </HtmlTooltip>
           </Box>
         </Box>
       );

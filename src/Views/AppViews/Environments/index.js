@@ -345,7 +345,7 @@ class Environments extends Component {
           if (accountsJSX.length === 0) {
             accountsJSX = (
               <TableRow>
-                <TableCell align="center">
+                <TableCell align="center" style={{ textAlign: "center" }} colSpan={7}>
                   There is no data with searched key.
                 </TableCell>
               </TableRow>
