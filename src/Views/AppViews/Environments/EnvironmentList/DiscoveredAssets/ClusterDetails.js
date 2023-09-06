@@ -57,6 +57,7 @@ class ClusterDetails extends React.Component {
 
   render() {
     const { currentActiveCluster } = this.state;
+    const { eksData, ecsData } = this.props;
     return (
       <>
         <Box className="cluster-heading m-t-4">Cluster</Box>
@@ -78,7 +79,7 @@ class ClusterDetails extends React.Component {
               <Box className="title-name">EKS-Cluster</Box>
             </Box>
             <Box className="data-contant">
-              <List>{this.renderClusterData(this.props.eksData)}</List>
+              <List>{this.renderClusterData(eksData)}</List>
             </Box>
           </Box>
           <Box
@@ -98,7 +99,7 @@ class ClusterDetails extends React.Component {
               <Box className="title-name">ECS-Cluster</Box>
             </Box>
             <Box className="data-contant">
-              <List>{this.renderClusterData(this.props.ecsData)}</List>
+              <List>{this.renderClusterData(ecsData)}</List>
             </Box>
           </Box>
         </Box>

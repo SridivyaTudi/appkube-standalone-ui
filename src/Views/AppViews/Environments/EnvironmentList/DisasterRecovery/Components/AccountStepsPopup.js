@@ -113,20 +113,22 @@ class AccountStepsPopup extends Component {
    * @param {Boolean} isSubmit - When submit btn,then receive 1 else 0
    */
   validateStep1 = (isSubmit) => {
-    const { step1FormData } = this.state;
+    const {
+      step1FormData: { account, region },
+    } = this.state;
     let isValid;
     let errors;
     if (isSubmit) {
       isValid = true;
 
-      if (!step1FormData.account) {
+      if (!account) {
         errors = { ...errors, account: "AWS account is required!" };
         isValid = false;
       } else {
         errors = { ...errors, account: "" };
       }
 
-      if (!step1FormData.region) {
+      if (!region) {
         errors = { ...errors, region: "Region is required!" };
         isValid = false;
       } else {
@@ -141,13 +143,15 @@ class AccountStepsPopup extends Component {
    * @param {Boolean} isSubmit - When submit btn,then receive 1 else 0
    */
   validateStep2 = (isSubmit) => {
-    const { step2FormData } = this.state;
+    const {
+      step2FormData: { accountPermission },
+    } = this.state;
     let isValid;
     let errors;
     if (isSubmit) {
       isValid = true;
 
-      if (!step2FormData.accountPermission.length) {
+      if (!accountPermission.length) {
         errors = {
           ...errors,
           accountPermission: "Account permission is required!",
@@ -165,27 +169,29 @@ class AccountStepsPopup extends Component {
    * @param {Boolean} isSubmit - When submit btn,then receive 1 else 0
    */
   validateStep3 = (isSubmit) => {
-    const { step3FormData } = this.state;
+    const {
+      step3FormData: { account, region, resources },
+    } = this.state;
     let isValid;
     let errors;
     if (isSubmit) {
       isValid = true;
 
-      if (!step3FormData.account) {
+      if (!account) {
         errors = { ...errors, account: "AWS account is required!" };
         isValid = false;
       } else {
         errors = { ...errors, account: "" };
       }
 
-      if (!step3FormData.region) {
+      if (!region) {
         errors = { ...errors, region: "Region is required!" };
         isValid = false;
       } else {
         errors = { ...errors, region: "" };
       }
 
-      if (!step3FormData.resources.length) {
+      if (!resources.length) {
         errors = {
           ...errors,
           resources: "Resources is required!",
@@ -203,27 +209,27 @@ class AccountStepsPopup extends Component {
    * @param {Boolean} isSubmit - When submit btn,then receive 1 else 0
    */
   validateStep4 = (isSubmit) => {
-    const { step4FormData } = this.state;
+    const { step4FormData:{resources,application,resourcesByTag} } = this.state;
     let isValid;
     let errors;
     if (isSubmit) {
       isValid = true;
 
-      if (!step4FormData.application) {
+      if (!application) {
         errors = { ...errors, application: "Application is required!" };
         isValid = false;
       } else {
         errors = { ...errors, application: "" };
       }
 
-      if (!step4FormData.resourcesByTag) {
+      if (!resourcesByTag) {
         errors = { ...errors, resourcesByTag: "Tag is required!" };
         isValid = false;
       } else {
         errors = { ...errors, resourcesByTag: "" };
       }
 
-      if (!step4FormData.resources.length) {
+      if (!resources.length) {
         errors = {
           ...errors,
           resources: "Resources is required!",

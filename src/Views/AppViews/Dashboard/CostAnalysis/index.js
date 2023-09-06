@@ -129,6 +129,8 @@ class CostAnalysis extends Component {
       productionVsOthersData,
       serviceTypeWiseCostData,
     } = this.state;
+    const { productWiseCost, productionVsOther, serviceTypeWiseCost } =
+      this.props;
     return (
       <Box className="cost-analysis-container">
         <Box className="product-wise-inner-container">
@@ -137,8 +139,7 @@ class CostAnalysis extends Component {
               <Grid container spacing={3}>
                 <Grid item lg={4} md={6} xs={12}>
                   <Box id="chart" className="collapse-expand">
-                    {this.props.productWiseCost.status ===
-                    status.IN_PROGRESS ? (
+                    {productWiseCost.status === status.IN_PROGRESS ? (
                       <Loader className="spend-loading" />
                     ) : (
                       <>
@@ -189,8 +190,7 @@ class CostAnalysis extends Component {
                 </Grid>
                 <Grid item lg={4} md={6} xs={12}>
                   <Box id="chart" className="collapse-expand">
-                    {this.props.productionVsOther.status ===
-                    status.IN_PROGRESS ? (
+                    {productionVsOther.status === status.IN_PROGRESS ? (
                       <Loader className="spend-loading" />
                     ) : (
                       <>
@@ -234,8 +234,7 @@ class CostAnalysis extends Component {
                 </Grid>
                 <Grid item lg={4} md={6} xs={12}>
                   <Box id="chart" className="collapse-expand">
-                    {this.props.serviceTypeWiseCost.status ===
-                    status.IN_PROGRESS ? (
+                    {serviceTypeWiseCost.status === status.IN_PROGRESS ? (
                       <Loader className="spend-loading" />
                     ) : (
                       <>
