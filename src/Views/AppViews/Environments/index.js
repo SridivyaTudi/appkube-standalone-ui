@@ -345,7 +345,11 @@ class Environments extends Component {
           if (accountsJSX.length === 0) {
             accountsJSX = (
               <TableRow>
-                <TableCell align="center" style={{ textAlign: "center" }} colSpan={7}>
+                <TableCell
+                  align="center"
+                  style={{ textAlign: "center" }}
+                  colSpan={7}
+                >
                   There is no data with searched key.
                 </TableCell>
               </TableRow>
@@ -423,7 +427,7 @@ class Environments extends Component {
           (item) => {
             if (
               item.landingZone.includes(value) ||
-              item?.cloud?.includes(value.toLowerCase())
+              item.cloud.toLowerCase().includes(value.toLowerCase())
             ) {
               return item;
             }

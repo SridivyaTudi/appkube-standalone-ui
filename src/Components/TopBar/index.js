@@ -241,6 +241,7 @@ function TopBar() {
                           onClick={() => {
                             localStorage.removeItem("currentUser");
                             localStorage.removeItem("currentOrgId");
+                            localStorage.removeItem("recentEnv");
                             navigate("/auth");
                           }}
                         >

@@ -189,6 +189,7 @@ class SpendAnalytics extends Component {
           },
         },
       },
+      totalSpend: "",
     };
   }
 
@@ -211,6 +212,15 @@ class SpendAnalytics extends Component {
       this.props.monthlyCloudWiseSpend.status === status.SUCCESS
     ) {
       this.lineDiagramDataPrepare();
+    }
+
+    if (
+      prevProps.totalSpend.status !== this.props.totalSpend.status &&
+      this.props.totalSpend.status === status.SUCCESS
+    ) {
+      if (!this.props.totalSpend.data.status) {
+        this.setState({ totalSpend: this.props.totalSpend.data });
+      }
     }
   }
 
@@ -338,13 +348,11 @@ class SpendAnalytics extends Component {
 
   /** Calculate the total spend. */
   getTotalSpend = () => {
-    const {
-      totalSpend: { data },
-    } = this.props;
-
+    const { totalSpend } = this.state;
     const renderHtml = [];
-    if (data) renderHtml.push(<h1>{data ? `$${data}` : ""}</h1>);
-
+    if (totalSpend) {
+      renderHtml.push(<h1>{totalSpend ? `$${totalSpend}` : ""}</h1>);
+    }
     return renderHtml;
   };
 
