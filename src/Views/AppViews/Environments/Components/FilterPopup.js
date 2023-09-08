@@ -116,7 +116,7 @@ class FilterPopup extends Component {
     if (departments.length) {
       return departments.map((department, index) => {
         return (
-          <Grid item lg={4} md={4} xs={12} key={index}>
+          <Grid item lg={4} md={4} xs={4} key={index}>
             <Box className="d-flex align-items-center checkbox">
               <input
                 className="checkbox-input"
@@ -148,7 +148,7 @@ class FilterPopup extends Component {
     ) {
       return productsByDepId.data.products.map((product, innerIndex) => {
         return (
-          <Grid item lg={4} md={4} xs={12}>
+          <Grid item lg={4} md={4} xs={4}>
             <Box className="d-flex align-items-center">
               <input
                 type="radio"
