@@ -43,6 +43,9 @@ const config = {
   GET_ASSOCIATE_MODULES_3_TIER: `${baseURL}//business-element/search-by-filters?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&serviceType=#service-type#`,
   GET_ASSOCIATE_MODULE_ELEMENTS: `${baseURL}/business-element/search-by-filters?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&moduleId=#module-id#&serviceNature=#service-nature#`,
   CREATE_ASSOCIATE: `${baseURL}/cloud-element/associate`,
+  GET_ASSOCIATE_EXISTING_TAG_LIST:`${baseURL}/cloud-element/tag/landing-zone-id/#landing-zone-id#/instance-id/#instance-id#`,
+  DELETE_TAG:`${baseURL}/cloud-element/tag/landing-zone-id/#landing-zone-id#/instance-id/#instance-id#/service-id/#service-id#`
+  
 };
 
 export default config;

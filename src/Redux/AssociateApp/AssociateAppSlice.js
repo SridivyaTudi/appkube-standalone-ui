@@ -7,6 +7,8 @@ import {
   getModuleElements,
   addService,
   getModulesOf3Tier,
+  getExistingTags,
+  deleteExistingTag,
 } from "Redux/AssociateApp/AssociateAppThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -40,6 +42,14 @@ export const AssociateAppSlice = createSlice({
     threeTierModules: {
       status: null,
       data: [],
+    },
+    existingTags: {
+      status: null,
+      data: [],
+    },
+    deleteTag: {
+      status: null,
+      data: {},
     },
   },
 
@@ -236,6 +246,62 @@ export const AssociateAppSlice = createSlice({
         threeTierModules: {
           status: status.FAILURE,
           data: [],
+        },
+      };
+    },
+
+    [getExistingTags.pending]: (state, action) => {
+      return {
+        ...state,
+        existingTags: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getExistingTags.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        existingTags: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getExistingTags.rejected]: (state, action) => {
+      return {
+        ...state,
+        existingTags: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [deleteExistingTag.pending]: (state, action) => {
+      return {
+        ...state,
+        deleteTag: {
+          status: status.IN_PROGRESS,
+          data: {},
+        },
+      };
+    },
+    [deleteExistingTag.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        deleteTag: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [deleteExistingTag.rejected]: (state, action) => {
+      return {
+        ...state,
+        deleteTag: {
+          status: status.FAILURE,
+          data: {},
         },
       };
     },

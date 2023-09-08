@@ -253,15 +253,6 @@ class BusinessAssociationMapping extends Component {
         );
       }
     }
-
-    if (prevProps.resetBreadCrumbId !== this.props.resetBreadCrumbId) {
-      let { activeLevels, levelsData, serviceName, productType } = this.state;
-      activeLevels = {};
-      levelsData = [];
-
-      this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
-      handleSetTransform(0, 0, 1);
-    }
   }
 
   /**

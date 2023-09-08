@@ -130,3 +130,36 @@ export const getModulesOf3Tier = createAsyncThunk(
     }
   }
 );
+
+export const getExistingTags = createAsyncThunk(
+  "associateApp/getExistingTags",
+  async ({ landingZoneId, instanceId }) => {
+    try {
+      let url = config.GET_ASSOCIATE_EXISTING_TAG_LIST.replace(
+        "#landing-zone-id#",
+        landingZoneId
+      ).replace("#instance-id#", instanceId);
+
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+export const deleteExistingTag = createAsyncThunk(
+  "associateApp/deleteExistingTag",
+  async ({ landingZoneId, instanceId, serviceId }) => {
+    try {
+      let url = config.DELETE_TAG.replace("#landing-zone-id#", landingZoneId)
+        .replace("#instance-id#", instanceId)
+        .replace("#service-id#", serviceId);
+
+      const response = await postLoginService.delete(url);
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);

@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import topBottomArrow from "assets/img/assetmanager/top-bottom-arrow.png";
 import BusinessAssociationMapping from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/BusinessAssociationMapping";
-import { addService } from "Redux/AssociateApp/AssociateAppThunk";
+import {
+  addService,
+  getExistingTags,
+  deleteExistingTag,
+} from "Redux/AssociateApp/AssociateAppThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -17,6 +21,18 @@ import {
   setCurrentOrgName,
   getCurrentUser,
 } from "Utils";
+import ConfirmationPopup from "Components/ConfirmationPopup";
+import Loader from "Components/Loader";
+
+const existingTagKeys = [
+  "org",
+  "dep",
+  "product",
+  "productEnv",
+  "type",
+  "module",
+  "service",
+];
 
 export class AssociateChartApp extends Component {
   constructor(props) {
@@ -27,12 +43,39 @@ export class AssociateChartApp extends Component {
       activeLevels: {},
       clickBreadCrumbDetails: {},
       levelsData: [],
-      resetBreadCrumb: "",
       productType: "",
+      existingTags: [],
+      showConfirmPopup: false,
+      serviceId: 0,
     };
   }
 
+  componentDidMount() {
+    this.getTags();
+  }
   componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.existingTags.status !== this.props.existingTags.status &&
+      this.props.existingTags.status === status.SUCCESS &&
+      this.props.existingTags.data
+    ) {
+      let { data: existingTags } = this.props.existingTags;
+      this.setState({ existingTags });
+    }
+
+    if (
+      prevProps.deleteTag.status !== this.props.deleteTag.status &&
+      this.props.deleteTag.status === status.SUCCESS
+    ) {
+      if (this.props.deleteTag.data == "OK") {
+        this.getTags();
+        this.togglePopup();
+        ToastMessage.success("Tag removed successfully.");
+      } else {
+        ToastMessage.success("Tag is not removed.");
+      }
+    }
+
     if (
       prevProps.serviceCreation.status !== this.props.serviceCreation.status &&
       this.props.serviceCreation.status === status.SUCCESS
@@ -273,15 +316,94 @@ export class AssociateChartApp extends Component {
       }
     }
   }
+
+  /** Render the ExistingTabs. */
+  renderExistingTags() {
+    let { existingTags } = this.state;
+    let { status: tagStatus } = this.props.existingTags;
+
+    if (tagStatus === status.IN_PROGRESS) {
+      return <Loader className="h-100" />;
+    } else if (existingTags.length) {
+      return existingTags.map((tag, index) => {
+        return (
+          <>
+            <ul key={v4()}>{this.renderChildTags(tag.tag, tag.tag.type)}</ul>
+          </>
+        );
+      });
+    } else {
+      return "There is no existing tag";
+    }
+  }
+
+  renderChildTags = (tags, type) => {
+    let tempTag = tags;
+    let updateKeyIf3Tier =
+      type === "3 Tier"
+        ? existingTagKeys.filter((key) => key !== "module")
+        : existingTagKeys;
+
+    if (tempTag) {
+      return updateKeyIf3Tier.map((tag) => {
+        tempTag = tempTag[tag];
+
+        return (
+          <>
+            <li key={v4()}>
+              <a>{tempTag.name}</a>
+            </li>
+            {tag === "service" ? (
+              <Button
+                type="button"
+                className="close"
+                aria-label="Close"
+                onClick={() => {
+                  this.setState({
+                    showConfirmPopup: true,
+                    serviceId: tempTag.id,
+                  });
+                }}
+              >
+                <i className="fa-solid fa-xmark"></i>
+              </Button>
+            ) : (
+              <></>
+            )}
+          </>
+        );
+      });
+    }
+  };
+
+  togglePopup = () => {
+    let { showConfirmPopup, serviceId } = this.state;
+    this.setState({
+      showConfirmPopup: !showConfirmPopup,
+      serviceId: showConfirmPopup ? 0 : serviceId,
+    });
+  };
+
+  getTags() {
+    const { instanceId, landingZoneId } = this.getUrlDetails();
+    this.props.getExistingTags({ instanceId, landingZoneId });
+  }
+
+  handleDeleteTag = () => {
+    let { serviceId } = this.state;
+    let { landingZoneId, instanceId } = this.getUrlDetails();
+    this.props.deleteExistingTag({ landingZoneId, instanceId, serviceId });
+  };
   render() {
     const {
       isSelectDepartmentOpen,
       isSelectProductOpen,
       clickBreadCrumbDetails,
       activeLevels,
-      resetBreadCrumb,
       productType,
+      showConfirmPopup,
     } = this.state;
+
     const { selectedLevel_0, selectedLevel_1 } = activeLevels;
     const departmentName = selectedLevel_0?.label || "";
     const productName = selectedLevel_1?.label || "";
@@ -290,6 +412,7 @@ export class AssociateChartApp extends Component {
       productType === "SOA" ? activeLevelLength === 6 : activeLevelLength === 5;
     const {
       serviceCreation: { status: serviceCreationStatus },
+      deleteTag: { status: deleteTagStatus },
     } = this.props;
     const { instanceId, elementType, landingZone, landingZoneId, cloudName } =
       this.getUrlDetails();
@@ -406,7 +529,6 @@ export class AssociateChartApp extends Component {
               });
             }}
             clickBreadCrumbDetails={clickBreadCrumbDetails}
-            resetBreadCrumbId={resetBreadCrumb}
           />
         </Box>
         <Box className="d-block width-100 text-center top-bottom-arrow">
@@ -414,19 +536,7 @@ export class AssociateChartApp extends Component {
         </Box>
         <Box className="infra-existing">
           <div className="heading">Infra Existing tags of element</div>
-          <Box className="breadcrumbs">
-            <ul>{this.renderBreadCrumbs(0)}</ul>
-            <Button
-              type="button"
-              className="close"
-              aria-label="Close"
-              onClick={() => {
-                this.setState({ resetBreadCrumb: v4() });
-              }}
-            >
-              <i className="fa-solid fa-xmark"></i>
-            </Button>
-          </Box>
+          <Box className="breadcrumbs">{this.renderExistingTags()}</Box>
         </Box>
         <Box className="d-block width-100 text-center m-t-4">
           {showBtn ? (
@@ -444,19 +554,38 @@ export class AssociateChartApp extends Component {
             <></>
           )}
         </Box>
+        {showConfirmPopup ? (
+          <ConfirmationPopup
+            showModal={showConfirmPopup}
+            togglePopup={this.togglePopup}
+            labels={{
+              btnYes: "Yes",
+              description: "Are you sure delete the tag ? ",
+              btnNo: "Cancel",
+            }}
+            handleCallBack={this.handleDeleteTag}
+            showLoader={deleteTagStatus === status.IN_PROGRESS}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }
 }
 function mapStateToProps(state) {
-  const { serviceCreation } = state.associateApp;
+  const { serviceCreation, existingTags, deleteTag } = state.associateApp;
   return {
     serviceCreation,
+    existingTags,
+    deleteTag,
   };
 }
 
 const mapDispatchToProps = {
+  getExistingTags,
   addService,
+  deleteExistingTag,
 };
 
 export default withRouter(
