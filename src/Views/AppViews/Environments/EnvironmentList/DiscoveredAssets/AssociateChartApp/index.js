@@ -317,8 +317,8 @@ export class AssociateChartApp extends Component {
     }
   }
 
-  /** Render the ExistingTabs. */
-  renderExistingTags() {
+  /** Render the tag body. */
+  renderTagBody() {
     let { existingTags } = this.state;
     let { status: tagStatus } = this.props.existingTags;
 
@@ -328,7 +328,7 @@ export class AssociateChartApp extends Component {
       return existingTags.map((tag, index) => {
         return (
           <>
-            <ul key={v4()}>{this.renderChildTags(tag.tag, tag.tag.type)}</ul>
+            <ul key={v4()}>{this.renderTags(tag.tag, tag.tag.type)}</ul>
           </>
         );
       });
@@ -337,7 +337,12 @@ export class AssociateChartApp extends Component {
     }
   }
 
-  renderChildTags = (tags, type) => {
+  /**
+   *   Render tags
+   *  @param {Object} tags - tag object
+   *  @param {String} type - tag type - 1. SOA, 2. 3-Tier
+   * */
+  renderTags = (tags, type) => {
     let tempTag = tags;
     let updateKeyIf3Tier =
       type === "3 Tier"
@@ -378,6 +383,7 @@ export class AssociateChartApp extends Component {
     }
   };
 
+  // toggle confirmation popup
   togglePopup = () => {
     let { showConfirmPopup, serviceId } = this.state;
     this.setState({
@@ -386,11 +392,13 @@ export class AssociateChartApp extends Component {
     });
   };
 
+  // Get existing tags
   getTags() {
     const { instanceId, landingZoneId } = this.getUrlDetails();
     this.props.getExistingTags({ instanceId, landingZoneId });
   }
 
+  // Delete tag API call
   handleDeleteTag = () => {
     let { serviceId } = this.state;
     let { landingZoneId, instanceId } = this.getUrlDetails();
@@ -538,7 +546,7 @@ export class AssociateChartApp extends Component {
         </Box>
         <Box className="infra-existing">
           <div className="heading">Infra Existing tags of element</div>
-          <Box className="breadcrumbs">{this.renderExistingTags()}</Box>
+          <Box className="breadcrumbs">{this.renderTagBody()}</Box>
         </Box>
         <Box className="d-block width-100 text-center m-t-4">
           {showBtn ? (
