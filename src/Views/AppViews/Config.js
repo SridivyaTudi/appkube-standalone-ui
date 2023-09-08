@@ -26,7 +26,7 @@ const config = {
   GET_INFRA_TOPOLOGY_DATA: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone-id/#landing-zone-id#`,
   DEPARTMENTS: `${baseURL}/department`,
   ADD_CLOUD_ENV: `/cloud-environments`,
-  GET_SINGLE_ENVIRONMENT_COUNT_DATA: `${baseURL}/query/organization/#orgId#/cloud/#cloud#/landing-zone/#landingZone#/cloud-environments/count`,
+  GET_SINGLE_ENVIRONMENT_COUNT_DATA: `${baseURL}/query/organization/#org-id#/environment/cloud/#cloud#/landing-zone/#landingZone#/count`,
   ADD_LANDING_ZONE: `${baseURL}/landingzone`,
   INFRA_TOPOLOGY_CLOUD_ELEMENT_LIST: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone/#landing-zone-id#/product-enclave/#product-enclave#/cloud-elements`,
   INFRA_TOPOLOGY_CATEGORY_WISE_VIEW: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone/#landing-zone-id#/product-enclave/#product-enclave#/category-wise-summary`,

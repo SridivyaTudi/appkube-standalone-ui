@@ -69,10 +69,10 @@ class EnvironmentList extends Component {
       cloudName: queryPrm.get("cloudName"),
     });
     const params = {
-      orgId: getCurrentOrgId(),
       cloud: queryPrm.get("cloudName"),
       landingZone: queryPrm.get("landingZone"),
     };
+    this.props.getSingleEnvironmentCountData(params);
   };
 
   componentDidUpdate = (prevProps, prevState) => {

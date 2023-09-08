@@ -35,11 +35,9 @@ export const getSingleEnvironmentCountData = createAsyncThunk(
   "environmentData/getSingleEnvironmentCountData",
   async (params) => {
     const url = config.GET_SINGLE_ENVIRONMENT_COUNT_DATA.replace(
-      "#orgId#",
-      params.orgId
-    )
-      .replace("#cloud#", params.cloud)
-      .replace("#landingZone#", params.landingZone);
+      "#cloud#",
+      params.cloud
+    ).replace("#landingZone#", params.landingZone);
     try {
       const response = await postLoginService.get(url);
       return response;
