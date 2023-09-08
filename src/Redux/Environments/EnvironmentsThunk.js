@@ -48,7 +48,7 @@ export const getOrgWiseDepartments = createAsyncThunk(
 export const getProductsByDepId = createAsyncThunk(
   "environments/getProductsByDepId",
   async (depId) => {
-    const url = config.GET_ASSOCIATE_PRODUCT_LIST.replace("#dep-id#", depId);
+    const url = config.GET_ASSOCIATE_PRODUCT_LIST.replace("#department-id#", depId);
     try {
       const response = await postLoginService.get(`${url}`);
       const products = response;

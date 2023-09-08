@@ -140,7 +140,7 @@ class FilterPopup extends Component {
 
   renderProducts = () => {
     const { productsByDepId } = this.props;
-    const { selectedDepartment } = this.state;
+    const { selectedDepartment, selectedProduct } = this.state;
     if (
       productsByDepId &&
       productsByDepId.data &&
@@ -154,12 +154,12 @@ class FilterPopup extends Component {
                 type="radio"
                 name="product"
                 value={product.name}
-                checked={product.name === this.state.selectedProduct}
-                onChange={(e) => this.handleProductCheck(product.name)}
+                checked={product.id === selectedProduct}
+                onChange={(e) => this.handleProductCheck(product.id)}
               />
               <label
                 htmlFor={product.name}
-                onClick={(e) => this.handleProductCheck(product.name)}
+                onClick={(e) => this.handleProductCheck(product.id)}
               >
                 {product.name}
               </label>
@@ -205,7 +205,7 @@ class FilterPopup extends Component {
         departmentId: selectedDepartment,
       };
       if (selectedProduct !== -1) {
-        params.product = selectedProduct;
+        params.productId = selectedProduct;
         if (selectedEnv !== -1) {
           params.env = selectedEnv;
         }
@@ -216,7 +216,6 @@ class FilterPopup extends Component {
         selectedProduct,
         selectedEnv,
       });
-      this.handleClearFilters();
     }
   };
 
@@ -250,6 +249,7 @@ class FilterPopup extends Component {
   render() {
     const { selectedDepartment } = this.state;
     let { selectedFilters } = this.props;
+
     return (
       <Modal
         isOpen={this.props.showModal}
