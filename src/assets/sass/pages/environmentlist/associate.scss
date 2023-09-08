@@ -447,10 +447,13 @@
         padding: 12px 15px 8px;
         border: 1px solid #8676ff;
         ul {
-          display: inline-block;
-          vertical-align: top;
+          display: block;
+          width: 100%;
           padding: 0;
-          margin: 0;
+          margin: 0 0 5px 0;
+          &:last-child {
+            margin-bottom: 0;
+          }
           li {
             display: inline-block;
             vertical-align: top;
@@ -549,9 +552,8 @@
           }
         }
         button {
-          display: inherit;
-          min-width: auto;
-          float: right;
+          display: inline-block;
+          min-width: inherit;
           height: 20px;
           padding: 0;
           width: 20px;

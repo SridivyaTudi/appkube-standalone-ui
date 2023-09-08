@@ -323,7 +323,7 @@ export class AssociateChartApp extends Component {
     let { status: tagStatus } = this.props.existingTags;
 
     if (tagStatus === status.IN_PROGRESS) {
-      return <Loader className="h-100" />;
+      return <Loader className="h-100 text-center" />;
     } else if (existingTags.length) {
       return existingTags.map((tag, index) => {
         return (
@@ -354,19 +354,21 @@ export class AssociateChartApp extends Component {
               <a>{tempTag.name}</a>
             </li>
             {tag === "service" ? (
-              <Button
-                type="button"
-                className="close"
-                aria-label="Close"
-                onClick={() => {
-                  this.setState({
-                    showConfirmPopup: true,
-                    serviceId: tempTag.id,
-                  });
-                }}
-              >
-                <i className="fa-solid fa-xmark"></i>
-              </Button>
+              <li style={{ float: "right" }}>
+                <Button
+                  type="button"
+                  className="close"
+                  aria-label="Close"
+                  onClick={() => {
+                    this.setState({
+                      showConfirmPopup: true,
+                      serviceId: tempTag.id,
+                    });
+                  }}
+                >
+                  <i className="fa-solid fa-xmark"></i>
+                </Button>
+              </li>
             ) : (
               <></>
             )}
