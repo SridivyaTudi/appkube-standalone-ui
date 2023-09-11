@@ -146,3 +146,19 @@ export const getGlobalServiceCloudElements = createAsyncThunk(
     }
   }
 );
+
+export const getEnvironmentsApplicationTableData = createAsyncThunk(
+  "environments/getEnvironmentsApplicationTableData",
+  async (params) => {
+    const url = config.ENVIRONMENTS_APPLICATIONS_TABLE_DATA.replace(
+      "#org-id#",
+      params.orgId
+    ).replace("#landing-zone-id#", params.landingZoneId);
+    try {
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

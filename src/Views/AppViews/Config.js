@@ -34,6 +34,7 @@ const config = {
   INFRA_TOPOLOGY_LAMBDA_TABLE_DATA: `${baseURL}/cloud-element/search?elementType=#element-type#&landingzoneId=#landing-zone#&productEnclaveId=#product-enclave#`,
   INFRA_TOPOLOGY_GLOBAL_SERVICES_DATA: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone-id/#landing-zone-id#/global-service-category-wise-summary`,
   INFRA_TOPOLOGY_GLOBAL_SERVICES_CLOUD_ELEMENT_SEARCH: `${baseURL}/cloud-element/search?elementType=#element-type#`,
+  ENVIRONMENTS_APPLICATIONS_TABLE_DATA: `${baseURL}/query/organization/#org-id#/application-topology/landing-zone-id/#landing-zone-id#`,
 
   /* AssociateApp  */
   GET_ASSOCIATE_DEPARTMENTS: `${baseURL}/organization/search?organizationDTO=#org-id#`,
@@ -43,9 +44,8 @@ const config = {
   GET_ASSOCIATE_MODULES_3_TIER: `${baseURL}//business-element/search-by-filters?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&serviceType=#service-type#`,
   GET_ASSOCIATE_MODULE_ELEMENTS: `${baseURL}/business-element/search-by-filters?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&moduleId=#module-id#&serviceNature=#service-nature#`,
   CREATE_ASSOCIATE: `${baseURL}/cloud-element/associate`,
-  GET_ASSOCIATE_EXISTING_TAG_LIST:`${baseURL}/cloud-element/tag/landing-zone-id/#landing-zone-id#/instance-id/#instance-id#`,
-  DELETE_TAG:`${baseURL}/cloud-element/tag/landing-zone-id/#landing-zone-id#/instance-id/#instance-id#/service-id/#service-id#`
-  
+  GET_ASSOCIATE_EXISTING_TAG_LIST: `${baseURL}/cloud-element/tag/landing-zone-id/#landing-zone-id#/instance-id/#instance-id#`,
+  DELETE_TAG: `${baseURL}/cloud-element/tag/landing-zone-id/#landing-zone-id#/instance-id/#instance-id#/service-id/#service-id#`,
 };
 
 export default config;

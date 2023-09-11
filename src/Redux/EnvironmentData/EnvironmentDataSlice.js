@@ -9,6 +9,7 @@ import {
   getInfraTopologyLambdaTableData,
   getGlobalServiceCategoryWiseSummary,
   getGlobalServiceCloudElements,
+  getEnvironmentsApplicationTableData,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -48,6 +49,10 @@ export const environmentDataSlice = createSlice({
       data: [],
     },
     globalServicesCloudElements: {
+      status: null,
+      data: [],
+    },
+    applicationsTableData: {
       status: null,
       data: [],
     },
@@ -287,6 +292,32 @@ export const environmentDataSlice = createSlice({
       return {
         ...state,
         globalServicesCloudElements: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getEnvironmentsApplicationTableData.pending]: (state) => {
+      return {
+        ...state,
+        applicationsTableData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getEnvironmentsApplicationTableData.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        applicationsTableData: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getEnvironmentsApplicationTableData.rejected]: (state) => {
+      return {
+        ...state,
+        applicationsTableData: {
           status: status.FAILURE,
         },
       };
