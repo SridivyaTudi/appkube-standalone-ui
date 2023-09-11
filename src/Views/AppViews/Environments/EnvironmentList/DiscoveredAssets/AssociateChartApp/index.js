@@ -53,6 +53,7 @@ export class AssociateChartApp extends Component {
   componentDidMount() {
     this.getTags();
   }
+
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.existingTags.status !== this.props.existingTags.status &&
@@ -284,7 +285,7 @@ export class AssociateChartApp extends Component {
           id: getCurrentOrgId(),
           name: getCurrentOrgName()
             ? getCurrentOrgName()
-            : this.setCurrentorganizationName(),
+            : this.setCurrentOrganizationName(),
           dep: {
             id: selectedLevel_0.id,
             name: selectedLevel_0.label,
@@ -305,7 +306,8 @@ export class AssociateChartApp extends Component {
     this.props.addService(JSON.stringify(paramsObj));
   };
 
-  setCurrentorganizationName() {
+  /** Set current organization name in local storage */
+  setCurrentOrganizationName() {
     let currentUser = getCurrentUser();
     if (currentUser) {
       try {
@@ -317,7 +319,7 @@ export class AssociateChartApp extends Component {
     }
   }
 
-  /** Render the tag body. */
+  /** Render the exisiting tag body. */
   renderTagBody() {
     let { existingTags } = this.state;
     let { status: tagStatus } = this.props.existingTags;
@@ -325,41 +327,36 @@ export class AssociateChartApp extends Component {
     if (tagStatus === status.IN_PROGRESS) {
       return <Loader className="h-100 text-center" />;
     } else if (existingTags.length) {
-      return existingTags.map((tag, index) => {
-        return (
-          <>
-            <ul key={v4()}>{this.renderTags(tag.tag, tag.tag.type)}</ul>
-          </>
-        );
-      });
+      return existingTags.map((tag, index) => (
+        <ul key={v4()}>{this.renderTags(tag.tag, tag.tag.type)}</ul>
+      ));
     } else {
       return "There is no existing tag";
     }
   }
 
   /**
-   *   Render tags
+   *   Render exisiting tags
    *  @param {Object} tags - tag object
    *  @param {String} type - tag type - 1. SOA, 2. 3-Tier
    * */
   renderTags = (tags, type) => {
     let tempTag = tags;
-    let updateKeyIf3Tier =
+    let updateExistingTagIf3Tier =
       type === "3 Tier"
         ? existingTagKeys.filter((key) => key !== "module")
         : existingTagKeys;
 
     if (tempTag) {
-      return updateKeyIf3Tier.map((tag) => {
+      return updateExistingTagIf3Tier.map((tag) => {
         tempTag = tempTag[tag];
-
         return (
           <>
             <li key={v4()}>
               <a>{tempTag.name}</a>
             </li>
             {tag === "service" ? (
-              <li style={{ float: "right" }}>
+              <li style={{ float: "right" }} key={v4()}>
                 <Button
                   type="button"
                   className="close"
@@ -404,6 +401,7 @@ export class AssociateChartApp extends Component {
     let { landingZoneId, instanceId } = this.getUrlDetails();
     this.props.deleteExistingTag({ landingZoneId, instanceId, serviceId });
   };
+
   render() {
     const {
       isSelectDepartmentOpen,
@@ -418,14 +416,17 @@ export class AssociateChartApp extends Component {
     const departmentName = selectedLevel_0?.label || "";
     const productName = selectedLevel_1?.label || "";
     const activeLevelLength = Object.keys(activeLevels).length;
+
     const showBtn =
       productType === "SOA" ? activeLevelLength === 6 : activeLevelLength === 5;
     const {
       serviceCreation: { status: serviceCreationStatus },
       deleteTag: { status: deleteTagStatus },
     } = this.props;
+
     const { instanceId, elementType, landingZone, landingZoneId, cloudName } =
       this.getUrlDetails();
+
     return (
       <Box className="environment-container associate-container">
         <Box className="list-heading">

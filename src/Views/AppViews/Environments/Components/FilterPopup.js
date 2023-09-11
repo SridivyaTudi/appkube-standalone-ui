@@ -112,7 +112,7 @@ class FilterPopup extends Component {
   };
 
   renderDepartments = () => {
-    let { departments } = this.state;
+    let { departments, selectedDepartment } = this.state;
     if (departments.length) {
       return departments.map((department, index) => {
         return (
@@ -122,7 +122,7 @@ class FilterPopup extends Component {
                 className="checkbox-input"
                 type="radio"
                 name="department"
-                checked={department.id === this.state.selectedDepartment}
+                checked={department.id === selectedDepartment}
                 onChange={(e) => this.handleDepartmentCheck(department.id)}
               />
               <label
@@ -173,6 +173,8 @@ class FilterPopup extends Component {
 
   renderEnvironments = () => {
     const { deploymentEnvs } = this.props;
+    const { selectedEnv } = this.state;
+
     if (deploymentEnvs && deploymentEnvs.data) {
       return deploymentEnvs.data.map((item) => {
         return (
@@ -181,7 +183,7 @@ class FilterPopup extends Component {
               onClick={() => this.handleEnvCheck(item.name)}
               className={`
                 environment-box 
-                ${this.state.selectedEnv === item.name ? "active" : ""}`}
+                ${selectedEnv === item.name ? "active" : ""}`}
             >
               <Box className="d-block">
                 <Box

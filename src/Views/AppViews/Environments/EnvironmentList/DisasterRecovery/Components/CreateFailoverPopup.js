@@ -113,9 +113,7 @@ class CreateFailoverPopup extends Component {
               type="button"
               className="close"
               aria-label="Close"
-              onClick={() => {
-                this.props.toggleCreateFailoverPopup();
-              }}
+              onClick={this.props.toggleCreateFailoverPopup}
             >
               <i className="fa-solid fa-xmark"></i>
             </button>

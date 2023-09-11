@@ -61,7 +61,6 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-let handleSetTransform = () => {};
 let handleZoomToElement = () => {};
 
 class BusinessAssociationMapping extends Component {
@@ -305,13 +304,9 @@ class BusinessAssociationMapping extends Component {
               zoomOut,
               instance,
               zoomToElement,
-              setTransform,
-              centerView,
               ...rest
             }) => {
               transformScale = instance.transformState.scale;
-
-              handleSetTransform = setTransform;
               handleZoomToElement = zoomToElement;
               return (
                 <>

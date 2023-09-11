@@ -64,6 +64,7 @@ function TopBar() {
       border: "1px solid #dadde9",
     },
   }));
+  let { username, email, profileImage = {} } = getCurrentUserInfo();
   return (
     <Box className="top-bar">
       <Box sx={{ width: "100%" }}>
@@ -84,16 +85,13 @@ function TopBar() {
           <Grid item xs={3}>
             <Box className="top-right-bar">
               <Box className="notification-box">
-                <Box
-                  className="notification"
-                  onClick={() => onClickNotification()}
-                >
+                <Box className="notification" onClick={onClickNotification}>
                   <span></span>
                   <img src={notification} alt="" />
                 </Box>
                 <Box
                   className={
-                    showNotification === true
+                    showNotification
                       ? "notification-dropdown active"
                       : "notification-dropdown"
                   }
@@ -147,23 +145,21 @@ function TopBar() {
                     <a href="#">Show all notifications</a>
                   </Box>
                 </Box>
-                {showNotification === true ? (
+                {showNotification ? (
                   <div
                     className="notification-bg"
-                    onClick={() => onClickNotification()}
+                    onClick={onClickNotification}
                   ></div>
                 ) : (
                   <></>
                 )}
               </Box>
               <Box className="profile-box">
-                <Box className="profile" onClick={() => onClickProfile()}>
+                <Box className="profile" onClick={onClickProfile}>
                   <img
                     src={
-                      getCurrentUserInfo().profileImage
-                        ? `data:image/png;base64,${
-                            getCurrentUserInfo().profileImage
-                          }`
+                      profileImage
+                        ? `data:image/png;base64,${profileImage}`
                         : avatar
                     }
                     alt=""
@@ -171,19 +167,15 @@ function TopBar() {
                 </Box>
                 <Box
                   className={
-                    showProfile === true
-                      ? "profile-dropdown active"
-                      : "profile-dropdown"
+                    showProfile ? "profile-dropdown active" : "profile-dropdown"
                   }
                 >
                   <Box className="d-flex align-items-center header">
                     <Box className="user-img">
                       <img
                         src={
-                          getCurrentUserInfo().profileImage
-                            ? `data:image/png;base64,${
-                                getCurrentUserInfo().profileImage
-                              }`
+                          profileImage
+                            ? `data:image/png;base64,${profileImage}`
                             : avatar
                         }
                         alt=""
@@ -195,32 +187,24 @@ function TopBar() {
                         title={
                           <React.Fragment>
                             <Box className="details">
-                              <div className="name">
-                                {getCurrentUserInfo().username}
-                              </div>
+                              <div className="name">{username}</div>
                             </Box>
                           </React.Fragment>
                         }
                       >
-                        <div className="name">
-                          {getCurrentUserInfo().username}
-                        </div>
+                        <div className="name">{username}</div>
                       </HtmlTooltip>
                       <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="details">
-                              <div className="email">
-                                {getCurrentUserInfo().email}
-                              </div>
+                              <div className="email">{email}</div>
                             </Box>
                           </React.Fragment>
                         }
                       >
-                        <div className="email">
-                          {getCurrentUserInfo().email}
-                        </div>
+                        <div className="email">{email}</div>
                       </HtmlTooltip>
                       {/* <div className="name">
                           {getCurrentUserInfo().username}
@@ -254,11 +238,8 @@ function TopBar() {
                     )}
                   </List>
                 </Box>
-                {showProfile === true ? (
-                  <div
-                    className="profile-bg"
-                    onClick={() => onClickProfile()}
-                  ></div>
+                {showProfile ? (
+                  <div className="profile-bg" onClick={onClickProfile}></div>
                 ) : (
                   <></>
                 )}

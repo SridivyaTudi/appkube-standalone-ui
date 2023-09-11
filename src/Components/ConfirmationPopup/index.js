@@ -56,6 +56,7 @@ class ConfirmationPopup extends Component {
               className="secondary-btn m-r-2"
               variant="contained"
               onClick={this.onClickNo}
+              disabled={showLoader}
             >
               {labels?.btnNo}
             </LoadingButton>

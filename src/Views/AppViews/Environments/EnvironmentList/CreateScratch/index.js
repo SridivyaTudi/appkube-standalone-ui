@@ -45,7 +45,7 @@ class CreateScratch extends Component {
   }
 
   render() {
-    const { formData } = this.state;
+    const { formData, isSubmit, checkedId, finishPrevious } = this.state;
     return (
       <Box className="create-scratch-container">
         <Box className="new-account-page-container">
@@ -54,8 +54,8 @@ class CreateScratch extends Component {
             formData={formData}
             validateCreateRoleForm={this.validateCreateRoleForm}
             setIsSubmit={this.setIsSubmit}
-            isSubmit={this.state.isSubmit}
-            departmentId={this.state.checkedId}
+            isSubmit={isSubmit}
+            departmentId={checkedId}
             previousStep={(finishPrevStep) => {
               if (finishPrevStep === "finishPrevStep") {
                 this.setState({ finishPrevious: false });
@@ -63,7 +63,7 @@ class CreateScratch extends Component {
                 this.props.previousStep();
               }
             }}
-            finishPrevious={this.state.finishPrevious}
+            finishPrevious={finishPrevious}
           />
         </Box>
       </Box>

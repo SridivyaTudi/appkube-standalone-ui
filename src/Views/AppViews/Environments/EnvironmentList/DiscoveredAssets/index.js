@@ -37,13 +37,10 @@ import LambdaTable from "Views/AppViews/Environments/EnvironmentList/DiscoveredA
 import Loader from "Components/Loader";
 import GlobalServicesSummaryTable from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/GlobalServicesSummaryTable";
 
-const orgId = getCurrentOrgId();
-
 class DiscoveredAssets extends Component {
   constructor(props) {
     super(props);
-    const queryPrm = new URLSearchParams(document.location.search);
-    const cloudName = queryPrm.get("cloudName");
+    const { cloudName } = this.getUrlDetails();
     this.state = {
       breadcrumbs: [{ level: -1, name: cloudName }],
       data: {},
@@ -70,10 +67,7 @@ class DiscoveredAssets extends Component {
 
   componentDidMount = () => {
     const { landingZoneId } = this.getUrlDetails();
-    this.props.getEnvironmentDataByLandingZone({
-      orgID: orgId,
-      landingZoneId: landingZoneId,
-    });
+    this.props.getEnvironmentDataByLandingZone({ landingZoneId });
     this.props.getInfraTopologyDbCategories();
   };
 
@@ -89,19 +83,14 @@ class DiscoveredAssets extends Component {
 
     if (prevState.currentActiveNode !== this.state.currentActiveNode) {
       if (this.state.currentActiveNode === null) {
-        this.props.getGlobalServiceCategoryWiseSummary({
-          orgId,
-          landingZoneId,
-        });
+        this.props.getGlobalServiceCategoryWiseSummary({ landingZoneId });
       } else {
         const { currentActiveNode: productEnclave } = this.state;
         this.props.GetInfraTopologyCloudElementList({
-          orgID: orgId,
           landingZone,
           productEnclave,
         });
         this.props.getInfraTopologyCategoryWiseViewData({
-          orgID: orgId,
           landingZone,
           productEnclave,
         });
@@ -148,15 +137,12 @@ class DiscoveredAssets extends Component {
           eksMetaData = newObject;
         }
       });
-      if (data.length) {
-        this.setState({
-          currentActiveTopologyCategory: data[0].elementType,
-        });
-      }
+
       this.setState({
         topologyCategoryWiseData: data,
         ecsMetaData,
         eksMetaData,
+        currentActiveTopologyCategory: data.length ? data[0].elementType : "",
       });
     }
 
