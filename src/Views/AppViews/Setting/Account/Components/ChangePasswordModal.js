@@ -55,10 +55,10 @@ class ChangePasswordModal extends Component {
   };
 
   /** Checkes new entered password strength */
-  checkPasswordStrength = () => {
+  checkPasswordStrength = (isConfirrmPasswordField = 0) => {
     const { formData } = this.state;
 
-    const password = formData.newPassword;
+    const password = isConfirrmPasswordField ? formData.confirmPassword : formData.newPassword;
     let strength = 0;
 
     if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
@@ -184,7 +184,10 @@ class ChangePasswordModal extends Component {
                 id="confirmPassword"
                 name="confirmPassword"
                 value={formData.confirmPassword}
-                onChange={this.handleInputChange}
+                onChange={(e) => {
+                  this.handleInputChange(e);
+                  this.checkPasswordStrength(1);
+                }}
                 autoComplete="off"
               />
               <span
