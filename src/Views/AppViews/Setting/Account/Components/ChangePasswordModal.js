@@ -1,8 +1,8 @@
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Box } from "@mui/material/";
+import PasswordStrength from "Components/PasswordStrength";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import { v4 } from "uuid";
 
 class ChangePasswordModal extends Component {
   constructor(props) {
@@ -49,50 +49,7 @@ class ChangePasswordModal extends Component {
       pwd += chars.substring(randomNumber, randomNumber + 1);
     }
     formData["newPassword"] = pwd;
-    this.setState({ formData }, () => {
-      this.checkPasswordStrength();
-    });
-  };
-
-  /** Checkes new entered password strength */
-  checkPasswordStrength = (isConfirrmPasswordField = 0) => {
-    const { formData } = this.state;
-
-    const password = isConfirrmPasswordField ? formData.confirmPassword : formData.newPassword;
-    let strength = 0;
-
-    if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
-      strength += 1;
-    }
-    if (password.match(/([0-9])/)) {
-      strength += 1;
-    }
-    if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) {
-      strength += 1;
-    }
-    if (password.length > 7) {
-      strength += 1;
-    }
-
-    this.setState({ pwdStrength: strength }, () => {
-      this.renderPasswordStrength();
-    });
-  };
-
-  /** Renders bars according to password strength */
-  renderPasswordStrength = () => {
-    const { pwdStrength } = this.state;
-    const JSX = [];
-    for (let i = 0; i < 4; i++) {
-      if (pwdStrength <= 2 && i <= pwdStrength - 1) {
-        JSX.push(<span key={v4()} className={"good"}></span>);
-      } else if (pwdStrength > 2 && i <= pwdStrength - 1) {
-        JSX.push(<span key={v4()} className={"strong"}></span>);
-      } else {
-        JSX.push(<span key={v4()}></span>);
-      }
-    }
-    return JSX;
+    this.setState({ formData });
   };
 
   render() {
@@ -150,10 +107,7 @@ class ChangePasswordModal extends Component {
                 name="newPassword"
                 value={formData.newPassword}
                 autoComplete="off"
-                onChange={(e) => {
-                  this.handleInputChange(e);
-                  this.checkPasswordStrength();
-                }}
+                onChange={this.handleInputChange}
               />
               <span
                 className="input-group-text rotate"
@@ -184,10 +138,7 @@ class ChangePasswordModal extends Component {
                 id="confirmPassword"
                 name="confirmPassword"
                 value={formData.confirmPassword}
-                onChange={(e) => {
-                  this.handleInputChange(e);
-                  this.checkPasswordStrength(1);
-                }}
+                onChange={this.handleInputChange}
                 autoComplete="off"
               />
               <span
@@ -203,12 +154,7 @@ class ChangePasswordModal extends Component {
                 ></i>
               </span>
             </Box>
-            <Box className="password-strength-group m-b-10">
-              {this.renderPasswordStrength()}
-            </Box>
-            <p className="strength-text">
-              We Strongly suggest that you create strong password
-            </p>
+            <PasswordStrength password={formData.newPassword} />
           </form>
         </ModalBody>
         <ModalFooter className="footer-top-br">
