@@ -2,16 +2,20 @@ import React, { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Box, List, ListItem } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import { getProcessCentral } from "Redux/Dashboard/DashboardThunk";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import Loader from "Components/Loader";
 
 const mappingData = {
-  devcentral: "Dev Central",
+  devCentral: "Dev Central",
   volume: "Volume",
   product: "Product",
   services: "Services",
   release: "Release",
   useCase: "Use Case",
   bugs: "Bugs",
-  workFlow: "Workflow",
+  workflow: "Work flow",
   documentation: "Documentation",
   automationTest: "Automation Test",
   velocity: "Velocity",
@@ -19,11 +23,11 @@ const mappingData = {
   releaseTime: "Release Time",
   bugFixing: "Bug Fixing",
   useCaseDelivery: "Use Case Delivery",
-  workFlowGeneration: "Work Flow Generation",
+  workflowGeneration: "Work Flow Generation",
   reliability: "Reliability",
   postReleaseDefects: "Post Release Defects",
   usageStats: "Usage Stats",
-  seccentral: "Sec Central",
+  secCentral: "Sec Central",
   infra: "Infra",
   account: "Account",
   vpc: "VPC",
@@ -33,85 +37,17 @@ const mappingData = {
   container: "Container",
   code: "Code",
   data: "Data",
-  accessControl: "Access Control",
+  accessCentral: "Access Central",
   governance: "Governance",
   transitAndStore: "Transit And Store",
-  opscentral: "Ops Central",
+  opsCentral: "Ops Central",
   newCloudProvisioning: "New Cloud Provisioning",
   newProduct: "New Product",
   serviceOnboarding: "Service On Boarding",
   newAutomation: "New Automation",
-  alertResolved: "Alert Resolved",
+  alertsResolved: "Alert Resolved",
   usecaseDelivery: "Use Case Delivery",
-  rateofReopenTickets: "Rate of Reopen Tickets",
-};
-
-const dummyData = {
-  devcentral: {
-    volume: {
-      product: "+56",
-      services: "-21",
-      release: "-35",
-      useCase: "+40",
-      bugs: "+45",
-      workFlow: "-32",
-      documentation: "-10",
-      automationTest: "+12",
-    },
-    velocity: {
-      scheduleDeviation: "+56",
-      releaseTime: "-21",
-      bugFixing: "+40",
-      useCaseDelivery: "+45",
-      bugs: "+45",
-      workFlowGeneration: "-32",
-      documentation: "-10",
-      automationTest: "+12",
-    },
-    reliability: {
-      postReleaseDefects: "+56",
-      usageStats: "-21",
-    },
-  },
-  seccentral: {
-    infra: {
-      account: "+56",
-      vpc: "-21",
-      cluster: "-35",
-      managedServices: "+40",
-    },
-    app: {
-      container: "+56",
-      code: "-21",
-    },
-    data: {
-      accessControl: "+56",
-      governance: "-21",
-      transitAndStore: "-35",
-    },
-  },
-  opscentral: {
-    volume: {
-      newCloudProvisioning: "+56",
-      newProduct: "-21",
-      serviceOnboarding: "-35",
-      newAutomation: "+40",
-      alertResolved: "+45",
-    },
-    velocity: {
-      scheduleDeviation: "+56",
-      releaseTime: "-21",
-      bugFixing: "-35",
-      usecaseDelivery: "+40",
-      bugs: "+45",
-      workFlowGeneration: "-32",
-      documentation: "-10",
-      automationTest: "+12",
-    },
-    reliability: {
-      rateofReopenTickets: "+56",
-    },
-  },
+  rateOfReopenTickets: "Rate of Reopen Tickets",
 };
 
 class ProcessCentral extends Component {
@@ -120,18 +56,26 @@ class ProcessCentral extends Component {
     super(props);
     this.state = {
       activeTabs: {
-        devcentral: "volume",
-        seccentral: "infra",
-        opscentral: "volume",
+        devCentral: "volume",
+        secCentral: "app",
+        opsCentral: "volume",
       },
       centralTable: {},
     };
   }
 
   componentDidMount = () => {
-    this.setState({
-      centralTable: dummyData,
-    });
+    this.props.getProcessCentral();
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      prevProps.processCentral.status !== this.props.processCentral.status &&
+      this.props.processCentral.status === status.SUCCESS &&
+      this.props.processCentral.data
+    ) {
+      this.setState({ centralTable: this.props.processCentral.data[0] });
+    }
   };
 
   handleTabToggle = (table, key) => {
@@ -142,12 +86,14 @@ class ProcessCentral extends Component {
 
   renderRows = (val) => {
     let retData = [];
+
     if (val) {
       let key;
       let value;
       for (let i = 0; i < Object.keys(val).length; i++) {
         key = Object.keys(val)[i];
-        value = val[Object.keys(val)[i]];
+        value = val[Object.keys(val)[i]]?.["diff"].replace("%", "");
+
         if (value) {
           retData.push(
             <Box className="report-box" key={uuidv4()}>
@@ -162,7 +108,7 @@ class ProcessCentral extends Component {
                     <i className="fa fa-caret-down"></i>
                   </span>
                 )}
-                <span>{`${Math.abs(value)}%`}</span>
+                <span>{`${Math.abs(+value)}%`}</span>
               </Box>
             </Box>
           );
@@ -219,15 +165,23 @@ class ProcessCentral extends Component {
 
   render() {
     const { centralTable } = this.state;
+    let { processCentral } = this.props;
+
     return (
       <Box className="process-central-container">
         <Box className="report-inner-container">
           <Box className="main-collapse-expand">
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={3}>
-                {this.renderTable(centralTable.devcentral, "devcentral")}
-                {this.renderTable(centralTable.seccentral, "seccentral")}
-                {this.renderTable(centralTable.opscentral, "opscentral")}
+                {processCentral.status === status.IN_PROGRESS ? (
+                  <Loader className="h-100 text-center" />
+                ) : (
+                  <>
+                    {this.renderTable(centralTable.devCentral, "devCentral")}
+                    {this.renderTable(centralTable.secCentral, "secCentral")}
+                    {this.renderTable(centralTable.opsCentral, "opsCentral")}
+                  </>
+                )}
               </Grid>
             </Box>
           </Box>
@@ -236,5 +190,13 @@ class ProcessCentral extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  const { processCentral } = state.dashboard;
+  return { processCentral };
+};
 
-export default ProcessCentral;
+const mapDispatchToProps = {
+  getProcessCentral,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProcessCentral);

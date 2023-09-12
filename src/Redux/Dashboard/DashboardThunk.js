@@ -173,3 +173,15 @@ export const getSlaMetrics = createAsyncThunk(
     }
   }
 );
+
+export const getProcessCentral = createAsyncThunk(
+  "dashboard/getProcessCentral",
+  async () => {
+    try {
+      const response = await postLoginService.get(config.PROCESS_CENTRAL);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

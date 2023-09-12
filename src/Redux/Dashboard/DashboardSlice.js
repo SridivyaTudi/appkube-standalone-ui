@@ -13,6 +13,7 @@ import {
   getProductionVsOther,
   getServiceTypeWiseCost,
   getSlaMetrics,
+  getProcessCentral,
 } from "Redux/Dashboard/DashboardThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -70,7 +71,11 @@ export const dashboardSlice = createSlice({
     slaMetrics: {
       status: null,
       data: [],
-    }
+    },
+    processCentral: {
+      status: null,
+      data: [],
+    },
   },
   reducers: {},
   extraReducers: {
@@ -432,6 +437,34 @@ export const dashboardSlice = createSlice({
       return {
         ...state,
         slaMetrics: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [getProcessCentral.pending]: (state, action) => {
+      return {
+        ...state,
+        processCentral: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getProcessCentral.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        processCentral: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getProcessCentral.rejected]: (state, action) => {
+      return {
+        ...state,
+        processCentral: {
           status: status.FAILURE,
           data: [],
         },
