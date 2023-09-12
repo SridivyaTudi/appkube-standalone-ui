@@ -82,7 +82,7 @@ class DiscoveredAssets extends Component {
     }
 
     if (prevState.currentActiveNode !== this.state.currentActiveNode) {
-      if (this.state.currentActiveNode === null) {
+      if (this.state.currentActiveNode === "Global Services") {
         this.props.getGlobalServiceCategoryWiseSummary({ landingZoneId });
       } else {
         const { currentActiveNode: productEnclave } = this.state;
@@ -540,7 +540,7 @@ class DiscoveredAssets extends Component {
 
     const dataObjLength = data && Object.keys(data).length;
     const currentActiveNodeNotNull =
-      !currentActiveNode && currentActiveNode !== null;
+      !currentActiveNode && currentActiveNode !== "Global Services";
 
     const soa3TierBtnCondition = dataObjLength && currentActiveNodeNotNull;
 
@@ -662,7 +662,7 @@ class DiscoveredAssets extends Component {
                       <></>
                     )}
                     {currentActiveNode &&
-                    currentActiveNode !== null &&
+                    currentActiveNode !== "Global Services" &&
                     !isClusterShow ? (
                       <>
                         {infraTopologyCloudElementList.status ===
@@ -675,7 +675,7 @@ class DiscoveredAssets extends Component {
                     ) : (
                       <></>
                     )}
-                    {currentActiveNode === null &&
+                    {currentActiveNode === "Global Services" &&
                     globalServicesSummaryData.length ? (
                       <GlobalServicesSummaryTable
                         data={globalServicesSummaryData}
@@ -705,7 +705,7 @@ class DiscoveredAssets extends Component {
           </>
         ) : infraTopologyCloudElementList.status === status.IN_PROGRESS ? (
           <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
-        ) : currentActiveNode && currentActiveNode !== null ? (
+        ) : currentActiveNode && currentActiveNode !== "Global Services" ? (
           <AssociateApp data={selectedCategoryCloudElementsData} />
         ) : (
           <></>

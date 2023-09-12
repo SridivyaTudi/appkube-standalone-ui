@@ -119,7 +119,6 @@ class TopologyView extends Component {
                           <span id="custom_location_1" className="d-block">
                             {data.landingZone}
                           </span>
-                          {/* <span className="d-block">{data.subLabel}</span> */}
                         </div>
                       </div>
                     </div>
@@ -198,16 +197,20 @@ class TopologyView extends Component {
                           ? "active"
                           : ""
                       }
-                      id={item.instanceId}
+                      id={item.instanceId ? item.instanceId : "Global Services"}
                       onClick={() => {
                         this.setState(
-                          { currentActiveNode: item.instanceId },
+                          {
+                            currentActiveNode: item.instanceId
+                              ? item.instanceId
+                              : "Global Services",
+                          },
                           () => {
                             this.zoomToElementCallback();
                           }
                         );
                         this.props.setCurrentActiveNode(
-                          item.instanceId,
+                          item.instanceId ? item.instanceId : "Global Services",
                           this.state.activeView,
                           item.id
                         );
