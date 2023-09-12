@@ -35,6 +35,7 @@ import { LOGOS } from "CommonData";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import Loader from "Components/Loader";
+import { v4 } from "uuid";
 
 class Environments extends Component {
   constructor(props) {
@@ -107,7 +108,7 @@ class Environments extends Component {
       if (environmentCountData?.length > 0) {
         environmentCountData.map((env) => {
           retData.push(
-            <Box className="environment-box" key={env.cloud}>
+            <Box className="environment-box" key={v4()}>
               <Box className="environment-title">
                 <Box className="environment-image">
                   <img src={LOGOS[env?.cloud?.toUpperCase()]} alt={env.cloud} />
@@ -236,7 +237,7 @@ class Environments extends Component {
           let accountsJSX = [];
           item.environmentSummaryList.map((account, accountIndex) => {
             accountsJSX.push(
-              <TableRow key={`env-${accountIndex}-${envIndex}`}>
+              <TableRow key={v4()}>
                 <TableCell align="left">
                   <Link
                     to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}&landingZoneId=${account.landingZoneId}`}
@@ -356,8 +357,8 @@ class Environments extends Component {
             );
           }
           retData.push(
-            <div className="environment-table">
-              <TableContainer className="table">
+            <div className="environment-table" key={v4()}>
+              <TableContainer className="table" >
                 <Table>
                   <TableHead
                     className={
@@ -475,7 +476,7 @@ class Environments extends Component {
     if (recentEnvs) {
       return recentEnvs.map((item) => {
         return (
-          <ListItem>
+          <ListItem key={v4()}>
             <Link
               to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}&landingZoneId=${item.landingZoneId}`}
               onClick={() => this.addAccountToRecentlyVisited(item)}
@@ -504,7 +505,7 @@ class Environments extends Component {
   renderAddNewEnvironmentList = () => {
     return (
       <>
-        <ListItem>
+        <ListItem >
           <Link to={`${APP_PREFIX_PATH}/environments/aws/newaccountsetup`}>
             <span className="image-box">
               <img src={AWS} alt="AWS" />
@@ -512,7 +513,7 @@ class Environments extends Component {
             <p>Amazon Web Services</p>
           </Link>
         </ListItem>
-        <ListItem>
+        <ListItem >
           <Link to={`${APP_PREFIX_PATH}/environments/azure/newaccountsetup`}>
             <span className="image-box">
               <img src={AZURE} alt="AZURE" />
@@ -520,7 +521,7 @@ class Environments extends Component {
             <p>Azure Cloud</p>
           </Link>
         </ListItem>
-        <ListItem>
+        <ListItem >
           <Link to={`${APP_PREFIX_PATH}/environments/gcp/newaccountsetup`}>
             <span className="image-box">
               <img src={GCP} alt="GCP" />
@@ -528,7 +529,7 @@ class Environments extends Component {
             <p>Google Cloud Platform</p>
           </Link>
         </ListItem>
-        <ListItem>
+        <ListItem >
           <Link
             to={`${APP_PREFIX_PATH}/environments/kubernetes/newaccountsetup`}
           >
@@ -553,13 +554,13 @@ class Environments extends Component {
 
     return (
       <div className="environment-container">
-        <Box className="list-heading">
+        <Box className="list-heading" key={v4()}>
           <h3>Environments</h3>
         </Box>
-        <Box className="environment-boxs m-t-4">
+        <Box className="environment-boxs m-t-4" key={v4()}>
           {this.renderEnvironmentCountData()}
         </Box>
-        <Box className="add-new-environment">
+        <Box className="add-new-environment" key={v4()}>
           <Box sx={{ width: "100%" }}>
             <Grid
               container

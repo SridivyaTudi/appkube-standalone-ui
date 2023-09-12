@@ -58,7 +58,7 @@ class TabsMenu extends Component {
             onChange={(e) => this.props.setActiveTab(e.target.value)}
           >
             {this.props.tabs.map((item, index) => {
-              return <MenuItem value={index}>{item.name}</MenuItem>;
+              return <MenuItem value={index} key={v4()}>{item.name}</MenuItem>;
             })}
           </Select>
         </Box>

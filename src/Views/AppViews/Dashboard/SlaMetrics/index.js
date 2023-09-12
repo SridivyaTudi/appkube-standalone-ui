@@ -76,14 +76,20 @@ class SLAMetrics extends Component {
     let tableHTML = [];
 
     if (slaMetricsStatus === status.IN_PROGRESS) {
-      return <Loader className="metrics-loading" />;
+      return (
+        <TableRow>
+          <TableCell className="products" colSpan={6}>
+            <Loader className="metrics-loading" />
+          </TableCell>
+        </TableRow>
+      );
     } else if (products.length) {
       products.forEach((productData, index) => {
         tableHTML.push(
           <TableRow key={uuidv4()}>
             <TableCell className="products">
               <HtmlTooltip className="table-tooltip" title={productData.name}>
-                {productData.name}
+               <span>{productData.name}</span>
               </HtmlTooltip>
             </TableCell>
             <TableCell

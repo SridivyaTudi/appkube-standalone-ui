@@ -352,7 +352,7 @@ class SpendAnalytics extends Component {
     const { totalSpend } = this.state;
     const renderHtml = [];
     if (totalSpend) {
-      renderHtml.push(<h1>{totalSpend ? `$${totalSpend}` : ""}</h1>);
+      renderHtml.push(<h1 key={v4()}>{totalSpend ? `$${totalSpend}` : ""}</h1>);
     }
     return renderHtml;
   };
@@ -497,10 +497,10 @@ class SpendAnalytics extends Component {
       <Loader />
     ) : (
       <>
-        <Box className="avrage-shape">
+        <Box className="avrage-shape" key={v4()}>
           <span>{this.getProgressBarTotalCloudwiseSpend()}</span>
         </Box>
-        <Box className="progress-bar-contant">
+        <Box className="progress-bar-contant" key={v4()}>
           <List>{this.getTotalCloudwiseSpend()}</List>
         </Box>
       </>

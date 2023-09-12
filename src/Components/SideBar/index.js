@@ -11,7 +11,7 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-
+import { v4 } from "uuid";
 function SideBar() {
   let location = useLocation();
   let currentLocation = location.pathname;
@@ -49,7 +49,7 @@ function SideBar() {
             return (
               <ListItem
                 className={currentLocation.includes(item.link) ? "active" : ""}
-                key={item.item}
+                key={v4()}
               >
                 <Link to={`${APP_PREFIX_PATH + item.link}`}>
                   <span className={`icon ${Parser(item.icon)}`}></span>
@@ -83,7 +83,7 @@ function SideBar() {
                       item.subMenu.map((subItem) => {
                         return (
                           <ListItem
-                            key={subItem.name}
+                            key={v4()}
                             className={`${
                               currentLocation.includes(subItem.link)
                                 ? "active"

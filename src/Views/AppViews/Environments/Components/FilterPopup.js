@@ -11,6 +11,7 @@ import {
 import status from "Redux/Constants/CommonDS";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Loader from "Components/Loader";
+import { v4 } from "uuid";
 
 const deploymentImgs = {
   DEV: "department",
@@ -116,7 +117,7 @@ class FilterPopup extends Component {
     if (departments.length) {
       return departments.map((department, index) => {
         return (
-          <Grid item lg={4} md={4} xs={4} key={index}>
+          <Grid item lg={4} md={4} xs={4} key={v4()}>
             <Box className="d-flex align-items-center checkbox">
               <input
                 className="checkbox-input"
@@ -148,7 +149,7 @@ class FilterPopup extends Component {
     ) {
       return productsByDepId.data.products.map((product, innerIndex) => {
         return (
-          <Grid item lg={4} md={4} xs={4}>
+          <Grid item lg={4} md={4} xs={4} key={v4()}>
             <Box className="d-flex align-items-center">
               <input
                 type="radio"
@@ -178,7 +179,7 @@ class FilterPopup extends Component {
     if (deploymentEnvs && deploymentEnvs.data) {
       return deploymentEnvs.data.map((item) => {
         return (
-          <Grid key={item.name} item lg={3} md={4} xs={12}>
+          <Grid item lg={3} md={4} xs={12} key={v4()}>
             <Box
               onClick={() => this.handleEnvCheck(item.name)}
               className={`
@@ -340,7 +341,6 @@ class FilterPopup extends Component {
                   this.props.envSummary.status === status.IN_PROGRESS
                 }
                 className="primary-btn min-width"
-                loadingPosition="start"
                 variant="contained"
                 onClick={this.handleSubmit}
               >

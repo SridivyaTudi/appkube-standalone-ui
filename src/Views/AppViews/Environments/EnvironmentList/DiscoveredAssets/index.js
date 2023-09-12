@@ -429,8 +429,8 @@ class DiscoveredAssets extends Component {
                 <Box
                   className="open-create-menu-close"
                   onClick={() => this.toggleMenu(index)}
-                ></Box>
-                <Box className="menu-list">
+                  key={v4()} ></Box>
+                <Box className="menu-list" key={v4()}>
                   <List>
                     <ListItem>
                       <a href="#">Add New datasource</a>
