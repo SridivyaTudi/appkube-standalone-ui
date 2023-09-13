@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 import { getCurrentOrgId } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
+import { v4 } from "uuid";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -88,7 +89,7 @@ class Application extends Component {
     let JSX = [];
     applicationTableData.map((item) => {
       JSX.push(
-        <TableRow>
+        <TableRow key={v4()}>
           <TableCell align="left" className="p-l-15">
             <Link to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}>
               {item.application}

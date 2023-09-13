@@ -278,7 +278,7 @@ class AccountStepsPopup extends Component {
             id={`${template}_${templateIndex}`}
             onChange={this.handleStep2}
           />
-          <label for={`${template}_${templateIndex}`}>{template}</label>
+          <label htmlFor={`${template}_${templateIndex}`}>{template}</label>
         </Box>
       );
     });
