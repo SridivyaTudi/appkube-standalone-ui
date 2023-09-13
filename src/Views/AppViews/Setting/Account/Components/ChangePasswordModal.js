@@ -1,8 +1,10 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box } from "@mui/material/";
+import { Box, List, ListItem } from "@mui/material/";
 import PasswordStrength from "Components/PasswordStrength";
-import { Component } from "react";
+import React,{ Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 
 class ChangePasswordModal extends Component {
   constructor(props) {
@@ -51,8 +53,23 @@ class ChangePasswordModal extends Component {
     formData["newPassword"] = pwd;
     this.setState({ formData });
   };
+  
 
   render() {
+    const HtmlTooltip = styled(({ className, ...props }) => (
+      <Tooltip {...props} arrow classes={{ popper: className }} />
+    ))(({ theme }) => ({
+      [`& .${tooltipClasses.arrow}`]: {
+        color: "#16161E",
+      },
+      [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: "#16161E",
+        color: "#FFFFFF",
+        maxWidth: 250,
+        fontSize: theme.typography.pxToRem(12),
+        border: "1px solid #16161E",
+      },
+    }));
     const { currentPasswordHidden, newPassword, confirmPassword, formData } =
       this.state;
     return (
@@ -113,7 +130,19 @@ class ChangePasswordModal extends Component {
                 className="input-group-text rotate"
                 onClick={this.generateRandomPassword}
               >
+                <HtmlTooltip
+                className="popup-tooltip"
+                title={
+                  <React.Fragment>
+                    <List>
+                      <ListItem>Generate a new secure 12-digit password</ListItem>
+                    </List>
+                  </React.Fragment>
+                }
+              >
                 <i className="fa-solid fa-arrows-rotate"></i>
+              </HtmlTooltip>
+                
               </span>
               <span
                 className="input-group-text"
