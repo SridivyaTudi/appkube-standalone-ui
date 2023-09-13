@@ -67,7 +67,11 @@ export class Permissions extends Component {
           {activeTab === 0 ? (
             <RoleControl />
           ) : activeTab === 1 ? (
-            <GroupControl />
+            <GroupControl
+              setActiveTab={() => {
+                this.setActiveTab(0);
+              }}
+            />
           ) : activeTab === 2 ? (
             <UserControl />
           ) : (

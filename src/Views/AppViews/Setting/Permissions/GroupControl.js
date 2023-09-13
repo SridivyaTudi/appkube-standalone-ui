@@ -112,9 +112,9 @@ class GroupControl extends Component {
     if (groupControlData?.length > 0) {
       groupControlData.map((groupData, index) => {
         retData.push(
-          <Box className="group-box" key={groupData.name}>
+          <Box className="group-box" key={groupData.name} >
             <Box className="heading">
-              <h4>{groupData.name}</h4>
+              <h4 onClick={this.props.setActiveTab}>{groupData.name}</h4>
               <IconButton
                 className="action-btn"
                 aria-label="morevertIcon"
@@ -146,7 +146,7 @@ class GroupControl extends Component {
                 </>
               )}
             </Box>
-            <Box className="group-data">
+            <Box className="group-data" onClick={this.props.setActiveTab}>
               <Box className="data">
                 <label>Active Users</label>
                 <span>{groupData.activeUsers}</span>
@@ -156,12 +156,12 @@ class GroupControl extends Component {
                 <span>{groupData.rolesAssigned}</span>
               </Box>
             </Box>
-            <Box className="description-text">
+            <Box className="description-text" onClick={this.props.setActiveTab}>
               <label>Group Description</label>
               <p>{groupData.description}</p>
             </Box>
             <Box className="view-btn text-center">
-              <Button className="primary-btn min-width">View Group</Button>
+              <Button className="primary-btn min-width" onClick={this.props.setActiveTab}>View Group</Button>
             </Box>
           </Box>
         );
