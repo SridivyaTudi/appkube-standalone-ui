@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import { v4 } from "uuid";
 
 class EcsCluster extends React.Component {
   constructor(props) {
@@ -352,7 +353,7 @@ class EcsCluster extends React.Component {
                   {tierRows
                     .slice(pg * rpg, pg * rpg + rpg)
                     .map((row, index) => (
-                      <TableRow key={index}>
+                      <TableRow key={v4()}>
                         <TableCell>{row.product}</TableCell>
                         <TableCell align="center">{row.environment}</TableCell>
                         <TableCell>{row.businessName}</TableCell>
@@ -505,7 +506,7 @@ class EcsCluster extends React.Component {
                 </TableHead>
                 <TableBody>
                   {soaRows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
-                    <TableRow key={index}>
+                    <TableRow key={v4()}>
                       <TableCell>{row.serviceName}</TableCell>
                       <TableCell>{row.businessName}</TableCell>
                       <TableCell>{row.typeOfService}</TableCell>

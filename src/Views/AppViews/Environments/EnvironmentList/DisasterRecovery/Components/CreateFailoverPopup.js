@@ -165,8 +165,9 @@ class CreateFailoverPopup extends Component {
                   placeholder="Write Description"
                   id="description"
                   onChange={this.handleChange}
+                  value={description}
                 >
-                  {description}
+                  
                 </textarea>
                 <span
                   className="red"

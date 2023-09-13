@@ -172,17 +172,15 @@ class ProcessCentral extends Component {
         <Box className="report-inner-container">
           <Box className="main-collapse-expand">
             <Box sx={{ flexGrow: 1 }}>
-              <Grid container spacing={3}>
-                {processCentral.status === status.IN_PROGRESS ? (
-                  <Loader className="h-100 text-center" />
-                ) : (
-                  <>
-                    {this.renderTable(centralTable.devCentral, "devCentral")}
-                    {this.renderTable(centralTable.secCentral, "secCentral")}
-                    {this.renderTable(centralTable.opsCentral, "opsCentral")}
-                  </>
-                )}
-              </Grid>
+              {processCentral.status === status.IN_PROGRESS ? (
+                <Loader className="h-100 text-center" />
+              ) : (
+                <Grid container spacing={3}>
+                  {this.renderTable(centralTable.devCentral, "devCentral")}
+                  {this.renderTable(centralTable.secCentral, "secCentral")}
+                  {this.renderTable(centralTable.opsCentral, "opsCentral")}
+                </Grid>
+              )}
             </Box>
           </Box>
         </Box>

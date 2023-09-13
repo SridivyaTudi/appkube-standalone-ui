@@ -16,6 +16,7 @@ import status from "Redux/Constants/CommonDS";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import TabsMenu from "../TabsMenu";
+import { v4 } from "uuid";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -180,7 +181,7 @@ class CloudManagedDetails extends React.Component {
     const childJSX = [];
     if (activeTab === 2) {
       JSX.push(
-        <Box sx={{ width: "100%" }} className="data-cloud-managed">
+        <Box sx={{ width: "100%" }} className="data-cloud-managed"    key={v4()}>
           <Grid
             container
             rowSpacing={1}
@@ -193,7 +194,7 @@ class CloudManagedDetails extends React.Component {
                     {this.dbMapping.map((tabData, index) => {
                       return (
                         <ListItem
-                          key={`ops-tab-${index}`}
+                          key={v4()}
                           className={index === activeDbTab ? "active" : ""}
                           onClick={() => this.setActiveDbTab(tabData, index)}
                         >
@@ -221,6 +222,7 @@ class CloudManagedDetails extends React.Component {
                               item.elementType
                             );
                           }}
+                          key={v4()}
                         >
                           <Box className="service-icon">
                             <img
@@ -272,6 +274,7 @@ class CloudManagedDetails extends React.Component {
               this.setState({ activeCategory: index });
               this.props.setCurrentTopologyCategory(item.elementType);
             }}
+            key={v4()}
           >
             <Box className="service-icon">
               <img src={this.state.serivceImages[index]} alt="serviceicon" />
@@ -287,7 +290,7 @@ class CloudManagedDetails extends React.Component {
       });
       if (cloudData.length) {
         JSX.push(
-          <Box className="cloud-managed-cards">
+          <Box className="cloud-managed-cards" key={v4()}>
             <Box className="cloud-managed-cards-scroll">{childJSX}</Box>
           </Box>
         );

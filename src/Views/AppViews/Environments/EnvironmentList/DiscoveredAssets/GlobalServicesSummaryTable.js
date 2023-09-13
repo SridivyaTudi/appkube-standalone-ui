@@ -12,6 +12,7 @@ import AppMesh from "assets/img/assetmanager/cloud-managed-icon7.png";
 import Kinesis from "assets/img/assetmanager/cloud-managed-icon8.png";
 import TimeSeries from "assets/img/assetmanager/cloud-managed-icon9.png";
 import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
+import { v4 } from "uuid";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -64,6 +65,7 @@ class GlobalServicesSummaryTable extends React.Component {
             this.setState({ activeCategory: index });
             this.props.setCurrentGlobalDataCategory(item.elementType);
           }}
+          key={v4()}
         >
           <Box className="service-icon">
             <img src={this.state.serivceImages[index]} alt="serviceicon" />
@@ -79,7 +81,7 @@ class GlobalServicesSummaryTable extends React.Component {
     });
     if (data.length) {
       JSX.push(
-        <Box className="cloud-managed-cards">
+        <Box className="cloud-managed-cards" key={v4()}>
           <Box className="cloud-managed-cards-scroll">{childJSX}</Box>
         </Box>
       );

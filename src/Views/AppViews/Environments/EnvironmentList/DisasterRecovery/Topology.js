@@ -11,6 +11,7 @@ import amazonEc3 from "assets/img/assetmanager/amazon-ec3.png";
 import { Box, Grid, Button } from "@mui/material";
 import { connect } from "react-redux";
 import TopologyView from "./TopologyView";
+import { v4 } from "uuid";
 
 let topologyData = {
   label: "HRMS",
@@ -211,7 +212,7 @@ class Topology extends Component {
       resources[`${selectedResource}_layer`]?.length &&
       resources[`${selectedResource}_layer`].map((resource) => {
         return (
-          <Box className="card-box">
+          <Box className="card-box" key={v4()}>
             <strong>{resource.number}</strong>
             <span>{resource.name}</span>
           </Box>

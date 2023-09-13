@@ -157,7 +157,7 @@ class TopologyView extends Component {
         // item = [item];
         if (item?.length > 0) {
           retData.push(
-            <ul>
+            <ul key={v4()}>
               {item.map((item, nodeIndex) => {
                 if (item.productEnclaveList?.length > 0) {
                   if (
@@ -220,6 +220,7 @@ class TopologyView extends Component {
                           nodeIndex
                         );
                       }}
+                      
                     >
                       <span>
                         <img

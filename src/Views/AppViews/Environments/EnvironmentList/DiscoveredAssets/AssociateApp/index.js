@@ -59,14 +59,14 @@ class AssociateApp extends Component {
       const tier3Data = Object.entries(data.threeTier);
       const soaData = Object.entries(data.soa);
       JSX.push(
-        <Box className="tiersoc-box" key={data.id}>
+        <Box className="tiersoc-box" key={v4()}>
           <Box className="heading">
             <h3>
               <p>
                 <img src={clusterIcon} alt="" />
               </p>
               <HtmlTooltip className="table-tooltip" title={data.instanceId}>
-                {data.elementType} ID: {data.instanceId}
+                <span>{data.elementType} ID: {data.instanceId}</span>
               </HtmlTooltip>
             </h3>
             <Button

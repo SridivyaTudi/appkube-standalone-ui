@@ -32,7 +32,6 @@ import {
   getGlobalServiceCategoryWiseSummary,
   getGlobalServiceCloudElements,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
-import { getCurrentOrgId } from "Utils";
 import LambdaTable from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/LambdaTable";
 import Loader from "Components/Loader";
 import GlobalServicesSummaryTable from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/GlobalServicesSummaryTable";
