@@ -109,7 +109,7 @@ class Wizard extends Component {
   };
 
   render() {
-    const { currentStep, isSubmit } = this.state;
+    const { currentStep } = this.state;
     const {
       steps,
       departmentId,
@@ -153,7 +153,7 @@ class Wizard extends Component {
                 if (currentStep === 1) {
                   this.props.setIsSubmit(true);
                   this.setState({ isSubmit: true }, () => {
-                    if (isSubmit) {
+                    if (this.state.isSubmit) {
                       let { isValid } = this.props.validateCreateRoleForm();
                       if (isValid) {
                         this.onClickStepButton(currentStep + 1);

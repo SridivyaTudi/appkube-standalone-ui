@@ -167,7 +167,7 @@ class Signin extends Component {
                             placeholder="Input your Username here"
                             value={
                               formData.userName ||
-                              localStorage.getItem("rememberUserName")
+                              localStorage.getItem("rememberUserName") || ''
                             }
                             onChange={this.handleInputChange}
                             id="userName"
@@ -242,12 +242,12 @@ class Signin extends Component {
                       }
                       loading={
                         this.props.loggedInUser?.status === status.IN_PROGRESS
-                      }
-                      loadingPosition="start"
+                      }                     
                       onClick={this.handleSignIn}
                       className="primary-btn"
                       variant="contained"
                       type="submit"
+                      // loadingPosition={"start"}
                     >
                       Sign In
                     </LoadingButton>
