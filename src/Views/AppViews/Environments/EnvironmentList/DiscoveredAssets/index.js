@@ -561,9 +561,9 @@ class DiscoveredAssets extends Component {
                   <Box className="services-panel">
                     <Box className="services-panel-title bottom-border">
                       <Box className="name">Infra Topology View</Box>
-                      <Box className="back-btn">
+                      {/* <Box className="back-btn">
                         <i className="fa-solid fa-arrow-left"></i>
-                      </Box>
+                      </Box> */}
                     </Box>
                     <Box className="services-panel-body">
                       {dataObjLength ? (
