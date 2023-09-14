@@ -18,6 +18,7 @@ import status from "Redux/Constants/CommonDS";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import RequestPopup from "./Components/RequestPopup";
 
 class SignUp extends Component {
   steps = {
@@ -44,8 +45,15 @@ class SignUp extends Component {
       },
       passwordView: true,
       submittedSteps: [false, false, false],
+      showRequestPopup: false,
     };
   }
+
+  togglePopup = () => {
+    this.setState({
+      showRequestPopup: !this.state.showRequestPopup,
+    });
+  };
 
   componentDidUpdate = (prevProps, prevState) => {
     if (this.props.signUpUser.status !== prevProps.signUpUser.status) {
@@ -182,7 +190,7 @@ class SignUp extends Component {
   };
 
   render() {
-    const { activeStep, submittedSteps, step1, step2, passwordView } =
+    const { activeStep, submittedSteps, step1, step2, passwordView, showRequestPopup, } =
       this.state;
     const { errors } = this.validateForm(activeStep, submittedSteps);
     return (
@@ -511,6 +519,7 @@ class SignUp extends Component {
                               name="companyName"
                               value={step2.companyName}
                               onChange={this.handleStep2Changes}
+                              onClick={this.togglePopup}
                             />
                             {submittedSteps[this.steps.STEP2] &&
                             errors.companyName ? (
@@ -559,6 +568,14 @@ class SignUp extends Component {
             </Box>
           </Box>
         </Box>
+        {showRequestPopup ? (
+          <RequestPopup
+            showModal={showRequestPopup}
+            togglePopup={this.togglePopup}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }

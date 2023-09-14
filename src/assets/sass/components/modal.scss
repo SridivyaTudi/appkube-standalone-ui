@@ -78,6 +78,18 @@
     .modal-body {
       padding: 0px 10px;
       color: #3b4859;
+      .request-popup-content{
+        p{padding: 0px 20px 10px 20px;
+          color: #000000;
+        }
+        .input-group{
+          .label{
+            font-size: 13px;
+            line-height: 16px;
+            color: #344054;
+          }
+        }
+      }
       .filter-pop-loading {
         display: flex;
         align-items: center;
