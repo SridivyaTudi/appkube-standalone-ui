@@ -58,6 +58,7 @@ export class AssociateChartApp extends Component {
       resetBreadCrumb: "",
       selectedExistingTag: {},
       selectedServiceId: "",
+      existingTagServiceIds:[]
     };
   }
 
