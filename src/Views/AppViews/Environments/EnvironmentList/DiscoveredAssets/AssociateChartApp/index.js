@@ -8,11 +8,16 @@ import {
   addService,
   getExistingTags,
   deleteExistingTag,
+  getDepartments,
+  getProductList,
+  getProductEnv,
+  getModules,
+  getModuleElements,
+  getModulesOf3Tier,
 } from "Redux/AssociateApp/AssociateAppThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { withRouter } from "Views/AppViews/Environments/NewAccountSetup/AccountPolicy/withRouter";
 import { ToastMessage } from "Toast/ToastMessage";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import {
@@ -33,7 +38,10 @@ const existingTagKeys = [
   "module",
   "service",
 ];
-
+const productCategory = {
+  "3 Tier": ["Web Layer", "App Layer", "Data Layer", "Auxilary Layer"],
+  SOA: ["BUSINESS", "COMMON"],
+};
 export class AssociateChartApp extends Component {
   constructor(props) {
     super(props);
@@ -47,6 +55,9 @@ export class AssociateChartApp extends Component {
       existingTags: [],
       showConfirmPopup: false,
       serviceId: 0,
+      resetBreadCrumb: "",
+      selectedExistingTag: {},
+      selectedServiceId: "",
     };
   }
 
@@ -82,10 +93,8 @@ export class AssociateChartApp extends Component {
       this.props.serviceCreation.status === status.SUCCESS
     ) {
       if (this.props.serviceCreation.data.id) {
-        const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
-        this.props.navigate(
-          `${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`
-        );
+        this.setState({ resetBreadCrumb: v4() });
+        this.getTags();
         ToastMessage.success("Service tagged successfully.");
       } else if (this.props.serviceCreation.status === status.FAILURE) {
         ToastMessage.error("Service is not tag  successfully.");
@@ -352,7 +361,11 @@ export class AssociateChartApp extends Component {
         tempTag = tempTag[tag];
         return (
           <>
-            <li key={v4()}>
+            <li
+              key={v4()}
+              className={this.findActiveTag(tags, type)}
+              onClick={() => this.onClickExistingTag(tags, type)}
+            >
               <a>{tempTag.name}</a>
             </li>
             {tag === "service" ? (
@@ -402,6 +415,74 @@ export class AssociateChartApp extends Component {
     this.props.deleteExistingTag({ landingZoneId, instanceId, serviceId });
   };
 
+  /**
+   *   Fire event exisiting tags
+   *  @param {Object} tags - tag object
+   *  @param {String} type - tag type - 1. SOA, 2. 3-Tier
+   * */
+  onClickExistingTag = (tags, type) => {
+    let tempTag = tags;
+    let updateExistingTagIf3Tier =
+      type === "3 Tier"
+        ? existingTagKeys.filter((key) => key !== "module")
+        : existingTagKeys;
+
+    let activeLevels = {};
+    let selectedServiceId = "";
+    if (tempTag) {
+      updateExistingTagIf3Tier.forEach((tag, index) => {
+        tempTag = tempTag[tag];
+        if (index) {
+          if (tag === "service") {
+            selectedServiceId = tempTag?.id;
+          }
+          activeLevels[`selectedLevel_${index - 1}`] = {
+            label: tempTag?.name,
+            id:
+              tag === "type"
+                ? this.getTypeId(tempTag?.name, type)
+                : tempTag?.id,
+            productType: type,
+          };
+        }
+      });
+    }
+    console.log(selectedServiceId);
+    this.setState({
+      selectedExistingTag: { activeLevels, type },
+      selectedServiceId,
+    });
+  };
+
+  getTypeId = (name, type) => {
+    return productCategory[type].findIndex(
+      (label) =>
+        label.replace(" Layer", "")?.toLowerCase() ===
+        name.replace(" Layer", "")?.toLowerCase()
+    );
+  };
+
+  findActiveTag = (tag, type) => {
+    let tempTag = tag;
+    let activeClass = "";
+    let { selectedServiceId } = this.state;
+
+    let updateExistingTagIf3Tier =
+      type === "3 Tier"
+        ? existingTagKeys.filter((key) => key !== "module")
+        : existingTagKeys;
+
+    if (selectedServiceId) {
+      updateExistingTagIf3Tier.forEach((tagName) => {
+        tempTag = tempTag[tagName];
+        if (tagName === "service" && tempTag.id === selectedServiceId) {
+          activeClass = "active";
+        }
+      });
+    }
+
+    return activeClass;
+  };
   render() {
     const {
       isSelectDepartmentOpen,
@@ -410,6 +491,8 @@ export class AssociateChartApp extends Component {
       activeLevels,
       productType,
       showConfirmPopup,
+      resetBreadCrumb,
+      selectedExistingTag,
     } = this.state;
 
     const { selectedLevel_0, selectedLevel_1 } = activeLevels;
@@ -540,6 +623,8 @@ export class AssociateChartApp extends Component {
               });
             }}
             clickBreadCrumbDetails={clickBreadCrumbDetails}
+            resetBreadCrumbId={resetBreadCrumb}
+            selectedExistingTag={selectedExistingTag}
           />
         </Box>
         <Box className="d-block width-100 text-center top-bottom-arrow">
@@ -597,8 +682,12 @@ const mapDispatchToProps = {
   getExistingTags,
   addService,
   deleteExistingTag,
+  getDepartments,
+  getProductList,
+  getProductEnv,
+  getModules,
+  getModuleElements,
+  getModulesOf3Tier,
 };
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AssociateChartApp)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(AssociateChartApp);

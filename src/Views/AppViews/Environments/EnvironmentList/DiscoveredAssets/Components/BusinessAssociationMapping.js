@@ -62,6 +62,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 }));
 
 let handleZoomToElement = () => {};
+let handleSetTransform = () => {};
 
 class BusinessAssociationMapping extends Component {
   constructor(props) {
@@ -71,6 +72,7 @@ class BusinessAssociationMapping extends Component {
       levelsData: [],
       productType: "",
       serviceName: "",
+      selectedTag: false,
     };
   }
 
@@ -103,24 +105,25 @@ class BusinessAssociationMapping extends Component {
       this.props.products.status === status.SUCCESS &&
       this.props.products?.data
     ) {
-      let { levelsData, activeLevels, serviceName, productType } = this.state;
+      let { levelsData, activeLevels, serviceName, productType, selectedTag } =
+        this.state;
       let products = this.props.products?.data;
 
-      levelsData.length = 1;
+      if (!selectedTag) {
+        levelsData.length = 1;
+      }
 
       if (products.length) {
-        levelsData.push(
-          products.map((product) => {
-            let { name: label, id } = product;
-            return {
-              label,
-              id,
-              image: calendarMouseIcon,
-              type: "Product",
-              productType: product.type,
-            };
-          })
-        );
+        levelsData[1] = products.map((product) => {
+          let { name: label, id } = product;
+          return {
+            label,
+            id,
+            image: calendarMouseIcon,
+            type: "Product",
+            productType: product.type,
+          };
+        });
       }
 
       this.setStateOrProps(activeLevels, levelsData, serviceName, productType);
@@ -131,24 +134,25 @@ class BusinessAssociationMapping extends Component {
       this.props.productEnv.status === status.SUCCESS &&
       this.props.productEnv?.data
     ) {
-      let { levelsData, activeLevels, productType, serviceName } = this.state;
+      let { levelsData, activeLevels, productType, serviceName, selectedTag } =
+        this.state;
       let productEnvs = this.props.productEnv.data;
 
-      levelsData.length = 2;
+      if (!selectedTag) {
+        levelsData.length = 2;
+      }
 
       if (productEnvs?.length) {
-        levelsData.push(
-          productEnvs.map((env) => {
-            let { name: label, id } = env;
-            return {
-              label,
-              id,
-              image: calendarMouseIcon,
-              type: "ProductEnv",
-              productType,
-            };
-          })
-        );
+        levelsData[2] = productEnvs.map((env) => {
+          let { name: label, id } = env;
+          return {
+            label,
+            id,
+            image: calendarMouseIcon,
+            type: "ProductEnv",
+            productType,
+          };
+        });
       }
 
       this.setStateOrProps(activeLevels, levelsData, serviceName, productType);
@@ -159,11 +163,14 @@ class BusinessAssociationMapping extends Component {
       this.props.modules.status === status.SUCCESS &&
       this.props.modules.data
     ) {
-      let { levelsData, activeLevels, serviceName, productType } = this.state;
+      let { levelsData, activeLevels, serviceName, productType, selectedTag } =
+        this.state;
 
       let modules = this.props.modules.data;
 
-      levelsData.length = 4;
+      if (!selectedTag) {
+        levelsData.length = 4;
+      }
 
       if (modules?.length) {
         levelsData[4] = modules.map((module) => {
@@ -186,11 +193,14 @@ class BusinessAssociationMapping extends Component {
       this.props.threeTierModules.status === status.SUCCESS &&
       this.props.threeTierModules.data
     ) {
-      let { levelsData, activeLevels, serviceName, productType } = this.state;
+      let { levelsData, activeLevels, serviceName, productType, selectedTag } =
+        this.state;
 
       let threeTierModules = this.props.threeTierModules.data;
 
-      levelsData.length = 4;
+      if (!selectedTag) {
+        levelsData.length = 4;
+      }
 
       if (threeTierModules?.length) {
         levelsData[4] = threeTierModules.map((module) => {
@@ -212,10 +222,13 @@ class BusinessAssociationMapping extends Component {
       this.props.moduleElements.status === status.SUCCESS &&
       this.props.moduleElements.data
     ) {
-      let { levelsData, activeLevels, serviceName, productType } = this.state;
+      let { levelsData, activeLevels, serviceName, productType, selectedTag } =
+        this.state;
       let moduleElements = this.props.moduleElements.data;
 
-      levelsData.length = 5;
+      if (!selectedTag) {
+        levelsData.length = 5;
+      }
 
       if (moduleElements?.length) {
         levelsData[5] = moduleElements.map((module) => {
@@ -252,6 +265,108 @@ class BusinessAssociationMapping extends Component {
         );
       }
     }
+
+    if (prevProps.resetBreadCrumbId !== this.props.resetBreadCrumbId) {
+      let { activeLevels, levelsData, serviceName, productType } = this.state;
+      activeLevels = {};
+      levelsData = [];
+
+      this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
+      handleSetTransform(0, 0, 1);
+    }
+
+    if (prevProps.selectedExistingTag !== this.props.selectedExistingTag) {
+      let selectedTag = this.props.selectedExistingTag;
+      let { activeLevels, levelsData, serviceName } = this.state;
+
+      if (
+        selectedTag.activeLevels &&
+        Object.keys(selectedTag.activeLevels).length
+      ) {
+        let { activeLevels: propActiveLevels, type } = selectedTag;
+
+        let {
+          selectedLevel_0,
+          selectedLevel_1,
+          selectedLevel_2,
+          selectedLevel_3,
+          selectedLevel_4,
+          selectedLevel_5,
+        } = propActiveLevels;
+        const checkSameSelectedTag =
+          type === "3 Tier"
+            ? selectedLevel_4?.id === activeLevels["selectedLevel_4"]?.id
+            : selectedLevel_5?.id === activeLevels["selectedLevel_5"]?.id;
+        if (!checkSameSelectedTag) {
+          activeLevels = {};
+          levelsData = [];
+          this.setState({ selectedTag: true });
+          this.setStateOrProps(activeLevels, levelsData, serviceName, 0).then(
+            () => {
+              this.onClickSynectiks().then(() => {
+                this.onClickDepartment({
+                  selectedLevel: 0,
+                  currentLevelIndex: selectedLevel_0.id,
+                  label: selectedLevel_0.label,
+                  type: "Department",
+                  productType: type || "",
+                }).then(() => {
+                  this.onClickProduct({
+                    selectedLevel: 1,
+                    currentLevelIndex: selectedLevel_1.id,
+                    label: selectedLevel_1.label,
+                    type: "Product",
+                    productType: type || "",
+                  }).then(() => {
+                    this.onClickProductEnv({
+                      selectedLevel: 2,
+                      currentLevelIndex: selectedLevel_2.id,
+                      label: selectedLevel_2.label,
+                      type: "ProductEnv",
+                      productType: type || "",
+                    }).then(() => {
+                      this.onClickCategory({
+                        selectedLevel: 3,
+                        currentLevelIndex: selectedLevel_3.id,
+                        label: selectedLevel_3.label,
+                        type: "Category",
+                        productType: type || "",
+                      }).then(() => {
+                        if (type === "SOA") {
+                          this.onClickModule({
+                            selectedLevel: 4,
+                            currentLevelIndex: selectedLevel_4.id,
+                            label: selectedLevel_4.label,
+                            type: "Module",
+                            productType: type || "",
+                          }).then(() => {
+                            this.onClickModuleElement({
+                              selectedLevel: 5,
+                              currentLevelIndex: selectedLevel_5.id,
+                              label: selectedLevel_5.label,
+                              type: "ModuleElement",
+                              productType: type || "",
+                            });
+                          });
+                        } else if (type === "3 Tier") {
+                          this.onClickThreeTierModule({
+                            selectedLevel: 4,
+                            currentLevelIndex: selectedLevel_4.id,
+                            label: selectedLevel_4.label,
+                            type: "ThreeTierModule",
+                            productType: type || "",
+                          });
+                        }
+                      });
+                    });
+                  });
+                });
+              });
+            }
+          );
+        }
+      }
+    }
   }
 
   /**
@@ -259,7 +374,7 @@ class BusinessAssociationMapping extends Component {
    * Render the main body including all levels data.
    */
   renderBody = () => {
-    let { activeLevels, departments, levelsData } = this.state;
+    let { activeLevels, departments, levelsData, selectedTag } = this.state;
 
     let departmentLength =
       departments?.length && departments[0].departments?.length;
@@ -283,7 +398,10 @@ class BusinessAssociationMapping extends Component {
       threeTierModules.status,
     ].includes(inprogressStatus);
 
-    if (organization.status === inprogressStatus) {
+    if (
+      organization.status === inprogressStatus ||
+      (lodingData && selectedTag)
+    ) {
       return this.renderLoder("h-100");
     } else {
       return departmentLength ? (
@@ -304,10 +422,12 @@ class BusinessAssociationMapping extends Component {
               zoomOut,
               instance,
               zoomToElement,
+              setTransform,
               ...rest
             }) => {
               transformScale = instance.transformState.scale;
               handleZoomToElement = zoomToElement;
+              handleSetTransform = setTransform;
               return (
                 <>
                   <TransformComponent
@@ -479,7 +599,7 @@ class BusinessAssociationMapping extends Component {
   /**
    * Fired event on click synectiks, then get departments
    */
-  onClickSynectiks = () => {
+  onClickSynectiks = async () => {
     let { activeLevels, levelsData, departments, serviceName } = this.state;
     activeLevels = {};
 
@@ -502,7 +622,7 @@ class BusinessAssociationMapping extends Component {
    *  @param {Object} data - get departmentId, selectedLevel and label
    *  @param {Boolean} isClickBreadCrumb - 1 if it is click on breadcrumb else 0
    */
-  onClickDepartment(data, isClickBreadCrumb = 0) {
+  onClickDepartment = async (data, isClickBreadCrumb = 0) => {
     let {
       currentLevelIndex: departmentId,
       selectedLevel,
@@ -537,14 +657,14 @@ class BusinessAssociationMapping extends Component {
     }
 
     this.setStateOrProps(activeLevels, levelsData, serviceName);
-  }
+  };
 
   /**
    * Fired event on click product, then get product envs
    *  @param {Object} data - get productId, selectedLevel,productType and label
    *  @param {Boolean} isClickBreadCrumb - 1 if it is click on breadcrumb else 0
    */
-  onClickProduct(data, isClickBreadCrumb = 0) {
+  onClickProduct = async (data, isClickBreadCrumb = 0) => {
     let {
       currentLevelIndex: productId,
       selectedLevel,
@@ -552,6 +672,7 @@ class BusinessAssociationMapping extends Component {
       type,
       productType,
     } = data;
+
     let { activeLevels, levelsData, serviceName } = this.state;
 
     let activeBAMLevel = activeLevels[`selectedLevel_1`];
@@ -583,14 +704,14 @@ class BusinessAssociationMapping extends Component {
       activeLevels,
       productType,
     });
-  }
+  };
 
   /**
    * Fired event on click product envs, then get product category
    *  @param {Object} data - get envId, selectedLevel and label
    *  @param {Boolean} isClickBreadCrumb - 1 if it is click on breadcrumb else 0
    */
-  onClickProductEnv(data, isClickBreadCrumb = 0) {
+  onClickProductEnv = async (data, isClickBreadCrumb = 0) => {
     let {
       productType,
       currentLevelIndex: envId,
@@ -600,7 +721,6 @@ class BusinessAssociationMapping extends Component {
     } = data;
     let { levelsData, activeLevels, serviceName } = this.state;
     let activeBAMLevel = activeLevels[`selectedLevel_2`];
-
     levelsData.length = isClickBreadCrumb ? 4 : 3;
     activeLevels = this.getPreviousSelectedLevels(isClickBreadCrumb ? 2 : 1);
 
@@ -617,7 +737,6 @@ class BusinessAssociationMapping extends Component {
             };
           })
         : [];
-
       activeLevels["selectedLevel_2"] = {
         id: envId,
         label,
@@ -627,14 +746,14 @@ class BusinessAssociationMapping extends Component {
     }
 
     this.setStateOrProps(activeLevels, levelsData, serviceName);
-  }
+  };
 
   /**
    * Fired event on click category, then get modules
    *  @param {Object} data - get envId, selectedLevel and label
    *  @param {Boolean} isClickBreadCrumb - 1 if it is click on breadcrumb else 0
    */
-  onClickCategory(data, isClickBreadCrumb = 0) {
+  onClickCategory = async (data, isClickBreadCrumb = 0) => {
     let { currentLevelIndex: categoryId, label, type, productType } = data;
     let {
       levelsData,
@@ -675,14 +794,14 @@ class BusinessAssociationMapping extends Component {
     }
 
     this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
-  }
+  };
 
   /**
    * Fired event on click category, then get modules
    *  @param {Object} data - get moduleId, selectedLevel and label
    *  @param {Boolean} isClickBreadCrumb - 1 if it is click on breadcrumb else 0
    */
-  onClickModule(data, isClickBreadCrumb = 0) {
+  onClickModule = async (data, isClickBreadCrumb = 0) => {
     let { currentLevelIndex: moduleId, label, type } = data;
     let { levelsData, activeLevels, serviceName, productType } = this.state;
 
@@ -713,14 +832,14 @@ class BusinessAssociationMapping extends Component {
     }
 
     this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
-  }
+  };
 
   /**
    * Fired event on click category, then get three-tier modules
    *  @param {Object} data - get moduleId, selectedLevel and label
    *  @param {Boolean} isClickBreadCrumb - 1 if it is click on breadcrumb else 0
    */
-  onClickThreeTierModule(data, isClickBreadCrumb = 0) {
+  onClickThreeTierModule = async (data, isClickBreadCrumb = 0) => {
     let { currentLevelIndex: moduleId, label, type } = data;
     let { levelsData, activeLevels, serviceName } = this.state;
 
@@ -738,13 +857,13 @@ class BusinessAssociationMapping extends Component {
     }
 
     this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
-  }
+  };
   /**
    * Fired event on click ModuleElement
    *  @param {Object} data - get moduleId, selectedLevel and label
    *  @param {Boolean} isClickBreadCrumb - 1 if it is click on breadcrumb else 0
    */
-  onClickModuleElement(data, isClickBreadCrumb = 0) {
+  onClickModuleElement = async (data, isClickBreadCrumb = 0) => {
     let { currentLevelIndex: moduleId, label, type } = data;
     let { levelsData, activeLevels, serviceName } = this.state;
 
@@ -762,7 +881,7 @@ class BusinessAssociationMapping extends Component {
     }
 
     this.setStateOrProps(activeLevels, levelsData, serviceName);
-  }
+  };
 
   /** Fire click event then draw
    *  @param {Number} selectedLevel- The selectedLevel of BAM,
@@ -805,7 +924,12 @@ class BusinessAssociationMapping extends Component {
    *  @param {Array} levelsData- Levels data of BAM
    *  @param {string} serviceName- service name of BAM
    */
-  setStateOrProps(activeLevels, levelsData, serviceName, isMoveToLeftSide = 1) {
+  setStateOrProps = async (
+    activeLevels,
+    levelsData,
+    serviceName,
+    isMoveToLeftSide = 1
+  ) => {
     let { productType } = this.state;
     this.props.setBreadCrumbs(
       activeLevels,
@@ -818,7 +942,7 @@ class BusinessAssociationMapping extends Component {
         handleZoomToElement("lastNodeActive", transformScale);
       }
     });
-  }
+  };
 
   /** get Previous levels
    *  @param {Number} level- number of level
