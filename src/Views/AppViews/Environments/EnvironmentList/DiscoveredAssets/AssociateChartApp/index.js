@@ -79,7 +79,7 @@ export class AssociateChartApp extends Component {
       prevProps.deleteTag.status !== this.props.deleteTag.status &&
       this.props.deleteTag.status === status.SUCCESS
     ) {
-      if (this.props.deleteTag.data == "OK") {
+      if (this.props.deleteTag.data === "OK") {
         this.getTags();
         this.togglePopup();
         ToastMessage.success("Tag removed successfully.");
@@ -447,13 +447,14 @@ export class AssociateChartApp extends Component {
         }
       });
     }
-    console.log(selectedServiceId);
+
     this.setState({
       selectedExistingTag: { activeLevels, type },
       selectedServiceId,
     });
   };
 
+  // Type -(BUSINESS,COMMON) return id
   getTypeId = (name, type) => {
     return productCategory[type].findIndex(
       (label) =>
@@ -462,6 +463,7 @@ export class AssociateChartApp extends Component {
     );
   };
 
+  // Find active tag and return active class
   findActiveTag = (tag, type) => {
     let tempTag = tag;
     let activeClass = "";
@@ -483,6 +485,7 @@ export class AssociateChartApp extends Component {
 
     return activeClass;
   };
+
   render() {
     const {
       isSelectDepartmentOpen,
@@ -493,15 +496,23 @@ export class AssociateChartApp extends Component {
       showConfirmPopup,
       resetBreadCrumb,
       selectedExistingTag,
+      selectedServiceId,
     } = this.state;
 
-    const { selectedLevel_0, selectedLevel_1 } = activeLevels;
+    const {
+      selectedLevel_0,
+      selectedLevel_1,
+      selectedLevel_4,
+      selectedLevel_5,
+    } = activeLevels;
     const departmentName = selectedLevel_0?.label || "";
     const productName = selectedLevel_1?.label || "";
     const activeLevelLength = Object.keys(activeLevels).length;
 
     const showBtn =
-      productType === "SOA" ? activeLevelLength === 6 : activeLevelLength === 5;
+      productType === "SOA"
+        ? activeLevelLength === 6 && selectedLevel_5.id !== selectedServiceId
+        : activeLevelLength === 5 && selectedLevel_4.id !== selectedServiceId;
     const {
       serviceCreation: { status: serviceCreationStatus },
       deleteTag: { status: deleteTagStatus },
@@ -625,6 +636,9 @@ export class AssociateChartApp extends Component {
             clickBreadCrumbDetails={clickBreadCrumbDetails}
             resetBreadCrumbId={resetBreadCrumb}
             selectedExistingTag={selectedExistingTag}
+            serviceIdReset={()=>{
+              this.setState({selectedServiceId:''})
+            }}
           />
         </Box>
         <Box className="d-block width-100 text-center top-bottom-arrow">

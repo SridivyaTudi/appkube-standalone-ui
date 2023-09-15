@@ -125,7 +125,7 @@ class BusinessAssociationMapping extends Component {
           };
         });
       } else {
-        levelsData[1] = []
+        levelsData[1] = [];
       }
 
       this.setStateOrProps(activeLevels, levelsData, serviceName, productType);
@@ -299,6 +299,7 @@ class BusinessAssociationMapping extends Component {
           type === "3 Tier"
             ? selectedLevel_4?.id === activeLevels["selectedLevel_4"]?.id
             : selectedLevel_5?.id === activeLevels["selectedLevel_5"]?.id;
+
         if (!checkSameSelectedTag) {
           activeLevels = {};
           levelsData = [];
@@ -501,7 +502,7 @@ class BusinessAssociationMapping extends Component {
    *
    */
   renderChildNodes = (data, selectedLevel) => {
-    let { activeLevels, levelsData } = this.state;
+    let { activeLevels, levelsData, selectedTag } = this.state;
 
     if (data.length) {
       return data.map((level, currentLevelIndex) => {
@@ -520,19 +521,21 @@ class BusinessAssociationMapping extends Component {
           <ArcherElement id={elementId} relations={relationsData} key={v4()}>
             <li
               className={`${isActive ? "active" : ""}`}
-              onClick={() =>
-                level.type ? (
+              onClick={() => {
+                if (level.type) {
+                  if (selectedTag) {
+                    this.props.serviceIdReset()
+                    this.setState({ selectedTag: false });
+                  }
                   this[`onClick${level.type}`]({
                     selectedLevel,
                     currentLevelIndex: level.id,
                     label: level.label,
                     type: level.type,
                     productType: level.productType || "",
-                  })
-                ) : (
-                  <></>
-                )
-              }
+                  });
+                }
+              }}
               key={v4()}
               id={`${
                 isActive && activeNodeLength === selectedLevel
