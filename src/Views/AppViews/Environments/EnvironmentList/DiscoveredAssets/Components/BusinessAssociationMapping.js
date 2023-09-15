@@ -124,6 +124,8 @@ class BusinessAssociationMapping extends Component {
             productType: product.type,
           };
         });
+      } else {
+        levelsData[1] = []
       }
 
       this.setStateOrProps(activeLevels, levelsData, serviceName, productType);
