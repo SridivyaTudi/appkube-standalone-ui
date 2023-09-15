@@ -73,6 +73,7 @@ export class AssociateChartApp extends Component {
     ) {
       let { data: existingTags } = this.props.existingTags;
       this.setState({ existingTags });
+      this.setExistingTagServiceIds(existingTags);
     }
 
     if (
@@ -337,7 +338,15 @@ export class AssociateChartApp extends Component {
       return <Loader className="h-100 text-center" />;
     } else if (existingTags.length) {
       return existingTags.map((tag, index) => (
-        <ul key={v4()}>{this.renderTags(tag.tag, tag.tag.type)}</ul>
+        <ul
+          key={v4()}
+          onClick={(e) => {
+            e.target?.attributes?.name?.value !== "deleteBtn" &&
+              this.onClickExistingTag(tag.tag, tag.tag.type);
+          }}
+        >
+          {this.renderTags(tag.tag, tag.tag.type)}
+        </ul>
       ));
     } else {
       return "There is no existing tag";
@@ -351,25 +360,18 @@ export class AssociateChartApp extends Component {
    * */
   renderTags = (tags, type) => {
     let tempTag = tags;
-    let updateExistingTagIf3Tier =
-      type === "3 Tier"
-        ? existingTagKeys.filter((key) => key !== "module")
-        : existingTagKeys;
+    let tagKeys = this.filterExistingTagKeys(type);
 
     if (tempTag) {
-      return updateExistingTagIf3Tier.map((tag) => {
+      return tagKeys.map((tag) => {
         tempTag = tempTag[tag];
         return (
           <>
-            <li
-              key={v4()}
-              className={this.findActiveTag(tags, type)}
-              onClick={() => this.onClickExistingTag(tags, type)}
-            >
+            <li key={v4()} className={this.findActiveTag(tags, type)}>
               <a>{tempTag.name}</a>
             </li>
             {tag === "service" ? (
-              <li style={{ float: "right" }} key={v4()}>
+              <li style={{ float: "right" }} key={v4()} name={"deleteBtn"}>
                 <Button
                   type="button"
                   className="close"
@@ -380,8 +382,9 @@ export class AssociateChartApp extends Component {
                       serviceId: tempTag.id,
                     });
                   }}
+                  name={"deleteBtn"}
                 >
-                  <i className="fa-solid fa-xmark"></i>
+                  <i className="fa-solid fa-xmark" name={"deleteBtn"}></i>
                 </Button>
               </li>
             ) : (
@@ -422,15 +425,13 @@ export class AssociateChartApp extends Component {
    * */
   onClickExistingTag = (tags, type) => {
     let tempTag = tags;
-    let updateExistingTagIf3Tier =
-      type === "3 Tier"
-        ? existingTagKeys.filter((key) => key !== "module")
-        : existingTagKeys;
+    let tagKeys = this.filterExistingTagKeys(type);
 
     let activeLevels = {};
     let selectedServiceId = "";
+
     if (tempTag) {
-      updateExistingTagIf3Tier.forEach((tag, index) => {
+      tagKeys.forEach((tag, index) => {
         tempTag = tempTag[tag];
         if (index) {
           if (tag === "service") {
@@ -467,15 +468,12 @@ export class AssociateChartApp extends Component {
   findActiveTag = (tag, type) => {
     let tempTag = tag;
     let activeClass = "";
-    let { selectedServiceId } = this.state;
 
-    let updateExistingTagIf3Tier =
-      type === "3 Tier"
-        ? existingTagKeys.filter((key) => key !== "module")
-        : existingTagKeys;
+    let { selectedServiceId } = this.state;
+    let tagKeys = this.filterExistingTagKeys(type);
 
     if (selectedServiceId) {
-      updateExistingTagIf3Tier.forEach((tagName) => {
+      tagKeys.forEach((tagName) => {
         tempTag = tempTag[tagName];
         if (tagName === "service" && tempTag.id === selectedServiceId) {
           activeClass = "active";
@@ -486,6 +484,30 @@ export class AssociateChartApp extends Component {
     return activeClass;
   };
 
+  // set Existing Tag ServiceIds  in state
+  setExistingTagServiceIds = (existingTags = []) => {
+    if (existingTags.length) {
+      let collectServiceIds = [];
+      existingTags.forEach((tags, index) => {
+        let tagKeys = this.filterExistingTagKeys(tags.tag.type);
+        let tempTag = tags.tag;
+        tagKeys.forEach((tag, index) => {
+          tempTag = tempTag?.[tag];
+          if (tag === "service") {
+            collectServiceIds.push(tempTag?.id);
+          }
+        });
+      });
+      this.setState({ existingTagServiceIds: collectServiceIds });
+    }
+  };
+
+  // update ExistingTag If product is 3Tier
+  filterExistingTagKeys = (type) => {
+    return type === "3 Tier"
+      ? existingTagKeys.filter((key) => key !== "module")
+      : existingTagKeys;
+  };
   render() {
     const {
       isSelectDepartmentOpen,
@@ -496,7 +518,7 @@ export class AssociateChartApp extends Component {
       showConfirmPopup,
       resetBreadCrumb,
       selectedExistingTag,
-      selectedServiceId,
+      existingTagServiceIds,
     } = this.state;
 
     const {
@@ -507,12 +529,13 @@ export class AssociateChartApp extends Component {
     } = activeLevels;
     const departmentName = selectedLevel_0?.label || "";
     const productName = selectedLevel_1?.label || "";
-    const activeLevelLength = Object.keys(activeLevels).length;
 
     const showBtn =
       productType === "SOA"
-        ? activeLevelLength === 6 && selectedLevel_5.id !== selectedServiceId
-        : activeLevelLength === 5 && selectedLevel_4.id !== selectedServiceId;
+        ? selectedLevel_5?.id &&
+          !existingTagServiceIds.includes(selectedLevel_5.id)
+        : selectedLevel_4?.id &&
+          !existingTagServiceIds.includes(selectedLevel_4.id);
     const {
       serviceCreation: { status: serviceCreationStatus },
       deleteTag: { status: deleteTagStatus },
@@ -636,8 +659,8 @@ export class AssociateChartApp extends Component {
             clickBreadCrumbDetails={clickBreadCrumbDetails}
             resetBreadCrumbId={resetBreadCrumb}
             selectedExistingTag={selectedExistingTag}
-            serviceIdReset={()=>{
-              this.setState({selectedServiceId:''})
+            serviceIdReset={() => {
+              this.setState({ selectedServiceId: "" });
             }}
           />
         </Box>
