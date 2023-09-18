@@ -178,10 +178,12 @@ class DiscoveredAssets extends Component {
       this.props.globalServiceData.status === status.SUCCESS
     ) {
       const { data } = this.props.globalServiceData;
-      this.setState({
-        globalServicesSummaryData: data,
-        currentActiveGlobalServiceCategory: data[0].elementType,
-      });
+      if (data?.length) {
+        this.setState({
+          globalServicesSummaryData: data,
+          currentActiveGlobalServiceCategory: data[0].elementType,
+        });
+      }
     }
 
     if (
@@ -428,7 +430,8 @@ class DiscoveredAssets extends Component {
                 <Box
                   className="open-create-menu-close"
                   onClick={() => this.toggleMenu(index)}
-                  key={v4()} ></Box>
+                  key={v4()}
+                ></Box>
                 <Box className="menu-list" key={v4()}>
                   <List>
                     <ListItem>
