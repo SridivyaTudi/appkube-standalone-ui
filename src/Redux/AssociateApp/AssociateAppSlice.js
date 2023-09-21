@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  getDepartments,
   getProductList,
   getProductEnv,
   getModules,
@@ -15,10 +14,6 @@ import status from "Redux/Constants/CommonDS";
 export const AssociateAppSlice = createSlice({
   name: "associateApp",
   initialState: {
-    departments: {
-      status: null,
-      data: [],
-    },
     products: {
       status: null,
       data: [],
@@ -54,34 +49,6 @@ export const AssociateAppSlice = createSlice({
   },
 
   extraReducers: {
-    [getDepartments.pending]: (state, action) => {
-      return {
-        ...state,
-        departments: {
-          status: status.IN_PROGRESS,
-          data: [],
-        },
-      };
-    },
-    [getDepartments.fulfilled]: (state, { payload }) => {
-      return {
-        ...state,
-        departments: {
-          status: status.SUCCESS,
-          data: payload,
-        },
-      };
-    },
-    [getDepartments.rejected]: (state, action) => {
-      return {
-        ...state,
-        departments: {
-          status: status.FAILURE,
-          data: [],
-        },
-      };
-    },
-
     [getProductList.pending]: (state, action) => {
       return {
         ...state,

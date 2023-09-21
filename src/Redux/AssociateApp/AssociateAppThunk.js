@@ -2,20 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import config from "Views/AppViews/Config";
 import { postLoginService } from "Services";
 
-export const getDepartments = createAsyncThunk(
-  "associateApp/getDepartments",
-  async (orgID) => {
-    let url = config.GET_ASSOCIATE_DEPARTMENTS.replace("#org-id#", orgID);
-
-    try {
-      const response = await postLoginService.get(url);
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
-
 export const getProductList = createAsyncThunk(
   "associateApp/getProductList",
   async (depID) => {

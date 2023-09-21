@@ -8,7 +8,6 @@ import {
   addService,
   getExistingTags,
   deleteExistingTag,
-  getDepartments,
   getProductList,
   getProductEnv,
   getModules,
@@ -58,7 +57,7 @@ export class AssociateChartApp extends Component {
       resetBreadCrumb: "",
       selectedExistingTag: {},
       selectedServiceId: "",
-      existingTagServiceIds:[]
+      existingTagServiceIds: [],
     };
   }
 
@@ -720,7 +719,6 @@ const mapDispatchToProps = {
   getExistingTags,
   addService,
   deleteExistingTag,
-  getDepartments,
   getProductList,
   getProductEnv,
   getModules,

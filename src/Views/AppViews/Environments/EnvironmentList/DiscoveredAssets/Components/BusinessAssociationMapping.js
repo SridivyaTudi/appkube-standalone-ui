@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { ArcherContainer, ArcherElement } from "react-archer";
 import { v4 } from "uuid";
 import {
-  getDepartments,
   getProductList,
   getProductEnv,
   getModules,
@@ -19,6 +18,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import Loader from "Components/Loader";
+import { getOrgWiseDepartments } from "Redux/Environments/EnvironmentsThunk";
 
 const orgId = getCurrentOrgId();
 
@@ -77,25 +77,26 @@ class BusinessAssociationMapping extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getDepartments(orgId);
+    this.props.getOrgWiseDepartments(orgId);
   };
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.departments.status !== this.props.departments.status &&
-      this.props.departments.status === status.SUCCESS &&
-      this.props.departments?.data?.length
+      prevProps.organizationWiseDepartments.status !==
+        this.props.organizationWiseDepartments.status &&
+      this.props.organizationWiseDepartments.status === status.SUCCESS &&
+      this.props.organizationWiseDepartments?.data
     ) {
       let { activeLevels, levelsData, productType } = this.state;
-      const initailDepartment = this.props.departments.data;
+      const organization = this.props.organizationWiseDepartments.data;
       this.setState({
-        departments: initailDepartment,
-        serviceName: initailDepartment[0]?.name,
+        departments: organization.departments || [],
+        serviceName: organization?.name,
       });
       this.props.setBreadCrumbs(
         activeLevels,
         levelsData,
-        initailDepartment[0]?.name,
+        organization?.name,
         productType
       );
     }
@@ -379,11 +380,8 @@ class BusinessAssociationMapping extends Component {
   renderBody = () => {
     let { activeLevels, departments, levelsData, selectedTag } = this.state;
 
-    let departmentLength =
-      departments?.length && departments[0].departments?.length;
-
     const {
-      departments: organization,
+      organizationWiseDepartments: organization,
       products,
       productEnv,
       modules,
@@ -407,7 +405,7 @@ class BusinessAssociationMapping extends Component {
     ) {
       return this.renderLoder("h-100");
     } else {
-      return departmentLength ? (
+      return departments?.length ? (
         <ArcherContainer className="chart-container" startMarker>
           <TransformWrapper
             wrapperStyle={{
@@ -524,7 +522,7 @@ class BusinessAssociationMapping extends Component {
               onClick={() => {
                 if (level.type) {
                   if (selectedTag) {
-                    this.props.serviceIdReset()
+                    this.props.serviceIdReset();
                     this.setState({ selectedTag: false });
                   }
                   this[`onClick${level.type}`]({
@@ -604,13 +602,13 @@ class BusinessAssociationMapping extends Component {
   /**
    * Fired event on click synectiks, then get departments
    */
-  onClickSynectiks = async () => {
+  onClickSynectiks = async (data, isClickBreadCrumb = 0) => {
     let { activeLevels, levelsData, departments, serviceName } = this.state;
     activeLevels = {};
 
     if (!levelsData.length) {
       levelsData = [
-        departments[0]?.departments.map((department, index) => {
+        departments.map((department, index) => {
           let { name: label, id } = department;
           return { label, id, image: calendarMouseIcon, type: "Department" };
         }),
@@ -619,7 +617,12 @@ class BusinessAssociationMapping extends Component {
       levelsData = [];
     }
 
-    this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
+    this.setStateOrProps(
+      activeLevels,
+      levelsData,
+      serviceName,
+      isClickBreadCrumb
+    );
   };
 
   /**
@@ -704,11 +707,18 @@ class BusinessAssociationMapping extends Component {
       this.props.getProductEnv(productId);
     }
 
-    this.setState({
-      levelsData,
-      activeLevels,
-      productType,
-    });
+    this.setState(
+      {
+        levelsData,
+        activeLevels,
+        productType,
+      },
+      () => {
+        if (isClickBreadCrumb) {
+          handleZoomToElement("lastNodeActive", transformScale);
+        }
+      }
+    );
   };
 
   /**
@@ -798,7 +808,12 @@ class BusinessAssociationMapping extends Component {
       };
     }
 
-    this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
+    this.setStateOrProps(
+      activeLevels,
+      levelsData,
+      serviceName,
+      isClickBreadCrumb
+    );
   };
 
   /**
@@ -836,7 +851,12 @@ class BusinessAssociationMapping extends Component {
       };
     }
 
-    this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
+    this.setStateOrProps(
+      activeLevels,
+      levelsData,
+      serviceName,
+      isClickBreadCrumb
+    );
   };
 
   /**
@@ -861,7 +881,12 @@ class BusinessAssociationMapping extends Component {
       };
     }
 
-    this.setStateOrProps(activeLevels, levelsData, serviceName, 0);
+    this.setStateOrProps(
+      activeLevels,
+      levelsData,
+      serviceName,
+      isClickBreadCrumb
+    );
   };
   /**
    * Fired event on click ModuleElement
@@ -979,16 +1004,11 @@ class BusinessAssociationMapping extends Component {
 }
 
 function mapStateToProps(state) {
-  const {
-    departments,
-    products,
-    productEnv,
-    modules,
-    moduleElements,
-    threeTierModules,
-  } = state.associateApp;
+  const { products, productEnv, modules, moduleElements, threeTierModules } =
+    state.associateApp;
+  const { organizationWiseDepartments } = state.environments;
   return {
-    departments,
+    organizationWiseDepartments,
     products,
     productEnv,
     modules,
@@ -998,7 +1018,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  getDepartments,
+  getOrgWiseDepartments,
   getProductList,
   getProductEnv,
   getModules,

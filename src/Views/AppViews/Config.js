@@ -37,7 +37,6 @@ const config = {
   ENVIRONMENTS_APPLICATIONS_TABLE_DATA: `${baseURL}/query/organization/#org-id#/application-topology/landing-zone-id/#landing-zone-id#`,
 
   /* AssociateApp  */
-  GET_ASSOCIATE_DEPARTMENTS: `${baseURL}/organization/search?organizationDTO=#org-id#`,
   GET_ASSOCIATE_PRODUCT_LIST: `${baseURL}/product/search?departmentId=#department-id#`,
   GET_ASSOCIATE_PRODUCT_ENV: `${baseURL}/product-env/search?productId=#product-id#`,
   GET_ASSOCIATE_MODULES: `${baseURL}/module/search-by-filters?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&serviceNature=#service-nature#`,

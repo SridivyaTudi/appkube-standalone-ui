@@ -20,6 +20,7 @@ export const environmentSlice = createSlice({
     },
     organizationWiseDepartments: {
       status: null,
+      data:{}
     },
     productsByDepId: {
       status: null,
@@ -87,6 +88,7 @@ export const environmentSlice = createSlice({
         ...state,
         organizationWiseDepartments: {
           status: status.IN_PROGRESS,
+          data:{}
         },
       };
     },
