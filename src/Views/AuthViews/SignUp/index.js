@@ -66,8 +66,9 @@ class SignUp extends Component {
         } else {
           if (signUpResponse?.code === 418) {
             this.togglePopup();
+          } else {
+            ToastMessage.error(signUpResponse.message);
           }
-          ToastMessage.error(signUpResponse.message);
         }
       } else if (this.props.signUpUser.status === status.FAILURE) {
         ToastMessage.error("User registration failed!");
