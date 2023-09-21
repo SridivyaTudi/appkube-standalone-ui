@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import SigninBanner from "assets/img/login/signin-banner.png";
 import SignupBanner1 from "assets/img/login/signup-banner1.png";
 import SignupBanner2 from "assets/img/login/signup-banner2.png";
@@ -460,16 +461,13 @@ class SignUp extends Component {
                     </Box>
                     <Box className="remember-content">
                       <Box className="d-flex align-items-center">
-                        <Checkbox
+                        <FormControlLabel
+                          control={<Checkbox checked={step1.termsOfService} />}
+                          label="I have read and agree to the trems of Service"
                           className="checkbox primary"
                           size="small"
-                          checked={step1.termsOfService}
                           onChange={this.handleTermsChange}
-                          id="termCondition"
                         />
-                        <label htmlFor="termCondition">
-                          I have read and agree to the trems of Service
-                        </label>
                       </Box>
                       {submittedSteps[this.steps.STEP1] &&
                       errors.termsOfService ? (
