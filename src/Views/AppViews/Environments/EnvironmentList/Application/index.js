@@ -140,7 +140,7 @@ class Application extends Component {
                   </React.Fragment>
                 }
               >
-                <p>{this.getAverageScore(item.sle)}</p>
+               {this.getAverageScore(item.sle)}
               </HtmlTooltip>
             </Box>
           </TableCell>
@@ -186,7 +186,7 @@ class Application extends Component {
                   </React.Fragment>
                 }
               >
-                <p>{this.getAverageScore(item.endUsage)}</p>
+                {this.getAverageScore(item.endUsage)}
               </HtmlTooltip>
             </Box>
           </TableCell>

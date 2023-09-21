@@ -240,7 +240,7 @@ class TopologyView extends Component {
         }
       });
       retData = [
-        <div className="global-servies" style={{ marginLeft: "50px" }}>
+        <div className="global-servies" style={{ marginLeft: "50px" }} key={v4()}>
           {retData}
         </div>,
       ];

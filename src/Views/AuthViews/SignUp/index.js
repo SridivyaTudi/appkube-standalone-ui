@@ -58,11 +58,15 @@ class SignUp extends Component {
   componentDidUpdate = (prevProps, prevState) => {
     if (this.props.signUpUser.status !== prevProps.signUpUser.status) {
       if (this.props.signUpUser.status === status.SUCCESS) {
-        if (this.props.signUpUser.data?.id) {
+        let signUpResponse = this.props.signUpUser.data;
+        if (signUpResponse?.id) {
           ToastMessage.success("New user registered!");
-          this.props.navigate(`${AUTH_PREFIX_PATH}/signin`);
+          this.setActiveStep("", this.steps.STEP3);
         } else {
-          ToastMessage.error(this.props.signUpUser.data.message);
+          if (signUpResponse?.code === 418) {
+            this.togglePopup();
+          }
+          ToastMessage.error(signUpResponse.message);
         }
       } else if (this.props.signUpUser.status === status.FAILURE) {
         ToastMessage.error("User registration failed!");
@@ -71,7 +75,10 @@ class SignUp extends Component {
   };
 
   setActiveStep = (e, newStep, dontValidate) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
+
     const { submittedSteps, activeStep } = this.state;
     submittedSteps[activeStep] = true;
     this.setState({
@@ -183,15 +190,28 @@ class SignUp extends Component {
   };
 
   signUpSubmit = () => {
-    const { step1, step2 } = this.state;
-    //Right now file is not being sent.
-    const urlParms = `username=${step1.userName}&password=${step1.password}&organization=${step2.companyName}&email=${step1.email}`;
-    this.props.signUp(urlParms);
+    const { submittedSteps, activeStep, step1, step2 } = this.state;
+    submittedSteps[activeStep] = true;
+    this.setState({
+      submittedSteps,
+    });
+    const { isValid } = this.validateForm(activeStep, submittedSteps);
+    if (isValid) {
+      //Right now file is not being sent.
+      const urlParms = `username=${step1.userName}&password=${step1.password}&organization=${step2.companyName}&email=${step1.email}`;
+      this.props.signUp(urlParms);
+    }
   };
 
   render() {
-    const { activeStep, submittedSteps, step1, step2, passwordView, showRequestPopup, } =
-      this.state;
+    const {
+      activeStep,
+      submittedSteps,
+      step1,
+      step2,
+      passwordView,
+      showRequestPopup,
+    } = this.state;
     const { errors } = this.validateForm(activeStep, submittedSteps);
     return (
       <Box className="sign-container">
@@ -245,9 +265,7 @@ class SignUp extends Component {
                   <Button
                     className="secondary-text-btn min-width-inherit"
                     variant="outlined"
-                    onClick={(e) =>
-                      this.setActiveStep(e, this.steps.STEP2, true)
-                    }
+                    disabled={true}
                   >
                     <i className="fa-solid fa-chevron-left"></i>
                   </Button>
@@ -447,8 +465,11 @@ class SignUp extends Component {
                           size="small"
                           checked={step1.termsOfService}
                           onChange={this.handleTermsChange}
+                          id="termCondition"
                         />
-                        <p>I have read and agree to the trems of Service</p>
+                        <label htmlFor="termCondition">
+                          I have read and agree to the trems of Service
+                        </label>
                       </Box>
                       {submittedSteps[this.steps.STEP1] &&
                       errors.termsOfService ? (
@@ -519,7 +540,6 @@ class SignUp extends Component {
                               name="companyName"
                               value={step2.companyName}
                               onChange={this.handleStep2Changes}
-                              onClick={this.togglePopup}
                             />
                             {submittedSteps[this.steps.STEP2] &&
                             errors.companyName ? (
@@ -531,20 +551,6 @@ class SignUp extends Component {
                         </Grid>
                       </Grid>
                     </Box>
-                    <Box className="d-flex width-100 next-step">
-                      <Button
-                        className="primary-btn"
-                        onClick={(e) => this.setActiveStep(e, this.steps.STEP3)}
-                        variant="contained"
-                        type="submit"
-                      >
-                        Next
-                      </Button>
-                    </Box>
-                  </>
-                )}
-                {activeStep === this.steps.STEP3 && (
-                  <>
                     <Box className="d-flex width-100 next-step">
                       <LoadingButton
                         type="submit"
@@ -558,6 +564,22 @@ class SignUp extends Component {
                           this.props.signUpUser.status === status.IN_PROGRESS
                         }
                         loadingPosition="start"
+                      >
+                        Next
+                      </LoadingButton>
+                    </Box>
+                  </>
+                )}
+                {activeStep === this.steps.STEP3 && (
+                  <>
+                    <Box className="d-flex width-100 next-step">
+                      <LoadingButton
+                        type="submit"
+                        className="primary-btn"
+                        variant="contained"
+                        onClick={() =>
+                          this.props.navigate(`${AUTH_PREFIX_PATH}/signin`)
+                        }
                       >
                         Continue To Sign In
                       </LoadingButton>
