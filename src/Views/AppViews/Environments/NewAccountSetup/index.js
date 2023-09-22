@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { Link } from "react-router-dom";
 import OprationMode1 from "assets/img/assetmanager/opration-mode1.png";
 import OprationMode2 from "assets/img/assetmanager/opration-mode2.png";
 import AccountPolicy from "Views/AppViews/Environments/NewAccountSetup/AccountPolicy";
@@ -28,6 +30,9 @@ export class NewAccountSetup extends Component {
       <Box className="new-account-container">
         <Box className="page-heading">
           <h3>New AWS Acoount Setup</h3>
+          <Link className="close-btn" to={`${APP_PREFIX_PATH}/environments`}>
+            <i className="fa-solid fa-xmark"></i>
+          </Link>
         </Box>
         <Box className="opration-mode-section text-center">
           <Box className="opration-head-section">

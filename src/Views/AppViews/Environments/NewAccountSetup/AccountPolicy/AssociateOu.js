@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { Link } from "react-router-dom";
 import SelectExisting from "assets/img/assetmanager/select-existing.png";
 import CreateFileIcon from "assets/img/assetmanager/create-file-icon.png";
 import AssociatedAccountPopup from "./AssociatedAccountPopup";
@@ -27,7 +29,8 @@ class AssociateOu extends Component {
     if (
       prevProps.organizationWiseDepartments.status !==
         this.props.organizationWiseDepartments.status &&
-      this.props.organizationWiseDepartments.status === status.SUCCESS && this.props.organizationWiseDepartments.data
+      this.props.organizationWiseDepartments.status === status.SUCCESS &&
+      this.props.organizationWiseDepartments.data
     ) {
       this.setState({
         departments: this.props.organizationWiseDepartments.data.departments,
@@ -44,11 +47,10 @@ class AssociateOu extends Component {
         name: department.name,
         description: description,
       });
-      this.props.setDepartment(department.id, department.name, description);  
+      this.props.setDepartment(department.id, department.name, description);
     } catch (error) {
       console.error(error);
     }
-    
   };
 
   getDepartmentName = (id) => {
@@ -82,13 +84,17 @@ class AssociateOu extends Component {
       selectAccountPopupShow,
       isDepartmentCreated,
       checkedId,
-      description,createNewOuPopupShow
+      description,
+      createNewOuPopupShow,
     } = this.state;
     const {
       roleDetails: { departmentName },
     } = this.props;
     return (
       <>
+        <Link className="close-btn" to={`${APP_PREFIX_PATH}/environments`}>
+          <i className="fa-solid fa-xmark"></i>
+        </Link>
         {!isDepartmentCreated && !checkedId ? (
           <Box className="d-inline-block width-100 new-account-setup-tab-contents">
             <h3>Associate OU</h3>

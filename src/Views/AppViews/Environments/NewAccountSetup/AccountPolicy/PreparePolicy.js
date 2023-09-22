@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { Link } from "react-router-dom";
 import IamImg from "assets/img/login/iam-img.png";
 import PolicyImg from "assets/img/login/policy-img.png";
 import JsonImg from "assets/img/login/json-img.png";
@@ -7,72 +9,77 @@ import Box from "@mui/material/Box";
 class PreparePolicy extends Component {
   render() {
     return (
-      <Box className="d-block new-account-setup-tab-contents">
-        <h3>Prepare IAM Policy For Appkube</h3>
-        <ul>
-          <li>
-            <span>1.</span> Login to your AWS console{" "}
-            <a href="https://aws.amazon.com/" target={"_blank"}>
-              (aws.amzon.com)
-            </a>
-          </li>
-          <li>
-            <span>2.</span> Click <strong>'Services'</strong> and select the{" "}
-            <strong>IAM</strong> Services
-            <div className="tooltip">
-              <i className="fas fa-question-circle"></i>
-              <div className="tooltip-img">
-                <img src={IamImg} alt="" />
+      <>
+        <Link className="close-btn" to={`${APP_PREFIX_PATH}/environments`}>
+          <i className="fa-solid fa-xmark"></i>
+        </Link>
+        <Box className="d-block new-account-setup-tab-contents">
+          <h3>Prepare IAM Policy For Appkube</h3>
+          <ul>
+            <li>
+              <span>1.</span> Login to your AWS console{" "}
+              <a href="https://aws.amazon.com/" target={"_blank"}>
+                (aws.amzon.com)
+              </a>
+            </li>
+            <li>
+              <span>2.</span> Click <strong>'Services'</strong> and select the{" "}
+              <strong>IAM</strong> Services
+              <div className="tooltip">
+                <i className="fas fa-question-circle"></i>
+                <div className="tooltip-img">
+                  <img src={IamImg} alt="" />
+                </div>
               </div>
-            </div>
-          </li>
-          <li>
-            <span>3.</span> Select <strong>'Policies'</strong> and click on{" "}
-            <strong>'Create Policy'</strong> button
-            <div className="tooltip">
-              <i className="fas fa-question-circle"></i>
-              <div className="tooltip-img">
-                <img src={PolicyImg} alt="" />
+            </li>
+            <li>
+              <span>3.</span> Select <strong>'Policies'</strong> and click on{" "}
+              <strong>'Create Policy'</strong> button
+              <div className="tooltip">
+                <i className="fas fa-question-circle"></i>
+                <div className="tooltip-img">
+                  <img src={PolicyImg} alt="" />
+                </div>
               </div>
-            </div>
-          </li>
-          <li>
-            <span>4.</span> Select the <strong>'JSON'</strong> tab{" "}
-            <div className="tooltip">
-              <i className="fas fa-question-circle"></i>
-              <div className="tooltip-img">
-                <img src={JsonImg} alt="" />
+            </li>
+            <li>
+              <span>4.</span> Select the <strong>'JSON'</strong> tab{" "}
+              <div className="tooltip">
+                <i className="fas fa-question-circle"></i>
+                <div className="tooltip-img">
+                  <img src={JsonImg} alt="" />
+                </div>
               </div>
-            </div>
-          </li>
-          <li>
-            <span>5.</span> Review this <a href="#">Policy document</a> and
-            copy-and-paste its content to the <strong>'JSON'</strong> tab in
-            AWS. Then click the <strong>'Next:Tags'</strong> button at the
-            botton of the page
-            <div className="tooltip">
-              <i className="fas fa-question-circle"></i>
-              <div className="tooltip-img">
-                <img src={PolicyDocumentImg} alt="" />
+            </li>
+            <li>
+              <span>5.</span> Review this <a href="#">Policy document</a> and
+              copy-and-paste its content to the <strong>'JSON'</strong> tab in
+              AWS. Then click the <strong>'Next:Tags'</strong> button at the
+              botton of the page
+              <div className="tooltip">
+                <i className="fas fa-question-circle"></i>
+                <div className="tooltip-img">
+                  <img src={PolicyDocumentImg} alt="" />
+                </div>
               </div>
-            </div>
-          </li>
-          <li>
-            <span>6.</span> Click <strong>'Next:Review'</strong> to review the
-            policy.Enter Appkube-readonly-policy for the policy name and click{" "}
-            <strong>'Create Policy'</strong>
-            <div className="tooltip">
-              <i className="fas fa-question-circle"></i>
-              <div className="tooltip-img">
-                <img src={PolicyImg} alt="" />
+            </li>
+            <li>
+              <span>6.</span> Click <strong>'Next:Review'</strong> to review the
+              policy.Enter Appkube-readonly-policy for the policy name and click{" "}
+              <strong>'Create Policy'</strong>
+              <div className="tooltip">
+                <i className="fas fa-question-circle"></i>
+                <div className="tooltip-img">
+                  <img src={PolicyImg} alt="" />
+                </div>
               </div>
-            </div>
-          </li>
-          <li>
-            <span>7.</span> Click on <a href="#">'NEXT'</a>
-          </li>
-        </ul>
-      </Box>
+            </li>
+            <li>
+              <span>7.</span> Click on <a href="#">'NEXT'</a>
+            </li>
+          </ul>
+        </Box>
+      </>
     );
   }
 }

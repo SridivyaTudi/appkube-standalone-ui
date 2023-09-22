@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { Link } from "react-router-dom";
 import AccountAddedImage from "assets/img/assetmanager/account-added-image.png";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -22,11 +24,14 @@ class Finish extends Component {
 
   render() {
     return (
-      <div className="d-inline-block width-100 new-account-setup-tab-contents">
-        <Box sx={{ width: "100%" }}>
+      <>
+        <Link className="close-btn" to={`${APP_PREFIX_PATH}/environments`}>
+          <i className="fa-solid fa-xmark"></i>
+        </Link>
+        <Box className="d-inline-block width-100 new-account-setup-tab-contents">
           <Grid
             container
-            rowSpacing={1}
+            rowSpacing={0}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             alignItems={"center"}
             justifyContent={"flex-start"}
@@ -59,7 +64,7 @@ class Finish extends Component {
             </Grid>
           </Grid>
         </Box>
-      </div>
+      </>
     );
   }
 }
