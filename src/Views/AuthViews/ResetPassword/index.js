@@ -11,6 +11,7 @@ import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { ToastMessage } from "Toast/ToastMessage";
+import PasswordStrength from "Components/PasswordStrength";
 
 class ResetPassword extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class ResetPassword extends Component {
       toggleScreen: false,
       showPassword: false,
       showconfirmPassword: false,
+      isValidPassword: false,
     };
   }
 
@@ -75,7 +77,7 @@ class ResetPassword extends Component {
   };
 
   validateForm = (isSubmit) => {
-    const { formData } = this.state;
+    const { formData,isValidPassword } = this.state;
     const errors = {
       newPassword: "",
       password: "",
@@ -93,11 +95,7 @@ class ResetPassword extends Component {
       if (!formData.password) {
         errors.password = "Please enter password";
         isValid = false;
-      } else if (
-        !/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(
-          formData.password
-        )
-      ) {
+      } else if (!isValidPassword) {
         errors.password = "Please enter strong password";
         isValid = false;
       } else {
@@ -218,45 +216,13 @@ class ResetPassword extends Component {
                         ></i>
                       </Box>
                     </Grid>
-                    <Grid item xs={12}>
-                      <Box className="password-must-include-contents">
-                        <label className="d-block">
-                          New Password Must Include:
-                        </label>
-                        <ul>
-                          <li className="green">
-                            <span>
-                              <i class="fa-solid fa-check"></i>
-                            </span>{" "}
-                            {"between 12 and 22 charaters"}
-                          </li>
-                          <li>
-                            <span>
-                              <i class="fa-solid fa-check"></i>
-                            </span>{" "}
-                            {"2 lowercase letter (s)"}
-                          </li>
-                          <li>
-                            <span>
-                              <i class="fa-solid fa-check"></i>
-                            </span>{" "}
-                            {"2 uppercase letter (s)"}
-                          </li>
-                          <li>
-                            <span>
-                              <i class="fa-solid fa-check"></i>
-                            </span>{" "}
-                            {"1 special charaters"}
-                          </li>
-                          <li>
-                            <span>
-                              <i class="fa-solid fa-check"></i>
-                            </span>{" "}
-                            {"differences from your previous passwords"}
-                          </li>
-                        </ul>
-                      </Box>
-                    </Grid>
+                    <PasswordStrength
+                      password={formData.password}
+                      checkIsValidPassword={(isValidPassword) => {
+                        this.setState({ isValidPassword });
+                      }}
+                    />
+
                     <Grid item xs={12}>
                       <Box className="input-group">
                         <label className="d-block" htmlFor="newPassword">

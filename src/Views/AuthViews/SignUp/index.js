@@ -20,6 +20,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import RequestPopup from "./Components/RequestPopup";
+import PasswordStrength from "Components/PasswordStrength";
 
 class SignUp extends Component {
   steps = {
@@ -47,6 +48,7 @@ class SignUp extends Component {
       passwordView: true,
       submittedSteps: [false, false, false],
       showRequestPopup: false,
+      isValidPassword: false,
     };
   }
 
@@ -95,7 +97,7 @@ class SignUp extends Component {
   };
 
   validateForm = (activeStep, submittedSteps) => {
-    const { step1, step2 } = this.state;
+    const { step1, step2, isValidPassword } = this.state;
     let isValid = true;
     let errors = {
       fullName: "",
@@ -134,6 +136,9 @@ class SignUp extends Component {
 
       if (!step1.password.trim()) {
         errors.password = "Password is required!";
+        isValid = false;
+      } else if (!isValidPassword) {
+        errors.password = "Please enter strong password";
         isValid = false;
       } else {
         errors.password = "";
@@ -458,6 +463,12 @@ class SignUp extends Component {
                             ></i>
                           </Box>
                         </Grid>
+                        <PasswordStrength
+                          password={step1.password}
+                          checkIsValidPassword={(isValidPassword) => {
+                            this.setState({ isValidPassword });
+                          }}
+                        />
                       </Grid>
                     </Box>
                     <Box className="remember-content">

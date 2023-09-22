@@ -51,3 +51,13 @@ export const setCurrentOrgName = (name) => {
 export const getCurrentOrgName = () => {
   return localStorage.getItem("currentOrgName");
 };
+
+export const upperCaseLengthInStr = (string) => {
+  let str = "" + string;
+  return str.length - str.replace(/[A-Z]/g, "").length;
+};
+
+export const lowerCaseLengthInStr = (string) => {
+  let str = "" + string;
+  return str.length - str.replace(/[a-z]/g, "").length;
+};

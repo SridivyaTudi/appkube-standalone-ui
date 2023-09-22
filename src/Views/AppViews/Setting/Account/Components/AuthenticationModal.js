@@ -11,6 +11,7 @@ import { getMFACode, authMFACode } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { ToastMessage } from "Toast/ToastMessage";
+import PasswordStrength from "Components/PasswordStrength";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 32,
@@ -75,6 +76,7 @@ class AuthenticationModal extends Component {
       mfaImage: "",
       mfaKey: "",
       twoFASwitch: false,
+      isValidPassword: false,
     };
   }
 
@@ -124,7 +126,7 @@ class AuthenticationModal extends Component {
   };
 
   validate = (isSubmit) => {
-    const { formData } = this.state;
+    const { formData, isValidPassword } = this.state;
     let isValid;
     let errors;
     if (isSubmit) {
@@ -138,6 +140,9 @@ class AuthenticationModal extends Component {
 
       if (!formData.password) {
         errors = { ...errors, password: "Password is required!" };
+        isValid = false;
+      } else if (!isValidPassword) {
+        errors = { ...errors, password: "Please enter strong password" };
         isValid = false;
       } else {
         errors = { ...errors, password: "" };
@@ -252,6 +257,12 @@ class AuthenticationModal extends Component {
                       : ""}
                   </span>
                 </Box>
+                <PasswordStrength
+                  password={formData.password}
+                  checkIsValidPassword={(isValidPassword) => {
+                    this.setState({ isValidPassword });
+                  }}
+                />
                 <h4 className="m-b-0 m-t-4">Two Factor Authentication</h4>
                 <p className="m-t-1">
                   Two Factor Authentication is a enchained security measure.

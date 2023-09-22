@@ -1,7 +1,7 @@
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Box, List, ListItem } from "@mui/material/";
 import PasswordStrength from "Components/PasswordStrength";
-import React,{ Component } from "react";
+import React, { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
@@ -19,6 +19,7 @@ class ChangePasswordModal extends Component {
         confirmPassword: "",
       },
       pwdStrength: 0,
+      isValidPassword:false
     };
   }
 
@@ -53,7 +54,6 @@ class ChangePasswordModal extends Component {
     formData["newPassword"] = pwd;
     this.setState({ formData });
   };
-  
 
   render() {
     const HtmlTooltip = styled(({ className, ...props }) => (
@@ -131,18 +131,19 @@ class ChangePasswordModal extends Component {
                 onClick={this.generateRandomPassword}
               >
                 <HtmlTooltip
-                className="popup-tooltip"
-                title={
-                  <React.Fragment>
-                    <List>
-                      <ListItem>Generate a new secure 12-digit password</ListItem>
-                    </List>
-                  </React.Fragment>
-                }
-              >
-                <i className="fa-solid fa-arrows-rotate"></i>
-              </HtmlTooltip>
-                
+                  className="popup-tooltip"
+                  title={
+                    <React.Fragment>
+                      <List>
+                        <ListItem>
+                          Generate a new secure 12-digit password
+                        </ListItem>
+                      </List>
+                    </React.Fragment>
+                  }
+                >
+                  <i className="fa-solid fa-arrows-rotate"></i>
+                </HtmlTooltip>
               </span>
               <span
                 className="input-group-text"
@@ -183,7 +184,12 @@ class ChangePasswordModal extends Component {
                 ></i>
               </span>
             </Box>
-            <PasswordStrength password={formData.newPassword} />
+            <PasswordStrength
+              password={formData.newPassword}
+              checkIsValidPassword={(isValidPassword) => {
+                this.setState({ isValidPassword });
+              }}
+            />
           </form>
         </ModalBody>
         <ModalFooter className="footer-top-br">
