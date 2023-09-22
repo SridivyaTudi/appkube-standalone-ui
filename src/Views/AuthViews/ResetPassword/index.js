@@ -219,6 +219,45 @@ class ResetPassword extends Component {
                       </Box>
                     </Grid>
                     <Grid item xs={12}>
+                      <Box className="password-must-include-contents">
+                        <label className="d-block">
+                          New Password Must Include:
+                        </label>
+                        <ul>
+                          <li className="green">
+                            <span>
+                              <i class="fa-solid fa-check"></i>
+                            </span>{" "}
+                            {"between 12 and 22 charaters"}
+                          </li>
+                          <li>
+                            <span>
+                              <i class="fa-solid fa-check"></i>
+                            </span>{" "}
+                            {"2 lowercase letter (s)"}
+                          </li>
+                          <li>
+                            <span>
+                              <i class="fa-solid fa-check"></i>
+                            </span>{" "}
+                            {"2 uppercase letter (s)"}
+                          </li>
+                          <li>
+                            <span>
+                              <i class="fa-solid fa-check"></i>
+                            </span>{" "}
+                            {"1 special charaters"}
+                          </li>
+                          <li>
+                            <span>
+                              <i class="fa-solid fa-check"></i>
+                            </span>{" "}
+                            {"differences from your previous passwords"}
+                          </li>
+                        </ul>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12}>
                       <Box className="input-group">
                         <label className="d-block" htmlFor="newPassword">
                           Re enter your password
