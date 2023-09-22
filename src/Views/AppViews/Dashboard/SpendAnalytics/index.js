@@ -206,7 +206,6 @@ class SpendAnalytics extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    
     if (
       prevProps.monthlyCloudWiseSpend.status !==
         this.props.monthlyCloudWiseSpend.status &&
@@ -553,7 +552,9 @@ class SpendAnalytics extends Component {
     return (
       <Box className="total-budget">
         <Box className="heading">
-          <label>Total Budget</label>
+          <label>
+            Total Budget <span>{"(Q1)"}</span>
+          </label>
           <Box className="total-budget">
             <label>{totalBudget}</label>
             {/* <span>10%</span> */}
