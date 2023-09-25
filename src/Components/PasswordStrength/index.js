@@ -25,7 +25,7 @@ class PasswordStrength extends Component {
   }
 
   componentDidMount = () => {
-    this.checkPasswordStrength()
+    this.checkPasswordStrength();
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -70,7 +70,12 @@ class PasswordStrength extends Component {
     } else {
       pwdStrength = this.removePasswordStrength(steps.STEP_4, pwdStrength);
     }
-    this.props.checkIsValidPassword(pwdStrength.length === 4);
+
+    try {
+      this.props.checkIsValidPassword(pwdStrength.length === 4);
+    } catch (error) {
+      console.log(error);
+    }
 
     this.setState({ pwdStrength });
   };

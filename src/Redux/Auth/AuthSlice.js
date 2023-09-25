@@ -4,6 +4,7 @@ import {
   login,
   forgotPassword,
   resetPassword,
+  sentEmailToCompanyAdmin,
 } from "Redux/Auth/AuthThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -21,6 +22,10 @@ const authSlice = createSlice({
     },
     resetPwd: {
       status: null,
+    },
+    sentEmailToAdmin: {
+      status: null,
+      data: {},
     },
   },
   reducers: {},
@@ -125,6 +130,34 @@ const authSlice = createSlice({
         ...state,
         resetPwd: {
           status: status.FAILURE,
+        },
+      };
+    },
+
+    [sentEmailToCompanyAdmin.pending]: (state, action) => {
+      return {
+        ...state,
+        sentEmailToAdmin: {
+          status: status.IN_PROGRESS,
+          data: {},
+        },
+      };
+    },
+    [sentEmailToCompanyAdmin.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        sentEmailToAdmin: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [sentEmailToCompanyAdmin.rejected]: (state, { payload }) => {
+      return {
+        ...state,
+        sentEmailToAdmin: {
+          status: status.FAILURE,
+          data: payload,
         },
       };
     },
