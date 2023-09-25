@@ -2,12 +2,97 @@ import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Button, Box, Grid } from "@mui/material";
 import RequestPopupImg from "../../../../assets/img/login/request-popup-img.png";
-
+import { connect } from "react-redux";
+import { sentEmailToCompanyAdmin } from "Redux/Auth/AuthThunk";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import status from "Redux/Constants/CommonDS";
+import { ToastMessage } from "Toast/ToastMessage";
+import { AUTH_PREFIX_PATH } from "Configs/AppConfig";
+import LoadingButton from "@mui/lab/LoadingButton";
 class RequestPopup extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      isSubmit: false,
+    };
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      this.props.sentEmailToAdmin.status !== prevProps.sentEmailToAdmin.status
+    ) {
+      if (this.props.sentEmailToAdmin.status === status.SUCCESS) {
+        let sentEmailToAdminResponse = this.props.sentEmailToAdmin.data;
+
+        if (sentEmailToAdminResponse?.id) {
+          this.props.navigate(`${AUTH_PREFIX_PATH}/signin`);
+          ToastMessage.success("An email has been sent to the company admin.");
+        } else {
+          ToastMessage.error(sentEmailToAdminResponse.message);
+        }
+      } else if (this.props.sentEmailToAdmin.status === status.FAILURE) {
+        ToastMessage.error(this.props.sentEmailToAdmin?.data?.message);
+      }
+    }
+  };
+
+  // handle email changes
+  handleChanges = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
+  // validate email
+  validateForm = () => {
+    const { email, isSubmit } = this.state;
+    let isValid = true;
+    let errors = {
+      email: "",
+    };
+    if (isSubmit) {
+      if (!email.trim()) {
+        errors.email = "Email is required!";
+        isValid = false;
+      } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        errors.email = "Please enter valid email!";
+        isValid = false;
+      } else {
+        errors.email = "";
+      }
+    }
+
+    return { isValid, errors };
+  };
+
+  // Fire click sent request
+  onClickSentRequest = () => {
+    this.setState({ isSubmit: true }, () => {
+      let { isSubmit, email } = this.state;
+      const { isValid } = this.validateForm(isSubmit);
+
+      if (isValid) {
+        let formData = new FormData();
+
+        try {
+          formData.append("organization", this.props.companyName);
+          formData.append("email", email);
+
+          this.props.sentEmailToCompanyAdmin(formData);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    });
+  };
+
   render() {
+    const { isSubmit, email } = this.state;
+    const { errors } = this.validateForm(isSubmit);
+    const { sentEmailToAdmin, showModal } = this.props;
     return (
       <Modal
-        isOpen={this.props.showModal}
+        isOpen={showModal}
         toggle={this.toggle}
         className="select-account-modal-container"
       >
@@ -24,26 +109,38 @@ class RequestPopup extends Component {
               administrator. Please contact the current administrator or enter
               their email address below to request access.
             </p>
-            <Box sx={{ width: "100%"}} >
+            <Box sx={{ width: "100%" }}>
               <Grid
-                container alignItems={"center"} display={"flex"} justifyContent={"center"}
+                container
+                alignItems={"center"}
+                display={"flex"}
+                justifyContent={"center"}
                 rowSpacing={2}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 <Grid item xs={6}>
                   <Box className="input-group m-b-10">
-                    <label className="d-block text-left p-l-0 m-b-10" htmlFor="companyName">
-                    Email Address
+                    <label
+                      className="d-block text-left p-l-0 m-b-10"
+                      htmlFor="email"
+                    >
+                      Email Address
                     </label>
                     <input
-                      id="companyName"
+                      id="email"
                       type="email"
                       className="form-control"
                       placeholder="user@example.com"
-                      name="companyName"
+                      name="email"
+                      onChange={this.handleChanges}
+                      value={email}
                     />
-                    
                   </Box>
+                  {errors.email ? (
+                    <span className="red">{errors.email}</span>
+                  ) : (
+                    <></>
+                  )}
                 </Grid>
               </Grid>
             </Box>
@@ -51,20 +148,35 @@ class RequestPopup extends Component {
         </ModalBody>
         <ModalFooter className="footer-top-br p-b-10">
           <Box className="d-block text-center">
-            <Button
+            <LoadingButton
+              type="submit"
+              onClick={this.onClickSentRequest}
               className="primary-btn min-width-inherit"
               variant="contained"
-              onClick={() => {
-                this.props.togglePopup();
-              }}
+              disabled={sentEmailToAdmin.status === status.IN_PROGRESS}
+              loading={sentEmailToAdmin.status === status.IN_PROGRESS}
+              loadingPosition="start"
             >
               Sent Request
-            </Button>
+            </LoadingButton>
           </Box>
         </ModalFooter>
       </Modal>
     );
   }
 }
+function mapStateToProps(state) {
+  const { sentEmailToAdmin } = state.auth;
+  return {
+    sentEmailToAdmin,
+  };
+}
 
-export default RequestPopup;
+const mapDispatchToProps = {
+  sentEmailToCompanyAdmin,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(RequestPopup));

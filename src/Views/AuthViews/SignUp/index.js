@@ -604,6 +604,7 @@ class SignUp extends Component {
           <RequestPopup
             showModal={showRequestPopup}
             togglePopup={this.togglePopup}
+            companyName={step2.companyName}
           />
         ) : (
           <></>

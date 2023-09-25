@@ -7,6 +7,7 @@ const config = {
   /* SIGN UP AND SIGN IN SERVICES */
   LOGIN: `${baseSecurityUrl}/public/login`,
   SIGN_UP: `${baseSecurityUrl}/users/create`,
+  SENT_EMAIL_TO_COMPANY_ADMIN: `${baseSecurityUrl}/users/create/new-org-user`,
 
   /* FORGET PASSWORD SERVICES */
   FORGET_PWD: `${baseSecurityUrl}/users/forgot-password`,

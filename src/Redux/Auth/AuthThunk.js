@@ -51,3 +51,19 @@ export const resetPassword = createAsyncThunk(
     }
   }
 );
+
+export const sentEmailToCompanyAdmin = createAsyncThunk(
+  "auth/sentEmailToCompanyAdmin",
+  async (formData) => {
+    try {
+      const response = await preLoginService.post(
+        config.SENT_EMAIL_TO_COMPANY_ADMIN,
+        formData
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+);
