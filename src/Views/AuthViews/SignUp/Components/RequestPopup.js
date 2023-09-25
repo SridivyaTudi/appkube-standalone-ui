@@ -135,12 +135,12 @@ class RequestPopup extends Component {
                       onChange={this.handleChanges}
                       value={email}
                     />
+                    {errors.email ? (
+                      <p className="red m-b-0 m-t-0 p-l-0 p-r-0 text-left">{errors.email}</p>
+                    ) : (
+                      <></>
+                    )}
                   </Box>
-                  {errors.email ? (
-                    <span className="red">{errors.email}</span>
-                  ) : (
-                    <></>
-                  )}
                 </Grid>
               </Grid>
             </Box>
