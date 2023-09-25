@@ -25,6 +25,8 @@
   .list-heading {
     margin-bottom: 15px;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
 
     h3 {
@@ -34,6 +36,10 @@
       color: #383874;
       margin-bottom: 0;
       display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 30%;
     }
 
     .breadcrumbs {
@@ -96,6 +102,14 @@
       0px 12.5216px 10.0172px rgba(108, 73, 172, 0.035),
       0px 6.6501px 5.32008px rgba(108, 73, 172, 0.0282725),
       0px 2.76726px 2.21381px rgba(108, 73, 172, 0.0196802);
+  }
+  .list-heading-tooltip{
+    display: block;
+    font-size: 11px;
+    line-height: 18px;
+    font-weight: 400;
+    color: #383874;
+    margin: 0;
   }
   .availability-inner {
     display: block;
@@ -193,18 +207,18 @@
   }
 }
 
-@media (max-width: 1280px) {
-  .environment-container {
-    .list-heading {
-      flex-wrap: wrap;
-      h3 {
-        display: block;
-        width: 100%;
-      }
-      .breadcrumbs {
-        display: block;
-        width: 100%;
-      }
-    }
-  }
-}
+// @media (max-width: 1280px) {
+//   .environment-container {
+//     .list-heading {
+//       flex-wrap: wrap;
+//       h3 {
+//         // display: block;
+//         width: 100%;
+//       }
+//       .breadcrumbs {
+//         // display: block;
+//         width: 100%;
+//       }
+//     }
+//   }
+// }

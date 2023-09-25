@@ -7,11 +7,16 @@
     display: block;
     width: 100%;
     .tabs-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      position: relative;
+      text-align: center;
+      // display: flex;
+      // align-items: center;
+      // justify-content: space-between;
       width: 100%;
       h3 {
+        position: absolute;
+        top: -4px;
+        left: 0;
         font-size: 24px;
         font-weight: 500;
         line-height: 36px;

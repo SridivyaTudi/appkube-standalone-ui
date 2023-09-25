@@ -27,6 +27,8 @@ import {
 } from "Utils";
 import ConfirmationPopup from "Components/ConfirmationPopup";
 import Loader from "Components/Loader";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 
 const existingTagKeys = [
   "org",
@@ -41,6 +43,21 @@ const productCategory = {
   "3 Tier": ["Web Layer", "App Layer", "Data Layer", "Auxilary Layer"],
   SOA: ["BUSINESS", "COMMON"],
 };
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 280,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 export class AssociateChartApp extends Component {
   constructor(props) {
     super(props);
@@ -547,9 +564,21 @@ export class AssociateChartApp extends Component {
     return (
       <Box className="environment-container associate-container">
         <Box className="list-heading">
-          <h3>
-            Business Association Mapping ({elementType}:{instanceId})
-          </h3>
+          <HtmlTooltip
+            className="table-tooltip"
+            title={
+              <React.Fragment>
+                <Box className="list-heading-tooltip">
+                  Business Association Mapping ({elementType}:{instanceId})
+                </Box>
+              </React.Fragment>
+            }
+          >
+            <h3>
+              Business Association Mapping ({elementType}:{instanceId})
+            </h3>
+          </HtmlTooltip>
+
           <Box className="breadcrumbs">
             <ul>
               <li>

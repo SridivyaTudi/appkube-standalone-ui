@@ -69,14 +69,14 @@ class DisasterRecovery extends Component {
                   );
                 })}
               </List>
-              <Button
+              {/* <Button
                 className="primary-btn min-width"
                 component={Link}
                 variant="contained"
                 to={`${APP_PREFIX_PATH}/environments`}
               >
                 Back to Infra View
-              </Button>
+              </Button> */}
             </Box>
             <Box className="tabs-content">
               {activeTab === 0 && <Topology />}
