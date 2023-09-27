@@ -7,6 +7,7 @@ import { addLandingZone } from "Redux/NewAccountSetup/NewAccountSetupThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Box from "@mui/material/Box";
+
 class Wizard extends Component {
   constructor(props) {
     super(props);
@@ -192,7 +193,6 @@ class Wizard extends Component {
                 onClick={this.createSubmit}
                 disabled={addLandingZoneStateStatus === status.IN_PROGRESS}
                 loading={addLandingZoneStateStatus === status.IN_PROGRESS}
-                loadingPosition="start"
                 className="primary-btn"
                 variant="contained"
               >

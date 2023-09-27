@@ -440,7 +440,7 @@ class BusinessAssociationMapping extends Component {
                   >
                     <ArcherElement
                       id="root"
-                      relations={this.onClickLevelsThenDrawLine()}
+                      relations={this.onClickLevelsThenDrawLine()} key={v4()}
                     >
                       <div
                         className={`chart-box ${

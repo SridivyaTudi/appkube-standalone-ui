@@ -109,7 +109,7 @@ class DisasterRecoveryMode extends Component {
         } = level;
         return (
           <ArcherElement id={elementId} key={v4()}>
-            <div className="primary-box">
+            <div className="primary-box" key={v4()}>
               <HtmlTooltip
                 className="primary-tooltip"
                 title={

@@ -370,7 +370,7 @@ class DiscoveredAssets extends Component {
       );
     });
     const TableJSX = [
-      <Box className="discovered-table" style={{ height: "415px" }}>
+      <Box className="discovered-table" style={{ height: "415px" }} key={v4()}>
         <TableContainer className="table">
           <Table className="discovered-table-inner">
             <TableHead className="active">
@@ -458,7 +458,7 @@ class DiscoveredAssets extends Component {
       );
     });
     const TableJSX = [
-      <Box className="discovered-table" style={{ height: "415px" }}>
+      <Box className="discovered-table" style={{ height: "415px" }} key={v4()}>
         <TableContainer className="table">
           <Table className="discovered-table-inner">
             <TableHead className="active">
@@ -496,7 +496,7 @@ class DiscoveredAssets extends Component {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-          }}
+          }} key={v4()}
         >
           <h4>No Data Found!</h4>
         </div>

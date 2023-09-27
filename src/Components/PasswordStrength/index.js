@@ -1,15 +1,8 @@
 import React, { Component } from "react";
-import { v4 } from "uuid";
 import { Box } from "@mui/material/";
 import Grid from "@mui/material/Grid";
 import { upperCaseLengthInStr, lowerCaseLengthInStr } from "Utils";
 
-const BACKGROUND_COLOR = {
-  1: "red",
-  2: "rgb(250, 162, 75)",
-  3: "yellowgreen",
-  4: "rgb(0, 85, 0)",
-};
 const steps = {
   STEP_1: 1,
   STEP_2: 2,
@@ -99,47 +92,47 @@ class PasswordStrength extends Component {
             <ul>
               <li
                 className={`${
-                  pwdStrength.includes(steps.STEP_1) ? "green" : ""
+                  pwdStrength.includes(STEP_1) ? "green" : ""
                 } `}
               >
                 <span>
-                  <i class="fa-solid fa-check"></i>
+                  <i className="fa-solid fa-check"></i>
                 </span>{" "}
                 {"between 12 and 22 charaters"}
               </li>
               <li
                 className={`${
-                  pwdStrength.includes(steps.STEP_2) ? "green" : ""
+                  pwdStrength.includes(STEP_2) ? "green" : ""
                 } `}
               >
                 <span>
-                  <i class="fa-solid fa-check"></i>
+                  <i className="fa-solid fa-check"></i>
                 </span>{" "}
                 {"2 lowercase letter (s)"}
               </li>
               <li
                 className={`${
-                  pwdStrength.includes(steps.STEP_3) ? "green" : ""
+                  pwdStrength.includes(STEP_3) ? "green" : ""
                 } `}
               >
                 <span>
-                  <i class="fa-solid fa-check"></i>
+                  <i className="fa-solid fa-check"></i>
                 </span>{" "}
                 {"2 uppercase letter (s)"}
               </li>
               <li
                 className={`${
-                  pwdStrength.includes(steps.STEP_4) ? "green" : ""
+                  pwdStrength.includes(STEP_4) ? "green" : ""
                 } `}
               >
                 <span>
-                  <i class="fa-solid fa-check"></i>
+                  <i className="fa-solid fa-check"></i>
                 </span>{" "}
                 {"1 special charaters"}
               </li>
               <li style={{ display: "none" }}>
                 <span>
-                  <i class="fa-solid fa-check"></i>
+                  <i className="fa-solid fa-check"></i>
                 </span>{" "}
                 {"differences from your previous passwords"}
               </li>
