@@ -7,7 +7,7 @@ import { addLandingZone } from "Redux/NewAccountSetup/NewAccountSetupThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Box from "@mui/material/Box";
-import { v4 } from "uuid";
+
 class Wizard extends Component {
   constructor(props) {
     super(props);
@@ -43,7 +43,6 @@ class Wizard extends Component {
             className={`wizard-step-button ${
               currentStep === i ? "active" : ""
             }`}
-            key={v4()}
           >
             {step.name}
           </div>
@@ -66,7 +65,6 @@ class Wizard extends Component {
             className={`wizard-step-component ${
               currentStep === i ? "" : "d-none"
             }`}
-            key={v4()}
           >
             {step.component()}
           </div>
