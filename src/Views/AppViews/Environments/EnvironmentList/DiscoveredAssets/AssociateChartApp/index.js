@@ -169,7 +169,7 @@ export class AssociateChartApp extends Component {
       : [];
 
     if (activeBAM.length) {
-      activeBAM.map((bamItemKey, index) => {
+      activeBAM.forEach((bamItemKey, index) => {
         let label = activeLevels[bamItemKey]?.label;
         let type = activeLevels[bamItemKey]?.type;
         let productType = activeLevels[bamItemKey]?.productType || "";
@@ -352,7 +352,7 @@ export class AssociateChartApp extends Component {
     let { status: tagStatus } = this.props.existingTags;
 
     if (tagStatus === status.IN_PROGRESS) {
-      return <Loader className="h-100 text-center" />;
+      return <Loader className="h-100 text-center" key={v4()} />;
     } else if (existingTags.length) {
       return existingTags.map((tag, index) => (
         <ul
@@ -698,7 +698,9 @@ export class AssociateChartApp extends Component {
         </Box>
         <Box className="infra-existing">
           <div className="heading">Infra Existing tags of element</div>
-          <Box className="breadcrumbs">{this.renderTagBody()}</Box>
+          <Box className="breadcrumbs" key={v4()}>
+            {this.renderTagBody()}
+          </Box>
         </Box>
         <Box className="d-block width-100 text-center m-t-4">
           {showBtn ? (
@@ -707,7 +709,7 @@ export class AssociateChartApp extends Component {
               onClick={this.onClickAddService}
               disabled={serviceCreationStatus === status.IN_PROGRESS}
               loading={serviceCreationStatus === status.IN_PROGRESS}
-              loadingPosition="start"
+              // loadingPosition="start"
               variant="contained"
             >
               Add Service

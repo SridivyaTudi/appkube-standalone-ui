@@ -90,7 +90,7 @@ class GlobalServicesSummaryTable extends React.Component {
       return JSX;
     } else {
       return [
-        <Box className="cloud-managed-cards global-sarvices-card">
+        <Box className="cloud-managed-cards global-sarvices-card" key={v4()}>
           <Box className="cloud-managed-cards-scroll">
             <p style={{ fontSize: "16px", margin: "22% auto", color: "#000" }}>
               No Data Available!

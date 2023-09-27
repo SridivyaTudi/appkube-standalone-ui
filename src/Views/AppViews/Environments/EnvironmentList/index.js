@@ -17,6 +17,7 @@ import { getCurrentOrgId } from "Utils";
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import TabsMenu from "./TabsMenu";
+import { v4 } from "uuid";
 
 class EnvironmentList extends Component {
   tabMapping = [
@@ -186,7 +187,8 @@ class EnvironmentList extends Component {
               tabs={this.tabMapping}
               setActiveTab={this.setActiveTab}
               activeTab={activeTab}
-              breakWidth={992}
+              breakWidth={992} 
+              key={v4()}
             />
           </Box>
           <Box className="tabs-content">

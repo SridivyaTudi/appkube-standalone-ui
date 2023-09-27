@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import DrTopology from "./DrTopology";
 import Topology from "./Topology";
-import { Box, List, ListItem, Button } from "@mui/material";
+import { Box, List, ListItem } from "@mui/material";
 import ActivityLogViewDetails from "Views/AppViews/Environments/EnvironmentList/DisasterRecovery/Components/ActivityLogViewDetails";
+import { v4 } from "uuid";
 
 class DisasterRecovery extends Component {
   tabMapping = [
@@ -60,7 +59,7 @@ class DisasterRecovery extends Component {
                 {this.tabMapping.map((tabData, index) => {
                   return (
                     <ListItem
-                      key={`${index}`}
+                      key={v4()}
                       className={index === activeTab ? "active" : ""}
                       onClick={() => this.setActiveTab(index)}
                     >

@@ -65,7 +65,7 @@ class ConfirmationPopup extends Component {
               disabled={showLoader}
               loading={showLoader}
               className="primary-btn min-width"
-              loadingPosition="start"
+              // loadingPosition="start"
               variant="contained"
               onClick={this.onClickYes}
             >

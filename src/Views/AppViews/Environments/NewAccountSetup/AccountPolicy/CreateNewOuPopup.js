@@ -169,7 +169,6 @@ class CreateNewOuPopup extends Component {
               disabled={createOuStatus === status.IN_PROGRESS}
               loading={createOuStatus === status.IN_PROGRESS}
               className="primary-btn"
-              loadingPosition="start"
               variant="contained"
               onClick={this.createDepartMent}
             >
