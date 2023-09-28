@@ -9,6 +9,9 @@ import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
 import amazonEc2 from "assets/img/assetmanager/amazon-ec2.png";
 import amazonEc3 from "assets/img/assetmanager/amazon-ec3.png";
 import Nglnx from "assets/img/assetmanager/nglnx.png";
+import Springboot from "assets/img/assetmanager/springboot.png";
+import PostgreSql from "assets/img/assetmanager/postgresql.png";
+import Opensearch from "assets/img/assetmanager/opensearch.png";
 import Aws from "assets/img/aws.png";
 import { Box, Grid, Button, List, ListItem } from "@mui/material";
 import { connect } from "react-redux";
@@ -432,159 +435,204 @@ class Topology extends Component {
                   </Box>
                   {this.renderResourcesWrapper()}
                 </>
+              ) : activeLayer === "Springboot" ? (
+                <Box className="nginx-cards springboot-cards">
+                  <Box className="title">
+                    <Box className="head-left">
+                      <Box className="environment-image">
+                        <img src={Springboot} alt="" />
+                      </Box>
+                      <Box className="name">Springboot</Box>
+                      <Box className="version-text">Version: 1.21.3</Box>
+                    </Box>
+                    <Box className="head-right">
+                      <Button
+                        className="primary-btn min-width"
+                        variant="contained"
+                      >
+                        View Explorer
+                      </Button>
+                    </Box>
+                  </Box>
+                  <Box className="nginx-content">
+                    <Box className="d-flex">
+                      <Box className="form-group m-r-3">
+                        <label htmlFor="Instance" className="form-label">
+                          Public IP
+                        </label>
+                        <input
+                          className="form-control"
+                          id="Instance"
+                          name="instance"
+                          placeholder="91"
+                        />
+                      </Box>
+                    </Box>
+                    <Box className="autoscaling-cards m-t-4">
+                      <Box className="card-box">
+                        <span>CPU</span>
+                        <strong>512GB</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Memory(RAM)</span>
+                        <strong>512GB</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Disk Space</span>
+                        <strong>512GB</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Public </span>
+                        <strong>IP4</strong>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+              ) : activeLayer === "Postgresql" ? (
+                <Box className="nginx-cards springboot-cards">
+                  <Box className="title">
+                    <Box className="head-left">
+                      <Box className="icon">
+                        <img src={PostgreSql} alt="" />
+                      </Box>
+                      <Box className="name">Postgre SQL</Box>
+                    </Box>
+                    <Box className="head-right">
+                      <Button
+                        className="primary-btn min-width"
+                        variant="contained"
+                      >
+                        View Explorer
+                      </Button>
+                    </Box>
+                  </Box>
+                  <Box className="nginx-content">
+                    <Box className="autoscaling-cards">
+                      <Box className="card-box">
+                        <span>Latency</span>
+                        <strong>512GB</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Throughput</span>
+                        <strong>512GB</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Resources Utilization</span>
+                        <strong>512GB</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Query Performance </span>
+                        <strong>156</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Concurrency</span>
+                        <strong>156</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Failover</span>
+                        <strong>12356</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Error</span>
+                        <strong>156</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>RPO </span>
+                        <strong>12356</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>RTO</span>
+                        <strong>156</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Response Time</span>
+                        <strong>12356</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Load Handling</span>
+                        <strong>156</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Incident response </span>
+                        <strong>12356</strong>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+              ) : activeLayer === "Opensearch" ? (
+                <Box className="nginx-cards springboot-cards">
+                  <Box className="title">
+                    <Box className="head-left">
+                      <Box className="icon">
+                        <img src={Opensearch} alt="" />
+                      </Box>
+                      <Box className="name">Opensearch</Box>
+                    </Box>
+                    <Box className="head-right">
+                      <Button
+                        className="primary-btn min-width"
+                        variant="contained"
+                      >
+                        View Explorer
+                      </Button>
+                    </Box>
+                  </Box>
+                  <Box className="nginx-content">
+                    <Box className="autoscaling-cards">
+                    <Box className="card-box">
+                        <span>Latency</span>
+                        <strong>512GB</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Throughput</span>
+                        <strong>512GB</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Resources Utilization</span>
+                        <strong>512GB</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Query Performance </span>
+                        <strong>156</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Cache Hit Rate</span>
+                        <strong>156</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Up Times</span>
+                        <strong>12356</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Failover</span>
+                        <strong>156</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Replications </span>
+                        <strong>12356</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Back Up</span>
+                        <strong>156</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Restore</span>
+                        <strong>12356</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Error Rates</span>
+                        <strong>156</strong>
+                      </Box>
+                      <Box className="card-box">
+                        <span>Data Protection </span>
+                        <strong>12356</strong>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
               ) : (
                 <></>
               )}
-
-              {/* <Box className="cloud-managed-cards">
-                {selectedResource === "web" && (
-                  <Box className="application-balancer">
-                    <Button
-                      className="primary-btn min-width"
-                      variant="contained"
-                    >
-                      <img src={balancingIcon} alt="" /> Application Load
-                      Balancer
-                    </Button>
-                    <Box className="balancer-boxs">
-                      <Box className="balancer-box">
-                        <span>
-                          <img src={bottomArrow} alt="" />
-                        </span>
-                        <Box className="icon">
-                          <img src={amazonEc2} alt="" />
-                        </Box>
-                        <p>EC2</p>
-                      </Box>
-                      <Box className="balancer-box">
-                        <span>
-                          <img src={bottomArrow} alt="" />
-                        </span>
-                        <Box className="icon">
-                          <img src={amazonEc2} alt="" />
-                        </Box>
-                        <p>EC2</p>
-                      </Box>
-                      <Box className="balancer-box">
-                        <span>
-                          <img src={bottomArrow} alt="" />
-                        </span>
-                        <Box className="icon">
-                          <img src={amazonEc2} alt="" />
-                        </Box>
-                        <p>EC2</p>
-                      </Box>
-                    </Box>
-                  </Box>
-                )}
-                {selectedResource === "app" && (
-                  <Box className="application-balancer">
-                    <Button
-                      className="primary-btn min-width"
-                      variant="contained"
-                    >
-                      <img src={balancingIcon} alt="" /> Application Load
-                      Balancer
-                    </Button>
-                    <Box className="balancer-boxs">
-                      <Box className="balancer-box">
-                        <span>
-                          <img src={bottomArrow} alt="" />
-                        </span>
-                        <Box className="icon">
-                          <img src={amazonEc2} alt="" />
-                        </Box>
-                        <p>EC2</p>
-                      </Box>
-                      <Box className="balancer-box">
-                        <span>
-                          <img src={bottomArrow} alt="" />
-                        </span>
-                        <Box className="icon">
-                          <img src={amazonEc2} alt="" />
-                        </Box>
-                        <p>EC2</p>
-                      </Box>
-                      <Box className="balancer-box">
-                        <span>
-                          <img src={bottomArrow} alt="" />
-                        </span>
-                        <Box className="icon">
-                          <img src={amazonEc2} alt="" />
-                        </Box>
-                        <p>EC2</p>
-                      </Box>
-                    </Box>
-                  </Box>
-                )}
-                {selectedResource === "data" && (
-                  <Box className="application-balancer">
-                    <Button
-                      className="primary-btn min-width"
-                      variant="contained"
-                    >
-                      <p>
-                        <img src={amazonEc3} alt="" />
-                      </p>{" "}
-                      Relational Database Service
-                    </Button>
-                    <Box className="balancer-boxs">
-                      <Box className="balancer-box">
-                        <span>
-                          <img src={bottomArrow} alt="" />
-                        </span>
-                        <Box className="icon">
-                          <img src={amazonEc3} alt="" />
-                        </Box>
-                        <p>RDS</p>
-                      </Box>
-                      <Box className="balancer-box">
-                        <span>
-                          <img src={bottomArrow} alt="" />
-                        </span>
-                        <Box className="icon">
-                          <img src={amazonEc3} alt="" />
-                        </Box>
-                        <p>RDS</p>
-                      </Box>
-                    </Box>
-                  </Box>
-                )}
-                {selectedResource === "auxiliary" && (
-                  <Box className="application-balancer">
-                    <Button
-                      className="primary-btn min-width"
-                      variant="contained"
-                    >
-                      <p>
-                        <img src={amazonEc3} alt="" />
-                      </p>{" "}
-                      Auxiliary
-                    </Button>
-                    <Box className="balancer-boxs">
-                      <Box className="balancer-box">
-                        <span>
-                          <img src={bottomArrow} alt="" />
-                        </span>
-                        <Box className="icon">
-                          <img src={amazonEc3} alt="" />
-                        </Box>
-                        <p>SNS</p>
-                      </Box>
-                      <Box className="balancer-box">
-                        <span>
-                          <img src={bottomArrow} alt="" />
-                        </span>
-                        <Box className="icon">
-                          <img src={amazonEc3} alt="" />
-                        </Box>
-                        <p>SQS</p>
-                      </Box>
-                    </Box>
-                  </Box>
-                )}
-              </Box>
-              {this.renderResourcesWrapper()} */}
             </Grid>
           </Grid>
           {activeLayer === "NGINX" || activeLayer === "Springboot" ? (
@@ -612,7 +660,7 @@ class Topology extends Component {
                     <Ports />
                   ) : activeTab === 2 ? (
                     <RolesPolicies />
-                  )  : (
+                  ) : (
                     <></>
                   )}
                 </Box>

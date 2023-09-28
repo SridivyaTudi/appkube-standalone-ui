@@ -31,99 +31,6 @@ class TopologyView extends Component {
     };
   }
 
-  renderBody = () => {
-    const { data } = this.props;
-    const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
-    const { activeView } = this.state;
-    return (
-      <ArcherContainer
-        noCurves
-        style={{
-          width: `100%`,
-          height: "100%",
-        }}
-      >
-        <TransformWrapper
-          onTransformed={(instance) => {
-            transformScale = instance && instance.state.scale;
-            this.setState({ scale: true });
-          }}
-        >
-          {({ zoomIn, zoomOut, instance, zoomToElement, ...rest }) => {
-            transformScale = instance.transformState.scale;
-            zoomElement = zoomToElement;
-            return (
-              <>
-                <div className="gmnoprint">
-                  <div className="gmnoprint-plus-minus">
-                    <button className="btn btn-plus" onClick={() => zoomIn()}>
-                      <i className="fa-solid fa-plus"></i>
-                    </button>
-                    <button className="btn btn-minus" onClick={() => zoomOut()}>
-                      <i className="fa-solid fa-minus"></i>
-                    </button>
-                  </div>
-                  {/* <div
-                    className="gmnoprint-map"
-                    onClick={() => {
-                      this.zoomToElementCallback(300);
-                    }}
-                  >
-                    <button className="btn btn-map">
-                      <i className="fa-solid fa-map-marker-alt"></i>
-                    </button>
-                  </div> */}
-                </div>
-                <TransformComponent
-                  wrapperStyle={{
-                    width: `100%`,
-                    height: "100%",
-                  }}
-                  contentStyle={{
-                    width: `${this.state.activeView.length * 200}px`,
-                    height: "100%",
-                    transform: "translate(0px, 0px) scale(0)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                  }}
-                >
-                  <ArcherElement
-                    id="root"
-                    relations={[
-                      {
-                        targetId: this.getTargetId(1),
-                        targetAnchor: "left",
-                        sourceAnchor: "right",
-                        style: strokeStyles,
-                      },
-                    ]}
-                  >
-                    <div
-                      className="topology-text-box active"
-                      id={`${data.label}`}
-                    >
-                      <div className="account-image">
-                        <img src={data.image} alt="aws image" />
-                      </div>
-                      <span id="custom_location_1" className="d-inline-flex">
-                        {data.label}
-                      </span>
-                    </div>
-                  </ArcherElement>
-                  {data.children.length ? (
-                    this.renderChildNodes(data.children, 1, activeView)
-                  ) : (
-                    <></>
-                  )}
-                </TransformComponent>
-              </>
-            );
-          }}
-        </TransformWrapper>
-      </ArcherContainer>
-    );
-  };
 
   getTargetId = (currentLevel) => {
     const activeNode = this.getChild(currentLevel);
@@ -267,9 +174,6 @@ class TopologyView extends Component {
       <>
         <Grid item xs={5}>
           <Box className="topology-panel">
-            {/* <Box className="topology-panel-title">
-              <Box className="name">App Topology</Box>
-            </Box> */}
             <Box className="topology-panel-body">
               <Box className="topology-inner-content">
                 <Box className="content-left">
@@ -391,9 +295,6 @@ class TopologyView extends Component {
                   </List>
                 </Box>
               </Box>
-              {/* <Box className="app-topology-chart">
-                {Object.keys(data).length ? this.renderBody() : <></>}
-              </Box> */}
             </Box>
           </Box>
         </Grid>
