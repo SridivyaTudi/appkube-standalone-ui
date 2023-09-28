@@ -275,7 +275,7 @@ class Topology extends Component {
               setLevel={this.getCurrentActiveTreeLevel}
               selectedBreadCrumbs={breadcrumbs}
               setActiveLayer={(activeLayer) => {
-                this.setState({ activeLayer });
+                this.setState({ activeLayer, activeTab: 0 });
               }}
             />
             <Grid item xs={7}>
@@ -580,7 +580,7 @@ class Topology extends Component {
                   </Box>
                   <Box className="nginx-content">
                     <Box className="autoscaling-cards">
-                    <Box className="card-box">
+                      <Box className="card-box">
                         <span>Latency</span>
                         <strong>512GB</strong>
                       </Box>
@@ -662,7 +662,7 @@ class Topology extends Component {
                   ) : activeTab === 2 ? (
                     <RolesPolicies />
                   ) : activeTab === 3 ? (
-                    <Volume/>
+                    <Volume />
                   ) : (
                     <></>
                   )}

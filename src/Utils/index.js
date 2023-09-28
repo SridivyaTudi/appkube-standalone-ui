@@ -87,7 +87,7 @@ export const localStorageClear = () => {
 
 export const setUserName = (userName) => {
   return userName
-    ? localStorage.getItem(LOCAL_STORAGE_CONSTANTS.REMEMBER_USER_NAME, userName)
+    ? localStorage.setItem(LOCAL_STORAGE_CONSTANTS.REMEMBER_USER_NAME, userName)
     : null;
 };
 
