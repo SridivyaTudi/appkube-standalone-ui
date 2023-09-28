@@ -10,7 +10,12 @@ import ListItem from "@mui/material/ListItem";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { organizationsAsyncThunk } from "Redux/Organization/OrganizationThunk";
-import { getCurrentOrgId, setCurrentOrgId, getCurrentUser } from "Utils";
+import {
+  getCurrentOrgId,
+  setCurrentOrgId,
+  getCurrentUser,
+  localStorageClear,
+} from "Utils";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 
@@ -218,14 +223,12 @@ function TopBar() {
                         Account
                       </a>
                     </ListItem>
-                    {localStorage.getItem("currentUser") ? (
+                    {getCurrentUser() ? (
                       <ListItem>
                         <a
                           className="item"
                           onClick={() => {
-                            localStorage.removeItem("currentUser");
-                            localStorage.removeItem("currentOrgId");
-                            localStorage.removeItem("recentEnv");
+                            localStorageClear();
                             navigate("/auth");
                           }}
                         >

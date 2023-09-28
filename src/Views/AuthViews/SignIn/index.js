@@ -8,12 +8,17 @@ import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Link, Navigate } from "react-router-dom";
 import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "Configs/AppConfig";
-import { setCurrentUser, setCurrentOrgId, setCurrentOrgName } from "Utils";
+import {
+  setCurrentUser,
+  setCurrentOrgId,
+  setCurrentOrgName,
+  getSavedUserName,
+  setUserName,deleteUserName
+} from "Utils";
 import { login } from "Redux/Auth/AuthThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { ToastMessage } from "Toast/ToastMessage";
-import { getSavedUserName } from "Utils";
 
 class Signin extends Component {
   constructor(props) {
@@ -79,9 +84,9 @@ class Signin extends Component {
 
     if (isValid) {
       if (rememberMe) {
-        localStorage.setItem("rememberUserName", formData.userName);
+        setUserName(formData.userName);
       } else {
-        localStorage.removeItem("rememberUserName");
+        deleteUserName()
       }
 
       const { userName, password } = this.state.formData;
@@ -166,8 +171,7 @@ class Signin extends Component {
                             name="userName"
                             placeholder="Input your Username here"
                             value={
-                              formData.userName ||
-                              localStorage.getItem("rememberUserName") || ''
+                              formData.userName || getSavedUserName() || ""
                             }
                             onChange={this.handleInputChange}
                             id="userName"
@@ -242,7 +246,7 @@ class Signin extends Component {
                       }
                       loading={
                         this.props.loggedInUser?.status === status.IN_PROGRESS
-                      }                     
+                      }
                       onClick={this.handleSignIn}
                       className="primary-btn"
                       variant="contained"
