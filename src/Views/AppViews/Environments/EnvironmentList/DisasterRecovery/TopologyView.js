@@ -315,10 +315,12 @@ class TopologyView extends Component {
                       <Box className="application-balancer">
                         <Button
                           className="secondary-btn min-width"
-                          variant="contained" onClick={()=>{
-                           this.props.setActiveLayer('SSL') 
-                          }}>
-                           SSL
+                          variant="contained"
+                          onClick={() => {
+                            this.props.setActiveLayer("SSL");
+                          }}
+                        >
+                          SSL
                         </Button>
                         <Box className="balancer-boxs">
                           <Box className="balancer-box">
@@ -333,9 +335,10 @@ class TopologyView extends Component {
                       <Box className="application-balancer">
                         <Button
                           className="primary-btn min-width"
-                          variant="contained" onClick={()=>{
-                            this.props.setActiveLayer('NGINX') 
-                           }}
+                          variant="contained"
+                          onClick={() => {
+                            this.props.setActiveLayer("NGINX");
+                          }}
                         >
                           <img src={Nginx} alt="" /> NGINX
                         </Button>
@@ -353,11 +356,16 @@ class TopologyView extends Component {
                         <Button
                           className="primary-btn min-width"
                           variant="contained"
+                          onClick={() => {
+                            this.props.setActiveLayer("Springboot");
+                          }}
                         >
                           <img src={Springboot} alt="" /> Springboot
                         </Button>
                         <Box className="balancer-boxs">
-                          <Box className="balancer-box">
+                          <Box className="balancer-box" onClick={()=>{
+                            this.props.setActiveLayer('Postgresql') 
+                           }}>
                             <span>
                               <img src={bottomArrow} alt="" />
                             </span>
@@ -366,7 +374,9 @@ class TopologyView extends Component {
                             </Box>
                             <p>PostgreSQL</p>
                           </Box>
-                          <Box className="balancer-box">
+                          <Box className="balancer-box" onClick={()=>{
+                            this.props.setActiveLayer('Opensearch') 
+                           }}>
                             <span>
                               <img src={bottomArrow} alt="" />
                             </span>

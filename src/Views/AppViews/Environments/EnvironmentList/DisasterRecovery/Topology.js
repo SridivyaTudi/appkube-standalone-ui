@@ -166,14 +166,22 @@ class Topology extends Component {
     {
       name: "Variable",
       dataKey: "variable",
+      type: ["NGINX", "Springboot"],
     },
     {
       name: "Ports",
       dataKey: "ports",
+      type: ["NGINX"],
     },
     {
       name: "Roles and policies",
       dataKey: "policies",
+      type: ["NGINX"],
+    },
+    {
+      name: "Volume",
+      dataKey: "volume",
+      type: ["Springboot"],
     },
   ];
   constructor(props) {
@@ -364,66 +372,69 @@ class Topology extends Component {
                     </Box>
                   </Box>
                 </Box>
+              ) : activeLayer === "NGINX" ? (
+                <>
+                  <Box className="nginx-cards">
+                    <Box className="title">
+                      <Box className="head-left">
+                        <Box className="environment-image">
+                          <img src={Nglnx} alt="" />
+                        </Box>
+                        <Box className="name">NGINX</Box>
+                        <Box className="version-text">Version: 1.21.3</Box>
+                      </Box>
+                      <Box className="head-right">
+                        <Button
+                          className="primary-btn min-width"
+                          variant="contained"
+                        >
+                          View Explorer
+                        </Button>
+                      </Box>
+                    </Box>
+                    <Box className="nginx-content">
+                      <Box className="d-flex">
+                        <Box className="form-group m-r-3">
+                          <label htmlFor="Instance" className="form-label">
+                            No Of Instance
+                          </label>
+                          <input
+                            className="form-control"
+                            id="Instance"
+                            name="instance"
+                            placeholder="91"
+                          />
+                        </Box>
+                        <Box className="form-group">
+                          <label htmlFor="Instance" className="form-label">
+                            State
+                          </label>
+                          <input
+                            className="form-control"
+                            id="Instance"
+                            name="instance"
+                            placeholder="Statefull"
+                          />
+                        </Box>
+                      </Box>
+                      <Box className="autoscaling-cards">
+                        <Box className="heading">Autoscaling</Box>
+                        <Box className="card-box">
+                          <span>Initial Scaling</span>
+                          <strong>123</strong>
+                        </Box>
+                        <Box className="card-box">
+                          <span>Scaling</span>
+                          <strong>151</strong>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                  {this.renderResourcesWrapper()}
+                </>
               ) : (
                 <></>
               )}
-              <Box className="nginx-cards">
-                <Box className="title">
-                  <Box className="head-left">
-                    <Box className="environment-image">
-                      <img src={Nglnx} alt="" />
-                    </Box>
-                    <Box className="name">NGINX</Box>
-                    <Box className="version-text">Version: 1.21.3</Box>
-                  </Box>
-                  <Box className="head-right">
-                    <Button
-                      className="primary-btn min-width"
-                      variant="contained"
-                    >
-                      View Explorer
-                    </Button>
-                  </Box>
-                </Box>
-                <Box className="nginx-content">
-                  <Box className="d-flex">
-                    <Box className="form-group m-r-3">
-                      <label htmlFor="Instance" className="form-label">
-                        No Of Instance
-                      </label>
-                      <input
-                        className="form-control"
-                        id="Instance"
-                        name="instance"
-                        placeholder="91"
-                      />
-                    </Box>
-                    <Box className="form-group">
-                      <label htmlFor="Instance" className="form-label">
-                        State
-                      </label>
-                      <input
-                        className="form-control"
-                        id="Instance"
-                        name="instance"
-                        placeholder="Statefull"
-                      />
-                    </Box>
-                  </Box>
-                  <Box className="autoscaling-cards">
-                    <Box className="heading">Autoscaling</Box>
-                    <Box className="card-box">
-                      <span>Initial Scaling</span>
-                      <strong>123</strong>
-                    </Box>
-                    <Box className="card-box">
-                      <span>Scaling</span>
-                      <strong>151</strong>
-                    </Box>
-                  </Box>
-                </Box>
-              </Box>
-              {this.renderResourcesWrapper()}
 
               {/* <Box className="cloud-managed-cards">
                 {selectedResource === "web" && (
@@ -576,34 +587,40 @@ class Topology extends Component {
               {this.renderResourcesWrapper()} */}
             </Grid>
           </Grid>
-          <Box className="nginx-section">
-            <Box className="tabs">
-              <List className="tabs-menu">
-                {this.tabMapping.map((tabData, index) => {
-                  return (
-                    <ListItem
-                      key={`ops-tab-${index}`}
-                      className={index === activeTab ? "active" : ""}
-                      onClick={() => this.setActiveTab(index)}
-                    >
-                      {tabData.name}
-                    </ListItem>
-                  );
-                })}
-              </List>
-              <Box className="tabs-content">
-                {activeTab === 0 ? (
-                  <Variable />
-                ) : activeTab === 1 ? (
-                  <Ports />
-                ) : activeTab === 2 ? (
-                  <RolesPolicies />
-                ) : (
-                  <></>
-                )}
+          {activeLayer === "NGINX" || activeLayer === "Springboot" ? (
+            <Box className="nginx-section">
+              <Box className="tabs">
+                <List className="tabs-menu">
+                  {this.tabMapping.map((tabData, index) => {
+                    if (tabData.type.includes(activeLayer)) {
+                      return (
+                        <ListItem
+                          key={`ops-tab-${index}`}
+                          className={index === activeTab ? "active" : ""}
+                          onClick={() => this.setActiveTab(index)}
+                        >
+                          {tabData.name}
+                        </ListItem>
+                      );
+                    }
+                  })}
+                </List>
+                <Box className="tabs-content">
+                  {activeTab === 0 ? (
+                    <Variable />
+                  ) : activeTab === 1 ? (
+                    <Ports />
+                  ) : activeTab === 2 ? (
+                    <RolesPolicies />
+                  )  : (
+                    <></>
+                  )}
+                </Box>
               </Box>
             </Box>
-          </Box>
+          ) : (
+            <></>
+          )}
         </Box>
       </>
     );
