@@ -20,6 +20,7 @@ import { v4 } from "uuid";
 import Variable from "./Components/Variable";
 import Ports from "./Components/Ports";
 import RolesPolicies from "./Components/RolesPolicies";
+import Volume from "./Components/Volume";
 
 let topologyData = {
   label: "HRMS",
@@ -660,6 +661,8 @@ class Topology extends Component {
                     <Ports />
                   ) : activeTab === 2 ? (
                     <RolesPolicies />
+                  ) : activeTab === 3 ? (
+                    <Volume/>
                   ) : (
                     <></>
                   )}
