@@ -86,12 +86,13 @@ class Application extends Component {
 
   renderTable = () => {
     const { applicationTableData } = this.state;
+    const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
     let JSX = [];
     applicationTableData.map((item) => {
       JSX.push(
         <TableRow key={v4()}>
           <TableCell align="left" className="p-l-15">
-            <Link to={`${APP_PREFIX_PATH}/environments/disasterrecovery`}>
+            <Link to={`${APP_PREFIX_PATH}/environments/disasterrecovery?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}>
               {item.application}
             </Link>
           </TableCell>
@@ -140,7 +141,7 @@ class Application extends Component {
                   </React.Fragment>
                 }
               >
-               {this.getAverageScore(item.sle)}
+                {this.getAverageScore(item.sle)}
               </HtmlTooltip>
             </Box>
           </TableCell>
@@ -204,6 +205,15 @@ class Application extends Component {
     return JSX;
   };
 
+  /** Get url details. */
+  getUrlDetails() {
+    const queryPrm = new URLSearchParams(document.location.search);
+    const cloudName = queryPrm.get("cloudName");
+    const landingZoneId = queryPrm.get("landingZoneId");
+    const landingZone = queryPrm.get("landingZone");
+
+    return { landingZone, landingZoneId, cloudName };
+  }
   render() {
     const { applicationTableData } = this.state;
 

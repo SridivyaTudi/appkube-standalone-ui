@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import DrTopology from "./DrTopology";
 import Topology from "./Topology";
-import { Box, Button, List, ListItem } from "@mui/material";
+import { Box, List, ListItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import ActivityLogViewDetails from "Views/AppViews/Environments/EnvironmentList/DisasterRecovery/Components/ActivityLogViewDetails";
 import { v4 } from "uuid";
-import Typography from "@mui/material/Typography";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 class DisasterRecovery extends Component {
   tabMapping = [
     {
@@ -44,8 +42,19 @@ class DisasterRecovery extends Component {
     this.setState({ activeTab });
   };
 
+  /** Get url details. */
+  getUrlDetails() {
+    const queryPrm = new URLSearchParams(document.location.search);
+    const cloudName = queryPrm.get("cloudName");
+    const landingZoneId = queryPrm.get("landingZoneId");
+    const landingZone = queryPrm.get("landingZone");
+
+    return { landingZone, landingZoneId, cloudName };
+  }
+
   render() {
     const { activeTab, isActivityViewDetails } = this.state;
+    const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
     return (
       <Box className="disaster-recovery-container">
         {isActivityViewDetails ? (
@@ -74,12 +83,25 @@ class DisasterRecovery extends Component {
               <Box className="breadcrumbs-content">
                 <ul>
                   <li>
-                    <Link to={`/environments`}>Environments</Link>
+                    <Link to={`${APP_PREFIX_PATH}/environments`}>
+                      Environments
+                    </Link>
                   </li>
                   <li>
                     <i className="fa-solid fa-chevron-right"></i>
                   </li>
-                  <li className="active">AWS &nbsp; (062041849235)</li>
+                  <li>
+                    <Link
+                      to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+                    >
+                      {cloudName} &nbsp;(
+                      {landingZone})
+                    </Link>
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-chevron-right"></i>
+                  </li>
+                  <li className="active">HRMS</li>
                 </ul>
               </Box>
             </Box>
