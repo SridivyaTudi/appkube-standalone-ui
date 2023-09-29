@@ -598,15 +598,6 @@
                         align-items: center;
                         justify-content: center;
                         flex-wrap: wrap;
-                       
-
-                        .icon {
-                          background: linear-gradient(
-                            45deg,
-                            #c8511b -4950%,
-                            #ff9900 5050%
-                          );
-                        }
                         span {
                           display: flex;
                           justify-content: center;
@@ -622,6 +613,12 @@
                           padding: 5px;
                           margin-top: 7px;
                           margin-bottom: 7px;
+                        cursor: pointer;
+                        background: linear-gradient(
+                            45deg,
+                            #c8511b -4950%,
+                            #ff9900 5050%
+                          );
                           img {
                             max-width: 20px;
                           }
