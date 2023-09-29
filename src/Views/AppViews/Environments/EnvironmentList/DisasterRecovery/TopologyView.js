@@ -28,9 +28,9 @@ class TopologyView extends Component {
       // at level 2, sublevel 0, index 1 is active.
       activeView: [0, -1],
       currentActiveNode: "",
+      activeLayer: "",
     };
   }
-
 
   getTargetId = (currentLevel) => {
     const activeNode = this.getChild(currentLevel);
@@ -170,6 +170,7 @@ class TopologyView extends Component {
 
   render() {
     const { data } = this.props;
+    let { activeLayer } = this.state;
     return (
       <>
         <Grid item xs={5}>
@@ -218,9 +219,12 @@ class TopologyView extends Component {
                     <ListItem>
                       <Box className="application-balancer">
                         <Button
-                          className="secondary-btn min-width"
+                          className={`secondary-btn min-width ${
+                            activeLayer === "SSL" ? "active" : ""
+                          }`}
                           variant="contained"
                           onClick={() => {
+                            this.setState({ activeLayer: "SSL" });
                             this.props.setActiveLayer("SSL");
                           }}
                         >
@@ -241,6 +245,7 @@ class TopologyView extends Component {
                           className="primary-btn min-width"
                           variant="contained"
                           onClick={() => {
+                            this.setState({ activeLayer: "NGINX" });
                             this.props.setActiveLayer("NGINX");
                           }}
                         >
@@ -261,15 +266,20 @@ class TopologyView extends Component {
                           className="primary-btn min-width"
                           variant="contained"
                           onClick={() => {
+                            this.setState({ activeLayer: "Springboot" });
                             this.props.setActiveLayer("Springboot");
                           }}
                         >
                           <img src={Springboot} alt="" /> Springboot
                         </Button>
                         <Box className="balancer-boxs">
-                          <Box className="balancer-box" onClick={()=>{
-                            this.props.setActiveLayer('Postgresql') 
-                           }}>
+                          <Box
+                            className="balancer-box"
+                            onClick={() => {
+                              this.setState({ activeLayer: "Postgresql" });
+                              this.props.setActiveLayer("Postgresql");
+                            }}
+                          >
                             <span>
                               <img src={bottomArrow} alt="" />
                             </span>
@@ -278,9 +288,12 @@ class TopologyView extends Component {
                             </Box>
                             <p>PostgreSQL</p>
                           </Box>
-                          <Box className="balancer-box" onClick={()=>{
-                            this.props.setActiveLayer('Opensearch') 
-                           }}>
+                          <Box
+                            className="balancer-box"
+                            onClick={() => {
+                              this.props.setActiveLayer("Opensearch");
+                            }}
+                          >
                             <span>
                               <img src={bottomArrow} alt="" />
                             </span>
