@@ -7,22 +7,22 @@
     display: block;
     width: 100%;
     .tabs-head {
-      position: relative;
-      text-align: center;
-      // display: flex;
-      // align-items: center;
-      // justify-content: space-between;
+      // position: relative;
+      // text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       width: 100%;
       h3 {
-        position: absolute;
-        top: -4px;
-        left: 0;
+        // position: absolute;
+        // top: -4px;
+        // left: 0;
         font-size: 24px;
         font-weight: 500;
         line-height: 36px;
         color: #383874;
         margin-bottom: 0;
-        display: inline-flex;
+        // display: inline-flex;
       }
       ul {
         display: inline-flex;
@@ -50,6 +50,41 @@
           &.active {
             color: #ffffff;
             background-color: #3247e5;
+          }
+        }
+      }
+      .breadcrumbs-content {
+        display: inline-flex;
+        width: auto;
+        ul {
+          display: inline-flex;
+          background: none;
+          padding: 0;
+
+          li {
+            display: inline-flex;
+            padding-left: 3px;
+            padding-right: 3px;
+            line-height: 32px;
+            align-items: center;
+            font-size: 12px;
+            color: #8676ff;
+            font-weight: 400;
+            &.active {
+              font-weight: 600;
+              cursor: auto;
+              color: #414d55;
+              background: transparent;
+            }
+
+            a {
+              color: #8676ff;
+            }
+
+            i {
+              font-size: 10px;
+              color: #414d55;
+            }
           }
         }
       }
@@ -2229,6 +2264,20 @@
       background-color: transparent;
       text-align: center;
       padding-bottom: 30px;
+    }
+  }
+}
+@media only screen and (max-width: 1280px) {
+  .disaster-recovery-container {
+    .services-panel-tabs {
+      .tabs-head {
+        ul {
+          li {
+            padding-left: 20px;
+            padding-right: 20px;
+          }
+        }
+      }
     }
   }
 }

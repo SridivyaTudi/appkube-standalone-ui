@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import DrTopology from "./DrTopology";
 import Topology from "./Topology";
-import { Box, List, ListItem } from "@mui/material";
+import { Box, Button, List, ListItem } from "@mui/material";
+import { Link } from "react-router-dom";
 import ActivityLogViewDetails from "Views/AppViews/Environments/EnvironmentList/DisasterRecovery/Components/ActivityLogViewDetails";
 import { v4 } from "uuid";
+import Typography from "@mui/material/Typography";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
 
 class DisasterRecovery extends Component {
   tabMapping = [
@@ -53,7 +56,7 @@ class DisasterRecovery extends Component {
           />
         ) : (
           <Box className="services-panel-tabs">
-            <Box className="tabs-head">
+            <Box className="tabs-head ">
               <h3>HRMS</h3>
               <List>
                 {this.tabMapping.map((tabData, index) => {
@@ -68,14 +71,17 @@ class DisasterRecovery extends Component {
                   );
                 })}
               </List>
-              {/* <Button
-                className="primary-btn min-width"
-                component={Link}
-                variant="contained"
-                to={`${APP_PREFIX_PATH}/environments`}
-              >
-                Back to Infra View
-              </Button> */}
+              <Box className="breadcrumbs-content">
+                <ul>
+                  <li>
+                    <Link to={`/environments`}>Environments</Link>
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-chevron-right"></i>
+                  </li>
+                  <li className="active">AWS &nbsp; (062041849235)</li>
+                </ul>
+              </Box>
             </Box>
             <Box className="tabs-content">
               {activeTab === 0 && <Topology />}
