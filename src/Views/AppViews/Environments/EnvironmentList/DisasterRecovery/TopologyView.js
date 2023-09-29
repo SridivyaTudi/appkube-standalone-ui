@@ -216,12 +216,12 @@ class TopologyView extends Component {
                 </Box>
                 <Box className="content-right">
                   <List>
-                    <ListItem>
+                    <ListItem  className={` ${
+                            activeLayer === "SSL" ? "active" : ""
+                          }`} >
                       <Box className="application-balancer">
                         <Button
-                          className={`secondary-btn min-width ${
-                            activeLayer === "SSL" ? "active" : ""
-                          }`}
+                          className="secondary-btn min-width "
                           variant="contained"
                           onClick={() => {
                             this.setState({ activeLayer: "SSL" });
@@ -239,7 +239,9 @@ class TopologyView extends Component {
                         </Box>
                       </Box>
                     </ListItem>
-                    <ListItem>
+                    <ListItem className={`  ${
+                            activeLayer === "NGINX" ? "active" : ""
+                          }`}>
                       <Box className="application-balancer">
                         <Button
                           className="primary-btn min-width"
@@ -260,7 +262,9 @@ class TopologyView extends Component {
                         </Box>
                       </Box>
                     </ListItem>
-                    <ListItem>
+                    <ListItem className={`  ${
+                            activeLayer === "Springboot" ? "active" : ""
+                          }`}>
                       <Box className="application-balancer">
                         <Button
                           className="primary-btn min-width"

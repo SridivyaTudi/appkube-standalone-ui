@@ -560,6 +560,16 @@
                   display: block;
                   margin: 0;
                   padding: 0;
+                  &.active{
+                    .secondary-btn{
+                      color: #ffffff;
+                      background: #3247e5;
+                    }
+                    .primary-btn{
+                      color: #ffffff;
+                      background: #3247e5;
+                    }
+                  }
                   .application-balancer {
                     display: flex;
                     width: 80%;
@@ -588,6 +598,7 @@
                         align-items: center;
                         justify-content: center;
                         flex-wrap: wrap;
+                       
 
                         .icon {
                           background: linear-gradient(
