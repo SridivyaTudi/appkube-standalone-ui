@@ -560,7 +560,7 @@
                   display: block;
                   margin: 0;
                   padding: 0;
-                 
+
                   .application-balancer {
                     display: flex;
                     width: 80%;
@@ -613,7 +613,9 @@
                           img {
                             max-width: 20px;
                           }
-                         
+                          &.active {
+                            background: #3247e5;
+                          }
                         }
                         p {
                           display: flex;
@@ -632,9 +634,6 @@
                   &.active {
                     .secondary-btn {
                       color: #ffffff;
-                      background: #3247e5;
-                    }
-                    .icon{
                       background: #3247e5;
                     }
                   }
