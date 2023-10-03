@@ -20,7 +20,6 @@ class TopologyView extends Component {
   }
 
   render() {
-    const { data } = this.props;
     let { activeLayer } = this.state;
     return (
       <>
@@ -130,16 +129,19 @@ class TopologyView extends Component {
                           <img src={Springboot} alt="" /> Springboot
                         </Button>
                         <Box className="balancer-boxs">
-                          <Box className="balancer-box"
-                            onClick={() => {
-                              this.setState({ activeLayer: "Postgresql" });
-                              this.props.setActiveLayer("Postgresql");
-                            }}
-                          >
+                          <Box className="balancer-box">
                             <span>
                               <img src={bottomArrow} alt="" />
                             </span>
-                            <Box className="icon">
+                            <Box
+                              className={`icon  ${
+                                activeLayer === "Postgresql" ? "active" : ""
+                              }`}
+                              onClick={() => {
+                                this.setState({ activeLayer: "Postgresql" });
+                                this.props.setActiveLayer("Postgresql");
+                              }}
+                            >
                               <img src={Postgresql} alt="" />
                             </Box>
                             <p>PostgreSQL</p>
@@ -153,7 +155,15 @@ class TopologyView extends Component {
                             <span>
                               <img src={bottomArrow} alt="" />
                             </span>
-                            <Box className="icon">
+                            <Box
+                              className={`icon  ${
+                                activeLayer === "Opensearch" ? "active" : ""
+                              }`}
+                              onClick={() => {
+                                this.setState({ activeLayer: "Opensearch" });
+                                this.props.setActiveLayer("Opensearch");
+                              }}
+                            >
                               <img src={Opensearch} alt="" />
                             </Box>
                             <p>Opensearch</p>
