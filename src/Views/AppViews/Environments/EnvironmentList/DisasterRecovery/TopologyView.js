@@ -72,7 +72,7 @@ class TopologyView extends Component {
                     >
                       <Box className="application-balancer">
                         <Button
-                          className="secondary-btn min-width "
+                          className="secondary-btn min-width"
                           variant="contained"
                           onClick={() => {
                             this.setState({ activeLayer: "SSL" });
@@ -95,7 +95,7 @@ class TopologyView extends Component {
                     >
                       <Box className="application-balancer">
                         <Button
-                          className="primary-btn min-width"
+                          className="secondary-btn min-width"
                           variant="contained"
                           onClick={() => {
                             this.setState({ activeLayer: "NGINX" });
@@ -120,7 +120,7 @@ class TopologyView extends Component {
                     >
                       <Box className="application-balancer">
                         <Button
-                          className="primary-btn min-width"
+                          className="secondary-btn min-width"
                           variant="contained"
                           onClick={() => {
                             this.setState({ activeLayer: "Springboot" });
@@ -130,8 +130,7 @@ class TopologyView extends Component {
                           <img src={Springboot} alt="" /> Springboot
                         </Button>
                         <Box className="balancer-boxs">
-                          <Box
-                            className="balancer-box"
+                          <Box className="balancer-box"
                             onClick={() => {
                               this.setState({ activeLayer: "Postgresql" });
                               this.props.setActiveLayer("Postgresql");

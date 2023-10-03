@@ -560,23 +560,14 @@
                   display: block;
                   margin: 0;
                   padding: 0;
-                  &.active{
-                    .secondary-btn{
-                      color: #ffffff;
-                      background: #3247e5;
-                    }
-                    .primary-btn{
-                      color: #ffffff;
-                      background: #3247e5;
-                    }
-                  }
+                 
                   .application-balancer {
                     display: flex;
                     width: 80%;
                     justify-content: center;
                     flex-wrap: wrap;
                     // margin-top: 10px;
-                    .primary-btn {
+                    .secondary-btn {
                       img {
                         max-width: 20px;
                         margin-right: 8px;
@@ -613,8 +604,8 @@
                           padding: 5px;
                           margin-top: 7px;
                           margin-bottom: 7px;
-                        cursor: pointer;
-                        background: linear-gradient(
+                          cursor: pointer;
+                          background: linear-gradient(
                             45deg,
                             #c8511b -4950%,
                             #ff9900 5050%
@@ -622,6 +613,7 @@
                           img {
                             max-width: 20px;
                           }
+                         
                         }
                         p {
                           display: flex;
@@ -635,6 +627,15 @@
                           color: #383874;
                         }
                       }
+                    }
+                  }
+                  &.active {
+                    .secondary-btn {
+                      color: #ffffff;
+                      background: #3247e5;
+                    }
+                    .icon{
+                      background: #3247e5;
                     }
                   }
                 }
@@ -2281,8 +2282,8 @@
       .tabs-head {
         ul {
           li {
-            padding-left: 20px;
-            padding-right: 20px;
+            padding-left: 18px;
+            padding-right: 18px;
           }
         }
       }
