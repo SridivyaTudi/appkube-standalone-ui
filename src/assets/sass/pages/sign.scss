@@ -8,8 +8,6 @@
     height: 100%;
     display: flex;
     align-items: center;
-
-    
   }
 
   .sign-left {
@@ -223,7 +221,6 @@
           &::placeholder {
             color: #a0a0b5;
           }
-
         }
 
         i {
@@ -249,7 +246,6 @@
             outline: none;
           }
         }
-
         p {
           font-size: 12px;
           line-height: 16px;
@@ -276,7 +272,6 @@
             margin: 0;
             font-family: "Poppins", sans-serif;
           }
-
         }
 
         p {
@@ -395,13 +390,9 @@
           line-height: 24px;
         }
       }
-
     }
-
   }
-
 }
-
 
 @media only screen and (max-width: 1280px) {
   .sign-container {
@@ -417,5 +408,4 @@
       }
     }
   }
-
 }

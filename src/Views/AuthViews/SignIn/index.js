@@ -13,12 +13,14 @@ import {
   setCurrentOrgId,
   setCurrentOrgName,
   getSavedUserName,
-  setUserName,deleteUserName
+  setUserName,
+  deleteUserName,
 } from "Utils";
 import { login } from "Redux/Auth/AuthThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { ToastMessage } from "Toast/ToastMessage";
+import ErrorsIcon from"assets/img/errors-icon.png"
 
 class Signin extends Component {
   constructor(props) {
@@ -86,7 +88,7 @@ class Signin extends Component {
       if (rememberMe) {
         setUserName(formData.userName);
       } else {
-        deleteUserName()
+        deleteUserName();
       }
 
       const { userName, password } = this.state.formData;
@@ -177,7 +179,8 @@ class Signin extends Component {
                             id="userName"
                           />
                           {errors.userName ? (
-                            <p className="m-b-0">{errors.userName}</p>
+                            <p className="m-b-0 p-l-5">{errors.userName}</p>
+                            
                           ) : (
                             <></>
                           )}

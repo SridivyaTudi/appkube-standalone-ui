@@ -9,7 +9,7 @@ export const ToastMessage = {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    theme: "light",
+    theme: "colored",
   }),
   success: (message) => toast.success(message, {
     position: "top-right",
@@ -19,7 +19,7 @@ export const ToastMessage = {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    theme: "light",
+    theme: "colored",
   }),
   info: (message) => toast.info(message, {
     position: "top-right",
@@ -29,6 +29,6 @@ export const ToastMessage = {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    theme: "light",
+    theme: "colored",
   })
 };
