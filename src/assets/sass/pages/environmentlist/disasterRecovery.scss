@@ -224,7 +224,7 @@
             display: inline-flex;
             padding: 0 30px 20px;
             margin: 0;
-            align-items: end;
+            align-items: flex-end;
             justify-content: flex-start;
             position: relative;
             &::after {
@@ -510,7 +510,7 @@
           overflow-x: auto;
           .topology-inner-content {
             display: flex;
-            align-items: end;
+            align-items: flex-end;
             justify-content: center;
             .content-left {
               ul {
