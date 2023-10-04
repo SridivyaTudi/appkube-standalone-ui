@@ -16,7 +16,6 @@ class Billing extends Component {
   }
 
   render() {
-    const {} = this.state;
     return (
       <Box className="environment-table-section">
         <TableContainer className="table">

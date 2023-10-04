@@ -364,7 +364,7 @@
               line-height: 32px;
               align-items: center;
               &.active {
-                a {
+                p {
                   background: #416bff33;
                   color: #8676ff;
                   cursor: default;
@@ -376,7 +376,7 @@
                 }
               }
 
-              a {
+              p {
                 display: block;
                 //background: #416BFF33;
                 color: #384cff;
@@ -386,6 +386,7 @@
                 padding-left: 10px;
                 padding-right: 10px;
                 border-radius: 5px;
+                margin: 0;
               }
 
               i {

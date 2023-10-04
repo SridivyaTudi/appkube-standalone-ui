@@ -54,7 +54,7 @@ export class NewAccountSetup extends Component {
                 <Grid item xs={6}>
                   <Box
                     className={`opration-card ${
-                      service == "read_mode" ? "active" : ""
+                      service === "read_mode" ? "active" : ""
                     }`}
                     onClick={() => {
                       this.setState({ service: "read_mode" });
@@ -87,10 +87,10 @@ export class NewAccountSetup extends Component {
                 <Grid item xs={6}>
                   <Box
                     className={`opration-card ${
-                      service == "automation_mode" ? "active" : ""
+                      service === "automation_mode" ? "active" : ""
                     }`}
                     onClick={() => {
-                      this.setState({ service: "automation_mode" });
+                      this.setState({ service: "automation_mode" })
                     }}
                   >
                     <Box className="card-images">

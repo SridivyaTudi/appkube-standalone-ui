@@ -13,7 +13,6 @@ import status from "Redux/Constants/CommonDS";
 import { getSingleEnvironmentCountData } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { connect } from "react-redux";
 import { LOGOS } from "CommonData";
-import { getCurrentOrgId } from "Utils";
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import TabsMenu from "./TabsMenu";
@@ -104,7 +103,7 @@ class EnvironmentList extends Component {
             <span style={{ backgroundColor: "#0089d6" }}></span>
             <p>Assets</p>
           </Box>
-          <label>{singleEnvironmentCountData.assets}</label>
+          <label>{singleEnvironmentCountData.assets }</label>
         </ListItem>
         <ListItem>
           <Box className="data-text">
@@ -160,7 +159,7 @@ class EnvironmentList extends Component {
             }`}
           >
             <Box className="image">
-              <img src={LOGOS[cloudName] ? LOGOS[cloudName] : ""} />
+              <img src={LOGOS[cloudName] ? LOGOS[cloudName] : ""} alt={cloudName} />
             </Box>
             <Box className="name">{cloudName}</Box>
             <Box

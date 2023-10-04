@@ -45,7 +45,7 @@ class Application extends Component {
 
   componentDidMount = () => {
     const queryPrm = new URLSearchParams(document.location.search);
-    const landingZoneId = queryPrm.get("landingZoneId");
+    const landingZoneId = queryPrm.get("landingZoneId")
     this.props.getEnvironmentsApplicationTableData({
       orgId: getCurrentOrgId(),
       landingZoneId: landingZoneId,
@@ -88,7 +88,7 @@ class Application extends Component {
     const { applicationTableData } = this.state;
     const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
     let JSX = [];
-    applicationTableData.map((item) => {
+    applicationTableData.forEach((item) => {
       JSX.push(
         <TableRow key={v4()}>
           <TableCell align="left" className="p-l-15">
