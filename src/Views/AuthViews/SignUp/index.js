@@ -18,7 +18,6 @@ import { ToastMessage } from "Toast/ToastMessage";
 import status from "Redux/Constants/CommonDS";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import RequestPopup from "./Components/RequestPopup";
 import PasswordStrength from "Components/PasswordStrength";
 
@@ -526,7 +525,7 @@ class SignUp extends Component {
                         />
                         <Box className="label">
                           <label className="image-upload" htmlFor="input">
-                            <a className="width-25 blue-button">Browse</a>
+                            <span className="width-25 blue-button">Browse</span>
                           </label>
                         </Box>
                       </Box>
@@ -573,7 +572,6 @@ class SignUp extends Component {
                         loading={
                           this.props.signUpUser.status === status.IN_PROGRESS
                         }
-                        loadingPosition="start"
                       >
                         Next
                       </LoadingButton>

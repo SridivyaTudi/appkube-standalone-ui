@@ -317,12 +317,12 @@ class ResetPassword extends Component {
         </Box>
         {imageVisibility ? (
           <Box className="forget-right">
-            <img src={ConfirmPasswordImage} alt="forget-image" />
+            <img src={ConfirmPasswordImage} alt="Confirm Password" />
           </Box>
         ) : (
           <>
             <Box className="forget-right">
-              <img src={ForgotPasswordImage} alt="forget-image" />
+              <img src={ForgotPasswordImage} alt="forget Password" />
             </Box>
           </>
         )}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Button, Box, Grid } from "@mui/material";
+import { Modal, ModalBody, ModalFooter } from "reactstrap";
+import {  Box, Grid } from "@mui/material";
 import RequestPopupImg from "../../../../assets/img/login/request-popup-img.png";
 import { connect } from "react-redux";
 import { sentEmailToCompanyAdmin } from "Redux/Auth/AuthThunk";
