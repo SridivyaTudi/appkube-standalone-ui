@@ -270,7 +270,7 @@ class BusinessAssociationMapping extends Component {
     }
 
     if (prevProps.resetBreadCrumbId !== this.props.resetBreadCrumbId) {
-      let { activeLevels, levelsData, serviceName, productType } = this.state;
+      let { activeLevels, levelsData, serviceName } = this.state;
       activeLevels = {};
       levelsData = [];
 
@@ -440,7 +440,8 @@ class BusinessAssociationMapping extends Component {
                   >
                     <ArcherElement
                       id="root"
-                      relations={this.onClickLevelsThenDrawLine()} key={v4()}
+                      relations={this.onClickLevelsThenDrawLine()}
+                      key={v4()}
                     >
                       <div
                         className={`chart-box ${
@@ -502,79 +503,77 @@ class BusinessAssociationMapping extends Component {
   renderChildNodes = (data, selectedLevel) => {
     let { activeLevels, levelsData, selectedTag } = this.state;
 
-    if (data.length) {
-      return data.map((level, currentLevelIndex) => {
-        let currentLevel = `selectedLevel_${selectedLevel}`;
-        let elementId = `${currentLevel}_${level.id}`;
+    return data.map((level, currentLevelIndex) => {
+      let currentLevel = `selectedLevel_${selectedLevel}`;
+      let elementId = `${currentLevel}_${level.id}`;
 
-        let isActive = activeLevels[currentLevel]?.id === level.id;
+      let isActive = activeLevels[currentLevel]?.id === level.id;
 
-        let relationsData = isActive
-          ? this.onClickLevelsThenDrawLine(selectedLevel)
-          : [];
+      let relationsData = isActive
+        ? this.onClickLevelsThenDrawLine(selectedLevel)
+        : [];
 
-        let activeNodeLength = Object.keys(activeLevels).length - 1;
+      let activeNodeLength = Object.keys(activeLevels).length - 1;
 
-        return (
-          <ArcherElement id={elementId} relations={relationsData} key={v4()}>
-            <li
-              className={`${isActive ? "active" : ""}`}
-              onClick={() => {
-                if (level.type) {
-                  if (selectedTag) {
-                    this.props.serviceIdReset();
-                    this.setState({ selectedTag: false });
-                  }
-                  this[`onClick${level.type}`]({
-                    selectedLevel,
-                    currentLevelIndex: level.id,
-                    label: level.label,
-                    type: level.type,
-                    productType: level.productType || "",
-                  });
+      return (
+        <ArcherElement id={elementId} relations={relationsData} key={v4()}>
+          <li
+            className={`${isActive ? "active" : ""}`}
+            onClick={() => {
+              if (level.type) {
+                if (selectedTag) {
+                  this.props.serviceIdReset();
+                  this.setState({ selectedTag: false });
                 }
-              }}
-              key={v4()}
-              id={`${
-                isActive && activeNodeLength === selectedLevel
-                  ? "lastNodeActive"
-                  : ""
-              }`}
-            >
-              <HtmlTooltip className="table-tooltip" title={level.label}>
-                <Box className="tooltip-content">
-                  <span>
-                    <img src={level.image} alt={level.label} />
-                  </span>
-                  <div className="content">
-                    <p>{level.label}</p>
+                this[`onClick${level.type}`]({
+                  selectedLevel,
+                  currentLevelIndex: level.id,
+                  label: level.label,
+                  type: level.type,
+                  productType: level.productType || "",
+                });
+              }
+            }}
+            key={v4()}
+            id={`${
+              isActive && activeNodeLength === selectedLevel
+                ? "lastNodeActive"
+                : ""
+            }`}
+          >
+            <HtmlTooltip className="table-tooltip" title={level.label}>
+              <Box className="tooltip-content">
+                <span>
+                  <img src={level.image} alt={level.label} />
+                </span>
+                <div className="content">
+                  <p>{level.label}</p>
 
-                    {level.type === "Product" ? (
-                      <div
-                        className={`box ${
-                          level.productType === "SOA" ? "orange" : "blue"
-                        }`}
-                      >
-                        {level.productType}
-                      </div>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                </Box>
-              </HtmlTooltip>
-              {isActive &&
-              // level.children.length === 0 &&
-              levelsData.length === selectedLevel + 1 ? (
-                <i className="fa-solid fa-circle-plus"></i>
-              ) : (
-                <></>
-              )}
-            </li>
-          </ArcherElement>
-        );
-      });
-    }
+                  {level.type === "Product" ? (
+                    <div
+                      className={`box ${
+                        level.productType === "SOA" ? "orange" : "blue"
+                      }`}
+                    >
+                      {level.productType}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </Box>
+            </HtmlTooltip>
+            {isActive &&
+            // level.children.length === 0 &&
+            levelsData.length === selectedLevel + 1 ? (
+              <i className="fa-solid fa-circle-plus"></i>
+            ) : (
+              <></>
+            )}
+          </li>
+        </ArcherElement>
+      );
+    });
   };
 
   /** Render All BAM Levels
@@ -594,6 +593,8 @@ class BusinessAssociationMapping extends Component {
               <ul>{this.renderChildNodes(levelData, selectedLevel)}</ul>
             </div>
           );
+        } else {
+          return null;
         }
       });
     }

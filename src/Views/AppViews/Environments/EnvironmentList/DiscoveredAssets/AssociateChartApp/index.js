@@ -156,7 +156,7 @@ export class AssociateChartApp extends Component {
               }}
               key={v4()}
             >
-              <a>{serviceName}</a>
+              <span>{serviceName}</span>
             </li>
             {!levelsData.length ? (
               <li key={v4()}>
@@ -198,7 +198,7 @@ export class AssociateChartApp extends Component {
               }}
               key={v4()}
             >
-              <a>{label}</a>
+              <span>{label}</span>
             </li>
           </>
         );
@@ -389,7 +389,7 @@ export class AssociateChartApp extends Component {
         return (
           <>
             <li key={v4()} className={this.findActiveTag(tags, type)}>
-              <a>{tempTag.name}</a>
+              <span>{tempTag.name}</span>
             </li>
             {tag === "service" ? (
               <li style={{ float: "right" }} key={v4()} name={"deleteBtn"}>

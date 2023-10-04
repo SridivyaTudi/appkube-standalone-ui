@@ -27,7 +27,7 @@
           font-size: 12px;
           font-weight: 500;
           color: #000000;
-          a {
+          span {
             display: block;
             color: #384cff;
             font-size: 12px;
@@ -38,7 +38,7 @@
             border-radius: 5px;
           }
           &:last-child {
-            a {
+            span {
               background-color: #416bff33;
               margin-left: 5px;
               cursor: auto;

@@ -122,7 +122,7 @@ class DiscoveredAssets extends Component {
       let eksMetaData;
       let ecsMetaData;
       const { data } = this.props.infraTopologyCategoryWiseData;
-      data.map((item) => {
+      data.forEach((item) => {
         if (item.elementType === "ECS") {
           const newKey = "noOfEcs";
           const newValue = item.totalRecord;
@@ -151,7 +151,7 @@ class DiscoveredAssets extends Component {
       this.props.infraTopologyLambdaTable.status === status.SUCCESS
     ) {
       const lambdaTableData = [];
-      this.props.infraTopologyLambdaTable.data.map((item) => {
+      this.props.infraTopologyLambdaTable.data.forEach((item) => {
         if (item.configJson) {
           lambdaTableData.push({
             functionName: item.instanceName,
@@ -192,7 +192,7 @@ class DiscoveredAssets extends Component {
       this.props.globalServicesCloudElements.status === status.SUCCESS
     ) {
       const lambdaTableData = [];
-      this.props.globalServicesCloudElements.data.map((item) => {
+      this.props.globalServicesCloudElements.data.forEach((item) => {
         if (item.configJson) {
           lambdaTableData.push({
             functionName: item.instanceName,
@@ -231,7 +231,7 @@ class DiscoveredAssets extends Component {
         productEnclave,
       });
     } else {
-      cloudElementsData.map((item) => {
+      cloudElementsData.forEach((item) => {
         if (item.elementType === category) {
           selectedCategoryCloudElementsData.push(item);
         }
@@ -270,7 +270,7 @@ class DiscoveredAssets extends Component {
             className={`${index === breadcrumbs.length - 1 ? "active" : ""}`}
             key={v4()}
           >
-            <a>{item?.name?.toUpperCase()}</a>
+            <p>{item?.name?.toUpperCase()}</p>
           </li>
           {index !== breadcrumbs.length - 1 ? (
             <li key={v4()}>
@@ -291,7 +291,7 @@ class DiscoveredAssets extends Component {
   setCurrentActiveNode = (node, nodeLevelData, nodeID) => {
     const { breadcrumbs } = this.state;
     let dupIndex = null;
-    breadcrumbs.map((item, index) => {
+    breadcrumbs.forEach((item, index) => {
       if (item.level === nodeLevelData[0]) {
         dupIndex = index;
       }
@@ -319,7 +319,7 @@ class DiscoveredAssets extends Component {
     const { cloudName } = this.getUrlDetails();
 
     const tableBodyJSX = [];
-    productEnclaveList?.map((vpc, index) => {
+    productEnclaveList?.forEach((vpc, index) => {
       tableBodyJSX.push(
         <TableRow key={v4()}>
           <TableCell align="center">{vpc.instanceId}</TableCell>
@@ -347,19 +347,19 @@ class DiscoveredAssets extends Component {
                 <Box className="menu-list">
                   <List>
                     <ListItem>
-                      <a href="#">Add New datasource</a>
+                      <span>Add New datasource</span>
                     </ListItem>
                     <ListItem>
-                      <a href="#">Add Compliance</a>
+                      <span>Add Compliance</span>
                     </ListItem>
                     <ListItem>
-                      <a href="#">Associate to OU</a>
+                      <span>Associate to OU</span>
                     </ListItem>
                     <ListItem>
-                      <a href="#">Add New VPC</a>
+                      <span>Add New VPC</span>
                     </ListItem>
                     <ListItem>
-                      <a href="#">Add New Product</a>
+                      <span>Add New Product</span>
                     </ListItem>
                   </List>
                 </Box>
@@ -407,7 +407,7 @@ class DiscoveredAssets extends Component {
     } = this.state;
     const { cloudName } = this.getUrlDetails();
     const tableBodyJSX = [];
-    productEnclaveList?.map((vpc, index) => {
+    productEnclaveList?.forEach((vpc, index) => {
       tableBodyJSX.push(
         <TableRow key={v4()}>
           <TableCell align="center">{vpc.id}</TableCell>
@@ -435,19 +435,19 @@ class DiscoveredAssets extends Component {
                 <Box className="menu-list" key={v4()}>
                   <List>
                     <ListItem>
-                      <a href="#">Add New datasource</a>
+                      <span >Add New datasource</span>
                     </ListItem>
                     <ListItem>
-                      <a href="#">Add Compliance</a>
+                      <span >Add Compliance</span>
                     </ListItem>
                     <ListItem>
-                      <a href="#">Associate to OU</a>
+                      <span >Associate to OU</span>
                     </ListItem>
                     <ListItem>
-                      <a href="#">Add New VPC</a>
+                      <span >Add New VPC</span>
                     </ListItem>
                     <ListItem>
-                      <a href="#">Add New Product</a>
+                      <span >Add New Product</span>
                     </ListItem>
                   </List>
                 </Box>
@@ -544,7 +544,7 @@ class DiscoveredAssets extends Component {
     const currentActiveNodeNotNull =
       !currentActiveNode && currentActiveNode !== "Global Services";
 
-    const soa3TierBtnCondition = dataObjLength && currentActiveNodeNotNull;
+    const soa3TierBtnCondition = dataObjLength && currentActiveNodeNotNull
 
     return (
       <Box className="discovered-assets">

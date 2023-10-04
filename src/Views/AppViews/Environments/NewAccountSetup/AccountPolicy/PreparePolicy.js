@@ -5,7 +5,7 @@ import IamImg from "assets/img/login/iam-img.png";
 import PolicyImg from "assets/img/login/policy-img.png";
 import JsonImg from "assets/img/login/json-img.png";
 import PolicyDocumentImg from "assets/img/login/policy-document-img.png";
-import Box from "@mui/material/Box";
+import Box from "@mui/material/Box"
 class PreparePolicy extends Component {
   render() {
     return (
@@ -18,7 +18,7 @@ class PreparePolicy extends Component {
           <ul>
             <li>
               <span>1.</span> Login to your AWS console{" "}
-              <a href="https://aws.amazon.com/" target={"_blank"}>
+              <a href="https://aws.amazon.com/" target={"_blank"} rel="noreferrer">
                 (aws.amzon.com)
               </a>
             </li>
@@ -52,7 +52,7 @@ class PreparePolicy extends Component {
               </div>
             </li>
             <li>
-              <span>5.</span> Review this <a href="#">Policy document</a> and
+              <span>5.</span> Review this <strong className="link">Policy document</strong> and
               copy-and-paste its content to the <strong>'JSON'</strong> tab in
               AWS. Then click the <strong>'Next:Tags'</strong> button at the
               botton of the page
@@ -75,7 +75,7 @@ class PreparePolicy extends Component {
               </div>
             </li>
             <li>
-              <span>7.</span> Click on <a href="#">'NEXT'</a>
+              <span>7.</span> Click on <strong className="link">'NEXT'</strong>
             </li>
           </ul>
         </Box>

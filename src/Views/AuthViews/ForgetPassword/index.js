@@ -166,7 +166,7 @@ class ForgetPassword extends Component {
               </Box>
             </Box>
             <Box className="forget-right">
-              <img src={ForgotPasswordImage} alt="forget-image" />
+              <img src={ForgotPasswordImage} alt="forget-password" />
             </Box>
           </Box>
         ) : (
@@ -178,7 +178,7 @@ class ForgetPassword extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { forgotPwd } = state.auth;
+  const { forgotPwd } = state.auth
   return { forgotPwd };
 };
 
