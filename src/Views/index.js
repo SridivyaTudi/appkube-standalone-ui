@@ -155,8 +155,6 @@ export const Views = (props) => {
           pauseOnHover
           theme="light"
         />
-        {/* Same as */}
-        <ToastContainer />
       </div>
     );
   } else {
@@ -174,8 +172,7 @@ export const Views = (props) => {
           pauseOnHover
           theme="light"
         />
-        {/* Same as */}
-        <ToastContainer />
+
         <Routes>
           {/* AUTH LAYOUT ROUTES */}
           <Route

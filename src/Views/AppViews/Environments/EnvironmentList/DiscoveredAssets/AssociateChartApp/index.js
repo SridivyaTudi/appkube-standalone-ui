@@ -102,7 +102,7 @@ export class AssociateChartApp extends Component {
         this.togglePopup();
         ToastMessage.success("Tag removed successfully.");
       } else {
-        ToastMessage.success("Tag is not removed.");
+        ToastMessage.error("Tag is not removed.");
       }
     }
 
@@ -269,7 +269,6 @@ export class AssociateChartApp extends Component {
   // Add service API call
   onClickAddService = () => {
     const { instanceId } = this.getUrlDetails();
-    const { productType: type } = this.state;
     const {
       activeLevels: {
         selectedLevel_0,
@@ -279,6 +278,7 @@ export class AssociateChartApp extends Component {
         selectedLevel_4,
         selectedLevel_5,
       },
+      productType: type,
     } = this.state;
     let serviceId;
 
