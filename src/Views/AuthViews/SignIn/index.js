@@ -20,7 +20,6 @@ import { login } from "Redux/Auth/AuthThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { ToastMessage } from "Toast/ToastMessage";
-import ErrorsIcon from"assets/img/errors-icon.png"
 
 class Signin extends Component {
   constructor(props) {
@@ -180,7 +179,6 @@ class Signin extends Component {
                           />
                           {errors.userName ? (
                             <p className="m-b-0 p-l-5">{errors.userName}</p>
-                            
                           ) : (
                             <></>
                           )}
