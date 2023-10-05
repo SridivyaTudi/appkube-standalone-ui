@@ -530,7 +530,10 @@
                 padding: 0;
                 li {
                   padding: 0;
-                  margin-bottom: 40px;
+                  margin-bottom: 43px;
+                  &:last-child{
+                    margin-bottom: 30px;
+                  }
                   .button-box {
                     display: inline-flex;
                     width: 120px;
@@ -558,6 +561,13 @@
                       white-space: nowrap;
                       margin: 0;
                       color: #383874;
+                    }
+                  }
+                  span {
+                    width: 30px;
+                    height: 30px;
+                    img {
+                      max-width: 100%;
                     }
                   }
                 }
@@ -2307,6 +2317,21 @@
             width: 100%;
             overflow: hidden;
             overflow-x: auto;
+          }
+        }
+        .topology-panel {
+          .topology-panel-body {
+            .topology-inner-content {
+              .content-right {
+                ul {
+                  li {
+                    .application-balancer {
+                      width: 100%;
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
