@@ -513,7 +513,7 @@
           }
         }
         .topology-panel-body {
-          height: 450px;
+          height: 455px;
           display: block;
           width: 100%;
           padding: 20px 20px;
@@ -531,7 +531,7 @@
                 li {
                   padding: 0;
                   margin-bottom: 43px;
-                  &:last-child{
+                  &:last-child {
                     margin-bottom: 30px;
                   }
                   .button-box {
@@ -1055,10 +1055,17 @@
         overflow: hidden;
         overflow-x: auto;
         width: 100%;
-        height: 265px;
+        // height: 265px;
         box-shadow: 0px 41.7776px 33.4221px rgba(108, 73, 172, 0.0503198);
         &.springboot-cards {
-          height: 450px;
+          height: 455px;
+          width: 100%;
+          display: block;
+        }
+        &.opensearch-cards{
+          height: 455px;
+          width: 100%;
+          display: block;
         }
         .title {
           display: flex;
@@ -1117,33 +1124,36 @@
             }
           }
         }
+        .form-group {
+          .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 18px;
+            color: #000000;
+          }
+          .form-control {
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 18px;
+          }
+        }
         .nginx-content {
-          padding: 15px;
-          .form-group {
-            .form-label {
-              font-size: 14px;
-              font-weight: 500;
-              line-height: 18px;
-              color: #000000;
-            }
-            .form-control {
-              font-size: 12px;
-              font-weight: 400;
-              line-height: 18px;
-            }
+          padding: 0 15px;
+         
+          .heading {
+            display: block;
+            font-size: 16px;
+            line-height: 22px;
+            font-weight: 500;
+            color: #000000;
+            margin-top: 7px;
           }
           .autoscaling-cards {
             width: 100%;
-            display: block;
+            display: flex;
+            flex-wrap: wrap;
             margin-top: 10px;
-            .heading {
-              display: block;
-              font-size: 16px;
-              line-height: 22px;
-              font-weight: 500;
-              color: #000000;
-              margin-bottom: 7px;
-            }
+
             .card-box {
               margin: 0 15px 15px 0;
               width: 155px;
@@ -1210,7 +1220,7 @@
             margin: 10px;
             .card-box {
               margin: 0 10px 15px;
-              width: 140px;
+              width: 155px;
               height: 90px;
               display: inline-flex;
               align-items: center;
@@ -2330,6 +2340,38 @@
                     }
                   }
                 }
+              }
+            }
+          }
+        }
+        .nginx-cards {
+          &.springboot-cards {
+            height: 455px;
+            .nginx-content {
+              padding: 15px 15px 0 15px;
+              display: -webkit-box;
+              overflow: hidden;
+              overflow-x: auto;
+              height: 326px;
+              .autoscaling-cards {
+                display: block;
+                margin-top: 10px;
+                width: 680px;
+              }
+            }
+          }
+          &.opensearch-cards {
+            height: 455px;
+            .nginx-content {
+              padding: 15px 15px 0 15px;
+              display: -webkit-box;
+              overflow: hidden;
+              overflow-x: auto;
+              height: 390px;
+              .autoscaling-cards {
+                display: block;
+                margin-top: 10px;
+                width: 680px;
               }
             }
           }

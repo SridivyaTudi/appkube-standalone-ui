@@ -396,33 +396,33 @@ class Topology extends Component {
                         </Button>
                       </Box>
                     </Box>
-                    <Box className="nginx-content">
-                      <Box className="d-flex">
-                        <Box className="form-group m-r-3">
-                          <label htmlFor="Instance" className="form-label">
-                            No Of Instance
-                          </label>
-                          <input
-                            className="form-control"
-                            id="Instance"
-                            name="instance"
-                            placeholder="91"
-                          />
-                        </Box>
-                        <Box className="form-group">
-                          <label htmlFor="Instance" className="form-label">
-                            State
-                          </label>
-                          <input
-                            className="form-control"
-                            id="Instance"
-                            name="instance"
-                            placeholder="Statefull"
-                          />
-                        </Box>
+                    <Box className="d-flex p-l-15 p-t-15 p-r-15">
+                      <Box className="form-group m-r-3">
+                        <label htmlFor="Instance" className="form-label">
+                          No Of Instance
+                        </label>
+                        <input
+                          className="form-control"
+                          id="Instance"
+                          name="instance"
+                          placeholder="91"
+                        />
                       </Box>
+                      <Box className="form-group">
+                        <label htmlFor="Instance" className="form-label">
+                          State
+                        </label>
+                        <input
+                          className="form-control"
+                          id="Instance"
+                          name="instance"
+                          placeholder="Statefull"
+                        />
+                      </Box>
+                    </Box>
+                    <Box className="nginx-content">
+                      <Box className="heading">Autoscaling</Box>
                       <Box className="autoscaling-cards">
-                        <Box className="heading">Autoscaling</Box>
                         <Box className="card-box">
                           <span>Initial Scaling</span>
                           <strong>123</strong>
@@ -455,20 +455,20 @@ class Topology extends Component {
                       </Button>
                     </Box>
                   </Box>
-                  <Box className="nginx-content">
-                    <Box className="d-flex">
-                      <Box className="form-group m-r-3">
-                        <label htmlFor="Instance" className="form-label">
-                          Public IP
-                        </label>
-                        <input
-                          className="form-control"
-                          id="Instance"
-                          name="instance"
-                          placeholder="91"
-                        />
-                      </Box>
+                  <Box className="d-flex p-l-15 p-t-15 p-r-15">
+                    <Box className="form-group m-r-3">
+                      <label htmlFor="Instance" className="form-label">
+                        Public IP
+                      </label>
+                      <input
+                        className="form-control"
+                        id="Instance"
+                        name="instance"
+                        placeholder="91"
+                      />
                     </Box>
+                  </Box>
+                  <Box className="nginx-content">
                     <Box className="autoscaling-cards m-t-4">
                       <Box className="card-box">
                         <span>CPU</span>
@@ -490,7 +490,7 @@ class Topology extends Component {
                   </Box>
                 </Box>
               ) : activeLayer === "Postgresql" ? (
-                <Box className="nginx-cards springboot-cards">
+                <Box className="nginx-cards opensearch-cards">
                   <Box className="title">
                     <Box className="head-left">
                       <Box className="icon">
@@ -561,7 +561,7 @@ class Topology extends Component {
                   </Box>
                 </Box>
               ) : activeLayer === "Opensearch" ? (
-                <Box className="nginx-cards springboot-cards">
+                <Box className="nginx-cards opensearch-cards">
                   <Box className="title">
                     <Box className="head-left">
                       <Box className="icon">
