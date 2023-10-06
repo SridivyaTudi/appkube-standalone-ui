@@ -490,13 +490,11 @@ class BusinessAssociationMapping extends Component {
   renderChildNodes = (data, selectedLevel) => {
     let { activeLevels, levelsData, selectedTag } = this.state;
     const lodingData = this.hasLodingData();
-
     return data.map((level, currentLevelIndex) => {
       let currentLevel = `selectedLevel_${selectedLevel}`;
       let elementId = `${currentLevel}_${level.id}`;
 
       let isActive = activeLevels[currentLevel]?.id === level.id;
-
       let relationsData = isActive
         ? this.onClickLevelsThenDrawLine(selectedLevel)
         : [];
@@ -985,14 +983,8 @@ class BusinessAssociationMapping extends Component {
   }
 
   hasLodingData = () => {
-    const {
-      organizationWiseDepartments: organization,
-      products,
-      productEnv,
-      modules,
-      moduleElements,
-      threeTierModules,
-    } = this.props;
+    const { products, productEnv, modules, moduleElements, threeTierModules } =
+      this.props;
 
     const inprogressStatus = status.IN_PROGRESS;
 
