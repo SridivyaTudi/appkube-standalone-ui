@@ -3,7 +3,6 @@ import { ArcherContainer, ArcherElement } from "react-archer";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Box } from "@mui/material";
 import { v4 } from "uuid";
-import aws from "assets/img/aws.png";
 import vpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
 import { LOGOS } from "CommonData";
 let transformScale = 0;
@@ -45,13 +44,15 @@ class TopologyView extends Component {
         style={{
           width: `100%`,
           height: "100%",
-        }} key={v4()}
+        }}
+        key={v4()}
       >
         <TransformWrapper
           onTransformed={(instance) => {
             transformScale = instance && instance.state.scale;
             this.setState({ scale: true });
-          }} key={v4()}
+          }}
+          key={v4()}
         >
           {({ zoomIn, zoomOut, instance, zoomToElement, ...rest }) => {
             transformScale = instance.transformState.scale;
@@ -90,7 +91,8 @@ class TopologyView extends Component {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "flex-start",
-                  }} key={v4()}
+                  }}
+                  key={v4()}
                 >
                   <ArcherElement
                     id="root"
@@ -101,7 +103,8 @@ class TopologyView extends Component {
                         sourceAnchor: "right",
                         style: strokeStyles,
                       },
-                    ]} key={v4()}
+                    ]}
+                    key={v4()}
                   >
                     <div
                       className="services-text-box active"
@@ -153,7 +156,7 @@ class TopologyView extends Component {
         activeNode = parseInt(activeViewArr[1]);
       }
       const childJSX = [];
-      nodes.map((item, sublevelIndex) => {
+      nodes.forEach((item, sublevelIndex) => {
         // item = [item];
         if (item?.length > 0) {
           retData.push(
@@ -219,8 +222,8 @@ class TopologyView extends Component {
                           sublevelIndex,
                           nodeIndex
                         );
-                      }} key={v4()}
-                      
+                      }}
+                      key={v4()}
                     >
                       <span>
                         <img
@@ -240,7 +243,11 @@ class TopologyView extends Component {
         }
       });
       retData = [
-        <div className="global-servies" style={{ marginLeft: "50px" }} key={v4()}>
+        <div
+          className="global-servies"
+          style={{ marginLeft: "50px" }}
+          key={v4()}
+        >
           {retData}
         </div>,
       ];

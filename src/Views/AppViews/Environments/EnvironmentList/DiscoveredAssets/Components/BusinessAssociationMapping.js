@@ -380,24 +380,11 @@ class BusinessAssociationMapping extends Component {
   renderBody = () => {
     let { activeLevels, departments, levelsData, selectedTag } = this.state;
 
-    const {
-      organizationWiseDepartments: organization,
-      products,
-      productEnv,
-      modules,
-      moduleElements,
-      threeTierModules,
-    } = this.props;
+    const { organizationWiseDepartments: organization } = this.props;
 
     const inprogressStatus = status.IN_PROGRESS;
 
-    const lodingData = [
-      products.status,
-      productEnv.status,
-      modules.status,
-      moduleElements.status,
-      threeTierModules.status,
-    ].includes(inprogressStatus);
+    const lodingData = this.hasLodingData();
 
     if (
       organization.status === inprogressStatus ||
@@ -502,6 +489,7 @@ class BusinessAssociationMapping extends Component {
    */
   renderChildNodes = (data, selectedLevel) => {
     let { activeLevels, levelsData, selectedTag } = this.state;
+    const lodingData = this.hasLodingData();
 
     return data.map((level, currentLevelIndex) => {
       let currentLevel = `selectedLevel_${selectedLevel}`;
@@ -512,7 +500,6 @@ class BusinessAssociationMapping extends Component {
       let relationsData = isActive
         ? this.onClickLevelsThenDrawLine(selectedLevel)
         : [];
-
       let activeNodeLength = Object.keys(activeLevels).length - 1;
 
       return (
@@ -520,7 +507,7 @@ class BusinessAssociationMapping extends Component {
           <li
             className={`${isActive ? "active" : ""}`}
             onClick={() => {
-              if (level.type) {
+              if (level.type && !lodingData) {
                 if (selectedTag) {
                   this.props.serviceIdReset();
                   this.setState({ selectedTag: false });
@@ -563,9 +550,7 @@ class BusinessAssociationMapping extends Component {
                 </div>
               </Box>
             </HtmlTooltip>
-            {isActive &&
-            // level.children.length === 0 &&
-            levelsData.length === selectedLevel + 1 ? (
+            {isActive && levelsData.length === selectedLevel + 1 ? (
               <i className="fa-solid fa-circle-plus"></i>
             ) : (
               <></>
@@ -841,7 +826,7 @@ class BusinessAssociationMapping extends Component {
           productId: selectedLevel_1.id,
           productEnvId: selectedLevel_2.id,
           moduleId,
-          serviceNature: selectedLevel_3.label?.toLowerCase(),
+          serviceNature: selectedLevel_3?.label?.toLowerCase(),
         });
       }
 
@@ -998,6 +983,27 @@ class BusinessAssociationMapping extends Component {
       <Loader className={`d-flex align-items-center ${widthClass} loading`} />
     );
   }
+
+  hasLodingData = () => {
+    const {
+      organizationWiseDepartments: organization,
+      products,
+      productEnv,
+      modules,
+      moduleElements,
+      threeTierModules,
+    } = this.props;
+
+    const inprogressStatus = status.IN_PROGRESS;
+
+    return [
+      products.status,
+      productEnv.status,
+      modules.status,
+      moduleElements.status,
+      threeTierModules.status,
+    ].includes(inprogressStatus);
+  };
 
   render() {
     return this.renderBody();
