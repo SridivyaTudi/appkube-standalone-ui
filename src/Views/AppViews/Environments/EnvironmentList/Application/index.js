@@ -45,7 +45,7 @@ class Application extends Component {
 
   componentDidMount = () => {
     const queryPrm = new URLSearchParams(document.location.search);
-    const landingZoneId = queryPrm.get("landingZoneId")
+    const landingZoneId = queryPrm.get("landingZoneId");
     this.props.getEnvironmentsApplicationTableData({
       orgId: getCurrentOrgId(),
       landingZoneId: landingZoneId,
@@ -92,7 +92,9 @@ class Application extends Component {
       JSX.push(
         <TableRow key={v4()}>
           <TableCell align="left" className="p-l-15">
-            <Link to={`${APP_PREFIX_PATH}/environments/disasterrecovery?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}>
+            <Link
+              to={`${APP_PREFIX_PATH}/environments/disasterrecovery?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+            >
               {item.application}
             </Link>
           </TableCell>
@@ -219,90 +221,92 @@ class Application extends Component {
 
     return (
       <>
-        {this.props.applicationsTableData.status === status.IN_PROGRESS ? (
-          <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
-        ) : applicationTableData.length ? (
-          <Box className="discovered-assets">
-            <Box className="discovered-assets-head">
-              <Grid
-                container
-                rowSpacing={1}
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                alignItems={"center"}
-                justifyContent={"flex-end"}
-              >
-                <Grid item lg={6} md={6} xs={12}>
-                  <h3 className="m-b-4">My Workspace</h3>
+        <Box className="discovered-assets">
+          {this.props.applicationsTableData.status === status.IN_PROGRESS ? (
+            <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
+          ) : applicationTableData.length ? (
+            <>
+              <Box className="discovered-assets-head">
+                <Grid
+                  container
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  alignItems={"center"}
+                  justifyContent={"flex-end"}
+                >
+                  <Grid item lg={6} md={6} xs={12}>
+                    <h3 className="m-b-4">My Workspace</h3>
+                  </Grid>
+                  <Grid item lg={6} md={6} xs={12}>
+                    <Box className="radio-group d-flex float-right ">
+                      <Box className="d-flex align-items-center checkbox">
+                        <label htmlFor={"DRS"}>DRS</label>
+                        <input
+                          id="DRS"
+                          className="checkbox-input"
+                          type="radio"
+                          name="department"
+                        />
+                      </Box>
+                      <Box className="d-flex align-items-center checkbox">
+                        <label htmlFor={"IOT"}>IOT</label>
+                        <input
+                          id="IOT"
+                          className="checkbox-input"
+                          type="radio"
+                          name="department"
+                        />
+                      </Box>
+                      <Box className="d-flex align-items-center checkbox">
+                        <label htmlFor={"Mesh"}>Mesh</label>
+                        <input
+                          id="Mesh"
+                          className="checkbox-input"
+                          type="radio"
+                          name="department"
+                        />
+                      </Box>
+                      <Box className="d-flex align-items-center checkbox">
+                        <label htmlFor={"Lake"}>Lake</label>
+                        <input
+                          id="Lake"
+                          className="checkbox-input"
+                          type="radio"
+                          name="department"
+                        />
+                      </Box>
+                    </Box>
+                  </Grid>
                 </Grid>
-                <Grid item lg={6} md={6} xs={12}>
-                  <Box className="radio-group d-flex float-right ">
-                    <Box className="d-flex align-items-center checkbox">
-                      <label htmlFor={"DRS"}>DRS</label>
-                      <input
-                        id="DRS"
-                        className="checkbox-input"
-                        type="radio"
-                        name="department"
-                      />
-                    </Box>
-                    <Box className="d-flex align-items-center checkbox">
-                      <label htmlFor={"IOT"}>IOT</label>
-                      <input
-                        id="IOT"
-                        className="checkbox-input"
-                        type="radio"
-                        name="department"
-                      />
-                    </Box>
-                    <Box className="d-flex align-items-center checkbox">
-                      <label htmlFor={"Mesh"}>Mesh</label>
-                      <input
-                        id="Mesh"
-                        className="checkbox-input"
-                        type="radio"
-                        name="department"
-                      />
-                    </Box>
-                    <Box className="d-flex align-items-center checkbox">
-                      <label htmlFor={"Lake"}>Lake</label>
-                      <input
-                        id="Lake"
-                        className="checkbox-input"
-                        type="radio"
-                        name="department"
-                      />
-                    </Box>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Box>
-            <Box className="environment-table">
-              <TableContainer className="table">
-                <Table>
-                  <TableHead className="active">
-                    <TableRow>
-                      <TableCell align="left">Application</TableCell>
-                      <TableCell align="center">LOB</TableCell>
-                      <TableCell align="center">Environment</TableCell>
-                      <TableCell align="center">App Type</TableCell>
-                      <TableCell align="center">SLE</TableCell>
-                      <TableCell align="center">End Usage</TableCell>
-                      <TableCell align="center">Cost</TableCell>
-                      <TableCell align="center">Actions</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {applicationTableData.length ? this.renderTable() : <></>}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Box>
-          </Box>
-        ) : (
-          <>
-            <h4 style={{ textAlign: "center" }}>No Data Found! </h4>
-          </>
-        )}
+              </Box>
+              <Box className="environment-table">
+                <TableContainer className="table">
+                  <Table>
+                    <TableHead className="active">
+                      <TableRow>
+                        <TableCell align="left">Application</TableCell>
+                        <TableCell align="center">LOB</TableCell>
+                        <TableCell align="center">Environment</TableCell>
+                        <TableCell align="center">App Type</TableCell>
+                        <TableCell align="center">SLE</TableCell>
+                        <TableCell align="center">End Usage</TableCell>
+                        <TableCell align="center">Cost</TableCell>
+                        <TableCell align="center">Actions</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {applicationTableData.length ? this.renderTable() : <></>}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Box>
+            </>
+          ) : (
+            <>
+              <h4 style={{ textAlign: "center" }}>No Data Found! </h4>
+            </>
+          )}
+        </Box>
       </>
     );
   }

@@ -60,6 +60,14 @@
       }
 
       .discovered-assets {
+        .discovered-loading {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          i {
+            margin-right: 8px;
+          }
+        }
         .discovered-assets-head {
           .radio-group {
             padding: 8px 10px;
