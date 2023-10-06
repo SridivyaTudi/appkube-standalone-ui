@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component,Fragment } from "react";
 import { Button, Box, Grid, List, ListItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
@@ -138,7 +138,7 @@ export class AssociateChartApp extends Component {
     let activeBAM = Object.keys(activeLevels);
     let breadcrumbs = serviceName
       ? [
-          <>
+          <Fragment key={v4()}>
             <li
               className={`${levelsData.length === 1 ? "active" : ""}`}
               onClick={() => {
@@ -165,7 +165,7 @@ export class AssociateChartApp extends Component {
             ) : (
               <></>
             )}
-          </>,
+          </Fragment>,
         ]
       : [];
 
@@ -177,7 +177,7 @@ export class AssociateChartApp extends Component {
         let currentLevelIndex = activeLevels[bamItemKey]?.id;
         let selectedLevel = +bamItemKey.split("_")?.[1];
         breadcrumbs.push(
-          <>
+          <Fragment key={v4()}>
             <li key={v4()}>
               <i className="fa-solid fa-chevron-right"></i>
             </li>
@@ -200,7 +200,7 @@ export class AssociateChartApp extends Component {
             >
               <span>{label}</span>
             </li>
-          </>
+          </Fragment>
         );
       });
     }
@@ -387,7 +387,7 @@ export class AssociateChartApp extends Component {
       return tagKeys.map((tag) => {
         tempTag = tempTag[tag];
         return (
-          <>
+          <Fragment key={v4()}>
             <li key={v4()} className={this.findActiveTag(tags, type)}>
               <span>{tempTag.name}</span>
             </li>
@@ -411,7 +411,7 @@ export class AssociateChartApp extends Component {
             ) : (
               <></>
             )}
-          </>
+          </Fragment>
         );
       });
     }

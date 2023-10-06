@@ -66,7 +66,7 @@ class Wizard extends Component {
           <div
             className={`wizard-step-component ${
               currentStep === i ? "" : "d-none"
-            }`}
+            }`} key={i}
           >
             {step.component()}
           </div>

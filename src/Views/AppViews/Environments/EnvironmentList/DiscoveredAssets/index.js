@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import CloudManagedDetails from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/CloudManagedDetails";
 import {
   IconButton,
@@ -265,7 +265,7 @@ class DiscoveredAssets extends Component {
 
     return breadcrumbs.map((item, index) => {
       return (
-        <>
+        <Fragment key={v4()}>
           <li
             className={`${index === breadcrumbs.length - 1 ? "active" : ""}`}
             key={v4()}
@@ -279,7 +279,7 @@ class DiscoveredAssets extends Component {
           ) : (
             <></>
           )}
-        </>
+        </Fragment>
       );
     });
   }
