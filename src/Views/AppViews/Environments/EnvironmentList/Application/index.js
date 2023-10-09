@@ -59,7 +59,7 @@ class Application extends Component {
       this.props.applicationsTableData.status === status.SUCCESS
     ) {
       this.setState({
-        applicationTableData: this.props.applicationsTableData.data,
+        applicationTableData: this.props.applicationsTableData.data || [],
       });
     }
   };

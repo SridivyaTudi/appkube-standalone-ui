@@ -4,10 +4,6 @@ import chartWebLayerIcon from "assets/img/assetmanager/chart-web-layer-icon.png"
 import chartAppLayerIcon from "assets/img/assetmanager/chart-app-layer-icon.png";
 import dataServiceSvgrepo from "assets/img/assetmanager/data-service-svgrepo.png";
 import chartAuxiliaryLayerIcon from "assets/img/assetmanager/chart-auxiliary-layer-icon.png";
-import balancingIcon from "assets/img/assetmanager/balancing-icon.png";
-import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
-import amazonEc2 from "assets/img/assetmanager/amazon-ec2.png";
-import amazonEc3 from "assets/img/assetmanager/amazon-ec3.png";
 import Nglnx from "assets/img/assetmanager/nglnx.png";
 import Springboot from "assets/img/assetmanager/springboot.png";
 import PostgreSql from "assets/img/assetmanager/postgresql.png";
@@ -233,12 +229,6 @@ class Topology extends Component {
   // Render resources container
   renderResourcesWrapper = () => {
     let { selectedResource } = this.state;
-    let resourceName =
-      selectedResource === "data"
-        ? "RDS"
-        : selectedResource === "auxiliary"
-        ? "SNS"
-        : "EC2";
     return (
       selectedResource && (
         <Box className="resources-cards m-t-4">
@@ -255,13 +245,7 @@ class Topology extends Component {
   };
 
   render() {
-    const {
-      dataOfLevel1,
-      breadcrumbs,
-      selectedResource,
-      activeLayer,
-      activeTab,
-    } = this.state;
+    const { dataOfLevel1, breadcrumbs, activeLayer, activeTab } = this.state;
     return (
       <>
         <Box sx={{ width: "100%" }}>
@@ -651,6 +635,8 @@ class Topology extends Component {
                           {tabData.name}
                         </ListItem>
                       );
+                    } else {
+                      return null;
                     }
                   })}
                 </List>
