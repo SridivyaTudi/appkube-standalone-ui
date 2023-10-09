@@ -35,6 +35,23 @@ import {
 import LambdaTable from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/LambdaTable";
 import Loader from "Components/Loader";
 import GlobalServicesSummaryTable from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/GlobalServicesSummaryTable";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 200,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 class DiscoveredAssets extends Component {
   constructor(props) {
@@ -322,7 +339,11 @@ class DiscoveredAssets extends Component {
     productEnclaveList?.forEach((vpc, index) => {
       tableBodyJSX.push(
         <TableRow key={v4()}>
-          <TableCell align="center">{vpc.instanceId}</TableCell>
+          <TableCell align="center" className="vpcid">
+            <HtmlTooltip className="table-tooltip" title={vpc.instanceId}>
+              {vpc.instanceId}
+            </HtmlTooltip>
+          </TableCell>
           <TableCell align="center">{vpc.threeTier.productCount}</TableCell>
           <TableCell align="center">{vpc.threeTier.webCount}</TableCell>
           <TableCell align="center">{vpc.threeTier.appCount}</TableCell>
@@ -370,7 +391,7 @@ class DiscoveredAssets extends Component {
       );
     });
     const TableJSX = [
-      <Box className="discovered-table" style={{ height: "415px" }} key={v4()}>
+      <Box className="discovered-table" style={{ height: "430px" }} key={v4()}>
         <TableContainer className="table">
           <Table className="discovered-table-inner">
             <TableHead className="active">
@@ -435,19 +456,19 @@ class DiscoveredAssets extends Component {
                 <Box className="menu-list" key={v4()}>
                   <List>
                     <ListItem>
-                      <span >Add New datasource</span>
+                      <span>Add New datasource</span>
                     </ListItem>
                     <ListItem>
-                      <span >Add Compliance</span>
+                      <span>Add Compliance</span>
                     </ListItem>
                     <ListItem>
-                      <span >Associate to OU</span>
+                      <span>Associate to OU</span>
                     </ListItem>
                     <ListItem>
-                      <span >Add New VPC</span>
+                      <span>Add New VPC</span>
                     </ListItem>
                     <ListItem>
-                      <span >Add New Product</span>
+                      <span>Add New Product</span>
                     </ListItem>
                   </List>
                 </Box>
@@ -496,7 +517,8 @@ class DiscoveredAssets extends Component {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-          }} key={v4()}
+          }}
+          key={v4()}
         >
           <h4>No Data Found!</h4>
         </div>
@@ -544,7 +566,7 @@ class DiscoveredAssets extends Component {
     const currentActiveNodeNotNull =
       !currentActiveNode && currentActiveNode !== "Global Services";
 
-    const soa3TierBtnCondition = dataObjLength && currentActiveNodeNotNull
+    const soa3TierBtnCondition = dataObjLength && currentActiveNodeNotNull;
 
     return (
       <Box className="discovered-assets">

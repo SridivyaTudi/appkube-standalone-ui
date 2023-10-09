@@ -5,9 +5,27 @@ import { Box } from "@mui/material";
 import { v4 } from "uuid";
 import vpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
 import { LOGOS } from "CommonData";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
 let transformScale = 0;
 
 let zoomElement = () => {};
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 200,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 class TopologyView extends Component {
   constructor(props) {
@@ -231,9 +249,18 @@ class TopologyView extends Component {
                           alt={item.instanceId}
                         />
                       </span>
-                      {this.getServiceName(
-                        item.instanceId ? item.instanceId : "Global Services"
-                      )}
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={item.instanceId}
+                      >
+                        <p>
+                          {this.getServiceName(
+                            item.instanceId
+                              ? item.instanceId
+                              : "Global Services"
+                          )}
+                        </p>
+                      </HtmlTooltip>
                     </li>
                   </ArcherElement>
                 );

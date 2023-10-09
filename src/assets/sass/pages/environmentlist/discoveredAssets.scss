@@ -177,10 +177,21 @@
             font-weight: 600;
             color: #383874;
             padding-left: 12px;
-            padding-right: 12px;
             cursor: pointer;
             position: relative;
             border-bottom: 1px solid #a5a5d7;
+            p {
+              width: calc(100% - 25px);
+              padding: 0;
+              margin: 0;
+              color: #383874;
+              font-size: 12px;
+              line-height: 30px;
+              font-weight: 600;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
 
             &:first-child {
               border-top-left-radius: 9px;
@@ -197,7 +208,9 @@
               color: #ffffff;
               background-color: #384cff;
               padding-left: 8px;
-              padding-right: 8px;
+              p {
+                color: #ffffff;
+              }
               span {
                 width: 20px;
                 height: 20px;
@@ -227,7 +240,7 @@
             // }
 
             span {
-              display: inline-block;
+              display: inline-flex;
               width: 12px;
               margin-right: 5px;
               // margin-top: -2px;
