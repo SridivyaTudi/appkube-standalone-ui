@@ -95,7 +95,9 @@ class Application extends Component {
             <Link
               to={`${APP_PREFIX_PATH}/environments/disasterrecovery?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
             >
-              {item.application}
+              <HtmlTooltip className="table-tooltip" title={item.application}>
+                {item.application}
+              </HtmlTooltip>
             </Link>
           </TableCell>
           <TableCell align="center">{item.lob}</TableCell>

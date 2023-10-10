@@ -128,7 +128,6 @@
                   background-color: #ffba69;
                 }
               }
-              
             }
 
             &:last-child {
@@ -139,6 +138,10 @@
             &:first-child {
               width: 200px;
               padding-left: 40px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              color: #384cff;
             }
 
             &.ou {
@@ -164,13 +167,13 @@
               width: 25px;
               height: 25px;
               border: none;
-              color: #1B4DFF;
+              color: #1b4dff;
               position: relative;
               cursor: pointer;
 
               &:hover {
-                background: #E5E1FF;
-                color: #1B4DFF;
+                background: #e5e1ff;
+                color: #1b4dff;
                 width: 25px;
                 height: 25px;
                 border-radius: 3px;
