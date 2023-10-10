@@ -10,6 +10,23 @@ import {
   TablePagination,
 } from "@mui/material";
 import { v4 } from "uuid";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 220,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 class LambdaTable extends Component {
   constructor(props) {
@@ -60,7 +77,7 @@ class LambdaTable extends Component {
             <Table className="lambda-functions-table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">Function name</TableCell>
+                  <TableCell>Function name</TableCell>
                   <TableCell align="center">Response time</TableCell>
                   <TableCell align="center">Duration</TableCell>
                   <TableCell align="center">Invocations</TableCell>
@@ -77,7 +94,14 @@ class LambdaTable extends Component {
               <TableBody>
                 {tableData.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
                   <TableRow key={v4()}>
-                    <TableCell align="center">{row.functionName}</TableCell>
+                    <TableCell className="functionid">
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={row.functionName}
+                      >
+                        {row.functionName}
+                      </HtmlTooltip>
+                    </TableCell>
                     <TableCell align="center">{row.responseTime}</TableCell>
                     <TableCell align="center">{row.duration}</TableCell>
                     <TableCell align="center">{row.invocations}</TableCell>
@@ -86,8 +110,23 @@ class LambdaTable extends Component {
                     <TableCell align="center">{row.latency}</TableCell>
                     <TableCell align="center">{row.networkReceived}</TableCell>
                     <TableCell align="center">{row.requests}</TableCell>
-                    <TableCell align="center">{row.product}</TableCell>
-                    <TableCell align="center">{row.environment}</TableCell>
+                    <TableCell align="center" className="productid">
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={row.product}
+                      >
+                        {row.product}
+                      </HtmlTooltip>
+                    </TableCell>
+                    <TableCell align="center" className="productid">
+                    <HtmlTooltip
+                        className="table-tooltip"
+                        title= {row.environment}
+                      >
+                        {row.environment}
+                      </HtmlTooltip>
+                     
+                    </TableCell>
                     <TableCell align="center">{row.actions}</TableCell>
                   </TableRow>
                 ))}
