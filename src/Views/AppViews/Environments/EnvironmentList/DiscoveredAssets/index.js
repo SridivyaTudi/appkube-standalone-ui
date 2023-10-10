@@ -341,7 +341,7 @@ class DiscoveredAssets extends Component {
         <TableRow key={v4()}>
           <TableCell align="center" className="vpcid">
             <HtmlTooltip className="table-tooltip" title={vpc.instanceId}>
-              {vpc.instanceId}
+              <span>{vpc.instanceId}</span>
             </HtmlTooltip>
           </TableCell>
           <TableCell align="center">{vpc.threeTier.productCount}</TableCell>

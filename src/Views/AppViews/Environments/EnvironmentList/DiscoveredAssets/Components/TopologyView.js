@@ -63,14 +63,13 @@ class TopologyView extends Component {
           width: `100%`,
           height: "100%",
         }}
-        key={v4()}
       >
         <TransformWrapper
           onTransformed={(instance) => {
             transformScale = instance && instance.state.scale;
             this.setState({ scale: true });
           }}
-          key={v4()}
+         
         >
           {({ zoomIn, zoomOut, instance, zoomToElement, ...rest }) => {
             transformScale = instance.transformState.scale;
@@ -110,7 +109,7 @@ class TopologyView extends Component {
                     alignItems: "center",
                     justifyContent: "flex-start",
                   }}
-                  key={v4()}
+                 
                 >
                   <ArcherElement
                     id="root"
