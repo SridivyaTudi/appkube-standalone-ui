@@ -190,7 +190,7 @@ class Topology extends Component {
       dataOfLevel1: topologyData,
       resources: resourceData,
       selectedResource: "web",
-      activeLayer: "",
+      activeLayer: "SSL",
       activeTab: 0,
     };
   }

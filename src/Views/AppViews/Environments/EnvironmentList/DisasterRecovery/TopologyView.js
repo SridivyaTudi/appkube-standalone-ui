@@ -15,7 +15,7 @@ class TopologyView extends Component {
     super(props);
     this.state = {
       currentActiveNode: "",
-      activeLayer: "",
+      activeLayer: "SSL",
     };
   }
 
