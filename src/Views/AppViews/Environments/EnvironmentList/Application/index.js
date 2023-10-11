@@ -4,6 +4,7 @@ import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import {
+  IconButton,
   Box,
   TableContainer,
   Table,
@@ -199,9 +200,10 @@ class Application extends Component {
             {item.cost.currencySymbol} {item.cost.total}
           </TableCell>
           <TableCell align="center">
-            <button type="button" className="list-icon">
+            <IconButton aria-label="delete"
+              size="small" className="list-icon">
               <i className="fas fa-ellipsis-v"></i>
-            </button>
+            </IconButton>
           </TableCell>
         </TableRow>
       );

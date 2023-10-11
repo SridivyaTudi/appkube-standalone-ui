@@ -116,19 +116,19 @@
 
             .list-icon {
               background: transparent;
-              width: 25px;
-              height: 25px;
+              width: 30px;
+              height: 30px;
               border: none;
               color: #1b4dff;
               position: relative;
               cursor: pointer;
+              border-radius: 3px;
+              font-size: 16px;
+              line-height: 30px;
 
               &:hover {
                 background: #e5e1ff;
                 color: #1b4dff;
-                width: 25px;
-                height: 25px;
-                border-radius: 3px;
               }
             }
 
