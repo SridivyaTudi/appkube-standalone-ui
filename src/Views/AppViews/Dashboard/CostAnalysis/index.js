@@ -87,7 +87,8 @@ class CostAnalysis extends Component {
     data?.length &&
       data.map((item, index) => {
         if (index !== data.length - 1) {
-          doughData.datasets[0].data.push(item.total);
+          let percentage = Number(item.percentage).toFixed(2);
+          doughData.datasets[0].data.push(percentage);
           doughData.datasets[0].backgroundColor.push(colorPallate[index]);
         }
       });
@@ -106,11 +107,11 @@ class CostAnalysis extends Component {
             <ListItem key={v4()}>
               <p>{item.name}</p>
               <Box className="d-block right-contant">
-                <label>${item.total?.toLocaleString()}</label>
+                <label>${item.total?.toLocaleString() || 0}</label>
                 <span>
                   <span
                     style={{
-                      width: `${item.percentage}%`,
+                      width: `${item.percentage || 0}%`,
                       background: `${colorPallate[index]}`,
                     }}
                   ></span>
@@ -153,13 +154,13 @@ class CostAnalysis extends Component {
                                   $
                                   {productWiseCostData[
                                     productWiseCostData.length - 1
-                                  ]?.total?.toLocaleString()}
+                                  ]?.total?.toLocaleString() || 0}
                                 </label>
                               </>
                             ) : (
                               <></>
                             )}
-                            <span>10%</span>
+                            <span>10 %</span>
                           </Box>
                         </Box>
                         <Box className="chart-contant">
@@ -199,16 +200,23 @@ class CostAnalysis extends Component {
                           <Box className="product-cost">
                             {productionVsOthersData &&
                             productionVsOthersData.length ? (
-                              <label>
-                                $
-                                {productionVsOthersData[
-                                  productionVsOthersData.length - 1
-                                ].total?.toLocaleString()}
-                              </label>
+                              productionVsOthersData[
+                                productionVsOthersData.length - 1
+                              ].total ? (
+                                <label>
+                                  $
+                                  {productionVsOthersData[
+                                    productionVsOthersData.length - 1
+                                  ].total?.toLocaleString()}
+                                </label>
+                              ) : (
+                                <></>
+                              )
                             ) : (
                               <></>
                             )}
-                            <span>10%</span>
+
+                            <span>10 %</span>
                           </Box>
                         </Box>
                         <Box className="chart-contant">
@@ -242,7 +250,10 @@ class CostAnalysis extends Component {
                           <h3>Service Type Wise Cost </h3>
                           <Box className="product-cost">
                             {serviceTypeWiseCostData &&
-                            serviceTypeWiseCostData.length ? (
+                            serviceTypeWiseCostData.length &&
+                            serviceTypeWiseCostData[
+                              serviceTypeWiseCostData.length - 1
+                            ]?.total ? (
                               <label>
                                 $
                                 {serviceTypeWiseCostData[
@@ -252,7 +263,8 @@ class CostAnalysis extends Component {
                             ) : (
                               <></>
                             )}
-                            <span>10%</span>
+
+                            <span>10 %</span>
                           </Box>
                         </Box>
                         <Box className="chart-contant">
