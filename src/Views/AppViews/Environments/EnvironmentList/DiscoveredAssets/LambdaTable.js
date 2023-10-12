@@ -99,7 +99,7 @@ class LambdaTable extends Component {
                         className="table-tooltip"
                         title={row.functionName}
                       >
-                        {row.functionName}
+                        <span> {row.functionName}</span>
                       </HtmlTooltip>
                     </TableCell>
                     <TableCell align="center">{row.responseTime}</TableCell>
@@ -115,17 +115,16 @@ class LambdaTable extends Component {
                         className="table-tooltip"
                         title={row.product}
                       >
-                        {row.product}
+                        <span> {row.product}</span>
                       </HtmlTooltip>
                     </TableCell>
                     <TableCell align="center" className="productid">
-                    <HtmlTooltip
+                      <HtmlTooltip
                         className="table-tooltip"
-                        title= {row.environment}
+                        title={row.environment}
                       >
                         {row.environment}
                       </HtmlTooltip>
-                     
                     </TableCell>
                     <TableCell align="center">{row.actions}</TableCell>
                   </TableRow>

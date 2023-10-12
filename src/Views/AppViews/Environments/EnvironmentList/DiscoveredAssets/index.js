@@ -208,26 +208,30 @@ class DiscoveredAssets extends Component {
         this.props.globalServicesCloudElements.status &&
       this.props.globalServicesCloudElements.status === status.SUCCESS
     ) {
-      const lambdaTableData = [];
-      this.props.globalServicesCloudElements.data.forEach((item) => {
-        if (item.configJson) {
-          lambdaTableData.push({
-            functionName: item.instanceName,
-            responseTime: item.configJson?.responseTime,
-            duration: item.configJson?.duration,
-            invocations: item.configJson?.invocations,
-            throttles: item.configJson?.throttles,
-            errors: item.configJson?.errors,
-            latency: item.configJson?.latency,
-            networkReceived: item.configJson?.networkReceived,
-            requests: item.configJson?.requests,
-            product: item.configJson?.product,
-            environment: item.configJson?.environment,
-            actions: "",
-          });
-        }
-      });
-      this.setState({ lambdaTableData });
+      let globalServicesCloudElements =
+        this.props.globalServicesCloudElements.data;
+      if (globalServicesCloudElements?.length) {
+        const lambdaTableData = [];
+        globalServicesCloudElements.forEach((item) => {
+          if (item.configJson) {
+            lambdaTableData.push({
+              functionName: item.instanceName,
+              responseTime: item.configJson?.responseTime,
+              duration: item.configJson?.duration,
+              invocations: item.configJson?.invocations,
+              throttles: item.configJson?.throttles,
+              errors: item.configJson?.errors,
+              latency: item.configJson?.latency,
+              networkReceived: item.configJson?.networkReceived,
+              requests: item.configJson?.requests,
+              product: item.configJson?.product,
+              environment: item.configJson?.environment,
+              actions: "",
+            });
+          }
+        });
+        this.setState({ lambdaTableData });
+      }
     }
   };
 

@@ -56,8 +56,8 @@ class GlobalServicesSummaryTable extends React.Component {
   renderTable = (data) => {
     const { activeCategory } = this.state;
     const JSX = [];
-    const childJSX = [];
-    data.map((item, index) => {
+    const childJSX = []
+    data.forEach((item, index) => {
       childJSX.push(
         <Box
           className={`service-card ${activeCategory === index ? "active" : ""}`}
