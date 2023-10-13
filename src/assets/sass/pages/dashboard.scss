@@ -915,6 +915,9 @@
                         font-weight: 400;
                         color: #383874;
                         margin: 0;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                       }
 
                       .right-contant {
