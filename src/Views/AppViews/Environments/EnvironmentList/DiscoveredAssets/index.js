@@ -720,7 +720,7 @@ class DiscoveredAssets extends Component {
             </Box>
           )}
         </Box>
-        {currentActiveTopologyCategory === "Lambda" ? (
+        {currentActiveTopologyCategory === "LAMBDA" ? (
           <>
             {[
               infraTopologyLambdaTable.status,

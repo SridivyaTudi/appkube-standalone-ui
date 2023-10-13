@@ -67,6 +67,18 @@ class LambdaTable extends Component {
     const { pg, rpg } = this.state;
     const { title } = this.props;
     const { tableData } = this.props;
+    if (!tableData.length) {
+      return (
+        <Box className="lambda-functions-container">
+          <Box className="heading">
+            {title ? `${title} Functions` : "Lambda Functions"}
+          </Box>
+          <Box className="lambda-functions-table-section">
+            <h3>No Data available!</h3>
+          </Box>
+        </Box>
+      );
+    }
     return (
       <Box className="lambda-functions-container">
         <Box className="heading">

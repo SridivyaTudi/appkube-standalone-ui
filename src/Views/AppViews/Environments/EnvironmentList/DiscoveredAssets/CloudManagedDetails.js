@@ -34,10 +34,10 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 }));
 
 const filterTabs = {
-  1: "App",
-  2: "Data",
-  3: "dataLake",
-  4: "serviceMesh",
+  1: "app",
+  2: "data",
+  3: "datalake",
+  4: "servicemesh",
 };
 
 class CloudManagedDetails extends React.Component {
@@ -160,7 +160,7 @@ class CloudManagedDetails extends React.Component {
     if (!filterTab) {
       return data;
     }
-    return data.filter((item) => item.category === filterTab);
+    return data.filter((item) => item.category.toLowerCase() === filterTab);
   };
 
   filterCloudDatabyDB = (data) => {
@@ -181,7 +181,7 @@ class CloudManagedDetails extends React.Component {
     const childJSX = [];
     if (activeTab === 2) {
       JSX.push(
-        <Box sx={{ width: "100%" }} className="data-cloud-managed"    key={v4()}>
+        <Box sx={{ width: "100%" }} className="data-cloud-managed" key={v4()}>
           <Grid
             container
             rowSpacing={1}
