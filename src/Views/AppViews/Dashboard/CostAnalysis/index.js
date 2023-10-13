@@ -144,6 +144,21 @@ class CostAnalysis extends Component {
     return JSX;
   };
 
+  appendTooltipPercentage = () => {
+    return {
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              let label = context.raw + "%" || "";
+
+              return label;
+            },
+          },
+        },
+      },
+    };
+  };
   render() {
     const {
       productWiseCostData,
@@ -180,7 +195,7 @@ class CostAnalysis extends Component {
                             ) : (
                               <></>
                             )}
-                            <span>10 %</span>
+                            <span>10%</span>
                           </Box>
                         </Box>
                         <Box className="chart-contant">
@@ -194,6 +209,7 @@ class CostAnalysis extends Component {
                                 data={this.manipulateDoughData(
                                   productWiseCostData
                                 )}
+                                options={this.appendTooltipPercentage()}
                               />
                             ) : (
                               <></>
@@ -236,7 +252,7 @@ class CostAnalysis extends Component {
                               <></>
                             )}
 
-                            <span>10 %</span>
+                            <span>10%</span>
                           </Box>
                         </Box>
                         <Box className="chart-contant">
@@ -247,7 +263,7 @@ class CostAnalysis extends Component {
                             <Doughnut
                               data={this.manipulateDoughData(
                                 productionVsOthersData
-                              )}
+                              )} options={this.appendTooltipPercentage()}
                             />
                           </Box>
                           <Box className="d-block chart-details">
@@ -284,7 +300,7 @@ class CostAnalysis extends Component {
                               <></>
                             )}
 
-                            <span>10 %</span>
+                            <span>10%</span>
                           </Box>
                         </Box>
                         <Box className="chart-contant">
@@ -295,7 +311,7 @@ class CostAnalysis extends Component {
                             <Doughnut
                               data={this.manipulateDoughData(
                                 serviceTypeWiseCostData
-                              )}
+                              )} options={this.appendTooltipPercentage()}
                             />
                           </Box>
                           <Box className="d-block chart-details">
