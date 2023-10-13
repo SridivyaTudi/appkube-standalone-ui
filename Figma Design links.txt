@@ -5,7 +5,7 @@ Dashboad:
 https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube?page-id=6795%3A29886&type=design&node-id=7291-22163&viewport=1213%2C2024%2C0.5&scaling=scale-down-width&starting-point-node-id=7047%3A17146
 
 Infra:
-https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube-DRS?page-id=11036%3A61674&type=design&node-id=20496-65204&viewport=9508%2C-17656%2C0.28&t=5N7QLwIaAMI2Mkg2-1&scaling=min-zoom&starting-point-node-id=20496%3A65204&mode=design
+https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube-DRS?page-id=12432%3A71156&type=design&node-id=21976-56029&viewport=4194%2C-889%2C0.11&t=PN0yhxCDHRKCrWj8-1&scaling=scale-down-width&starting-point-node-id=21976%3A124846
 
 https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube-DRS?page-id=12432%3A71156&type=design&node-id=21976-124846&viewport=9958%2C8732%2C0.55&t=gngbpYONS8Aby9fO-1&scaling=min-zoom&starting-point-node-id=21976%3A124846
 
