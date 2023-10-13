@@ -1,10 +1,89 @@
 import React, { Component } from "react";
 import DrTopology from "Views/AppViews/Environments/EnvironmentList/DisasterRecovery/DrTopology";
-import { Box, List, ListItem } from "@mui/material";
+import { Box, List, ListItem, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import TopologyView from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
+let data = {
+  landingZone: "Xuber",
+  productEnclaveList: [
+    {
+      id: 18,
+      instanceName: "Business Service",
+      instanceId: "Business Service",
+      threeTier: {
+        productCount: 0,
+        webCount: 0,
+        appCount: 0,
+        dataCount: 0,
+        auxiliaryCount: 0,
+      },
+      soa: {
+        productCount: 2,
+        appCount: 0,
+        dataCount: 10,
+        otherCount: 0,
+      },
+      productEnclaveList: [
+        {
+          id: 15,
+          instanceName: "Admission Fee",
+          instanceId: "Admission Fee",
+          threeTier: {
+            productCount: 0,
+            webCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            auxiliaryCount: 0,
+          },
+          soa: {
+            productCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            otherCount: 0,
+          },
+        }, {
+          id: 15,
+          instanceName: "A/C Payable",
+          instanceId: "A/C Payable",
+          threeTier: {
+            productCount: 0,
+            webCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            auxiliaryCount: 0,
+          },
+          soa: {
+            productCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            otherCount: 0,
+          },
+        }
+      ],
+    },
+    {
+      id: 15,
+      instanceName: "Common Service",
+      instanceId: "Common Service",
+      threeTier: {
+        productCount: 0,
+        webCount: 0,
+        appCount: 0,
+        dataCount: 0,
+        auxiliaryCount: 0,
+      },
+      soa: {
+        productCount: 0,
+        appCount: 0,
+        dataCount: 0,
+        otherCount: 0,
+      },
+    },
+  ],
+  globalServiceList: [],
+};
 class DisasterRecoverySOA extends Component {
   tabMapping = [
     {
@@ -58,7 +137,7 @@ class DisasterRecoverySOA extends Component {
       <Box className="disaster-recovery-container">
         <Box className="services-panel-tabs">
           <Box className="tabs-head ">
-            <h3>HRMS</h3>
+            <h3>XUBER</h3>
             <List>
               {this.tabMapping.map((tabData, index) => {
                 return (
@@ -99,11 +178,36 @@ class DisasterRecoverySOA extends Component {
           </Box>
           <Box className="tabs-content">
             {activeTab === 0 && (
-              <TopologyView
-                data={{}}
-                parentCssClass="infra-toplogy-view"
-                setCurrentActiveNode={this.setCurrentActiveNode}
-              />
+              <Box className="environment-container">
+                <Box className="discovered-assets">
+                  <Box className="discovered-assets-body">
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                      <Grid item xs={5}>
+                        <Box className="services-panel">
+                          <Box className="services-panel-title bottom-border">
+                            <Box className="name">Service View Topology </Box>
+                            {/* <Box className="back-btn">
+                        <i className="fa-solid fa-arrow-left"></i>
+                      </Box> */}
+                          </Box>
+                          <Box className="services-panel-body">
+                            <TopologyView
+                              data={data}
+                              parentCssClass="infra-toplogy-view"
+                              setCurrentActiveNode={() => {}}
+                            />
+                          </Box>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={7}></Grid>
+                    </Grid>
+                  </Box>
+                </Box>
+              </Box>
             )}
             {activeTab === 1 && (
               <DrTopology
