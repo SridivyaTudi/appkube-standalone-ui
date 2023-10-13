@@ -12,6 +12,8 @@ import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { v4 } from "uuid";
 import Loader from "Components/Loader";
+import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -27,6 +29,20 @@ const colorPallate = [
   "#608E7D",
 ];
 
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <CommonTooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 200,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 class CostAnalysis extends Component {
   constructor(props) {
     super(props);
@@ -85,9 +101,10 @@ class CostAnalysis extends Component {
       ],
     };
     data?.length &&
-      data.map((item, index) => {
+      data.forEach((item, index) => {
         if (index !== data.length - 1) {
           let percentage = Number(item.percentage).toFixed(2);
+
           doughData.datasets[0].data.push(percentage);
           doughData.datasets[0].backgroundColor.push(colorPallate[index]);
         }
@@ -101,11 +118,14 @@ class CostAnalysis extends Component {
   renderBarsData = (data) => {
     const JSX = [];
     data?.length &&
-      data.map((item, index) => {
+      data.forEach((item, index) => {
         if (index !== data.length - 1) {
           JSX.push(
             <ListItem key={v4()}>
-              <p>{item.name}</p>
+              <HtmlTooltip className="table-tooltip" title={item.name}>
+                <p>{item.name}</p>
+              </HtmlTooltip>
+
               <Box className="d-block right-contant">
                 <label>${item.total?.toLocaleString() || 0}</label>
                 <span>

@@ -16,7 +16,6 @@ import {
 import { Line } from "react-chartjs-2";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
-import { ToastMessage } from "Toast/ToastMessage";
 import { v4 } from "uuid";
 import { cloudwiseSpendColor } from "Utils";
 import {
@@ -282,11 +281,11 @@ class SpendAnalytics extends Component {
     if (data && Object.keys(data).length) {
       let { sumCurrentDate, percentage } = data;
 
-      if (sumCurrentDate) renderHtml.push(<strong>${sumCurrentDate}</strong>);
+      if (sumCurrentDate) renderHtml.push(<strong key={v4()}>${sumCurrentDate}</strong>);
 
       if (percentage)
         renderHtml.push(
-          <span className={`${percentage > 0 ? "" : "red"}`}>
+          <span className={`${percentage > 0 ? "" : "red"}`} key={v4()}>
             {Math.abs(percentage).toFixed(2)}%
           </span>
         );
@@ -320,11 +319,11 @@ class SpendAnalytics extends Component {
     if (data && Object.keys(data).length) {
       let { sumCurrentDate, percentage } = data;
 
-      if (sumCurrentDate) renderHtml.push(<strong>${sumCurrentDate}</strong>);
+      if (sumCurrentDate) renderHtml.push(<strong key={v4()}>${sumCurrentDate}</strong>);
 
       if (percentage)
         renderHtml.push(
-          <span className={`${percentage > 0 ? "" : "red"}`}>
+          <span className={`${percentage > 0 ? "" : "red"}`} key={v4()}>
             {Math.abs(percentage).toFixed(2)}%
           </span>
         );
@@ -633,6 +632,8 @@ class SpendAnalytics extends Component {
             </span>
           </ListItem>
         );
+      } else {
+        return null
       }
     });
   }
