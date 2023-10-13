@@ -34,6 +34,7 @@ import { ToastContainer } from "react-toastify";
 import { getCurrentUser } from "Utils";
 import titles from "./PathTitles.json";
 import Error from "./AppViews/Error";
+import DisasterRecoverySOA from "Views/AppViews/Environments/EnvironmentList/DisasterRecoverySOA";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -134,8 +135,12 @@ export const Views = (props) => {
             element={<AssociateChartApp />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/disasterrecovery`}
+            path={`${APP_PREFIX_PATH}/environments/3tier/disasterrecovery`}
             element={<DisasterRecovery />}
+          />
+            <Route
+            path={`${APP_PREFIX_PATH}/environments/soa/disasterrecovery`}
+            element={<DisasterRecoverySOA />}
           />
           <Route
             path={`${APP_PREFIX_PATH}/application-status-dashboard`}

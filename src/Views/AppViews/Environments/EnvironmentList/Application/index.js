@@ -90,11 +90,12 @@ class Application extends Component {
     const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
     let JSX = [];
     applicationTableData.forEach((item) => {
+      let type = item.appType === '3 Tier' ? '3tier': 'soa'
       JSX.push(
         <TableRow key={v4()}>
           <TableCell align="left" className="p-l-15">
             <Link
-              to={`${APP_PREFIX_PATH}/environments/disasterrecovery?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+              to={`${APP_PREFIX_PATH}/environments/${type}/disasterrecovery?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
             >
               <HtmlTooltip className="table-tooltip" title={item.application}>
                 {item.application}
