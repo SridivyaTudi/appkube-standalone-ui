@@ -44,7 +44,7 @@ let data = {
             otherCount: 0,
           },
         }, {
-          id: 15,
+          id: 16,
           instanceName: "A/C Payable",
           instanceId: "A/C Payable",
           threeTier: {
@@ -60,8 +60,93 @@ let data = {
             dataCount: 0,
             otherCount: 0,
           },
+        },{
+          id: 16,
+          instanceName: "Canteen",
+          instanceId: "Canteen",
+          threeTier: {
+            productCount: 0,
+            webCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            auxiliaryCount: 0,
+          },
+          soa: {
+            productCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            otherCount: 0,
+          },
+        },{
+          id: 16,
+          instanceName: "Library",
+          instanceId: "Library",
+          threeTier: {
+            productCount: 0,
+            webCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            auxiliaryCount: 0,
+          },
+          soa: {
+            productCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            otherCount: 0,
+          },
+        },{
+          id: 16,
+          instanceName: "Classroom",
+          instanceId: "Classroom",
+          threeTier: {
+            productCount: 0,
+            webCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            auxiliaryCount: 0,
+          },
+          soa: {
+            productCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            otherCount: 0,
+          },
+        },{
+          id: 16,
+          instanceName: "Attendance",
+          instanceId: "Attendance",
+          threeTier: {
+            productCount: 0,
+            webCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            auxiliaryCount: 0,
+          },
+          soa: {
+            productCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            otherCount: 0,
+          },
+        },{
+          id: 16,
+          instanceName: "Finance",
+          instanceId: "Finance",
+          threeTier: {
+            productCount: 0,
+            webCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            auxiliaryCount: 0,
+          },
+          soa: {
+            productCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            otherCount: 0,
+          },
         }
-      ],
+      ],globalServiceList:[]
     },
     {
       id: 15,
@@ -80,6 +165,128 @@ let data = {
         dataCount: 0,
         otherCount: 0,
       },
+      productEnclaveList: [
+        {
+          id: 15,
+          instanceName: "Search",
+          instanceId: "Search",
+          threeTier: {
+            productCount: 0,
+            webCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            auxiliaryCount: 0,
+          },
+          soa: {
+            productCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            otherCount: 0,
+          },
+        }, {
+          id: 16,
+          instanceName: "Filter",
+          instanceId: "Filter",
+          threeTier: {
+            productCount: 0,
+            webCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            auxiliaryCount: 0,
+          },
+          soa: {
+            productCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            otherCount: 0,
+          },
+        },{
+          id: 16,
+          instanceName: "Rbac",
+          instanceId: "Rbac",
+          threeTier: {
+            productCount: 0,
+            webCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            auxiliaryCount: 0,
+          },
+          soa: {
+            productCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            otherCount: 0,
+          },
+        },{
+          id: 16,
+          instanceName: "Security",
+          instanceId: "Security",
+          threeTier: {
+            productCount: 0,
+            webCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            auxiliaryCount: 0,
+          },
+          soa: {
+            productCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            otherCount: 0,
+          },
+        },{
+          id: 16,
+          instanceName: "Message",
+          instanceId: "Message",
+          threeTier: {
+            productCount: 0,
+            webCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            auxiliaryCount: 0,
+          },
+          soa: {
+            productCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            otherCount: 0,
+          },
+        },{
+          id: 16,
+          instanceName: "Setting",
+          instanceId: "Setting",
+          threeTier: {
+            productCount: 0,
+            webCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            auxiliaryCount: 0,
+          },
+          soa: {
+            productCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            otherCount: 0,
+          },
+        },{
+          id: 16,
+          instanceName: "Navigation",
+          instanceId: "Navigation",
+          threeTier: {
+            productCount: 0,
+            webCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            auxiliaryCount: 0,
+          },
+          soa: {
+            productCount: 0,
+            appCount: 0,
+            dataCount: 0,
+            otherCount: 0,
+          },
+        }
+      ],globalServiceList:[]
     },
   ],
   globalServiceList: [],
