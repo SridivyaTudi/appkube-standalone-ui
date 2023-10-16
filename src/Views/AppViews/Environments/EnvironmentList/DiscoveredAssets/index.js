@@ -126,6 +126,8 @@ class DiscoveredAssets extends Component {
         () => {
           if (data.length) {
             this.setCurrentTopologyCategory(data[0].elementType);
+          } else {
+            this.setState({ selectedCategoryCloudElementsData: [] });
           }
         }
       );
