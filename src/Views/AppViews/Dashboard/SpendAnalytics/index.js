@@ -515,6 +515,11 @@ class SpendAnalytics extends Component {
       remainingBudgetPercentage,
     } = totalBudgetData;
 
+    // Temp 
+    budgetUsed = parseInt(totalBudget / 2);
+    remainingBudget = totalBudget - budgetUsed;
+    remainingBudgetPercentage = 50;
+    
     totalBudget = totalBudget > 0 ? `$${totalBudget}` : "";
     remainingBudget = remainingBudget > 0 ? `$${remainingBudget}` : "";
     remainingBudgetPercentage =
