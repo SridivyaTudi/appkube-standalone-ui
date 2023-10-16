@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
-import Nglnx from "assets/img/assetmanager/nglnx.png";
+import Gateway from "assets/img/assetmanager/gateway.png";
 
 class APIGatewayComponent extends Component {
   constructor(props) {
@@ -9,11 +9,11 @@ class APIGatewayComponent extends Component {
   }
   render() {
     return (
-      <Box className="nginx-cards">
+      <Box className="nginx-cards ">
         <Box className="title">
           <Box className="head-left">
             <Box className="environment-image">
-              <img src={Nglnx} alt="" />
+              <img src={Gateway} alt="" />
             </Box>
             <Box className="name">APIGateway</Box>
           </Box>

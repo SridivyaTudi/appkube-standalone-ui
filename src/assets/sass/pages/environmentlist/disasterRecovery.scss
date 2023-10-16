@@ -1113,6 +1113,23 @@
                 0px 12.5216px 10.0172px rgba(108, 73, 172, 0.035),
                 0px 6.6501px 5.32008px rgba(108, 73, 172, 0.0282725),
                 0px 2.76726px 2.21381px rgba(108, 73, 172, 0.0196802);
+              span {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 2px;
+                padding: 2px;
+                width: 20px;
+                height: 20px;
+                background: linear-gradient(
+                  45deg,
+                  #4d27a8 -4950%,
+                  #a166ff 5050%
+                );
+                img {
+                  max-width: 100%;
+                }
+              }
             }
             .icon {
               display: inline-flex;
@@ -1210,7 +1227,6 @@
               }
             }
           }
-          
         }
         .gateway-content {
           .autoscaling-cards {
@@ -1226,7 +1242,30 @@
               strong {
                 text-align: left;
               }
-              p{
+              .lambda-price {
+                display: flex;
+                align-items: baseline;
+                justify-content: flex-start;
+                span {
+                  font-size: 12px;
+                  line-height: 16px;
+                  font-weight: 400;
+                  color: #15c64c;
+                  position: relative;
+                  padding-left: 15px;
+                  &::before {
+                    content: "\f0de";
+                    position: absolute;
+                    top: 6px;
+                    left: 5px;
+                    font-weight: 900;
+                    font-size: 12px;
+                    color: #15c64c;
+                    font-family: "FontAwesome";
+                  }
+                }
+              }
+              p {
                 display: block;
                 text-align: left;
                 width: 100%;
@@ -1239,7 +1278,6 @@
               &:nth-child(3n) {
                 margin-right: 0;
               }
-
             }
           }
         }
@@ -2377,9 +2415,9 @@
       .tabs-content {
         .certificate-cards {
           .certificate-content {
-           overflow: hidden;
-           overflow-y: auto;
-           height: 400px;
+            overflow: hidden;
+            overflow-y: auto;
+            height: 400px;
           }
         }
         .ports-content {

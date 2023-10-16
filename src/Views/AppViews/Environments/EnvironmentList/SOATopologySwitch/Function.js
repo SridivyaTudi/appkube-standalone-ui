@@ -13,9 +13,11 @@ class FunctionComponent extends Component {
         <Box className="title">
           <Box className="head-left">
             <Box className="environment-image">
-              <img src={Nglnx} alt="" />
+              <span>
+                <img src={Nglnx} alt="" />
+              </span>
             </Box>
-            <Box className="name">Function</Box>
+            <Box className="name">Lambda</Box>
           </Box>
           <Box className="head-right">
             <Button className="primary-btn min-width" variant="contained">
@@ -26,33 +28,99 @@ class FunctionComponent extends Component {
         <Box className="nginx-content gateway-content">
           <Box className="autoscaling-cards">
             <Box className="card-box">
-              <span>Request Count</span>
-              <strong>10,000</strong>
+              <span>Function</span>
+              <Box className="lambda-price">
+                <strong>18,6875 </strong>
+                <span>10%</span>
+              </Box>
               <p>Compared to $21,490 last year</p>
             </Box>
             <Box className="card-box">
-              <span>Integration Count</span>
-              <strong>7000</strong>
+              <span>Errors</span>
+              <Box className="lambda-price">
+                <strong>2,875 </strong>
+                <span>10%</span>
+              </Box>
               <p>Compared to $21,490 last year</p>
             </Box>
             <Box className="card-box">
-              <span>4xx Errors</span>
-              <strong>100</strong>
+              <span>Throttles</span>
+              <Box className="lambda-price">
+                <strong>285 </strong>
+                <span>10%</span>
+              </Box>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Trends</span>
+              <Box className="lambda-price">
+                <strong>123 </strong>
+                <span>10%</span>
+              </Box>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Failure Function</span>
+              <Box className="lambda-price">
+                <strong>15 </strong>
+                <span>10%</span>
+              </Box>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>CPU Used</span>
+              <Box className="lambda-price">
+                <strong>256MB </strong>
+                <span>10%</span>
+              </Box>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Request</span>
+              <Box className="lambda-price">
+                <strong>16522 </strong>
+                <span>10%</span>
+              </Box>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Memory Used</span>
+              <Box className="lambda-price">
+                <strong>512MB </strong>
+                <span>10%</span>
+              </Box>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>****</span>
+              <Box className="lambda-price">
+                <strong>12,875 </strong>
+                <span>10%</span>
+              </Box>
               <p>Compared to $21,490 last year</p>
             </Box>
             <Box className="card-box">
               <span>Latency</span>
-              <strong>50 ms</strong>
+              <Box className="lambda-price">
+                <strong>365</strong>
+                <span>10%</span>
+              </Box>
               <p>Compared to $21,490 last year</p>
             </Box>
             <Box className="card-box">
-              <span>Integration Latency</span>
-              <strong>30 ms</strong>
+              <span>Net Received</span>
+              <Box className="lambda-price">
+                <strong>1562</strong>
+                <span>10%</span>
+              </Box>
               <p>Compared to $21,490 last year</p>
             </Box>
             <Box className="card-box">
-              <span>Data Transfer IN</span>
-              <strong>50 MB</strong>
+              <span>----</span>
+              <Box className="lambda-price">
+                <strong>12,875</strong>
+                <span>10%</span>
+              </Box>
               <p>Compared to $21,490 last year</p>
             </Box>
           </Box>
