@@ -294,7 +294,12 @@ class SOATopologySwitch extends Component {
                     <span>
                       <img src={bottomArrow} alt="" />
                     </span>
-                    <Box className="icon">
+                    <Box className="icon"  onClick={() =>
+                          this.props.setCurrentActiveNode(
+                            "PostgreSQL",
+                            toggleView
+                          )
+                        }>
                       <img src={Postgresql} alt="" />
                     </Box>
                     <p>PostgreSQL</p>
@@ -303,7 +308,12 @@ class SOATopologySwitch extends Component {
                     <span>
                       <img src={bottomArrow} alt="" />
                     </span>
-                    <Box className="icon">
+                    <Box className="icon" onClick={() =>
+                          this.props.setCurrentActiveNode(
+                            "Opensearch",
+                            toggleView
+                          )
+                        }>
                       <img src={Opensearch} alt="" />
                     </Box>
                     <p>Opensearch</p>
@@ -321,6 +331,7 @@ class SOATopologySwitch extends Component {
           {activeComponent === "Ingress" && <IngressComponent />}
           {activeComponent === "ServiceMesh" && <ServiceMeshComponent />}
           {activeComponent === "JavaSpringbot" && <JavaSpringbootComponent />}
+          {activeComponent === "Opensearch" && <APIGatewayComponent />}
         </Grid>
       </Grid>
     );

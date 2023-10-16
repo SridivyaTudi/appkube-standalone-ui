@@ -494,7 +494,7 @@ class SOATopology extends Component {
                         ) : activeServiceChildTopology === "PostgreSQL" ? (
                           "PostgreSQL"
                         ) : activeServiceChildTopology === "Opensearch" ? (
-                          "Opensearch"
+                          <APIGatewayComponent />
                         ) : (
                           <></>
                         )}
