@@ -3,10 +3,10 @@ import DrTopology from "./DrTopology";
 import Topology from "./Topology";
 import { Box, List, ListItem } from "@mui/material";
 import { Link } from "react-router-dom";
-import ActivityLogViewDetails from "Views/AppViews/Environments/EnvironmentList/DisasterRecovery/Components/ActivityLogViewDetails";
+import ActivityLogViewDetails from "Views/AppViews/Environments/EnvironmentList/ThreeTierTopology/Components/ActivityLogViewDetails";
 import { v4 } from "uuid";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-class DisasterRecovery extends Component {
+class ThreeTierTopology extends Component {
   tabMapping = [
     {
       name: "Topology",
@@ -125,4 +125,4 @@ class DisasterRecovery extends Component {
   }
 }
 
-export default DisasterRecovery;
+export default ThreeTierTopology;

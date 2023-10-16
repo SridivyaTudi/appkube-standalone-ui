@@ -27,14 +27,14 @@ import Setting from "./AppViews/Setting";
 import SetTransitions from "./AppViews/Setting/SetTransitions";
 import EcsCluster from "./AppViews/Environments/EnvironmentList/DiscoveredAssets/EcsCluster";
 import AssociateChartApp from "./AppViews/Environments/EnvironmentList/DiscoveredAssets/AssociateChartApp";
-import DisasterRecovery from "./AppViews/Environments/EnvironmentList/DisasterRecovery";
+import ThreeTierTopology from "./AppViews/Environments/EnvironmentList/ThreeTierTopology";
 import ApplicationStatusDashboard from "./AppViews/Dashboard/ApplicationStatusDashboard";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { getCurrentUser } from "Utils";
 import titles from "./PathTitles.json";
 import Error from "./AppViews/Error";
-import DisasterRecoverySOA from "Views/AppViews/Environments/EnvironmentList/DisasterRecoverySOA";
+import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -135,12 +135,12 @@ export const Views = (props) => {
             element={<AssociateChartApp />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/3tier/disasterrecovery`}
-            element={<DisasterRecovery />}
+            path={`${APP_PREFIX_PATH}/environments/3tier/topology`}
+            element={<ThreeTierTopology />}
           />
             <Route
-            path={`${APP_PREFIX_PATH}/environments/soa/disasterrecovery`}
-            element={<DisasterRecoverySOA />}
+            path={`${APP_PREFIX_PATH}/environments/soa/topology`}
+            element={<SOATopology />}
           />
           <Route
             path={`${APP_PREFIX_PATH}/application-status-dashboard`}

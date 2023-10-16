@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import DrTopology from "Views/AppViews/Environments/EnvironmentList/DisasterRecovery/DrTopology";
+import DrTopology from "Views/AppViews/Environments/EnvironmentList/ThreeTierTopology/DrTopology";
 import { Box, List, ListItem, Grid, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import TopologyView from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
-import Container from "Views/AppViews/Environments/EnvironmentList/DisasterRecoverySOA/Components/Container";
+import Container from "Views/AppViews/Environments/EnvironmentList/SOATopology/Components/Container";
 
 let data = {
   landingZone: "EMS",
@@ -308,7 +308,7 @@ let data = {
   ],
   globalServiceList: [],
 };
-class DisasterRecoverySOA extends Component {
+class SOATopology extends Component {
   tabMapping = [
     {
       name: "Topology",
@@ -475,4 +475,4 @@ class DisasterRecoverySOA extends Component {
   }
 }
 
-export default DisasterRecoverySOA;
+export default SOATopology;

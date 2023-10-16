@@ -95,7 +95,7 @@ class Application extends Component {
         <TableRow key={v4()}>
           <TableCell align="left" className="p-l-15">
             <Link
-              to={`${APP_PREFIX_PATH}/environments/${type}/disasterrecovery?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+              to={`${APP_PREFIX_PATH}/environments/${type}/topology?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
             >
               <HtmlTooltip className="table-tooltip" title={item.application}>
                 {item.application}

@@ -14,7 +14,7 @@ import {
   List,
   ListItem,
 } from "@mui/material";
-import DisasterRecoveryMode from "Views/AppViews/Environments/EnvironmentList/DisasterRecovery/Components/DisasterRecoveryMode";
+import DisasterRecoveryMode from "Views/AppViews/Environments/EnvironmentList/ThreeTierTopology/Components/DisasterRecoveryMode";
 import calendarMouseIcon from "assets/img/assetmanager/calendar-mouse-icon.png";
 import databaseIcon from "assets/img/assetmanager/database-icon.png";
 import internetIcon from "assets/img/assetmanager/internet-icon.png";
