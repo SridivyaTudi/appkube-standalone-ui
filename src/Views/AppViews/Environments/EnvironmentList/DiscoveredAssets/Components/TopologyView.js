@@ -69,7 +69,6 @@ class TopologyView extends Component {
             transformScale = instance && instance.state.scale;
             this.setState({ scale: true });
           }}
-         
         >
           {({ zoomIn, zoomOut, instance, zoomToElement, ...rest }) => {
             transformScale = instance.transformState.scale;
@@ -109,7 +108,6 @@ class TopologyView extends Component {
                     alignItems: "center",
                     justifyContent: "flex-start",
                   }}
-                 
                 >
                   <ArcherElement
                     id="root"
@@ -313,7 +311,9 @@ class TopologyView extends Component {
           let activeNode = parseInt(activeView[i].split(".")[1]);
           // let newArray = [retData.productEnclaveList[activeSublevel]];
           // retData.productEnclaveList[activeSublevel] = newArray;
-          retData = retData[activeSublevel][activeNode];
+          if (retData[activeSublevel] && retData[activeSublevel][activeNode]) {
+            retData = retData[activeSublevel][activeNode];
+          }
         } else {
           retData = null;
           break;

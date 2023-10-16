@@ -1,4 +1,4 @@
-import React, { Component,Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import { Button, Box, Grid, List, ListItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
@@ -268,7 +268,7 @@ export class AssociateChartApp extends Component {
 
   // Add service API call
   onClickAddService = () => {
-    const { instanceId } = this.getUrlDetails();
+    const { instanceId, landingZoneId } = this.getUrlDetails();
     const {
       activeLevels: {
         selectedLevel_0,
@@ -310,6 +310,7 @@ export class AssociateChartApp extends Component {
     let paramsObj = {
       instanceId,
       serviceId,
+      landingZoneId,
       tag: {
         type,
         org: {
