@@ -101,7 +101,8 @@ class TopologyView extends Component {
                     height: "100%",
                   }}
                   contentStyle={{
-                    width: `464px`,
+                    width: "1000px",
+                    minWidth: `464px`,
                     height: "100%",
                     transform: "translate(0px, 0px) scale(0)",
                     display: "flex",
@@ -162,6 +163,7 @@ class TopologyView extends Component {
   renderChildNodes = (nodes, currentLevel, activeView) => {
     let retData = [];
     const strokeStyles = { strokeColor: "#a5a5d7", strokeWidth: 2 };
+
     if (activeView.length > currentLevel) {
       let activeSublevel = -1;
       let activeNode = -1;
@@ -173,6 +175,7 @@ class TopologyView extends Component {
       const childJSX = [];
       nodes.forEach((item, sublevelIndex) => {
         // item = [item];
+
         if (item?.length > 0) {
           retData.push(
             <ul key={v4()}>
@@ -200,7 +203,7 @@ class TopologyView extends Component {
                         targetId:
                           activeSublevel === sublevelIndex &&
                           activeNode === nodeIndex
-                            ? this.getTargetId(currentLevel + 1)
+                            ? this.getTargetId(currentLevel + 1, nodeIndex)
                             : "",
                         targetAnchor: "left",
                         sourceAnchor: "right",
@@ -282,8 +285,16 @@ class TopologyView extends Component {
     return retData;
   };
 
-  getTargetId = (currentLevel) => {
+  getTargetId = (currentLevel, nodeIndex) => {
+    let { activeView } = this.state;
+
     const activeNode = this.getChild(currentLevel);
+
+    if (activeView.length > 3 && currentLevel > 1) {
+      let activeSubNode = this.getSubChild(activeNode, currentLevel, nodeIndex);
+      return activeSubNode?.id;
+    }
+
     if (activeNode) {
       return activeNode.id;
     }
@@ -299,6 +310,7 @@ class TopologyView extends Component {
       JSON.parse(JSON.stringify(productEnclaveList)),
       JSON.parse(JSON.stringify(globalServiceList)),
     ];
+
     for (let i = 0; i <= level; i++) {
       if (i === 0) {
         retData = [
@@ -311,6 +323,7 @@ class TopologyView extends Component {
           let activeNode = parseInt(activeView[i].split(".")[1]);
           // let newArray = [retData.productEnclaveList[activeSublevel]];
           // retData.productEnclaveList[activeSublevel] = newArray;
+
           if (retData[activeSublevel] && retData[activeSublevel][activeNode]) {
             retData = retData[activeSublevel][activeNode];
           }
@@ -331,6 +344,7 @@ class TopologyView extends Component {
     activeView.length = currentLevel + 2;
     activeView[currentLevel] = activeSublevel + "." + activeIndex;
     activeView[currentLevel + 1] = -1;
+
     this.setState({
       activeView,
     });
@@ -345,6 +359,26 @@ class TopologyView extends Component {
     const landingZone = queryPrm.get("landingZone");
     const cloudName = queryPrm.get("cloudName")?.toUpperCase();
     return { cloudName, landingZone };
+  };
+
+  getSubChild = (activeNode, currentLevel, nodeIndex) => {
+    let retData = activeNode;
+    let { activeView } = this.state;
+    if (activeView.length > 3) {
+      for (let index = 2; index < activeView.length; index++) {
+        if (activeView[index] !== 0 && activeView[index] !== -1) {
+          let verticalIndex = parseInt(activeView[index].split(".")[0]);
+          let currentIndex = parseInt(activeView[index].split(".")[1]);
+          let keyName =
+            verticalIndex === 0 ? "productEnclaveList" : "globalServiceList";
+          if (retData?.[keyName]) {
+            retData = retData[keyName][currentIndex];
+          }
+        }
+      }
+    }
+
+    return retData;
   };
 
   render() {

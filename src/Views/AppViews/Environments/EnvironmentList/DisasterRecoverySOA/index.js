@@ -5,24 +5,16 @@ import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import TopologyView from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
-import Gateway from "assets/img/assetmanager/gateway.png";
-import LoadBalancer from "assets/img/assetmanager/load-balancer.png";
-import Cluster from "assets/img/assetmanager/cluster.png";
-import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
-import Ingress from "assets/img/assetmanager/ingress.png";
-import RightArrow from "assets/img/assetmanager/right-arrow.png";
-import ServiceMesh from "assets/img/assetmanager/service-mesh.png";
-import JavaSpringbot from "assets/img/assetmanager/java-springbot.png";
-import Postgresql from "assets/img/assetmanager/postgresql.png";
-import Opensearch from "assets/img/assetmanager/opensearch.png";
+import Container from "Views/AppViews/Environments/EnvironmentList/DisasterRecoverySOA/Components/Container";
 
 let data = {
-  landingZone: "Xuber",
+  landingZone: "EMS",
   productEnclaveList: [
     {
       id: 18,
       instanceName: "Business Service",
       instanceId: "Business Service",
+      image: "",
       threeTier: {
         productCount: 0,
         webCount: 0,
@@ -38,7 +30,7 @@ let data = {
       },
       productEnclaveList: [
         {
-          id: 15,
+          id: 155,
           instanceName: "Admission Fee",
           instanceId: "Admission Fee",
           threeTier: {
@@ -56,7 +48,7 @@ let data = {
           },
         },
         {
-          id: 16,
+          id: 166,
           instanceName: "A/C Payable",
           instanceId: "A/C Payable",
           threeTier: {
@@ -74,7 +66,7 @@ let data = {
           },
         },
         {
-          id: 16,
+          id: 167,
           instanceName: "Canteen",
           instanceId: "Canteen",
           threeTier: {
@@ -92,7 +84,7 @@ let data = {
           },
         },
         {
-          id: 16,
+          id: 168,
           instanceName: "Library",
           instanceId: "Library",
           threeTier: {
@@ -110,7 +102,7 @@ let data = {
           },
         },
         {
-          id: 16,
+          id: 169,
           instanceName: "Classroom",
           instanceId: "Classroom",
           threeTier: {
@@ -128,7 +120,7 @@ let data = {
           },
         },
         {
-          id: 16,
+          id: 161,
           instanceName: "Attendance",
           instanceId: "Attendance",
           threeTier: {
@@ -146,7 +138,7 @@ let data = {
           },
         },
         {
-          id: 16,
+          id: 171,
           instanceName: "Finance",
           instanceId: "Finance",
           threeTier: {
@@ -185,7 +177,7 @@ let data = {
       },
       productEnclaveList: [
         {
-          id: 15,
+          id: 151,
           instanceName: "Search",
           instanceId: "Search",
           threeTier: {
@@ -203,7 +195,7 @@ let data = {
           },
         },
         {
-          id: 16,
+          id: 162,
           instanceName: "Filter",
           instanceId: "Filter",
           threeTier: {
@@ -221,7 +213,7 @@ let data = {
           },
         },
         {
-          id: 16,
+          id: 167,
           instanceName: "Rbac",
           instanceId: "Rbac",
           threeTier: {
@@ -239,7 +231,7 @@ let data = {
           },
         },
         {
-          id: 16,
+          id: 122,
           instanceName: "Security",
           instanceId: "Security",
           threeTier: {
@@ -257,7 +249,7 @@ let data = {
           },
         },
         {
-          id: 16,
+          id: 133,
           instanceName: "Message",
           instanceId: "Message",
           threeTier: {
@@ -275,7 +267,7 @@ let data = {
           },
         },
         {
-          id: 16,
+          id: 144,
           instanceName: "Setting",
           instanceId: "Setting",
           threeTier: {
@@ -293,7 +285,7 @@ let data = {
           },
         },
         {
-          id: 16,
+          id: 155,
           instanceName: "Navigation",
           instanceId: "Navigation",
           threeTier: {
@@ -345,6 +337,7 @@ class DisasterRecoverySOA extends Component {
     this.state = {
       activeTab: 0,
       isActivityViewDetails: false,
+      activeRightSideView: "",
     };
   }
 
@@ -362,14 +355,32 @@ class DisasterRecoverySOA extends Component {
     return { landingZone, landingZoneId, cloudName };
   }
 
+  setCurrentActiveNode = (node, nodeLevelData, nodeID) => {
+    let { activeRightSideView } = this.state;
+    let level1 = ["Common Service", "Business Service"];
+
+    if (level1.includes(node)) {
+      activeRightSideView = "";
+    } else {
+      if (nodeLevelData.length === 4 || !level1.includes(node)) {
+        if (nodeLevelData[2]) {
+          let firstLevelIndex = parseInt(nodeLevelData[1].split(".")[1]);
+          activeRightSideView = firstLevelIndex === 0 ? "container" : "lambda";
+        }
+      }
+    }
+
+    this.setState({ activeRightSideView });
+  };
+
   render() {
-    const { activeTab, isActivityViewDetails } = this.state;
+    const { activeTab, activeRightSideView } = this.state;
     const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
     return (
       <Box className="disaster-recovery-container">
         <Box className="services-panel-tabs">
           <Box className="tabs-head ">
-            <h3>XUBER</h3>
+            <h3>EMS</h3>
             <List>
               {this.tabMapping.map((tabData, index) => {
                 return (
@@ -404,7 +415,7 @@ class DisasterRecoverySOA extends Component {
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
-                <li className="active">HRMS</li>
+                <li className="active">EMS</li>
               </ul>
             </Box>
           </Box>
@@ -430,195 +441,18 @@ class DisasterRecoverySOA extends Component {
                             <TopologyView
                               data={data}
                               parentCssClass="infra-toplogy-view"
-                              setCurrentActiveNode={() => {}}
+                              setCurrentActiveNode={this.setCurrentActiveNode}
                             />
                           </Box>
                         </Box>
                       </Grid>
-                      <Grid item xs={6}>
-                        <Box className="business-service">
-                          <Box className="title">Container Based</Box>
-                          <Box className="business-service-content">
-                            <Box className="business-service-left">
-                              <List>
-                                <ListItem>
-                                  <Box className="button-box">
-                                    <p>Cloud Managed</p>
-                                  </Box>
-                                  <span>
-                                    <img src={RightArrow} alt="" />
-                                  </span>
-                                </ListItem>
-                              </List>
-                            </Box>
-                            <Box className="business-service-right">
-                              <Box className="application-balancer m-b-10">
-                                <Button
-                                  className="secondary-btn min-width"
-                                  variant="contained"
-                                >
-                                  SSL
-                                </Button>
-                              </Box>
-                              <List>
-                                <ListItem>
-                                  <Box className="application-balancer">
-                                    <Box className="balancer-boxs m-b-10">
-                                      <Box className="balancer-box">
-                                        <span>
-                                          <img src={bottomArrow} alt="" />
-                                        </span>
-                                      </Box>
-                                    </Box>
-                                    <Button
-                                      className="secondary-btn min-width"
-                                      variant="contained"
-                                    >
-                                      <img src={Gateway} alt="" />
-                                      API Gateway
-                                      <i className="fa-solid fa-angle-down"></i>
-                                    </Button>
-                                  </Box>
-                                </ListItem>
-                                <ListItem>
-                                  <Box className="application-balancer">
-                                    <Box className="balancer-boxs  m-b-10">
-                                      <Box className="balancer-box">
-                                        <span>
-                                          <img src={bottomArrow} alt="" />
-                                        </span>
-                                      </Box>
-                                    </Box>
-                                    <Button
-                                      className="secondary-btn min-width"
-                                      variant="contained"
-                                    >
-                                      <img src={LoadBalancer} alt="" /> Load
-                                      Balancer
-                                      <i className="fa-solid fa-angle-down"></i>
-                                    </Button>
-                                  </Box>
-                                </ListItem>
-                              </List>
-                            </Box>
-                          </Box>
-                          <Box className="business-service-content">
-                            <Box className="business-service-left">
-                              <List>
-                                <ListItem>
-                                  <Box className="button-box">
-                                    <p>Cluster Managed</p>
-                                  </Box>
-                                  <span>
-                                    <img src={RightArrow} alt="" />
-                                  </span>
-                                </ListItem>
-                              </List>
-                            </Box>
-                            <Box className="business-service-right">
-                              <Box className="balancer-boxs text-center">
-                                <Box className="balancer-box">
-                                  <span>
-                                    <img src={bottomArrow} alt="" />
-                                  </span>
-                                </Box>
-                              </Box>
-                              <List>
-                                <ListItem>
-                                  <Box className="application-balancer p-t-15">
-                                    <Button
-                                      className="secondary-btn min-width"
-                                      variant="contained"
-                                    >
-                                      <img src={Cluster} alt="" />
-                                      Cluster
-                                      <i className="fa-solid fa-angle-down"></i>
-                                    </Button>
-                                  </Box>
-                                </ListItem>
-                                <ListItem>
-                                  <Box className="application-balancer">
-                                    <Box className="balancer-boxs  m-b-10">
-                                      <Box className="balancer-box">
-                                        <span>
-                                          <img src={bottomArrow} alt="" />
-                                        </span>
-                                      </Box>
-                                    </Box>
-                                    <Button
-                                      className="secondary-btn min-width"
-                                      variant="contained"
-                                    >
-                                      <img src={Ingress} alt="" /> Ingress
-                                      <i className="fa-solid fa-angle-down"></i>
-                                    </Button>
-                                  </Box>
-                                </ListItem>
-                                <ListItem>
-                                  <Box className="application-balancer">
-                                    <Box className="balancer-boxs  m-b-10">
-                                      <Box className="balancer-box">
-                                        <span>
-                                          <img src={bottomArrow} alt="" />
-                                        </span>
-                                      </Box>
-                                    </Box>
-                                    <Button
-                                      className="secondary-btn min-width"
-                                      variant="contained"
-                                    >
-                                      <img src={ServiceMesh} alt="" /> Service
-                                      mesh
-                                      <i className="fa-solid fa-angle-down"></i>
-                                    </Button>
-                                  </Box>
-                                </ListItem>
-                                <ListItem>
-                                  <Box className="application-balancer">
-                                    <Box className="balancer-boxs  m-b-10">
-                                      <Box className="balancer-box">
-                                        <span>
-                                          <img src={bottomArrow} alt="" />
-                                        </span>
-                                      </Box>
-                                    </Box>
-                                    <Button
-                                      className="secondary-btn min-width"
-                                      variant="contained"
-                                    >
-                                      <img src={JavaSpringbot} alt="" /> Java
-                                      springbot
-                                      <i className="fa-solid fa-angle-down"></i>
-                                    </Button>
-                                  </Box>
-                                </ListItem>
-                              </List>
-                              <Box className="balancer-boxs">
-                                <Box className="balancer-box">
-                                  <span>
-                                    <img src={bottomArrow} alt="" />
-                                  </span>
-                                  <Box
-                                    className="icon"  
-                                  >
-                                    <img src={Postgresql} alt="" />
-                                  </Box>
-                                  <p>PostgreSQL</p>
-                                </Box>
-                                <Box className="balancer-box">
-                                  <span>
-                                    <img src={bottomArrow} alt="" />
-                                  </span>
-                                  <Box className="icon">
-                                    <img src={Opensearch} alt="" />
-                                  </Box>
-                                  <p>Opensearch</p>
-                                </Box>
-                              </Box>
-                            </Box>
-                          </Box>
-                        </Box>
-                      </Grid>
+                      {activeRightSideView === "container" ? (
+                        <Container />
+                      ) : activeRightSideView === "lambda" ? (
+                        "lambda"
+                      ) : (
+                        <></>
+                      )}
                     </Grid>
                   </Box>
                 </Box>
