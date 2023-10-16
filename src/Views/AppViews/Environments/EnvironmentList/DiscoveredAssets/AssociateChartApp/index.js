@@ -310,7 +310,7 @@ export class AssociateChartApp extends Component {
     let paramsObj = {
       instanceId,
       serviceId,
-      landingZoneId,
+      landingZoneId: parseInt(landingZoneId),
       tag: {
         type,
         org: {
