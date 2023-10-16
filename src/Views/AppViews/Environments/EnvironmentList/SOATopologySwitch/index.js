@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Box, List, ListItem, Grid, Button, IconButton } from "@mui/material";
-import { v4 } from "uuid";
 import Gateway from "assets/img/assetmanager/gateway.png";
 import LoadBalancer from "assets/img/assetmanager/load-balancer.png";
 import Cluster from "assets/img/assetmanager/cluster.png";
@@ -18,7 +17,9 @@ import ClusterComponent from "./Cluster";
 import IngressComponent from "./Ingress";
 import ServiceMeshComponent from "./ServiceMesh";
 import JavaSpringbootComponent from "./JavaSpringboot";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+
 class SOATopologySwitch extends Component {
   tabMapping = [
     {
@@ -90,7 +91,6 @@ class SOATopologySwitch extends Component {
       >
         <Grid item xs={6}>
           <Box className="business-service">
-            <Box className="title">Container Based</Box>
             <IconButton
               size="small"
               className="open-close"
@@ -103,7 +103,7 @@ class SOATopologySwitch extends Component {
             >
               <KeyboardArrowRightIcon fontSize="inherit" />
             </IconButton>
-
+            <Box className="title">Container Based</Box>
             <Box className="business-service-content">
               <Box className="business-service-left">
                 <List>
