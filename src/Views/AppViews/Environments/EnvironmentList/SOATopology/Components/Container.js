@@ -32,7 +32,11 @@ class Container extends Component {
             </Box>
             <Box className="business-service-right">
               <Box className="application-balancer m-b-10">
-                <Button className="secondary-btn min-width" variant="contained">
+                <Button
+                  className="secondary-btn min-width"
+                  variant="contained"
+                  onClick={() => this.props.setCurrentActiveNode("SSL")}
+                >
                   SSL
                 </Button>
               </Box>
@@ -48,7 +52,7 @@ class Container extends Component {
                     </Box>
                     <Button
                       className="secondary-btn min-width"
-                      variant="contained"
+                      variant="contained"  onClick={() => this.props.setCurrentActiveNode("APIGateway")}
                     >
                       <img src={Gateway} alt="" />
                       API Gateway
@@ -67,7 +71,7 @@ class Container extends Component {
                     </Box>
                     <Button
                       className="secondary-btn min-width"
-                      variant="contained"
+                      variant="contained"  onClick={() => this.props.setCurrentActiveNode("LoadBalancer")}
                     >
                       <img src={LoadBalancer} alt="" /> Load Balancer
                       <i className="fa-solid fa-angle-down"></i>
@@ -103,7 +107,7 @@ class Container extends Component {
                   <Box className="application-balancer p-t-15">
                     <Button
                       className="secondary-btn min-width"
-                      variant="contained"
+                      variant="contained" onClick={() => this.props.setCurrentActiveNode("Cluster")}
                     >
                       <img src={Cluster} alt="" />
                       Cluster
@@ -122,7 +126,7 @@ class Container extends Component {
                     </Box>
                     <Button
                       className="secondary-btn min-width"
-                      variant="contained"
+                      variant="contained" onClick={() => this.props.setCurrentActiveNode("Ingress")}
                     >
                       <img src={Ingress} alt="" /> Ingress
                       <i className="fa-solid fa-angle-down"></i>
@@ -140,7 +144,7 @@ class Container extends Component {
                     </Box>
                     <Button
                       className="secondary-btn min-width"
-                      variant="contained"
+                      variant="contained" onClick={() => this.props.setCurrentActiveNode("ServiceMesh")}
                     >
                       <img src={ServiceMesh} alt="" /> Service mesh
                       <i className="fa-solid fa-angle-down"></i>
@@ -158,7 +162,7 @@ class Container extends Component {
                     </Box>
                     <Button
                       className="secondary-btn min-width"
-                      variant="contained"
+                      variant="contained" onClick={() => this.props.setCurrentActiveNode("JavaSpringbot")}
                     >
                       <img src={JavaSpringbot} alt="" /> Java springbot
                       <i className="fa-solid fa-angle-down"></i>
@@ -171,7 +175,7 @@ class Container extends Component {
                   <span>
                     <img src={bottomArrow} alt="" />
                   </span>
-                  <Box className="icon">
+                  <Box className="icon" onClick={() => this.props.setCurrentActiveNode("PostgreSQL")}>
                     <img src={Postgresql} alt="" />
                   </Box>
                   <p>PostgreSQL</p>
@@ -180,7 +184,7 @@ class Container extends Component {
                   <span>
                     <img src={bottomArrow} alt="" />
                   </span>
-                  <Box className="icon">
+                  <Box className="icon" onClick={() => this.props.setCurrentActiveNode("Opensearch")}>
                     <img src={Opensearch} alt="" />
                   </Box>
                   <p>Opensearch</p>

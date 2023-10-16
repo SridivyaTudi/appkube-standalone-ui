@@ -7,7 +7,7 @@ import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import TopologyView from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
 import Container from "Views/AppViews/Environments/EnvironmentList/SOATopology/Components/Container";
 import Lambda from "./Components/Lambda";
-
+import SSLCertificate from "Views/AppViews/Environments/EnvironmentList/SOATopology/Components/SslCertificate";
 
 let data = {
   landingZone: "EMS",
@@ -339,7 +339,8 @@ class SOATopology extends Component {
     this.state = {
       activeTab: 0,
       isActivityViewDetails: false,
-      activeRightSideView: "",
+      activeServiceTopology: "",
+      activeServiceChildTopology: "",
     };
   }
 
@@ -358,25 +359,28 @@ class SOATopology extends Component {
   }
 
   setCurrentActiveNode = (node, nodeLevelData, nodeID) => {
-    let { activeRightSideView } = this.state;
+    let { activeServiceTopology, activeServiceChildTopology } = this.state;
     let level1 = ["Common Service", "Business Service"];
 
     if (level1.includes(node)) {
-      activeRightSideView = "";
+      activeServiceTopology = "";
+      activeServiceChildTopology = "";
     } else {
       if (nodeLevelData.length === 4 || !level1.includes(node)) {
         if (nodeLevelData[2]) {
           let firstLevelIndex = parseInt(nodeLevelData[1].split(".")[1]);
-          activeRightSideView = firstLevelIndex === 0 ? "container" : "lambda";
+          activeServiceTopology =
+            firstLevelIndex === 0 ? "container" : "lambda";
         }
       }
     }
 
-    this.setState({ activeRightSideView });
+    this.setState({ activeServiceTopology, activeServiceChildTopology });
   };
 
   render() {
-    const { activeTab, activeRightSideView } = this.state;
+    const { activeTab, activeServiceTopology, activeServiceChildTopology } =
+      this.state;
     const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
     return (
       <Box className="disaster-recovery-container">
@@ -448,10 +452,38 @@ class SOATopology extends Component {
                           </Box>
                         </Box>
                       </Grid>
-                      {activeRightSideView === "container" ? (
-                        <Container />
-                      ) : activeRightSideView === "lambda" ? (
-                       <Lambda/>
+
+                      {activeServiceTopology === "container" ? (
+                        <Container
+                          setCurrentActiveNode={(
+                            activeServiceChildTopology
+                          ) => {
+                            this.setState({ activeServiceChildTopology });
+                          }}
+                        />
+                      ) : activeServiceTopology === "lambda" ? (
+                        <Lambda />
+                      ) : (
+                        <></>
+                      )}
+                      {activeServiceChildTopology === "SSL" ? (
+                        <SSLCertificate />
+                      ) : activeServiceChildTopology === "APIGateway" ? (
+                        "APIGateway"
+                      ) : activeServiceChildTopology === "LoadBalancer" ? (
+                        "LoadBalancer"
+                      ) : activeServiceChildTopology === "Cluster" ? (
+                        "Cluster"
+                      ) : activeServiceChildTopology === "Ingress" ? (
+                        "Ingress"
+                      ) : activeServiceChildTopology === "ServiceMesh" ? (
+                        "ServiceMesh"
+                      ) : activeServiceChildTopology === "JavaSpringbot" ? (
+                        "JavaSpringbot"
+                      ) : activeServiceChildTopology === "PostgreSQL" ? (
+                        "PostgreSQL"
+                      ) : activeServiceChildTopology === "Opensearch" ? (
+                        "Opensearch"
                       ) : (
                         <></>
                       )}
