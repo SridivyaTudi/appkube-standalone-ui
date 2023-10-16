@@ -13,7 +13,7 @@
   "settransitions": "Set Transitions",
   "ecscluster": "ECS Cluster 01",
   "associatechartapp": "Associate Chart App",
-  "disasterrecovery": "Disaster Recovery",
+  "topology": "Topology",
   "application-status-dashboard": "Application Status Dashboard",
   "error": "404"
 }

@@ -202,3 +202,108 @@
     }
   }
 }
+.common-service {
+  display: block;
+  padding: 25px;
+  margin-top: 0px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0px 41.7776px 33.4221px rgba(108, 73, 172, 0.0503198);
+  .title {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    color: #383874;
+    padding: 5px;
+    margin: 0;
+  }
+ 
+  ul {
+    display: block;
+    padding: 0;
+    margin: 0;
+    li {
+      display: block;
+      margin: 0;
+      padding: 0;
+
+      .application-balancer {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        // margin-top: 10px;
+        .secondary-btn {
+          background-color: #dde1f8;
+          color: #383874;
+          img {
+            max-width: 20px;
+            margin-right: 8px;
+          }
+        }
+        .primary-btn{
+          img {
+            max-width: 20px;
+            margin-right: 8px;
+          }
+          i{
+            margin-left: 8px;
+          }
+        }
+        .balancer-boxs {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          .balancer-box {
+            width: 36px;
+            margin-left: 15px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            span {
+              display: flex;
+              justify-content: center;
+              width: 100%;
+            }
+            .icon {
+              display: inline-flex;
+              width: 36px;
+              height: 36px;
+              align-items: center;
+              justify-content: center;
+              border-radius: 5px;
+              padding: 5px;
+              margin-top: 7px;
+              margin-bottom: 7px;
+              cursor: pointer;
+              background: linear-gradient(45deg, #c8511b -4950%, #ff9900 5050%);
+              img {
+                max-width: 20px;
+              }
+              &.active {
+                background: #3247e5;
+              }
+            }
+            p {
+              display: flex;
+              width: 100%;
+              justify-content: center;
+              text-align: center;
+              margin: 0;
+              font-size: 10px;
+              line-height: 14px;
+              font-weight: 600;
+              color: #383874;
+            }
+          }
+        }
+      }
+    }
+  }
+}
