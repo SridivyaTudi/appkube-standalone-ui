@@ -217,12 +217,16 @@
   }
 }
 .common-service {
+  position: relative;
   display: block;
   padding: 25px;
   margin-top: 0px;
   border-radius: 10px;
   background-color: #ffffff;
   box-shadow: 0px 41.7776px 33.4221px rgba(108, 73, 172, 0.0503198);
+  .open-close {
+    top: 48px !important;
+  }
   .title {
     font-size: 12px;
     line-height: 16px;

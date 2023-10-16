@@ -17,6 +17,9 @@ import IngressComponent from "Views/AppViews/Environments/EnvironmentList/SOATop
 import ServiceMeshComponent from "Views/AppViews/Environments/EnvironmentList/SOATopologySwitch/ServiceMesh";
 import JavaSpringbootComponent from "Views/AppViews/Environments/EnvironmentList/SOATopologySwitch/JavaSpringboot";
 import FunctionComponent from "../SOATopologySwitch/Function";
+import PostgresqlComponent from "../SOATopologySwitch/Postgresql";
+import OpensearchComponent from "../SOATopologySwitch/Opensearch";
+
 let data = {
   landingZone: "EMS",
   productEnclaveList: [
@@ -495,9 +498,9 @@ class SOATopology extends Component {
                       ) : activeServiceChildTopology === "JavaSpringbot" ? (
                         <JavaSpringbootComponent />
                       ) : activeServiceChildTopology === "PostgreSQL" ? (
-                        "PostgreSQL"
+                        <PostgresqlComponent />
                       ) : activeServiceChildTopology === "Opensearch" ? (
-                        <APIGatewayComponent />
+                        <OpensearchComponent />
                       ) : activeServiceChildTopology === "Function" ? (
                         <FunctionComponent />
                       ) : (
@@ -528,11 +531,13 @@ class SOATopology extends Component {
                     activeServiceTopology={activeServiceTopology}
                     setCurrentActiveNode={(
                       activeServiceChildTopology,
-                      toggleView
+                      toggleView,
+                      activeServiceTopology
                     ) => {
                       this.setState({
                         activeServiceChildTopology,
                         toggleView,
+                        activeServiceTopology,
                       });
                     }}
                   />

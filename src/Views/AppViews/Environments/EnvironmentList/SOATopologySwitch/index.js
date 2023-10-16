@@ -19,8 +19,10 @@ import ServiceMeshComponent from "./ServiceMesh";
 import JavaSpringbootComponent from "./JavaSpringboot";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import Lambda from "../SOATopology/Components/Lambda"
+import Lambda from "../SOATopology/Components/Lambda";
 import FunctionComponent from "./Function";
+import PostgresqlComponent from "./Postgresql";
+import OpensearchComponent from "./Opensearch";
 
 class SOATopologySwitch extends Component {
   tabMapping = [
@@ -101,7 +103,8 @@ class SOATopologySwitch extends Component {
                 onClick={() =>
                   this.props.setCurrentActiveNode(
                     activeServiceChildTopology,
-                    true
+                    true,
+                    activeServiceTopology
                   )
                 }
               >
@@ -340,11 +343,19 @@ class SOATopologySwitch extends Component {
             </Box>
           </Grid>
         ) : (
-          <Lambda
-            setCurrentActiveNode={(activeServiceChildTopology) => {
-              this.props.setCurrentActiveNode(activeServiceChildTopology, toggleView,activeServiceTopology);
-            }}
-          />
+          <>
+            <Lambda
+              setCurrentActiveNode={(activeServiceChildTopology) => {
+                this.props.setCurrentActiveNode(
+                  activeServiceChildTopology
+                    ? activeServiceChildTopology
+                    : this.props.activeServiceChildTopology,
+                  activeServiceChildTopology ? toggleView : true,
+                  activeServiceTopology
+                );
+              }}
+            />
+          </>
         )}
 
         <Grid item xs={6}>
@@ -355,8 +366,9 @@ class SOATopologySwitch extends Component {
           {activeComponent === "Ingress" && <IngressComponent />}
           {activeComponent === "ServiceMesh" && <ServiceMeshComponent />}
           {activeComponent === "JavaSpringbot" && <JavaSpringbootComponent />}
-          {activeComponent === "Opensearch" && <APIGatewayComponent />}
+          {activeComponent === "Opensearch" && <OpensearchComponent />}
           {activeComponent === "Function" && <FunctionComponent />}
+          {activeComponent === "PostgreSQL" && <PostgresqlComponent />}
         </Grid>
       </Grid>
     );

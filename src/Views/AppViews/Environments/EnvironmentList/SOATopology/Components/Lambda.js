@@ -1,19 +1,31 @@
 import React, { Component } from "react";
-import { Box, List, ListItem, Grid, Button } from "@mui/material";
+import { Box, List, ListItem, Grid, Button,IconButton } from "@mui/material";
 import Gateway from "assets/img/assetmanager/gateway.png";
 import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
 import FunctionImg from "assets/img/assetmanager/function-img.png";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 class Lambda extends Component {
   render() {
     return (
       <Grid item xs={6}>
         <Box className="common-service">
+          <IconButton
+            size="small"
+            className="open-close"
+            onClick={() => this.props.setCurrentActiveNode("",true)}
+          >
+            <KeyboardArrowRightIcon fontSize="inherit" />
+          </IconButton>
           <Box className="title">Lambda Based</Box>
           <List>
             <ListItem>
               <Box className="application-balancer">
-                <Button className="secondary-btn min-width" variant="contained" onClick={() => this.props.setCurrentActiveNode("SSL")}>
+                <Button
+                  className="secondary-btn min-width"
+                  variant="contained"
+                  onClick={() => this.props.setCurrentActiveNode("SSL")}
+                >
                   SSL
                 </Button>
                 <Box className="balancer-boxs">
@@ -27,12 +39,19 @@ class Lambda extends Component {
             </ListItem>
             <ListItem>
               <Box className="application-balancer">
-                <Button className="primary-btn min-width" variant="contained" onClick={() => this.props.setCurrentActiveNode("APIGateway")}>
+                <Button
+                  className="primary-btn min-width"
+                  variant="contained"
+                  onClick={() => this.props.setCurrentActiveNode("APIGateway")}
+                >
                   <img src={Gateway} alt="" /> API Gateway
                   <i className="fa-solid fa-angle-down"></i>
                 </Button>
-                <Box className="balancer-boxs" >
-                  <Box className="balancer-box " onClick={() => this.props.setCurrentActiveNode("Function")}>
+                <Box className="balancer-boxs">
+                  <Box
+                    className="balancer-box "
+                    onClick={() => this.props.setCurrentActiveNode("Function")}
+                  >
                     <span>
                       <img src={bottomArrow} alt="" />
                     </span>
@@ -41,7 +60,10 @@ class Lambda extends Component {
                     </Box>
                     <p>Function</p>
                   </Box>
-                  <Box className="balancer-box" onClick={() => this.props.setCurrentActiveNode("Function")}>
+                  <Box
+                    className="balancer-box"
+                    onClick={() => this.props.setCurrentActiveNode("Function")}
+                  >
                     <span>
                       <img src={bottomArrow} alt="" />
                     </span>
@@ -50,7 +72,10 @@ class Lambda extends Component {
                     </Box>
                     <p>Function</p>
                   </Box>
-                  <Box className="balancer-box" onClick={() => this.props.setCurrentActiveNode("Function")}>
+                  <Box
+                    className="balancer-box"
+                    onClick={() => this.props.setCurrentActiveNode("Function")}
+                  >
                     <span>
                       <img src={bottomArrow} alt="" />
                     </span>
@@ -59,7 +84,10 @@ class Lambda extends Component {
                     </Box>
                     <p>Function</p>
                   </Box>
-                  <Box className="balancer-box" onClick={() => this.props.setCurrentActiveNode("Function")}>
+                  <Box
+                    className="balancer-box"
+                    onClick={() => this.props.setCurrentActiveNode("Function")}
+                  >
                     <span>
                       <img src={bottomArrow} alt="" />
                     </span>
