@@ -183,7 +183,7 @@
                   span {
                     display: inline-block;
                     width: 100%;
-                    border-radius: 3px;
+                    border-radius: 0;
 
                     &.dark-orange {
                       background: #ff9900;
@@ -196,6 +196,9 @@
                     &.dark-coral {
                       background: #da4f44;
                       border-radius: 0px 3px 3px 0px;
+                    }
+                    &:last-child{
+                      border-radius: 0 5px 5px 0;
                     }
                   }
                 }
