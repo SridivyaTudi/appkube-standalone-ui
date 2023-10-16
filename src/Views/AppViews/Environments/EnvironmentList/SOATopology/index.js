@@ -1,14 +1,21 @@
 import React, { Component } from "react";
 import DrTopology from "Views/AppViews/Environments/EnvironmentList/ThreeTierTopology/DrTopology";
-import { Box, List, ListItem, Grid, Button } from "@mui/material";
+import { Box, List, ListItem, Grid, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import TopologyView from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
 import Container from "Views/AppViews/Environments/EnvironmentList/SOATopology/Components/Container";
 import Lambda from "./Components/Lambda";
-import SSLCertificate from "Views/AppViews/Environments/EnvironmentList/SOATopology/Components/SslCertificate";
-
+import SOATopologySwitch from "../SOATopologySwitch";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import SslTableComponent from "Views/AppViews/Environments/EnvironmentList/SOATopologySwitch/SslTable";
+import APIGatewayComponent from "Views/AppViews/Environments/EnvironmentList/SOATopologySwitch/APIGateway";
+import LoadBalancerComponent from "Views/AppViews/Environments/EnvironmentList/SOATopologySwitch/LoadBalancer";
+import ClusterComponent from "Views/AppViews/Environments/EnvironmentList/SOATopologySwitch/Cluster";
+import IngressComponent from "Views/AppViews/Environments/EnvironmentList/SOATopologySwitch/Ingress";
+import ServiceMeshComponent from "Views/AppViews/Environments/EnvironmentList/SOATopologySwitch/ServiceMesh";
+import JavaSpringbootComponent from "Views/AppViews/Environments/EnvironmentList/SOATopologySwitch/JavaSpringboot";
 let data = {
   landingZone: "EMS",
   productEnclaveList: [
@@ -341,6 +348,7 @@ class SOATopology extends Component {
       isActivityViewDetails: false,
       activeServiceTopology: "",
       activeServiceChildTopology: "",
+      toggleView: true,
     };
   }
 
@@ -379,14 +387,20 @@ class SOATopology extends Component {
   };
 
   render() {
-    const { activeTab, activeServiceTopology, activeServiceChildTopology } =
-      this.state;
+    const {
+      activeTab,
+      activeServiceTopology,
+      activeServiceChildTopology,
+      toggleView,
+    } = this.state;
     const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
     return (
       <Box className="disaster-recovery-container">
         <Box className="services-panel-tabs">
           <Box className="tabs-head ">
-            <h3>EMS</h3>
+            <h3 onClick={() => this.setState({ toggleView: !toggleView })}>
+              EMS
+            </h3>
             <List>
               {this.tabMapping.map((tabData, index) => {
                 return (
@@ -434,16 +448,28 @@ class SOATopology extends Component {
                       container
                       rowSpacing={1}
                       columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                      style={{ display: `${toggleView ? "" : "none"}` }}
                     >
                       <Grid item xs={6}>
                         <Box className="services-panel">
                           <Box className="services-panel-title bottom-border">
                             <Box className="name">Service View Topology </Box>
-                            {/* <Box className="back-btn">
-                                <i className="fa-solid fa-arrow-left"></i>
-                            </Box> */}
                           </Box>
                           <Box className="services-panel-body">
+                            {activeServiceChildTopology ? (
+                              <IconButton
+                                size="small"
+                                className="open-close"
+                                onClick={() =>
+                                  this.setState({ toggleView: !toggleView })
+                                }
+                              >
+                                <KeyboardArrowLeftIcon fontSize="inherit" />
+                              </IconButton>
+                            ) : (
+                              <></>
+                            )}
+
                             <TopologyView
                               data={data}
                               parentCssClass="infra-toplogy-view"
@@ -451,6 +477,27 @@ class SOATopology extends Component {
                             />
                           </Box>
                         </Box>
+                        {activeServiceChildTopology === "SSL" ? (
+                          <SslTableComponent />
+                        ) : activeServiceChildTopology === "APIGateway" ? (
+                          <APIGatewayComponent />
+                        ) : activeServiceChildTopology === "LoadBalancer" ? (
+                          <LoadBalancerComponent />
+                        ) : activeServiceChildTopology === "Cluster" ? (
+                          <ClusterComponent />
+                        ) : activeServiceChildTopology === "Ingress" ? (
+                          <IngressComponent />
+                        ) : activeServiceChildTopology === "ServiceMesh" ? (
+                          <ServiceMeshComponent />
+                        ) : activeServiceChildTopology === "JavaSpringbot" ? (
+                          <JavaSpringbootComponent />
+                        ) : activeServiceChildTopology === "PostgreSQL" ? (
+                          "PostgreSQL"
+                        ) : activeServiceChildTopology === "Opensearch" ? (
+                          "Opensearch"
+                        ) : (
+                          <></>
+                        )}
                       </Grid>
 
                       {activeServiceTopology === "container" ? (
@@ -462,32 +509,35 @@ class SOATopology extends Component {
                           }}
                         />
                       ) : activeServiceTopology === "lambda" ? (
-                        <Lambda />
-                      ) : (
-                        <></>
-                      )}
-                      {activeServiceChildTopology === "SSL" ? (
-                        <SSLCertificate />
-                      ) : activeServiceChildTopology === "APIGateway" ? (
-                        "APIGateway"
-                      ) : activeServiceChildTopology === "LoadBalancer" ? (
-                        "LoadBalancer"
-                      ) : activeServiceChildTopology === "Cluster" ? (
-                        "Cluster"
-                      ) : activeServiceChildTopology === "Ingress" ? (
-                        "Ingress"
-                      ) : activeServiceChildTopology === "ServiceMesh" ? (
-                        "ServiceMesh"
-                      ) : activeServiceChildTopology === "JavaSpringbot" ? (
-                        "JavaSpringbot"
-                      ) : activeServiceChildTopology === "PostgreSQL" ? (
-                        "PostgreSQL"
-                      ) : activeServiceChildTopology === "Opensearch" ? (
-                        "Opensearch"
+                        <Lambda
+                          setCurrentActiveNode={(
+                            activeServiceChildTopology
+                          ) => {
+                            this.setState({ activeServiceChildTopology });
+                          }}
+                        />
                       ) : (
                         <></>
                       )}
                     </Grid>
+
+                    <SOATopologySwitch
+                      toggleView={
+                        activeServiceTopology === "container"
+                          ? toggleView
+                          : true
+                      }
+                      activeServiceChildTopology={activeServiceChildTopology}
+                      setCurrentActiveNode={(
+                        activeServiceChildTopology,
+                        toggleView
+                      ) => {
+                        this.setState({
+                          activeServiceChildTopology,
+                          toggleView,
+                        });
+                      }}
+                    />
                   </Box>
                 </Box>
               </Box>

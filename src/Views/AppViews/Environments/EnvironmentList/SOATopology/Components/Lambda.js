@@ -13,7 +13,7 @@ class Lambda extends Component {
           <List>
             <ListItem>
               <Box className="application-balancer">
-                <Button className="secondary-btn min-width" variant="contained">
+                <Button className="secondary-btn min-width" variant="contained" onClick={() => this.props.setCurrentActiveNode("SSL")}>
                   SSL
                 </Button>
                 <Box className="balancer-boxs">
@@ -27,7 +27,7 @@ class Lambda extends Component {
             </ListItem>
             <ListItem>
               <Box className="application-balancer">
-                <Button className="primary-btn min-width" variant="contained">
+                <Button className="primary-btn min-width" variant="contained" onClick={() => this.props.setCurrentActiveNode("APIGateway")}>
                   <img src={Gateway} alt="" /> API Gateway
                   <i className="fa-solid fa-angle-down"></i>
                 </Button>
