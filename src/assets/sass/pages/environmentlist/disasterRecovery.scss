@@ -951,7 +951,7 @@
         overflow: hidden;
         overflow-x: auto;
         width: 100%;
-        height: 455px;
+        height: auto;
         box-shadow: 0px 41.7776px 33.4221px rgba(108, 73, 172, 0.0503198);
         .title {
           display: flex;
@@ -1186,6 +1186,38 @@
                 font-weight: 500;
                 color: #383874;
               }
+            }
+          }
+          
+        }
+        .gateway-content {
+          .autoscaling-cards {
+            .card-box {
+              width: 183px;
+              padding-top: 15px;
+              padding-bottom: 15px;
+              span {
+                text-align: left;
+                font-size: 12px;
+                padding-bottom: 3px;
+              }
+              strong {
+                text-align: left;
+              }
+              p{
+                display: block;
+                text-align: left;
+                width: 100%;
+                font-size: 10px;
+                line-height: 12px;
+                font-weight: 400;
+                color: #383874;
+                margin: 0;
+              }
+              &:nth-child(3n) {
+                margin-right: 0;
+              }
+
             }
           }
         }
