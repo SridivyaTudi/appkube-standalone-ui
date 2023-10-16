@@ -6,6 +6,8 @@ import { v4 } from "uuid";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import TopologyView from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
 import Container from "Views/AppViews/Environments/EnvironmentList/SOATopology/Components/Container";
+import Lambda from "./Components/Lambda";
+
 
 let data = {
   landingZone: "EMS",
@@ -421,7 +423,7 @@ class SOATopology extends Component {
           </Box>
           <Box className="tabs-content">
             {activeTab === 0 && (
-              <Box className="environment-container">
+              <Box className="environment-container p-0">
                 <Box className="discovered-assets">
                   <Box className="discovered-assets-body">
                     <Grid
@@ -449,7 +451,7 @@ class SOATopology extends Component {
                       {activeRightSideView === "container" ? (
                         <Container />
                       ) : activeRightSideView === "lambda" ? (
-                        "lambda"
+                       <Lambda/>
                       ) : (
                         <></>
                       )}
