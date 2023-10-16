@@ -130,7 +130,7 @@ class SOATopologySwitch extends Component {
                       className="secondary-btn min-width"
                       variant="contained"
                       onClick={() =>
-                        this.props.setCurrentActiveNode("SSL", toggleView)
+                        this.props.setCurrentActiveNode("SSL", toggleView,activeServiceTopology)
                       }
                     >
                       SSL
@@ -152,7 +152,7 @@ class SOATopologySwitch extends Component {
                           onClick={() =>
                             this.props.setCurrentActiveNode(
                               "APIGateway",
-                              toggleView
+                              toggleView,activeServiceTopology
                             )
                           }
                         >
@@ -177,7 +177,7 @@ class SOATopologySwitch extends Component {
                           onClick={() =>
                             this.props.setCurrentActiveNode(
                               "LoadBalancer",
-                              toggleView
+                              toggleView,activeServiceTopology
                             )
                           }
                         >
@@ -219,7 +219,7 @@ class SOATopologySwitch extends Component {
                           onClick={() =>
                             this.props.setCurrentActiveNode(
                               "Cluster",
-                              toggleView
+                              toggleView,activeServiceTopology
                             )
                           }
                         >
@@ -244,7 +244,7 @@ class SOATopologySwitch extends Component {
                           onClick={() =>
                             this.props.setCurrentActiveNode(
                               "Ingress",
-                              toggleView
+                              toggleView,activeServiceTopology
                             )
                           }
                         >
@@ -268,7 +268,7 @@ class SOATopologySwitch extends Component {
                           onClick={() =>
                             this.props.setCurrentActiveNode(
                               "ServiceMesh",
-                              toggleView
+                              toggleView,activeServiceTopology
                             )
                           }
                         >
@@ -292,7 +292,7 @@ class SOATopologySwitch extends Component {
                           onClick={() =>
                             this.props.setCurrentActiveNode(
                               "JavaSpringbot",
-                              toggleView
+                              toggleView,activeServiceTopology
                             )
                           }
                         >
@@ -312,7 +312,7 @@ class SOATopologySwitch extends Component {
                         onClick={() =>
                           this.props.setCurrentActiveNode(
                             "PostgreSQL",
-                            toggleView
+                            toggleView,activeServiceTopology
                           )
                         }
                       >
@@ -329,7 +329,7 @@ class SOATopologySwitch extends Component {
                         onClick={() =>
                           this.props.setCurrentActiveNode(
                             "Opensearch",
-                            toggleView
+                            toggleView,activeServiceTopology
                           )
                         }
                       >
