@@ -31,8 +31,8 @@ class Lambda extends Component {
                   <img src={Gateway} alt="" /> API Gateway
                   <i className="fa-solid fa-angle-down"></i>
                 </Button>
-                <Box className="balancer-boxs">
-                  <Box className="balancer-box">
+                <Box className="balancer-boxs" >
+                  <Box className="balancer-box " onClick={() => this.props.setCurrentActiveNode("Function")}>
                     <span>
                       <img src={bottomArrow} alt="" />
                     </span>
@@ -41,7 +41,7 @@ class Lambda extends Component {
                     </Box>
                     <p>Function</p>
                   </Box>
-                  <Box className="balancer-box">
+                  <Box className="balancer-box" onClick={() => this.props.setCurrentActiveNode("Function")}>
                     <span>
                       <img src={bottomArrow} alt="" />
                     </span>
@@ -50,7 +50,7 @@ class Lambda extends Component {
                     </Box>
                     <p>Function</p>
                   </Box>
-                  <Box className="balancer-box">
+                  <Box className="balancer-box" onClick={() => this.props.setCurrentActiveNode("Function")}>
                     <span>
                       <img src={bottomArrow} alt="" />
                     </span>
@@ -59,7 +59,7 @@ class Lambda extends Component {
                     </Box>
                     <p>Function</p>
                   </Box>
-                  <Box className="balancer-box">
+                  <Box className="balancer-box" onClick={() => this.props.setCurrentActiveNode("Function")}>
                     <span>
                       <img src={bottomArrow} alt="" />
                     </span>

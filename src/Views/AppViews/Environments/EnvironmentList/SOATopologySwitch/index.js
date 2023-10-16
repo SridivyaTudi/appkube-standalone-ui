@@ -19,6 +19,8 @@ import ServiceMeshComponent from "./ServiceMesh";
 import JavaSpringbootComponent from "./JavaSpringboot";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import Lambda from "../SOATopology/Components/Lambda"
+import FunctionComponent from "./Function";
 
 class SOATopologySwitch extends Component {
   tabMapping = [
@@ -81,7 +83,8 @@ class SOATopologySwitch extends Component {
 
   render() {
     const { activeComponent } = this.state;
-    let { activeServiceChildTopology, toggleView } = this.props;
+    let { activeServiceChildTopology, toggleView, activeServiceTopology } =
+      this.props;
     return (
       <Grid
         container
@@ -89,240 +92,261 @@ class SOATopologySwitch extends Component {
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         style={{ display: `${this.props.toggleView ? "none" : ""}` }}
       >
-        <Grid item xs={6}>
-          <Box className="business-service">
-            <IconButton
-              size="small"
-              className="open-close"
-              onClick={() =>
-                this.props.setCurrentActiveNode(
-                  activeServiceChildTopology,
-                  true
-                )
-              }
-            >
-              <KeyboardArrowRightIcon fontSize="inherit" />
-            </IconButton>
-            <Box className="title">Container Based</Box>
-            <Box className="business-service-content">
-              <Box className="business-service-left">
-                <List>
-                  <ListItem>
-                    <Box className="button-box">
-                      <p>Cloud Managed</p>
-                    </Box>
-                    <span>
-                      <img src={RightArrow} alt="" />
-                    </span>
-                  </ListItem>
-                </List>
-              </Box>
-              <Box className="business-service-right">
-                <Box className="application-balancer m-b-10">
-                  <Button
-                    className="secondary-btn min-width"
-                    variant="contained"
-                    onClick={() =>
-                      this.props.setCurrentActiveNode("SSL", toggleView)
-                    }
-                  >
-                    SSL
-                  </Button>
+        {activeServiceTopology === "container" ? (
+          <Grid item xs={6}>
+            <Box className="business-service">
+              <IconButton
+                size="small"
+                className="open-close"
+                onClick={() =>
+                  this.props.setCurrentActiveNode(
+                    activeServiceChildTopology,
+                    true
+                  )
+                }
+              >
+                <KeyboardArrowRightIcon fontSize="inherit" />
+              </IconButton>
+              <Box className="title">Container Based</Box>
+              <Box className="business-service-content">
+                <Box className="business-service-left">
+                  <List>
+                    <ListItem>
+                      <Box className="button-box">
+                        <p>Cloud Managed</p>
+                      </Box>
+                      <span>
+                        <img src={RightArrow} alt="" />
+                      </span>
+                    </ListItem>
+                  </List>
                 </Box>
-                <List>
-                  <ListItem>
-                    <Box className="application-balancer">
-                      <Box className="balancer-boxs m-b-10">
-                        <Box className="balancer-box">
-                          <span>
-                            <img src={bottomArrow} alt="" />
-                          </span>
-                        </Box>
-                      </Box>
-                      <Button
-                        className="secondary-btn min-width"
-                        variant="contained"
-                        onClick={() =>
-                          this.props.setCurrentActiveNode(
-                            "APIGateway",
-                            toggleView
-                          )
-                        }
-                      >
-                        <img src={Gateway} alt="" />
-                        API Gateway
-                        <i className="fa-solid fa-angle-down"></i>
-                      </Button>
-                    </Box>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="application-balancer">
-                      <Box className="balancer-boxs  m-b-10">
-                        <Box className="balancer-box">
-                          <span>
-                            <img src={bottomArrow} alt="" />
-                          </span>
-                        </Box>
-                      </Box>
-                      <Button
-                        className="secondary-btn min-width"
-                        variant="contained"
-                        onClick={() =>
-                          this.props.setCurrentActiveNode(
-                            "LoadBalancer",
-                            toggleView
-                          )
-                        }
-                      >
-                        <img src={LoadBalancer} alt="" /> Load Balancer
-                        <i className="fa-solid fa-angle-down"></i>
-                      </Button>
-                    </Box>
-                  </ListItem>
-                </List>
-              </Box>
-            </Box>
-            <Box className="business-service-content">
-              <Box className="business-service-left">
-                <List>
-                  <ListItem>
-                    <Box className="button-box">
-                      <p>Cluster Managed</p>
-                    </Box>
-                    <span>
-                      <img src={RightArrow} alt="" />
-                    </span>
-                  </ListItem>
-                </List>
-              </Box>
-              <Box className="business-service-right">
-                <Box className="balancer-boxs text-center">
-                  <Box className="balancer-box">
-                    <span>
-                      <img src={bottomArrow} alt="" />
-                    </span>
+                <Box className="business-service-right">
+                  <Box className="application-balancer m-b-10">
+                    <Button
+                      className="secondary-btn min-width"
+                      variant="contained"
+                      onClick={() =>
+                        this.props.setCurrentActiveNode("SSL", toggleView)
+                      }
+                    >
+                      SSL
+                    </Button>
                   </Box>
+                  <List>
+                    <ListItem>
+                      <Box className="application-balancer">
+                        <Box className="balancer-boxs m-b-10">
+                          <Box className="balancer-box">
+                            <span>
+                              <img src={bottomArrow} alt="" />
+                            </span>
+                          </Box>
+                        </Box>
+                        <Button
+                          className="secondary-btn min-width"
+                          variant="contained"
+                          onClick={() =>
+                            this.props.setCurrentActiveNode(
+                              "APIGateway",
+                              toggleView
+                            )
+                          }
+                        >
+                          <img src={Gateway} alt="" />
+                          API Gateway
+                          <i className="fa-solid fa-angle-down"></i>
+                        </Button>
+                      </Box>
+                    </ListItem>
+                    <ListItem>
+                      <Box className="application-balancer">
+                        <Box className="balancer-boxs  m-b-10">
+                          <Box className="balancer-box">
+                            <span>
+                              <img src={bottomArrow} alt="" />
+                            </span>
+                          </Box>
+                        </Box>
+                        <Button
+                          className="secondary-btn min-width"
+                          variant="contained"
+                          onClick={() =>
+                            this.props.setCurrentActiveNode(
+                              "LoadBalancer",
+                              toggleView
+                            )
+                          }
+                        >
+                          <img src={LoadBalancer} alt="" /> Load Balancer
+                          <i className="fa-solid fa-angle-down"></i>
+                        </Button>
+                      </Box>
+                    </ListItem>
+                  </List>
                 </Box>
-                <List>
-                  <ListItem>
-                    <Box className="application-balancer p-t-15">
-                      <Button
-                        className="secondary-btn min-width"
-                        variant="contained"
-                        onClick={() =>
-                          this.props.setCurrentActiveNode("Cluster", toggleView)
-                        }
-                      >
-                        <img src={Cluster} alt="" />
-                        Cluster
-                        <i className="fa-solid fa-angle-down"></i>
-                      </Button>
-                    </Box>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="application-balancer">
-                      <Box className="balancer-boxs  m-b-10">
-                        <Box className="balancer-box">
-                          <span>
-                            <img src={bottomArrow} alt="" />
-                          </span>
-                        </Box>
+              </Box>
+              <Box className="business-service-content">
+                <Box className="business-service-left">
+                  <List>
+                    <ListItem>
+                      <Box className="button-box">
+                        <p>Cluster Managed</p>
                       </Box>
-                      <Button
-                        className="secondary-btn min-width"
-                        variant="contained"
-                        onClick={() =>
-                          this.props.setCurrentActiveNode("Ingress", toggleView)
-                        }
-                      >
-                        <img src={Ingress} alt="" /> Ingress
-                        <i className="fa-solid fa-angle-down"></i>
-                      </Button>
+                      <span>
+                        <img src={RightArrow} alt="" />
+                      </span>
+                    </ListItem>
+                  </List>
+                </Box>
+                <Box className="business-service-right">
+                  <Box className="balancer-boxs text-center">
+                    <Box className="balancer-box">
+                      <span>
+                        <img src={bottomArrow} alt="" />
+                      </span>
                     </Box>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="application-balancer">
-                      <Box className="balancer-boxs  m-b-10">
-                        <Box className="balancer-box">
-                          <span>
-                            <img src={bottomArrow} alt="" />
-                          </span>
-                        </Box>
+                  </Box>
+                  <List>
+                    <ListItem>
+                      <Box className="application-balancer p-t-15">
+                        <Button
+                          className="secondary-btn min-width"
+                          variant="contained"
+                          onClick={() =>
+                            this.props.setCurrentActiveNode(
+                              "Cluster",
+                              toggleView
+                            )
+                          }
+                        >
+                          <img src={Cluster} alt="" />
+                          Cluster
+                          <i className="fa-solid fa-angle-down"></i>
+                        </Button>
                       </Box>
-                      <Button
-                        className="secondary-btn min-width"
-                        variant="contained"
-                        onClick={() =>
-                          this.props.setCurrentActiveNode(
-                            "ServiceMesh",
-                            toggleView
-                          )
-                        }
-                      >
-                        <img src={ServiceMesh} alt="" /> Service mesh
-                        <i className="fa-solid fa-angle-down"></i>
-                      </Button>
-                    </Box>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="application-balancer">
-                      <Box className="balancer-boxs  m-b-10">
-                        <Box className="balancer-box">
-                          <span>
-                            <img src={bottomArrow} alt="" />
-                          </span>
+                    </ListItem>
+                    <ListItem>
+                      <Box className="application-balancer">
+                        <Box className="balancer-boxs  m-b-10">
+                          <Box className="balancer-box">
+                            <span>
+                              <img src={bottomArrow} alt="" />
+                            </span>
+                          </Box>
                         </Box>
+                        <Button
+                          className="secondary-btn min-width"
+                          variant="contained"
+                          onClick={() =>
+                            this.props.setCurrentActiveNode(
+                              "Ingress",
+                              toggleView
+                            )
+                          }
+                        >
+                          <img src={Ingress} alt="" /> Ingress
+                          <i className="fa-solid fa-angle-down"></i>
+                        </Button>
                       </Box>
-                      <Button
-                        className="secondary-btn min-width"
-                        variant="contained"
+                    </ListItem>
+                    <ListItem>
+                      <Box className="application-balancer">
+                        <Box className="balancer-boxs  m-b-10">
+                          <Box className="balancer-box">
+                            <span>
+                              <img src={bottomArrow} alt="" />
+                            </span>
+                          </Box>
+                        </Box>
+                        <Button
+                          className="secondary-btn min-width"
+                          variant="contained"
+                          onClick={() =>
+                            this.props.setCurrentActiveNode(
+                              "ServiceMesh",
+                              toggleView
+                            )
+                          }
+                        >
+                          <img src={ServiceMesh} alt="" /> Service mesh
+                          <i className="fa-solid fa-angle-down"></i>
+                        </Button>
+                      </Box>
+                    </ListItem>
+                    <ListItem>
+                      <Box className="application-balancer">
+                        <Box className="balancer-boxs  m-b-10">
+                          <Box className="balancer-box">
+                            <span>
+                              <img src={bottomArrow} alt="" />
+                            </span>
+                          </Box>
+                        </Box>
+                        <Button
+                          className="secondary-btn min-width"
+                          variant="contained"
+                          onClick={() =>
+                            this.props.setCurrentActiveNode(
+                              "JavaSpringbot",
+                              toggleView
+                            )
+                          }
+                        >
+                          <img src={JavaSpringbot} alt="" /> Java springbot
+                          <i className="fa-solid fa-angle-down"></i>
+                        </Button>
+                      </Box>
+                    </ListItem>
+                  </List>
+                  <Box className="balancer-boxs">
+                    <Box className="balancer-box">
+                      <span>
+                        <img src={bottomArrow} alt="" />
+                      </span>
+                      <Box
+                        className="icon"
                         onClick={() =>
-                          this.props.setCurrentActiveNode(
-                            "JavaSpringbot",
-                            toggleView
-                          )
-                        }
-                      >
-                        <img src={JavaSpringbot} alt="" /> Java springbot
-                        <i className="fa-solid fa-angle-down"></i>
-                      </Button>
-                    </Box>
-                  </ListItem>
-                </List>
-                <Box className="balancer-boxs">
-                  <Box className="balancer-box">
-                    <span>
-                      <img src={bottomArrow} alt="" />
-                    </span>
-                    <Box className="icon"  onClick={() =>
                           this.props.setCurrentActiveNode(
                             "PostgreSQL",
                             toggleView
                           )
-                        }>
-                      <img src={Postgresql} alt="" />
+                        }
+                      >
+                        <img src={Postgresql} alt="" />
+                      </Box>
+                      <p>PostgreSQL</p>
                     </Box>
-                    <p>PostgreSQL</p>
-                  </Box>
-                  <Box className="balancer-box">
-                    <span>
-                      <img src={bottomArrow} alt="" />
-                    </span>
-                    <Box className="icon" onClick={() =>
+                    <Box className="balancer-box">
+                      <span>
+                        <img src={bottomArrow} alt="" />
+                      </span>
+                      <Box
+                        className="icon"
+                        onClick={() =>
                           this.props.setCurrentActiveNode(
                             "Opensearch",
                             toggleView
                           )
-                        }>
-                      <img src={Opensearch} alt="" />
+                        }
+                      >
+                        <img src={Opensearch} alt="" />
+                      </Box>
+                      <p>Opensearch</p>
                     </Box>
-                    <p>Opensearch</p>
                   </Box>
                 </Box>
               </Box>
             </Box>
-          </Box>
-        </Grid>
+          </Grid>
+        ) : (
+          <Lambda
+            setCurrentActiveNode={(activeServiceChildTopology) => {
+              this.props.setCurrentActiveNode(activeServiceChildTopology, toggleView,activeServiceTopology);
+            }}
+          />
+        )}
+
         <Grid item xs={6}>
           {activeComponent === "SSL" && <SslTableComponent />}
           {activeComponent === "APIGateway" && <APIGatewayComponent />}
@@ -332,6 +356,7 @@ class SOATopologySwitch extends Component {
           {activeComponent === "ServiceMesh" && <ServiceMeshComponent />}
           {activeComponent === "JavaSpringbot" && <JavaSpringbootComponent />}
           {activeComponent === "Opensearch" && <APIGatewayComponent />}
+          {activeComponent === "Function" && <FunctionComponent />}
         </Grid>
       </Grid>
     );

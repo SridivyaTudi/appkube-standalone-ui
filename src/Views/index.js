@@ -143,10 +143,10 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/environments/soa/topology`}
             element={<SOATopology />}
           />
-          <Route
+          {/* <Route
             path={`${APP_PREFIX_PATH}/environments/soa/topologyswitch`}
             element={<SOATopologySwitch />}
-          />
+          /> */}
           <Route
             path={`${APP_PREFIX_PATH}/application-status-dashboard`}
             element={<ApplicationStatusDashboard />}
