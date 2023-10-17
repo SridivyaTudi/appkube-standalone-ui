@@ -25,6 +25,7 @@ import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import TabsMenu from "../TabsMenu";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -203,7 +204,7 @@ class SOATopology extends Component {
 
     let { serviceView } = this.props;
     return (
-      <Box className="disaster-recovery-container">
+      <Box className="disaster-recovery-container environment-container">
         <Box className="services-panel-tabs">
           <Box className="tabs-head ">
             <HtmlTooltip className="table-tooltip" title={productName}>
@@ -211,20 +212,13 @@ class SOATopology extends Component {
                 {productName}
               </h3>
             </HtmlTooltip>
-
-            <List>
-              {this.tabMapping.map((tabData, index) => {
-                return (
-                  <ListItem
-                    key={v4()}
-                    className={index === activeTab ? "active" : ""}
-                    onClick={() => this.setActiveTab(index)}
-                  >
-                    {tabData.name}
-                  </ListItem>
-                );
-              })}
-            </List>
+            <TabsMenu
+              tabs={this.tabMapping}
+              setActiveTab={this.setActiveTab}
+              activeTab={activeTab}
+              breakWidth={1280} 
+              key={v4()}
+            />
             <Box className="breadcrumbs-content">
               <ul>
                 <li>
