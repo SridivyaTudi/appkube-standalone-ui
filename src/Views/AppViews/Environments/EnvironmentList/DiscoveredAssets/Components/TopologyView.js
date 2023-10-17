@@ -128,7 +128,7 @@ class TopologyView extends Component {
                       className="services-text-box active"
                       id={`${data.label}`}
                     >
-                      <div className="d-flex">
+                      <div className="d-flex align-items-center">
                         <div className="account-image">
                           <img src={data.image} alt={cloudName} />
                         </div>
