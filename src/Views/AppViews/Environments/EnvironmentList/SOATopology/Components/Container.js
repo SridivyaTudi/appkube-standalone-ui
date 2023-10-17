@@ -12,9 +12,6 @@ import Postgresql from "assets/img/assetmanager/postgresql.png";
 import Opensearch from "assets/img/assetmanager/opensearch.png";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 class Container extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     let { toggleView, activeServiceChildTopology } = this.props;
     return (

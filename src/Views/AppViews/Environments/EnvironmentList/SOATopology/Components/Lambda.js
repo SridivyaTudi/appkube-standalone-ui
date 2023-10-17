@@ -6,9 +6,6 @@ import FunctionImg from "assets/img/assetmanager/function-img.png";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 class Lambda extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     let { activeServiceChildTopology, toggleView } = this.props;
     return (

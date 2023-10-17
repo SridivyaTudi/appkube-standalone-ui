@@ -97,10 +97,11 @@ class DiscoveredAssets extends Component {
       let { cloudName } = this.getUrlDetails();
 
       let resEnvData = this.props.envDataByLandingZone.data;
-
-      this.setState({
-        data: { ...resEnvData, label: "Account ID", image: LOGOS[cloudName] },
-      });
+      if (resEnvData) {
+        this.setState({
+          data: { ...resEnvData, label: "Account ID", image: LOGOS[cloudName] },
+        });
+      }
     }
 
     if (prevState.currentActiveNode !== this.state.currentActiveNode) {

@@ -4,7 +4,6 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Box } from "@mui/material";
 import { v4 } from "uuid";
 import vpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
-import { LOGOS } from "CommonData";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 

@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import DrTopology from "Views/AppViews/Environments/EnvironmentList/ThreeTierTopology/DrTopology";
-import { Box, List, ListItem, Grid, IconButton } from "@mui/material";
+import { Box, Grid, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
@@ -316,7 +316,7 @@ class SOATopology extends Component {
     );
   };
   render() {
-    const { activeTab, toggleView } = this.state;
+    const { activeTab } = this.state;
     const { landingZone, landingZoneId, cloudName, productName } =
       this.getUrlDetails();
 
@@ -325,9 +325,7 @@ class SOATopology extends Component {
         <Box className="services-panel-tabs">
           <Box className="tabs-head ">
             <HtmlTooltip className="table-tooltip" title={productName}>
-              <h3 onClick={() => this.setState({ toggleView: !toggleView })}>
-                {productName}
-              </h3>
+              <h3>{productName}</h3>
             </HtmlTooltip>
 
             <TabsMenu
