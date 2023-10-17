@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, List, ListItem, Grid, Button,IconButton } from "@mui/material";
+import { Box, List, ListItem, Grid, Button, IconButton } from "@mui/material";
 import Gateway from "assets/img/assetmanager/gateway.png";
 import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
 import FunctionImg from "assets/img/assetmanager/function-img.png";
@@ -7,16 +7,22 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 class Lambda extends Component {
   render() {
+    let { arrowRightIconShow = true } = this.props;
     return (
       <Grid item xs={6}>
         <Box className="common-service">
-          <IconButton
-            size="small"
-            className="open-close"
-            onClick={() => this.props.setCurrentActiveNode("",true)}
-          >
-            <KeyboardArrowRightIcon fontSize="inherit" />
-          </IconButton>
+          {arrowRightIconShow ? (
+            <IconButton
+              size="small"
+              className="open-close"
+              onClick={() => this.props.setCurrentActiveNode("", true)}
+            >
+              <KeyboardArrowRightIcon fontSize="inherit" />
+            </IconButton>
+          ) : (
+            <></>
+          )}
+
           <Box className="title">Lambda Based</Box>
           <List>
             <ListItem>

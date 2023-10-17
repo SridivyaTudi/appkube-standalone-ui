@@ -516,6 +516,7 @@ class SOATopology extends Component {
                       />
                     ) : activeServiceTopology === "lambda" ? (
                       <Lambda
+                        arrowRightIconShow={false}
                         setCurrentActiveNode={(activeServiceChildTopology) => {
                           this.setState({ activeServiceChildTopology });
                         }}
