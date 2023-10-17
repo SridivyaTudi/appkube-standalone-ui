@@ -53,6 +53,7 @@ class SOATopologySwitch extends Component {
     this.state = {
       activeComponent: "",
       isActivityViewDetails: false,
+      activeLayer: "",
     };
   }
   componentDidUpdate(prevProps, prevState) {
@@ -84,7 +85,7 @@ class SOATopologySwitch extends Component {
   }
 
   render() {
-    const { activeComponent } = this.state;
+    const { activeComponent, activeLayer } = this.state;
     let { activeServiceChildTopology, toggleView, activeServiceTopology } =
       this.props;
     return (
@@ -127,21 +128,28 @@ class SOATopologySwitch extends Component {
                 <Box className="business-service-right">
                   <Box className="application-balancer m-b-10">
                     <Button
-                      className="secondary-btn min-width"
+                      className={`secondary-btn min-width ${
+                        activeLayer === "SSL" ? "active" : ""
+                      }`}
                       variant="contained"
-                      onClick={() =>
+                      onClick={() => {
+                        this.setState({ activeLayer: "SSL" });
                         this.props.setCurrentActiveNode(
                           "SSL",
                           toggleView,
                           activeServiceTopology
-                        )
-                      }
+                        );
+                      }}
                     >
                       SSL
                     </Button>
                   </Box>
                   <List>
-                    <ListItem>
+                    <ListItem
+                      className={`${
+                        activeLayer === "APIGateway" ? "active" : ""
+                      }`}
+                    >
                       <Box className="application-balancer">
                         <Box className="balancer-boxs m-b-10">
                           <Box className="balancer-box">
@@ -153,13 +161,14 @@ class SOATopologySwitch extends Component {
                         <Button
                           className="secondary-btn min-width"
                           variant="contained"
-                          onClick={() =>
+                          onClick={() => {
+                            this.setState({ activeLayer: "APIGateway" });
                             this.props.setCurrentActiveNode(
                               "APIGateway",
                               toggleView,
                               activeServiceTopology
-                            )
-                          }
+                            );
+                          }}
                         >
                           <img src={Gateway} alt="" />
                           API Gateway
@@ -167,7 +176,11 @@ class SOATopologySwitch extends Component {
                         </Button>
                       </Box>
                     </ListItem>
-                    <ListItem>
+                    <ListItem
+                      className={`${
+                        activeLayer === "LoadBalancer" ? "active" : ""
+                      }`}
+                    >
                       <Box className="application-balancer">
                         <Box className="balancer-boxs  m-b-10">
                           <Box className="balancer-box">
@@ -179,13 +192,14 @@ class SOATopologySwitch extends Component {
                         <Button
                           className="secondary-btn min-width"
                           variant="contained"
-                          onClick={() =>
+                          onClick={() => {
+                            this.setState({ activeLayer: "LoadBalancer" });
                             this.props.setCurrentActiveNode(
                               "LoadBalancer",
                               toggleView,
                               activeServiceTopology
-                            )
-                          }
+                            );
+                          }}
                         >
                           <img src={LoadBalancer} alt="" /> Load Balancer
                           <i className="fa-solid fa-angle-down"></i>
@@ -217,18 +231,21 @@ class SOATopologySwitch extends Component {
                     </Box>
                   </Box>
                   <List>
-                    <ListItem>
+                    <ListItem
+                      className={`${activeLayer === "Cluster" ? "active" : ""}`}
+                    >
                       <Box className="application-balancer p-t-15">
                         <Button
                           className="secondary-btn min-width"
                           variant="contained"
-                          onClick={() =>
+                          onClick={() => {
+                            this.setState({ activeLayer: "Cluster" });
                             this.props.setCurrentActiveNode(
                               "Cluster",
                               toggleView,
                               activeServiceTopology
-                            )
-                          }
+                            );
+                          }}
                         >
                           <img src={Cluster} alt="" />
                           Cluster
@@ -236,7 +253,9 @@ class SOATopologySwitch extends Component {
                         </Button>
                       </Box>
                     </ListItem>
-                    <ListItem>
+                    <ListItem
+                      className={`${activeLayer === "Ingress" ? "active" : ""}`}
+                    >
                       <Box className="application-balancer">
                         <Box className="balancer-boxs  m-b-10">
                           <Box className="balancer-box">
@@ -248,20 +267,25 @@ class SOATopologySwitch extends Component {
                         <Button
                           className="secondary-btn min-width"
                           variant="contained"
-                          onClick={() =>
+                          onClick={() => {
+                            this.setState({ activeLayer: "Ingress" });
                             this.props.setCurrentActiveNode(
                               "Ingress",
                               toggleView,
                               activeServiceTopology
-                            )
-                          }
+                            );
+                          }}
                         >
                           <img src={Ingress} alt="" /> Ingress
                           <i className="fa-solid fa-angle-down"></i>
                         </Button>
                       </Box>
                     </ListItem>
-                    <ListItem>
+                    <ListItem
+                      className={`${
+                        activeLayer === "ServiceMesh" ? "active" : ""
+                      }`}
+                    >
                       <Box className="application-balancer">
                         <Box className="balancer-boxs  m-b-10">
                           <Box className="balancer-box">
@@ -273,20 +297,25 @@ class SOATopologySwitch extends Component {
                         <Button
                           className="secondary-btn min-width"
                           variant="contained"
-                          onClick={() =>
+                          onClick={() => {
+                            this.setState({ activeLayer: "ServiceMesh" });
                             this.props.setCurrentActiveNode(
                               "ServiceMesh",
                               toggleView,
                               activeServiceTopology
-                            )
-                          }
+                            );
+                          }}
                         >
                           <img src={ServiceMesh} alt="" /> Service mesh
                           <i className="fa-solid fa-angle-down"></i>
                         </Button>
                       </Box>
                     </ListItem>
-                    <ListItem>
+                    <ListItem
+                      className={`${
+                        activeLayer === "JavaSpringbot" ? "active" : ""
+                      }`}
+                    >
                       <Box className="application-balancer">
                         <Box className="balancer-boxs  m-b-10">
                           <Box className="balancer-box">
@@ -298,13 +327,14 @@ class SOATopologySwitch extends Component {
                         <Button
                           className="secondary-btn min-width"
                           variant="contained"
-                          onClick={() =>
+                          onClick={() => {
+                            this.setState({ activeLayer: "JavaSpringbot" });
                             this.props.setCurrentActiveNode(
                               "JavaSpringbot",
                               toggleView,
                               activeServiceTopology
-                            )
-                          }
+                            );
+                          }}
                         >
                           <img src={JavaSpringbot} alt="" /> Java springbot
                           <i className="fa-solid fa-angle-down"></i>
@@ -313,37 +343,47 @@ class SOATopologySwitch extends Component {
                     </ListItem>
                   </List>
                   <Box className="balancer-boxs">
-                    <Box className="balancer-box">
+                    <Box
+                      className={`balancer-box ${
+                        activeLayer === "PostgreSQL" ? "active" : ""
+                      }`}
+                    >
                       <span>
                         <img src={bottomArrow} alt="" />
                       </span>
                       <Box
                         className="icon"
-                        onClick={() =>
+                        onClick={() => {
+                          this.setState({ activeLayer: "PostgreSQL" });
                           this.props.setCurrentActiveNode(
                             "PostgreSQL",
                             toggleView,
                             activeServiceTopology
-                          )
-                        }
+                          );
+                        }}
                       >
                         <img src={Postgresql} alt="" />
                       </Box>
                       <p>PostgreSQL</p>
                     </Box>
-                    <Box className="balancer-box">
+                    <Box
+                      className={`balancer-box ${
+                        activeLayer === "Opensearch" ? "active" : ""
+                      }`}
+                    >
                       <span>
                         <img src={bottomArrow} alt="" />
                       </span>
                       <Box
                         className="icon"
-                        onClick={() =>
+                        onClick={() => {
+                          this.setState({ activeLayer: "Opensearch" });
                           this.props.setCurrentActiveNode(
                             "Opensearch",
                             toggleView,
                             activeServiceTopology
-                          )
-                        }
+                          );
+                        }}
                       >
                         <img src={Opensearch} alt="" />
                       </Box>
