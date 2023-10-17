@@ -88,9 +88,14 @@ tags:
     description: cost analytics
   - name: SlaAnalyticsQuery
     description: sla analytics
+  - name: ProcessCentralAnalyticsQuery
+    description: sla analytics
   - name: BillingAnalyticsQuery
     description: billing  cost analytics
-
+  - name: ApplicationTopologyQuery
+    description: get application topology data
+  - name: InfraDiscovery
+    description: Cloud element discovery
 
 paths:
   /organization:
@@ -737,7 +742,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/LandingzoneDTO'
+                  $ref: '#/components/schemas/LandingzoneResponseDTO'
         404:
           description: "Service Not found"
         500:
@@ -759,13 +764,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LandingzoneDTO'
+                $ref: '#/components/schemas/LandingzoneResponseDTO'
         201:
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LandingzoneDTO'
+                $ref: '#/components/schemas/LandingzoneResponseDTO'
         404:
           description: "Service Not found"
         500:
@@ -787,13 +792,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LandingzoneDTO'
+                $ref: '#/components/schemas/LandingzoneResponseDTO'
         201:
           description: Updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LandingzoneDTO'
+                $ref: '#/components/schemas/LandingzoneResponseDTO'
         404:
           description: "Service Not found"
         500:
@@ -817,7 +822,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LandingzoneDTO'
+                $ref: '#/components/schemas/LandingzoneResponseDTO'
         404:
           description: "Service Not found"
         500:
@@ -844,7 +849,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/LandingzoneDTO'
+                  $ref: '#/components/schemas/LandingzoneResponseDTO'
         404:
           description: "Service Not found"
         500:
@@ -1432,6 +1437,153 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudElementDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /cloud-element/auto-associate/org/{orgId}/cloud/{cloud}:
+    get:
+      tags:
+        - CloudElement
+      summary: Auto-associate cloud-element with business element
+      operationId: autoAssociateCloudElement
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: path
+          name: cloud
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /cloud-element/auto-associate-lambda:
+    get:
+      tags:
+        - CloudElement
+      summary: Auto-associate lambda cloud-element with business element
+      operationId: autoAssociateLambdaTags
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /cloud-element/auto-associate-s3:
+    get:
+      tags:
+        - CloudElement
+      summary: Auto-associate S3 cloud-element with business element
+      operationId: autoAssociateS3Tags
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /cloud-element/tag/landing-zone-id/{landingZoneId}/instance-id/{instanceId}:
+    parameters:
+      - in: path
+        name: landingZoneId
+        schema:
+          type: integer
+          format: int64
+        required: true
+      - in: path
+        name: instanceId
+        schema:
+          type: string
+        required: true
+    get:
+      tags:
+        - CloudElement
+      summary: Fetch tags of a given landing-zone-id
+      operationId: getCloudElementTag
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CloudElementTagDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /cloud-element/tag/landing-zone-id/{landingZoneId}/instance-id/{instanceId}/service-id/{serviceId}:
+    parameters:
+      - in: path
+        name: landingZoneId
+        schema:
+          type: integer
+          format: int64
+        required: true
+      - in: path
+        name: instanceId
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: serviceId
+        schema:
+          type: integer
+          format: int64
+        required: true
+    delete:
+      tags:
+        - CloudElement
+      summary: Delete a tag of a given landing-zone-id, instance-id and service-id
+      operationId: deleteCloudElementTag
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
         404:
           description: "Service Not found"
         500:
@@ -3863,6 +4015,32 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
+  /query/organization/{orgId}/analytics/process-central-analytics:
+    get:
+      tags:
+        - ProcessCentralAnalyticsQuery
+      summary: get process central analytic data
+      operationId: getProcessCentralAnalytics
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProcessCentralAnalyticDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
   /query/organization/{orgId}/billing/cloud-element/entity/{entity}/organization-wise-billing:
     get:
       tags:
@@ -4010,6 +4188,175 @@ paths:
           description: "Service Not found"
         500:
           description: "Internal Server Error"
+  /query/organization/{orgId}/application-topology/landing-zone-id/{landingZoneId}:
+    get:
+      tags:
+        - ApplicationTopologyQuery
+      summary: Application-topology view by landing-zone-id
+      operationId: getApplicationTopologyByLandingZoneId
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: path
+          name: landingZoneId
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApplicationTopologyDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /query/organization/{orgId}/application-topology/service-view:
+    get:
+      tags:
+        - ApplicationTopologyQuery
+      summary: Application-topology service view
+      operationId: getApplicationTopologyServiceView
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: query
+          name: landingZoneId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: query
+          name: productName
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: departmentName
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: env
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: productType
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: serviceNature
+          schema:
+            type: string
+          required: false
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /infra-discovery/organization/{orgId}/aws:
+    get:
+      tags:
+        - InfraDiscovery
+      summary: Getting AWS elements
+      operationId: discoverAwsCloudElements
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: query
+          name: landingZone
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: elementType
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: awsRegion
+          schema:
+            type: string
+          required: false
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CloudElementDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
+  /infra-discovery/organization/{orgId}/azure:
+    get:
+      tags:
+        - InfraDiscovery
+      summary: Getting Azure elements
+      operationId: discoverAzureCloudElements
+      parameters:
+        - in: path
+          name: orgId
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - in: query
+          name: landingZone
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: elementType
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: awsRegion
+          schema:
+            type: string
+          required: false
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CloudElementDTO'
+        404:
+          description: "Service Not found"
+        500:
+          description: "Internal Server Error"
 components:
   schemas:
     OrganizationDTO:
@@ -4056,6 +4403,8 @@ components:
         organizationId:
           type: integer
           format: int64
+        organizationName:
+          type: string
     ProductDTO:
       type: object
       properties:
@@ -4072,6 +4421,10 @@ components:
         departmentId:
           type: integer
           format: int64
+        organizationName:
+          type: string
+        departmentName:
+          type: string
         status:
           type: string
         createdBy:
@@ -4109,9 +4462,13 @@ components:
         departmentId:
           type: integer
           format: int64
+        departmentName:
+          type: string
         landingzoneId:
           type: integer
           format: int64
+        landingZone:
+          type: string
     BudgetDTO:
       type: object
       properties:
@@ -4126,6 +4483,8 @@ components:
         organizationId:
           type: integer
           format: int64
+        organizationName:
+          type: string
         status:
           type: string
         createdBy:
@@ -4167,6 +4526,46 @@ components:
         departmentId:
           type: integer
           format: int64
+        departmentName:
+          type: string
+    LandingzoneResponseDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        description:
+          type: string
+        landingZone:
+          type: string
+        cloud:
+          type: string
+        displayName:
+          type: string
+        roleArn:
+          type: string
+        externalId:
+          type: string
+        status:
+          type: string
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+        createdOn:
+          type: string
+        updatedOn:
+          type: string
+        departmentId:
+          type: integer
+          format: int64
+        departmentName:
+          type: string
+        organizationId:
+          type: integer
+          format: int64
+        organizationName:
+          type: string
     CloudElementSummaryDTO:
       type: object
       properties:
@@ -4188,6 +4587,8 @@ components:
         landingzoneId:
           type: integer
           format: int64
+        landingZone:
+          type: string
     CloudElementDTO:
       type: object
       properties:
@@ -4229,12 +4630,18 @@ components:
         landingzoneId:
           type: integer
           format: int64
+        landingZone:
+          type: string
         dbCategoryId:
           type: integer
           format: int64
+        dbCategoryName:
+          type: string
         productEnclaveId:
           type: integer
           format: int64
+        productEnclaveInstanceId:
+          type: string
     ModuleDTO:
       type: object
       properties:
@@ -4246,9 +4653,13 @@ components:
         productId:
           type: integer
           format: int64
+        productName:
+          type: string
         productEnvId:
           type: integer
           format: int64
+        productEnvName:
+          type: string
         moduleNature:
           type: string
         serviceTopology:
@@ -4282,18 +4693,28 @@ components:
         cloudElementId:
           type: integer
           format: int64
+        cloudElementInstanceId:
+          type: string
         departmentId:
           type: integer
           format: int64
+        departmentName:
+          type: string
         productId:
           type: integer
           format: int64
+        productName:
+          type: string
         moduleId:
           type: integer
           format: int64
+        moduleName:
+          type: string
         productEnvId:
           type: integer
           format: int64
+        productEnvName:
+          type: string
         slaJson:
           type: object
         costJson:
@@ -4335,6 +4756,8 @@ components:
         productId:
           type: integer
           format: int64
+        productName:
+          type: string
     DbCategoryDTO:
       type: object
       properties:
@@ -4356,6 +4779,8 @@ components:
         organizationId:
           type: integer
           format: int64
+        organizationName:
+          type: string
     EnvironmentCountQueryDTO:
       type: object
       properties:
@@ -4659,6 +5084,15 @@ components:
           type: string
         endUsage:
           type: string
+    ProcessCentralAnalyticDTO:
+      type: object
+      properties:
+        devCentral:
+          type: object
+        secCentral:
+          type: object
+        opsCentral:
+          type: object
     InfraTopologySOAStatsDTO:
       type: object
       properties:
@@ -4671,3 +5105,57 @@ components:
         otherCount:
           type: integer
           format: int64
+    CloudElementTagDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        landingzoneId:
+          type: integer
+          format: int64
+        instanceId:
+          type: string
+        tag:
+          type: object
+    ApplicationTopologyDTO:
+      type: object
+      properties:
+        application:
+          type: string
+        lob:
+          type: string
+        environment:
+          type: string
+        appType:
+          type: string
+        sle:
+          type: object
+        endUsage:
+          type: object
+        cost:
+          type: object
+    ServiceViewTopologyDTO:
+      type: object
+      properties:
+        application:
+          type: string
+        lob:
+          type: string
+        environment:
+          type: string
+        appType:
+          type: string
+        landingZoneId:
+          type: integer
+          format: int64
+        cloud:
+          type: string
+        businessServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/BusinessElementDTO'
+        commonServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/BusinessElementDTO'
