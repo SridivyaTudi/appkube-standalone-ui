@@ -69,6 +69,8 @@ class TopologyView extends Component {
             transformScale = instance && instance.state.scale;
             this.setState({ scale: true });
           }}
+          minScale={0.4}
+          limitToBounds={false}
         >
           {({ zoomIn, zoomOut, instance, zoomToElement, ...rest }) => {
             transformScale = instance.transformState.scale;

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import DrTopology from "Views/AppViews/Environments/EnvironmentList/ThreeTierTopology/DrTopology";
 import { Box, List, ListItem, Grid, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -19,308 +19,10 @@ import JavaSpringbootComponent from "Views/AppViews/Environments/EnvironmentList
 import FunctionComponent from "../SOATopologySwitch/Function";
 import PostgresqlComponent from "../SOATopologySwitch/Postgresql";
 import OpensearchComponent from "../SOATopologySwitch/Opensearch";
-
-let data = {
-  landingZone: "EMS",
-  productEnclaveList: [
-    {
-      id: 18,
-      instanceName: "Business Service",
-      instanceId: "Business Service",
-      image: "",
-      threeTier: {
-        productCount: 0,
-        webCount: 0,
-        appCount: 0,
-        dataCount: 0,
-        auxiliaryCount: 0,
-      },
-      soa: {
-        productCount: 2,
-        appCount: 0,
-        dataCount: 10,
-        otherCount: 0,
-      },
-      productEnclaveList: [
-        {
-          id: 155,
-          instanceName: "Admission Fee",
-          instanceId: "Admission Fee",
-          threeTier: {
-            productCount: 0,
-            webCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            auxiliaryCount: 0,
-          },
-          soa: {
-            productCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            otherCount: 0,
-          },
-        },
-        {
-          id: 166,
-          instanceName: "A/C Payable",
-          instanceId: "A/C Payable",
-          threeTier: {
-            productCount: 0,
-            webCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            auxiliaryCount: 0,
-          },
-          soa: {
-            productCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            otherCount: 0,
-          },
-        },
-        {
-          id: 167,
-          instanceName: "Canteen",
-          instanceId: "Canteen",
-          threeTier: {
-            productCount: 0,
-            webCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            auxiliaryCount: 0,
-          },
-          soa: {
-            productCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            otherCount: 0,
-          },
-        },
-        {
-          id: 168,
-          instanceName: "Library",
-          instanceId: "Library",
-          threeTier: {
-            productCount: 0,
-            webCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            auxiliaryCount: 0,
-          },
-          soa: {
-            productCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            otherCount: 0,
-          },
-        },
-        {
-          id: 169,
-          instanceName: "Classroom",
-          instanceId: "Classroom",
-          threeTier: {
-            productCount: 0,
-            webCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            auxiliaryCount: 0,
-          },
-          soa: {
-            productCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            otherCount: 0,
-          },
-        },
-        {
-          id: 161,
-          instanceName: "Attendance",
-          instanceId: "Attendance",
-          threeTier: {
-            productCount: 0,
-            webCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            auxiliaryCount: 0,
-          },
-          soa: {
-            productCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            otherCount: 0,
-          },
-        },
-        {
-          id: 171,
-          instanceName: "Finance",
-          instanceId: "Finance",
-          threeTier: {
-            productCount: 0,
-            webCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            auxiliaryCount: 0,
-          },
-          soa: {
-            productCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            otherCount: 0,
-          },
-        },
-      ],
-      globalServiceList: [],
-    },
-    {
-      id: 15,
-      instanceName: "Common Service",
-      instanceId: "Common Service",
-      threeTier: {
-        productCount: 0,
-        webCount: 0,
-        appCount: 0,
-        dataCount: 0,
-        auxiliaryCount: 0,
-      },
-      soa: {
-        productCount: 0,
-        appCount: 0,
-        dataCount: 0,
-        otherCount: 0,
-      },
-      productEnclaveList: [
-        {
-          id: 151,
-          instanceName: "Search",
-          instanceId: "Search",
-          threeTier: {
-            productCount: 0,
-            webCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            auxiliaryCount: 0,
-          },
-          soa: {
-            productCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            otherCount: 0,
-          },
-        },
-        {
-          id: 162,
-          instanceName: "Filter",
-          instanceId: "Filter",
-          threeTier: {
-            productCount: 0,
-            webCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            auxiliaryCount: 0,
-          },
-          soa: {
-            productCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            otherCount: 0,
-          },
-        },
-        {
-          id: 167,
-          instanceName: "Rbac",
-          instanceId: "Rbac",
-          threeTier: {
-            productCount: 0,
-            webCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            auxiliaryCount: 0,
-          },
-          soa: {
-            productCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            otherCount: 0,
-          },
-        },
-        {
-          id: 122,
-          instanceName: "Security",
-          instanceId: "Security",
-          threeTier: {
-            productCount: 0,
-            webCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            auxiliaryCount: 0,
-          },
-          soa: {
-            productCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            otherCount: 0,
-          },
-        },
-        {
-          id: 133,
-          instanceName: "Message",
-          instanceId: "Message",
-          threeTier: {
-            productCount: 0,
-            webCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            auxiliaryCount: 0,
-          },
-          soa: {
-            productCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            otherCount: 0,
-          },
-        },
-        {
-          id: 144,
-          instanceName: "Setting",
-          instanceId: "Setting",
-          threeTier: {
-            productCount: 0,
-            webCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            auxiliaryCount: 0,
-          },
-          soa: {
-            productCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            otherCount: 0,
-          },
-        },
-        {
-          id: 155,
-          instanceName: "Navigation",
-          instanceId: "Navigation",
-          threeTier: {
-            productCount: 0,
-            webCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            auxiliaryCount: 0,
-          },
-          soa: {
-            productCount: 0,
-            appCount: 0,
-            dataCount: 0,
-            otherCount: 0,
-          },
-        },
-      ],
-      globalServiceList: [],
-    },
-  ],
-  globalServiceList: [],
-};
+import { getServiceView } from "Redux/ServiceViewTopology/ServiceViewTopologyThunk";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import Loader from "Components/Loader";
 class SOATopology extends Component {
   tabMapping = [
     {
@@ -353,9 +55,39 @@ class SOATopology extends Component {
       activeServiceTopology: "",
       activeServiceChildTopology: "",
       toggleView: true,
+      serviceViewData: {},
     };
   }
 
+  componentDidMount = () => {
+    const { landingZoneId, departmentName, environmentName, productName } =
+      this.getUrlDetails();
+    try {
+      let params = `landingZoneId=${landingZoneId}&productName=${productName.replace(
+        "%20",
+        ""
+      )}&departmentName=${departmentName.replace(
+        "%20",
+        ""
+      )}&env=${environmentName.replace("%20", "")}&productType=SOA`;
+      this.props.getServiceView(params);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.serviceView.status !== this.props.serviceView.status &&
+      this.props.serviceView.status === status.SUCCESS
+    ) {
+      let responseServiceView = this.props.serviceView.data;
+
+      if (responseServiceView && Object.keys(responseServiceView).length) {
+        this.manipulateServiceViewData(responseServiceView);
+      }
+    }
+  }
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
@@ -366,8 +98,18 @@ class SOATopology extends Component {
     const cloudName = queryPrm.get("cloudName");
     const landingZoneId = queryPrm.get("landingZoneId");
     const landingZone = queryPrm.get("landingZone");
+    const productName = queryPrm.get("productName");
+    const departmentName = queryPrm.get("departmentName");
+    const environmentName = queryPrm.get("environmentName");
 
-    return { landingZone, landingZoneId, cloudName };
+    return {
+      landingZone,
+      landingZoneId,
+      cloudName,
+      departmentName,
+      environmentName,
+      productName,
+    };
   }
 
   setCurrentActiveNode = (node, nodeLevelData, nodeID) => {
@@ -390,20 +132,64 @@ class SOATopology extends Component {
     this.setState({ activeServiceTopology, activeServiceChildTopology });
   };
 
+  /** Manipulate Service View Data.
+   * @param {Object} data - The data of the service view.
+   */
+  manipulateServiceViewData = (data = {}) => {
+    let { application = "", businessServices = [], commonServices = [] } = data;
+
+    let serviceViewData = {
+      landingZone: application,
+      productEnclaveList: [
+        {
+          id: v4(),
+          instanceName: "Business Service",
+          instanceId: "Business Service",
+          image: "",
+          productEnclaveList: [],
+          globalServiceList: [],
+        },
+        {
+          id: v4(),
+          instanceName: "Common Service",
+          instanceId: "Common Service",
+          productEnclaveList: [],
+          globalServiceList: [],
+        },
+      ],
+      globalServiceList: [],
+    };
+    if (businessServices?.length || commonServices?.length) {
+      serviceViewData.productEnclaveList[0].productEnclaveList =
+        businessServices.map((service) => {
+          return { ...service, instanceId: service.serviceName };
+        });
+      serviceViewData.productEnclaveList[1].productEnclaveList =
+        commonServices.map((service) => {
+          return { ...service, instanceId: service.serviceName };
+        });
+    }
+
+    this.setState({ serviceViewData });
+  };
   render() {
     const {
       activeTab,
       activeServiceTopology,
       activeServiceChildTopology,
       toggleView,
+      serviceViewData,
     } = this.state;
-    const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
+    const { landingZone, landingZoneId, cloudName,productName } = this.getUrlDetails();
+    const serviceViewDataLength = Object.keys(serviceViewData).length;
+
+    let { serviceView } = this.props;
     return (
       <Box className="disaster-recovery-container">
         <Box className="services-panel-tabs">
           <Box className="tabs-head ">
             <h3 onClick={() => this.setState({ toggleView: !toggleView })}>
-              EMS
+              {productName}
             </h3>
             <List>
               {this.tabMapping.map((tabData, index) => {
@@ -439,7 +225,7 @@ class SOATopology extends Component {
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
-                <li className="active">EMS</li>
+                <li className="active">{productName}</li>
               </ul>
             </Box>
           </Box>
@@ -461,27 +247,35 @@ class SOATopology extends Component {
                         <Box className="services-panel-title bottom-border">
                           <Box className="name">Service View Topology </Box>
                         </Box>
-                        <Box className="services-panel-body">
-                          {activeServiceChildTopology ? (
-                            <IconButton
-                              size="small"
-                              className="open-close"
-                              onClick={() =>
-                                this.setState({ toggleView: !toggleView })
-                              }
-                            >
-                              <KeyboardArrowLeftIcon fontSize="inherit" />
-                            </IconButton>
-                          ) : (
-                            <></>
-                          )}
 
-                          <TopologyView
-                            data={data}
-                            parentCssClass="infra-toplogy-view"
-                            setCurrentActiveNode={this.setCurrentActiveNode}
-                          />
-                        </Box>
+                        {[serviceView.status].includes(status.IN_PROGRESS) ? (
+                          <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
+                        ) : (
+                          <Box className="services-panel-body">
+                            {activeServiceChildTopology ? (
+                              <IconButton
+                                size="small"
+                                className="open-close"
+                                onClick={() =>
+                                  this.setState({ toggleView: !toggleView })
+                                }
+                              >
+                                <KeyboardArrowLeftIcon fontSize="inherit" />
+                              </IconButton>
+                            ) : (
+                              <></>
+                            )}
+                            {serviceViewDataLength ? (
+                              <TopologyView
+                                data={serviceViewData}
+                                parentCssClass="infra-toplogy-view"
+                                setCurrentActiveNode={this.setCurrentActiveNode}
+                              />
+                            ) : (
+                              <></>
+                            )}
+                          </Box>
+                        )}
                       </Box>
                       {activeServiceChildTopology === "SSL" ? (
                         <SslTableComponent />
@@ -563,4 +357,13 @@ class SOATopology extends Component {
   }
 }
 
-export default SOATopology;
+const mapStateToProps = (state) => {
+  const { serviceView } = state.serviceTopology;
+  return { serviceView };
+};
+
+const mapDispatchToProps = {
+  getServiceView,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SOATopology);

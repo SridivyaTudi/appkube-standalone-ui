@@ -90,12 +90,12 @@ class Application extends Component {
     const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
     let JSX = [];
     applicationTableData.forEach((item) => {
-      let type = item.appType === '3 Tier' ? '3tier': 'soa'
+      let type = item.appType === "3 Tier" ? "3tier" : "soa";
       JSX.push(
         <TableRow key={v4()}>
           <TableCell align="left" className="p-l-15">
             <Link
-              to={`${APP_PREFIX_PATH}/environments/${type}/topology?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+              to={`${APP_PREFIX_PATH}/environments/${type}/topology?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&productName=${item.application}&departmentName=${item.lob}&environmentName=${item.environment}`}
             >
               <HtmlTooltip className="table-tooltip" title={item.application}>
                 {item.application}
@@ -201,8 +201,7 @@ class Application extends Component {
             {item.cost.currencySymbol} {item.cost.total}
           </TableCell>
           <TableCell align="center">
-            <IconButton aria-label="delete"
-              size="small" className="list-icon">
+            <IconButton aria-label="delete" size="small" className="list-icon">
               <i className="fas fa-ellipsis-v"></i>
             </IconButton>
           </TableCell>

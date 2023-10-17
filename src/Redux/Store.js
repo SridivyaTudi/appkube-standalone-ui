@@ -7,6 +7,7 @@ import environmentDataReducer from "Redux/EnvironmentData/EnvironmentDataSlice";
 import dashboardReducer from "Redux/Dashboard/DashboardSlice";
 import settingsReducer from "Redux/Settings/SettingsSlice";
 import associateAppReducer from "Redux/AssociateApp/AssociateAppSlice";
+import ServiceViewTopologyReducer from "Redux/ServiceViewTopology/ServiceViewTopologySlice";
 
 const store = configureStore({
   reducer: {
@@ -17,8 +18,8 @@ const store = configureStore({
     environmentData: environmentDataReducer,
     dashboard: dashboardReducer,
     settings: settingsReducer,
-    associateApp:associateAppReducer
-
+    associateApp: associateAppReducer,
+    serviceTopology: ServiceViewTopologyReducer,
   },
 });
 

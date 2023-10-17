@@ -17,7 +17,6 @@ import ClusterComponent from "./Cluster";
 import IngressComponent from "./Ingress";
 import ServiceMeshComponent from "./ServiceMesh";
 import JavaSpringbootComponent from "./JavaSpringboot";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Lambda from "../SOATopology/Components/Lambda";
 import FunctionComponent from "./Function";

@@ -1,5 +1,5 @@
 const baseURL = `https://5jdezsz635.execute-api.us-east-1.amazonaws.com/dev`;
-// export const baseURL = `http://34.199.12.114:6057/api`;
+export const baseURLAPI = `http://34.199.12.114:6057/api`;
 
 const config = {
   baseURL,
@@ -45,6 +45,9 @@ const config = {
   CREATE_ASSOCIATE: `${baseURL}/cloud-element/associate`,
   GET_ASSOCIATE_EXISTING_TAG_LIST: `${baseURL}/cloud-element/tag/landing-zone-id/#landing-zone-id#/instance-id/#instance-id#`,
   DELETE_TAG: `${baseURL}/cloud-element/tag/landing-zone-id/#landing-zone-id#/instance-id/#instance-id#/service-id/#service-id#`,
+
+  /* Service View Topology  */
+  GET_SERVICE_VIEW: `${baseURLAPI}/query/organization/#org-id#/application-topology/service-view?`,
 };
 
 export default config;
