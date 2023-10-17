@@ -6,7 +6,14 @@ import FunctionImg from "assets/img/assetmanager/function-img.png";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 class Lambda extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeLayer: "",
+    };
+  }
   render() {
+    let { activeLayer } = this.state;
     let { arrowRightIconShow = true } = this.props;
     return (
       <Grid item xs={6}>
@@ -25,12 +32,15 @@ class Lambda extends Component {
 
           <Box className="title">Lambda Based</Box>
           <List>
-            <ListItem>
+            <ListItem className={` ${activeLayer === "SSL" ? "active" : ""}`}>
               <Box className="application-balancer">
                 <Button
                   className="secondary-btn min-width"
                   variant="contained"
-                  onClick={() => this.props.setCurrentActiveNode("SSL")}
+                  onClick={() => {
+                    this.setState({ activeLayer: "SSL" });
+                    this.props.setCurrentActiveNode("SSL");
+                  }}
                 >
                   SSL
                 </Button>
@@ -43,20 +53,30 @@ class Lambda extends Component {
                 </Box>
               </Box>
             </ListItem>
-            <ListItem>
+            <ListItem
+              className={`${activeLayer === "APIGateway" ? "active" : ""}`}
+            >
               <Box className="application-balancer">
                 <Button
-                  className="primary-btn min-width"
+                  className="secondary-btn min-width"
                   variant="contained"
-                  onClick={() => this.props.setCurrentActiveNode("APIGateway")}
+                  onClick={() => {
+                    this.setState({ activeLayer: "APIGateway" });
+                    this.props.setCurrentActiveNode("APIGateway");
+                  }}
                 >
                   <img src={Gateway} alt="" /> API Gateway
                   <i className="fa-solid fa-angle-down"></i>
                 </Button>
                 <Box className="balancer-boxs">
                   <Box
-                    className="balancer-box "
-                    onClick={() => this.props.setCurrentActiveNode("Function")}
+                    className={`balancer-box ${
+                      activeLayer === "Function" ? "active" : ""
+                    }`}
+                    onClick={() => {
+                      this.setState({ activeLayer: "Function" });
+                      this.props.setCurrentActiveNode("Function");
+                    }}
                   >
                     <span>
                       <img src={bottomArrow} alt="" />
@@ -67,8 +87,13 @@ class Lambda extends Component {
                     <p>Function</p>
                   </Box>
                   <Box
-                    className="balancer-box"
-                    onClick={() => this.props.setCurrentActiveNode("Function")}
+                    className={`balancer-box ${
+                      activeLayer === "Function1" ? "active" : ""
+                    }`}
+                    onClick={() => {
+                      this.setState({ activeLayer: "Function1" });
+                      this.props.setCurrentActiveNode("Function");
+                    }}
                   >
                     <span>
                       <img src={bottomArrow} alt="" />
@@ -79,8 +104,13 @@ class Lambda extends Component {
                     <p>Function</p>
                   </Box>
                   <Box
-                    className="balancer-box"
-                    onClick={() => this.props.setCurrentActiveNode("Function")}
+                     className={`balancer-box ${
+                      activeLayer === "Function2" ? "active" : ""
+                    }`}
+                    onClick={() => {
+                      this.setState({ activeLayer: "Function2" });
+                      this.props.setCurrentActiveNode("Function");
+                    }}
                   >
                     <span>
                       <img src={bottomArrow} alt="" />
@@ -91,8 +121,13 @@ class Lambda extends Component {
                     <p>Function</p>
                   </Box>
                   <Box
-                    className="balancer-box"
-                    onClick={() => this.props.setCurrentActiveNode("Function")}
+                    className={`balancer-box ${
+                      activeLayer === "Function3" ? "active" : ""
+                    }`}
+                    onClick={() => {
+                      this.setState({ activeLayer: "Function3" });
+                      this.props.setCurrentActiveNode("Function");
+                    }}
                   >
                     <span>
                       <img src={bottomArrow} alt="" />

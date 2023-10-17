@@ -310,9 +310,7 @@
               img {
                 max-width: 20px;
               }
-              &.active {
-                background: #3247e5;
-              }
+             
             }
             p {
               display: flex;
@@ -325,8 +323,23 @@
               font-weight: 600;
               color: #383874;
             }
+            &.active {
+              .icon{
+                background: #3247e5;
+              }
+             
+            }
           }
         }
+      }
+      &.active {
+        .application-balancer{
+          .secondary-btn{
+            background: #3247e5;
+            color: #ffffff;
+          }
+        }
+       
       }
     }
   }
