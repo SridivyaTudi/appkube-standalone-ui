@@ -130,7 +130,11 @@ class SOATopologySwitch extends Component {
                       className="secondary-btn min-width"
                       variant="contained"
                       onClick={() =>
-                        this.props.setCurrentActiveNode("SSL", toggleView,activeServiceTopology)
+                        this.props.setCurrentActiveNode(
+                          "SSL",
+                          toggleView,
+                          activeServiceTopology
+                        )
                       }
                     >
                       SSL
@@ -152,7 +156,8 @@ class SOATopologySwitch extends Component {
                           onClick={() =>
                             this.props.setCurrentActiveNode(
                               "APIGateway",
-                              toggleView,activeServiceTopology
+                              toggleView,
+                              activeServiceTopology
                             )
                           }
                         >
@@ -177,7 +182,8 @@ class SOATopologySwitch extends Component {
                           onClick={() =>
                             this.props.setCurrentActiveNode(
                               "LoadBalancer",
-                              toggleView,activeServiceTopology
+                              toggleView,
+                              activeServiceTopology
                             )
                           }
                         >
@@ -219,7 +225,8 @@ class SOATopologySwitch extends Component {
                           onClick={() =>
                             this.props.setCurrentActiveNode(
                               "Cluster",
-                              toggleView,activeServiceTopology
+                              toggleView,
+                              activeServiceTopology
                             )
                           }
                         >
@@ -244,7 +251,8 @@ class SOATopologySwitch extends Component {
                           onClick={() =>
                             this.props.setCurrentActiveNode(
                               "Ingress",
-                              toggleView,activeServiceTopology
+                              toggleView,
+                              activeServiceTopology
                             )
                           }
                         >
@@ -268,7 +276,8 @@ class SOATopologySwitch extends Component {
                           onClick={() =>
                             this.props.setCurrentActiveNode(
                               "ServiceMesh",
-                              toggleView,activeServiceTopology
+                              toggleView,
+                              activeServiceTopology
                             )
                           }
                         >
@@ -292,7 +301,8 @@ class SOATopologySwitch extends Component {
                           onClick={() =>
                             this.props.setCurrentActiveNode(
                               "JavaSpringbot",
-                              toggleView,activeServiceTopology
+                              toggleView,
+                              activeServiceTopology
                             )
                           }
                         >
@@ -312,7 +322,8 @@ class SOATopologySwitch extends Component {
                         onClick={() =>
                           this.props.setCurrentActiveNode(
                             "PostgreSQL",
-                            toggleView,activeServiceTopology
+                            toggleView,
+                            activeServiceTopology
                           )
                         }
                       >
@@ -329,7 +340,8 @@ class SOATopologySwitch extends Component {
                         onClick={() =>
                           this.props.setCurrentActiveNode(
                             "Opensearch",
-                            toggleView,activeServiceTopology
+                            toggleView,
+                            activeServiceTopology
                           )
                         }
                       >
