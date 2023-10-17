@@ -81,6 +81,15 @@
           justify-content: center;
           margin-right: 8px;
         }
+        .account-id {
+          width: 80px;
+          span {
+            width: 80px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
       }
       .global-servies {
         display: inline-flex;

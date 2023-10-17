@@ -23,6 +23,23 @@ import { getServiceView } from "Redux/ServiceViewTopology/ServiceViewTopologyThu
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 220,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 class SOATopology extends Component {
   tabMapping = [
     {
@@ -180,7 +197,8 @@ class SOATopology extends Component {
       toggleView,
       serviceViewData,
     } = this.state;
-    const { landingZone, landingZoneId, cloudName,productName } = this.getUrlDetails();
+    const { landingZone, landingZoneId, cloudName, productName } =
+      this.getUrlDetails();
     const serviceViewDataLength = Object.keys(serviceViewData).length;
 
     let { serviceView } = this.props;
@@ -188,9 +206,12 @@ class SOATopology extends Component {
       <Box className="disaster-recovery-container">
         <Box className="services-panel-tabs">
           <Box className="tabs-head ">
-            <h3 onClick={() => this.setState({ toggleView: !toggleView })}>
-              {productName}
-            </h3>
+            <HtmlTooltip className="table-tooltip" title={productName}>
+              <h3 onClick={() => this.setState({ toggleView: !toggleView })}>
+                {productName}
+              </h3>
+            </HtmlTooltip>
+
             <List>
               {this.tabMapping.map((tabData, index) => {
                 return (
@@ -207,25 +228,44 @@ class SOATopology extends Component {
             <Box className="breadcrumbs-content">
               <ul>
                 <li>
-                  <Link to={`${APP_PREFIX_PATH}/environments`}>
-                    Environments
-                  </Link>
-                </li>
-                <li>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </li>
-                <li>
-                  <Link
-                    to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={<span>Environments</span>}
                   >
-                    {cloudName} &nbsp;(
-                    {landingZone})
-                  </Link>
+                    <Link to={`${APP_PREFIX_PATH}/environments`}>
+                      Environments
+                    </Link>
+                  </HtmlTooltip>
                 </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
-                <li className="active">{productName}</li>
+                <li>
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={
+                      <>
+                        {cloudName} &nbsp;(
+                        {landingZone})
+                      </>
+                    }
+                  >
+                    <Link
+                      to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+                    >
+                      {cloudName} &nbsp;(
+                      {landingZone})
+                    </Link>
+                  </HtmlTooltip>
+                </li>
+                <li>
+                  <i className="fa-solid fa-chevron-right"></i>
+                </li>
+                <li className="active">
+                  <HtmlTooltip className="table-tooltip" title={productName}>
+                    {productName}
+                  </HtmlTooltip>
+                </li>
               </ul>
             </Box>
           </Box>

@@ -136,10 +136,20 @@ class TopologyView extends Component {
                           />
                         </div>
                         <div className="account-id">
-                          <span className="d-block">Account ID</span>
-                          <span id="custom_location_1" className="d-block">
-                            {data.landingZone}
-                          </span>
+                          <HtmlTooltip
+                            className="table-tooltip"
+                            title={<span>Account ID</span>}
+                          >
+                            <span className="d-block">Account ID</span>
+                          </HtmlTooltip>
+                          <HtmlTooltip
+                            className="table-tooltip"
+                            title={data.landingZone}
+                          >
+                            <span id="custom_location_1" className="d-block">
+                              {data.landingZone}
+                            </span>
+                          </HtmlTooltip>
                         </div>
                       </div>
                     </div>
@@ -180,7 +190,7 @@ class TopologyView extends Component {
 
         if (item?.length > 0) {
           retData.push(
-            <ul key={v4()}>
+            <ul key={v4()} className="m-b-0">
               {item.map((item, nodeIndex) => {
                 if (item.productEnclaveList?.length > 0) {
                   if (
