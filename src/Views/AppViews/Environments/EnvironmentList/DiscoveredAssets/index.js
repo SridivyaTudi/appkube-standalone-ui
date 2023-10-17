@@ -94,7 +94,13 @@ class DiscoveredAssets extends Component {
         this.props.envDataByLandingZone.status &&
       this.props.envDataByLandingZone.status === status.SUCCESS
     ) {
-      this.setState({ data: this.props.envDataByLandingZone.data });
+      let { cloudName } = this.getUrlDetails();
+
+      let resEnvData = this.props.envDataByLandingZone.data;
+
+      this.setState({
+        data: { ...resEnvData, label: "Account ID", image: LOGOS[cloudName] },
+      });
     }
 
     if (prevState.currentActiveNode !== this.state.currentActiveNode) {

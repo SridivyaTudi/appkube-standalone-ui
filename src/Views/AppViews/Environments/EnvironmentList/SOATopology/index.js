@@ -7,7 +7,6 @@ import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import TopologyView from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
 import Container from "Views/AppViews/Environments/EnvironmentList/SOATopology/Components/Container";
 import Lambda from "./Components/Lambda";
-import SOATopologySwitch from "../SOATopologySwitch";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import SslTableComponent from "Views/AppViews/Environments/EnvironmentList/SOATopologySwitch/SslTable";
 import APIGatewayComponent from "Views/AppViews/Environments/EnvironmentList/SOATopologySwitch/APIGateway";
@@ -26,7 +25,7 @@ import Loader from "Components/Loader";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import TabsMenu from "../TabsMenu";
-
+import ServiceIcon from "assets/img/assetmanager/ems.png";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -158,6 +157,7 @@ class SOATopology extends Component {
 
     let serviceViewData = {
       landingZone: application,
+      image: ServiceIcon,
       productEnclaveList: [
         {
           id: v4(),
@@ -186,23 +186,140 @@ class SOATopology extends Component {
         commonServices.map((service) => {
           return { ...service, instanceId: service.serviceName };
         });
+    } else {
+      serviceViewData = {};
     }
 
     this.setState({ serviceViewData });
   };
+
+  renderComponent = () => {
+    let { activeServiceChildTopology } = this.state;
+    return activeServiceChildTopology === "SSL" ? (
+      <SslTableComponent />
+    ) : activeServiceChildTopology === "APIGateway" ? (
+      <APIGatewayComponent />
+    ) : activeServiceChildTopology === "LoadBalancer" ? (
+      <LoadBalancerComponent />
+    ) : activeServiceChildTopology === "Cluster" ? (
+      <ClusterComponent />
+    ) : activeServiceChildTopology === "Ingress" ? (
+      <IngressComponent />
+    ) : activeServiceChildTopology === "ServiceMesh" ? (
+      <ServiceMeshComponent />
+    ) : activeServiceChildTopology === "JavaSpringbot" ? (
+      <JavaSpringbootComponent />
+    ) : activeServiceChildTopology === "PostgreSQL" ? (
+      <PostgresqlComponent />
+    ) : activeServiceChildTopology === "Opensearch" ? (
+      <OpensearchComponent />
+    ) : activeServiceChildTopology === "Function" ? (
+      <FunctionComponent />
+    ) : (
+      <></>
+    );
+  };
+
+  renderTopologyTitle = () => {
+    return (
+      <Box className="services-panel-title bottom-border">
+        <Box className="name">Service View Topology </Box>
+      </Box>
+    );
+  };
+
+  renderToggleViewIconBtn = () => {
+    let { toggleView } = this.state;
+    return (
+      <IconButton
+        size="small"
+        className="open-close"
+        onClick={() => this.setState({ toggleView: !toggleView })}
+      >
+        <KeyboardArrowLeftIcon fontSize="inherit" />
+      </IconButton>
+    );
+  };
+
+  renderTopologyView = () => {
+    const { activeServiceChildTopology, toggleView, serviceViewData } =
+      this.state;
+    const serviceViewDataLength = Object.keys(serviceViewData).length;
+    let { serviceView } = this.props;
+    return (
+      <Grid item xs={6} style={{ display: `${toggleView ? "" : "none"}` }}>
+        <Box className="services-panel">
+          {this.renderTopologyTitle()}
+
+          {[serviceView.status].includes(status.IN_PROGRESS) ? (
+            <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
+          ) : (
+            <Box className="services-panel-body">
+              {activeServiceChildTopology ? (
+                this.renderToggleViewIconBtn()
+              ) : (
+                <></>
+              )}
+              {serviceViewDataLength ? (
+                <TopologyView
+                  data={serviceViewData}
+                  parentCssClass="infra-toplogy-view"
+                  setCurrentActiveNode={this.setCurrentActiveNode}
+                />
+              ) : (
+                <></>
+              )}
+            </Box>
+          )}
+        </Box>
+        {toggleView ? this.renderComponent() : ""}
+      </Grid>
+    );
+  };
+
+  renderWithOutToggleView = () => {
+    let { toggleView } = this.state;
+    return (
+      <Grid item xs={6} style={{ display: `${toggleView ? "none" : "block"}` }}>
+        {this.renderComponent()}
+      </Grid>
+    );
+  };
+
+  renderContainerOrLambdaComponent = () => {
+    const { activeServiceTopology, activeServiceChildTopology, toggleView } =
+      this.state;
+    return activeServiceTopology === "container" ? (
+      <Container
+        toggleView={toggleView}
+        activeServiceChildTopology={activeServiceChildTopology}
+        setCurrentActiveNode={(activeServiceChildTopology, toggleView) => {
+          this.setState({
+            activeServiceChildTopology,
+            toggleView,
+          });
+        }}
+      />
+    ) : activeServiceTopology === "lambda" ? (
+      <Lambda
+        toggleView={toggleView}
+        activeServiceChildTopology={activeServiceChildTopology}
+        setCurrentActiveNode={(activeServiceChildTopology, toggleView) => {
+          this.setState({
+            activeServiceChildTopology,
+            toggleView,
+          });
+        }}
+      />
+    ) : (
+      <></>
+    );
+  };
   render() {
-    const {
-      activeTab,
-      activeServiceTopology,
-      activeServiceChildTopology,
-      toggleView,
-      serviceViewData,
-    } = this.state;
+    const { activeTab, toggleView } = this.state;
     const { landingZone, landingZoneId, cloudName, productName } =
       this.getUrlDetails();
-    const serviceViewDataLength = Object.keys(serviceViewData).length;
 
-    let { serviceView } = this.props;
     return (
       <Box className="disaster-recovery-container environment-container">
         <Box className="services-panel-tabs">
@@ -212,11 +329,12 @@ class SOATopology extends Component {
                 {productName}
               </h3>
             </HtmlTooltip>
+
             <TabsMenu
               tabs={this.tabMapping}
               setActiveTab={this.setActiveTab}
               activeTab={activeTab}
-              breakWidth={1280} 
+              breakWidth={1280}
               key={v4()}
             />
             <Box className="breadcrumbs-content">
@@ -274,102 +392,11 @@ class SOATopology extends Component {
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    style={{ display: `${toggleView ? "" : "none"}` }}
                   >
-                    <Grid item xs={6}>
-                      <Box className="services-panel">
-                        <Box className="services-panel-title bottom-border">
-                          <Box className="name">Service View Topology </Box>
-                        </Box>
-
-                        {[serviceView.status].includes(status.IN_PROGRESS) ? (
-                          <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
-                        ) : (
-                          <Box className="services-panel-body">
-                            {activeServiceChildTopology ? (
-                              <IconButton
-                                size="small"
-                                className="open-close"
-                                onClick={() =>
-                                  this.setState({ toggleView: !toggleView })
-                                }
-                              >
-                                <KeyboardArrowLeftIcon fontSize="inherit" />
-                              </IconButton>
-                            ) : (
-                              <></>
-                            )}
-                            {serviceViewDataLength ? (
-                              <TopologyView
-                                data={serviceViewData}
-                                parentCssClass="infra-toplogy-view"
-                                setCurrentActiveNode={this.setCurrentActiveNode}
-                              />
-                            ) : (
-                              <></>
-                            )}
-                          </Box>
-                        )}
-                      </Box>
-                      {activeServiceChildTopology === "SSL" ? (
-                        <SslTableComponent />
-                      ) : activeServiceChildTopology === "APIGateway" ? (
-                        <APIGatewayComponent />
-                      ) : activeServiceChildTopology === "LoadBalancer" ? (
-                        <LoadBalancerComponent />
-                      ) : activeServiceChildTopology === "Cluster" ? (
-                        <ClusterComponent />
-                      ) : activeServiceChildTopology === "Ingress" ? (
-                        <IngressComponent />
-                      ) : activeServiceChildTopology === "ServiceMesh" ? (
-                        <ServiceMeshComponent />
-                      ) : activeServiceChildTopology === "JavaSpringbot" ? (
-                        <JavaSpringbootComponent />
-                      ) : activeServiceChildTopology === "PostgreSQL" ? (
-                        <PostgresqlComponent />
-                      ) : activeServiceChildTopology === "Opensearch" ? (
-                        <OpensearchComponent />
-                      ) : activeServiceChildTopology === "Function" ? (
-                        <FunctionComponent />
-                      ) : (
-                        <></>
-                      )}
-                    </Grid>
-
-                    {activeServiceTopology === "container" ? (
-                      <Container
-                        setCurrentActiveNode={(activeServiceChildTopology) => {
-                          this.setState({ activeServiceChildTopology });
-                        }}
-                      />
-                    ) : activeServiceTopology === "lambda" ? (
-                      <Lambda
-                        arrowRightIconShow={false}
-                        setCurrentActiveNode={(activeServiceChildTopology) => {
-                          this.setState({ activeServiceChildTopology });
-                        }}
-                      />
-                    ) : (
-                      <></>
-                    )}
+                    {this.renderTopologyView()}
+                    {this.renderContainerOrLambdaComponent()}
+                    {this.renderWithOutToggleView()}
                   </Grid>
-
-                  <SOATopologySwitch
-                    toggleView={toggleView}
-                    activeServiceChildTopology={activeServiceChildTopology}
-                    activeServiceTopology={activeServiceTopology}
-                    setCurrentActiveNode={(
-                      activeServiceChildTopology,
-                      toggleView,
-                      activeServiceTopology
-                    ) => {
-                      this.setState({
-                        activeServiceChildTopology,
-                        toggleView,
-                        activeServiceTopology,
-                      });
-                    }}
-                  />
                 </Box>
               </Box>
             </Box>

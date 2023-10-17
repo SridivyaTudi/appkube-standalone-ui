@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
-import Nglnx from "assets/img/assetmanager/nglnx.png";
 import PostgreSqiDark from "assets/img/assetmanager/postgre-sqi-dark.png";
 class PostgresqlComponent extends Component {
   constructor(props) {
@@ -57,7 +56,7 @@ class PostgresqlComponent extends Component {
             </Box>
             <Box className="card-box">
               <span>Latency</span>
-              <strong>235  </strong>
+              <strong>235 </strong>
               <p>Compared to $21,490 last year</p>
             </Box>
             <Box className="card-box">

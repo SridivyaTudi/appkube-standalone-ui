@@ -8,21 +8,22 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 class Lambda extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      activeLayer: "",
-    };
   }
   render() {
-    let { activeLayer } = this.state;
-    let { arrowRightIconShow = true } = this.props;
+    let { activeServiceChildTopology, toggleView } = this.props;
     return (
       <Grid item xs={6}>
         <Box className="common-service">
-          {arrowRightIconShow ? (
+          {!toggleView ? (
             <IconButton
               size="small"
               className="open-close"
-              onClick={() => this.props.setCurrentActiveNode("", true)}
+              onClick={() =>
+                this.props.setCurrentActiveNode(
+                  activeServiceChildTopology,
+                  !toggleView
+                )
+              }
             >
               <KeyboardArrowRightIcon fontSize="inherit" />
             </IconButton>
@@ -32,14 +33,17 @@ class Lambda extends Component {
 
           <Box className="title">Lambda Based</Box>
           <List>
-            <ListItem className={` ${activeLayer === "SSL" ? "active" : ""}`}>
+            <ListItem
+              className={` ${
+                activeServiceChildTopology === "SSL" ? "active" : ""
+              }`}
+            >
               <Box className="application-balancer">
                 <Button
                   className="secondary-btn min-width"
                   variant="contained"
                   onClick={() => {
-                    this.setState({ activeLayer: "SSL" });
-                    this.props.setCurrentActiveNode("SSL");
+                    this.props.setCurrentActiveNode("SSL", toggleView);
                   }}
                 >
                   SSL
@@ -54,15 +58,16 @@ class Lambda extends Component {
               </Box>
             </ListItem>
             <ListItem
-              className={`${activeLayer === "APIGateway" ? "active" : ""}`}
+              className={`${
+                activeServiceChildTopology === "APIGateway" ? "active" : ""
+              }`}
             >
               <Box className="application-balancer">
                 <Button
                   className="secondary-btn min-width"
                   variant="contained"
                   onClick={() => {
-                    this.setState({ activeLayer: "APIGateway" });
-                    this.props.setCurrentActiveNode("APIGateway");
+                    this.props.setCurrentActiveNode("APIGateway", toggleView);
                   }}
                 >
                   <img src={Gateway} alt="" /> API Gateway
@@ -71,11 +76,10 @@ class Lambda extends Component {
                 <Box className="balancer-boxs">
                   <Box
                     className={`balancer-box ${
-                      activeLayer === "Function" ? "active" : ""
+                      activeServiceChildTopology === "Function" ? "active" : ""
                     }`}
                     onClick={() => {
-                      this.setState({ activeLayer: "Function" });
-                      this.props.setCurrentActiveNode("Function");
+                      this.props.setCurrentActiveNode("Function", toggleView);
                     }}
                   >
                     <span>
@@ -88,28 +92,10 @@ class Lambda extends Component {
                   </Box>
                   <Box
                     className={`balancer-box ${
-                      activeLayer === "Function1" ? "active" : ""
+                      activeServiceChildTopology === "Function1" ? "active" : ""
                     }`}
                     onClick={() => {
-                      this.setState({ activeLayer: "Function1" });
-                      this.props.setCurrentActiveNode("Function");
-                    }}
-                  >
-                    <span>
-                      <img src={bottomArrow} alt="" />
-                    </span>
-                    <Box className="icon">
-                      <img src={FunctionImg} alt="" />
-                    </Box>
-                    <p>Function</p>
-                  </Box>
-                  <Box
-                     className={`balancer-box ${
-                      activeLayer === "Function2" ? "active" : ""
-                    }`}
-                    onClick={() => {
-                      this.setState({ activeLayer: "Function2" });
-                      this.props.setCurrentActiveNode("Function");
+                      this.props.setCurrentActiveNode("Function", toggleView);
                     }}
                   >
                     <span>
@@ -122,11 +108,29 @@ class Lambda extends Component {
                   </Box>
                   <Box
                     className={`balancer-box ${
-                      activeLayer === "Function3" ? "active" : ""
+                      activeServiceChildTopology === "Function2" ? "active" : ""
                     }`}
                     onClick={() => {
-                      this.setState({ activeLayer: "Function3" });
-                      this.props.setCurrentActiveNode("Function");
+                      this.setState({
+                        activeServiceChildTopology: "Function2",
+                      });
+                      this.props.setCurrentActiveNode("Function", toggleView);
+                    }}
+                  >
+                    <span>
+                      <img src={bottomArrow} alt="" />
+                    </span>
+                    <Box className="icon">
+                      <img src={FunctionImg} alt="" />
+                    </Box>
+                    <p>Function</p>
+                  </Box>
+                  <Box
+                    className={`balancer-box ${
+                      activeServiceChildTopology === "Function3" ? "active" : ""
+                    }`}
+                    onClick={() => {
+                      this.props.setCurrentActiveNode("Function", toggleView);
                     }}
                   >
                     <span>

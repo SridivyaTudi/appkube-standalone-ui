@@ -130,17 +130,14 @@ class TopologyView extends Component {
                     >
                       <div className="d-flex">
                         <div className="account-image">
-                          <img
-                            src={LOGOS[cloudName] ? LOGOS[cloudName] : ""}
-                            alt={cloudName}
-                          />
+                          <img src={data.image} alt={cloudName} />
                         </div>
                         <div className="account-id">
                           <HtmlTooltip
                             className="table-tooltip"
-                            title={<span>Account ID</span>}
+                            title={<span>{data.label}</span>}
                           >
-                            <span className="d-block">Account ID</span>
+                            <span className="d-block">{data.label}</span>
                           </HtmlTooltip>
                           <HtmlTooltip
                             className="table-tooltip"
