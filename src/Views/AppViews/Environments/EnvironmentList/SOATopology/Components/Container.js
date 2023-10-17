@@ -12,7 +12,14 @@ import Postgresql from "assets/img/assetmanager/postgresql.png";
 import Opensearch from "assets/img/assetmanager/opensearch.png";
 
 class Container extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeLayer: "",
+    };
+  }
   render() {
+    let { activeLayer } = this.state;
     return (
       <Grid item xs={6}>
         <Box className="business-service">
@@ -33,15 +40,22 @@ class Container extends Component {
             <Box className="business-service-right">
               <Box className="application-balancer m-b-10">
                 <Button
-                  className="secondary-btn min-width"
+                  className={`secondary-btn min-width ${
+                    activeLayer === "SSL" ? "active" : ""
+                  }`}
                   variant="contained"
-                  onClick={() => this.props.setCurrentActiveNode("SSL")}
+                  onClick={() => {
+                    this.setState({ activeLayer: "SSL" });
+                    this.props.setCurrentActiveNode("SSL");
+                  }}
                 >
                   SSL
                 </Button>
               </Box>
               <List>
-                <ListItem>
+                <ListItem
+                  className={`${activeLayer === "APIGateway" ? "active" : ""}`}
+                >
                   <Box className="application-balancer">
                     <Box className="balancer-boxs m-b-10">
                       <Box className="balancer-box">
@@ -52,7 +66,11 @@ class Container extends Component {
                     </Box>
                     <Button
                       className="secondary-btn min-width"
-                      variant="contained"  onClick={() => this.props.setCurrentActiveNode("APIGateway")}
+                      variant="contained"
+                      onClick={() => {
+                        this.setState({ activeLayer: "APIGateway" });
+                        this.props.setCurrentActiveNode("APIGateway");
+                      }}
                     >
                       <img src={Gateway} alt="" />
                       API Gateway
@@ -60,7 +78,11 @@ class Container extends Component {
                     </Button>
                   </Box>
                 </ListItem>
-                <ListItem>
+                <ListItem
+                  className={`${
+                    activeLayer === "LoadBalancer" ? "active" : ""
+                  }`}
+                >
                   <Box className="application-balancer">
                     <Box className="balancer-boxs  m-b-10">
                       <Box className="balancer-box">
@@ -71,7 +93,11 @@ class Container extends Component {
                     </Box>
                     <Button
                       className="secondary-btn min-width"
-                      variant="contained"  onClick={() => this.props.setCurrentActiveNode("LoadBalancer")}
+                      variant="contained"
+                      onClick={() => {
+                        this.setState({ activeLayer: "LoadBalancer" });
+                        this.props.setCurrentActiveNode("LoadBalancer");
+                      }}
                     >
                       <img src={LoadBalancer} alt="" /> Load Balancer
                       <i className="fa-solid fa-angle-down"></i>
@@ -103,11 +129,17 @@ class Container extends Component {
                 </Box>
               </Box>
               <List>
-                <ListItem>
+                <ListItem
+                  className={`${activeLayer === "Cluster" ? "active" : ""}`}
+                >
                   <Box className="application-balancer p-t-15">
                     <Button
                       className="secondary-btn min-width"
-                      variant="contained" onClick={() => this.props.setCurrentActiveNode("Cluster")}
+                      variant="contained"
+                      onClick={() => {
+                        this.setState({ activeLayer: "Cluster" });
+                        this.props.setCurrentActiveNode("Cluster");
+                      }}
                     >
                       <img src={Cluster} alt="" />
                       Cluster
@@ -115,7 +147,9 @@ class Container extends Component {
                     </Button>
                   </Box>
                 </ListItem>
-                <ListItem>
+                <ListItem
+                  className={`${activeLayer === "Ingress" ? "active" : ""}`}
+                >
                   <Box className="application-balancer">
                     <Box className="balancer-boxs  m-b-10">
                       <Box className="balancer-box">
@@ -126,14 +160,20 @@ class Container extends Component {
                     </Box>
                     <Button
                       className="secondary-btn min-width"
-                      variant="contained" onClick={() => this.props.setCurrentActiveNode("Ingress")}
+                      variant="contained"
+                      onClick={() => {
+                        this.setState({ activeLayer: "Ingress" });
+                        this.props.setCurrentActiveNode("Ingress");
+                      }}
                     >
                       <img src={Ingress} alt="" /> Ingress
                       <i className="fa-solid fa-angle-down"></i>
                     </Button>
                   </Box>
                 </ListItem>
-                <ListItem>
+                <ListItem
+                  className={`${activeLayer === "ServiceMesh" ? "active" : ""}`}
+                >
                   <Box className="application-balancer">
                     <Box className="balancer-boxs  m-b-10">
                       <Box className="balancer-box">
@@ -144,14 +184,22 @@ class Container extends Component {
                     </Box>
                     <Button
                       className="secondary-btn min-width"
-                      variant="contained" onClick={() => this.props.setCurrentActiveNode("ServiceMesh")}
+                      variant="contained"
+                      onClick={() => {
+                        this.setState({ activeLayer: "ServiceMesh" });
+                        this.props.setCurrentActiveNode("ServiceMesh");
+                      }}
                     >
                       <img src={ServiceMesh} alt="" /> Service mesh
                       <i className="fa-solid fa-angle-down"></i>
                     </Button>
                   </Box>
                 </ListItem>
-                <ListItem>
+                <ListItem
+                  className={`${
+                    activeLayer === "JavaSpringbot" ? "active" : ""
+                  }`}
+                >
                   <Box className="application-balancer">
                     <Box className="balancer-boxs  m-b-10">
                       <Box className="balancer-box">
@@ -162,7 +210,11 @@ class Container extends Component {
                     </Box>
                     <Button
                       className="secondary-btn min-width"
-                      variant="contained" onClick={() => this.props.setCurrentActiveNode("JavaSpringbot")}
+                      variant="contained"
+                      onClick={() => {
+                        this.setState({ activeLayer: "JavaSpringbot" });
+                        this.props.setCurrentActiveNode("JavaSpringbot");
+                      }}
                     >
                       <img src={JavaSpringbot} alt="" /> Java springbot
                       <i className="fa-solid fa-angle-down"></i>
@@ -171,20 +223,40 @@ class Container extends Component {
                 </ListItem>
               </List>
               <Box className="balancer-boxs">
-                <Box className="balancer-box">
+                <Box
+                  className={`balancer-box ${
+                    activeLayer === "PostgreSQL" ? "active" : ""
+                  }`}
+                >
                   <span>
                     <img src={bottomArrow} alt="" />
                   </span>
-                  <Box className="icon" onClick={() => this.props.setCurrentActiveNode("PostgreSQL")}>
+                  <Box
+                    className="icon"
+                    onClick={() => {
+                      this.setState({ activeLayer: "PostgreSQL" });
+                      this.props.setCurrentActiveNode("PostgreSQL");
+                    }}
+                  >
                     <img src={Postgresql} alt="" />
                   </Box>
                   <p>PostgreSQL</p>
                 </Box>
-                <Box className="balancer-box">
+                <Box
+                  className={`balancer-box ${
+                    activeLayer === "Opensearch" ? "active" : ""
+                  }`}
+                >
                   <span>
                     <img src={bottomArrow} alt="" />
                   </span>
-                  <Box className="icon" onClick={() => this.props.setCurrentActiveNode("Opensearch")}>
+                  <Box
+                    className="icon"
+                    onClick={() => {
+                      this.setState({ activeLayer: "Opensearch" });
+                      this.props.setCurrentActiveNode("Opensearch");
+                    }}
+                  >
                     <img src={Opensearch} alt="" />
                   </Box>
                   <p>Opensearch</p>
