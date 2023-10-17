@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
-import Nglnx from "assets/img/assetmanager/nglnx.png";
-import Opensearch from "assets/img/assetmanager/opensearch.png";
+import PostgreSqiDark from "assets/img/assetmanager/postgre-sqi-dark.png";
 class OpensearchComponent extends Component {
   constructor(props) {
     super(props);
@@ -9,76 +8,85 @@ class OpensearchComponent extends Component {
   }
   render() {
     return (
-      <Box className="nginx-cards opensearch-cards">
-      <Box className="title">
-        <Box className="head-left">
-          <Box className="icon">
-            <img src={Opensearch} alt="" />
+      <Box className="nginx-cards">
+        <Box className="title">
+          <Box className="head-left">
+            <Box className="environment-image">
+              <img src={PostgreSqiDark} alt="" />
+            </Box>
+            <Box className="name">Opensearch</Box>
           </Box>
-          <Box className="name">Opensearch</Box>
+          <Box className="head-right">
+            <Button className="primary-btn min-width" variant="contained">
+              View Explorer
+            </Button>
+          </Box>
         </Box>
-        <Box className="head-right">
-          <Button
-            className="primary-btn min-width"
-            variant="contained"
-          >
-            View Explorer
-          </Button>
+        <Box className="nginx-content gateway-content">
+          <Box className="autoscaling-cards">
+          <Box className="card-box">
+              <span>CPU Utilization</span>
+              <strong>256GB</strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Memory Usage</span>
+              <strong>256GB</strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Storage</span>
+              <strong>512GB</strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Active Connection </span>
+              <strong>1024</strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Idle Connection</span>
+              <strong>1024</strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Error Count</span>
+              <strong>2698</strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Latency</span>
+              <strong>235  </strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>THroughtput </span>
+              <strong>434 GB/S </strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Read Iops</span>
+              <strong>750</strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Write Iops</span>
+              <strong>450</strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Replication lag</span>
+              <strong>569</strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Index size </span>
+              <strong>50GB</strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+          </Box>
         </Box>
       </Box>
-      <Box className="nginx-content">
-        <Box className="autoscaling-cards">
-          <Box className="card-box">
-            <span>Latency</span>
-            <strong>512GB</strong>
-          </Box>
-          <Box className="card-box">
-            <span>Throughput</span>
-            <strong>512GB</strong>
-          </Box>
-          <Box className="card-box">
-            <span>Resources Utilization</span>
-            <strong>512GB</strong>
-          </Box>
-          <Box className="card-box">
-            <span>Query Performance </span>
-            <strong>156</strong>
-          </Box>
-          <Box className="card-box">
-            <span>Cache Hit Rate</span>
-            <strong>156</strong>
-          </Box>
-          <Box className="card-box">
-            <span>Up Times</span>
-            <strong>12356</strong>
-          </Box>
-          <Box className="card-box">
-            <span>Failover</span>
-            <strong>156</strong>
-          </Box>
-          <Box className="card-box">
-            <span>Replications </span>
-            <strong>12356</strong>
-          </Box>
-          <Box className="card-box">
-            <span>Back Up</span>
-            <strong>156</strong>
-          </Box>
-          <Box className="card-box">
-            <span>Restore</span>
-            <strong>12356</strong>
-          </Box>
-          <Box className="card-box">
-            <span>Error Rates</span>
-            <strong>156</strong>
-          </Box>
-          <Box className="card-box">
-            <span>Data Protection </span>
-            <strong>12356</strong>
-          </Box>
-        </Box>
-      </Box>
-    </Box>
     );
   }
 }

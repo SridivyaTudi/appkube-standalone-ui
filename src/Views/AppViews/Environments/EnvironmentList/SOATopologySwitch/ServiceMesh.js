@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
-import Nglnx from "assets/img/assetmanager/nglnx.png";
+import ServiceMesh from "assets/img/assetmanager/service-mesh.png";
 
 class ServiceMeshComponent extends Component {
   constructor(props) {
@@ -13,7 +13,9 @@ class ServiceMeshComponent extends Component {
         <Box className="title">
           <Box className="head-left">
             <Box className="environment-image">
-              <img src={Nglnx} alt="" />
+              <span>
+                <img src={ServiceMesh} alt="" />
+              </span>
             </Box>
             <Box className="name">Service mesh</Box>
           </Box>
