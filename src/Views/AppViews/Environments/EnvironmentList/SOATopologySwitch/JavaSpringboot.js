@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
-import Nglnx from "assets/img/assetmanager/nglnx.png";
+import JavaSpringbot from "assets/img/assetmanager/java-springbot.png";
 
 class JavaSpringbootComponent extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class JavaSpringbootComponent extends Component {
         <Box className="title">
           <Box className="head-left">
             <Box className="environment-image">
-              <img src={Nglnx} alt="" />
+              <img src={JavaSpringbot} alt="" />
             </Box>
             <Box className="name">Java Springboot</Box>
           </Box>

@@ -13,7 +13,9 @@ class APIGatewayComponent extends Component {
         <Box className="title">
           <Box className="head-left">
             <Box className="environment-image">
-              <img src={Gateway} alt="" />
+              <span>
+                <img src={Gateway} alt="" />
+              </span>
             </Box>
             <Box className="name">APIGateway</Box>
           </Box>
@@ -53,6 +55,36 @@ class APIGatewayComponent extends Component {
             <Box className="card-box">
               <span>Data Transfer IN</span>
               <strong>50 MB</strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>5xx Errors</span>
+              <strong>15</strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Cache Hit Count</span>
+              <strong>3000 </strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Cache miss Count  </span>
+              <strong>7000 </strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Data Transfer OUT</span>
+              <strong>100 MB</strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Throttling Error Count</span>
+              <strong>20</strong>
+              <p>Compared to $21,490 last year</p>
+            </Box>
+            <Box className="card-box">
+              <span>Concurrent Execution</span>
+              <strong>30</strong>
               <p>Compared to $21,490 last year</p>
             </Box>
           </Box>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
-import Nglnx from "assets/img/assetmanager/nglnx.png";
+import Cluster from "assets/img/assetmanager/cluster.png";
 
 class ClusterComponent extends Component {
   constructor(props) {
@@ -13,7 +13,9 @@ class ClusterComponent extends Component {
         <Box className="title">
           <Box className="head-left">
             <Box className="environment-image">
-              <img src={Nglnx} alt="" />
+              <span>
+                <img src={Cluster} alt="" />
+              </span>
             </Box>
             <Box className="name">Cluster</Box>
           </Box>

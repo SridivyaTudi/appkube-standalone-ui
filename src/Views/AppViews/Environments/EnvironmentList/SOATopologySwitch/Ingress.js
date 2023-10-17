@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
-import Nglnx from "assets/img/assetmanager/nglnx.png";
+import Ingress from "assets/img/assetmanager/ingress.png";
 
 class IngressComponent extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class IngressComponent extends Component {
         <Box className="title">
           <Box className="head-left">
             <Box className="environment-image">
-              <img src={Nglnx} alt="" />
+              <span> <img src={Ingress} alt="" /></span>
             </Box>
             <Box className="name">Ingress</Box>
           </Box>

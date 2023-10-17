@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
-import Nglnx from "assets/img/assetmanager/nglnx.png";
+import LoadBalancer from "assets/img/assetmanager/load-balancer.png";
 
 class LoadBalancerComponent extends Component {
   constructor(props) {
@@ -13,7 +13,9 @@ class LoadBalancerComponent extends Component {
         <Box className="title">
           <Box className="head-left">
             <Box className="environment-image">
-              <img src={Nglnx} alt="" />
+              <span>
+                <img src={LoadBalancer} alt="" />
+              </span>
             </Box>
             <Box className="name">Load balancer</Box>
           </Box>

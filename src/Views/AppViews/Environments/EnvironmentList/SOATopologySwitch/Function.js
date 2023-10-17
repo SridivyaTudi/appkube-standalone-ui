@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
-import Nglnx from "assets/img/assetmanager/nglnx.png";
+import FunctionImg from "assets/img/assetmanager/function-img.png";
 
 class FunctionComponent extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class FunctionComponent extends Component {
           <Box className="head-left">
             <Box className="environment-image">
               <span>
-                <img src={Nglnx} alt="" />
+                <img src={FunctionImg} alt="" />
               </span>
             </Box>
             <Box className="name">Lambda</Box>
