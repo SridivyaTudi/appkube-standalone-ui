@@ -256,16 +256,9 @@
         width: 100%;
         justify-content: center;
         flex-wrap: wrap;
-        // margin-top: 10px;
         .secondary-btn {
           background-color: #dde1f8;
           color: #383874;
-          img {
-            max-width: 20px;
-            margin-right: 8px;
-          }
-        }
-        .primary-btn {
           img {
             max-width: 20px;
             margin-right: 8px;
@@ -310,7 +303,6 @@
               img {
                 max-width: 20px;
               }
-             
             }
             p {
               display: flex;
@@ -324,22 +316,20 @@
               color: #383874;
             }
             &.active {
-              .icon{
+              .icon {
                 background: #3247e5;
               }
-             
             }
           }
         }
       }
       &.active {
-        .application-balancer{
-          .secondary-btn{
+        .application-balancer {
+          .secondary-btn {
             background: #3247e5;
             color: #ffffff;
           }
         }
-       
       }
     }
   }

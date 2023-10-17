@@ -186,7 +186,7 @@ class TopologyView extends Component {
 
         if (item?.length > 0) {
           retData.push(
-            <ul key={v4()} className="m-b-0">
+            <ul key={v4()}>
               {item.map((item, nodeIndex) => {
                 if (item.productEnclaveList?.length > 0) {
                   if (
