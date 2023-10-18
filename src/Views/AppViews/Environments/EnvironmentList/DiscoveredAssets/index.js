@@ -404,7 +404,7 @@ class DiscoveredAssets extends Component {
       );
     });
     const TableJSX = [
-      <Box className="discovered-table" style={{ height: "430px" }} key={v4()}>
+      <Box className="discovered-table" style={{ height: "425px" }} key={v4()}>
         <TableContainer className="table">
           <Table className="discovered-table-inner">
             <TableHead className="active">
@@ -492,7 +492,7 @@ class DiscoveredAssets extends Component {
       );
     });
     const TableJSX = [
-      <Box className="discovered-table" style={{ height: "415px" }} key={v4()}>
+      <Box className="discovered-table" style={{ height: "425px" }} key={v4()}>
         <TableContainer className="table">
           <Table className="discovered-table-inner">
             <TableHead className="active">
