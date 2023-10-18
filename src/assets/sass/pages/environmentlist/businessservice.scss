@@ -32,19 +32,20 @@
           margin: 0;
           padding: 0;
           .button-box {
-            width: 140px;
+            width: 150px;
             display: inline-flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             border: 1px solid #8676ff;
             border-radius: 5px;
-            padding: 6px 10px;
+            padding: 6px 8px;
             margin-right: 20px;
             p {
               font-size: 12px;
               line-height: 16px;
               font-weight: 500;
               color: #383874;
-              padding: 5px;
               margin: 0;
             }
           }

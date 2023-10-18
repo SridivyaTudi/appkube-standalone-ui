@@ -2483,6 +2483,15 @@
               }
             }
           }
+          .gateway-content {
+            .autoscaling-cards {
+              .card-box{
+                &:nth-child(3n) {
+                  margin-right: 15px;
+                }
+              }
+            }
+          }
         }
       }
     }
