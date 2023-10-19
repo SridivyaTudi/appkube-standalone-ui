@@ -958,6 +958,9 @@
     .lambda-functions-table-section {
       display: block;
       width: 100%;
+      h3{
+        text-align: center;
+      }
 
       .lambda-functions-table {
         overflow: hidden;

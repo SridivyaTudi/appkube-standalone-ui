@@ -8,6 +8,7 @@ import { v4 } from "uuid";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import TabsMenu from "../TabsMenu";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -89,7 +90,7 @@ class ThreeTierTopology extends Component {
       productName,
     } = this.getUrlDetails();
     return (
-      <Box className="disaster-recovery-container">
+      <Box className="disaster-recovery-container environment-container">
         {isActivityViewDetails ? (
           <ActivityLogViewDetails
             backToDRS={() => {
@@ -102,20 +103,13 @@ class ThreeTierTopology extends Component {
               <HtmlTooltip className="table-tooltip" title={productName}>
                 <h3>{productName}</h3>
               </HtmlTooltip>
-
-              <List>
-                {this.tabMapping.map((tabData, index) => {
-                  return (
-                    <ListItem
-                      key={v4()}
-                      className={index === activeTab ? "active" : ""}
-                      onClick={() => this.setActiveTab(index)}
-                    >
-                      {tabData.name}
-                    </ListItem>
-                  );
-                })}
-              </List>
+              <TabsMenu
+                tabs={this.tabMapping}
+                setActiveTab={this.setActiveTab}
+                activeTab={activeTab}
+                breakWidth={1280}
+                key={v4()}
+              />
               <Box className="breadcrumbs-content">
                 <ul>
                   <li>
