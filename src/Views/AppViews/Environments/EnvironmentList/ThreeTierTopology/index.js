@@ -120,7 +120,12 @@ class ThreeTierTopology extends Component {
                 <ul>
                   <li>
                     <Link to={`${APP_PREFIX_PATH}/environments`}>
-                      Environments
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={`Environments`}
+                      >
+                        Environments
+                      </HtmlTooltip>
                     </Link>
                   </li>
                   <li>
@@ -130,15 +135,19 @@ class ThreeTierTopology extends Component {
                     <Link
                       to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
                     >
-                      {cloudName} &nbsp;(
-                      {landingZone})
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={`${cloudName} ${landingZone}`}
+                      >
+                        {cloudName} &nbsp;(
+                        {landingZone})
+                      </HtmlTooltip>
                     </Link>
                   </li>
                   <li>
                     <i className="fa-solid fa-chevron-right"></i>
                   </li>
                   <li className="active">
-                    {" "}
                     <HtmlTooltip className="table-tooltip" title={productName}>
                       {productName}
                     </HtmlTooltip>
