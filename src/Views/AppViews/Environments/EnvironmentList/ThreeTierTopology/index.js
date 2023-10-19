@@ -48,13 +48,30 @@ class ThreeTierTopology extends Component {
     const cloudName = queryPrm.get("cloudName");
     const landingZoneId = queryPrm.get("landingZoneId");
     const landingZone = queryPrm.get("landingZone");
+    const productName = queryPrm.get("productName");
+    const departmentName = queryPrm.get("departmentName");
+    const environmentName = queryPrm.get("environmentName");
 
-    return { landingZone, landingZoneId, cloudName };
+    return {
+      landingZone,
+      landingZoneId,
+      cloudName,
+      departmentName,
+      environmentName,
+      productName,
+    };
   }
 
   render() {
     const { activeTab, isActivityViewDetails } = this.state;
-    const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
+    const {
+      landingZone,
+      landingZoneId,
+      cloudName,
+      departmentName,
+      environmentName,
+      productName,
+    } = this.getUrlDetails();
     return (
       <Box className="disaster-recovery-container">
         {isActivityViewDetails ? (
@@ -66,7 +83,7 @@ class ThreeTierTopology extends Component {
         ) : (
           <Box className="services-panel-tabs">
             <Box className="tabs-head ">
-              <h3>HRMS</h3>
+              <h3>{productName}</h3>
               <List>
                 {this.tabMapping.map((tabData, index) => {
                   return (
@@ -101,7 +118,7 @@ class ThreeTierTopology extends Component {
                   <li>
                     <i className="fa-solid fa-chevron-right"></i>
                   </li>
-                  <li className="active">HRMS</li>
+                  <li className="active">{productName}</li>
                 </ul>
               </Box>
             </Box>
