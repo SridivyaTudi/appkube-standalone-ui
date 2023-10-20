@@ -239,7 +239,7 @@ class Application extends Component {
                   justifyContent={"flex-end"}
                 >
                   <Grid item lg={6} md={6} xs={12}>
-                    <h3 className="m-b-4">My Workspace</h3>
+                    <h3 className="m-b-0">My Workspace</h3>
                   </Grid>
                   <Grid item lg={6} md={6} xs={12}>
                     <Box className="radio-group d-flex float-right ">
