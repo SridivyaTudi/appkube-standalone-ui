@@ -35,7 +35,6 @@ import { getCurrentUser } from "Utils";
 import titles from "./PathTitles.json";
 import Error from "./AppViews/Error";
 import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
-import SOATopologySwitch from "./AppViews/Environments/EnvironmentList/SOATopologySwitch";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -139,7 +138,7 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/environments/3tier/topology`}
             element={<ThreeTierTopology />}
           />
-            <Route
+          <Route
             path={`${APP_PREFIX_PATH}/environments/soa/topology`}
             element={<SOATopology />}
           />

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DrTopology from "./DrTopology";
 import Topology from "./Topology";
-import { Box, List, ListItem } from "@mui/material";
+import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import ActivityLogViewDetails from "Views/AppViews/Environments/EnvironmentList/ThreeTierTopology/Components/ActivityLogViewDetails";
 import { v4 } from "uuid";
@@ -81,14 +81,8 @@ class ThreeTierTopology extends Component {
 
   render() {
     const { activeTab, isActivityViewDetails } = this.state;
-    const {
-      landingZone,
-      landingZoneId,
-      cloudName,
-      departmentName,
-      environmentName,
-      productName,
-    } = this.getUrlDetails();
+    const { landingZone, landingZoneId, cloudName, productName } =
+      this.getUrlDetails();
     return (
       <Box className="disaster-recovery-container environment-container">
         {isActivityViewDetails ? (
