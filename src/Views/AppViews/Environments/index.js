@@ -239,7 +239,12 @@ class Environments extends Component {
             accountsJSX.push(
               <TableRow key={v4()}>
                 <TableCell align="left">
-                  <Link
+                 
+                  <HtmlTooltip
+                        className="table-tooltip"
+                        title={account.landingZone}
+                      >
+                        <Link
                     to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}&landingZoneId=${account.landingZoneId}`}
                     onClick={() =>
                       this.addAccountToRecentlyVisited({
@@ -251,6 +256,7 @@ class Environments extends Component {
                   >
                     {account.cloud} ({account.landingZone})
                   </Link>
+                      </HtmlTooltip>
                 </TableCell>
                 <TableCell align="center">
                   {account.productEnclave} VPC
