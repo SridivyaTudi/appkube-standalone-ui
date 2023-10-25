@@ -132,12 +132,7 @@ class TopologyView extends Component {
                           <img src={data.image} alt={cloudName} />
                         </div>
                         <div className="account-id">
-                          <HtmlTooltip
-                            className="table-tooltip"
-                            title={<span>{data.label}</span>}
-                          >
-                            <span className="d-block">{data.label}</span>
-                          </HtmlTooltip>
+                          <span className="d-block">{data.label}</span>
                           <HtmlTooltip
                             className="table-tooltip"
                             title={data.landingZone}
