@@ -258,7 +258,11 @@ export class AssociateChartApp extends Component {
               className={activeClass}
             >
               <i className="fa-solid fa-circle-dot"></i>
-              {item.label}
+              <HtmlTooltip
+                className="table-tooltip"
+                title={item.label}>
+                <span>{item.label}</span>
+              </HtmlTooltip>
             </ListItem>
           );
         })

@@ -134,6 +134,11 @@
               padding: 7px 10px;
               border-radius: 3px;
               cursor: pointer;
+              span{
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
               &:hover {
                 color: #383874;
                 background-color: #dde1f8;
@@ -146,13 +151,6 @@
               i {
                 margin-right: 7px;
               }
-
-              // a {
-              //   width: 100%;
-              //   display: flex;
-              //   align-items: center;
-              //   justify-content: flex-start;
-              // }
             }
           }
         }
