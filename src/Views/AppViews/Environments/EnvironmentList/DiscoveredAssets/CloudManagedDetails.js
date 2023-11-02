@@ -89,7 +89,7 @@ class CloudManagedDetails extends React.Component {
   componentDidMount = () => {
     if (this.props.infraTopologyDbCategories.data) {
       const data = this.props.infraTopologyDbCategories.data;
-      data.map((item) => {
+      data.forEach((item) => {
         this.dbMapping.push({ name: item.name, dataKey: item.id });
       });
     }
@@ -210,7 +210,7 @@ class CloudManagedDetails extends React.Component {
               <Box className="tabs-content m-t-0">
                 <Box className="cloud-managed-cards">
                   <Box className="cloud-managed-cards-scroll">
-                    {cloudData?.map((item, index) => {
+                    {cloudData?.forEach((item, index) => {
                       childJSX.push(
                         <Box
                           className={`service-card ${
@@ -264,7 +264,7 @@ class CloudManagedDetails extends React.Component {
         </Box>
       );
     } else {
-      cloudData.map((item, index) => {
+      cloudData.forEach((item, index) => {
         childJSX.push(
           <Box
             className={`service-card ${
@@ -300,7 +300,7 @@ class CloudManagedDetails extends React.Component {
       return JSX;
     } else {
       return [
-        <Box className="cloud-managed-cards">
+        <Box className="cloud-managed-cards" key={v4()}>
           <Box className="cloud-managed-cards-scroll">
             <p style={{ fontSize: "16px", margin: "22% auto", color: "#000" }}>
               No Data Available!

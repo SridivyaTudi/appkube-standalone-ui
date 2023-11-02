@@ -135,7 +135,7 @@ class LambdaTable extends Component {
                         className="table-tooltip"
                         title={row.environment}
                       >
-                        {row.environment}
+                           <span> {row.environment} </span>
                       </HtmlTooltip>
                     </TableCell>
                     <TableCell align="center">{row.actions}</TableCell>

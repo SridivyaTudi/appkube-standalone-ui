@@ -98,7 +98,7 @@ class Application extends Component {
               to={`${APP_PREFIX_PATH}/environments/${type}/topology?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&productName=${item.application}&departmentName=${item.lob}&environmentName=${item.environment}`}
             >
               <HtmlTooltip className="table-tooltip" title={item.application}>
-                {item.application}
+                <span>{item.application}</span>
               </HtmlTooltip>
             </Link>
           </TableCell>
