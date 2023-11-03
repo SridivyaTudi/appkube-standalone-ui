@@ -15,5 +15,6 @@
   "associatechartapp": "Associate Chart App",
   "topology": "Topology",
   "application-status-dashboard": "Application Status Dashboard",
-  "error": "404"
+  "error": "404",
+  "reports": "Reports"
 }

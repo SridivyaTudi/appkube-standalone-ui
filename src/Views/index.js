@@ -35,6 +35,7 @@ import { getCurrentUser } from "Utils";
 import titles from "./PathTitles.json";
 import Error from "./AppViews/Error";
 import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
+import Reports from "./AppViews/Reports";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -151,6 +152,7 @@ export const Views = (props) => {
             element={<ApplicationStatusDashboard />}
           />
           <Route path={`/error`} element={<Error />} />
+          <Route path={`${APP_PREFIX_PATH}/reports`} element={<Reports />} />
         </Routes>
         <ToastContainer
           position="top-right"

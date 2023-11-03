@@ -59,6 +59,11 @@
       "link": "/setting",
       "icon": "setting",
       "name": "Setting"
+    },
+    {
+      "link": "/reports",
+      "icon": "setting",
+      "name": "Reports"
     }
   ]
 }
