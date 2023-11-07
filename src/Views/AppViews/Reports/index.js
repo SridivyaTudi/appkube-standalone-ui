@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import Planet from "assets/img/dashboard/planet2.png";
 import { Box, Grid } from "@mui/material";
+import chartIcon from "../../../assets/img/chart-icon.png";
 import aws from "../../../assets/img/aws.png";
 import microsoftazure from "../../../assets/img/microsoftazure.png";
 import googleCloud from "../../../assets/img/google-cloud.png";
 import oracle from "../../../assets/img/oracle.png";
 import CloudCostMonthChart from "./CloudCostMonthChart";
 import AwsMonthlySpendRegionChart from "./AwsMonthlySpendRegionChart";
+import CostAWSAccountsChart from "./CostAWSAccountsChart";
+import CostDepartmentProductsChart from "./CostDepartmentProductsChart";
+import CostsComputeChart from "./CostsComputeChart";
+import CloudCostByDepartMent from "./CloudCostByDepartMent";
 
 class Reports extends Component {
   constructor(props) {
@@ -29,7 +34,7 @@ class Reports extends Component {
         </Box>
         <Box className="reports-service-box">
           <Grid container spacing={3}>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={6} lg={3}>
               <Box className="service-box">
                 <Box className="image">
                   <img src={aws} alt="" />
@@ -40,7 +45,7 @@ class Reports extends Component {
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={6} lg={3}>
               <Box className="service-box">
                 <Box className="image">
                   <img src={microsoftazure} alt="" />
@@ -51,7 +56,7 @@ class Reports extends Component {
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={6} lg={3}>
               <Box className="service-box">
                 <Box className="image">
                   <img src={googleCloud} alt="" />
@@ -62,7 +67,7 @@ class Reports extends Component {
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={6} lg={3}>
               <Box className="service-box">
                 <Box className="image">
                   <img src={oracle} alt="" />
@@ -77,17 +82,66 @@ class Reports extends Component {
         </Box>
         <Box className="reports-charts">
           <Grid container spacing={3}>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={12} lg={6}>
               <Box className="chart-box">
                 <Box className="heading">Cloud Cost by Month</Box>
                 <CloudCostMonthChart />
               </Box>
             </Grid>
-            <Grid item xs={6}>
-            
-            <Box className="chart-box">
-                <Box className="heading">AWS Monthly Spend by Region</Box>
+            <Grid item xs={12} md={12} lg={6}>
+              <Box className="chart-box">
+                <Box className="heading">
+                  <img src={chartIcon} alt="" /> AWS Monthly Spend by Region
+                </Box>
                 <AwsMonthlySpendRegionChart />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={12} lg={6}>
+              <Box className="chart-box">
+                <Box className="heading">Cost by AWS Accounts</Box>
+                <Box className="d-block width-100 cost-accounts-boxes">
+                  <ul className="d-block width-100 text-center">
+                    <li>
+                      <span style={{ backgroundColor: "#B399FF" }}></span>{" "}
+                      AWS167263
+                    </li>
+                    <li>
+                      <span style={{ backgroundColor: "#F08397" }}></span>{" "}
+                      AWS167264
+                    </li>
+                    <li>
+                      <span style={{ backgroundColor: "#F2BB23" }}></span>{" "}
+                      AWS167265
+                    </li>
+                    <li>
+                      <span style={{ backgroundColor: "#519FFF" }}></span>{" "}
+                      AWS167266
+                    </li>
+                  </ul>
+                </Box>
+                <Box className="d-block width-100 text-center">
+                  <CostAWSAccountsChart />
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={12} lg={6}>
+              <Box className="chart-box">
+                <Box className="heading">
+                  <img src={chartIcon} alt="" /> Cloud Cost by Department
+                </Box>
+                <Box className="d-block width-100 cloud-department-chart">
+                  <CloudCostByDepartMent />
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box className="chart-box department-chart">
+                <CostDepartmentProductsChart />
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box className="chart-box">
+                <CostsComputeChart />
               </Box>
             </Grid>
           </Grid>

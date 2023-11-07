@@ -114,7 +114,7 @@
       display: block;
       width: 100%;
       padding: 20px;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
       border-radius: 10px;
       background-color: #ffffff;
       box-shadow: 0px 100px 80px rgba(108, 73, 172, 0.07),
@@ -129,7 +129,263 @@
         font-size: 14px;
         line-height: 18px;
         font-weight: 600;
-        color: #000000;
+        color: #383874;
+        p{
+          margin: 3px 0 0 0;
+          font-size: 12px;
+          color: #383874;
+        }
+      }
+
+      .cost-accounts-boxes {
+        ul {
+          border-bottom: 1px dotted #f7f7f7;
+          padding-bottom: 5px;
+          margin-bottom: 20px;
+          margin-top: 10px;
+          li {
+            display: inline-block;
+            list-style: none;
+            font-size: 12px;
+            line-height: 16px;
+            color: #1e2129;
+            font-weight: 400;
+            margin-left: 5px;
+            margin-right: 5px;
+            span {
+              display: inline-block;
+              vertical-align: middle;
+              margin-top: -2px;
+              width: 12px;
+              height: 12px;
+              border-radius: 5px;
+              border: 1px solid #f6f7fb;
+            }
+          }
+        }
+      }
+
+      .cloud-department-chart {
+        padding: 20px 40px;
+      }
+
+      &.department-chart {
+        padding-top: 30px;
+        padding-bottom: 40px;
+        .heading {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 30px;
+          position: relative;
+          span {
+            font-size: 22px;
+            line-height: 26px;
+            font-weight: 500;
+          }
+          .chart-fliter {
+            display: inline-block;
+            width: auto;
+            position: relative;
+
+            .fliter-toggel {
+              width: auto;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              border: none;
+              background: #dde1f8;
+              color: #383874;
+              font-size: 12px;
+              font-weight: 600;
+              height: 36px;
+              padding: 0 15px;
+              border-radius: 4px;
+              cursor: pointer;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+
+              .fillter-icon {
+                margin-right: 5px;
+              }
+
+              .arrow-icon {
+                margin-left: 5px;
+                margin-right: 0;
+              }
+            }
+          }
+        }
+
+        .collapse-expand {
+          display: inline-block;
+          vertical-align: top;
+          min-height: 440px;
+          width: 100%;
+          padding: 20px 0 0 0;
+          position: relative;
+
+          &::after {
+            position: absolute;
+            right: -25px;
+            top: 0;
+            content: "";
+            height: 100%;
+            width: 3px;
+            border-radius: 3px;
+            background-image: url(../../img/chart-line.png);
+            background-position: -12px top;
+            background-repeat: no-repeat;
+            background-size: cover;
+          }
+
+          &.last {
+            &::after {
+              display: none;
+            }
+          }
+
+          .heading {
+            display: block;
+            width: 100%;
+            text-align: left;
+
+            h3 {
+              font-size: 16px;
+              line-height: 22px;
+              color: #383874;
+              font-weight: 600;
+              display: block;
+              margin: 0;
+              letter-spacing: 0.5px;
+            }
+
+            .product-cost {
+              display: flex;
+              align-items: flex-end;
+              justify-content: flex-start;
+              margin: 10px 0 0 0;
+
+              label {
+                font-size: 24px;
+                line-height: 26px;
+                color: #383874;
+                font-weight: 400;
+                margin: 0;
+                letter-spacing: 0.5px;
+              }
+
+              span {
+                font-size: 12px;
+                line-height: 16px;
+                font-weight: 400;
+                color: #15c64c;
+                position: relative;
+                padding-left: 15px;
+
+                &::before {
+                  content: "\f0de";
+                  position: absolute;
+                  top: 6px;
+                  left: 5px;
+                  font-weight: 900;
+                  font-size: 12px;
+                  color: #15c64c;
+                  font-family: "FontAwesome";
+                }
+              }
+            }
+          }
+
+          .chart-contant {
+            margin: 5px 0 0px 0;
+            text-align: -webkit-center;
+            .chart {
+              justify-content: center;
+            }
+
+            .chart-details {
+              width: 100%;
+              display: block;
+              margin-top: 30px;
+
+              ul {
+                padding: 0;
+                margin: 0;
+
+                li {
+                  list-style: none;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  margin: 0 0 5px 0;
+                  padding: 0;
+
+                  p {
+                    font-size: 12px;
+                    line-height: 20px;
+                    font-weight: 400;
+                    color: #383874;
+                    margin: 0;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  }
+
+                  .right-contant {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+
+                    label {
+                      font-size: 12px;
+                      line-height: 20px;
+                      font-weight: 400;
+                      color: #383874;
+                      margin: 0 5px 0 0;
+                    }
+
+                    span {
+                      display: inline-block;
+                      width: 100px;
+                      height: 6px;
+                      background-color: #f2f2f2;
+                      border-radius: 5px;
+                      position: relative;
+                      overflow: hidden;
+
+                      span {
+                        display: block;
+                        width: 100%;
+                        border-radius: 3px;
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+
+                        &.crocus-purple {
+                          background: #8676ff;
+                        }
+
+                        &.orange {
+                          background: #ff9066;
+                        }
+
+                        &.yellow {
+                          background: #ffcc41;
+                        }
+
+                        &.paris-green {
+                          background: #42cd7e;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -157,8 +413,8 @@
       width: 14px;
       height: 14px;
       border-radius: 5px;
-      border: 1px solid #C6C1D5;
-      background-color: #B399FF;
+      border: 1px solid #c6c1d5;
+      background-color: #b399ff;
     }
   }
 
@@ -174,12 +430,12 @@
   .previous-month-data {
     display: block;
     padding: 0 0px 15px 15px;
-    color: #C4C5C9;
+    color: #c4c5c9;
     font-size: 12px;
     line-height: 20px;
     font-weight: 400;
-    span{
-      color: #5CEF8B;
+    span {
+      color: #5cef8b;
       font-size: 14px;
       font-weight: 500;
     }
@@ -188,7 +444,7 @@
   .name {
     display: block;
     padding: 10px 15px;
-    color: #C4C5C9;
+    color: #c4c5c9;
     font-size: 12px;
     line-height: 16px;
     font-weight: 400;
