@@ -86,7 +86,7 @@ const CostsComputeChart = () => {
     svg
       .append("g")
       .attr("transform", `translate(0,${height + 9})`)
-      .call(d3.axisTop(x).ticks(width / 80))
+      .call(d3.axisTop(x).tickFormat((d, index) => `$${digitToThousand(d)}`))
       .call((g) => g.select(".domain").remove());
 
     svg
@@ -95,7 +95,13 @@ const CostsComputeChart = () => {
       .call(d3.axisLeft(y).tickSizeOuter(0));
     d3.select(ref.current);
   };
-
+  function digitToThousand(value) {
+    return value >= 1000
+      ? Number.isInteger(value / 1000)
+        ? parseInt(value / 1000) + "k"
+        : Number(value / 1000).toFixed(1) + "k"
+      : value;
+  }
   return (
     <>
       <Box className="heading">
