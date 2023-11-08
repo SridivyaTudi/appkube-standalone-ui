@@ -3,23 +3,23 @@ import * as d3 from "d3";
 
 const data = [
   {
-    label: "IT",
-    value: 8000,
+    label: "Marketing",
+    value: 5000,
     index: 1,
-  },
-  {
-    label: "Sales",
-    value: 6000,
-    index: 2,
   },
   {
     label: "Finance",
     value: 7000,
+    index: 2,
+  },
+  {
+    label: "Sales",
+    value: 6000,
     index: 3,
   },
   {
-    label: "Marketing",
-    value: 5000,
+    label: "IT",
+    value: 8000,
     index: 4,
   },
 ];
@@ -76,9 +76,26 @@ const CloudCostByDepartMent = () => {
             return `${data[index].label}`;
           })
       );
-    svg.append("g").call(d3.axisLeft(yScale).ticks(data.length).tickFormat(""));
+    svg
+      .append("text")
+      .attr("x", 0)
+      .attr("y", -5)
+      .style("text-anchor", "middle")
+      .text("Monthly Spend");
+    svg
+      .append("text") // text label for the x axis
+      .attr("x", width / 2)
+      .attr("y", height + 30)
+      .style("text-anchor", "middle")
+      .text("Department");
 
-    svg.append("g").attr("class", "y-axis").call(d3.axisLeft(yScale));
+    svg
+      .append("g")
+      .attr("class", "y-axis")
+      .call(
+        d3.axisLeft(yScale).tickFormat((d, index) => `$${digitToThousand(d)}`)
+      );
+
     svg
       .append("g")
       .selectAll("circle")
@@ -108,6 +125,7 @@ const CloudCostByDepartMent = () => {
       .on("mouseout", function () {
         return tooltip.style("visibility", "hidden");
       });
+
     svg
       .append("g")
       .selectAll("text")
@@ -135,6 +153,7 @@ const CloudCostByDepartMent = () => {
 
     d3.select(ref.current);
   }, [height, width]);
+
   function digitToThousand(value) {
     return value >= 1000
       ? Number.isInteger(value / 1000)
@@ -152,7 +171,7 @@ const CloudCostByDepartMent = () => {
     >
       <defs>
         <filter x="0" y="0" width="1" height="1" id="solid">
-          <feFlood flood-color="#EAEAEB" />
+          <feFlood floodColor="#d2d2d3" floodOpacity="0.4" />
           <feComposite in="SourceGraphic" operator="xor" />
         </filter>
       </defs>

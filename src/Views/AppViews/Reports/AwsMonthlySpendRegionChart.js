@@ -60,9 +60,10 @@ const AwsMonthlySpendRegionChart = () => {
       .selectAll("rect")
       .attr("fill", "#B399FF")
       .data(data)
-      .enter()
+      .enter();
 
-      barGroups.append("rect")
+    barGroups
+      .append("rect")
       .attr("x", (d) => xScale(d.name))
       .attr("y", (d) => yScale(d.value))
       .attr("width", xScale.bandwidth())
@@ -84,13 +85,21 @@ const AwsMonthlySpendRegionChart = () => {
       .on("mouseout", function () {
         return tooltip.style("visibility", "hidden");
       });
-      barGroups.append('text')
-      .attr('class', 'value')
-      .attr('x', (a) => xScale(a.name) + xScale.bandwidth() / 2)
-      .attr('y', (a) => yScale(a.value) + 30)
-      .attr('text-anchor', 'middle')
-      .text((a) =>{
-       return `$${a.value >= 1000 ? Number.isInteger((a.value/1000)) ? parseInt(a.value/1000) + 'k' : Number(a.value/1000).toFixed(1)+'k' : a.value}` })
+    barGroups
+      .append("text")
+      .attr("class", "value")
+      .attr("x", (a) => xScale(a.name) + xScale.bandwidth() / 2)
+      .attr("y", (a) => yScale(a.value) + 30)
+      .attr("text-anchor", "middle")
+      .text((a) => {
+        return `$${
+          a.value >= 1000
+            ? Number.isInteger(a.value / 1000)
+              ? parseInt(a.value / 1000) + "k"
+              : Number(a.value / 1000).toFixed(1) + "k"
+            : a.value
+        }`;
+      });
     svg.append("g").attr("class", "x-axis").call(xAxis);
 
     svg.append("g").attr("class", "y-axis").call(yAxis);
