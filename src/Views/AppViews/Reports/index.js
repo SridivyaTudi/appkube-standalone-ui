@@ -12,6 +12,7 @@ import CostAWSAccountsChart from "./CostAWSAccountsChart";
 import CostDepartmentProductsChart from "./CostDepartmentProductsChart";
 import CostsComputeChart from "./CostsComputeChart";
 import CloudCostByDepartMent from "./CloudCostByDepartMent";
+import CostByDepartmentProducts from "./CostByDepartmentProducts";
 
 class Reports extends Component {
   constructor(props) {
@@ -144,6 +145,12 @@ class Reports extends Component {
                 <CostsComputeChart />
               </Box>
             </Grid>
+            <Grid item xs={12}>
+              <Box className="chart-box department-chart">
+                <CostByDepartmentProducts />
+              </Box>
+            </Grid>
+            
           </Grid>
         </Box>
       </Box>

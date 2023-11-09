@@ -22,7 +22,7 @@ const CostsComputeChart = () => {
     const marginRight = 0;
     const marginBottom = 10;
     const marginLeft = 60;
-    const width = 1000;
+    const width = 1200;
     const height =
       Math.ceil(alphabet.length * barHeight) + marginTop + marginBottom;
 

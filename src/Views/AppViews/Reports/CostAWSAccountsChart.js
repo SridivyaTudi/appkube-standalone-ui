@@ -15,14 +15,14 @@ const CostAWSAccountsChart = () => {
   function donutChart() {
     const height = Math.min(width, 400);
     const radius = Math.min(width, height) / 2;
-   
+
     var tooltip = d3
-    .select("body")
-    .data(data)
-    .append("div")
-    .style("position", "absolute")
-    .style("z-index", "10")
-    .style("visibility", "hidden");
+      .select("body")
+      .data(data)
+      .append("div")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden");
 
     const arc = d3
       .arc()
@@ -55,8 +55,20 @@ const CostAWSAccountsChart = () => {
         return d.data.color;
       })
       .attr("d", arc)
-      .append("title")
-      .text((d) => ` ${d.data.value.toLocaleString()}`)
+      .on("mouseover", function (inde, d) {
+        tooltip.html(
+          `<div class="chart-tooltip-contents"><div class="cost-text">Monthly Spend (USD)</div><div class="value">$${d.data.value}</div><div class="name">${d.data.name}</div></div>`
+        );
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function (d) {
+        return tooltip
+          .style("top", d.pageY - 10 + "px")
+          .style("left", d.pageX + 10 + "px");
+      })
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      });
 
     svg
       .append("g")
@@ -82,21 +94,7 @@ const CostAWSAccountsChart = () => {
           .attr("y", "0.7em")
           .attr("fill-opacity", 0.7)
           .text((d) => `$${digitToThousand(d.data.value)}`)
-      ).on("mouseover", function (inde,d) {
-
-        tooltip.html(
-          `<div class="chart-tooltip-contents"><div class="cost-text">Monthly Spend (USD)</div><div class="value">$${d.data.value}</div><div class="name">${d.data.name}</div></div>`
-        );
-        return tooltip.style("visibility", "visible");
-      })
-      .on("mousemove", function (d) {
-        return tooltip
-          .style("top", d.pageY - 10 + "px")
-          .style("left", d.pageX + 10 + "px");
-      })
-      .on("mouseout", function () {
-        return tooltip.style("visibility", "hidden");
-      }); 
+      );
 
     d3.select(ref.current);
   }
@@ -118,8 +116,7 @@ const CostAWSAccountsChart = () => {
       height={height}
       viewBox={`${-width / 2} ${-height / 2} ${width} ${height}`}
       style={{ maxWidth: "100%", height: "auto" }}
-    >
-    </svg>
+    ></svg>
   );
 };
 

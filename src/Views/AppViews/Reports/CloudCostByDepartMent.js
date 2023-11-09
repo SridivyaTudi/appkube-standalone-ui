@@ -25,7 +25,7 @@ const data = [
 ];
 
 const CloudCostByDepartMent = () => {
-  const width = 450;
+  const width = 500;
   const height = 380;
   const ref = useRef(null);
 
@@ -76,18 +76,7 @@ const CloudCostByDepartMent = () => {
             return `${data[index].label}`;
           })
       );
-    svg
-      .append("text")
-      .attr("x", 0)
-      .attr("y", -5)
-      .style("text-anchor", "middle")
-      .text("Monthly Spend");
-    svg
-      .append("text") // text label for the x axis
-      .attr("x", width / 2)
-      .attr("y", height + 30)
-      .style("text-anchor", "middle")
-      .text("Department");
+  
 
     svg
       .append("g")
