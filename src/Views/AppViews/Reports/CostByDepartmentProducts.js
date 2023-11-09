@@ -9,15 +9,49 @@ var data = [
   { name: "Item D", value: 20, color: "#f2e9e4" },
   { name: "Item E", value: 20, color: "#ffffff" },
 ];
+let overLapData = [
+  {
+    letter: "A",
+    col1: ".04167",
+    col2: ".08165",
+  },
+  {
+    letter: "B",
+    col1: ".01492",
+    col2: ".08165",
+  },
+  {
+    letter: "C",
+    col1: ".02782",
+    col2: ".08165",
+  },
+  {
+    letter: "D",
+    col1: ".04253",
+    col2: ".08165",
+  },
+  {
+    letter: "E",
+    col1: ".05702",
+    col2: ".08165",
+  },
+];
+let OVERLAP_COLOR = {
+  COLOR_1: "#1d3557",
+  COLOR_2: "#03a1fc",
+};
 const CostByDepartmentProducts = () => {
   const ref = useRef();
-  var width = 610;
-  var height = 350;
+  const overLapRef = useRef();
+
   useEffect(() => {
     donutChart();
+    overLapBarChart();
   }, []);
 
   function donutChart() {
+    var width = 610;
+    var height = 350;
     const margin = 40;
     // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
     var radius = Math.min(width, height) / 2 - margin;
@@ -133,7 +167,73 @@ const CostByDepartmentProducts = () => {
 
     d3.select(ref.current);
   }
+  function overLapBarChart() {
+    var width = 660;
+    var height = 400;
+    let svg = d3.select(overLapRef.current);
 
+    let margin = { top: 20, right: 20, bottom: 30, left: 50 };
+    width = width - margin.left - margin.right;
+    height = height - margin.top - margin.bottom;
+
+    let x = d3.scaleLinear().rangeRound([0, width]);
+    let y = d3.scaleBand().rangeRound([0, height]).padding(0.1);
+
+    let g = svg
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    x.domain([
+      0,
+      d3.max(overLapData, function (d) {
+        return d.col1;
+      }),
+    ]);
+    y.domain(
+      overLapData.map(function (d) {
+        return d.letter;
+      })
+    );
+
+    g.append("g")
+      .attr("class", "axis x_axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+    g.append("g").attr("class", "axis y_axis").call(d3.axisLeft(y));
+
+    g.selectAll(".bar")
+      .data(overLapData)
+      .enter()
+      .append("rect")
+      .attr("fill", `${OVERLAP_COLOR[`COLOR_1`]}`)
+      .attr("opacity", 0.5)
+      .attr("x", 0)
+      .attr("y", function (d) {
+        return y(d.letter) + 15;
+      })
+      .attr("width", function (d) {
+        return x(d.col1);
+      })
+      .attr("height", 20);
+
+    g.selectAll(".bar2")
+      .data(overLapData)
+      .enter()
+      .append("rect")
+      .attr("fill", `${OVERLAP_COLOR[`COLOR_2`]}`)
+      .attr("opacity", 0.5)
+      .attr("x", 0)
+      .attr("y", function (d) {
+        return y(d.letter);
+      })
+      .attr("width", function (d) {
+        return x(d.col2);
+      })
+      .attr("height", 51)
+      .style("z-index", "10");
+
+    d3.select(overLapRef.current);
+  }
   return (
     <>
       <Box className="heading">
@@ -149,6 +249,11 @@ const CostByDepartmentProducts = () => {
         <Grid item xs={6}>
           <Box className="chart">
             <svg ref={ref}></svg>
+          </Box>
+        </Grid>
+        <Grid item xs={6}>
+          <Box className="chart">
+            <svg ref={overLapRef} viewBox="0 0 660 700"></svg>
           </Box>
         </Grid>
       </Grid>
