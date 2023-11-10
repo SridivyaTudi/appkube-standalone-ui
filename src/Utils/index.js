@@ -94,3 +94,11 @@ export const setUserName = (userName) => {
 export const deleteUserName = () => {
   localStorage.removeItem(LOCAL_STORAGE_CONSTANTS.REMEMBER_USER_NAME);
 };
+
+export const convertDigitToThousand = (value) => {
+  return value >= 1000
+  ? Number.isInteger(value / 1000)
+    ? parseInt(value / 1000) + "k"
+    : Number(value / 1000).toFixed(1) + "k"
+  : value;
+};

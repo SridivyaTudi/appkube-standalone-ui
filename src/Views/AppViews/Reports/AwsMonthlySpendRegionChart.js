@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
-
+import { convertDigitToThousand } from "Utils";
 const data = [
   { name: "us-east-1", value: 5 },
   { name: "us-east-2", value: 3.5 },
@@ -14,13 +14,16 @@ const AwsMonthlySpendRegionChart = () => {
     height = 400;
   const ref = useRef(null);
 
-  const margin = { top: 20, right: 0, bottom: 30, left: 40 };
-  const extent = [
-    [margin.left, margin.top],
-    [width - margin.right, height - margin.top],
-  ];
-
   useEffect(() => {
+    renderChart();
+  }, [data, height, width]);
+
+  const renderChart = () => {
+    const margin = { top: 20, right: 0, bottom: 30, left: 40 };
+    const extent = [
+      [margin.left, margin.top],
+      [width - margin.right, height - margin.top],
+    ];
     const svg = d3.select(ref.current);
 
     const xScale = d3
@@ -92,13 +95,7 @@ const AwsMonthlySpendRegionChart = () => {
       .attr("y", (a) => yScale(a.value) + 30)
       .attr("text-anchor", "middle")
       .text((a) => {
-        return `$${
-          a.value >= 1000
-            ? Number.isInteger(a.value / 1000)
-              ? parseInt(a.value / 1000) + "k"
-              : Number(a.value / 1000).toFixed(1) + "k"
-            : a.value
-        }`;
+        return `$${convertDigitToThousand(a.value)}`;
       });
     svg.append("g").attr("class", "x-axis").call(xAxis);
 
@@ -129,8 +126,7 @@ const AwsMonthlySpendRegionChart = () => {
     }
 
     d3.select(ref.current).call(zoom);
-  }, [data, height, width]);
-
+  };
   return (
     <svg
       ref={ref}

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
-
+import { convertDigitToThousand } from "Utils";
 const data = [
   { name: "May", value: 500 },
   { name: "Jun", value: 600 },
@@ -15,13 +15,17 @@ const CloudCostMonthChart = () => {
     height = 400;
   const ref = useRef(null);
 
-  const margin = { top: 20, right: 0, bottom: 30, left: 40 };
-  const extent = [
-    [margin.left, margin.top],
-    [width - margin.right, height - margin.top],
-  ];
-
   useEffect(() => {
+    renderChart();
+  }, [data, height, width]);
+
+  const renderChart = () => {
+    const margin = { top: 20, right: 0, bottom: 30, left: 40 };
+    const extent = [
+      [margin.left, margin.top],
+      [width - margin.right, height - margin.top],
+    ];
+
     const svg = d3.select(ref.current);
 
     const xScale = d3
@@ -54,16 +58,17 @@ const CloudCostMonthChart = () => {
       .style("position", "absolute")
       .style("z-index", "10")
       .style("visibility", "hidden");
-    
-      const barGroups =   svg
+
+    const barGroups = svg
       .append("g")
       .attr("class", "bars")
       .selectAll("rect")
       .attr("fill", "#B399FF")
       .data(data)
-      .enter()
-     
-     barGroups.append("rect")
+      .enter();
+
+    barGroups
+      .append("rect")
       .attr("x", (d) => xScale(d.name))
       .attr("y", (d) => yScale(d.value))
       .attr("width", xScale.bandwidth())
@@ -84,21 +89,20 @@ const CloudCostMonthChart = () => {
       })
       .on("mouseout", function () {
         return tooltip.style("visibility", "hidden");
-      })
+      });
 
-      barGroups.append('text')
-      .attr('class', 'value')
-      .attr('x', (a) => xScale(a.name) + xScale.bandwidth() / 2)
-      .attr('y', (a) => yScale(a.value) + 30)
-      .attr('text-anchor', 'middle')
-      .text((a) =>`$${a.value >= 1000 ? Number.isInteger((a.value/1000)) ? parseInt(a.value/1000) + 'k' : Number(a.value/1000).toFixed(1)+'k' : a.value}`)
-      
-  
+    barGroups
+      .append("text")
+      .attr("class", "value")
+      .attr("x", (a) => xScale(a.name) + xScale.bandwidth() / 2)
+      .attr("y", (a) => yScale(a.value) + 30)
+      .attr("text-anchor", "middle")
+      .text((a) => `$${convertDigitToThousand(a.value)}`);
+
     svg.append("g").attr("class", "x-axis").call(xAxis);
 
     svg.append("g").attr("class", "y-axis").call(yAxis);
 
-    
     function zoom() {
       function zoomed(event) {
         yScale.range(
@@ -124,9 +128,7 @@ const CloudCostMonthChart = () => {
     }
 
     d3.select(ref.current).call(zoom);
-    
-  }, [data, height, width]);
-
+  };
   return (
     <svg
       ref={ref}

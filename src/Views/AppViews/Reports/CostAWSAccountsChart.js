@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
-
+import { convertDigitToThousand } from "Utils";
 var data = [
   { name: "AWS167263", value: 1000, color: "#B399FF" },
   { name: "AWS167264", value: 1500, color: "#F08397" },
@@ -12,7 +12,12 @@ var height = 360;
 
 const CostAWSAccountsChart = () => {
   const ref = useRef(null);
-  function donutChart() {
+
+  useEffect(() => {
+    renderChart();
+  }, []);
+
+  function renderChart() {
     const height = Math.min(width, 400);
     const radius = Math.min(width, height) / 2;
 
@@ -79,13 +84,6 @@ const CostAWSAccountsChart = () => {
       .data(pie(data))
       .join("text")
       .attr("transform", (d) => `translate(${arc.centroid(d)})`)
-      // .call((text) =>
-      //   text
-      //     .append("tspan")
-      //     .attr("y", "-0.4em")
-      //     .attr("font-weight", "bold")
-      //     .text((d) => d.data.name)
-      // )
       .call((text) =>
         text
           .filter((d) => d.endAngle - d.startAngle > 0.25)
@@ -93,21 +91,10 @@ const CostAWSAccountsChart = () => {
           .attr("x", 0)
           .attr("y", "0.7em")
           .attr("fill-opacity", 0.7)
-          .text((d) => `$${digitToThousand(d.data.value)}`)
+          .text((d) => `$${convertDigitToThousand(d.data.value)}`)
       );
 
     d3.select(ref.current);
-  }
-  useEffect(() => {
-    donutChart();
-  }, []);
-
-  function digitToThousand(value) {
-    return value >= 1000
-      ? Number.isInteger(value / 1000)
-        ? parseInt(value / 1000) + "k"
-        : Number(value / 1000).toFixed(1) + "k"
-      : value;
   }
   return (
     <svg

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { convertDigitToThousand } from "Utils";
 
 const data = [
   {
@@ -29,13 +30,16 @@ const CloudCostByDepartMent = () => {
   const height = 380;
   const ref = useRef(null);
 
-  const margin = { top: 0, right: 0, bottom: 0, left: 0 };
-  const extent = [
-    [margin.left, margin.top],
-    [width - margin.right, height - margin.top],
-  ];
-
   useEffect(() => {
+    renderChart();
+  }, [height, width]);
+
+  const renderChart = () => {
+    const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+    const extent = [
+      [margin.left, margin.top],
+      [width - margin.right, height - margin.top],
+    ];
     var tooltip = d3
       .select("body")
       .data(data)
@@ -49,7 +53,7 @@ const CloudCostByDepartMent = () => {
       .attr("width", width)
       .attr("height", height)
       .style("overflow", "visible");
-    const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+
     const yMinValue = d3.min(data, (d) => d.value);
     const yMaxValue = d3.max(data, (d) => d.value);
     const xMinValue = d3.min(data, (d) => d.index);
@@ -76,13 +80,14 @@ const CloudCostByDepartMent = () => {
             return `${data[index].label}`;
           })
       );
-  
 
     svg
       .append("g")
       .attr("class", "y-axis")
       .call(
-        d3.axisLeft(yScale).tickFormat((d, index) => `$${digitToThousand(d)}`)
+        d3
+          .axisLeft(yScale)
+          .tickFormat((d, index) => `$${convertDigitToThousand(d)}`)
       );
 
     svg
@@ -129,7 +134,7 @@ const CloudCostByDepartMent = () => {
       })
       .attr("filter", "url(#solid)")
       .text(function (d) {
-        return `$${digitToThousand(d.value)}`;
+        return `$${convertDigitToThousand(d.value)}`;
       });
 
     svg
@@ -141,15 +146,8 @@ const CloudCostByDepartMent = () => {
       .attr("d", line);
 
     d3.select(ref.current);
-  }, [height, width]);
+  };
 
-  function digitToThousand(value) {
-    return value >= 1000
-      ? Number.isInteger(value / 1000)
-        ? parseInt(value / 1000) + "k"
-        : Number(value / 1000).toFixed(1) + "k"
-      : value;
-  }
   return (
     <svg
       ref={ref}

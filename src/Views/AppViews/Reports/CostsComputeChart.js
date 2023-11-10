@@ -1,22 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { Box } from "@mui/material";
+import { convertDigitToThousand } from "Utils";
 
 const alphabet = [
-  { letter: "Compute", frequency: 7700, color: "#A145FF",unit:'INSTANCE' },
-  { letter: "Storage", frequency: 6700, color: "#FA6298",unit:'TB' },
-  { letter: "Network", frequency: 6500, color: "#FAA24B",unit:'TB/DAY' },
-  { letter: "Database", frequency: 8500, color: "#F9D33D",unit:'INSTANCE' },
+  { letter: "Compute", frequency: 7700, color: "#A145FF", unit: "INSTANCE" },
+  { letter: "Storage", frequency: 6700, color: "#FA6298", unit: "TB" },
+  { letter: "Network", frequency: 6500, color: "#FAA24B", unit: "TB/DAY" },
+  { letter: "Database", frequency: 8500, color: "#F9D33D", unit: "INSTANCE" },
 ];
 const CostsComputeChart = () => {
   const ref = useRef();
-  const [data, setData] = useState([]);
 
   useEffect(() => {
-    draw();
-  }, [data]);
+    renderChart();
+  }, []);
 
-  const draw = () => {
+  const renderChart = () => {
     const barHeight = 25;
     const marginTop = 20;
     const marginRight = 0;
@@ -86,7 +86,9 @@ const CostsComputeChart = () => {
     svg
       .append("g")
       .attr("transform", `translate(0,${height + 9})`)
-      .call(d3.axisTop(x).tickFormat((d, index) => `$${digitToThousand(d)}`))
+      .call(
+        d3.axisTop(x).tickFormat((d, index) => `$${convertDigitToThousand(d)}`)
+      )
       .call((g) => g.select(".domain").remove());
 
     svg
@@ -95,13 +97,7 @@ const CostsComputeChart = () => {
       .call(d3.axisLeft(y).tickSizeOuter(0));
     d3.select(ref.current);
   };
-  function digitToThousand(value) {
-    return value >= 1000
-      ? Number.isInteger(value / 1000)
-        ? parseInt(value / 1000) + "k"
-        : Number(value / 1000).toFixed(1) + "k"
-      : value;
-  }
+
   return (
     <>
       <Box className="heading">
