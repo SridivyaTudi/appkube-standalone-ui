@@ -118,7 +118,12 @@ const CostByDepartmentProducts = () => {
       .on("mouseout", function () {
         return tooltip.style("visibility", "hidden");
       });
-    svg.append("text").attr("text-anchor", "middle").text("Total Label");
+    svg.append("text").attr("text-anchor", "middle").text("Total ");
+    svg
+      .append("text")
+      .attr("y", 20)
+      .attr("text-anchor", "middle")
+      .text(" Label");
     const borderArc = d3
       .arc()
       .innerRadius(radius - 10)
@@ -146,13 +151,14 @@ const CostByDepartmentProducts = () => {
         posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
         return [posA, posB, posC];
       });
+
     svg
       .selectAll("allPolylines")
       .data(data_ready)
       .enter()
       .append("text")
       .text(function (d) {
-        return `${d.data.name} - X(${d.data.value}%)`;
+        return `${d.data.name} `;
       })
       .attr("transform", function (d) {
         var pos = outerArc.centroid(d);
@@ -164,7 +170,25 @@ const CostByDepartmentProducts = () => {
         var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
         return midangle < Math.PI ? "start" : "end";
       });
-
+    svg
+      .selectAll("allPolylines")
+      .data(data_ready)
+      .enter()
+      .append("text")
+      .text(function (d) {
+        return ` X(${d.data.value}%)`;
+      })
+      .attr("transform", function (d) {
+        var pos = outerArc.centroid(d);
+        var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
+        pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+        pos[1] = pos[1] + 20;
+        return "translate(" + pos + ")";
+      })
+      .style("text-anchor", function (d) {
+        var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
+        return midangle < Math.PI ? "start" : "end";
+      });
     d3.select(ref.current);
   }
   function overLapBarChart() {
