@@ -324,19 +324,19 @@ class Environments extends Component {
                       <Box className="menu-list">
                         <List>
                           <ListItem>
-                            <a href="#">Add New datasource</a>
+                            Add New datasource
                           </ListItem>
                           <ListItem>
-                            <a href="#">Add CompListItemance</a>
+                            Add CompListItemance
                           </ListItem>
                           <ListItem>
-                            <a href="#">Associate to OU</a>
+                            Associate to OU
                           </ListItem>
                           <ListItem>
-                            <a href="#">Add New VPC</a>
+                            Add New VPC
                           </ListItem>
                           <ListItem>
-                            <a href="#">Add New Product</a>
+                            Add New Product
                           </ListItem>
                         </List>
                       </Box>
