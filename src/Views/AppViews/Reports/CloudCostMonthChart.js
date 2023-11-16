@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { convertDigitToThousand } from "Utils";
-const data = [
+let data = [
   { name: "May", value: 500 },
   { name: "Jun", value: 600 },
   { name: "Jul", value: 700 },
@@ -17,7 +17,7 @@ const CloudCostMonthChart = () => {
 
   useEffect(() => {
     renderChart();
-  }, [data, height, width]);
+  }, [ height, width]);
 
   const renderChart = () => {
     const margin = { top: 20, right: 0, bottom: 30, left: 40 };

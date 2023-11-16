@@ -137,14 +137,12 @@ class ProcessCentral extends Component {
             {this.mapping[tab]}
           </ListItem>
         );
-        {
-          activeTabs[tableKey] === tab &&
-            listJSX.push(
-              <Box key={uuidv4()} className="reports-boxes active">
-                {this.renderRows(rows)}
-              </Box>
-            );
-        }
+        activeTabs[tableKey] === tab &&
+          listJSX.push(
+            <Box key={uuidv4()} className="reports-boxes active">
+              {this.renderRows(rows)}
+            </Box>
+          );
       }
     }
     retData.push(
