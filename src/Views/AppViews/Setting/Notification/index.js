@@ -8,7 +8,6 @@ export class Notification extends Component {
   }
 
   render() {
-    const {} = this.state;
     return <Box className="notification-container">Notification</Box>;
   }
 }

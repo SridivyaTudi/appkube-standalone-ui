@@ -110,7 +110,7 @@ class GroupControl extends Component {
     const { groupControlData, actionButton } = this.state;
     let retData = [];
     if (groupControlData?.length > 0) {
-      groupControlData.map((groupData, index) => {
+      groupControlData.forEach((groupData, index) => {
         retData.push(
           <Box className="group-box" key={groupData.name} >
             <Box className="heading">

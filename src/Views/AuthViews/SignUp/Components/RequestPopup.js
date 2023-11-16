@@ -47,6 +47,7 @@ class RequestPopup extends Component {
   validateForm = () => {
     const { email, isSubmit } = this.state;
     let isValid = true;
+    let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ // eslint-disable-line
     let errors = {
       email: "",
     };
@@ -54,7 +55,7 @@ class RequestPopup extends Component {
       if (!email.trim()) {
         errors.email = "Email is required!";
         isValid = false;
-      } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      } else if (!emailRegex.test(email)) {
         errors.email = "Please enter valid email!";
         isValid = false;
       } else {

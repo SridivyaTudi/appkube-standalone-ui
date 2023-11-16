@@ -105,7 +105,7 @@ class CommonFilterViewSearch extends Component {
     };
     let recentEnv = getRecentVisitedEnvironments();
     if (recentEnv !== null) {
-      recentEnv.map((item, index) => {
+      recentEnv.forEach((item, index) => {
         if (item.accountId === account.accountId) {
           recentEnv.splice(index, 1);
         }

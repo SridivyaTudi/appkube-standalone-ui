@@ -21,8 +21,6 @@ class Reports extends Component {
   }
 
   render() {
-    const {} = this.state;
-
     return (
       <Box className="reports-container">
         <Box className="reports-inner">

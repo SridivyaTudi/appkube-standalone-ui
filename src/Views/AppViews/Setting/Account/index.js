@@ -50,7 +50,7 @@ export class Account extends Component {
             >
               <Grid item xs={6}>
                 <Box
-                  className={`card ${service == "read_mode" ? "active" : ""}`}
+                  className={`card ${service === "read_mode" ? "active" : ""}`}
                   onClick={() => {
                     this.setState({ service: "read_mode" });
                   }}
@@ -68,7 +68,7 @@ export class Account extends Component {
               <Grid item xs={6}>
                 <Box
                   className={`card ${
-                    service == "automation_mode" ? "active" : ""
+                    service === "automation_mode" ? "active" : ""
                   }`}
                   onClick={() => {
                     this.setState({ service: "automation_mode" });
@@ -89,7 +89,7 @@ export class Account extends Component {
           </Box>
         </Box>
         <Box className="d-block bottom-button">
-          {service == "read_mode" && (
+          {service === "read_mode" && (
             <Button
               className="primary-btn width-25"
               onClick={this.handleChangePasswordModal}
@@ -97,7 +97,7 @@ export class Account extends Component {
               Change Password
             </Button>
           )}
-          {service == "automation_mode" && (
+          {service === "automation_mode" && (
             <Button
               className="primary-btn width-25"
               onClick={this.handleAuthenticationModal}

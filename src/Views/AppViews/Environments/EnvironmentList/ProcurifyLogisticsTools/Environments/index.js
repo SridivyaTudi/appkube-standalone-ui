@@ -91,7 +91,8 @@ class Environments extends Component {
               rowSpacing={1}
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
-              <TopologyView data={Data} setLevel={() => {}} />
+              <TopologyView data={{}} setLevel={() => {}} />
+
               <Grid item xs={5}>
                 <Box className="fliter-tabs">
                   <Box

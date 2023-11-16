@@ -38,8 +38,7 @@ const CostsComputeChart = () => {
       .rangeRound([marginTop, height - marginBottom])
       .padding(0.3);
 
-    // Create a value format.
-    const format = x.tickFormat(20);
+    
 
     // Create the SVG container.
     const svg = d3

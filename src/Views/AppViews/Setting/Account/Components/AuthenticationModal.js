@@ -309,8 +309,8 @@ class AuthenticationModal extends Component {
               </Box>
               <List className="list-contents">
                 <ListItem>
-                  <span>1.</span> Get Authy from the <a href="#">App Store </a>
-                  or <a href="#">Play Store</a>
+                  <span>1.</span> Get Authy from the <span>App Store </span>
+                  or <span>Play Store</span>
                 </ListItem>
                 <ListItem>
                   <span>2.</span> In the app, after login or creating your

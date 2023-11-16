@@ -15,7 +15,7 @@ import { styled } from "@mui/material/styles";
 
 let firstPointerPosition;
 let firstPointerInitWidth = 23.4444;
-let firstPointerCurrentWidth = 23.4444;
+let firstPointerCurrentWidth = 23.4444
 
 let secondPointerPosition;
 let secondPointerInitWidth = 77.1111;

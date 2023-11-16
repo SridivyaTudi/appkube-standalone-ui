@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import sideBarMenu from "Components/SideBar/SideMenu.json";

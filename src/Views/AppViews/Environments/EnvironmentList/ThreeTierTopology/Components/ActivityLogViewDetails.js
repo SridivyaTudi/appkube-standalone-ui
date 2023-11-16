@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { ArcherContainer } from "react-archer";
-import { BurstMode } from "@mui/icons-material";
 import longArrow from "assets/img/assetmanager/long-arrow.png";
-
-let transformScale = 0;
 
 class ActivityLogViewDetails extends Component {
   constructor(props) {
@@ -19,13 +16,11 @@ class ActivityLogViewDetails extends Component {
       <ArcherContainer noCurves style={{ width: "100%", height: "100%" }}>
         <TransformWrapper
           onTransformed={(instance) => {
-            transformScale = instance && instance.state.scale;
             this.setState({ scale: true });
           }}
           style={{ width: "100%", height: "100%" }}
         >
           {({ zoomIn, zoomOut, instance, zoomToElement, ...rest }) => {
-            transformScale = instance.transformState.scale;
             return (
               <React.Fragment>
                 <div className="gmnoprint">

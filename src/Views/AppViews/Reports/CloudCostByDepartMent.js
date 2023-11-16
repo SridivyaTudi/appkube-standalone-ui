@@ -35,11 +35,8 @@ const CloudCostByDepartMent = () => {
   }, [height, width]);
 
   const renderChart = () => {
-    const margin = { top: 0, right: 0, bottom: 0, left: 0 };
-    const extent = [
-      [margin.left, margin.top],
-      [width - margin.right, height - margin.top],
-    ];
+    
+
     var tooltip = d3
       .select("body")
       .data(data)
@@ -54,7 +51,7 @@ const CloudCostByDepartMent = () => {
       .attr("height", height)
       .style("overflow", "visible");
 
-    const yMinValue = d3.min(data, (d) => d.value);
+    
     const yMaxValue = d3.max(data, (d) => d.value);
     const xMinValue = d3.min(data, (d) => d.index);
     const xMaxValue = d3.max(data, (d) => d.index);

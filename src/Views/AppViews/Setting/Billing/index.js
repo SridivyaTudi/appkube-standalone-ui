@@ -8,7 +8,6 @@ export class Billing extends Component {
   }
 
   render() {
-    const {} = this.state;
     return <Box className="billing-container">Billing</Box>;
   }
 }

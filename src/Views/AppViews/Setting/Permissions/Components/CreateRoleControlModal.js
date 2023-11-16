@@ -10,7 +10,7 @@ class CreateRoleControlModal extends Component {
   }
 
   render() {
-    const {} = this.state;
+    
     return (
       <Modal
         isOpen={this.props.showModal}

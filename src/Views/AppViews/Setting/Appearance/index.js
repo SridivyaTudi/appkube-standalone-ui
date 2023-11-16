@@ -8,7 +8,6 @@ export class Appearance extends Component {
   }
 
   render() {
-    const {} = this.state;
     return <Box className="appearance-container">Appearance</Box>;
   }
 }

@@ -106,7 +106,7 @@ class Environments extends Component {
       const { environmentCountData } = this.state;
       let retData = [];
       if (environmentCountData?.length > 0) {
-        environmentCountData.map((env) => {
+        environmentCountData.forEach((env) => {
           retData.push(
             <Box className="environment-box" key={v4()}>
               <Box className="environment-title">
@@ -233,30 +233,29 @@ class Environments extends Component {
       } = this.state;
       let retData = [];
       if (envSummary.length > 0) {
-        searchedEnvSummary.map((item, envIndex) => {
+        searchedEnvSummary.forEach((item, envIndex) => {
           let accountsJSX = [];
-          item.environmentSummaryList.map((account, accountIndex) => {
+          item.environmentSummaryList.forEach((account, accountIndex) => {
             accountsJSX.push(
               <TableRow key={v4()}>
                 <TableCell align="left">
-                 
                   <HtmlTooltip
-                        className="table-tooltip"
-                        title={account.landingZone}
-                      >
-                        <Link
-                    to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}&landingZoneId=${account.landingZoneId}`}
-                    onClick={() =>
-                      this.addAccountToRecentlyVisited({
-                        accountType: account.cloud,
-                        accountId: account.landingZone,
-                        landingZoneId: account.landingZoneId,
-                      })
-                    }
+                    className="table-tooltip"
+                    title={account.landingZone}
                   >
-                    {account.cloud} ({account.landingZone})
-                  </Link>
-                      </HtmlTooltip>
+                    <Link
+                      to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}&landingZoneId=${account.landingZoneId}`}
+                      onClick={() =>
+                        this.addAccountToRecentlyVisited({
+                          accountType: account.cloud,
+                          accountId: account.landingZone,
+                          landingZoneId: account.landingZoneId,
+                        })
+                      }
+                    >
+                      {account.cloud} ({account.landingZone})
+                    </Link>
+                  </HtmlTooltip>
                 </TableCell>
                 <TableCell align="center">
                   {account.productEnclave} VPC
@@ -364,7 +363,7 @@ class Environments extends Component {
           }
           retData.push(
             <div className="environment-table" key={v4()}>
-              <TableContainer className="table" >
+              <TableContainer className="table">
                 <Table>
                   <TableHead
                     className={
@@ -437,6 +436,8 @@ class Environments extends Component {
               item.cloud.toLowerCase().includes(value.toLowerCase())
             ) {
               return item;
+            } else {
+              return null;
             }
           }
         );
@@ -511,7 +512,7 @@ class Environments extends Component {
   renderAddNewEnvironmentList = () => {
     return (
       <>
-        <ListItem >
+        <ListItem>
           <Link to={`${APP_PREFIX_PATH}/environments/aws/newaccountsetup`}>
             <span className="image-box">
               <img src={AWS} alt="AWS" />
@@ -519,7 +520,7 @@ class Environments extends Component {
             <p>Amazon Web Services</p>
           </Link>
         </ListItem>
-        <ListItem >
+        <ListItem>
           <Link to={`${APP_PREFIX_PATH}/environments/azure/newaccountsetup`}>
             <span className="image-box">
               <img src={AZURE} alt="AZURE" />
@@ -527,7 +528,7 @@ class Environments extends Component {
             <p>Azure Cloud</p>
           </Link>
         </ListItem>
-        <ListItem >
+        <ListItem>
           <Link to={`${APP_PREFIX_PATH}/environments/gcp/newaccountsetup`}>
             <span className="image-box">
               <img src={GCP} alt="GCP" />
@@ -535,7 +536,7 @@ class Environments extends Component {
             <p>Google Cloud Platform</p>
           </Link>
         </ListItem>
-        <ListItem >
+        <ListItem>
           <Link
             to={`${APP_PREFIX_PATH}/environments/kubernetes/newaccountsetup`}
           >

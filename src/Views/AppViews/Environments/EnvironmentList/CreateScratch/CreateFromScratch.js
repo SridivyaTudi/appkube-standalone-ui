@@ -101,7 +101,7 @@ class CreateFromScratch extends Component {
             </Grid>
             <Grid item xs={6}>
               <Box className="added-image">
-                <img src={AccountAddedImage} alt="added image" />
+                <img src={AccountAddedImage} alt="account added." />
               </Box>
             </Grid>
           </Grid>

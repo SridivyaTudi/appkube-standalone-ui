@@ -106,6 +106,8 @@ class SignUp extends Component {
       termsOfService: "",
       companyName: "",
     };
+
+    let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
     if (activeStep === this.steps.STEP1 && submittedSteps[this.steps.STEP1]) {
       if (!step1.fullName.trim()) {
         errors.fullName = "Full name is required!";
@@ -124,9 +126,7 @@ class SignUp extends Component {
       if (!step1.email.trim()) {
         errors.email = "Email is required!";
         isValid = false;
-      } else if (
-        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(step1.email)
-      ) {
+      } else if (!emailRegex.test(step1.email)) {
         errors.email = "Please enter valid email!";
         isValid = false;
       } else {

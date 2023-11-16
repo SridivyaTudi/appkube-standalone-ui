@@ -59,7 +59,7 @@ class Finish extends Component {
             </Grid>
             <Grid item xs={5}>
               <Box className="added-image">
-                <img src={AccountAddedImage} alt="added image" />
+                <img src={AccountAddedImage} alt="Account added" />
               </Box>
             </Grid>
           </Grid>

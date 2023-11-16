@@ -16,7 +16,7 @@ class ConfigureTopology extends Component {
   }
 
   render() {
-    const {} = this.state;
+    
     return (
       <Box className="configure-topology-container">
         <Box className="page-heading">

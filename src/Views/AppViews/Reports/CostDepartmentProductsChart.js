@@ -30,15 +30,6 @@ const CostDepartmentProductsChart = () => {
       .sort(null)
       .value((d) => d.value);
 
-    const color = d3
-      .scaleOrdinal()
-      .domain(data.map((d) => d.name))
-      .range(
-        d3
-          .quantize((t) => d3.interpolateSpectral(t * 0.8 + 0.1), data.length)
-          .reverse()
-      );
-
     const svg = d3.select(refDepartment.current);
 
     svg
@@ -79,15 +70,6 @@ const CostDepartmentProductsChart = () => {
       .padAngle(1 / radius)
       .sort(null)
       .value((d) => d.value);
-
-    const color = d3
-      .scaleOrdinal()
-      .domain(data.map((d) => d.name))
-      .range(
-        d3
-          .quantize((t) => d3.interpolateSpectral(t * 0.8 + 0.1), data.length)
-          .reverse()
-      );
 
     const svg = d3.select(refProduct.current);
 
@@ -130,15 +112,6 @@ const CostDepartmentProductsChart = () => {
       .sort(null)
       .value((d) => d.value);
 
-    const color = d3
-      .scaleOrdinal()
-      .domain(data.map((d) => d.name))
-      .range(
-        d3
-          .quantize((t) => d3.interpolateSpectral(t * 0.8 + 0.1), data.length)
-          .reverse()
-      );
-
     const svg = d3.select(refEnvironment.current);
 
     svg
@@ -179,15 +152,6 @@ const CostDepartmentProductsChart = () => {
       .padAngle(1 / radius)
       .sort(null)
       .value((d) => d.value);
-
-    const color = d3
-      .scaleOrdinal()
-      .domain(data.map((d) => d.name))
-      .range(
-        d3
-          .quantize((t) => d3.interpolateSpectral(t * 0.8 + 0.1), data.length)
-          .reverse()
-      );
 
     const svg = d3.select(refService.current);
 

@@ -9,7 +9,7 @@ class SetTransitions extends Component {
           <Box className="breadcrumbs">
             <List>
               <ListItem>
-                <a href="#">Rbac</a>
+                <span>Rbac</span>
               </ListItem>
               <ListItem>
                 <i className="fa-solid fa-chevron-right"></i>

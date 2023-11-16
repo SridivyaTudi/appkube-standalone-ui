@@ -8,7 +8,6 @@ class ConfigureTopology extends Component {
   }
 
   render() {
-    const {} = this.state;
     return (
       <Box>
         <h4>Configure Topology Page</h4>

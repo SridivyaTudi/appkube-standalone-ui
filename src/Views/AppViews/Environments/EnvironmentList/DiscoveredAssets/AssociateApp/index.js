@@ -55,7 +55,7 @@ class AssociateApp extends Component {
     const JSX = [];
     const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
 
-    dataTierSoc.map((data, index) => {
+    dataTierSoc.forEach((data, index) => {
       const tier3Data = Object.entries(data.threeTier);
       const soaData = Object.entries(data.soa);
       JSX.push(

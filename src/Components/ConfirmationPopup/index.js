@@ -4,10 +4,6 @@ import Box from "@mui/material/Box";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 class ConfirmationPopup extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   toggle = () => {
     this.props.togglePopup();
   };
@@ -21,11 +17,7 @@ class ConfirmationPopup extends Component {
   };
 
   render() {
-    const {
-      showLoader,
-      showModal,
-      labels,
-    } = this.props;
+    const { showLoader, showModal, labels } = this.props;
     return (
       <Modal
         isOpen={showModal}
