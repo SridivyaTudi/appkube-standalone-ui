@@ -15,11 +15,11 @@ import { styled } from "@mui/material/styles";
 
 let firstPointerPosition;
 let firstPointerInitWidth = 23.4444;
-let firstPointerCurrentWidth = 23.4444
+// let firstPointerCurrentWidth = 23.4444
 
 let secondPointerPosition;
 let secondPointerInitWidth = 77.1111;
-let secondPointerCurrentwidth = 77.1111;
+// let secondPointerCurrentwidth = 77.1111;
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 32,
@@ -117,10 +117,10 @@ class ConfigureHorizontal extends Component {
         allFirstLineStyles[0][0].split(":")[1].replace("%", "")
       );
       if (firstPointerPosition <= firstPointerInitWidth) {
-        firstPointerCurrentWidth = firstPointerInitWidth - firstPointerPosition;
+        // firstPointerCurrentWidth = firstPointerInitWidth - firstPointerPosition;
       }
       if (firstPointerPosition > firstPointerInitWidth) {
-        firstPointerCurrentWidth = firstPointerPosition;
+        // firstPointerCurrentWidth = firstPointerPosition;
       }
     }
 
@@ -138,11 +138,11 @@ class ConfigureHorizontal extends Component {
         allSecondLineStyles[0][0].split(":")[1].replace("%", "")
       );
       if (secondPointerPosition <= secondPointerInitWidth) {
-        secondPointerCurrentwidth =
-          secondPointerInitWidth - secondPointerPosition;
+        // secondPointerCurrentwidth =
+        //   secondPointerInitWidth - secondPointerPosition;
       }
       if (secondPointerPosition > secondPointerInitWidth) {
-        secondPointerCurrentwidth = secondPointerPosition;
+        // secondPointerCurrentwidth = secondPointerPosition;
       }
     }
   };

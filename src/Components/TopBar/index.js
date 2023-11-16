@@ -37,9 +37,11 @@ function TopBar() {
   };
 
   useEffect(() => {
+    
     if (!getCurrentOrgId()) {
       dispatch(organizationsAsyncThunk());
     }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -218,14 +220,14 @@ function TopBar() {
                   </Box>
                   <List>
                     <ListItem>
-                      <a className="item" href="#!">
+                      <li className="item">
                         <i className="fa-solid fa-file-invoice m-r-2"></i>
                         Account
-                      </a>
+                      </li>
                     </ListItem>
                     {getCurrentUser() ? (
                       <ListItem>
-                        <a
+                        <li
                           className="item"
                           onClick={() => {
                             localStorageClear();
@@ -234,7 +236,7 @@ function TopBar() {
                         >
                           <i className="fa-solid fa-arrow-right-from-bracket m-r-2"></i>
                           Logout
-                        </a>
+                        </li>
                       </ListItem>
                     ) : (
                       <></>

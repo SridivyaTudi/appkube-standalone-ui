@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import CommonFilterViewSearch from "../../CommonFilterViewSearch";
 import TopologyView from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
-import Aws from "assets/img/aws.png";
-import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
-import ClusterIcon from "assets/img/assetmanager/cluster-icon.png";
-import GatewayIcon from "assets/img/assetmanager/gateway-icon.png";
+// import Aws from "assets/img/aws.png";
+// import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
+// import ClusterIcon from "assets/img/assetmanager/cluster-icon.png";
+// import GatewayIcon from "assets/img/assetmanager/gateway-icon.png";
 import {
   Box,
   Grid,
@@ -16,61 +16,61 @@ import {
   TableBody,
 } from "@mui/material";
 
-let Data = {
-  label: "Account ID",
-  subLabel: "456262908",
-  image: Aws,
-  children: [
-    [
-      {
-        label: "vpc-218",
-        id: null,
-        type: "vpc",
-        image: VpcServicesIcon,
-        children: [
-          {
-            label: "cloudManaged",
-            id: "",
-            image: ClusterIcon,
-            type: "cluster",
-            children: [],
-          },
-        ],
-      },
-      {
-        label: "vpc-224",
-        id: null,
-        type: "vpc",
-        image: VpcServicesIcon,
-        children: [
-          {
-            label: "gateway",
-            id: "",
-            image: ClusterIcon,
-            type: "cluster",
-            children: [],
-          },
-        ],
-      },
-      {
-        label: "vpc-223",
-        id: null,
-        type: "vpc",
-        image: VpcServicesIcon,
-        children: [
-          {
-            label: "gateway",
-            id: "",
-            image: GatewayIcon,
-            type: "cluster",
-            children: [],
-          },
-        ],
-      },
-    ],
-    [],
-  ],
-};
+// let Data = {
+//   label: "Account ID",
+//   subLabel: "456262908",
+//   image: Aws,
+//   children: [
+//     [
+//       {
+//         label: "vpc-218",
+//         id: null,
+//         type: "vpc",
+//         image: VpcServicesIcon,
+//         children: [
+//           {
+//             label: "cloudManaged",
+//             id: "",
+//             image: ClusterIcon,
+//             type: "cluster",
+//             children: [],
+//           },
+//         ],
+//       },
+//       {
+//         label: "vpc-224",
+//         id: null,
+//         type: "vpc",
+//         image: VpcServicesIcon,
+//         children: [
+//           {
+//             label: "gateway",
+//             id: "",
+//             image: ClusterIcon,
+//             type: "cluster",
+//             children: [],
+//           },
+//         ],
+//       },
+//       {
+//         label: "vpc-223",
+//         id: null,
+//         type: "vpc",
+//         image: VpcServicesIcon,
+//         children: [
+//           {
+//             label: "gateway",
+//             id: "",
+//             image: GatewayIcon,
+//             type: "cluster",
+//             children: [],
+//           },
+//         ],
+//       },
+//     ],
+//     [],
+//   ],
+// };
 
 class Environments extends Component {
   constructor(props) {

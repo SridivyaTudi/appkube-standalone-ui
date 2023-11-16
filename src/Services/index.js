@@ -57,22 +57,22 @@ service.interceptors.response.use(
   (error) => {
     // Remove token and redirect
     if (error?.response?.status) {
-      let message = "";
+      // let message = "";
       if (error.response.status === 400 || error.response.status === 403) {
-        message = "Authentication failed";
+        // message = "Authentication failed";
         // Handle logout
       }
 
       if (error.response.status === 404) {
-        message = "Not Found";
+        // message = "Not Found";
       }
 
       if (error.response.status === 500) {
-        message = "Error";
+        // message = "Error";
       }
 
       if (error.response.status === 508) {
-        message = "Time Out";
+        // message = "Time Out";
       }
       ToastMessage.error("Error");
     }
@@ -96,22 +96,22 @@ authService.interceptors.response.use(
   (error) => {
     // Remove token and redirect
     if (error?.response?.status) {
-      let message = "";
+      // let message = "";
       if (error.response.status === 400 || error.response.status === 403) {
-        message = "Authentication failed";
+        // message = "Authentication failed";
         // Handle logout
       }
 
       if (error.response.status === 404) {
-        message = "Not Found";
+        // message = "Not Found";
       }
 
       if (error.response.status === 500) {
-        message = "Error";
+        // message = "Error";
       }
 
       if (error.response.status === 508) {
-        message = "Time Out";
+        // message = "Time Out";
       }
       ToastMessage.error("Error");
     }

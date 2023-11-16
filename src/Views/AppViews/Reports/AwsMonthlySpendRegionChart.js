@@ -16,7 +16,7 @@ const AwsMonthlySpendRegionChart = () => {
 
   useEffect(() => {
     renderChart();
-  }, [data, height, width]);
+  }, [height, width]);
 
   const renderChart = () => {
     const margin = { top: 20, right: 0, bottom: 30, left: 40 };
