@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import CommonFilterViewSearch from "../../CommonFilterViewSearch";
 import TopologyView from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/Components/TopologyView";
-// import Aws from "assets/img/aws.png";
-// import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
-// import ClusterIcon from "assets/img/assetmanager/cluster-icon.png";
-// import GatewayIcon from "assets/img/assetmanager/gateway-icon.png";
+import Aws from "assets/img/aws.png";
+import VpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
+import ClusterIcon from "assets/img/assetmanager/cluster-icon.png";
+import GatewayIcon from "assets/img/assetmanager/gateway-icon.png";
 import {
   Box,
   Grid,
@@ -16,61 +16,59 @@ import {
   TableBody,
 } from "@mui/material";
 
-// let Data = {
-//   label: "Account ID",
-//   subLabel: "456262908",
-//   image: Aws,
-//   children: [
-//     [
-//       {
-//         label: "vpc-218",
-//         id: null,
-//         type: "vpc",
-//         image: VpcServicesIcon,
-//         children: [
-//           {
-//             label: "cloudManaged",
-//             id: "",
-//             image: ClusterIcon,
-//             type: "cluster",
-//             children: [],
-//           },
-//         ],
-//       },
-//       {
-//         label: "vpc-224",
-//         id: null,
-//         type: "vpc",
-//         image: VpcServicesIcon,
-//         children: [
-//           {
-//             label: "gateway",
-//             id: "",
-//             image: ClusterIcon,
-//             type: "cluster",
-//             children: [],
-//           },
-//         ],
-//       },
-//       {
-//         label: "vpc-223",
-//         id: null,
-//         type: "vpc",
-//         image: VpcServicesIcon,
-//         children: [
-//           {
-//             label: "gateway",
-//             id: "",
-//             image: GatewayIcon,
-//             type: "cluster",
-//             children: [],
-//           },
-//         ],
-//       },
-//     ],
-//     [],
-//   ],
-// };
+let Data = {
+  label: "Account ID",
+  subLabel: "456262908",
+  image: Aws,
+  productEnclaveList: [
+    {
+      label: "vpc-218",
+      id: null,
+      type: "vpc",
+      image: VpcServicesIcon,
+      children: [
+        {
+          label: "cloudManaged",
+          id: "",
+          image: ClusterIcon,
+          type: "cluster",
+          children: [],
+        },
+      ],
+    },
+    {
+      label: "vpc-224",
+      id: null,
+      type: "vpc",
+      image: VpcServicesIcon,
+      children: [
+        {
+          label: "gateway",
+          id: "",
+          image: ClusterIcon,
+          type: "cluster",
+          children: [],
+        },
+      ],
+    },
+    {
+      label: "vpc-223",
+      id: null,
+      type: "vpc",
+      image: VpcServicesIcon,
+      children: [
+        {
+          label: "gateway",
+          id: "",
+          image: GatewayIcon,
+          type: "cluster",
+          children: [],
+        },
+      ],
+    },
+  ],
+  globalServiceList: [],
+};
 
 class Environments extends Component {
   constructor(props) {
@@ -91,7 +89,21 @@ class Environments extends Component {
               rowSpacing={1}
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
-              <TopologyView data={{}} setLevel={() => {}} />
+              <Grid item xs={6}>
+                <Box className="services-panel">
+                  <Box className="services-panel-body">
+                    {Object.keys(Data).length ? (
+                      <TopologyView
+                        data={Data}
+                        setCurrentActiveNode={() => {}}
+                        parentCssClass="infra-toplogy-view"
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </Box>
+                </Box>
+              </Grid>
 
               <Grid item xs={5}>
                 <Box className="fliter-tabs">
@@ -117,9 +129,7 @@ class Environments extends Component {
                           <TableBody>
                             <TableRow>
                               <TableCell>
-                                <strong>
-                                  EMS
-                                </strong>
+                                <strong>EMS</strong>
                               </TableCell>
                               <TableCell align="center">
                                 <Box className="box red">2</Box>
@@ -145,9 +155,7 @@ class Environments extends Component {
                             </TableRow>
                             <TableRow>
                               <TableCell>
-                                <strong>
-                                  Supply Chain
-                                </strong>
+                                <strong>Supply Chain</strong>
                               </TableCell>
                               <TableCell align="center">
                                 <Box className="box red">2</Box>
@@ -171,9 +179,7 @@ class Environments extends Component {
                             </TableRow>
                             <TableRow>
                               <TableCell>
-                                <strong>
-                                  Procurement
-                                </strong>
+                                <strong>Procurement</strong>
                               </TableCell>
                               <TableCell align="center">
                                 <Box className="box red">2</Box>
