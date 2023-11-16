@@ -26,3 +26,22 @@ https://github.com/AppkubeCloud/appkube-architectures-doc/blob/main/postman-coll
 
 Figma Password
 BeyondSoft
+
+
+EKS explorer:
+https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?type=design&node-id=12383-64820&t=9Xrymh7JYyOv4TIB-1&scaling=scale-down-width&page-id=12227%3A62321&starting-point-node-id=12455%3A71734
+
+ELB/NLB explorer:
+https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?type=design&amp%3Bnode-id=12252-62320&amp%3Bt=pwdkxRU4L3feUy5a-1&amp%3Bscaling=min-zoom&amp%3Bpage-id=12227%3A62325&amp%3Bstarting-point-node-id=12252%3A62320&amp%3Bmode=design&utm_source=link-unfurl&utm_medium=msft&utm_content=mSwpmnkmrqHXX6AkzXzbtC&utm_product_type=design&node-id=10061-64679&starting-point-node-id=10061%3A64679
+
+EC2 explorer:
+https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?type=design&amp%3Bnode-id=12252-62320&amp%3Bt=pwdkxRU4L3feUy5a-1&amp%3Bscaling=min-zoom&amp%3Bpage-id=12227%3A62325&amp%3Bstarting-point-node-id=12252%3A62320&amp%3Bmode=design&utm_source=link-unfurl&utm_medium=msft&utm_content=mSwpmnkmrqHXX6AkzXzbtC&utm_product_type=design&node-id=10061-64679&starting-point-node-id=10061%3A64679
+
+s3 explorer:
+https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?type=design&node-id=8288-34673&t=dqlwHSI7g2LowKt4-1&scaling=scale-down-width&page-id=7794%3A35100&starting-point-node-id=8288%3A34673
+
+lambda explorer:
+https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?type=design&node-id=10603-60789&t=t8tXZyiCvYJJexud-1&scaling=min-zoom&page-id=9401%3A52769&starting-point-node-id=10603%3A60789
+
+reports ui:
+https://www.figma.com/file/gsXH45MPpJKqaxwpOLAdbu/AppKube-DRS?type=design&node-id=26842-23627&mode=design&t=s7Hd0VhLXCCvn4wf-0
