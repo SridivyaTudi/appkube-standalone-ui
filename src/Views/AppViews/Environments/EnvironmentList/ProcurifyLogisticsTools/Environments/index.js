@@ -118,7 +118,7 @@ class Environments extends Component {
                             <TableRow>
                               <TableCell>
                                 <strong>
-                                  <a href="#">EMS</a>
+                                  EMS
                                 </strong>
                               </TableCell>
                               <TableCell align="center">
@@ -146,7 +146,7 @@ class Environments extends Component {
                             <TableRow>
                               <TableCell>
                                 <strong>
-                                  <a href="#">Supply Chain</a>
+                                  Supply Chain
                                 </strong>
                               </TableCell>
                               <TableCell align="center">
@@ -172,7 +172,7 @@ class Environments extends Component {
                             <TableRow>
                               <TableCell>
                                 <strong>
-                                  <a href="#">Procurement</a>
+                                  Procurement
                                 </strong>
                               </TableCell>
                               <TableCell align="center">
