@@ -26,7 +26,7 @@ const data = [
 ];
 
 const CloudCostByDepartMent = () => {
-  const width = 480;
+  const width = 400;
   const height = 380;
   const ref = useRef(null);
 
@@ -148,10 +148,10 @@ const CloudCostByDepartMent = () => {
   return (
     <svg
       ref={ref}
-      width={width}
-      height={height}
+      // width={width}
+      // height={height}
 
-      // viewBox={`0 0 ${width - 600} ${height}`}
+      viewBox={`0 0 ${width} ${height}`}
     >
       <defs>
         <filter x="0" y="0" width="1" height="1" id="solid">
