@@ -277,7 +277,7 @@ const CostByDepartmentProducts = () => {
         </Grid>
         <Grid item xs={6}>
           <Box className="chart">
-            <svg ref={overLapRef} viewBox="0 0 660 700"></svg>
+            <svg ref={overLapRef} viewBox="0 0 610 350"></svg>
           </Box>
         </Grid>
       </Grid>

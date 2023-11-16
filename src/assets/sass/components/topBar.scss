@@ -180,10 +180,11 @@
           justify-content: center;
           font-weight: 400;
 
-          a {
+          span {
             color: #383874;
             font-size: 13px;
             line-height: 16px;
+            cursor: pointer;
 
             &:hover {
               color: #3247e5;

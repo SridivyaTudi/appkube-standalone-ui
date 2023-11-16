@@ -147,7 +147,7 @@ function TopBar() {
                     </ListItem>
                   </List>
                   <Box className="d-flex align-items-center show-notifications">
-                    <a href="#">Show all notifications</a>
+                    <span>Show all notifications</span>
                   </Box>
                 </Box>
                 {showNotification ? (

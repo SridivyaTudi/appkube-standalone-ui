@@ -26,7 +26,7 @@ const data = [
 ];
 
 const CloudCostByDepartMent = () => {
-  const width = 500;
+  const width = 480;
   const height = 380;
   const ref = useRef(null);
 
