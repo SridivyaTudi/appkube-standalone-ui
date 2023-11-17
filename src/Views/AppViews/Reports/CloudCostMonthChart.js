@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { Component } from "react";
 import * as d3 from "d3";
 import { convertDigitToThousand } from "Utils";
+
 let data = [
   { name: "May", value: 500 },
   { name: "Jun", value: 600 },
@@ -10,23 +11,25 @@ let data = [
   { name: "Oct", value: 1000 },
 ];
 
-const CloudCostMonthChart = () => {
-  const width = 520,
-    height = 400;
-  const ref = useRef(null);
+const width = 520,
+  height = 400;
+class CloudCostMonthChart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.ref = React.createRef();
+  }
 
-  useEffect(() => {
-    renderChart();
-  }, [ height, width]);
+  componentDidMount = () => this.renderChart();
 
-  const renderChart = () => {
+  renderChart = () => {
     const margin = { top: 20, right: 0, bottom: 30, left: 40 };
     const extent = [
       [margin.left, margin.top],
       [width - margin.right, height - margin.top],
     ];
 
-    const svg = d3.select(ref.current);
+    const svg = d3.select(this.ref.current);
 
     const xScale = d3
       .scaleBand()
@@ -127,16 +130,18 @@ const CloudCostMonthChart = () => {
       );
     }
 
-    d3.select(ref.current).call(zoom);
+    d3.select(this.ref.current).call(zoom);
   };
-  return (
-    <svg
-      ref={ref}
-      width={width}
-      height={height}
-      viewBox={`0 0 ${width - 600} ${height}`}
-    ></svg>
-  );
-};
+  render() {
+    return (
+      <svg
+        ref={this.ref}
+        width={width}
+        height={height}
+        viewBox={`0 0 ${width - 600} ${height}`}
+      ></svg>
+    );
+  }
+}
 
 export default CloudCostMonthChart;

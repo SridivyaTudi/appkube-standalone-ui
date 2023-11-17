@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { Component } from "react";
 import * as d3 from "d3";
 import { Box } from "@mui/material";
 import { convertDigitToThousand } from "Utils";
@@ -9,14 +9,19 @@ const alphabet = [
   { letter: "Network", frequency: 6500, color: "#FAA24B", unit: "TB/DAY" },
   { letter: "Database", frequency: 8500, color: "#F9D33D", unit: "INSTANCE" },
 ];
-const CostsComputeChart = () => {
-  const ref = useRef();
 
-  useEffect(() => {
-    renderChart();
-  }, []);
+class CostsComputeChart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.ref = React.createRef();
+  }
 
-  const renderChart = () => {
+  componentDidMount = () => {
+    this.renderChart();
+  };
+
+  renderChart = () => {
     const barHeight = 25;
     const marginTop = 20;
     const marginRight = 0;
@@ -38,11 +43,9 @@ const CostsComputeChart = () => {
       .rangeRound([marginTop, height - marginBottom])
       .padding(0.3);
 
-    
-
     // Create the SVG container.
     const svg = d3
-      .select(ref.current)
+      .select(this.ref.current)
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", [0, 0, width, height])
@@ -94,23 +97,24 @@ const CostsComputeChart = () => {
       .append("g")
       .attr("transform", `translate(${marginLeft},0)`)
       .call(d3.axisLeft(y).tickSizeOuter(0));
-    d3.select(ref.current);
+    d3.select(this.ref.current);
   };
-
-  return (
-    <>
-      <Box className="heading">
-        <span>Costs By Compute / Storage / Network / DB</span>
-        <p>
-          Monthly cost of all the Service providers spent on Computing, Storage,
-          networking and DB
-        </p>
-      </Box>
-      <Box className="chart">
-        <svg ref={ref}></svg>
-      </Box>
-    </>
-  );
-};
+  render() {
+    return (
+      <>
+        <Box className="heading">
+          <span>Costs By Compute / Storage / Network / DB</span>
+          <p>
+            Monthly cost of all the Service providers spent on Computing,
+            Storage, networking and DB
+          </p>
+        </Box>
+        <Box className="chart">
+          <svg ref={this.ref}></svg>
+        </Box>
+      </>
+    );
+  }
+}
 
 export default CostsComputeChart;

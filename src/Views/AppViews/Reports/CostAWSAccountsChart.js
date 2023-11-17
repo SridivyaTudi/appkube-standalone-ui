@@ -1,23 +1,26 @@
-import React, { useEffect, useRef } from "react";
+import React, { Component } from "react";
 import * as d3 from "d3";
 import { convertDigitToThousand } from "Utils";
-var data = [
+
+let data = [
   { name: "AWS167263", value: 1000, color: "#B399FF" },
   { name: "AWS167264", value: 1500, color: "#F08397" },
   { name: "AWS167265", value: 800, color: "#F2BB23" },
   { name: "AWS167266", value: 1200, color: "#519FFF" },
 ];
-var width = 360;
-var height = 360;
 
-const CostAWSAccountsChart = () => {
-  const ref = useRef(null);
+const width = 360,
+  height = 360;
+class CostAWSAccountsChart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.ref = React.createRef();
+  }
 
-  useEffect(() => {
-    renderChart();
-  }, []);
+  componentDidMount = () => this.renderChart();
 
-  function renderChart() {
+  renderChart = () => {
     const height = Math.min(width, 400);
     const radius = Math.min(width, height) / 2;
 
@@ -40,8 +43,7 @@ const CostAWSAccountsChart = () => {
       .sort(null)
       .value((d) => d.value);
 
-
-    const svg = d3.select(ref.current);
+    const svg = d3.select(this.ref.current);
 
     svg
       .append("g")
@@ -86,17 +88,19 @@ const CostAWSAccountsChart = () => {
           .text((d) => `$${convertDigitToThousand(d.data.value)}`)
       );
 
-    d3.select(ref.current);
+    d3.select(this.ref.current);
+  };
+  render() {
+    return (
+      <svg
+        ref={this.ref}
+        width={width}
+        height={height}
+        viewBox={`${-width / 2} ${-height / 2} ${width} ${height}`}
+        style={{ maxWidth: "100%", height: "auto" }}
+      ></svg>
+    );
   }
-  return (
-    <svg
-      ref={ref}
-      width={width}
-      height={height}
-      viewBox={`${-width / 2} ${-height / 2} ${width} ${height}`}
-      style={{ maxWidth: "100%", height: "auto" }}
-    ></svg>
-  );
-};
+}
 
 export default CostAWSAccountsChart;

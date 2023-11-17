@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { Component } from "react";
 import * as d3 from "d3";
 import { convertDigitToThousand } from "Utils";
 
@@ -25,18 +25,18 @@ const data = [
   },
 ];
 
-const CloudCostByDepartMent = () => {
-  const width = 400;
-  const height = 380;
-  const ref = useRef(null);
+const width = 400,
+  height = 380;
+class CloudCostByDepartMent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.ref = React.createRef();
+  }
 
-  useEffect(() => {
-    renderChart();
-  }, [height, width]);
+  componentDidMount = () => this.renderChart();
 
-  const renderChart = () => {
-    
-
+  renderChart = () => {
     var tooltip = d3
       .select("body")
       .data(data)
@@ -46,12 +46,11 @@ const CloudCostByDepartMent = () => {
       .style("visibility", "hidden");
 
     const svg = d3
-      .select(ref.current)
+      .select(this.ref.current)
       .attr("width", width)
       .attr("height", height)
       .style("overflow", "visible");
 
-    
     const yMaxValue = d3.max(data, (d) => d.value);
     const xMinValue = d3.min(data, (d) => d.index);
     const xMaxValue = d3.max(data, (d) => d.index);
@@ -142,25 +141,20 @@ const CloudCostByDepartMent = () => {
       .attr("stroke-width", 2)
       .attr("d", line);
 
-    d3.select(ref.current);
+    d3.select(this.ref.current);
   };
-
-  return (
-    <svg
-      ref={ref}
-      // width={width}
-      // height={height}
-
-      viewBox={`0 0 ${width} ${height}`}
-    >
-      <defs>
-        <filter x="0" y="0" width="1" height="1" id="solid">
-          <feFlood floodColor="#d2d2d3" floodOpacity="0.4" />
-          <feComposite in="SourceGraphic" operator="xor" />
-        </filter>
-      </defs>
-    </svg>
-  );
-};
+  render() {
+    return (
+      <svg ref={this.ref} viewBox={`0 0 ${width} ${height}`}>
+        <defs>
+          <filter x="0" y="0" width="1" height="1" id="solid">
+            <feFlood floodColor="#d2d2d3" floodOpacity="0.4" />
+            <feComposite in="SourceGraphic" operator="xor" />
+          </filter>
+        </defs>
+      </svg>
+    );
+  }
+}
 
 export default CloudCostByDepartMent;

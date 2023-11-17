@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, } from "react";
+import React, { Component } from "react";
 import * as d3 from "d3";
 import { Box, Grid } from "@mui/material";
 
@@ -40,16 +40,20 @@ let OVERLAP_COLOR = {
   COLOR_1: "#1d3557",
   COLOR_2: "#03a1fc",
 };
-const CostByDepartmentProducts = () => {
-  const ref = useRef();
-  const overLapRef = useRef();
+class CostByDepartmentProducts extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.ref = React.createRef();
+    this.barRef = React.createRef();
+  }
 
-  useEffect(() => {
-    donutChart();
-    overLapBarChart();
-  }, []);
+  componentDidMount = () => {
+    this.donutChart();
+    this.barChart();
+  };
 
-  function donutChart() {
+  donutChart = () => {
     var width = 610;
     var height = 350;
     const margin = 40;
@@ -64,7 +68,7 @@ const CostByDepartmentProducts = () => {
       .style("visibility", "hidden");
     // append the svg object to the div called 'my_dataviz'
     var svg = d3
-      .select(ref.current)
+      .select(this.ref.current)
       .attr("width", width)
       .attr("height", height)
       .append("g")
@@ -189,12 +193,13 @@ const CostByDepartmentProducts = () => {
         var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
         return midangle < Math.PI ? "start" : "end";
       });
-    d3.select(ref.current);
-  }
-  function overLapBarChart() {
+    d3.select(this.ref.current);
+  };
+
+  barChart = () => {
     var width = 660;
     var height = 400;
-    let svg = d3.select(overLapRef.current);
+    let svg = d3.select(this.barRef.current);
 
     let margin = { top: 20, right: 20, bottom: 30, left: 50 };
     width = width - margin.left - margin.right;
@@ -256,33 +261,35 @@ const CostByDepartmentProducts = () => {
       .attr("height", 51)
       .style("z-index", "10");
 
-    d3.select(overLapRef.current);
-  }
-  return (
-    <>
-      <Box className="heading">
-        <span>Cost by Department and Products</span>
-        <Box className="chart-fliter">
-          <Box className="fliter-toggel">
-            <i className="fa-solid fa-filter fillter-icon"></i>
-            Fillter
+    d3.select(this.barRef.current);
+  };
+  render() {
+    return (
+      <>
+        <Box className="heading">
+          <span>Cost by Department and Products</span>
+          <Box className="chart-fliter">
+            <Box className="fliter-toggel">
+              <i className="fa-solid fa-filter fillter-icon"></i>
+              Fillter
+            </Box>
           </Box>
         </Box>
-      </Box>
-      <Grid container spacing={6}>
-        <Grid item xs={6}>
-          <Box className="chart">
-            <svg ref={ref}></svg>
-          </Box>
+        <Grid container spacing={6}>
+          <Grid item xs={6}>
+            <Box className="chart">
+              <svg ref={this.ref}></svg>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Box className="chart">
+              <svg ref={this.barRef} viewBox="0 0 610 350"></svg>
+            </Box>
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <Box className="chart">
-            <svg ref={overLapRef} viewBox="0 0 610 350"></svg>
-          </Box>
-        </Grid>
-      </Grid>
-    </>
-  );
-};
+      </>
+    );
+  }
+}
 
 export default CostByDepartmentProducts;
