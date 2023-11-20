@@ -36,6 +36,7 @@ import titles from "./PathTitles.json";
 import Error from "./AppViews/Error";
 import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
 import Reports from "./AppViews/Reports";
+import SetPolicy from "./AppViews/Setting/SetPolicy";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -127,6 +128,7 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/settransitions`}
             element={<SetTransitions />}
           />
+          <Route path={`${APP_PREFIX_PATH}/setpolicy`} element={<SetPolicy/>} />
           <Route
             path={`${APP_PREFIX_PATH}/environments/ecscluster`}
             element={<EcsCluster />}

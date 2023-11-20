@@ -137,7 +137,7 @@ class RoleControl extends Component {
                   <TableCell>{row.name}</TableCell>
                   <TableCell>{row.content}</TableCell>
                   <TableCell>
-                    <a href="/app/settransitions">Set Transitions</a>
+                    <a href="/app/setpolicy">Set Transitions</a>
                   </TableCell>
                   <TableCell align="center">
                     <IconButton
