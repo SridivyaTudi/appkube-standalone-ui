@@ -373,7 +373,7 @@ class SOATopology extends Component {
                 </li>
                 <li className="active">
                   <HtmlTooltip className="table-tooltip" title={productName}>
-                    {productName}
+                    <span>{productName}</span>
                   </HtmlTooltip>
                 </li>
               </ul>

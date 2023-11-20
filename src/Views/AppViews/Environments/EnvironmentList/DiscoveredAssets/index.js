@@ -666,7 +666,7 @@ class DiscoveredAssets extends Component {
                                 e.target.checked
                                   ? "EKS"
                                   : infraTopologyCloudElementList.data[0]
-                                      .elementType
+                                      ?.elementType
                               );
                             }}
                             checked={isClusterShow}
