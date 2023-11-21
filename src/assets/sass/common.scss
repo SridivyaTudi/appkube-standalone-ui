@@ -436,6 +436,42 @@ button.light-btn {
     box-shadow: none;
   }
 }
+button.danger-btn{
+  background: #FF2D2E;
+  color: #ffffff;
+  min-width: 180px;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 24px;
+  box-shadow: none;
+  text-transform: none;
+  letter-spacing: 0px;
+  border-radius: 5px;
+  font-family: "Open Sans", sans-serif;
+  &:hover {
+    background: #ff2d2db6;
+    color: #ffffff;
+    box-shadow: none;
+  }
+}
+button.info-btn{
+  background: #8676FF;
+  color: #ffffff;
+  min-width: 180px;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 24px;
+  box-shadow: none;
+  text-transform: none;
+  letter-spacing: 0px;
+  border-radius: 5px;
+  font-family: "Open Sans", sans-serif;
+  &:hover {
+    background: #8676ffb7;
+    color: #ffffff;
+    box-shadow: none;
+  }
+}
 
 .open-create-menu-close {
   background-color: transparent;

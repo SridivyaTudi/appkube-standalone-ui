@@ -31,7 +31,7 @@ class CreateUserControlModal extends Component {
               <label className="form-label">Email Address</label>
               <label className="form-label">Name (Optional)</label>
             </Box>
-           
+
             <Box className="form-group">
               <Box className="d-inline-block">
                 <input
@@ -125,12 +125,10 @@ class CreateUserControlModal extends Component {
               </Box>
             </Box>
             <Box className="add-user">
-              <a href="">
-                <IconButton className="add-icon">
-                  <i class="fa-sharp fa-solid fa-plus"></i>
-                </IconButton>
-                Add Another person
-              </a>
+              <IconButton className="add-icon">
+                <i class="fa-sharp fa-solid fa-plus"></i>
+              </IconButton>
+              Add Another person
             </Box>
           </Box>
         </ModalBody>

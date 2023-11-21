@@ -5,6 +5,8 @@ import CreateGroupControlModal from "./Components/CreateGroupControlModal";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { Link } from "react-router-dom";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class GroupControl extends Component {
   constructor(props) {
@@ -112,7 +114,7 @@ class GroupControl extends Component {
     if (groupControlData?.length > 0) {
       groupControlData.forEach((groupData, index) => {
         retData.push(
-          <Box className="group-box" key={groupData.name} >
+          <Box className="group-box" key={groupData.name}>
             <Box className="heading">
               <h4 onClick={this.props.setActiveTab}>{groupData.name}</h4>
               <IconButton
@@ -161,7 +163,9 @@ class GroupControl extends Component {
               <p>{groupData.description}</p>
             </Box>
             <Box className="view-btn text-center">
-              <Button className="primary-btn min-width" onClick={this.props.setActiveTab}>View Group</Button>
+              <Button className="primary-btn min-width">
+                <Link to={`${APP_PREFIX_PATH}/setting/super-admin`}>View Group</Link>
+              </Button>
             </Box>
           </Box>
         );

@@ -12,6 +12,7 @@ import {
   IconButton,
   TablePagination,
 } from "@mui/material";
+import {Link} from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -137,7 +138,7 @@ class RoleControl extends Component {
                   <TableCell>{row.name}</TableCell>
                   <TableCell>{row.content}</TableCell>
                   <TableCell>
-                    <a href="/app/setpolicy">Set Transitions</a>
+                    <Link to="/app/setting/setpolicy">Set Policy</Link>
                   </TableCell>
                   <TableCell align="center">
                     <IconButton

@@ -437,6 +437,9 @@
             .primary-btn {
               padding-left: 15px;
               padding-right: 15px;
+              a{
+                color: #ffffff;
+              }
             }
           }
         }
@@ -792,22 +795,19 @@
   
         }
         .add-user{
-          a{
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 20px;
-            color: #344054;
-            .add-icon{
-              color: #ffffff;
-              background: #8676FF;
-              margin-right: 8px;
-              padding: 5px 6px;
-              i{
-                font-size: 16px;
-              }
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 20px;
+          color: #344054;
+          .add-icon{
+            color: #ffffff;
+            background: #8676FF;
+            margin-right: 8px;
+            padding: 5px 6px;
+            i{
+              font-size: 16px;
             }
           }
-          
         }
       }
      

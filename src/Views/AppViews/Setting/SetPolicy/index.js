@@ -86,7 +86,7 @@ class SetPolicy extends Component {
                       className="secondary-btn min-width"
                       variant="contained"
                     >
-                      <Link to={`${APP_PREFIX_PATH}/settransitions`}>Manage</Link>
+                      <Link to={`${APP_PREFIX_PATH}/setting/settransitions`}>Manage</Link>
                     </Button>
                   </Box>
                 </Grid>
