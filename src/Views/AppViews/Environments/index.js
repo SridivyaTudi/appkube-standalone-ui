@@ -668,7 +668,7 @@ class Environments extends Component {
                             placeholder="Search"
                             name="searchedKey"
                             value={searchedKey}
-                            onChange={this.handleSearchChange}
+                            onChange={this.handleSearchChange} autoFocus="autoFocus"
                           />
                           <button className="search-btn">
                             <i className="fa fa-search" />

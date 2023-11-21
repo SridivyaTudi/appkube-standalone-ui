@@ -23,7 +23,7 @@ import {
   getCurrentOrgId,
   getCurrentOrgName,
   setCurrentOrgName,
-  getCurrentUser,
+  getCurrentUser,deleteSelectedInfraTopologyView
 } from "Utils";
 import ConfirmationPopup from "Components/ConfirmationPopup";
 import Loader from "Components/Loader";
@@ -258,9 +258,7 @@ export class AssociateChartApp extends Component {
               className={activeClass}
             >
               <i className="fa-solid fa-circle-dot"></i>
-              <HtmlTooltip
-                className="table-tooltip"
-                title={item.label}>
+              <HtmlTooltip className="table-tooltip" title={item.label}>
                 <span>{item.label}</span>
               </HtmlTooltip>
             </ListItem>
@@ -591,7 +589,12 @@ export class AssociateChartApp extends Component {
           <Box className="breadcrumbs">
             <ul>
               <li>
-                <Link to={`${APP_PREFIX_PATH}/environments`}>Environments</Link>
+                <Link
+                  to={`${APP_PREFIX_PATH}/environments`}
+                  onClick={() => deleteSelectedInfraTopologyView()}
+                >
+                  Environments
+                </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>

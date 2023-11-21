@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import sideBarMenu from "Components/SideBar/SideMenu.json";
@@ -11,6 +11,7 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { deleteSelectedInfraTopologyView } from "Utils";
 import { v4 } from "uuid";
 function SideBar() {
   let location = useLocation();
@@ -51,7 +52,10 @@ function SideBar() {
                 className={currentLocation.includes(item.link) ? "active" : ""}
                 key={v4()}
               >
-                <Link to={`${APP_PREFIX_PATH + item.link}`}>
+                <Link
+                  to={`${APP_PREFIX_PATH + item.link}`}
+                  onClick={() => deleteSelectedInfraTopologyView()}
+                >
                   <span className={`icon ${Parser(item.icon)}`}></span>
                   <span className="name">{Parser(item.name)}</span>
                   {item.subMenu && (

@@ -9,6 +9,8 @@ import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import TabsMenu from "../TabsMenu";
+import { removeActiveTabInEnvironmentData } from "Utils";
+
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -107,7 +109,7 @@ class ThreeTierTopology extends Component {
               <Box className="breadcrumbs-content">
                 <ul>
                   <li>
-                    <Link to={`${APP_PREFIX_PATH}/environments`}>
+                    <Link to={`${APP_PREFIX_PATH}/environments`} onClick={()=>removeActiveTabInEnvironmentData()}>
                       <HtmlTooltip
                         className="table-tooltip"
                         title={`Environments`}

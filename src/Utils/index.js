@@ -4,6 +4,8 @@ const LOCAL_STORAGE_CONSTANTS = {
   REMEMBER_USER_NAME: "rememberUserName",
   RECENT_ENV: "recentEnv",
   CURRENT_ORG_NAME: "currentOrgName",
+  ACTIVE_TAB: "activeTab",
+  INFRAVIEW_DETAILS: "infraViewDetails",
 };
 
 export const getCurrentUser = () => {
@@ -97,8 +99,37 @@ export const deleteUserName = () => {
 
 export const convertDigitToThousand = (value) => {
   return value >= 1000
-  ? Number.isInteger(value / 1000)
-    ? parseInt(value / 1000) + "k"
-    : Number(value / 1000).toFixed(1) + "k"
-  : value;
+    ? Number.isInteger(value / 1000)
+      ? parseInt(value / 1000) + "k"
+      : Number(value / 1000).toFixed(1) + "k"
+    : value;
+};
+
+export const setActiveTabInEnvironmentData = (value) => {
+  localStorage.setItem(LOCAL_STORAGE_CONSTANTS.ACTIVE_TAB, value);
+};
+
+export const getActiveTabInEnvironmentData = (value) => {
+  return localStorage.getItem(LOCAL_STORAGE_CONSTANTS.ACTIVE_TAB) || null;
+};
+
+export const removeActiveTabInEnvironmentData = () => {
+  localStorage.removeItem(LOCAL_STORAGE_CONSTANTS.ACTIVE_TAB);
+};
+
+export const setSelectedInfraTopologyView = (details) => {
+  localStorage.setItem(
+    LOCAL_STORAGE_CONSTANTS.INFRAVIEW_DETAILS,
+    JSON.stringify(details)
+  );
+};
+
+export const getSelectedInfraTopologyView = (details) => {
+  return JSON.parse(
+    localStorage.getItem(LOCAL_STORAGE_CONSTANTS.INFRAVIEW_DETAILS) || null
+  );
+};
+
+export const deleteSelectedInfraTopologyView = () => {
+  localStorage.removeItem(LOCAL_STORAGE_CONSTANTS.INFRAVIEW_DETAILS);
 };
