@@ -32,7 +32,7 @@ class SetTransitions extends Component {
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">Set Policy</li>
+              <li><Link to={`#`}>Set Policy</Link></li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>

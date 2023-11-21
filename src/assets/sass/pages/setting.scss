@@ -754,7 +754,7 @@
           display: flex;
           margin-bottom: 5px;
           .form-label {
-            width: 48%;
+            width: 47%;
             font-size: 14px;
             color: #344054;
             line-height: 20px;
@@ -770,7 +770,7 @@
           flex-wrap: wrap;
           margin-bottom: 15px;
           .form-control {
-            width: 245px;
+            width: 240px;
             height: 36px;
             padding: 5px 15px;
             border: 1px solid #d0d5dd;
@@ -781,11 +781,13 @@
             line-height: 26px;
             font-weight: 400;
             color: #344054;
+            margin-right: 15px;
             font-family: "Poppins", sans-serif;
           }
           .delete-icon{
             width: 30px;
             height: 30px;
+            cursor: pointer;
           }
   
         }
