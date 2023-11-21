@@ -6,12 +6,14 @@ import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import CreateUserControlModal from "../Permissions/Components/CreateUserControlModal";
 
 class SuperAdmin extends Component {
   constructor(props) {
     super(props);
     this.state = {
       actionButton: null,
+      showCreateUserControlModal: false,
       groupControlData: [
         {
           name: "Richard Thompson",
@@ -48,7 +50,6 @@ class SuperAdmin extends Component {
           description:
             "Active The super admin is the highest level of administrative authority within a system",
         },
-        
       ],
     };
   }
@@ -128,8 +129,14 @@ class SuperAdmin extends Component {
     }
     return retData;
   };
+
+  handleCreateUserControlModal = () => {
+    this.setState({
+      showCreateUserControlModal: !this.state.showCreateUserControlModal,
+    });
+  };
   render() {
-    const { actionButton } = this.state;
+    const { showCreateUserControlModal } = this.state;
     return (
       <Box className="super-admin-container">
         <Box className="list-heading">
@@ -174,6 +181,7 @@ class SuperAdmin extends Component {
                     <Button
                       className="primary-btn min-width-inherit"
                       variant="contained"
+                      onClick={this.handleCreateUserControlModal}
                     >
                       Add Users
                     </Button>
@@ -209,111 +217,6 @@ class SuperAdmin extends Component {
         </Box>
         <Box className="group-control-boxs">
           {this.renderGroupControlData()}
-
-          {/* <Box className="group-box">
-            <Box className="heading">
-              <h4>Robert Johnson</h4>
-              <IconButton
-                className="action-btn"
-                aria-label="morevertIcon"
-                size="small"
-              >
-                <MoreVertIcon fontSize="small" />
-              </IconButton>
-            </Box>
-            <Box className="group-data">
-              <Box className="data">
-                <label>Roles Assigned</label>
-                <span>Admin</span>
-                <span>SHE</span>
-              </Box>
-            </Box>
-            <Box className="description-text">
-              <label>Group Description</label>
-              <p>
-                Active The super admin is the highest level of administrative
-                authority within a system{" "}
-              </p>
-            </Box>
-          </Box>
-          <Box className="group-box">
-            <Box className="heading">
-              <h4>Ella Lewis</h4>
-              <IconButton
-                className="action-btn"
-                aria-label="morevertIcon"
-                size="small"
-              >
-                <MoreVertIcon fontSize="small" />
-              </IconButton>
-            </Box>
-            <Box className="group-data">
-              <Box className="data">
-                <label>Roles Assigned</label>
-                <span>Admin</span>
-                <span>SHE</span>
-              </Box>
-            </Box>
-            <Box className="description-text">
-              <label>Group Description</label>
-              <p>
-                Active The super admin is the highest level of administrative
-                authority within a system{" "}
-              </p>
-            </Box>
-          </Box>
-          <Box className="group-box">
-            <Box className="heading">
-              <h4>Sophia Hernandez</h4>
-              <IconButton
-                className="action-btn"
-                aria-label="morevertIcon"
-                size="small"
-              >
-                <MoreVertIcon fontSize="small" />
-              </IconButton>
-            </Box>
-            <Box className="group-data">
-              <Box className="data">
-                <label>Roles Assigned</label>
-                <span>Admin</span>
-                <span>SHE</span>
-              </Box>
-            </Box>
-            <Box className="description-text">
-              <label>Group Description</label>
-              <p>
-                Active The super admin is the highest level of administrative
-                authority within a system{" "}
-              </p>
-            </Box>
-          </Box>
-          <Box className="group-box">
-            <Box className="heading">
-              <h4>Isabella Anderson</h4>
-              <IconButton
-                className="action-btn"
-                aria-label="morevertIcon"
-                size="small"
-              >
-                <MoreVertIcon fontSize="small" />
-              </IconButton>
-            </Box>
-            <Box className="group-data">
-              <Box className="data">
-                <label>Roles Assigned</label>
-                <span>Admin</span>
-                <span>SHE</span>
-              </Box>
-            </Box>
-            <Box className="description-text">
-              <label>Group Description</label>
-              <p>
-                Active The super admin is the highest level of administrative
-                authority within a system{" "}
-              </p>
-            </Box>
-          </Box> */}
         </Box>
         <Box className="policy-section">
           <h4>Set Policy and Permission</h4>
@@ -439,6 +342,14 @@ class SuperAdmin extends Component {
             </Box>
           </Box>
         </Box>
+        {showCreateUserControlModal ? (
+          <CreateUserControlModal
+            showModal={showCreateUserControlModal}
+            handleCreateUserControlModal={this.handleCreateUserControlModal}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }
