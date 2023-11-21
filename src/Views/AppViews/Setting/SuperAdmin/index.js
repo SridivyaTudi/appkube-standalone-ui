@@ -144,7 +144,7 @@ class SuperAdmin extends Component {
           <Box className="breadcrumbs">
             <ul>
               <li>
-                <Link to={`#`}>Users and Permissions </Link>
+                <Link to={`#`}>Super Admin Group </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
@@ -281,7 +281,7 @@ class SuperAdmin extends Component {
                       className="secondary-btn min-width"
                       variant="contained"
                     >
-                      <Link to={`${APP_PREFIX_PATH}/settransitions`}>
+                      <Link to={`${APP_PREFIX_PATH}/setting/settransitions`}>
                         Manage
                       </Link>
                     </Button>
@@ -332,7 +332,7 @@ class SuperAdmin extends Component {
                       className="secondary-btn min-width"
                       variant="contained"
                     >
-                      <Link to={`${APP_PREFIX_PATH}/settransitions`}>
+                      <Link to={`${APP_PREFIX_PATH}/setting/settransitions`}>
                         Manage
                       </Link>
                     </Button>
