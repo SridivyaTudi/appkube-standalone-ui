@@ -13,7 +13,7 @@ class SetPolicy extends Component {
           <Box className="breadcrumbs">
             <ul>
               <li>
-                <Link to={`#`}>Admin </Link>
+                <Link to={`#`}>Users and Permissions </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>

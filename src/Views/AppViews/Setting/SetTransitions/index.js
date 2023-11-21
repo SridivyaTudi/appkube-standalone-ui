@@ -36,7 +36,7 @@ class SetTransitions extends Component {
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">Set Transitions</li>
+              <li className="active">Edit Policy</li>
             </ul>
           </Box>
         </Box>

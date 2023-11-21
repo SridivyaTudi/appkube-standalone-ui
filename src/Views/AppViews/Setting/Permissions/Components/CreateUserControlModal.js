@@ -1,7 +1,8 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box } from "@mui/material/";
+import { Box, IconButton } from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import DeleteIcon from "../../../../../assets/img/setting/delete-icon.png";
 
 class CreateUserControlModal extends Component {
   constructor(props) {
@@ -14,62 +15,133 @@ class CreateUserControlModal extends Component {
       <Modal
         isOpen={this.props.showModal}
         toggle={this.props.handleCreateUserControlModal}
-        className="setting-modal-container permissions-modal"
+        className="invite-user-modal-container"
       >
         <ModalHeader tag="div">
           <h5>
-            Add New User
+            Invite Users
             <button onClick={this.props.handleCreateUserControlModal}>
               <i className="fa-solid fa-xmark"></i>
             </button>
           </h5>
         </ModalHeader>
         <ModalBody>
-          <Box className="form-group">
-            <label htmlFor="roleName" className="form-label">
-              User Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="roleName"
-              name="roleName"
-              placeholder="Director"
-            />
-          </Box>
-          <Box className="form-group">
-            <label htmlFor="roleDescription" className="form-label">
-              User Description
-            </label>
-            <textarea
-              type="text"
-              className="form-control"
-              id="roleDescription"
-              name="roleDescription"
-              style={{
-                height: "120px",
-                lineHeight: "18px",
-                paddingRight: "15px",
-              }}
-              placeholder="director is a senior executive responsible for overseeing the strategic department."
-            />
+          <Box className="users-content">
+            <Box className="title">
+              <label className="form-label">Email Address</label>
+              <label className="form-label">Name (Optional)</label>
+            </Box>
+           
+            <Box className="form-group">
+              <Box className="d-inline-block">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="roleName"
+                  name="roleName"
+                  placeholder="user@example.com"
+                />
+              </Box>
+              <Box className="d-inline-block">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="roleName"
+                  name="roleName"
+                  placeholder="user"
+                />
+              </Box>
+              <Box className="d-inline-block delete-icon">
+                <img src={DeleteIcon} alt="" />
+              </Box>
+            </Box>
+            <Box className="form-group">
+              <Box className="d-inline-block">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="roleName"
+                  name="roleName"
+                  placeholder="user@example.com"
+                />
+              </Box>
+              <Box className="d-inline-block">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="roleName"
+                  name="roleName"
+                  placeholder="user"
+                />
+              </Box>
+              <Box className="d-inline-block delete-icon">
+                <img src={DeleteIcon} alt="" />
+              </Box>
+            </Box>
+            <Box className="form-group">
+              <Box className="d-inline-block">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="roleName"
+                  name="roleName"
+                  placeholder="user@example.com"
+                />
+              </Box>
+              <Box className="d-inline-block">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="roleName"
+                  name="roleName"
+                  placeholder="user"
+                />
+              </Box>
+              <Box className="d-inline-block delete-icon">
+                <img src={DeleteIcon} alt="" />
+              </Box>
+            </Box>
+            <Box className="form-group">
+              <Box className="d-inline-block">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="roleName"
+                  name="roleName"
+                  placeholder="user@example.com"
+                />
+              </Box>
+              <Box className="d-inline-block">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="roleName"
+                  name="roleName"
+                  placeholder="user"
+                />
+              </Box>
+              <Box className="d-inline-block delete-icon">
+                <img src={DeleteIcon} alt="" />
+              </Box>
+            </Box>
+            <Box className="add-user">
+              <a href="">
+                <IconButton className="add-icon">
+                  <i class="fa-sharp fa-solid fa-plus"></i>
+                </IconButton>
+                Add Another person
+              </a>
+            </Box>
           </Box>
         </ModalBody>
         <ModalFooter className="footer-top-br">
           <Box className="d-block text-right">
             <LoadingButton
-              className="primary-outline-btn min-width m-r-2"
-              variant="outlined"
-              onClick={this.props.handleCreateUserControlModal}
-            >
-              Cancel
-            </LoadingButton>
-            <LoadingButton
               className="primary-btn min-width"
               variant="contained"
               onClick={this.props.handleCreateUserControlModal}
             >
-              Create
+              Send Invitation
             </LoadingButton>
           </Box>
         </ModalFooter>

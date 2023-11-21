@@ -130,7 +130,7 @@ class UserControl extends Component {
             className="primary-btn min-width"
             onClick={this.handleCreateUserControlModal}
           >
-            Create New User
+            Invite User
           </Button>
         </Box>
         <TableContainer component={Paper} className="access-control-table">
