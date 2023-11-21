@@ -12,6 +12,44 @@ class SuperAdmin extends Component {
     super(props);
     this.state = {
       actionButton: null,
+      groupControlData: [
+        {
+          name: "Richard Thompson",
+          admin: "Admin",
+          she: "SHE",
+          description:
+            "Active The super admin is the highest level of administrative authority within a system",
+        },
+        {
+          name: "Robert Johnson",
+          admin: "Admin",
+          she: "SHE",
+          description:
+            "Active The super admin is the highest level of administrative authority within a system",
+        },
+        {
+          name: "Ella Lewis",
+          admin: "Admin",
+          she: "SHE",
+          description:
+            "Active The super admin is the highest level of administrative authority within a system",
+        },
+        {
+          name: "Sophia Hernandez",
+          admin: "Admin",
+          she: "SHE",
+          description:
+            "Active The super admin is the highest level of administrative authority within a system",
+        },
+        {
+          name: "Isabella Anderson",
+          admin: "Admin",
+          she: "SHE",
+          description:
+            "Active The super admin is the highest level of administrative authority within a system",
+        },
+        
+      ],
     };
   }
   handleActionButton = (index) => {
@@ -25,7 +63,71 @@ class SuperAdmin extends Component {
         actionButton: null,
       });
     }
-  };  
+  };
+
+  renderGroupControlData = () => {
+    const { groupControlData, actionButton } = this.state;
+    let retData = [];
+    if (groupControlData?.length > 0) {
+      groupControlData.forEach((groupData, index) => {
+        retData.push(
+          <Box className="group-box" key={groupData.name}>
+            <Box className="heading">
+              <h4>{groupData.name}</h4>
+              <IconButton
+                className="action-btn"
+                aria-label="morevertIcon"
+                size="small"
+                onClick={() => this.handleActionButton(index)}
+              >
+                <MoreVertIcon fontSize="small" />
+              </IconButton>
+              {actionButton === index && (
+                <>
+                  <Box className="action-buttons">
+                    <Button
+                      startIcon={<DeleteOutlineOutlinedIcon className="icon" />}
+                      className="secondary-text-btn"
+                    >
+                      Delete Role
+                    </Button>
+                    <Button
+                      startIcon={<ContentCopyIcon className="icon" />}
+                      className="secondary-text-btn"
+                    >
+                      Duplicate Group
+                    </Button>
+                  </Box>
+                  <Box
+                    className="action-buttons-bg"
+                    onClick={() => this.handleActionButton(index)}
+                  ></Box>
+                </>
+              )}
+            </Box>
+            <Box className="group-data">
+              <Box className="data">
+                <label>Roles Assigned</label>
+                <span>{groupData.admin}</span>
+                <span>{groupData.she}</span>
+              </Box>
+            </Box>
+            <Box className="description-text">
+              <label>Group Description</label>
+              <p>{groupData.description}</p>
+            </Box>
+          </Box>
+        );
+      });
+    } else {
+      retData = (
+        <Box className="group-loader text-center w-100">
+          There are no data available.
+        </Box>
+      );
+    }
+    return retData;
+  };
   render() {
     const { actionButton } = this.state;
     return (
@@ -106,56 +208,9 @@ class SuperAdmin extends Component {
           </Grid>
         </Box>
         <Box className="group-control-boxs">
-          <Box className="group-box">
-            <Box className="heading">
-              <h4>Richard Thompson</h4>
-              <IconButton
-                className="action-btn"
-                aria-label="morevertIcon"
-                size="small"
-                // onClick={() => this.handleActionButton(index)}
-              >
-                <MoreVertIcon fontSize="small" />
-              </IconButton>
-              {/* {actionButton ===  && (
-                <>
-                  <Box className="action-buttons">
-                    <Button
-                      startIcon={<DeleteOutlineOutlinedIcon className="icon" />}
-                      className="secondary-text-btn"
-                    >
-                      Delete Role
-                    </Button>
-                    <Button
-                      startIcon={<ContentCopyIcon className="icon" />}
-                      className="secondary-text-btn"
-                    >
-                      Duplicate Group
-                    </Button>
-                  </Box>
-                  <Box
-                    className="action-buttons-bg"
-                    // onClick={() => this.handleActionButton(index)}
-                  ></Box>
-                </>
-              )} */}
-            </Box>
-            <Box className="group-data">
-              <Box className="data">
-                <label>Roles Assigned</label>
-                <span>Admin</span>
-                <span>SHE</span>
-              </Box>
-            </Box>
-            <Box className="description-text">
-              <label>Group Description</label>
-              <p>
-                Active The super admin is the highest level of administrative
-                authority within a system{" "}
-              </p>
-            </Box>
-          </Box>
-          <Box className="group-box">
+          {this.renderGroupControlData()}
+
+          {/* <Box className="group-box">
             <Box className="heading">
               <h4>Robert Johnson</h4>
               <IconButton
@@ -258,7 +313,7 @@ class SuperAdmin extends Component {
                 authority within a system{" "}
               </p>
             </Box>
-          </Box>
+          </Box> */}
         </Box>
         <Box className="policy-section">
           <h4>Set Policy and Permission</h4>
