@@ -6,6 +6,10 @@ import { v4 } from "uuid";
 import vpcServicesIcon from "assets/img/assetmanager/vpc-services-icon.png";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import {
+  setSelectedInfraTopologyView,
+  getSelectedInfraTopologyView,
+} from "Utils";
 
 let transformScale = 0;
 
@@ -40,6 +44,10 @@ class TopologyView extends Component {
       topologyData: this.props.data,
     };
   }
+
+  componentDidMount = () => {
+    this.previousCurrentNode();
+  };
 
   zoomToElementCallback = (animationTime) => {
     zoomElement(
@@ -223,11 +231,12 @@ class TopologyView extends Component {
                       }
                       id={item.instanceId ? item.instanceId : "Global Services"}
                       onClick={() => {
+                        let currentActiveNode = item.instanceId
+                          ? item.instanceId
+                          : "Global Services";
                         this.setState(
                           {
-                            currentActiveNode: item.instanceId
-                              ? item.instanceId
-                              : "Global Services",
+                            currentActiveNode,
                           },
                           () => {
                             this.zoomToElementCallback();
@@ -243,6 +252,14 @@ class TopologyView extends Component {
                           sublevelIndex,
                           nodeIndex
                         );
+                        setSelectedInfraTopologyView({
+                          currentActiveNode,
+                          activeView: this.state.activeView,
+                          id: item.id,
+                          currentLevel,
+                          sublevelIndex,
+                          nodeIndex,
+                        });
                       }}
                       key={v4()}
                     >
@@ -382,6 +399,32 @@ class TopologyView extends Component {
     }
 
     return retData;
+  };
+
+  previousCurrentNode = () => {
+    let viewDetails = getSelectedInfraTopologyView();
+
+    if (viewDetails) {
+      let {
+        currentActiveNode,
+        activeView,
+        id,
+        currentLevel,
+        sublevelIndex,
+        nodeIndex,
+      } = viewDetails;
+
+      this.setState(
+        {
+          currentActiveNode,
+        },
+        () => {
+          this.zoomToElementCallback();
+        }
+      );
+      this.props.setCurrentActiveNode(currentActiveNode, activeView, id);
+      this.handleNodeClick(currentLevel, sublevelIndex, nodeIndex);
+    }
   };
 
   render() {

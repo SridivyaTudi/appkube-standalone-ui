@@ -16,5 +16,6 @@
   "topology": "Topology",
   "application-status-dashboard": "Application Status Dashboard",
   "error": "404",
-  "reports": "Reports"
+  "reports": "Reports",
+  "setpolicy": "Set Policy"
 }

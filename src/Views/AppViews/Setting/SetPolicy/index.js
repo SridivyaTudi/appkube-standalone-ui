@@ -1,4 +1,3 @@
-import { Start } from "@mui/icons-material";
 import { Box, List, ListItem, Grid, Button } from "@mui/material";
 import { Component } from "react";
 import { Link } from "react-router-dom";
@@ -81,12 +80,14 @@ class SetPolicy extends Component {
                   </Box>
                 </Grid>
                 <Grid item xs={2}>
-                <Box className="manage-btn text-right ">
+                  <Box className="manage-btn text-right ">
                     <Button
                       className="secondary-btn min-width"
                       variant="contained"
                     >
-                      <Link to={`${APP_PREFIX_PATH}/settransitions`}>Manage</Link>
+                      <Link to={`${APP_PREFIX_PATH}/settransitions`}>
+                        Manage
+                      </Link>
                     </Button>
                   </Box>
                 </Grid>
@@ -135,7 +136,9 @@ class SetPolicy extends Component {
                       className="secondary-btn min-width"
                       variant="contained"
                     >
-                      <Link to={`${APP_PREFIX_PATH}/settransitions`}>Manage</Link>
+                      <Link to={`${APP_PREFIX_PATH}/settransitions`}>
+                        Manage
+                      </Link>
                     </Button>
                   </Box>
                 </Grid>

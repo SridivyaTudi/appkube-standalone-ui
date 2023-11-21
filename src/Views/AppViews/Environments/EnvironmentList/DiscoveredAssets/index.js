@@ -35,6 +35,7 @@ import {
 import LambdaTable from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/LambdaTable";
 import Loader from "Components/Loader";
 import GlobalServicesSummaryTable from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/GlobalServicesSummaryTable";
+import { getSelectedInfraTopologyView } from "Utils";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 
@@ -132,7 +133,11 @@ class DiscoveredAssets extends Component {
         },
         () => {
           if (data.length) {
-            this.setCurrentTopologyCategory(data[0].elementType);
+            let previousViewDetails = getSelectedInfraTopologyView();
+
+            this.setCurrentTopologyCategory(
+              previousViewDetails?.elementType || data[0].elementType
+            );
           } else {
             this.setState({ selectedCategoryCloudElementsData: [] });
           }

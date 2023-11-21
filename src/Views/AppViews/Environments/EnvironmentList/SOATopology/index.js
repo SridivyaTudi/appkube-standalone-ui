@@ -26,6 +26,8 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import TabsMenu from "../TabsMenu";
 import ServiceIcon from "assets/img/assetmanager/ems.png";
+import { removeActiveTabInEnvironmentData } from "Utils";
+
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -342,7 +344,7 @@ class SOATopology extends Component {
                     className="table-tooltip"
                     title={<span>Environments</span>}
                   >
-                    <Link to={`${APP_PREFIX_PATH}/environments`}>
+                    <Link to={`${APP_PREFIX_PATH}/environments`} onClick={()=>removeActiveTabInEnvironmentData()}>
                       Environments
                     </Link>
                   </HtmlTooltip>

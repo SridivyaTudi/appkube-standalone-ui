@@ -17,7 +17,17 @@ import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import TabsMenu from "./TabsMenu";
 import { v4 } from "uuid";
+import {
+  getActiveTabInEnvironmentData,
+  removeActiveTabInEnvironmentData,
+  deleteSelectedInfraTopologyView,
+  getSelectedInfraTopologyView,
+} from "Utils";
 
+let TABS_NAME = {
+  discoveredAssets: 0,
+  application: 1,
+};
 class EnvironmentList extends Component {
   tabMapping = [
     {
@@ -60,10 +70,14 @@ class EnvironmentList extends Component {
   };
 
   setActiveTab = (activeTab) => {
+    if (activeTab !== 0 && getSelectedInfraTopologyView()) {
+      deleteSelectedInfraTopologyView();
+    }
     this.setState({ activeTab });
   };
 
   componentDidMount = () => {
+    this.setPreviousActiveTab();
     const queryPrm = new URLSearchParams(document.location.search);
     this.setState({
       cloudName: queryPrm.get("cloudName"),
@@ -103,7 +117,7 @@ class EnvironmentList extends Component {
             <span style={{ backgroundColor: "#0089d6" }}></span>
             <p>Assets</p>
           </Box>
-          <label>{singleEnvironmentCountData.assets }</label>
+          <label>{singleEnvironmentCountData.assets}</label>
         </ListItem>
         <ListItem>
           <Box className="data-text">
@@ -130,6 +144,13 @@ class EnvironmentList extends Component {
     return { cloudName, landingZone };
   };
 
+  setPreviousActiveTab = () => {
+    let activeTab = getActiveTabInEnvironmentData();
+    if (activeTab && TABS_NAME[activeTab]) {
+      this.setActiveTab(TABS_NAME[activeTab]);
+      removeActiveTabInEnvironmentData();
+    }
+  };
   render() {
     const { showLandingZoneDetails, activeTab, singleEnvironmentCountData } =
       this.state;
@@ -141,7 +162,12 @@ class EnvironmentList extends Component {
           <Box className="breadcrumbs">
             <ul>
               <li>
-                <Link to={`${APP_PREFIX_PATH}/environments`}>Environments</Link>
+                <Link
+                  to={`${APP_PREFIX_PATH}/environments`}
+                  onClick={() => deleteSelectedInfraTopologyView()}
+                >
+                  Environments
+                </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
@@ -159,7 +185,10 @@ class EnvironmentList extends Component {
             }`}
           >
             <Box className="image">
-              <img src={LOGOS[cloudName] ? LOGOS[cloudName] : ""} alt={cloudName} />
+              <img
+                src={LOGOS[cloudName] ? LOGOS[cloudName] : ""}
+                alt={cloudName}
+              />
             </Box>
             <Box className="name">{cloudName}</Box>
             <Box
@@ -186,7 +215,7 @@ class EnvironmentList extends Component {
               tabs={this.tabMapping}
               setActiveTab={this.setActiveTab}
               activeTab={activeTab}
-              breakWidth={992} 
+              breakWidth={992}
               key={v4()}
             />
           </Box>

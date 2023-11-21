@@ -17,6 +17,10 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import TabsMenu from "../TabsMenu";
 import { v4 } from "uuid";
+import {
+  getSelectedInfraTopologyView,
+  setSelectedInfraTopologyView,
+} from "Utils";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -88,10 +92,12 @@ class CloudManagedDetails extends React.Component {
 
   componentDidMount = () => {
     if (this.props.infraTopologyDbCategories.data) {
+     
       const data = this.props.infraTopologyDbCategories.data;
       data.forEach((item) => {
         this.dbMapping.push({ name: item.name, dataKey: item.id });
       });
+      this.setPreviousCategory()
     }
   };
 
@@ -273,6 +279,12 @@ class CloudManagedDetails extends React.Component {
             onClick={() => {
               this.setState({ activeCategory: index });
               this.props.setCurrentTopologyCategory(item.elementType);
+              let infraViewDetails = getSelectedInfraTopologyView();
+              setSelectedInfraTopologyView({
+                ...infraViewDetails,
+                activeCategory: index,
+                elementType: item.elementType,
+              });
             }}
             key={v4()}
           >
@@ -311,6 +323,17 @@ class CloudManagedDetails extends React.Component {
     }
   };
 
+  setPreviousCategory = () => {
+    let viewDetails = getSelectedInfraTopologyView();
+
+    if (viewDetails) {
+      let { elementType, activeCategory } = viewDetails;
+      if (elementType) {
+        this.setState({ activeCategory });
+        this.props.setCurrentTopologyCategory(elementType);
+      }
+    }
+  };
   render() {
     const { activeTab } = this.state;
     return (

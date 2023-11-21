@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import { getEnvironmentsApplicationTableData } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { connect } from "react-redux";
-import { getCurrentOrgId } from "Utils";
+import { getCurrentOrgId,setActiveTabInEnvironmentData } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
@@ -96,6 +96,7 @@ class Application extends Component {
           <TableCell align="left" className="p-l-15">
             <Link
               to={`${APP_PREFIX_PATH}/environments/${type}/topology?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&productName=${item.application}&departmentName=${item.lob}&environmentName=${item.environment}`}
+              onClick={() => setActiveTabInEnvironmentData('application')}
             >
               <HtmlTooltip className="table-tooltip" title={item.application}>
                 <span>{item.application}</span>
