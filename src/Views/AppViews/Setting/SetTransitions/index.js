@@ -71,88 +71,136 @@ class SetTransitions extends Component {
           {/* <h3>Set Policy and Permission</h3> */}
           <Box className="policy-permission">
             <Box className="policy-permission-head">
-              <Box className="title">Policy</Box>
-              <Box className="title">Permission</Box>
+              <Grid
+                container
+                alignItems={"center"}
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={6}>
+                  <Box className="title">Policy</Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box className="title">Permission</Box>
+                </Grid>
+              </Grid>
             </Box>
             <Box
               className="policy-permission-content"
               onClick={this.handleAddPermitionControlModal}
             >
-              <Box className="policy-text">
-                <input type="checkbox" />
-                <span>Environment</span>
-              </Box>
-              <Box className="edit-policy">
-                <List>
-                  <ListItem>
-                    <Button>Delete</Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button>Edit</Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button>Delete</Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button>Edit</Button>
-                  </ListItem>
-                </List>
-                <span>
-                  <i className="fa-solid fa-angle-down"></i>
-                </span>
-              </Box>
+              <Grid
+                container
+                alignItems={"center"}
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={6}>
+                  <Box className="policy-text">
+                    <input type="checkbox" />
+                    <span>Environment</span>
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box className="edit-policy">
+                    <List>
+                      <ListItem>
+                        <Button>Delete</Button>
+                      </ListItem>
+                      <ListItem>
+                        <Button>Edit</Button>
+                      </ListItem>
+                      <ListItem>
+                        <Button>Delete</Button>
+                      </ListItem>
+                      <ListItem>
+                        <Button>Edit</Button>
+                      </ListItem>
+                    </List>
+                    <span>
+                      <i className="fa-solid fa-angle-down"></i>
+                    </span>
+                  </Box>
+                </Grid>
+              </Grid>
             </Box>
-            <Box className="policy-permission-content"
-            onClick={this.handleAddPermitionControlModal}>
-              <Box className="policy-text">
-                <input type="checkbox" />
-                <span>Product</span>
-              </Box>
-              <Box className="edit-policy">
-                <List>
-                  <ListItem>
-                    <Button>Delete</Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button>Edit</Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button>Delete</Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button>Edit</Button>
-                  </ListItem>
-                </List>
-                <span>
-                  <i className="fa-solid fa-angle-down"></i>
-                </span>
-              </Box>
+            <Box
+              className="policy-permission-content"
+              onClick={this.handleAddPermitionControlModal}
+            >
+              <Grid
+                container
+                alignItems={"center"}
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={6}>
+                  <Box className="policy-text">
+                    <input type="checkbox" />
+                    <span>Product</span>
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box className="edit-policy">
+                    <List>
+                      <ListItem>
+                        <Button>Delete</Button>
+                      </ListItem>
+                      <ListItem>
+                        <Button>Edit</Button>
+                      </ListItem>
+                      <ListItem>
+                        <Button>Delete</Button>
+                      </ListItem>
+                      <ListItem>
+                        <Button>Edit</Button>
+                      </ListItem>
+                    </List>
+                    <span>
+                      <i className="fa-solid fa-angle-down"></i>
+                    </span>
+                  </Box>
+                </Grid>
+              </Grid>
             </Box>
-            <Box className="policy-permission-content"
-            onClick={this.handleAddPermitionControlModal}>
-              <Box className="policy-text">
-                <input type="checkbox" />
-                <span>SRE</span>
-              </Box>
-              <Box className="edit-policy">
-                <List>
-                  <ListItem>
-                    <Button>Delete</Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button>Edit</Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button>Delete</Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button>Edit</Button>
-                  </ListItem>
-                </List>
-                <span>
-                  <i className="fa-solid fa-angle-down"></i>
-                </span>
-              </Box>
+            <Box
+              className="policy-permission-content"
+              onClick={this.handleAddPermitionControlModal}
+            >
+              <Grid
+                container
+                alignItems={"center"}
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={6}>
+                  <Box className="policy-text">
+                    <input type="checkbox" />
+                    <span>SRE</span>
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box className="edit-policy">
+                    <List>
+                      <ListItem>
+                        <Button>Delete</Button>
+                      </ListItem>
+                      <ListItem>
+                        <Button>Edit</Button>
+                      </ListItem>
+                      <ListItem>
+                        <Button>Delete</Button>
+                      </ListItem>
+                      <ListItem>
+                        <Button>Edit</Button>
+                      </ListItem>
+                    </List>
+                    <span>
+                      <i className="fa-solid fa-angle-down"></i>
+                    </span>
+                  </Box>
+                </Grid>
+              </Grid>
             </Box>
           </Box>
         </Box>
