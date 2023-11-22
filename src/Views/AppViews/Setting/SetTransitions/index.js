@@ -3,6 +3,7 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import AddPermitionControlModal from "../Permissions/Components/AddPermitionControlModal";
+import { setActiveTab } from "Utils";
 
 class SetTransitions extends Component {
   constructor(props) {
@@ -18,8 +19,7 @@ class SetTransitions extends Component {
     });
   };
   render() {
-    const {  showAddPermitionControlModal  } =
-    this.state;
+    const { showAddPermitionControlModal } = this.state;
     return (
       <Box className="set-transitions-container">
         <Box className="list-heading">
@@ -27,12 +27,19 @@ class SetTransitions extends Component {
           <Box className="breadcrumbs">
             <ul>
               <li>
-                <Link to={`#`}>Admin</Link>
+                <Link
+                  to={`/app/setting`}
+                  onClick={() => setActiveTab("permissions")}
+                >
+                  Users and Permissions
+                </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li><Link to={`#`}>Set Policy</Link></li>
+              <li>
+                <Link to={`/app/setting/setpolicy`}>Set Policy</Link>
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
@@ -48,7 +55,11 @@ class SetTransitions extends Component {
           >
             <Grid item xs={12}>
               <Box className="top-search">
-                <input type="text" className="form-control" placeholder="Search policy" />
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search policy"
+                />
                 <button className="button">
                   <SearchOutlinedIcon />
                 </button>
@@ -63,13 +74,16 @@ class SetTransitions extends Component {
               <Box className="title">Policy</Box>
               <Box className="title">Permission</Box>
             </Box>
-            <Box className="policy-permission-content"  onClick={this.handleAddPermitionControlModal}>
+            <Box
+              className="policy-permission-content"
+              onClick={this.handleAddPermitionControlModal}
+            >
               <Box className="policy-text">
                 <input type="checkbox" />
                 <span>Environment</span>
               </Box>
               <Box className="edit-policy">
-              <List>
+                <List>
                   <ListItem>
                     <Button>Delete</Button>
                   </ListItem>
@@ -119,7 +133,7 @@ class SetTransitions extends Component {
                 <span>SRE</span>
               </Box>
               <Box className="edit-policy">
-              <List>
+                <List>
                   <ListItem>
                     <Button>Delete</Button>
                   </ListItem>
@@ -149,7 +163,6 @@ class SetTransitions extends Component {
           <></>
         )}
       </Box>
-      
     );
   }
 }

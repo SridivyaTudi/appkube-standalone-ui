@@ -29,6 +29,7 @@ import Button from "@mui/material/Button";
 import {
   getRecentVisitedEnvironments,
   setRecentVisitedEnvironments,
+  deleteSelectedInfraTopologyView,
 } from "Utils";
 import { ToastMessage } from "Toast/ToastMessage";
 import { LOGOS } from "CommonData";
@@ -245,13 +246,14 @@ class Environments extends Component {
                   >
                     <Link
                       to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}&landingZoneId=${account.landingZoneId}`}
-                      onClick={() =>
+                      onClick={() => {
                         this.addAccountToRecentlyVisited({
                           accountType: account.cloud,
                           accountId: account.landingZone,
                           landingZoneId: account.landingZoneId,
-                        })
-                      }
+                        });
+                        deleteSelectedInfraTopologyView();
+                      }}
                     >
                       {account.cloud} ({account.landingZone})
                     </Link>
@@ -323,21 +325,11 @@ class Environments extends Component {
                       ></div>
                       <Box className="menu-list">
                         <List>
-                          <ListItem>
-                            Add New datasource
-                          </ListItem>
-                          <ListItem>
-                            Add CompListItemance
-                          </ListItem>
-                          <ListItem>
-                            Associate to OU
-                          </ListItem>
-                          <ListItem>
-                            Add New VPC
-                          </ListItem>
-                          <ListItem>
-                            Add New Product
-                          </ListItem>
+                          <ListItem>Add New datasource</ListItem>
+                          <ListItem>Add CompListItemance</ListItem>
+                          <ListItem>Associate to OU</ListItem>
+                          <ListItem>Add New VPC</ListItem>
+                          <ListItem>Add New Product</ListItem>
                         </List>
                       </Box>
                     </>
@@ -668,7 +660,8 @@ class Environments extends Component {
                             placeholder="Search"
                             name="searchedKey"
                             value={searchedKey}
-                            onChange={this.handleSearchChange} autoFocus="autoFocus"
+                            onChange={this.handleSearchChange}
+                            autoFocus="autoFocus"
                           />
                           <button className="search-btn">
                             <i className="fa fa-search" />

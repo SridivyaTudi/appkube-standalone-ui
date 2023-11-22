@@ -17,5 +17,6 @@
   "application-status-dashboard": "Application Status Dashboard",
   "error": "404",
   "reports": "Reports",
-  "setpolicy": "Set Policy"
+  "setpolicy": "Set Policy",
+  "super-admin":"Super Admin"
 }

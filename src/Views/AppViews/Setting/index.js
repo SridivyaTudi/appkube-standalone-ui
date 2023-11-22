@@ -7,28 +7,34 @@ import Permissions from "./Permissions";
 import Notification from "./Notification";
 import Appearance from "./Appearance";
 import Billing from "./Billing";
+import { deleteActiveTab, getActiveTab } from "Utils";
 
 export class Setting extends Component {
   tabMapping = [
     {
       name: "Account",
       dataKey: "account",
+      index: 0,
     },
     {
       name: "Users and Permissions",
       dataKey: "permissions",
+      index: 1,
     },
     {
       name: "Notification",
       dataKey: "notification",
+      index: 2,
     },
     {
       name: "Appearance",
       dataKey: "appearance",
+      index: 3,
     },
     {
       name: "Billing",
       dataKey: "billing",
+      index: 4,
     },
   ];
 
@@ -39,6 +45,23 @@ export class Setting extends Component {
     };
   }
 
+  componentDidMount = () => {
+    this.setPreviousTab();
+  };
+
+  setPreviousTab = () => {
+    let currentTab = getActiveTab();
+    if (currentTab) {
+      for (let tab = 0; tab < this.tabMapping.length; tab++) {
+        const element = this.tabMapping[tab];
+        if (element.dataKey === currentTab) {
+          this.setActiveTab(element.index);
+          deleteActiveTab();
+          break;
+        }
+      }
+    }
+  };
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };

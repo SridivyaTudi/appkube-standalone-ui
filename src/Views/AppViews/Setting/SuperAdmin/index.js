@@ -7,6 +7,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CreateUserControlModal from "../Permissions/Components/CreateUserControlModal";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { setActiveTab } from "Utils";
 
 class SuperAdmin extends Component {
   constructor(props) {
@@ -66,6 +68,11 @@ class SuperAdmin extends Component {
     }
   };
 
+  redirectToSettingPage = () => {
+    this.props.navigate("/app/setting");
+    setActiveTab("permissions");
+  };
+
   renderGroupControlData = () => {
     const { groupControlData, actionButton } = this.state;
     let retData = [];
@@ -74,7 +81,9 @@ class SuperAdmin extends Component {
         retData.push(
           <Box className="group-box" key={groupData.name}>
             <Box className="heading">
-              <h4>{groupData.name}</h4>
+              <h4 onClick={() => this.redirectToSettingPage()}>
+                {groupData.name}
+              </h4>
               <IconButton
                 className="action-btn"
                 aria-label="morevertIcon"
@@ -106,14 +115,20 @@ class SuperAdmin extends Component {
                 </>
               )}
             </Box>
-            <Box className="group-data">
+            <Box
+              className="group-data"
+              onClick={() => this.redirectToSettingPage()}
+            >
               <Box className="data">
                 <label>Roles Assigned</label>
                 <span>{groupData.admin}</span>
                 <span>{groupData.she}</span>
               </Box>
             </Box>
-            <Box className="description-text">
+            <Box
+              className="description-text"
+              onClick={() => this.redirectToSettingPage()}
+            >
               <label>Group Description</label>
               <p>{groupData.description}</p>
             </Box>
@@ -144,12 +159,12 @@ class SuperAdmin extends Component {
           <Box className="breadcrumbs">
             <ul>
               <li>
-                <Link to={`#`}>Super Admin Group </Link>
+                <Link to={`/app/setting/setpolicy`}> Set Policy </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">Set Policy</li>
+              <li className="active">Super Admin Group</li>
             </ul>
           </Box>
         </Box>
@@ -355,4 +370,4 @@ class SuperAdmin extends Component {
   }
 }
 
-export default SuperAdmin;
+export default navigateRouter(SuperAdmin);

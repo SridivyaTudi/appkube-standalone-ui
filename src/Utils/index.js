@@ -133,3 +133,15 @@ export const getSelectedInfraTopologyView = (details) => {
 export const deleteSelectedInfraTopologyView = () => {
   localStorage.removeItem(LOCAL_STORAGE_CONSTANTS.INFRAVIEW_DETAILS);
 };
+
+export const setActiveTab = (value) => {
+  localStorage.setItem(LOCAL_STORAGE_CONSTANTS.ACTIVE_TAB, value);
+};
+
+export const getActiveTab = (value) => {
+  return localStorage.getItem(LOCAL_STORAGE_CONSTANTS.ACTIVE_TAB);
+};
+
+export const deleteActiveTab = () => {
+   localStorage.removeItem(LOCAL_STORAGE_CONSTANTS.ACTIVE_TAB);
+};

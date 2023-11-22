@@ -3,6 +3,7 @@ import { Box, List, ListItem, Grid, Button } from "@mui/material";
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { setActiveTab } from "Utils";
 
 class SetPolicy extends Component {
   render() {
@@ -13,7 +14,12 @@ class SetPolicy extends Component {
           <Box className="breadcrumbs">
             <ul>
               <li>
-                <Link to={`#`}>Users and Permissions </Link>
+                <Link
+                  to={`/app/setting`}
+                  onClick={() => setActiveTab("permissions")}
+                >
+                  Users and Permissions{" "}
+                </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
@@ -81,12 +87,14 @@ class SetPolicy extends Component {
                   </Box>
                 </Grid>
                 <Grid item xs={2}>
-                <Box className="manage-btn text-right ">
+                  <Box className="manage-btn text-right ">
                     <Button
                       className="secondary-btn min-width"
                       variant="contained"
                     >
-                      <Link to={`${APP_PREFIX_PATH}/setting/settransitions`}>Manage</Link>
+                      <Link to={`${APP_PREFIX_PATH}/setting/settransitions`}>
+                        Manage
+                      </Link>
                     </Button>
                   </Box>
                 </Grid>
@@ -135,7 +143,9 @@ class SetPolicy extends Component {
                       className="secondary-btn min-width"
                       variant="contained"
                     >
-                      <Link to={`${APP_PREFIX_PATH}/settings/settransitions`}>Manage</Link>
+                      <Link to={`${APP_PREFIX_PATH}/settings/settransitions`}>
+                        Manage
+                      </Link>
                     </Button>
                   </Box>
                 </Grid>
