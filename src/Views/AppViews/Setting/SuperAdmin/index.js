@@ -159,7 +159,7 @@ class SuperAdmin extends Component {
           <Box className="breadcrumbs">
             <ul>
               <li>
-                <Link to={`/app/setting/setpolicy`}> Set Policy </Link>
+                <Link to={`/app/setting/setpolicy`}>Users and Permissions</Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>

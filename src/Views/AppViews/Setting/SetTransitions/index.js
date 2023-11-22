@@ -102,7 +102,8 @@ class SetTransitions extends Component {
                 </span>
               </Box>
             </Box>
-            <Box className="policy-permission-content">
+            <Box className="policy-permission-content"
+            onClick={this.handleAddPermitionControlModal}>
               <Box className="policy-text">
                 <input type="checkbox" />
                 <span>Product</span>
@@ -127,7 +128,8 @@ class SetTransitions extends Component {
                 </span>
               </Box>
             </Box>
-            <Box className="policy-permission-content">
+            <Box className="policy-permission-content"
+            onClick={this.handleAddPermitionControlModal}>
               <Box className="policy-text">
                 <input type="checkbox" />
                 <span>SRE</span>
