@@ -81,7 +81,7 @@
 
       tbody {
         display: block;
-        height: 300px;
+        max-height: 300px;
         overflow: auto;
         width: calc(100% - 0.05em);
 
