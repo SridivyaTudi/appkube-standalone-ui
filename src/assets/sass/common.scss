@@ -163,7 +163,6 @@ p {
   // margin-bottom: 0;
 }
 
-
 //*********************************** Password Must Include *********************************//
 .password-must-include-contents {
   display: block;
@@ -200,17 +199,16 @@ p {
         margin-right: 7px;
         text-align: center;
         border-radius: 50%;
-        background-color: rgba(150, 150, 150, .5);
+        background-color: rgba(150, 150, 150, 0.5);
       }
       &.green {
         color: #00b929;
         span {
-          background-color: rgba(0, 185, 41, .3);
+          background-color: rgba(0, 185, 41, 0.3);
         }
       }
     }
   }
-
 }
 
 //*********************************** Common Container *********************************//
@@ -436,8 +434,8 @@ button.light-btn {
     box-shadow: none;
   }
 }
-button.danger-btn{
-  background: #FF2D2E;
+button.danger-btn {
+  background: #ff2d2e;
   color: #ffffff;
   min-width: 180px;
   font-weight: 600;
@@ -454,8 +452,8 @@ button.danger-btn{
     box-shadow: none;
   }
 }
-button.info-btn{
-  background: #8676FF;
+button.info-btn {
+  background: #8676ff;
   color: #ffffff;
   min-width: 180px;
   font-weight: 600;
@@ -1023,111 +1021,124 @@ a {
       border-bottom-color: #b3b3b3;
       border-bottom-style: dotted;
     }
-    td {
-      font-weight: 400;
-      color: #383874;
-      padding-left: 15px;
-      padding-right: 15px;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      font-size: 12px;
-      line-height: 18px;
-      font-family: "Poppins", sans-serif;
-      border-bottom-color: #eaecf0;
-      border-bottom-style: solid;
-      position: relative;
-
-      .group-name {
-        display: inline-block;
-        border: 1px solid #c6cbd9;
-        border-radius: 5px;
-        color: #383874;
-        font-size: 12px;
-        line-height: 16px;
-        font-weight: 600;
-        position: relative;
-        padding: 5px 10px 5px 20px;
-        &::before {
-          position: absolute;
-          left: 10px;
-          top: 10px;
-          width: 5px;
-          height: 5px;
-          content: "";
-          border-radius: 50px;
-          background-color: #8676ff;
-        }
-      }
-
-      a {
-        color: #384cff;
-        font-weight: 600;
-      }
-
-      .action-btn {
-        padding: 10px 10px;
-        border-radius: 5px;
-        color: #384cff;
-        &:hover {
-          background-color: #d1d5ff;
-        }
-      }
-
-      .action-buttons-bg {
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        z-index: 1;
-        background-color: transparent;
-      }
-
-      .action-buttons {
-        position: absolute;
-        z-index: 10;
-        right: 0;
-        top: 50px;
-        width: 120px;
-        overflow: hidden;
-        border-radius: 10px;
-        background-color: #ffffff;
-        box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px #6c49ac0d;
-
-        .secondary-text-btn {
-          font-size: 12px;
-          padding: 5px 10px;
-          min-width: 100%;
-          text-align: left;
-          border-radius: 0;
-          color: #383874;
-          border-bottom: 1px solid #dbdff1;
-          &:last-child {
-            border-bottom: none;
+    tbody{
+      tr{
+        &:last-child {
+          td{
+            .action-buttons {
+              top: auto;
+              bottom: 36px;
+            }
           }
-
-          .MuiButton-startIcon {
-            font-size: 12px;
-            margin-left: 0;
-            line-height: 16px;
-            vertical-align: middle;
-            margin-right: 5px;
+         
+        }
+        td {
+          font-weight: 400;
+          color: #383874;
+          padding-left: 15px;
+          padding-right: 15px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          font-size: 12px;
+          line-height: 18px;
+          font-family: "Poppins", sans-serif;
+          border-bottom-color: #eaecf0;
+          border-bottom-style: solid;
+          position: relative;
+    
+          .group-name {
+            display: inline-block;
+            border: 1px solid #c6cbd9;
+            border-radius: 5px;
             color: #383874;
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: 600;
+            position: relative;
+            padding: 5px 10px 5px 20px;
+            &::before {
+              position: absolute;
+              left: 10px;
+              top: 10px;
+              width: 5px;
+              height: 5px;
+              content: "";
+              border-radius: 50px;
+              background-color: #8676ff;
+            }
+          }
+    
+          a {
+            color: #384cff;
+            font-weight: 600;
+          }
+    
+          .action-btn {
+            padding: 10px 10px;
+            border-radius: 5px;
+            color: #384cff;
+            &:hover {
+              background-color: #d1d5ff;
+            }
+          }
+         
+          .action-buttons-bg {
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: 1;
+            background-color: transparent;
+          }
+    
+          .action-buttons {
+            position: absolute;
+            z-index: 10;
+            right: 0;
+            top: 50px;
+            width: 120px;
+            overflow: hidden;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px #6c49ac0d;
+    
+            .secondary-text-btn {
+              font-size: 12px;
+              padding: 5px 10px;
+              min-width: 100%;
+              text-align: left;
+              border-radius: 0;
+              color: #383874;
+              border-bottom: 1px solid #dbdff1;
+              &:last-child {
+                border-bottom: none;
+              }
+    
+              .MuiButton-startIcon {
+                font-size: 12px;
+                margin-left: 0;
+                line-height: 16px;
+                vertical-align: middle;
+                margin-right: 5px;
+                color: #383874;
+              }
+            }
           }
         }
       }
     }
+   
   }
 }
-
 
 .access-control-pagination {
   p {
     color: #000000;
   }
 }
-.Toastify__close-button{
+.Toastify__close-button {
   position: absolute;
-    top: 23px;
-    right: 15px;
+  top: 23px;
+  right: 15px;
 }
