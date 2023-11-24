@@ -2,11 +2,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import config from "Views/AuthViews/Config";
 import { preLoginService } from "Services";
 
-export const signUp = createAsyncThunk("auth/signUp", async (urlParams) => {
+export const signUp = createAsyncThunk("auth/signUp", async (formData) => {
   try {
-    const response = await preLoginService.post(
-      `${config.SIGN_UP}?${urlParams}`
-    );
+    const response = await preLoginService.post(`${config.SIGN_UP}`, formData);
     return response;
   } catch (error) {
     console.log(error);

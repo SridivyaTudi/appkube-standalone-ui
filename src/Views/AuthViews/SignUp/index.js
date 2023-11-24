@@ -203,9 +203,15 @@ class SignUp extends Component {
     });
     const { isValid } = this.validateForm(activeStep, submittedSteps);
     if (isValid) {
-      //Right now file is not being sent.
-      const urlParms = `username=${step1.userName}&password=${step1.password}&organization=${step2.companyName}&email=${step1.email}`;
-      this.props.signUp(urlParms);
+      let formData = new FormData();
+      formData.append("username", step1.userName);
+      formData.append("organization", step2.companyName);
+      formData.append("password", step1.password);
+      formData.append("email", step1.email);
+      formData.append("type", "ADMIN");
+      formData.append("targetService", "cmdb");
+
+      this.props.signUp(formData);
     }
   };
 

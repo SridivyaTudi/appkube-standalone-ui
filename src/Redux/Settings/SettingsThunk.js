@@ -31,3 +31,33 @@ export const authMFACode = createAsyncThunk(
     }
   }
 );
+
+export const createRole = createAsyncThunk(
+  "settings/createRole",
+  async (params) => {
+    try {
+      const response = await postLoginService.post(
+        `${config.CREATE_ROLE}`,
+        params
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const createGroup = createAsyncThunk(
+  "settings/createGroup",
+  async (params) => {
+    try {
+      const response = await postLoginService.post(
+        `${config.CREATE_GROUP}`,
+        params
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

@@ -1,6 +1,6 @@
-const baseSecurityUrl =
-  "https://40fglalyd0.execute-api.us-east-1.amazonaws.com/dev";
-// const baseSecurityUrl = "http://34.199.12.114:8094/security";
+// const baseSecurityUrl =
+//   "https://40fglalyd0.execute-api.us-east-1.amazonaws.com/dev";
+const baseSecurityUrl = "http://34.199.12.114:8094/security";
 
 const config = {
   baseSecurityUrl,
@@ -16,6 +16,8 @@ const config = {
   /* SETTINGS PAGE SECURITY URL */
   GET_MFA_CODE: `${baseSecurityUrl}/users/mfaCode`,
   AUTH_MFA: `${baseSecurityUrl}/users/authenticateMfa`,
+  CREATE_ROLE: `${baseSecurityUrl}/roles/create`,
+  CREATE_GROUP: `${baseSecurityUrl}/roles/create`,
 };
 
 export default config;

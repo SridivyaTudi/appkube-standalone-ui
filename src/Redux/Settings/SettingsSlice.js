@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import status from "Redux/Constants/CommonDS";
-import { getMFACode, authMFACode } from "./SettingsThunk";
+import {
+  getMFACode,
+  authMFACode,
+  createRole,
+  createGroup,
+} from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
   name: "getMFACode",
@@ -10,6 +15,14 @@ export const settingsSlice = createSlice({
       data: {},
     },
     mfaAuth: {
+      status: null,
+      data: {},
+    },
+    roleCreation: {
+      status: null,
+      data: {},
+    },
+    groupCreation: {
       status: null,
       data: {},
     },
@@ -63,6 +76,58 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         mfaAuth: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [createRole.pending]: (state) => {
+      return {
+        ...state,
+        roleCreation: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [createRole.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        roleCreation: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [createRole.rejected]: (state) => {
+      return {
+        ...state,
+        roleCreation: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [createGroup.pending]: (state) => {
+      return {
+        ...state,
+        groupCreation: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [createGroup.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        groupCreation: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [createGroup.rejected]: (state) => {
+      return {
+        ...state,
+        groupCreation: {
           status: status.FAILURE,
         },
       };
