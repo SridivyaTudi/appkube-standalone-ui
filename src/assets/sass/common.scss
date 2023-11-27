@@ -1021,16 +1021,16 @@ a {
       border-bottom-color: #b3b3b3;
       border-bottom-style: dotted;
     }
-    tbody{
-      tr{
+    tbody {
+      tr {
         &:last-child {
-          td{
+          td {
             .action-buttons {
               top: auto;
               bottom: 36px;
+              height: auto;
             }
           }
-         
         }
         td {
           font-weight: 400;
@@ -1045,7 +1045,7 @@ a {
           border-bottom-color: #eaecf0;
           border-bottom-style: solid;
           position: relative;
-    
+
           .group-name {
             display: inline-block;
             border: 1px solid #c6cbd9;
@@ -1067,12 +1067,12 @@ a {
               background-color: #8676ff;
             }
           }
-    
+
           a {
             color: #384cff;
             font-weight: 600;
           }
-    
+
           .action-btn {
             padding: 10px 10px;
             border-radius: 5px;
@@ -1081,7 +1081,7 @@ a {
               background-color: #d1d5ff;
             }
           }
-         
+
           .action-buttons-bg {
             left: 0;
             top: 0;
@@ -1091,7 +1091,7 @@ a {
             z-index: 1;
             background-color: transparent;
           }
-    
+
           .action-buttons {
             position: absolute;
             z-index: 10;
@@ -1101,8 +1101,8 @@ a {
             overflow: hidden;
             border-radius: 10px;
             background-color: #ffffff;
-            box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px #6c49ac0d;
-    
+            box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px
+              #6c49ac0d;
             .secondary-text-btn {
               font-size: 12px;
               padding: 5px 10px;
@@ -1114,7 +1114,7 @@ a {
               &:last-child {
                 border-bottom: none;
               }
-    
+
               .MuiButton-startIcon {
                 font-size: 12px;
                 margin-left: 0;
@@ -1128,7 +1128,6 @@ a {
         }
       }
     }
-   
   }
 }
 

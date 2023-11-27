@@ -83,13 +83,13 @@ class Reports extends Component {
           <Grid container spacing={3}>
             <Grid item xs={12} md={12} lg={6}>
               <Box className="chart-box">
-                <Box className="heading">Cloud Cost by Month</Box>
+                <Box className="heading m-b-10">Cloud Cost by Month</Box>
                 <CloudCostMonthChart />
               </Box>
             </Grid>
             <Grid item xs={12} md={12} lg={6}>
               <Box className="chart-box">
-                <Box className="heading">
+                <Box className="heading m-b-10">
                   <img src={chartIcon} alt="" /> AWS Monthly Spend by Region
                 </Box>
                 <AwsMonthlySpendRegionChart />
