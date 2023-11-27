@@ -9,7 +9,7 @@ class SetPolicy extends Component {
     return (
       <Box className="set-policy-container">
         <Box className="list-heading">
-          <h3>Admin Set Policy </h3>
+          <h3>Administrator View Policy </h3>
           <Box className="breadcrumbs">
             <ul>
               <li>
@@ -27,9 +27,73 @@ class SetPolicy extends Component {
             </ul>
           </Box>
         </Box>
-
+        <Box className="overview-section">
+          <Grid
+            container
+            rowSpacing={1}
+            className="h-100"
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid item xs={6}>
+              <Box className="overview-card">
+                <h5>Overview</h5>
+                <p>
+                  The super admin is the highest level of administrative
+                  authority within a system or platform, possessing unparalleled
+                  control and access to all features, settings, and user data
+                  Super admins hold the key to managing and overseeing the
+                  entire infrastructure, making critical decisions, and
+                  implementing security measures to protect the system from
+                  unauthorized access and potential breaches.
+                </p>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
         <Box className="policy-section">
-          <h4>Set Policy and Permission</h4>
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid item xs={6}>
+              <h4>Allowed Policy set</h4>
+            </Grid>
+            <Grid item xs={6}>
+              <Box className="overview-buttons">
+                <List>
+                  <ListItem>
+                    <Button
+                      className="primary-btn min-width-inherit"
+                      variant="contained"
+                      onClick={this.handleCreateUserControlModal}
+                    >
+                      Add Users
+                    </Button>
+                  </ListItem>
+                  <ListItem>
+                    <Button
+                      className="danger-outline-btn min-width-inherit"
+                      variant="outlined"
+                    >
+                      <i className="p-r-10 fas fa-trash-alt"></i>
+                      Delete
+                    </Button>
+                  </ListItem>
+                  <ListItem>
+                    <Button
+                      className="danger-outline-btn min-width-inherit"
+                      variant="outlined"
+                    >
+                      <i className="p-r-10 fas fa-trash-alt"></i>
+                      Delete Role
+                    </Button>
+                  </ListItem>
+                </List>
+              </Box>
+            </Grid>
+          </Grid>
+
           <Box className="policy-permission">
             <Box className="policy-permission-head">
               <Grid
@@ -37,18 +101,12 @@ class SetPolicy extends Component {
                 rowSpacing={1}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
-                <Grid item xs={3}>
-                  <Box className="title">Policy</Box>
-                </Grid>
-                <Grid item xs={7}>
-                  <Box className="title">Permission</Box>
-                </Grid>
-                <Grid item xs={2} className="text-right">
-                  <Box className="title">Action</Box>
+                <Grid item xs={12}>
+                  <Box className="title"> <input type="checkbox" /> Policy Name</Box>
                 </Grid>
               </Grid>
             </Box>
-            <Box className="policy-permission-content">
+            {/* <Box className="policy-permission-content">
               <Grid
                 container
                 rowSpacing={1}
@@ -149,7 +207,7 @@ class SetPolicy extends Component {
                   </Box>
                 </Grid>
               </Grid>
-            </Box>
+            </Box> */}
           </Box>
         </Box>
       </Box>

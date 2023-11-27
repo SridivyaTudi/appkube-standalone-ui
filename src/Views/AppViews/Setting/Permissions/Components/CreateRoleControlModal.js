@@ -1,5 +1,5 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box } from "@mui/material/";
+import { Box, FormControl, MenuItem, Select } from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { connect } from "react-redux";
@@ -146,6 +146,28 @@ class CreateRoleControlModal extends Component {
               ) : (
                 <></>
               )}
+            </Box>
+            <Box className="form-group">
+              <label htmlFor="roleDescription" className="form-label">
+                Add Policy
+              </label>
+              <FormControl className="select-policy">
+                <Select
+                  //value={age}
+                 // onChange={handleChange}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="">
+                    <em>Select Policy</em>
+                  </MenuItem>
+                  <MenuItem value={10}>All Access</MenuItem>
+                  <MenuItem value={20}>Minimal Access</MenuItem>
+                  <MenuItem value={30}>SRE</MenuItem>
+                  <MenuItem value={40}>Dev Ops</MenuItem> 
+                  <MenuItem value={50}>System Engineer</MenuItem>
+                </Select>
+              </FormControl>
             </Box>
           </ModalBody>
 
