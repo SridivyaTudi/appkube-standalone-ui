@@ -116,7 +116,7 @@ authService.interceptors.response.use(
       ToastMessage.error("Error");
     }
 
-    return Promise.reject(error.response.data);
+    return Promise.reject(error.response?.data);
   }
 );
 

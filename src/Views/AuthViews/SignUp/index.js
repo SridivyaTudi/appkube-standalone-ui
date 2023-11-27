@@ -73,7 +73,9 @@ class SignUp extends Component {
           if (signUpResponse?.code === 418) {
             this.togglePopup();
           } else {
-            ToastMessage.error(signUpResponse.message);
+            ToastMessage.error(
+              signUpResponse?.message || "User registration failed!"
+            );
           }
         }
       } else if (this.props.signUpUser.status === status.FAILURE) {
@@ -208,15 +210,16 @@ class SignUp extends Component {
     });
     const { isValid } = this.validateForm(activeStep, submittedSteps);
     if (isValid) {
-      let formData = new FormData();
-      formData.append("username", step1.userName);
-      formData.append("organization", step2.companyName);
-      formData.append("password", step1.password);
-      formData.append("email", step1.email);
-      formData.append("type", this.apiConstants.ADMIN);
-      formData.append("targetService", this.apiConstants.CMDB);
+      let { ADMIN, CMDB } = this.apiConstants;
+      let params = `username=${step1.userName}&organization=${
+        step2.companyName
+      }&email=${
+        step1.email
+      }&type=${ADMIN}&targetService=${CMDB}&password=${encodeURIComponent(
+        step1.password
+      )}`;
 
-      this.props.signUp(formData);
+      this.props.signUp(params);
     }
   };
 
