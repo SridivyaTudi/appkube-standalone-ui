@@ -62,7 +62,8 @@ class CreateRoleControlModal extends Component {
   };
 
   // Call API create role
-  handleCreateRole = () => {
+  handleCreateRole = (e) => {
+    e.preventDefault();
     const { name, description } = this.state;
     this.setState({ isSubmit: true });
     const { isValid } = this.validateForm(true);
@@ -100,68 +101,77 @@ class CreateRoleControlModal extends Component {
             </button>
           </h5>
         </ModalHeader>
-        <ModalBody>
-          <Box className="form-group">
-            <label htmlFor="roleName" className="form-label">
-              Role Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              name="name"
-              placeholder="Director"
-              value={name}
-              onChange={this.handleInputChange}
-            />
-            {errors.name ? <span className="red">{errors.name}</span> : <></>}
-          </Box>
+        <form onSubmit={this.handleCreateRole}>
+          <ModalBody>
+            <Box className="form-group">
+              <label htmlFor="roleName" className="form-label">
+                Role Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                name="name"
+                placeholder="Director"
+                value={name}
+                onChange={this.handleInputChange}
+                autoFocus={"autoFocus"}
+              />
+              {errors.name ? <span className="red">{errors.name}</span> : <></>}
+            </Box>
 
-          <Box className="form-group">
-            <label htmlFor="roleDescription" className="form-label">
-              Role Description
-            </label>
-            <textarea
-              type="text"
-              className="form-control"
-              id="description"
-              name="description"
-              style={{
-                height: "120px",
-                lineHeight: "18px",
-                paddingRight: "15px",
-              }}
-              placeholder="director is a senior executive responsible for overseeing the strategic department."
-              value={description}
-              onChange={this.handleInputChange}
-            />
-            {errors.description ? (
-              <span className="red">{errors.description}</span>
-            ) : (
-              <></>
-            )}
-          </Box>
-        </ModalBody>
-        <ModalFooter className="footer-top-br">
-          <Box className="d-block text-right">
-            <LoadingButton
-              className="primary-outline-btn min-width m-r-2"
-              variant="outlined"
-              onClick={this.handleCloseModal}
-            >
-              Cancel
-            </LoadingButton>
-            <LoadingButton
-              className="primary-btn min-width"
-              variant="contained"
-              disabled={this.props.roleCreation?.status === status.IN_PROGRESS}
-              loading={this.props.roleCreation?.status === status.IN_PROGRESS}
-              onClick={this.handleCreateRole}
-            >
-              Create
-            </LoadingButton>
-          </Box>
-        </ModalFooter>
+            <Box className="form-group">
+              <label htmlFor="roleDescription" className="form-label">
+                Role Description
+              </label>
+              <textarea
+                type="text"
+                className="form-control"
+                id="description"
+                name="description"
+                style={{
+                  height: "120px",
+                  lineHeight: "18px",
+                  paddingRight: "15px",
+                }}
+                placeholder="director is a senior executive responsible for overseeing the strategic department."
+                value={description}
+                onChange={this.handleInputChange}
+                onKeyDown={(e) =>
+                  e.key === "Enter" ? this.handleCreateRole(e) : <></>
+                }
+              />
+              {errors.description ? (
+                <span className="red">{errors.description}</span>
+              ) : (
+                <></>
+              )}
+            </Box>
+          </ModalBody>
+
+          <ModalFooter className="footer-top-br">
+            <Box className="d-block text-right">
+              <LoadingButton
+                className="primary-outline-btn min-width m-r-2"
+                variant="outlined"
+                onClick={this.handleCloseModal}
+              >
+                Cancel
+              </LoadingButton>
+              <LoadingButton
+                className="primary-btn min-width"
+                variant="contained"
+                disabled={
+                  this.props.roleCreation?.status === status.IN_PROGRESS
+                }
+                loading={this.props.roleCreation?.status === status.IN_PROGRESS}
+                onClick={this.handleCreateRole}
+              >
+                Create
+              </LoadingButton>
+            </Box>
+          </ModalFooter>
+        </form>
       </Modal>
     );
   }

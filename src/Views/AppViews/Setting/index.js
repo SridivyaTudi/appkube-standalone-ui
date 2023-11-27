@@ -7,7 +7,7 @@ import Permissions from "./Permissions";
 import Notification from "./Notification";
 import Appearance from "./Appearance";
 import Billing from "./Billing";
-import { deleteActiveTab, getActiveTab } from "Utils";
+import { deleteActiveTab, getActiveTab, getCurrentUser } from "Utils";
 
 export class Setting extends Component {
   tabMapping = [
@@ -66,12 +66,26 @@ export class Setting extends Component {
     this.setState({ activeTab });
   };
 
+  getCurrentUserInfo = () => {
+    let userInfo = getCurrentUser()
+      ? getCurrentUser()?.info?.user
+        ? getCurrentUser().info.user
+        : { username: "" }
+      : { username: "" };
+
+    let { organization, username } = userInfo;
+    let role = organization?.updatedBy || "";
+    if (role) {
+      role = role.charAt(0)?.toUpperCase() + role?.slice(1);
+    }
+    return { username, role };
+  };
   render() {
     const { activeTab } = this.state;
     return (
       <Box className="setting-container">
         <Box className="page-header">
-          <h3>James Kernal</h3>
+          <h3>{this.getCurrentUserInfo().username}</h3>
           <Button
             className="primary-outline-btn min-width-inherit"
             variant="outlined"

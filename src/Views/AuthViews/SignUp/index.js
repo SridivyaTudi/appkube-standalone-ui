@@ -27,6 +27,11 @@ class SignUp extends Component {
     STEP2: 1,
     STEP3: 2,
   };
+  apiConstants = {
+    ADMIN: "ADMIN",
+    CMDB: "cmdb",
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -208,8 +213,8 @@ class SignUp extends Component {
       formData.append("organization", step2.companyName);
       formData.append("password", step1.password);
       formData.append("email", step1.email);
-      formData.append("type", "ADMIN");
-      formData.append("targetService", "cmdb");
+      formData.append("type", this.apiConstants.ADMIN);
+      formData.append("targetService", this.apiConstants.CMDB);
 
       this.props.signUp(formData);
     }
