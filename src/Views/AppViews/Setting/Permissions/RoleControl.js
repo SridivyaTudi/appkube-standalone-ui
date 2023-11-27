@@ -11,13 +11,36 @@ import {
   Paper,
   IconButton,
   TablePagination,
+  List,
+  ListItem,
 } from "@mui/material";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import CreateRoleControlModal from "./Components/CreateRoleControlModal";
+import DefaultIcon from "../../../../assets/img/setting/default-icon.png";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#16161E",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#16161E",
+    color: "#ffffff",
+    maxWidth: 250,
+    
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+    padding: "8px 10px",
+  },
+}));
+
 
 class RoleControl extends Component {
   constructor(props) {
@@ -71,7 +94,6 @@ class RoleControl extends Component {
       actionButton: null,
     };
   }
-
   handleChangePage = (event, newpage) => {
     this.setState({ pg: newpage });
   };
@@ -135,10 +157,27 @@ class RoleControl extends Component {
             <TableBody>
               {rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell>{row.name}</TableCell>
+                  <TableCell>
+                    {row.name}
+                    <Box className="d-flex roles-box">
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={
+                          <React.Fragment>
+                           <span>This role created by default by the system</span>
+                          </React.Fragment>
+                        }
+                      >
+                        <span>
+                          <img src={DefaultIcon} alt="" />
+                        </span>
+                        Default
+                      </HtmlTooltip>
+                    </Box>
+                  </TableCell>
                   <TableCell>{row.content}</TableCell>
                   <TableCell>
-                    <Link to="/app/setting/setpolicy">Set Policy</Link>
+                    <Link to="/app/setting/setpolicy">View Policy</Link>
                   </TableCell>
                   <TableCell align="center">
                     <IconButton
