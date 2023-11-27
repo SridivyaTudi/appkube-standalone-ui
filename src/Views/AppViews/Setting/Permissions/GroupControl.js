@@ -7,83 +7,102 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import DefaultIcon from "../../../../assets/img/setting/default-icon.png";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#16161E",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#16161E",
+    color: "#ffffff",
+    maxWidth: 250,
+
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+    padding: "8px 10px",
+  },
+}));
 class GroupControl extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showCreateGroupControlModal: false,
       groupControlData: [
+        // {
+        //   name: "Super Admin Group",
+        //   activeUsers: "45",
+        //   rolesAssigned: "All",
+        //   description:
+        //     "Active The super admin is the highest level of administrative authority within a system",
+        // },
+        // {
+        //   name: "Finance Manager",
+        //   activeUsers: "05",
+        //   rolesAssigned: "01",
+        //   description:
+        //     "Active The super admin is the highest level of administrative authority within a system",
+        // },
+        // {
+        //   name: "Team Leads",
+        //   activeUsers: "17",
+        //   rolesAssigned: "08",
+        //   description:
+        //     "Active The super admin is the highest level of administrative authority within a system",
+        // },
         {
-          name: "Super Admin Group",
+          name: "Default Users",
           activeUsers: "45",
-          rolesAssigned: "All",
+          rolesAssigned: "Basic Users",
           description:
             "Active The super admin is the highest level of administrative authority within a system",
         },
         {
-          name: "Finance Manager",
-          activeUsers: "05",
-          rolesAssigned: "01",
-          description:
-            "Active The super admin is the highest level of administrative authority within a system",
-        },
-        {
-          name: "Team Leads",
-          activeUsers: "17",
-          rolesAssigned: "08",
-          description:
-            "Active The super admin is the highest level of administrative authority within a system",
-        },
-        {
-          name: "Fleet Manager",
-          activeUsers: "70",
-          rolesAssigned: "12",
-          description:
-            "Active The super admin is the highest level of administrative authority within a system",
-        },
-        {
-          name: "Area Manager",
-          activeUsers: "500",
-          rolesAssigned: "81",
-          description:
-            "Active The super admin is the highest level of administrative authority within a system",
-        },
-        {
-          name: "Director",
-          activeUsers: "01",
-          rolesAssigned: "52",
-          description:
-            "Active The super admin is the highest level of administrative authority within a system",
-        },
-        {
-          name: "Auditor",
-          activeUsers: "10",
-          rolesAssigned: "All",
-          description:
-            "Active The super admin is the highest level of administrative authority within a system",
-        },
-        {
-          name: "Quality Manager",
-          activeUsers: "05",
-          rolesAssigned: "17",
-          description:
-            "Active The super admin is the highest level of administrative authority within a system",
-        },
-        {
-          name: "Account Manager",
-          activeUsers: "07",
-          rolesAssigned: "19",
-          description:
-            "Active The super admin is the highest level of administrative authority within a system",
-        },
-        {
-          name: "Analytics",
+          name: "Super Admins",
           activeUsers: "45",
-          rolesAssigned: "07",
+          rolesAssigned: "Administrator",
           description:
             "Active The super admin is the highest level of administrative authority within a system",
         },
+        // {
+        //   name: "Director",
+        //   activeUsers: "01",
+        //   rolesAssigned: "52",
+        //   description:
+        //     "Active The super admin is the highest level of administrative authority within a system",
+        // },
+        // {
+        //   name: "Auditor",
+        //   activeUsers: "10",
+        //   rolesAssigned: "All",
+        //   description:
+        //     "Active The super admin is the highest level of administrative authority within a system",
+        // },
+        // {
+        //   name: "Quality Manager",
+        //   activeUsers: "05",
+        //   rolesAssigned: "17",
+        //   description:
+        //     "Active The super admin is the highest level of administrative authority within a system",
+        // },
+        // {
+        //   name: "Account Manager",
+        //   activeUsers: "07",
+        //   rolesAssigned: "19",
+        //   description:
+        //     "Active The super admin is the highest level of administrative authority within a system",
+        // },
+        // {
+        //   name: "Analytics",
+        //   activeUsers: "45",
+        //   rolesAssigned: "07",
+        //   description:
+        //     "Active The super admin is the highest level of administrative authority within a system",
+        // },
       ],
       actionButton: null,
     };
@@ -117,6 +136,19 @@ class GroupControl extends Component {
           <Box className="group-box" key={groupData.name}>
             <Box className="heading">
               <h4 onClick={this.props.setActiveTab}>{groupData.name}</h4>
+              <Box className="d-flex roles-box">
+                <HtmlTooltip
+                  className="table-tooltip d-flex"
+                  title={
+                    <React.Fragment>
+                      <span>This role created by default by the system</span>
+                    </React.Fragment>
+                  }
+                >
+                  <img src={DefaultIcon} alt="" />
+                  Default
+                </HtmlTooltip>
+              </Box>
               <IconButton
                 className="action-btn"
                 aria-label="morevertIcon"
@@ -155,7 +187,7 @@ class GroupControl extends Component {
               </Box>
               <Box className="data">
                 <label>Roles Assigned</label>
-                <span>{groupData.rolesAssigned}</span>
+                <span className="group-name">{groupData.rolesAssigned}</span>
               </Box>
             </Box>
             <Box className="description-text" onClick={this.props.setActiveTab}>
@@ -164,7 +196,9 @@ class GroupControl extends Component {
             </Box>
             <Box className="view-btn text-center">
               <Button className="primary-btn min-width">
-                <Link to={`${APP_PREFIX_PATH}/setting/super-admin`}>View Group</Link>
+                <Link to={`${APP_PREFIX_PATH}/setting/super-admin`}>
+                  View Group
+                </Link>
               </Button>
             </Box>
           </Box>

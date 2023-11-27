@@ -283,8 +283,8 @@
           display: inline-flex;
           flex-wrap: wrap;
           min-height: 250px;
-          width: calc(20.3333% - 20px);
-          margin-left: 20px;
+          width: calc(280px - 20px);
+          margin-right: 20px;
           margin-bottom: 20px;
           border-radius: 15px;
           border: 1px solid #e2e2ea;
@@ -316,6 +316,7 @@
               color: #9a9aaf;
               margin-left: auto;
               font-size: 12px;
+
               &:hover {
                 background-color: #d1d5ff;
               }
@@ -340,8 +341,7 @@
               overflow: hidden;
               border-radius: 10px;
               background-color: #ffffff;
-              box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px
-                #6c49ac0d;
+              box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px #6c49ac0d;
 
               .secondary-text-btn {
                 font-size: 12px;
@@ -376,6 +376,7 @@
               display: inline-flex;
               flex-wrap: wrap;
               width: 50%;
+
               label {
                 font-size: 12px;
                 line-height: 16px;
@@ -385,6 +386,7 @@
                 width: 100%;
                 padding-bottom: 2px;
               }
+
               span {
                 font-size: 12px;
                 line-height: 16px;
@@ -392,12 +394,35 @@
                 color: #383874;
                 display: flex;
                 width: 36px;
-                border-radius: 3px;
+                border-radius: 8px;
                 text-align: center;
                 justify-content: center;
                 background-color: #f6f7fb;
                 height: 24px;
                 align-items: center;
+              }
+              .group-name {
+                display: inline-flex;
+                border: 1px solid #c6cbd9;
+                border-radius: 70px;
+                color: #383874;
+                font-size: 12px;
+                line-height: 16px;
+                font-weight: 600;
+                position: relative;
+                padding: 5px 10px 5px 20px;
+                width: 100%;
+                align-items: center;
+                &::before {
+                  position: absolute;
+                  left: 10px;
+                  top: 10px;
+                  width: 5px;
+                  height: 5px;
+                  content: "";
+                  border-radius: 50px;
+                  background-color: #8676ff;
+                }
               }
             }
           }
@@ -407,6 +432,7 @@
             width: 100%;
             flex-wrap: wrap;
             padding: 5px 15px 10px 15px;
+
             label {
               font-size: 12px;
               line-height: 16px;
@@ -416,6 +442,7 @@
               width: 100%;
               padding-bottom: 2px;
             }
+
             p {
               font-size: 12px;
               line-height: 16px;
@@ -437,9 +464,32 @@
             .primary-btn {
               padding-left: 15px;
               padding-right: 15px;
-              a{
+
+              a {
                 color: #ffffff;
               }
+            }
+          }
+
+          .roles-box {
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: 400;
+            background: #00B929;
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 5px;
+            margin-left: 10px;
+            color: #ffffff;
+
+            span {
+              display: flex;
+              align-items: center;
+            }
+
+            img {
+              margin-right: 5px;
+              height: 100%;
             }
           }
         }
@@ -454,11 +504,14 @@
   border-radius: 10px;
   background: white;
   margin: 0 auto;
+
   .modal-content {
     padding: 30px 30px;
+
     .modal-header {
       margin-bottom: 20px;
       border: none;
+
       .modal-title {
         text-align: left !important;
         justify-content: flex-start;
@@ -486,6 +539,7 @@
         }
       }
     }
+
     .modal-body {
       .form-group {
         width: 100%;
@@ -536,9 +590,11 @@
 
           &.rotate {
             right: 45px;
+
             i {
               color: #8676ff;
             }
+
             &:hover {
               i {
                 color: #384cff;
@@ -552,7 +608,7 @@
             }
           }
         }
-        
+
       }
 
       .password-strength-group {
@@ -592,6 +648,7 @@
         width: 100%;
         text-align: center;
         margin-bottom: 30px;
+
         img {
           max-width: 150px;
         }
@@ -601,6 +658,7 @@
         padding-bottom: 20px;
         width: 86%;
         margin: 0 auto;
+
         li {
           display: block;
           padding-left: 12px;
@@ -654,6 +712,7 @@
         }
       }
     }
+
     .modal-footer {
       padding-top: 10px;
       padding-bottom: 0;
@@ -670,8 +729,10 @@
       }
     }
   }
+
   &.add-permition-modal {
     width: 380px;
+
     .modal-content {
       .modal-header {
         margin-bottom: 0;
@@ -684,6 +745,7 @@
         margin-bottom: 0;
         padding-bottom: 10px;
         border-bottom: 1px dashed #000000;
+
         .modal-title {
           display: flex;
           align-items: center;
@@ -695,19 +757,24 @@
           }
         }
       }
+
       .modal-body {
         padding: 15px 0 20px 0;
+
         h5 {
           margin-bottom: 20px;
         }
+
         .form-group {
           display: flex;
           align-items: center;
           justify-content: space-between;
+
           .form-label {
             display: inline-block;
             width: auto;
           }
+
           &:last-child {
             margin-bottom: 0;
           }
@@ -715,16 +782,19 @@
       }
     }
   }
- 
+
 }
-.invite-user-modal-container{
+
+.invite-user-modal-container {
   width: 600px !important;
   box-shadow: 0px 0px 16px rgba(59, 72, 89, 0.2392156863);
   border-radius: 10px;
   background: white;
   margin: 0 auto;
+
   .modal-content {
     padding: 30px 30px;
+
     .modal-header {
       margin-bottom: 15px;
       padding-bottom: 15px;
@@ -732,6 +802,7 @@
       margin-right: -30px;
       padding-left: 30px;
       padding-right: 30px;
+
       .modal-title {
         text-align: left !important;
         justify-content: flex-start;
@@ -752,11 +823,13 @@
         }
       }
     }
+
     .modal-body {
-      .users-content{
+      .users-content {
         .title {
           display: flex;
           margin-bottom: 5px;
+
           .form-label {
             width: 47%;
             font-size: 14px;
@@ -767,12 +840,14 @@
             padding-left: 0;
           }
         }
+
         .form-group {
           display: flex;
           align-items: center;
           justify-content: space-between;
           flex-wrap: wrap;
           margin-bottom: 15px;
+
           .form-control {
             width: 240px;
             height: 36px;
@@ -788,31 +863,36 @@
             margin-right: 15px;
             font-family: "Poppins", sans-serif;
           }
-          .delete-icon{
+
+          .delete-icon {
             width: 30px;
             height: 30px;
             cursor: pointer;
           }
-  
+
         }
-        .add-user{
+
+        .add-user {
           font-size: 14px;
           font-weight: 500;
           line-height: 20px;
           color: #344054;
-          .add-icon{
+
+          .add-icon {
             color: #ffffff;
             background: #8676FF;
             margin-right: 8px;
             padding: 5px 6px;
-            i{
+
+            i {
               font-size: 16px;
             }
           }
         }
       }
-     
+
     }
+
     .modal-footer {
       padding-top: 10px;
       padding-bottom: 0;
@@ -827,27 +907,33 @@
         .group-control-boxs {
           .group-box {
             width: calc(25.3333% - 20px);
+
             &:nth-child(5n + 1) {
               margin-left: 20px;
             }
+
             &:nth-child(4n + 1) {
               margin-left: 0px;
             }
+
             .heading {
               h4 {
                 font-size: 12px;
               }
             }
+
             .group-data {
               .data {
                 label {
                   font-size: 10px;
                 }
+
                 span {
                   font-size: 12px;
                 }
               }
             }
+
             .description-text {
               p {
                 font-size: 11px;
@@ -859,9 +945,11 @@
     }
   }
 }
+
 .popup-tooltip {
   ul {
     padding: 0;
+
     li {
       display: block;
       color: #ffffff;
