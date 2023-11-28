@@ -1,8 +1,22 @@
-import { Box, List, ListItem, Grid, Button } from "@mui/material";
+import {
+  Box,
+  List,
+  ListItem,
+  Grid,
+  Button,
+  FormControlLabel,
+  Checkbox,
+} from "@mui/material";
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { setActiveTab } from "Utils";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 
 class SetPolicy extends Component {
   render() {
@@ -68,7 +82,7 @@ class SetPolicy extends Component {
                       variant="contained"
                       onClick={this.handleCreateUserControlModal}
                     >
-                      Add Users
+                      Add Policy
                     </Button>
                   </ListItem>
                   <ListItem>
@@ -102,10 +116,40 @@ class SetPolicy extends Component {
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 <Grid item xs={12}>
-                  <Box className="title"> <input type="checkbox" /> Policy Name</Box>
+                  <Box className="title">
+                    <FormControlLabel
+                      control={<Checkbox />}
+                      label="Policy Name"
+                    />
+                  </Box>
                 </Grid>
               </Grid>
             </Box>
+            <div className="environment-table">
+              <TableContainer className="table">
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="left"><span><i className="fas fa-chevron-down"></i></span><strong>All Access</strong></TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell align="left"><span><i class="fas fa-chevron-right"></i></span> Environment</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell align="left"><span><i class="fas fa-chevron-right"></i></span>Product</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell align="left"><span><i class="fas fa-chevron-right"></i></span>SRE</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell align="left"><span><i class="fas fa-chevron-right"></i></span>DevSecOps</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
             {/* <Box className="policy-permission-content">
               <Grid
                 container
