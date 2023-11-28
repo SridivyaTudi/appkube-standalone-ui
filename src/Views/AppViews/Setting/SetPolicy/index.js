@@ -7,7 +7,7 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
-import { Component } from "react";
+import { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { setActiveTab } from "Utils";
@@ -19,13 +19,70 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import CreateAddPolicyControlModal from "../Permissions/Components/CreateAddPolicyControlModal";
 import DeletePolicyControlModal from "../Permissions/Components/DeletePolicyControlModal";
-
+import { v4 } from "uuid";
+let accessPolicyData = [
+  {
+    name: "ALL ACCESS",
+    chlidren: [
+      {
+        name: "Environment",
+        chlidren: [
+          {
+            name: "Create Landing Zone",
+            
+          },
+          {
+            name: "Clone Landing Zone",
+           
+          },
+          {
+            name: "Delete Landing Zone",
+           
+          },
+          { name: "Create Product Enclave" },
+          { name: "Edit Product Enclave" },
+        ],
+      },
+      {
+        name: "Product",
+        chlidren: [
+          { name: "Create Landing Zone" },
+          { name: "Clone Landing Zone" },
+          { name: "Delete Landing Zone" },
+          { name: "Create Product Enclave" },
+          { name: "Edit Product Enclave" },
+        ],
+      },
+      {
+        name: "SRE",
+        chlidren: [
+          { name: "Create Landing Zone" },
+          { name: "Clone Landing Zone" },
+          { name: "Delete Landing Zone" },
+          { name: "Create Product Enclave" },
+          { name: "Edit Product Enclave" },
+        ],
+      },
+      {
+        name: "DevSecOps",
+        chlidren: [
+          { name: "Create Landing Zone" },
+          { name: "Clone Landing Zone" },
+          { name: "Delete Landing Zone" },
+          { name: "Create Product Enclave" },
+        ],
+      },
+    ],
+  },
+];
 class SetPolicy extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showCreateAddPolicyControlModal: false,
       showDeletePolicyControlModal: false,
+      accessPolicy: accessPolicyData,
+      selectedPolicy: [],
     };
   }
   handleCreateAddPolicyControlModal = () => {
@@ -39,6 +96,80 @@ class SetPolicy extends Component {
       showDeletePolicyControlModal: !this.state.showDeletePolicyControlModal,
     });
   };
+
+  renderAccessPolicyTable = () => {
+    let { accessPolicy, selectedPolicy } = this.state;
+    if (accessPolicy?.length) {
+      return accessPolicy.map((policy, index) => {
+        return (
+          <Table key={v4()}>
+            <TableHead onClick={() => this.onClickAccessPolicy(index)}>
+              <TableRow>
+                <TableCell align="left">
+                  <span>
+                    <i className="fas fa-chevron-down"></i>
+                  </span>
+                  <strong>{policy.name}</strong>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {selectedPolicy.includes(index) && policy?.chlidren?.length ? (
+                this.renderAccessPolicyChild(policy.chlidren, index)
+              ) : (
+                <></>
+              )}
+            </TableBody>
+          </Table>
+        );
+      });
+    }
+  };
+
+  renderAccessPolicyChild = (data, parentIndex) => {
+    let { selectedPolicy } = this.state;
+    return data.map((subchild, childIndex) => {
+      let currentNode = `${parentIndex}_${childIndex}`;
+      return (
+        <TableRow
+          key={v4()}
+          onClick={(e) => {
+            e.stopPropagation();
+            this.onClickAccessPolicy(currentNode);
+          }}
+        >
+          <TableCell align="left">
+            <span>
+              <i class="fas fa-chevron-right"></i>
+            </span>
+            {subchild.name}
+            {selectedPolicy.includes(currentNode) &&
+            subchild?.chlidren?.length ? (
+              this.renderAccessPolicyChild(subchild?.chlidren, currentNode)
+            ) : (
+              <></>
+            )}
+          </TableCell>
+        </TableRow>
+      );
+    });
+  };
+
+  onClickAccessPolicy = (currentNode) => {
+    let { selectedPolicy } = this.state;
+    let isExistNode = selectedPolicy.filter((policy) => policy === currentNode);
+
+    if (isExistNode.length) {
+      selectedPolicy = selectedPolicy.filter(
+        (policy) => policy !== currentNode
+      );
+    } else {
+      selectedPolicy.push(currentNode);
+    }
+
+    this.setState({ selectedPolicy });
+  };
+
   render() {
     const { showCreateAddPolicyControlModal, showDeletePolicyControlModal } =
       this.state;
@@ -150,76 +281,7 @@ class SetPolicy extends Component {
             </Box>
             <div className="environment-table">
               <TableContainer className="table">
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell align="left">
-                        <span>
-                          <i className="fas fa-chevron-down"></i>
-                        </span>
-                        <strong>All Access</strong>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="left">
-                        <span>
-                          <i class="fas fa-chevron-right"></i>
-                        </span>{" "}
-                        Environment
-                        <TableRow>
-                          <TableCell align="left">
-                            <span>
-                              <i class="fas fa-chevron-right"></i>
-                            </span>
-                            Product
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell align="left">
-                            <span>
-                              <i class="fas fa-chevron-right"></i>
-                            </span>
-                            SRE
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell align="left">
-                            <span>
-                              <i class="fas fa-chevron-right"></i>
-                            </span>
-                            DevSecOps
-                          </TableCell>
-                        </TableRow>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell align="left">
-                        <span>
-                          <i class="fas fa-chevron-right"></i>
-                        </span>
-                        Product
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell align="left">
-                        <span>
-                          <i class="fas fa-chevron-right"></i>
-                        </span>
-                        SRE
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell align="left">
-                        <span>
-                          <i class="fas fa-chevron-right"></i>
-                        </span>
-                        DevSecOps
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
+                {this.renderAccessPolicyTable()}
               </TableContainer>
             </div>
           </Box>
