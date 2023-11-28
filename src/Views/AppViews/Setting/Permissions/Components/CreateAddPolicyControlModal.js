@@ -1,7 +1,6 @@
-import LoadingButton from "@mui/lab/LoadingButton";
 import { Box, Button, Grid, Checkbox, ListItem } from "@mui/material/";
 import { Component } from "react";
-import { List, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { List, Modal, ModalBody, ModalHeader } from "reactstrap";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 class CreateAddPolicyControlModal extends Component {

@@ -1,8 +1,7 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box, IconButton } from "@mui/material/";
+import { Box } from "@mui/material/";
 import { Component } from "react";
-import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-
+import { Modal, ModalBody, ModalFooter } from "reactstrap";
 
 class DeleteRoleControlModal extends Component {
   constructor(props) {

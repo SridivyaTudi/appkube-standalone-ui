@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { setActiveTab } from "Utils";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -30,15 +29,12 @@ let accessPolicyData = [
         chlidren: [
           {
             name: "Create Landing Zone",
-            
           },
           {
             name: "Clone Landing Zone",
-           
           },
           {
             name: "Delete Landing Zone",
-           
           },
           { name: "Create Product Enclave" },
           { name: "Edit Product Enclave" },
@@ -105,24 +101,30 @@ class SetPolicy extends Component {
     });
   };
 
+  // Render the table parent view
   renderAccessPolicyTable = () => {
     let { accessPolicy, selectedPolicy } = this.state;
     if (accessPolicy?.length) {
       return accessPolicy.map((policy, index) => {
+        let arrowDownOrRight = selectedPolicy.includes(index)
+          ? "down"
+          : "right";
+        let childDataShow =
+          selectedPolicy.includes(index) && policy?.chlidren?.length;
         return (
           <Table key={v4()}>
             <TableHead onClick={() => this.onClickAccessPolicy(index)}>
               <TableRow>
                 <TableCell align="left">
                   <span>
-                    <i className="fas fa-chevron-down"></i>
+                    <i class={`fas fa-chevron-${arrowDownOrRight}`}></i>
                   </span>
                   <strong>{policy.name}</strong>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {selectedPolicy.includes(index) && policy?.chlidren?.length ? (
+              {childDataShow ? (
                 this.renderAccessPolicyChild(policy.chlidren, index)
               ) : (
                 <></>
@@ -134,10 +136,19 @@ class SetPolicy extends Component {
     }
   };
 
+  /**
+   * Render the table child view
+   *  @param {Array} data - child data as array of object
+   *  @param {String} parentIndex - parent index
+   */
   renderAccessPolicyChild = (data, parentIndex) => {
     let { selectedPolicy } = this.state;
     return data.map((subchild, childIndex) => {
       let currentNode = `${parentIndex}_${childIndex}`;
+      let isActive = selectedPolicy.includes(currentNode);
+      let arrowDownOrRight = isActive ? "down" : "right";
+      let childDataShow =
+        selectedPolicy.includes(currentNode) && subchild?.chlidren?.length;
       return (
         <TableRow
           key={v4()}
@@ -145,14 +156,14 @@ class SetPolicy extends Component {
             e.stopPropagation();
             this.onClickAccessPolicy(currentNode);
           }}
+          className={`${isActive ? "active" : ""}`}
         >
           <TableCell align="left">
             <span>
-              <i class="fas fa-chevron-right"></i>
+              <i class={`fas fa-chevron-${arrowDownOrRight}`}></i>
             </span>
             {subchild.name}
-            {selectedPolicy.includes(currentNode) &&
-            subchild?.chlidren?.length ? (
+            {childDataShow ? (
               this.renderAccessPolicyChild(subchild?.chlidren, currentNode)
             ) : (
               <></>
@@ -163,6 +174,10 @@ class SetPolicy extends Component {
     });
   };
 
+  /**
+   * Fire click event on node
+   *  @param {String} currentNode - selected index
+   */
   onClickAccessPolicy = (currentNode) => {
     let { selectedPolicy } = this.state;
     let isExistNode = selectedPolicy.filter((policy) => policy === currentNode);
@@ -179,8 +194,11 @@ class SetPolicy extends Component {
   };
 
   render() {
-    const { showCreateAddPolicyControlModal, showDeletePolicyControlModal, showDeleteRoleControlModal } =
-      this.state;
+    const {
+      showCreateAddPolicyControlModal,
+      showDeletePolicyControlModal,
+      showDeleteRoleControlModal,
+    } = this.state;
     return (
       <Box className="set-policy-container">
         <Box className="list-heading">
@@ -257,7 +275,8 @@ class SetPolicy extends Component {
                     </Button>
                   </ListItem>
                   <ListItem>
-                    <Button onClick={this.handleDeleteRoleControlModal}
+                    <Button
+                      onClick={this.handleDeleteRoleControlModal}
                       className="danger-outline-btn min-width-inherit"
                       variant="outlined"
                     >
@@ -312,7 +331,7 @@ class SetPolicy extends Component {
         ) : (
           <></>
         )}
-         {showDeleteRoleControlModal ? (
+        {showDeleteRoleControlModal ? (
           <DeleteRoleControlModal
             showModal={showDeleteRoleControlModal}
             handleDeleteRoleControlModal={this.handleDeleteRoleControlModal}

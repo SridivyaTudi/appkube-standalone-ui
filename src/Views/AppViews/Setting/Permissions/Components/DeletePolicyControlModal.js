@@ -1,9 +1,7 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box, IconButton } from "@mui/material/";
+import { Box } from "@mui/material/";
 import { Component } from "react";
-import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import DeleteIcon from "../../../../../assets/img/setting/delete-icon.png";
-
+import { Modal, ModalBody, ModalFooter } from "reactstrap";
 class DeletePolicyControlModal extends Component {
   constructor(props) {
     super(props);
