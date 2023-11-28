@@ -33,27 +33,6 @@ class GroupControl extends Component {
     this.state = {
       showCreateGroupControlModal: false,
       groupControlData: [
-        // {
-        //   name: "Super Admin Group",
-        //   activeUsers: "45",
-        //   rolesAssigned: "All",
-        //   description:
-        //     "Active The super admin is the highest level of administrative authority within a system",
-        // },
-        // {
-        //   name: "Finance Manager",
-        //   activeUsers: "05",
-        //   rolesAssigned: "01",
-        //   description:
-        //     "Active The super admin is the highest level of administrative authority within a system",
-        // },
-        // {
-        //   name: "Team Leads",
-        //   activeUsers: "17",
-        //   rolesAssigned: "08",
-        //   description:
-        //     "Active The super admin is the highest level of administrative authority within a system",
-        // },
         {
           name: "Default Users",
           activeUsers: "45",
@@ -68,41 +47,6 @@ class GroupControl extends Component {
           description:
             "Active The super admin is the highest level of administrative authority within a system",
         },
-        // {
-        //   name: "Director",
-        //   activeUsers: "01",
-        //   rolesAssigned: "52",
-        //   description:
-        //     "Active The super admin is the highest level of administrative authority within a system",
-        // },
-        // {
-        //   name: "Auditor",
-        //   activeUsers: "10",
-        //   rolesAssigned: "All",
-        //   description:
-        //     "Active The super admin is the highest level of administrative authority within a system",
-        // },
-        // {
-        //   name: "Quality Manager",
-        //   activeUsers: "05",
-        //   rolesAssigned: "17",
-        //   description:
-        //     "Active The super admin is the highest level of administrative authority within a system",
-        // },
-        // {
-        //   name: "Account Manager",
-        //   activeUsers: "07",
-        //   rolesAssigned: "19",
-        //   description:
-        //     "Active The super admin is the highest level of administrative authority within a system",
-        // },
-        // {
-        //   name: "Analytics",
-        //   activeUsers: "45",
-        //   rolesAssigned: "07",
-        //   description:
-        //     "Active The super admin is the highest level of administrative authority within a system",
-        // },
       ],
       actionButton: null,
     };
