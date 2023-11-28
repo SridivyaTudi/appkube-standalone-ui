@@ -27,56 +27,74 @@ class UserControl extends Component {
           user: "Super Admin",
           emailAddress: "Carolina.Patzwahl81@gmal.com",
           loginDetails: "Never Login",
-          groupName: "Super Admin",
+          groups: "01",
+          createdDate: "30/Nov/2023",
           applications: "AppKube",
         },
         {
           user: "Mats Ertl I",
           emailAddress: "Juliane17@hotmail.com",
-          loginDetails: "Never Login",
-          groupName: "Finance Manager",
+          loginDetails: (
+            <>
+              <span className="d-block">Count : 12</span>
+              <span className="d-block">Last : 5 Minutes ago</span>
+            </>
+          ),
+          groups: "0",
+          createdDate: "28/Sept/2023",
           applications: "AppKube",
         },
         {
           user: "Tayler Buschbaum",
           emailAddress: "Charlotta_Peters4@gmail.com",
-          loginDetails: "Never Login",
-          groupName: "Team Leads",
+          loginDetails: (
+            <>
+              <span className="d-block">Count : 33</span>
+              <span className="d-block">Last : 13 Minutes ago</span>
+            </>
+          ),
+          groups: "80",
+          createdDate: "26/Oct/2023",
           applications: "AppKube",
         },
         {
           user: "Mikail Hooss",
           emailAddress: "Malte50@gmail.com",
           loginDetails: "Never Login",
-          groupName: "Approvers",
+          groups: "10",
+          createdDate: "01/AUg/2023",
           applications: "AppKube",
         },
         {
           user: "Irem Olbrich",
           emailAddress: "Anny.Bremer@gmail.com",
           loginDetails: "Never Login",
-          groupName: "Fleet Manager",
+          groups: "03",
+          createdDate: "30/Aug/2022",
           applications: "AppKube",
         },
         {
           user: "Karoline Kraft",
           emailAddress: "Anny.Bremer@gmail.com",
           loginDetails: "Never Login",
-          groupName: "Fleet Manager",
+          groups: "03",
+          createdDate: "13/Jan/2023",
           applications: "AppKube",
         },
         {
           user: "Arian Sauerland",
           emailAddress: "Anny.Bremer@gmail.com",
           loginDetails: "Never Login",
-          groupName: "Fleet Manager",
+          groups: "09",
+          createdDate: "26/Nov/2021",
           applications: "AppKube",
         },
         {
           user: "Prof. Dr. Till Neimke",
           emailAddress: "Aliya.Freimuth29@hotmail.com",
           loginDetails: "Never Login",
-          groupName: "Fleet Manager",
+          groups: "05",
+          createdDate: "14/Feb/2020",
           applications: "AppKube",
         },
       ],
@@ -144,7 +162,8 @@ class UserControl extends Component {
                 <TableCell>User</TableCell>
                 <TableCell>Email Address</TableCell>
                 <TableCell>Login Details</TableCell>
-                <TableCell>Group Name</TableCell>
+                <TableCell>Groups</TableCell>
+                <TableCell>Created Date</TableCell>
                 <TableCell>Applications</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
@@ -155,9 +174,8 @@ class UserControl extends Component {
                   <TableCell>{row.user}</TableCell>
                   <TableCell>{row.emailAddress}</TableCell>
                   <TableCell>{row.loginDetails}</TableCell>
-                  <TableCell>
-                    <Box className="group-name">{row.groupName}</Box>
-                  </TableCell>
+                  <TableCell>{row.groups}</TableCell>
+                  <TableCell>{row.createdDate}</TableCell>
                   <TableCell>{row.applications}</TableCell>
                   <TableCell align="center">
                     <IconButton
