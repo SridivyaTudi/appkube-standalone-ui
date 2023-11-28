@@ -1,7 +1,7 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box, IconButton } from "@mui/material/";
+import { Box, Button, Grid, Checkbox, ListItem } from "@mui/material/";
 import { Component } from "react";
-import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { List, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 class CreateAddPolicyControlModal extends Component {
@@ -36,18 +36,157 @@ class CreateAddPolicyControlModal extends Component {
               <SearchOutlinedIcon />
             </button>
           </Box>
-        </ModalBody>
-        <ModalFooter className="footer-top-br">
-          <Box className="d-block text-right">
-            <LoadingButton
-              className="primary-btn min-width"
+          <Box className="policy-list p-t-10 p-b-10">
+            <h5>List of Policies (5)</h5>
+            <Button
+              className="primary-btn min-width-inherit"
               variant="contained"
-              onClick={this.props.handleCreateAddPolicyControlModal}
+              onClick={this.handleCreateAddPolicyControlModal}
             >
-              Send Invitation
-            </LoadingButton>
+              Add Policies
+            </Button>
           </Box>
-        </ModalFooter>
+          <Box className="policy-boxs">
+            <Grid
+              container
+              rowSpacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            >
+              <Grid item xs={4}>
+                <Box className="policy-box">
+                  <Box className="head">
+                    <Box className="title">Environment</Box>
+                    <Box className="d-inline-block">
+                      <Checkbox size="small" />
+                    </Box>
+                  </Box>
+                  <Box className="policy-list-content">
+                    <Box className="title">list of permissons</Box>
+                    <List>
+                      <ListItem>Create Landing Zone</ListItem>
+                      <ListItem>Edit Landing Zone</ListItem>
+                      <ListItem>Create Landing Zone</ListItem>
+                      <ListItem>Clone Landing Zone</ListItem>
+                      <ListItem>Migrate Landing Zone</ListItem>
+                      <ListItem>Delete Landing Zone</ListItem>
+                      <ListItem>Replicate Landing Zone</ListItem>
+                    </List>
+                  </Box>
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box className="policy-box">
+                  <Box className="head">
+                    <Box className="title">Product</Box>
+                    <Box className="d-inline-block">
+                      <Checkbox size="small" />
+                    </Box>
+                  </Box>
+                  <Box className="policy-list-content">
+                    <Box className="title">list of permissons</Box>
+                    <List>
+                      <ListItem>Create Landing Zone</ListItem>
+                      <ListItem>Edit Landing Zone</ListItem>
+                      <ListItem>Create Landing Zone</ListItem>
+                      <ListItem>Clone Landing Zone</ListItem>
+                      <ListItem>Migrate Landing Zone</ListItem>
+                      <ListItem>Delete Landing Zone</ListItem>
+                      <ListItem>Replicate Landing Zone</ListItem>
+                    </List>
+                  </Box>
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box className="policy-box">
+                  <Box className="head">
+                    <Box className="title">SHE</Box>
+                    <Box className="d-inline-block">
+                      <Checkbox size="small" />
+                    </Box>
+                  </Box>
+                  <Box className="policy-list-content">
+                    <Box className="title">list of permissons</Box>
+                    <List>
+                      <ListItem>Create Landing Zone</ListItem>
+                      <ListItem>Edit Landing Zone</ListItem>
+                      <ListItem>Create Landing Zone</ListItem>
+                      <ListItem>Clone Landing Zone</ListItem>
+                      <ListItem>Migrate Landing Zone</ListItem>
+                      <ListItem>Delete Landing Zone</ListItem>
+                      <ListItem>Replicate Landing Zone</ListItem>
+                    </List>
+                  </Box>
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box className="policy-box">
+                  <Box className="head">
+                    <Box className="title">DevSecOps</Box>
+                    <Box className="d-inline-block">
+                      <Checkbox size="small" />
+                    </Box>
+                  </Box>
+                  <Box className="policy-list-content">
+                    <Box className="title">list of permissons</Box>
+                    <List>
+                      <ListItem>Create Landing Zone</ListItem>
+                      <ListItem>Edit Landing Zone</ListItem>
+                      <ListItem>Create Landing Zone</ListItem>
+                      <ListItem>Clone Landing Zone</ListItem>
+                      <ListItem>Migrate Landing Zone</ListItem>
+                      <ListItem>Delete Landing Zone</ListItem>
+                      <ListItem>Replicate Landing Zone</ListItem>
+                    </List>
+                  </Box>
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box className="policy-box">
+                  <Box className="head">
+                    <Box className="title">Full Access</Box>
+                    <Box className="d-inline-block">
+                      <Checkbox size="small" />
+                    </Box>
+                  </Box>
+                  <Box className="policy-list-content">
+                    <Box className="title">list of permissons</Box>
+                    <List>
+                      <ListItem>Create Landing Zone</ListItem>
+                      <ListItem>Edit Landing Zone</ListItem>
+                      <ListItem>Create Landing Zone</ListItem>
+                      <ListItem>Clone Landing Zone</ListItem>
+                      <ListItem>Migrate Landing Zone</ListItem>
+                      <ListItem>Delete Landing Zone</ListItem>
+                      <ListItem>Replicate Landing Zone</ListItem>
+                    </List>
+                  </Box>
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box className="policy-box">
+                  <Box className="head">
+                    <Box className="title">Minimal Access</Box>
+                    <Box className="d-inline-block">
+                      <Checkbox size="small" />
+                    </Box>
+                  </Box>
+                  <Box className="policy-list-content">
+                    <Box className="title">list of permissons</Box>
+                    <List>
+                      <ListItem>Create Landing Zone</ListItem>
+                      <ListItem>Edit Landing Zone</ListItem>
+                      <ListItem>Create Landing Zone</ListItem>
+                      <ListItem>Clone Landing Zone</ListItem>
+                      <ListItem>Migrate Landing Zone</ListItem>
+                      <ListItem>Delete Landing Zone</ListItem>
+                      <ListItem>Replicate Landing Zone</ListItem>
+                    </List>
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </ModalBody>
       </Modal>
     );
   }

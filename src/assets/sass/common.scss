@@ -434,6 +434,25 @@ button.light-btn {
     box-shadow: none;
   }
 }
+button.danger-btn {
+  background-color: #ff2d2e;
+  border-color: #ff2d2e;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 24px;
+  box-shadow: none;
+  text-transform: none;
+  letter-spacing: 0px;
+  border-radius: 5px;
+  font-family: "Open Sans", sans-serif;
+  &:hover {
+    background: #ff2d2db6;
+    color: #ffffff;
+    box-shadow: none;
+    border-color: #ff2d2e;
+  }
+}
 button.danger-outline-btn {
   border-color: #ff2d2e;
   color: #ff2d2e;

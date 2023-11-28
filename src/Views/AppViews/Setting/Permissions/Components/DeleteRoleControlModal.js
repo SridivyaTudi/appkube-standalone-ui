@@ -2,9 +2,9 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { Box, IconButton } from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import DeleteIcon from "../../../../../assets/img/setting/delete-icon.png";
 
-class DeletePolicyControlModal extends Component {
+
+class DeleteRoleControlModal extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -14,7 +14,7 @@ class DeletePolicyControlModal extends Component {
     return (
       <Modal
         isOpen={this.props.showModal}
-        toggle={this.props.handleDeletePolicyControlModal}
+        toggle={this.props.handleDeleteRoleControlModal}
         className="setting-modal-container delete-policy-modal"
       >
         <ModalBody>
@@ -22,7 +22,7 @@ class DeletePolicyControlModal extends Component {
             <Box className="delete-icom">
               <i class="fas fa-trash-alt"></i>
             </Box>
-            <h5>Do you want to delete this Policy?</h5>
+            <h5>Do you want to delete this Role?</h5>
             <p>This action can’t be undone</p>
           </Box>
         </ModalBody>
@@ -31,7 +31,7 @@ class DeletePolicyControlModal extends Component {
             <LoadingButton
               className="danger-btn   m-r-2"
               variant="contained"
-              onClick={this.props.handleDeletePolicyControlModal}
+              onClick={this.props.handleDeleteRoleControlModal}
             >
               Delete
             </LoadingButton>
@@ -49,4 +49,4 @@ class DeletePolicyControlModal extends Component {
   }
 }
 
-export default DeletePolicyControlModal;
+export default DeleteRoleControlModal;

@@ -19,6 +19,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import CreateAddPolicyControlModal from "../Permissions/Components/CreateAddPolicyControlModal";
 import DeletePolicyControlModal from "../Permissions/Components/DeletePolicyControlModal";
+import DeleteRoleControlModal from "../Permissions/Components/DeleteRoleControlModal";
 import { v4 } from "uuid";
 let accessPolicyData = [
   {
@@ -81,6 +82,7 @@ class SetPolicy extends Component {
     this.state = {
       showCreateAddPolicyControlModal: false,
       showDeletePolicyControlModal: false,
+      showDeleteRoleControlModal: false,
       accessPolicy: accessPolicyData,
       selectedPolicy: [],
     };
@@ -94,6 +96,12 @@ class SetPolicy extends Component {
   handleDeletePolicyControlModal = () => {
     this.setState({
       showDeletePolicyControlModal: !this.state.showDeletePolicyControlModal,
+    });
+  };
+
+  handleDeleteRoleControlModal = () => {
+    this.setState({
+      showDeleteRoleControlModal: !this.state.showDeleteRoleControlModal,
     });
   };
 
@@ -171,7 +179,7 @@ class SetPolicy extends Component {
   };
 
   render() {
-    const { showCreateAddPolicyControlModal, showDeletePolicyControlModal } =
+    const { showCreateAddPolicyControlModal, showDeletePolicyControlModal, showDeleteRoleControlModal } =
       this.state;
     return (
       <Box className="set-policy-container">
@@ -249,7 +257,7 @@ class SetPolicy extends Component {
                     </Button>
                   </ListItem>
                   <ListItem>
-                    <Button
+                    <Button onClick={this.handleDeleteRoleControlModal}
                       className="danger-outline-btn min-width-inherit"
                       variant="outlined"
                     >
@@ -300,6 +308,14 @@ class SetPolicy extends Component {
           <DeletePolicyControlModal
             showModal={showDeletePolicyControlModal}
             handleDeletePolicyControlModal={this.handleDeletePolicyControlModal}
+          />
+        ) : (
+          <></>
+        )}
+         {showDeleteRoleControlModal ? (
+          <DeleteRoleControlModal
+            showModal={showDeleteRoleControlModal}
+            handleDeleteRoleControlModal={this.handleDeleteRoleControlModal}
           />
         ) : (
           <></>
