@@ -20,19 +20,18 @@ import TableRow from "@mui/material/TableRow";
 import CreateAddPolicyControlModal from "../Permissions/Components/CreateAddPolicyControlModal";
 import DeletePolicyControlModal from "../Permissions/Components/DeletePolicyControlModal";
 
-
 class SetPolicy extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showCreateAddPolicyControlModal: false,
       showDeletePolicyControlModal: false,
-     
     };
   }
   handleCreateAddPolicyControlModal = () => {
     this.setState({
-      showCreateAddPolicyControlModal: !this.state.showCreateAddPolicyControlModal,
+      showCreateAddPolicyControlModal:
+        !this.state.showCreateAddPolicyControlModal,
     });
   };
   handleDeletePolicyControlModal = () => {
@@ -41,7 +40,8 @@ class SetPolicy extends Component {
     });
   };
   render() {
-    const { showCreateAddPolicyControlModal, showDeletePolicyControlModal } = this.state;
+    const { showCreateAddPolicyControlModal, showDeletePolicyControlModal } =
+      this.state;
     return (
       <Box className="set-policy-container">
         <Box className="list-heading">
@@ -108,7 +108,8 @@ class SetPolicy extends Component {
                     </Button>
                   </ListItem>
                   <ListItem>
-                    <Button onClick={this.handleDeletePolicyControlModal}
+                    <Button
+                      onClick={this.handleDeletePolicyControlModal}
                       className="danger-outline-btn min-width-inherit"
                       variant="outlined"
                     >
@@ -152,21 +153,70 @@ class SetPolicy extends Component {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="left"><span><i className="fas fa-chevron-down"></i></span><strong>All Access</strong></TableCell>
+                      <TableCell align="left">
+                        <span>
+                          <i className="fas fa-chevron-down"></i>
+                        </span>
+                        <strong>All Access</strong>
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     <TableRow>
-                      <TableCell align="left"><span><i class="fas fa-chevron-right"></i></span> Environment</TableCell>
+                      <TableCell align="left">
+                        <span>
+                          <i class="fas fa-chevron-right"></i>
+                        </span>{" "}
+                        Environment
+                        <TableRow>
+                          <TableCell align="left">
+                            <span>
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                            Product
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="left">
+                            <span>
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                            SRE
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="left">
+                            <span>
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                            DevSecOps
+                          </TableCell>
+                        </TableRow>
+                      </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell align="left"><span><i class="fas fa-chevron-right"></i></span>Product</TableCell>
+                      <TableCell align="left">
+                        <span>
+                          <i class="fas fa-chevron-right"></i>
+                        </span>
+                        Product
+                      </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell align="left"><span><i class="fas fa-chevron-right"></i></span>SRE</TableCell>
+                      <TableCell align="left">
+                        <span>
+                          <i class="fas fa-chevron-right"></i>
+                        </span>
+                        SRE
+                      </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell align="left"><span><i class="fas fa-chevron-right"></i></span>DevSecOps</TableCell>
+                      <TableCell align="left">
+                        <span>
+                          <i class="fas fa-chevron-right"></i>
+                        </span>
+                        DevSecOps
+                      </TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
@@ -177,12 +227,14 @@ class SetPolicy extends Component {
         {showCreateAddPolicyControlModal ? (
           <CreateAddPolicyControlModal
             showModal={showCreateAddPolicyControlModal}
-            handleCreateAddPolicyControlModal={this.handleCreateAddPolicyControlModal}
+            handleCreateAddPolicyControlModal={
+              this.handleCreateAddPolicyControlModal
+            }
           />
         ) : (
           <></>
         )}
-         {showDeletePolicyControlModal ? (
+        {showDeletePolicyControlModal ? (
           <DeletePolicyControlModal
             showModal={showDeletePolicyControlModal}
             handleDeletePolicyControlModal={this.handleDeletePolicyControlModal}

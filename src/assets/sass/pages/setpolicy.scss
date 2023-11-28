@@ -83,8 +83,6 @@
         color: #383874;
       }
     }
-
-   
   }
 
   .policy-section {
@@ -112,10 +110,9 @@
           padding: 0;
           margin-right: 15px;
           width: auto;
-          &:last-child{
+          &:last-child {
             margin-right: 0;
           }
-
         }
       }
     }
@@ -148,79 +145,78 @@
       overflow: auto;
       border-radius: 10px;
       box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
-  
+
       .table {
         display: block;
         width: 100%;
-  
+
         thead {
           padding-top: 0px;
           padding-bottom: 0px;
           display: table;
-          width: calc(100% - 0.0em)
+          width: calc(100% - 0em)
             /* scrollbar is average 1em/16px width, remove it from thead width */;
           tr {
             display: inline-table;
             width: 100%;
             table-layout: fixed;
-            
-  
+
             th {
-              display: flex;
-              align-items: center;
+              display: block;
               padding-top: 15px;
               padding-bottom: 15px;
               padding-left: 15px;
               padding-right: 15px;
               font-size: 14px;
               font-weight: 400;
-              color: #171C26;
+              color: #171c26;
               border: none;
               font-family: "Poppins", sans-serif;
-              background-color: #E9EDF5;
-  
+              background-color: #e9edf5;
+
               strong {
+                display: inline-block;
                 color: #383874;
                 font-weight: 600;
                 font-size: 15px;
                 text-transform: uppercase;
               }
-              span{
-                width: 18px;
-                height: 18px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 30px;
-                border: 1px solid #464F60;
-               margin-right: 10px;
-              
-               i{
-                font-size: 10px;
-                line-height: 18px;
-                color: #464F60;
-               }
+              span {
+                width: 20px;
+                height: 20px;
+                min-width: 20px;
+                max-height: 20px;
+                display: inline-block;
+                line-height: 12px;
+                border-radius: 50%;
+                border: 1px solid #464f60;
+                margin-right: 10px;
+                text-align: center;
+
+                i {
+                  font-size: 10px;
+                  line-height: 18px;
+                  color: #464f60;
+                }
               }
             }
           }
         }
-  
+
         tbody {
           display: block;
           max-height: 300px;
           overflow: auto;
           //width: calc(100% - 1.2em);
-  
+
           tr {
             display: table;
             width: 100%;
             //table-layout: fixed;
-            &:hover{
+            &:hover {
               background-color: #f7f9fc;
             }
             td {
-              display: flex;
-              align-items: center;
               padding: 12px 15px 12px 30px;
               font-size: 13px;
               font-weight: 500;
@@ -229,32 +225,33 @@
               border-bottom: 1px solid #eaecf0;
               font-family: "Poppins", sans-serif;
               position: relative;
-              &::before{
+              &::before {
                 content: "";
                 width: 1px;
                 height: 90%;
-                background: #D5DBE5;
+                background: #d5dbe5;
                 position: absolute;
                 top: 0;
                 left: 20px;
-
               }
-             
-              span{
-                width: 18px;
-                height: 18px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 30px;
-                border: 1px solid #868FA0;
-               margin-right: 10px;
-              
-               i{
-                font-size: 10px;
-                line-height: 18px;
-                color: #868FA0;
-               }
+
+              span {
+                width: 20px;
+                height: 20px;
+                min-width: 20px;
+                max-height: 20px;
+                display: inline-block;
+                line-height: 12px;
+                border-radius: 50%;
+                border: 1px solid #464f60;
+                margin-right: 10px;
+                text-align: center;
+
+                i {
+                  font-size: 10px;
+                  line-height: 18px;
+                  color: #464f60;
+                }
               }
             }
           }

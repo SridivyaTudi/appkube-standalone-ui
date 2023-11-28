@@ -2,7 +2,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { Box, IconButton } from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import DeleteIcon from "../../../../../assets/img/setting/delete-icon.png";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 class CreateAddPolicyControlModal extends Component {
   constructor(props) {
@@ -15,121 +15,26 @@ class CreateAddPolicyControlModal extends Component {
       <Modal
         isOpen={this.props.showModal}
         toggle={this.props.handleCreateAddPolicyControlModal}
-        className="invite-user-modal-container"
+        className="add-policy-modal-container"
       >
         <ModalHeader tag="div">
           <h5>
-            Invite Users
+            Choose Policy
             <button onClick={this.props.handleCreateAddPolicyControlModal}>
               <i className="fa-solid fa-xmark"></i>
             </button>
           </h5>
         </ModalHeader>
         <ModalBody>
-          <Box className="users-content">
-            <Box className="title">
-              <label className="form-label">Email Address</label>
-              <label className="form-label">Name (Optional)</label>
-            </Box>
-
-            <Box className="form-group">
-              <Box className="d-inline-block">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="roleName"
-                  name="roleName"
-                  placeholder="user@example.com"
-                />
-              </Box>
-              <Box className="d-inline-block">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="roleName"
-                  name="roleName"
-                  placeholder="user"
-                />
-              </Box>
-              <Box className="d-inline-block delete-icon">
-                <img src={DeleteIcon} alt="" />
-              </Box>
-            </Box>
-            <Box className="form-group">
-              <Box className="d-inline-block">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="roleName"
-                  name="roleName"
-                  placeholder="user@example.com"
-                />
-              </Box>
-              <Box className="d-inline-block">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="roleName"
-                  name="roleName"
-                  placeholder="user"
-                />
-              </Box>
-              <Box className="d-inline-block delete-icon">
-                <img src={DeleteIcon} alt="" />
-              </Box>
-            </Box>
-            <Box className="form-group">
-              <Box className="d-inline-block">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="roleName"
-                  name="roleName"
-                  placeholder="user@example.com"
-                />
-              </Box>
-              <Box className="d-inline-block">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="roleName"
-                  name="roleName"
-                  placeholder="user"
-                />
-              </Box>
-              <Box className="d-inline-block delete-icon">
-                <img src={DeleteIcon} alt="" />
-              </Box>
-            </Box>
-            <Box className="form-group">
-              <Box className="d-inline-block">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="roleName"
-                  name="roleName"
-                  placeholder="user@example.com"
-                />
-              </Box>
-              <Box className="d-inline-block">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="roleName"
-                  name="roleName"
-                  placeholder="user"
-                />
-              </Box>
-              <Box className="d-inline-block delete-icon">
-                <img src={DeleteIcon} alt="" />
-              </Box>
-            </Box>
-            <Box className="add-user">
-              <IconButton className="add-icon">
-                <i class="fa-sharp fa-solid fa-plus"></i>
-              </IconButton>
-              Add Another person
-            </Box>
+          <Box className="top-search">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search policy"
+            />
+            <button className="button">
+              <SearchOutlinedIcon />
+            </button>
           </Box>
         </ModalBody>
         <ModalFooter className="footer-top-br">
