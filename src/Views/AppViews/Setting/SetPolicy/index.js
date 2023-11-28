@@ -17,9 +17,31 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import CreateAddPolicyControlModal from "../Permissions/Components/CreateAddPolicyControlModal";
+import DeletePolicyControlModal from "../Permissions/Components/DeletePolicyControlModal";
+
 
 class SetPolicy extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showCreateAddPolicyControlModal: false,
+      showDeletePolicyControlModal: false,
+     
+    };
+  }
+  handleCreateAddPolicyControlModal = () => {
+    this.setState({
+      showCreateAddPolicyControlModal: !this.state.showCreateAddPolicyControlModal,
+    });
+  };
+  handleDeletePolicyControlModal = () => {
+    this.setState({
+      showDeletePolicyControlModal: !this.state.showDeletePolicyControlModal,
+    });
+  };
   render() {
+    const { showCreateAddPolicyControlModal, showDeletePolicyControlModal } = this.state;
     return (
       <Box className="set-policy-container">
         <Box className="list-heading">
@@ -80,13 +102,13 @@ class SetPolicy extends Component {
                     <Button
                       className="primary-btn min-width-inherit"
                       variant="contained"
-                      onClick={this.handleCreateUserControlModal}
+                      onClick={this.handleCreateAddPolicyControlModal}
                     >
                       Add Policy
                     </Button>
                   </ListItem>
                   <ListItem>
-                    <Button
+                    <Button onClick={this.handleDeletePolicyControlModal}
                       className="danger-outline-btn min-width-inherit"
                       variant="outlined"
                     >
@@ -152,6 +174,22 @@ class SetPolicy extends Component {
             </div>
           </Box>
         </Box>
+        {showCreateAddPolicyControlModal ? (
+          <CreateAddPolicyControlModal
+            showModal={showCreateAddPolicyControlModal}
+            handleCreateAddPolicyControlModal={this.handleCreateAddPolicyControlModal}
+          />
+        ) : (
+          <></>
+        )}
+         {showDeletePolicyControlModal ? (
+          <DeletePolicyControlModal
+            showModal={showDeletePolicyControlModal}
+            handleDeletePolicyControlModal={this.handleDeletePolicyControlModal}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }
