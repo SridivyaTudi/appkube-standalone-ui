@@ -435,8 +435,27 @@ button.light-btn {
   }
 }
 button.danger-btn {
-  background: #ff2d2e;
+  background-color: #ff2d2e;
+  border-color: #ff2d2e;
   color: #ffffff;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 24px;
+  box-shadow: none;
+  text-transform: none;
+  letter-spacing: 0px;
+  border-radius: 5px;
+  font-family: "Open Sans", sans-serif;
+  &:hover {
+    background: #ff2d2db6;
+    color: #ffffff;
+    box-shadow: none;
+    border-color: #ff2d2e;
+  }
+}
+button.danger-outline-btn {
+  border-color: #ff2d2e;
+  color: #ff2d2e;
   min-width: 180px;
   font-weight: 600;
   font-size: 13px;
@@ -450,6 +469,7 @@ button.danger-btn {
     background: #ff2d2db6;
     color: #ffffff;
     box-shadow: none;
+    border-color: #ff2d2e;
   }
 }
 button.info-btn {
@@ -1045,6 +1065,20 @@ a {
           border-bottom-color: #eaecf0;
           border-bottom-style: solid;
           position: relative;
+          .roles-box{
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: 400;
+            background: #00B929;
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 5px;
+            margin-left: 10px;
+            color: #ffffff;
+            span{
+              margin-right: 5px;
+            }
+          }
 
           .group-name {
             display: inline-block;

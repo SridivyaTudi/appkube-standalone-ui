@@ -3,7 +3,8 @@ import { Box } from "@mui/material";
 import RoleControl from "./RoleControl";
 import GroupControl from "./GroupControl";
 import UserControl from "./UserControl";
-
+import Policies from "./Policies";
+import Permissson from "./Permission"
 export class Permissions extends Component {
   controlMapping = [
     {
@@ -23,6 +24,18 @@ export class Permissions extends Component {
       label: "User",
       value: "544",
       dataKey: "user",
+    },
+    {
+      icon: "fa-users",
+      label: "Policies",
+      value: "33",
+      dataKey: "policies",
+    },
+    {
+      icon: "fa-user",
+      label: "Permissions",
+      value: "544",
+      dataKey: "permissions",
     },
   ];
 
@@ -74,6 +87,10 @@ export class Permissions extends Component {
             />
           ) : activeTab === 2 ? (
             <UserControl />
+          ) : activeTab === 3 ? (
+            <Policies />
+          ) : activeTab === 4 ? (
+          <Permissson/>
           ) : (
             <></>
           )}
