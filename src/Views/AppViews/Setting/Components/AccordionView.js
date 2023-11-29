@@ -24,7 +24,7 @@ class AccordionView extends Component {
           selectedNodes.includes(index) && policy?.chlidren?.length;
         return (
           <Table key={v4()}>
-            <TableHead onClick={() => this.onClickAccessPolicy(index)}>
+            <TableHead onClick={() => this.onClickNode(index)}>
               <TableRow>
                 <TableCell align="left">
                   <span>
@@ -66,7 +66,7 @@ class AccordionView extends Component {
             key={v4()}
             onClick={(e) => {
               e.stopPropagation();
-              this.onClickAccessPolicy(currentNode);
+              this.onClickNode(currentNode);
             }}
             className={`${isActive ? "active" : ""}`}
           >
@@ -82,7 +82,7 @@ class AccordionView extends Component {
               key={v4()}
               onClick={(e) => {
                 e.stopPropagation();
-                this.onClickAccessPolicy(currentNode);
+                this.onClickNode(currentNode);
               }}
               className={`${isActive ? "active" : ""}`}
             >
@@ -102,7 +102,7 @@ class AccordionView extends Component {
    * Fire click event on node
    *  @param {String} currentNode - selected index
    */
-  onClickAccessPolicy = (currentNode) => {
+  onClickNode = (currentNode) => {
     let { selectedNodes } = this.state;
     let isExistNode = selectedNodes.filter((policy) => policy === currentNode);
 
