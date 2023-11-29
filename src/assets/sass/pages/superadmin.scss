@@ -185,8 +185,107 @@
             height: 100%;
           }
         }
-        &.allowed-permission-table{
+      }
+      .allowed-permission-table {
+        table {
+          width: 100%;
+          thead {
+            tr {
+              th {
+                padding-top: 10px;
+                padding-bottom: 10px;
+                padding-left: 15px;
+                padding-right: 15px;
+                font-size: 14px;
+                line-height: 25px;
+                font-weight: 500;
+                width: 350px;
+                white-space: nowrap;
+              }
+            }
+          }
+          tbody {
+            display: table-row-group;
+            tr {
+              &.active {
+                background-color: #E9EDF5;
+              }
+              td {
+                padding-left: 15px;
+                padding-right: 15px;
+                width: 350px;
+                white-space: nowrap;
+                color: #171C26;
+                button {
+                  width: 20px;
+                  height: 20px;
+                  border: 1px solid #414d55;
+                  .MuiSvgIcon-root {
+                    width: 0.8rem;
+                    height: 0.8rem;
+                  }
+                }
+                .check-icon {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 50%;
+                  background: #00b929;
+                  color: #ffffff;
+                }
+               
+              }
+              .inner-table-section {
+                padding: 0;
+                .MuiCollapse-wrapper {
+                  .MuiBox-root {
+                    margin: 0;
+                    table {
+                      tbody {
+                        tr {
+                          &:hover {
+                            background-color: #f7f9fc;
+                           td{
+                            &:first-child{
+                              padding-left: 25px;
+                            }
+                           
+                           }
+                          }
+                          td {
+                            color: #171C26;
+                            font-size: 12px;
+                            font-weight: 500;
+                            padding-left: 15px;
+                            padding-right: 15px;
+                            width: 350px;
+                            white-space: nowrap;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        .roles-box {
+          font-size: 12px;
+          line-height: 16px;
+          font-weight: 400;
+          background: #00b929;
+          display: inline-block;
+          padding: 4px 10px;
+          border-radius: 5px;
+          color: #ffffff;
 
+          span {
+            display: flex;
+            align-items: center;
+          }
         }
       }
     }

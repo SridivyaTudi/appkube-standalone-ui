@@ -166,7 +166,8 @@ class SetPolicy extends Component {
               {subchild.name}
             </TableCell>
           </TableRow>
-          <TableRow
+          {
+            childDataShow ?     <TableRow
             key={v4()}
             onClick={(e) => {
               e.stopPropagation();
@@ -175,13 +176,13 @@ class SetPolicy extends Component {
             className={`${isActive ? "active" : ""}`}
           >
             <TableCell align="left">
-              {childDataShow ? (
-                this.renderAccessPolicyChild(subchild?.chlidren, currentNode)
-              ) : (
-                <></>
-              )}
+              
+              {  this.renderAccessPolicyChild(subchild?.chlidren, currentNode)
+              }
             </TableCell>
-          </TableRow>
+          </TableRow> :<></>
+          }
+      
         </>
       );
     });

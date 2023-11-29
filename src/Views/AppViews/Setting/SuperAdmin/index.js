@@ -80,7 +80,7 @@ class SuperAdmin extends Component {
             className="h-100"
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid item xs={6}>
+            <Grid item xs={5}>
               <Box className="overview-card">
                 <h5>Overview</h5>
                 <p>
@@ -88,7 +88,7 @@ class SuperAdmin extends Component {
                 </p>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={7}>
               <Box className="overview-buttons">
                 <List>
                   <ListItem>
@@ -98,6 +98,23 @@ class SuperAdmin extends Component {
                       onClick={this.handleCreateUserControlModal}
                     >
                       Add Users
+                    </Button>
+                  </ListItem>
+                  <ListItem>
+                    <Button
+                      className="danger-btn min-width-inherit"
+                      variant="contained"
+                    >
+                      Remove
+                    </Button>
+                  </ListItem>
+                  <ListItem>
+                    <Button
+                      className="primary-btn min-width-inherit"
+                      variant="contained"
+                      onClick={this.handleCreateUserControlModal}
+                    >
+                      Add Role
                     </Button>
                   </ListItem>
                   <ListItem>
