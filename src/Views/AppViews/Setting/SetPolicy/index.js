@@ -150,26 +150,39 @@ class SetPolicy extends Component {
       let childDataShow =
         selectedPolicy.includes(currentNode) && subchild?.chlidren?.length;
       return (
-        <TableRow
-          key={v4()}
-          onClick={(e) => {
-            e.stopPropagation();
-            this.onClickAccessPolicy(currentNode);
-          }}
-          className={`${isActive ? "active" : ""}`}
-        >
-          <TableCell align="left">
-            <span>
-              <i class={`fas fa-chevron-${arrowDownOrRight}`}></i>
-            </span>
-            {subchild.name}
-            {childDataShow ? (
-              this.renderAccessPolicyChild(subchild?.chlidren, currentNode)
-            ) : (
-              <></>
-            )}
-          </TableCell>
-        </TableRow>
+        <>
+          <TableRow
+            key={v4()}
+            onClick={(e) => {
+              e.stopPropagation();
+              this.onClickAccessPolicy(currentNode);
+            }}
+            className={`${isActive ? "active" : ""}`}
+          >
+            <TableCell align="left">
+              <span>
+                <i class={`fas fa-chevron-${arrowDownOrRight}`}></i>
+              </span>
+              {subchild.name}
+            </TableCell>
+          </TableRow>
+          <TableRow
+            key={v4()}
+            onClick={(e) => {
+              e.stopPropagation();
+              this.onClickAccessPolicy(currentNode);
+            }}
+            className={`${isActive ? "active" : ""}`}
+          >
+            <TableCell align="left">
+              {childDataShow ? (
+                this.renderAccessPolicyChild(subchild?.chlidren, currentNode)
+              ) : (
+                <></>
+              )}
+            </TableCell>
+          </TableRow>
+        </>
       );
     });
   };
