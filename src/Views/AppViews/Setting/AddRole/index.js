@@ -1,6 +1,7 @@
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Box, Grid, List, ListItem, Button } from "@mui/material";
-import { Component } from "react";
+import DefaultIcon from "../../../../assets/img/setting/default-icon.png";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {
   Checkbox,
@@ -13,7 +14,26 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#16161E",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#16161E",
+    color: "#ffffff",
+    maxWidth: 250,
+    
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+    padding: "8px 10px",
+  },
+}));
 class AddRole extends Component {
   constructor(props) {
     super(props);
@@ -193,6 +213,23 @@ class AddRole extends Component {
                   <TableCell>
                     {" "}
                     <Checkbox size="small" /> {row.user}
+                    <Box className="d-flex roles-box">
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={
+                          <React.Fragment>
+                            <span>
+                              This role created by default by the system
+                            </span>
+                          </React.Fragment>
+                        }
+                      >
+                        <span>
+                          <img src={DefaultIcon} alt="" />
+                        </span>
+                        Default
+                      </HtmlTooltip>
+                    </Box>
                   </TableCell>
                   <TableCell>{row.emailAddress}</TableCell>
                   <TableCell>{row.groups}</TableCell>
