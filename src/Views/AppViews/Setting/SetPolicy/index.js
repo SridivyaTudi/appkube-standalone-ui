@@ -151,7 +151,7 @@ class SetPolicy extends Component {
         selectedPolicy.includes(currentNode) && subchild?.chlidren?.length;
       return (
         <>
-          <TableRow
+          <TableRow  
             key={v4()}
             onClick={(e) => {
               e.stopPropagation();
@@ -175,7 +175,7 @@ class SetPolicy extends Component {
             }}
             className={`${isActive ? "active" : ""}`}
           >
-            <TableCell align="left">
+            <TableCell align="left inner-table-section">
               
               {  this.renderAccessPolicyChild(subchild?.chlidren, currentNode)
               }
