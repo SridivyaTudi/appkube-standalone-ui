@@ -114,7 +114,7 @@ class SuperAdmin extends Component {
             className="h-100"
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <Box className="overview-card">
                 <h5>Overview</h5>
                 <p>
@@ -128,7 +128,7 @@ class SuperAdmin extends Component {
                 </p>
               </Box>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={6}>
               <Box className="overview-buttons">{this.renderBtns()}</Box>
             </Grid>
           </Grid>
