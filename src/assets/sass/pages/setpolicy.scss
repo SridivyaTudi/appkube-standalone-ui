@@ -154,8 +154,8 @@
           padding-top: 0px;
           padding-bottom: 0px;
           display: table;
-          width: calc(100% - 0em)
-            /* scrollbar is average 1em/16px width, remove it from thead width */;
+          // width: calc(100% - 0em)
+          /* scrollbar is average 1em/16px width, remove it from thead width */
           tr {
             display: inline-table;
             width: 100%;
@@ -205,16 +205,14 @@
 
         tbody {
           display: block;
-          max-height: 300px;
-          overflow: auto;
-          //width: calc(100% - 1.2em);
-
           tr {
             display: table;
             width: 100%;
-            //table-layout: fixed;
             &:hover {
               background-color: #f7f9fc;
+            }
+            &.active{
+              background-color: #e9edf5;
             }
             td {
               padding: 12px 15px 12px 30px;
