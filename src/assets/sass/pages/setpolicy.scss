@@ -211,6 +211,13 @@
             }
             &.active {
               background-color: #e9edf5;
+              td {
+                font-weight: 600;
+                &::before {
+                  content: "";
+                  width: 0;
+                }
+              }
             }
             td {
               padding: 12px 15px 12px 30px;
@@ -230,7 +237,6 @@
                 top: 0;
                 left: 20px;
               }
-
               span {
                 width: 20px;
                 height: 20px;
@@ -272,12 +278,11 @@
                       top: 0;
                       left: 35px;
                     }
-                    &:last-child{
+                    &:last-child {
                       border-bottom: 0;
                     }
-                    
                   }
-                  &:last-child{
+                  &:last-child {
                     border-bottom: none;
                   }
                 }
