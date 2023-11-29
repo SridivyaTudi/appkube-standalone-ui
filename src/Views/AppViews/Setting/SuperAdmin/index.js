@@ -1,13 +1,8 @@
-import { Box, List, ListItem, Grid, Button, IconButton } from "@mui/material";
-import { Component } from "react";
+import { Box, List, ListItem, Grid, Button } from "@mui/material";
+import { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import { APP_PREFIX_PATH } from "Configs/AppConfig";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CreateUserControlModal from "../Permissions/Components/CreateUserControlModal";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
-import { setActiveTab } from "Utils";
 import Users from "./Users";
 import Allowed from "./Allowed";
 import Disallowed from "./Disallowed";
@@ -43,7 +38,6 @@ class SuperAdmin extends Component {
       dataKey: "disallowed",
       index: 3,
     },
-    
   ];
 
   setActiveTab = (activeTab) => {
@@ -55,6 +49,49 @@ class SuperAdmin extends Component {
       showCreateUserControlModal: !this.state.showCreateUserControlModal,
     });
   };
+
+  renderBtns = () => {
+    let { activeTab } = this.state;
+    return (
+      <List>
+        {[0, 1].includes(activeTab) ? (
+          <Fragment>
+            <ListItem>
+              <Button
+                className="danger-btn min-width-inherit"
+                variant="contained"
+              >
+                Remove
+              </Button>
+            </ListItem>
+            <ListItem>
+              <Button
+                className="primary-btn min-width-inherit"
+                variant="contained"
+                onClick={this.handleCreateUserControlModal}
+              >
+                {activeTab === 0 ? "Add Users" : "Add Role"}
+              </Button>
+            </ListItem>
+          </Fragment>
+        ) : (
+          <></>
+        )}
+
+        <ListItem>
+          <Button className="info-btn min-width-inherit" variant="contained">
+            Edit
+          </Button>
+        </ListItem>
+        <ListItem>
+          <Button className="danger-btn min-width-inherit" variant="contained">
+            Delete Group
+          </Button>
+        </ListItem>
+      </List>
+    );
+  };
+
   render() {
     const { showCreateUserControlModal, activeTab } = this.state;
     return (
@@ -84,65 +121,18 @@ class SuperAdmin extends Component {
               <Box className="overview-card">
                 <h5>Overview</h5>
                 <p>
-                The super admin is the highest level of administrative authority within a system or platform, possessing unparalleled control and access to all features, settings, and user data Super admins hold the key to managing and overseeing the entire infrastructure, making critical decisions, and implementing security measures to protect the system from unauthorized access and potential breaches.
+                  The super admin is the highest level of administrative
+                  authority within a system or platform, possessing unparalleled
+                  control and access to all features, settings, and user data
+                  Super admins hold the key to managing and overseeing the
+                  entire infrastructure, making critical decisions, and
+                  implementing security measures to protect the system from
+                  unauthorized access and potential breaches.
                 </p>
               </Box>
             </Grid>
             <Grid item xs={7}>
-              <Box className="overview-buttons">
-                <List>
-                  <ListItem>
-                    <Button
-                      className="primary-btn min-width-inherit"
-                      variant="contained"
-                      onClick={this.handleCreateUserControlModal}
-                    >
-                      Add Users
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button
-                      className="danger-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Remove
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button
-                      className="primary-btn min-width-inherit"
-                      variant="contained"
-                      onClick={this.handleCreateUserControlModal}
-                    >
-                      Add Role
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button
-                      className="danger-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Remove
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button
-                      className="info-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Edit
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button
-                      className="danger-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Delete Group
-                    </Button>
-                  </ListItem>
-                </List>
-              </Box>
+              <Box className="overview-buttons">{this.renderBtns()}</Box>
             </Grid>
           </Grid>
         </Box>
