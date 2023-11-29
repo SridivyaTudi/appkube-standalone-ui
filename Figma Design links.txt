@@ -16,7 +16,7 @@ MFA:
 https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube-DRS?page-id=11036%3A61674&type=design&node-id=12284-67810&viewport=796%2C-927%2C0.06&t=xUF2v4d1XVdTYFeZ-1&scaling=min-zoom&starting-point-node-id=12284%3A67810
 
 RBAC:
-https://www.figma.com/proto/T1v5T4vk20KfW4rASjo3uM/Appkube-Main-Evn?page-id=12432%3A71156&type=design&node-id=27627-49041&viewport=13426%2C921%2C0.28&t=uxe5G7zw4hL2KM7w-1&scaling=min-zoom&starting-point-node-id=21976%3A124846&mode=design
+https://www.figma.com/proto/T1v5T4vk20KfW4rASjo3uM/Appkube-Main-Evn?page-id=12432%3A71156&type=design&node-id=27627-49041&viewport=7318%2C550%2C0.15&t=bSDsygo9JFX12SBz-1&scaling=scale-down-width&starting-point-node-id=27627%3A49041&mode=design
 
 Side Menu
 https://www.figma.com/proto/gsXH45MPpJKqaxwpOLAdbu/AppKube-DRS?page-id=12432%3A71156&type=design&node-id=21976-124846&viewport=9958%2C8732%2C0.55&t=gngbpYONS8Aby9fO-1&scaling=scale-down-width&starting-point-node-id=21976%3A124846
