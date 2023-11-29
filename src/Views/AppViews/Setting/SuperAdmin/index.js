@@ -7,6 +7,7 @@ import Users from "./Users";
 import Allowed from "./Allowed";
 import Disallowed from "./Disallowed";
 import Roles from "./Roles";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class SuperAdmin extends Component {
   constructor(props) {
@@ -14,7 +15,6 @@ class SuperAdmin extends Component {
     this.state = {
       activeTab: 0,
       actionButton: null,
-      showCreateUserControlModal: false,
     };
   }
   tabMapping = [
@@ -44,11 +44,7 @@ class SuperAdmin extends Component {
     this.setState({ activeTab });
   };
 
-  handleCreateUserControlModal = () => {
-    this.setState({
-      showCreateUserControlModal: !this.state.showCreateUserControlModal,
-    });
-  };
+  
 
   renderBtns = () => {
     let { activeTab } = this.state;
@@ -68,9 +64,10 @@ class SuperAdmin extends Component {
               <Button
                 className="primary-btn min-width-inherit"
                 variant="contained"
-                onClick={this.handleCreateUserControlModal}
               >
-                {activeTab === 0 ? "Add Users" : "Add Role"}
+                <Link to={`${APP_PREFIX_PATH}/setting/${activeTab === 0 ? "add-users" :"add-role"}`} >
+                  {activeTab === 0 ? "Add Users" : "Add Role"}
+                </Link>
               </Button>
             </ListItem>
           </Fragment>
@@ -164,15 +161,6 @@ class SuperAdmin extends Component {
             )}
           </Box>
         </Box>
-
-        {showCreateUserControlModal ? (
-          <CreateUserControlModal
-            showModal={showCreateUserControlModal}
-            handleCreateUserControlModal={this.handleCreateUserControlModal}
-          />
-        ) : (
-          <></>
-        )}
       </Box>
     );
   }
