@@ -7,19 +7,20 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
-import { Component, Fragment } from "react";
+import { Component, } from "react";
 import { Link } from "react-router-dom";
 import { setActiveTab } from "Utils";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import CreateAddPolicyControlModal from "../Permissions/Components/CreateAddPolicyControlModal";
 import DeletePolicyControlModal from "../Permissions/Components/DeletePolicyControlModal";
 import DeleteRoleControlModal from "../Permissions/Components/DeleteRoleControlModal";
 import { v4 } from "uuid";
+import AccordionView from "../Components/AccordionView";
+
 let accessPolicyData = [
   {
     name: "ALL ACCESS",
@@ -151,7 +152,7 @@ class SetPolicy extends Component {
         selectedPolicy.includes(currentNode) && subchild?.chlidren?.length;
       return (
         <>
-          <TableRow  
+          <TableRow
             key={v4()}
             onClick={(e) => {
               e.stopPropagation();
@@ -166,23 +167,22 @@ class SetPolicy extends Component {
               {subchild.name}
             </TableCell>
           </TableRow>
-          {
-            childDataShow ?     <TableRow
-            key={v4()}
-            onClick={(e) => {
-              e.stopPropagation();
-              this.onClickAccessPolicy(currentNode);
-            }}
-            className={`${isActive ? "active" : ""}`}
-          >
-            <TableCell align="left inner-table-section">
-              
-              {  this.renderAccessPolicyChild(subchild?.chlidren, currentNode)
-              }
-            </TableCell>
-          </TableRow> :<></>
-          }
-      
+          {childDataShow ? (
+            <TableRow
+              key={v4()}
+              onClick={(e) => {
+                e.stopPropagation();
+                this.onClickAccessPolicy(currentNode);
+              }}
+              className={`${isActive ? "active" : ""}`}
+            >
+              <TableCell align="left inner-table-section">
+                {this.renderAccessPolicyChild(subchild?.chlidren, currentNode)}
+              </TableCell>
+            </TableRow>
+          ) : (
+            <></>
+          )}
         </>
       );
     });
@@ -321,9 +321,7 @@ class SetPolicy extends Component {
               </Grid>
             </Box>
             <div className="environment-table">
-              <TableContainer className="table">
-                {this.renderAccessPolicyTable()}
-              </TableContainer>
+              <AccordionView data={accessPolicyData} />
             </div>
           </Box>
         </Box>
