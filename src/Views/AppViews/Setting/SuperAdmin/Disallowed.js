@@ -30,7 +30,7 @@ let accessPolicyData = [
 class Disallowed extends Component {
   render() {
     return (
-      <Box className="environment-table">
+      <Box className="environment-table permission-table">
         <AccordionView data={accessPolicyData} />
       </Box>
     );
