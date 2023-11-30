@@ -41,6 +41,8 @@ import SuperAdmin from "./AppViews/Setting/SuperAdmin";
 import AddUsers from "./AppViews/Setting/AddUsers";
 import AddRole from "./AppViews/Setting/AddRole";
 import CreateGroup from "./AppViews/Setting/CreateGroup";
+import UserProfile from "./AppViews/Setting/UserProfile";
+
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -137,6 +139,7 @@ export const Views = (props) => {
           <Route path={`${APP_PREFIX_PATH}/setting/add-users`} element={<AddUsers/>}/>
           <Route path={`${APP_PREFIX_PATH}/setting/add-role`} element={<AddRole/>}/>
           <Route path={`${APP_PREFIX_PATH}/setting/create-group`} element={<CreateGroup/>}/>
+          <Route path={`${APP_PREFIX_PATH}/setting/user-profile`} element={<UserProfile/>}/>
           <Route
             path={`${APP_PREFIX_PATH}/environments/ecscluster`}
             element={<EcsCluster />}

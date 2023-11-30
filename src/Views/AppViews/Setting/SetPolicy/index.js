@@ -208,7 +208,7 @@ class SetPolicy extends Component {
                 </Grid>
               </Grid>
             </Box>
-            <Box className="environment-table">
+            <Box className="setting-table">
               <AccordionView data={accessPolicyData} />
             </Box>
           </Box>

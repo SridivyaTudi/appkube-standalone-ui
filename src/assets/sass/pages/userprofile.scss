@@ -1,0 +1,196 @@
+.user-profile-container {
+  width: 100%;
+  display: block;
+  padding: 30px 45px;
+  .list-heading {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    h3 {
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 500;
+      color: #383874;
+      margin-bottom: 0;
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 30%;
+    }
+
+    .breadcrumbs {
+      display: inline-flex;
+      width: auto;
+      margin-left: auto;
+
+      ul {
+        list-style: none;
+        display: flex;
+
+        li {
+          display: inline-flex;
+          padding-left: 3px;
+          padding-right: 3px;
+          line-height: 32px;
+          align-items: center;
+          font-size: 12px;
+          color: #8676ff;
+          font-weight: 400;
+          &.active {
+            font-weight: 600;
+            cursor: auto;
+            color: #414d55;
+          }
+
+          a {
+            color: #8676ff;
+          }
+
+          i {
+            font-size: 10px;
+            color: #414d55;
+          }
+        }
+      }
+    }
+
+    .primary-btn {
+      margin-left: auto;
+    }
+  }
+  .user-top-section {
+    h4 {
+      display: block;
+      font-size: 18px;
+      line-height: 24px;
+      font-weight: 500;
+      color: #383874;
+    }
+    .overview-buttons {
+      display: flex;
+      height: 100%;
+      align-items: end;
+      justify-content: end;
+      ul {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        padding: 0;
+        margin: 0;
+        li {
+          display: inline-block;
+          list-style: none;
+          padding: 0;
+          margin-right: 15px;
+          width: auto;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+    .user-profile-details {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      label {
+        display: block;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 500;
+        color: #383874;
+      }
+      ul {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding: 0;
+        li {
+          display: inline-block;
+          width: auto;
+          padding: 5px 30px;
+          border-right: 1px solid #1c1c1c1a;
+          &:first-child {
+            padding-left: 0;
+          }
+          &:last-child {
+            border-right: none;
+          }
+          span {
+            display: block;
+            font-size: 14px;
+            line-height: 18px;
+            font-weight: 400;
+            color: #383874;
+            margin-bottom: 5px;
+          }
+          strong {
+            display: block;
+            font-size: 14px;
+            line-height: 18px;
+            color: #383874;
+            .green {
+              color: #00b929;
+            }
+          }
+        }
+      }
+    }
+  }
+  .services-panel-tabs {
+    display: block;
+    width: 100%;
+    margin-top: 25px;
+
+    .tabs-head {
+      display: block;
+      width: 100%;
+      text-align: center;
+
+      ul {
+        display: inline-block;
+        width: auto;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        padding-left: 8px;
+        padding-right: 8px;
+        border-radius: 30px;
+        background-color: #dbdff1;
+
+        li {
+          width: auto;
+          display: inline-block;
+          vertical-align: top;
+          font-size: 11px;
+          line-height: 20px;
+          font-weight: 500;
+          color: #000000;
+          padding-top: 4px;
+          padding-bottom: 4px;
+          padding-left: 30px;
+          padding-right: 30px;
+          border-radius: 30px;
+          cursor: pointer;
+
+          &.active {
+            color: #ffffff;
+            background-color: #3247e5;
+          }
+        }
+      }
+    }
+
+    .permission-tabs-content {
+      display: block;
+      width: 100%;
+      margin-top: 25px;
+      
+    }
+  }
+}

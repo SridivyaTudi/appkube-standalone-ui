@@ -12,6 +12,7 @@ import {
   IconButton,
   TablePagination,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CreateUserControlModal from "./Components/CreateUserControlModal";
@@ -171,7 +172,7 @@ class UserControl extends Component {
             <TableBody>
               {rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell>{row.user}</TableCell>
+                  <TableCell><Link to={`/app/setting/user-profile`}>{row.user}</Link></TableCell>
                   <TableCell>{row.emailAddress}</TableCell>
                   <TableCell>{row.loginDetails}</TableCell>
                   <TableCell>{row.groups}</TableCell>
