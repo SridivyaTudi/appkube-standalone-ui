@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "5aff4b9d-1815-401b-944e-440a27df955c",
+		"_postman_id": "69b8440c-6f34-41e6-9d49-ea9adca55475",
 		"name": "security_latest",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4204032"
 	},
 	"item": [
 		{
@@ -18,9 +19,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base}}/users/listAll",
+							"raw": "{{baseSecurityUrl}}/users/listAll",
 							"host": [
-								"{{base}}"
+								"{{baseSecurityUrl}}"
 							],
 							"path": [
 								"users",
@@ -40,30 +41,41 @@
 							"formdata": [
 								{
 									"key": "username",
-									"value": "ss_test",
+									"value": "helo-org-admin-user",
 									"type": "default"
 								},
 								{
 									"key": "organization",
-									"value": "SYNECTIKS",
+									"value": "HELO-ORG",
 									"type": "default"
 								},
 								{
 									"key": "password",
-									"value": "ss_test",
+									"value": "Demo-helo-admin@123",
 									"type": "default"
 								},
 								{
 									"key": "email",
-									"value": "ss_test@yy.com",
+									"value": "demo_user-helo-org@demo.com",
 									"type": "default"
+								},
+								{
+									"key": "ownerId",
+									"value": "503",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "USER",
+									"type": "text"
+								},
+								{
+									"key": "targetService",
+									"value": "cmdb",
+									"type": "text",
+									"disabled": true
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{baseSecurityUrl}}/users/create",
@@ -79,18 +91,52 @@
 					"response": []
 				},
 				{
-					"name": "findById",
+					"name": "newOrgUser",
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "organization",
+									"value": "BJ_ASDF",
+									"type": "default"
+								},
+								{
+									"key": "email",
+									"value": "ss_test@yy.com",
+									"type": "default"
+								}
+							]
+						},
 						"url": {
-							"raw": "{{baseSecurityUrl}}/users/10",
+							"raw": "{{baseSecurityUrl}}/users/create/new-org-user",
 							"host": [
 								"{{baseSecurityUrl}}"
 							],
 							"path": [
 								"users",
-								"10"
+								"create",
+								"new-org-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseSecurityUrl}}/users/79",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"users",
+								"79"
 							]
 						}
 					},
@@ -327,11 +373,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseSecurityUrl}}/users/forgot-password?userName=ABCD",
+							"raw": "https://40fglalyd0.execute-api.us-east-1.amazonaws.com/dev/users/forgot-password?userName=ABCD",
+							"protocol": "https",
 							"host": [
-								"{{baseSecurityUrl}}"
+								"40fglalyd0",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
 							],
 							"path": [
+								"dev",
 								"users",
 								"forgot-password"
 							],
@@ -352,7 +404,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\":\"ABCD\",\r\n    \"token\":\"AoobjV\",\r\n    \"oldPassword\":\"password\",\r\n    \"newPassword\":\"abcd\"\r\n}",
+							"raw": "{\r\n    \"userName\":\"ABCD\",\r\n    \"token\":\"nsWAwb\",\r\n    \"newPassword\":\"abcd1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -497,11 +549,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseSecurityUrl}}/organization/getAllOrganizations",
+							"raw": "http://34.199.12.114:8094/security/organization/getAllOrganizations",
+							"protocol": "http",
 							"host": [
-								"{{baseSecurityUrl}}"
+								"34",
+								"199",
+								"12",
+								"114"
 							],
+							"port": "8094",
 							"path": [
+								"security",
 								"organization",
 								"getAllOrganizations"
 							]
@@ -515,14 +573,50 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseSecurityUrl}}/organization/getOrganization/78",
+							"raw": "http://34.199.12.114:8094/security/organization/id/78",
+							"protocol": "http",
 							"host": [
-								"{{baseSecurityUrl}}"
+								"34",
+								"199",
+								"12",
+								"114"
 							],
+							"port": "8094",
 							"path": [
+								"security",
 								"organization",
-								"getOrganization",
+								"id",
 								"78"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByUserName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://34.199.12.114:8094/security/organization/getOrganizationByUserName?userName=qwert",
+							"protocol": "http",
+							"host": [
+								"34",
+								"199",
+								"12",
+								"114"
+							],
+							"port": "8094",
+							"path": [
+								"security",
+								"organization",
+								"getOrganizationByUserName"
+							],
+							"query": [
+								{
+									"key": "userName",
+									"value": "qwert"
+								}
 							]
 						}
 					},
@@ -534,19 +628,87 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseSecurityUrl}}/organization/getOrganizationByUserName?userName=admin.test@synectiks.com",
+							"raw": "http://34.199.12.114:8094/security/organization/name/TEST_ORG",
+							"protocol": "http",
+							"host": [
+								"34",
+								"199",
+								"12",
+								"114"
+							],
+							"port": "8094",
+							"path": [
+								"security",
+								"organization",
+								"name",
+								"TEST_ORG"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":\"test-12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.199.12.114:8094/security/organization/add?pushToCmdb=true",
+							"protocol": "http",
+							"host": [
+								"34",
+								"199",
+								"12",
+								"114"
+							],
+							"port": "8094",
+							"path": [
+								"security",
+								"organization",
+								"add"
+							],
+							"query": [
+								{
+									"key": "pushToCmdb",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pushToCMDB",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":\"test_qwer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/organization/push-to-cmdb/wwwww",
 							"host": [
 								"{{baseSecurityUrl}}"
 							],
 							"path": [
 								"organization",
-								"getOrganizationByUserName"
-							],
-							"query": [
-								{
-									"key": "userName",
-									"value": "admin.test@synectiks.com"
-								}
+								"push-to-cmdb",
+								"wwwww"
 							]
 						}
 					},
@@ -563,7 +725,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseSecurityUrl}}/public/login?username=home_test&password=home_test",
+							"raw": "{{baseSecurityUrl}}/public/login?username=jasmin&password=Jasmin@123",
 							"host": [
 								"{{baseSecurityUrl}}"
 							],
@@ -574,11 +736,11 @@
 							"query": [
 								{
 									"key": "username",
-									"value": "home_test"
+									"value": "jasmin"
 								},
 								{
 									"key": "password",
-									"value": "home_test"
+									"value": "Jasmin@123"
 								}
 							]
 						}
@@ -619,7 +781,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"test\",\r\n    \"password\":\"password\"\r\n}",
+							"raw": "{\r\n    \"username\":\"demo_user\",\r\n    \"password\":\"Demo@123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -807,7 +969,34 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"version\": 1,\r\n    \"name\": \"GAMA_USER\",\r\n    \"permission\": \"Account setting\",\r\n    \"description\": \"Account setting\"\r\n}",
+							"raw": "{\r\n    \"version\": 1,\r\n    \"name\": \"Demo_Role_2\",\r\n    \"description\": \"Demo Role 2\",\r\n    \"grp\":false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/roles/create",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"roles",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create role group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"version\": 1,\r\n    \"name\": \"Demo_Role_Group\",\r\n    \"description\": \"Demo Role Group\",\r\n    \"grp\":true,\r\n    \"roles\":[\r\n        {\r\n            \"id\":500\r\n        },\r\n        {\r\n            \"id\":501\r\n        }\r\n\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -871,7 +1060,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\"id\": 6,\r\n\t\"createdAt\": null,\r\n\t\"updatedAt\": null,\r\n\t\"createdBy\": \"Are Bhai Kha na pata nhi kitani bar puchhega\",\r\n\t\"updatedBy\": null,\r\n\t\"name\": \"Admin\",\r\n\t\"version\": 1,\r\n\t\"grp\": false,\r\n\t\"description\": \"Admin\",\r\n\t\"permissions\": [\r\n\t\t{\r\n\t\t\t\"id\": 1,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": \"pata nhi\",\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Team\",\r\n\t\t\t\"permission\": \"Team\",\r\n\t\t\t\"description\": \"Team menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 8,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Overview\",\r\n\t\t\t\"permission\": \"Overview\",\r\n\t\t\t\"description\": \"Overview menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 38,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Overview\",\r\n\t\t\t\"permission\": \"Overview\",\r\n\t\t\t\"description\": \"Overview sub menu of Logs menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 44,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Overview\",\r\n\t\t\t\"permission\": \"Overview\",\r\n\t\t\t\"description\": \"Overview sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 9,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Assets\",\r\n\t\t\t\"permission\": \"Assets\",\r\n\t\t\t\"description\": \"Assets menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 10,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Environments\",\r\n\t\t\t\"permission\": \"Environments\",\r\n\t\t\t\"description\": \"Environments sub menu of Assets\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 11,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Discovered Assets\",\r\n\t\t\t\"permission\": \"Discovered Assets\",\r\n\t\t\t\"description\": \"Discovered assets sub menu of Assets\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 12,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Monitored Assets\",\r\n\t\t\t\"permission\": \"Monitored Assets\",\r\n\t\t\t\"description\": \"Monitored assets sub menu of Assets\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 13,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Org Unit\",\r\n\t\t\t\"permission\": \"Org Unit\",\r\n\t\t\t\"description\": \"Org unit sub menu of Assets\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 14,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Custom-Resources\",\r\n\t\t\t\"permission\": \"Custom-Resources\",\r\n\t\t\t\"description\": \"Custom-Resources sub menu of Assets\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 15,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"App Catalogue\",\r\n\t\t\t\"permission\": \"App Catalogue\",\r\n\t\t\t\"description\": \"App Catalogue menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 16,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"View And Search Catalogue\",\r\n\t\t\t\"permission\": \"View And Search Catalogue\",\r\n\t\t\t\"description\": \"View And Search Catalogue sub menu of App Catalogue menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 17,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Library\",\r\n\t\t\t\"permission\": \"Library\",\r\n\t\t\t\"description\": \"Library sub menu of App Catalogue menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 18,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Import Assets From Module Pack\",\r\n\t\t\t\"permission\": \"Import Assets From Module Pack\",\r\n\t\t\t\"description\": \"Import Assets From Module Pack sub menu of App Catalogue menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 19,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Create Or Import Module Packs\",\r\n\t\t\t\"permission\": \"Create Or Import Module Packs\",\r\n\t\t\t\"description\": \"Create Or Import Module Packs sub menu of App Catalogue menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 20,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Events\",\r\n\t\t\t\"permission\": \"Events\",\r\n\t\t\t\"description\": \"Events menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 21,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Dashboard\",\r\n\t\t\t\"permission\": \"Dashboard\",\r\n\t\t\t\"description\": \"Dashboard sub menu of Events menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 31,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Dashboard\",\r\n\t\t\t\"permission\": \"Dashboard\",\r\n\t\t\t\"description\": \"Dashboard sub menu of Performance & Availability menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 39,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Dashboard\",\r\n\t\t\t\"permission\": \"Dashboard\",\r\n\t\t\t\"description\": \"Dashboard sub menu of Logs menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 54,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Dashboard\",\r\n\t\t\t\"permission\": \"Dashboard\",\r\n\t\t\t\"description\": \"Dashboard sub menu of Service desk menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 22,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"New Alert Rule\",\r\n\t\t\t\"permission\": \"New Alert Rule\",\r\n\t\t\t\"description\": \"New Alert Rule sub menu of Events menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 23,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"All Alert Rules\",\r\n\t\t\t\"permission\": \"All Alert Rules\",\r\n\t\t\t\"description\": \"All Alerts Rule sub menu of Events menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 24,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Manage Alert Rule\",\r\n\t\t\t\"permission\": \"Manage Alert Rule\",\r\n\t\t\t\"description\": \"Manage Alert Rule sub menu of Events menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 25,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Manage Workflows\",\r\n\t\t\t\"permission\": \"Manage Workflows\",\r\n\t\t\t\"description\": \"Manage Workflows sub menu of Events menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 26,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Analytics\",\r\n\t\t\t\"permission\": \"Analytics\",\r\n\t\t\t\"description\": \"Analytics menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 27,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Manage Dashboards\",\r\n\t\t\t\"permission\": \"Manage Dashboards\",\r\n\t\t\t\"description\": \"Manage Dashboards sub menu of Analytics menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 28,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Manage Views\",\r\n\t\t\t\"permission\": \"Manage Views\",\r\n\t\t\t\"description\": \"Manage Views sub menu of Analytics menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 29,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Task Manager\",\r\n\t\t\t\"permission\": \"Task Manager\",\r\n\t\t\t\"description\": \"Task Manager sub menu of Analytics menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 30,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Performance & Availability\",\r\n\t\t\t\"permission\": \"Performance & Availability\",\r\n\t\t\t\"description\": \"Performance & Availability menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 32,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Collection\",\r\n\t\t\t\"permission\": \"Collection\",\r\n\t\t\t\"description\": \"Collection sub menu of Performance & Availability menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 33,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Rule\",\r\n\t\t\t\"permission\": \"Rule\",\r\n\t\t\t\"description\": \"Rule sub menu of Performance & Availability menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 34,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Preferences\",\r\n\t\t\t\"permission\": \"Preferences\",\r\n\t\t\t\"description\": \"Preferences sub menu of Performance & Availability menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 41,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Preferences\",\r\n\t\t\t\"permission\": \"Preferences\",\r\n\t\t\t\"description\": \"Preferences sub menu of Logs menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 58,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Preferences\",\r\n\t\t\t\"permission\": \"Preferences\",\r\n\t\t\t\"description\": \"Preferences sub menu of Service desk menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 35,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Discovery\",\r\n\t\t\t\"permission\": \"Discovery\",\r\n\t\t\t\"description\": \"Discovery sub menu of Performance & Availability menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 36,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"View\",\r\n\t\t\t\"permission\": \"View\",\r\n\t\t\t\"description\": \"View sub menu of Performance & Availability menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 37,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Logs\",\r\n\t\t\t\"permission\": \"Logs\",\r\n\t\t\t\"description\": \"Logs menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 40,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Alerts\",\r\n\t\t\t\"permission\": \"Alerts\",\r\n\t\t\t\"description\": \"Alerts sub menu of Logs menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 42,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Preference\",\r\n\t\t\t\"permission\": \"Preference\",\r\n\t\t\t\"description\": \"Preference sub menu of Logs menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 52,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Preference\",\r\n\t\t\t\"permission\": \"Preference\",\r\n\t\t\t\"description\": \"Preference sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 71,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Preference\",\r\n\t\t\t\"permission\": \"Preference\",\r\n\t\t\t\"description\": \"Preference menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 43,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Compliance\",\r\n\t\t\t\"permission\": \"Compliance\",\r\n\t\t\t\"description\": \"Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 45,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Rulesets\",\r\n\t\t\t\"permission\": \"Rulesets\",\r\n\t\t\t\"description\": \"Rulesets sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 46,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Rule Builder\",\r\n\t\t\t\"permission\": \"Rule Builder\",\r\n\t\t\t\"description\": \"Rule Builder sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 47,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Audits\",\r\n\t\t\t\"permission\": \"Audits\",\r\n\t\t\t\"description\": \"Audits sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 48,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Policies\",\r\n\t\t\t\"permission\": \"Policies\",\r\n\t\t\t\"description\": \"Policies sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 49,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Remediation\",\r\n\t\t\t\"permission\": \"Remediation\",\r\n\t\t\t\"description\": \"Remediation sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 50,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Assessment History\",\r\n\t\t\t\"permission\": \"Assessment History\",\r\n\t\t\t\"description\": \"Assessment History sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 51,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Exclusions\",\r\n\t\t\t\"permission\": \"Exclusions\",\r\n\t\t\t\"description\": \"Exclusions sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 53,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Service desk\",\r\n\t\t\t\"permission\": \"Service desk\",\r\n\t\t\t\"description\": \"Service desk menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 55,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Contacts\",\r\n\t\t\t\"permission\": \"Contacts\",\r\n\t\t\t\"description\": \"Contacts sub menu of Service desk menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 56,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Companies\",\r\n\t\t\t\"permission\": \"Companies\",\r\n\t\t\t\"description\": \"Companies sub menu of Service desk menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 57,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Reports\",\r\n\t\t\t\"permission\": \"Reports\",\r\n\t\t\t\"description\": \"Reports sub menu of Service desk menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 59,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Automation\",\r\n\t\t\t\"permission\": \"Automation\",\r\n\t\t\t\"description\": \"Automation menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 60,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Generators\",\r\n\t\t\t\"permission\": \"Generators\",\r\n\t\t\t\"description\": \"Generators menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 61,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Delivery\",\r\n\t\t\t\"permission\": \"Delivery\",\r\n\t\t\t\"description\": \"Delivery menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 62,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Quality\",\r\n\t\t\t\"permission\": \"Quality\",\r\n\t\t\t\"description\": \"Quality menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 63,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Test\",\r\n\t\t\t\"permission\": \"Test\",\r\n\t\t\t\"description\": \"Test menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 64,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Change Manager\",\r\n\t\t\t\"permission\": \"Change Manager\",\r\n\t\t\t\"description\": \"Change Manager menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 65,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Explorer\",\r\n\t\t\t\"permission\": \"Explorer\",\r\n\t\t\t\"description\": \"Explorer menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 66,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"RCA\",\r\n\t\t\t\"permission\": \"RCA\",\r\n\t\t\t\"description\": \"RCA menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 67,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Search & Act\",\r\n\t\t\t\"permission\": \"Search & Act\",\r\n\t\t\t\"description\": \"Search & Act menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 68,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Script Manager\",\r\n\t\t\t\"permission\": \"Script Manager\",\r\n\t\t\t\"description\": \"Script Manager menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 69,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Optimizer\",\r\n\t\t\t\"permission\": \"Optimizer\",\r\n\t\t\t\"description\": \"Optimizer menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 70,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Migration Manager\",\r\n\t\t\t\"permission\": \"Migration Manager\",\r\n\t\t\t\"description\": \"Migration Manager menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 72,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"RBAC Settings\",\r\n\t\t\t\"permission\": \"RBAC Settings\",\r\n\t\t\t\"description\": \"RBAC Settings menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 73,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Permissions\",\r\n\t\t\t\"permission\": \"Permissions\",\r\n\t\t\t\"description\": \"Permissions sub menu of RBAC Settings menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 74,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Roles\",\r\n\t\t\t\"permission\": \"Roles\",\r\n\t\t\t\"description\": \"Roles sub menu of RBAC Settings menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 75,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Groups\",\r\n\t\t\t\"permission\": \"Groups\",\r\n\t\t\t\"description\": \"Groups sub menu of RBAC Settings menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 76,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Users\",\r\n\t\t\t\"permission\": \"Users\",\r\n\t\t\t\"description\": \"Users sub menu of RBAC Settings menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 77,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Resource\",\r\n\t\t\t\"permission\": \"Resource\",\r\n\t\t\t\"description\": \"Resource menu\"\r\n\t\t}\r\n\t],\r\n\t\"roles\": []\r\n}",
+							"raw": "{\r\n\t\"id\": 6,\r\n\t\"createdAt\": null,\r\n\t\"updatedAt\": null,\r\n\t\"createdBy\": \"Are Bhai Kha na pata nhi kitani bar puchhega\",\r\n\t\"updatedBy\": null,\r\n\t\"name\": \"Admin\",\r\n\t\"version\": 1,\r\n\t\"grp\": false,\r\n\t\"description\": \"Admin\",\r\n    \"policies\":[\r\n        {\r\n            \"id\":511\r\n        },\r\n        {\r\n            \"id\":509\r\n        }\r\n    ],\r\n\t\"permissions\": [\r\n\t\t{\r\n\t\t\t\"id\": 1,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": \"pata nhi\",\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Team\",\r\n\t\t\t\"permission\": \"Team\",\r\n\t\t\t\"description\": \"Team menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 8,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Overview\",\r\n\t\t\t\"permission\": \"Overview\",\r\n\t\t\t\"description\": \"Overview menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 38,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Overview\",\r\n\t\t\t\"permission\": \"Overview\",\r\n\t\t\t\"description\": \"Overview sub menu of Logs menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 44,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Overview\",\r\n\t\t\t\"permission\": \"Overview\",\r\n\t\t\t\"description\": \"Overview sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 9,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Assets\",\r\n\t\t\t\"permission\": \"Assets\",\r\n\t\t\t\"description\": \"Assets menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 10,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Environments\",\r\n\t\t\t\"permission\": \"Environments\",\r\n\t\t\t\"description\": \"Environments sub menu of Assets\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 11,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Discovered Assets\",\r\n\t\t\t\"permission\": \"Discovered Assets\",\r\n\t\t\t\"description\": \"Discovered assets sub menu of Assets\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 12,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Monitored Assets\",\r\n\t\t\t\"permission\": \"Monitored Assets\",\r\n\t\t\t\"description\": \"Monitored assets sub menu of Assets\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 13,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Org Unit\",\r\n\t\t\t\"permission\": \"Org Unit\",\r\n\t\t\t\"description\": \"Org unit sub menu of Assets\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 14,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Custom-Resources\",\r\n\t\t\t\"permission\": \"Custom-Resources\",\r\n\t\t\t\"description\": \"Custom-Resources sub menu of Assets\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 15,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"App Catalogue\",\r\n\t\t\t\"permission\": \"App Catalogue\",\r\n\t\t\t\"description\": \"App Catalogue menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 16,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"View And Search Catalogue\",\r\n\t\t\t\"permission\": \"View And Search Catalogue\",\r\n\t\t\t\"description\": \"View And Search Catalogue sub menu of App Catalogue menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 17,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Library\",\r\n\t\t\t\"permission\": \"Library\",\r\n\t\t\t\"description\": \"Library sub menu of App Catalogue menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 18,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Import Assets From Module Pack\",\r\n\t\t\t\"permission\": \"Import Assets From Module Pack\",\r\n\t\t\t\"description\": \"Import Assets From Module Pack sub menu of App Catalogue menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 19,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Create Or Import Module Packs\",\r\n\t\t\t\"permission\": \"Create Or Import Module Packs\",\r\n\t\t\t\"description\": \"Create Or Import Module Packs sub menu of App Catalogue menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 20,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Events\",\r\n\t\t\t\"permission\": \"Events\",\r\n\t\t\t\"description\": \"Events menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 21,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Dashboard\",\r\n\t\t\t\"permission\": \"Dashboard\",\r\n\t\t\t\"description\": \"Dashboard sub menu of Events menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 31,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Dashboard\",\r\n\t\t\t\"permission\": \"Dashboard\",\r\n\t\t\t\"description\": \"Dashboard sub menu of Performance & Availability menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 39,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Dashboard\",\r\n\t\t\t\"permission\": \"Dashboard\",\r\n\t\t\t\"description\": \"Dashboard sub menu of Logs menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 54,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Dashboard\",\r\n\t\t\t\"permission\": \"Dashboard\",\r\n\t\t\t\"description\": \"Dashboard sub menu of Service desk menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 22,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"New Alert Rule\",\r\n\t\t\t\"permission\": \"New Alert Rule\",\r\n\t\t\t\"description\": \"New Alert Rule sub menu of Events menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 23,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"All Alert Rules\",\r\n\t\t\t\"permission\": \"All Alert Rules\",\r\n\t\t\t\"description\": \"All Alerts Rule sub menu of Events menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 24,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Manage Alert Rule\",\r\n\t\t\t\"permission\": \"Manage Alert Rule\",\r\n\t\t\t\"description\": \"Manage Alert Rule sub menu of Events menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 25,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Manage Workflows\",\r\n\t\t\t\"permission\": \"Manage Workflows\",\r\n\t\t\t\"description\": \"Manage Workflows sub menu of Events menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 26,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Analytics\",\r\n\t\t\t\"permission\": \"Analytics\",\r\n\t\t\t\"description\": \"Analytics menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 27,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Manage Dashboards\",\r\n\t\t\t\"permission\": \"Manage Dashboards\",\r\n\t\t\t\"description\": \"Manage Dashboards sub menu of Analytics menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 28,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Manage Views\",\r\n\t\t\t\"permission\": \"Manage Views\",\r\n\t\t\t\"description\": \"Manage Views sub menu of Analytics menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 29,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Task Manager\",\r\n\t\t\t\"permission\": \"Task Manager\",\r\n\t\t\t\"description\": \"Task Manager sub menu of Analytics menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 30,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Performance & Availability\",\r\n\t\t\t\"permission\": \"Performance & Availability\",\r\n\t\t\t\"description\": \"Performance & Availability menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 32,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Collection\",\r\n\t\t\t\"permission\": \"Collection\",\r\n\t\t\t\"description\": \"Collection sub menu of Performance & Availability menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 33,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Rule\",\r\n\t\t\t\"permission\": \"Rule\",\r\n\t\t\t\"description\": \"Rule sub menu of Performance & Availability menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 34,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Preferences\",\r\n\t\t\t\"permission\": \"Preferences\",\r\n\t\t\t\"description\": \"Preferences sub menu of Performance & Availability menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 41,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Preferences\",\r\n\t\t\t\"permission\": \"Preferences\",\r\n\t\t\t\"description\": \"Preferences sub menu of Logs menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 58,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Preferences\",\r\n\t\t\t\"permission\": \"Preferences\",\r\n\t\t\t\"description\": \"Preferences sub menu of Service desk menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 35,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Discovery\",\r\n\t\t\t\"permission\": \"Discovery\",\r\n\t\t\t\"description\": \"Discovery sub menu of Performance & Availability menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 36,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"View\",\r\n\t\t\t\"permission\": \"View\",\r\n\t\t\t\"description\": \"View sub menu of Performance & Availability menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 37,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Logs\",\r\n\t\t\t\"permission\": \"Logs\",\r\n\t\t\t\"description\": \"Logs menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 40,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Alerts\",\r\n\t\t\t\"permission\": \"Alerts\",\r\n\t\t\t\"description\": \"Alerts sub menu of Logs menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 42,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Preference\",\r\n\t\t\t\"permission\": \"Preference\",\r\n\t\t\t\"description\": \"Preference sub menu of Logs menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 52,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Preference\",\r\n\t\t\t\"permission\": \"Preference\",\r\n\t\t\t\"description\": \"Preference sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 71,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Preference\",\r\n\t\t\t\"permission\": \"Preference\",\r\n\t\t\t\"description\": \"Preference menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 43,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Compliance\",\r\n\t\t\t\"permission\": \"Compliance\",\r\n\t\t\t\"description\": \"Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 45,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Rulesets\",\r\n\t\t\t\"permission\": \"Rulesets\",\r\n\t\t\t\"description\": \"Rulesets sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 46,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Rule Builder\",\r\n\t\t\t\"permission\": \"Rule Builder\",\r\n\t\t\t\"description\": \"Rule Builder sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 47,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Audits\",\r\n\t\t\t\"permission\": \"Audits\",\r\n\t\t\t\"description\": \"Audits sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 48,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Policies\",\r\n\t\t\t\"permission\": \"Policies\",\r\n\t\t\t\"description\": \"Policies sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 49,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Remediation\",\r\n\t\t\t\"permission\": \"Remediation\",\r\n\t\t\t\"description\": \"Remediation sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 50,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Assessment History\",\r\n\t\t\t\"permission\": \"Assessment History\",\r\n\t\t\t\"description\": \"Assessment History sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 51,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Exclusions\",\r\n\t\t\t\"permission\": \"Exclusions\",\r\n\t\t\t\"description\": \"Exclusions sub menu of Compliance menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 53,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Service desk\",\r\n\t\t\t\"permission\": \"Service desk\",\r\n\t\t\t\"description\": \"Service desk menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 55,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Contacts\",\r\n\t\t\t\"permission\": \"Contacts\",\r\n\t\t\t\"description\": \"Contacts sub menu of Service desk menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 56,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Companies\",\r\n\t\t\t\"permission\": \"Companies\",\r\n\t\t\t\"description\": \"Companies sub menu of Service desk menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 57,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Reports\",\r\n\t\t\t\"permission\": \"Reports\",\r\n\t\t\t\"description\": \"Reports sub menu of Service desk menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 59,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Automation\",\r\n\t\t\t\"permission\": \"Automation\",\r\n\t\t\t\"description\": \"Automation menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 60,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Generators\",\r\n\t\t\t\"permission\": \"Generators\",\r\n\t\t\t\"description\": \"Generators menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 61,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Delivery\",\r\n\t\t\t\"permission\": \"Delivery\",\r\n\t\t\t\"description\": \"Delivery menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 62,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Quality\",\r\n\t\t\t\"permission\": \"Quality\",\r\n\t\t\t\"description\": \"Quality menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 63,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Test\",\r\n\t\t\t\"permission\": \"Test\",\r\n\t\t\t\"description\": \"Test menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 64,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Change Manager\",\r\n\t\t\t\"permission\": \"Change Manager\",\r\n\t\t\t\"description\": \"Change Manager menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 65,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Explorer\",\r\n\t\t\t\"permission\": \"Explorer\",\r\n\t\t\t\"description\": \"Explorer menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 66,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"RCA\",\r\n\t\t\t\"permission\": \"RCA\",\r\n\t\t\t\"description\": \"RCA menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 67,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Search & Act\",\r\n\t\t\t\"permission\": \"Search & Act\",\r\n\t\t\t\"description\": \"Search & Act menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 68,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Script Manager\",\r\n\t\t\t\"permission\": \"Script Manager\",\r\n\t\t\t\"description\": \"Script Manager menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 69,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Optimizer\",\r\n\t\t\t\"permission\": \"Optimizer\",\r\n\t\t\t\"description\": \"Optimizer menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 70,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Migration Manager\",\r\n\t\t\t\"permission\": \"Migration Manager\",\r\n\t\t\t\"description\": \"Migration Manager menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 72,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"RBAC Settings\",\r\n\t\t\t\"permission\": \"RBAC Settings\",\r\n\t\t\t\"description\": \"RBAC Settings menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 73,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Permissions\",\r\n\t\t\t\"permission\": \"Permissions\",\r\n\t\t\t\"description\": \"Permissions sub menu of RBAC Settings menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 74,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Roles\",\r\n\t\t\t\"permission\": \"Roles\",\r\n\t\t\t\"description\": \"Roles sub menu of RBAC Settings menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 75,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Groups\",\r\n\t\t\t\"permission\": \"Groups\",\r\n\t\t\t\"description\": \"Groups sub menu of RBAC Settings menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 76,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Users\",\r\n\t\t\t\"permission\": \"Users\",\r\n\t\t\t\"description\": \"Users sub menu of RBAC Settings menu\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 77,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": null,\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Resource\",\r\n\t\t\t\"permission\": \"Resource\",\r\n\t\t\t\"description\": \"Resource menu\"\r\n\t\t}\r\n\t],\r\n\t\"roles\": []\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -886,6 +1075,120 @@
 							"path": [
 								"roles",
 								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "policy",
+			"item": [
+				{
+					"name": "listAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseSecurityUrl}}/policy/listAll",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"policy",
+								"listAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"version\": 1,\r\n    \"name\": \"Demo_policy\",\r\n    \"description\": \"Demo policy\",\r\n    \"permissions\": [\r\n        {\r\n            \"id\": 109\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/policy/create",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"policy",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"id\": 509,\r\n\t\"createdBy\": \"POSTMAN\",\r\n\t\"name\": \"test policy\",\r\n\t\"version\": 1,\r\n\t\"description\": \"test policy update\",\r\n\t\"permissions\": [\r\n\t\t{\r\n\t\t\t\"id\": 1,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": \"pata nhi\",\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Team\",\r\n\t\t\t\"permission\": \"Team\",\r\n\t\t\t\"description\": \"Team menu\"\r\n\t\t}\r\n\t],\r\n\t\"roles\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/policy/update",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"policy",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseSecurityUrl}}/policy/512",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"policy",
+								"512"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteById",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseSecurityUrl}}/policy/delete/508",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"policy",
+								"delete",
+								"508"
 							]
 						}
 					},
@@ -1528,7 +1831,7 @@
 	"variable": [
 		{
 			"key": "baseSecurityUrl",
-			"value": "http://34.199.12.114:8094/security"
+			"value": "http://localhost:8094/security"
 		}
 	]
 }
