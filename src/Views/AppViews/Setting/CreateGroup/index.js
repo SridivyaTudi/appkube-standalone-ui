@@ -21,6 +21,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import DefaultIcon from "../../../../assets/img/setting/default-icon.png";
+import CancelGroupControlModal from "../Permissions/Components/CancelGroupControlModal";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -43,6 +44,7 @@ export class CreateGroup extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showCancelGroupControlModal: false,
       userrow: [
         {
           user: "Milena Kahles",
@@ -149,9 +151,9 @@ export class CreateGroup extends Component {
     this.setState({ rpg: parseInt(event.target.value, 10) });
   };
 
-  handleCreateUserControlModal = () => {
+  handleCancelGroupControlModal = () => {
     this.setState({
-      showCreateUserControlModal: !this.state.showCreateUserControlModal,
+      showCancelGroupControlModal: !this.state.showCancelGroupControlModal,
     });
   };
 
@@ -168,7 +170,7 @@ export class CreateGroup extends Component {
     }
   };
   render() {
-    const { userrow, rolerow, pg, rpg, actionButton } = this.state;
+    const { userrow, rolerow, pg, rpg, showCancelGroupControlModal, actionButton } = this.state;
     return (
       <Box className="create-group-container">
         <Box className="list-heading">
@@ -199,7 +201,7 @@ export class CreateGroup extends Component {
               <Box className="overview-buttons">
                 <List>
                   <ListItem>
-                    <Button
+                    <Button onClick={this.handleCancelGroupControlModal}
                       className="danger-outline-btn min-width-inherit"
                       variant="outlined"
                     >
@@ -425,6 +427,14 @@ export class CreateGroup extends Component {
           onPageChange={this.handleChangePage}
           onRowsPerPageChange={this.handleChangeRowsPerPage}
         />
+         {showCancelGroupControlModal ? (
+          <CancelGroupControlModal
+            showModal={showCancelGroupControlModal}
+            handleCancelGroupControlModal={this.handleCancelGroupControlModal}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }

@@ -2,8 +2,9 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { Box } from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter } from "reactstrap";
+import NoteIcon from "../../../../../assets/img/setting/note-icon.png";
 
-class DeleteRoleControlModal extends Component {
+class CancelGroupControlModal extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -13,33 +14,33 @@ class DeleteRoleControlModal extends Component {
     return (
       <Modal
         isOpen={this.props.showModal}
-        toggle={this.props.handleDeleteRoleControlModal}
+        toggle={this.props.handleCancelGroupControlModal}
         className="setting-modal-container delete-policy-modal"
       >
         <ModalBody>
           <Box className="delete-policy-content text-center">
-            <Box className="delete-icon">
-              <i class="fas fa-trash-alt"></i>
+            <h5 className="m-b-2 leave-heading">Leave Page ?</h5>
+            <Box className="cancel-icon">
+              <img src={NoteIcon} alt=""/>
             </Box>
-            <h5>Do you want to delete this Role?</h5>
-            <p>This action can’t be undone</p>
+            <p>are you sure you want to leave the current page?. The change that you made won’t be saved</p>
           </Box>
         </ModalBody>
         <ModalFooter className="footer-top-br m-t-3">
           <Box className="d-block text-center">
             <LoadingButton
-              className="danger-btn   m-r-2"
+              className="danger-btn min-width-inherit m-r-2"
               variant="contained"
-              onClick={this.props.handleDeleteRoleControlModal}
+              onClick={this.props.handleCancelGroupControlModal}
             >
-              Delete
+              Cancel
             </LoadingButton>
             <LoadingButton
-              className="secondary-btn "
+              className="primary-btn min-width-inherit "
               variant="contained"
               onClick={this.handleCloseModal}
             >
-              Cancel
+              Continue
             </LoadingButton>
           </Box>
         </ModalFooter>
@@ -48,4 +49,4 @@ class DeleteRoleControlModal extends Component {
   }
 }
 
-export default DeleteRoleControlModal;
+export default CancelGroupControlModal;
