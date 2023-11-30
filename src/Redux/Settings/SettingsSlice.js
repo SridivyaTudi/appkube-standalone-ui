@@ -5,6 +5,11 @@ import {
   authMFACode,
   createRole,
   createGroup,
+  getRoles,
+  getPolicies,
+  deleteRole,
+  getRoleById,
+  updateRole,
 } from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
@@ -23,6 +28,26 @@ export const settingsSlice = createSlice({
       data: {},
     },
     groupCreation: {
+      status: null,
+      data: {},
+    },
+    allRoles: {
+      status: null,
+      data: [],
+    },
+    allPolicy: {
+      status: null,
+      data: [],
+    },
+    removeRole: {
+      status: null,
+      data: "",
+    },
+    roleDetailsById: {
+      status: null,
+      data: {},
+    },
+    roleUpdation: {
       status: null,
       data: {},
     },
@@ -107,6 +132,32 @@ export const settingsSlice = createSlice({
       };
     },
 
+    [updateRole.pending]: (state) => {
+      return {
+        ...state,
+        roleUpdation: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [updateRole.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        roleUpdation: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [updateRole.rejected]: (state) => {
+      return {
+        ...state,
+        roleUpdation: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
     [createGroup.pending]: (state) => {
       return {
         ...state,
@@ -128,6 +179,110 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         groupCreation: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getRoles.pending]: (state) => {
+      return {
+        ...state,
+        allRoles: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getRoles.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        allRoles: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getRoles.rejected]: (state) => {
+      return {
+        ...state,
+        allRoles: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getRoleById.pending]: (state) => {
+      return {
+        ...state,
+        roleDetailsById: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getRoleById.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        roleDetailsById: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getRoleById.rejected]: (state) => {
+      return {
+        ...state,
+        roleDetailsById: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getPolicies.pending]: (state) => {
+      return {
+        ...state,
+        allPolicy: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getPolicies.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        allPolicy: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getPolicies.rejected]: (state) => {
+      return {
+        ...state,
+        allPolicy: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [deleteRole.pending]: (state) => {
+      return {
+        ...state,
+        removeRole: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [deleteRole.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        removeRole: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [deleteRole.rejected]: (state) => {
+      return {
+        ...state,
+        removeRole: {
           status: status.FAILURE,
         },
       };

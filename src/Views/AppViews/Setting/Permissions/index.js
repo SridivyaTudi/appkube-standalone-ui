@@ -4,13 +4,15 @@ import RoleControl from "./RoleControl";
 import GroupControl from "./GroupControl";
 import UserControl from "./UserControl";
 import Policies from "./Policies";
-import Permissson from "./Permission"
+import Permissson from "./Permission";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
 export class Permissions extends Component {
   controlMapping = [
     {
       icon: "fa-user-gear",
       label: "Role",
-      value: "46",
+      value: 0,
       dataKey: "role",
     },
     {
@@ -43,20 +45,41 @@ export class Permissions extends Component {
     super(props);
     this.state = {
       activeTab: 0,
+      tabMapping: this.controlMapping,
     };
   }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.props.allRoles.status !== prevProps.allRoles.status) {
+      if (this.props.allRoles.status === status.SUCCESS) {
+        let roles = this.props.allRoles.data;
+        if (roles) {
+          let { tabMapping } = this.state;
+
+          tabMapping = tabMapping.map((tab) => {
+            if (tab.dataKey === "role") {
+              tab.value = roles.length;
+            }
+            return tab;
+          });
+
+          this.setState({ tabMapping });
+        }
+      }
+    }
+  };
 
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
 
   render() {
-    const { activeTab } = this.state;
+    const { activeTab, tabMapping } = this.state;
     return (
       <Box className="permissions-container">
         <Box className="heading">Role Based Access Control</Box>
         <Box className="access-control-boxs">
-          {this.controlMapping.map((tabData, index) => {
+          {tabMapping.map((tabData, index) => {
             return (
               <Box
                 key={`control-${index}`}
@@ -90,7 +113,7 @@ export class Permissions extends Component {
           ) : activeTab === 3 ? (
             <Policies />
           ) : activeTab === 4 ? (
-          <Permissson/>
+            <Permissson />
           ) : (
             <></>
           )}
@@ -99,4 +122,13 @@ export class Permissions extends Component {
     );
   }
 }
-export default Permissions;
+const mapStateToProps = (state) => {
+  const { allRoles } = state.settings;
+  return {
+    allRoles,
+  };
+};
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Permissions);

@@ -31,6 +31,7 @@ class AccordionView extends Component {
                     <i class={`fas fa-chevron-${arrowDownOrRight}`}></i>
                   </span>
                   <strong>{policy.name}</strong>
+                  {policy.subName ? policy.subName : <></>}
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -75,6 +76,7 @@ class AccordionView extends Component {
                 <i class={`fas fa-chevron-${arrowDownOrRight}`}></i>
               </span>
               {subchild.name}
+              {subchild.subName ? subchild.subName : <></>}
             </TableCell>
           </TableRow>
           {childDataShow ? (

@@ -4,8 +4,16 @@ import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
-import { createRole } from "Redux/Settings/SettingsThunk";
+import {
+  createRole,
+  getPolicies,
+  getRoleById,
+  updateRole,
+} from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+
 class CreateRoleControlModal extends Component {
   constructor(props) {
     super(props);
@@ -13,17 +21,48 @@ class CreateRoleControlModal extends Component {
       name: "",
       description: "",
       isSubmit: false,
+      policyList: [],
+      selectedPolicy: [],
     };
   }
+
+  componentDidMount = () => {
+    this.props.getPolicies();
+    if (this.props.roleId > 0) {
+      this.props.getRoleById(this.props.roleId);
+    }
+  };
 
   componentDidUpdate = (prevProps, prevState) => {
     if (this.props.roleCreation.status !== prevProps.roleCreation.status) {
       if (this.props.roleCreation.status === status.SUCCESS) {
+        let label = this.props.roleId > 0 ? "Update" : "Creation";
         if (this.props.roleCreation.data) {
-          ToastMessage.success("Role Created Successfully");
+          ToastMessage.success(` Role ${label} Successfully`);
           this.handleCloseModal();
         } else {
-          ToastMessage.error("Role Creation Failed!");
+          ToastMessage.error(`Role ${label} Failed!`);
+        }
+      }
+    }
+
+    if (
+      this.props.roleDetailsById.status !== prevProps.roleDetailsById.status
+    ) {
+      if (this.props.roleDetailsById.status === status.SUCCESS) {
+        let roleDetails = this.props.roleDetailsById.data;
+        if (roleDetails) {
+          let { name, description, policies } = roleDetails;
+          this.setState({ name, description, selectedPolicy: policies });
+        }
+      }
+    }
+
+    if (this.props.allPolicy.status !== prevProps.allPolicy.status) {
+      if (this.props.allPolicy.status === status.SUCCESS) {
+        let policyList = this.props.allPolicy.data;
+        if (policyList) {
+          this.setState({ policyList });
         }
       }
     }
@@ -35,9 +74,16 @@ class CreateRoleControlModal extends Component {
     this.setState({ [name]: value });
   };
 
+  handleSelectboxChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    this.setState({ selectedPolicy: value });
+  };
+
   // Validate form input fields
   validateForm = (isSubmit) => {
-    const { name, description } = this.state;
+    const { name, description, selectedPolicy } = this.state;
     const errors = {
       name: "",
       description: "",
@@ -57,35 +103,59 @@ class CreateRoleControlModal extends Component {
       } else {
         errors.description = "";
       }
+
+      if (!selectedPolicy.length) {
+        errors.policy = "Policy is required!";
+        isValid = false;
+      } else {
+        errors.policy = "";
+      }
     }
     return { isValid, errors };
   };
 
   // Call API create role
-  handleCreateRole = (e) => {
+  handleRoleSubmit = (e) => {
     e.preventDefault();
-    const { name, description } = this.state;
+    const { name, description, selectedPolicy } = this.state;
     this.setState({ isSubmit: true });
     const { isValid } = this.validateForm(true);
 
     if (isValid) {
-      this.props.createRole({
+      let params = {
         version: 1,
         name,
         description,
         grp: false,
-      });
+        policies: selectedPolicy.map((policy) => ({ id: policy })),
+      };
+
+      if (this.props.roleId > 0) {
+        params["id"] = this.props.roleId;
+        this.props.updateRole(params);
+      } else {
+        this.props.createRole(params);
+      }
     }
   };
 
   //  Reset state and close modal
   handleCloseModal = () => {
-    this.setState({ name: "", description: "", isSubmit: false });
+    this.setState({ name: "", description: "", isSubmit: false,selectedPolicy:[] });
     this.props.handleCreateRoleControlModal();
   };
 
+  renderPolicies = () => {
+    let { policyList } = this.state;
+    if (policyList.length) {
+      return policyList.map((policy) => (
+        <MenuItem value={policy.id}>{policy.name}</MenuItem>
+      ));
+    }
+  };
+
   render() {
-    let { name, description, isSubmit } = this.state;
+    let { name, description, isSubmit, selectedPolicy } = this.state;
     const { errors } = this.validateForm(isSubmit);
     return (
       <Modal
@@ -95,13 +165,13 @@ class CreateRoleControlModal extends Component {
       >
         <ModalHeader tag="div">
           <h5>
-            Add New Role
+            {this.props.roleId > 0 ? "Edit" : "Add New"} Role
             <button onClick={this.handleCloseModal}>
               <i className="fa-solid fa-xmark"></i>
             </button>
           </h5>
         </ModalHeader>
-        <form onSubmit={this.handleCreateRole}>
+        <form onSubmit={this.handleRoleSubmit}>
           <ModalBody>
             <Box className="form-group">
               <label htmlFor="roleName" className="form-label">
@@ -138,7 +208,7 @@ class CreateRoleControlModal extends Component {
                 value={description}
                 onChange={this.handleInputChange}
                 onKeyDown={(e) =>
-                  e.key === "Enter" ? this.handleCreateRole(e) : <></>
+                  e.key === "Enter" ? this.handleRoleSubmit(e) : <></>
                 }
               />
               {errors.description ? (
@@ -152,22 +222,25 @@ class CreateRoleControlModal extends Component {
                 Add Policy
               </label>
               <FormControl className="select-policy">
+                <InputLabel id="demo-multiple-name-label">
+                  Select Policy
+                </InputLabel>
                 <Select
-                  //value={age}
-                 // onChange={handleChange}
-                  displayEmpty
+                  labelId="demo-multiple-name-label"
+                  multiple
+                  value={selectedPolicy}
+                  onChange={this.handleSelectboxChange}
+                  input={<OutlinedInput label={"Select Policy"} />}
                   inputProps={{ "aria-label": "Without label" }}
                 >
-                  <MenuItem value="">
-                    <em>Select Policy</em>
-                  </MenuItem>
-                  <MenuItem value={10}>All Access</MenuItem>
-                  <MenuItem value={20}>Minimal Access</MenuItem>
-                  <MenuItem value={30}>SRE</MenuItem>
-                  <MenuItem value={40}>Dev Ops</MenuItem> 
-                  <MenuItem value={50}>System Engineer</MenuItem>
+                  {this.renderPolicies()}
                 </Select>
               </FormControl>
+              {errors.policy ? (
+                <span className="red">{errors.policy}</span>
+              ) : (
+                <></>
+              )}
             </Box>
           </ModalBody>
 
@@ -187,9 +260,9 @@ class CreateRoleControlModal extends Component {
                   this.props.roleCreation?.status === status.IN_PROGRESS
                 }
                 loading={this.props.roleCreation?.status === status.IN_PROGRESS}
-                onClick={this.handleCreateRole}
+                onClick={this.handleRoleSubmit}
               >
-                Create
+                {this.props.roleId > 0 ? "Edit" : "Create"}
               </LoadingButton>
             </Box>
           </ModalFooter>
@@ -200,14 +273,19 @@ class CreateRoleControlModal extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { roleCreation } = state.settings;
+  const { roleCreation, allPolicy, roleDetailsById } = state.settings;
   return {
     roleCreation,
+    allPolicy,
+    roleDetailsById,
   };
 };
 
 const mapDispatchToProps = {
   createRole,
+  getPolicies,
+  getRoleById,
+  updateRole,
 };
 
 export default connect(

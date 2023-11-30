@@ -16,7 +16,12 @@ const config = {
   GET_MFA_CODE: `${baseSecurityUrl}/users/mfaCode`,
   AUTH_MFA: `${baseSecurityUrl}/users/authenticateMfa`,
   CREATE_ROLE: `${baseSecurityUrl}/roles/create`,
+  UPDATE_ROLE: `${baseSecurityUrl}/roles/update`,
   CREATE_GROUP: `${baseSecurityUrl}/roles/create`,
+  GET_ROLES: `${baseSecurityUrl}/roles/listAll`,
+  GET_ROLE_BY_ID: `${baseSecurityUrl}/roles/#role-id#`,
+  GET_POLICIES: `${baseSecurityUrl}/policy/listAll`,
+  DELETE_ROLE: `${baseSecurityUrl}/roles/delete/#role-id#`,
 };
 
 export default config;

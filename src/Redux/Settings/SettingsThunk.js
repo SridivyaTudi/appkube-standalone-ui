@@ -61,3 +61,65 @@ export const createGroup = createAsyncThunk(
     }
   }
 );
+
+export const getRoles = createAsyncThunk("settings/getRoles", async () => {
+  try {
+    const response = await postLoginService.get(config.GET_ROLES);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export const getPolicies = createAsyncThunk(
+  "settings/getPolicies",
+  async () => {
+    try {
+      const response = await postLoginService.get(config.GET_POLICIES);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const deleteRole = createAsyncThunk(
+  "settings/deleteRole",
+  async (id) => {
+    try {
+      let url = config.DELETE_ROLE.replace("#role-id#", id);
+      const response = await postLoginService.delete(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const getRoleById = createAsyncThunk(
+  "settings/getRoleById",
+  async (id) => {
+    try {
+      let url = config.GET_ROLE_BY_ID.replace("#role-id#", id);
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const updateRole = createAsyncThunk(
+  "settings/updateRole",
+  async (params) => {
+    try {
+      const response = await postLoginService.post(
+        `${config.UPDATE_ROLE}`,
+        params
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
