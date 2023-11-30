@@ -22,7 +22,10 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import DefaultIcon from "../../../../assets/img/setting/default-icon.png";
 import CancelGroupControlModal from "../Permissions/Components/CancelGroupControlModal";
-
+import { getRoles, deleteRole } from "Redux/Settings/SettingsThunk";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import Loader from "Components/Loader";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -95,54 +98,28 @@ export class CreateGroup extends Component {
           date: "03/01/2023",
         },
       ],
-      rolerow: [
-        {
-          user: "Milena Kahles",
-          description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia	",
-        },
-        {
-          user: "Natalie Clark",
-          description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia	",
-        },
-        {
-          user: "David Garcia",
-          description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia	",
-        },
-        {
-          user: "Olivia Martin",
-          description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia	",
-        },
-        {
-          user: "William Davis",
-          description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia	",
-        },
-        {
-          user: "Ella Lewis",
-          description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia	",
-        },
-        {
-          user: "David Garcia",
-          description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia	",
-        },
-        {
-          user: "William Davis",
-          description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia	",
-        },
-      ],
+      roles: [],
       pg: 0,
       rpg: 5,
       showCreateUserControlModal: false,
       actionButton: null,
     };
   }
+
+  componentDidMount = () => {
+    this.props.getRoles();
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.props.allRoles.status !== prevProps.allRoles.status) {
+      if (this.props.allRoles.status === status.SUCCESS) {
+        let roles = this.props.allRoles.data;
+        if (roles) {
+          this.setState({ roles });
+        }
+      }
+    }
+  };
   handleChangePage = (event, newpage) => {
     this.setState({ pg: newpage });
   };
@@ -169,8 +146,96 @@ export class CreateGroup extends Component {
       });
     }
   };
+  // Render Loder
+  renderLoder() {
+    return (
+      <Loader
+        className={`d-flex align-item-center justify-center w-100 h-100`}
+      />
+    );
+  }
+
+  // render Roles Table
+  renderRoleTable = () => {
+    const { status: rolesStatus } = this.props.allRoles;
+
+    if (rolesStatus === status.IN_PROGRESS) {
+      return this.renderLoder();
+    } else {
+      return (
+        <Table
+          sx={{ minWidth: 500 }}
+          aria-label="custom pagination table"
+          className="table"
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <Checkbox size="small" /> Role Name
+              </TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>{this.renderRoles()}</TableBody>
+        </Table>
+      );
+    }
+  };
+
+  // render Roles data
+  renderRoles = () => {
+    const { roles, pg, rpg, actionButton } = this.state;
+
+    if (roles?.length) {
+      return roles.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
+        <TableRow key={index}>
+          <TableCell>
+            {" "}
+            <Checkbox size="small" /> {row.name}
+            <Box className="d-flex roles-box">
+              <HtmlTooltip
+                className="table-tooltip d-flex"
+                title={
+                  <React.Fragment>
+                    <span>This role created by default by the system</span>
+                  </React.Fragment>
+                }
+              >
+                <img src={DefaultIcon} alt="" className="m-r-1" />
+                Default
+              </HtmlTooltip>
+            </Box>
+          </TableCell>
+          <TableCell>{row.description}</TableCell>
+          <TableCell></TableCell>
+          <TableCell></TableCell>
+          <TableCell></TableCell>
+          <TableCell></TableCell>
+          <TableCell align="center"></TableCell>
+        </TableRow>
+      ));
+    } else {
+      return (
+        <Box className="environment-loader w-100">
+          There are no roles available.
+        </Box>
+      );
+    }
+  };
   render() {
-    const { userrow, rolerow, pg, rpg, showCancelGroupControlModal, actionButton } = this.state;
+    const {
+      userrow,
+      roles,
+      pg,
+      rpg,
+      showCancelGroupControlModal,
+      actionButton,
+    } = this.state;
     return (
       <Box className="create-group-container">
         <Box className="list-heading">
@@ -201,7 +266,8 @@ export class CreateGroup extends Component {
               <Box className="overview-buttons">
                 <List>
                   <ListItem>
-                    <Button onClick={this.handleCancelGroupControlModal}
+                    <Button
+                      onClick={this.handleCancelGroupControlModal}
                       className="danger-outline-btn min-width-inherit"
                       variant="outlined"
                     >
@@ -365,69 +431,19 @@ export class CreateGroup extends Component {
           </Grid>
         </Box>
         <TableContainer component={Paper} className="access-control-table">
-          <Table
-            sx={{ minWidth: 500 }}
-            aria-label="custom pagination table"
-            className="table"
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  {" "}
-                  <Checkbox size="small" /> Role Name
-                </TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rolerow.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    {" "}
-                    <Checkbox size="small" /> {row.user}
-                    <Box className="d-flex roles-box">
-                      <HtmlTooltip
-                        className="table-tooltip d-flex"
-                        title={
-                          <React.Fragment>
-                            <span>
-                              This role created by default by the system
-                            </span>
-                          </React.Fragment>
-                        }
-                      >
-                        <img src={DefaultIcon} alt="" className="m-r-1" />
-                        Default
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell>{row.description}</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell align="center"></TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          {this.renderRoleTable()}
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 20]}
           component="div"
-          count={rolerow.length}
+          count={roles.length}
           rowsPerPage={rpg}
           page={pg}
           className="access-control-pagination"
           onPageChange={this.handleChangePage}
           onRowsPerPageChange={this.handleChangeRowsPerPage}
         />
-         {showCancelGroupControlModal ? (
+        {showCancelGroupControlModal ? (
           <CancelGroupControlModal
             showModal={showCancelGroupControlModal}
             handleCancelGroupControlModal={this.handleCancelGroupControlModal}
@@ -439,5 +455,15 @@ export class CreateGroup extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  const { allRoles } = state.settings;
+  return {
+    allRoles,
+  };
+};
 
-export default CreateGroup;
+const mapDispatchToProps = {
+  getRoles,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateGroup);
