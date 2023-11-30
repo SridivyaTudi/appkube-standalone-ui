@@ -9,27 +9,26 @@ import TabsMenu from "../../Environments/EnvironmentList/TabsMenu";
 import { v4 } from "uuid";
 
 export class UserProfile extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          activeTab: 0,
-        };
-      }
-      tabMapping = [
-        {
-          name: "Permission",
-        },
-        {
-          name: "Group",
-        },
-        {
-          name: "SecurityCredentials",
-        },
-        
-      ];
-      setActiveTab = (activeTab) => {
-        this.setState({ activeTab });
-      };
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeTab: 0,
+    };
+  }
+  tabMapping = [
+    {
+      name: "Permission",
+    },
+    {
+      name: "Group",
+    },
+    {
+      name: "Security Credentials",
+    },
+  ];
+  setActiveTab = (activeTab) => {
+    this.setState({ activeTab });
+  };
   render() {
     const { activeTab } = this.state;
     return (
@@ -100,8 +99,9 @@ export class UserProfile extends Component {
             </Box>
           </Box>
         </Box>
-        <Box className="services-panel-tabs">
-          <Box className="tabs-head">
+        <Box className="services-panel-tabs ">
+          <Box className="tabs-head ">
+            <h4>Assign Permission</h4>
             <TabsMenu
               tabs={this.tabMapping}
               setActiveTab={this.setActiveTab}
@@ -109,7 +109,28 @@ export class UserProfile extends Component {
               breakWidth={992}
               key={v4()}
             />
+            <Box className="overview-buttons">
+              <List>
+                <ListItem>
+                  <Button
+                    className="danger-btn min-width-inherit"
+                    variant="contained"
+                  >
+                    Delete user
+                  </Button>
+                </ListItem>
+                <ListItem>
+                  <Button
+                    className="primary-btn min-width-inherit"
+                    variant="contained"
+                  >
+                    Add user to Group
+                  </Button>
+                </ListItem>
+              </List>
+            </Box>
           </Box>
+
           <Box className="permission-tabs-content">
             {activeTab === 0 ? (
               <Permission />
@@ -117,7 +138,7 @@ export class UserProfile extends Component {
               <Group />
             ) : activeTab === 2 ? (
               <SecurityCredentials />
-            ) :  (
+            ) : (
               <></>
             )}
           </Box>

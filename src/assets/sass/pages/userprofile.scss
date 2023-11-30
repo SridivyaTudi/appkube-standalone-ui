@@ -97,6 +97,7 @@
       background: #ffffff;
       border-radius: 10px;
       padding: 20px;
+      box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
       label {
         display: block;
         font-size: 16px;
@@ -149,9 +150,29 @@
     margin-top: 25px;
 
     .tabs-head {
-      display: block;
-      width: 100%;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .overview-buttons {
+        ul {
+          background: none;
+          display: flex;
+          align-items: center;
+          justify-content: end;
+          padding: 0;
+          margin: 0;
+          li {
+            display: inline-block;
+            list-style: none;
+            padding: 0;
+            margin-right: 15px;
+            width: auto;
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+      }
 
       ul {
         display: inline-block;
@@ -190,7 +211,147 @@
       display: block;
       width: 100%;
       margin-top: 25px;
-      
+      .credentials-content {
+        display: block;
+        width: 100%;
+        .credentials-box {
+          background: #ffffff;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+          .head {
+            margin-left: -20px;
+            margin-right: -20px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #414d55;
+            h4 {
+              margin: 0;
+            }
+          }
+          .credentials-details {
+            width: 100%;
+            display: block;
+            padding-top: 20px;
+            label {
+              display: block;
+              font-size: 16px;
+              line-height: 20px;
+              font-weight: 500;
+              color: #383874;
+              margin-bottom: 15px;
+            }
+            span {
+              display: block;
+              font-size: 14px;
+              line-height: 20px;
+              font-weight: 400;
+              color: #383874;
+              margin-bottom: 30px;
+            }
+            p {
+              display: block;
+              font-size: 14px;
+              line-height: 20px;
+              font-weight: 400;
+              color: #00b929;
+            }
+          }
+        }
+      }
+      .multi-authentication-section {
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+        .overview-buttons {
+          display: flex;
+          height: 100%;
+          align-items: end;
+          justify-content: end;
+          ul {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            padding: 0;
+            margin: 0;
+            li {
+              display: inline-block;
+              list-style: none;
+              padding: 0;
+              margin-right: 15px;
+              width: auto;
+              .primary-btn {
+                a {
+                  color: #ffffff;
+                }
+              }
+            }
+          }
+        }
+        .environment-table-section {
+          padding-top: 0;
+          padding-bottom: 0;
+          height: auto;
+
+          .table {
+            table {
+              thead {
+                tr {
+                  background-color: #ffffff;
+                  border-bottom: 1px dotted #b3b3b3;
+                  th {
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                    font-size: 13px;
+                    line-height: 25px;
+                    font-weight: 500;
+                    width: auto;
+                    white-space: nowrap;
+
+                    .environment-image {
+                      margin: 0px;
+                      width: 24px;
+                      height: 24px;
+                      padding: 2px;
+                    }
+                  }
+                }
+              }
+
+              tbody {
+                background: #ffffff;
+                tr {
+                  td {
+                    padding-left: 15px;
+                    padding-right: 15px;
+                    width: auto;
+                    white-space: nowrap;
+                    .billing-section {
+                      min-height: 250px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      .billing-details {
+                        width: 80%;
+                        height: 70px;
+                        padding: 10px;
+                        background-color: #FCFCFD;
+                        display: flex;
+                        border-radius: 5px;
+                        align-items: center;
+                        justify-content: flex-start;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
