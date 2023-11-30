@@ -38,6 +38,9 @@ import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology
 import Reports from "./AppViews/Reports";
 import SetPolicy from "./AppViews/Setting/SetPolicy";
 import SuperAdmin from "./AppViews/Setting/SuperAdmin";
+import AddUsers from "./AppViews/Setting/AddUsers";
+import AddRole from "./AppViews/Setting/AddRole";
+import CreateGroup from "./AppViews/Setting/CreateGroup";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -131,6 +134,9 @@ export const Views = (props) => {
           />
           <Route path={`${APP_PREFIX_PATH}/setting/setpolicy`} element={<SetPolicy/>} />
           <Route path={`${APP_PREFIX_PATH}/setting/super-admin`} element={<SuperAdmin/>}/>
+          <Route path={`${APP_PREFIX_PATH}/setting/add-users`} element={<AddUsers/>}/>
+          <Route path={`${APP_PREFIX_PATH}/setting/add-role`} element={<AddRole/>}/>
+          <Route path={`${APP_PREFIX_PATH}/setting/create-group`} element={<CreateGroup/>}/>
           <Route
             path={`${APP_PREFIX_PATH}/environments/ecscluster`}
             element={<EcsCluster />}

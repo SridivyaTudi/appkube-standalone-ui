@@ -31,7 +31,6 @@ class GroupControl extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCreateGroupControlModal: false,
       groupControlData: [
         {
           name: "Default Users",
@@ -52,11 +51,7 @@ class GroupControl extends Component {
     };
   }
 
-  handleCreateGroupControlModal = () => {
-    this.setState({
-      showCreateGroupControlModal: !this.state.showCreateGroupControlModal,
-    });
-  };
+ 
 
   handleActionButton = (index) => {
     const { actionButton } = this.state;
@@ -159,7 +154,7 @@ class GroupControl extends Component {
   };
 
   render() {
-    const { showCreateGroupControlModal } = this.state;
+    const {  } = this.state;
     return (
       <>
         <Box className="d-flex width-100 search-box">
@@ -171,22 +166,14 @@ class GroupControl extends Component {
           </Box>
           <Button
             className="primary-btn min-width"
-            onClick={this.handleCreateGroupControlModal}
+            
           >
-            Create New Group
+            <Link to={`/app/setting/create-group`}> Create New Group</Link>
           </Button>
         </Box>
         <Box className="group-control-boxs">
           {this.renderGroupControlData()}
         </Box>
-        {showCreateGroupControlModal ? (
-          <CreateGroupControlModal
-            showModal={showCreateGroupControlModal}
-            handleCreateGroupControlModal={this.handleCreateGroupControlModal}
-          />
-        ) : (
-          <></>
-        )}
       </>
     );
   }

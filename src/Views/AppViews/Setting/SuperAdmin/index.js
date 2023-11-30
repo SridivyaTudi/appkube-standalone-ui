@@ -1,17 +1,13 @@
-import { Box, List, ListItem, Grid, Button, IconButton } from "@mui/material";
-import { Component } from "react";
+import { Box, List, ListItem, Grid, Button } from "@mui/material";
+import { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import { APP_PREFIX_PATH } from "Configs/AppConfig";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CreateUserControlModal from "../Permissions/Components/CreateUserControlModal";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
-import { setActiveTab } from "Utils";
 import Users from "./Users";
 import Allowed from "./Allowed";
 import Disallowed from "./Disallowed";
 import Roles from "./Roles";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class SuperAdmin extends Component {
   constructor(props) {
@@ -19,7 +15,6 @@ class SuperAdmin extends Component {
     this.state = {
       activeTab: 0,
       actionButton: null,
-      showCreateUserControlModal: false,
     };
   }
   tabMapping = [
@@ -43,18 +38,57 @@ class SuperAdmin extends Component {
       dataKey: "disallowed",
       index: 3,
     },
-    
   ];
 
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
 
-  handleCreateUserControlModal = () => {
-    this.setState({
-      showCreateUserControlModal: !this.state.showCreateUserControlModal,
-    });
+  
+
+  renderBtns = () => {
+    let { activeTab } = this.state;
+    return (
+      <List>
+        {[0, 1].includes(activeTab) ? (
+          <Fragment>
+            <ListItem>
+              <Button
+                className="danger-btn min-width-inherit"
+                variant="contained"
+              >
+                Remove
+              </Button>
+            </ListItem>
+            <ListItem>
+              <Button
+                className="primary-btn min-width-inherit"
+                variant="contained"
+              >
+                <Link to={`${APP_PREFIX_PATH}/setting/${activeTab === 0 ? "add-users" :"add-role"}`} >
+                  {activeTab === 0 ? "Add Users" : "Add Role"}
+                </Link>
+              </Button>
+            </ListItem>
+          </Fragment>
+        ) : (
+          <></>
+        )}
+
+        <ListItem>
+          <Button className="info-btn min-width-inherit" variant="contained">
+            Edit
+          </Button>
+        </ListItem>
+        <ListItem>
+          <Button className="danger-btn min-width-inherit" variant="contained">
+            Delete Group
+          </Button>
+        </ListItem>
+      </List>
+    );
   };
+
   render() {
     const { showCreateUserControlModal, activeTab } = this.state;
     return (
@@ -80,69 +114,22 @@ class SuperAdmin extends Component {
             className="h-100"
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <Box className="overview-card">
                 <h5>Overview</h5>
                 <p>
-                The super admin is the highest level of administrative authority within a system or platform, possessing unparalleled control and access to all features, settings, and user data Super admins hold the key to managing and overseeing the entire infrastructure, making critical decisions, and implementing security measures to protect the system from unauthorized access and potential breaches.
+                  The super admin is the highest level of administrative
+                  authority within a system or platform, possessing unparalleled
+                  control and access to all features, settings, and user data
+                  Super admins hold the key to managing and overseeing the
+                  entire infrastructure, making critical decisions, and
+                  implementing security measures to protect the system from
+                  unauthorized access and potential breaches.
                 </p>
               </Box>
             </Grid>
-            <Grid item xs={7}>
-              <Box className="overview-buttons">
-                <List>
-                  <ListItem>
-                    <Button
-                      className="primary-btn min-width-inherit"
-                      variant="contained"
-                      onClick={this.handleCreateUserControlModal}
-                    >
-                      Add Users
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button
-                      className="danger-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Remove
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button
-                      className="primary-btn min-width-inherit"
-                      variant="contained"
-                      onClick={this.handleCreateUserControlModal}
-                    >
-                      Add Role
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button
-                      className="danger-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Remove
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button
-                      className="info-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Edit
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button
-                      className="danger-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Delete Group
-                    </Button>
-                  </ListItem>
-                </List>
-              </Box>
+            <Grid item xs={6}>
+              <Box className="overview-buttons">{this.renderBtns()}</Box>
             </Grid>
           </Grid>
         </Box>
@@ -174,15 +161,6 @@ class SuperAdmin extends Component {
             )}
           </Box>
         </Box>
-
-        {showCreateUserControlModal ? (
-          <CreateUserControlModal
-            showModal={showCreateUserControlModal}
-            handleCreateUserControlModal={this.handleCreateUserControlModal}
-          />
-        ) : (
-          <></>
-        )}
       </Box>
     );
   }
