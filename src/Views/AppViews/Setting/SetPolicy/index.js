@@ -147,6 +147,7 @@ class SetPolicy extends Component {
         <Box className="policy-section">
           <Grid
             container
+            alignItems={"center"}
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
