@@ -1,11 +1,40 @@
-import React, { Component } from 'react'
+import { Box } from "@mui/material";
+import { Component } from "react";
+import AccordionView from "../Components/AccordionView";
+let accessPolicyData = [
+  {
+    name: "Permission Set",
+    chlidren: [
+      {
+        name: "Prodect",
+        chlidren: [
+          {
+            name: "Create Prodect Environment",
+          },
+          {
+            name: "Create Prodect Environment",
+          },
+          {
+            name: "Create Prodect Environment",
+          },
+          { name: "Create Prodect Environment",
+         },
+          { name: "Create Prodect Environment",
+         },
+        ],
+      },
+    ],
+  },
+];
 
 class Disallowed extends Component {
   render() {
     return (
-      <div>Disallowed</div>
-    )
+      <Box className="environment-table">
+        <AccordionView data={accessPolicyData} />
+      </Box>
+    );
   }
 }
 
-export default Disallowed
+export default Disallowed;
