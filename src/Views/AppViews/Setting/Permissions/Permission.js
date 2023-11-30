@@ -46,7 +46,7 @@ class Permission extends Component {
               key={v4()}
             />
           </Box>
-          <Box className="tabs-content">
+          <Box className="permission-tabs-content">
             {activeTab === 0 ? (
               <Enviroment />
             ) : activeTab === 1 ? (
