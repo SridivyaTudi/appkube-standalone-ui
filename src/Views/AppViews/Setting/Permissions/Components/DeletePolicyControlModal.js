@@ -17,7 +17,7 @@ class DeletePolicyControlModal extends Component {
       >
         <ModalBody>
           <Box className="delete-policy-content text-center">
-            <Box className="delete-icom">
+            <Box className="delete-icon">
               <i class="fas fa-trash-alt"></i>
             </Box>
             <h5>Do you want to delete this Policy?</h5>
