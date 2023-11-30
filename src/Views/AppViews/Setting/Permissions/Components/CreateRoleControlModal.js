@@ -141,7 +141,12 @@ class CreateRoleControlModal extends Component {
 
   //  Reset state and close modal
   handleCloseModal = () => {
-    this.setState({ name: "", description: "", isSubmit: false,selectedPolicy:[] });
+    this.setState({
+      name: "",
+      description: "",
+      isSubmit: false,
+      selectedPolicy: [],
+    });
     this.props.handleCreateRoleControlModal();
   };
 
