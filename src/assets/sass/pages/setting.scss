@@ -816,8 +816,8 @@
     align-items: center;
     justify-content: center;
 
-    .leave-heading{
-      color: #3772FF;
+    .leave-heading {
+      color: #3772ff;
     }
 
     .delete-icon {
@@ -840,8 +840,8 @@
       width: 80px;
       height: 80px;
       border-radius: 50%;
-      background: #EBEFF7;
-      color: #3772FF;
+      background: #ebeff7;
+      color: #3772ff;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -905,13 +905,125 @@
     }
 
     .modal-body {
+      // .sign-right-content {
+      //   width: 100%;
+      //   flex-wrap: wrap;
+      //   //display: inline-flex;
+
+      //   .steps-container {
+      //     display: flex;
+      //     width: 100%;
+      //     padding: 0;
+      //     margin: 0 0 30px 0;
+      //     list-style: none;
+      //     align-items: center;
+      //     justify-content: space-between;
+
+      //     li {
+      //       position: relative;
+      //       display: inline-flex;
+      //       font-size: 0px;
+      //       // text-indent: -99990px;
+      //       width: 30px;
+      //       height: 30px;
+      //       padding: 4px;
+      //       border-radius: 50%;
+      //       background-color: #f0f0f0;
+      //       span{
+      //         font-size: 14px;
+      //         color: #000000;
+      //         position: absolute;
+      //         top: 0;
+      //         width: 100%;
+
+      //       }
+
+      //       &:first-child {
+      //         margin-left: 0;
+
+      //         &::after {
+      //           display: none;
+      //         }
+      //       }
+
+      //       // &::before {
+      //       //   position: absolute;
+      //       //   left: 0;
+      //       //   top: 0;
+      //       //   width: 30px;
+      //       //   height: 30px;
+      //       //   content: "";
+      //       //   border-radius: 50%;
+      //       //   border: 1px solid #00B929;
+      //       //   //background: #F0F0F0;
+      //       // }
+
+      //       &::after {
+      //         position: absolute;
+      //         top: 14px;
+      //         right: 30px;
+      //         content: "";
+      //         width: 225px;
+      //         height: 2px;
+      //         background-color: #f0f0f0;
+      //       }
+      //       &.active {
+      //         background-color: #00b929;
+      //         &::before {
+      //           content: "f00c";
+      //           position: absolute;
+      //           left: 0;
+      //           top: 0;
+      //           font-family: "FontAwesome";
+      //           color: #f0f0f0;
+      //           z-index: 100;
+      //         }
+
+      //         &::after {
+      //           background-color: #00b929;
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
+      .stepar-content {
+        width: 100%;
+        display: block;
+        .steper-label {
+          font-size: 12px;
+          line-height: 18px;
+          font-weight: 500;
+          color: #383874;
+          text-align: center;
+          margin-bottom: 5px;
+        }
+        .steper-button {
+          padding: 0;
+          width: 150px;
+          .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+            color: #00b929;
+          }
+          .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
+            color: #00b929;
+          }
+        }
+        .css-j5w0w9-MuiStepConnector-root {
+          margin-top: 25px;
+          .css-z7uhs0-MuiStepConnector-line {
+            display: block;
+            border-color: #bdbdbd;
+            border-top-style: solid;
+            border-top-width: 2px;
+            margin-right: -51px;
+            margin-left: -59px;
+          }
+        }
+      }
       .users-content {
         .title {
-          display: flex;
+          display: block;
           margin-bottom: 5px;
-
           .form-label {
-            width: 47%;
             font-size: 14px;
             color: #344054;
             line-height: 20px;
@@ -922,14 +1034,9 @@
         }
 
         .form-group {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          flex-wrap: wrap;
           margin-bottom: 15px;
-
           .form-control {
-            width: 240px;
+            width: 255px;
             height: 36px;
             padding: 5px 15px;
             border: 1px solid #d0d5dd;
@@ -940,7 +1047,6 @@
             line-height: 26px;
             font-weight: 400;
             color: #344054;
-            margin-right: 15px;
             font-family: "Poppins", sans-serif;
           }
 
@@ -952,19 +1058,86 @@
         }
 
         .add-user {
-          font-size: 14px;
-          font-weight: 500;
-          line-height: 20px;
-          color: #344054;
-
-          .add-icon {
-            color: #ffffff;
-            background: #8676ff;
-            margin-right: 8px;
-            padding: 5px 6px;
-
-            i {
-              font-size: 16px;
+          .compliance-btn {
+            text-transform: capitalize;
+            background-color: #dde1f8;
+            color: #383874;
+            font-weight: 600;
+            font-size: 13px;
+            line-height: 24px;
+            box-shadow: none;
+            text-transform: none;
+            letter-spacing: 0px;
+            border-radius: 5px;
+          }
+        }
+        .adduser-top-section {
+          margin-bottom: 20px;
+          h4 {
+            margin-bottom: 0;
+            margin-top: 0;
+          }
+          .top-search {
+            position: relative;
+            .form-control {
+              width: 100%;
+              height: 40px;
+              font-size: 14px;
+              line-height: 20px;
+              font-weight: 500;
+              margin-top: 10px;
+              color: #8676ff;
+              padding: 10px 50px 10px 20px;
+              margin-bottom: 10px;
+              border: none;
+              background-color: #eef0fa;
+              border-radius: 8px;
+            }
+            ::placeholder {
+              color: #8676ff;
+              opacity: 1; /* Firefox */
+            }
+      
+            ::-ms-input-placeholder {
+              /* Edge 12-18 */
+              color: #8676ff;
+            }
+            button {
+              position: absolute;
+              top: 8px;
+              right: 15px;
+              display: inline-flex;
+              border: none;
+              background-color: transparent;
+              color: #a1a3d4;
+            }
+          }
+          .overview-buttons {
+            display: flex;
+            height: 100%;
+            align-items: end;
+            justify-content: end;
+            ul {
+              display: flex;
+              align-items: center;
+              justify-content: end;
+              padding: 0;
+              margin: 0;
+              li {
+                display: inline-block;
+                list-style: none;
+                padding: 0;
+                margin-right: 15px;
+                width: auto;
+                &:last-child {
+                  margin-right: 0;
+                }
+                .primary-btn {
+                  a{
+                      color: #ffffff;
+                  }
+                }
+              }
             }
           }
         }

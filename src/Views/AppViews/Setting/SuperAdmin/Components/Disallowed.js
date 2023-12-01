@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { Component } from "react";
-import AccordionView from "../Components/AccordionView";
+import AccordionView from "../../Components/AccordionView";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";

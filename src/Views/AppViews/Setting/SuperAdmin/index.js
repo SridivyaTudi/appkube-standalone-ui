@@ -3,10 +3,10 @@ import { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import CreateUserControlModal from "../Permissions/Components/CreateUserControlModal";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
-import Users from "./Users";
-import Allowed from "./Allowed";
-import Disallowed from "./Disallowed";
-import Roles from "./Roles";
+import Users from "./Components/Users";
+import Allowed from "./Components/Allowed";
+import Disallowed from "./Components/Disallowed";
+import Roles from "./Components/Roles";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class SuperAdmin extends Component {
