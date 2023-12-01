@@ -6,6 +6,7 @@ import Permission from "./Components/Permission";
 import Group from "./Components/Group";
 import SecurityCredentials from "./Components/SecurityCredentials";
 import TabsMenu from "../../Environments/EnvironmentList/TabsMenu";
+import ChangePasswordModal from "../../../AppViews/Setting/Account/Components/ChangePasswordModal";
 import { v4 } from "uuid";
 let HEADER = {
   0: "Assign Permission",
@@ -17,6 +18,7 @@ export class UserProfile extends Component {
     super(props);
     this.state = {
       activeTab: 0,
+      showChangePasswordModal: false,
     };
   }
   tabMapping = [
@@ -33,8 +35,14 @@ export class UserProfile extends Component {
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
+
+  handleChangePasswordModal = () => {
+    this.setState({
+      showChangePasswordModal: !this.state.showChangePasswordModal,
+    });
+  };
   render() {
-    const { activeTab } = this.state;
+    const { activeTab, showChangePasswordModal } = this.state;
     return (
       <Box className="user-profile-container">
         <Box className="list-heading">
@@ -139,6 +147,7 @@ export class UserProfile extends Component {
                     <Button
                       className="primary-btn min-width-inherit"
                       variant="contained"
+                      onClick={this.handleChangePasswordModal}
                     >
                       Reset Password
                     </Button>
@@ -162,6 +171,12 @@ export class UserProfile extends Component {
             )}
           </Box>
         </Box>
+        {showChangePasswordModal ? (
+          <ChangePasswordModal
+            showModal={showChangePasswordModal}
+            handleChangePasswordModal={this.handleChangePasswordModal}
+          />
+        ) : null}
       </Box>
     );
   }
