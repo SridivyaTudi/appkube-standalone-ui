@@ -1,18 +1,26 @@
 import { Box, Grid, List, ListItem, Button } from "@mui/material";
-import { Component } from "react";
+import { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import UserImage from "../../../../assets/img/setting/user-image.png";
 import Permission from "./Components/Permission";
 import Group from "./Components/Group";
 import SecurityCredentials from "./Components/SecurityCredentials";
 import TabsMenu from "../../Environments/EnvironmentList/TabsMenu";
+import ChangePasswordModal from "../../../AppViews/Setting/Account/Components/ChangePasswordModal";
+
 import { v4 } from "uuid";
+let HEADER = {
+  0: "Assign Permission",
+  1: "Assign Groups",
+  2: "Security Credentials",
+};
 
 export class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 0,
+      showChangePasswordModal: false,
     };
   }
   tabMapping = [
@@ -29,8 +37,15 @@ export class UserProfile extends Component {
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
+
+  handleChangePasswordModal = () => {
+    this.setState({
+      showChangePasswordModal: !this.state.showChangePasswordModal,
+    });
+  };
+
   render() {
-    const { activeTab } = this.state;
+    const { activeTab, showChangePasswordModal,showAuthenticationModal } = this.state;
     return (
       <Box className="user-profile-container">
         <Box className="list-heading">
@@ -101,7 +116,7 @@ export class UserProfile extends Component {
         </Box>
         <Box className="services-panel-tabs ">
           <Box className="tabs-head ">
-            <h4>Assign Permission</h4>
+            <h4>{HEADER[activeTab]}</h4>
             <TabsMenu
               tabs={this.tabMapping}
               setActiveTab={this.setActiveTab}
@@ -111,22 +126,38 @@ export class UserProfile extends Component {
             />
             <Box className="overview-buttons">
               <List>
-                <ListItem>
-                  <Button
-                    className="danger-btn min-width-inherit"
-                    variant="contained"
-                  >
-                    Delete user
-                  </Button>
-                </ListItem>
-                <ListItem>
-                  <Button
-                    className="primary-btn min-width-inherit"
-                    variant="contained"
-                  >
-                    Add user to Group
-                  </Button>
-                </ListItem>
+                {activeTab === 1 ? (
+                  <Fragment>
+                    <ListItem>
+                      <Button
+                        className="danger-btn min-width-inherit"
+                        variant="contained"
+                      >
+                        Remove
+                      </Button>
+                    </ListItem>
+                    <ListItem>
+                      <Button
+                        className="primary-btn min-width-inherit"
+                        variant="contained"
+                      >
+                        Add user to Groups
+                      </Button>
+                    </ListItem>
+                  </Fragment>
+                ) : activeTab === 2 ? (
+                  <ListItem>
+                    <Button
+                      className="primary-btn min-width-inherit"
+                      variant="contained"
+                      onClick={this.handleChangePasswordModal}
+                    >
+                      Reset Password
+                    </Button>
+                  </ListItem>
+                ) : (
+                  <></>
+                )}
               </List>
             </Box>
           </Box>
@@ -143,6 +174,15 @@ export class UserProfile extends Component {
             )}
           </Box>
         </Box>
+        {showChangePasswordModal ? (
+          <ChangePasswordModal
+            showModal={showChangePasswordModal}
+            handleChangePasswordModal={this.handleChangePasswordModal}
+          />
+        ) : (
+          <></>
+        )}
+       
       </Box>
     );
   }

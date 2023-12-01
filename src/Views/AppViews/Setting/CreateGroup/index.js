@@ -26,6 +26,8 @@ import { getRoles, deleteRole } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
+import { setActiveTab } from "Utils";
+
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -279,7 +281,13 @@ export class CreateGroup extends Component {
                       className="primary-btn min-width-inherit"
                       variant="contained"
                     >
-                      <Link to={`/app/setting`}> Create Group</Link>
+                      <Link
+                        to={`/app/setting`}
+                        onClick={() => setActiveTab("permissions/group")}
+                      >
+                        {" "}
+                        Create Group
+                      </Link>
                     </Button>
                   </ListItem>
                 </List>
