@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import NoteIcon from "../../../../../assets/img/setting/note-icon.png";
 
 export class SecurityCredentials extends Component {
   render() {
@@ -64,30 +65,36 @@ export class SecurityCredentials extends Component {
               </Grid>
             </Grid>
           </Box>
-         
-          <Box className="environment-table-section">
-              <TableContainer className="table">
-                <Table className="overview">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell align="left">MFA</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="center" colSpan={6}>
-                        <Box className="billing-section">
-                          <Box className="billing-details">
-                           
-                            <span>Billing details will be displayed here</span>
+          <Box className="environment-table-section m-t-3">
+            <TableContainer className="table">
+              <Table className="overview">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="left">MFA</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell align="center" colSpan={6}>
+                      <Box className="billing-section">
+                        <Box className="billing-details">
+                          <Box className="d-flex align-items-center">
+                            <Box className="note-icon">
+                              <img src={NoteIcon} alt="" />
+                            </Box>
+                            <span>Please Authenticate.</span>
+                          </Box>
+                          <Box className="close-icon">
+                            <i class="fas fa-times"></i>
                           </Box>
                         </Box>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Box>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
         </Box>
       </Box>
     );
