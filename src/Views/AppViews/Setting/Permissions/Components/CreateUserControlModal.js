@@ -344,20 +344,12 @@ class CreateUserControlModal extends Component {
                     </Box>
                   </Box>
                   <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                    <Button
-                      color="inherit"
-                      disabled={activeStep === 0}
-                      onClick={this.handleBack}
-                      sx={{ mr: 1 }}
-                    >
-                      Back
-                    </Button>
                     <Box sx={{ flex: "1 1 auto" }} />
-                    <Button className="info-btn min-width" sx={{ mr: 1 }}>
+                    <Button className="info-btn min-width-inherit" sx={{ mr: 1 }}>
                       Cancel
                     </Button>
                     <Button
-                      className="primary-btn min-width"
+                      className="primary-btn min-width-inherit"
                       onClick={this.handleNext}
                       sx={{ mr: 1 }}
                     >
@@ -372,10 +364,10 @@ class CreateUserControlModal extends Component {
                           Step {activeStep + 1} already completed
                         </Typography>
                       ) : (
-                        <Button onClick={this.handleComplete}>
+                        <Button onClick={this.handleComplete} className="primary-btn min-width-inherit">
                           {this.completedSteps() === this.totalSteps() - 1
                             ? "Finish"
-                            : "Complete Step"}
+                            : "Create User"}
                         </Button>
                       ))}
                   </Box>
