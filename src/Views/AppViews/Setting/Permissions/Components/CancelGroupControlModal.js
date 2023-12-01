@@ -3,6 +3,9 @@ import { Box } from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter } from "reactstrap";
 import NoteIcon from "../../../../../assets/img/setting/note-icon.png";
+import { setActiveTab } from "Utils";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class CancelGroupControlModal extends Component {
   constructor(props) {
@@ -21,9 +24,12 @@ class CancelGroupControlModal extends Component {
           <Box className="delete-policy-content text-center">
             <h5 className="m-b-2 leave-heading">Leave Page ?</h5>
             <Box className="cancel-icon">
-              <img src={NoteIcon} alt=""/>
+              <img src={NoteIcon} alt="" />
             </Box>
-            <p>are you sure you want to leave the current page?. The change that you made won’t be saved</p>
+            <p>
+              are you sure you want to leave the current page?. The change that
+              you made won’t be saved
+            </p>
           </Box>
         </ModalBody>
         <ModalFooter className="footer-top-br m-t-3">
@@ -31,7 +37,11 @@ class CancelGroupControlModal extends Component {
             <LoadingButton
               className="danger-btn min-width-inherit m-r-2"
               variant="contained"
-              onClick={this.props.handleCancelGroupControlModal}
+              onClick={() => {
+                this.props.handleCancelGroupControlModal();
+                setActiveTab("permissions/group");
+                this.props.navigate(`${APP_PREFIX_PATH}/setting`)
+              }}
             >
               Cancel
             </LoadingButton>
@@ -49,4 +59,4 @@ class CancelGroupControlModal extends Component {
   }
 }
 
-export default CancelGroupControlModal;
+export default navigateRouter(CancelGroupControlModal);

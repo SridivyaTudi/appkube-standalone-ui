@@ -54,9 +54,13 @@ export class Setting extends Component {
     if (currentTab) {
       for (let tab = 0; tab < this.tabMapping.length; tab++) {
         const element = this.tabMapping[tab];
-        if (element.dataKey === currentTab) {
+
+        if (currentTab.includes(element.dataKey)) {
           this.setActiveTab(element.index);
-          deleteActiveTab();
+
+          if (!currentTab.includes("/")) {
+            deleteActiveTab();
+          }
           break;
         }
       }

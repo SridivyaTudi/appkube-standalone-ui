@@ -7,6 +7,7 @@ import Policies from "./Policies";
 import Permissson from "./Permission";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
+import { getActiveTab, deleteActiveTab } from "Utils";
 export class Permissions extends Component {
   controlMapping = [
     {
@@ -49,6 +50,10 @@ export class Permissions extends Component {
     };
   }
 
+  componentDidMount = () => {
+    this.setPreviousTab()
+  };
+
   componentDidUpdate = (prevProps, prevState) => {
     if (this.props.allRoles.status !== prevProps.allRoles.status) {
       if (this.props.allRoles.status === status.SUCCESS) {
@@ -71,6 +76,20 @@ export class Permissions extends Component {
 
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
+  };
+
+  setPreviousTab = () => {
+    let currentTab = getActiveTab();
+    if (currentTab) {
+      for (let tab = 0; tab < this.controlMapping.length; tab++) {
+        const element = this.controlMapping[tab];
+        if (currentTab.includes(element.dataKey)) {
+          this.setActiveTab(tab);
+          deleteActiveTab();
+          break;
+        }
+      }
+    }
   };
 
   render() {
