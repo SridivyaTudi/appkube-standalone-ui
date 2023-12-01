@@ -14,9 +14,23 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import NoteIcon from "../../../../../assets/img/setting/note-icon.png";
+import AuthenticationModal from "../../../../AppViews/Setting/Account/Components/AuthenticationModal";
 
 export class SecurityCredentials extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showAuthenticationModal: false,
+    };
+  }
+  handleAuthenticationModal = () => {
+    this.setState({
+      showAuthenticationModal: !this.state.showAuthenticationModal,
+    });
+  };
   render() {
+    const { showAuthenticationModal } = this.state;
+
     return (
       <Box className="credentials-content">
         <Box className="credentials-box">
@@ -56,6 +70,7 @@ export class SecurityCredentials extends Component {
                       <Button
                         className="primary-btn min-width-inherit"
                         variant="contained"
+                        onClick={this.handleAuthenticationModal}
                       >
                         <Link to={``}> Setup MFA</Link>
                       </Button>
@@ -96,6 +111,14 @@ export class SecurityCredentials extends Component {
             </TableContainer>
           </Box>
         </Box>
+        {showAuthenticationModal ? (
+          <AuthenticationModal
+            showModal={showAuthenticationModal}
+            handleAuthenticationModal={this.handleAuthenticationModal}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }

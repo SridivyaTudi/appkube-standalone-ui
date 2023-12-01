@@ -7,12 +7,14 @@ import Group from "./Components/Group";
 import SecurityCredentials from "./Components/SecurityCredentials";
 import TabsMenu from "../../Environments/EnvironmentList/TabsMenu";
 import ChangePasswordModal from "../../../AppViews/Setting/Account/Components/ChangePasswordModal";
+
 import { v4 } from "uuid";
 let HEADER = {
   0: "Assign Permission",
   1: "Assign Groups",
   2: "Security Credentials",
 };
+
 export class UserProfile extends Component {
   constructor(props) {
     super(props);
@@ -41,8 +43,9 @@ export class UserProfile extends Component {
       showChangePasswordModal: !this.state.showChangePasswordModal,
     });
   };
+
   render() {
-    const { activeTab, showChangePasswordModal } = this.state;
+    const { activeTab, showChangePasswordModal,showAuthenticationModal } = this.state;
     return (
       <Box className="user-profile-container">
         <Box className="list-heading">
@@ -176,7 +179,10 @@ export class UserProfile extends Component {
             showModal={showChangePasswordModal}
             handleChangePasswordModal={this.handleChangePasswordModal}
           />
-        ) : null}
+        ) : (
+          <></>
+        )}
+       
       </Box>
     );
   }
