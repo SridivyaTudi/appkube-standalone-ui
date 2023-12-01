@@ -271,49 +271,42 @@ class CreateUserControlModal extends Component {
                           {/* step3 */}
 
                           <Box className="d-block">
-                            <Grid
-                              container
-                              alignItems={"center"}
-                              rowSpacing={1}
-                              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                            >
-                              <Grid item xs={12}>
-                                <Box className="form-group">
-                                  <label
-                                    htmlFor="roleName"
-                                    className="form-label"
-                                  >
-                                    Role Name
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    id="name"
-                                    name="name"
-                                    placeholder="Director"
-                                    autoFocus={"autoFocus"}
-                                  />
-                                </Box>
-                              </Grid>
-                              <Grid item xs={12}>
-                                <Box className="form-group">
-                                  <label
-                                    htmlFor="roleName"
-                                    className="form-label"
-                                  >
-                                    Role Name
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    id="name"
-                                    name="name"
-                                    placeholder="Director"
-                                    autoFocus={"autoFocus"}
-                                  />
-                                </Box>
-                              </Grid>
-                            </Grid>
+                            <Box className="user-review">
+                              <h4>Review</h4>
+                              <Box className="form-group">
+                                <label
+                                  htmlFor="username"
+                                  className="form-label"
+                                >
+                                  Username (optional)
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="username"
+                                  name="username"
+                                  placeholder="James"
+                                  autoFocus={"autoFocus"}
+                                />
+                              </Box>
+                              <Box className="form-group">
+                                <label
+                                  htmlFor="email"
+                                  className="form-label"
+                                >
+                                  Email Address
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="email"
+                                  name="email"
+                                  placeholder="James@synectiks.com"
+                                  autoFocus={"autoFocus"}
+                                />
+                              </Box>
+                            </Box>
+                            <h4>Group</h4>
                             <TableContainer
                               component={Paper}
                               className="access-control-table"
