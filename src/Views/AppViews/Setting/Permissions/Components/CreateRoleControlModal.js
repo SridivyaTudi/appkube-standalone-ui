@@ -227,17 +227,26 @@ class CreateRoleControlModal extends Component {
                 Add Policy
               </label>
               <FormControl className="select-policy">
-                <InputLabel id="demo-multiple-name-label">
-                  Select Policy
-                </InputLabel>
+                
                 <Select
                   labelId="demo-multiple-name-label"
                   multiple
+                  displayEmpty
+                  renderValue={(selected) => {
+                    if (selected.length === 0) {
+                      return <em>Placeholder</em>;
+                    }
+        
+                    return selected.join(', ');
+                  }}
                   value={selectedPolicy}
                   onChange={this.handleSelectboxChange}
-                  input={<OutlinedInput label={"Select Policy"} />}
+                 
                   inputProps={{ "aria-label": "Without label" }}
                 >
+                  <MenuItem disabled value="">
+                    <em>Placeholder</em>
+                  </MenuItem>
                   {this.renderPolicies()}
                 </Select>
               </FormControl>
