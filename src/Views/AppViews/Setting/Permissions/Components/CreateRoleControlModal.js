@@ -160,7 +160,8 @@ class CreateRoleControlModal extends Component {
   };
 
   render() {
-    let { name, description, isSubmit, selectedPolicy } = this.state;
+    let { name, description, isSubmit, selectedPolicy, policyList } =
+      this.state;
     const { errors } = this.validateForm(isSubmit);
     return (
       <Modal
@@ -227,25 +228,28 @@ class CreateRoleControlModal extends Component {
                 Add Policy
               </label>
               <FormControl className="select-policy">
-                
                 <Select
                   labelId="demo-multiple-name-label"
                   multiple
                   displayEmpty
                   renderValue={(selected) => {
                     if (selected.length === 0) {
-                      return <em>Placeholder</em>;
+                      return <em>Select Policy</em>;
                     }
-        
-                    return selected.join(', ');
+                    let labels = [];
+                    policyList.map((policy) => {
+                      if (selected.includes(+policy.id)) {
+                        labels.push(policy.name);
+                      }
+                    });
+                    return labels.join(", ");
                   }}
                   value={selectedPolicy}
                   onChange={this.handleSelectboxChange}
-                 
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem disabled value="">
-                    <em>Placeholder</em>
+                    <em>Select Policy</em>
                   </MenuItem>
                   {this.renderPolicies()}
                 </Select>
