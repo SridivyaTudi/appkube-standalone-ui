@@ -4,6 +4,8 @@ import TableCell from "@mui/material/TableCell";
 import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import AccordionView from "../../Components/AccordionView";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -25,99 +27,98 @@ let accessPolicyData = [
   {
     name: "Product",
     subName: (
-     
-        <Box className="d-flex status">
-          <HtmlTooltip
-            className="table-tooltip d-flex"
-            title={
-              <React.Fragment>
-                <span>This role created by default by the system</span>
-              </React.Fragment>
-            }
-          >
-            Not Permitted
-          </HtmlTooltip>
-        </Box>
+      <Box className="d-flex status">
+        <HtmlTooltip
+          className="table-tooltip d-flex"
+          title={
+            <React.Fragment>
+              <span>This role created by default by the system</span>
+            </React.Fragment>
+          }
+        >
+          Not Permitted
+        </HtmlTooltip>
+      </Box>
     ),
     chlidren: [
       {
         name: "Create Product Environment",
         subName: (
-          <button type="button" className="close" aria-label="Close">
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+          <IconButton aria-label="delete" size="small" className="close-icon">
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
         ),
       },
       {
         name: "Edit Product Environment",
         subName: (
-          <button type="button" className="close" aria-label="Close">
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+          <IconButton aria-label="delete" size="small" className="close-icon">
+          <CloseIcon fontSize="inherit" />
+        </IconButton>
         ),
       },
       {
         name: "Clone Product Environment",
         subName: (
-          <button type="button" className="close" aria-label="Close">
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+          <IconButton aria-label="delete" size="small" className="close-icon">
+          <CloseIcon fontSize="inherit" />
+        </IconButton>
         ),
       },
       {
         name: "Migrate Product Environment",
         subName: (
-          <button type="button" className="close" aria-label="Close">
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+          <IconButton aria-label="delete" size="small" className="close-icon">
+          <CloseIcon fontSize="inherit" />
+        </IconButton>
         ),
       },
       {
         name: "Delete Product Environment",
         subName: (
-          <button type="button" className="close" aria-label="Close">
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+          <IconButton aria-label="delete" size="small" className="close-icon">
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
         ),
       },
       {
         name: "Replicate Product Environment",
         subName: (
-          <button type="button" className="close" aria-label="Close">
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+          <IconButton aria-label="delete" size="small" className="close-icon">
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
         ),
       },
       {
         name: "Add service in Product Environment",
         subName: (
-          <button type="button" className="close" aria-label="Close">
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+          <IconButton aria-label="delete" size="small" className="close-icon">
+          <CloseIcon fontSize="inherit" />
+        </IconButton>
         ),
       },
       {
         name: "Add service in Product Environment",
         subName: (
-          <button type="button" className="close" aria-label="Close">
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+          <IconButton aria-label="delete" size="small" className="close-icon">
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
         ),
       },
       {
         name: "Delete service Product in Environment",
         subName: (
-          <button type="button" className="close" aria-label="Close">
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+          <IconButton aria-label="delete" size="small" className="close-icon">
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
         ),
       },
       {
         name: "Replicate service Product in Environment",
         subName: (
-          <button type="button" className="close" aria-label="Close">
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+          <IconButton aria-label="delete" size="small" className="close-icon">
+          <CloseIcon fontSize="inherit" />
+        </IconButton>
         ),
       },
     ],
@@ -130,7 +131,10 @@ class Disallowed extends Component {
       <Box className="setting-table permission-table">
         <AccordionView
           data={accessPolicyData}
-          headers={[{name: "Permission set" , styled:{width:80}} , {name: "Status" , styled:{width:105}} ]}
+          headers={[
+            { name: "Permission set", styled: { width: 105 } },
+            { name: "Status", styled: { width: 105 } },
+          ]}
         />
       </Box>
     );
