@@ -1,70 +1,51 @@
-import React, { Component } from "react";
-import Table from "@mui/material/Table";
+import React, { Component, Fragment } from "react";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import TableContainer from "@mui/material/TableContainer";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
 import { v4 } from "uuid";
 class AccordionView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: this.props.data,
+      headers: this.props.headers || "",
       selectedNodes: [],
     };
   }
-  // Render the table parent view
-  renderParentTable = () => {
-    let { data, selectedNodes } = this.state;
-    if (data?.length) {
-      return data.map((policy, index) => {
-        let arrowDownOrRight = selectedNodes.includes(index) ? "down" : "right";
-        let childDataShow =
-          selectedNodes.includes(index) && policy?.chlidren?.length;
-        return (
-          <Table key={v4()}>
-            <TableHead onClick={() => this.onClickNode(index)}>
-              <TableRow>
-                <TableCell align="left">
-                  <span>
-                    <i class={`fas fa-chevron-${arrowDownOrRight}`}></i>
-                  </span>
-                  <strong>{policy.name}</strong>
-                  {policy.subName ? policy.subName : <></>}
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {childDataShow ? (
-                this.renderChildTable(policy.chlidren, index)
-              ) : (
-                <></>
-              )}
-            </TableBody>
-          </Table>
-        );
-      });
+
+  renderTableHead = () => {
+    let { headers } = this.state;
+    if (headers?.length) {
+      return (
+        <TableRow>
+          {headers.map((header) => (
+            <TableCell key={v4()}>{header}</TableCell>
+          ))}
+        </TableRow>
+      );
     }
   };
 
   /**
-   * Render the table child view
+   * Render the table  view
    *  @param {Array} data - child data as array of object
    *  @param {String} parentIndex - parent index
    */
-  renderChildTable = (data, parentIndex) => {
+  renderTableBody = (data, parentIndex) => {
     let { selectedNodes } = this.state;
     return data.map((subchild, childIndex) => {
-      let currentNode = `${parentIndex}_${childIndex}`;
+      let currentNode = `${parentIndex ? `${parentIndex}_` : ""}${childIndex}`;
       let isActive = selectedNodes.includes(currentNode);
       let arrowDownOrRight = isActive ? "down" : "right";
       let childDataShow =
         selectedNodes.includes(currentNode) && subchild?.chlidren?.length;
       return (
-        <>
+        <Fragment key={v4()}>
           <TableRow
-            key={v4()}
             onClick={(e) => {
               e.stopPropagation();
               this.onClickNode(currentNode);
@@ -73,29 +54,24 @@ class AccordionView extends Component {
           >
             <TableCell align="left">
               <span>
-                <i class={`fas fa-chevron-${arrowDownOrRight}`}></i>
+                <i className={`fas fa-chevron-${arrowDownOrRight}`}></i>
               </span>
               {subchild.name}
-              {subchild.subName ? subchild.subName : <></>}
             </TableCell>
+            {subchild.subName ? (
+              <TableCell align="left">
+                {subchild.subName ? subchild.subName : <></>}
+              </TableCell>
+            ) : (
+              <></>
+            )}
           </TableRow>
           {childDataShow ? (
-            <TableRow
-              key={v4()}
-              onClick={(e) => {
-                e.stopPropagation();
-                this.onClickNode(currentNode);
-              }}
-              className={`${isActive ? "active" : ""}`}
-            >
-              <TableCell align="left inner-table-section">
-                {this.renderChildTable(subchild?.chlidren, currentNode)}
-              </TableCell>
-            </TableRow>
+            this.renderTableBody(subchild?.chlidren, currentNode)
           ) : (
             <></>
           )}
-        </>
+        </Fragment>
       );
     });
   };
@@ -113,14 +89,20 @@ class AccordionView extends Component {
     } else {
       selectedNodes.push(currentNode);
     }
-
     this.setState({ selectedNodes });
   };
+
   render() {
-    return (
-      <TableContainer className="table">
-        {this.renderParentTable()}
+    let { data } = this.state;
+    return data?.length ? (
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableHead>{this.renderTableHead()}</TableHead>
+          <TableBody> {this.renderTableBody(data)}</TableBody>
+        </Table>
       </TableContainer>
+    ) : (
+      <></>
     );
   }
 }

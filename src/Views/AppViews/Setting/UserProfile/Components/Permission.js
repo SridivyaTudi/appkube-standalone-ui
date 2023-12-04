@@ -9,35 +9,35 @@ let accessPolicyData = [
         name: "Environment",
         chlidren: [
           {
-            name: "Create Prodect Environment",
+            name: "Create Product Environment",
           },
           {
-            name: "Create Prodect Environment",
+            name: "Create Product Environment",
           },
           {
-            name: "Create Prodect Environment",
+            name: "Create Product Environment",
           },
-          { name: "Create Prodect Environment",
+          { name: "Create Product Environment",
          },
-          { name: "Create Prodect Environment",
+          { name: "Create Product Environment",
          },
         ],
       },
       {
-        name: "Prodect",
+        name: "Product",
         chlidren: [
           {
-            name: "Create Prodect Environment",
+            name: "Create Product Environment",
           },
           {
-            name: "Create Prodect Environment",
+            name: "Create Product Environment",
           },
           {
-            name: "Create Prodect Environment",
+            name: "Create Product Environment",
           },
-          { name: "Create Prodect Environment",
+          { name: "Create Product Environment",
          },
-          { name: "Create Prodect Environment",
+          { name: "Create Product Environment",
          },
         ],
       },
@@ -45,17 +45,17 @@ let accessPolicyData = [
         name: "SHR",
         chlidren: [
           {
-            name: "Create Prodect Environment",
+            name: "Create Product Environment",
           },
           {
-            name: "Create Prodect Environment",
+            name: "Create Product Environment",
           },
           {
-            name: "Create Prodect Environment",
+            name: "Create Product Environment",
           },
-          { name: "Create Prodect Environment",
+          { name: "Create Product Environment",
          },
-          { name: "Create Prodect Environment",
+          { name: "Create Product Environment",
          },
         ],
       },
@@ -63,17 +63,17 @@ let accessPolicyData = [
         name: "DevSecOps",
         chlidren: [
           {
-            name: "Create Prodect Environment",
+            name: "Create Product Environment",
           },
           {
-            name: "Create Prodect Environment",
+            name: "Create Product Environment",
           },
           {
-            name: "Create Prodect Environment",
+            name: "Create Product Environment",
           },
-          { name: "Create Prodect Environment",
+          { name: "Create Product Environment",
          },
-          { name: "Create Prodect Environment",
+          { name: "Create Product Environment",
          },
         ],
       },
