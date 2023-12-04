@@ -282,37 +282,41 @@ class CreateUserControlModal extends Component {
                                 </Grid>
                               </Grid>
                             </Box>
-                            <TableContainer
-                              component={Paper}
-                              className="access-control-table"
-                            >
-                              <Table
-                                sx={{ minWidth: 500 }}
-                                aria-label="custom pagination table"
+                            <Box className="create-user-control-table">
+                              <TableContainer
+                                component={Paper}
                                 className="table"
                               >
-                                <TableHead>
-                                  <TableRow>
-                                    <TableCell>Group</TableCell>
-                                    <TableCell>Attached Policies</TableCell>
-                                  </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                  {rows.map((row, index) => (
-                                    <TableRow key={index}>
-                                      <TableCell>
-                                        <Checkbox
-                                          size="small"
-                                          className="check-box"
-                                        />
-                                        {row.permissionName}
-                                      </TableCell>
-                                      <TableCell>{row.policiesname}</TableCell>
+                                <Table
+                                  sx={{ minWidth: 500 }}
+                                  aria-label="custom pagination table"
+                                  className="table"
+                                >
+                                  <TableHead>
+                                    <TableRow>
+                                      <TableCell>Group</TableCell>
+                                      <TableCell>Attached Policies</TableCell>
                                     </TableRow>
-                                  ))}
-                                </TableBody>
-                              </Table>
-                            </TableContainer>
+                                  </TableHead>
+                                  <TableBody>
+                                    {rows.map((row, index) => (
+                                      <TableRow key={index}>
+                                        <TableCell>
+                                          <Checkbox
+                                            size="small"
+                                            className="check-box"
+                                          />
+                                          {row.permissionName}
+                                        </TableCell>
+                                        <TableCell>
+                                          {row.policiesname}
+                                        </TableCell>
+                                      </TableRow>
+                                    ))}
+                                  </TableBody>
+                                </Table>
+                              </TableContainer>
+                            </Box>
                           </Box>
                         </>
                       ) : (
@@ -321,69 +325,89 @@ class CreateUserControlModal extends Component {
 
                           <Box className="d-block">
                             <Box className="user-review">
-                              <h4>Review</h4>
-                              <Box className="form-group">
-                                <label
-                                  htmlFor="username"
-                                  className="form-label"
+                              <h4 className="m-t-0 m-b-0">Review</h4>
+                              <Box className="d-block m-t-1">
+                                <Grid
+                                  container
+                                  alignItems={"center"}
+                                  rowSpacing={1}
+                                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                                 >
-                                  Username (optional)
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="username"
-                                  name="username"
-                                  placeholder="James"
-                                  autoFocus={"autoFocus"}
-                                />
-                              </Box>
-                              <Box className="form-group">
-                                <label htmlFor="email" className="form-label">
-                                  Email Address
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="email"
-                                  name="email"
-                                  placeholder="James@synectiks.com"
-                                  autoFocus={"autoFocus"}
-                                />
+                                  <Grid item xs={6}>
+                                    <Box className="form-group">
+                                      <label
+                                        htmlFor="username"
+                                        className="form-label"
+                                      >
+                                        Username (optional)
+                                      </label>
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        id="username"
+                                        name="username"
+                                        placeholder="James"
+                                        autoFocus={"autoFocus"}
+                                      />
+                                    </Box>
+                                  </Grid>
+                                  <Grid item xs={6}>
+                                    <Box className="form-group">
+                                      <label
+                                        htmlFor="email"
+                                        className="form-label"
+                                      >
+                                        Email Address
+                                      </label>
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        id="email"
+                                        name="email"
+                                        placeholder="James@synectiks.com"
+                                        autoFocus={"autoFocus"}
+                                      />
+                                    </Box>
+                                  </Grid>
+                                </Grid>
                               </Box>
                             </Box>
-                            <h4>Group</h4>
-                            <TableContainer
-                              component={Paper}
-                              className="access-control-table"
-                            >
-                              <Table
-                                sx={{ minWidth: 500 }}
-                                aria-label="custom pagination table"
-                                className="table"
+                            <h4 className="m-t-0 m-b-0">Group</h4>
+                            <Box className="create-user-control-table">
+                              <TableContainer
+                                component={Paper}
+                                className=" table"
                               >
-                                <TableHead>
-                                  <TableRow>
-                                    <TableCell>Group</TableCell>
-                                    <TableCell>Attached Policies</TableCell>
-                                  </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                  {rows.map((row, index) => (
-                                    <TableRow key={index}>
-                                      <TableCell>
-                                        <Checkbox
-                                          size="small"
-                                          className="check-box"
-                                        />
-                                        {row.permissionName}
-                                      </TableCell>
-                                      <TableCell>{row.policiesname}</TableCell>
+                                <Table
+                                  sx={{ minWidth: 500 }}
+                                  aria-label="custom pagination table"
+                                  className="table"
+                                >
+                                  <TableHead>
+                                    <TableRow>
+                                      <TableCell>Group</TableCell>
+                                      <TableCell>Attached Policies</TableCell>
                                     </TableRow>
-                                  ))}
-                                </TableBody>
-                              </Table>
-                            </TableContainer>
+                                  </TableHead>
+                                  <TableBody>
+                                    {rows.map((row, index) => (
+                                      <TableRow key={index}>
+                                        <TableCell>
+                                          <Checkbox
+                                            size="small"
+                                            className="check-box"
+                                          />
+                                          {row.permissionName}
+                                        </TableCell>
+                                        <TableCell>
+                                          {row.policiesname}
+                                        </TableCell>
+                                      </TableRow>
+                                    ))}
+                                  </TableBody>
+                                </Table>
+                              </TableContainer>
+                            </Box>
                           </Box>
                         </>
                       )}
