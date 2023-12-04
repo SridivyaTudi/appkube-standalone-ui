@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { Link } from "react-router-dom";
 
 class Policies extends Component {
   render() {
@@ -13,7 +14,9 @@ class Policies extends Component {
               <SearchOutlinedIcon />
             </button>
           </Box>
-          <Button className="primary-btn min-width">Create Policy</Button>
+          <Button className="primary-btn min-width">
+            <Link to={`/app/setting/create-policy`}>Create Policy</Link>
+          </Button>
         </Box>
         <Button className="danger-btn min-width-inherit" variant="contained">
           Delete

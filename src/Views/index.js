@@ -42,6 +42,7 @@ import AddUsers from "./AppViews/Setting/AddUsers";
 import AddRole from "./AppViews/Setting/AddRole";
 import CreateGroup from "./AppViews/Setting/CreateGroup";
 import UserProfile from "./AppViews/Setting/UserProfile";
+import CreatePolicy from "./AppViews/Setting/CreatePolicy";
 
 
 export function withRouter(Component) {
@@ -140,6 +141,7 @@ export const Views = (props) => {
           <Route path={`${APP_PREFIX_PATH}/setting/add-role`} element={<AddRole/>}/>
           <Route path={`${APP_PREFIX_PATH}/setting/create-group`} element={<CreateGroup/>}/>
           <Route path={`${APP_PREFIX_PATH}/setting/user-profile`} element={<UserProfile/>}/>
+          <Route path={`${APP_PREFIX_PATH}/setting/create-policy`} element={<CreatePolicy/>}/>
           <Route
             path={`${APP_PREFIX_PATH}/environments/ecscluster`}
             element={<EcsCluster />}
