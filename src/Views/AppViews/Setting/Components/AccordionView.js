@@ -23,7 +23,9 @@ class AccordionView extends Component {
       return (
         <TableRow>
           {headers.map((header) => (
-            <TableCell key={v4()}>{header}</TableCell>
+            <TableCell key={v4()} style={header.styled}>
+              {header.name}
+            </TableCell>
           ))}
         </TableRow>
       );
@@ -45,21 +47,21 @@ class AccordionView extends Component {
         selectedNodes.includes(currentNode) && subchild?.chlidren?.length;
       return (
         <Fragment key={v4()}>
-          <TableRow
-            onClick={(e) => {
-              e.stopPropagation();
-              this.onClickNode(currentNode);
-            }}
-            className={`${isActive ? "active" : ""}`}
-          >
-            <TableCell align="left">
-              <span>
-                <i className={`fas fa-chevron-${arrowDownOrRight}`}></i>
-              </span>
+          <TableRow className={`${isActive ? "active" : ""}`}>
+            <TableCell
+            
+              width={80}
+              onClick={(e) => {
+                e.stopPropagation();
+                this.onClickNode(currentNode);
+              }}
+              className="accrodion-main-title"
+            >
+              <i className={`fas fa-chevron-${arrowDownOrRight}`}></i>
               {subchild.name}
             </TableCell>
             {subchild.subName ? (
-              <TableCell align="left">
+              <TableCell width={120}>
                 {subchild.subName ? subchild.subName : <></>}
               </TableCell>
             ) : (
@@ -95,8 +97,8 @@ class AccordionView extends Component {
   render() {
     let { data } = this.state;
     return data?.length ? (
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
+      <TableContainer component={Paper} className="access-control-table">
+        <Table aria-label="collapsible table" className="table">
           <TableHead>{this.renderTableHead()}</TableHead>
           <TableBody> {this.renderTableBody(data)}</TableBody>
         </Table>

@@ -1,11 +1,44 @@
 import { Box } from "@mui/material";
-import { Component } from "react";
+import React, { Component } from "react";
+import TableCell from "@mui/material/TableCell";
+import { styled } from "@mui/material/styles";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import AccordionView from "../../Components/AccordionView";
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#16161E",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#16161E",
+    color: "#ffffff",
+    maxWidth: 250,
+
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+    padding: "8px 10px",
+  },
+}));
 
 let accessPolicyData = [
   {
     name: "Product",
-    subName: <button>Not Permitted</button>,
+    subName: (
+     
+        <Box className="d-flex status">
+          <HtmlTooltip
+            className="table-tooltip d-flex"
+            title={
+              <React.Fragment>
+                <span>This role created by default by the system</span>
+              </React.Fragment>
+            }
+          >
+            Not Permitted
+          </HtmlTooltip>
+        </Box>
+    ),
     chlidren: [
       {
         name: "Create Product Environment",
@@ -97,7 +130,7 @@ class Disallowed extends Component {
       <Box className="setting-table permission-table">
         <AccordionView
           data={accessPolicyData}
-          headers={["Permission set", "Status"]}
+          headers={[{name: "Permission set" , styled:{width:80}} , {name: "Status" , styled:{width:105}} ]}
         />
       </Box>
     );
