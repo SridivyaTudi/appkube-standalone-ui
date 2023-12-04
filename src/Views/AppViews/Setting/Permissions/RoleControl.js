@@ -120,7 +120,7 @@ class RoleControl extends Component {
   renderLoder() {
     return (
       <Loader
-        className={`d-flex align-item-center justify-center w-100 h-100`}
+        className={`d-flex align-item-center justify-center w-100 h-100 p-t-20 p-b-20`}
       />
     );
   }
@@ -229,7 +229,7 @@ class RoleControl extends Component {
       ));
     } else {
       return (
-        <Box className="environment-loader w-100">
+        <Box className="environment-loader w-100 text-center align-self-center p-t-20 p-b-20">
           There are no roles available.
         </Box>
       );

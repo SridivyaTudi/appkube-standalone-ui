@@ -576,7 +576,7 @@
           background: linear-gradient(0deg, #ffffff, #ffffff);
           box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
           border-radius: 5px;
-          font-size: 13px;
+          font-size: 12px;
           line-height: 26px;
           font-weight: 400;
           color: #344054;
@@ -605,8 +605,14 @@
             &:focus-visible {
               border-color: #d0d5dd;
               box-shadow: none;
+             overflow: unset;
             }
+            &:hover{
+              border-color: #d0d5dd;
+            }
+           
           }
+         
         }
 
         .input-group-text {
