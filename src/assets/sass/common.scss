@@ -1175,3 +1175,22 @@ a {
   top: 23px;
   right: 15px;
 }
+
+
+.accordion-table{
+  .table{
+    th{
+      font-weight: 500;
+      color: #000000;
+      padding-left: 15px;
+      padding-right: 15px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      font-size: 14px;
+      font-family: "Poppins", sans-serif;
+      border-bottom-color: #b3b3b3;
+      border-bottom-style: dotted;
+
+    }
+  }
+}
