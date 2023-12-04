@@ -57,25 +57,74 @@ class CreateUserControlModal extends Component {
     return Object.keys(this.state.completed).length;
   };
 
-  isLastStep = () => {
-    return this.state.activeStep === this.totalSteps() - 1;
-  };
-
   allStepsCompleted = () => {
     return this.completedSteps() === this.totalSteps();
   };
+
   handleStep = (step) => () => {
     this.setState({ activeStep: step });
   };
 
-  handleNext = () => {
-    const newActiveStep =
-      this.isLastStep() && !this.allStepsCompleted()
-        ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
-          this.state.steps.findIndex((step, i) => !(i in this.state.completed))
-        : this.state.activeStep + 1;
-    this.setState({ activeStep: newActiveStep });
+  //  Render footer buttons
+  renderFooterBtnsSection = () => {
+    let { activeStep } = this.state;
+    return (
+      <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+        <Box sx={{ flex: "1 1 auto" }} />
+        <Button
+          className="info-btn min-width-inherit"
+          sx={{ mr: 1 }}
+          onClick={() => this.handleCancel()}
+        >
+          Cancel
+        </Button>
+        {activeStep > 0 ? (
+          <Button
+            className="info-btn min-width-inherit"
+            sx={{ mr: 1 }}
+            onClick={() => this.handlePreviousSteps()}
+          >
+            Previous
+          </Button>
+        ) : (
+          <></>
+        )}
+
+        <Button
+          className="primary-btn min-width-inherit"
+          onClick={() =>
+            activeStep === 2 ? this.handleCreateUser() : this.handleNextSteps()
+          }
+          sx={{ mr: 1 }}
+        >
+          {activeStep === 2 ? "Create User" : "Next"}
+        </Button>
+      </Box>
+    );
+  };
+
+  // Set next activeStep state.
+  handleNextSteps = () => {
+    let { activeStep } = this.state;
+    activeStep = activeStep + 1;
+    this.setState({ activeStep });
+  };
+
+  // Set previous activeStep state.
+  handlePreviousSteps = () => {
+    let { activeStep } = this.state;
+    activeStep = activeStep - 1;
+    this.setState({ activeStep });
+  };
+
+  // Close modal
+  handleCancel = () => {
+    this.props.handleCreateUserControlModal();
+  };
+
+  // Create user API call
+  handleCreateUser = () => {
+    this.handleCancel();
   };
 
   render() {
@@ -83,13 +132,13 @@ class CreateUserControlModal extends Component {
     return (
       <Modal
         isOpen={this.props.showModal}
-        toggle={this.props.handleCreateUserControlModal}
+        toggle={this.handleCancel}
         className="invite-user-modal-container"
       >
         <ModalHeader tag="div">
           <h5>
             Create Users
-            <button onClick={this.props.handleCreateUserControlModal}>
+            <button onClick={this.handleCancel}>
               <i className="fa-solid fa-xmark"></i>
             </button>
           </h5>
@@ -128,7 +177,7 @@ class CreateUserControlModal extends Component {
                   <Box sx={{ mt: 2, mb: 1, py: 1 }}>
                     <Box className="users-content">
                       {/* step1 */}
-                      {activeStep == 0 ? (
+                      {activeStep === 0 ? (
                         <Box className="d-block">
                           <Box className="title">
                             <Grid
@@ -191,7 +240,7 @@ class CreateUserControlModal extends Component {
                             </Button>
                           </Box>
                         </Box>
-                      ) : activeStep == 1 ? (
+                      ) : activeStep === 1 ? (
                         <>
                           {/* step2 */}
 
@@ -290,10 +339,7 @@ class CreateUserControlModal extends Component {
                                 />
                               </Box>
                               <Box className="form-group">
-                                <label
-                                  htmlFor="email"
-                                  className="form-label"
-                                >
+                                <label htmlFor="email" className="form-label">
                                   Email Address
                                 </label>
                                 <input
@@ -343,34 +389,7 @@ class CreateUserControlModal extends Component {
                       )}
                     </Box>
                   </Box>
-                  <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                    <Box sx={{ flex: "1 1 auto" }} />
-                    <Button className="info-btn min-width-inherit" sx={{ mr: 1 }}>
-                      Cancel
-                    </Button>
-                    <Button
-                      className="primary-btn min-width-inherit"
-                      onClick={this.handleNext}
-                      sx={{ mr: 1 }}
-                    >
-                      Next
-                    </Button>
-                    {activeStep !== steps.length &&
-                      (completed[activeStep] ? (
-                        <Typography
-                          variant="caption"
-                          sx={{ display: "inline-block" }}
-                        >
-                          Step {activeStep + 1} already completed
-                        </Typography>
-                      ) : (
-                        <Button onClick={this.handleComplete} className="primary-btn min-width-inherit">
-                          {this.completedSteps() === this.totalSteps() - 1
-                            ? "Finish"
-                            : "Create User"}
-                        </Button>
-                      ))}
-                  </Box>
+                  {this.renderFooterBtnsSection()}
                 </React.Fragment>
               )}
             </div>
