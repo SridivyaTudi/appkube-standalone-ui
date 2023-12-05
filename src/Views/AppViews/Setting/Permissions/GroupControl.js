@@ -51,8 +51,6 @@ class GroupControl extends Component {
     };
   }
 
- 
-
   handleActionButton = (index) => {
     const { actionButton } = this.state;
     if (actionButton === null) {
@@ -154,7 +152,7 @@ class GroupControl extends Component {
   };
 
   render() {
-    const {  } = this.state;
+    const {} = this.state;
     return (
       <>
         <Box className="d-flex width-100 search-box">
@@ -164,10 +162,7 @@ class GroupControl extends Component {
               <SearchOutlinedIcon />
             </button>
           </Box>
-          <Button
-            className="primary-btn min-width"
-            
-          >
+          <Button className="primary-btn min-width">
             <Link to={`/app/setting/create-group`}> Create New Group</Link>
           </Button>
         </Box>

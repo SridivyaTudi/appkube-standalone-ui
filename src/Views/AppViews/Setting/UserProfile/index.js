@@ -45,7 +45,8 @@ export class UserProfile extends Component {
   };
 
   render() {
-    const { activeTab, showChangePasswordModal,showAuthenticationModal } = this.state;
+    const { activeTab, showChangePasswordModal, showAuthenticationModal } =
+      this.state;
     return (
       <Box className="user-profile-container">
         <Box className="list-heading">
@@ -137,12 +138,14 @@ export class UserProfile extends Component {
                       </Button>
                     </ListItem>
                     <ListItem>
-                      <Button
-                        className="primary-btn min-width-inherit"
-                        variant="contained"
-                      >
-                        Add user to Groups
-                      </Button>
+                      <Link to={`/app/setting/user-profile/add-user-group`}>
+                        <Button
+                          className="primary-btn min-width-inherit"
+                          variant="contained"
+                        >
+                          Add user to Groups
+                        </Button>
+                      </Link>
                     </ListItem>
                   </Fragment>
                 ) : activeTab === 2 ? (
@@ -182,7 +185,6 @@ export class UserProfile extends Component {
         ) : (
           <></>
         )}
-       
       </Box>
     );
   }
