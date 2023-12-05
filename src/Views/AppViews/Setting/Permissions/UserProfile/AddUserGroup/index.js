@@ -10,14 +10,11 @@ import {
   TableRow,
   TableCell,
   Paper,
-  IconButton,
-  TablePagination,
   List,
   ListItem,
   Checkbox,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { setActiveTab } from "Utils";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
@@ -84,7 +81,7 @@ class AddUserGroup extends Component {
     };
   }
   render() {
-    const { rows, pg, rpg, actionButton } = this.state;
+    const { rows } = this.state;
 
     return (
       <Box className="create-group-container">

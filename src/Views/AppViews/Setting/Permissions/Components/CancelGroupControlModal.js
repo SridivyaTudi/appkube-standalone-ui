@@ -39,8 +39,8 @@ class CancelGroupControlModal extends Component {
               variant="contained"
               onClick={() => {
                 this.props.handleCancelGroupControlModal();
-                setActiveTab("permissions/group");
-                this.props.navigate(`${APP_PREFIX_PATH}/setting`)
+                setActiveTab(this.props.previousTab);
+                this.props.navigate(`${APP_PREFIX_PATH}/setting`);
               }}
             >
               Cancel

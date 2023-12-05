@@ -1,7 +1,6 @@
 import { Box, List, ListItem, Grid, Button } from "@mui/material";
 import { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import CreateUserControlModal from "../Components/CreateUserControlModal";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import Users from "./Components/Users";
 import Allowed from "./Components/Allowed";
@@ -44,8 +43,6 @@ class SuperAdmin extends Component {
     this.setState({ activeTab });
   };
 
-  
-
   renderBtns = () => {
     let { activeTab } = this.state;
     return (
@@ -65,7 +62,11 @@ class SuperAdmin extends Component {
                 className="primary-btn min-width-inherit"
                 variant="contained"
               >
-                <Link to={`${APP_PREFIX_PATH}/setting/${activeTab === 0 ? "add-users" :"add-role"}`} >
+                <Link
+                  to={`${APP_PREFIX_PATH}/setting/${
+                    activeTab === 0 ? "add-users" : "add-role"
+                  }`}
+                >
                   {activeTab === 0 ? "Add Users" : "Add Role"}
                 </Link>
               </Button>
@@ -90,7 +91,7 @@ class SuperAdmin extends Component {
   };
 
   render() {
-    const { showCreateUserControlModal, activeTab } = this.state;
+    const { activeTab } = this.state;
     return (
       <Box className="super-admin-container">
         <Box className="list-heading">

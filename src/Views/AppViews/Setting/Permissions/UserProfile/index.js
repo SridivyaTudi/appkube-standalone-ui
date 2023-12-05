@@ -45,7 +45,7 @@ export class UserProfile extends Component {
   };
 
   render() {
-    const { activeTab, showChangePasswordModal, showAuthenticationModal } =
+    const { activeTab, showChangePasswordModal } =
       this.state;
     return (
       <Box className="user-profile-container">

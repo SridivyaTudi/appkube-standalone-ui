@@ -112,7 +112,7 @@ class Roles extends Component {
     }
   };
   render() {
-    const { rows, pg, rpg, actionButton } = this.state;
+    const { rows, pg, rpg } = this.state;
     return (
       <>
         <TableContainer component={Paper} className="access-control-table">

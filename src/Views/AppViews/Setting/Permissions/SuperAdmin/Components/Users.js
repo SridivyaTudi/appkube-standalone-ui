@@ -56,7 +56,6 @@ class Users extends Component {
           emailAddress: "lucas.martinez@example.com",
           groups: "06",
         },
-        
       ],
       pg: 0,
       rpg: 5,
@@ -92,7 +91,7 @@ class Users extends Component {
     }
   };
   render() {
-    const { rows, pg, rpg, actionButton } = this.state;
+    const { rows, pg, rpg } = this.state;
     return (
       <>
         <TableContainer component={Paper} className="access-control-table">
@@ -103,7 +102,10 @@ class Users extends Component {
           >
             <TableHead>
               <TableRow>
-                <TableCell> <Checkbox size="small" /> User</TableCell>
+                <TableCell>
+                  {" "}
+                  <Checkbox size="small" /> User
+                </TableCell>
                 <TableCell>Email Address</TableCell>
                 <TableCell>Groups</TableCell>
                 <TableCell></TableCell>
@@ -115,7 +117,10 @@ class Users extends Component {
             <TableBody>
               {rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell> <Checkbox size="small" /> {row.user}</TableCell>
+                  <TableCell>
+                    {" "}
+                    <Checkbox size="small" /> {row.user}
+                  </TableCell>
                   <TableCell>{row.emailAddress}</TableCell>
                   <TableCell>{row.groups}</TableCell>
                   <TableCell></TableCell>

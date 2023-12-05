@@ -10,7 +10,6 @@ import {
   TableRow,
   TableCell,
   Paper,
-  IconButton,
   TablePagination,
   List,
   ListItem,
@@ -22,7 +21,7 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import DefaultIcon from "../../../../../assets/img/setting/default-icon.png";
 import CancelGroupControlModal from "../Components/CancelGroupControlModal";
-import { getRoles, deleteRole } from "Redux/Settings/SettingsThunk";
+import { getRoles } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
@@ -191,7 +190,7 @@ export class CreateGroup extends Component {
 
   // render Roles data
   renderRoles = () => {
-    const { roles, pg, rpg, actionButton } = this.state;
+    const { roles, pg, rpg } = this.state;
 
     if (roles?.length) {
       return roles.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
@@ -232,14 +231,7 @@ export class CreateGroup extends Component {
     }
   };
   render() {
-    const {
-      userrow,
-      roles,
-      pg,
-      rpg,
-      showCancelGroupControlModal,
-      actionButton,
-    } = this.state;
+    const { userrow, roles, pg, rpg, showCancelGroupControlModal } = this.state;
     return (
       <Box className="create-group-container">
         <Box className="list-heading">
@@ -457,6 +449,7 @@ export class CreateGroup extends Component {
           <CancelGroupControlModal
             showModal={showCancelGroupControlModal}
             handleCancelGroupControlModal={this.handleCancelGroupControlModal}
+            previousTab={"permissions/group"}
           />
         ) : (
           <></>
