@@ -13,7 +13,7 @@ import Box from "@mui/material/Box";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import React, { Component } from "react";
-import AccordionView from "../../Components/AccordionView";
+import AccordionView from "../../../Components/AccordionView";
 import IconButton from "@mui/material/IconButton";
 import CheckIcon from "@mui/icons-material/Check";
 //import status from "Redux/Constants/CommonDS";
@@ -162,7 +162,7 @@ let accessPolicyData = [
             </React.Fragment>
           }
         >
-        Permitted
+          <span>Permitted</span>
         </HtmlTooltip>
       </Box>
     ),
@@ -219,8 +219,8 @@ let accessPolicyData = [
         name: "Add service in Product Environment",
         subName: (
           <IconButton aria-label="delete" size="small" className="check-icon">
-          <CheckIcon fontSize="inherit" />
-        </IconButton>
+            <CheckIcon fontSize="inherit" />
+          </IconButton>
         ),
       },
       {

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { Component } from "react";
-import AccordionView from "../../Components/AccordionView";
+import AccordionView from "Views/AppViews/Setting/Components/AccordionView";
 let accessPolicyData = [
   {
     name: "Permission Set",

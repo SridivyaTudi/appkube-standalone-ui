@@ -1,12 +1,12 @@
 import { Box, Grid, List, ListItem, Button } from "@mui/material";
 import { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import UserImage from "../../../../assets/img/setting/user-image.png";
+import UserImage from "assets/img/setting/user-image.png";
 import Permission from "./Components/Permission";
 import Group from "./Components/Group";
 import SecurityCredentials from "./Components/SecurityCredentials";
-import TabsMenu from "../../Environments/EnvironmentList/TabsMenu";
-import ChangePasswordModal from "../../../AppViews/Setting/Account/Components/ChangePasswordModal";
+import TabsMenu from "Views/AppViews/Environments/EnvironmentList/TabsMenu";
+import ChangePasswordModal from "Views/AppViews/Setting/Account/Components/ChangePasswordModal";
 
 import { v4 } from "uuid";
 let HEADER = {

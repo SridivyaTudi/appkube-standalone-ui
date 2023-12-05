@@ -1,7 +1,7 @@
 import { Box, List, ListItem, Grid, Button } from "@mui/material";
 import { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import CreateUserControlModal from "../Permissions/Components/CreateUserControlModal";
+import CreateUserControlModal from "../Components/CreateUserControlModal";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import Users from "./Components/Users";
 import Allowed from "./Components/Allowed";

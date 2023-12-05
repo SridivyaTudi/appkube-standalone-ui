@@ -37,13 +37,13 @@ import Error from "./AppViews/Error";
 import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
 import Reports from "./AppViews/Reports";
 import SetPolicy from "./AppViews/Setting/Permissions/SetPolicy";
-import SuperAdmin from "./AppViews/Setting/SuperAdmin";
+import SuperAdmin from "./AppViews/Setting/Permissions/SuperAdmin";
 import AddUsers from "./AppViews/Setting/Permissions/AddUsers";
 import AddRole from "./AppViews/Setting/Permissions/AddRole";
 import CreateGroup from "./AppViews/Setting/Permissions/CreateGroup";
-import UserProfile from "./AppViews/Setting/UserProfile";
+import UserProfile from "./AppViews/Setting/Permissions/UserProfile";
 import CreatePolicy from "./AppViews/Setting/Permissions/CreatePolicy";
-import AddUserGroup from "./AppViews/Setting/UserProfile/AddUserGroup";
+import AddUserGroup from "./AppViews/Setting/Permissions/UserProfile/AddUserGroup";
 
 
 export function withRouter(Component) {

@@ -1,9 +1,8 @@
 import { Box } from "@mui/material";
 import React, { Component } from "react";
-import TableCell from "@mui/material/TableCell";
 import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import AccordionView from "../../Components/AccordionView";
+import AccordionView from "../../../Components/AccordionView";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 const HtmlTooltip = styled(({ className, ...props }) => (
@@ -36,7 +35,7 @@ let accessPolicyData = [
             </React.Fragment>
           }
         >
-          Not Permitted
+          <span>Not Permitted</span>
         </HtmlTooltip>
       </Box>
     ),
@@ -53,24 +52,24 @@ let accessPolicyData = [
         name: "Edit Product Environment",
         subName: (
           <IconButton aria-label="delete" size="small" className="close-icon">
-          <CloseIcon fontSize="inherit" />
-        </IconButton>
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
         ),
       },
       {
         name: "Clone Product Environment",
         subName: (
           <IconButton aria-label="delete" size="small" className="close-icon">
-          <CloseIcon fontSize="inherit" />
-        </IconButton>
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
         ),
       },
       {
         name: "Migrate Product Environment",
         subName: (
           <IconButton aria-label="delete" size="small" className="close-icon">
-          <CloseIcon fontSize="inherit" />
-        </IconButton>
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
         ),
       },
       {
@@ -93,8 +92,8 @@ let accessPolicyData = [
         name: "Add service in Product Environment",
         subName: (
           <IconButton aria-label="delete" size="small" className="close-icon">
-          <CloseIcon fontSize="inherit" />
-        </IconButton>
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
         ),
       },
       {
@@ -117,8 +116,8 @@ let accessPolicyData = [
         name: "Replicate service Product in Environment",
         subName: (
           <IconButton aria-label="delete" size="small" className="close-icon">
-          <CloseIcon fontSize="inherit" />
-        </IconButton>
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
         ),
       },
     ],

@@ -21,7 +21,7 @@ import { setActiveTab } from "Utils";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import DefaultIcon from "../../../../../assets/img/setting/default-icon.png";
+import DefaultIcon from "assets/img/setting/default-icon.png";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />

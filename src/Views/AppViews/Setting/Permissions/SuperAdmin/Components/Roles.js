@@ -13,8 +13,7 @@ import {
 import React, { Component } from "react";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import DefaultIcon from "../../../../../assets/img/setting/default-icon.png";
-
+import DefaultIcon from "assets/img/setting/default-icon.png";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -40,35 +39,43 @@ class Roles extends Component {
       rows: [
         {
           user: "Senior Leadership",
-          Description: "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+          Description:
+            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
         },
         {
           user: "Administrator",
-          Description: "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+          Description:
+            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
         },
         {
           user: "Tech user",
-          Description: "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+          Description:
+            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
         },
         {
           user: "DevSecOps",
-          Description: "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+          Description:
+            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
         },
         {
           user: "System Engineer",
-          Description: "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+          Description:
+            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
         },
         {
           user: "Architect Designer",
-          Description: "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+          Description:
+            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
         },
         {
           user: "Product Manager",
-          Description: "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+          Description:
+            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
         },
         {
           user: "Tester",
-          Description: "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+          Description:
+            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
         },
       ],
       pg: 0,
@@ -145,8 +152,10 @@ class Roles extends Component {
                           </React.Fragment>
                         }
                       >
-                        <img src={DefaultIcon} alt="" />
-                        Default
+                        <React.Fragment>
+                          <img src={DefaultIcon} alt="" />
+                         Default
+                        </React.Fragment>
                       </HtmlTooltip>
                     </Box>
                   </TableCell>
