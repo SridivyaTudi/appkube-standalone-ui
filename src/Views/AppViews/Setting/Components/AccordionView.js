@@ -47,18 +47,24 @@ class AccordionView extends Component {
         selectedNodes.includes(currentNode) && subchild?.chlidren?.length;
       return (
         <Fragment key={v4()}>
-          <TableRow className={`${isActive ? "active" : ""}`}>
+          <TableRow>
             <TableCell
-            
               width={80}
               onClick={(e) => {
                 e.stopPropagation();
                 this.onClickNode(currentNode);
               }}
-              className="accrodion-main-title"
+              className={` accrodion-main-title ${isActive ? "active" : ""}`}
             >
               <i className={`fas fa-chevron-${arrowDownOrRight}`}></i>
               {subchild.name}
+              {childDataShow ? (
+                <Table>
+                  {this.renderTableBody(subchild?.chlidren, currentNode)}
+                </Table>
+              ) : (
+                <></>
+              )}
             </TableCell>
             {subchild.subName ? (
               <TableCell width={120}>
@@ -68,11 +74,6 @@ class AccordionView extends Component {
               <></>
             )}
           </TableRow>
-          {childDataShow ? (
-            this.renderTableBody(subchild?.chlidren, currentNode)
-          ) : (
-            <></>
-          )}
         </Fragment>
       );
     });

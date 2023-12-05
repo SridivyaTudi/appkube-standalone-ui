@@ -18,7 +18,8 @@
   "error": "404",
   "reports": "Reports",
   "setpolicy": "Set Policy",
-  "super-admin":"Super Admin",
-  "user-profile":"User Profile",
-  "create-group":"Create Group"
+  "super-admin": "Super Admin",
+  "user-profile": "User Profile",
+  "create-group": "Create Group",
+  "create-policy": "Create Policy"
 }
