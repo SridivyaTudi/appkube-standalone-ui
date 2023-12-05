@@ -25,6 +25,7 @@
           width: 100%;
           td{
             width: 150px;
+            padding: 12px 15px;
             .status {
               font-size: 12px;
               line-height: 16px;
@@ -51,10 +52,7 @@
               color: #ffffff;
               background: #656575;
               margin-left: 38px;
-             
-            
             }
-            
           }
           &:hover {
             background-color: #f7f9fc;
@@ -65,12 +63,13 @@
              
             }
           }
+         
         }
       }
     }
   }
 
-  .table {
+  table {
     display: block;
     width: 100%;
 
@@ -101,7 +100,6 @@
             font-size: 15px;
             text-transform: capitalize;
           }
-
           span {
             width: 20px;
             height: 20px;
@@ -136,6 +134,7 @@
 
           td {
             font-weight: 600;
+            padding: 12px 15px;
 
             &:first-child {
               &::before {
@@ -145,13 +144,17 @@
             }
           }
         }
+        &:hover {
+          background-color: #f7f9fc;
+         
+        }
 
         .accrodion-main-title {
-          padding-left: 15px;
+          padding-left: 30px;
         }
 
         td {
-          padding: 12px 0px;
+          padding: 12px 30px;
           font-size: 13px;
           font-weight: 500;
           color: #101828;
@@ -159,18 +162,6 @@
           border-bottom: 1px solid #eaecf0;
           font-family: "Poppins", sans-serif;
           position: relative;
-
-          // &:first-child {
-          //   &::before {
-          //     content: "";
-          //     width: 1px;
-          //     height: 90%;
-          //     background: #d5dbe5;
-          //     position: absolute;
-          //     top: 0;
-          //     left: 20px;
-          //   }
-          // }
           Button {
             background-color: transparent;
             border: none;
@@ -190,50 +181,6 @@
             line-height: 18px;
             color: #464f60;
           }
-
-          // &.inner-table-section {
-          //   padding: 0;
-          //   background: #ffffff;
-
-          //   tr {
-          //     border-bottom: 1px solid #eaecf0;
-
-          //     td {
-          //       padding: 12px 15px 12px 45px;
-          //       font-size: 13px;
-          //       font-weight: 500;
-          //       color: #101828;
-          //       position: relative;
-          //       border-bottom: 1px solid #eaecf0;
-          //       font-family: "Poppins", sans-serif;
-          //       position: relative;
-
-          //       &:first-child {
-          //         &::before {
-          //           content: "";
-          //           width: 1px;
-          //           height: 90%;
-          //           background: #d5dbe5;
-          //           position: absolute;
-          //           top: 0;
-          //           left: 35px;
-          //         }
-          //       }
-
-          //       &:last-child {
-          //         border-bottom: 0;
-          //       }
-
-          //     }
-
-          //     &:last-child {
-          //       border-bottom: none;
-          //     }
-
-          //   }
-          // }
-
-          
         }
       }
     }

@@ -2,7 +2,7 @@ import { Box, List, ListItem, Grid, Button } from "@mui/material";
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import AddPermitionControlModal from "../Permissions/Components/AddPermitionControlModal";
+import AddPermitionControlModal from "../Components/AddPermitionControlModal";
 import { setActiveTab } from "Utils";
 
 class SetTransitions extends Component {

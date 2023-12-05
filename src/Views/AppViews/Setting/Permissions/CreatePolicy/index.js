@@ -20,8 +20,8 @@ import { Link } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import DefaultIcon from "../../../../assets/img/setting/default-icon.png";
-import CancelGroupControlModal from "../Permissions/Components/CancelGroupControlModal";
+import DefaultIcon from "../../../../../assets/img/setting/default-icon.png";
+import CancelGroupControlModal from "../Components/CancelGroupControlModal";
 import { getRoles, deleteRole } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
@@ -45,7 +45,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-export class CreateGroup extends Component {
+export class CreatePolicy extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -173,7 +173,7 @@ export class CreateGroup extends Component {
           <TableHead>
             <TableRow>
               <TableCell>
-                <Checkbox size="small" /> Role Name
+                <Checkbox size="small" /> Permission Set
               </TableCell>
               <TableCell>Description</TableCell>
               <TableCell></TableCell>
@@ -243,7 +243,7 @@ export class CreateGroup extends Component {
     return (
       <Box className="create-group-container">
         <Box className="list-heading">
-          <h3>Create Group</h3>
+          <h3>Create policy</h3>
           <Box className="breadcrumbs">
             <ul>
               <li>
@@ -252,7 +252,7 @@ export class CreateGroup extends Component {
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">Create Group</li>
+              <li className="active">Create policy</li>
             </ul>
           </Box>
         </Box>
@@ -264,7 +264,7 @@ export class CreateGroup extends Component {
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
             <Grid item xs={6}>
-              <h4>Name of the group</h4>
+              <h4>Name of the policy</h4>
             </Grid>
             <Grid item xs={6}>
               <Box className="overview-buttons">
@@ -288,7 +288,7 @@ export class CreateGroup extends Component {
                         onClick={() => setActiveTab("permissions/group")}
                       >
                         {" "}
-                        Create Group
+                        Create policy
                       </Link>
                     </Button>
                   </ListItem>
@@ -306,17 +306,17 @@ export class CreateGroup extends Component {
               <Grid item xs={6}>
                 <Box className="form-group">
                   <label htmlFor="roleName" className="form-label d-block">
-                    Group Name
+                    policy Name
                   </label>
                   <span className="D-block">
-                    Enter a meaningful name to identify this group.
+                    Enter a meaningful name to identify this policy.
                   </span>
                   <input
                     type="text"
                     className="form-control"
                     id="roleName"
                     name="name"
-                    placeholder="Infra Team"
+                    placeholder="Src-core"
                   />
                 </Box>
               </Grid>
@@ -326,7 +326,7 @@ export class CreateGroup extends Component {
                     htmlFor="roleDescription"
                     className="form-label d-block"
                   >
-                    Group Description
+                    policy Description
                   </label>
 
                   <textarea
@@ -347,7 +347,7 @@ export class CreateGroup extends Component {
           </Box>
         </Box>
         <Box className="adduser-top-section">
-          <h4>Add users to the group(324)</h4>
+          <h4>Add Permissions to the Policy(68)</h4>
           <Grid
             container
             rowSpacing={1}
@@ -360,78 +360,7 @@ export class CreateGroup extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Search policy"
-                />
-                <button className="button">
-                  <SearchOutlinedIcon />
-                </button>
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-        <TableContainer component={Paper} className="access-control-table">
-          <Table
-            sx={{ minWidth: 500 }}
-            aria-label="custom pagination table"
-            className="table"
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  {" "}
-                  <Checkbox size="small" /> User
-                </TableCell>
-                <TableCell>Email Address</TableCell>
-                <TableCell>Groups</TableCell>
-                <TableCell>User Creation Date</TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {userrow.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    {" "}
-                    <Checkbox size="small" /> {row.user}
-                  </TableCell>
-                  <TableCell>{row.emailAddress}</TableCell>
-                  <TableCell>{row.groups}</TableCell>
-                  <TableCell>{row.date}</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell align="center"></TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 20]}
-          component="div"
-          count={userrow.length}
-          rowsPerPage={rpg}
-          page={pg}
-          className="access-control-pagination"
-          onPageChange={this.handleChangePage}
-          onRowsPerPageChange={this.handleChangeRowsPerPage}
-        />
-        <Box className="adduser-top-section">
-          <h4>Add Role (10)</h4>
-          <Grid
-            container
-            rowSpacing={1}
-            className="h-100"
-            alignItems={"center"}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            <Grid item xs={6}>
-              <Box className="top-search">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search policy"
+                  placeholder="Search Permission here"
                 />
                 <button className="button">
                   <SearchOutlinedIcon />
@@ -476,4 +405,4 @@ const mapDispatchToProps = {
   getRoles,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateGroup);
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePolicy);
