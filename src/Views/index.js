@@ -24,7 +24,7 @@ import ConfigureTopology from "Views/AppViews/Environments/EnvironmentList/Confi
 import CreateScratch from "./AppViews/Environments/EnvironmentList/CreateScratch";
 import SelectYourTemplate from "./AppViews/SelectYourTemplate";
 import Setting from "./AppViews/Setting";
-import SetTransitions from "./AppViews/Setting/SetTransitions";
+import SetTransitions from "./AppViews/Setting/Permissions/SetTransitions";
 import EcsCluster from "./AppViews/Environments/EnvironmentList/DiscoveredAssets/EcsCluster";
 import AssociateChartApp from "./AppViews/Environments/EnvironmentList/DiscoveredAssets/AssociateChartApp";
 import ThreeTierTopology from "./AppViews/Environments/EnvironmentList/ThreeTierTopology";
@@ -36,13 +36,13 @@ import titles from "./PathTitles.json";
 import Error from "./AppViews/Error";
 import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
 import Reports from "./AppViews/Reports";
-import SetPolicy from "./AppViews/Setting/SetPolicy";
+import SetPolicy from "./AppViews/Setting/Permissions/SetPolicy";
 import SuperAdmin from "./AppViews/Setting/SuperAdmin";
-import AddUsers from "./AppViews/Setting/AddUsers";
-import AddRole from "./AppViews/Setting/AddRole";
-import CreateGroup from "./AppViews/Setting/CreateGroup";
+import AddUsers from "./AppViews/Setting/Permissions/AddUsers";
+import AddRole from "./AppViews/Setting/Permissions/AddRole";
+import CreateGroup from "./AppViews/Setting/Permissions/CreateGroup";
 import UserProfile from "./AppViews/Setting/UserProfile";
-import CreatePolicy from "./AppViews/Setting/CreatePolicy";
+import CreatePolicy from "./AppViews/Setting/Permissions/CreatePolicy";
 
 
 export function withRouter(Component) {

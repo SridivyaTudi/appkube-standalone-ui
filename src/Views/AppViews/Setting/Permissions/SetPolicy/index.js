@@ -10,10 +10,10 @@ import {
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import { setActiveTab } from "Utils";
-import CreateAddPolicyControlModal from "../Permissions/Components/CreateAddPolicyControlModal";
-import DeletePolicyControlModal from "../Permissions/Components/DeletePolicyControlModal";
-import DeleteRoleControlModal from "../Permissions/Components/DeleteRoleControlModal";
-import AccordionView from "../Components/AccordionView";
+import CreateAddPolicyControlModal from "../Components/CreateAddPolicyControlModal";
+import DeletePolicyControlModal from "../Components/DeletePolicyControlModal";
+import DeleteRoleControlModal from "../Components/DeleteRoleControlModal";
+import AccordionView from "../../Components/AccordionView";
 
 let accessPolicyData = [
   {

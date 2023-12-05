@@ -1,6 +1,6 @@
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Box, Grid, List, ListItem, Button } from "@mui/material";
-import DefaultIcon from "../../../../assets/img/setting/default-icon.png";
+import DefaultIcon from "../../../../../assets/img/setting/default-icon.png";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {
