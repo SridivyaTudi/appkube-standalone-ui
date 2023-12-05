@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import { v4 } from "uuid";
+import { Box } from "@mui/material";
 class AccordionView extends Component {
   constructor(props) {
     super(props);
@@ -54,26 +55,32 @@ class AccordionView extends Component {
                 e.stopPropagation();
                 this.onClickNode(currentNode);
               }}
-              className={` accrodion-main-title ${isActive ? "active" : ""}`}
+              className={`${isActive ? "active" : ""}`}
             >
-              <i className={`fas fa-chevron-${arrowDownOrRight}`}></i>
-              {subchild.name}
-              {childDataShow ? (
-                <Table>
-                  {this.renderTableBody(subchild?.chlidren, currentNode)}
-                </Table>
-              ) : (
-                <></>
-              )}
+              <Box className="access-box">
+                <i className={`fas fa-chevron-${arrowDownOrRight}`}></i>
+                {subchild.name}
+              </Box>
             </TableCell>
             {subchild.subName ? (
-              <TableCell width={120}>
+              <TableCell width={120} className="subchild-table-section">
                 {subchild.subName ? subchild.subName : <></>}
               </TableCell>
             ) : (
               <></>
             )}
           </TableRow>
+          {childDataShow ? (
+            <TableRow >
+              <TableCell colSpan={2} className="child-table-section">
+                <Table>
+                  {this.renderTableBody(subchild?.chlidren, currentNode)}
+                </Table>
+              </TableCell>
+            </TableRow>
+          ) : (
+            <></>
+          )}
         </Fragment>
       );
     });
