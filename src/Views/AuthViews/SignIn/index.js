@@ -48,7 +48,7 @@ class Signin extends Component {
   componentDidUpdate = (prevProps, prevState) => {
     if (this.props.loggedInUser.status !== prevProps.loggedInUser.status) {
       if (this.props.loggedInUser.status === status.SUCCESS) {
-        if (this.props.loggedInUser.data.info) {
+        if (this.props.loggedInUser.data?.info) {
           setCurrentUser(this.props.loggedInUser.data);
           setCurrentOrgId(
             this.props.loggedInUser.data.info.user.organization.cmdbOrgId
