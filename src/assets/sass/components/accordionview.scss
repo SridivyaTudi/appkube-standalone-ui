@@ -24,6 +24,7 @@
             color: #101828;
             font-family: "Poppins", sans-serif;
             position: relative;
+            border-bottom: none;
             &:first-child {
               width: 580px;
             }
@@ -53,6 +54,14 @@
                         height: 90%;
                         background: #d5dbe5;
                       }
+                      &:hover{
+                        padding-left: 15px;
+                       
+                      }
+                    }
+                    &:hover{
+                      padding-left: 50px;
+                     
                     }
                   }
                 }
@@ -89,16 +98,15 @@
                 background: #656575;
               }
             }
-           
           }
           &.active {
             background-color: #e9edf5;
+            border-bottom: none;
           }
           &:hover {
             background-color: #f7f9fc;
-            
+           
           }
-          
         }
       }
     }
@@ -175,6 +183,7 @@
           position: relative;
           font-family: "Poppins", sans-serif;
           position: relative;
+          border-bottom: 1px solid #ffffff;
 
           &.active {
             background-color: #e9edf5;
@@ -203,99 +212,104 @@
           &.child-table-section {
             padding: 0;
             background: #ffffff;
-            tr {
-              border-bottom: 1px solid #eaecf0;
-
-              td {
-                padding: 12px 15px 12px 40px;
-                font-size: 13px;
-                font-weight: 500;
-                color: #101828;
-                position: relative;
+            table{
+              tr {
                 border-bottom: 1px solid #eaecf0;
-                font-family: "Poppins", sans-serif;
-                position: relative;
-                &::before {
-                  content: "";
-                  position: absolute;
-                  top: 0;
-                  left: 25px;
-                  width: 1px;
-                  height: 90%;
-                  background: #d5dbe5;
-                }
-                &:hover {
-                  background-color: #f7f9fc;
-                }
-                &.active {
-                  background-color: #e9edf5;
-                  td {
-                    &::before {
-                      content: "";
-                      position: absolute;
-                      top: 0;
-                      left: 30px;
-                      width: 0px;
-                      height: 90%;
-                      background: #d5dbe5;
-                    }
-                  }
-                }
-                &.child-table-section {
-                  padding: 0;
-                  background: #ffffff;
+  
+                td {
+                  padding: 12px 15px 12px 40px;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #101828;
+                  position: relative;
+                  border-bottom: 1px solid #eaecf0;
+                  font-family: "Poppins", sans-serif;
+                  position: relative;
                   &::before {
                     content: "";
                     position: absolute;
                     top: 0;
-                    left: 45px;
+                    left: 25px;
                     width: 1px;
                     height: 90%;
                     background: #d5dbe5;
                   }
-                  tr {
-                    border-bottom: 1px solid #eaecf0;
+                  &:hover {
+                    background-color: #f7f9fc;
+                  }
+                  &.active {
+                    background-color: #e9edf5;
                     td {
-                      padding: 12px 15px 12px 55px;
-                      font-size: 13px;
-                      font-weight: 500;
-                      color: #101828;
-                      position: relative;
-                      font-family: "Poppins", sans-serif;
-                      position: relative;
                       &::before {
                         content: "";
                         position: absolute;
                         top: 0;
-                        left: 45px;
-                        width: 1px;
+                        left: 30px;
+                        width: 0px;
                         height: 90%;
                         background: #d5dbe5;
                       }
-                      &:hover {
-                        background-color: #f7f9fc;
-                      }
-                      &.active {
-                        background-color: #e9edf5;
-                      }
-                      &:last-child {
-                        border-bottom: none;
-                      }
-                    }
-                    &:last-child {
-                      border-bottom: 0;
                     }
                   }
+                  &.child-table-section {
+                    padding: 0;
+                    background: #ffffff;
+                    &::before {
+                      content: "";
+                      position: absolute;
+                      top: 0;
+                      left: 45px;
+                      width: 1px;
+                      height: 90%;
+                      background: #d5dbe5;
+                    }
+                    tr {
+                      border-bottom: 1px solid #eaecf0;
+                      td {
+                        padding: 12px 15px 12px 55px;
+                        font-size: 13px;
+                        font-weight: 500;
+                        color: #101828;
+                        position: relative;
+                        font-family: "Poppins", sans-serif;
+                        position: relative;
+                        &::before {
+                          content: "";
+                          position: absolute;
+                          top: 0;
+                          left: 45px;
+                          width: 1px;
+                          height: 90%;
+                          background: #d5dbe5;
+                        }
+                        &:hover {
+                          background-color: #f7f9fc;
+                        }
+                        &.active {
+                          background-color: #e9edf5;
+                        }
+                        // &:last-child {
+                        //   border-bottom: none;
+                        // }
+                      }
+                      &:last-child {
+                        border-bottom: 0;
+                      }
+                    }
+                   
+                  }
+  
+                  &:last-child {
+                    border-bottom: 0;
+                  }
                 }
-
                 &:last-child {
-                  border-bottom: 0;
+                  border-bottom: none;
                 }
-              }
-              &:last-child {
-                border-bottom: none;
               }
             }
+           
+           
           }
         }
       }
