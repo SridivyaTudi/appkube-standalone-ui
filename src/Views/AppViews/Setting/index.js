@@ -84,53 +84,77 @@ export class Setting extends Component {
     }
     return { username, role };
   };
+
+  // Render page header
+  renderHeader = () => {
+    return (
+      <Box className="page-header">
+        <h3>{this.getCurrentUserInfo().username}</h3>
+        <Button
+          className="primary-outline-btn min-width-inherit"
+          variant="outlined"
+        >
+          <img
+            src={AccountIcon}
+            alt=""
+            style={{ maxWidth: "10px", marginRight: "5px" }}
+          />
+          Admin
+        </Button>
+      </Box>
+    );
+  };
+
+  // Render tabs
+  renderTabMenu = () => {
+    const { activeTab } = this.state;
+    return (
+      <List className="tabs-menu">
+        {this.tabMapping.map((tabData, index) => {
+          return (
+            <ListItem
+              key={`ops-tab-${index}`}
+              className={index === activeTab ? "active" : ""}
+              onClick={() => this.setActiveTab(index)}
+            >
+              {tabData.name}
+            </ListItem>
+          );
+        })}
+      </List>
+    );
+  };
+
+  // Render active tab component
+  renderActiveTabOfComponent = () => {
+    const { activeTab } = this.state;
+    return (
+      <Box className="tabs-content">
+        {activeTab === 0 ? (
+          <Account />
+        ) : activeTab === 1 ? (
+          <Permissions />
+        ) : activeTab === 2 ? (
+          <Notification />
+        ) : activeTab === 3 ? (
+          <Appearance />
+        ) : activeTab === 4 ? (
+          <Billing />
+        ) : (
+          <></>
+        )}
+      </Box>
+    );
+  };
+
   render() {
     const { activeTab } = this.state;
     return (
       <Box className="setting-container">
-        <Box className="page-header">
-          <h3>{this.getCurrentUserInfo().username}</h3>
-          <Button
-            className="primary-outline-btn min-width-inherit"
-            variant="outlined"
-          >
-            <img
-              src={AccountIcon}
-              alt=""
-              style={{ maxWidth: "10px", marginRight: "5px" }}
-            />{" "}
-            Admin
-          </Button>
-        </Box>
+        {this.renderHeader()}
         <Box className="tabs">
-          <List className="tabs-menu">
-            {this.tabMapping.map((tabData, index) => {
-              return (
-                <ListItem
-                  key={`ops-tab-${index}`}
-                  className={index === activeTab ? "active" : ""}
-                  onClick={() => this.setActiveTab(index)}
-                >
-                  {tabData.name}
-                </ListItem>
-              );
-            })}
-          </List>
-          <Box className="tabs-content">
-            {activeTab === 0 ? (
-              <Account />
-            ) : activeTab === 1 ? (
-              <Permissions />
-            ) : activeTab === 2 ? (
-              <Notification />
-            ) : activeTab === 3 ? (
-              <Appearance />
-            ) : activeTab === 4 ? (
-              <Billing />
-            ) : (
-              <></>
-            )}
-          </Box>
+          {this.renderTabMenu()}
+          {this.renderActiveTabOfComponent()}
         </Box>
       </Box>
     );

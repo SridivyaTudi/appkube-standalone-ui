@@ -10,6 +10,7 @@ import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import DefaultIcon from "../../../../assets/img/setting/default-icon.png";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import { group } from "d3";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -27,26 +28,28 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     padding: "8px 10px",
   },
 }));
+
+let groups = [
+  {
+    name: "Default Users",
+    activeUsers: "45",
+    rolesAssigned: "Basic Users",
+    description:
+      "Active The super admin is the highest level of administrative authority within a system",
+  },
+  {
+    name: "Super Admins",
+    activeUsers: "45",
+    rolesAssigned: "Administrator",
+    description:
+      "Active The super admin is the highest level of administrative authority within a system",
+  },
+];
 class GroupControl extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      groupControlData: [
-        {
-          name: "Default Users",
-          activeUsers: "45",
-          rolesAssigned: "Basic Users",
-          description:
-            "Active The super admin is the highest level of administrative authority within a system",
-        },
-        {
-          name: "Super Admins",
-          activeUsers: "45",
-          rolesAssigned: "Administrator",
-          description:
-            "Active The super admin is the highest level of administrative authority within a system",
-        },
-      ],
+      groupList: groups,
       actionButton: null,
     };
   }
@@ -64,11 +67,12 @@ class GroupControl extends Component {
     }
   };
 
-  renderGroupControlData = () => {
-    const { groupControlData, actionButton } = this.state;
+  // Render Groups
+  renderGroupList = () => {
+    const { groupList, actionButton } = this.state;
     let retData = [];
-    if (groupControlData?.length > 0) {
-      groupControlData.forEach((groupData, index) => {
+    if (groupList?.length > 0) {
+      groupList.forEach((groupData, index) => {
         retData.push(
           <Box className="group-box" key={groupData.name}>
             <Box className="heading">
@@ -144,31 +148,64 @@ class GroupControl extends Component {
     } else {
       retData = (
         <Box className="group-loader text-center w-100">
-          There are no data available.
+          There are no groups available.
         </Box>
       );
     }
     return retData;
   };
 
+  // Render search group and btn
+  renderSearchInputAndBtn = () => {
+    const { searchedKey } = this.state;
+    return (
+      <Box className="d-flex width-100 search-box">
+        <Box className="search">
+          <input
+            type="text"
+            className="input"
+            placeholder="Search Group"
+            value={searchedKey}
+            onChange={this.handleSearchChange}
+            autoFocus="autoFocus"
+          />
+          <button className="button">
+            <SearchOutlinedIcon />
+          </button>
+        </Box>
+        <Button className="primary-btn min-width">
+          <Link to={`/app/setting/create-group`}> Create New Group</Link>
+        </Button>
+      </Box>
+    );
+  };
+
+  //  Serach Groups
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { groupList } = this.state;
+
+    if (groups?.length) {
+      if (value) {
+        groupList = groups.filter((group) => {
+          if (group?.name.toLowerCase().includes(value.toLowerCase())) {
+            return group;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        groupList = groups;
+      }
+      this.setState({ groupList, searchedKey: value });
+    }
+  };
+
   render() {
-    const {} = this.state;
     return (
       <>
-        <Box className="d-flex width-100 search-box">
-          <Box className="search">
-            <input type="text" className="input" placeholder="Search Group" />
-            <button className="button">
-              <SearchOutlinedIcon />
-            </button>
-          </Box>
-          <Button className="primary-btn min-width">
-            <Link to={`/app/setting/create-group`}> Create New Group</Link>
-          </Button>
-        </Box>
-        <Box className="group-control-boxs">
-          {this.renderGroupControlData()}
-        </Box>
+        {this.renderSearchInputAndBtn()}
+        <Box className="group-control-boxs">{this.renderGroupList()}</Box>
       </>
     );
   }

@@ -51,7 +51,7 @@ export class Permissions extends Component {
   }
 
   componentDidMount = () => {
-    this.setPreviousTab()
+    this.setPreviousTab();
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -92,50 +92,56 @@ export class Permissions extends Component {
     }
   };
 
-  render() {
+  // Render tabs
+  renderTabMenu = () => {
     const { activeTab, tabMapping } = this.state;
+    return tabMapping.map((tabData, index) => {
+      return (
+        <Box
+          key={`control-${index}`}
+          className={index === activeTab ? "control-box active" : "control-box"}
+          onClick={() => this.setActiveTab(index)}
+        >
+          <Box className="icon">
+            <i className={`fa-solid ${tabData.icon}`}></i>
+          </Box>
+          <Box className="content">
+            <label>{tabData.label}</label>
+            <strong>{tabData.value}</strong>
+          </Box>
+        </Box>
+      );
+    });
+  };
+
+  // Render active tab component
+  renderActiveTabComponent = () => {
+    const { activeTab } = this.state;
+    return activeTab === 0 ? (
+      <RoleControl />
+    ) : activeTab === 1 ? (
+      <GroupControl
+        setActiveTab={() => {
+          this.setActiveTab(0);
+        }}
+      />
+    ) : activeTab === 2 ? (
+      <UserControl />
+    ) : activeTab === 3 ? (
+      <Policies />
+    ) : activeTab === 4 ? (
+      <Permissson />
+    ) : (
+      <></>
+    );
+  };
+  render() {
     return (
       <Box className="permissions-container">
         <Box className="heading">Role Based Access Control</Box>
-        <Box className="access-control-boxs">
-          {tabMapping.map((tabData, index) => {
-            return (
-              <Box
-                key={`control-${index}`}
-                className={
-                  index === activeTab ? "control-box active" : "control-box"
-                }
-                onClick={() => this.setActiveTab(index)}
-              >
-                <Box className="icon">
-                  <i className={`fa-solid ${tabData.icon}`}></i>
-                </Box>
-                <Box className="content">
-                  <label>{tabData.label}</label>
-                  <strong>{tabData.value}</strong>
-                </Box>
-              </Box>
-            );
-          })}
-        </Box>
+        <Box className="access-control-boxs">{this.renderTabMenu()}</Box>
         <Box className="access-control-container">
-          {activeTab === 0 ? (
-            <RoleControl />
-          ) : activeTab === 1 ? (
-            <GroupControl
-              setActiveTab={() => {
-                this.setActiveTab(0);
-              }}
-            />
-          ) : activeTab === 2 ? (
-            <UserControl />
-          ) : activeTab === 3 ? (
-            <Policies />
-          ) : activeTab === 4 ? (
-            <Permissson />
-          ) : (
-            <></>
-          )}
+          {this.renderActiveTabComponent()}
         </Box>
       </Box>
     );
