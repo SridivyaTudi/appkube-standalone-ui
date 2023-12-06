@@ -32,32 +32,43 @@ class Permission extends Component {
     this.setState({ activeTab });
   };
 
-  render() {
+  // Render tabs Component
+  renderTabsMenuComponent = () => {
     const { activeTab } = this.state;
+    return (
+      <TabsMenu
+        tabs={this.tabMapping}
+        setActiveTab={this.setActiveTab}
+        activeTab={activeTab}
+        breakWidth={992}
+        key={v4()}
+      />
+    );
+  };
+
+  // Render active tab component
+  renderActiveTabComponent = () => {
+    const { activeTab } = this.state;
+    return activeTab === 0 ? (
+      <Enviroment />
+    ) : activeTab === 1 ? (
+      <Product />
+    ) : activeTab === 2 ? (
+      <Sre />
+    ) : activeTab === 3 ? (
+      <Devsecops />
+    ) : (
+      <></>
+    );
+  };
+
+  render() {
     return (
       <Box className="permission-container">
         <Box className="services-panel-tabs">
-          <Box className="tabs-head">
-            <TabsMenu
-              tabs={this.tabMapping}
-              setActiveTab={this.setActiveTab}
-              activeTab={activeTab}
-              breakWidth={992}
-              key={v4()}
-            />
-          </Box>
+          <Box className="tabs-head">{this.renderTabsMenuComponent()}</Box>
           <Box className="permission-tabs-content">
-            {activeTab === 0 ? (
-              <Enviroment />
-            ) : activeTab === 1 ? (
-              <Product />
-            ) : activeTab === 2 ? (
-              <Sre />
-            ) : activeTab === 3 ? (
-              <Devsecops />
-            ) : (
-              <></>
-            )}
+            {this.renderActiveTabComponent()}
           </Box>
         </Box>
       </Box>

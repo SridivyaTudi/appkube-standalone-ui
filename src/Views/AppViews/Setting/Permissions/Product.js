@@ -1,15 +1,5 @@
-import {
-  Checkbox,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
 import { Component } from "react";
-
+import PermissionTable from "Views/AppViews/Setting/Permissions/Components/PermissionTable";
 class Product extends Component {
   constructor(props) {
     super(props);
@@ -48,40 +38,7 @@ class Product extends Component {
 
   render() {
     const { rows } = this.state;
-    return (
-      <>
-        <TableContainer component={Paper} className="access-control-table">
-          <Table
-            sx={{ minWidth: 500 }}
-            aria-label="custom pagination table"
-            className="table"
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell width={100}>
-                  <Checkbox size="small" className="check-box" /> Permission
-                  name
-                </TableCell>
-                <TableCell width={200}>Status</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    <Checkbox size="small" className="check-box" />
-                    {row.permissionName}
-                  </TableCell>
-                  <TableCell>
-                    <button className="green-btn">Active</button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </>
-    );
+    return <PermissionTable data={rows} />;
   }
 }
 
