@@ -90,9 +90,13 @@
     margin-top: 25px;
 
     .tabs-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: block;
+      h4 {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
       .overview-buttons {
         ul {
           background: none;
@@ -299,20 +303,20 @@
                           padding: 5px;
                           margin-right: 8px;
                         }
-                        span{
+                        span {
                           font-size: 14px;
                           line-height: 20px;
                           font-weight: 500;
-                          color: #3772FF;
+                          color: #3772ff;
                         }
-                        .close-icon{
+                        .close-icon {
                           width: 25px;
                           height: 25px;
                           text-align: center;
                           line-height: 25px;
                           border-radius: 50%;
                           border: 1px solid #eef0fa;
-                          i{
+                          i {
                             line-height: 25px;
                           }
                         }

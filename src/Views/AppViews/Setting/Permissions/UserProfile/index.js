@@ -45,8 +45,7 @@ export class UserProfile extends Component {
   };
 
   render() {
-    const { activeTab, showChangePasswordModal } =
-      this.state;
+    const { activeTab, showChangePasswordModal } = this.state;
     return (
       <Box className="user-profile-container">
         <Box className="list-heading">
@@ -117,52 +116,68 @@ export class UserProfile extends Component {
         </Box>
         <Box className="services-panel-tabs ">
           <Box className="tabs-head ">
-            <h4>{HEADER[activeTab]}</h4>
-            <TabsMenu
-              tabs={this.tabMapping}
-              setActiveTab={this.setActiveTab}
-              activeTab={activeTab}
-              breakWidth={992}
-              key={v4()}
-            />
-            <Box className="overview-buttons">
-              <List>
-                {activeTab === 1 ? (
-                  <Fragment>
-                    <ListItem>
-                      <Button
-                        className="danger-btn min-width-inherit"
-                        variant="contained"
-                      >
-                        Remove
-                      </Button>
-                    </ListItem>
-                    <ListItem>
-                      <Link to={`/app/setting/user-profile/add-user-group`}>
+            <Grid container alignItems={"center"} rowSpacing={0}>
+              <Grid item xl={3} lg={3} md={2} sm={4} xs={4}>
+                <h4>{HEADER[activeTab]}</h4>
+              </Grid>
+              <Grid
+                item
+                xl={6}
+                lg={6}
+                md={6}
+                sm={4}
+                xs={4}
+                className="text-center"
+              >
+                <TabsMenu
+                  tabs={this.tabMapping}
+                  setActiveTab={this.setActiveTab}
+                  activeTab={activeTab}
+                  breakWidth={992}
+                  key={v4()}
+                />
+              </Grid>
+              <Grid item xl={3} lg={3} md={4} sm={4} xs={4}>
+                <Box className="overview-buttons">
+                  <List>
+                    {activeTab === 1 ? (
+                      <Fragment>
+                        <ListItem>
+                          <Button
+                            className="danger-btn min-width-inherit"
+                            variant="contained"
+                          >
+                            Remove
+                          </Button>
+                        </ListItem>
+                        <ListItem>
+                          <Link to={`/app/setting/user-profile/add-user-group`}>
+                            <Button
+                              className="primary-btn min-width-inherit"
+                              variant="contained"
+                            >
+                              Add user to Groups
+                            </Button>
+                          </Link>
+                        </ListItem>
+                      </Fragment>
+                    ) : activeTab === 2 ? (
+                      <ListItem>
                         <Button
                           className="primary-btn min-width-inherit"
                           variant="contained"
+                          onClick={this.handleChangePasswordModal}
                         >
-                          Add user to Groups
+                          Reset Password
                         </Button>
-                      </Link>
-                    </ListItem>
-                  </Fragment>
-                ) : activeTab === 2 ? (
-                  <ListItem>
-                    <Button
-                      className="primary-btn min-width-inherit"
-                      variant="contained"
-                      onClick={this.handleChangePasswordModal}
-                    >
-                      Reset Password
-                    </Button>
-                  </ListItem>
-                ) : (
-                  <></>
-                )}
-              </List>
-            </Box>
+                      </ListItem>
+                    ) : (
+                      <></>
+                    )}
+                  </List>
+                </Box>
+              </Grid>
+            </Grid>
           </Box>
 
           <Box className="permission-tabs-content">
