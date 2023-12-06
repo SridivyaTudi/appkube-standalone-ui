@@ -21,5 +21,6 @@
   "super-admin": "Super Admin",
   "user-profile": "User Profile",
   "create-group": "Create Group",
-  "create-policy": "Create Policy"
+  "create-policy": "Create Policy",
+  "add-user-group": "Add User Group"
 }
