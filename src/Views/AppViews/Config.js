@@ -1,4 +1,4 @@
-const baseURL = `http://api.synectiks.net/cmdb`;
+const baseURL = `https://api.synectiks.net/cmdb`;
 // export const baseURL = `http://34.199.12.114:6057/api`;
 
 const config = {

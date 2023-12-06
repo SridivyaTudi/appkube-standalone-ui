@@ -69,7 +69,7 @@ class RoleControl extends Component {
     if (this.props.allRoles.status !== prevProps.allRoles.status) {
       if (this.props.allRoles.status === status.SUCCESS) {
         let roles = this.props.allRoles.data;
-        if (roles) {
+        if (roles?.length) {
           this.setState({ roles });
         }
       }
@@ -124,6 +124,33 @@ class RoleControl extends Component {
       </Box>
     );
   }
+  // Render search role and btn
+  renderSearchInputAndBtn = () => {
+    const { searchedKey } = this.state;
+    return (
+      <Box className="d-flex width-100 search-box">
+        <Box className="search">
+          <input
+            type="text"
+            className="input"
+            placeholder="Search Role"
+            value={searchedKey}
+            onChange={this.handleSearchChange}
+            autoFocus="autoFocus"
+          />
+          <button className="button">
+            <SearchOutlinedIcon />
+          </button>
+        </Box>
+        <Button
+          className="primary-btn min-width"
+          onClick={this.handleCreateRoleControlModal}
+        >
+          Create New Role
+        </Button>
+      </Box>
+    );
+  };
 
   // render Roles Table
   renderTable = () => {
@@ -231,7 +258,7 @@ class RoleControl extends Component {
       return (
         <TableRow>
           <TableCell colSpan={12}>
-            <Box className="d-blck text-center w-100 h-100 "  >
+            <Box className="d-blck text-center w-100 h-100 ">
               <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
                 <h5 className="m-t-0 m-b-0">There are no roles available.</h5>
               </Box>
@@ -262,87 +289,51 @@ class RoleControl extends Component {
   //  serach Roles
   handleSearchChange = (e) => {
     let value = e.target.value;
-    this.setState({ searchedKey: value });
-
     let roles = this.props.allRoles.data;
 
-    if (value) {
-      roles = roles.filter((role) => {
-        if (
-          role?.name.toLowerCase().includes(value.toLowerCase()) ||
-          role?.description.toLowerCase().includes(value.toLowerCase())
-        ) {
-          return role;
-        } else {
-          return null;
-        }
-      });
+    if (roles?.length) {
+      if (value) {
+        roles = roles.filter((role) => {
+          if (
+            role?.name.toLowerCase().includes(value.toLowerCase()) ||
+            role?.description.toLowerCase().includes(value.toLowerCase())
+          ) {
+            return role;
+          } else {
+            return null;
+          }
+        });
+      }
+      this.setState({ roles, searchedKey: value });
     }
-
-    this.setState({ roles });
   };
-  render() {
-    const {
-      roles,
-      pg,
-      rpg,
-      showCreateRoleControlModal,
-      showConfirmPopup,
-      editRoleId,
-      searchedKey,
-    } = this.state;
+
+  // Render component of table pagination
+  renderComponentTablePagination = () => {
+    const { roles, pg, rpg } = this.state;
+    return roles.length ? (
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 20]}
+        component="div"
+        count={roles.length}
+        rowsPerPage={rpg}
+        page={pg}
+        className="access-control-pagination"
+        onPageChange={this.handleChangePage}
+        onRowsPerPageChange={this.handleChangeRowsPerPage}
+      />
+    ) : (
+      <></>
+    );
+  };
+
+  // Render component of Create User Modal
+  renderOtherComponents = () => {
+    const { showCreateRoleControlModal, showConfirmPopup, editRoleId } =
+      this.state;
     let { status: deleteRoleStatus } = this.props.removeRole;
     return (
       <>
-        <Box className="d-flex width-100 search-box">
-          <Box className="search">
-            <input
-              type="text"
-              className="input"
-              placeholder="Search Role"
-              value={searchedKey}
-              onChange={this.handleSearchChange}
-              autoFocus="autoFocus"
-            />
-            <button className="button">
-              <SearchOutlinedIcon />
-            </button>
-          </Box>
-          <Button
-            className="primary-btn min-width"
-            onClick={this.handleCreateRoleControlModal}
-          >
-            Create New Role
-          </Button>
-        </Box>
-        <TableContainer component={Paper} className="access-control-table">
-          {this.renderTable()}
-        </TableContainer>
-        {roles.length ? (
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 20]}
-            component="div"
-            count={roles.length}
-            rowsPerPage={rpg}
-            page={pg}
-            className="access-control-pagination"
-            onPageChange={this.handleChangePage}
-            onRowsPerPageChange={this.handleChangeRowsPerPage}
-          />
-        ) : (
-          <></>
-        )}
-
-        {showCreateRoleControlModal ? (
-          <CreateRoleControlModal
-            showModal={showCreateRoleControlModal}
-            handleCreateRoleControlModal={this.handleCreateRoleControlModal}
-            roleId={editRoleId}
-          />
-        ) : (
-          <></>
-        )}
-
         {showConfirmPopup ? (
           <ConfirmationPopup
             showModal={showConfirmPopup}
@@ -358,6 +349,28 @@ class RoleControl extends Component {
         ) : (
           <></>
         )}
+        {showCreateRoleControlModal ? (
+          <CreateRoleControlModal
+            showModal={showCreateRoleControlModal}
+            handleCreateRoleControlModal={this.handleCreateRoleControlModal}
+            roleId={editRoleId}
+          />
+        ) : (
+          <></>
+        )}
+      </>
+    );
+  };
+
+  render() {
+    return (
+      <>
+        {this.renderSearchInputAndBtn()}
+        <TableContainer component={Paper} className="access-control-table">
+          {this.renderTable()}
+        </TableContainer>
+        {this.renderComponentTablePagination()}
+        {this.renderOtherComponents()}
       </>
     );
   }
