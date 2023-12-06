@@ -331,6 +331,7 @@ export class CreateGroup extends Component {
                     id="roleDescription"
                     name="description"
                     style={{
+                      maxWidth:"100%",
                       height: "60px",
                       lineHeight: "18px",
                       paddingRight: "15px",
