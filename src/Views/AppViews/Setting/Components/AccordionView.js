@@ -64,7 +64,7 @@ class AccordionView extends Component {
             </TableCell>
             {subchild.subName ? (
               <TableRow className={`${isActive ? "active" : ""}`}>
-                <TableCell width={120} className="subchild-table-section">
+                <TableCell width={120} className={`subchild-table-section ${isActive ? "active" : ""}`}>
                   <Table>{subchild.subName ? subchild.subName : <></>}</Table>
                 </TableCell>
               </TableRow>
