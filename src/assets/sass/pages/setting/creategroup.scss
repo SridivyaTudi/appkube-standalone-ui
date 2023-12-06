@@ -68,6 +68,9 @@
           color: #344054;
           font-family: "Poppins", sans-serif;
           margin-top: 8px;
+          &:focus-visible{
+            outline: none;
+          }
         }
       }
     }
