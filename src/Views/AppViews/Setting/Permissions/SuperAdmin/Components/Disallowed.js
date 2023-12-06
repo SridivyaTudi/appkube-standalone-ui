@@ -26,98 +26,120 @@ let accessPolicyData = [
   {
     name: "Product",
     subName: (
-      <Box className="d-flex status">
-        <HtmlTooltip
-          className="table-tooltip d-flex"
-          title={
-            <React.Fragment>
-              <span>This role created by default by the system</span>
-            </React.Fragment>
-          }
-        >
-          <span>Not Permitted</span>
-        </HtmlTooltip>
+      <Box className="status-btn">
+        <Box className="status">
+          <HtmlTooltip
+            className="table-tooltip d-flex"
+            title={
+              <React.Fragment>
+                <span>This role created by default by the system</span>
+              </React.Fragment>
+            }
+          >
+            <span>Not Permitted</span>
+          </HtmlTooltip>
+        </Box>
       </Box>
     ),
     chlidren: [
       {
         name: "Create Product Environment",
         subName: (
-          <IconButton aria-label="delete" size="small" className="close-icon">
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
+          <Box className="status-btn">
+            <IconButton aria-label="delete" size="small" className="close-icon">
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
         ),
       },
       {
         name: "Edit Product Environment",
         subName: (
-          <IconButton aria-label="delete" size="small" className="close-icon">
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
+          <Box className="status-btn">
+            <IconButton aria-label="delete" size="small" className="close-icon">
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
         ),
       },
       {
         name: "Clone Product Environment",
         subName: (
-          <IconButton aria-label="delete" size="small" className="close-icon">
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
+          <Box className="status-btn">
+            <IconButton aria-label="delete" size="small" className="close-icon">
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
         ),
       },
       {
         name: "Migrate Product Environment",
         subName: (
-          <IconButton aria-label="delete" size="small" className="close-icon">
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
+          <Box className="status-btn">
+            <IconButton aria-label="delete" size="small" className="close-icon">
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
         ),
       },
       {
         name: "Delete Product Environment",
         subName: (
-          <IconButton aria-label="delete" size="small" className="close-icon">
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
+          <Box className="status-btn">
+            <IconButton aria-label="delete" size="small" className="close-icon">
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
         ),
       },
       {
         name: "Replicate Product Environment",
         subName: (
-          <IconButton aria-label="delete" size="small" className="close-icon">
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
+          <Box className="status-btn">
+            <IconButton aria-label="delete" size="small" className="close-icon">
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
         ),
       },
       {
         name: "Add service in Product Environment",
         subName: (
-          <IconButton aria-label="delete" size="small" className="close-icon">
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
+          <Box className="status-btn">
+            <IconButton aria-label="delete" size="small" className="close-icon">
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
         ),
       },
       {
         name: "Add service in Product Environment",
         subName: (
-          <IconButton aria-label="delete" size="small" className="close-icon">
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
+          <Box className="status-btn">
+            <IconButton aria-label="delete" size="small" className="close-icon">
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
         ),
       },
       {
         name: "Delete service Product in Environment",
         subName: (
-          <IconButton aria-label="delete" size="small" className="close-icon">
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
+          <Box className="status-btn">
+            <IconButton aria-label="delete" size="small" className="close-icon">
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
         ),
       },
       {
         name: "Replicate service Product in Environment",
         subName: (
-          <IconButton aria-label="delete" size="small" className="close-icon">
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
+          <Box className="status-btn">
+            <IconButton aria-label="delete" size="small" className="close-icon">
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
         ),
       },
     ],
