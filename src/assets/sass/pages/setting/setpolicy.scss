@@ -5,7 +5,6 @@
   .overview-section {
     width: 100%;
     display: block;
-    margin-bottom: 30px;
     .overview-card {
       padding: 25px;
       border-radius: 10px;
@@ -26,48 +25,18 @@
   }
 
   .policy-section {
-    h4 {
-      display: block;
-      font-size: 18px;
-      line-height: 24px;
-      font-weight: 500;
-      color: #383874;
-    }
-    .overview-buttons {
-      display: flex;
-      height: 100%;
-      align-items: end;
-      justify-content: end;
-      ul {
-        display: flex;
-        align-items: center;
-        justify-content: end;
-        padding: 0;
-        margin: 0;
-        li {
-          display: inline-block;
-          list-style: none;
-          padding: 0;
-          margin-right: 15px;
-          width: auto;
-          &:last-child {
-            margin-right: 0;
-          }
-        }
-      }
-    }
     .policy-permission {
       width: 100%;
       display: block;
-      margin-top: 20px;
       .policy-permission-head {
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 10px;
-        padding: 15px 30px;
+        padding: 15px 20px;
         background-color: #ffffff;
-        height: 65px;
+        height: 60px;
+        margin-bottom: 20px;
         .title {
           display: block;
           font-size: 16px;

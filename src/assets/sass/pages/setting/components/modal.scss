@@ -956,53 +956,6 @@
         }
       }
     }
-
-    .top-search {
-      position: relative;
-
-      .form-control {
-        width: 100%;
-        height: 40px;
-        font-size: 14px;
-        line-height: 20px;
-        font-weight: 500;
-        margin-top: 10px;
-        color: #8676ff;
-        padding: 10px 50px 10px 20px;
-        margin-bottom: 10px;
-        border: none;
-        background-color: #eef0fa;
-        border-radius: 8px;
-      }
-
-      ::placeholder {
-        color: #8676ff;
-        opacity: 1;
-        /* Firefox */
-      }
-
-      ::-ms-input-placeholder {
-        /* Edge 12-18 */
-        color: #8676ff;
-      }
-
-      button {
-        position: absolute;
-        top: 8px;
-        right: 15px;
-        display: inline-flex;
-        border: none;
-        background-color: transparent;
-        color: #a1a3d4;
-      }
-    }
-
-    .policy-list {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
     .policy-boxs {
       display: block;
       width: 100%;

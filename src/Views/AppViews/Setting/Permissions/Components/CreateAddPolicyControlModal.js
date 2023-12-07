@@ -25,25 +25,42 @@ class CreateAddPolicyControlModal extends Component {
           </h5>
         </ModalHeader>
         <ModalBody>
-          <Box className="top-search">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search policy"
-            />
-            <button className="button">
-              <SearchOutlinedIcon />
-            </button>
+          <Box className="setting-common-searchbar p-t-5 p-b-0">
+            <Grid container>
+              <Grid item xs={12}>
+                <Box className="top-search">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search policy"
+                  />
+                  <button className="button">
+                    <SearchOutlinedIcon />
+                  </button>
+                </Box>
+              </Grid>
+            </Grid>
           </Box>
-          <Box className="policy-list p-t-10 p-b-10">
-            <h5>List of Policies (5)</h5>
-            <Button
-              className="primary-btn min-width-inherit"
-              variant="contained"
-              onClick={this.handleCreateAddPolicyControlModal}
-            >
-              Add Policies
-            </Button>
+
+          <Box className="setting-common-searchbar">
+            <Grid container>
+              <Grid item xs={6}>
+                <h5>List of Policies (5)</h5>
+              </Grid>
+              <Grid item xs={6}>
+                <List>
+                  <ListItem>
+                    <Button
+                      className="primary-btn min-width-inherit"
+                      variant="contained"
+                      onClick={this.handleCreateAddPolicyControlModal}
+                    >
+                      Add Policies
+                    </Button>
+                  </ListItem>
+                </List>
+              </Grid>
+            </Grid>
           </Box>
           <Box className="policy-boxs">
             <Grid

@@ -121,6 +121,7 @@ class SetPolicy extends Component {
             </ul>
           </Box>
         </Box>
+
         <Box className="overview-section">
           <Grid
             container
@@ -145,17 +146,12 @@ class SetPolicy extends Component {
           </Grid>
         </Box>
         <Box className="policy-section">
-          <Grid
-            container
-            alignItems={"center"}
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            <Grid item xs={6}>
-              <h4>Allowed Policy set</h4>
-            </Grid>
-            <Grid item xs={6}>
-              <Box className="overview-buttons">
+          <Box className="setting-common-searchbar">
+            <Grid container alignItems={"center"}>
+              <Grid item xs={6}>
+                <h4 className="m-t-0 m-b-0" >Allowed Policy set</h4>
+              </Grid>
+              <Grid item xs={6}>
                 <List>
                   <ListItem>
                     <Button
@@ -187,10 +183,9 @@ class SetPolicy extends Component {
                     </Button>
                   </ListItem>
                 </List>
-              </Box>
+              </Grid>
             </Grid>
-          </Grid>
-
+          </Box>
           <Box className="policy-permission">
             <Box className="policy-permission-head">
               <Grid
