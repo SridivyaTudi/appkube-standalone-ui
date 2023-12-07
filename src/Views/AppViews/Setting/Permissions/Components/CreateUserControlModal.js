@@ -26,7 +26,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
 const steps = ["User details ", "Add  user to group ", "Review and Create"];
 const initialFormData = {
-  names: "",
+  name: "",
   email: "",
   group: 0,
 };
@@ -54,7 +54,8 @@ class CreateUserControlModal extends Component {
           policiesname: "Multiple",
         },
       ],
-      formData: [initialFormData],
+      formData: [Object.assign({}, initialFormData)],
+      isSubmit: false,
     };
   }
   totalSteps = () => {
@@ -100,8 +101,8 @@ class CreateUserControlModal extends Component {
 
         <Button
           className="primary-btn min-width-inherit"
-          onClick={() =>
-            activeStep === 2 ? this.handleCreateUser() : this.handleNextSteps()
+          onClick={(e) =>
+            activeStep === 2 ? this.handleCreateUser() : this.setActiveStep(e)
           }
           sx={{ mr: 1 }}
         >
@@ -136,7 +137,7 @@ class CreateUserControlModal extends Component {
   };
 
   //  Render inputs
-  renderInputs = () => {
+  renderInputs = (errors) => {
     let { formData } = this.state;
     return (
       formData.length &&
@@ -155,6 +156,9 @@ class CreateUserControlModal extends Component {
                   onChange={(e) => {
                     this.handleInputChange(e, index);
                   }}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" ? this.setActiveStep(e) : <></>
+                  }
                   autoFocus={
                     document.activeElement.id === `name_${index}`
                       ? "autofocus"
@@ -178,20 +182,35 @@ class CreateUserControlModal extends Component {
                       ? "autofocus"
                       : null
                   }
+                  onKeyDown={(e) =>
+                    e.key === "Enter" ? this.setActiveStep(e) : <></>
+                  }
                 />
+                {errors?.includes(index) ? (
+                  <span className="red">Please provide valid email</span>
+                ) : (
+                  <></>
+                )}
               </Box>
             </Box>
-            <Box className="form-group">
-              <IconButton
-                variant="outlined"
-                color="error"
-                aria-label="delete"
-                size="small"
-                className="close-icon"
+            {index !== 0 ? (
+              <Box
+                className="form-group"
+                onClick={() => this.onClickRemoveRow(index)}
               >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            </Box>
+                <IconButton
+                  variant="outlined"
+                  color="error"
+                  aria-label="delete"
+                  size="small"
+                  className="close-icon"
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              </Box>
+            ) : (
+              <></>
+            )}
           </Box>
         );
       })
@@ -215,7 +234,7 @@ class CreateUserControlModal extends Component {
       if (isEmailValidate) {
         formData.push(Object.assign({}, initialFormData));
       }
-      this.setState({ formData });
+      this.setState({ formData, isSubmit: false });
     }
   };
 
@@ -228,8 +247,58 @@ class CreateUserControlModal extends Component {
 
     this.setState({ formData });
   };
+
+  // Remove row
+  onClickRemoveRow = (index) => {
+    let { formData } = this.state;
+    formData.splice(index, 1);
+    this.setState({ formData });
+  };
+
+  // Set active step
+  setActiveStep = (e) => {
+    e.preventDefault();
+    let { activeStep, isSubmit } = this.state;
+    isSubmit = true;
+    if (activeStep === 0) {
+      let { isStepValid } = this.validateStep1(isSubmit);
+      if (isStepValid) {
+        activeStep = activeStep + 1;
+      }
+    } else if (activeStep === 1) {
+      // let isValidStep = this.validateStep1();
+      // if (isValidStep) {
+      //   activeStep = activeStep + 1;
+      // }
+    }
+    this.setState({ activeStep, isSubmit });
+  };
+
+  //  Validate step 1
+  validateStep1 = (isSubmit) => {
+    let { formData } = this.state;
+    let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
+    let isStepValid = true;
+    let errors = [];
+    if (isSubmit) {
+      formData = formData.map((user, index) => {
+        if (!emailRegex.test(user.email)) {
+          errors.push(index);
+          isStepValid = false;
+          return user;
+        }
+
+        return user;
+      });
+    }
+
+    return { errors, isStepValid };
+  };
+
   render() {
-    const { activeStep, completed, rows } = this.state;
+    const { activeStep, completed, rows, isSubmit } = this.state;
+    let { errors } = this.validateStep1(isSubmit);
+
     return (
       <Modal
         isOpen={this.props.showModal}
@@ -275,8 +344,8 @@ class CreateUserControlModal extends Component {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <form>
-                    <Box sx={{ mt: 2,}}>
+                  <form onSubmit={this.setActiveStep}>
+                    <Box sx={{ mt: 2 }}>
                       <Box className="users-content">
                         {/* step1 */}
                         {activeStep === 0 ? (
@@ -291,7 +360,7 @@ class CreateUserControlModal extends Component {
                             </Box>
                             <Box className="d-block">
                               {" "}
-                              {this.renderInputs()}
+                              {this.renderInputs(errors)}
                             </Box>
 
                             <Box
