@@ -21,8 +21,15 @@ import Typography from "@mui/material/Typography";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
-
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { v4 } from "uuid";
 const steps = ["User details ", "Add  user to group ", "Review and Create"];
+const initialFormData = {
+  names: "",
+  email: "",
+  group: 0,
+};
 class CreateUserControlModal extends Component {
   constructor(props) {
     super(props);
@@ -47,6 +54,7 @@ class CreateUserControlModal extends Component {
           policiesname: "Multiple",
         },
       ],
+      formData: [initialFormData],
     };
   }
   totalSteps = () => {
@@ -127,6 +135,108 @@ class CreateUserControlModal extends Component {
     this.handleCancel();
   };
 
+  //  Render inputs
+  renderInputs = () => {
+    let { formData } = this.state;
+    return (
+      formData.length &&
+      formData.map((user, index) => {
+        return (
+          <Grid
+            container
+            alignItems={"center"}
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            key={v4()}
+          >
+            <Grid item xs={6}>
+              <Box className="form-group">
+                <Box className="d-inline-block">
+                  <input
+                    id={`name_${index}`}
+                    type="text"
+                    className="form-control"
+                    name="name"
+                    placeholder="Write Request Title"
+                    value={user.name}
+                    onChange={(e) => {
+                      this.handleInputChange(e, index);
+                    }}
+                    autoFocus={
+                      document.activeElement.id === `name_${index}`
+                        ? "autofocus"
+                        : null
+                    }
+                  />
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box className="form-group">
+                <Box className="d-inline-block">
+                  <input
+                    id={`email_${index}`}
+                    type="text"
+                    className="form-control"
+                    name="email"
+                    placeholder="Write Request Title"
+                    value={user.email}
+                    onChange={(e) => this.handleInputChange(e, index)}
+                    autoFocus={
+                      document.activeElement.id === `email_${index}`
+                        ? "autofocus"
+                        : null
+                    }
+                  />
+                </Box>
+              </Box>
+            </Grid>
+
+            <Box className="status-btn">
+              <IconButton
+                aria-label="delete"
+                size="small"
+                className="close-icon"
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            </Box>
+          </Grid>
+        );
+      })
+    );
+  };
+
+  //Click on Add Another Person button
+  onClickAnotherPerson = () => {
+    let { formData } = this.state;
+    let isEmailValidate = true;
+    let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
+
+    if (formData?.length) {
+      for (let index = 0; index < formData.length; index++) {
+        const element = formData[index];
+        if (!emailRegex.test(element.email)) {
+          isEmailValidate = false;
+        }
+      }
+
+      if (isEmailValidate) {
+        formData.push(Object.assign({}, initialFormData));
+      }
+      this.setState({ formData });
+    }
+  };
+
+  //Set state on  input changes
+  handleInputChange = (e, index) => {
+    e.preventDefault();
+    let { formData } = this.state;
+    const { name, value } = e.target;
+    formData[index][name] = value;
+
+    this.setState({ formData });
+  };
   render() {
     const { activeStep, completed, rows } = this.state;
     return (
@@ -174,245 +284,216 @@ class CreateUserControlModal extends Component {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <Box sx={{ mt: 2, mb: 1, py: 1 }}>
-                    <Box className="users-content">
-                      {/* step1 */}
-                      {activeStep === 0 ? (
-                        <Box className="d-block">
-                          <Box className="title">
-                            <Grid
-                              container
-                              alignItems={"center"}
-                              rowSpacing={1}
-                              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                            >
-                              <Grid item xs={6}>
-                                <label className="form-label">
-                                  Name (Optional)
-                                </label>
-                              </Grid>
-                              <Grid item xs={6}>
-                                <label className="form-label">
-                                  Email Address
-                                </label>
-                              </Grid>
-                            </Grid>
-                          </Box>
-                          <Grid
-                            container
-                            alignItems={"center"}
-                            rowSpacing={1}
-                            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                          >
-                            <Grid item xs={6}>
-                              <Box className="form-group">
-                                <Box className="d-inline-block">
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    id="roleName"
-                                    name="roleName"
-                                    placeholder="Write Request Title"
-                                  />
-                                </Box>
-                              </Box>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Box className="form-group">
-                                <Box className="d-inline-block">
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    id="roleName"
-                                    name="roleName"
-                                    placeholder="Write Request Title"
-                                  />
-                                </Box>
-                              </Box>
-                            </Grid>
-                          </Grid>
-                          <Box className="add-user">
-                            <Button
-                              className="compliance-btn min-width"
-                              variant="contained"
-                            >
-                              Add Another person
-                            </Button>
-                          </Box>
-                        </Box>
-                      ) : activeStep === 1 ? (
-                        <>
-                          {/* step2 */}
-
+                  <form>
+                    <Box sx={{ mt: 2, mb: 1, py: 1 }}>
+                      <Box className="users-content">
+                        {/* step1 */}
+                        {activeStep === 0 ? (
                           <Box className="d-block">
-                            <Box className="adduser-top-section">
-                              <h4>Add users to the group(324)</h4>
+                            <Box className="title">
                               <Grid
                                 container
-                                rowSpacing={1}
-                                className="h-100"
                                 alignItems={"center"}
+                                rowSpacing={1}
                                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                               >
-                                <Grid item xs={8}>
-                                  <Box className="top-search">
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      placeholder="Search policy"
-                                    />
-                                    <button className="button">
-                                      <SearchOutlinedIcon />
-                                    </button>
-                                  </Box>
+                                <Grid item xs={6}>
+                                  <label className="form-label">
+                                    Name (Optional)
+                                  </label>
                                 </Grid>
-                                <Grid item xs={4}>
-                                  <Box className="overview-buttons">
-                                    <List>
-                                      <ListItem>
-                                        <Button
-                                          className="primary-btn min-width-inherit"
-                                          variant="contained"
-                                        >
-                                          <Link to={``}> Create Group</Link>
-                                        </Button>
-                                      </ListItem>
-                                    </List>
-                                  </Box>
+                                <Grid item xs={6}>
+                                  <label className="form-label">
+                                    Email Address
+                                  </label>
                                 </Grid>
                               </Grid>
                             </Box>
-                            <Box className="create-user-control-table">
-                              <TableContainer
-                                component={Paper}
-                                className="table"
+                            {this.renderInputs()}
+                            <Box className="add-user"  onClick={this.onClickAnotherPerson}>
+                              <Button
+                                className="compliance-btn min-width"
+                                variant="contained"
+                               
                               >
-                                <Table
-                                  sx={{ minWidth: 500 }}
-                                  aria-label="custom pagination table"
-                                  className="table"
-                                >
-                                  <TableHead>
-                                    <TableRow>
-                                      <TableCell>Group</TableCell>
-                                      <TableCell>Attached Policies</TableCell>
-                                    </TableRow>
-                                  </TableHead>
-                                  <TableBody>
-                                    {rows.map((row, index) => (
-                                      <TableRow key={index}>
-                                        <TableCell>
-                                          <Checkbox
-                                            size="small"
-                                            className="check-box"
-                                          />
-                                          {row.permissionName}
-                                        </TableCell>
-                                        <TableCell>
-                                          {row.policiesname}
-                                        </TableCell>
-                                      </TableRow>
-                                    ))}
-                                  </TableBody>
-                                </Table>
-                              </TableContainer>
+                                Add Another person
+                              </Button>
                             </Box>
                           </Box>
-                        </>
-                      ) : (
-                        <>
-                          {/* step3 */}
+                        ) : activeStep === 1 ? (
+                          <>
+                            {/* step2 */}
 
-                          <Box className="d-block">
-                            <Box className="user-review">
-                              <h4 className="m-t-0 m-b-0">Review</h4>
-                              <Box className="d-block m-t-1">
+                            <Box className="d-block">
+                              <Box className="adduser-top-section">
+                                <h4>Add users to the group(324)</h4>
                                 <Grid
                                   container
-                                  alignItems={"center"}
                                   rowSpacing={1}
+                                  className="h-100"
+                                  alignItems={"center"}
                                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                                 >
-                                  <Grid item xs={6}>
-                                    <Box className="form-group">
-                                      <label
-                                        htmlFor="username"
-                                        className="form-label"
-                                      >
-                                        Username (optional)
-                                      </label>
+                                  <Grid item xs={8}>
+                                    <Box className="top-search">
                                       <input
                                         type="text"
                                         className="form-control"
-                                        id="username"
-                                        name="username"
-                                        placeholder="James"
-                                        autoFocus={"autoFocus"}
+                                        placeholder="Search policy"
                                       />
+                                      <button className="button">
+                                        <SearchOutlinedIcon />
+                                      </button>
                                     </Box>
                                   </Grid>
-                                  <Grid item xs={6}>
-                                    <Box className="form-group">
-                                      <label
-                                        htmlFor="email"
-                                        className="form-label"
-                                      >
-                                        Email Address
-                                      </label>
-                                      <input
-                                        type="text"
-                                        className="form-control"
-                                        id="email"
-                                        name="email"
-                                        placeholder="James@synectiks.com"
-                                        autoFocus={"autoFocus"}
-                                      />
+                                  <Grid item xs={4}>
+                                    <Box className="overview-buttons">
+                                      <List>
+                                        <ListItem>
+                                          <Button
+                                            className="primary-btn min-width-inherit"
+                                            variant="contained"
+                                          >
+                                            <Link to={``}> Create Group</Link>
+                                          </Button>
+                                        </ListItem>
+                                      </List>
                                     </Box>
                                   </Grid>
                                 </Grid>
                               </Box>
-                            </Box>
-                            <h4 className="m-t-0 m-b-0">Group</h4>
-                            <Box className="create-user-control-table">
-                              <TableContainer
-                                component={Paper}
-                                className=" table"
-                              >
-                                <Table
-                                  sx={{ minWidth: 500 }}
-                                  aria-label="custom pagination table"
+                              <Box className="create-user-control-table">
+                                <TableContainer
+                                  component={Paper}
                                   className="table"
                                 >
-                                  <TableHead>
-                                    <TableRow>
-                                      <TableCell>Group</TableCell>
-                                      <TableCell>Attached Policies</TableCell>
-                                    </TableRow>
-                                  </TableHead>
-                                  <TableBody>
-                                    {rows.map((row, index) => (
-                                      <TableRow key={index}>
-                                        <TableCell>
-                                          <Checkbox
-                                            size="small"
-                                            className="check-box"
-                                          />
-                                          {row.permissionName}
-                                        </TableCell>
-                                        <TableCell>
-                                          {row.policiesname}
-                                        </TableCell>
+                                  <Table
+                                    sx={{ minWidth: 500 }}
+                                    aria-label="custom pagination table"
+                                    className="table"
+                                  >
+                                    <TableHead>
+                                      <TableRow>
+                                        <TableCell>Group</TableCell>
+                                        <TableCell>Attached Policies</TableCell>
                                       </TableRow>
-                                    ))}
-                                  </TableBody>
-                                </Table>
-                              </TableContainer>
+                                    </TableHead>
+                                    <TableBody>
+                                      {rows.map((row, index) => (
+                                        <TableRow key={index}>
+                                          <TableCell>
+                                            <Checkbox
+                                              size="small"
+                                              className="check-box"
+                                            />
+                                            {row.permissionName}
+                                          </TableCell>
+                                          <TableCell>
+                                            {row.policiesname}
+                                          </TableCell>
+                                        </TableRow>
+                                      ))}
+                                    </TableBody>
+                                  </Table>
+                                </TableContainer>
+                              </Box>
                             </Box>
-                          </Box>
-                        </>
-                      )}
+                          </>
+                        ) : (
+                          <>
+                            {/* step3 */}
+
+                            <Box className="d-block">
+                              <Box className="user-review">
+                                <h4 className="m-t-0 m-b-0">Review</h4>
+                                <Box className="d-block m-t-1">
+                                  <Grid
+                                    container
+                                    alignItems={"center"}
+                                    rowSpacing={1}
+                                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                                  >
+                                    <Grid item xs={6}>
+                                      <Box className="form-group">
+                                        <label
+                                          htmlFor="username"
+                                          className="form-label"
+                                        >
+                                          Username (optional)
+                                        </label>
+                                        <input
+                                          type="text"
+                                          className="form-control"
+                                          id="username"
+                                          name="username"
+                                          placeholder="James"
+                                          autoFocus={"autoFocus"}
+                                        />
+                                      </Box>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                      <Box className="form-group">
+                                        <label
+                                          htmlFor="email"
+                                          className="form-label"
+                                        >
+                                          Email Address
+                                        </label>
+                                        <input
+                                          type="text"
+                                          className="form-control"
+                                          id="email"
+                                          name="email"
+                                          placeholder="James@synectiks.com"
+                                          autoFocus={"autoFocus"}
+                                        />
+                                      </Box>
+                                    </Grid>
+                                  </Grid>
+                                </Box>
+                              </Box>
+                              <h4 className="m-t-0 m-b-0">Group</h4>
+                              <Box className="create-user-control-table">
+                                <TableContainer
+                                  component={Paper}
+                                  className=" table"
+                                >
+                                  <Table
+                                    sx={{ minWidth: 500 }}
+                                    aria-label="custom pagination table"
+                                    className="table"
+                                  >
+                                    <TableHead>
+                                      <TableRow>
+                                        <TableCell>Group</TableCell>
+                                        <TableCell>Attached Policies</TableCell>
+                                      </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                      {rows.map((row, index) => (
+                                        <TableRow key={index}>
+                                          <TableCell>
+                                            <Checkbox
+                                              size="small"
+                                              className="check-box"
+                                            />
+                                            {row.permissionName}
+                                          </TableCell>
+                                          <TableCell>
+                                            {row.policiesname}
+                                          </TableCell>
+                                        </TableRow>
+                                      ))}
+                                    </TableBody>
+                                  </Table>
+                                </TableContainer>
+                              </Box>
+                            </Box>
+                          </>
+                        )}
+                      </Box>
                     </Box>
-                  </Box>
+                  </form>
                   {this.renderFooterBtnsSection()}
                 </React.Fragment>
               )}
