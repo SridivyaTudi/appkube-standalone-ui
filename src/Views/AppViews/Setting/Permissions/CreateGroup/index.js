@@ -26,6 +26,7 @@ import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { setActiveTab } from "Utils";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -43,67 +44,85 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     padding: "8px 10px",
   },
 }));
-
+let users = [
+  {
+    id: 1,
+    name: "Milena Kahles",
+    emailAddress: "Carolina.Patzwahl81@gmal.cm",
+    groups: "02",
+    date: "03/01/2023",
+  },
+  {
+    id: 2,
+    name: "Natalie Clark",
+    emailAddress: "mia.johnson@example.com",
+    groups: "03",
+    date: "03/01/2023",
+  },
+  {
+    id: 3,
+    name: "David Garcia",
+    emailAddress: "sophia.brown@example.com",
+    groups: "08",
+    date: "03/01/2023",
+  },
+  {
+    id: 4,
+    name: "Olivia Martin",
+    emailAddress: "sarah.lee@example.com",
+    groups: "03",
+    date: "03/01/2023",
+  },
+  {
+    id: 5,
+    name: "William Davis",
+    emailAddress: "noah.thompson@example.com",
+    groups: "02",
+    date: "03/01/2023",
+  },
+  {
+    id: 6,
+    name: "Ella Lewis",
+    emailAddress: "bob.johnson@example.com",
+    groups: "00",
+    date: "03/01/2023",
+  },
+  {
+    id: 7,
+    name: "David Garcia",
+    emailAddress: "emma.davis@example.com",
+    groups: "04",
+    date: "03/01/2023",
+  },
+  {
+    id: 8,
+    name: "William Davis",
+    emailAddress: "lucas.martinez@example.com",
+    groups: "06",
+    date: "03/01/2023",
+  },
+];
 export class CreateGroup extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showCancelGroupControlModal: false,
-      userrow: [
-        {
-          user: "Milena Kahles",
-          emailAddress: "Carolina.Patzwahl81@gmal.cm",
-          groups: "02",
-          date: "03/01/2023",
-        },
-        {
-          user: "Natalie Clark",
-          emailAddress: "mia.johnson@example.com",
-          groups: "03",
-          date: "03/01/2023",
-        },
-        {
-          user: "David Garcia",
-          emailAddress: "sophia.brown@example.com",
-          groups: "08",
-          date: "03/01/2023",
-        },
-        {
-          user: "Olivia Martin",
-          emailAddress: "sarah.lee@example.com",
-          groups: "03",
-          date: "03/01/2023",
-        },
-        {
-          user: "William Davis",
-          emailAddress: "noah.thompson@example.com",
-          groups: "02",
-          date: "03/01/2023",
-        },
-        {
-          user: "Ella Lewis",
-          emailAddress: "bob.johnson@example.com",
-          groups: "00",
-          date: "03/01/2023",
-        },
-        {
-          user: "David Garcia",
-          emailAddress: "emma.davis@example.com",
-          groups: "04",
-          date: "03/01/2023",
-        },
-        {
-          user: "William Davis",
-          emailAddress: "lucas.martinez@example.com",
-          groups: "06",
-          date: "03/01/2023",
-        },
-      ],
+      userrow: users,
       roles: [],
       pg: 0,
       rpg: 5,
+      rolePG: 0,
+      roleRPG: 5,
       showCreateUserControlModal: false,
       actionButton: null,
+      formData: {
+        name: "",
+        description: "",
+        users: [],
+        roles: [],
+      },
+      searchedUser: "",
+      searchedRole: "",
     };
   }
 
@@ -121,12 +140,15 @@ export class CreateGroup extends Component {
       }
     }
   };
-  handleChangePage = (event, newpage) => {
+
+  handleChangePage = (event, newpage, isRole) => {
     this.setState({ pg: newpage });
   };
 
-  handleChangeRowsPerPage = (event) => {
-    this.setState({ rpg: parseInt(event.target.value, 10) });
+  handleChangeRowsPerPage = (event, isRole) => {
+    this.setState({
+      [`${isRole ? "roleRPG" : "rpg"}`]: parseInt(event.target.value, 10),
+    });
   };
 
   handleCancelGroupControlModal = () => {
@@ -159,6 +181,7 @@ export class CreateGroup extends Component {
   // render Roles Table
   renderRoleTable = () => {
     const { status: rolesStatus } = this.props.allRoles;
+    const { roles, formData } = this.state;
 
     if (rolesStatus === status.IN_PROGRESS) {
       return this.renderLoder();
@@ -172,7 +195,13 @@ export class CreateGroup extends Component {
           <TableHead>
             <TableRow>
               <TableCell>
-                <Checkbox size="small" /> Role Name
+                <Checkbox
+                  size="small"
+                  disabled={roles?.length ? false : true}
+                  checked={formData.roles.length === roles?.length}
+                  onChange={(e) => this.handleSelectAllCheckBox(e, 1)}
+                />
+                Role Name
               </TableCell>
               <TableCell>Description</TableCell>
               <TableCell></TableCell>
@@ -190,14 +219,19 @@ export class CreateGroup extends Component {
 
   // render Roles data
   renderRoles = () => {
-    const { roles, pg, rpg } = this.state;
+    const { roles, pg, rpg, formData } = this.state;
 
     if (roles?.length) {
       return roles.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
         <TableRow key={index}>
           <TableCell>
-            {" "}
-            <Checkbox size="small" /> {row.name}
+            <Checkbox
+              size="small"
+              id={row.id}
+              checked={formData.roles.includes(row.id)}
+              onChange={(e) => this.handleCheckBox(e, 1)}
+            />{" "}
+            {row.name}
             <Box className="d-flex roles-box">
               <HtmlTooltip
                 className="table-tooltip d-flex"
@@ -223,27 +257,277 @@ export class CreateGroup extends Component {
     } else {
       return (
         <TableRow>
-        <TableCell colSpan={12}>
-          <Box className="d-blck text-center w-100 h-100 "  >
-            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-              <h5 className="m-t-0 m-b-0">There are no roles available.</h5>
+          <TableCell colSpan={12}>
+            <Box className="d-blck text-center w-100 h-100 ">
+              <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+                <h5 className="m-t-0 m-b-0">There are no roles available.</h5>
+              </Box>
             </Box>
-          </Box>
-        </TableCell>
-      </TableRow>
+          </TableCell>
+        </TableRow>
       );
     }
   };
+
+  // Validate form input fields
+  validateForm = (isSubmit) => {
+    const { name, description, users, roles } = this.state.formData;
+    const errors = {
+      name: "",
+      description: "",
+      roles: "",
+      users: "",
+    };
+    let isValid = true;
+    if (isSubmit) {
+      if (!name) {
+        errors.name = "Group Name is required!";
+        isValid = false;
+      } else {
+        errors.name = "";
+      }
+
+      if (!description) {
+        errors.description = "Group Description is required!";
+        isValid = false;
+      } else {
+        errors.description = "";
+      }
+
+      if (!users.length) {
+        errors.users = "Please select user!";
+        isValid = false;
+      } else {
+        errors.users = "";
+      }
+
+      if (!roles.length) {
+        errors.roles = "Please select role!";
+        isValid = false;
+      } else {
+        errors.roles = "";
+      }
+    }
+    return { isValid, errors };
+  };
+
+  //Set state on  input changes
+  handleInputChange = (e) => {
+    const { name, value } = e.target;
+    let { formData } = this.state;
+    formData[name] = value;
+    this.setState({ formData });
+  };
+
+  // Call API create group
+  handleGroupSubmit = (e) => {
+    e.preventDefault();
+    this.setState({ isSubmit: true });
+    const { isValid } = this.validateForm(true);
+
+    if (isValid) {
+      this.handlePreviousPage();
+    }
+  };
+
+  // render User Table
+  renderUserTable = () => {
+    let { userrow, pg, rpg, formData } = this.state;
+
+    return (
+      <Table
+        sx={{ minWidth: 500 }}
+        aria-label="custom pagination table"
+        className="table"
+      >
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              <Checkbox
+                size="small"
+                id="all"
+                disabled={userrow?.length ? false : true}
+                checked={formData.users.length === userrow?.length}
+                onChange={(e) => this.handleSelectAllCheckBox(e)}
+              />
+              User
+            </TableCell>
+            <TableCell>Email Address</TableCell>
+            <TableCell>Groups</TableCell>
+            <TableCell>User Creation Date</TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {userrow.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
+            <TableRow key={index}>
+              <TableCell>
+                <Checkbox
+                  size="small"
+                  id={row.id}
+                  checked={formData.users.includes(row.id)}
+                  onChange={(e) => this.handleCheckBox(e)}
+                />{" "}
+                {row.name}
+              </TableCell>
+              <TableCell>{row.emailAddress}</TableCell>
+              <TableCell>{row.groups}</TableCell>
+              <TableCell>{row.date}</TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell align="center"></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    );
+  };
+
+  // render Pagination component
+  renderPaginationComponent = (dataLength, rowPerPage, page, isRole = 0) => {
+    return dataLength ? (
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 20]}
+        component="div"
+        count={dataLength}
+        rowsPerPage={rowPerPage}
+        page={page}
+        className="access-control-pagination"
+        onPageChange={(event, newpage) =>
+          this.handleChangePage(event, newpage, isRole)
+        }
+        onRowsPerPageChange={(event) =>
+          this.handleChangeRowsPerPage(event, isRole)
+        }
+      />
+    ) : (
+      <></>
+    );
+  };
+
+  // Render search input for role or user
+  renderSearchInput = (isRole = 0) => {
+    let { searchedUser, searchedRole } = this.state;
+    return (
+      <Grid
+        container
+        rowSpacing={1}
+        className="h-100"
+        alignItems={"center"}
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+      >
+        <Grid item xs={6}>
+          <Box className="top-search">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search policy"
+              value={isRole ? searchedRole : searchedUser}
+              onChange={(e) => this.handleSearchChange(e, isRole)}
+            />
+            <button className="button">
+              <SearchOutlinedIcon />
+            </button>
+          </Box>
+        </Grid>
+      </Grid>
+    );
+  };
+
+  //  serach role and user
+  handleSearchChange = (e, isRole) => {
+    let value = e.target.value;
+    let data = isRole ? [] : users;
+    let { userrow, roles, searchedUser, searchedRole } = this.state;
+
+    if (data?.length) {
+      if (value) {
+        data = data.filter((row) => {
+          if (row?.name.toLowerCase().includes(value.toLowerCase())) {
+            return row;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        data = isRole ? [] : users;
+      }
+
+      if (isRole) {
+        roles = data;
+        searchedRole = value;
+      } else {
+        userrow = data;
+        searchedUser = value;
+      }
+
+      this.setState({ userrow, roles, searchedRole, searchedUser });
+    }
+  };
+
+  // Handle check box
+  handleCheckBox = (event, isRole = 0) => {
+    let { formData } = this.state;
+    let data = formData[isRole ? "roles" : "users"];
+    let { id, checked } = event.target;
+
+    if (checked) {
+      data.push(+id);
+      formData[isRole ? "roles" : "users"] = data;
+    } else {
+      formData[isRole ? "roles" : "users"] = data.filter(
+        (value) => value !== +id
+      );
+    }
+
+    this.setState({ formData });
+  };
+
+  handleSelectAllCheckBox = (event, isRole = 0) => {
+    let { roles, userrow, formData } = this.state;
+
+    let data = isRole ? roles : userrow;
+    let { checked } = event.target;
+    let key = isRole ? "roles" : "users";
+
+    if (checked) {
+      formData[key] = data.map((value) => value.id);
+    } else {
+      formData[key] = [];
+    }
+
+    this.setState({ formData });
+  };
+
+  // Move to previous page
+  handlePreviousPage = () => {
+    setActiveTab("permissions/group");
+    this.props.navigate("/app/setting");
+  };
   render() {
-    const { userrow, roles, pg, rpg, showCancelGroupControlModal } = this.state;
+    const {
+      userrow,
+      roles,
+      pg,
+      rpg,
+      showCancelGroupControlModal,
+      isSubmit,
+      formData,
+      roleRPG,
+      rolePG,
+    } = this.state;
+    let { name, description } = formData;
+    const { errors } = this.validateForm(isSubmit);
     return (
       <Box className="create-group-container">
         <Box className="list-heading">
           <h3>Create Group</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li>
-                <Link to={`/app/setting/setpolicy`}>Users and Permissions</Link>
+              <li onClick={this.handlePreviousPage}>
+                <Link>Users and Permissions</Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
@@ -279,13 +563,7 @@ export class CreateGroup extends Component {
                       className="primary-btn min-width-inherit"
                       variant="contained"
                     >
-                      <Link
-                        to={`/app/setting`}
-                        onClick={() => setActiveTab("permissions/group")}
-                      >
-                        {" "}
-                        Create Group
-                      </Link>
+                      <Link onClick={this.handleGroupSubmit}>Create Group</Link>
                     </Button>
                   </ListItem>
                 </List>
@@ -313,7 +591,15 @@ export class CreateGroup extends Component {
                     id="roleName"
                     name="name"
                     placeholder="Infra Team"
+                    value={name}
+                    onChange={this.handleInputChange}
+                    autoFocus={"autoFocus"}
                   />
+                  {errors.name ? (
+                    <span style={{ color: "red" }}>{errors.name}</span>
+                  ) : (
+                    <></>
+                  )}
                 </Box>
               </Grid>
               <Grid item xs={6}>
@@ -331,13 +617,23 @@ export class CreateGroup extends Component {
                     id="roleDescription"
                     name="description"
                     style={{
-                      maxWidth:"100%",
+                      maxWidth: "100%",
                       height: "60px",
                       lineHeight: "18px",
                       paddingRight: "15px",
                     }}
                     placeholder="pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia "
+                    value={description}
+                    onChange={this.handleInputChange}
+                    onKeyDown={(e) =>
+                      e.key === "Enter" ? this.handleGroupSubmit(e) : <></>
+                    }
                   />
+                  {errors.description ? (
+                    <span style={{ color: "red" }}>{errors.description}</span>
+                  ) : (
+                    <></>
+                  )}
                 </Box>
               </Grid>
             </Grid>
@@ -345,111 +641,30 @@ export class CreateGroup extends Component {
         </Box>
         <Box className="adduser-top-section">
           <h4>Add users to the group(324)</h4>
-          <Grid
-            container
-            rowSpacing={1}
-            className="h-100"
-            alignItems={"center"}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            <Grid item xs={6}>
-              <Box className="top-search">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search policy"
-                />
-                <button className="button">
-                  <SearchOutlinedIcon />
-                </button>
-              </Box>
-            </Grid>
-          </Grid>
+          {this.renderSearchInput()}
         </Box>
         <TableContainer component={Paper} className="access-control-table">
-          <Table
-            sx={{ minWidth: 500 }}
-            aria-label="custom pagination table"
-            className="table"
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  {" "}
-                  <Checkbox size="small" /> User
-                </TableCell>
-                <TableCell>Email Address</TableCell>
-                <TableCell>Groups</TableCell>
-                <TableCell>User Creation Date</TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {userrow.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    {" "}
-                    <Checkbox size="small" /> {row.user}
-                  </TableCell>
-                  <TableCell>{row.emailAddress}</TableCell>
-                  <TableCell>{row.groups}</TableCell>
-                  <TableCell>{row.date}</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell align="center"></TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          {errors.users ? (
+            <span style={{ color: "red" }}>{errors.users}</span>
+          ) : (
+            <></>
+          )}
+          {this.renderUserTable()}
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 20]}
-          component="div"
-          count={userrow.length}
-          rowsPerPage={rpg}
-          page={pg}
-          className="access-control-pagination"
-          onPageChange={this.handleChangePage}
-          onRowsPerPageChange={this.handleChangeRowsPerPage}
-        />
+        {this.renderPaginationComponent(userrow.length, rpg, pg)}
         <Box className="adduser-top-section">
           <h4>Add Role (10)</h4>
-          <Grid
-            container
-            rowSpacing={1}
-            className="h-100"
-            alignItems={"center"}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            <Grid item xs={6}>
-              <Box className="top-search">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search policy"
-                />
-                <button className="button">
-                  <SearchOutlinedIcon />
-                </button>
-              </Box>
-            </Grid>
-          </Grid>
+          {this.renderSearchInput(1)}
         </Box>
         <TableContainer component={Paper} className="access-control-table">
+          {errors.roles ? (
+            <span style={{ color: "red" }}>{errors.roles}</span>
+          ) : (
+            <></>
+          )}
           {this.renderRoleTable()}
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 20]}
-          component="div"
-          count={roles.length}
-          rowsPerPage={rpg}
-          page={pg}
-          className="access-control-pagination"
-          onPageChange={this.handleChangePage}
-          onRowsPerPageChange={this.handleChangeRowsPerPage}
-        />
+        {this.renderPaginationComponent(roles.length, roleRPG, rolePG, 1)}
         {showCancelGroupControlModal ? (
           <CancelGroupControlModal
             showModal={showCancelGroupControlModal}
@@ -474,4 +689,7 @@ const mapDispatchToProps = {
   getRoles,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateGroup);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(CreateGroup));
