@@ -291,7 +291,7 @@ class CreateUserControlModal extends Component {
     let isStepValid = true;
     let errors = [];
     if (isSubmit) {
-      formData = formData.map((user, index) => {
+      formData.forEach((user, index) => {
         if (!emailRegex.test(user.email)) {
           errors.push(index);
           isStepValid = false;
@@ -616,20 +616,28 @@ class CreateUserControlModal extends Component {
                                       </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                      {groups.map((row, index) => (
-                                        <TableRow key={index}>
-                                          <TableCell>
-                                            <Checkbox
-                                              size="small"
-                                              className="check-box"
-                                            />
-                                            {row.permissionName}
-                                          </TableCell>
-                                          <TableCell>
-                                            {row.policiesname}
-                                          </TableCell>
-                                        </TableRow>
-                                      ))}
+                                      {groups.map((row, index) => {
+                                        if (!selectedGroups.includes(row.id)) {
+                                          return null;
+                                        } else {
+                                          return (
+                                            <TableRow key={v4()}>
+                                              <TableCell>
+                                                <Checkbox
+                                                  size="small"
+                                                  className="check-box"
+                                                  checked
+                                                  disabled
+                                                />
+                                                {row.name}
+                                              </TableCell>
+                                              <TableCell>
+                                                {row.policiesname}
+                                              </TableCell>
+                                            </TableRow>
+                                          );
+                                        }
+                                      })}
                                     </TableBody>
                                   </Table>
                                 </TableContainer>
