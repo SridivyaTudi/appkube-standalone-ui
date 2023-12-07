@@ -236,7 +236,7 @@
       width: 100%;
 
       .search-box {
-        padding-bottom: 15px;
+        padding-bottom: 20px;
 
         .search {
           display: inline-flex;
@@ -505,12 +505,11 @@
 }
 
 
-
 .permission-container {
   .services-panel-tabs {
     display: block;
     width: 100%;
-    margin-top: 25px;
+    //margin-top: 0;
 
     .tabs-head {
       display: block;
@@ -553,7 +552,7 @@
     .permission-tabs-content {
       display: block;
       width: 100%;
-      margin-top: 25px;
+      margin-top: 20px;
       .check-box {
         color: #2d96ee;
       }

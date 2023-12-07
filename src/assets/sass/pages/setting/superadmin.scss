@@ -5,7 +5,7 @@
   .overview-section {
     width: 100%;
     display: block;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     .overview-card {
       padding: 25px;
       border-radius: 10px;
@@ -60,6 +60,7 @@
     .tabs-menu {
       width: 100%;
       padding-bottom: 0px;
+      padding-top: 0px;
       display: flex;
       align-items: center;
       justify-content: flex-start;

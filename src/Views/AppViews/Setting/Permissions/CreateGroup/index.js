@@ -413,10 +413,9 @@ export class CreateGroup extends Component {
     return (
       <Grid
         container
-        rowSpacing={1}
         className="h-100"
         alignItems={"center"}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        
       >
         <Grid item xs={6}>
           <Box className="top-search">
@@ -537,14 +536,9 @@ export class CreateGroup extends Component {
           </Box>
         </Box>
         <Box className="group-name">
-          <Grid
-            container
-            alignItems={"center"}
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
+          <Grid container alignItems={"center"} className="p-t-20 p-b-20">
             <Grid item xs={6}>
-              <h4>Name of the group</h4>
+              <h4 className="m-t-0 m-b-0">Name of the group</h4>
             </Grid>
             <Grid item xs={6}>
               <Box className="overview-buttons">
@@ -639,7 +633,7 @@ export class CreateGroup extends Component {
             </Grid>
           </Box>
         </Box>
-        <Box className="adduser-top-section">
+        <Box className="adduser-top-section p-t-20 p-b-20">
           <h4>Add users to the group(324)</h4>
           {this.renderSearchInput()}
         </Box>
@@ -652,7 +646,7 @@ export class CreateGroup extends Component {
           {this.renderUserTable()}
         </TableContainer>
         {this.renderPaginationComponent(userrow.length, rpg, pg)}
-        <Box className="adduser-top-section">
+        <Box className="adduser-top-section p-t-20 p-b-20">
           <h4>Add Role (10)</h4>
           {this.renderSearchInput(1)}
         </Box>

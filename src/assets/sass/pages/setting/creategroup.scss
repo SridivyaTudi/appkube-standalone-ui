@@ -4,7 +4,7 @@
   padding: 30px 45px;
   .group-name {
     display: block;
-    margin-bottom: 20px;
+    //margin-bottom: 20px;
     .overview-buttons {
       display: flex;
       height: 100%;
@@ -37,7 +37,7 @@
       padding: 15px 20px;
       background: #ffffff;
       border-radius: 10px;
-      margin-top: 15px;
+      //margin-top: 15px;
       .form-group {
         width: 100%;
         .form-label {
@@ -76,9 +76,7 @@
     }
   }
   .adduser-top-section {
-    margin-bottom: 20px;
     h4 {
-      margin-bottom: 0;
       margin-top: 0;
     }
     .top-search {
@@ -89,10 +87,8 @@
         font-size: 14px;
         line-height: 20px;
         font-weight: 500;
-        margin-top: 10px;
         color: #8676ff;
         padding: 10px 50px 10px 20px;
-        margin-bottom: 10px;
         border: none;
         background-color: #eef0fa;
         border-radius: 8px;
