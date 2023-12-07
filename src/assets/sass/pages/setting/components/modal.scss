@@ -528,87 +528,87 @@
           }
         }
 
-        .adduser-top-section {
-          margin-bottom: 20px;
+        // .adduser-top-section {
+        //   margin-bottom: 20px;
 
-          h4 {
-            margin-bottom: 0;
-            margin-top: 0;
-          }
+        //   h4 {
+        //     margin-bottom: 0;
+        //     margin-top: 0;
+        //   }
 
-          .top-search {
-            position: relative;
+        //   .top-search {
+        //     position: relative;
 
-            .form-control {
-              width: 100%;
-              height: 40px;
-              font-size: 14px;
-              line-height: 20px;
-              font-weight: 500;
-              margin-top: 10px;
-              color: #8676ff;
-              padding: 10px 50px 10px 20px;
-              margin-bottom: 10px;
-              border: none;
-              background-color: #eef0fa;
-              border-radius: 8px;
-            }
+        //     .form-control {
+        //       width: 100%;
+        //       height: 40px;
+        //       font-size: 14px;
+        //       line-height: 20px;
+        //       font-weight: 500;
+        //       margin-top: 10px;
+        //       color: #8676ff;
+        //       padding: 10px 50px 10px 20px;
+        //       margin-bottom: 10px;
+        //       border: none;
+        //       background-color: #eef0fa;
+        //       border-radius: 8px;
+        //     }
 
-            ::placeholder {
-              color: #8676ff;
-              opacity: 1;
-              /* Firefox */
-            }
+        //     ::placeholder {
+        //       color: #8676ff;
+        //       opacity: 1;
+        //       /* Firefox */
+        //     }
 
-            ::-ms-input-placeholder {
-              /* Edge 12-18 */
-              color: #8676ff;
-            }
+        //     ::-ms-input-placeholder {
+        //       /* Edge 12-18 */
+        //       color: #8676ff;
+        //     }
 
-            button {
-              position: absolute;
-              top: 8px;
-              right: 15px;
-              display: inline-flex;
-              border: none;
-              background-color: transparent;
-              color: #a1a3d4;
-            }
-          }
+        //     button {
+        //       position: absolute;
+        //       top: 8px;
+        //       right: 15px;
+        //       display: inline-flex;
+        //       border: none;
+        //       background-color: transparent;
+        //       color: #a1a3d4;
+        //     }
+        //   }
 
-          .overview-buttons {
-            display: flex;
-            height: 100%;
-            align-items: end;
-            justify-content: end;
+        //   .overview-buttons {
+        //     display: flex;
+        //     height: 100%;
+        //     align-items: end;
+        //     justify-content: end;
 
-            ul {
-              display: flex;
-              align-items: center;
-              justify-content: end;
-              padding: 0;
-              margin: 0;
+        //     ul {
+        //       display: flex;
+        //       align-items: center;
+        //       justify-content: end;
+        //       padding: 0;
+        //       margin: 0;
 
-              li {
-                display: inline-block;
-                list-style: none;
-                padding: 0;
-                margin-right: 15px;
-                width: auto;
+        //       li {
+        //         display: inline-block;
+        //         list-style: none;
+        //         padding: 0;
+        //         margin-right: 15px;
+        //         width: auto;
 
-                &:last-child {
-                  margin-right: 0;
-                }
+        //         &:last-child {
+        //           margin-right: 0;
+        //         }
 
-                .primary-btn {
-                  a {
-                    color: #ffffff;
-                  }
-                }
-              }
-            }
-          }
-        }
+        //         .primary-btn {
+        //           a {
+        //             color: #ffffff;
+        //           }
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
 
         .user-review {
           .form-group {
@@ -644,7 +644,6 @@
         .create-user-control-table {
           display: block;
           background-color: #ffffff;
-          margin-top: 20px;
           padding: 0;
           border-radius: 10px;
           box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);

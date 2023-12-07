@@ -182,7 +182,9 @@ class CreateUserControlModal extends Component {
               </Box>
             </Box>
             <Box className="form-group">
-              <IconButton variant="outlined" color="error"
+              <IconButton
+                variant="outlined"
+                color="error"
                 aria-label="delete"
                 size="small"
                 className="close-icon"
@@ -274,7 +276,7 @@ class CreateUserControlModal extends Component {
               ) : (
                 <React.Fragment>
                   <form>
-                    <Box sx={{ mt: 2, mb: 1, py: 1 }}>
+                    <Box sx={{ mt: 2,}}>
                       <Box className="users-content">
                         {/* step1 */}
                         {activeStep === 0 ? (
@@ -309,14 +311,12 @@ class CreateUserControlModal extends Component {
                             {/* step2 */}
 
                             <Box className="d-block">
-                              <Box className="adduser-top-section">
-                                <h4>Add users to the group(324)</h4>
+                              <Box className="setting-common-searchbar p-t-0">
+                                <h5>Add users to the group(324)</h5>
                                 <Grid
                                   container
-                                  rowSpacing={1}
                                   className="h-100"
                                   alignItems={"center"}
-                                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                                 >
                                   <Grid item xs={8}>
                                     <Box className="top-search">
@@ -436,7 +436,7 @@ class CreateUserControlModal extends Component {
                                   </Grid>
                                 </Box>
                               </Box>
-                              <h4 className="m-t-0 m-b-0">Group</h4>
+                              <h4 className="m-t-0">Group</h4>
                               <Box className="create-user-control-table">
                                 <TableContainer
                                   component={Paper}
