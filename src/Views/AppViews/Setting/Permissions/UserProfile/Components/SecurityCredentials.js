@@ -45,15 +45,10 @@ export class SecurityCredentials extends Component {
           </Box>
         </Box>
         <Box className="multi-authentication-section">
-          <Box className="d-block">
-            <Grid
-              container
-              alignItems={"center"}
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            >
+          <Box className="d-block p-t-20 p-b-20">
+            <Grid container alignItems={"center"}>
               <Grid item xs={6}>
-                <h4>Multi-factor authentication</h4>
+                <h4 className="m-t-0 m-b-0">Multi-factor authentication</h4>
               </Grid>
               <Grid item xs={6}>
                 <Box className="overview-buttons">
@@ -80,7 +75,7 @@ export class SecurityCredentials extends Component {
               </Grid>
             </Grid>
           </Box>
-          <Box className="environment-table-section m-t-3">
+          <Box className="environment-table-section">
             <TableContainer className="table">
               <Table className="overview">
                 <TableHead>

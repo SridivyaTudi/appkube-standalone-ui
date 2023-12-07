@@ -106,13 +106,11 @@ class AddUserGroup extends Component {
           </Box>
         </Box>
         <Box className="group-name">
-          <Grid
-            container
-            alignItems={"center"}
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            <Grid item xs={12}>
+          <Grid container alignItems={"center"} className="p-t-20 p-b-20">
+            <Grid item xs={6}>
+              <h4 className="m-t-0 m-b-0">Add user to groups</h4>
+            </Grid>
+            <Grid item xs={6}>
               <Box className="overview-buttons">
                 <List>
                   <ListItem>
@@ -120,11 +118,7 @@ class AddUserGroup extends Component {
                       className="primary-btn min-width-inherit"
                       variant="contained"
                     >
-                      <Link
-                        to={`/app/setting/create-group`}
-                      >
-                        Create Group
-                      </Link>
+                      <Link to={`/app/setting/create-group`}>Create Group</Link>
                     </Button>
                   </ListItem>
                 </List>
@@ -132,13 +126,12 @@ class AddUserGroup extends Component {
             </Grid>
           </Grid>
         </Box>
-        <Box className="adduser-top-section">
+        <Box className="adduser-top-section p-b-20">
           <Grid
             container
-            rowSpacing={1}
             className="h-100"
             alignItems={"center"}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            
           >
             <Grid item xs={6}>
               <Box className="top-search">
@@ -216,9 +209,7 @@ class AddUserGroup extends Component {
                   className="primary-btn min-width-inherit"
                   variant="contained"
                 >
-                  <Link
-                    to={`/app/setting/create-group`}
-                  >
+                  <Link to={`/app/setting/create-group`}>
                     Add user to groups
                   </Link>
                 </Button>

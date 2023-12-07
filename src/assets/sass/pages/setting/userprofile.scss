@@ -9,6 +9,7 @@
       line-height: 24px;
       font-weight: 500;
       color: #383874;
+      margin: 0;
     }
     .overview-buttons {
       display: flex;
@@ -87,15 +88,15 @@
   .services-panel-tabs {
     display: block;
     width: 100%;
-    margin-top: 25px;
-
     .tabs-head {
       display: block;
+      margin: 20px 0;
       h4 {
         width: 100%;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        margin: 0;
       }
       .overview-buttons {
         ul {
@@ -117,7 +118,6 @@
           }
         }
       }
-
       ul {
         display: inline-block;
         width: auto;
@@ -154,7 +154,6 @@
     .permission-tabs-content {
       display: block;
       width: 100%;
-      margin-top: 25px;
       .credentials-content {
         display: block;
         width: 100%;
@@ -207,7 +206,6 @@
       .multi-authentication-section {
         display: block;
         width: 100%;
-        margin-top: 20px;
         .overview-buttons {
           display: flex;
           height: 100%;
@@ -229,6 +227,9 @@
                 a {
                   color: #ffffff;
                 }
+              }
+              &:last-child{
+                margin-right: 0;
               }
             }
           }

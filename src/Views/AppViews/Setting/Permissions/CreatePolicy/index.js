@@ -209,13 +209,7 @@ export class CreatePolicy extends Component {
   renderSearchInput = () => {
     let { searchedRole } = this.state;
     return (
-      <Grid
-        container
-        rowSpacing={1}
-        className="h-100"
-        alignItems={"center"}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-      >
+      <Grid container className="h-100" alignItems={"center"}>
         <Grid item xs={6}>
           <Box className="top-search">
             <input
@@ -402,14 +396,9 @@ export class CreatePolicy extends Component {
           </Box>
         </Box>
         <Box className="group-name">
-          <Grid
-            container
-            alignItems={"center"}
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
+          <Grid container alignItems={"center"} className="p-t-20 p-b-20">
             <Grid item xs={6}>
-              <h4>Name of the policy</h4>
+              <h4 className="m-t-0 m-b-0">Name of the policy</h4>
             </Grid>
             <Grid item xs={6}>
               <Box className="overview-buttons">
@@ -509,7 +498,7 @@ export class CreatePolicy extends Component {
             </Grid>
           </Box>
         </Box>
-        <Box className="adduser-top-section">
+        <Box className="adduser-top-section p-t-20 p-b-20">
           <h4>Add Permissions to the Policy(68)</h4>
           {this.renderSearchInput()}
         </Box>
