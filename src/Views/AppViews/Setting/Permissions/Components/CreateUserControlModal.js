@@ -142,58 +142,47 @@ class CreateUserControlModal extends Component {
       formData.length &&
       formData.map((user, index) => {
         return (
-          <Grid
-            container
-            alignItems={"center"}
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            key={v4()}
-          >
-            <Grid item xs={6}>
-              <Box className="form-group">
-                <Box className="d-inline-block">
-                  <input
-                    id={`name_${index}`}
-                    type="text"
-                    className="form-control"
-                    name="name"
-                    placeholder="Write Request Title"
-                    value={user.name}
-                    onChange={(e) => {
-                      this.handleInputChange(e, index);
-                    }}
-                    autoFocus={
-                      document.activeElement.id === `name_${index}`
-                        ? "autofocus"
-                        : null
-                    }
-                  />
-                </Box>
+          <Box className="d-flex align-items-center form-row " key={v4()}>
+            <Box className="form-group">
+              <Box className="d-inline-block">
+                <input
+                  id={`name_${index}`}
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  placeholder="Write Request Title"
+                  value={user.name}
+                  onChange={(e) => {
+                    this.handleInputChange(e, index);
+                  }}
+                  autoFocus={
+                    document.activeElement.id === `name_${index}`
+                      ? "autofocus"
+                      : null
+                  }
+                />
               </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box className="form-group">
-                <Box className="d-inline-block">
-                  <input
-                    id={`email_${index}`}
-                    type="text"
-                    className="form-control"
-                    name="email"
-                    placeholder="Write Request Title"
-                    value={user.email}
-                    onChange={(e) => this.handleInputChange(e, index)}
-                    autoFocus={
-                      document.activeElement.id === `email_${index}`
-                        ? "autofocus"
-                        : null
-                    }
-                  />
-                </Box>
+            </Box>
+            <Box className="form-group">
+              <Box className="d-inline-block">
+                <input
+                  id={`email_${index}`}
+                  type="text"
+                  className="form-control"
+                  name="email"
+                  placeholder="Write Request Title"
+                  value={user.email}
+                  onChange={(e) => this.handleInputChange(e, index)}
+                  autoFocus={
+                    document.activeElement.id === `email_${index}`
+                      ? "autofocus"
+                      : null
+                  }
+                />
               </Box>
-            </Grid>
-
-            <Box className="status-btn">
-              <IconButton
+            </Box>
+            <Box className="form-group">
+              <IconButton variant="outlined" color="error"
                 aria-label="delete"
                 size="small"
                 className="close-icon"
@@ -201,7 +190,7 @@ class CreateUserControlModal extends Component {
                 <CloseIcon fontSize="inherit" />
               </IconButton>
             </Box>
-          </Grid>
+          </Box>
         );
       })
     );
@@ -291,30 +280,25 @@ class CreateUserControlModal extends Component {
                         {activeStep === 0 ? (
                           <Box className="d-block">
                             <Box className="title">
-                              <Grid
-                                container
-                                alignItems={"center"}
-                                rowSpacing={1}
-                                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                              >
-                                <Grid item xs={6}>
-                                  <label className="form-label">
-                                    Name (Optional)
-                                  </label>
-                                </Grid>
-                                <Grid item xs={6}>
-                                  <label className="form-label">
-                                    Email Address
-                                  </label>
-                                </Grid>
-                              </Grid>
+                              <label className="form-label">
+                                Name (Optional)
+                              </label>
+                              <label className="form-label">
+                                Email Address
+                              </label>
                             </Box>
-                            {this.renderInputs()}
-                            <Box className="add-user"  onClick={this.onClickAnotherPerson}>
+                            <Box className="d-block">
+                              {" "}
+                              {this.renderInputs()}
+                            </Box>
+
+                            <Box
+                              className="add-user"
+                              onClick={this.onClickAnotherPerson}
+                            >
                               <Button
                                 className="compliance-btn min-width"
                                 variant="contained"
-                               
                               >
                                 Add Another person
                               </Button>

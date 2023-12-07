@@ -476,10 +476,11 @@
 
       .users-content {
         .title {
-          display: block;
+          display: flex;
           margin-bottom: 5px;
 
           .form-label {
+            width: 47.2%;
             font-size: 14px;
             color: #344054;
             line-height: 20px;
@@ -491,11 +492,11 @@
 
         .form-group {
           margin-bottom: 15px;
-
           .form-control {
-            width: 255px;
+            width: 240px;
             height: 36px;
             padding: 5px 15px;
+            margin-right: 15px;
             border: 1px solid #d0d5dd;
             background: linear-gradient(0deg, #ffffff, #ffffff);
             box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
@@ -505,6 +506,10 @@
             font-weight: 400;
             color: #344054;
             font-family: "Poppins", sans-serif;
+          }
+          .close-icon {
+            color: #ff2d2e;
+           border: 1px solid #ff2d2e;
           }
         }
 
@@ -653,8 +658,7 @@
               padding-bottom: 0px;
               display: table;
               width: calc(100% - 0.1em)
-                /* scrollbar is average 1em/16px width, remove it from thead width */
-              ;
+                /* scrollbar is average 1em/16px width, remove it from thead width */;
 
               &.active {
                 th {
