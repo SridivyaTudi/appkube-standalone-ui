@@ -24,36 +24,43 @@ import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
+import { ToastMessage } from "Toast/ToastMessage";
 const steps = ["User details ", "Add  user to group ", "Review and Create"];
 const initialFormData = {
   name: "",
   email: "",
   group: 0,
 };
+let groupData = [
+  {
+    name: "Super Admin",
+    policiesname: "Multiple",
+    id: 1,
+  },
+  {
+    name: "Defaulta User",
+    policiesname: "Single",
+    id: 2,
+  },
+  {
+    name: "Infra Team",
+    policiesname: "Multiple",
+    id: 3,
+  },
+  {
+    name: "Design Architect",
+    policiesname: "Multiple",
+    id: 4,
+  },
+];
 class CreateUserControlModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeStep: 0,
       completed: {},
-      rows: [
-        {
-          permissionName: "Super Admin",
-          policiesname: "Multiple",
-        },
-        {
-          permissionName: "Defaulta User",
-          policiesname: "Single",
-        },
-        {
-          permissionName: "Infra Team",
-          policiesname: "Multiple",
-        },
-        {
-          permissionName: "Design Architect",
-          policiesname: "Multiple",
-        },
-      ],
+      selectedGroups: [],
+      groups: groupData,
       formData: [Object.assign({}, initialFormData)],
       isSubmit: false,
     };
@@ -266,10 +273,13 @@ class CreateUserControlModal extends Component {
         activeStep = activeStep + 1;
       }
     } else if (activeStep === 1) {
-      // let isValidStep = this.validateStep1();
-      // if (isValidStep) {
-      //   activeStep = activeStep + 1;
-      // }
+      let isValid = this.validateStep2(isSubmit);
+      if (isValid) {
+        activeStep = activeStep + 1;
+      } else {
+        ToastMessage.error("Please select any group.");
+        return;
+      }
     }
     this.setState({ activeStep, isSubmit });
   };
@@ -295,8 +305,117 @@ class CreateUserControlModal extends Component {
     return { errors, isStepValid };
   };
 
+  //  Validate step 2
+  validateStep2 = (isSubmit) => {
+    let { selectedGroups } = this.state;
+    let isValid = selectedGroups.length ? true : false;
+    return isValid;
+  };
+
+  // Handle check box
+  handleCheckBox = (event) => {
+    let { selectedGroups } = this.state;
+
+    let { id, checked } = event.target;
+
+    if (checked) {
+      selectedGroups.push(+id);
+    } else {
+      selectedGroups = selectedGroups.filter((value) => value !== +id);
+    }
+
+    this.setState({ selectedGroups });
+  };
+
+  //  Serach group
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+
+    let { groups, searchedGroup } = this.state;
+
+    if (groupData?.length) {
+      searchedGroup = value;
+
+      if (value) {
+        groups = groupData.filter((row) => {
+          if (row?.name.toLowerCase().includes(value.toLowerCase())) {
+            return row;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        groups = groupData;
+      }
+
+      this.setState({ groups, searchedGroup });
+    }
+  };
+
+  renderUserReview = () => {
+    let { formData } = this.state;
+    return formData && formData.length ? (
+      formData.map((row, index) => {
+        return (
+          <React.Fragment key={v4()}>
+            <Grid item xs={6}>
+              <Box className="form-group">
+                {index === 0 ? (
+                  <label htmlFor="username" className="form-label">
+                    Username (optional)
+                  </label>
+                ) : (
+                  <></>
+                )}
+
+                <input
+                  type="text"
+                  className="form-control"
+                  id="username"
+                  name="username"
+                  placeholder="James"
+                  disabled
+                  value={row.name}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box className="form-group">
+                {index === 0 ? (
+                  <label htmlFor="email" className="form-label">
+                    Email Address
+                  </label>
+                ) : (
+                  <></>
+                )}
+
+                <input
+                  type="text"
+                  className="form-control"
+                  id="email"
+                  name="email"
+                  placeholder="James@synectiks.com"
+                  disabled
+                  value={row.email}
+                />
+              </Box>
+            </Grid>
+          </React.Fragment>
+        );
+      })
+    ) : (
+      <></>
+    );
+  };
   render() {
-    const { activeStep, completed, rows, isSubmit } = this.state;
+    const {
+      activeStep,
+      completed,
+      isSubmit,
+      groups,
+      selectedGroups,
+      searchedGroup,
+    } = this.state;
     let { errors } = this.validateStep1(isSubmit);
 
     return (
@@ -393,6 +512,10 @@ class CreateUserControlModal extends Component {
                                         type="text"
                                         className="form-control"
                                         placeholder="Search policy"
+                                        value={searchedGroup}
+                                        onChange={(e) =>
+                                          this.handleSearchChange(e)
+                                        }
                                       />
                                       <button className="button">
                                         <SearchOutlinedIcon />
@@ -432,14 +555,19 @@ class CreateUserControlModal extends Component {
                                       </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                      {rows.map((row, index) => (
+                                      {groups.map((row, index) => (
                                         <TableRow key={index}>
                                           <TableCell>
                                             <Checkbox
                                               size="small"
                                               className="check-box"
+                                              id={row.id}
+                                              checked={selectedGroups.includes(
+                                                row.id
+                                              )}
+                                              onChange={this.handleCheckBox}
                                             />
-                                            {row.permissionName}
+                                            {row.name}
                                           </TableCell>
                                           <TableCell>
                                             {row.policiesname}
@@ -466,42 +594,7 @@ class CreateUserControlModal extends Component {
                                     rowSpacing={1}
                                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                                   >
-                                    <Grid item xs={6}>
-                                      <Box className="form-group">
-                                        <label
-                                          htmlFor="username"
-                                          className="form-label"
-                                        >
-                                          Username (optional)
-                                        </label>
-                                        <input
-                                          type="text"
-                                          className="form-control"
-                                          id="username"
-                                          name="username"
-                                          placeholder="James"
-                                          autoFocus={"autoFocus"}
-                                        />
-                                      </Box>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                      <Box className="form-group">
-                                        <label
-                                          htmlFor="email"
-                                          className="form-label"
-                                        >
-                                          Email Address
-                                        </label>
-                                        <input
-                                          type="text"
-                                          className="form-control"
-                                          id="email"
-                                          name="email"
-                                          placeholder="James@synectiks.com"
-                                          autoFocus={"autoFocus"}
-                                        />
-                                      </Box>
-                                    </Grid>
+                                    {this.renderUserReview()}
                                   </Grid>
                                 </Box>
                               </Box>
@@ -523,7 +616,7 @@ class CreateUserControlModal extends Component {
                                       </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                      {rows.map((row, index) => (
+                                      {groups.map((row, index) => (
                                         <TableRow key={index}>
                                           <TableCell>
                                             <Checkbox
