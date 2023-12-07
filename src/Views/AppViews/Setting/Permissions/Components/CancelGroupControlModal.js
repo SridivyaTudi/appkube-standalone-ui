@@ -48,7 +48,7 @@ class CancelGroupControlModal extends Component {
             <LoadingButton
               className="primary-btn min-width-inherit "
               variant="contained"
-              onClick={this.handleCloseModal}
+              onClick={this.props.handleCancelGroupControlModal}
             >
               Continue
             </LoadingButton>
