@@ -62,27 +62,26 @@ export class UserProfile extends Component {
             </ul>
           </Box>
         </Box>
-        <Box className="user-top-section">
-          <Grid container alignItems={"center"} className=" p-b-20"> 
+        <Box className="setting-common-searchbar">
+          <Grid container alignItems={"center"}>
             <Grid item xs={6}>
               <h4>Milena kahles</h4>
             </Grid>
             <Grid item xs={6}>
-              <Box className="overview-buttons">
-                <List>
-                  <ListItem>
-                    <Button
-                      className="danger-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Delete user
-                    </Button>
-                  </ListItem>
-                </List>
-              </Box>
+              <List>
+                <ListItem>
+                  <Button
+                    className="danger-btn min-width-inherit"
+                    variant="contained"
+                  >
+                    Delete user
+                  </Button>
+                </ListItem>
+              </List>
             </Grid>
           </Grid>
-          <Box className="user-profile-details">
+        </Box>
+        <Box className="user-profile-details">
             <Box className="d-flex align-items-center">
               <Box className="user-image m-r-2">
                 <img src={UserImage} alt="" />
@@ -108,12 +107,11 @@ export class UserProfile extends Component {
               </List>
             </Box>
           </Box>
-        </Box>
         <Box className="services-panel-tabs ">
           <Box className="tabs-head ">
             <Grid container alignItems={"center"} rowSpacing={0}>
               <Grid item xl={3} lg={3} md={2} sm={4} xs={4}>
-                <h4 >{HEADER[activeTab]}</h4>
+                <h4>{HEADER[activeTab]}</h4>
               </Grid>
               <Grid
                 item

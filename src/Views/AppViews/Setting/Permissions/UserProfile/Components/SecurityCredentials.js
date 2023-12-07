@@ -45,33 +45,31 @@ export class SecurityCredentials extends Component {
           </Box>
         </Box>
         <Box className="multi-authentication-section">
-          <Box className="d-block p-t-20 p-b-20">
+          <Box className="setting-common-searchbar">
             <Grid container alignItems={"center"}>
               <Grid item xs={6}>
                 <h4 className="m-t-0 m-b-0">Multi-factor authentication</h4>
               </Grid>
               <Grid item xs={6}>
-                <Box className="overview-buttons">
-                  <List>
-                    <ListItem>
-                      <Button
-                        className="danger-btn min-width-inherit"
-                        variant="contained"
-                      >
-                        Remove
-                      </Button>
-                    </ListItem>
-                    <ListItem>
-                      <Button
-                        className="primary-btn min-width-inherit"
-                        variant="contained"
-                        onClick={this.handleAuthenticationModal}
-                      >
-                        <Link to={``}> Setup MFA</Link>
-                      </Button>
-                    </ListItem>
-                  </List>
-                </Box>
+                <List>
+                  <ListItem>
+                    <Button
+                      className="danger-btn min-width-inherit"
+                      variant="contained"
+                    >
+                      Remove
+                    </Button>
+                  </ListItem>
+                  <ListItem>
+                    <Button
+                      className="primary-btn min-width-inherit"
+                      variant="contained"
+                      onClick={this.handleAuthenticationModal}
+                    >
+                      <Link to={``}> Setup MFA</Link>
+                    </Button>
+                  </ListItem>
+                </List>
               </Grid>
             </Grid>
           </Box>

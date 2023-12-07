@@ -411,12 +411,7 @@ export class CreateGroup extends Component {
   renderSearchInput = (isRole = 0) => {
     let { searchedUser, searchedRole } = this.state;
     return (
-      <Grid
-        container
-        className="h-100"
-        alignItems={"center"}
-        
-      >
+      <Grid container className="h-100" alignItems={"center"}>
         <Grid item xs={6}>
           <Box className="top-search">
             <input
@@ -535,106 +530,101 @@ export class CreateGroup extends Component {
             </ul>
           </Box>
         </Box>
-        <Box className="group-name">
-          <Grid container alignItems={"center"} className="p-t-20 p-b-20">
+        <Box className="setting-common-searchbar">
+          <Grid container alignItems={"center"}>
             <Grid item xs={6}>
               <h4 className="m-t-0 m-b-0">Name of the group</h4>
             </Grid>
             <Grid item xs={6}>
-              <Box className="overview-buttons">
-                <List>
-                  <ListItem>
-                    <Button
-                      onClick={this.handleCancelGroupControlModal}
-                      className="danger-outline-btn min-width-inherit"
-                      variant="outlined"
-                    >
-                      Cancel
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button
-                      className="primary-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      <Link onClick={this.handleGroupSubmit}>Create Group</Link>
-                    </Button>
-                  </ListItem>
-                </List>
+              <List>
+                <ListItem>
+                  <Button
+                    onClick={this.handleCancelGroupControlModal}
+                    className="danger-outline-btn min-width-inherit"
+                    variant="outlined"
+                  >
+                    Cancel
+                  </Button>
+                </ListItem>
+                <ListItem>
+                  <Button
+                    className="primary-btn min-width-inherit"
+                    variant="contained"
+                  >
+                    <Link onClick={this.handleGroupSubmit}>Create Group</Link>
+                  </Button>
+                </ListItem>
+              </List>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box className="grop-description-section">
+          <Grid
+            container
+            alignItems={"center"}
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid item xs={6}>
+              <Box className="form-group">
+                <label htmlFor="roleName" className="form-label d-block">
+                  Group Name
+                </label>
+                <span className="D-block">
+                  Enter a meaningful name to identify this group.
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="roleName"
+                  name="name"
+                  placeholder="Infra Team"
+                  value={name}
+                  onChange={this.handleInputChange}
+                  autoFocus={"autoFocus"}
+                />
+                {errors.name ? (
+                  <span style={{ color: "red" }}>{errors.name}</span>
+                ) : (
+                  <></>
+                )}
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box className="form-group">
+                <label htmlFor="roleDescription" className="form-label d-block">
+                  Group Description
+                </label>
+
+                <textarea
+                  type="text"
+                  className="form-control"
+                  id="roleDescription"
+                  name="description"
+                  style={{
+                    maxWidth: "100%",
+                    height: "60px",
+                    lineHeight: "18px",
+                    paddingRight: "15px",
+                  }}
+                  placeholder="pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia "
+                  value={description}
+                  onChange={this.handleInputChange}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" ? this.handleGroupSubmit(e) : <></>
+                  }
+                />
+                {errors.description ? (
+                  <span style={{ color: "red" }}>{errors.description}</span>
+                ) : (
+                  <></>
+                )}
               </Box>
             </Grid>
           </Grid>
-          <Box className="grop-description-section">
-            <Grid
-              container
-              alignItems={"center"}
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            >
-              <Grid item xs={6}>
-                <Box className="form-group">
-                  <label htmlFor="roleName" className="form-label d-block">
-                    Group Name
-                  </label>
-                  <span className="D-block">
-                    Enter a meaningful name to identify this group.
-                  </span>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="roleName"
-                    name="name"
-                    placeholder="Infra Team"
-                    value={name}
-                    onChange={this.handleInputChange}
-                    autoFocus={"autoFocus"}
-                  />
-                  {errors.name ? (
-                    <span style={{ color: "red" }}>{errors.name}</span>
-                  ) : (
-                    <></>
-                  )}
-                </Box>
-              </Grid>
-              <Grid item xs={6}>
-                <Box className="form-group">
-                  <label
-                    htmlFor="roleDescription"
-                    className="form-label d-block"
-                  >
-                    Group Description
-                  </label>
-
-                  <textarea
-                    type="text"
-                    className="form-control"
-                    id="roleDescription"
-                    name="description"
-                    style={{
-                      maxWidth: "100%",
-                      height: "60px",
-                      lineHeight: "18px",
-                      paddingRight: "15px",
-                    }}
-                    placeholder="pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia "
-                    value={description}
-                    onChange={this.handleInputChange}
-                    onKeyDown={(e) =>
-                      e.key === "Enter" ? this.handleGroupSubmit(e) : <></>
-                    }
-                  />
-                  {errors.description ? (
-                    <span style={{ color: "red" }}>{errors.description}</span>
-                  ) : (
-                    <></>
-                  )}
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
         </Box>
-        <Box className="adduser-top-section p-t-20 p-b-20">
-          <h4>Add users to the group(324)</h4>
+        <Box className="setting-common-searchbar">
+          <h5>Add users to the group(324)</h5>
           {this.renderSearchInput()}
         </Box>
         <TableContainer component={Paper} className="access-control-table">
@@ -646,8 +636,8 @@ export class CreateGroup extends Component {
           {this.renderUserTable()}
         </TableContainer>
         {this.renderPaginationComponent(userrow.length, rpg, pg)}
-        <Box className="adduser-top-section p-t-20 p-b-20">
-          <h4>Add Role (10)</h4>
+        <Box className="setting-common-searchbar">
+          <h5>Add Role (10)</h5>
           {this.renderSearchInput(1)}
         </Box>
         <TableContainer component={Paper} className="access-control-table">

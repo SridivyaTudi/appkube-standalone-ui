@@ -124,16 +124,10 @@ class AddUsers extends Component {
             </ul>
           </Box>
         </Box>
-        <Box className="adduser-top-section">
+        <Box className="setting-common-searchbar">
           <h5>Add users to infra team</h5>
-          <Grid
-            container
-            rowSpacing={1}
-            className="h-100"
-            alignItems={"center"}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            <Grid item xs={7}>
+          <Grid container className="h-100" alignItems={"center"}>
+            <Grid item xs={6}>
               <Box className="top-search">
                 <input
                   type="text"
@@ -145,7 +139,7 @@ class AddUsers extends Component {
                 </button>
               </Box>
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <List>
                 <ListItem>
                   <Button

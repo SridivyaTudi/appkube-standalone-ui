@@ -17,7 +17,6 @@ import {
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 
-
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -28,7 +27,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     backgroundColor: "#16161E",
     color: "#ffffff",
     maxWidth: 250,
-    
+
     fontSize: theme.typography.pxToRem(12),
     border: "1px solid #dadde9",
     padding: "8px 10px",
@@ -144,16 +143,10 @@ class AddRole extends Component {
             </ul>
           </Box>
         </Box>
-        <Box className="adduser-top-section">
+        <Box className="setting-common-searchbar">
           <h5>Add users to infra team</h5>
-          <Grid
-            container
-            rowSpacing={1}
-            className="h-100"
-            alignItems={"center"}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            <Grid item xs={7}>
+          <Grid container className="h-100" alignItems={"center"}>
+            <Grid item xs={6}>
               <Box className="top-search">
                 <input
                   type="text"
@@ -165,7 +158,7 @@ class AddRole extends Component {
                 </button>
               </Box>
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <List>
                 <ListItem>
                   <Button
