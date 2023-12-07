@@ -1,5 +1,5 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box, FormControl, MenuItem, Select } from "@mui/material/";
+import { Box, FormControl, MenuItem, Select, IconButton } from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { connect } from "react-redux";
@@ -11,6 +11,7 @@ import {
   updateRole,
 } from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
+import CloseIcon from "@mui/icons-material/Close";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 
@@ -172,9 +173,15 @@ class CreateRoleControlModal extends Component {
         <ModalHeader tag="div">
           <h5>
             {this.props.roleId > 0 ? "Edit" : "Add New"} Role
-            <button onClick={this.handleCloseModal}>
-              <i className="fa-solid fa-xmark"></i>
-            </button>
+            <IconButton
+              onClick={this.handleCloseModal}
+              variant="outlined"
+              aria-label="delete"
+              size="small"
+              className="close-btn"
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
           </h5>
         </ModalHeader>
         <form onSubmit={this.handleRoleSubmit}>

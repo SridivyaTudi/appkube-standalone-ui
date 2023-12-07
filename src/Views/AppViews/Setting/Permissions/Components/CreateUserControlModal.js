@@ -12,6 +12,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  IconButton,
 } from "@mui/material/";
 import Button from "@mui/material/Button";
 import Step from "@mui/material/Step";
@@ -21,7 +22,6 @@ import Typography from "@mui/material/Typography";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
-import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
 import { ToastMessage } from "Toast/ToastMessage";
@@ -427,9 +427,15 @@ class CreateUserControlModal extends Component {
         <ModalHeader tag="div">
           <h5>
             Create Users
-            <button onClick={this.handleCancel}>
-              <i className="fa-solid fa-xmark"></i>
-            </button>
+            <IconButton
+              onClick={this.handleCancel}
+              variant="outlined"
+              aria-label="delete"
+              size="small"
+              className="close-btn"
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
           </h5>
         </ModalHeader>
         <ModalBody>

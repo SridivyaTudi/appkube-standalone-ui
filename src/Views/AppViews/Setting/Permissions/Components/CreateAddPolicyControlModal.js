@@ -1,7 +1,8 @@
-import { Box, Button, Grid, Checkbox, ListItem } from "@mui/material/";
+import { Box, Button, Grid, Checkbox, ListItem, IconButton } from "@mui/material/";
 import { Component } from "react";
 import { List, Modal, ModalBody, ModalHeader } from "reactstrap";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import CloseIcon from "@mui/icons-material/Close";
 
 class CreateAddPolicyControlModal extends Component {
   constructor(props) {
@@ -19,9 +20,15 @@ class CreateAddPolicyControlModal extends Component {
         <ModalHeader tag="div">
           <h5>
             Choose Policy
-            <button onClick={this.props.handleCreateAddPolicyControlModal}>
-              <i className="fa-solid fa-xmark"></i>
-            </button>
+            <IconButton
+              onClick={this.props.handleCreateAddPolicyControlModal}
+              variant="outlined"
+              aria-label="delete"
+              size="small"
+              className="close-btn"
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
           </h5>
         </ModalHeader>
         <ModalBody>
