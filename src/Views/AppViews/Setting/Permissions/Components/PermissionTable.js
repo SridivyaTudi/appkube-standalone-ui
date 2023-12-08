@@ -15,16 +15,25 @@ class PermissionTable extends Component {
     super(props);
     this.state = {
       rows: this.props.data || [],
+      selectedData: [],
     };
   }
 
   // Render head of table
   renderTableHead = () => {
+    let { rows, selectedData } = this.state;
     return (
       <TableHead>
         <TableRow>
           <TableCell width={100}>
-            <Checkbox size="small" className="check-box" /> Permission name
+            <Checkbox
+              size="small"
+              className="check-box"
+              disabled={rows?.length ? false : true}
+              checked={selectedData.length === rows?.length}
+              onChange={(e) => this.handleSelectAllCheckBox(e)}
+            />{" "}
+            Permission name
           </TableCell>
           <TableCell width={200}>Status</TableCell>
         </TableRow>
@@ -34,14 +43,20 @@ class PermissionTable extends Component {
 
   // Render body of table
   renderTableBody = () => {
-    const { rows } = this.state;
+    const { rows, selectedData } = this.state;
     return (
       <TableBody>
         {rows?.length ? (
           rows.map((row, index) => (
             <TableRow key={index}>
               <TableCell>
-                <Checkbox size="small" className="check-box" />
+                <Checkbox
+                  size="small"
+                  className="check-box"
+                  id={row.id}
+                  checked={selectedData.includes(row.id)}
+                  onChange={this.handleCheckBox}
+                />
                 {row.permissionName}
               </TableCell>
               <TableCell>
@@ -62,6 +77,36 @@ class PermissionTable extends Component {
         )}
       </TableBody>
     );
+  };
+
+  // Handle check box
+  handleCheckBox = (event) => {
+    let { selectedData } = this.state;
+
+    let { id, checked } = event.target;
+
+    if (checked) {
+      selectedData.push(+id);
+    } else {
+      selectedData = selectedData.filter((value) => value !== +id);
+    }
+    console.log(selectedData, "data");
+    this.setState({ selectedData });
+  };
+
+  // Handle select all checkbox
+  handleSelectAllCheckBox = (event, isRole = 0) => {
+    let { rows, selectedData } = this.state;
+
+    let { checked } = event.target;
+
+    if (checked) {
+      selectedData = rows.map((value) => value.id);
+    } else {
+      selectedData = [];
+    }
+
+    this.setState({ selectedData });
   };
   render() {
     return (

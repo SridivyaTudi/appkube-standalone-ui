@@ -5,33 +5,15 @@ class Product extends Component {
     super(props);
     this.state = {
       rows: [
-        {
-          permissionName: "Enable SLA monitoring for Service",
-        },
-        {
-          permissionName: "Edit Product Environment",
-        },
-        {
-          permissionName: "Clone Product Environment",
-        },
-        {
-          permissionName: "Migrate Product Environment",
-        },
-        {
-          permissionName: "Create Product Environment",
-        },
-        {
-          permissionName: "Replicate Product Environment",
-        },
-        {
-          permissionName: "Add Service in Product Environment",
-        },
-        {
-          permissionName: "Delete Service in Product Environment",
-        },
-        {
-          permissionName: "Add Service in Product Environment",
-        },
+        { id: 1, permissionName: "Enable SLA monitoring for Service" },
+        { id: 2, permissionName: "Edit Product Environment" },
+        { id: 3, permissionName: "Clone Product Environment" },
+        { id: 4, permissionName: "Migrate Product Environment" },
+        { id: 5, permissionName: "Create Product Environment" },
+        { id: 6, permissionName: "Replicate Product Environment" },
+        { id: 7, permissionName: "Add Service in Product Environment" },
+        { id: 8, permissionName: "Delete Service in Product Environment" },
+        { id: 9, permissionName: "Add Service in Product Environment" },
       ],
     };
   }
