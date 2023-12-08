@@ -18,6 +18,13 @@ class AccordionView extends Component {
     };
   }
 
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.props.selectedData !== prevProps.selectedData) {
+      let selectedNodes = this.props.selectedData;
+      this.setState({ selectedNodes });
+    }
+  };
+
   renderTableHead = () => {
     let { headers } = this.state;
     if (headers?.length) {
@@ -64,7 +71,12 @@ class AccordionView extends Component {
             </TableCell>
             {subchild.subName ? (
               <TableRow className={`${isActive ? "active" : ""}`}>
-                <TableCell width={120} className={`subchild-table-section ${isActive ? "active" : ""}`}>
+                <TableCell
+                  width={120}
+                  className={`subchild-table-section ${
+                    isActive ? "active" : ""
+                  }`}
+                >
                   <Table>{subchild.subName ? subchild.subName : <></>}</Table>
                 </TableCell>
               </TableRow>
@@ -101,6 +113,7 @@ class AccordionView extends Component {
     } else {
       selectedNodes.push(currentNode);
     }
+
     this.setState({ selectedNodes });
   };
 
