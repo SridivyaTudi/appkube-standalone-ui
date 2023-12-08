@@ -544,12 +544,14 @@ export class CreateGroup extends Component {
                   </Button>
                 </ListItem>
                 <ListItem>
+                <Link onClick={this.handleGroupSubmit}>
                   <Button
                     className="primary-btn min-width-inherit"
                     variant="contained"
                   >
-                    <Link onClick={this.handleGroupSubmit}>Create Group</Link>
+                   Create Group
                   </Button>
+                  </Link>
                 </ListItem>
               </List>
             </Grid>

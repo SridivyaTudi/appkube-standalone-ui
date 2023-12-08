@@ -150,12 +150,14 @@ class AddUsers extends Component {
                   </Button>
                 </ListItem>
                 <ListItem>
-                  <Button
-                    className="primary-btn min-width-inherit"
-                    variant="contained"
-                  >
-                    <Link to={`/app/setting/super-admin`}>Add users</Link>
-                  </Button>
+                  <Link to={`/app/setting/super-admin`}>
+                    <Button
+                      className="primary-btn min-width-inherit"
+                      variant="contained"
+                    >
+                      Add users
+                    </Button>
+                  </Link>
                 </ListItem>
               </List>
             </Grid>

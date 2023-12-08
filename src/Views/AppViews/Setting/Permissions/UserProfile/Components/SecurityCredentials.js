@@ -66,7 +66,7 @@ export class SecurityCredentials extends Component {
                       variant="contained"
                       onClick={this.handleAuthenticationModal}
                     >
-                      <Link to={``}> Setup MFA</Link>
+                      Setup MFA
                     </Button>
                   </ListItem>
                 </List>

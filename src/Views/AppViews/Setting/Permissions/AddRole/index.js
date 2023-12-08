@@ -169,12 +169,14 @@ class AddRole extends Component {
                   </Button>
                 </ListItem>
                 <ListItem>
+                <Link to={`/app/setting/super-admin`}>
                   <Button
                     className="primary-btn min-width-inherit"
                     variant="contained"
                   >
-                    <Link to={`/app/setting/super-admin`}>Add role</Link>
+                    Add role
                   </Button>
+                  </Link>
                 </ListItem>
               </List>
             </Grid>

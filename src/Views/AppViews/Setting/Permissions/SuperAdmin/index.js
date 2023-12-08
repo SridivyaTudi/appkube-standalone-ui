@@ -58,18 +58,18 @@ class SuperAdmin extends Component {
               </Button>
             </ListItem>
             <ListItem>
-              <Button
-                className="primary-btn min-width-inherit"
-                variant="contained"
+              <Link
+                to={`${APP_PREFIX_PATH}/setting/${
+                  activeTab === 0 ? "add-users" : "add-role"
+                }`}
               >
-                <Link
-                  to={`${APP_PREFIX_PATH}/setting/${
-                    activeTab === 0 ? "add-users" : "add-role"
-                  }`}
+                <Button
+                  className="primary-btn min-width-inherit"
+                  variant="contained"
                 >
                   {activeTab === 0 ? "Add Users" : "Add Role"}
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </ListItem>
           </Fragment>
         ) : (
