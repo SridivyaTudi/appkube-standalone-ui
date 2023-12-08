@@ -148,7 +148,6 @@ export class Setting extends Component {
   };
 
   render() {
-    const { activeTab } = this.state;
     return (
       <Box className="setting-container">
         {this.renderHeader()}

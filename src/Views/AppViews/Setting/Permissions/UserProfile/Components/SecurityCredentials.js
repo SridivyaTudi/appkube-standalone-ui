@@ -12,7 +12,6 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import NoteIcon from "assets/img/setting/note-icon.png";
 import AuthenticationModal from "Views/AppViews/Setting/Account/Components/AuthenticationModal";
 

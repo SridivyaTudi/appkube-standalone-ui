@@ -120,7 +120,7 @@ class AddRole extends Component {
     }
   };
   render() {
-    const { rows, pg, rpg, actionButton } = this.state;
+    const { rows, pg, rpg } = this.state;
     return (
       <Box className="add-users-container">
         <Box className="list-heading">
@@ -169,13 +169,13 @@ class AddRole extends Component {
                   </Button>
                 </ListItem>
                 <ListItem>
-                <Link to={`/app/setting/super-admin`}>
-                  <Button
-                    className="primary-btn min-width-inherit"
-                    variant="contained"
-                  >
-                    Add role
-                  </Button>
+                  <Link to={`/app/setting/super-admin`}>
+                    <Button
+                      className="primary-btn min-width-inherit"
+                      variant="contained"
+                    >
+                      Add role
+                    </Button>
                   </Link>
                 </ListItem>
               </List>

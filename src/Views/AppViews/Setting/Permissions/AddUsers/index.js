@@ -101,7 +101,7 @@ class AddUsers extends Component {
     }
   };
   render() {
-    const { rows, pg, rpg, actionButton } = this.state;
+    const { rows, pg, rpg } = this.state;
     return (
       <Box className="add-users-container">
         <Box className="list-heading">

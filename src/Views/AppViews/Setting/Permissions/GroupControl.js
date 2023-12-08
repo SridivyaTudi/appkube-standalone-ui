@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Box, Button, IconButton } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import CreateGroupControlModal from "./Components/CreateGroupControlModal";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -10,7 +9,6 @@ import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import DefaultIcon from "../../../../assets/img/setting/default-icon.png";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import { group } from "d3";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
