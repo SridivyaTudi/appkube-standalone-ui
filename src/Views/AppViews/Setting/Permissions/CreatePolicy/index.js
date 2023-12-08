@@ -411,12 +411,14 @@ export class CreatePolicy extends Component {
                   </Button>
                 </ListItem>
                 <ListItem>
-                  <Button
-                    className="primary-btn min-width-inherit"
-                    variant="contained"
-                  >
-                    <Link onClick={this.handlePolicySubmit}>Create policy</Link>
-                  </Button>
+                  <Link onClick={this.handlePolicySubmit}>
+                    <Button
+                      className="primary-btn min-width-inherit"
+                      variant="contained"
+                    >
+                      Create policy
+                    </Button>
+                  </Link>
                 </ListItem>
               </List>
             </Grid>

@@ -143,7 +143,7 @@ class Roles extends Component {
                     <Checkbox size="small" /> {row.user}{" "}
                     <Box className="d-flex roles-box">
                       <HtmlTooltip
-                        className="table-tooltip d-flex"
+                        className="table-tooltip"
                         title={
                           <React.Fragment>
                             <span>
@@ -152,10 +152,10 @@ class Roles extends Component {
                           </React.Fragment>
                         }
                       >
-                        <React.Fragment>
+                        <span>
                           <img src={DefaultIcon} alt="" />
-                         Default
-                        </React.Fragment>
+                        </span>
+                        Default
                       </HtmlTooltip>
                     </Box>
                   </TableCell>

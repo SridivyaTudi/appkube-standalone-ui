@@ -5,33 +5,15 @@ class Devsecops extends Component {
     super(props);
     this.state = {
       rows: [
-        {
-          permissionName: "Create Landing Zone",
-        },
-        {
-          permissionName: "Edit Landing Zone",
-        },
-        {
-          permissionName: "Clone Landing Zone",
-        },
-        {
-          permissionName: "Delete Landing Zone",
-        },
-        {
-          permissionName: "Create Product Environment",
-        },
-        {
-          permissionName: "Edit Product Environment",
-        },
-        {
-          permissionName: "Migrate Product Environment",
-        },
-        {
-          permissionName: "Replicate Product Environment",
-        },
-        {
-          permissionName: "Add Service in Product Environment",
-        },
+        { id: 1, permissionName: "Create Landing Zone" },
+        { id: 2, permissionName: "Edit Landing Zone" },
+        { id: 3, permissionName: "Clone Landing Zone" },
+        { id: 4, permissionName: "Delete Landing Zone" },
+        { id: 5, permissionName: "Create Product Environment" },
+        { id: 6, permissionName: "Edit Product Environment" },
+        { id: 7, permissionName: "Migrate Product Environment" },
+        { id: 8, permissionName: "Replicate Product Environment" },
+        { id: 9, permissionName: "Add Service in Product Environment" },
       ],
     };
   }
