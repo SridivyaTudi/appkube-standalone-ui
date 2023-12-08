@@ -27,6 +27,7 @@ import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { setActiveTab } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { ToastMessage } from "Toast/ToastMessage";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -271,7 +272,7 @@ export class CreateGroup extends Component {
 
   // Validate form input fields
   validateForm = (isSubmit) => {
-    const { name, description, users, roles } = this.state.formData;
+    const { name, description } = this.state.formData;
     const errors = {
       name: "",
       description: "",
@@ -293,20 +294,6 @@ export class CreateGroup extends Component {
       } else {
         errors.description = "";
       }
-
-      if (!users.length) {
-        errors.users = "Please select user!";
-        isValid = false;
-      } else {
-        errors.users = "";
-      }
-
-      if (!roles.length) {
-        errors.roles = "Please select role!";
-        isValid = false;
-      } else {
-        errors.roles = "";
-      }
     }
     return { isValid, errors };
   };
@@ -324,8 +311,18 @@ export class CreateGroup extends Component {
     e.preventDefault();
     this.setState({ isSubmit: true });
     const { isValid } = this.validateForm(true);
+    const { users, roles } = this.state.formData;
 
     if (isValid) {
+      if (!users.length) {
+        ToastMessage.error("Please select user!");
+        return 0;
+      }
+
+      if (!roles.length) {
+        ToastMessage.error("Please select role!");
+        return 0;
+      }
       this.handlePreviousPage();
     }
   };
@@ -641,11 +638,6 @@ export class CreateGroup extends Component {
           {this.renderSearchInput(1)}
         </Box>
         <TableContainer component={Paper} className="access-control-table">
-          {errors.roles ? (
-            <span style={{ color: "red" }}>{errors.roles}</span>
-          ) : (
-            <></>
-          )}
           {this.renderRoleTable()}
         </TableContainer>
         {this.renderPaginationComponent(roles.length, roleRPG, rolePG, 1)}

@@ -119,13 +119,6 @@ class CreateUserControlModal extends Component {
     );
   };
 
-  // Set next activeStep state.
-  handleNextSteps = () => {
-    let { activeStep } = this.state;
-    activeStep = activeStep + 1;
-    this.setState({ activeStep });
-  };
-
   // Set previous activeStep state.
   handlePreviousSteps = () => {
     let { activeStep } = this.state;
@@ -172,6 +165,11 @@ class CreateUserControlModal extends Component {
                       : null
                   }
                 />
+                {errors?.includes(index) ? (
+                  <span className="red"></span>
+                ) : (
+                  <></>
+                )}
               </Box>
             </Box>
             <Box className="form-group">
@@ -265,8 +263,9 @@ class CreateUserControlModal extends Component {
   // Set active step
   setActiveStep = (e) => {
     e.preventDefault();
-    let { activeStep, isSubmit } = this.state;
+    let { activeStep, isSubmit, groups } = this.state;
     isSubmit = true;
+
     if (activeStep === 0) {
       let { isStepValid } = this.validateStep1(isSubmit);
       if (isStepValid) {
@@ -280,8 +279,10 @@ class CreateUserControlModal extends Component {
         ToastMessage.error("Please select any group.");
         return;
       }
+      groups = groupData;
     }
-    this.setState({ activeStep, isSubmit });
+
+    this.setState({ activeStep, isSubmit, groups });
   };
 
   //  Validate step 1
@@ -407,15 +408,225 @@ class CreateUserControlModal extends Component {
       <></>
     );
   };
+
+  // Render step 1
+  renderStep1 = (errors) => {
+    return (
+      <Box className="d-block">
+        <Box className="title">
+          <label className="form-label">Name (Optional)</label>
+          <label className="form-label">Email Address</label>
+        </Box>
+        <Box className="d-block">{this.renderInputs(errors)}</Box>
+        <Box className="add-user" onClick={this.onClickAnotherPerson}>
+          <Button className="compliance-btn min-width" variant="contained">
+            Add Another person
+          </Button>
+        </Box>
+      </Box>
+    );
+  };
+
+  // Render step 2
+  renderStep2 = () => {
+    let { searchedGroup } = this.state;
+    return (
+      <Box className="d-block">
+        <Box className="setting-common-searchbar p-t-0">
+          <h5>Add users to the group(324)</h5>
+          <Grid container className="h-100" alignItems={"center"}>
+            <Grid item xs={8}>
+              <Box className="top-search">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search policy"
+                  value={searchedGroup}
+                  onChange={(e) => this.handleSearchChange(e)}
+                />
+                <button className="button">
+                  <SearchOutlinedIcon />
+                </button>
+              </Box>
+            </Grid>
+            <Grid item xs={4}>
+              <Box className="overview-buttons">
+                <List>
+                  <ListItem>
+                    <Button
+                      className="primary-btn min-width-inherit"
+                      variant="contained"
+                    >
+                      <Link to={``}> Create Group</Link>
+                    </Button>
+                  </ListItem>
+                </List>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box className="create-user-control-table">
+          {this.renderGroupTable()}
+        </Box>
+      </Box>
+    );
+  };
+
+  // Render step 3
+  renderStep3 = () => {
+    return (
+      <Box className="d-block">
+        <Box className="user-review">
+          <h4 className="m-t-0 m-b-0">Review</h4>
+          <Box className="d-block m-t-1">
+            <Grid
+              container
+              alignItems={"center"}
+              rowSpacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            >
+              {this.renderUserReview()}
+            </Grid>
+          </Box>
+        </Box>
+        <h4 className="m-t-0">Group</h4>
+        <Box className="create-user-control-table">
+          {this.renderGroupTable(1)}
+        </Box>
+      </Box>
+    );
+  };
+
+  // Render active step
+  renderActiveStep = (errors) => {
+    let { activeStep } = this.state;
+    return (
+      <form onSubmit={this.setActiveStep}>
+        <Box sx={{ mt: 2 }}>
+          <Box className="users-content">
+            {activeStep === 0
+              ? this.renderStep1(errors)
+              : activeStep === 1
+              ? this.renderStep2()
+              : this.renderStep3()}
+          </Box>
+        </Box>
+      </form>
+    );
+  };
+
+  // Render modal header
+  renderModalHeader = () => {
+    return (
+      <ModalHeader tag="div">
+        <h5>
+          Create Users
+          <IconButton
+            onClick={this.handleCancel}
+            variant="outlined"
+            aria-label="delete"
+            size="small"
+            className="close-btn"
+          >
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
+        </h5>
+      </ModalHeader>
+    );
+  };
+
+  // Render modal body
+  renderModalBody = (errors) => {
+    let { activeStep, completed } = this.state;
+    return (
+      <ModalBody>
+        <Box className="stepar-content">
+          <Stepper activeStep={activeStep}>
+            {steps.map((label, index) => (
+              <Step
+                key={label}
+                completed={completed[index]}
+                className="stepar-head"
+              >
+                <Box className="steper-label"> {label}</Box>
+                <StepButton
+                  className="steper-button"
+                  color="inherit"
+                  onClick={this.handleStep(index)}
+                ></StepButton>
+              </Step>
+            ))}
+          </Stepper>
+          <div>
+            {this.allStepsCompleted() ? (
+              <React.Fragment>
+                <Typography sx={{ mt: 2, mb: 1 }}>
+                  All steps completed - you&apos;re finished
+                </Typography>
+                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                  <Box sx={{ flex: "1 1 auto" }} />
+                  <Button onClick={this.handleReset}>Reset</Button>
+                </Box>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {this.renderActiveStep(errors)}
+                {this.renderFooterBtnsSection()}
+              </React.Fragment>
+            )}
+          </div>
+        </Box>
+      </ModalBody>
+    );
+  };
+
+  // Render group table
+  renderGroupTable = (isDisable = 0) => {
+    let { groups, selectedGroups } = this.state;
+    return (
+      <TableContainer component={Paper} className="table">
+        <Table
+          sx={{ minWidth: 500 }}
+          aria-label="custom pagination table"
+          className="table"
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell>Group</TableCell>
+              <TableCell>Attached Policies</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {groups.map((row, index) => {
+              if (isDisable && !selectedGroups.includes(row.id)) {
+                return null;
+              } else {
+                return (
+                  <TableRow key={index}>
+                    <TableCell>
+                      <Checkbox
+                        size="small"
+                        className="check-box"
+                        id={row.id}
+                        checked={selectedGroups.includes(row.id)}
+                        onChange={this.handleCheckBox}
+                        disabled={isDisable ? true : false}
+                      />
+                      {row.name}
+                    </TableCell>
+                    <TableCell>{row.policiesname}</TableCell>
+                  </TableRow>
+                );
+              }
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  };
+
   render() {
-    const {
-      activeStep,
-      completed,
-      isSubmit,
-      groups,
-      selectedGroups,
-      searchedGroup,
-    } = this.state;
+    const { isSubmit } = this.state;
     let { errors } = this.validateStep1(isSubmit);
 
     return (
@@ -424,242 +635,8 @@ class CreateUserControlModal extends Component {
         toggle={this.handleCancel}
         className="invite-user-modal-container"
       >
-        <ModalHeader tag="div">
-          <h5>
-            Create Users
-            <IconButton
-              onClick={this.handleCancel}
-              variant="outlined"
-              aria-label="delete"
-              size="small"
-              className="close-btn"
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          </h5>
-        </ModalHeader>
-        <ModalBody>
-          <Box className="stepar-content">
-            <Stepper activeStep={activeStep}>
-              {steps.map((label, index) => (
-                <Step
-                  key={label}
-                  completed={completed[index]}
-                  className="stepar-head"
-                >
-                  <Box className="steper-label"> {label}</Box>
-                  <StepButton
-                    className="steper-button"
-                    color="inherit"
-                    onClick={this.handleStep(index)}
-                  ></StepButton>
-                </Step>
-              ))}
-            </Stepper>
-            <div>
-              {this.allStepsCompleted() ? (
-                <React.Fragment>
-                  <Typography sx={{ mt: 2, mb: 1 }}>
-                    All steps completed - you&apos;re finished
-                  </Typography>
-                  <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                    <Box sx={{ flex: "1 1 auto" }} />
-                    <Button onClick={this.handleReset}>Reset</Button>
-                  </Box>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <form onSubmit={this.setActiveStep}>
-                    <Box sx={{ mt: 2 }}>
-                      <Box className="users-content">
-                        {/* step1 */}
-                        {activeStep === 0 ? (
-                          <Box className="d-block">
-                            <Box className="title">
-                              <label className="form-label">
-                                Name (Optional)
-                              </label>
-                              <label className="form-label">
-                                Email Address
-                              </label>
-                            </Box>
-                            <Box className="d-block">
-                              {" "}
-                              {this.renderInputs(errors)}
-                            </Box>
-
-                            <Box
-                              className="add-user"
-                              onClick={this.onClickAnotherPerson}
-                            >
-                              <Button
-                                className="compliance-btn min-width"
-                                variant="contained"
-                              >
-                                Add Another person
-                              </Button>
-                            </Box>
-                          </Box>
-                        ) : activeStep === 1 ? (
-                          <>
-                            {/* step2 */}
-
-                            <Box className="d-block">
-                              <Box className="setting-common-searchbar p-t-0">
-                                <h5>Add users to the group(324)</h5>
-                                <Grid
-                                  container
-                                  className="h-100"
-                                  alignItems={"center"}
-                                >
-                                  <Grid item xs={8}>
-                                    <Box className="top-search">
-                                      <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Search policy"
-                                        value={searchedGroup}
-                                        onChange={(e) =>
-                                          this.handleSearchChange(e)
-                                        }
-                                      />
-                                      <button className="button">
-                                        <SearchOutlinedIcon />
-                                      </button>
-                                    </Box>
-                                  </Grid>
-                                  <Grid item xs={4}>
-                                    <Box className="overview-buttons">
-                                      <List>
-                                        <ListItem>
-                                          <Button
-                                            className="primary-btn min-width-inherit"
-                                            variant="contained"
-                                          >
-                                            <Link to={``}> Create Group</Link>
-                                          </Button>
-                                        </ListItem>
-                                      </List>
-                                    </Box>
-                                  </Grid>
-                                </Grid>
-                              </Box>
-                              <Box className="create-user-control-table">
-                                <TableContainer
-                                  component={Paper}
-                                  className="table"
-                                >
-                                  <Table
-                                    sx={{ minWidth: 500 }}
-                                    aria-label="custom pagination table"
-                                    className="table"
-                                  >
-                                    <TableHead>
-                                      <TableRow>
-                                        <TableCell>Group</TableCell>
-                                        <TableCell>Attached Policies</TableCell>
-                                      </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                      {groups.map((row, index) => (
-                                        <TableRow key={index}>
-                                          <TableCell>
-                                            <Checkbox
-                                              size="small"
-                                              className="check-box"
-                                              id={row.id}
-                                              checked={selectedGroups.includes(
-                                                row.id
-                                              )}
-                                              onChange={this.handleCheckBox}
-                                            />
-                                            {row.name}
-                                          </TableCell>
-                                          <TableCell>
-                                            {row.policiesname}
-                                          </TableCell>
-                                        </TableRow>
-                                      ))}
-                                    </TableBody>
-                                  </Table>
-                                </TableContainer>
-                              </Box>
-                            </Box>
-                          </>
-                        ) : (
-                          <>
-                            {/* step3 */}
-
-                            <Box className="d-block">
-                              <Box className="user-review">
-                                <h4 className="m-t-0 m-b-0">Review</h4>
-                                <Box className="d-block m-t-1">
-                                  <Grid
-                                    container
-                                    alignItems={"center"}
-                                    rowSpacing={1}
-                                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                                  >
-                                    {this.renderUserReview()}
-                                  </Grid>
-                                </Box>
-                              </Box>
-                              <h4 className="m-t-0">Group</h4>
-                              <Box className="create-user-control-table">
-                                <TableContainer
-                                  component={Paper}
-                                  className=" table"
-                                >
-                                  <Table
-                                    sx={{ minWidth: 500 }}
-                                    aria-label="custom pagination table"
-                                    className="table"
-                                  >
-                                    <TableHead>
-                                      <TableRow>
-                                        <TableCell>Group</TableCell>
-                                        <TableCell>Attached Policies</TableCell>
-                                      </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                      {groups.map((row, index) => {
-                                        if (!selectedGroups.includes(row.id)) {
-                                          return null;
-                                        } else {
-                                          return (
-                                            <TableRow key={v4()}>
-                                              <TableCell>
-                                                <Checkbox
-                                                  size="small"
-                                                  className="check-box"
-                                                  checked
-                                                  disabled
-                                                />
-                                                {row.name}
-                                              </TableCell>
-                                              <TableCell>
-                                                {row.policiesname}
-                                              </TableCell>
-                                            </TableRow>
-                                          );
-                                        }
-                                      })}
-                                    </TableBody>
-                                  </Table>
-                                </TableContainer>
-                              </Box>
-                            </Box>
-                          </>
-                        )}
-                      </Box>
-                    </Box>
-                  </form>
-                  {this.renderFooterBtnsSection()}
-                </React.Fragment>
-              )}
-            </div>
-          </Box>
-        </ModalBody>
+        {this.renderModalHeader()}
+        {this.renderModalBody(errors)}
       </Modal>
     );
   }

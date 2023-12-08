@@ -27,6 +27,7 @@ import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { setActiveTab } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { ToastMessage } from "Toast/ToastMessage";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -255,7 +256,7 @@ export class CreatePolicy extends Component {
 
   // Validate form input fields
   validateForm = (isSubmit) => {
-    const { name, description, roles } = this.state.formData;
+    const { name, description } = this.state.formData;
     const errors = {
       name: "",
       description: "",
@@ -276,13 +277,6 @@ export class CreatePolicy extends Component {
       } else {
         errors.description = "";
       }
-
-      if (!roles.length) {
-        errors.roles = "Please select role!";
-        isValid = false;
-      } else {
-        errors.roles = "";
-      }
     }
     return { isValid, errors };
   };
@@ -292,8 +286,13 @@ export class CreatePolicy extends Component {
     e.preventDefault();
     this.setState({ isSubmit: true });
     const { isValid } = this.validateForm(true);
+    let { roles } = this.state.formData;
 
     if (isValid) {
+      if (!roles.length) {
+        ToastMessage.error("Please select role!");
+        return 0;
+      }
       this.handlePreviousPage();
     }
   };
