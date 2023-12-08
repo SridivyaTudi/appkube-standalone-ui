@@ -136,11 +136,9 @@ class GroupControl extends Component {
               <p>{groupData.description}</p>
             </Box>
             <Box className="view-btn text-center">
-              <Button className="primary-btn min-width">
-                <Link to={`${APP_PREFIX_PATH}/setting/super-admin`}>
-                  View Group
-                </Link>
-              </Button>
+              <Link to={`${APP_PREFIX_PATH}/setting/super-admin`}>
+                <Button className="primary-btn min-width">View Group</Button>
+              </Link>
             </Box>
           </Box>
         );
@@ -173,9 +171,9 @@ class GroupControl extends Component {
             <SearchOutlinedIcon />
           </button>
         </Box>
-        <Button className="primary-btn min-width">
-          <Link to={`/app/setting/create-group`}> Create New Group</Link>
-        </Button>
+        <Link to={`/app/setting/create-group`}>
+          <Button className="primary-btn min-width">Create New Group</Button>
+        </Link>
       </Box>
     );
   };

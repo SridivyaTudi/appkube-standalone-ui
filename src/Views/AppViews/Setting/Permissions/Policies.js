@@ -19,10 +19,8 @@ let accessPolicyData = [
           {
             name: "Create Product Environment",
           },
-          { name: "Create Product Environment",
-         },
-          { name: "Create Product Environment",
-         },
+          { name: "Create Product Environment" },
+          { name: "Create Product Environment" },
         ],
       },
       {
@@ -37,10 +35,8 @@ let accessPolicyData = [
           {
             name: "Create Product Environment",
           },
-          { name: "Create Product Environment",
-         },
-          { name: "Create Product Environment",
-         },
+          { name: "Create Product Environment" },
+          { name: "Create Product Environment" },
         ],
       },
       {
@@ -55,10 +51,8 @@ let accessPolicyData = [
           {
             name: "Create Product Environment",
           },
-          { name: "Create Product Environment",
-         },
-          { name: "Create Product Environment",
-         },
+          { name: "Create Product Environment" },
+          { name: "Create Product Environment" },
         ],
       },
       {
@@ -73,10 +67,8 @@ let accessPolicyData = [
           {
             name: "Create Product Environment",
           },
-          { name: "Create Product Environment",
-         },
-          { name: "Create Product Environment",
-         },
+          { name: "Create Product Environment" },
+          { name: "Create Product Environment" },
         ],
       },
     ],
@@ -94,9 +86,9 @@ class Policies extends Component {
                 <SearchOutlinedIcon />
               </button>
             </Box>
-            <Button className="primary-btn min-width">
-              <Link to={`/app/setting/create-policy`}>Create Policy</Link>
-            </Button>
+            <Link to={`/app/setting/create-policy`}>
+              <Button className="primary-btn min-width">Create Policy</Button>
+            </Link>
           </Box>
           <Button className="danger-btn min-width-inherit" variant="contained">
             Delete
