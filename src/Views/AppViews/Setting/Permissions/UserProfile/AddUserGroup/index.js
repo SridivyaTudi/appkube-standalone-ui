@@ -106,33 +106,30 @@ class AddUserGroup extends Component {
           </Box>
         </Box>
         <Box className="group-name">
-          <Grid container alignItems={"center"} className="p-t-20 p-b-20">
+          <Grid container alignItems={"center"}>
             <Grid item xs={6}>
               <h4 className="m-t-0 m-b-0">Add user to groups</h4>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} display={"flex"} justifyContent={"flex-end"}>
               <Box className="overview-buttons">
                 <List>
                   <ListItem>
-                    <Button
-                      className="primary-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      <Link to={`/app/setting/create-group`}>Create Group</Link>
-                    </Button>
+                    <Link to={`/app/setting/create-group`}>
+                      <Button
+                        className="primary-btn min-width-inherit"
+                        variant="contained"
+                      >
+                        Create Group
+                      </Button>
+                    </Link>
                   </ListItem>
                 </List>
               </Box>
             </Grid>
           </Grid>
         </Box>
-        <Box className="adduser-top-section p-b-20">
-          <Grid
-            container
-            className="h-100"
-            alignItems={"center"}
-            
-          >
+        <Box className="setting-common-searchbar p-b-20">
+          <Grid container className="h-100" alignItems={"center"}>
             <Grid item xs={6}>
               <Box className="top-search">
                 <input
@@ -192,30 +189,26 @@ class AddUserGroup extends Component {
           </Table>
         </TableContainer>
 
-        <Box className="group-name m-t-4">
-          <Box className="overview-buttons ">
-            <List>
-              <ListItem>
-                <Button
-                  onClick={this.handleCancelGroupControlModal}
-                  className="danger-outline-btn min-width-inherit"
-                  variant="outlined"
-                >
-                  Cancel
-                </Button>
-              </ListItem>
-              <ListItem>
+        <Box className="overview-buttons d-flex justify-content-end  m-t-4">
+          <List>
+            <ListItem>
+              <Button
+                onClick={this.handleCancelGroupControlModal}
+                className="danger-outline-btn min-width-inherit m-r-2"
+                variant="outlined"
+              >
+                Cancel
+              </Button>
+              <Link to={`/app/setting/create-group`}>
                 <Button
                   className="primary-btn min-width-inherit"
                   variant="contained"
                 >
-                  <Link to={`/app/setting/create-group`}>
-                    Add user to groups
-                  </Link>
+                  Add user to groups
                 </Button>
-              </ListItem>
-            </List>
-          </Box>
+              </Link>
+            </ListItem>
+          </List>
         </Box>
       </Box>
     );
