@@ -54,14 +54,12 @@
                         height: 90%;
                         background: #d5dbe5;
                       }
-                      &:hover{
+                      &:hover {
                         padding-left: 15px;
-                       
                       }
                     }
-                    &:hover{
+                    &:hover {
                       padding-left: 50px;
-                     
                     }
                   }
                 }
@@ -105,20 +103,17 @@
           }
           &:hover {
             background-color: #f7f9fc;
-           
           }
         }
       }
     }
   }
+ 
 
   table {
     display: block;
     width: 100%;
-    tbody {
-      width: 100%;
-      display: block;
-    }
+   
     thead {
       padding-top: 0px;
       padding-bottom: 0px;
@@ -169,12 +164,13 @@
       }
     }
     tbody {
+      width: 100%;
       display: block;
 
       tr {
         display: table;
         width: 100%;
-        border-bottom: 1px solid #eaecf0;
+        //border-bottom: 1px solid #eaecf0;
         td {
           padding: 12px 15px;
           font-size: 13px;
@@ -212,10 +208,10 @@
           &.child-table-section {
             padding: 0;
             background: #ffffff;
-            table{
+            table {
               tr {
                 border-bottom: 1px solid #eaecf0;
-  
+
                 td {
                   padding: 12px 15px 12px 40px;
                   font-size: 13px;
@@ -296,9 +292,8 @@
                         border-bottom: 0;
                       }
                     }
-                   
                   }
-  
+
                   &:last-child {
                     border-bottom: 0;
                   }
@@ -308,11 +303,10 @@
                 }
               }
             }
-           
-           
           }
         }
       }
     }
   }
 }
+
