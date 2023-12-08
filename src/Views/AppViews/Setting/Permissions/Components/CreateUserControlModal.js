@@ -360,7 +360,7 @@ class CreateUserControlModal extends Component {
         return (
           <React.Fragment key={v4()}>
             <Grid item xs={6}>
-              <Box className="form-group">
+              <Box className="form-group m-b-0">
                 {index === 0 ? (
                   <label htmlFor="username" className="form-label">
                     Username (optional)
@@ -381,7 +381,7 @@ class CreateUserControlModal extends Component {
               </Box>
             </Grid>
             <Grid item xs={6}>
-              <Box className="form-group">
+              <Box className="form-group m-b-0">
                 {index === 0 ? (
                   <label htmlFor="email" className="form-label">
                     Email Address
@@ -417,7 +417,7 @@ class CreateUserControlModal extends Component {
           <label className="form-label">Name (Optional)</label>
           <label className="form-label">Email Address</label>
         </Box>
-        <Box className="d-block">{this.renderInputs(errors)}</Box>
+        <Box className="d-block step-frist">{this.renderInputs(errors)}</Box>
         <Box className="add-user" onClick={this.onClickAnotherPerson}>
           <Button className="compliance-btn min-width" variant="contained">
             Add Another person
@@ -475,10 +475,10 @@ class CreateUserControlModal extends Component {
   // Render step 3
   renderStep3 = () => {
     return (
-      <Box className="d-block">
+      <Box className="d-block step-third">
         <Box className="user-review">
           <h4 className="m-t-0 m-b-0">Review</h4>
-          <Box className="d-block m-t-1">
+          <Box className="d-block  step-third-form m-t-1">
             <Grid
               container
               alignItems={"center"}
@@ -489,7 +489,7 @@ class CreateUserControlModal extends Component {
             </Grid>
           </Box>
         </Box>
-        <h4 className="m-t-0">Group</h4>
+        <h4 className="m-t-1">Group</h4>
         <Box className="create-user-control-table">
           {this.renderGroupTable(1)}
         </Box>
@@ -521,15 +521,7 @@ class CreateUserControlModal extends Component {
       <ModalHeader tag="div">
         <h5>
           Create Users
-          <IconButton
-            onClick={this.handleCancel}
-            variant="outlined"
-            aria-label="delete"
-            size="small"
-            className="close-btn"
-          >
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
+         
         </h5>
       </ModalHeader>
     );
@@ -557,7 +549,14 @@ class CreateUserControlModal extends Component {
               </Step>
             ))}
           </Stepper>
-          <div>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: "500px",
+            }}
+          >
             {this.allStepsCompleted() ? (
               <React.Fragment>
                 <Typography sx={{ mt: 2, mb: 1 }}>
@@ -574,7 +573,7 @@ class CreateUserControlModal extends Component {
                 {this.renderFooterBtnsSection()}
               </React.Fragment>
             )}
-          </div>
+          </Box>
         </Box>
       </ModalBody>
     );
