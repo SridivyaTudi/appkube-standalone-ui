@@ -141,25 +141,30 @@
             font-size: 15px;
             text-transform: capitalize;
           }
-
-          span {
-            width: 20px;
-            height: 20px;
-            min-width: 20px;
-            max-height: 20px;
+          .check-box {
             display: inline-block;
-            line-height: 12px;
-            border-radius: 50%;
-            border: 1px solid #464f60;
-            margin-right: 10px;
-            text-align: center;
-
-            i {
-              font-size: 10px;
-              line-height: 18px;
-              color: #464f60;
-            }
+          
+           
           }
+
+          // span {
+          //   width: 20px;
+          //   height: 20px;
+          //   min-width: 20px;
+          //   max-height: 20px;
+          //   display: inline-block;
+          //   line-height: 12px;
+          //   border-radius: 50%;
+          //   border: 1px solid #464f60;
+          //   margin-right: 10px;
+          //   text-align: center;
+
+          //   i {
+          //     font-size: 10px;
+          //     line-height: 18px;
+          //     color: #464f60;
+          //   }
+          // }
         }
       }
     }
@@ -318,30 +323,11 @@
   .setting-table {
     &.permission-table {
       table {
-        display: block;
-        width: 100%;
-
         thead {
-          padding-top: 0px;
-          padding-bottom: 0px;
-          display: table;
-
           tr {
-            display: inline-table;
-            width: 100%;
-            table-layout: fixed;
-
             th {
-              font-weight: 500;
-              color: #000000;
-              padding-left: 0;
-              padding: 12px 15px;
-              font-size: 14px;
-              font-family: "Poppins", sans-serif;
-              border-bottom-color: #b3b3b3;
-              border-bottom-style: dotted;
               text-align: center;
-              &:first-child{
+              &:first-child {
                 text-align: left;
               }
             }

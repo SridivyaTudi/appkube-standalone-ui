@@ -32,7 +32,9 @@ class AccordionView extends Component {
         <TableRow>
           {headers.map((header) => (
             <TableCell key={v4()} style={header.styled}>
+              {header.subChild ? header.subChild :<></>}
               {header.name}
+              
             </TableCell>
           ))}
         </TableRow>

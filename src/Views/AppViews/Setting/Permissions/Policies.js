@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Checkbox } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from "react-router-dom";
 import AccordionView from "../Components/AccordionView";
 let accessPolicyData = [
   {
-    name: "Permission Set",
+    name: "All Access",
     chlidren: [
       {
         name: "Environment",
@@ -162,7 +162,11 @@ class Policies extends Component {
           </Button>
         </Box>
         <Box className="setting-table">
-          <AccordionView data={data} selectedData={selectedData} />
+          <AccordionView data={data} selectedData={selectedData}
+            headers={[
+              { name: "Policy name", subChild: <Box className="check-box"> <Checkbox size="small" /></Box>, styled: { width: 20} },
+            ]}
+           />
         </Box>
       </>
     );
