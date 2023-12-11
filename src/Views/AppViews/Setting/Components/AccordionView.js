@@ -51,8 +51,8 @@ class AccordionView extends Component {
       let currentNode = `${parentIndex ? `${parentIndex}_` : ""}${childIndex}`;
       let isActive = selectedNodes.includes(currentNode);
       let arrowDownOrRight = isActive ? "down" : "right";
-      let childDataShow =
-        selectedNodes.includes(currentNode) && subchild?.chlidren?.length;
+      let isChildExist = subchild?.chlidren?.length ? true : false;
+      let childDataShow = selectedNodes.includes(currentNode) && isChildExist;
       return (
         <Fragment key={v4()}>
           <TableRow>
@@ -60,7 +60,7 @@ class AccordionView extends Component {
               width={80}
               onClick={(e) => {
                 e.stopPropagation();
-                this.onClickNode(currentNode);
+                isChildExist ? this.onClickNode(currentNode) : <></>;
               }}
               className={`${isActive ? "active" : ""}`}
             >
