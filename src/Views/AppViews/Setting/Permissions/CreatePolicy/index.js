@@ -140,7 +140,7 @@ export class CreatePolicy extends Component {
                 />
                 Permission Set
               </TableCell>
-              <TableCell>Description</TableCell>
+              <TableCell>Status</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>

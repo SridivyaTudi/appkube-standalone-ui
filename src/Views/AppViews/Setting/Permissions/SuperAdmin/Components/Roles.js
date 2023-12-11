@@ -117,22 +117,18 @@ class Roles extends Component {
       <>
         <TableContainer component={Paper} className="access-control-table">
           <Table
-            sx={{ minWidth: 500 }}
+            sx={{ minWidth: 500}}
             aria-label="custom pagination table"
             className="table"
+           
           >
             <TableHead>
-              <TableRow>
+              <TableRow >
                 <TableCell>
                   {" "}
                   <Checkbox size="small" /> Role Name
                 </TableCell>
                 <TableCell>Description</TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -160,11 +156,7 @@ class Roles extends Component {
                     </Box>
                   </TableCell>
                   <TableCell>{row.Description}</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell align="center"></TableCell>
+                  
                 </TableRow>
               ))}
             </TableBody>
