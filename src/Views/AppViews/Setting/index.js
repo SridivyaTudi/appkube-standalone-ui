@@ -47,6 +47,7 @@ export class Setting extends Component {
 
   componentDidMount = () => {
     this.setPreviousTab();
+    
   };
 
   setPreviousTab = () => {

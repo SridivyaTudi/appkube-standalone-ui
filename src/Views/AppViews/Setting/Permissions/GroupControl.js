@@ -84,8 +84,10 @@ class GroupControl extends Component {
                     </React.Fragment>
                   }
                 >
-                  <img src={DefaultIcon} alt="" />
-                  Default
+                  <React.Fragment>
+                    <img src={DefaultIcon} alt="" />
+                    Default
+                  </React.Fragment>
                 </HtmlTooltip>
               </Box>
               <IconButton

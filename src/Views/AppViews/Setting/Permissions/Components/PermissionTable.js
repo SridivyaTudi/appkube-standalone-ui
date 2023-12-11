@@ -57,7 +57,7 @@ class PermissionTable extends Component {
                   checked={selectedData.includes(row.id)}
                   onChange={this.handleCheckBox}
                 />
-                {row.permissionName}
+                {row.name}
               </TableCell>
               <TableCell>
                 <button className="green-btn">Active</button>

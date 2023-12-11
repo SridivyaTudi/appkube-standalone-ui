@@ -10,6 +10,7 @@ import {
   deleteRole,
   getRoleById,
   updateRole,
+  getPermissionCategory,
 } from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
@@ -50,6 +51,10 @@ export const settingsSlice = createSlice({
     roleUpdation: {
       status: null,
       data: {},
+    },
+    permissionCategory: {
+      status: null,
+      data: [],
     },
   },
   reducers: {},
@@ -283,6 +288,32 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         removeRole: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getPermissionCategory.pending]: (state) => {
+      return {
+        ...state,
+        permissionCategory: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getPermissionCategory.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        permissionCategory: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getPermissionCategory.rejected]: (state) => {
+      return {
+        ...state,
+        permissionCategory: {
           status: status.FAILURE,
         },
       };

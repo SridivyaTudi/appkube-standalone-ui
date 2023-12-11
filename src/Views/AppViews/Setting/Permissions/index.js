@@ -8,6 +8,7 @@ import Permissson from "./Permission";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { getActiveTab, deleteActiveTab } from "Utils";
+import { getPermissionCategory } from "Redux/Settings/SettingsThunk";
 export class Permissions extends Component {
   controlMapping = [
     {
@@ -37,7 +38,7 @@ export class Permissions extends Component {
     {
       icon: "fa-user",
       label: "Permissions",
-      value: "544",
+      value: 0,
       dataKey: "permissions",
     },
   ];
@@ -52,6 +53,7 @@ export class Permissions extends Component {
 
   componentDidMount = () => {
     this.setPreviousTab();
+    this.props.getPermissionCategory();
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -59,16 +61,20 @@ export class Permissions extends Component {
       if (this.props.allRoles.status === status.SUCCESS) {
         let roles = this.props.allRoles.data;
         if (roles) {
-          let { tabMapping } = this.state;
+          this.getTabCount("role", roles.length);
+        }
+      }
+    }
 
-          tabMapping = tabMapping.map((tab) => {
-            if (tab.dataKey === "role") {
-              tab.value = roles.length;
-            }
-            return tab;
-          });
-
-          this.setState({ tabMapping });
+    if (
+      this.props.permissionCategory.status !==
+      prevProps.permissionCategory.status
+    ) {
+      if (this.props.permissionCategory.status === status.SUCCESS) {
+        let permissionCategory = this.props.permissionCategory.data;
+        if (permissionCategory?.length) {
+          let permissionCount = this.getPermissionLength(permissionCategory);
+          this.getTabCount("permissions", permissionCount);
         }
       }
     }
@@ -135,6 +141,34 @@ export class Permissions extends Component {
       <></>
     );
   };
+
+  // Tab data length
+  getTabCount = (key, count) => {
+    if (key) {
+      let { tabMapping } = this.state;
+      tabMapping = tabMapping.map((tab) => {
+        if (tab.dataKey === key) {
+          tab.value = count;
+        }
+        return tab;
+      });
+
+      this.setState({ tabMapping });
+    }
+  };
+
+  getPermissionLength = (data = []) => {
+    let count = 0;
+    if (data.length) {
+      data.forEach((permission) => {
+        if (permission?.permissions.length) {
+          count = count + permission.permissions.length;
+        }
+      });
+    }
+    return count;
+  };
+
   render() {
     return (
       <Box className="permissions-container">
@@ -148,12 +182,13 @@ export class Permissions extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { allRoles } = state.settings;
+  const { allRoles, permissionCategory } = state.settings;
   return {
     allRoles,
+    permissionCategory,
   };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { getPermissionCategory };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Permissions);

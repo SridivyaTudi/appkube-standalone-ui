@@ -19,6 +19,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import DefaultIcon from "assets/img/setting/default-icon.png";
+import { v4 } from "uuid";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -36,53 +37,154 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     padding: "8px 10px",
   },
 }));
+
+let data = [
+  { id: 1, groupName: "Super Admin", attachedPolicies: "Single " },
+  { id: 2, groupName: "Defaults Users", attachedPolicies: "Single " },
+  { id: 3, groupName: "System Engineer", attachedPolicies: "Multiple " },
+  { id: 4, groupName: "Design Architect", attachedPolicies: "Multiple " },
+  { id: 5, groupName: "Design Architect", attachedPolicies: "Multiple " },
+  { id: 6, groupName: "Design Architect", attachedPolicies: "Multiple " },
+  { id: 7, groupName: "Design Architect", attachedPolicies: "Multiple " },
+  { id: 8, groupName: "Design Architect", attachedPolicies: "Multiple " },
+];
 class AddUserGroup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: [
-        {
-          groupName: "Super Admin",
-          attachedPolicies: "Single ",
-        },
-        {
-          groupName: "Defaults Users",
-          attachedPolicies: "Single ",
-        },
-        {
-          groupName: "System Engineer",
-          attachedPolicies: "Multiple ",
-        },
-        {
-          groupName: "Design Architect",
-          attachedPolicies: "Multiple ",
-        },
-        {
-          groupName: "Design Architect",
-          attachedPolicies: "Multiple ",
-        },
-        {
-          groupName: "Design Architect",
-          attachedPolicies: "Multiple ",
-        },
-        {
-          groupName: "Design Architect",
-          attachedPolicies: "Multiple ",
-        },
-        {
-          groupName: "Design Architect",
-          attachedPolicies: "Multiple ",
-        },
-      ],
+      rows: data,
       pg: 0,
       rpg: 5,
       showCreateUserControlModal: false,
       actionButton: null,
+      selectedGroup: [],
+      searchedKey: "",
     };
   }
-  render() {
-    const { rows } = this.state;
 
+  // Render table header
+  renderTableHeader = () => {
+    const { rows, selectedGroup } = this.state;
+    return (
+      <TableHead>
+        <TableRow>
+          <TableCell width={100}>
+            <Checkbox
+              size="small"
+              disabled={rows?.length ? false : true}
+              checked={rows?.length === selectedGroup?.length}
+              onChange={(e) => this.handleSelectAllCheckBox(e)}
+            />
+            Group Name
+          </TableCell>
+          <TableCell width={200}>Attached Policies</TableCell>
+        </TableRow>
+      </TableHead>
+    );
+  };
+
+  // Render table body
+  renderTableBody = () => {
+    const { rows, selectedGroup } = this.state;
+    return (
+      <TableBody>
+        {rows?.length ? (
+          rows.map((row, index) => (
+            <TableRow key={v4()}>
+              <TableCell>
+                <Checkbox
+                  size="small"
+                  id={row.id}
+                  checked={selectedGroup.includes(row.id)}
+                  onChange={this.handleCheckBox}
+                />
+                {row.groupName}
+                <Box className="d-flex roles-box">
+                  <HtmlTooltip
+                    className="table-tooltip d-flex"
+                    title={
+                      <React.Fragment>
+                        <span>This role created by default by the system</span>
+                      </React.Fragment>
+                    }
+                  >
+                    <React.Fragment>
+                      <img src={DefaultIcon} alt="" />
+                      Default
+                    </React.Fragment>
+                  </HtmlTooltip>
+                </Box>
+              </TableCell>
+              <TableCell>{row.attachedPolicies}</TableCell>
+            </TableRow>
+          ))
+        ) : (
+          <TableRow>
+            <TableCell colSpan={12}>
+              <Box className="d-blck text-center w-100 h-100 ">
+                <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+                  <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+                </Box>
+              </Box>
+            </TableCell>
+          </TableRow>
+        )}
+      </TableBody>
+    );
+  };
+
+  // Handle check box
+  handleCheckBox = (event) => {
+    let { selectedGroup } = this.state;
+
+    let { id, checked } = event.target;
+
+    if (checked) {
+      selectedGroup.push(+id);
+    } else {
+      selectedGroup = selectedGroup.filter((value) => value !== +id);
+    }
+
+    this.setState({ selectedGroup });
+  };
+
+  // Handle select all checkbox
+  handleSelectAllCheckBox = (event, isRole = 0) => {
+    let { selectedGroup } = this.state;
+
+    let { checked } = event.target;
+
+    if (checked) {
+      selectedGroup = data.map((value) => value.id);
+    } else {
+      selectedGroup = [];
+    }
+    this.setState({ selectedGroup });
+  };
+
+  //  Serach Groups
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { rows } = this.state;
+
+    if (data?.length) {
+      if (value) {
+        rows = data.filter((group) => {
+          if (group?.groupName.toLowerCase().includes(value.toLowerCase())) {
+            return group;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        rows = data;
+      }
+      this.setState({ rows, searchedKey: value });
+    }
+  };
+
+  render() {
+    let { searchedKey } = this.state;
     return (
       <Box className="create-group-container">
         <Box className="list-heading">
@@ -136,6 +238,9 @@ class AddUserGroup extends Component {
                   type="text"
                   className="form-control"
                   placeholder="Search groups here"
+                  value={searchedKey}
+                  onChange={this.handleSearchChange}
+                  autoFocus="autoFocus"
                 />
                 <button className="button">
                   <SearchOutlinedIcon />
@@ -150,42 +255,8 @@ class AddUserGroup extends Component {
             aria-label="custom pagination table"
             className="table"
           >
-            <TableHead>
-              <TableRow>
-                <TableCell width={100}>
-                  {" "}
-                  <Checkbox size="small" />
-                  Group Name
-                </TableCell>
-                <TableCell width={200}>Attached Policies</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    {" "}
-                    <Checkbox size="small" /> {row.groupName}{" "}
-                    <Box className="d-flex roles-box">
-                      <HtmlTooltip
-                        className="table-tooltip d-flex"
-                        title={
-                          <React.Fragment>
-                            <span>
-                              This role created by default by the system
-                            </span>
-                          </React.Fragment>
-                        }
-                      >
-                        <img src={DefaultIcon} alt="" />
-                        Default
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell>{row.attachedPolicies}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
+            {this.renderTableHeader()}
+            {this.renderTableBody()}
           </Table>
         </TableContainer>
 

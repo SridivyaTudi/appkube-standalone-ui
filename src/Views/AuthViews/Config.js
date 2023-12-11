@@ -22,6 +22,7 @@ const config = {
   GET_ROLE_BY_ID: `${baseSecurityUrl}/roles/#role-id#`,
   GET_POLICIES: `${baseSecurityUrl}/policy/listAll`,
   DELETE_ROLE: `${baseSecurityUrl}/roles/delete/#role-id#`,
+  GET_PERMISSION_CATEGORY: `${baseSecurityUrl}/permission-category/listAll`,
 };
 
 export default config;

@@ -123,3 +123,17 @@ export const updateRole = createAsyncThunk(
     }
   }
 );
+
+export const getPermissionCategory = createAsyncThunk(
+  "settings/getPermissionCategory",
+  async () => {
+    try {
+      const response = await postLoginService.get(
+        config.GET_PERMISSION_CATEGORY
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
