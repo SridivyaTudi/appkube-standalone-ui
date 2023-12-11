@@ -29,7 +29,7 @@ class SignUp extends Component {
   };
   apiConstants = {
     ADMIN: "ADMIN",
-    CMDB: "cmdb",
+    CMDB: "",
   };
 
   constructor(props) {
