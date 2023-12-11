@@ -287,7 +287,7 @@
           display: inline-flex;
           flex-wrap: wrap;
           min-height: 250px;
-          width: calc(280px - 20px);
+          width: calc(278px - 22px);
           margin-right: 20px;
           margin-bottom: 20px;
           border-radius: 15px;
@@ -571,48 +571,48 @@
 }
 
 @media only screen and (max-width: 1280px) {
-  .setting-container {
-    .permissions-container {
-      .access-control-container {
-        // .group-control-boxs {
-        //   .group-box {
-        //     width: calc(25.3333% - 20px);
+  // .setting-container {
+  //   .permissions-container {
+  //     .access-control-container {
+  //       // .group-control-boxs {
+  //       //   .group-box {
+  //       //     width: calc(25.3333% - 20px);
 
-        //     &:nth-child(5n + 1) {
-        //       margin-left: 20px;
-        //     }
+  //       //     &:nth-child(5n + 1) {
+  //       //       margin-left: 20px;
+  //       //     }
 
-        //     &:nth-child(4n + 1) {
-        //       margin-left: 0px;
-        //     }
+  //       //     &:nth-child(4n + 1) {
+  //       //       margin-left: 0px;
+  //       //     }
 
-        //     .heading {
-        //       h4 {
-        //         font-size: 12px;
-        //       }
-        //     }
+  //       //     .heading {
+  //       //       h4 {
+  //       //         font-size: 12px;
+  //       //       }
+  //       //     }
 
-        //     .group-data {
-        //       .data {
-        //         label {
-        //           font-size: 10px;
-        //         }
+  //       //     .group-data {
+  //       //       .data {
+  //       //         label {
+  //       //           font-size: 10px;
+  //       //         }
 
-        //         span {
-        //           font-size: 12px;
-        //         }
-        //       }
-        //     }
-        //     .description-text {
-        //       p {
-        //         font-size: 11px;
-        //       }
-        //     }
-        //   }
-        // }
-      }
-    }
-  }
+  //       //         span {
+  //       //           font-size: 12px;
+  //       //         }
+  //       //       }
+  //       //     }
+  //       //     .description-text {
+  //       //       p {
+  //       //         font-size: 11px;
+  //       //       }
+  //       //     }
+  //       //   }
+  //       // }
+  //     }
+  //   }
+  // }
 }
 
 .popup-tooltip {

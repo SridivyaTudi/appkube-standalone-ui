@@ -109,12 +109,11 @@
       }
     }
   }
- 
 
   table {
     display: block;
     width: 100%;
-   
+
     thead {
       padding-top: 0px;
       padding-bottom: 0px;
@@ -181,6 +180,7 @@
           font-family: "Poppins", sans-serif;
           position: relative;
           border-bottom: 1px solid #ffffff;
+          cursor: pointer;
 
           &.active {
             font-weight: 600;
@@ -314,3 +314,40 @@
   }
 }
 
+@media only screen and (max-width: 1280px) {
+  .setting-table {
+    &.permission-table {
+      table {
+        display: block;
+        width: 100%;
+
+        thead {
+          padding-top: 0px;
+          padding-bottom: 0px;
+          display: table;
+
+          tr {
+            display: inline-table;
+            width: 100%;
+            table-layout: fixed;
+
+            th {
+              font-weight: 500;
+              color: #000000;
+              padding-left: 0;
+              padding: 12px 15px;
+              font-size: 14px;
+              font-family: "Poppins", sans-serif;
+              border-bottom-color: #b3b3b3;
+              border-bottom-style: dotted;
+              text-align: center;
+              &:first-child{
+                text-align: left;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
