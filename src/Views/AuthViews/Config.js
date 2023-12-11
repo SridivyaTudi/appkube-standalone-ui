@@ -1,4 +1,4 @@
-const baseSecurityUrl = "http://api.synectiks.net/security";
+const baseSecurityUrl = "https://api.synectiks.net/security";
 // const baseSecurityUrl = "http://34.199.12.114:8094/security";
 
 const config = {

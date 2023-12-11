@@ -32,7 +32,7 @@
 					"response": []
 				},
 				{
-					"name": "create",
+					"name": "create-admin",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -41,7 +41,67 @@
 							"formdata": [
 								{
 									"key": "username",
-									"value": "helo-org-admin-user",
+									"value": "test-admin",
+									"type": "default"
+								},
+								{
+									"key": "organization",
+									"value": "Synectiks",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "test-admin",
+									"type": "default"
+								},
+								{
+									"key": "email",
+									"value": "manoj.sharma@synectiks.com",
+									"type": "default"
+								},
+								{
+									"key": "ownerId",
+									"value": "503",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "ADMIN",
+									"type": "text"
+								},
+								{
+									"key": "targetService",
+									"value": "cmdb",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/users/create",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"users",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "helo-user",
 									"type": "default"
 								},
 								{
@@ -51,22 +111,22 @@
 								},
 								{
 									"key": "password",
-									"value": "Demo-helo-admin@123",
+									"value": "helo-user@123",
 									"type": "default"
 								},
 								{
 									"key": "email",
-									"value": "demo_user-helo-org@demo.com",
+									"value": "helo-user@demo.com",
 									"type": "default"
 								},
 								{
 									"key": "ownerId",
-									"value": "503",
+									"value": "67",
 									"type": "text"
 								},
 								{
 									"key": "type",
-									"value": "USER",
+									"value": "user",
 									"type": "text"
 								},
 								{
@@ -143,6 +203,30 @@
 					"response": []
 				},
 				{
+					"name": "findByOwner",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseSecurityUrl}}/users/find-by-owner?ownerId=67",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"users",
+								"find-by-owner"
+							],
+							"query": [
+								{
+									"key": "ownerId",
+									"value": "67"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "deleteById",
 					"request": {
 						"method": "POST",
@@ -207,9 +291,16 @@
 				},
 				{
 					"name": "search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
 						"url": {
 							"raw": "{{baseSecurityUrl}}/users/search",
 							"host": [
@@ -265,13 +356,23 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{baseSecurityUrl}}/users/updateUserRoles",
+							"raw": "{{baseSecurityUrl}}/users/updateUserRoles?userName=helo-org-admin-user&roleId=60,61",
 							"host": [
 								"{{baseSecurityUrl}}"
 							],
 							"path": [
 								"users",
 								"updateUserRoles"
+							],
+							"query": [
+								{
+									"key": "userName",
+									"value": "helo-org-admin-user"
+								},
+								{
+									"key": "roleId",
+									"value": "60,61"
+								}
 							]
 						}
 					},
@@ -427,6 +528,120 @@
 			]
 		},
 		{
+			"name": "permission category",
+			"item": [
+				{
+					"name": "listAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseSecurityUrl}}/permission-category/listAll",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"permission-category",
+								"listAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"version\": 1,\r\n    \"name\": \"Demo_permission-category\",\r\n    \"description\": \"Demo permission-category\",\r\n    \"permissions\": [\r\n        {\r\n            \"id\": 109\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/permission-category/create",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"permission-category",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"id\": 509,\r\n\t\"createdBy\": \"POSTMAN\",\r\n\t\"name\": \"test permission-category\",\r\n\t\"version\": 1,\r\n\t\"description\": \"test permission-category update\",\r\n\t\"permissions\": [\r\n\t\t{\r\n\t\t\t\"id\": 1,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": \"pata nhi\",\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Team\",\r\n\t\t\t\"permission\": \"Team\",\r\n\t\t\t\"description\": \"Team menu\"\r\n\t\t}\r\n\t]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/permission-category/update",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"permission-category",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseSecurityUrl}}/permission-category/522",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"permission-category",
+								"522"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteById",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseSecurityUrl}}/permission-category/delete/508",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"permission-category",
+								"delete",
+								"508"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "permission",
 			"item": [
 				{
@@ -435,9 +650,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base}}/permissions/listAll",
+							"raw": "{{baseSecurityUrl}}/permissions/listAll",
 							"host": [
-								"{{base}}"
+								"{{baseSecurityUrl}}"
 							],
 							"path": [
 								"permissions",
@@ -480,13 +695,13 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{baseSecurityUrl}}/permissions/23",
+							"raw": "{{baseSecurityUrl}}/permissions/5",
 							"host": [
 								"{{baseSecurityUrl}}"
 							],
 							"path": [
 								"permissions",
-								"23"
+								"5"
 							]
 						}
 					},
@@ -725,7 +940,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseSecurityUrl}}/public/login?username=jasmin&password=Jasmin@123",
+							"raw": "{{baseSecurityUrl}}/public/login?username=helo-org-admin-user&password=Demo-helo-admin@123",
 							"host": [
 								"{{baseSecurityUrl}}"
 							],
@@ -736,11 +951,11 @@
 							"query": [
 								{
 									"key": "username",
-									"value": "jasmin"
+									"value": "helo-org-admin-user"
 								},
 								{
 									"key": "password",
-									"value": "Jasmin@123"
+									"value": "Demo-helo-admin@123"
 								}
 							]
 						}
@@ -963,13 +1178,149 @@
 					"response": []
 				},
 				{
+					"name": "findByOwnerAndGroup",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseSecurityUrl}}/roles/find-by-owner?createdBy=helo-org-admin-user&isGroup=true",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"roles",
+								"find-by-owner"
+							],
+							"query": [
+								{
+									"key": "createdBy",
+									"value": "helo-org-admin-user"
+								},
+								{
+									"key": "isGroup",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "create",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"version\": 1,\r\n    \"name\": \"Demo_Role_2\",\r\n    \"description\": \"Demo Role 2\",\r\n    \"grp\":false\r\n}",
+							"raw": "{\r\n    \"name\": \"TT\",\r\n    \"description\": \"TT\",\r\n    \"grp\":false,\r\n    \"createdBy\":\"helo-org-admin-user\",\r\n    \"policies\":[\r\n        {\r\n            \"id\":56\r\n        },\r\n        {\r\n            \"id\":58\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/roles/create",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"roles",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createSuperAdminsGroup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Super Admins\",\r\n    \"description\": \"Super Admins Role Group\",\r\n    \"grp\":true,\r\n    \"policies\":[],\r\n    \"roles\":[\r\n        {\r\n            \"id\":113\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/roles/create",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"roles",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createDefaultUsersGroup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Default Users\",\r\n    \"description\": \"Default Users Role Group\",\r\n    \"grp\":true,\r\n    \"policies\":[],\r\n    \"roles\":[\r\n        {\r\n            \"id\":114\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/roles/create",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"roles",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createAdministrator",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Administrator\",\r\n    \"description\": \"Administrator role\",\r\n    \"grp\":false,\r\n    \"policies\":[\r\n        {\r\n            \"id\":63\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/roles/create",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"roles",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createBasicUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Basic User\",\r\n    \"description\": \"Basic User role\",\r\n    \"grp\":false,\r\n    \"policies\":[\r\n        \r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -996,7 +1347,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"version\": 1,\r\n    \"name\": \"Demo_Role_Group\",\r\n    \"description\": \"Demo Role Group\",\r\n    \"grp\":true,\r\n    \"roles\":[\r\n        {\r\n            \"id\":500\r\n        },\r\n        {\r\n            \"id\":501\r\n        }\r\n\r\n    ]\r\n}",
+							"raw": "{\r\n    \"version\": 1,\r\n    \"name\": \"Demo_Role_Group\",\r\n    \"description\": \"Demo Role Group\",\r\n    \"grp\":true,\r\n    \"roles\":[\r\n        {\r\n            \"id\":60\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1110,7 +1461,61 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"version\": 1,\r\n    \"name\": \"Demo_policy\",\r\n    \"description\": \"Demo policy\",\r\n    \"permissions\": [\r\n        {\r\n            \"id\": 109\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"version\": 1,\r\n    \"name\": \"All Access\",\r\n    \"description\": \"All Access Policy\",\r\n    \"permissions\": [\r\n\t\t{\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 5\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 6\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 7\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 8\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 9\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 10\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 11\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 12\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 13\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 14\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 15\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 16\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 17\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 18\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 19\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 20\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 21\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 22\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 23\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 24\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 25\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 26\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 27\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 28\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 29\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 30\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 31\r\n\t\t},\r\n\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 32\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 33\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 34\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 35\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 36\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 37\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 38\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 39\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 40\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 41\r\n\t\t},\r\n\r\n        {\r\n\t\t\t\"permissionCategoryId\": 3,\r\n            \"permissionId\": 42\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 3,\r\n            \"permissionId\": 43\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 3,\r\n            \"permissionId\": 44\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 3,\r\n            \"permissionId\": 45\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 3,\r\n            \"permissionId\": 46\r\n\t\t},\r\n\r\n        {\r\n\t\t\t\"permissionCategoryId\": 4,\r\n            \"permissionId\": 47\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 4,\r\n            \"permissionId\": 48\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 4,\r\n            \"permissionId\": 49\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 4,\r\n            \"permissionId\": 50\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 4,\r\n            \"permissionId\": 51\r\n\t\t}\r\n        \r\n\t]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/policy/create",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"policy",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createAllAccessPolicy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"version\": 1,\r\n    \"name\": \"All Access\",\r\n    \"description\": \"All Access Policy\",\r\n    \"permissions\": [\r\n\t\t{\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 5\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 6\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 7\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 8\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 9\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 10\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 11\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 12\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 13\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 14\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 15\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 16\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 17\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 18\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 19\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 20\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 21\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 22\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 23\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 24\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 25\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 26\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 27\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 28\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 29\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 30\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 1,\r\n            \"permissionId\": 31\r\n\t\t},\r\n\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 32\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 33\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 34\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 35\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 36\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 37\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 38\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 39\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 40\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 2,\r\n            \"permissionId\": 41\r\n\t\t},\r\n\r\n        {\r\n\t\t\t\"permissionCategoryId\": 3,\r\n            \"permissionId\": 42\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 3,\r\n            \"permissionId\": 43\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 3,\r\n            \"permissionId\": 44\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 3,\r\n            \"permissionId\": 45\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 3,\r\n            \"permissionId\": 46\r\n\t\t},\r\n\r\n        {\r\n\t\t\t\"permissionCategoryId\": 4,\r\n            \"permissionId\": 47\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 4,\r\n            \"permissionId\": 48\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 4,\r\n            \"permissionId\": 49\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 4,\r\n            \"permissionId\": 50\r\n\t\t},\r\n        {\r\n\t\t\t\"permissionCategoryId\": 4,\r\n            \"permissionId\": 51\r\n\t\t}\r\n        \r\n\t]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/policy/create",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"policy",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createNoAccessPolicy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"version\": 1,\r\n    \"name\": \"No Access\",\r\n    \"description\": \"No Access Policy\",\r\n    \"permissions\": [\r\n\t    \r\n\t]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1137,7 +1542,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\"id\": 509,\r\n\t\"createdBy\": \"POSTMAN\",\r\n\t\"name\": \"test policy\",\r\n\t\"version\": 1,\r\n\t\"description\": \"test policy update\",\r\n\t\"permissions\": [\r\n\t\t{\r\n\t\t\t\"id\": 1,\r\n\t\t\t\"createdAt\": null,\r\n\t\t\t\"updatedAt\": null,\r\n\t\t\t\"createdBy\": \"pata nhi\",\r\n\t\t\t\"updatedBy\": null,\r\n\t\t\t\"version\": 1,\r\n\t\t\t\"name\": \"Team\",\r\n\t\t\t\"permission\": \"Team\",\r\n\t\t\t\"description\": \"Team menu\"\r\n\t\t}\r\n\t],\r\n\t\"roles\": []\r\n}",
+							"raw": "{\r\n\t\"id\": 58,\r\n\t\"permissions\": [\r\n\t\t{\r\n\t\t\t\"id\": 59\r\n\t\t},\r\n        {\r\n\t\t\t\"id\": 57\r\n\t\t}\r\n\t]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
