@@ -7,16 +7,24 @@ import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import { v4 } from "uuid";
-import { Box } from "@mui/material";
+import { Box, Checkbox } from "@mui/material";
 class AccordionView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: this.props.data,
+      data: [],
       headers: this.props.headers || "",
       selectedNodes: [],
     };
   }
+
+  componentDidMount = () => {
+    let data = this.props.data || [];
+
+    if (data?.length) {
+      this.setState({ data });
+    }
+  };
 
   componentDidUpdate = (prevProps, prevState) => {
     if (this.props.selectedData !== prevProps.selectedData) {
@@ -32,9 +40,8 @@ class AccordionView extends Component {
         <TableRow>
           {headers.map((header) => (
             <TableCell key={v4()} style={header.styled}>
-              {header.subChild ? header.subChild :<></>}
+              {header.subChild ? header.subChild : <></>}
               {header.name}
-              
             </TableCell>
           ))}
         </TableRow>
@@ -66,6 +73,18 @@ class AccordionView extends Component {
               }}
               className={`${isActive ? "active" : ""}`}
             >
+              {subchild.isCheckBoxShow ? (
+                <Box className="check-box">
+                  <Checkbox
+                    size="small"
+                    onClick={(e) => {
+                      this.onClickNode(currentNode);
+                    }}
+                  />
+                </Box>
+              ) : (
+                ""
+              )}
               <Box className="access-box">
                 <i className={`fas fa-chevron-${arrowDownOrRight}`}></i>
                 {subchild.name}

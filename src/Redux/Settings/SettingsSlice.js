@@ -61,6 +61,10 @@ export const settingsSlice = createSlice({
       status: null,
       data: [],
     },
+    policyList: {
+      status: null,
+      data: [],
+    },
   },
   reducers: {},
   extraReducers: {

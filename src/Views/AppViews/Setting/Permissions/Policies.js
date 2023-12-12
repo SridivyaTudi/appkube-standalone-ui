@@ -2,88 +2,32 @@ import React, { Component } from "react";
 import { Box, Button, Checkbox } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from "react-router-dom";
+import status from "Redux/Constants/CommonDS";
 import AccordionView from "../Components/AccordionView";
-let accessPolicyData = [
-  {
-    name: "All Access",
-    chlidren: [
-      {
-        name: "Environment",
-        chlidren: [
-          {
-            name: "Create Product Environment",
-          },
-          {
-            name: "Create Product Environment",
-          },
-          {
-            name: "Create Product Environment",
-          },
-          { name: "Create Product Environment" },
-          { name: "Create Product Environment" },
-        ],
-      },
-      {
-        name: "Product",
-        chlidren: [
-          {
-            name: "Create Product Environment",
-          },
-          {
-            name: "Create Product Environment",
-          },
-          {
-            name: "Create Product Environment",
-          },
-          { name: "Create Product Environment" },
-          { name: "Create Product Environment" },
-        ],
-      },
-      {
-        name: "SHR",
-        chlidren: [
-          {
-            name: "Create Product Environment",
-          },
-          {
-            name: "Create Product Environment",
-          },
-          {
-            name: "Create Product Environment",
-          },
-          { name: "Create Product Environment" },
-          { name: "Create Product Environment" },
-        ],
-      },
-      {
-        name: "DevSecOps",
-        chlidren: [
-          {
-            name: "Create Product Environment",
-          },
-          {
-            name: "Create Product Environment",
-          },
-          {
-            name: "Create Product Environment",
-          },
-          { name: "Create Product Environment" },
-          { name: "Create Product Environment" },
-        ],
-      },
-    ],
-  },
-];
+import { connect } from "react-redux";
+import Loader from "Components/Loader";
 let searchedData = [];
 class Policies extends Component {
   constructor(props) {
     super(props);
     this.state = {
       searchedKey: "",
-      data: accessPolicyData,
+      data: [],
       selectedData: [],
     };
   }
+
+  componentDidMount = () => {
+    this.setPolicyStateOrReturnData();
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.props.allPolicy?.status !== prevProps.allPolicy?.status) {
+      if (this.props.allPolicy.status === status.SUCCESS) {
+        this.setPolicyStateOrReturnData();
+      }
+    }
+  };
 
   //  Serach Groups
   handleSearchChange = (e) => {
@@ -91,9 +35,10 @@ class Policies extends Component {
     let { selectedData } = this.state;
     searchedData = [];
     selectedData = [];
-    if (accessPolicyData?.length) {
+    let data = this.setPolicyStateOrReturnData(0);
+    if (data?.length) {
       if (searchedKey) {
-        this.searchRecursiveLogic(searchedKey, accessPolicyData);
+        this.searchRecursiveLogic(searchedKey, data);
         selectedData = this.getParentElement(searchedData);
       } else {
         selectedData = [];
@@ -133,7 +78,47 @@ class Policies extends Component {
 
     return [...new Set(parentElement)].concat(data);
   };
-  
+
+  // set policy state according format
+  setPolicyAccordingToFormat = (policies) => {
+    return policies.map((policy) => {
+      policy["name"] = policy.name || policy.permissionId;
+
+      if (policy.version) {
+        policy["isCheckBoxShow"] = true;
+      }
+      if (policy?.permissions?.length) {
+        policy["chlidren"] = this.setPolicyAccordingToFormat(
+          policy.permissions
+        );
+        return policy;
+      } else {
+        return policy;
+      }
+    });
+  };
+
+  // Set state of policies
+  setPolicyStateOrReturnData = (isStateSet = 1) => {
+    let data = this.props.allPolicy?.data || [];
+    if (data?.length) {
+      data = this.setPolicyAccordingToFormat(JSON.parse(JSON.stringify(data)));
+      if (isStateSet) {
+        this.setState({ data });
+      } else {
+        return data;
+      }
+    }
+  };
+
+  // Render loder
+  renderLoder = () => {
+    return (
+      <Box className="d-blck text-center w-100 h-100 ">
+        <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
+      </Box>
+    );
+  };
   render() {
     let { searchedKey, data, selectedData } = this.state;
     return (
@@ -162,15 +147,37 @@ class Policies extends Component {
           </Button>
         </Box>
         <Box className="setting-table">
-          <AccordionView data={data} selectedData={selectedData}
-            headers={[
-              { name: "Policy name", subChild: <Box className="check-box"> <Checkbox size="small" /></Box>, styled: { width: 20} },
-            ]}
-           />
+          {this.props.allPolicy?.status === status.IN_PROGRESS ? (
+            this.renderLoder()
+          ) : data?.length ? (
+            <AccordionView
+              data={data}
+              selectedData={selectedData}
+              headers={[
+                {
+                  name: "Policy name",
+                  subChild: (
+                    <Box className="check-box">
+                      <Checkbox size="small" />
+                    </Box>
+                  ),
+                  styled: { width: 20 },
+                },
+              ]}
+            />
+          ):<></>}
         </Box>
       </>
     );
   }
 }
+const mapStateToProps = (state) => {
+  const { allPolicy } = state.settings;
+  return {
+    allPolicy,
+  };
+};
 
-export default Policies;
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Policies);

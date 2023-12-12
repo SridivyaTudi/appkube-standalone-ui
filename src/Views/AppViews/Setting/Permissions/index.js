@@ -8,7 +8,10 @@ import Permissson from "./Permission";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { getActiveTab, deleteActiveTab } from "Utils";
-import { getPermissionCategory } from "Redux/Settings/SettingsThunk";
+import {
+  getPermissionCategory,
+  getPolicies,
+} from "Redux/Settings/SettingsThunk";
 export class Permissions extends Component {
   controlMapping = [
     {
@@ -32,7 +35,7 @@ export class Permissions extends Component {
     {
       icon: "fa-users",
       label: "Policies",
-      value: "33",
+      value: 0,
       dataKey: "policies",
     },
     {
@@ -54,6 +57,7 @@ export class Permissions extends Component {
   componentDidMount = () => {
     this.setPreviousTab();
     this.props.getPermissionCategory();
+    this.props.getPolicies();
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -75,6 +79,15 @@ export class Permissions extends Component {
         if (permissionCategory?.length) {
           let permissionCount = this.getPermissionLength(permissionCategory);
           this.getTabCount("permissions", permissionCount);
+        }
+      }
+    }
+
+    if (this.props.allPolicy.status !== prevProps.allPolicy.status) {
+      if (this.props.allPolicy.status === status.SUCCESS) {
+        let policies = this.props.allPolicy.data;
+        if (policies) {
+          this.getTabCount("policies", policies.length);
         }
       }
     }
@@ -182,13 +195,14 @@ export class Permissions extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { allRoles, permissionCategory } = state.settings;
+  const { allRoles, permissionCategory, allPolicy } = state.settings;
   return {
     allRoles,
     permissionCategory,
+    allPolicy,
   };
 };
 
-const mapDispatchToProps = { getPermissionCategory };
+const mapDispatchToProps = { getPermissionCategory, getPolicies };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Permissions);
