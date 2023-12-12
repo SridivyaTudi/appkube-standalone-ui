@@ -7,9 +7,31 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Box
 } from "@mui/material";
-import { Component } from "react";
+import React, { Component } from "react";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+import DefaultIcon from "../../../../../../assets/img/setting/default-icon.png";
 import { v4 } from "uuid";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#16161E",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#16161E",
+    color: "#ffffff",
+    maxWidth: 250,
+
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+    padding: "8px 10px",
+  },
+}));
+
 let data = [
   { id: 1, permissionName: "Super Admin", policiesname: "Single" },
   { id: 2, permissionName: "Defaulta User", policiesname: "Single" },
@@ -31,7 +53,7 @@ class Group extends Component {
     return (
       <TableHead>
         <TableRow>
-          <TableCell width={100}>
+          <TableCell>
             <Checkbox
               size="small"
               className="check-box"
@@ -41,7 +63,7 @@ class Group extends Component {
             />{" "}
             Group Name
           </TableCell>
-          <TableCell width={200}>Attached Policies</TableCell>
+          <TableCell>Attached Policies</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -63,6 +85,21 @@ class Group extends Component {
                 onChange={this.handleCheckBox}
               />
               {row.permissionName}
+              <Box className="d-flex roles-box">
+                <HtmlTooltip
+                  className="table-tooltip"
+                  title={
+                    <React.Fragment>
+                      <span>This role created by default by the system</span>
+                    </React.Fragment>
+                  }
+                >
+                  <span>
+                    <img src={DefaultIcon} alt="" />
+                  </span>
+                  Default
+                </HtmlTooltip>
+              </Box>
             </TableCell>
             <TableCell>{row.policiesname}</TableCell>
           </TableRow>
@@ -102,9 +139,9 @@ class Group extends Component {
   render() {
     return (
       <>
-        <TableContainer component={Paper} className="access-control-table">
+        <TableContainer component={Paper} className="setting-common-table">
           <Table
-            sx={{ minWidth: 500 }}
+            sx={{ minWidth: 800 }}
             aria-label="custom pagination table"
             className="table"
           >

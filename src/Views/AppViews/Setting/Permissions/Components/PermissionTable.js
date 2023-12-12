@@ -32,7 +32,7 @@ class PermissionTable extends Component {
     return (
       <TableHead>
         <TableRow>
-          <TableCell width={100}>
+          <TableCell >
             <Checkbox
               size="small"
               className="check-box"
@@ -40,9 +40,9 @@ class PermissionTable extends Component {
               checked={selectedData.length === rows?.length}
               onChange={(e) => this.handleSelectAllCheckBox(e)}
             />{" "}
-            Permission name
+            Permission name 
           </TableCell>
-          <TableCell width={200}>Status</TableCell>
+          <TableCell >Status</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -118,9 +118,9 @@ class PermissionTable extends Component {
 
   render() {
     return (
-      <TableContainer component={Paper} className="access-control-table">
+      <TableContainer component={Paper} className="setting-common-table">
         <Table
-          sx={{ minWidth: 500 }}
+          sx={{ minWidth: 800 }}
           aria-label="custom pagination table"
           className="table"
         >

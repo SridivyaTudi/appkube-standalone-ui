@@ -161,7 +161,7 @@ class RoleControl extends Component {
     } else {
       return (
         <Table
-          sx={{ minWidth: 500 }}
+          sx={{ minWidth: 800 }}
           aria-label="custom pagination table"
           className="table"
         >
