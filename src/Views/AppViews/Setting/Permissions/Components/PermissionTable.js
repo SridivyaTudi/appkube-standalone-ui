@@ -19,6 +19,13 @@ class PermissionTable extends Component {
     };
   }
 
+  componentDidUpdate = (prevProps, prevState) => {
+    let rows = this.props.data || [];
+
+    if (this.props.data !== prevProps.data) {
+      this.setState({ rows });
+    }
+  };
   // Render head of table
   renderTableHead = () => {
     let { rows, selectedData } = this.state;
@@ -108,6 +115,7 @@ class PermissionTable extends Component {
 
     this.setState({ selectedData });
   };
+
   render() {
     return (
       <TableContainer component={Paper} className="access-control-table">

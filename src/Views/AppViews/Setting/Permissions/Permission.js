@@ -2,29 +2,27 @@ import React, { Component } from "react";
 import { v4 } from "uuid";
 import { Box } from "@mui/material";
 import TabsMenu from "../../Environments/EnvironmentList/TabsMenu";
-import Devsecops from "./Devsecops";
-import Enviroment from "./Enviroment";
-import Sre from "./Sre";
-import Product from "./Product";
-import { getPermissionCategory } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
-import { ToastMessage } from "Toast/ToastMessage";
+import PermissionTable from "Views/AppViews/Setting/Permissions/Components/PermissionTable";
+
 class Permission extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 0,
       permissionCategory: [],
-      permissionCount: 0,
     };
   }
 
   componentDidMount = () => {
-   
+    let permissionCategory = this.props?.permissionCategory?.data;
+    if (permissionCategory?.length) {
+      this.setState({ permissionCategory });
+    }
   };
-
+  
   componentDidUpdate = (prevProps, prevState) => {
     if (
       this.props.permissionCategory.status !==
@@ -43,6 +41,14 @@ class Permission extends Component {
     this.setState({ activeTab });
   };
 
+  // Render loder
+  renderLoder = () => {
+    return (
+      <Box className="d-blck text-center w-100 h-100 ">
+        <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
+      </Box>
+    );
+  };
   // Render tabs Component
   renderTabsMenuComponent = () => {
     const { activeTab, permissionCategory } = this.state;
@@ -59,22 +65,15 @@ class Permission extends Component {
 
   // Render active tab component
   renderActiveTabComponent = () => {
-    const { activeTab, permissionCategory } = this.state;
-    let permissions = permissionCategory?.[activeTab]?.permissions
-      ? permissionCategory[activeTab]?.permissions
-      : [];
+    let { activeTab, permissionCategory } = this.state;
+    let permissions = permissionCategory?.[activeTab]?.permissions;
+    permissions = permissions?.length ? permissions : [];
 
-    return activeTab === 0 ? (
-      <Enviroment data={permissions} />
-    ) : activeTab === 1 ? (
-      <Product data={permissions} />
-    ) : activeTab === 2 ? (
-      <Sre data={permissions} />
-    ) : activeTab === 3 ? (
-      <Devsecops data={permissions} />
-    ) : (
-      <></>
-    );
+    if (this.props.permissionCategory.status === status.IN_PROGRESS) {
+      return this.renderLoder();
+    } else {
+      return <PermissionTable data={permissions} />;
+    }
   };
 
   render() {
@@ -97,8 +96,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = {
-  getPermissionCategory,
-};
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Permission);
