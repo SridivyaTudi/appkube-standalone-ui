@@ -11,6 +11,7 @@ import {
   getRoleById,
   updateRole,
   getPermissionCategory,
+  createPolicy,
 } from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
@@ -53,6 +54,10 @@ export const settingsSlice = createSlice({
       data: {},
     },
     permissionCategory: {
+      status: null,
+      data: [],
+    },
+    policyCreation: {
       status: null,
       data: [],
     },
@@ -314,6 +319,32 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         permissionCategory: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [createPolicy.pending]: (state) => {
+      return {
+        ...state,
+        policyCreation: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [createPolicy.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        policyCreation: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [createPolicy.rejected]: (state) => {
+      return {
+        ...state,
+        policyCreation: {
           status: status.FAILURE,
         },
       };

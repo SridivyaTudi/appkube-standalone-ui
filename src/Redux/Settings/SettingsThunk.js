@@ -137,3 +137,18 @@ export const getPermissionCategory = createAsyncThunk(
     }
   }
 );
+
+export const createPolicy = createAsyncThunk(
+  "settings/createPolicy",
+  async (params) => {
+    try {
+      const response = await postLoginService.post(
+        config.CREATE_POLICY,
+        params
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

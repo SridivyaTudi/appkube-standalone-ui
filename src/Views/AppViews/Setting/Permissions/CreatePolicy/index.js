@@ -21,13 +21,17 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import DefaultIcon from "../../../../../assets/img/setting/default-icon.png";
 import CancelGroupControlModal from "../Components/CancelGroupControlModal";
-import { getRoles } from "Redux/Settings/SettingsThunk";
+import {
+  getPermissionCategory,
+  createPolicy,
+} from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { setActiveTab } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { ToastMessage } from "Toast/ToastMessage";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -51,34 +55,52 @@ export class CreatePolicy extends Component {
     super(props);
     this.state = {
       showCancelGroupControlModal: false,
-      roles: [],
+      permissions: [],
       pg: 0,
       rpg: 5,
       showCreateUserControlModal: false,
       actionButton: null,
-      searchedRole: "",
+      searchedPermission: "",
       formData: {
         name: "",
         description: "",
-        roles: [],
+        permissions: [],
       },
     };
   }
 
   componentDidMount = () => {
-    this.props.getRoles();
+    this.props.getPermissionCategory();
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.allRoles.status !== prevProps.allRoles.status) {
-      if (this.props.allRoles.status === status.SUCCESS) {
-        let roles = this.props.allRoles.data;
-        if (roles) {
-          this.setState({ roles });
+    if (
+      this.props.permissionCategory.status !==
+      prevProps.permissionCategory.status
+    ) {
+      if (this.props.permissionCategory.status === status.SUCCESS) {
+        let permissions = this.props.permissionCategory.data;
+        if (permissions?.length) {
+          permissions = this.getPermissionsFromCategory(
+            JSON.parse(JSON.stringify(permissions))
+          );
+          this.setState({ permissions });
+        }
+      }
+    }
+
+    if (this.props.policyCreation.status !== prevProps.policyCreation.status) {
+      if (this.props.policyCreation.status === status.SUCCESS) {
+        if (this.props.policyCreation.data) {
+          ToastMessage.success(`Policy Created Successfully`);
+          this.handlePreviousPage();
+        } else {
+          ToastMessage.error(`Policy Creation Failed!`);
         }
       }
     }
   };
+
   handleChangePage = (event, newpage) => {
     this.setState({ pg: newpage });
   };
@@ -114,11 +136,11 @@ export class CreatePolicy extends Component {
     );
   }
 
-  // render Roles Table
-  renderRoleTable = () => {
-    const { status: rolesStatus } = this.props.allRoles;
-    let { roles, formData } = this.state;
-    if (rolesStatus === status.IN_PROGRESS) {
+  // render permission Table
+  renderPermissionTable = () => {
+    const { status: permissionStatus } = this.props.permissionCategory;
+    let { permissions, formData } = this.state;
+    if (permissionStatus === status.IN_PROGRESS) {
       return this.renderLoder();
     } else {
       return (
@@ -132,11 +154,12 @@ export class CreatePolicy extends Component {
               <TableCell>
                 <Checkbox
                   size="small"
-                  disabled={roles?.length ? false : true}
+                  disabled={permissions?.length ? false : true}
                   checked={
-                    roles?.length && formData.roles.length === roles?.length
+                    permissions?.length &&
+                    formData.permissions.length === permissions?.length
                   }
-                  onChange={(e) => this.handleSelectAllCheckBox(e, 1)}
+                  onChange={(e) => this.handleSelectAllCheckBox(e)}
                 />
                 Permission Set
               </TableCell>
@@ -148,49 +171,54 @@ export class CreatePolicy extends Component {
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{this.renderRoles()}</TableBody>
+          <TableBody>{this.renderPermissions()}</TableBody>
         </Table>
       );
     }
   };
 
-  // render Roles data
-  renderRoles = () => {
-    const { roles, pg, rpg, formData } = this.state;
+  // Render permissions data
+  renderPermissions = () => {
+    const { permissions, pg, rpg, formData } = this.state;
 
-    if (roles?.length) {
-      return roles.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
-        <TableRow key={index}>
-          <TableCell>
-            <Checkbox
-              size="small"
-              id={row.id}
-              checked={formData.roles.includes(row.id)}
-              onChange={this.handleCheckBox}
-            />
-            {row.name}
-            <Box className="d-flex roles-box">
-              <HtmlTooltip
-                className="table-tooltip d-flex"
-                title={
-                  <React.Fragment>
-                    <span>This role created by default by the system</span>
-                  </React.Fragment>
+    if (permissions?.length) {
+      return permissions.slice(pg * rpg, pg * rpg + rpg).map((row, index) => {
+        let { id: permissionId, permissionCategoryId } = row;
+        return (
+          <TableRow key={index}>
+            <TableCell>
+              <Checkbox
+                size="small"
+                id={permissionId}
+                checked={this.isCheckedPermission(permissionId)}
+                onChange={(e) =>
+                  this.handleCheckBox(e, { permissionId, permissionCategoryId })
                 }
-              >
-                <img src={DefaultIcon} alt="" className="m-r-1" />
-                Default
-              </HtmlTooltip>
-            </Box>
-          </TableCell>
-          <TableCell>{row.description}</TableCell>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
-          <TableCell align="center"></TableCell>
-        </TableRow>
-      ));
+              />
+              {row.name}
+              <Box className="d-flex roles-box">
+                <HtmlTooltip
+                  className="table-tooltip d-flex"
+                  title={
+                    <React.Fragment>
+                      <span>This role created by default by the system</span>
+                    </React.Fragment>
+                  }
+                >
+                  <img src={DefaultIcon} alt="" className="m-r-1" />
+                  Default
+                </HtmlTooltip>
+              </Box>
+            </TableCell>
+            <TableCell>{row.description}</TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell align="center"></TableCell>
+          </TableRow>
+        );
+      });
     } else {
       return (
         <TableRow>
@@ -206,9 +234,9 @@ export class CreatePolicy extends Component {
     }
   };
 
-  // Search  Roles Inputs
+  // Search  permission Inputs
   renderSearchInput = () => {
-    let { searchedRole } = this.state;
+    let { searchedPermission } = this.state;
     return (
       <Grid container className="h-100" alignItems={"center"}>
         <Grid item xs={6}>
@@ -217,7 +245,7 @@ export class CreatePolicy extends Component {
               type="text"
               className="form-control"
               placeholder="Search Permission here"
-              value={searchedRole}
+              value={searchedPermission}
               onChange={(e) => this.handleSearchChange(e)}
             />
             <button className="button">
@@ -232,14 +260,16 @@ export class CreatePolicy extends Component {
   //  Serach role
   handleSearchChange = (e) => {
     let value = e.target.value;
-    let data = this.props.allRoles.data || [];
-    let { roles, searchedRole } = this.state;
+    let data = this.props.permissionCategory.data || [];
+
+    let { permissions, searchedPermission } = this.state;
 
     if (data?.length) {
-      searchedRole = value;
+      data = this.getPermissionsFromCategory(JSON.parse(JSON.stringify(data)));
+      searchedPermission = value;
 
       if (value) {
-        roles = data.filter((row) => {
+        permissions = data.filter((row) => {
           if (row?.name.toLowerCase().includes(value.toLowerCase())) {
             return row;
           } else {
@@ -247,10 +277,10 @@ export class CreatePolicy extends Component {
           }
         });
       } else {
-        roles = data;
+        permissions = data;
       }
 
-      this.setState({ roles, searchedRole });
+      this.setState({ permissions, searchedPermission });
     }
   };
 
@@ -286,14 +316,21 @@ export class CreatePolicy extends Component {
     e.preventDefault();
     this.setState({ isSubmit: true });
     const { isValid } = this.validateForm(true);
-    let { roles } = this.state.formData;
+    let { permissions, name, description } = this.state.formData;
 
     if (isValid) {
-      if (!roles.length) {
-        ToastMessage.error("Please select role!");
+      if (!permissions.length) {
+        ToastMessage.error("Please select permission!");
         return 0;
+      } else {
+        let params = {
+          version: 1,
+          name,
+          description,
+          permissions,
+        };
+        this.props.createPolicy(params);
       }
-      this.handlePreviousPage();
     }
   };
 
@@ -313,14 +350,14 @@ export class CreatePolicy extends Component {
 
   // Render Other components
   renderOtherComponents = () => {
-    const { roles, pg, rpg, showCancelGroupControlModal } = this.state;
+    const { permissions, pg, rpg, showCancelGroupControlModal } = this.state;
     return (
       <>
-        {roles.length ? (
+        {permissions.length ? (
           <TablePagination
             rowsPerPageOptions={[5, 10, 20]}
             component="div"
-            count={roles.length}
+            count={permissions.length}
             rowsPerPage={rpg}
             page={pg}
             className="access-control-pagination"
@@ -344,40 +381,76 @@ export class CreatePolicy extends Component {
   };
 
   // Handle check box
-  handleCheckBox = (event) => {
+  handleCheckBox = (event, permissionObj) => {
     let { formData } = this.state;
-    let data = formData["roles"];
+    let data = formData["permissions"];
     let { id, checked } = event.target;
 
     if (checked) {
-      data.push(+id);
-      formData["roles"] = data;
+      data.push(permissionObj);
+      formData["permissions"] = data;
     } else {
-      formData["roles"] = data.filter((value) => value !== +id);
+      formData["permissions"] = data.filter(
+        (value) => value.permissionId !== permissionObj.permissionId
+      );
     }
 
     this.setState({ formData });
   };
 
   // Handle select all checkbox
-  handleSelectAllCheckBox = (event, isRole = 0) => {
-    let { roles, formData } = this.state;
+  handleSelectAllCheckBox = (event) => {
+    let { permissions, formData } = this.state;
 
     let { checked } = event.target;
 
     if (checked) {
-      formData["roles"] = roles.map((value) => value.id);
+      formData["permissions"] = permissions.map(
+        ({ id: permissionId, permissionCategoryId }) => ({
+          permissionId,
+          permissionCategoryId,
+        })
+      );
     } else {
-      formData["roles"] = [];
+      formData["permissions"] = [];
     }
 
     this.setState({ formData });
+  };
+
+  // Get permission from category
+  getPermissionsFromCategory = (data) => {
+    let permissions = [];
+    data.forEach((permission) => {
+      permission.permissions.forEach((innerPermission) => {
+        innerPermission["permissionCategoryId"] = permission.id;
+        permissions.push(innerPermission);
+      });
+    });
+
+    return permissions;
+  };
+
+  //  Permission checked return true ,otherwise false
+  isCheckedPermission = (id) => {
+    let { permissions } = this.state.formData;
+    let isChecked = false;
+    for (let permission = 0; permission < permissions.length; permission++) {
+      const element = permissions[permission];
+      if (element.permissionId === id) {
+        isChecked = true;
+        break;
+      }
+    }
+
+    return isChecked;
   };
 
   render() {
     const { isSubmit, formData } = this.state;
     let { name, description } = formData;
     const { errors } = this.validateForm(isSubmit);
+    let policyStatus = this.props.policyCreation?.status;
     return (
       <Box className="create-group-container">
         <Box className="list-heading">
@@ -411,14 +484,15 @@ export class CreatePolicy extends Component {
                   </Button>
                 </ListItem>
                 <ListItem>
-                  <Link onClick={this.handlePolicySubmit}>
-                    <Button
-                      className="primary-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Create policy
-                    </Button>
-                  </Link>
+                  <LoadingButton
+                    className="primary-btn min-width-inherit"
+                    variant="contained"
+                    disabled={policyStatus === status.IN_PROGRESS}
+                    loading={policyStatus === status.IN_PROGRESS}
+                    onClick={this.handlePolicySubmit}
+                  >
+                    Create policy
+                  </LoadingButton>
                 </ListItem>
               </List>
             </Grid>
@@ -497,12 +571,7 @@ export class CreatePolicy extends Component {
           {this.renderSearchInput()}
         </Box>
         <TableContainer component={Paper} className="access-control-table">
-          {errors.roles ? (
-            <span style={{ color: "red" }}>{errors.roles}</span>
-          ) : (
-            <></>
-          )}
-          {this.renderRoleTable()}
+          {this.renderPermissionTable()}
         </TableContainer>
         {this.renderOtherComponents()}
       </Box>
@@ -510,14 +579,16 @@ export class CreatePolicy extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { allRoles } = state.settings;
+  const { permissionCategory, policyCreation } = state.settings;
   return {
-    allRoles,
+    permissionCategory,
+    policyCreation,
   };
 };
 
 const mapDispatchToProps = {
-  getRoles,
+  getPermissionCategory,
+  createPolicy,
 };
 
 export default connect(
