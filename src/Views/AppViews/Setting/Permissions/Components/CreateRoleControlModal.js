@@ -12,9 +12,7 @@ import {
 } from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
 import CloseIcon from "@mui/icons-material/Close";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-
+import { getCurrentUser } from "Utils";
 class CreateRoleControlModal extends Component {
   constructor(props) {
     super(props);
@@ -129,6 +127,7 @@ class CreateRoleControlModal extends Component {
         description,
         grp: false,
         policies: selectedPolicy.map((policy) => ({ id: policy })),
+        createdBy: this.getCurrentUserInfo().username,
       };
 
       if (this.props.roleId > 0) {
@@ -158,6 +157,14 @@ class CreateRoleControlModal extends Component {
         <MenuItem value={policy.id}>{policy.name}</MenuItem>
       ));
     }
+  };
+
+  getCurrentUserInfo = () => {
+    return getCurrentUser()
+      ? getCurrentUser()?.info?.user
+        ? getCurrentUser().info.user
+        : { username: "", email: "", profileImage: "" }
+      : { username: "", email: "", profileImage: "" };
   };
 
   render() {
