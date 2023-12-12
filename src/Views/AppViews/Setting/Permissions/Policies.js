@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import { Box, Button, Checkbox } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from "react-router-dom";
 import status from "Redux/Constants/CommonDS";
 import AccordionView from "../Components/AccordionView";
 import { connect } from "react-redux";
 import Loader from "Components/Loader";
+import ConfirmationPopup from "Components/ConfirmationPopup";
+import { deletePolicy, getPolicies } from "Redux/Settings/SettingsThunk";
+import { ToastMessage } from "Toast/ToastMessage";
 let searchedData = [];
 class Policies extends Component {
   constructor(props) {
@@ -15,6 +18,7 @@ class Policies extends Component {
       data: [],
       selectedData: [],
       selectedCheckBox: [],
+      showConfirmPopup: false,
     };
   }
 
@@ -28,6 +32,19 @@ class Policies extends Component {
         this.setPolicyStateOrReturnData();
       }
     }
+
+    if (
+      prevProps.removePolicy.status !== this.props.removePolicy.status &&
+      this.props.removePolicy.status === status.SUCCESS
+    ) {
+      if (this.props.removePolicy.data === "OK") {
+        this.togglePopup();
+        ToastMessage.success("Policy removed successfully.");
+        this.props.getPolicies();
+      } else {
+        ToastMessage.error("Policy is not removed.");
+      }
+    }
   };
 
   //  Serach Groups
@@ -37,6 +54,7 @@ class Policies extends Component {
     searchedData = [];
     selectedData = [];
     let data = this.setPolicyStateOrReturnData(0);
+
     if (data?.length) {
       if (searchedKey) {
         this.searchRecursiveLogic(searchedKey, data);
@@ -54,7 +72,12 @@ class Policies extends Component {
     policyData.forEach((data, index) => {
       let currentNode = `${parentIndex ? `${parentIndex}_` : ""}${index}`;
 
-      if (data?.name.toLowerCase().includes(value.toLowerCase())) {
+      if (
+        data?.name
+          ?.toString()
+          ?.toLowerCase()
+          .includes(value?.toString()?.toLowerCase())
+      ) {
         searchedData.push(currentNode);
       }
       if (data?.chlidren?.length) {
@@ -120,8 +143,39 @@ class Policies extends Component {
       </Box>
     );
   };
+
+  onClickDeleteBtn = () => {
+    let { data, selectedCheckBox } = this.state;
+    this.setState({
+      showConfirmPopup: true,
+      selectedPolicyId: data[selectedCheckBox[0]].id,
+    });
+  };
+
+  // toggle confirmation popup
+  togglePopup = () => {
+    let { showConfirmPopup, selectedPolicyId, selectedCheckBox } = this.state;
+    this.setState({
+      showConfirmPopup: !showConfirmPopup,
+      selectedPolicyId: showConfirmPopup ? 0 : selectedPolicyId,
+    });
+  };
+
+  handleDeletePolicy = () => {
+    let { selectedPolicyId } = this.state;
+    if (selectedPolicyId) {
+      this.props.deletePolicy(selectedPolicyId);
+    }
+  };
   render() {
-    let { searchedKey, data, selectedData, selectedCheckBox } = this.state;
+    let {
+      searchedKey,
+      data,
+      selectedData,
+      selectedCheckBox,
+      showConfirmPopup,
+    } = this.state;
+    let deletePolicyStatus = this.props?.removePolicy?.status;
     return (
       <>
         <Box className="d-flex Justify-content-between align-items-center search-box">
@@ -147,6 +201,7 @@ class Policies extends Component {
             <Button
               className="danger-btn min-width-inherit"
               variant="contained"
+              onClick={this.onClickDeleteBtn}
             >
               Delete
             </Button>
@@ -175,18 +230,35 @@ class Policies extends Component {
           ) : (
             <></>
           )}
+
+          {showConfirmPopup ? (
+            <ConfirmationPopup
+              showModal={showConfirmPopup}
+              togglePopup={this.togglePopup}
+              labels={{
+                btnYes: "Yes",
+                description: "Are you sure delete the policy ? ",
+                btnNo: "Cancel",
+              }}
+              handleCallBack={this.handleDeletePolicy}
+              showLoader={deletePolicyStatus === status.IN_PROGRESS}
+            />
+          ) : (
+            <></>
+          )}
         </Box>
       </>
     );
   }
 }
 const mapStateToProps = (state) => {
-  const { allPolicy } = state.settings;
+  const { allPolicy, removePolicy } = state.settings;
   return {
     allPolicy,
+    removePolicy,
   };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { deletePolicy, getPolicies };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Policies);

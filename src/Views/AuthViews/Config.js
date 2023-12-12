@@ -24,6 +24,7 @@ const config = {
   DELETE_ROLE: `${baseSecurityUrl}/roles/delete/#role-id#`,
   GET_PERMISSION_CATEGORY: `${baseSecurityUrl}/permission-category/listAll`,
   CREATE_POLICY:`${baseSecurityUrl}/policy/create`,
+  DELETE_POLICY:`${baseSecurityUrl}/policy/delete/#policy-id#`
 };
 
 export default config;

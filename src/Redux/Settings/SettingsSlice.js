@@ -12,6 +12,7 @@ import {
   updateRole,
   getPermissionCategory,
   createPolicy,
+  deletePolicy,
 } from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
@@ -62,6 +63,10 @@ export const settingsSlice = createSlice({
       data: [],
     },
     policyList: {
+      status: null,
+      data: [],
+    },
+    removePolicy: {
       status: null,
       data: [],
     },
@@ -349,6 +354,32 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         policyCreation: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [deletePolicy.pending]: (state) => {
+      return {
+        ...state,
+        removePolicy: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [deletePolicy.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        removePolicy: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [deletePolicy.rejected]: (state) => {
+      return {
+        ...state,
+        removePolicy: {
           status: status.FAILURE,
         },
       };

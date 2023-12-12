@@ -153,4 +153,15 @@ export const createPolicy = createAsyncThunk(
   }
 );
 
-
+export const deletePolicy = createAsyncThunk(
+  "settings/deletePolicy",
+  async (id) => {
+    try {
+      let url = config.DELETE_POLICY.replace("#policy-id#", id);
+      const response = await postLoginService.delete(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
