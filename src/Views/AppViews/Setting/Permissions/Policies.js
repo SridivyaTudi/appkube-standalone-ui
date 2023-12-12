@@ -146,7 +146,7 @@ class Policies extends Component {
             Delete
           </Button>
         </Box>
-        <Box className="setting-table">
+        <Box className="policies-setting-table">
           {this.props.allPolicy?.status === status.IN_PROGRESS ? (
             this.renderLoder()
           ) : data?.length ? (
