@@ -15,6 +15,7 @@ class AccordionView extends Component {
       data: [],
       headers: this.props.headers || "",
       selectedNodes: [],
+      selectedCheckBox: [],
     };
   }
 
@@ -34,13 +35,12 @@ class AccordionView extends Component {
   };
 
   renderTableHead = () => {
-    let { headers } = this.state;
+    let { headers, data, selectedCheckBox } = this.state;
     if (headers?.length) {
       return (
         <TableRow>
           {headers.map((header) => (
             <TableCell key={v4()} style={header.styled}>
-              {header.subChild ? header.subChild : <></>}
               {header.name}
             </TableCell>
           ))}
@@ -55,7 +55,7 @@ class AccordionView extends Component {
    *  @param {String} parentIndex - parent index
    */
   renderTableBody = (data, parentIndex) => {
-    let { selectedNodes } = this.state;
+    let { selectedNodes, selectedCheckBox } = this.state;
     return data.map((subchild, childIndex) => {
       let currentNode = `${parentIndex ? `${parentIndex}_` : ""}${childIndex}`;
       let isActive = selectedNodes.includes(currentNode);
@@ -77,8 +77,11 @@ class AccordionView extends Component {
                 <Box className="d-inline-block check-box ">
                   <Checkbox
                     size="small"
+                    id={currentNode}
+                    checked={selectedCheckBox.includes(+currentNode)}
                     onClick={(e) => {
-                      this.onClickNode(currentNode);
+                      this.onClickCheckBox(e, subchild);
+                      e.stopPropagation();
                     }}
                   />
                 </Box>
@@ -108,7 +111,7 @@ class AccordionView extends Component {
           {childDataShow ? (
             <TableRow>
               <TableCell colSpan={2} className="child-table-section">
-                <Table >
+                <Table>
                   {this.renderTableBody(subchild?.chlidren, currentNode)}
                 </Table>
               </TableCell>
@@ -136,6 +139,25 @@ class AccordionView extends Component {
     }
 
     this.setState({ selectedNodes });
+  };
+
+  // Handle check box
+  onClickCheckBox = (event, extraData) => {
+    let { selectedCheckBox } = this.state;
+
+    let { id, checked } = event.target;
+
+    if (checked) {
+      selectedCheckBox = [+id];
+    } else {
+      selectedCheckBox = [];
+    }
+    this.setState({ selectedCheckBox });
+    try {
+      this.props.setSelectedViewData({ selectedCheckBox });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   render() {

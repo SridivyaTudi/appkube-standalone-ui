@@ -14,6 +14,7 @@ class Policies extends Component {
       searchedKey: "",
       data: [],
       selectedData: [],
+      selectedCheckBox: [],
     };
   }
 
@@ -120,7 +121,7 @@ class Policies extends Component {
     );
   };
   render() {
-    let { searchedKey, data, selectedData } = this.state;
+    let { searchedKey, data, selectedData, selectedCheckBox } = this.state;
     return (
       <>
         <Box className="d-flex Justify-content-between align-items-center search-box">
@@ -142,9 +143,16 @@ class Policies extends Component {
               <Button className="primary-btn min-width">Create Policy</Button>
             </Link>
           </Box>
-          <Button className="danger-btn min-width-inherit" variant="contained">
-            Delete
-          </Button>
+          {selectedCheckBox?.length ? (
+            <Button
+              className="danger-btn min-width-inherit"
+              variant="contained"
+            >
+              Delete
+            </Button>
+          ) : (
+            <></>
+          )}
         </Box>
         <Box className="policies-setting-table">
           {this.props.allPolicy?.status === status.IN_PROGRESS ? (
@@ -156,16 +164,17 @@ class Policies extends Component {
               headers={[
                 {
                   name: "Policy name",
-                  subChild: (
-                    <Box className="check-box">
-                      <Checkbox size="small" />
-                    </Box>
-                  ),
                   styled: { width: 20 },
                 },
               ]}
+              setSelectedViewData={(data) => {
+                let { selectedCheckBox } = data;
+                this.setState({ selectedCheckBox });
+              }}
             />
-          ):<></>}
+          ) : (
+            <></>
+          )}
         </Box>
       </>
     );
