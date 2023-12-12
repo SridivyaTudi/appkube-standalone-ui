@@ -74,7 +74,7 @@ class AccordionView extends Component {
               className={`${isActive ? "active" : ""}`}
             >
               {subchild.isCheckBoxShow ? (
-                <Box className="check-box">
+                <Box className="d-inline-block check-box ">
                   <Checkbox
                     size="small"
                     onClick={(e) => {
@@ -85,7 +85,7 @@ class AccordionView extends Component {
               ) : (
                 ""
               )}
-              <Box className="access-box">
+              <Box className="access-box d-inline-block ">
                 <i className={`fas fa-chevron-${arrowDownOrRight}`}></i>
                 {subchild.name}
               </Box>
@@ -108,7 +108,7 @@ class AccordionView extends Component {
           {childDataShow ? (
             <TableRow>
               <TableCell colSpan={2} className="child-table-section">
-                <Table>
+                <Table >
                   {this.renderTableBody(subchild?.chlidren, currentNode)}
                 </Table>
               </TableCell>
