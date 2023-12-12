@@ -37,18 +37,18 @@ class CancelGroupControlModal extends Component {
             <LoadingButton
               className="danger-btn min-width-inherit m-r-2"
               variant="contained"
-              onClick={() => {
-                this.props.handleCancelGroupControlModal();
-                setActiveTab(this.props.previousTab);
-                this.props.navigate(`${APP_PREFIX_PATH}/setting`);
-              }}
+              onClick={this.props.handleCancelGroupControlModal}
             >
               Cancel
             </LoadingButton>
             <LoadingButton
               className="primary-btn min-width-inherit "
               variant="contained"
-              onClick={this.props.handleCancelGroupControlModal}
+              onClick={() => {
+                this.props.handleCancelGroupControlModal();
+                setActiveTab(this.props.previousTab);
+                this.props.navigate(`${APP_PREFIX_PATH}/setting`);
+              }}
             >
               Continue
             </LoadingButton>
