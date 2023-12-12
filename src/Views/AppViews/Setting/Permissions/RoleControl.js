@@ -170,7 +170,7 @@ class RoleControl extends Component {
               <TableCell>Roles</TableCell>
               <TableCell>Role Description</TableCell>
               <TableCell>Preferences</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>{this.renderRoles()}</TableBody>
