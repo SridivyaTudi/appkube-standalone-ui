@@ -182,13 +182,13 @@
           position: relative;
           font-family: "Poppins", sans-serif;
           position: relative;
-          border-bottom: 1px solid #eaecf0;
+          border-bottom: 1px solid #ffffff;
           cursor: pointer;
 
           &.active {
             font-weight: 600;
             background-color: #e9edf5;
-            border-bottom: 1px solid #ffffff;
+            //border-bottom: 1px solid #eaecf0;
           }
 
           Button {
@@ -214,6 +214,7 @@
           &.child-table-section {
             padding: 0;
             background: #ffffff;
+
             table {
               tr {
                 border-bottom: 1px solid #eaecf0;
@@ -262,7 +263,7 @@
                       position: absolute;
                       top: 0;
                       left: 45px;
-                      width: 1px;
+                      width: 0px;
                       height: 90%;
                       background: #d5dbe5;
                     }
@@ -318,8 +319,7 @@
   }
 }
 
-
-.policies-setting-table{
+.policies-setting-table {
   display: block;
   background-color: #ffffff;
   //margin-top: 20px;
@@ -401,6 +401,15 @@
           position: relative;
           border-bottom: 1px solid #eaecf0;
           cursor: pointer;
+          &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 15px;
+            width: 1px;
+            height: 90%;
+            background: #d5dbe5;
+          }
 
           &.active {
             font-weight: 600;
@@ -431,6 +440,15 @@
           &.child-table-section {
             padding: 0;
             background: #ffffff;
+            &::before {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: 60px;
+              width: 0px;
+              height: 90%;
+              background: #d5dbe5;
+            }
             table {
               max-height: 250px;
               overflow: hidden;
