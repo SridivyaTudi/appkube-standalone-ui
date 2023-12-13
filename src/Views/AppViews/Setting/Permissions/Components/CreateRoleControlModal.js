@@ -13,6 +13,7 @@ import {
 import { ToastMessage } from "Toast/ToastMessage";
 import CloseIcon from "@mui/icons-material/Close";
 import { getCurrentUser } from "Utils";
+import { v4 } from "uuid";
 class CreateRoleControlModal extends Component {
   constructor(props) {
     super(props);
@@ -155,7 +156,7 @@ class CreateRoleControlModal extends Component {
     let { policyList } = this.state;
     if (policyList.length) {
       return policyList.map((policy) => (
-        <MenuItem value={policy.id}>{policy.name}</MenuItem>
+        <MenuItem value={policy.id} key={v4()}>{policy.name}</MenuItem>
       ));
     }
   };

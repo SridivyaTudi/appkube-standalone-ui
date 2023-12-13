@@ -152,10 +152,9 @@ class Roles extends Component {
           rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
             <TableRow key={index}>
               <TableCell>
-                {" "}
                 <Checkbox
                   size="small"
-                  id={row.id}
+                  id={`${row.id}`}
                   checked={selectedRoles.includes(row.id)}
                   onChange={this.handleCheckBox}
                 />{" "}
@@ -170,9 +169,9 @@ class Roles extends Component {
                     }
                   >
                     <span>
-                      <img src={DefaultIcon} alt="" />
+                      <img src={DefaultIcon} alt="" /> Default
                     </span>
-                    Default
+                   
                   </HtmlTooltip>
                 </Box>
               </TableCell>

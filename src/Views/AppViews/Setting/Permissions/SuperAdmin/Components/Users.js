@@ -137,13 +137,12 @@ class Users extends Component {
           rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
             <TableRow key={index}>
               <TableCell>
-                {" "}
                 <Checkbox
                   size="small"
-                  id={row.id}
+                  id={`${row.id}`}
                   checked={selectedUsers.includes(row.id)}
                   onChange={this.handleCheckBox}
-                />{" "}
+                />
                 {row.user}
               </TableCell>
               <TableCell>{row.emailAddress}</TableCell>

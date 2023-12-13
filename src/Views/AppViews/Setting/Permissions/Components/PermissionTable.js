@@ -60,7 +60,7 @@ class PermissionTable extends Component {
                 <Checkbox
                   size="small"
                   className="check-box"
-                  id={row.id}
+                  id={`${row.id}`}
                   checked={selectedData.includes(row.id)}
                   onChange={this.handleCheckBox}
                 />
