@@ -32,6 +32,14 @@ class AccordionView extends Component {
       let selectedNodes = this.props.selectedData;
       this.setState({ selectedNodes });
     }
+
+    if (this.props.data !== prevProps.data) {
+      let data = this.props.data;
+
+      if (data.length) {
+        this.setState({ data });
+      }
+    }
   };
 
   renderTableHead = () => {
