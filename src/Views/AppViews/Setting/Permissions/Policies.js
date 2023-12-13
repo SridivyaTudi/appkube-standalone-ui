@@ -105,16 +105,16 @@ class Policies extends Component {
 
   // set policy state according format
   setPolicyAccordingToFormat = (policies) => {
+    let permissionCategory = this.props.permissionCategory.data || [];
     return policies.map((policy) => {
-      policy["name"] = policy.name || policy.permissionId;
+      policy["name"] = policy.name;
 
       if (policy.version) {
         policy["isCheckBoxShow"] = true;
       }
       if (policy?.permissions?.length) {
-        policy["chlidren"] = this.setPolicyAccordingToFormat(
-          policy.permissions
-        );
+        // permissionCategory
+        policy["chlidren"] = policy?.permissions;
         return policy;
       } else {
         return policy;
@@ -252,10 +252,11 @@ class Policies extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { allPolicy, removePolicy } = state.settings;
+  const { allPolicy, removePolicy, permissionCategory } = state.settings;
   return {
     allPolicy,
     removePolicy,
+    permissionCategory,
   };
 };
 
