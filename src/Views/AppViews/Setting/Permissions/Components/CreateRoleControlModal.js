@@ -13,6 +13,7 @@ import {
 import { ToastMessage } from "Toast/ToastMessage";
 import CloseIcon from "@mui/icons-material/Close";
 import { getCurrentUser } from "Utils";
+import { v4 } from "uuid";
 class CreateRoleControlModal extends Component {
   constructor(props) {
     super(props);
@@ -52,7 +53,8 @@ class CreateRoleControlModal extends Component {
         let roleDetails = this.props.roleDetailsById.data;
         if (roleDetails) {
           let { name, description, policies } = roleDetails;
-          this.setState({ name, description, selectedPolicy: policies });
+          let selectedPolicy = this.getSelectedPolicies(policies);
+          this.setState({ name, description, selectedPolicy });
         }
       }
     }
@@ -154,7 +156,7 @@ class CreateRoleControlModal extends Component {
     let { policyList } = this.state;
     if (policyList.length) {
       return policyList.map((policy) => (
-        <MenuItem value={policy.id}>{policy.name}</MenuItem>
+        <MenuItem value={policy.id} key={v4()}>{policy.name}</MenuItem>
       ));
     }
   };
@@ -165,6 +167,29 @@ class CreateRoleControlModal extends Component {
         ? getCurrentUser().info.user
         : { username: "", email: "", profileImage: "" }
       : { username: "", email: "", profileImage: "" };
+  };
+
+  // Get selected policy
+  getSelectedPolicies = (policies) => {
+    let selectedPolicy = [];
+    if (policies.length) {
+      let { policyList } = this.state;
+      policies.forEach((value) => {
+        let isExist = false;
+
+        for (let index = 0; index < policyList.length; index++) {
+          const element = policyList[index];
+          if (element.id === value.id) {
+            isExist = true;
+          }
+        }
+
+        if (isExist) {
+          selectedPolicy.push({ id: value.id });
+        }
+      });
+    }
+    return selectedPolicy;
   };
 
   render() {
@@ -251,7 +276,7 @@ class CreateRoleControlModal extends Component {
                       return <em>Select Policy</em>;
                     }
                     let labels = [];
-                    policyList.map((policy) => {
+                    policyList.forEach((policy) => {
                       if (selected.includes(+policy.id)) {
                         labels.push(policy.name);
                       }

@@ -158,6 +158,8 @@ export class CreatePolicy extends Component {
                   checked={
                     permissions?.length &&
                     formData.permissions.length === permissions?.length
+                      ? true
+                      : false
                   }
                   onChange={(e) => this.handleSelectAllCheckBox(e)}
                 />
@@ -179,7 +181,7 @@ export class CreatePolicy extends Component {
 
   // Render permissions data
   renderPermissions = () => {
-    const { permissions, pg, rpg, formData } = this.state;
+    const { permissions, pg, rpg } = this.state;
 
     if (permissions?.length) {
       return permissions.slice(pg * rpg, pg * rpg + rpg).map((row, index) => {
@@ -189,7 +191,7 @@ export class CreatePolicy extends Component {
             <TableCell>
               <Checkbox
                 size="small"
-                id={permissionId}
+                id={`${permissionId}`}
                 checked={this.isCheckedPermission(permissionId)}
                 onChange={(e) =>
                   this.handleCheckBox(e, { permissionId, permissionCategoryId })
@@ -205,8 +207,10 @@ export class CreatePolicy extends Component {
                     </React.Fragment>
                   }
                 >
-                  <img src={DefaultIcon} alt="" className="m-r-1" />
-                  Default
+                  <React.Fragment>
+                    <img src={DefaultIcon} alt="" className="m-r-1" />
+                    Default
+                  </React.Fragment>
                 </HtmlTooltip>
               </Box>
             </TableCell>

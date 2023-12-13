@@ -35,7 +35,7 @@ class AccordionView extends Component {
   };
 
   renderTableHead = () => {
-    let { headers, data, selectedCheckBox } = this.state;
+    let { headers } = this.state;
     if (headers?.length) {
       return (
         <TableRow>
@@ -86,7 +86,7 @@ class AccordionView extends Component {
                   />
                 </Box>
               ) : (
-                ""
+                <></>
               )}
               <Box className="access-box d-inline-block ">
                 <i className={`fas fa-chevron-${arrowDownOrRight}`}></i>

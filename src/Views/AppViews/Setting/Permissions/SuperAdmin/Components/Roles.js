@@ -31,57 +31,66 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     padding: "8px 10px",
   },
 }));
-
+let data = [
+  {
+    user: "Senior Leadership",
+    Description:
+      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+    id: 1,
+  },
+  {
+    user: "Administrator",
+    Description:
+      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+    id: 2,
+  },
+  {
+    user: "Tech user",
+    Description:
+      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+    id: 3,
+  },
+  {
+    user: "DevSecOps",
+    Description:
+      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+    id: 3,
+  },
+  {
+    user: "System Engineer",
+    Description:
+      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+    id: 4,
+  },
+  {
+    user: "Architect Designer",
+    Description:
+      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+    id: 5,
+  },
+  {
+    user: "Product Manager",
+    Description:
+      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+    id: 6,
+  },
+  {
+    user: "Tester",
+    Description:
+      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
+    id: 6,
+  },
+];
 class Roles extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: [
-        {
-          user: "Senior Leadership",
-          Description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-        },
-        {
-          user: "Administrator",
-          Description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-        },
-        {
-          user: "Tech user",
-          Description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-        },
-        {
-          user: "DevSecOps",
-          Description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-        },
-        {
-          user: "System Engineer",
-          Description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-        },
-        {
-          user: "Architect Designer",
-          Description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-        },
-        {
-          user: "Product Manager",
-          Description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-        },
-        {
-          user: "Tester",
-          Description:
-            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-        },
-      ],
+      rows: data,
       pg: 0,
       rpg: 5,
       showCreateUserControlModal: false,
       actionButton: null,
+      selectedRoles: [],
     };
   }
 
@@ -111,67 +120,146 @@ class Roles extends Component {
       });
     }
   };
-  render() {
+
+  // Render header of table
+  renderTableHead = () => {
+    const { rows, selectedRoles } = this.state;
+    return (
+      <TableHead>
+        <TableRow>
+          <TableCell>
+            {" "}
+            <Checkbox
+              size="small"
+              disabled={rows?.length ? false : true}
+              checked={rows?.length === selectedRoles?.length}
+              onChange={(e) => this.handleSelectAllCheckBox(e)}
+            />{" "}
+            Role Name
+          </TableCell>
+          <TableCell>Description</TableCell>
+        </TableRow>
+      </TableHead>
+    );
+  };
+
+  // Render body of table
+  renderTableBody = () => {
+    const { rows, pg, rpg, selectedRoles } = this.state;
+    return (
+      <TableBody>
+        {rows?.length ? (
+          rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
+            <TableRow key={index}>
+              <TableCell>
+                <Checkbox
+                  size="small"
+                  id={`${row.id}`}
+                  checked={selectedRoles.includes(row.id)}
+                  onChange={this.handleCheckBox}
+                />{" "}
+                {row.user}{" "}
+                <Box className="d-flex roles-box">
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={
+                      <React.Fragment>
+                        <span>This role created by default by the system</span>
+                      </React.Fragment>
+                    }
+                  >
+                    <span>
+                      <img src={DefaultIcon} alt="" /> Default
+                    </span>
+                   
+                  </HtmlTooltip>
+                </Box>
+              </TableCell>
+              <TableCell>{row.Description}</TableCell>
+            </TableRow>
+          ))
+        ) : (
+          <TableRow>
+            <TableCell colSpan={12}>
+              <Box className="d-blck text-center w-100 h-100 ">
+                <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+                  <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+                </Box>
+              </Box>
+            </TableCell>
+          </TableRow>
+        )}
+      </TableBody>
+    );
+  };
+
+  renderComponentTablePagination = () => {
     const { rows, pg, rpg } = this.state;
+    return rows?.length ? (
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 20]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rpg}
+        page={pg}
+        className="access-control-pagination"
+        onPageChange={this.handleChangePage}
+        onRowsPerPageChange={this.handleChangeRowsPerPage}
+      />
+    ) : (
+      <></>
+    );
+  };
+
+  // Render table container
+  renderTableContainer = () => {
+    return (
+      <TableContainer component={Paper} className="access-control-table">
+        <Table
+          sx={{ minWidth: 500 }}
+          aria-label="custom pagination table"
+          className="table"
+        >
+          {this.renderTableHead()}
+          {this.renderTableBody()}
+        </Table>
+      </TableContainer>
+    );
+  };
+
+  // Handle check box
+  handleCheckBox = (event) => {
+    let { selectedRoles } = this.state;
+
+    let { id, checked } = event.target;
+
+    if (checked) {
+      selectedRoles.push(+id);
+    } else {
+      selectedRoles = selectedRoles.filter((value) => value !== +id);
+    }
+
+    this.setState({ selectedRoles });
+  };
+
+  // Handle select all checkbox
+  handleSelectAllCheckBox = (event, isRole = 0) => {
+    let { selectedRoles } = this.state;
+
+    let { checked } = event.target;
+
+    if (checked) {
+      selectedRoles = data.map((value) => value.id);
+    } else {
+      selectedRoles = [];
+    }
+    this.setState({ selectedRoles });
+  };
+  render() {
     return (
       <>
-        <TableContainer component={Paper} className="access-control-table">
-          <Table
-            sx={{ minWidth: 500}}
-            aria-label="custom pagination table"
-            className="table"
-           
-          >
-            <TableHead>
-              <TableRow >
-                <TableCell>
-                  {" "}
-                  <Checkbox size="small" /> Role Name
-                </TableCell>
-                <TableCell>Description</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    {" "}
-                    <Checkbox size="small" /> {row.user}{" "}
-                    <Box className="d-flex roles-box">
-                      <HtmlTooltip
-                        className="table-tooltip"
-                        title={
-                          <React.Fragment>
-                            <span>
-                              This role created by default by the system
-                            </span>
-                          </React.Fragment>
-                        }
-                      >
-                        <span>
-                          <img src={DefaultIcon} alt="" />
-                        </span>
-                        Default
-                      </HtmlTooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell>{row.Description}</TableCell>
-                  
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 20]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rpg}
-          page={pg}
-          className="access-control-pagination"
-          onPageChange={this.handleChangePage}
-          onRowsPerPageChange={this.handleChangeRowsPerPage}
-        />
+        {this.renderTableContainer()}
+        {this.renderComponentTablePagination()}
       </>
     );
   }

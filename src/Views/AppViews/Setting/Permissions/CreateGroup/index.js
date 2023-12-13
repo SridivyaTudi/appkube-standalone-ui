@@ -228,10 +228,10 @@ export class CreateGroup extends Component {
           <TableCell>
             <Checkbox
               size="small"
-              id={row.id}
+              id={`${row.id}`}
               checked={formData.roles.includes(row.id)}
               onChange={(e) => this.handleCheckBox(e, 1)}
-            />{" "}
+            />
             {row.name}
             <Box className="d-flex roles-box">
               <HtmlTooltip
@@ -242,8 +242,10 @@ export class CreateGroup extends Component {
                   </React.Fragment>
                 }
               >
-                <img src={DefaultIcon} alt="" className="m-r-1" />
-                Default
+                <React.Fragment>
+                  <img src={DefaultIcon} alt="" className="m-r-1" />
+                  <span>Default</span>
+                </React.Fragment>
               </HtmlTooltip>
             </Box>
           </TableCell>
@@ -363,7 +365,7 @@ export class CreateGroup extends Component {
               <TableCell>
                 <Checkbox
                   size="small"
-                  id={row.id}
+                  id={`${row.id}`}
                   checked={formData.users.includes(row.id)}
                   onChange={(e) => this.handleCheckBox(e)}
                 />{" "}
@@ -544,13 +546,13 @@ export class CreateGroup extends Component {
                   </Button>
                 </ListItem>
                 <ListItem>
-                <Link onClick={this.handleGroupSubmit}>
-                  <Button
-                    className="primary-btn min-width-inherit"
-                    variant="contained"
-                  >
-                   Create Group
-                  </Button>
+                  <Link onClick={this.handleGroupSubmit}>
+                    <Button
+                      className="primary-btn min-width-inherit"
+                      variant="contained"
+                    >
+                      Create Group
+                    </Button>
                   </Link>
                 </ListItem>
               </List>

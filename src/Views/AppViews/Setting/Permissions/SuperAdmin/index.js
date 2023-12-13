@@ -7,6 +7,7 @@ import Allowed from "./Components/Allowed";
 import Disallowed from "./Components/Disallowed";
 import Roles from "./Components/Roles";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { setActiveTab } from "Utils";
 
 class SuperAdmin extends Component {
   constructor(props) {
@@ -90,6 +91,11 @@ class SuperAdmin extends Component {
     );
   };
 
+  // Move to previous page
+  handlePreviousPage = (tab, url) => {
+    setActiveTab(tab);
+    this.props.navigate(url);
+  };
   render() {
     const { activeTab } = this.state;
     return (
@@ -98,8 +104,12 @@ class SuperAdmin extends Component {
           <h3>Group Default User</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li>
-                <Link to={`/app/setting/setpolicy`}>Users and Permissions</Link>
+              <li
+                onClick={() =>
+                  this.handlePreviousPage("permissions/group", "/app/setting")
+                }
+              >
+                <Link>Users and Permissions</Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
