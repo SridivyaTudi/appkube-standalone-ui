@@ -52,7 +52,8 @@ class CreateRoleControlModal extends Component {
         let roleDetails = this.props.roleDetailsById.data;
         if (roleDetails) {
           let { name, description, policies } = roleDetails;
-          this.setState({ name, description, selectedPolicy: policies });
+          let selectedPolicy = this.getSelectedPolicies(policies);
+          this.setState({ name, description, selectedPolicy });
         }
       }
     }
@@ -167,6 +168,29 @@ class CreateRoleControlModal extends Component {
       : { username: "", email: "", profileImage: "" };
   };
 
+  // Get selected policy
+  getSelectedPolicies = (policies) => {
+    let selectedPolicy = [];
+    if (policies.length) {
+      let { policyList } = this.state;
+      policies.forEach((value) => {
+        let isExist = false;
+
+        for (let index = 0; index < policyList.length; index++) {
+          const element = policyList[index];
+          if (element.id === value.id) {
+            isExist = true;
+          }
+        }
+
+        if (isExist) {
+          selectedPolicy.push({ id: value.id });
+        }
+      });
+    }
+    return selectedPolicy;
+  };
+
   render() {
     let { name, description, isSubmit, selectedPolicy, policyList } =
       this.state;
@@ -251,7 +275,7 @@ class CreateRoleControlModal extends Component {
                       return <em>Select Policy</em>;
                     }
                     let labels = [];
-                    policyList.map((policy) => {
+                    policyList.forEach((policy) => {
                       if (selected.includes(+policy.id)) {
                         labels.push(policy.name);
                       }

@@ -20,7 +20,8 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import DefaultIcon from "assets/img/setting/default-icon.png";
 import { v4 } from "uuid";
-
+import { setActiveTab } from "Utils";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -183,6 +184,12 @@ class AddUserGroup extends Component {
     }
   };
 
+  // Move to previous page
+  handlePreviousPage = (tab, url) => {
+    setActiveTab(tab);
+    this.props.navigate(url);
+  };
+
   render() {
     let { searchedKey } = this.state;
     return (
@@ -191,14 +198,22 @@ class AddUserGroup extends Component {
           <h3>Add user to groups</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li>
-                <Link to={`/app/setting`}>Users</Link>
+              <li
+                onClick={() =>
+                  this.handlePreviousPage("permissions/user", "/app/setting")
+                }
+              >
+                <Link>Users</Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li>
-                <Link to={`/app/setting/user-profile`}>Milena</Link>
+              <li
+                onClick={() =>
+                  this.handlePreviousPage("group", "/app/setting/user-profile")
+                }
+              >
+                <Link>Milena</Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
@@ -285,5 +300,4 @@ class AddUserGroup extends Component {
     );
   }
 }
-
-export default AddUserGroup;
+export default navigateRouter(AddUserGroup);

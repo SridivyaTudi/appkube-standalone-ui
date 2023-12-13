@@ -7,8 +7,9 @@ import Group from "./Components/Group";
 import SecurityCredentials from "./Components/SecurityCredentials";
 import TabsMenu from "Views/AppViews/Environments/EnvironmentList/TabsMenu";
 import ChangePasswordModal from "Views/AppViews/Setting/Account/Components/ChangePasswordModal";
-
 import { v4 } from "uuid";
+import { getActiveTab, deleteActiveTab, setActiveTab } from "Utils";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 let HEADER = {
   0: "Assign Permission",
   1: "Assign Groups",
@@ -26,14 +27,21 @@ export class UserProfile extends Component {
   tabMapping = [
     {
       name: "Permission",
+      key: "permission",
     },
     {
       name: "Group",
+      key: "group",
     },
     {
       name: "Security Credentials",
+      key: "securityCredentials",
     },
   ];
+
+  componentDidMount = () => {
+    this.setPreviousTab();
+  };
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
@@ -44,6 +52,26 @@ export class UserProfile extends Component {
     });
   };
 
+  setPreviousTab = () => {
+    let currentTab = getActiveTab();
+    if (currentTab) {
+      for (let tab = 0; tab < this.tabMapping.length; tab++) {
+        const element = this.tabMapping[tab];
+        if (currentTab.includes(element.key)) {
+          this.setActiveTab(tab);
+          deleteActiveTab();
+          break;
+        }
+      }
+    }
+  };
+
+  // Move to previous page
+  handlePreviousPage = (tab, url) => {
+    setActiveTab(tab);
+    this.props.navigate(url);
+  };
+
   render() {
     const { activeTab, showChangePasswordModal } = this.state;
     return (
@@ -52,8 +80,12 @@ export class UserProfile extends Component {
           <h3>Milena kahles</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li>
-                <Link to={`/app/setting`}>Users and Permissions </Link>
+              <li
+                onClick={() =>
+                  this.handlePreviousPage("permissions/user", "/app/setting")
+                }
+              >
+                <Link>Users and Permissions</Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
@@ -82,31 +114,31 @@ export class UserProfile extends Component {
           </Grid>
         </Box>
         <Box className="user-profile-details">
-            <Box className="d-flex align-items-center">
-              <Box className="user-image m-r-2">
-                <img src={UserImage} alt="" />
-              </Box>
-              <label>Milena kahles</label>
+          <Box className="d-flex align-items-center">
+            <Box className="user-image m-r-2">
+              <img src={UserImage} alt="" />
             </Box>
-            <Box className="d-block">
-              <List>
-                <ListItem>
-                  <span>Created Date and Time</span>
-                  <strong>Dec 01,2023 14:30</strong>
-                </ListItem>
-                <ListItem>
-                  <span>Last Activity</span>
-                  <strong>
-                    <Box className="green d-block">1 hour Ago</Box>
-                  </strong>
-                </ListItem>
-                <ListItem>
-                  <span>Application Access</span>
-                  <strong>Enabled with MFA</strong>
-                </ListItem>
-              </List>
-            </Box>
+            <label>Milena kahles</label>
           </Box>
+          <Box className="d-block">
+            <List>
+              <ListItem>
+                <span>Created Date and Time</span>
+                <strong>Dec 01,2023 14:30</strong>
+              </ListItem>
+              <ListItem>
+                <span>Last Activity</span>
+                <strong>
+                  <Box className="green d-block">1 hour Ago</Box>
+                </strong>
+              </ListItem>
+              <ListItem>
+                <span>Application Access</span>
+                <strong>Enabled with MFA</strong>
+              </ListItem>
+            </List>
+          </Box>
+        </Box>
         <Box className="services-panel-tabs ">
           <Box className="tabs-head ">
             <Grid container alignItems={"center"} rowSpacing={0}>
@@ -198,4 +230,4 @@ export class UserProfile extends Component {
   }
 }
 
-export default UserProfile;
+export default navigateRouter(UserProfile);

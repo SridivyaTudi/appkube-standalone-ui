@@ -22,5 +22,6 @@
   "user-profile": "User Profile",
   "create-group": "Create Group",
   "create-policy": "Create Policy",
-  "add-user-group": "Add User Group"
+  "add-user-group": "Add User Group",
+  "add-users": "Add Users"
 }

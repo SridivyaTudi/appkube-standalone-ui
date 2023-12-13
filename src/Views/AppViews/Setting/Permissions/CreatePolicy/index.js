@@ -179,7 +179,7 @@ export class CreatePolicy extends Component {
 
   // Render permissions data
   renderPermissions = () => {
-    const { permissions, pg, rpg, formData } = this.state;
+    const { permissions, pg, rpg } = this.state;
 
     if (permissions?.length) {
       return permissions.slice(pg * rpg, pg * rpg + rpg).map((row, index) => {
