@@ -154,7 +154,7 @@ class Allowed extends Component {
   render() {
     return (
       <>
-        <Box className="setting-table permission-table">
+        <Box className="permission-table">
           <AccordionView
             data={accessPolicyData}
             headers={[
