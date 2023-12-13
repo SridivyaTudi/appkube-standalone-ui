@@ -1,20 +1,5 @@
 import React, { Component } from "react";
-import {
-  Box,
-  Button,
-  Grid,
-  TableContainer,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  Paper,
-  TablePagination,
-  List,
-  ListItem,
-  Checkbox,
-} from "@mui/material";
+import { Box, Button, Grid, List, ListItem, Checkbox } from "@mui/material";
 import { Link } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -32,6 +17,7 @@ import { setActiveTab } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { ToastMessage } from "Toast/ToastMessage";
 import LoadingButton from "@mui/lab/LoadingButton";
+import AccordionView from "Views/AppViews/Setting/Components/AccordionView";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -49,7 +35,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     padding: "8px 10px",
   },
 }));
-
+let searchedData = [];
 export class CreatePolicy extends Component {
   constructor(props) {
     super(props);
@@ -66,6 +52,7 @@ export class CreatePolicy extends Component {
         description: "",
         permissions: [],
       },
+      selectedData: [],
     };
   }
 
@@ -81,9 +68,10 @@ export class CreatePolicy extends Component {
       if (this.props.permissionCategory.status === status.SUCCESS) {
         let permissions = this.props.permissionCategory.data;
         if (permissions?.length) {
-          permissions = this.getPermissionsFromCategory(
+          permissions = this.setPermissionAccordingToFormat(
             JSON.parse(JSON.stringify(permissions))
           );
+
           this.setState({ permissions });
         }
       }
@@ -136,108 +124,6 @@ export class CreatePolicy extends Component {
     );
   }
 
-  // render permission Table
-  renderPermissionTable = () => {
-    const { status: permissionStatus } = this.props.permissionCategory;
-    let { permissions, formData } = this.state;
-    if (permissionStatus === status.IN_PROGRESS) {
-      return this.renderLoder();
-    } else {
-      return (
-        <Table
-          sx={{ minWidth: 500 }}
-          aria-label="custom pagination table"
-          className="table"
-        >
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                <Checkbox
-                  size="small"
-                  disabled={permissions?.length ? false : true}
-                  checked={
-                    permissions?.length &&
-                    formData.permissions.length === permissions?.length
-                      ? true
-                      : false
-                  }
-                  onChange={(e) => this.handleSelectAllCheckBox(e)}
-                />
-                Permission Set
-              </TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>{this.renderPermissions()}</TableBody>
-        </Table>
-      );
-    }
-  };
-
-  // Render permissions data
-  renderPermissions = () => {
-    const { permissions, pg, rpg } = this.state;
-
-    if (permissions?.length) {
-      return permissions.slice(pg * rpg, pg * rpg + rpg).map((row, index) => {
-        let { id: permissionId, permissionCategoryId } = row;
-        return (
-          <TableRow key={index}>
-            <TableCell>
-              <Checkbox
-                size="small"
-                id={`${permissionId}`}
-                checked={this.isCheckedPermission(permissionId)}
-                onChange={(e) =>
-                  this.handleCheckBox(e, { permissionId, permissionCategoryId })
-                }
-              />
-              {row.name}
-              <Box className="d-flex roles-box">
-                <HtmlTooltip
-                  className="table-tooltip d-flex"
-                  title={
-                    <React.Fragment>
-                      <span>This role created by default by the system</span>
-                    </React.Fragment>
-                  }
-                >
-                  <React.Fragment>
-                    <img src={DefaultIcon} alt="" className="m-r-1" />
-                    Default
-                  </React.Fragment>
-                </HtmlTooltip>
-              </Box>
-            </TableCell>
-            <TableCell>{row.description}</TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-            <TableCell align="center"></TableCell>
-          </TableRow>
-        );
-      });
-    } else {
-      return (
-        <TableRow>
-          <TableCell colSpan={12}>
-            <Box className="d-blck text-center w-100 h-100 ">
-              <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-                <h5 className="m-t-0 m-b-0">There are no roles available.</h5>
-              </Box>
-            </Box>
-          </TableCell>
-        </TableRow>
-      );
-    }
-  };
-
   // Search  permission Inputs
   renderSearchInput = () => {
     let { searchedPermission } = this.state;
@@ -264,27 +150,20 @@ export class CreatePolicy extends Component {
   //  Serach role
   handleSearchChange = (e) => {
     let value = e.target.value;
-    let data = this.props.permissionCategory.data || [];
 
-    let { permissions, searchedPermission } = this.state;
-
+    let { permissions, searchedPermission, selectedData } = this.state;
+    searchedData = [];
+    selectedData = [];
+    let data = this.setPermissionStateOrReturnData(0);
     if (data?.length) {
-      data = this.getPermissionsFromCategory(JSON.parse(JSON.stringify(data)));
-      searchedPermission = value;
-
-      if (value) {
-        permissions = data.filter((row) => {
-          if (row?.name.toLowerCase().includes(value.toLowerCase())) {
-            return row;
-          } else {
-            return null;
-          }
-        });
+      if (searchedPermission) {
+        this.searchRecursiveLogic(searchedPermission, data);
+        selectedData = this.getParentElement(searchedData);
       } else {
-        permissions = data;
+        selectedData = [];
       }
-
-      this.setState({ permissions, searchedPermission });
+      console.log(selectedData);
+      this.setState({ selectedData, searchedPermission: value });
     }
   };
 
@@ -354,23 +233,10 @@ export class CreatePolicy extends Component {
 
   // Render Other components
   renderOtherComponents = () => {
-    const { permissions, pg, rpg, showCancelGroupControlModal } = this.state;
+    const { showCancelGroupControlModal } = this.state;
+
     return (
       <>
-        {permissions.length ? (
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 20]}
-            component="div"
-            count={permissions.length}
-            rowsPerPage={rpg}
-            page={pg}
-            className="access-control-pagination"
-            onPageChange={this.handleChangePage}
-            onRowsPerPageChange={this.handleChangeRowsPerPage}
-          />
-        ) : (
-          <></>
-        )}
         {showCancelGroupControlModal ? (
           <CancelGroupControlModal
             showModal={showCancelGroupControlModal}
@@ -422,6 +288,41 @@ export class CreatePolicy extends Component {
     this.setState({ formData });
   };
 
+  // set policy state according format
+  setPermissionAccordingToFormat = (policies) => {
+    return policies.map((policy) => {
+      policy["name"] = policy.name || policy.permissionId;
+
+      if (policy.version) {
+        policy["isCheckBoxShow"] = true;
+        policy["subName"] = (
+          <Box className="status-btn">
+            <Box className="d-flex status green">
+              <HtmlTooltip
+                className="table-tooltip d-flex"
+                title={
+                  <React.Fragment>
+                    <span>This role created by default by the system</span>
+                  </React.Fragment>
+                }
+              >
+                <span>{policy.status}</span>
+              </HtmlTooltip>
+            </Box>
+          </Box>
+        );
+      }
+      if (policy?.permissions?.length) {
+        policy["chlidren"] = this.setPermissionAccordingToFormat(
+          policy.permissions
+        );
+        return policy;
+      } else {
+        return policy;
+      }
+    });
+  };
+
   // Get permission from category
   getPermissionsFromCategory = (data) => {
     let permissions = [];
@@ -450,8 +351,57 @@ export class CreatePolicy extends Component {
     return isChecked;
   };
 
+  //  Search recursive logic
+  searchRecursiveLogic = (value, policyData, parentIndex) => {
+    policyData.forEach((data, index) => {
+      let currentNode = `${parentIndex ? `${parentIndex}_` : ""}${index}`;
+
+      if (
+        data?.name
+          ?.toString()
+          ?.toLowerCase()
+          .includes(value?.toString()?.toLowerCase())
+      ) {
+        searchedData.push(currentNode);
+      }
+      if (data?.chlidren?.length) {
+        return this.searchRecursiveLogic(value, data?.chlidren, currentNode);
+      }
+    });
+  };
+
+  // Set state of policies
+  setPermissionStateOrReturnData = (isStateSet = 1) => {
+    let permissions = this.props.permissionCategory.data || [];
+    if (permissions?.length) {
+      permissions = this.setPermissionAccordingToFormat(
+        JSON.parse(JSON.stringify(permissions))
+      );
+      if (isStateSet) {
+        this.setState({ permissions });
+      } else {
+        return permissions;
+      }
+    }
+  };
+  //  Get parent element from child element
+  getParentElement = (data) => {
+    let parentElement = [];
+
+    data.forEach((value) => {
+      let currentVal = value;
+      let currentValToArr = value.split("_");
+      if (currentValToArr.length) {
+        for (let index = 0; index < currentValToArr.length; index = index + 2) {
+          parentElement.push(currentVal.slice(0, index + 1));
+        }
+      }
+    });
+
+    return [...new Set(parentElement)].concat(data);
+  };
   render() {
-    const { isSubmit, formData } = this.state;
+    const { isSubmit, formData, permissions, selectedData } = this.state;
     let { name, description } = formData;
     const { errors } = this.validateForm(isSubmit);
     let policyStatus = this.props.policyCreation?.status;
@@ -574,9 +524,19 @@ export class CreatePolicy extends Component {
           <h5>Add Permissions to the Policy(68)</h5>
           {this.renderSearchInput()}
         </Box>
-        <TableContainer component={Paper} className="access-control-table">
-          {this.renderPermissionTable()}
-        </TableContainer>
+        {permissions.length ? (
+          <AccordionView
+            data={permissions}
+            selectedData={selectedData}
+            headers={[
+              { name: "Permission set", styled: { width: 105 } },
+              { name: "Status", styled: { width: 105 } },
+            ]}
+          />
+        ) : (
+          <></>
+        )}
+
         {this.renderOtherComponents()}
       </Box>
     );
