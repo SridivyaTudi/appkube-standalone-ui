@@ -113,8 +113,33 @@ class Policies extends Component {
         policy["isCheckBoxShow"] = true;
       }
       if (policy?.permissions?.length) {
-        // permissionCategory
-        policy["chlidren"] = policy?.permissions;
+        let categories = {};
+        permissionCategory.forEach((category) => {
+          policy?.permissions.forEach((permission) => {
+            if (category.id === permission.permissionCategoryId) {
+              if (!categories[category.name]) {
+                categories[category.name] = [];
+              }
+
+              categories[category.name].push({
+                id: permission.permissionId,
+                name: permission.permissionId || permission.name,
+                permissionCategoryId: permission.permissionCategoryId,
+              });
+            }
+          });
+          return;
+        });
+
+        let permissions = Object.keys(categories).map((key) => {
+          return {
+            id: categories[key][0].permissionCategoryId,
+            name: key,
+            chlidren: categories[key],
+          };
+        });
+      
+        policy["chlidren"] = permissions;
         return policy;
       } else {
         return policy;
@@ -127,6 +152,7 @@ class Policies extends Component {
     let data = this.props.allPolicy?.data || [];
     if (data?.length) {
       data = this.setPolicyAccordingToFormat(JSON.parse(JSON.stringify(data)));
+     
       if (isStateSet) {
         this.setState({ data });
       } else {
