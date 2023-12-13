@@ -136,7 +136,7 @@ export class CreatePolicy extends Component {
               className="form-control"
               placeholder="Search Permission here"
               value={searchedPermission}
-              onChange={(e) => this.handleSearchChange(e)}
+              onChange={this.handleSearchChange}
             />
             <button className="button">
               <SearchOutlinedIcon />
@@ -149,11 +149,11 @@ export class CreatePolicy extends Component {
 
   //  Serach role
   handleSearchChange = (e) => {
-    let value = e.target.value;
-
-    let { permissions, searchedPermission, selectedData } = this.state;
+    let searchedPermission = e.target.value;
+    let { selectedData } = this.state;
     searchedData = [];
     selectedData = [];
+
     let data = this.setPermissionStateOrReturnData(0);
     if (data?.length) {
       if (searchedPermission) {
@@ -162,8 +162,8 @@ export class CreatePolicy extends Component {
       } else {
         selectedData = [];
       }
-      console.log(selectedData);
-      this.setState({ selectedData, searchedPermission: value });
+
+      this.setState({ selectedData, searchedPermission });
     }
   };
 
@@ -295,22 +295,7 @@ export class CreatePolicy extends Component {
 
       if (policy.version) {
         policy["isCheckBoxShow"] = true;
-        policy["subName"] = (
-          <Box className="status-btn">
-            <Box className="d-flex status green">
-              <HtmlTooltip
-                className="table-tooltip d-flex"
-                title={
-                  <React.Fragment>
-                    <span>This role created by default by the system</span>
-                  </React.Fragment>
-                }
-              >
-                <span>{policy.status}</span>
-              </HtmlTooltip>
-            </Box>
-          </Box>
-        );
+       
       }
       if (policy?.permissions?.length) {
         policy["chlidren"] = this.setPermissionAccordingToFormat(
@@ -370,7 +355,7 @@ export class CreatePolicy extends Component {
     });
   };
 
-  // Set state of policies
+  // Set state of permission
   setPermissionStateOrReturnData = (isStateSet = 1) => {
     let permissions = this.props.permissionCategory.data || [];
     if (permissions?.length) {
@@ -401,7 +386,7 @@ export class CreatePolicy extends Component {
     return [...new Set(parentElement)].concat(data);
   };
   render() {
-    const { isSubmit, formData, permissions, selectedData } = this.state;
+    let { isSubmit, formData, permissions, selectedData } = this.state;
     let { name, description } = formData;
     const { errors } = this.validateForm(isSubmit);
     let policyStatus = this.props.policyCreation?.status;
@@ -524,18 +509,21 @@ export class CreatePolicy extends Component {
           <h5>Add Permissions to the Policy(68)</h5>
           {this.renderSearchInput()}
         </Box>
+        <Box className="policies-setting-table">
         {permissions.length ? (
           <AccordionView
             data={permissions}
             selectedData={selectedData}
             headers={[
               { name: "Permission set", styled: { width: 105 } },
-              { name: "Status", styled: { width: 105 } },
+            
             ]}
           />
         ) : (
           <></>
         )}
+        </Box>
+       
 
         {this.renderOtherComponents()}
       </Box>
