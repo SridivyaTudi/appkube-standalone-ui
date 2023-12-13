@@ -547,14 +547,14 @@
                       position: absolute;
                       top: 0;
                       left: 45px;
-                      width: 1px;
+                      width: 0px;
                       height: 90%;
                       background: #d5dbe5;
                     }
                     tr {
                       border-bottom: 1px solid #eaecf0;
                       td {
-                        padding: 12px 15px 12px 55px;
+                        padding: 12px 15px 12px 95px;
                         font-size: 13px;
                         font-weight: 500;
                         color: #101828;
@@ -565,7 +565,7 @@
                           content: "";
                           position: absolute;
                           top: 0;
-                          left: 45px;
+                          left: 85px;
                           width: 1px;
                           height: 90%;
                           background: #d5dbe5;
@@ -576,7 +576,10 @@
                         &.active {
                           font-weight: 600;
                           background-color: #e9edf5;
+                         
+                          
                         }
+                       
                         // &:last-child {
                         //   border-bottom: none;
                         // }
