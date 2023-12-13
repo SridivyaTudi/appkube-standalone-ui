@@ -410,7 +410,12 @@ export class CreateGroup extends Component {
   renderSearchInput = (isRole = 0) => {
     let { searchedUser, searchedRole } = this.state;
     return (
-      <Grid container className="h-100" alignItems={"center"}>
+      <Grid
+        container
+        className="h-100"
+        alignItems={"center"}
+        columns={{ xs: 4, md: 12 }}
+      >
         <Grid item xs={6}>
           <Box className="top-search">
             <input
@@ -530,7 +535,11 @@ export class CreateGroup extends Component {
           </Box>
         </Box>
         <Box className="setting-common-searchbar">
-          <Grid container alignItems={"center"}>
+          <Grid
+            container
+            alignItems={"center"}
+            columns={{ xs: 4, sm: 12, md: 12 }}
+          >
             <Grid item xs={6}>
               <h4 className="m-t-0 m-b-0">Name of the group</h4>
             </Grid>
@@ -564,7 +573,8 @@ export class CreateGroup extends Component {
             container
             alignItems={"center"}
             rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 4, md: 12 }}
           >
             <Grid item xs={6}>
               <Box className="form-group">

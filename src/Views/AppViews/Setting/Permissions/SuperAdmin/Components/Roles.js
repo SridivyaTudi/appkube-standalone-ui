@@ -216,7 +216,7 @@ class Roles extends Component {
     return (
       <TableContainer component={Paper} className="access-control-table">
         <Table
-          sx={{ minWidth: 500 }}
+          sx={{ minWidth: 900 }}
           aria-label="custom pagination table"
           className="table"
         >

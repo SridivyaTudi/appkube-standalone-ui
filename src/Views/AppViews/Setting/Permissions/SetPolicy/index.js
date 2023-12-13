@@ -129,7 +129,7 @@ class SetPolicy extends Component {
             className="h-100"
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid item xs={6}>
+            <Grid item xs={12} md={8} lg={6} >
               <Box className="overview-card">
                 <h5>Overview</h5>
                 <p>
@@ -148,10 +148,10 @@ class SetPolicy extends Component {
         <Box className="policy-section">
           <Box className="setting-common-searchbar">
             <Grid container alignItems={"center"}>
-              <Grid item xs={6}>
-                <h4 className="m-t-0 m-b-0" >Allowed Policy set</h4>
+              <Grid item xs={4} md={4} >
+                <h4 className="m-t-0 m-b-0">Allowed Policy set</h4>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={8} md={8}>
                 <List>
                   <ListItem>
                     <Button
