@@ -49,16 +49,22 @@ class Signin extends Component {
     if (this.props.loggedInUser.status !== prevProps.loggedInUser.status) {
       if (this.props.loggedInUser.status === status.SUCCESS) {
         if (this.props.loggedInUser.data?.info) {
-          setCurrentUser(this.props.loggedInUser.data);
-          setCurrentOrgId(
-            this.props.loggedInUser.data.info.user.organization.cmdbOrgId
-          );
-          setCurrentOrgName(
-            this.props.loggedInUser.data.info.user.organization.name
-          );
-          this.setState({
-            userLoggedIn: true,
-          });
+          let isExistCmdbOrgId =
+            this.props.loggedInUser.data.info.user.organization.cmdbOrgId;
+          if (isExistCmdbOrgId) {
+            setCurrentUser(this.props.loggedInUser.data);
+            setCurrentOrgId(
+              this.props.loggedInUser.data.info.user.organization.cmdbOrgId
+            );
+            setCurrentOrgName(
+              this.props.loggedInUser.data.info.user.organization.name
+            );
+            this.setState({
+              userLoggedIn: true,
+            });
+          } else {
+            ToastMessage.error("We can't find cmdbOrgId.");
+          }
         } else {
           ToastMessage.error("User login failed!");
         }
