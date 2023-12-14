@@ -25,11 +25,15 @@ import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
 import { ToastMessage } from "Toast/ToastMessage";
+import { createUser, getUsers } from "Redux/Settings/SettingsThunk";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import { getCurrentUser } from "Utils";
+import LoadingButton from "@mui/lab/LoadingButton";
 const steps = ["User details ", "Add  user to group ", "Review and Create"];
 const initialFormData = {
   name: "",
   email: "",
-  group: 0,
 };
 let groupData = [
   {
@@ -53,6 +57,14 @@ let groupData = [
     id: 4,
   },
 ];
+
+const getCurrentUserInfo = () => {
+  return getCurrentUser()
+    ? getCurrentUser()?.info?.user
+      ? getCurrentUser().info.user
+      : { id: "", organization: { name: "" } }
+    : { id: "", organization: { name: "" } };
+};
 class CreateUserControlModal extends Component {
   constructor(props) {
     super(props);
@@ -65,6 +77,21 @@ class CreateUserControlModal extends Component {
       isSubmit: false,
     };
   }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.props.userCreation.status !== prevProps.userCreation.status) {
+      if (this.props.userCreation.status === status.SUCCESS) {
+        if (this.props.userCreation.data) {
+          ToastMessage.success(`User Created Successfully`);
+          this.props.getUsers(getCurrentUserInfo().id);
+          this.handleCancel();
+        } else {
+          ToastMessage.error(`User Creation Failed!`);
+        }
+      }
+    }
+  };
+
   totalSteps = () => {
     return this.state.steps?.length;
   };
@@ -84,6 +111,7 @@ class CreateUserControlModal extends Component {
   //  Render footer buttons
   renderFooterBtnsSection = () => {
     let { activeStep } = this.state;
+    let userStatus = this.props.userCreation?.status;
     return (
       <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
         <Box sx={{ flex: "1 1 auto" }} />
@@ -105,16 +133,17 @@ class CreateUserControlModal extends Component {
         ) : (
           <></>
         )}
-
-        <Button
+        <LoadingButton
+          disabled={userStatus === status.IN_PROGRESS}
+          loading={userStatus === status.IN_PROGRESS}
           className="primary-btn min-width-inherit"
+          variant="contained"
           onClick={(e) =>
             activeStep === 2 ? this.handleCreateUser() : this.setActiveStep(e)
           }
-          sx={{ mr: 1 }}
         >
           {activeStep === 2 ? "Create User" : "Next"}
-        </Button>
+        </LoadingButton>
       </Box>
     );
   };
@@ -133,7 +162,20 @@ class CreateUserControlModal extends Component {
 
   // Create user API call
   handleCreateUser = () => {
-    this.handleCancel();
+    let { formData, selectedGroups } = this.state;
+    let form = new FormData();
+
+    try {
+      form.append("username", formData[0].name);
+      form.append("organization", selectedGroups[0]);
+      form.append("email", formData[0].email);
+      form.append("ownerId", getCurrentUserInfo().id);
+      form.append("type", "user");
+
+      this.props.createUser(form);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   //  Render inputs
@@ -147,6 +189,7 @@ class CreateUserControlModal extends Component {
             <Box className="form-group">
               <Box className="d-inline-block">
                 <input
+                  key={`name_${index}`}
                   id={`name_${index}`}
                   type="text"
                   className="form-control"
@@ -519,10 +562,7 @@ class CreateUserControlModal extends Component {
   renderModalHeader = () => {
     return (
       <ModalHeader tag="div">
-        <h5>
-          Create Users
-         
-        </h5>
+        <h5>Create Users</h5>
       </ModalHeader>
     );
   };
@@ -641,4 +681,16 @@ class CreateUserControlModal extends Component {
   }
 }
 
-export default CreateUserControlModal;
+const mapStateToProps = (state) => {
+  const { userCreation } = state.settings;
+  return {
+    userCreation,
+  };
+};
+
+const mapDispatchToProps = { createUser, getUsers };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateUserControlModal);

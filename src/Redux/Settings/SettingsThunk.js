@@ -165,3 +165,25 @@ export const deletePolicy = createAsyncThunk(
     }
   }
 );
+
+export const getUsers = createAsyncThunk("settings/getUsers", async (id) => {
+  try {
+    let url = config.GET_USERS.replace("#owner-id#", id);
+    const response = await postLoginService.get(url);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export const createUser = createAsyncThunk(
+  "settings/createUser",
+  async (params) => {
+    try {
+      const response = await postLoginService.post(config.CREATE_USER, params);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

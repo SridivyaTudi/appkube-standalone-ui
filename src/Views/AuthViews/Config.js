@@ -23,8 +23,10 @@ const config = {
   GET_POLICIES: `${baseSecurityUrl}/policy/listAll`,
   DELETE_ROLE: `${baseSecurityUrl}/roles/delete/#role-id#`,
   GET_PERMISSION_CATEGORY: `${baseSecurityUrl}/permission-category/listAll`,
-  CREATE_POLICY:`${baseSecurityUrl}/policy/create`,
-  DELETE_POLICY:`${baseSecurityUrl}/policy/delete/#policy-id#`
+  CREATE_POLICY: `${baseSecurityUrl}/policy/create`,
+  DELETE_POLICY: `${baseSecurityUrl}/policy/delete/#policy-id#`,
+  GET_USERS: `${baseSecurityUrl}/users/find-by-owner?ownerId=#owner-id#`,
+  CREATE_USER: `${baseSecurityUrl}/users/create`,
 };
 
 export default config;

@@ -7,10 +7,12 @@ import Policies from "./Policies";
 import Permissson from "./Permission";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
-import { getActiveTab, deleteActiveTab } from "Utils";
+import { getActiveTab, deleteActiveTab, getCurrentUser } from "Utils";
 import {
   getPermissionCategory,
   getPolicies,
+  getUsers,
+  getRoles,
 } from "Redux/Settings/SettingsThunk";
 export class Permissions extends Component {
   controlMapping = [
@@ -29,7 +31,7 @@ export class Permissions extends Component {
     {
       icon: "fa-user",
       label: "User",
-      value: "544",
+      value: 0,
       dataKey: "user",
     },
     {
@@ -58,6 +60,8 @@ export class Permissions extends Component {
     this.setPreviousTab();
     this.props.getPermissionCategory();
     this.props.getPolicies();
+    this.props.getUsers(this.getCurrentUserInfo().id);
+    this.props.getRoles();
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -88,6 +92,15 @@ export class Permissions extends Component {
         let policies = this.props.allPolicy.data;
         if (policies) {
           this.getTabCount("policies", policies.length);
+        }
+      }
+    }
+
+    if (this.props.allUsers.status !== prevProps.allUsers.status) {
+      if (this.props.allUsers.status === status.SUCCESS) {
+        let users = this.props.allUsers.data;
+        if (users?.length) {
+          this.getTabCount("user", users.length);
         }
       }
     }
@@ -181,7 +194,14 @@ export class Permissions extends Component {
     }
     return count;
   };
-
+  //CurrentUser details
+  getCurrentUserInfo = () => {
+    return getCurrentUser()
+      ? getCurrentUser()?.info?.user
+        ? getCurrentUser().info.user
+        : { id: "" }
+      : { id: "" };
+  };
   render() {
     return (
       <Box className="permissions-container">
@@ -195,14 +215,20 @@ export class Permissions extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { allRoles, permissionCategory, allPolicy } = state.settings;
+  const { allRoles, permissionCategory, allPolicy, allUsers } = state.settings;
   return {
     allRoles,
     permissionCategory,
     allPolicy,
+    allUsers,
   };
 };
 
-const mapDispatchToProps = { getPermissionCategory, getPolicies };
+const mapDispatchToProps = {
+  getPermissionCategory,
+  getPolicies,
+  getUsers,
+  getRoles,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Permissions);

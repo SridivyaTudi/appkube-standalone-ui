@@ -18,6 +18,10 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CreateUserControlModal from "./Components/CreateUserControlModal";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import Loader from "Components/Loader";
+import { v4 } from "uuid";
 let users = [
   {
     user: "Super Admin",
@@ -94,11 +98,38 @@ let users = [
     applications: "AppKube",
   },
 ];
+
+let getFormattedDate = (dateString) => {
+  try {
+    const monthList = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    let date = new Date(dateString);
+    let day = date.getDate();
+    let year = date.getFullYear();
+    let month = monthList[date.getMonth()];
+    return `${day}/${month}/${year}`;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
 class UserControl extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: users,
+      rows: [],
       pg: 0,
       rpg: 5,
       showCreateUserControlModal: false,
@@ -106,6 +137,18 @@ class UserControl extends Component {
       searchedKey: "",
     };
   }
+
+  componentDidMount = () => {
+    this.setUsersStateOrReturnData();
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.props.allUsers?.status !== prevProps.allUsers?.status) {
+      if (this.props.allUsers.status === status.SUCCESS) {
+        this.setUsersStateOrReturnData();
+      }
+    }
+  };
 
   handleChangePage = (event, newpage) => {
     this.setState({ pg: newpage });
@@ -208,14 +251,14 @@ class UserControl extends Component {
       <TableBody>
         {rows?.length ? (
           rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
-            <TableRow key={index}>
+            <TableRow key={v4()}>
               <TableCell>
-                <Link to={`/app/setting/user-profile`}>{row.user}</Link>
+                <Link to={`/app/setting/user-profile`}>{row.username}</Link>
               </TableCell>
-              <TableCell>{row.emailAddress}</TableCell>
+              <TableCell>{row.email}</TableCell>
               <TableCell>{row.loginDetails}</TableCell>
               <TableCell>{row.groups}</TableCell>
-              <TableCell>{row.createdDate}</TableCell>
+              <TableCell>{getFormattedDate(row.createdAt)}</TableCell>
               <TableCell>{row.applications}</TableCell>
               <TableCell align="center">
                 <IconButton
@@ -270,18 +313,24 @@ class UserControl extends Component {
 
   // Render table container
   renderTableContainer = () => {
-    return (
-      <TableContainer component={Paper} className="access-control-table">
-        <Table
-          sx={{ minWidth: 1000 }}
-          aria-label="custom pagination table"
-          className="table"
-        >
-          {this.renderTableHead()}
-          {this.renderTableBody()}
-        </Table>
-      </TableContainer>
-    );
+    const { status: userStatus } = this.props.allUsers;
+
+    if (userStatus === status.IN_PROGRESS) {
+      return this.renderLoder();
+    } else {
+      return (
+        <TableContainer component={Paper} className="access-control-table">
+          <Table
+            sx={{ minWidth: 1000 }}
+            aria-label="custom pagination table"
+            className="table"
+          >
+            {this.renderTableHead()}
+            {this.renderTableBody()}
+          </Table>
+        </TableContainer>
+      );
+    }
   };
 
   // Render component of table pagination
@@ -316,6 +365,25 @@ class UserControl extends Component {
     );
   };
 
+  // Set state or return data
+  setUsersStateOrReturnData = (isStateSet = 1) => {
+    let rows = this.props?.allUsers.data || [];
+    if (isStateSet) {
+      this.setState({ rows });
+    } else {
+      return rows;
+    }
+  };
+
+  // Render Loder
+  renderLoder() {
+    return (
+      <Box className="d-blck text-center w-100 h-100 ">
+        <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
+      </Box>
+    );
+  }
+
   render() {
     return (
       <>
@@ -327,4 +395,14 @@ class UserControl extends Component {
     );
   }
 }
-export default UserControl;
+
+const mapStateToProps = (state) => {
+  const { allUsers } = state.settings;
+  return {
+    allUsers,
+  };
+};
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserControl);

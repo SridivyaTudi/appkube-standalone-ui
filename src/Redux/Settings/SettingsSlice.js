@@ -13,6 +13,8 @@ import {
   getPermissionCategory,
   createPolicy,
   deletePolicy,
+  getUsers,
+  createUser,
 } from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
@@ -67,6 +69,14 @@ export const settingsSlice = createSlice({
       data: [],
     },
     removePolicy: {
+      status: null,
+      data: [],
+    },
+    allUsers: {
+      status: null,
+      data: [],
+    },
+    userCreation: {
       status: null,
       data: [],
     },
@@ -380,6 +390,58 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         removePolicy: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getUsers.pending]: (state) => {
+      return {
+        ...state,
+        allUsers: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getUsers.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        allUsers: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getUsers.rejected]: (state) => {
+      return {
+        ...state,
+        allUsers: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [createUser.pending]: (state) => {
+      return {
+        ...state,
+        userCreation: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [createUser.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        userCreation: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [createUser.rejected]: (state) => {
+      return {
+        ...state,
+        userCreation: {
           status: status.FAILURE,
         },
       };

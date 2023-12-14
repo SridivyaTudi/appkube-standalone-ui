@@ -62,7 +62,10 @@ class RoleControl extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getRoles();
+    let roles = this.props.allRoles?.data || [];
+    if (roles?.length) {
+      this.setState({ roles });
+    }
   };
 
   componentDidUpdate = (prevProps, prevState) => {
