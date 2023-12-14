@@ -364,7 +364,6 @@
 .policies-setting-table {
   display: block;
   background-color: #ffffff;
-  //margin-top: 20px;
   padding: 0;
   overflow: auto;
   border-radius: 10px;
@@ -428,11 +427,13 @@
     tbody {
       width: 100%;
       display: block;
+      max-height: 300px;
+      overflow: hidden;
+      overflow-y: auto;
 
       tr {
         display: table;
         width: 100%;
-        //border-bottom: 1px solid #eaecf0;
         td {
           padding: 8px 15px;
           font-size: 13px;
@@ -452,8 +453,8 @@
             height: 90%;
             background: #d5dbe5;
           }
-          .check-box{
-            span{
+          .check-box {
+            span {
               padding: 5px;
             }
           }
@@ -489,12 +490,7 @@
             background: #ffffff;
             &::before {
               content: "";
-              position: absolute;
-              top: 0;
-              left: 60px;
               width: 0px;
-              height: 90%;
-              background: #d5dbe5;
             }
             table {
               max-height: 250px;
@@ -530,12 +526,7 @@
                     td {
                       &::before {
                         content: "";
-                        position: absolute;
-                        top: 0;
                         left: 30px;
-                        width: 0px;
-                        height: 90%;
-                        background: #d5dbe5;
                       }
                     }
                   }
@@ -544,48 +535,46 @@
                     background: #ffffff;
                     &::before {
                       content: "";
-                      position: absolute;
-                      top: 0;
-                      left: 45px;
                       width: 0px;
-                      height: 90%;
-                      background: #d5dbe5;
                     }
-                    tr {
-                      border-bottom: 1px solid #eaecf0;
-                      td {
-                        padding: 12px 15px 12px 95px;
-                        font-size: 13px;
-                        font-weight: 500;
-                        color: #101828;
-                        position: relative;
-                        font-family: "Poppins", sans-serif;
-                        position: relative;
-                        &::before {
-                          content: "";
-                          position: absolute;
-                          top: 0;
-                          left: 85px;
-                          width: 1px;
-                          height: 90%;
-                          background: #d5dbe5;
+                    table {
+                      max-height: 180px;
+                      overflow: hidden;
+                      overflow-y: auto;
+                      tr {
+                        border-bottom: 1px solid #eaecf0;
+                        td {
+                          padding: 12px 15px 12px 106px;
+                          font-size: 13px;
+                          font-weight: 500;
+                          color: #101828;
+                          position: relative;
+                          font-family: "Poppins", sans-serif;
+                          position: relative;
+                          &::before {
+                            content: "";
+                            position: absolute;
+                            top: 0;
+                            left: 85px;
+                            width: 1px;
+                            height: 90%;
+                            background: #d5dbe5;
+                          }
+                          &:hover {
+                            background-color: #f7f9fc;
+                          }
+                          &.active {
+                            font-weight: 600;
+                            background-color: #e9edf5;
+                          }
+
+                          // &:last-child {
+                          //   border-bottom: none;
+                          // }
                         }
-                        &:hover {
-                          background-color: #f7f9fc;
+                        &:last-child {
+                          border-bottom: 0;
                         }
-                        &.active {
-                          font-weight: 600;
-                          background-color: #e9edf5;
-                         
-                          
-                        }
-                       
-                        // &:last-child {
-                        //   border-bottom: none;
-                        // }
-                      }
-                      &:last-child {
-                        border-bottom: 0;
                       }
                     }
                   }
