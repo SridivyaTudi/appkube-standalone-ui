@@ -166,8 +166,12 @@ class CreateUserControlModal extends Component {
     let form = new FormData();
 
     try {
+      let groupName = groupData.filter(
+        (group) => group.id === selectedGroups[0]
+      )[0]?.name;
+
       form.append("username", formData[0].name);
-      form.append("organization", selectedGroups[0]);
+      form.append("organization", groupName);
       form.append("email", formData[0].email);
       form.append("ownerId", getCurrentUserInfo().id);
       form.append("type", "user");
@@ -185,11 +189,13 @@ class CreateUserControlModal extends Component {
       formData.length &&
       formData.map((user, index) => {
         return (
-          <Box className="d-flex align-items-center form-row " key={v4()}>
+          <Box
+            className="d-flex align-items-center form-row "
+            key={`name_${index}`}
+          >
             <Box className="form-group">
               <Box className="d-inline-block">
                 <input
-                  key={`name_${index}`}
                   id={`name_${index}`}
                   type="text"
                   className="form-control"
@@ -201,11 +207,6 @@ class CreateUserControlModal extends Component {
                   }}
                   onKeyDown={(e) =>
                     e.key === "Enter" ? this.setActiveStep(e) : <></>
-                  }
-                  autoFocus={
-                    document.activeElement.id === `name_${index}`
-                      ? "autofocus"
-                      : null
                   }
                 />
                 {errors?.includes(index) ? (
