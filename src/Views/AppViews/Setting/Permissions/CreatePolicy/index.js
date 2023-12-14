@@ -205,11 +205,11 @@ export class CreatePolicy extends Component {
     const { isValid } = this.validateForm(true);
     let {
       formData: { name, description },
-      selectedCheckBox,
+      selectedCheckBoxData: { permissionsParams },
     } = this.state;
 
     if (isValid) {
-      if (!selectedCheckBox.length) {
+      if (!permissionsParams.length) {
         ToastMessage.error("Please select permission!");
         return 0;
       } else {
@@ -217,7 +217,7 @@ export class CreatePolicy extends Component {
           version: 1,
           name,
           description,
-          permissions: selectedCheckBox,
+          permissions: permissionsParams,
         };
         this.props.createPolicy(params);
       }
@@ -334,6 +334,7 @@ export class CreatePolicy extends Component {
       }
     }
   };
+
   //  Get parent element from child element
   getParentElement = (data) => {
     let parentElement = [];
@@ -351,24 +352,30 @@ export class CreatePolicy extends Component {
     return [...new Set(parentElement)].concat(data);
   };
 
+  // On Checkbox check or uncheck data
   onChangeCheckbox = (data) => {
-    let { selectedCheckBox: checkbox, extraData, checked } = data;
+    let { selectedCheckBox: checkbox, extraData, checked, uniqueID } = data;
     let {
       selectedCheckBoxData: { permissionsParams, viewData },
     } = this.state;
-    
+
     if (extraData) {
       let { permissionCategoryId, id, chlidren } = extraData;
+      let uniqueIDToArr = uniqueID.split("_");
+      viewData = checkbox;
 
       if (checked) {
         if (permissionCategoryId) {
           permissionsParams.push({ permissionCategoryId, permissionId: id });
         } else {
           if (chlidren.length) {
-            let permissions = chlidren.map((permission) => ({
-              permissionId: permission.id,
-              permissionCategoryId: permission.permissionCategoryId,
-            }));
+            let permissions = chlidren.map((permission, index) => {
+              viewData.push(`${uniqueIDToArr[0]}_${index}`);
+              return {
+                permissionId: permission.id,
+                permissionCategoryId: permission.permissionCategoryId,
+              };
+            });
             permissionsParams = permissionsParams.concat(permissions);
           }
         }
@@ -377,20 +384,30 @@ export class CreatePolicy extends Component {
           permissionsParams = permissionsParams.filter(
             (value) => value.permissionId !== id
           );
+          viewData = viewData.filter((tempId) => tempId !== uniqueID[0]);
         } else {
           if (chlidren.length) {
             permissionsParams = permissionsParams.filter(
               (value) => value.permissionCategoryId !== id
             );
+            viewData = viewData.filter(
+              (tempId) => !tempId.startsWith(uniqueID[0])
+            );
           }
         }
       }
-     
+
       this.setState({ selectedCheckBoxData: { permissionsParams, viewData } });
     }
   };
   render() {
-    let { isSubmit, formData, permissions, selectedActiveData } = this.state;
+    let {
+      isSubmit,
+      formData,
+      permissions,
+      selectedActiveData,
+      selectedCheckBoxData,
+    } = this.state;
     let { name, description } = formData;
     const { errors } = this.validateForm(isSubmit);
     let policyStatus = this.props.policyCreation?.status;
@@ -525,6 +542,7 @@ export class CreatePolicy extends Component {
             <AccordionView
               data={permissions}
               selectedData={selectedActiveData}
+              selectedCheckBoxData={selectedCheckBoxData}
               headers={[
                 { name: "Permission set", styled: { width: 105 } },
                 { name: "Status", styled: { width: 105 } },

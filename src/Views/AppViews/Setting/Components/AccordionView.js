@@ -33,6 +33,16 @@ class AccordionView extends Component {
       this.setState({ selectedNodes });
     }
 
+    if (this.props.selectedCheckBoxData !== prevProps.selectedCheckBoxData) {
+      let selectedCheckBox = this.props.selectedCheckBoxData?.viewData || [];
+      let { selectedCheckBox: stateCheckbox } = this.state;
+
+      if (!selectedCheckBox?.length && stateCheckbox.length) {
+        this.setState({ selectedCheckBox: [] });
+      }
+      this.setState({ selectedCheckBox });
+    }
+
     if (this.props.data !== prevProps.data) {
       let data = this.props.data;
 
@@ -173,7 +183,12 @@ class AccordionView extends Component {
 
     this.setState({ selectedCheckBox });
     try {
-      this.props.setSelectedViewData({ selectedCheckBox, extraData,checked });
+      this.props.setSelectedViewData({
+        selectedCheckBox,
+        extraData,
+        checked,
+        uniqueID: id,
+      });
     } catch (error) {
       console.log(error);
     }
