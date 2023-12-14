@@ -208,7 +208,7 @@
     tbody {
       width: 100%;
       display: block;
-      max-height: 300px;
+      max-height: 400px;
       overflow: auto;
       width: calc(100% - 0.05em);
 
@@ -342,7 +342,7 @@
             .status {
               font-size: 12px;
               line-height: 16px;
-              font-weight: 400;
+              font-weight: 500;
               background: #656575;
               display: inline-block;
               padding: 4px 10px;
@@ -528,9 +528,6 @@
               width: 0px;
             }
             table {
-              // max-height: 250px;
-              // overflow: hidden;
-              overflow-y: auto;
               tr {
                 border-bottom: 1px solid #eaecf0;
 
@@ -573,9 +570,6 @@
                       width: 0px;
                     }
                     table {
-                      // max-height: 180px;
-                      // overflow: hidden;
-                      overflow-y: auto;
                       tr {
                         border-bottom: 1px solid #eaecf0;
                         td {
