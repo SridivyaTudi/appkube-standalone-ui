@@ -158,8 +158,8 @@ class Allowed extends Component {
           <AccordionView
             data={accessPolicyData}
             headers={[
-              { name: "Permission set", styled: { width: 105 } },
-              { name: "Status", styled: { width: 105 } },
+              { name: "Permission set" },
+              { name: "Status" },
             ]}
           />
         </Box>
