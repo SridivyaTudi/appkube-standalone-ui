@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-import { Box, Button, Grid, List, ListItem, Checkbox } from "@mui/material";
+import { Box, Button, Grid, List, ListItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import { styled } from "@mui/material/styles";
-import DefaultIcon from "../../../../../assets/img/setting/default-icon.png";
 import CancelGroupControlModal from "../Components/CancelGroupControlModal";
 import {
   getPermissionCategory,
@@ -18,7 +15,8 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { ToastMessage } from "Toast/ToastMessage";
 import LoadingButton from "@mui/lab/LoadingButton";
 import AccordionView from "Views/AppViews/Setting/Components/AccordionView";
-
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -35,6 +33,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     padding: "8px 10px",
   },
 }));
+
 let searchedData = [];
 export class CreatePolicy extends Component {
   constructor(props) {
@@ -50,9 +49,9 @@ export class CreatePolicy extends Component {
       formData: {
         name: "",
         description: "",
-        permissions: [],
       },
-      selectedData: [],
+      selectedActiveData: [],
+      selectedCheckBoxData: { permissionsParams: [], viewData: [] },
     };
   }
 
@@ -128,7 +127,12 @@ export class CreatePolicy extends Component {
   renderSearchInput = () => {
     let { searchedPermission } = this.state;
     return (
-      <Grid container className="h-100" alignItems={"center"}  columns={{ xs: 4, md: 12 }}>
+      <Grid
+        container
+        className="h-100"
+        alignItems={"center"}
+        columns={{ xs: 4, md: 12 }}
+      >
         <Grid item xs={6}>
           <Box className="top-search">
             <input
@@ -147,23 +151,23 @@ export class CreatePolicy extends Component {
     );
   };
 
-  //  Serach role
+  //  Serach policy
   handleSearchChange = (e) => {
     let searchedPermission = e.target.value;
-    let { selectedData } = this.state;
+    let { selectedActiveData } = this.state;
     searchedData = [];
-    selectedData = [];
+    selectedActiveData = [];
 
     let data = this.setPermissionStateOrReturnData(0);
     if (data?.length) {
       if (searchedPermission) {
         this.searchRecursiveLogic(searchedPermission, data);
-        selectedData = this.getParentElement(searchedData);
+        selectedActiveData = this.getParentElement(searchedData);
       } else {
-        selectedData = [];
+        selectedActiveData = [];
       }
 
-      this.setState({ selectedData, searchedPermission });
+      this.setState({ selectedActiveData, searchedPermission });
     }
   };
 
@@ -199,10 +203,13 @@ export class CreatePolicy extends Component {
     e.preventDefault();
     this.setState({ isSubmit: true });
     const { isValid } = this.validateForm(true);
-    let { permissions, name, description } = this.state.formData;
+    let {
+      formData: { name, description },
+      selectedCheckBox,
+    } = this.state;
 
     if (isValid) {
-      if (!permissions.length) {
+      if (!selectedCheckBox.length) {
         ToastMessage.error("Please select permission!");
         return 0;
       } else {
@@ -210,7 +217,7 @@ export class CreatePolicy extends Component {
           version: 1,
           name,
           description,
-          permissions,
+          permissions: selectedCheckBox,
         };
         this.props.createPolicy(params);
       }
@@ -250,56 +257,23 @@ export class CreatePolicy extends Component {
     );
   };
 
-  // Handle check box
-  handleCheckBox = (event, permissionObj) => {
-    let { formData } = this.state;
-    let data = formData["permissions"];
-    let { id, checked } = event.target;
-
-    if (checked) {
-      data.push(permissionObj);
-      formData["permissions"] = data;
-    } else {
-      formData["permissions"] = data.filter(
-        (value) => value.permissionId !== permissionObj.permissionId
-      );
-    }
-
-    this.setState({ formData });
-  };
-
-  // Handle select all checkbox
-  handleSelectAllCheckBox = (event) => {
-    let { permissions, formData } = this.state;
-
-    let { checked } = event.target;
-
-    if (checked) {
-      formData["permissions"] = permissions.map(
-        ({ id: permissionId, permissionCategoryId }) => ({
-          permissionId,
-          permissionCategoryId,
-        })
-      );
-    } else {
-      formData["permissions"] = [];
-    }
-
-    this.setState({ formData });
-  };
-
   // set policy state according format
-  setPermissionAccordingToFormat = (policies) => {
+  setPermissionAccordingToFormat = (policies, categoryId) => {
     return policies.map((policy) => {
       policy["name"] = policy.name || policy.permissionId;
+      policy["isCheckBoxShow"] = true;
 
-      if (policy.version) {
-        policy["isCheckBoxShow"] = true;
-       
+      if (policy["status"]) {
+        policy["subName"] = this.getStatusHtml(policy["status"]);
+      }
+
+      if (categoryId) {
+        policy["permissionCategoryId"] = categoryId;
       }
       if (policy?.permissions?.length) {
         policy["chlidren"] = this.setPermissionAccordingToFormat(
-          policy.permissions
+          policy.permissions,
+          policy.id
         );
         return policy;
       } else {
@@ -308,32 +282,23 @@ export class CreatePolicy extends Component {
     });
   };
 
-  // Get permission from category
-  getPermissionsFromCategory = (data) => {
-    let permissions = [];
-    data.forEach((permission) => {
-      permission.permissions.forEach((innerPermission) => {
-        innerPermission["permissionCategoryId"] = permission.id;
-        permissions.push(innerPermission);
-      });
-    });
-
-    return permissions;
-  };
-
-  //  Permission checked return true ,otherwise false
-  isCheckedPermission = (id) => {
-    let { permissions } = this.state.formData;
-    let isChecked = false;
-    for (let permission = 0; permission < permissions.length; permission++) {
-      const element = permissions[permission];
-      if (element.permissionId === id) {
-        isChecked = true;
-        break;
-      }
-    }
-
-    return isChecked;
+  getStatusHtml = (status) => {
+    return (
+      <Box className="status-btn">
+        <Box className="d-flex status green">
+          <HtmlTooltip
+            className="table-tooltip d-flex"
+            title={
+              <React.Fragment>
+                <span>This role created by default by the system</span>
+              </React.Fragment>
+            }
+          >
+            <span>{status}</span>
+          </HtmlTooltip>
+        </Box>
+      </Box>
+    );
   };
 
   //  Search recursive logic
@@ -385,8 +350,47 @@ export class CreatePolicy extends Component {
 
     return [...new Set(parentElement)].concat(data);
   };
+
+  onChangeCheckbox = (data) => {
+    let { selectedCheckBox: checkbox, extraData, checked } = data;
+    let {
+      selectedCheckBoxData: { permissionsParams, viewData },
+    } = this.state;
+    
+    if (extraData) {
+      let { permissionCategoryId, id, chlidren } = extraData;
+
+      if (checked) {
+        if (permissionCategoryId) {
+          permissionsParams.push({ permissionCategoryId, permissionId: id });
+        } else {
+          if (chlidren.length) {
+            let permissions = chlidren.map((permission) => ({
+              permissionId: permission.id,
+              permissionCategoryId: permission.permissionCategoryId,
+            }));
+            permissionsParams = permissionsParams.concat(permissions);
+          }
+        }
+      } else {
+        if (permissionCategoryId) {
+          permissionsParams = permissionsParams.filter(
+            (value) => value.permissionId !== id
+          );
+        } else {
+          if (chlidren.length) {
+            permissionsParams = permissionsParams.filter(
+              (value) => value.permissionCategoryId !== id
+            );
+          }
+        }
+      }
+     
+      this.setState({ selectedCheckBoxData: { permissionsParams, viewData } });
+    }
+  };
   render() {
-    let { isSubmit, formData, permissions, selectedData } = this.state;
+    let { isSubmit, formData, permissions, selectedActiveData } = this.state;
     let { name, description } = formData;
     const { errors } = this.validateForm(isSubmit);
     let policyStatus = this.props.policyCreation?.status;
@@ -407,7 +411,11 @@ export class CreatePolicy extends Component {
           </Box>
         </Box>
         <Box className="setting-common-searchbar">
-          <Grid container alignItems={"center"} columns={{ xs: 4, sm: 12, md: 12 }}>
+          <Grid
+            container
+            alignItems={"center"}
+            columns={{ xs: 4, sm: 12, md: 12 }}
+          >
             <Grid item xs={6}>
               <h4 className="m-t-0 m-b-0">Name of the policy</h4>
             </Grid>
@@ -510,21 +518,24 @@ export class CreatePolicy extends Component {
           <h5>Add Permissions to the Policy(68)</h5>
           {this.renderSearchInput()}
         </Box>
-        <Box className="policies-setting-table">
-        {permissions.length ? (
-          <AccordionView
-            data={permissions}
-            selectedData={selectedData}
-            headers={[
-              { name: "Permission set", styled: { width: 105 } },
-            
-            ]}
-          />
-        ) : (
-          <></>
-        )}
+        <Box className="permission-table">
+          {this.props.permissionCategory?.status === status.IN_PROGRESS ? (
+            this.renderLoder()
+          ) : permissions.length ? (
+            <AccordionView
+              data={permissions}
+              selectedData={selectedActiveData}
+              headers={[
+                { name: "Permission set", styled: { width: 105 } },
+                { name: "Status", styled: { width: 105 } },
+              ]}
+              isSingleChecked={false}
+              setSelectedViewData={(data) => this.onChangeCheckbox(data)}
+            />
+          ) : (
+            <></>
+          )}
         </Box>
-       
 
         {this.renderOtherComponents()}
       </Box>

@@ -107,8 +107,6 @@ class Policies extends Component {
   setPolicyAccordingToFormat = (policies) => {
     let permissionCategory = this.props.permissionCategory.data || [];
     return policies.map((policy) => {
-      policy["name"] = policy.name;
-
       if (policy.version) {
         policy["isCheckBoxShow"] = true;
       }
@@ -138,7 +136,7 @@ class Policies extends Component {
             chlidren: categories[key],
           };
         });
-      
+
         policy["chlidren"] = permissions;
         return policy;
       } else {
@@ -152,7 +150,7 @@ class Policies extends Component {
     let data = this.props.allPolicy?.data || [];
     if (data?.length) {
       data = this.setPolicyAccordingToFormat(JSON.parse(JSON.stringify(data)));
-     
+
       if (isStateSet) {
         this.setState({ data });
       } else {
@@ -180,7 +178,7 @@ class Policies extends Component {
 
   // toggle confirmation popup
   togglePopup = () => {
-    let { showConfirmPopup, selectedPolicyId, selectedCheckBox } = this.state;
+    let { showConfirmPopup, selectedPolicyId } = this.state;
     this.setState({
       showConfirmPopup: !showConfirmPopup,
       selectedPolicyId: showConfirmPopup ? 0 : selectedPolicyId,
@@ -252,6 +250,7 @@ class Policies extends Component {
                 let { selectedCheckBox } = data;
                 this.setState({ selectedCheckBox });
               }}
+              isSingleChecked={true}
             />
           ) : (
             <></>

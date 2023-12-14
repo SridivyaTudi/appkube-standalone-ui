@@ -86,7 +86,9 @@ class AccordionView extends Component {
                   <Checkbox
                     size="small"
                     id={currentNode}
-                    checked={selectedCheckBox.includes(+currentNode)}
+                    checked={
+                      selectedCheckBox.includes(currentNode) ? true : false
+                    }
                     onClick={(e) => {
                       this.onClickCheckBox(e, subchild);
                       e.stopPropagation();
@@ -156,13 +158,22 @@ class AccordionView extends Component {
     let { id, checked } = event.target;
 
     if (checked) {
-      selectedCheckBox = [+id];
+      if (this.props.isSingleChecked) {
+        selectedCheckBox = [id];
+      } else {
+        selectedCheckBox.push(id);
+      }
     } else {
-      selectedCheckBox = [];
+      if (this.props.isSingleChecked) {
+        selectedCheckBox = [];
+      } else {
+        selectedCheckBox = selectedCheckBox.filter((value) => value !== id);
+      }
     }
+
     this.setState({ selectedCheckBox });
     try {
-      this.props.setSelectedViewData({ selectedCheckBox });
+      this.props.setSelectedViewData({ selectedCheckBox, extraData,checked });
     } catch (error) {
       console.log(error);
     }
