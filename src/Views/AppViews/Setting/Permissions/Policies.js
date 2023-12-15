@@ -105,39 +105,16 @@ class Policies extends Component {
 
   // set policy state according format
   setPolicyAccordingToFormat = (policies) => {
-    let permissionCategory = this.props.permissionCategory.data || [];
     return policies.map((policy) => {
+      policy["name"] = policy.name || policy.permissionId;
+
       if (policy.version) {
         policy["isCheckBoxShow"] = true;
       }
       if (policy?.permissions?.length) {
-        let categories = {};
-        permissionCategory.forEach((category) => {
-          policy?.permissions.forEach((permission) => {
-            if (category.id === permission.permissionCategoryId) {
-              if (!categories[category.name]) {
-                categories[category.name] = [];
-              }
-
-              categories[category.name].push({
-                id: permission.permissionId,
-                name: permission.permissionId || permission.name,
-                permissionCategoryId: permission.permissionCategoryId,
-              });
-            }
-          });
-          return;
-        });
-
-        let permissions = Object.keys(categories).map((key) => {
-          return {
-            id: categories[key][0].permissionCategoryId,
-            name: key,
-            chlidren: categories[key],
-          };
-        });
-
-        policy["chlidren"] = permissions;
+        policy["chlidren"] = this.setPolicyAccordingToFormat(
+          policy.permissions
+        );
         return policy;
       } else {
         return policy;
