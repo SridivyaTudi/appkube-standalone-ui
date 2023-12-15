@@ -20,11 +20,9 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     backgroundColor: "#16161E",
     color: "#ffffff",
     maxWidth: 250,
-
-    fontSize: theme.typography.pxToRem(12),
+     fontSize: theme.typography.pxToRem(11),
     border: "1px solid #dadde9",
     padding: "4px 8px",
-    fontSize: "11px",
   },
 }));
 
@@ -85,10 +83,10 @@ class GroupControl extends Component {
                     </React.Fragment>
                   }
                 >
-                  <React.Fragment>
+                  <span>
                     <img src={DefaultIcon} alt="" />
                     Default
-                  </React.Fragment>
+                  </span>
                 </HtmlTooltip>
               </Box>
               <IconButton
