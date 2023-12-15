@@ -30,7 +30,8 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 
     fontSize: theme.typography.pxToRem(12),
     border: "1px solid #dadde9",
-    padding: "8px 10px",
+    padding: "4px 8px",
+    fontSize: "11px",
   },
 }));
 
