@@ -92,10 +92,10 @@ class GroupControl extends Component {
                         </React.Fragment>
                       }
                     >
-                      <React.Fragment>
+                      <span>
                         <img src={DefaultIcon} alt="" />
                         Default
-                      </React.Fragment>
+                      </span>
                     </HtmlTooltip>
                   </Box>
                 ) : (
@@ -162,8 +162,8 @@ class GroupControl extends Component {
         });
       } else {
         retData = (
-          <Box className="group-loader text-center w-100">
-            There are no groups available.
+          <Box className="group-loader h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
+            <h5 className="m-t-0 m-b-0">There are no groups available.</h5>
           </Box>
         );
       }
@@ -231,7 +231,7 @@ class GroupControl extends Component {
   // Render Loder
   renderLoder() {
     return (
-      <Box className="d-block text-center w-100 h-100 ">
+      <Box className="d-block text-center w-100 h-100 m-r-auto m-l-auto ">
         <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
       </Box>
     );
