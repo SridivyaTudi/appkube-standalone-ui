@@ -104,6 +104,7 @@ class RoleControl extends Component {
     this.setState({
       showCreateRoleControlModal: !this.state.showCreateRoleControlModal,
       editRoleId: 0,
+      actionButton: null,
     });
   };
 
@@ -202,9 +203,8 @@ class RoleControl extends Component {
                 }
               >
                 <span>
-                  <img src={DefaultIcon} alt="" />   Default
+                  <img src={DefaultIcon} alt="" /> Default
                 </span>
-             
               </HtmlTooltip>
             </Box>
           </TableCell>

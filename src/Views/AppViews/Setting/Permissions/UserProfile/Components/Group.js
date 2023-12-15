@@ -80,7 +80,7 @@ class Group extends Component {
               <Checkbox
                 size="small"
                 className="check-box"
-                id={row.id}
+                id={`${row.id}`}
                 checked={selectedGroup.includes(row.id)}
                 onChange={this.handleCheckBox}
               />

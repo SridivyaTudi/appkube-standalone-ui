@@ -51,10 +51,7 @@ export const createGroup = createAsyncThunk(
   "settings/createGroup",
   async (params) => {
     try {
-      const response = await postLoginService.post(
-        `${config.CREATE_GROUP}`,
-        params
-      );
+      const response = await postLoginService.post(config.CREATE_GROUP, params);
       return response;
     } catch (error) {
       console.log(error);
@@ -62,14 +59,21 @@ export const createGroup = createAsyncThunk(
   }
 );
 
-export const getRoles = createAsyncThunk("settings/getRoles", async () => {
-  try {
-    const response = await postLoginService.get(config.GET_ROLES);
-    return response;
-  } catch (error) {
-    console.log(error);
+export const getRoles = createAsyncThunk(
+  "settings/getRoles",
+  async (userName) => {
+    try {
+      let url = config.GET_ROLES.replace("#user-name#", userName).replace(
+        "#is-group#",
+        false
+      );
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
   }
-});
+);
 
 export const getPolicies = createAsyncThunk(
   "settings/getPolicies",

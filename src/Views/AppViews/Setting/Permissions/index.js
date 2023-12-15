@@ -61,7 +61,7 @@ export class Permissions extends Component {
     this.props.getPermissionCategory();
     this.props.getPolicies();
     this.props.getUsers(this.getCurrentUserInfo().id);
-    this.props.getRoles();
+    this.props.getRoles(this.getCurrentUserInfo().username);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -199,8 +199,8 @@ export class Permissions extends Component {
     return getCurrentUser()
       ? getCurrentUser()?.info?.user
         ? getCurrentUser().info.user
-        : { id: "" }
-      : { id: "" };
+        : { id: "", username: "" }
+      : { id: "", username: "" };
   };
   render() {
     return (
