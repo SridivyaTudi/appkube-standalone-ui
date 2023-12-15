@@ -92,7 +92,7 @@ export const deleteRole = createAsyncThunk(
   async (id) => {
     try {
       let url = config.DELETE_ROLE.replace("#role-id#", id);
-      const response = await postLoginService.delete(url);
+      const response = await postLoginService.post(url);
       return response;
     } catch (error) {
       console.log(error);
@@ -162,7 +162,7 @@ export const deletePolicy = createAsyncThunk(
   async (id) => {
     try {
       let url = config.DELETE_POLICY.replace("#policy-id#", id);
-      const response = await postLoginService.delete(url);
+      const response = await postLoginService.post(url);
       return response;
     } catch (error) {
       console.log(error);
@@ -201,6 +201,19 @@ export const getGroups = createAsyncThunk(
         true
       );
       const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const deleteGroup = createAsyncThunk(
+  "settings/deleteGroup",
+  async (id) => {
+    try {
+      let url = config.DELETE_GROUP.replace("#group-id#", id);
+      const response = await postLoginService.post(url);
       return response;
     } catch (error) {
       console.log(error);

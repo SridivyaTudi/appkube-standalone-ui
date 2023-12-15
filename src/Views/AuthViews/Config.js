@@ -28,6 +28,7 @@ const config = {
   DELETE_POLICY: `${baseSecurityUrl}/policy/delete/#policy-id#`,
   GET_USERS: `${baseSecurityUrl}/users/find-by-owner?ownerId=#owner-id#`,
   CREATE_USER: `${baseSecurityUrl}/users/create`,
+  DELETE_GROUP: `${baseSecurityUrl}/roles/delete/#group-id#`,
 };
 
 export default config;

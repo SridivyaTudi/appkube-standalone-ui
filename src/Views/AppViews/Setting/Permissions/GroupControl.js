@@ -13,6 +13,10 @@ import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import { v4 } from "uuid";
 import Loader from "Components/Loader";
+import ConfirmationPopup from "Components/ConfirmationPopup";
+import { deleteGroup, getGroups } from "Redux/Settings/SettingsThunk";
+import { ToastMessage } from "Toast/ToastMessage";
+import { getCurrentUser } from "Utils";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -38,6 +42,8 @@ class GroupControl extends Component {
     this.state = {
       groupList: [],
       actionButton: null,
+      groupId: 0,
+      showConfirmPopup: false,
     };
   }
 
@@ -49,6 +55,19 @@ class GroupControl extends Component {
     if (this.props.allGroups.status !== prevProps.allGroups.status) {
       if (this.props.allGroups.status === status.SUCCESS) {
         this.setGroupStateOrReturnData();
+      }
+    }
+
+    if (this.props.removeGroup.status !== prevProps.removeGroup.status) {
+      if (this.props.removeGroup.status === status.SUCCESS) {
+        let removeGroupRes = this.props.removeGroup.data;
+        if (removeGroupRes) {
+          this.togglePopup();
+          this.props.getGroups(this.getCurrentUserInfo().username);
+          ToastMessage.success("Group Removed Successfully");
+        } else {
+          ToastMessage.error("Group Deletion Failed!");
+        }
       }
     }
   };
@@ -118,6 +137,12 @@ class GroupControl extends Component {
                           <DeleteOutlineOutlinedIcon className="icon" />
                         }
                         className="secondary-text-btn"
+                        onClick={() => {
+                          this.setState({
+                            showConfirmPopup: true,
+                            groupId: groupData.id,
+                          });
+                        }}
                       >
                         Delete Group
                       </Button>
@@ -236,22 +261,67 @@ class GroupControl extends Component {
       </Box>
     );
   }
+
+  // Delete group
+  handleDeleteGroup = () => {
+    let { groupId } = this.state;
+    if (groupId) {
+      this.props.deleteGroup(groupId);
+    }
+  };
+
+  // toggle confirmation popup
+  togglePopup = () => {
+    let { showConfirmPopup, groupId } = this.state;
+    this.setState({
+      showConfirmPopup: !showConfirmPopup,
+      groupId: showConfirmPopup ? 0 : groupId,
+      actionButton: false,
+    });
+  };
+
+  getCurrentUserInfo = () => {
+    return getCurrentUser()
+      ? getCurrentUser()?.info?.user
+        ? getCurrentUser().info.user
+        : { id: "", username: "" }
+      : { id: "", username: "" };
+  };
   render() {
+    let { showConfirmPopup } = this.state;
+    let deleteGroupStatus =
+      this.props.removeGroup?.status === status.IN_PROGRESS;
     return (
       <>
         {this.renderSearchInputAndBtn()}
         <Box className="group-control-boxs">{this.renderGroupList()}</Box>
+        {showConfirmPopup ? (
+          <ConfirmationPopup
+            showModal={showConfirmPopup}
+            togglePopup={this.togglePopup}
+            labels={{
+              btnYes: "Delete",
+              description: "Do you want to delete this Group ? ",
+              btnNo: "Cancel",
+            }}
+            handleCallBack={this.handleDeleteGroup}
+            showLoader={deleteGroupStatus}
+          />
+        ) : (
+          <></>
+        )}
       </>
     );
   }
 }
 const mapStateToProps = (state) => {
-  const { allGroups } = state.settings;
+  const { allGroups, removeGroup } = state.settings;
   return {
     allGroups,
+    removeGroup,
   };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { deleteGroup, getGroups };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupControl);

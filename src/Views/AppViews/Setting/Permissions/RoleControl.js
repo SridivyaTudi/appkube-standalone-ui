@@ -27,6 +27,7 @@ import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import ConfirmationPopup from "Components/ConfirmationPopup";
 import { ToastMessage } from "Toast/ToastMessage";
+import { getCurrentUser } from "Utils";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -45,7 +46,14 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     fontSize: "11px",
   },
 }));
-
+//CurrentUser details
+const getCurrentUserInfo = () => {
+  return getCurrentUser()
+    ? getCurrentUser()?.info?.user
+      ? getCurrentUser().info.user
+      : { id: "", username: "" }
+    : { id: "", username: "" };
+};
 class RoleControl extends Component {
   constructor(props) {
     super(props);
@@ -84,6 +92,7 @@ class RoleControl extends Component {
         let removeRoleRes = this.props.removeRole.data;
         if (removeRoleRes) {
           this.togglePopup();
+          this.props.getRoles(getCurrentUserInfo().username);
           ToastMessage.success("Role Removed Successfully");
         } else {
           ToastMessage.error("Role Deletion Failed!");

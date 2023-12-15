@@ -151,7 +151,7 @@ class CreateRoleControlModal extends Component {
         description,
         grp: false,
         policies: selectedPolicy.map((policy) => ({ id: policy })),
-        createdBy: this.getCurrentUserInfo().username,
+        createdBy: getCurrentUserInfo().username,
       };
 
       if (this.props.roleId > 0) {
