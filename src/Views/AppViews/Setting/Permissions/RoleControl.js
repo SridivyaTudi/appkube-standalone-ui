@@ -193,20 +193,24 @@ class RoleControl extends Component {
         <TableRow key={index}>
           <TableCell>
             {row?.name}
-            <Box className="d-flex roles-box">
-              <HtmlTooltip
-                className="table-tooltip"
-                title={
-                  <React.Fragment>
-                    <span>This role created by default by the system</span>
-                  </React.Fragment>
-                }
-              >
-                <span>
-                  <img src={DefaultIcon} alt="" /> Default
-                </span>
-              </HtmlTooltip>
-            </Box>
+            {row.default ? (
+              <Box className="d-flex roles-box">
+                <HtmlTooltip
+                  className="table-tooltip"
+                  title={
+                    <React.Fragment>
+                      <span>This role created by default by the system</span>
+                    </React.Fragment>
+                  }
+                >
+                  <span>
+                    <img src={DefaultIcon} alt="" /> Default
+                  </span>
+                </HtmlTooltip>
+              </Box>
+            ) : (
+              <></>
+            )}
           </TableCell>
           <TableCell>{row?.description}</TableCell>
           <TableCell>

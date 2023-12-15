@@ -13,6 +13,7 @@ import {
   getPolicies,
   getUsers,
   getRoles,
+  getGroups,
 } from "Redux/Settings/SettingsThunk";
 export class Permissions extends Component {
   controlMapping = [
@@ -25,7 +26,7 @@ export class Permissions extends Component {
     {
       icon: "fa-users",
       label: "Group",
-      value: "33",
+      value: 0,
       dataKey: "group",
     },
     {
@@ -62,6 +63,7 @@ export class Permissions extends Component {
     this.props.getPolicies();
     this.props.getUsers(this.getCurrentUserInfo().id);
     this.props.getRoles(this.getCurrentUserInfo().username);
+    this.props.getGroups(this.getCurrentUserInfo().username);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -101,6 +103,15 @@ export class Permissions extends Component {
         let users = this.props.allUsers.data;
         if (users?.length) {
           this.getTabCount("user", users.length);
+        }
+      }
+    }
+
+    if (this.props.allGroups.status !== prevProps.allGroups.status) {
+      if (this.props.allGroups.status === status.SUCCESS) {
+        let groups = this.props.allGroups.data;
+        if (groups?.length) {
+          this.getTabCount("group", groups.length);
         }
       }
     }
@@ -215,12 +226,14 @@ export class Permissions extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { allRoles, permissionCategory, allPolicy, allUsers } = state.settings;
+  const { allRoles, permissionCategory, allPolicy, allUsers, allGroups } =
+    state.settings;
   return {
     allRoles,
     permissionCategory,
     allPolicy,
     allUsers,
+    allGroups,
   };
 };
 
@@ -229,6 +242,7 @@ const mapDispatchToProps = {
   getPolicies,
   getUsers,
   getRoles,
+  getGroups,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Permissions);

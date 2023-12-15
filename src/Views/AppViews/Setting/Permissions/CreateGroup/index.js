@@ -229,7 +229,6 @@ export class CreateGroup extends Component {
                 }
               >
                 <span>
-                  {" "}
                   <img src={DefaultIcon} alt="" className="m-r-1" /> Default
                 </span>
               </HtmlTooltip>
@@ -529,7 +528,8 @@ export class CreateGroup extends Component {
       rolePG,
     } = this.state;
     let { name, description } = formData;
-    let groupCreationStatus = this.props.groupCreation?.status;
+    let groupCreationStatus =
+      this.props.groupCreation?.status === status.IN_PROGRESS;
     const { errors } = this.validateForm(isSubmit);
     return (
       <Box className="create-group-container">

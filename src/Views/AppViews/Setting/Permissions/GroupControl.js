@@ -9,6 +9,10 @@ import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import DefaultIcon from "../../../../assets/img/setting/default-icon.png";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import status from "Redux/Constants/CommonDS";
+import { connect } from "react-redux";
+import { v4 } from "uuid";
+import Loader from "Components/Loader";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -28,30 +32,26 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-let groups = [
-  {
-    name: "Default Users",
-    activeUsers: "45",
-    rolesAssigned: "Basic Users",
-    description:
-      "Active The super admin is the highest level of administrative authority within a system",
-  },
-  {
-    name: "Super Admins",
-    activeUsers: "45",
-    rolesAssigned: "Administrator",
-    description:
-      "Active The super admin is the highest level of administrative authority within a system",
-  },
-];
 class GroupControl extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      groupList: groups,
+      groupList: [],
       actionButton: null,
     };
   }
+
+  componentDidMount = () => {
+    this.setGroupStateOrReturnData();
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.props.allGroups.status !== prevProps.allGroups.status) {
+      if (this.props.allGroups.status === status.SUCCESS) {
+        this.setGroupStateOrReturnData();
+      }
+    }
+  };
 
   handleActionButton = (index) => {
     const { actionButton } = this.state;
@@ -69,89 +69,106 @@ class GroupControl extends Component {
   // Render Groups
   renderGroupList = () => {
     const { groupList, actionButton } = this.state;
-    let retData = [];
-    if (groupList?.length > 0) {
-      groupList.forEach((groupData, index) => {
-        retData.push(
-          <Box className="group-box" key={groupData.name}>
-            <Box className="heading">
-              <h4 onClick={this.props.setActiveTab}>{groupData.name}</h4>
-              <Box className="d-flex roles-box">
-                <HtmlTooltip
-                  className="table-tooltip d-flex"
-                  title={
-                    <React.Fragment>
-                      <span>This role created by default by the system</span>
-                    </React.Fragment>
-                  }
-                >
-                  <React.Fragment>
-                    <img src={DefaultIcon} alt="" />
-                    Default
-                  </React.Fragment>
-                </HtmlTooltip>
-              </Box>
-              <IconButton
-                className="action-btn"
-                aria-label="morevertIcon"
-                size="small"
-                onClick={() => this.handleActionButton(index)}
-              >
-                <MoreVertIcon fontSize="small" />
-              </IconButton>
-              {actionButton === index && (
-                <>
-                  <Box className="action-buttons">
-                    <Button
-                      startIcon={<DeleteOutlineOutlinedIcon className="icon" />}
-                      className="secondary-text-btn"
+
+    if (this.props.allGroups.status === status.IN_PROGRESS) {
+      return this.renderLoder();
+    } else {
+      let retData = [];
+      if (groupList?.length > 0) {
+        groupList.forEach((groupData, index) => {
+          retData.push(
+            <Box className="group-box" key={v4()}>
+              <Box className="heading">
+                <h4 onClick={this.props.setActiveTab}>{groupData.name}</h4>
+                {groupData.default ? (
+                  <Box className="d-flex roles-box">
+                    <HtmlTooltip
+                      className="table-tooltip d-flex"
+                      title={
+                        <React.Fragment>
+                          <span>
+                            This role created by default by the system
+                          </span>
+                        </React.Fragment>
+                      }
                     >
-                      Delete Role
-                    </Button>
-                    <Button
-                      startIcon={<ContentCopyIcon className="icon" />}
-                      className="secondary-text-btn"
-                    >
-                      Duplicate Group
-                    </Button>
+                      <React.Fragment>
+                        <img src={DefaultIcon} alt="" />
+                        Default
+                      </React.Fragment>
+                    </HtmlTooltip>
                   </Box>
-                  <Box
-                    className="action-buttons-bg"
-                    onClick={() => this.handleActionButton(index)}
-                  ></Box>
-                </>
-              )}
-            </Box>
-            <Box className="group-data" onClick={this.props.setActiveTab}>
-              <Box className="data">
-                <label>Active Users</label>
-                <span>{groupData.activeUsers}</span>
+                ) : (
+                  <></>
+                )}
+
+                <IconButton
+                  className="action-btn"
+                  aria-label="morevertIcon"
+                  size="small"
+                  onClick={() => this.handleActionButton(index)}
+                >
+                  <MoreVertIcon fontSize="small" />
+                </IconButton>
+                {actionButton === index && (
+                  <>
+                    <Box className="action-buttons">
+                      <Button
+                        startIcon={
+                          <DeleteOutlineOutlinedIcon className="icon" />
+                        }
+                        className="secondary-text-btn"
+                      >
+                        Delete Group
+                      </Button>
+                      <Button
+                        startIcon={<ContentCopyIcon className="icon" />}
+                        className="secondary-text-btn"
+                      >
+                        Duplicate Group
+                      </Button>
+                    </Box>
+                    <Box
+                      className="action-buttons-bg"
+                      onClick={() => this.handleActionButton(index)}
+                    ></Box>
+                  </>
+                )}
               </Box>
-              <Box className="data">
-                <label>Roles Assigned</label>
-                <span className="group-name">{groupData.rolesAssigned}</span>
+              <Box className="group-data" onClick={this.props.setActiveTab}>
+                <Box className="data">
+                  <label>Active Users</label>
+                  <span>{groupData.users?.length || 0}</span>
+                </Box>
+                <Box className="data">
+                  <label>Roles Assigned</label>
+                  <span className="group-name">Basic Users</span>
+                </Box>
+              </Box>
+              <Box
+                className="description-text"
+                onClick={this.props.setActiveTab}
+              >
+                <label>Group Description</label>
+                <p>{groupData.description}</p>
+              </Box>
+              <Box className="view-btn text-center">
+                <Link to={`${APP_PREFIX_PATH}/setting/super-admin`}>
+                  <Button className="primary-btn min-width">View Group</Button>
+                </Link>
               </Box>
             </Box>
-            <Box className="description-text" onClick={this.props.setActiveTab}>
-              <label>Group Description</label>
-              <p>{groupData.description}</p>
-            </Box>
-            <Box className="view-btn text-center">
-              <Link to={`${APP_PREFIX_PATH}/setting/super-admin`}>
-                <Button className="primary-btn min-width">View Group</Button>
-              </Link>
-            </Box>
+          );
+        });
+      } else {
+        retData = (
+          <Box className="group-loader text-center w-100">
+            There are no groups available.
           </Box>
         );
-      });
-    } else {
-      retData = (
-        <Box className="group-loader text-center w-100">
-          There are no groups available.
-        </Box>
-      );
+      }
+      return retData;
     }
-    return retData;
   };
 
   // Render search group and btn
@@ -183,7 +200,7 @@ class GroupControl extends Component {
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { groupList } = this.state;
-
+    let groups = this.props.allGroups.data || [];
     if (groups?.length) {
       if (value) {
         groupList = groups.filter((group) => {
@@ -200,6 +217,25 @@ class GroupControl extends Component {
     }
   };
 
+  // Set state or return data
+  setGroupStateOrReturnData = (isStateSet = 1) => {
+    let groupList = this.props.allGroups.data || [];
+
+    if (isStateSet) {
+      this.setState({ groupList });
+    } else {
+      return groupList;
+    }
+  };
+
+  // Render Loder
+  renderLoder() {
+    return (
+      <Box className="d-block text-center w-100 h-100 ">
+        <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
+      </Box>
+    );
+  }
   render() {
     return (
       <>
@@ -209,4 +245,13 @@ class GroupControl extends Component {
     );
   }
 }
-export default GroupControl;
+const mapStateToProps = (state) => {
+  const { allGroups } = state.settings;
+  return {
+    allGroups,
+  };
+};
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupControl);

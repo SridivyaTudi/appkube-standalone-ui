@@ -191,3 +191,19 @@ export const createUser = createAsyncThunk(
     }
   }
 );
+
+export const getGroups = createAsyncThunk(
+  "settings/getGroups",
+  async (userName) => {
+    try {
+      let url = config.GET_GROUPS.replace("#user-name#", userName).replace(
+        "#is-group#",
+        true
+      );
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

@@ -15,6 +15,7 @@ import {
   deletePolicy,
   getUsers,
   createUser,
+  getGroups,
 } from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
@@ -77,6 +78,10 @@ export const settingsSlice = createSlice({
       data: [],
     },
     userCreation: {
+      status: null,
+      data: [],
+    },
+    allGroups: {
       status: null,
       data: [],
     },
@@ -442,6 +447,32 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         userCreation: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getGroups.pending]: (state) => {
+      return {
+        ...state,
+        allGroups: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getGroups.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        allGroups: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getGroups.rejected]: (state) => {
+      return {
+        ...state,
+        allGroups: {
           status: status.FAILURE,
         },
       };
