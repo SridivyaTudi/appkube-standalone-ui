@@ -277,6 +277,7 @@ class Policies extends Component {
                 header: "Are you sure delete the policy ? ",
                 btnNo: "Cancel",
               }}
+              icon={<i class="fas fa-trash-alt"></i>}
               handleCallBack={this.handleDeletePolicy}
               showLoader={deletePolicyStatus === status.IN_PROGRESS}
             />

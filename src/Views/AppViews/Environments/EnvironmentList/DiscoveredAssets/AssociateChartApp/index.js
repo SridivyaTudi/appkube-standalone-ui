@@ -23,7 +23,8 @@ import {
   getCurrentOrgId,
   getCurrentOrgName,
   setCurrentOrgName,
-  getCurrentUser,deleteSelectedInfraTopologyView
+  getCurrentUser,
+  deleteSelectedInfraTopologyView,
 } from "Utils";
 import ConfirmationPopup from "Components/ConfirmationPopup";
 import Loader from "Components/Loader";
@@ -739,6 +740,7 @@ export class AssociateChartApp extends Component {
               header: "Are you sure delete the tag ? ",
               btnNo: "Cancel",
             }}
+            icon={<i class="fas fa-trash-alt"></i>}
             handleCallBack={this.handleDeleteTag}
             showLoader={deleteTagStatus === status.IN_PROGRESS}
           />
