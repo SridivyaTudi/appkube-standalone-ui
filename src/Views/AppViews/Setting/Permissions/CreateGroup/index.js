@@ -183,7 +183,8 @@ export class CreateGroup extends Component {
             <TableRow>
               <TableCell>
                 <Checkbox
-                  size="small" className="check-box"
+                  size="small"
+                  className="check-box"
                   disabled={roles?.length ? false : true}
                   checked={formData.roles.length === roles?.length}
                   onChange={(e) => this.handleSelectAllCheckBox(e, 1)}
@@ -213,7 +214,8 @@ export class CreateGroup extends Component {
         <TableRow key={index}>
           <TableCell>
             <Checkbox
-              size="small" className="check-box"
+              size="small"
+              className="check-box"
               id={`${row.id}`}
               checked={formData.roles.includes(row.id)}
               onChange={(e) => this.handleCheckBox(e, 1)}
@@ -338,7 +340,8 @@ export class CreateGroup extends Component {
           <TableHead>
             <TableRow>
               <TableCell>
-                <Checkbox className="check-box"
+                <Checkbox
+                  className="check-box"
                   size="small"
                   id="all"
                   disabled={users?.length ? false : true}
@@ -348,11 +351,8 @@ export class CreateGroup extends Component {
                 User
               </TableCell>
               <TableCell>Email Address</TableCell>
-              <TableCell>Groups</TableCell>
-              <TableCell>User Creation Date</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
+              <TableCell align="center">Groups</TableCell>
+              <TableCell align="center">User Creation Date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -360,7 +360,8 @@ export class CreateGroup extends Component {
               users.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
                 <TableRow key={index}>
                   <TableCell>
-                    <Checkbox className="check-box"
+                    <Checkbox
+                      className="check-box"
                       size="small"
                       id={`${row.id}`}
                       checked={formData.users.includes(row.id)}
@@ -369,11 +370,8 @@ export class CreateGroup extends Component {
                     {row.username}
                   </TableCell>
                   <TableCell>{row.email}</TableCell>
-                  <TableCell>{row.groups}</TableCell>
-                  <TableCell>{getFormattedDate(row.createdAt)}</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell align="center"></TableCell>
+                  <TableCell align="center">{row.groups}</TableCell>
+                  <TableCell align="center">{getFormattedDate(row.createdAt)}</TableCell>
                 </TableRow>
               ))
             ) : (

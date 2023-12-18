@@ -110,7 +110,8 @@ class Users extends Component {
           <TableCell>
             {" "}
             <Checkbox
-              size="small" className="check-box"
+              size="small"
+              className="check-box"
               disabled={rows?.length ? false : true}
               checked={rows?.length === selectedUsers?.length}
               onChange={(e) => this.handleSelectAllCheckBox(e)}
@@ -118,11 +119,7 @@ class Users extends Component {
             User
           </TableCell>
           <TableCell>Email Address</TableCell>
-          <TableCell>Groups</TableCell>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
+          <TableCell align="center">Groups</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -138,7 +135,8 @@ class Users extends Component {
             <TableRow key={index}>
               <TableCell>
                 <Checkbox
-                  size="small" className="check-box"
+                  size="small"
+                  className="check-box"
                   id={`${row.id}`}
                   checked={selectedUsers.includes(row.id)}
                   onChange={this.handleCheckBox}
@@ -146,11 +144,7 @@ class Users extends Component {
                 {row.user}
               </TableCell>
               <TableCell>{row.emailAddress}</TableCell>
-              <TableCell>{row.groups}</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell align="center"></TableCell>
+              <TableCell align="center">{row.groups}</TableCell>
             </TableRow>
           ))
         ) : (

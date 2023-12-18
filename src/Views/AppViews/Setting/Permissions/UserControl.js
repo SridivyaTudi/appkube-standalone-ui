@@ -235,9 +235,9 @@ class UserControl extends Component {
           <TableCell>User</TableCell>
           <TableCell>Email Address</TableCell>
           <TableCell>Login Details</TableCell>
-          <TableCell>Groups</TableCell>
-          <TableCell>Created Date</TableCell>
-          <TableCell>Applications</TableCell>
+          <TableCell align="center">Groups</TableCell>
+          <TableCell align="center">Created Date</TableCell>
+          <TableCell align="center">Applications</TableCell>
           <TableCell align="center">Actions</TableCell>
         </TableRow>
       </TableHead>
@@ -257,9 +257,9 @@ class UserControl extends Component {
               </TableCell>
               <TableCell>{row.email}</TableCell>
               <TableCell>{row.loginDetails}</TableCell>
-              <TableCell>{row.groups}</TableCell>
-              <TableCell>{getFormattedDate(row.createdAt)}</TableCell>
-              <TableCell>{row.applications}</TableCell>
+              <TableCell align="center">{row.groups}</TableCell>
+              <TableCell align="center">{getFormattedDate(row.createdAt)}</TableCell>
+              <TableCell align="center">{row.applications}</TableCell>
               <TableCell align="center">
                 <IconButton
                   className="action-btn"

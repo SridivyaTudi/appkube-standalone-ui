@@ -71,7 +71,7 @@ class AddUserGroup extends Component {
         <TableRow>
           <TableCell width={100}>
             <Checkbox
-              size="small"
+              size="small" className="check-box"
               disabled={rows?.length ? false : true}
               checked={rows?.length === selectedGroup?.length}
               onChange={(e) => this.handleSelectAllCheckBox(e)}
