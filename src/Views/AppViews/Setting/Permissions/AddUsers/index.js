@@ -126,7 +126,7 @@ class AddUsers extends Component {
         <TableRow>
           <TableCell>
             {" "}
-            <Checkbox
+            <Checkbox className="check-box"
               size="small"
               disabled={rows?.length ? false : true}
               checked={rows?.length === selectedUsers?.length}
@@ -155,7 +155,7 @@ class AddUsers extends Component {
             <TableRow key={index}>
               <TableCell>
                 {" "}
-                <Checkbox
+                <Checkbox className="check-box"
                   size="small"
                   id={row.id}
                   checked={selectedUsers.includes(row.id)}

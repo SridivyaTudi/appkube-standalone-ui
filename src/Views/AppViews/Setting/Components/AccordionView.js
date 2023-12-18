@@ -94,7 +94,7 @@ class AccordionView extends Component {
               {subchild.isCheckBoxShow ? (
                 <Box className="d-inline-block check-box ">
                   <Checkbox
-                    size="small"
+                    size="small" className="check-box"
                     id={currentNode}
                     checked={
                       selectedCheckBox.includes(currentNode) ? true : false

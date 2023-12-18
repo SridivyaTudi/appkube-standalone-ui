@@ -213,7 +213,7 @@ class CreateAddPolicyControlModal extends Component {
             <Box className="head">
               <Box className="title">{policy.name}</Box>
               <Box className="d-inline-block">
-                <Checkbox
+                <Checkbox className="check-box"
                   size="small"
                   id={policy.id}
                   checked={selectedPolicy.includes(policy.id)}

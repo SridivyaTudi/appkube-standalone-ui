@@ -131,7 +131,7 @@ class Roles extends Component {
           <TableCell>
             {" "}
             <Checkbox
-              size="small"
+              size="small" className="check-box"
               disabled={rows?.length ? false : true}
               checked={rows?.length === selectedRoles?.length}
               onChange={(e) => this.handleSelectAllCheckBox(e)}
@@ -154,7 +154,7 @@ class Roles extends Component {
             <TableRow key={index}>
               <TableCell>
                 <Checkbox
-                  size="small"
+                  size="small" className="check-box"
                   id={`${row.id}`}
                   checked={selectedRoles.includes(row.id)}
                   onChange={this.handleCheckBox}

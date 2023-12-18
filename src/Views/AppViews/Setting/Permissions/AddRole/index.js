@@ -192,7 +192,7 @@ class AddRole extends Component {
               <TableRow>
                 <TableCell>
                   {" "}
-                  <Checkbox size="small" /> User
+                  <Checkbox className="check-box" size="small" /> User
                 </TableCell>
                 <TableCell>Email Address</TableCell>
                 <TableCell>Groups</TableCell>
@@ -207,7 +207,7 @@ class AddRole extends Component {
                 <TableRow key={index}>
                   <TableCell>
                     {" "}
-                    <Checkbox size="small" /> {row.user}
+                    <Checkbox className="check-box" size="small" /> {row.user}
                     <Box className="d-flex roles-box">
                       <HtmlTooltip
                         className="table-tooltip"
