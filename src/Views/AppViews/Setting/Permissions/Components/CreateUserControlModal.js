@@ -175,6 +175,7 @@ class CreateUserControlModal extends Component {
       form.append("email", formData[0].email);
       form.append("ownerId", getCurrentUserInfo().id);
       form.append("type", "user");
+      form.append("errorOnOrgFound", false);
 
       this.props.createUser(form);
     } catch (error) {

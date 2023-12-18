@@ -217,7 +217,7 @@ class SignUp extends Component {
         step1.email
       }&type=${ADMIN}&targetService=${CMDB}&password=${encodeURIComponent(
         step1.password
-      )}`;
+      )}&errorOnOrgFound=true`;
 
       this.props.signUp(params);
     }
