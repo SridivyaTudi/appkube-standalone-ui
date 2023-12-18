@@ -108,8 +108,13 @@ class AccordionView extends Component {
               ) : (
                 <></>
               )}
+
               <Box className="access-box d-inline-block ">
-                <i className={`fas fa-chevron-${arrowDownOrRight}`}></i>
+                {isChildExist ? (
+                  <i className={`fas fa-chevron-${arrowDownOrRight}`}></i>
+                ) : (
+                  <></>
+                )}
                 {subchild.name}
               </Box>
             </TableCell>

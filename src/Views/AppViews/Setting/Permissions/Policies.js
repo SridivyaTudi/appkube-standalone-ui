@@ -106,15 +106,45 @@ class Policies extends Component {
   // set policy state according format
   setPolicyAccordingToFormat = (policies) => {
     return policies.map((policy) => {
-      policy["name"] = policy.name || policy.permissionId;
-
       if (policy.version) {
         policy["isCheckBoxShow"] = true;
       }
-      if (policy?.permissions?.length) {
-        policy["chlidren"] = this.setPolicyAccordingToFormat(
-          policy.permissions
-        );
+
+      let permissions = policy?.permissions;
+      if (permissions?.length) {
+        let categories = [];
+        permissions.forEach((permission) => {
+          let { permissionCategoryId } = permission;
+          let isExistCategory = categories.filter(
+            (category) => category.id === permissionCategoryId
+          ).length;
+
+          if (!isExistCategory) {
+            categories.push({
+              id: permissionCategoryId,
+              name: permissionCategoryId,
+            });
+          }
+        });
+
+        let permissionList = categories.map((category) => {
+          let childData = [];
+          permissions.forEach((permission) => {
+            if (permission.permissionCategoryId === category.id) {
+              let obj = {
+                id: permission.permissionId,
+                name: permission.permissionId,
+                permissionCategoryId: category.id,
+              };
+              childData.push(obj);
+            }
+          });
+
+          category["chlidren"] = childData;
+          return category;
+        });
+
+        policy["chlidren"] = permissionList;
         return policy;
       } else {
         return policy;
@@ -230,7 +260,11 @@ class Policies extends Component {
               isSingleChecked={true}
             />
           ) : (
-            <></>
+            <Box className="group-control-boxs">
+              <Box className="group-loader h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
+                <h5 className="m-t-0 m-b-0">There are no policy available.</h5>
+              </Box>
+            </Box>
           )}
 
           {showConfirmPopup ? (
