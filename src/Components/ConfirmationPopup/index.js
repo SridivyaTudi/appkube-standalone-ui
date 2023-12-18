@@ -17,7 +17,7 @@ class ConfirmationPopup extends Component {
   };
 
   render() {
-    const { showLoader, showModal, labels } = this.props;
+    const { showLoader, showModal, labels, icon } = this.props;
     return (
       <Modal
         isOpen={showModal}
@@ -26,9 +26,7 @@ class ConfirmationPopup extends Component {
       >
         <ModalBody>
           <Box className="delete-policy-content text-center">
-            <Box className="delete-icon">
-              <i class="fas fa-trash-alt"></i>
-            </Box>
+            <Box className="delete-icon">{icon}</Box>
             <h5>{labels?.header}</h5>
             <p> {labels?.description}</p>
           </Box>

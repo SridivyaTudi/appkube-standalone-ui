@@ -301,6 +301,7 @@ class GroupControl extends Component {
               header: "Do you want to delete this Group ? ",
               btnNo: "Cancel",
             }}
+            icon={<i class="fas fa-trash-alt"></i>}
             handleCallBack={this.handleDeleteGroup}
             showLoader={deleteGroupStatus}
           />

@@ -361,6 +361,7 @@ class RoleControl extends Component {
               description: "This action can’t be undone",
               btnNo: "Cancel",
             }}
+            icon={<i class="fas fa-trash-alt"></i>}
             handleCallBack={this.handleDeleteRole}
             showLoader={deleteRoleStatus === status.IN_PROGRESS}
           />
