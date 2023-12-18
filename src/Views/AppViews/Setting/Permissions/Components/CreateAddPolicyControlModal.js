@@ -217,9 +217,11 @@ class CreateAddPolicyControlModal extends Component {
   // Render loder
   renderLoder = () => {
     return (
-      <Box className="d-blck text-center w-100 h-100 ">
-        <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
-      </Box>
+      <Grid item xs={12}>
+        <Box className="d-blck text-center w-100 h-100 ">
+          <Loader className="text-center w-100 h-100 p-t-20 p-b-20" />
+        </Box>
+      </Grid>
     );
   };
 
