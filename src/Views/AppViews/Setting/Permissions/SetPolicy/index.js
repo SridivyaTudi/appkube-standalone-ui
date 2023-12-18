@@ -11,9 +11,8 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import { setActiveTab } from "Utils";
 import CreateAddPolicyControlModal from "../Components/CreateAddPolicyControlModal";
-import DeletePolicyControlModal from "../Components/DeletePolicyControlModal";
-import DeleteRoleControlModal from "../Components/DeleteRoleControlModal";
 import AccordionView from "../../Components/AccordionView";
+import ConfirmationPopup from "Components/ConfirmationPopup";
 
 let accessPolicyData = [
   {
@@ -72,8 +71,8 @@ class SetPolicy extends Component {
     super(props);
     this.state = {
       showCreateAddPolicyControlModal: false,
-      showDeletePolicyControlModal: false,
-      showDeleteRoleControlModal: false,
+      showConfirmPopup: false,
+      currentDeleteFlag: "",
     };
   }
   handleCreateAddPolicyControlModal = () => {
@@ -82,23 +81,20 @@ class SetPolicy extends Component {
         !this.state.showCreateAddPolicyControlModal,
     });
   };
-  handleDeletePolicyControlModal = () => {
+  // toggle confirmation popup
+  togglePopup = (name) => {
+    let { showConfirmPopup } = this.state;
     this.setState({
-      showDeletePolicyControlModal: !this.state.showDeletePolicyControlModal,
-    });
-  };
-
-  handleDeleteRoleControlModal = () => {
-    this.setState({
-      showDeleteRoleControlModal: !this.state.showDeleteRoleControlModal,
+      showConfirmPopup: !showConfirmPopup,
+      currentDeleteFlag: showConfirmPopup ? "" : name,
     });
   };
 
   render() {
     const {
       showCreateAddPolicyControlModal,
-      showDeletePolicyControlModal,
-      showDeleteRoleControlModal,
+      currentDeleteFlag,
+      showConfirmPopup,
     } = this.state;
     return (
       <Box className="set-policy-container">
@@ -129,7 +125,7 @@ class SetPolicy extends Component {
             className="h-100"
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid item xs={12} md={8} lg={6} >
+            <Grid item xs={12} md={8} lg={6}>
               <Box className="overview-card">
                 <h5>Overview</h5>
                 <p>
@@ -148,7 +144,7 @@ class SetPolicy extends Component {
         <Box className="policy-section">
           <Box className="setting-common-searchbar">
             <Grid container alignItems={"center"}>
-              <Grid item xs={4} md={4} >
+              <Grid item xs={4} md={4}>
                 <h4 className="m-t-0 m-b-0">Allowed Policy set</h4>
               </Grid>
               <Grid item xs={8} md={8}>
@@ -164,22 +160,32 @@ class SetPolicy extends Component {
                   </ListItem>
                   <ListItem>
                     <Button
-                      onClick={this.handleDeletePolicyControlModal}
+                      onClick={() =>
+                        this.setState({
+                          currentDeleteFlag: "policy",
+                          showConfirmPopup: true,
+                        })
+                      }
+                      className="danger-outline-btn min-width-inherit"
+                      variant="outlined"
+                    >
+                      <i className="p-r-10 fas fa-trash-alt"></i>
+                      Delete Policy
+                    </Button>
+                  </ListItem>
+                  <ListItem>
+                    <Button
+                      onClick={() =>
+                        this.setState({
+                          currentDeleteFlag: "role",
+                          showConfirmPopup: true,
+                        })
+                      }
                       className="danger-outline-btn min-width-inherit"
                       variant="outlined"
                     >
                       <i className="p-r-10 fas fa-trash-alt"></i>
                       Delete
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button
-                      onClick={this.handleDeleteRoleControlModal}
-                      className="danger-outline-btn min-width-inherit"
-                      variant="outlined"
-                    >
-                      <i className="p-r-10 fas fa-trash-alt"></i>
-                      Delete Role
                     </Button>
                   </ListItem>
                 </List>
@@ -218,18 +224,21 @@ class SetPolicy extends Component {
         ) : (
           <></>
         )}
-        {showDeletePolicyControlModal ? (
-          <DeletePolicyControlModal
-            showModal={showDeletePolicyControlModal}
-            handleDeletePolicyControlModal={this.handleDeletePolicyControlModal}
-          />
-        ) : (
-          <></>
-        )}
-        {showDeleteRoleControlModal ? (
-          <DeleteRoleControlModal
-            showModal={showDeleteRoleControlModal}
-            handleDeleteRoleControlModal={this.handleDeleteRoleControlModal}
+
+        {showConfirmPopup ? (
+          <ConfirmationPopup
+            showModal={showConfirmPopup}
+            togglePopup={() => this.togglePopup()}
+            labels={{
+              btnYes: "Delete",
+              header: `Do you want to delete this  ${
+                currentDeleteFlag === "policy" ? "Policy" : "Role"
+              } ? `,
+              description: "This action can’t be undone",
+              btnNo: "Cancel",
+            }}
+            handleCallBack={() => this.togglePopup()}
+            showLoader={false}
           />
         ) : (
           <></>

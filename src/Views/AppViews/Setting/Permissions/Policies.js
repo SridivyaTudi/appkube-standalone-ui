@@ -9,6 +9,7 @@ import Loader from "Components/Loader";
 import ConfirmationPopup from "Components/ConfirmationPopup";
 import { deletePolicy, getPolicies } from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
+
 let searchedData = [];
 class Policies extends Component {
   constructor(props) {
@@ -273,7 +274,7 @@ class Policies extends Component {
               togglePopup={this.togglePopup}
               labels={{
                 btnYes: "Yes",
-                description: "Are you sure delete the policy ? ",
+                header: "Are you sure delete the policy ? ",
                 btnNo: "Cancel",
               }}
               handleCallBack={this.handleDeletePolicy}

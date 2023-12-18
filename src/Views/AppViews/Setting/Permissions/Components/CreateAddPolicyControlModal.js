@@ -161,42 +161,38 @@ class CreateAddPolicyControlModal extends Component {
   // Render policies
   renderPolicies = () => {
     let { policies, selectedPolicy } = this.state;
-    return policies?.length ? (
-      policies.map((policy) => (
-        <Grid item xs={4} key={v4()}>
-          <Box className="policy-box">
-            <Box className="head">
-              <Box className="title">{policy.name}</Box>
-              <Box className="d-inline-block">
-                <Checkbox
-                  className="check-box"
-                  size="small"
-                  id={policy.id}
-                  checked={selectedPolicy.includes(policy.id)}
-                  onChange={this.handleCheckBox}
-                />
+    return policies?.length
+      ? policies.map((policy) => (
+          <Grid item xs={4} key={v4()}>
+            <Box className="policy-box">
+              <Box className="head">
+                <Box className="title">{policy.name}</Box>
+                <Box className="d-inline-block">
+                  <Checkbox
+                    className="check-box"
+                    size="small"
+                    id={policy.id}
+                    checked={selectedPolicy.includes(policy.id)}
+                    onChange={this.handleCheckBox}
+                  />
+                </Box>
               </Box>
+              {policy.permissions?.length ? (
+                <Box className="policy-list-content">
+                  <Box className="title">list of permissons</Box>
+                  <List>
+                    {policy.permissions.map((permisson) => (
+                      <ListItem key={v4()}>{permisson.id}</ListItem>
+                    ))}
+                  </List>
+                </Box>
+              ) : (
+                this.renderNoDataHtml("No permission Found.")
+              )}
             </Box>
-            {policy.permissions?.length ? (
-              <Box className="policy-list-content">
-                <Box className="title">list of permissons</Box>
-                <List>
-                  {policy.permissions.map((permisson) => (
-                    <ListItem key={v4()}>{permisson.id}</ListItem>
-                  ))}
-                </List>
-              </Box>
-            ) : (
-              <></>
-            )}
-          </Box>
-        </Grid>
-      ))
-    ) : (
-      <Box className="group-loader h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
-        <h5 className="m-t-0 m-b-0">There are no policy available.</h5>
-      </Box>
-    );
+          </Grid>
+        ))
+      : this.renderNoDataHtml("There are no policy available.");
   };
 
   // Handle check box
@@ -222,6 +218,14 @@ class CreateAddPolicyControlModal extends Component {
           <Loader className="text-center w-100 h-100 p-t-20 p-b-20" />
         </Box>
       </Grid>
+    );
+  };
+
+  renderNoDataHtml = (text) => {
+    return (
+      <Box className="group-loader h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
+        <h5 className="m-t-0 m-b-0">{text}</h5>
+      </Box>
     );
   };
 

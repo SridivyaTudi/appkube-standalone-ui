@@ -357,7 +357,8 @@ class RoleControl extends Component {
             togglePopup={this.togglePopup}
             labels={{
               btnYes: "Delete",
-              description: "Do you want to delete this Role? ",
+              header: "Do you want to delete this Role ? ",
+              description: "This action can’t be undone",
               btnNo: "Cancel",
             }}
             handleCallBack={this.handleDeleteRole}

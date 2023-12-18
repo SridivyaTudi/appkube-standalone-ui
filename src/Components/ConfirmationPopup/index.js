@@ -22,46 +22,35 @@ class ConfirmationPopup extends Component {
       <Modal
         isOpen={showModal}
         toggle={this.toggle}
-        className="select-account-modal-container"
+        className="setting-modal-container delete-policy-modal"
       >
-        <ModalHeader className="m-b-1 border-bottom">
-          Confirmation
-          <button
-            type="button"
-            className="close"
-            aria-label="Close"
-            onClick={() => {
-              this.props.togglePopup();
-            }}
-          >
-            <i className="fa-solid fa-xmark"></i>
-          </button>
-        </ModalHeader>
-        <ModalBody
-          style={{ overflowY: "auto", overflowX: "hidden", maxHeight: "300px" }}
-        >
-          <h4 className="text-left m-b-1 m-t-0 ">{labels?.description}</h4>
+        <ModalBody>
+          <Box className="delete-policy-content text-center">
+            <Box className="delete-icon">
+              <i class="fas fa-trash-alt"></i>
+            </Box>
+            <h5>{labels?.header}</h5>
+            <p> {labels?.description}</p>
+          </Box>
         </ModalBody>
-        <ModalFooter className="footer-top-br">
+        <ModalFooter className="footer-top-br m-t-3">
           <Box className="d-block text-center">
             <LoadingButton
-              className="secondary-btn m-r-2"
+              className="danger-btn   m-r-2"
+              variant="contained"
+              disabled={showLoader}
+              loading={showLoader}
+              onClick={this.onClickYes}
+            >
+              {labels?.btnYes}
+            </LoadingButton>
+            <LoadingButton
+              className="secondary-btn "
               variant="contained"
               onClick={this.onClickNo}
               disabled={showLoader}
             >
               {labels?.btnNo}
-            </LoadingButton>
-
-            <LoadingButton
-              disabled={showLoader}
-              loading={showLoader}
-              className="primary-btn min-width"
-              // loadingPosition="start"
-              variant="contained"
-              onClick={this.onClickYes}
-            >
-              {labels?.btnYes}
             </LoadingButton>
           </Box>
         </ModalFooter>

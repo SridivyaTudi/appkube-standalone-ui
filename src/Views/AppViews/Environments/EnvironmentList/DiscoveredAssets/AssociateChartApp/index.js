@@ -736,7 +736,7 @@ export class AssociateChartApp extends Component {
             togglePopup={this.togglePopup}
             labels={{
               btnYes: "Yes",
-              description: "Are you sure delete the tag ? ",
+              header: "Are you sure delete the tag ? ",
               btnNo: "Cancel",
             }}
             handleCallBack={this.handleDeleteTag}

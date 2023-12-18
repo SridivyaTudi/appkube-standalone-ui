@@ -98,7 +98,7 @@ class GroupControl extends Component {
           retData.push(
             <Box className="group-box" key={v4()}>
               <Box className="heading">
-                <h4 onClick={this.props.setActiveTab}>{groupData.name}</h4>
+                <h4>{groupData.name}</h4>
                 {groupData.default ? (
                   <Box className="d-flex roles-box">
                     <HtmlTooltip
@@ -160,7 +160,7 @@ class GroupControl extends Component {
                   </>
                 )}
               </Box>
-              <Box className="group-data" onClick={this.props.setActiveTab}>
+              <Box className="group-data">
                 <Box className="data">
                   <label>Active Users</label>
                   <span>{groupData.users?.length || 0}</span>
@@ -170,10 +170,7 @@ class GroupControl extends Component {
                   <span className="group-name">Basic Users</span>
                 </Box>
               </Box>
-              <Box
-                className="description-text"
-                onClick={this.props.setActiveTab}
-              >
+              <Box className="description-text">
                 <label>Group Description</label>
                 <p>{groupData.description}</p>
               </Box>
@@ -301,7 +298,7 @@ class GroupControl extends Component {
             togglePopup={this.togglePopup}
             labels={{
               btnYes: "Delete",
-              description: "Do you want to delete this Group ? ",
+              header: "Do you want to delete this Group ? ",
               btnNo: "Cancel",
             }}
             handleCallBack={this.handleDeleteGroup}
