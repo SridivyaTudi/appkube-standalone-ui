@@ -177,18 +177,21 @@ class CreateAddPolicyControlModal extends Component {
                   />
                 </Box>
               </Box>
-              {policy.permissions?.length ? (
-                <Box className="policy-list-content">
-                  <Box className="title">list of permissons</Box>
-                  <List>
-                    {policy.permissions.map((permisson) => (
-                      <ListItem key={v4()}>{permisson.id}</ListItem>
-                    ))}
-                  </List>
-                </Box>
-              ) : (
-                this.renderNoDataHtml("No permission Found.")
-              )}
+
+              <Box className="policy-list-content">
+                {policy.permissions?.length ? (
+                  <>
+                    <Box className="title">list of permissons</Box>
+                    <List>
+                      {policy.permissions.map((permisson) => (
+                        <ListItem key={v4()}>{permisson.id}</ListItem>
+                      ))}
+                    </List>
+                  </>
+                ) : (
+                  this.renderNoDataHtml("No permission Found.")
+                )}
+              </Box>
             </Box>
           </Grid>
         ))
@@ -223,7 +226,7 @@ class CreateAddPolicyControlModal extends Component {
 
   renderNoDataHtml = (text) => {
     return (
-      <Box className="group-loader h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
+      <Box className="group-loader">
         <h5 className="m-t-0 m-b-0">{text}</h5>
       </Box>
     );
