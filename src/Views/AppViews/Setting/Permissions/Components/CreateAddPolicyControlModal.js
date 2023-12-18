@@ -11,95 +11,34 @@ import { List, Modal, ModalBody, ModalHeader } from "reactstrap";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import { getPolicies } from "Redux/Settings/SettingsThunk";
+import Loader from "Components/Loader";
 
-let policy = [
-  {
-    id: 1,
-    name: "Environment",
-    permissions: [
-      "Create Landing Zone",
-      "Edit Landing Zone",
-      "Create Landing Zone",
-      "Clone Landing Zone",
-      "Migrate Landing Zone",
-      "Delete Landing Zone",
-      "Replicate Landing Zone",
-    ],
-  },
-  {
-    id: 2,
-    name: "Product",
-    permissions: [
-      "Create Landing Zone",
-      "Edit Landing Zone",
-      "Create Landing Zone",
-      "Clone Landing Zone",
-      "Migrate Landing Zone",
-      "Delete Landing Zone",
-      "Replicate Landing Zone",
-    ],
-  },
-  {
-    id: 3,
-    name: "SHE",
-    permissions: [
-      "Create Landing Zone",
-      "Edit Landing Zone",
-      "Create Landing Zone",
-      "Clone Landing Zone",
-      "Migrate Landing Zone",
-      "Delete Landing Zone",
-      "Replicate Landing Zone",
-    ],
-  },
-  {
-    id: 4,
-    name: "DevSecOps",
-    permissions: [
-      "Create Landing Zone",
-      "Edit Landing Zone",
-      "Create Landing Zone",
-      "Clone Landing Zone",
-      "Migrate Landing Zone",
-      "Delete Landing Zone",
-      "Replicate Landing Zone",
-    ],
-  },
-  {
-    id: 5,
-    name: "Full Access",
-    permissions: [
-      "Create Landing Zone",
-      "Edit Landing Zone",
-      "Create Landing Zone",
-      "Clone Landing Zone",
-      "Migrate Landing Zone",
-      "Delete Landing Zone",
-      "Replicate Landing Zone",
-    ],
-  },
-  {
-    id: 6,
-    name: "Minimal Access",
-    permissions: [
-      "Create Landing Zone",
-      "Edit Landing Zone",
-      "Create Landing Zone",
-      "Clone Landing Zone",
-      "Migrate Landing Zone",
-      "Delete Landing Zone",
-      "Replicate Landing Zone",
-    ],
-  },
-];
 class CreateAddPolicyControlModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      policies: policy,
+      policies: [],
       selectedPolicy: [],
     };
   }
+
+  componentDidMount = () => {
+    this.props.getPolicies();
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.props.allPolicy.status !== prevProps.allPolicy.status) {
+      if (this.props.allPolicy.status === status.SUCCESS) {
+        let policies = this.props.allPolicy.data;
+        if (policies) {
+          this.setState({ policies });
+        }
+      }
+    }
+  };
 
   // Render modal header
   renderModalHeader = () => {
@@ -123,7 +62,8 @@ class CreateAddPolicyControlModal extends Component {
 
   // Render modal body
   renderModalBody = () => {
-    let { searchedPolicy } = this.state;
+    let { searchedPolicy, selectedPolicy } = this.state;
+    let { allPolicy } = this.props;
     return (
       <ModalBody>
         <Box className="setting-common-searchbar p-t-5 p-b-0">
@@ -148,7 +88,7 @@ class CreateAddPolicyControlModal extends Component {
         <Box className="setting-common-searchbar">
           <Grid container>
             <Grid item xs={6}>
-              <h5>List of Policies (5)</h5>
+              <h5>List of Policies ({selectedPolicy.length})</h5>
             </Grid>
             <Grid item xs={6}>
               <List>
@@ -171,7 +111,9 @@ class CreateAddPolicyControlModal extends Component {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            {this.renderPolicies()}
+            {allPolicy.status === status.IN_PROGRESS
+              ? this.renderLoder()
+              : this.renderPolicies()}
           </Grid>
         </Box>
       </ModalBody>
@@ -181,22 +123,35 @@ class CreateAddPolicyControlModal extends Component {
   //  Serach policy
   handleSearchChange = (e) => {
     let value = e.target.value;
+    let data = this.props.allPolicy?.data || [];
 
     let { policies, searchedPolicy } = this.state;
 
-    if (policy?.length) {
+    if (data?.length) {
       searchedPolicy = value;
-
       if (value) {
-        policies = policy.filter((row) => {
+        policies = [];
+        data.forEach((row) => {
+          let permissions = row.permissions;
+
           if (row?.name.toLowerCase().includes(value.toLowerCase())) {
-            return row;
+            policies.push(row);
+          } else if (permissions.length) {
+            permissions.forEach((permisson) => {
+              let findValue = `${permisson?.id || permisson?.name}`;
+              if (
+                findValue &&
+                findValue.toLowerCase().includes(value.toLowerCase())
+              ) {
+                return permisson;
+              }
+            });
           } else {
             return null;
           }
         });
       } else {
-        policies = policy;
+        policies = data;
       }
 
       this.setState({ policies, searchedPolicy });
@@ -213,7 +168,8 @@ class CreateAddPolicyControlModal extends Component {
             <Box className="head">
               <Box className="title">{policy.name}</Box>
               <Box className="d-inline-block">
-                <Checkbox className="check-box"
+                <Checkbox
+                  className="check-box"
                   size="small"
                   id={policy.id}
                   checked={selectedPolicy.includes(policy.id)}
@@ -221,23 +177,25 @@ class CreateAddPolicyControlModal extends Component {
                 />
               </Box>
             </Box>
-            <Box className="policy-list-content">
-              <Box className="title">list of permissons</Box>
-              <List>
-                {policy.permissions?.length ? (
-                  policy.permissions.map((permisson) => (
-                    <ListItem>{permisson}</ListItem>
-                  ))
-                ) : (
-                  <></>
-                )}
-              </List>
-            </Box>
+            {policy.permissions?.length ? (
+              <Box className="policy-list-content">
+                <Box className="title">list of permissons</Box>
+                <List>
+                  {policy.permissions.map((permisson) => (
+                    <ListItem key={v4()}>{permisson.id}</ListItem>
+                  ))}
+                </List>
+              </Box>
+            ) : (
+              <></>
+            )}
           </Box>
         </Grid>
       ))
     ) : (
-      <></>
+      <Box className="group-loader h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
+        <h5 className="m-t-0 m-b-0">There are no policy available.</h5>
+      </Box>
     );
   };
 
@@ -256,6 +214,15 @@ class CreateAddPolicyControlModal extends Component {
     this.setState({ selectedPolicy });
   };
 
+  // Render loder
+  renderLoder = () => {
+    return (
+      <Box className="d-blck text-center w-100 h-100 ">
+        <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
+      </Box>
+    );
+  };
+
   render() {
     return (
       <Modal
@@ -269,5 +236,18 @@ class CreateAddPolicyControlModal extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  const { allPolicy } = state.settings;
+  return {
+    allPolicy,
+  };
+};
 
-export default CreateAddPolicyControlModal;
+const mapDispatchToProps = {
+  getPolicies,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateAddPolicyControlModal);
