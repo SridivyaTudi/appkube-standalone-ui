@@ -196,7 +196,7 @@ class SetPolicy extends Component {
                 <Grid item xs={12}>
                   <Box className="title">
                     <FormControlLabel
-                      control={<Checkbox />}
+                      control={<Checkbox className="check-box" />}
                       label="Policy Name"
                     />
                   </Box>

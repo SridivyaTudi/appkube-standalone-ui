@@ -183,7 +183,7 @@ export class CreateGroup extends Component {
             <TableRow>
               <TableCell>
                 <Checkbox
-                  size="small"
+                  size="small" className="check-box"
                   disabled={roles?.length ? false : true}
                   checked={formData.roles.length === roles?.length}
                   onChange={(e) => this.handleSelectAllCheckBox(e, 1)}
@@ -213,7 +213,7 @@ export class CreateGroup extends Component {
         <TableRow key={index}>
           <TableCell>
             <Checkbox
-              size="small"
+              size="small" className="check-box"
               id={`${row.id}`}
               checked={formData.roles.includes(row.id)}
               onChange={(e) => this.handleCheckBox(e, 1)}
@@ -338,7 +338,7 @@ export class CreateGroup extends Component {
           <TableHead>
             <TableRow>
               <TableCell>
-                <Checkbox
+                <Checkbox className="check-box"
                   size="small"
                   id="all"
                   disabled={users?.length ? false : true}
@@ -360,7 +360,7 @@ export class CreateGroup extends Component {
               users.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
                 <TableRow key={index}>
                   <TableCell>
-                    <Checkbox
+                    <Checkbox className="check-box"
                       size="small"
                       id={`${row.id}`}
                       checked={formData.users.includes(row.id)}

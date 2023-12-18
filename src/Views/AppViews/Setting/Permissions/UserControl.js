@@ -238,7 +238,7 @@ class UserControl extends Component {
           <TableCell>Groups</TableCell>
           <TableCell>Created Date</TableCell>
           <TableCell>Applications</TableCell>
-          <TableCell>Actions</TableCell>
+          <TableCell align="center">Actions</TableCell>
         </TableRow>
       </TableHead>
     );
