@@ -28,7 +28,7 @@ import { ToastMessage } from "Toast/ToastMessage";
 import { createUser, getUsers } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
-import { getCurrentUser } from "Utils";
+import { getCurrentUser,getCurrentOrgName } from "Utils";
 import LoadingButton from "@mui/lab/LoadingButton";
 const steps = ["User details ", "Add  user to group ", "Review and Create"];
 const initialFormData = {
@@ -166,12 +166,10 @@ class CreateUserControlModal extends Component {
     let form = new FormData();
 
     try {
-      let groupName = groupData.filter(
-        (group) => group.id === selectedGroups[0]
-      )[0]?.name;
+      
 
       form.append("username", formData[0].name);
-      form.append("organization", groupName);
+      form.append("organization", getCurrentOrgName());
       form.append("email", formData[0].email);
       form.append("ownerId", getCurrentUserInfo().id);
       form.append("type", "user");

@@ -22,6 +22,7 @@ import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
+import ConfirmationPopup from "Components/ConfirmationPopup";
 let users = [
   {
     user: "Super Admin",
@@ -258,7 +259,9 @@ class UserControl extends Component {
               <TableCell>{row.email}</TableCell>
               <TableCell>{row.loginDetails}</TableCell>
               <TableCell align="center">{row.groups}</TableCell>
-              <TableCell align="center">{getFormattedDate(row.createdAt)}</TableCell>
+              <TableCell align="center">
+                {getFormattedDate(row.createdAt)}
+              </TableCell>
               <TableCell align="center">{row.applications}</TableCell>
               <TableCell align="center">
                 <IconButton
@@ -277,6 +280,12 @@ class UserControl extends Component {
                           <DeleteOutlineOutlinedIcon className="icon" />
                         }
                         className="secondary-text-btn"
+                        onClick={() => {
+                          this.setState({
+                            showConfirmPopup: true,
+                            roleId: row.id,
+                          });
+                        }}
                       >
                         Delete User
                       </Button>
@@ -365,6 +374,27 @@ class UserControl extends Component {
     );
   };
 
+  // Render component of Create User Modal
+  renderComponentConfirmationModal = () => {
+    const { showConfirmPopup } = this.state;
+    return showConfirmPopup ? (
+      <ConfirmationPopup
+        showModal={showConfirmPopup}
+        togglePopup={this.togglePopup}
+        labels={{
+          btnYes: "Delete",
+          header: "Do you want to delete this User ? ",
+          btnNo: "Cancel",
+        }}
+        icon={<i class="fas fa-trash-alt"></i>}
+        handleCallBack={this.handleDeleteUser}
+        showLoader={false}
+      />
+    ) : (
+      <></>
+    );
+  };
+
   // Set state or return data
   setUsersStateOrReturnData = (isStateSet = 1) => {
     let rows = this.props?.allUsers.data || [];
@@ -384,6 +414,20 @@ class UserControl extends Component {
     );
   }
 
+  // Delete user API
+  handleDeleteUser = () => {
+    this.togglePopup();
+  };
+
+  // toggle confirmation popup
+  togglePopup = () => {
+    let { showConfirmPopup, userId } = this.state;
+    this.setState({
+      showConfirmPopup: !showConfirmPopup,
+      roleId: showConfirmPopup ? 0 : userId,
+      actionButton: false,
+    });
+  };
   render() {
     return (
       <>
@@ -391,6 +435,7 @@ class UserControl extends Component {
         {this.renderTableContainer()}
         {this.renderComponentTablePagination()}
         {this.renderComponentCreateUserModal()}
+        {this.renderComponentConfirmationModal()}
       </>
     );
   }
