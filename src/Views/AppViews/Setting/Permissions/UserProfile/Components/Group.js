@@ -23,12 +23,8 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: "#16161E",
-    color: "#ffffff",
     maxWidth: 250,
-
-    fontSize: theme.typography.pxToRem(12),
-    border: "1px solid #dadde9",
-    padding: "8px 10px",
+    fontSize: theme.typography.pxToRem(11),
   },
 }));
 
@@ -87,7 +83,7 @@ class Group extends Component {
               {row.permissionName}
               <Box className="d-flex roles-box">
                 <HtmlTooltip
-                  className="table-tooltip"
+                  className="table-tooltip-dark"
                   title={
                     <React.Fragment>
                       <span>This role created by default by the system</span>

@@ -195,3 +195,17 @@
 .check-box {
   color: #3247e5!important;
 }
+
+.table-tooltip-dark {
+  border-radius: 6px;
+  .MuiTooltip-tooltip {
+    margin-bottom: 0 !important;
+    margin-top: 5px !important;
+    border-radius: 5px;
+    padding: 4px 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  .css-kudwh-MuiTooltip-arrow::before {
+    border: 1px solid #000000;
+  }
+}
