@@ -106,9 +106,9 @@ class AddUserGroup extends Component {
                     }
                   >
                    <Box className="d-inline-block default-Icon p-r-5">
-                    <img src={DefaultIcon} alt=""  /> 
+                    <img src={DefaultIcon} alt=""  />Default 
                   </Box>
-                  Default
+                  
                   </HtmlTooltip>
                 </Box>
               </TableCell>
