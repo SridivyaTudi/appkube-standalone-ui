@@ -94,7 +94,8 @@ class AccordionView extends Component {
               {subchild.isCheckBoxShow ? (
                 <Box className="d-inline-block check-box ">
                   <Checkbox
-                    size="small" className="check-box"
+                    size="small"
+                    className="check-box"
                     id={currentNode}
                     checked={
                       selectedCheckBox.includes(currentNode) ? true : false
@@ -108,7 +109,6 @@ class AccordionView extends Component {
               ) : (
                 <></>
               )}
-
               <Box className="access-box d-inline-block ">
                 {isChildExist ? (
                   <i className={`fas fa-chevron-${arrowDownOrRight}`}></i>
@@ -137,7 +137,9 @@ class AccordionView extends Component {
             <TableRow>
               <TableCell colSpan={2} className="child-table-section">
                 <Table>
-                  {this.renderTableBody(subchild?.chlidren, currentNode)}
+                  <TableBody>
+                    {this.renderTableBody(subchild?.chlidren, currentNode)}
+                  </TableBody>
                 </Table>
               </TableCell>
             </TableRow>
