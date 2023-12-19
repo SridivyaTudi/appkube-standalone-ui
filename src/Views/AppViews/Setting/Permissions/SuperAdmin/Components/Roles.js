@@ -126,7 +126,8 @@ class Roles extends Component {
           <TableCell>
             {" "}
             <Checkbox
-              size="small" className="check-box"
+              size="small"
+              className="check-box"
               disabled={rows?.length ? false : true}
               checked={rows?.length === selectedRoles?.length}
               onChange={(e) => this.handleSelectAllCheckBox(e)}
@@ -149,7 +150,8 @@ class Roles extends Component {
             <TableRow key={index}>
               <TableCell>
                 <Checkbox
-                  size="small" className="check-box"
+                  size="small"
+                  className="check-box"
                   id={`${row.id}`}
                   checked={selectedRoles.includes(row.id)}
                   onChange={this.handleCheckBox}
@@ -164,10 +166,10 @@ class Roles extends Component {
                       </React.Fragment>
                     }
                   >
-                    <span>
-                      <img src={DefaultIcon} alt="" /> Default
-                    </span>
-                   
+                    <Box className="d-inline-block default-Icon p-r-5">
+                      <img src={DefaultIcon} alt="" />
+                    </Box>
+                    Default
                   </HtmlTooltip>
                 </Box>
               </TableCell>

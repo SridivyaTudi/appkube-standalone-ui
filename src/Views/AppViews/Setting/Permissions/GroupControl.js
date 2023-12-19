@@ -106,10 +106,10 @@ class GroupControl extends Component {
                         </React.Fragment>
                       }
                     >
-                      <span>
+                      <Box className="d-inline-block default-Icon p-r-5">
                         <img src={DefaultIcon} alt="" />
-                        Default
-                      </span>
+                      </Box>
+                      Default
                     </HtmlTooltip>
                   </Box>
                 ) : (

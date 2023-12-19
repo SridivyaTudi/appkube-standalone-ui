@@ -7,7 +7,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Box
+  Box,
 } from "@mui/material";
 import React, { Component } from "react";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -90,9 +90,9 @@ class Group extends Component {
                     </React.Fragment>
                   }
                 >
-                  <span>
-                    <img src={DefaultIcon} alt="" />
-                  </span>
+                  <Box className="d-inline-block default-Icon p-r-5">
+                    <img src={DefaultIcon} alt=""  /> 
+                  </Box>
                   Default
                 </HtmlTooltip>
               </Box>

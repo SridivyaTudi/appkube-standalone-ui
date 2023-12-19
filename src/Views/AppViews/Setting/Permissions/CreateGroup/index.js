@@ -225,9 +225,10 @@ export class CreateGroup extends Component {
                   </React.Fragment>
                 }
               >
-                <span>
-                  <img src={DefaultIcon} alt="" className="m-r-1" /> Default
-                </span>
+               <Box className="d-inline-block default-Icon p-r-5">
+                    <img src={DefaultIcon} alt=""  /> 
+                  </Box>
+                  Default
               </HtmlTooltip>
             </Box>
           </TableCell>
