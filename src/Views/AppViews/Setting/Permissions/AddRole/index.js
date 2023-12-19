@@ -216,7 +216,7 @@ class AddRole extends Component {
                         }
                       >
                         <span className=" m-r-0">
-                          <img src={DefaultIcon} alt="" className="p-r-5" />{" "}
+                          <img src={DefaultIcon} alt=""  />{" "}
                           Default
                         </span>
                       </HtmlTooltip>

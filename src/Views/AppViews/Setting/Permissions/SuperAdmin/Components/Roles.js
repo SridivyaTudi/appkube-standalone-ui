@@ -167,7 +167,7 @@ class Roles extends Component {
                     }
                   >
                     <span className="m-r-0">
-                      <img src={DefaultIcon} alt="" className="p-r-5" /> Default
+                      <img src={DefaultIcon} alt="" /> Default
                     </span>
                   </HtmlTooltip>
                 </Box>
