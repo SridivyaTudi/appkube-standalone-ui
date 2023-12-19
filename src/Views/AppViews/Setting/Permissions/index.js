@@ -15,6 +15,7 @@ import {
   getRoles,
   getGroups,
 } from "Redux/Settings/SettingsThunk";
+import Loader from "Components/Loader";
 export class Permissions extends Component {
   controlMapping = [
     {
@@ -48,6 +49,14 @@ export class Permissions extends Component {
       dataKey: "permissions",
     },
   ];
+
+  loder = {
+    role: this.props.allRoles.status,
+    group: this.props.allGroups.status,
+    user: this.props.allUsers.status,
+    policies: this.props.allPolicy.status,
+    permissions: this.props.permissionCategory.status,
+  };
 
   constructor(props) {
     super(props);
@@ -138,6 +147,15 @@ export class Permissions extends Component {
   // Render tabs
   renderTabMenu = () => {
     const { activeTab, tabMapping } = this.state;
+    let {
+      allGroups: { status: groupStatus },
+      allPolicy: { status: policyStatus },
+      allRoles: { status: roleStatus },
+      allUsers: { status: userStatus },
+    } = this.props;
+    let isLoding = [groupStatus, policyStatus, roleStatus, userStatus].includes(
+      status.IN_PROGRESS
+    );
     return tabMapping.map((tabData, index) => {
       return (
         <Box
@@ -150,7 +168,11 @@ export class Permissions extends Component {
           </Box>
           <Box className="content">
             <label>{tabData.label}</label>
-            <strong>{tabData.value}</strong>
+            {isLoding && this.loder[tabData.dataKey] ? (
+              this.renderLoder()
+            ) : (
+              <strong>{tabData.value}</strong>
+            )}
           </Box>
         </Box>
       );
@@ -212,6 +234,15 @@ export class Permissions extends Component {
         ? getCurrentUser().info.user
         : { id: "", username: "" }
       : { id: "", username: "" };
+  };
+
+  // Render loder
+  renderLoder = () => {
+    return (
+      <Box className="d-blck text-center w-100 h-100 ">
+        <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
+      </Box>
+    );
   };
   render() {
     return (
