@@ -62,7 +62,7 @@ class CreateAddPolicyControlModal extends Component {
 
   // Render modal body
   renderModalBody = () => {
-    let { searchedPolicy, selectedPolicy } = this.state;
+    let { searchedPolicy, policies } = this.state;
     let { allPolicy } = this.props;
     return (
       <ModalBody>
@@ -88,7 +88,7 @@ class CreateAddPolicyControlModal extends Component {
         <Box className="setting-common-searchbar">
           <Grid container>
             <Grid item xs={6}>
-              <h5>List of Policies ({selectedPolicy.length})</h5>
+              <h5>List of Policies ({policies.length})</h5>
             </Grid>
             <Grid item xs={6}>
               <List>
