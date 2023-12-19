@@ -86,9 +86,9 @@ class CreateAddPolicyControlModal extends Component {
         </Box>
 
         <Box className="setting-common-searchbar">
-          <Grid container>
+          <Grid container alignItems={"center"}>
             <Grid item xs={6}>
-              <h5>List of Policies ({policies.length})</h5>
+              <h5 className="m-b-0 m-t-0">List of Policies ({policies.length})</h5>
             </Grid>
             <Grid item xs={6}>
               <List>
