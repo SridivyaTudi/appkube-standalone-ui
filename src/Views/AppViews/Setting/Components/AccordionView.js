@@ -106,15 +106,11 @@ class AccordionView extends Component {
                     }}
                   />
                 </Box>
-              ) : (
-                <></>
-              )}
+              ) : null}
               <Box className="access-box d-inline-block ">
                 {isChildExist ? (
                   <i className={`fas fa-chevron-${arrowDownOrRight}`}></i>
-                ) : (
-                  <></>
-                )}
+                ) : null}
                 {subchild.name}
               </Box>
             </TableCell>
@@ -129,9 +125,7 @@ class AccordionView extends Component {
                   <Table>{subchild.subName ? subchild.subName : <></>}</Table>
                 </TableCell>
               </TableRow>
-            ) : (
-              <></>
-            )}
+            ) : null}
           </TableRow>
           {childDataShow ? (
             <TableRow>
@@ -143,9 +137,7 @@ class AccordionView extends Component {
                 </Table>
               </TableCell>
             </TableRow>
-          ) : (
-            <></>
-          )}
+          ) : null}
         </Fragment>
       );
     });
