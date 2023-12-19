@@ -91,9 +91,9 @@ class Group extends Component {
                   }
                 >
                   <span>
-                    <img src={DefaultIcon} alt="" />
+                    <img src={DefaultIcon} alt="" /> Default
                   </span>
-                  Default
+                 
                 </HtmlTooltip>
               </Box>
             </TableCell>

@@ -28,7 +28,7 @@ import { ToastMessage } from "Toast/ToastMessage";
 import { createUser, getUsers } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
-import { getCurrentUser,getCurrentOrgName } from "Utils";
+import { getCurrentUser, getCurrentOrgName } from "Utils";
 import LoadingButton from "@mui/lab/LoadingButton";
 const steps = ["User details ", "Add  user to group ", "Review and Create"];
 const initialFormData = {
@@ -162,12 +162,10 @@ class CreateUserControlModal extends Component {
 
   // Create user API call
   handleCreateUser = () => {
-    let { formData, selectedGroups } = this.state;
+    let { formData } = this.state;
     let form = new FormData();
 
     try {
-      
-
       form.append("username", formData[0].name);
       form.append("organization", getCurrentOrgName());
       form.append("email", formData[0].email);

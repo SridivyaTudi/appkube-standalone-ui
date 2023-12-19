@@ -67,7 +67,8 @@ class AddUserGroup extends Component {
         <TableRow>
           <TableCell width={100}>
             <Checkbox
-              size="small" className="check-box"
+              size="small"
+              className="check-box"
               disabled={rows?.length ? false : true}
               checked={rows?.length === selectedGroup?.length}
               onChange={(e) => this.handleSelectAllCheckBox(e)}
@@ -91,7 +92,7 @@ class AddUserGroup extends Component {
               <TableCell>
                 <Checkbox
                   size="small"
-                  id={row.id}
+                  id={`${row.id}`}
                   checked={selectedGroup.includes(row.id)}
                   onChange={this.handleCheckBox}
                 />
@@ -105,8 +106,11 @@ class AddUserGroup extends Component {
                       </React.Fragment>
                     }
                   >
-                    <span> <img src={DefaultIcon} alt="" className="m-r-1" />
-                      Default</span>
+                    <span>
+                      {" "}
+                      <img src={DefaultIcon} alt="" className="m-r-1" />
+                      Default
+                    </span>
                   </HtmlTooltip>
                 </Box>
               </TableCell>

@@ -175,7 +175,7 @@ class CreateAddPolicyControlModal extends Component {
                   <Checkbox
                     className="check-box"
                     size="small"
-                    id={policy.id}
+                    id={`${policy.id}`}
                     checked={selectedPolicy.includes(policy.id)}
                     onChange={this.handleCheckBox}
                   />

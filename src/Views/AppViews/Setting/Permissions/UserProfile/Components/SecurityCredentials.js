@@ -92,7 +92,7 @@ export class SecurityCredentials extends Component {
                             <span>Please Authenticate.</span>
                           </Box>
                           <Box className="close-icon">
-                            <i class="fas fa-times"></i>
+                            <i className="fas fa-times"></i>
                           </Box>
                         </Box>
                       </Box>
