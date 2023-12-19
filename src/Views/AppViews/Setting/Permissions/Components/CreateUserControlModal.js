@@ -164,7 +164,6 @@ class CreateUserControlModal extends Component {
   handleCreateUser = () => {
     let { formData } = this.state;
     let form = new FormData();
-
     try {
       form.append("username", formData[0].name);
       form.append("organization", getCurrentOrgName());
@@ -644,7 +643,7 @@ class CreateUserControlModal extends Component {
                       <Checkbox
                         size="small"
                         className="check-box"
-                        id={row.id}
+                        id={`${row.id}`}
                         checked={selectedGroups.includes(row.id)}
                         onChange={this.handleCheckBox}
                         disabled={isDisable ? true : false}

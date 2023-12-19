@@ -38,7 +38,7 @@ class SetTransitions extends Component {
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li>
-                <Link to={`/app/setting/setpolicy`}>Set Policy</Link>
+                <Link to={`/app/setting/role-details`}>Role Details</Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>

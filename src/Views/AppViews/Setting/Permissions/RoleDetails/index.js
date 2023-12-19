@@ -66,7 +66,7 @@ let accessPolicyData = [
     ],
   },
 ];
-class SetPolicy extends Component {
+class RoleDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -113,7 +113,7 @@ class SetPolicy extends Component {
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">Set Policy</li>
+              <li className="active">Role Details</li>
             </ul>
           </Box>
         </Box>
@@ -155,24 +155,10 @@ class SetPolicy extends Component {
                       variant="contained"
                       onClick={this.handleCreateAddPolicyControlModal}
                     >
-                      Add Policy
+                      Update Policies
                     </Button>
                   </ListItem>
-                  <ListItem>
-                    <Button
-                      onClick={() =>
-                        this.setState({
-                          currentDeleteFlag: "policy",
-                          showConfirmPopup: true,
-                        })
-                      }
-                      className="danger-outline-btn min-width-inherit"
-                      variant="outlined"
-                    >
-                      <i className="p-r-10 fas fa-trash-alt"></i>
-                      Delete Policy
-                    </Button>
-                  </ListItem>
+
                   <ListItem>
                     <Button
                       onClick={() =>
@@ -249,4 +235,4 @@ class SetPolicy extends Component {
   }
 }
 
-export default SetPolicy;
+export default RoleDetails;

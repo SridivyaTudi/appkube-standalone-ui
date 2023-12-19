@@ -36,7 +36,7 @@ import titles from "./PathTitles.json";
 import Error from "./AppViews/Error";
 import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
 import Reports from "./AppViews/Reports";
-import SetPolicy from "./AppViews/Setting/Permissions/SetPolicy";
+import RoleDetails from "./AppViews/Setting/Permissions/RoleDetails";
 import SuperAdmin from "./AppViews/Setting/Permissions/SuperAdmin";
 import AddUsers from "./AppViews/Setting/Permissions/AddUsers";
 import AddRole from "./AppViews/Setting/Permissions/AddRole";
@@ -136,7 +136,7 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/setting/settransitions`}
             element={<SetTransitions />}
           />
-          <Route path={`${APP_PREFIX_PATH}/setting/setpolicy`} element={<SetPolicy/>} />
+          <Route path={`${APP_PREFIX_PATH}/setting/role-details`} element={<RoleDetails />} />
           <Route path={`${APP_PREFIX_PATH}/setting/super-admin`} element={<SuperAdmin/>}/>
           <Route path={`${APP_PREFIX_PATH}/setting/add-users`} element={<AddUsers/>}/>
           <Route path={`${APP_PREFIX_PATH}/setting/add-role`} element={<AddRole/>}/>

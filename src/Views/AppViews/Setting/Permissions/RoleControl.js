@@ -218,7 +218,7 @@ class RoleControl extends Component {
           </TableCell>
           <TableCell>{row?.description}</TableCell>
           <TableCell>
-            <Link to="/app/setting/setpolicy">View Policy</Link>
+            <Link to={`/app/setting/role-details?roleId=${row.id}`}>View Policy</Link>
           </TableCell>
           <TableCell align="center">
             <IconButton

@@ -98,7 +98,7 @@ class CreateAddPolicyControlModal extends Component {
                     variant="contained"
                     onClick={this.handleCreateAddPolicyControlModal}
                   >
-                    Add Policies
+                    Update Policies
                   </Button>
                 </ListItem>
               </List>
