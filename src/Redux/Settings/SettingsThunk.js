@@ -117,10 +117,7 @@ export const updateRole = createAsyncThunk(
   "settings/updateRole",
   async (params) => {
     try {
-      const response = await postLoginService.post(
-        `${config.UPDATE_ROLE}`,
-        params
-      );
+      const response = await postLoginService.post(config.UPDATE_ROLE, params);
       return response;
     } catch (error) {
       console.log(error);

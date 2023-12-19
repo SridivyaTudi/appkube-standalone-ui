@@ -69,6 +69,8 @@ class RoleControl extends Component {
     let roles = this.props.allRoles?.data || [];
     if (roles?.length) {
       this.setState({ roles });
+    } else {
+      this.setState({ roles: [] });
     }
   };
 
@@ -78,6 +80,8 @@ class RoleControl extends Component {
         let roles = this.props.allRoles.data;
         if (roles?.length) {
           this.setState({ roles });
+        } else {
+          this.setState({ roles: [] });
         }
       }
     }
@@ -208,8 +212,8 @@ class RoleControl extends Component {
                   }
                 >
                   <span className=" m-r-0">
-                  <img src={DefaultIcon} alt="" className="p-r-5" /> Default
-                </span>
+                    <img src={DefaultIcon} alt="" className="p-r-5" /> Default
+                  </span>
                 </HtmlTooltip>
               </Box>
             ) : (
@@ -218,7 +222,9 @@ class RoleControl extends Component {
           </TableCell>
           <TableCell>{row?.description}</TableCell>
           <TableCell>
-            <Link to={`/app/setting/role-details?roleId=${row.id}`}>View Policy</Link>
+            <Link to={`/app/setting/role-details?roleId=${row.id}`}>
+              View Policy
+            </Link>
           </TableCell>
           <TableCell align="center">
             <IconButton

@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  Checkbox,
-  ListItem,
-  IconButton,
-} from "@mui/material/";
+import { Box, Grid, Checkbox, ListItem, IconButton } from "@mui/material/";
 import { Component } from "react";
 import { List, Modal, ModalBody, ModalHeader } from "reactstrap";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -13,9 +6,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
-import { getPolicies } from "Redux/Settings/SettingsThunk";
+import { getPolicies,updateRole,getRoleById } from "Redux/Settings/SettingsThunk";
 import Loader from "Components/Loader";
-
+import { ToastMessage } from "Toast/ToastMessage";
+import LoadingButton from "@mui/lab/LoadingButton";
 class CreateAddPolicyControlModal extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +21,7 @@ class CreateAddPolicyControlModal extends Component {
 
   componentDidMount = () => {
     this.props.getPolicies();
+    this.getSelectedPoliciesFromProps();
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -35,6 +30,22 @@ class CreateAddPolicyControlModal extends Component {
         let policies = this.props.allPolicy.data;
         if (policies) {
           this.setState({ policies });
+        }
+      }
+    }
+
+    if (this.props.selectedPolicies !== prevProps.selectedPolicies) {
+      this.getSelectedPoliciesFromProps();
+    }
+
+    if (this.props.roleUpdation.status !== prevProps.roleUpdation.status) {
+      if (this.props.roleUpdation.status === status.SUCCESS) {
+        if (this.props.roleUpdation.data) {
+          ToastMessage.success(`Policies Updated Successfully`);
+          let { roleId } = this.getRoleDetailsFromUrl();
+          this.props.getRoleById(roleId);
+        } else {
+          ToastMessage.error(`Policies Updation Failed!`);
         }
       }
     }
@@ -63,7 +74,9 @@ class CreateAddPolicyControlModal extends Component {
   // Render modal body
   renderModalBody = () => {
     let { searchedPolicy, policies } = this.state;
-    let { allPolicy } = this.props;
+    let { allPolicy, roleUpdation } = this.props;
+
+    let updatePoliciesStatus = roleUpdation?.status === status.IN_PROGRESS;
     return (
       <ModalBody>
         <Box className="setting-common-searchbar p-t-5 p-b-0">
@@ -88,18 +101,22 @@ class CreateAddPolicyControlModal extends Component {
         <Box className="setting-common-searchbar">
           <Grid container alignItems={"center"}>
             <Grid item xs={6}>
-              <h5 className="m-b-0 m-t-0">List of Policies ({policies.length})</h5>
+              <h5 className="m-b-0 m-t-0">
+                List of Policies ({policies.length})
+              </h5>
             </Grid>
             <Grid item xs={6}>
               <List>
                 <ListItem>
-                  <Button
+                  <LoadingButton
                     className="primary-btn min-width-inherit"
                     variant="contained"
-                    onClick={this.handleCreateAddPolicyControlModal}
+                    onClick={this.onClickUpdatePolicies}
+                    disabled={updatePoliciesStatus}
+                    loading={updatePoliciesStatus}
                   >
                     Update Policies
-                  </Button>
+                  </LoadingButton>
                 </ListItem>
               </List>
             </Grid>
@@ -236,6 +253,39 @@ class CreateAddPolicyControlModal extends Component {
     );
   };
 
+  // Get Selected Policies from props
+  getSelectedPoliciesFromProps = () => {
+    let policies = this.props.selectedPolicies;
+
+    if (policies?.length) {
+      let { selectedPolicy } = this.state;
+      selectedPolicy = policies.map((policy) => policy.id);
+
+      this.setState({ selectedPolicy });
+    }
+  };
+
+  getRoleDetailsFromUrl = () => {
+    const queryPrm = new URLSearchParams(document.location.search);
+    const roleId = queryPrm.get("roleId");
+    return { roleId };
+  };
+
+  onClickUpdatePolicies = () => {
+    let { roleId: id } = this.getRoleDetailsFromUrl();
+    let { selectedPolicy } = this.state;
+    if (!selectedPolicy.length) {
+      ToastMessage.error("Please select policies");
+    } else {
+      let params = {
+        id,
+        policies: selectedPolicy.map((policy) => ({ id: policy })),
+      };
+      this.props.updateRole(params);
+    }
+  };
+
+
   render() {
     return (
       <Modal
@@ -250,14 +300,16 @@ class CreateAddPolicyControlModal extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { allPolicy } = state.settings;
+  const { allPolicy, roleUpdation } = state.settings;
   return {
     allPolicy,
+    roleUpdation,
   };
 };
 
 const mapDispatchToProps = {
   getPolicies,
+  updateRole,getRoleById
 };
 
 export default connect(
