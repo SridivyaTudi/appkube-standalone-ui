@@ -137,15 +137,19 @@ class CreateAddPolicyControlModal extends Component {
           if (row?.name.toLowerCase().includes(value.toLowerCase())) {
             policies.push(row);
           } else if (permissions.length) {
+            let searchPermissionData = [];
             permissions.forEach((permisson) => {
               let findValue = `${permisson?.id || permisson?.name}`;
               if (
                 findValue &&
                 findValue.toLowerCase().includes(value.toLowerCase())
               ) {
-                return permisson;
+                searchPermissionData.push(permisson);
               }
             });
+            if (searchPermissionData.length) {
+              policies.push({ ...row, permissions: searchPermissionData });
+            }
           } else {
             return null;
           }
