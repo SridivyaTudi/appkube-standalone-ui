@@ -207,7 +207,7 @@ class RoleControl extends Component {
                     </React.Fragment>
                   }
                 >
-                  <span className="d-flex align-items m-r-0">
+                  <span className=" m-r-0">
                   <img src={DefaultIcon} alt="" className="p-r-5" /> Default
                 </span>
                 </HtmlTooltip>
