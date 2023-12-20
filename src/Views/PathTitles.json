@@ -18,7 +18,7 @@
   "error": "404",
   "reports": "Reports",
   "role-details": "Role Details",
-  "super-admin": "Super Admin",
+  "group-details": "Group Details",
   "user-profile": "User Profile",
   "create-group": "Create Group",
   "create-policy": "Create Policy",

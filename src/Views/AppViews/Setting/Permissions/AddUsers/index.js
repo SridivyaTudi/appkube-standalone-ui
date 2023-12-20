@@ -126,7 +126,8 @@ class AddUsers extends Component {
         <TableRow>
           <TableCell>
             {" "}
-            <Checkbox className="check-box"
+            <Checkbox
+              className="check-box"
               size="small"
               disabled={rows?.length ? false : true}
               checked={rows?.length === selectedUsers?.length}
@@ -155,7 +156,8 @@ class AddUsers extends Component {
             <TableRow key={index}>
               <TableCell>
                 {" "}
-                <Checkbox className="check-box"
+                <Checkbox
+                  className="check-box"
                   size="small"
                   id={row.id}
                   checked={selectedUsers.includes(row.id)}
@@ -288,7 +290,7 @@ class AddUsers extends Component {
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li>
-                <Link to={`/app/setting/super-admin`}>Super Admin Group</Link>
+                <Link to={`/app/setting/group-details`}>Super Admin Group</Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
@@ -326,7 +328,7 @@ class AddUsers extends Component {
                   </Button>
                 </ListItem>
                 <ListItem>
-                  <Link to={`/app/setting/super-admin`}>
+                  <Link to={`/app/setting/group-details`}>
                     <Button
                       className="primary-btn min-width-inherit"
                       variant="contained"

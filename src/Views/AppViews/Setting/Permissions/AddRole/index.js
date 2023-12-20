@@ -130,7 +130,7 @@ class AddRole extends Component {
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li>
-                <Link to={`/app/setting/super-admin`}>Super Admin Group</Link>
+                <Link to={`/app/setting/group-details`}>Super Admin Group</Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
@@ -165,7 +165,7 @@ class AddRole extends Component {
                   </Button>
                 </ListItem>
                 <ListItem>
-                  <Link to={`/app/setting/super-admin`}>
+                  <Link to={`/app/setting/group-details`}>
                     <Button
                       className="primary-btn min-width-inherit"
                       variant="contained"

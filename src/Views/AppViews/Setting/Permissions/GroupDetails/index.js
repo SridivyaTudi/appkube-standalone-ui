@@ -8,8 +8,12 @@ import Disallowed from "./Components/Disallowed";
 import Roles from "./Components/Roles";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { setActiveTab } from "Utils";
+import status from "Redux/Constants/CommonDS";
+import { getRoleById } from "Redux/Settings/SettingsThunk";
+import Loader from "Components/Loader";
+import { connect } from "react-redux";
 
-class SuperAdmin extends Component {
+class GroupDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +21,27 @@ class SuperAdmin extends Component {
       actionButton: null,
     };
   }
+
+  componentDidMount = () => {
+    let { roleId } = this.getRoleDetailsFromUrl();
+    if (roleId) {
+      this.props.getRoleById(roleId);
+    }
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      this.props.roleDetailsById.status !== prevProps.roleDetailsById.status
+    ) {
+      if (this.props.roleDetailsById.status === status.SUCCESS) {
+        let roleDetails = this.props.roleDetailsById.data;
+        if (roleDetails) {
+          this.setState({ roleDetails });
+          this.setPolicyStateOrReturnData();
+        }
+      }
+    }
+  };
   tabMapping = [
     {
       name: "Users",
@@ -96,6 +121,22 @@ class SuperAdmin extends Component {
     setActiveTab(tab);
     this.props.navigate(url);
   };
+
+  getRoleDetailsFromUrl = () => {
+    const queryPrm = new URLSearchParams(document.location.search);
+    const groupId = queryPrm.get("groupId");
+    return { groupId };
+  };
+
+  // Render Loder
+  renderLoder() {
+    return (
+      <Box className="d-block text-center w-100 h-100 m-r-auto m-l-auto ">
+        <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
+      </Box>
+    );
+  }
+
   render() {
     const { activeTab } = this.state;
     return (
@@ -114,7 +155,7 @@ class SuperAdmin extends Component {
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">Super Admin Group</li>
+              <li className="active">Group Details</li>
             </ul>
           </Box>
         </Box>
@@ -176,5 +217,14 @@ class SuperAdmin extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  const { roleDetailsById } = state.settings;
+  return { roleDetailsById };
+};
 
-export default navigateRouter(SuperAdmin);
+const mapDispatchToProps = { getRoleById };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(GroupDetails));

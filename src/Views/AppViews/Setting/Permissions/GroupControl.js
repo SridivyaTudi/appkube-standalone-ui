@@ -170,7 +170,9 @@ class GroupControl extends Component {
                 <p>{groupData.description}</p>
               </Box>
               <Box className="view-btn text-center">
-                <Link to={`${APP_PREFIX_PATH}/setting/super-admin`}>
+                <Link
+                  to={`${APP_PREFIX_PATH}/setting/group-details?groupId=${groupData.id}`}
+                >
                   <Button className="primary-btn min-width">View Group</Button>
                 </Link>
               </Box>

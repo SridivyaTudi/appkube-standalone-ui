@@ -33,7 +33,9 @@ class RoleDetails extends Component {
 
   componentDidMount = () => {
     let { roleId } = this.getRoleDetailsFromUrl();
-    this.props.getRoleById(roleId);
+    if (roleId) {
+      this.props.getRoleById(roleId);
+    }
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -54,7 +56,7 @@ class RoleDetails extends Component {
         let removeRoleRes = this.props.removeRole.data;
         if (removeRoleRes) {
           ToastMessage.success("Role Removed Successfully");
-          setActiveTab('permissions/role');
+          setActiveTab("permissions/role");
           this.props.navigate("/app/setting");
         } else {
           ToastMessage.error("Role Deletion Failed!");
@@ -166,7 +168,6 @@ class RoleDetails extends Component {
   render() {
     const {
       showCreateAddPolicyControlModal,
-      currentDeleteFlag,
       showConfirmPopup,
       roleDetails,
       policyList,

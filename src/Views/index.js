@@ -37,14 +37,13 @@ import Error from "./AppViews/Error";
 import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
 import Reports from "./AppViews/Reports";
 import RoleDetails from "./AppViews/Setting/Permissions/RoleDetails";
-import SuperAdmin from "./AppViews/Setting/Permissions/SuperAdmin";
+import GroupDetails from "Views/AppViews/Setting/Permissions/GroupDetails";
 import AddUsers from "./AppViews/Setting/Permissions/AddUsers";
 import AddRole from "./AppViews/Setting/Permissions/AddRole";
 import CreateGroup from "./AppViews/Setting/Permissions/CreateGroup";
 import UserProfile from "./AppViews/Setting/Permissions/UserProfile";
 import CreatePolicy from "./AppViews/Setting/Permissions/CreatePolicy";
 import AddUserGroup from "./AppViews/Setting/Permissions/UserProfile/AddUserGroup";
-
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -136,14 +135,38 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/setting/settransitions`}
             element={<SetTransitions />}
           />
-          <Route path={`${APP_PREFIX_PATH}/setting/role-details`} element={<RoleDetails />} />
-          <Route path={`${APP_PREFIX_PATH}/setting/super-admin`} element={<SuperAdmin/>}/>
-          <Route path={`${APP_PREFIX_PATH}/setting/add-users`} element={<AddUsers/>}/>
-          <Route path={`${APP_PREFIX_PATH}/setting/add-role`} element={<AddRole/>}/>
-          <Route path={`${APP_PREFIX_PATH}/setting/create-group`} element={<CreateGroup/>}/>
-          <Route path={`${APP_PREFIX_PATH}/setting/user-profile`} element={<UserProfile/>}/>
-          <Route path={`${APP_PREFIX_PATH}/setting/create-policy`} element={<CreatePolicy/>}/>
-          <Route path={`${APP_PREFIX_PATH}/setting/user-profile/add-user-group`} element={<AddUserGroup/>}/>
+          <Route
+            path={`${APP_PREFIX_PATH}/setting/role-details`}
+            element={<RoleDetails />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/setting/group-details`}
+            element={<GroupDetails />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/setting/add-users`}
+            element={<AddUsers />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/setting/add-role`}
+            element={<AddRole />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/setting/create-group`}
+            element={<CreateGroup />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/setting/user-profile`}
+            element={<UserProfile />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/setting/create-policy`}
+            element={<CreatePolicy />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/setting/user-profile/add-user-group`}
+            element={<AddUserGroup />}
+          />
           <Route
             path={`${APP_PREFIX_PATH}/environments/ecscluster`}
             element={<EcsCluster />}
