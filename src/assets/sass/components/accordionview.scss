@@ -9,7 +9,7 @@
     display: block;
     width: 100%;
 
-    tbody {
+    .body {
       width: 100%;
       display: block;
       max-height: 400px;
@@ -64,9 +64,8 @@
             table {
               width: 100%;
               tbody {
-                &::-webkit-scrollbar {
-                  display: none;
-                }
+                width: 100%;
+                display: block;
                 tr {
                   border-bottom: 1px solid #eaecf0;
                   td {
@@ -108,6 +107,8 @@
                         width: 0px;
                       }
                       tbody {
+                        width: 100%;
+                        display: block;
                         tr {
                           border-bottom: 1px solid #eaecf0;
                           td {
@@ -208,7 +209,7 @@
         }
       }
     }
-    tbody {
+    .body {
       width: 100%;
       display: block;
       max-height: 400px;
@@ -285,9 +286,8 @@
             }
             table {
               tbody {
-                &::-webkit-scrollbar {
-                  display: none;
-                }
+                width: 100%;
+                display: block;
                 tr {
                   border-bottom: 1px solid #eaecf0;
                   td {
@@ -448,7 +448,7 @@
         }
       }
     }
-    tbody {
+    .body {
       width: 100%;
       display: block;
       max-height: 400px;
@@ -517,9 +517,8 @@
             }
             table {
               tbody {
-                &::-webkit-scrollbar {
-                  display: none;
-                }
+                width: 100%;
+                display: block;
                 tr {
                   border-bottom: 1px solid #eaecf0;
 
@@ -562,35 +561,39 @@
                         width: 0px;
                       }
                       table {
-                        tr {
-                          border-bottom: 1px solid #eaecf0;
-                          td {
-                            padding: 12px 15px 12px 106px;
-                            font-size: 13px;
-                            font-weight: 500;
-                            color: #101828;
-                            position: relative;
-                            font-family: "Poppins", sans-serif;
-                            position: relative;
-                            &::before {
-                              content: "";
-                              position: absolute;
-                              top: 0;
-                              left: 85px;
-                              width: 1px;
-                              height: 90%;
-                              background: #d5dbe5;
+                        tbody {
+                          width: 100%;
+                          display: block;
+                          tr {
+                            border-bottom: 1px solid #eaecf0;
+                            td {
+                              padding: 12px 15px 12px 106px;
+                              font-size: 13px;
+                              font-weight: 500;
+                              color: #101828;
+                              position: relative;
+                              font-family: "Poppins", sans-serif;
+                              position: relative;
+                              &::before {
+                                content: "";
+                                position: absolute;
+                                top: 0;
+                                left: 85px;
+                                width: 1px;
+                                height: 90%;
+                                background: #d5dbe5;
+                              }
+                              &:hover {
+                                background-color: #f7f9fc;
+                              }
+                              &.active {
+                                font-weight: 600;
+                                background-color: #e9edf5;
+                              }
                             }
-                            &:hover {
-                              background-color: #f7f9fc;
+                            &:last-child {
+                              border-bottom: 0;
                             }
-                            &.active {
-                              font-weight: 600;
-                              background-color: #e9edf5;
-                            }
-                          }
-                          &:last-child {
-                            border-bottom: 0;
                           }
                         }
                       }
@@ -662,7 +665,7 @@
         }
       }
     }
-    tbody {
+    .body {
       width: 100%;
       display: block;
       max-height: 400px;
@@ -739,9 +742,8 @@
             }
             table {
               tbody {
-                &::-webkit-scrollbar{
-                  display: none;
-                }
+                width: 100%;
+                display: block;
                 tr {
                   border-bottom: 1px solid #eaecf0;
                   td {

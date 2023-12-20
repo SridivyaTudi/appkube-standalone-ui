@@ -199,7 +199,7 @@ class AccordionView extends Component {
       <TableContainer component={Paper} className="access-control-table">
         <Table aria-label="collapsible table" className="table">
           <TableHead>{this.renderTableHead()}</TableHead>
-          <TableBody> {this.renderTableBody(data)}</TableBody>
+          <TableBody className="body"> {this.renderTableBody(data)}</TableBody>
         </Table>
       </TableContainer>
     ) : (
