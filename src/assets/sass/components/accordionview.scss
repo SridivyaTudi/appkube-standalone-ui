@@ -64,9 +64,11 @@
             table {
               width: 100%;
               tbody {
+                &::-webkit-scrollbar {
+                  display: none;
+                }
                 tr {
                   border-bottom: 1px solid #eaecf0;
-
                   td {
                     padding: 12px 15px 12px 75px;
                     font-size: 13px;
@@ -105,36 +107,37 @@
                         content: "";
                         width: 0px;
                       }
-                      tr {
-                        border-bottom: 1px solid #eaecf0;
-                        td {
-                          padding: 12px 15px 12px 100px;
-                          font-size: 13px;
-                          font-weight: 500;
-                          color: #101828;
-                          position: relative;
-                          font-family: "Poppins", sans-serif;
-                          position: relative;
-                          &::before {
-                            content: "";
-                            position: absolute;
-                            top: 0;
-                            left: 85px;
-                            width: 1px;
-                            height: 90%;
-                            background: #d5dbe5;
+                      tbody {
+                        tr {
+                          border-bottom: 1px solid #eaecf0;
+                          td {
+                            padding: 12px 15px 12px 100px;
+                            font-size: 13px;
+                            font-weight: 500;
+                            color: #101828;
+                            position: relative;
+                            font-family: "Poppins", sans-serif;
+                            position: relative;
+                            &::before {
+                              content: "";
+                              position: absolute;
+                              top: 0;
+                              left: 85px;
+                              width: 1px;
+                              height: 90%;
+                              background: #d5dbe5;
+                            }
+                            &:hover {
+                              background-color: #f7f9fc;
+                            }
+                            &.active {
+                              font-weight: 600;
+                              background-color: #e9edf5;
+                            }
                           }
-                          &:hover {
-                            background-color: #f7f9fc;
+                          &:last-child {
+                            border-bottom: 0;
                           }
-                          &.active {
-                            font-weight: 600;
-                            background-color: #e9edf5;
-                          }
-                          
-                        }
-                        &:last-child {
-                          border-bottom: 0;
                         }
                       }
                     }
@@ -155,6 +158,7 @@
     }
   }
 }
+
 .permission-table {
   display: block;
   background-color: #ffffff;
@@ -281,6 +285,9 @@
             }
             table {
               tbody {
+                &::-webkit-scrollbar {
+                  display: none;
+                }
                 tr {
                   border-bottom: 1px solid #eaecf0;
                   td {
@@ -396,6 +403,7 @@
     }
   }
 }
+
 .policies-setting-table {
   display: block;
   background-color: #ffffff;
@@ -508,88 +516,93 @@
               width: 0px;
             }
             table {
-              tr {
-                border-bottom: 1px solid #eaecf0;
-
-                td {
-                  padding: 12px 15px 12px 75px;
-                  font-size: 13px;
-                  font-weight: 500;
-                  color: #101828;
-                  position: relative;
+              tbody {
+                &::-webkit-scrollbar {
+                  display: none;
+                }
+                tr {
                   border-bottom: 1px solid #eaecf0;
-                  font-family: "Poppins", sans-serif;
-                  position: relative;
-                  &::before {
-                    content: "";
-                    position: absolute;
-                    top: 0;
-                    left: 55px;
-                    width: 1px;
-                    height: 90%;
-                    background: #d5dbe5;
-                  }
-                  &:hover {
-                    background-color: #f7f9fc;
-                  }
-                  &.active {
-                    font-weight: 600;
-                    background-color: #e9edf5;
-                    td {
-                      &::before {
-                        content: "";
-                        left: 30px;
-                      }
-                    }
-                  }
-                  &.child-table-section {
-                    padding: 0;
-                    background: #ffffff;
+
+                  td {
+                    padding: 12px 15px 12px 75px;
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: #101828;
+                    position: relative;
+                    border-bottom: 1px solid #eaecf0;
+                    font-family: "Poppins", sans-serif;
+                    position: relative;
                     &::before {
                       content: "";
-                      width: 0px;
+                      position: absolute;
+                      top: 0;
+                      left: 55px;
+                      width: 1px;
+                      height: 90%;
+                      background: #d5dbe5;
                     }
-                    table {
-                      tr {
-                        border-bottom: 1px solid #eaecf0;
-                        td {
-                          padding: 12px 15px 12px 106px;
-                          font-size: 13px;
-                          font-weight: 500;
-                          color: #101828;
-                          position: relative;
-                          font-family: "Poppins", sans-serif;
-                          position: relative;
-                          &::before {
-                            content: "";
-                            position: absolute;
-                            top: 0;
-                            left: 85px;
-                            width: 1px;
-                            height: 90%;
-                            background: #d5dbe5;
-                          }
-                          &:hover {
-                            background-color: #f7f9fc;
-                          }
-                          &.active {
-                            font-weight: 600;
-                            background-color: #e9edf5;
-                          }
-                        }
-                        &:last-child {
-                          border-bottom: 0;
+                    &:hover {
+                      background-color: #f7f9fc;
+                    }
+                    &.active {
+                      font-weight: 600;
+                      background-color: #e9edf5;
+                      td {
+                        &::before {
+                          content: "";
+                          left: 30px;
                         }
                       }
                     }
-                  }
+                    &.child-table-section {
+                      padding: 0;
+                      background: #ffffff;
+                      &::before {
+                        content: "";
+                        width: 0px;
+                      }
+                      table {
+                        tr {
+                          border-bottom: 1px solid #eaecf0;
+                          td {
+                            padding: 12px 15px 12px 106px;
+                            font-size: 13px;
+                            font-weight: 500;
+                            color: #101828;
+                            position: relative;
+                            font-family: "Poppins", sans-serif;
+                            position: relative;
+                            &::before {
+                              content: "";
+                              position: absolute;
+                              top: 0;
+                              left: 85px;
+                              width: 1px;
+                              height: 90%;
+                              background: #d5dbe5;
+                            }
+                            &:hover {
+                              background-color: #f7f9fc;
+                            }
+                            &.active {
+                              font-weight: 600;
+                              background-color: #e9edf5;
+                            }
+                          }
+                          &:last-child {
+                            border-bottom: 0;
+                          }
+                        }
+                      }
+                    }
 
-                  &:last-child {
-                    border-bottom: 0;
+                    &:last-child {
+                      border-bottom: 0;
+                    }
                   }
-                }
-                &:last-child {
-                  border-bottom: none;
+                  &:last-child {
+                    border-bottom: none;
+                  }
                 }
               }
             }
@@ -726,6 +739,9 @@
             }
             table {
               tbody {
+                &::-webkit-scrollbar{
+                  display: none;
+                }
                 tr {
                   border-bottom: 1px solid #eaecf0;
                   td {
