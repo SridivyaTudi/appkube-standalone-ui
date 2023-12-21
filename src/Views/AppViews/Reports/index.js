@@ -19,6 +19,20 @@ class Reports extends Component {
     super(props);
     this.state = {};
   }
+  componentWillUnmount() {
+    this.removeTooltipElement()
+  }
+
+  removeTooltipElement = () => {
+    try {
+      const elements = document.getElementsByClassName("chart-tooltip");
+      while (elements.length > 0) {
+        elements[0].parentNode.removeChild(elements[0]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   render() {
     return (
@@ -148,7 +162,6 @@ class Reports extends Component {
                 <CostByDepartmentProducts />
               </Box>
             </Grid>
-            
           </Grid>
         </Box>
       </Box>

@@ -60,9 +60,9 @@ class CostByDepartmentProducts extends Component {
     // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
     var radius = Math.min(width, height) / 2 - margin;
     var tooltip = d3
-      .select("body")
+      .select("#root")
       .data(data)
-      .append("div")
+      .append("div").attr('class','chart-tooltip')
       .style("position", "absolute")
       .style("z-index", "10")
       .style("visibility", "hidden");

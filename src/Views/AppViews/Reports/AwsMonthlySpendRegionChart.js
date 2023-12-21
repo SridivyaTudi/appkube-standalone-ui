@@ -51,9 +51,9 @@ class AwsMonthlySpendRegionChart extends Component {
         .call((g_local) => g_local.select(".domain").remove());
 
     var tooltip = d3
-      .select("body")
+      .select("#root")
       .data(data)
-      .append("div")
+      .append("div").attr('class','chart-tooltip')
       .style("position", "absolute")
       .style("z-index", "10")
       .style("visibility", "hidden");
