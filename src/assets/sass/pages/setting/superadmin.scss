@@ -21,6 +21,9 @@
         line-height: 20px;
         font-weight: 400;
         color: #383874;
+        max-height: 150px;
+        overflow: hidden;
+        overflow-y: auto;
       }
     }
 
@@ -44,8 +47,8 @@
           &:last-child {
             margin-right: 0;
           }
-          .primary-btn{
-            a{
+          .primary-btn {
+            a {
               color: #ffffff;
             }
           }
@@ -154,14 +157,14 @@
             display: table-row-group;
             tr {
               &.active {
-                background-color: #E9EDF5;
+                background-color: #e9edf5;
               }
               td {
                 padding-left: 15px;
                 padding-right: 15px;
                 width: 350px;
                 white-space: nowrap;
-                color: #171C26;
+                color: #171c26;
                 button {
                   width: 20px;
                   height: 20px;
@@ -181,7 +184,6 @@
                   background: #00b929;
                   color: #ffffff;
                 }
-               
               }
               .inner-table-section {
                 padding: 0;
@@ -193,15 +195,14 @@
                         tr {
                           &:hover {
                             background-color: #f7f9fc;
-                           td{
-                            &:first-child{
-                              padding-left: 25px;
+                            td {
+                              &:first-child {
+                                padding-left: 25px;
+                              }
                             }
-                           
-                           }
                           }
                           td {
-                            color: #171C26;
+                            color: #171c26;
                             font-size: 12px;
                             font-weight: 500;
                             padding-left: 15px;
