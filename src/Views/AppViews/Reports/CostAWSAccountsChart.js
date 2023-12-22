@@ -25,9 +25,9 @@ class CostAWSAccountsChart extends Component {
     const radius = Math.min(width, height) / 2;
 
     var tooltip = d3
-      .select("body")
+      .select("#root")
       .data(data)
-      .append("div")
+      .append("div").attr('class','chart-tooltip')
       .style("position", "absolute")
       .style("z-index", "10")
       .style("visibility", "hidden");

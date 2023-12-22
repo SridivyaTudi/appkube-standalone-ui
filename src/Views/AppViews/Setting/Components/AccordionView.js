@@ -109,7 +109,7 @@ class AccordionView extends Component {
               ) : null}
               <Box className="access-box d-inline-block ">
                 {isChildExist ? (
-                  <i className={`fas fa-chevron-${arrowDownOrRight}`}></i>
+                  <i className={`fas fa-chevron-${arrowDownOrRight}`} />
                 ) : null}
                 {subchild.name}
               </Box>
@@ -199,7 +199,7 @@ class AccordionView extends Component {
       <TableContainer component={Paper} className="access-control-table">
         <Table aria-label="collapsible table" className="table">
           <TableHead>{this.renderTableHead()}</TableHead>
-          <TableBody className="body"> {this.renderTableBody(data)}</TableBody>
+          <TableBody className="body">{this.renderTableBody(data)}</TableBody>
         </Table>
       </TableContainer>
     ) : (
