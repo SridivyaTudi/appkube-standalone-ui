@@ -29,6 +29,7 @@ const config = {
   GET_USERS: `${baseSecurityUrl}/users/find-by-owner?ownerId=#owner-id#`,
   CREATE_USER: `${baseSecurityUrl}/users/create`,
   DELETE_GROUP: `${baseSecurityUrl}/roles/delete/#group-id#`,
+  GET_USER_PERMISSION_DATA_URL: `${baseSecurityUrl}/users/get-user-hierarchy?userName=#user-name#`,
 };
 
 export default config;

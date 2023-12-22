@@ -23,109 +23,8 @@ import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
 import ConfirmationPopup from "Components/ConfirmationPopup";
-let users = [
-  {
-    user: "Super Admin",
-    emailAddress: "Carolina.Patzwahl81@gmal.com",
-    loginDetails: "Never Login",
-    groups: "01",
-    createdDate: "30/Nov/2023",
-    applications: "AppKube",
-  },
-  {
-    user: "Mats Ertl I",
-    emailAddress: "Juliane17@hotmail.com",
-    loginDetails: (
-      <>
-        <span className="d-block">Count : 12</span>
-        <span className="d-block">Last : 5 Minutes ago</span>
-      </>
-    ),
-    groups: "0",
-    createdDate: "28/Sept/2023",
-    applications: "AppKube",
-  },
-  {
-    user: "Tayler Buschbaum",
-    emailAddress: "Charlotta_Peters4@gmail.com",
-    loginDetails: (
-      <>
-        <span className="d-block">Count : 33</span>
-        <span className="d-block">Last : 13 Minutes ago</span>
-      </>
-    ),
-    groups: "80",
-    createdDate: "26/Oct/2023",
-    applications: "AppKube",
-  },
-  {
-    user: "Mikail Hooss",
-    emailAddress: "Malte50@gmail.com",
-    loginDetails: "Never Login",
-    groups: "10",
-    createdDate: "01/AUg/2023",
-    applications: "AppKube",
-  },
-  {
-    user: "Irem Olbrich",
-    emailAddress: "Anny.Bremer@gmail.com",
-    loginDetails: "Never Login",
-    groups: "03",
-    createdDate: "30/Aug/2022",
-    applications: "AppKube",
-  },
-  {
-    user: "Karoline Kraft",
-    emailAddress: "Anny.Bremer@gmail.com",
-    loginDetails: "Never Login",
-    groups: "03",
-    createdDate: "13/Jan/2023",
-    applications: "AppKube",
-  },
-  {
-    user: "Arian Sauerland",
-    emailAddress: "Anny.Bremer@gmail.com",
-    loginDetails: "Never Login",
-    groups: "09",
-    createdDate: "26/Nov/2021",
-    applications: "AppKube",
-  },
-  {
-    user: "Prof. Dr. Till Neimke",
-    emailAddress: "Aliya.Freimuth29@hotmail.com",
-    loginDetails: "Never Login",
-    groups: "05",
-    createdDate: "14/Feb/2020",
-    applications: "AppKube",
-  },
-];
+import { getFormattedDate } from "Utils";
 
-let getFormattedDate = (dateString) => {
-  try {
-    const monthList = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    let date = new Date(dateString);
-    let day = date.getDate();
-    let year = date.getFullYear();
-    let month = monthList[date.getMonth()];
-    return `${day}/${month}/${year}`;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
 class UserControl extends Component {
   constructor(props) {
     super(props);
@@ -144,8 +43,11 @@ class UserControl extends Component {
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.allUsers?.status !== prevProps.allUsers?.status) {
-      if (this.props.allUsers.status === status.SUCCESS) {
+    if (
+      this.props.userPermissionData?.status !==
+      prevProps.userPermissionData?.status
+    ) {
+      if (this.props.userPermissionData.status === status.SUCCESS) {
         this.setUsersStateOrReturnData();
       }
     }
@@ -182,12 +84,12 @@ class UserControl extends Component {
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { rows } = this.state;
-
+    let users = this.props.userPermissionData.data?.users || [];
     if (value) {
       rows = users.filter((userData) => {
         if (
-          userData?.user.toLowerCase().includes(value.toLowerCase()) ||
-          userData?.emailAddress.toLowerCase().includes(value.toLowerCase())
+          userData?.username.toLowerCase().includes(value.toLowerCase()) ||
+          userData?.email?.toLowerCase().includes(value.toLowerCase())
         ) {
           return userData;
         } else {
@@ -238,7 +140,6 @@ class UserControl extends Component {
           <TableCell>Login Details</TableCell>
           <TableCell align="center">Groups</TableCell>
           <TableCell align="center">Created Date</TableCell>
-          <TableCell align="center">Applications</TableCell>
           <TableCell align="center">Actions</TableCell>
         </TableRow>
       </TableHead>
@@ -257,12 +158,16 @@ class UserControl extends Component {
                 <Link to={`/app/setting/user-profile`}>{row.username}</Link>
               </TableCell>
               <TableCell>{row.email}</TableCell>
-              <TableCell>{row.loginDetails}</TableCell>
-              <TableCell align="center">{row.groups}</TableCell>
+              <TableCell>
+                {row.loginCount ? `Count : ${row.loginCount} ` : "Never Login "}
+                {row.lastLoginAt
+                  ? `Last : ${getFormattedDate(row.lastLoginAt)}`
+                  : ""}
+              </TableCell>
+              <TableCell align="center">{row.roles?.length}</TableCell>
               <TableCell align="center">
                 {getFormattedDate(row.createdAt)}
               </TableCell>
-              <TableCell align="center">{row.applications}</TableCell>
               <TableCell align="center">
                 <IconButton
                   className="action-btn"
@@ -322,7 +227,7 @@ class UserControl extends Component {
 
   // Render table container
   renderTableContainer = () => {
-    const { status: userStatus } = this.props.allUsers;
+    const { status: userStatus } = this.props.userPermissionData;
 
     if (userStatus === status.IN_PROGRESS) {
       return this.renderLoder();
@@ -397,7 +302,7 @@ class UserControl extends Component {
 
   // Set state or return data
   setUsersStateOrReturnData = (isStateSet = 1) => {
-    let rows = this.props?.allUsers.data || [];
+    let rows = this.props?.userPermissionData.data?.users || [];
     if (isStateSet) {
       this.setState({ rows });
     } else {
@@ -442,9 +347,10 @@ class UserControl extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { allUsers } = state.settings;
+  const { allUsers, userPermissionData } = state.settings;
   return {
     allUsers,
+    userPermissionData,
   };
 };
 

@@ -8,13 +8,7 @@ import Permissson from "./Permission";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { getActiveTab, deleteActiveTab, getCurrentUser } from "Utils";
-import {
-  getPermissionCategory,
-  getPolicies,
-  getUsers,
-  getRoles,
-  getGroups,
-} from "Redux/Settings/SettingsThunk";
+import { getUserPermissionData } from "Redux/Settings/SettingsThunk";
 import Loader from "Components/Loader";
 export class Permissions extends Component {
   controlMapping = [
@@ -50,14 +44,6 @@ export class Permissions extends Component {
     },
   ];
 
-  loder = {
-    role: this.props.allRoles.status,
-    group: this.props.allGroups.status,
-    user: this.props.allUsers.status,
-    policies: this.props.allPolicy.status,
-    permissions: this.props.permissionCategory.status,
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -68,59 +54,29 @@ export class Permissions extends Component {
 
   componentDidMount = () => {
     this.setPreviousTab();
-    this.props.getPermissionCategory();
-    this.props.getPolicies();
-    this.props.getUsers(this.getCurrentUserInfo().id);
-    this.props.getRoles(this.getCurrentUserInfo().username);
-    this.props.getGroups(this.getCurrentUserInfo().username);
+    this.props.getUserPermissionData(
+      "admin" || this.getCurrentUserInfo().username
+    );
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.allRoles.status !== prevProps.allRoles.status) {
-      if (this.props.allRoles.status === status.SUCCESS) {
-        let roles = this.props.allRoles.data;
-        if (roles) {
-          this.getTabCount("role", roles.length);
-        }
-      }
-    }
-
     if (
-      this.props.permissionCategory.status !==
-      prevProps.permissionCategory.status
+      this.props.userPermissionData.status !==
+      prevProps.userPermissionData.status
     ) {
-      if (this.props.permissionCategory.status === status.SUCCESS) {
-        let permissionCategory = this.props.permissionCategory.data;
-        if (permissionCategory?.length) {
-          let permissionCount = this.getPermissionLength(permissionCategory);
-          this.getTabCount("permissions", permissionCount);
-        }
-      }
-    }
-
-    if (this.props.allPolicy.status !== prevProps.allPolicy.status) {
-      if (this.props.allPolicy.status === status.SUCCESS) {
-        let policies = this.props.allPolicy.data;
-        if (policies) {
-          this.getTabCount("policies", policies.length);
-        }
-      }
-    }
-
-    if (this.props.allUsers.status !== prevProps.allUsers.status) {
-      if (this.props.allUsers.status === status.SUCCESS) {
-        let users = this.props.allUsers.data;
-        if (users?.length) {
-          this.getTabCount("user", users.length);
-        }
-      }
-    }
-
-    if (this.props.allGroups.status !== prevProps.allGroups.status) {
-      if (this.props.allGroups.status === status.SUCCESS) {
-        let groups = this.props.allGroups.data;
-        if (groups?.length) {
-          this.getTabCount("group", groups.length);
+      if (this.props.userPermissionData.status === status.SUCCESS) {
+        let userPermissionData = this.props.userPermissionData.data;
+        if (userPermissionData) {
+          let { permissionCategories, roles, policies, roleGroups, users } =
+            userPermissionData;
+          let data = {
+            role: roles.length,
+            permissions: this.getPermissionLength(permissionCategories),
+            policies: policies.length,
+            user: users.length,
+            group: roleGroups.length,
+          };
+          this.getTabCount(data);
         }
       }
     }
@@ -148,14 +104,9 @@ export class Permissions extends Component {
   renderTabMenu = () => {
     const { activeTab, tabMapping } = this.state;
     let {
-      allGroups: { status: groupStatus },
-      allPolicy: { status: policyStatus },
-      allRoles: { status: roleStatus },
-      allUsers: { status: userStatus },
+      userPermissionData: { status: userStatus },
     } = this.props;
-    let isLoding = [groupStatus, policyStatus, roleStatus, userStatus].includes(
-      status.IN_PROGRESS
-    );
+    let isLoding = userStatus === status.IN_PROGRESS;
     return tabMapping.map((tabData, index) => {
       return (
         <Box
@@ -168,11 +119,7 @@ export class Permissions extends Component {
           </Box>
           <Box className="content">
             <label>{tabData.label}</label>
-            {isLoding && this.loder[tabData.dataKey] ? (
-              this.renderLoder()
-            ) : (
-              <strong>{tabData.value}</strong>
-            )}
+            {isLoding ? this.renderLoder() : <strong>{tabData.value}</strong>}
           </Box>
         </Box>
       );
@@ -182,6 +129,7 @@ export class Permissions extends Component {
   // Render active tab component
   renderActiveTabComponent = () => {
     const { activeTab } = this.state;
+
     return activeTab === 0 ? (
       <RoleControl />
     ) : activeTab === 1 ? (
@@ -202,12 +150,12 @@ export class Permissions extends Component {
   };
 
   // Tab data length
-  getTabCount = (key, count) => {
-    if (key) {
+  getTabCount = (data) => {
+    if (data) {
       let { tabMapping } = this.state;
       tabMapping = tabMapping.map((tab) => {
-        if (tab.dataKey === key) {
-          tab.value = count;
+        if (data[tab.dataKey]) {
+          tab.value = data[tab.dataKey];
         }
         return tab;
       });
@@ -244,6 +192,7 @@ export class Permissions extends Component {
       </Box>
     );
   };
+
   render() {
     return (
       <Box className="permissions-container">
@@ -257,23 +206,14 @@ export class Permissions extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { allRoles, permissionCategory, allPolicy, allUsers, allGroups } =
-    state.settings;
+  const { userPermissionData } = state.settings;
   return {
-    allRoles,
-    permissionCategory,
-    allPolicy,
-    allUsers,
-    allGroups,
+    userPermissionData,
   };
 };
 
 const mapDispatchToProps = {
-  getPermissionCategory,
-  getPolicies,
-  getUsers,
-  getRoles,
-  getGroups,
+  getUserPermissionData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Permissions);

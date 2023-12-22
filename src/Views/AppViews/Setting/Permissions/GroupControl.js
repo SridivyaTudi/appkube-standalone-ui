@@ -14,7 +14,10 @@ import { connect } from "react-redux";
 import { v4 } from "uuid";
 import Loader from "Components/Loader";
 import ConfirmationPopup from "Components/ConfirmationPopup";
-import { deleteGroup, getGroups } from "Redux/Settings/SettingsThunk";
+import {
+  deleteGroup,
+  getUserPermissionData,
+} from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
 import { getCurrentUser } from "Utils";
 
@@ -47,10 +50,8 @@ class GroupControl extends Component {
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.allGroups.status !== prevProps.allGroups.status) {
-      if (this.props.allGroups.status === status.SUCCESS) {
-        this.setGroupStateOrReturnData();
-      }
+    if (this.props.userPermissionData !== prevProps.userPermissionData) {
+      this.setGroupStateOrReturnData();
     }
 
     if (this.props.removeGroup.status !== prevProps.removeGroup.status) {
@@ -58,7 +59,7 @@ class GroupControl extends Component {
         let removeGroupRes = this.props.removeGroup.data;
         if (removeGroupRes) {
           this.togglePopup();
-          this.props.getGroups(this.getCurrentUserInfo().username);
+          this.props.getUserPermissionData(this.getCurrentUserInfo().username);
           ToastMessage.success("Group Removed Successfully");
         } else {
           ToastMessage.error("Group Deletion Failed!");
@@ -84,7 +85,7 @@ class GroupControl extends Component {
   renderGroupList = () => {
     const { groupList, actionButton } = this.state;
 
-    if (this.props.allGroups.status === status.IN_PROGRESS) {
+    if (this.props.userPermissionData.status === status.IN_PROGRESS) {
       return this.renderLoder();
     } else {
       let retData = [];
@@ -219,7 +220,7 @@ class GroupControl extends Component {
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { groupList } = this.state;
-    let groups = this.props.allGroups.data || [];
+    let groups = this.props.userPermissionData.data?.roleGroups || [];
     if (groups?.length) {
       if (value) {
         groupList = groups.filter((group) => {
@@ -238,7 +239,7 @@ class GroupControl extends Component {
 
   // Set state or return data
   setGroupStateOrReturnData = (isStateSet = 1) => {
-    let groupList = this.props.allGroups.data || [];
+    let groupList = this.props.userPermissionData.data?.roleGroups || [];
 
     if (isStateSet) {
       this.setState({ groupList });
@@ -310,13 +311,13 @@ class GroupControl extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { allGroups, removeGroup } = state.settings;
+  const { userPermissionData, removeGroup } = state.settings;
   return {
-    allGroups,
+    userPermissionData,
     removeGroup,
   };
 };
 
-const mapDispatchToProps = { deleteGroup, getGroups };
+const mapDispatchToProps = { deleteGroup, getUserPermissionData };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupControl);

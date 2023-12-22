@@ -4,19 +4,20 @@ import { Link } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import CancelGroupControlModal from "../Components/CancelGroupControlModal";
 import {
-  getPermissionCategory,
+  getUserPermissionData,
   createPolicy,
 } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
-import { setActiveTab } from "Utils";
+import { getCurrentUser, setActiveTab } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { ToastMessage } from "Toast/ToastMessage";
 import LoadingButton from "@mui/lab/LoadingButton";
 import AccordionView from "Views/AppViews/Setting/Components/AccordionView";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -29,7 +30,13 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     fontSize: theme.typography.pxToRem(11),
   },
 }));
-
+const getCurrentUserInfo = () => {
+  return getCurrentUser()
+    ? getCurrentUser()?.info?.user
+      ? getCurrentUser().info.user
+      : { id: "", username: "", email: "", profileImage: "" }
+    : { id: "", username: "", email: "", profileImage: "" };
+};
 let searchedData = [];
 export class CreatePolicy extends Component {
   constructor(props) {
@@ -52,16 +59,17 @@ export class CreatePolicy extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getPermissionCategory();
+    this.props.getUserPermissionData("admin" || getCurrentUserInfo().username);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
     if (
-      this.props.permissionCategory.status !==
-      prevProps.permissionCategory.status
+      this.props.userPermissionData.status !==
+      prevProps.userPermissionData.status
     ) {
-      if (this.props.permissionCategory.status === status.SUCCESS) {
-        let permissions = this.props.permissionCategory.data;
+      if (this.props.userPermissionData.status === status.SUCCESS) {
+        let permissions =
+          this.props.userPermissionData.data?.permissionCategories || [];
         if (permissions?.length) {
           permissions = this.setPermissionAccordingToFormat(
             JSON.parse(JSON.stringify(permissions))
@@ -318,7 +326,7 @@ export class CreatePolicy extends Component {
 
   // Set state of permission
   setPermissionStateOrReturnData = (isStateSet = 1) => {
-    let permissions = this.props.permissionCategory.data || [];
+    let permissions = this.props.userPermissionData.data.permissionCategories || [];
     if (permissions?.length) {
       permissions = this.setPermissionAccordingToFormat(
         JSON.parse(JSON.stringify(permissions))
@@ -532,7 +540,7 @@ export class CreatePolicy extends Component {
           {this.renderSearchInput()}
         </Box>
         <Box className="permission-table">
-          {this.props.permissionCategory?.status === status.IN_PROGRESS ? (
+          {this.props.userPermissionData?.status === status.IN_PROGRESS ? (
             this.renderLoder()
           ) : permissions.length ? (
             <AccordionView
@@ -557,15 +565,15 @@ export class CreatePolicy extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { permissionCategory, policyCreation } = state.settings;
+  const { userPermissionData, policyCreation } = state.settings;
   return {
-    permissionCategory,
+    userPermissionData,
     policyCreation,
   };
 };
 
 const mapDispatchToProps = {
-  getPermissionCategory,
+  getUserPermissionData,
   createPolicy,
 };
 

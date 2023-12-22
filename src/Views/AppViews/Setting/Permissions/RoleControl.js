@@ -21,7 +21,10 @@ import CreateRoleControlModal from "./Components/CreateRoleControlModal";
 import DefaultIcon from "../../../../assets/img/setting/default-icon.png";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import { getRoles, deleteRole } from "Redux/Settings/SettingsThunk";
+import {
+  deleteRole,
+  getUserPermissionData,
+} from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
@@ -66,24 +69,12 @@ class RoleControl extends Component {
   }
 
   componentDidMount = () => {
-    let roles = this.props.allRoles?.data || [];
-    if (roles?.length) {
-      this.setState({ roles });
-    } else {
-      this.setState({ roles: [] });
-    }
+    this.setStateRoles();
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.allRoles.status !== prevProps.allRoles.status) {
-      if (this.props.allRoles.status === status.SUCCESS) {
-        let roles = this.props.allRoles.data;
-        if (roles?.length) {
-          this.setState({ roles });
-        } else {
-          this.setState({ roles: [] });
-        }
-      }
+    if (this.props.userPermissionData !== prevProps.userPermissionData) {
+      this.setStateRoles();
     }
 
     if (this.props.removeRole.status !== prevProps.removeRole.status) {
@@ -91,7 +82,9 @@ class RoleControl extends Component {
         let removeRoleRes = this.props.removeRole.data;
         if (removeRoleRes) {
           this.togglePopup();
-          this.props.getRoles(getCurrentUserInfo().username);
+          this.props.getUserPermissionData(
+            "admin" || getCurrentUserInfo().username
+          );
           ToastMessage.success("Role Removed Successfully");
         } else {
           ToastMessage.error("Role Deletion Failed!");
@@ -167,7 +160,7 @@ class RoleControl extends Component {
 
   // render Roles Table
   renderTable = () => {
-    const { status: rolesStatus } = this.props.allRoles;
+    const { status: rolesStatus } = this.props.userPermissionData;
 
     if (rolesStatus === status.IN_PROGRESS) {
       return this.renderLoder();
@@ -307,7 +300,7 @@ class RoleControl extends Component {
   //  serach Roles
   handleSearchChange = (e) => {
     let value = e.target.value;
-    let roles = this.props.allRoles.data;
+    let roles = this.props.userPermissionData.data?.roles;
 
     if (roles?.length) {
       if (value) {
@@ -382,6 +375,15 @@ class RoleControl extends Component {
     );
   };
 
+  setStateRoles = () => {
+    let roles = this.props.userPermissionData.data?.roles || [];
+    if (roles.length) {
+      this.setState({ roles });
+    } else {
+      this.setState({ roles: [] });
+    }
+  };
+
   render() {
     return (
       <>
@@ -397,16 +399,16 @@ class RoleControl extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { allRoles, removeRole } = state.settings;
+  const { removeRole, userPermissionData } = state.settings;
   return {
-    allRoles,
     removeRole,
+    userPermissionData,
   };
 };
 
 const mapDispatchToProps = {
-  getRoles,
   deleteRole,
+  getUserPermissionData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoleControl);

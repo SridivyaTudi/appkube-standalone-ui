@@ -67,7 +67,7 @@ class PermissionTable extends Component {
                 {row.name}
               </TableCell>
               <TableCell>
-                <button className="green-btn">Active</button>
+                <button className="green-btn"> {row.status}</button>
               </TableCell>
             </TableRow>
           ))

@@ -7,8 +7,12 @@ import AccordionView from "../Components/AccordionView";
 import { connect } from "react-redux";
 import Loader from "Components/Loader";
 import ConfirmationPopup from "Components/ConfirmationPopup";
-import { deletePolicy, getPolicies } from "Redux/Settings/SettingsThunk";
+import {
+  deletePolicy,
+  getUserPermissionData,
+} from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
+import { getCurrentUser } from "Utils";
 
 let searchedData = [];
 class Policies extends Component {
@@ -28,8 +32,11 @@ class Policies extends Component {
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.allPolicy?.status !== prevProps.allPolicy?.status) {
-      if (this.props.allPolicy.status === status.SUCCESS) {
+    if (
+      this.props.userPermissionData?.status !==
+      prevProps.userPermissionData?.status
+    ) {
+      if (this.props.userPermissionData.status === status.SUCCESS) {
         this.setPolicyStateOrReturnData();
       }
     }
@@ -41,7 +48,9 @@ class Policies extends Component {
       if (this.props.removePolicy.data === "OK") {
         this.togglePopup();
         ToastMessage.success("Policy removed successfully.");
-        this.props.getPolicies();
+        this.props.getUserPermissionData(
+          "admin" || this.getCurrentUserInfo().username
+        );
       } else {
         ToastMessage.error("Policy is not removed.");
       }
@@ -115,7 +124,7 @@ class Policies extends Component {
       if (permissions?.length) {
         let categories = [];
         permissions.forEach((permission) => {
-          let { permissionCategoryId } = permission;
+          let { permissionCategoryId, permissionCategoryName } = permission;
           let isExistCategory = categories.filter(
             (category) => category.id === permissionCategoryId
           ).length;
@@ -123,7 +132,7 @@ class Policies extends Component {
           if (!isExistCategory) {
             categories.push({
               id: permissionCategoryId,
-              name: permissionCategoryId,
+              name: permissionCategoryName,
             });
           }
         });
@@ -134,7 +143,7 @@ class Policies extends Component {
             if (permission.permissionCategoryId === category.id) {
               let obj = {
                 id: permission.permissionId,
-                name: permission.permissionId,
+                name: permission.permissionName,
                 permissionCategoryId: category.id,
               };
               childData.push(obj);
@@ -155,7 +164,7 @@ class Policies extends Component {
 
   // Set state of policies
   setPolicyStateOrReturnData = (isStateSet = 1) => {
-    let data = this.props.allPolicy?.data || [];
+    let data = this.props.userPermissionData?.data?.policies || [];
     if (data?.length) {
       data = this.setPolicyAccordingToFormat(JSON.parse(JSON.stringify(data)));
 
@@ -198,6 +207,15 @@ class Policies extends Component {
     if (selectedPolicyId) {
       this.props.deletePolicy(selectedPolicyId);
     }
+  };
+
+  //CurrentUser details
+  getCurrentUserInfo = () => {
+    return getCurrentUser()
+      ? getCurrentUser()?.info?.user
+        ? getCurrentUser().info.user
+        : { id: "", username: "" }
+      : { id: "", username: "" };
   };
   render() {
     let {
@@ -290,14 +308,13 @@ class Policies extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { allPolicy, removePolicy, permissionCategory } = state.settings;
+  const { removePolicy, userPermissionData } = state.settings;
   return {
-    allPolicy,
     removePolicy,
-    permissionCategory,
+    userPermissionData,
   };
 };
 
-const mapDispatchToProps = { deletePolicy, getPolicies };
+const mapDispatchToProps = { deletePolicy, getUserPermissionData };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Policies);

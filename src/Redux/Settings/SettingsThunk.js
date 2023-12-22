@@ -217,3 +217,16 @@ export const deleteGroup = createAsyncThunk(
     }
   }
 );
+
+export const getUserPermissionData = createAsyncThunk(
+  "settings/getUserPermissionData",
+  async (name) => {
+    try {
+      let url = config.GET_USER_PERMISSION_DATA_URL.replace("#user-name#", name);
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

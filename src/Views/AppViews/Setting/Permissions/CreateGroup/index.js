@@ -21,11 +21,14 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import DefaultIcon from "../../../../../assets/img/setting/default-icon.png";
 import CancelGroupControlModal from "../Components/CancelGroupControlModal";
-import { getRoles, getUsers, createGroup } from "Redux/Settings/SettingsThunk";
+import {
+  getUserPermissionData,
+  createGroup,
+} from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
-import { setActiveTab, getCurrentUser } from "Utils";
+import { setActiveTab, getCurrentUser, getFormattedDate } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { ToastMessage } from "Toast/ToastMessage";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -42,25 +45,13 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     fontSize: theme.typography.pxToRem(11),
   },
 }));
+
 const getCurrentUserInfo = () => {
   return getCurrentUser()
     ? getCurrentUser()?.info?.user
       ? getCurrentUser().info.user
       : { id: "", username: "", email: "", profileImage: "" }
     : { id: "", username: "", email: "", profileImage: "" };
-};
-
-let getFormattedDate = (dateString) => {
-  try {
-    let date = new Date(dateString);
-    let day = date.getDate();
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    return `${day}/${month}/${year}`;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
 };
 
 export class CreateGroup extends Component {
@@ -88,25 +79,18 @@ export class CreateGroup extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getRoles(getCurrentUserInfo().username);
-    this.props.getUsers(getCurrentUserInfo().id);
+    this.props.getUserPermissionData("admin" || getCurrentUserInfo().username);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.allRoles.status !== prevProps.allRoles.status) {
-      if (this.props.allRoles.status === status.SUCCESS) {
-        let roles = this.props.allRoles.data;
-        if (roles) {
-          this.setState({ roles });
-        }
-      }
-    }
-
-    if (this.props.allUsers.status !== prevProps.allUsers.status) {
-      if (this.props.allUsers.status === status.SUCCESS) {
-        let users = this.props.allUsers.data;
-        if (users?.length) {
-          this.setState({ users });
+    if (
+      this.props.userPermissionData.status !==
+      prevProps.userPermissionData.status
+    ) {
+      if (this.props.userPermissionData.status === status.SUCCESS) {
+        let { roles, users } = this.props.userPermissionData.data;
+        if (roles || users) {
+          this.setState({ roles, users });
         }
       }
     }
@@ -162,7 +146,7 @@ export class CreateGroup extends Component {
 
   // render Roles Table
   renderRoleTable = () => {
-    const { status: rolesStatus } = this.props.allRoles;
+    const { status: rolesStatus } = this.props.userPermissionData;
     const { roles, formData } = this.state;
 
     if (rolesStatus === status.IN_PROGRESS) {
@@ -226,7 +210,7 @@ export class CreateGroup extends Component {
                 }
               >
                 <span className=" m-r-0">
-                  <img src={DefaultIcon} alt=""  /> Default
+                  <img src={DefaultIcon} alt="" /> Default
                 </span>
               </HtmlTooltip>
             </Box>
@@ -322,7 +306,7 @@ export class CreateGroup extends Component {
   // render User Table
   renderUserTable = () => {
     let { users, pg, rpg, formData } = this.state;
-    const { status: usersStatus } = this.props.allUsers;
+    const { status: usersStatus } = this.props.userPermissionData;
     if (usersStatus === status.IN_PROGRESS) {
       return this.renderLoder();
     } else {
@@ -365,7 +349,7 @@ export class CreateGroup extends Component {
                     {row.username}
                   </TableCell>
                   <TableCell>{row.email}</TableCell>
-                  <TableCell align="center">{row.groups}</TableCell>
+                  <TableCell align="center">{row.roles?.length}</TableCell>
                   <TableCell align="center">
                     {getFormattedDate(row.createdAt)}
                   </TableCell>
@@ -443,8 +427,9 @@ export class CreateGroup extends Component {
   //  serach role and user
   handleSearchChange = (e, isRole) => {
     let value = e.target.value;
-    let { allRoles, allUsers } = this.props;
-    let data = isRole ? allRoles.data || [] : allUsers.data || [];
+    let { roles: rolesData, users: userData } =
+      this.props.userPermissionData.data;
+    let data = isRole ? rolesData || [] : userData || [];
     let { users, roles, searchedUser, searchedRole } = this.state;
 
     if (data?.length) {
@@ -678,17 +663,15 @@ export class CreateGroup extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { allRoles, allUsers, groupCreation } = state.settings;
+  const { userPermissionData, groupCreation } = state.settings;
   return {
-    allRoles,
-    allUsers,
+    userPermissionData,
     groupCreation,
   };
 };
 
 const mapDispatchToProps = {
-  getRoles,
-  getUsers,
+  getUserPermissionData,
   createGroup,
 };
 

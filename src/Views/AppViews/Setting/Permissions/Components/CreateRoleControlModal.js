@@ -10,6 +10,7 @@ import {
   getRoleById,
   updateRole,
   getRoles,
+  getUserPermissionData,
 } from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
 import CloseIcon from "@mui/icons-material/Close";
@@ -37,7 +38,7 @@ class CreateRoleControlModal extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getPolicies();
+    this.setStatePolicies();
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -45,7 +46,9 @@ class CreateRoleControlModal extends Component {
       if (this.props.roleCreation.status === status.SUCCESS) {
         if (this.props.roleCreation.data) {
           ToastMessage.success(` Role Created Successfully`);
-          this.props.getRoles(getCurrentUserInfo().username);
+          this.props.getUserPermissionData(
+            "admin" || getCurrentUserInfo().username
+          );
           this.handleCloseModal();
         } else {
           ToastMessage.error(`Role Creation Failed!`);
@@ -66,23 +69,13 @@ class CreateRoleControlModal extends Component {
       }
     }
 
-    if (this.props.allPolicy.status !== prevProps.allPolicy.status) {
-      if (this.props.allPolicy.status === status.SUCCESS) {
-        let policyList = this.props.allPolicy.data;
-        if (policyList) {
-          this.setState({ policyList });
-        }
-        if (this.props.roleId > 0) {
-          this.props.getRoleById(this.props.roleId);
-        }
-      }
-    }
-
     if (this.props.roleUpdation.status !== prevProps.roleUpdation.status) {
       if (this.props.roleUpdation.status === status.SUCCESS) {
         if (this.props.roleUpdation.data) {
           ToastMessage.success(` Role Updated Successfully`);
-          this.props.getRoles(getCurrentUserInfo().username);
+          this.props.getUserPermissionData(
+            "admin" || getCurrentUserInfo().username
+          );
           this.handleCloseModal();
         } else {
           ToastMessage.error(`Role Updation Failed!`);
@@ -215,20 +208,28 @@ class CreateRoleControlModal extends Component {
       </Box>
     );
   };
+
+  setStatePolicies = () => {
+    let policyList = this.props.userPermissionData.data?.policies || [];
+    if (policyList.length) {
+      this.setState({ policyList });
+    } else {
+      this.setState({ policyList: [] });
+    }
+  };
   render() {
     let { name, description, isSubmit, selectedPolicy, policyList } =
       this.state;
     const { errors } = this.validateForm(isSubmit);
-    let { roleUpdation, roleCreation, roleDetailsById, allPolicy } = this.props;
+    let { roleUpdation, roleCreation, roleDetailsById } = this.props;
     let createOrUpdateStatus = [
       roleCreation?.status,
       roleUpdation?.status,
     ].includes(status.IN_PROGRESS);
 
-    let roleDetailsStatus = [
-      allPolicy?.status,
-      roleDetailsById?.status,
-    ].includes(status.IN_PROGRESS);
+    let roleDetailsStatus = [roleDetailsById?.status].includes(
+      status.IN_PROGRESS
+    );
 
     return (
       <Modal
@@ -370,11 +371,11 @@ class CreateRoleControlModal extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { roleCreation, allPolicy, roleDetailsById, roleUpdation } =
+  const { roleCreation, roleDetailsById, roleUpdation, userPermissionData } =
     state.settings;
   return {
     roleCreation,
-    allPolicy,
+    userPermissionData,
     roleDetailsById,
     roleUpdation,
   };
@@ -386,6 +387,7 @@ const mapDispatchToProps = {
   getRoleById,
   updateRole,
   getRoles,
+  getUserPermissionData,
 };
 
 export default connect(

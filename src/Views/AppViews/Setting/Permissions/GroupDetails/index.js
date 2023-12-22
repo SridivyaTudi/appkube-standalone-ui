@@ -14,34 +14,6 @@ import Loader from "Components/Loader";
 import { connect } from "react-redux";
 
 class GroupDetails extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeTab: 0,
-      actionButton: null,
-    };
-  }
-
-  componentDidMount = () => {
-    let { roleId } = this.getRoleDetailsFromUrl();
-    if (roleId) {
-      this.props.getRoleById(roleId);
-    }
-  };
-
-  componentDidUpdate = (prevProps, prevState) => {
-    if (
-      this.props.roleDetailsById.status !== prevProps.roleDetailsById.status
-    ) {
-      if (this.props.roleDetailsById.status === status.SUCCESS) {
-        let roleDetails = this.props.roleDetailsById.data;
-        if (roleDetails) {
-          this.setState({ roleDetails });
-          this.setPolicyStateOrReturnData();
-        }
-      }
-    }
-  };
   tabMapping = [
     {
       name: "Users",
@@ -64,6 +36,35 @@ class GroupDetails extends Component {
       index: 3,
     },
   ];
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeTab: 0,
+      actionButton: null,
+      groupDetails: {},
+    };
+  }
+
+  componentDidMount = () => {
+    let { groupId } = this.getRoleDetailsFromUrl();
+    if (groupId) {
+      this.props.getRoleById(groupId);
+    }
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      this.props.roleDetailsById.status !== prevProps.roleDetailsById.status
+    ) {
+      if (this.props.roleDetailsById.status === status.SUCCESS) {
+        let groupDetails = this.props.roleDetailsById.data;
+        if (groupDetails) {
+          this.setState({ groupDetails });
+        }
+      }
+    }
+  };
 
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
@@ -138,81 +139,83 @@ class GroupDetails extends Component {
   }
 
   render() {
-    const { activeTab } = this.state;
+    const { activeTab, groupDetails } = this.state;
+    let { roleDetailsById: groupDetailsById } = this.props;
     return (
       <Box className="super-admin-container">
-        <Box className="list-heading">
-          <h3>Group Default User</h3>
-          <Box className="breadcrumbs">
-            <ul>
-              <li
-                onClick={() =>
-                  this.handlePreviousPage("permissions/group", "/app/setting")
-                }
-              >
-                <Link>Users and Permissions</Link>
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li className="active">Group Details</li>
-            </ul>
-          </Box>
-        </Box>
-        <Box className="overview-section">
-          <Grid
-            container
-            rowSpacing={1}
-            className="h-100"
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            <Grid item xs={12} md={6}>
-              <Box className="overview-card">
-                <h5>Overview</h5>
-                <p>
-                  The super admin is the highest level of administrative
-                  authority within a system or platform, possessing unparalleled
-                  control and access to all features, settings, and user data
-                  Super admins hold the key to managing and overseeing the
-                  entire infrastructure, making critical decisions, and
-                  implementing security measures to protect the system from
-                  unauthorized access and potential breaches.
-                </p>
+        {groupDetailsById.status === status.IN_PROGRESS ? (
+          this.renderLoder()
+        ) : (
+          <>
+            <Box className="list-heading">
+              <h3>{groupDetails.name}</h3>
+              <Box className="breadcrumbs">
+                <ul>
+                  <li
+                    onClick={() =>
+                      this.handlePreviousPage(
+                        "permissions/group",
+                        "/app/setting"
+                      )
+                    }
+                  >
+                    <Link>Users and Permissions</Link>
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-chevron-right"></i>
+                  </li>
+                  <li className="active">Group Details</li>
+                </ul>
               </Box>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Box className="overview-buttons">{this.renderBtns()}</Box>
-            </Grid>
-          </Grid>
-        </Box>
-        <Box className="tabs">
-          <List className="tabs-menu">
-            {this.tabMapping.map((tabData, index) => {
-              return (
-                <ListItem
-                  key={`ops-tab-${index}`}
-                  className={index === activeTab ? "active" : ""}
-                  onClick={() => this.setActiveTab(index)}
-                >
-                  {tabData.name}
-                </ListItem>
-              );
-            })}
-          </List>
-          <Box className="tabs-content">
-            {activeTab === 0 ? (
-              <Users />
-            ) : activeTab === 1 ? (
-              <Roles />
-            ) : activeTab === 2 ? (
-              <Allowed />
-            ) : activeTab === 3 ? (
-              <Disallowed />
-            ) : (
-              <></>
-            )}
-          </Box>
-        </Box>
+            </Box>
+            <Box className="overview-section">
+              <Grid
+                container
+                rowSpacing={1}
+                className="h-100"
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={12} md={6}>
+                  <Box className="overview-card">
+                    <h5>Overview</h5>
+                    <p>{groupDetails.description}</p>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Box className="overview-buttons">{this.renderBtns()}</Box>
+                </Grid>
+              </Grid>
+            </Box>
+            <Box className="tabs">
+              <List className="tabs-menu">
+                {this.tabMapping.map((tabData, index) => {
+                  return (
+                    <ListItem
+                      key={`ops-tab-${index}`}
+                      className={index === activeTab ? "active" : ""}
+                      onClick={() => this.setActiveTab(index)}
+                    >
+                      {tabData.name}
+                    </ListItem>
+                  );
+                })}
+              </List>
+              <Box className="tabs-content">
+                {activeTab === 0 ? (
+                  <Users />
+                ) : activeTab === 1 ? (
+                  <Roles />
+                ) : activeTab === 2 ? (
+                  <Allowed />
+                ) : activeTab === 3 ? (
+                  <Disallowed />
+                ) : (
+                  <></>
+                )}
+              </Box>
+            </Box>
+          </>
+        )}
       </Box>
     );
   }

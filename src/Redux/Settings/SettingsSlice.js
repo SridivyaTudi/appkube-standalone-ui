@@ -17,6 +17,7 @@ import {
   createUser,
   getGroups,
   deleteGroup,
+  getUserPermissionData,
 } from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
@@ -89,6 +90,10 @@ export const settingsSlice = createSlice({
     removeGroup: {
       status: null,
       data: "",
+    },
+    userPermissionData: {
+      status: null,
+      data: {},
     },
   },
   reducers: {},
@@ -504,6 +509,32 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         removeGroup: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getUserPermissionData.pending]: (state) => {
+      return {
+        ...state,
+        userPermissionData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getUserPermissionData.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        userPermissionData: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getUserPermissionData.rejected]: (state) => {
+      return {
+        ...state,
+        userPermissionData: {
           status: status.FAILURE,
         },
       };

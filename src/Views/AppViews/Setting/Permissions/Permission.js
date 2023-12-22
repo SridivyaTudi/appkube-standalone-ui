@@ -12,28 +12,27 @@ class Permission extends Component {
     super(props);
     this.state = {
       activeTab: 0,
-      permissionCategory: [],
+      permissionCategories: [],
     };
   }
 
   componentDidMount = () => {
-    let permissionCategory = this.props?.permissionCategory?.data;
-    if (permissionCategory?.length) {
-      this.setState({ permissionCategory });
+    this.setStatePermission();
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.props.userPermissionData !== prevProps.userPermissionData) {
+      this.setStatePermission();
     }
   };
-  
-  componentDidUpdate = (prevProps, prevState) => {
-    if (
-      this.props.permissionCategory.status !==
-      prevProps.permissionCategory.status
-    ) {
-      if (this.props.permissionCategory.status === status.SUCCESS) {
-        let permissionCategory = this.props.permissionCategory.data;
-        if (permissionCategory?.length) {
-          this.setState({ permissionCategory });
-        }
-      }
+
+  setStatePermission = () => {
+    let permissionCategories =
+      this.props.userPermissionData.data?.permissionCategories || [];
+    if (permissionCategories?.length) {
+      this.setState({ permissionCategories });
+    } else {
+      this.setState({ permissionCategories: [] });
     }
   };
 
@@ -51,10 +50,10 @@ class Permission extends Component {
   };
   // Render tabs Component
   renderTabsMenuComponent = () => {
-    const { activeTab, permissionCategory } = this.state;
+    const { activeTab, permissionCategories } = this.state;
     return (
       <TabsMenu
-        tabs={permissionCategory.length ? permissionCategory : []}
+        tabs={permissionCategories.length ? permissionCategories : []}
         setActiveTab={this.setActiveTab}
         activeTab={activeTab}
         breakWidth={992}
@@ -65,11 +64,11 @@ class Permission extends Component {
 
   // Render active tab component
   renderActiveTabComponent = () => {
-    let { activeTab, permissionCategory } = this.state;
-    let permissions = permissionCategory?.[activeTab]?.permissions;
+    let { activeTab, permissionCategories } = this.state;
+    let permissions = permissionCategories?.[activeTab]?.permissions;
     permissions = permissions?.length ? permissions : [];
 
-    if (this.props.permissionCategory.status === status.IN_PROGRESS) {
+    if (this.props.userPermissionData.status === status.IN_PROGRESS) {
       return this.renderLoder();
     } else {
       return <PermissionTable data={permissions} />;
@@ -90,9 +89,9 @@ class Permission extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { permissionCategory } = state.settings;
+  const { userPermissionData } = state.settings;
   return {
-    permissionCategory,
+    userPermissionData,
   };
 };
 

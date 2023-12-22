@@ -14,7 +14,9 @@ import React, { Component } from "react";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import DefaultIcon from "assets/img/setting/default-icon.png";
-
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import Loader from "Components/Loader";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -81,7 +83,7 @@ class Roles extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: data,
+      rows: [],
       pg: 0,
       rpg: 5,
       showCreateUserControlModal: false,
@@ -89,6 +91,19 @@ class Roles extends Component {
       selectedRoles: [],
     };
   }
+
+  componentDidMount = () => {
+    this.setRowsStateOrReturn();
+  };
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      this.props.roleDetailsById.status !== prevProps.roleDetailsById.status
+    ) {
+      if (this.props.roleDetailsById.status === status.SUCCESS) {
+        this.setRowsStateOrReturn();
+      }
+    }
+  };
 
   handleChangePage = (event, newpage) => {
     this.setState({ pg: newpage });
@@ -156,23 +171,29 @@ class Roles extends Component {
                   checked={selectedRoles.includes(row.id)}
                   onChange={this.handleCheckBox}
                 />{" "}
-                {row.user}{" "}
-                <Box className="d-flex roles-box">
-                  <HtmlTooltip
-                    className="table-tooltip-dark"
-                    title={
-                      <React.Fragment>
-                        <span>This role created by default by the system</span>
-                      </React.Fragment>
-                    }
-                  >
-                    <span className="m-r-0">
-                      <img src={DefaultIcon} alt="" /> Default
-                    </span>
-                  </HtmlTooltip>
-                </Box>
+                {row.name}
+                {row.default ? (
+                  <Box className="d-flex roles-box">
+                    <HtmlTooltip
+                      className="table-tooltip-dark"
+                      title={
+                        <React.Fragment>
+                          <span>
+                            This role created by default by the system
+                          </span>
+                        </React.Fragment>
+                      }
+                    >
+                      <span className="m-r-0">
+                        <img src={DefaultIcon} alt="" /> Default
+                      </span>
+                    </HtmlTooltip>
+                  </Box>
+                ) : (
+                  <></>
+                )}
               </TableCell>
-              <TableCell>{row.Description}</TableCell>
+              <TableCell>{row.description}</TableCell>
             </TableRow>
           ))
         ) : (
@@ -210,18 +231,24 @@ class Roles extends Component {
 
   // Render table container
   renderTableContainer = () => {
-    return (
-      <TableContainer component={Paper} className="access-control-table">
-        <Table
-          sx={{ minWidth: 900 }}
-          aria-label="custom pagination table"
-          className="table"
-        >
-          {this.renderTableHead()}
-          {this.renderTableBody()}
-        </Table>
-      </TableContainer>
-    );
+    const { status: groupStatus } = this.props.roleDetailsById;
+
+    if (groupStatus === status.IN_PROGRESS) {
+      return this.renderLoder();
+    } else {
+      return (
+        <TableContainer component={Paper} className="access-control-table">
+          <Table
+            sx={{ minWidth: 900 }}
+            aria-label="custom pagination table"
+            className="table"
+          >
+            {this.renderTableHead()}
+            {this.renderTableBody()}
+          </Table>
+        </TableContainer>
+      );
+    }
   };
 
   // Handle check box
@@ -252,6 +279,26 @@ class Roles extends Component {
     }
     this.setState({ selectedRoles });
   };
+
+  // Render Loder
+  renderLoder() {
+    return (
+      <Box className="d-block text-center w-100 h-100 m-r-auto m-l-auto ">
+        <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
+      </Box>
+    );
+  }
+
+  setRowsStateOrReturn = (isStateSet = 1) => {
+    let groupDetails = this.props.roleDetailsById.data || {};
+    if (groupDetails.roles) {
+      if (isStateSet) {
+        this.setState({ rows: groupDetails.roles });
+      } else {
+        return groupDetails.roles;
+      }
+    }
+  };
   render() {
     return (
       <>
@@ -261,5 +308,11 @@ class Roles extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  const { roleDetailsById } = state.settings;
+  return { roleDetailsById };
+};
 
-export default Roles;
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Roles);
