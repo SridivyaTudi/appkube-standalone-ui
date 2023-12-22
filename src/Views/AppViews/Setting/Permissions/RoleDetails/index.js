@@ -32,7 +32,7 @@ class RoleDetails extends Component {
   }
 
   componentDidMount = () => {
-    let { roleId } = this.getRoleDetailsFromUrl();
+    let roleId = this.getRoleId();
     if (roleId) {
       this.props.getRoleById(roleId);
     }
@@ -78,11 +78,7 @@ class RoleDetails extends Component {
     });
   };
 
-  getRoleDetailsFromUrl = () => {
-    const queryPrm = new URLSearchParams(document.location.search);
-    const roleId = queryPrm.get("roleId");
-    return { roleId };
-  };
+  getRoleId = () => this.props.params.id;
 
   // set policy state according format
   setPolicyAccordingToFormat = (policies) => {
@@ -95,7 +91,7 @@ class RoleDetails extends Component {
       if (permissions?.length) {
         let categories = [];
         permissions.forEach((permission) => {
-          let { permissionCategoryId } = permission;
+          let { permissionCategoryId, permissionCategoryName } = permission;
           let isExistCategory = categories.filter(
             (category) => category.id === permissionCategoryId
           ).length;
@@ -103,7 +99,7 @@ class RoleDetails extends Component {
           if (!isExistCategory) {
             categories.push({
               id: permissionCategoryId,
-              name: permissionCategoryId,
+              name: permissionCategoryName,
             });
           }
         });
@@ -114,7 +110,7 @@ class RoleDetails extends Component {
             if (permission.permissionCategoryId === category.id) {
               let obj = {
                 id: permission.permissionId,
-                name: permission.permissionId,
+                name: permission.permissionName,
                 permissionCategoryId: category.id,
               };
               childData.push(obj);

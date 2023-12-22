@@ -6,10 +6,23 @@ import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
-import { getPolicies,updateRole,getRoleById } from "Redux/Settings/SettingsThunk";
+import {
+  updateRole,
+  getRoleById,
+  getUserPermissionData,
+} from "Redux/Settings/SettingsThunk";
 import Loader from "Components/Loader";
 import { ToastMessage } from "Toast/ToastMessage";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { getCurrentUser } from "Utils";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+const getCurrentUserInfo = () => {
+  return getCurrentUser()
+    ? getCurrentUser()?.info?.user
+      ? getCurrentUser().info.user
+      : { id: "", username: "", email: "", profileImage: "" }
+    : { id: "", username: "", email: "", profileImage: "" };
+};
 class CreateAddPolicyControlModal extends Component {
   constructor(props) {
     super(props);
@@ -20,14 +33,17 @@ class CreateAddPolicyControlModal extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getPolicies();
+    this.props.getUserPermissionData("admin" || getCurrentUserInfo().username);
     this.getSelectedPoliciesFromProps();
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.allPolicy.status !== prevProps.allPolicy.status) {
-      if (this.props.allPolicy.status === status.SUCCESS) {
-        let policies = this.props.allPolicy.data;
+    if (
+      this.props.userPermissionData.status !==
+      prevProps.userPermissionData.status
+    ) {
+      if (this.props.userPermissionData.status === status.SUCCESS) {
+        let policies = this.props.userPermissionData.data?.policies || [];
         if (policies) {
           this.setState({ policies });
         }
@@ -42,7 +58,7 @@ class CreateAddPolicyControlModal extends Component {
       if (this.props.roleUpdation.status === status.SUCCESS) {
         if (this.props.roleUpdation.data) {
           ToastMessage.success(`Policies Updated Successfully`);
-          let { roleId } = this.getRoleDetailsFromUrl();
+          let  roleId  = this.getRoleId();
           this.props.getRoleById(roleId);
         } else {
           ToastMessage.error(`Policies Updation Failed!`);
@@ -74,7 +90,7 @@ class CreateAddPolicyControlModal extends Component {
   // Render modal body
   renderModalBody = () => {
     let { searchedPolicy, policies } = this.state;
-    let { allPolicy, roleUpdation } = this.props;
+    let { userPermissionData, roleUpdation } = this.props;
 
     let updatePoliciesStatus = roleUpdation?.status === status.IN_PROGRESS;
     return (
@@ -128,7 +144,7 @@ class CreateAddPolicyControlModal extends Component {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            {allPolicy.status === status.IN_PROGRESS
+            {userPermissionData.status === status.IN_PROGRESS
               ? this.renderLoder()
               : this.renderPolicies()}
           </Grid>
@@ -140,7 +156,7 @@ class CreateAddPolicyControlModal extends Component {
   //  Serach policy
   handleSearchChange = (e) => {
     let value = e.target.value;
-    let data = this.props.allPolicy?.data || [];
+    let data = this.props.userPermissionData.data?.policies || [];
 
     let { policies, searchedPolicy } = this.state;
 
@@ -205,7 +221,7 @@ class CreateAddPolicyControlModal extends Component {
                     <Box className="title">list of permissons</Box>
                     <List>
                       {policy.permissions.map((permisson) => (
-                        <ListItem key={v4()}>{permisson.id}</ListItem>
+                        <ListItem key={v4()}>{permisson.permissionName}</ListItem>
                       ))}
                     </List>
                   </>
@@ -265,14 +281,10 @@ class CreateAddPolicyControlModal extends Component {
     }
   };
 
-  getRoleDetailsFromUrl = () => {
-    const queryPrm = new URLSearchParams(document.location.search);
-    const roleId = queryPrm.get("roleId");
-    return { roleId };
-  };
+  getRoleId = () => this.props.params.id;
 
   onClickUpdatePolicies = () => {
-    let { roleId: id } = this.getRoleDetailsFromUrl();
+    let id = this.getRoleId();
     let { selectedPolicy } = this.state;
     if (!selectedPolicy.length) {
       ToastMessage.error("Please select policies");
@@ -284,7 +296,6 @@ class CreateAddPolicyControlModal extends Component {
       this.props.updateRole(params);
     }
   };
-
 
   render() {
     return (
@@ -300,19 +311,20 @@ class CreateAddPolicyControlModal extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { allPolicy, roleUpdation } = state.settings;
+  const { roleUpdation, userPermissionData } = state.settings;
   return {
-    allPolicy,
+    userPermissionData,
     roleUpdation,
   };
 };
 
 const mapDispatchToProps = {
-  getPolicies,
-  updateRole,getRoleById
+  getUserPermissionData,
+  updateRole,
+  getRoleById,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreateAddPolicyControlModal);
+)(navigateRouter(CreateAddPolicyControlModal));

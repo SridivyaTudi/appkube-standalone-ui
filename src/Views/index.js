@@ -136,11 +136,11 @@ export const Views = (props) => {
             element={<SetTransitions />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/setting/role-details`}
+            path={`${APP_PREFIX_PATH}/setting/role-details/:id`}
             element={<RoleDetails />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/setting/group-details`}
+            path={`${APP_PREFIX_PATH}/setting/group-details/:id`}
             element={<GroupDetails />}
           />
           <Route

@@ -47,7 +47,7 @@ class GroupDetails extends Component {
   }
 
   componentDidMount = () => {
-    let { groupId } = this.getRoleDetailsFromUrl();
+    let groupId = this.getGroupId();
     if (groupId) {
       this.props.getRoleById(groupId);
     }
@@ -123,11 +123,7 @@ class GroupDetails extends Component {
     this.props.navigate(url);
   };
 
-  getRoleDetailsFromUrl = () => {
-    const queryPrm = new URLSearchParams(document.location.search);
-    const groupId = queryPrm.get("groupId");
-    return { groupId };
-  };
+  getGroupId = () => this.props.params.id;
 
   // Render Loder
   renderLoder() {
