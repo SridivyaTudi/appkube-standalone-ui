@@ -90,7 +90,7 @@ class AddUserGroup extends Component {
             <TableRow key={v4()}>
               <TableCell>
                 <Checkbox
-                  size="small"
+                  size="small" className="check-box"
                   id={row.id}
                   checked={selectedGroup.includes(row.id)}
                   onChange={this.handleCheckBox}
@@ -105,8 +105,8 @@ class AddUserGroup extends Component {
                       </React.Fragment>
                     }
                   >
-                   <Box className="d-inline-block default-Icon p-r-5">
-                    <img src={DefaultIcon} alt=""  />Default 
+                   <Box className="d-inline-block default-Icon">
+                    <img src={DefaultIcon} alt=""   /> Default 
                   </Box>
                   
                   </HtmlTooltip>

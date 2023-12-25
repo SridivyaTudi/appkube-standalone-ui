@@ -90,7 +90,7 @@ class Group extends Component {
                     </React.Fragment>
                   }
                 >
-                  <Box className="d-inline-block default-Icon p-r-5">
+                  <Box className="d-inline-block default-Icon">
                     <img src={DefaultIcon} alt=""  /> Default
                   </Box>
                   

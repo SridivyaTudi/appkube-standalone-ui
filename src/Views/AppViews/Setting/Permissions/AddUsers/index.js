@@ -136,11 +136,8 @@ class AddUsers extends Component {
             User
           </TableCell>
           <TableCell>Email Address</TableCell>
-          <TableCell>Groups</TableCell>
-          <TableCell>User Creation Date</TableCell>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
+          <TableCell align="center">Groups</TableCell>
+          <TableCell align="center">User Creation Date</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -166,11 +163,8 @@ class AddUsers extends Component {
                 {row.user}
               </TableCell>
               <TableCell>{row.emailAddress}</TableCell>
-              <TableCell>{row.groups}</TableCell>
-              <TableCell>{row.date}</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell align="center"></TableCell>
+              <TableCell align="center">{row.groups}</TableCell>
+              <TableCell align="center">{row.date}</TableCell>
             </TableRow>
           ))
         ) : (
