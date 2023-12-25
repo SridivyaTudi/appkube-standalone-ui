@@ -57,12 +57,31 @@ export function withRouter(Component) {
 }
 
 export const Views = (props) => {
-  const title = props.router.location.pathname.split("/").pop();
+  const location = useLocation();
   useEffect(() => {
-    document.title = titles[title];
+    setTitle();
   });
 
   const user = getCurrentUser();
+
+  const setTitle = () => {
+    if (location) {
+      let locationToArr = location.pathname.split("/");
+
+      for (
+        let locationIndex = locationToArr.length - 1;
+        locationIndex >= 0;
+        locationIndex--
+      ) {
+        const value = locationToArr[locationIndex];
+
+        if (titles[value]) {
+          document.title = titles[value];
+          break;
+        }
+      }
+    }
+  };
   if (user) {
     return (
       <div className="standalone-container">
