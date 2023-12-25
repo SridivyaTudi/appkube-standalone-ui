@@ -6,10 +6,8 @@ import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import {
   createRole,
-  getPolicies,
   getRoleById,
   updateRole,
-  getRoles,
   getUserPermissionData,
 } from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
@@ -383,10 +381,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   createRole,
-  getPolicies,
   getRoleById,
   updateRole,
-  getRoles,
   getUserPermissionData,
 };
 

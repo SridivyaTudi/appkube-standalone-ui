@@ -59,34 +59,6 @@ export const createGroup = createAsyncThunk(
   }
 );
 
-export const getRoles = createAsyncThunk(
-  "settings/getRoles",
-  async (userName) => {
-    try {
-      let url = config.GET_ROLES.replace("#user-name#", userName).replace(
-        "#is-group#",
-        false
-      );
-      const response = await postLoginService.get(url);
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
-
-export const getPolicies = createAsyncThunk(
-  "settings/getPolicies",
-  async () => {
-    try {
-      const response = await postLoginService.get(config.GET_POLICIES);
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
-
 export const deleteRole = createAsyncThunk(
   "settings/deleteRole",
   async (id) => {
@@ -125,20 +97,6 @@ export const updateRole = createAsyncThunk(
   }
 );
 
-export const getPermissionCategory = createAsyncThunk(
-  "settings/getPermissionCategory",
-  async () => {
-    try {
-      const response = await postLoginService.get(
-        config.GET_PERMISSION_CATEGORY
-      );
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
-
 export const createPolicy = createAsyncThunk(
   "settings/createPolicy",
   async (params) => {
@@ -167,37 +125,11 @@ export const deletePolicy = createAsyncThunk(
   }
 );
 
-export const getUsers = createAsyncThunk("settings/getUsers", async (id) => {
-  try {
-    let url = config.GET_USERS.replace("#owner-id#", id);
-    const response = await postLoginService.get(url);
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 export const createUser = createAsyncThunk(
   "settings/createUser",
   async (params) => {
     try {
       const response = await postLoginService.post(config.CREATE_USER, params);
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
-
-export const getGroups = createAsyncThunk(
-  "settings/getGroups",
-  async (userName) => {
-    try {
-      let url = config.GET_GROUPS.replace("#user-name#", userName).replace(
-        "#is-group#",
-        true
-      );
-      const response = await postLoginService.get(url);
       return response;
     } catch (error) {
       console.log(error);

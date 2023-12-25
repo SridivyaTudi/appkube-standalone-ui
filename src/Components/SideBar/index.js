@@ -11,7 +11,7 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { deleteSelectedInfraTopologyView, deleteActiveTab } from "Utils";
+import { deleteSelectedInfraTopologyView, deleteActiveTab, deleteUrlDetailsOfPage } from "Utils";
 import { v4 } from "uuid";
 function SideBar() {
   let location = useLocation();
@@ -57,6 +57,7 @@ function SideBar() {
                   onClick={() => {
                     deleteSelectedInfraTopologyView();
                     deleteActiveTab();
+                    deleteUrlDetailsOfPage()
                   }}
                 >
                   <span className={`icon ${Parser(item.icon)}`}></span>

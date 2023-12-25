@@ -260,7 +260,7 @@ class Policies extends Component {
           )}
         </Box>
         <Box className="policies-setting-table">
-          {this.props.allPolicy?.status === status.IN_PROGRESS ? (
+          {this.props.userPermissionData.status === status.IN_PROGRESS ? (
             this.renderLoder()
           ) : data?.length ? (
             <AccordionView

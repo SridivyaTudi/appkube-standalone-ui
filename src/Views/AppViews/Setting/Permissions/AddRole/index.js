@@ -16,7 +16,12 @@ import {
 } from "@mui/material";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-
+import {
+  getUrlDetailsOfPage,
+  deleteUrlDetailsOfPage,
+  setActiveTab,
+} from "Utils";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -115,6 +120,11 @@ class AddRole extends Component {
       });
     }
   };
+  handlePreviousPage = () => {
+    console.log('in')
+    setActiveTab("permissions/group");
+    this.props.navigate("/app/setting");
+  };
   render() {
     const { rows, pg, rpg } = this.state;
     return (
@@ -123,14 +133,21 @@ class AddRole extends Component {
           <h3>Group Infra team Add Role</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li>
-                <Link to={`/app/setting/role-details`}>Users and Permissions</Link>
+              <li  onClick={()=>this.handlePreviousPage()}>
+                <Link>
+                  Users and Permissions
+                </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li>
-                <Link to={`/app/setting/group-details`}>Super Admin Group</Link>
+                <Link
+                  to={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
+                  onClick={() => deleteUrlDetailsOfPage()}
+                >
+                  Super Admin Group
+                </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
@@ -157,15 +174,23 @@ class AddRole extends Component {
             <Grid item xs={6}>
               <List>
                 <ListItem>
-                  <Button
-                    className="danger-btn min-width-inherit"
-                    variant="contained"
+                  <Link
+                    to={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
+                    onClick={() => deleteUrlDetailsOfPage()}
                   >
-                    Cancel
-                  </Button>
+                    <Button
+                      className="danger-btn min-width-inherit"
+                      variant="contained"
+                    >
+                      Cancel
+                    </Button>
+                  </Link>
                 </ListItem>
                 <ListItem>
-                  <Link to={`/app/setting/group-details`}>
+                  <Link
+                    to={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
+                    onClick={() => deleteUrlDetailsOfPage()}
+                  >
                     <Button
                       className="primary-btn min-width-inherit"
                       variant="contained"
@@ -187,7 +212,6 @@ class AddRole extends Component {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  {" "}
                   <Checkbox className="check-box" size="small" /> User
                 </TableCell>
                 <TableCell>Email Address</TableCell>
@@ -213,8 +237,7 @@ class AddRole extends Component {
                         }
                       >
                         <span className=" m-r-0">
-                          <img src={DefaultIcon} alt=""  />{" "}
-                          Default
+                          <img src={DefaultIcon} alt="" /> Default
                         </span>
                       </HtmlTooltip>
                     </Box>
@@ -242,4 +265,4 @@ class AddRole extends Component {
   }
 }
 
-export default AddRole;
+export default navigateRouter(AddRole);

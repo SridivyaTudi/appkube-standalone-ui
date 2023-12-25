@@ -25,7 +25,10 @@ import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
 import { ToastMessage } from "Toast/ToastMessage";
-import { createUser, getUsers } from "Redux/Settings/SettingsThunk";
+import {
+  createUser,
+  getUserPermissionData,
+} from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { getCurrentUser, getCurrentOrgName } from "Utils";
@@ -58,12 +61,13 @@ let groupData = [
   },
 ];
 
+//CurrentUser details
 const getCurrentUserInfo = () => {
   return getCurrentUser()
     ? getCurrentUser()?.info?.user
       ? getCurrentUser().info.user
-      : { id: "", organization: { name: "" } }
-    : { id: "", organization: { name: "" } };
+      : { id: "", username: "" }
+    : { id: "", username: "" };
 };
 class CreateUserControlModal extends Component {
   constructor(props) {
@@ -83,7 +87,9 @@ class CreateUserControlModal extends Component {
       if (this.props.userCreation.status === status.SUCCESS) {
         if (this.props.userCreation.data) {
           ToastMessage.success(`User Created Successfully`);
-          this.props.getUsers(getCurrentUserInfo().id);
+          this.props.getUserPermissionData(
+            "admin" || getCurrentUserInfo().username
+          );
           this.handleCancel();
         } else {
           ToastMessage.error(`User Creation Failed!`);
@@ -685,7 +691,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { createUser, getUsers };
+const mapDispatchToProps = { createUser, getUserPermissionData };
 
 export default connect(
   mapStateToProps,

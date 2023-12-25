@@ -6,6 +6,7 @@ const LOCAL_STORAGE_CONSTANTS = {
   CURRENT_ORG_NAME: "currentOrgName",
   ACTIVE_TAB: "activeTab",
   INFRAVIEW_DETAILS: "infraViewDetails",
+  URL_DETAILS_OF_PAGE: "urlDetailsOfPage",
 };
 
 export const getCurrentUser = () => {
@@ -165,4 +166,26 @@ export const getFormattedDate = (dateString) => {
     console.log(error);
     return null;
   }
+};
+
+export const setUrlDetailsOfPage = (data, isConvertToString = 0) => {
+  let pageData = data;
+  if (isConvertToString) {
+    pageData = JSON.stringify(pageData);
+  }
+  localStorage.setItem(LOCAL_STORAGE_CONSTANTS.URL_DETAILS_OF_PAGE, pageData);
+};
+
+export const getUrlDetailsOfPage = (isConvertToObj = 0) => {
+  let pageData = localStorage.getItem(
+    LOCAL_STORAGE_CONSTANTS.URL_DETAILS_OF_PAGE
+  );
+  if (isConvertToObj) {
+    pageData = JSON.parse(pageData);
+  }
+  return pageData;
+};
+
+export const deleteUrlDetailsOfPage = () => {
+  localStorage.removeItem(LOCAL_STORAGE_CONSTANTS.URL_DETAILS_OF_PAGE);
 };

@@ -13,8 +13,13 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import { setActiveTab } from "Utils";
+import {
+  setActiveTab,
+  getUrlDetailsOfPage,
+  deleteUrlDetailsOfPage,
+} from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+
 let data = [
   {
     user: "Milena Kahles",
@@ -84,6 +89,7 @@ class AddUsers extends Component {
       actionButton: null,
       selectedUsers: [],
       searchedKey: "",
+      showCancelUserControlModal: false,
     };
   }
   handleChangePage = (event, newpage) => {
@@ -265,6 +271,7 @@ class AddUsers extends Component {
       this.setState({ rows, searchedKey: value });
     }
   };
+
   render() {
     let { searchedKey } = this.state;
     return (
@@ -272,7 +279,7 @@ class AddUsers extends Component {
         <Box className="list-heading">
           <h3>Group Infra team Add users</h3>
           <Box className="breadcrumbs">
-            <ul>
+            <ul onClick={() => deleteUrlDetailsOfPage()}>
               <li
                 onClick={() =>
                   this.handlePreviousPage("permissions/group", "/app/setting")
@@ -284,7 +291,11 @@ class AddUsers extends Component {
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li>
-                <Link to={`/app/setting/group-details`}>Super Admin Group</Link>
+                <Link
+                  to={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
+                >
+                  Super Admin Group
+                </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
@@ -314,15 +325,23 @@ class AddUsers extends Component {
             <Grid item xs={6}>
               <List>
                 <ListItem>
-                  <Button
-                    className="danger-btn min-width-inherit"
-                    variant="contained"
+                  <Link
+                    to={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
+                    onClick={() => deleteUrlDetailsOfPage()}
                   >
-                    Cancel
-                  </Button>
+                    <Button
+                      className="danger-btn min-width-inherit"
+                      variant="contained"
+                    >
+                      Cancel
+                    </Button>
+                  </Link>
                 </ListItem>
                 <ListItem>
-                  <Link to={`/app/setting/group-details`}>
+                  <Link
+                    to={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
+                    onClick={() => deleteUrlDetailsOfPage()}
+                  >
                     <Button
                       className="primary-btn min-width-inherit"
                       variant="contained"

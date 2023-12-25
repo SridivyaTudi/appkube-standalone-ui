@@ -5,17 +5,12 @@ import {
   authMFACode,
   createRole,
   createGroup,
-  getRoles,
-  getPolicies,
   deleteRole,
   getRoleById,
   updateRole,
-  getPermissionCategory,
   createPolicy,
   deletePolicy,
-  getUsers,
   createUser,
-  getGroups,
   deleteGroup,
   getUserPermissionData,
 } from "./SettingsThunk";
@@ -228,32 +223,6 @@ export const settingsSlice = createSlice({
       };
     },
 
-    [getRoles.pending]: (state) => {
-      return {
-        ...state,
-        allRoles: {
-          status: status.IN_PROGRESS,
-        },
-      };
-    },
-    [getRoles.fulfilled]: (state, { payload }) => {
-      return {
-        ...state,
-        allRoles: {
-          status: status.SUCCESS,
-          data: payload,
-        },
-      };
-    },
-    [getRoles.rejected]: (state) => {
-      return {
-        ...state,
-        allRoles: {
-          status: status.FAILURE,
-        },
-      };
-    },
-
     [getRoleById.pending]: (state) => {
       return {
         ...state,
@@ -280,32 +249,6 @@ export const settingsSlice = createSlice({
       };
     },
 
-    [getPolicies.pending]: (state) => {
-      return {
-        ...state,
-        allPolicy: {
-          status: status.IN_PROGRESS,
-        },
-      };
-    },
-    [getPolicies.fulfilled]: (state, { payload }) => {
-      return {
-        ...state,
-        allPolicy: {
-          status: status.SUCCESS,
-          data: payload,
-        },
-      };
-    },
-    [getPolicies.rejected]: (state) => {
-      return {
-        ...state,
-        allPolicy: {
-          status: status.FAILURE,
-        },
-      };
-    },
-
     [deleteRole.pending]: (state) => {
       return {
         ...state,
@@ -327,32 +270,6 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         removeRole: {
-          status: status.FAILURE,
-        },
-      };
-    },
-
-    [getPermissionCategory.pending]: (state) => {
-      return {
-        ...state,
-        permissionCategory: {
-          status: status.IN_PROGRESS,
-        },
-      };
-    },
-    [getPermissionCategory.fulfilled]: (state, { payload }) => {
-      return {
-        ...state,
-        permissionCategory: {
-          status: status.SUCCESS,
-          data: payload,
-        },
-      };
-    },
-    [getPermissionCategory.rejected]: (state) => {
-      return {
-        ...state,
-        permissionCategory: {
           status: status.FAILURE,
         },
       };
@@ -410,32 +327,6 @@ export const settingsSlice = createSlice({
       };
     },
 
-    [getUsers.pending]: (state) => {
-      return {
-        ...state,
-        allUsers: {
-          status: status.IN_PROGRESS,
-        },
-      };
-    },
-    [getUsers.fulfilled]: (state, { payload }) => {
-      return {
-        ...state,
-        allUsers: {
-          status: status.SUCCESS,
-          data: payload,
-        },
-      };
-    },
-    [getUsers.rejected]: (state) => {
-      return {
-        ...state,
-        allUsers: {
-          status: status.FAILURE,
-        },
-      };
-    },
-
     [createUser.pending]: (state) => {
       return {
         ...state,
@@ -457,32 +348,6 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         userCreation: {
-          status: status.FAILURE,
-        },
-      };
-    },
-
-    [getGroups.pending]: (state) => {
-      return {
-        ...state,
-        allGroups: {
-          status: status.IN_PROGRESS,
-        },
-      };
-    },
-    [getGroups.fulfilled]: (state, { payload }) => {
-      return {
-        ...state,
-        allGroups: {
-          status: status.SUCCESS,
-          data: payload,
-        },
-      };
-    },
-    [getGroups.rejected]: (state) => {
-      return {
-        ...state,
-        allGroups: {
           status: status.FAILURE,
         },
       };
