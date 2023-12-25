@@ -7,11 +7,13 @@ import Allowed from "./Components/Allowed";
 import Disallowed from "./Components/Disallowed";
 import Roles from "./Components/Roles";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-import { setActiveTab } from "Utils";
+import { setActiveTab, setUrlDetailsOfPage } from "Utils";
 import status from "Redux/Constants/CommonDS";
-import { getRoleById } from "Redux/Settings/SettingsThunk";
+import { getRoleById, deleteGroup } from "Redux/Settings/SettingsThunk";
 import Loader from "Components/Loader";
 import { connect } from "react-redux";
+import ConfirmationPopup from "Components/ConfirmationPopup";
+import { ToastMessage } from "Toast/ToastMessage";
 
 class GroupDetails extends Component {
   tabMapping = [
@@ -64,6 +66,20 @@ class GroupDetails extends Component {
         }
       }
     }
+
+    if (this.props.removeGroup.status !== prevProps.removeGroup.status) {
+      if (this.props.removeGroup.status === status.SUCCESS) {
+        let removeGroupRes = this.props.removeGroup.data;
+        if (removeGroupRes) {
+          this.togglePopup();
+          setActiveTab("permissions/group");
+          this.props.navigate("/app/setting");
+          ToastMessage.success("Group Removed Successfully");
+        } else {
+          ToastMessage.error("Group Deletion Failed!");
+        }
+      }
+    }
   };
 
   setActiveTab = (activeTab) => {
@@ -93,6 +109,7 @@ class GroupDetails extends Component {
                 <Button
                   className="primary-btn min-width-inherit"
                   variant="contained"
+                  onClick={() => setUrlDetailsOfPage(this.getGroupId())}
                 >
                   {activeTab === 0 ? "Add Users" : "Add Role"}
                 </Button>
@@ -109,7 +126,13 @@ class GroupDetails extends Component {
           </Button>
         </ListItem>
         <ListItem>
-          <Button className="danger-btn min-width-inherit" variant="contained">
+          <Button
+            className="danger-btn min-width-inherit"
+            variant="contained"
+            onClick={() => {
+              this.setState({ showConfirmPopup: true });
+            }}
+          >
             Delete Group
           </Button>
         </ListItem>
@@ -139,14 +162,27 @@ class GroupDetails extends Component {
       </Box>
     );
   }
+  // Delete group
+  handleDeleteGroup = () => {
+    this.props.deleteGroup(this.getGroupId());
+  };
 
+  // toggle confirmation popup
+  togglePopup = () => {
+    let { showConfirmPopup } = this.state;
+    this.setState({
+      showConfirmPopup: !showConfirmPopup,
+    });
+  };
   render() {
-    const { activeTab, groupDetails } = this.state;
+    const { activeTab, groupDetails, showConfirmPopup } = this.state;
     let { roleDetailsById: groupDetailsById } = this.props;
+    let deleteGroupStatus =
+      this.props.removeGroup?.status === status.IN_PROGRESS;
     return (
       <Box className="super-admin-container">
         {groupDetailsById.status === status.IN_PROGRESS ? (
-         <Box sx={{height: 550 }}>{this.renderLoder()}</Box>
+          <Box sx={{ height: 550 }}>{this.renderLoder()}</Box>
         ) : (
           <>
             <Box className="list-heading">
@@ -216,6 +252,22 @@ class GroupDetails extends Component {
                 )}
               </Box>
             </Box>
+            {showConfirmPopup ? (
+              <ConfirmationPopup
+                showModal={showConfirmPopup}
+                togglePopup={this.togglePopup}
+                labels={{
+                  btnYes: "Delete",
+                  header: "Do you want to delete this Group ? ",
+                  btnNo: "Cancel",
+                }}
+                icon={<i className="fas fa-trash-alt"></i>}
+                handleCallBack={this.handleDeleteGroup}
+                showLoader={deleteGroupStatus}
+              />
+            ) : (
+              <></>
+            )}
           </>
         )}
       </Box>
@@ -223,11 +275,11 @@ class GroupDetails extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { roleDetailsById } = state.settings;
-  return { roleDetailsById };
+  const { roleDetailsById, removeGroup } = state.settings;
+  return { roleDetailsById, removeGroup };
 };
 
-const mapDispatchToProps = { getRoleById };
+const mapDispatchToProps = { getRoleById, deleteGroup };
 
 export default connect(
   mapStateToProps,

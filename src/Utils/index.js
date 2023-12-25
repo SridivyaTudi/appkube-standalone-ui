@@ -149,19 +149,22 @@ export const deleteActiveTab = () => {
 
 export const getFormattedDate = (dateString) => {
   try {
-    let date = new Date(dateString);
+    if (dateString) {
+      let date = new Date(dateString);
 
-    let day = `${date.getDate()}`.padStart(2, "0");
-    let month = `${date.getMonth() + 1}`.padStart(2, "0");
-    let year = date.getFullYear();
+      let day = `${date.getDate()}`.padStart(2, "0");
+      let month = `${date.getMonth() + 1}`.padStart(2, "0");
+      let year = date.getFullYear();
 
-    let hours = date.getHours();
-    hours = `${hours % 12}`.padStart(2, "0");
-    let minutes = `${date.getMinutes()}`.padStart(2, "0");
+      let hours = date.getHours();
+      hours = `${hours % 12}`.padStart(2, "0");
+      let minutes = `${date.getMinutes()}`.padStart(2, "0");
 
-    let amPm = hours >= 12 ? "PM" : "AM";
+      let amPm = hours >= 12 ? "PM" : "AM";
 
-    return `${day}/${month}/${year} ${hours}:${minutes} ${amPm}`;
+      return `${day}/${month}/${year} ${hours}:${minutes} ${amPm}`;
+    }
+    throw new Error()
   } catch (error) {
     console.log(error);
     return null;

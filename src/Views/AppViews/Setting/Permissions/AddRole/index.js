@@ -121,7 +121,6 @@ class AddRole extends Component {
     }
   };
   handlePreviousPage = () => {
-    console.log('in')
     setActiveTab("permissions/group");
     this.props.navigate("/app/setting");
   };
@@ -133,10 +132,8 @@ class AddRole extends Component {
           <h3>Group Infra team Add Role</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li  onClick={()=>this.handlePreviousPage()}>
-                <Link>
-                  Users and Permissions
-                </Link>
+              <li onClick={() => this.handlePreviousPage()}>
+                <Link>Users and Permissions</Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
@@ -224,7 +221,12 @@ class AddRole extends Component {
                 <TableRow key={index}>
                   <TableCell>
                     {" "}
-                    <Checkbox className="check-box" size="small" /> {row.user}
+                    <Checkbox
+                      className="check-box"
+                      size="small"
+                      id={`${index}`}
+                    />{" "}
+                    {row.user}
                     <Box className="d-flex roles-box">
                       <HtmlTooltip
                         className="table-tooltip-dark"

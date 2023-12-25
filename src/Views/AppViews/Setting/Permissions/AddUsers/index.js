@@ -17,72 +17,27 @@ import {
   setActiveTab,
   getUrlDetailsOfPage,
   deleteUrlDetailsOfPage,
+  getCurrentUser,
+  getFormattedDate,
 } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { getUserPermissionData } from "Redux/Settings/SettingsThunk";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import Loader from "Components/Loader";
+const getCurrentUserInfo = () => {
+  return getCurrentUser()
+    ? getCurrentUser()?.info?.user
+      ? getCurrentUser().info.user
+      : { id: "", username: "", email: "", profileImage: "" }
+    : { id: "", username: "", email: "", profileImage: "" };
+};
 
-let data = [
-  {
-    user: "Milena Kahles",
-    emailAddress: "Carolina.Patzwahl81@gmal.cm",
-    groups: "02",
-    date: "03/01/2023",
-    id: 1,
-  },
-  {
-    user: "Natalie Clark",
-    emailAddress: "mia.johnson@example.com",
-    groups: "03",
-    date: "03/01/2023",
-    id: 2,
-  },
-  {
-    user: "David Garcia",
-    emailAddress: "sophia.brown@example.com",
-    groups: "08",
-    date: "03/01/2023",
-    id: 3,
-  },
-  {
-    user: "Olivia Martin",
-    emailAddress: "sarah.lee@example.com",
-    groups: "03",
-    date: "03/01/2023",
-    id: 4,
-  },
-  {
-    user: "William Davis",
-    emailAddress: "noah.thompson@example.com",
-    groups: "02",
-    date: "03/01/2023",
-    id: 5,
-  },
-  {
-    user: "Ella Lewis",
-    emailAddress: "bob.johnson@example.com",
-    groups: "00",
-    date: "03/01/2023",
-    id: 6,
-  },
-  {
-    user: "David Garcia",
-    emailAddress: "emma.davis@example.com",
-    groups: "04",
-    date: "03/01/2023",
-    id: 7,
-  },
-  {
-    user: "William Davis",
-    emailAddress: "lucas.martinez@example.com",
-    groups: "06",
-    date: "03/01/2023",
-    id: 8,
-  },
-];
 class AddUsers extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: data,
+      rows: [],
       pg: 0,
       rpg: 5,
       showCreateUserControlModal: false,
@@ -92,6 +47,25 @@ class AddUsers extends Component {
       showCancelUserControlModal: false,
     };
   }
+
+  componentDidMount = () => {
+    this.props.getUserPermissionData("admin" || getCurrentUserInfo().username);
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      this.props.userPermissionData.status !==
+      prevProps.userPermissionData.status
+    ) {
+      if (this.props.userPermissionData.status === status.SUCCESS) {
+        let rows = this.props.userPermissionData.data?.users || [];
+        if (rows) {
+          this.setState({ rows });
+        }
+      }
+    }
+  };
+
   handleChangePage = (event, newpage) => {
     this.setState({ pg: newpage });
   };
@@ -131,14 +105,13 @@ class AddUsers extends Component {
       <TableHead>
         <TableRow>
           <TableCell>
-            {" "}
             <Checkbox
               className="check-box"
               size="small"
               disabled={rows?.length ? false : true}
               checked={rows?.length === selectedUsers?.length}
               onChange={(e) => this.handleSelectAllCheckBox(e)}
-            />{" "}
+            />
             User
           </TableCell>
           <TableCell>Email Address</TableCell>
@@ -158,19 +131,20 @@ class AddUsers extends Component {
           rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
             <TableRow key={index}>
               <TableCell>
-                {" "}
                 <Checkbox
                   className="check-box"
                   size="small"
-                  id={row.id}
+                  id={`${row.id}`}
                   checked={selectedUsers.includes(row.id)}
                   onChange={this.handleCheckBox}
                 />
-                {row.user}
+                {row.username}
               </TableCell>
-              <TableCell>{row.emailAddress}</TableCell>
-              <TableCell align="center">{row.groups}</TableCell>
-              <TableCell align="center">{row.date}</TableCell>
+              <TableCell>{row.email}</TableCell>
+              <TableCell align="center">{row.roles?.length}</TableCell>
+              <TableCell align="center">
+                {getFormattedDate(row.createdAt)}
+              </TableCell>
             </TableRow>
           ))
         ) : (
@@ -208,18 +182,23 @@ class AddUsers extends Component {
 
   // Render table container
   renderTableContainer = () => {
-    return (
-      <TableContainer component={Paper} className="access-control-table">
-        <Table
-          sx={{ minWidth: 500 }}
-          aria-label="custom pagination table"
-          className="table"
-        >
-          {this.renderTableHead()}
-          {this.renderTableBody()}
-        </Table>
-      </TableContainer>
-    );
+    let { status: userStatus } = this.props.userPermissionData;
+    if (userStatus === status.IN_PROGRESS) {
+      return this.renderLoder();
+    } else {
+      return (
+        <TableContainer component={Paper} className="access-control-table">
+          <Table
+            sx={{ minWidth: 500 }}
+            aria-label="custom pagination table"
+            className="table"
+          >
+            {this.renderTableHead()}
+            {this.renderTableBody()}
+          </Table>
+        </TableContainer>
+      );
+    }
   };
 
   // Handle check box
@@ -239,12 +218,12 @@ class AddUsers extends Component {
 
   // Handle select all checkbox
   handleSelectAllCheckBox = (event, isRole = 0) => {
-    let { selectedUsers } = this.state;
+    let { selectedUsers, rows } = this.state;
 
     let { checked } = event.target;
 
     if (checked) {
-      selectedUsers = data.map((value) => value.id);
+      selectedUsers = rows.map((value) => value.id);
     } else {
       selectedUsers = [];
     }
@@ -255,11 +234,12 @@ class AddUsers extends Component {
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { rows } = this.state;
+    let data = this.props.userPermissionData.data?.users || [];
 
     if (data?.length) {
       if (value) {
         rows = data.filter((user) => {
-          if (user?.user.toLowerCase().includes(value.toLowerCase())) {
+          if (user?.username.toLowerCase().includes(value.toLowerCase())) {
             return user;
           } else {
             return null;
@@ -271,6 +251,15 @@ class AddUsers extends Component {
       this.setState({ rows, searchedKey: value });
     }
   };
+
+   // Render Loder
+   renderLoder() {
+    return (
+      <Box className="d-blck text-center w-100 h-100 ">
+        <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
+      </Box>
+    );
+  }
 
   render() {
     let { searchedKey } = this.state;
@@ -360,5 +349,18 @@ class AddUsers extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  const { userPermissionData } = state.settings;
+  return {
+    userPermissionData,
+  };
+};
 
-export default navigateRouter(AddUsers);
+const mapDispatchToProps = {
+  getUserPermissionData,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(AddUsers));
