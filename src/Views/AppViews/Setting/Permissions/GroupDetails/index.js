@@ -128,8 +128,14 @@ class GroupDetails extends Component {
   // Render Loder
   renderLoder() {
     return (
-      <Box className="d-block text-center w-100 h-100 m-r-auto m-l-auto ">
-        <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
+      <Box
+        sx={{ height: "100%" }}
+        display={"flex"}
+        alignItems={"center"}
+        justifyContent={"center"}
+        className="width-100"
+      >
+        <Loader sx={{ height: "100%" }} />
       </Box>
     );
   }
@@ -140,7 +146,7 @@ class GroupDetails extends Component {
     return (
       <Box className="super-admin-container">
         {groupDetailsById.status === status.IN_PROGRESS ? (
-          this.renderLoder()
+         <Box sx={{height: 550 }}>{this.renderLoder()}</Box>
         ) : (
           <>
             <Box className="list-heading">
