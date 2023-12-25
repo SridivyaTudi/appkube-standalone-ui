@@ -262,7 +262,7 @@ class AddUserGroup extends Component {
         </Box>
         <TableContainer component={Paper} className="access-control-table">
           <Table
-            sx={{ minWidth: 500 }}
+            sx={{ minWidth: 800 }}
             aria-label="custom pagination table"
             className="table"
           >
