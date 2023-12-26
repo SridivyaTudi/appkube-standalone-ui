@@ -128,14 +128,8 @@ class AddRole extends Component {
   // Render Loder
   renderLoder() {
     return (
-      <Box
-        sx={{ height: "100%" }}
-        display={"flex"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        className="width-100"
-      >
-        <Loader sx={{ height: "100%" }} />
+      <Box className="d-blck text-center w-100 h-100 ">
+        <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
       </Box>
     );
   }
@@ -275,10 +269,10 @@ class AddRole extends Component {
             </Grid>
           </Grid>
         </Box>
-        <TableContainer component={Paper} className="access-control-table">
-          {userStatus ? (
-            this.renderLoder()
-          ) : (
+        {userStatus ? (
+          this.renderLoder()
+        ) : (
+          <TableContainer component={Paper} className="access-control-table">
             <Table
               sx={{ minWidth: 800 }}
               aria-label="custom pagination table"
@@ -353,8 +347,8 @@ class AddRole extends Component {
                 )}
               </TableBody>
             </Table>
-          )}
-        </TableContainer>
+          </TableContainer>
+        )}
         <TablePagination
           rowsPerPageOptions={[5, 10, 20]}
           component="div"
