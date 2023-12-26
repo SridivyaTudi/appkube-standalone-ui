@@ -354,6 +354,10 @@
               padding: 4px 10px;
               border-radius: 5px;
               color: #ffffff;
+              text-transform: lowercase;
+              &::first-letter{
+                text-transform: capitalize;
+              }
               &.green {
                 background: #00b929;
               }
