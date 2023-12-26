@@ -46,8 +46,14 @@ class CancelGroupControlModal extends Component {
               variant="contained"
               onClick={() => {
                 this.props.handleCancelGroupControlModal();
-                setActiveTab(this.props.previousTab);
-                this.props.navigate(`${APP_PREFIX_PATH}/setting`);
+                let { redirectUrl, previousTab } = this.props;
+                if (previousTab) {
+                  setActiveTab(this.props.previousTab);
+                }
+
+                this.props.navigate(
+                  redirectUrl || `${APP_PREFIX_PATH}/setting`
+                );
               }}
             >
               Continue

@@ -122,7 +122,7 @@ class AccordionView extends Component {
                     isActive ? "active" : ""
                   }`}
                 >
-                  <Table>{subchild.subName ? subchild.subName : <></>}</Table>
+                {subchild.subName ? subchild.subName : <></>}
                 </TableCell>
               </TableRow>
             ) : null}

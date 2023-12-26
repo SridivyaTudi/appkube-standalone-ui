@@ -20,8 +20,16 @@ import {
   getUrlDetailsOfPage,
   deleteUrlDetailsOfPage,
   setActiveTab,
+  getCurrentUser,
+  getFormattedDate,
 } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import CancelGroupControlModal from "../Components/CancelGroupControlModal";
+import status from "Redux/Constants/CommonDS";
+import { connect } from "react-redux";
+import { getUserPermissionData } from "Redux/Settings/SettingsThunk";
+import Loader from "Components/Loader";
+
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -38,62 +46,38 @@ class AddRole extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: [
-        {
-          user: "Milena Kahles",
-          emailAddress: "Carolina.Patzwahl81@gmal.cm",
-          groups: "02",
-          date: "03/01/2023",
-        },
-        {
-          user: "Natalie Clark",
-          emailAddress: "mia.johnson@example.com",
-          groups: "03",
-          date: "03/01/2023",
-        },
-        {
-          user: "David Garcia",
-          emailAddress: "sophia.brown@example.com",
-          groups: "08",
-          date: "03/01/2023",
-        },
-        {
-          user: "Olivia Martin",
-          emailAddress: "sarah.lee@example.com",
-          groups: "03",
-          date: "03/01/2023",
-        },
-        {
-          user: "William Davis",
-          emailAddress: "noah.thompson@example.com",
-          groups: "02",
-          date: "03/01/2023",
-        },
-        {
-          user: "Ella Lewis",
-          emailAddress: "bob.johnson@example.com",
-          groups: "00",
-          date: "03/01/2023",
-        },
-        {
-          user: "David Garcia",
-          emailAddress: "emma.davis@example.com",
-          groups: "04",
-          date: "03/01/2023",
-        },
-        {
-          user: "William Davis",
-          emailAddress: "lucas.martinez@example.com",
-          groups: "06",
-          date: "03/01/2023",
-        },
-      ],
+      rows: [],
       pg: 0,
       rpg: 5,
       showCreateUserControlModal: false,
       actionButton: null,
+      showCancelRoleControlModal: false,
+      searchedKey: "",
+      selectedUsers: [],
     };
   }
+
+  componentDidMount = () => {
+    this.props.getUserPermissionData(
+      "admin" || this.getCurrentUserInfo().username
+    );
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      this.props.userPermissionData.status !==
+      prevProps.userPermissionData.status
+    ) {
+      if (this.props.userPermissionData.status === status.SUCCESS) {
+        let userPermissionData = this.props.userPermissionData.data;
+        if (userPermissionData) {
+          let { users } = userPermissionData;
+          this.setState({ rows: users });
+        }
+      }
+    }
+  };
+
   handleChangePage = (event, newpage) => {
     this.setState({ pg: newpage });
   };
@@ -120,12 +104,102 @@ class AddRole extends Component {
       });
     }
   };
+
   handlePreviousPage = () => {
     setActiveTab("permissions/group");
     this.props.navigate("/app/setting");
   };
+
+  handleCancelRoleControlModal = () => {
+    this.setState({
+      showCancelRoleControlModal: !this.state.showCancelRoleControlModal,
+    });
+  };
+
+  //CurrentUser details
+  getCurrentUserInfo = () => {
+    return getCurrentUser()
+      ? getCurrentUser()?.info?.user
+        ? getCurrentUser().info.user
+        : { id: "", username: "" }
+      : { id: "", username: "" };
+  };
+
+  // Render Loder
+  renderLoder() {
+    return (
+      <Box
+        sx={{ height: "100%" }}
+        display={"flex"}
+        alignItems={"center"}
+        justifyContent={"center"}
+        className="width-100"
+      >
+        <Loader sx={{ height: "100%" }} />
+      </Box>
+    );
+  }
+
+  // Handle check box
+  handleCheckBox = (event) => {
+    let { selectedUsers } = this.state;
+
+    let { id, checked } = event.target;
+
+    if (checked) {
+      selectedUsers.push(+id);
+    } else {
+      selectedUsers = selectedUsers.filter((value) => value !== +id);
+    }
+
+    this.setState({ selectedUsers });
+  };
+
+  //  Serach Groups
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { rows } = this.state;
+    let data = this.props.userPermissionData.data?.users || [];
+
+    if (data?.length) {
+      if (value) {
+        rows = data.filter((user) => {
+          if (user?.username.toLowerCase().includes(value.toLowerCase())) {
+            return user;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        rows = data;
+      }
+      this.setState({ rows, searchedKey: value });
+    }
+  };
+  // Handle select all checkbox
+  handleSelectAllCheckBox = (event, isRole = 0) => {
+    let { selectedUsers, rows } = this.state;
+
+    let { checked } = event.target;
+
+    if (checked) {
+      selectedUsers = rows.map((value) => value.id);
+    } else {
+      selectedUsers = [];
+    }
+    this.setState({ selectedUsers });
+  };
   render() {
-    const { rows, pg, rpg } = this.state;
+    const {
+      rows,
+      pg,
+      rpg,
+      showCancelRoleControlModal,
+      searchedKey,
+      selectedUsers,
+    } = this.state;
+    let userStatus =
+      this.props.userPermissionData.status === status.IN_PROGRESS;
     return (
       <Box className="add-users-container">
         <Box className="list-heading">
@@ -161,7 +235,10 @@ class AddRole extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Search policy"
+                  placeholder="Search users"
+                  value={searchedKey}
+                  onChange={this.handleSearchChange}
+                  autoFocus="autoFocus"
                 />
                 <button className="button">
                   <SearchOutlinedIcon />
@@ -171,10 +248,7 @@ class AddRole extends Component {
             <Grid item xs={6}>
               <List>
                 <ListItem>
-                  <Link
-                    to={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
-                    onClick={() => deleteUrlDetailsOfPage()}
-                  >
+                  <Link onClick={this.handleCancelRoleControlModal}>
                     <Button
                       className="danger-btn min-width-inherit"
                       variant="contained"
@@ -191,6 +265,7 @@ class AddRole extends Component {
                     <Button
                       className="primary-btn min-width-inherit"
                       variant="contained"
+                      onClick={() => setActiveTab("roles")}
                     >
                       Add role
                     </Button>
@@ -201,56 +276,84 @@ class AddRole extends Component {
           </Grid>
         </Box>
         <TableContainer component={Paper} className="access-control-table">
-          <Table
-            sx={{ minWidth: 800 }}
-            aria-label="custom pagination table"
-            className="table"
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <Checkbox className="check-box" size="small" /> User
-                </TableCell>
-                <TableCell>Email Address</TableCell>
-                <TableCell align="center">Groups</TableCell>
-                <TableCell align="center">User Creation Date</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
-                <TableRow key={index}>
+          {userStatus ? (
+            this.renderLoder()
+          ) : (
+            <Table
+              sx={{ minWidth: 800 }}
+              aria-label="custom pagination table"
+              className="table"
+            >
+              <TableHead>
+                <TableRow>
                   <TableCell>
-                    {" "}
                     <Checkbox
                       className="check-box"
                       size="small"
-                      id={`${index}`}
+                      disabled={rows?.length ? false : true}
+                      checked={rows?.length === selectedUsers?.length}
+                      onChange={(e) => this.handleSelectAllCheckBox(e)}
                     />{" "}
-                    {row.user}
-                    <Box className="d-flex roles-box">
-                      <HtmlTooltip
-                        className="table-tooltip-dark"
-                        title={
-                          <React.Fragment>
-                            <span>
-                              This role created by default by the system
-                            </span>
-                          </React.Fragment>
-                        }
-                      >
-                        <span className=" m-r-0">
-                          <img src={DefaultIcon} alt="" /> Default
-                        </span>
-                      </HtmlTooltip>
-                    </Box>
+                    User
                   </TableCell>
-                  <TableCell>{row.emailAddress}</TableCell>
-                  <TableCell align="center">{row.groups}</TableCell>
-                  <TableCell align="center">{row.date}</TableCell>
+                  <TableCell>Email Address</TableCell>
+                  <TableCell align="center">Groups</TableCell>
+                  <TableCell align="center">User Creation Date</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHead>
+              <TableBody>
+                {rows.length ? (
+                  rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
+                    <TableRow key={index}>
+                      <TableCell>
+                        <Checkbox
+                          className="check-box"
+                          size="small"
+                          id={`${row.id}`}
+                          checked={selectedUsers.includes(row.id)}
+                          onChange={this.handleCheckBox}
+                        />
+                        {row.username}
+                        <Box className="d-flex roles-box">
+                          <HtmlTooltip
+                            className="table-tooltip-dark"
+                            title={
+                              <React.Fragment>
+                                <span>
+                                  This role created by default by the system
+                                </span>
+                              </React.Fragment>
+                            }
+                          >
+                            <span className=" m-r-0">
+                              <img src={DefaultIcon} alt="" /> Default
+                            </span>
+                          </HtmlTooltip>
+                        </Box>
+                      </TableCell>
+                      <TableCell>{row.emailAddress}</TableCell>
+                      <TableCell align="center">{row.roles?.length}</TableCell>
+                      <TableCell align="center">
+                        {getFormattedDate(row.createdAt)}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={12}>
+                      <Box className="d-blck text-center w-100 h-100 ">
+                        <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+                          <h5 className="m-t-0 m-b-0">
+                            There are no data available.
+                          </h5>
+                        </Box>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          )}
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 20]}
@@ -262,9 +365,31 @@ class AddRole extends Component {
           onPageChange={this.handleChangePage}
           onRowsPerPageChange={this.handleChangeRowsPerPage}
         />
+
+        {showCancelRoleControlModal ? (
+          <CancelGroupControlModal
+            showModal={showCancelRoleControlModal}
+            handleCancelGroupControlModal={this.handleCancelRoleControlModal}
+            redirectUrl={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
+            previousTab={"roles"}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }
 }
+const mapStateToProps = (state) => {
+  const { userPermissionData } = state.settings;
+  return {
+    userPermissionData,
+  };
+};
 
-export default navigateRouter(AddRole);
+const mapDispatchToProps = { getUserPermissionData };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(AddRole));

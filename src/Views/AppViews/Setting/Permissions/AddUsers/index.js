@@ -25,6 +25,8 @@ import { getUserPermissionData } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
+import CancelGroupControlModal from "../Components/CancelGroupControlModal";
+
 const getCurrentUserInfo = () => {
   return getCurrentUser()
     ? getCurrentUser()?.info?.user
@@ -252,8 +254,8 @@ class AddUsers extends Component {
     }
   };
 
-   // Render Loder
-   renderLoder() {
+  // Render Loder
+  renderLoder() {
     return (
       <Box className="d-blck text-center w-100 h-100 ">
         <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
@@ -261,8 +263,13 @@ class AddUsers extends Component {
     );
   }
 
+  handleCancelUserControlModal = () => {
+    this.setState({
+      showCancelUserControlModal: !this.state.showCancelUserControlModal,
+    });
+  };
   render() {
-    let { searchedKey } = this.state;
+    let { searchedKey, showCancelUserControlModal } = this.state;
     return (
       <Box className="add-users-container">
         <Box className="list-heading">
@@ -314,10 +321,7 @@ class AddUsers extends Component {
             <Grid item xs={6}>
               <List>
                 <ListItem>
-                  <Link
-                    to={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
-                    onClick={() => deleteUrlDetailsOfPage()}
-                  >
+                  <Link onClick={this.handleCancelUserControlModal}>
                     <Button
                       className="danger-btn min-width-inherit"
                       variant="contained"
@@ -345,6 +349,15 @@ class AddUsers extends Component {
         </Box>
         {this.renderTableContainer()}
         {this.renderComponentTablePagination()}
+        {showCancelUserControlModal ? (
+          <CancelGroupControlModal
+            showModal={showCancelUserControlModal}
+            handleCancelGroupControlModal={this.handleCancelUserControlModal}
+            redirectUrl={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }

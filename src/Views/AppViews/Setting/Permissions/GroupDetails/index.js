@@ -7,7 +7,12 @@ import Allowed from "./Components/Allowed";
 import Disallowed from "./Components/Disallowed";
 import Roles from "./Components/Roles";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-import { setActiveTab, setUrlDetailsOfPage } from "Utils";
+import {
+  setActiveTab,
+  setUrlDetailsOfPage,
+  getActiveTab,
+  deleteActiveTab,
+} from "Utils";
 import status from "Redux/Constants/CommonDS";
 import { getRoleById, deleteGroup } from "Redux/Settings/SettingsThunk";
 import Loader from "Components/Loader";
@@ -49,6 +54,7 @@ class GroupDetails extends Component {
   }
 
   componentDidMount = () => {
+    this.setPreviousTab();
     let groupId = this.getGroupId();
     if (groupId) {
       this.props.getRoleById(groupId);
@@ -84,6 +90,20 @@ class GroupDetails extends Component {
 
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
+  };
+
+  setPreviousTab = () => {
+    let currentTab = getActiveTab();
+    if (currentTab) {
+      for (let tab = 0; tab < this.tabMapping.length; tab++) {
+        const element = this.tabMapping[tab];
+        if (currentTab.includes(element.dataKey)) {
+          this.setActiveTab(tab);
+          deleteActiveTab();
+          break;
+        }
+      }
+    }
   };
 
   renderBtns = () => {
