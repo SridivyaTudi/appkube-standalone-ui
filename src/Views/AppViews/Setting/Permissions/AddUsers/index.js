@@ -13,13 +13,7 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import {
-  setActiveTab,
-  getUrlDetailsOfPage,
-  deleteUrlDetailsOfPage,
-  getCurrentUser,
-  getFormattedDate,
-} from "Utils";
+import { setActiveTab, getCurrentUser, getFormattedDate } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { getUserPermissionData } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
@@ -111,7 +105,7 @@ class AddUsers extends Component {
               className="check-box"
               size="small"
               disabled={rows?.length ? false : true}
-              checked={rows?.length === selectedUsers?.length}
+              checked={rows?.length > 0 && rows.length === selectedUsers?.length}
               onChange={(e) => this.handleSelectAllCheckBox(e)}
             />
             User
@@ -268,6 +262,8 @@ class AddUsers extends Component {
       showCancelUserControlModal: !this.state.showCancelUserControlModal,
     });
   };
+
+  getGroupId = () => this.props.params.id;
   render() {
     let { searchedKey, showCancelUserControlModal } = this.state;
     return (
@@ -275,7 +271,7 @@ class AddUsers extends Component {
         <Box className="list-heading">
           <h3>Group Infra team Add users</h3>
           <Box className="breadcrumbs">
-            <ul onClick={() => deleteUrlDetailsOfPage()}>
+            <ul>
               <li
                 onClick={() =>
                   this.handlePreviousPage("permissions/group", "/app/setting")
@@ -287,9 +283,7 @@ class AddUsers extends Component {
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li>
-                <Link
-                  to={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
-                >
+                <Link to={`/app/setting/group-details/${this.getGroupId()}`}>
                   Super Admin Group
                 </Link>
               </li>
@@ -331,10 +325,7 @@ class AddUsers extends Component {
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link
-                    to={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
-                    onClick={() => deleteUrlDetailsOfPage()}
-                  >
+                  <Link to={`/app/setting/group-details/${this.getGroupId()}`}>
                     <Button
                       className="primary-btn min-width-inherit"
                       variant="contained"
@@ -353,7 +344,7 @@ class AddUsers extends Component {
           <CancelGroupControlModal
             showModal={showCancelUserControlModal}
             handleCancelGroupControlModal={this.handleCancelUserControlModal}
-            redirectUrl={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
+            redirectUrl={`/app/setting/group-details/${this.getGroupId()}`}
           />
         ) : (
           <></>

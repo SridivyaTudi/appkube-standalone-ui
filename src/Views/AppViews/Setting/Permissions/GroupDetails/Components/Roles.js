@@ -144,7 +144,9 @@ class Roles extends Component {
               size="small"
               className="check-box"
               disabled={rows?.length ? false : true}
-              checked={rows?.length === selectedRoles?.length}
+              checked={
+                rows?.length > 0 && rows.length === selectedRoles?.length
+              }
               onChange={(e) => this.handleSelectAllCheckBox(e)}
             />{" "}
             Role Name

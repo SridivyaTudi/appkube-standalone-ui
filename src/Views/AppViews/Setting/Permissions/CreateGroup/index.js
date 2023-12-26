@@ -165,7 +165,7 @@ export class CreateGroup extends Component {
                   size="small"
                   className="check-box"
                   disabled={roles?.length ? false : true}
-                  checked={formData.roles.length === roles?.length}
+                  checked={roles?.length>0 && formData.roles.length === roles.length}
                   onChange={(e) => this.handleSelectAllCheckBox(e, 1)}
                 />
                 Role Name
@@ -324,7 +324,9 @@ export class CreateGroup extends Component {
                   size="small"
                   id="all"
                   disabled={users?.length ? false : true}
-                  checked={formData.users.length === users?.length}
+                  checked={
+                    users.length > 0 && formData.users.length === users?.length
+                  }
                   onChange={(e) => this.handleSelectAllCheckBox(e)}
                 />
                 User
@@ -411,7 +413,7 @@ export class CreateGroup extends Component {
             <input
               type="text"
               className="form-control"
-              placeholder="Search policy"
+              placeholder={`Search ${isRole ? "Roles" : "Users"}`}
               value={isRole ? searchedRole : searchedUser}
               onChange={(e) => this.handleSearchChange(e, isRole)}
             />

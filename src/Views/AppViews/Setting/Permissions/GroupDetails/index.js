@@ -9,7 +9,6 @@ import Roles from "./Components/Roles";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import {
   setActiveTab,
-  setUrlDetailsOfPage,
   getActiveTab,
   deleteActiveTab,
 } from "Utils";
@@ -122,14 +121,14 @@ class GroupDetails extends Component {
             </ListItem>
             <ListItem>
               <Link
-                to={`${APP_PREFIX_PATH}/setting/${
+                to={`${APP_PREFIX_PATH}/setting/group-details/${this.getGroupId()}/${
                   activeTab === 0 ? "add-users" : "add-role"
                 }`}
               >
                 <Button
                   className="primary-btn min-width-inherit"
                   variant="contained"
-                  onClick={() => setUrlDetailsOfPage(this.getGroupId())}
+              
                 >
                   {activeTab === 0 ? "Add Users" : "Add Role"}
                 </Button>

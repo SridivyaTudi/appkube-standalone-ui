@@ -163,11 +163,11 @@ export const Views = (props) => {
             element={<GroupDetails />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/setting/add-users`}
+            path={`${APP_PREFIX_PATH}/setting/group-details/:id/add-users`}
             element={<AddUsers />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/setting/add-role`}
+            path={`${APP_PREFIX_PATH}/setting/group-details/:id/add-role`}
             element={<AddRole />}
           />
           <Route

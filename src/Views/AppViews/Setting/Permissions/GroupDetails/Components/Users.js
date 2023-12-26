@@ -113,9 +113,11 @@ class Users extends Component {
               size="small"
               className="check-box"
               disabled={rows?.length ? false : true}
-              checked={rows?.length === selectedUsers?.length}
+              checked={
+                rows?.length > 0 && rows.length === selectedUsers?.length
+              }
               onChange={(e) => this.handleSelectAllCheckBox(e)}
-            />{" "}
+            />
             User
           </TableCell>
           <TableCell>Email Address</TableCell>

@@ -18,7 +18,6 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import {
   getUrlDetailsOfPage,
-  deleteUrlDetailsOfPage,
   setActiveTab,
   getCurrentUser,
   getFormattedDate,
@@ -183,6 +182,8 @@ class AddRole extends Component {
     }
     this.setState({ selectedUsers });
   };
+  getGroupId = () => this.props.params.id;
+
   render() {
     const {
       rows,
@@ -207,10 +208,7 @@ class AddRole extends Component {
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li>
-                <Link
-                  to={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
-                  onClick={() => deleteUrlDetailsOfPage()}
-                >
+                <Link to={`/app/setting/group-details/${this.getGroupId()}`}>
                   Super Admin Group
                 </Link>
               </li>
@@ -252,10 +250,7 @@ class AddRole extends Component {
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link
-                    to={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
-                    onClick={() => deleteUrlDetailsOfPage()}
-                  >
+                  <Link to={`/app/setting/group-details/${this.getGroupId()}`}>
                     <Button
                       className="primary-btn min-width-inherit"
                       variant="contained"
@@ -285,7 +280,7 @@ class AddRole extends Component {
                       className="check-box"
                       size="small"
                       disabled={rows?.length ? false : true}
-                      checked={rows?.length === selectedUsers?.length}
+                      checked={rows?.length >0 && rows.length === selectedUsers?.length}
                       onChange={(e) => this.handleSelectAllCheckBox(e)}
                     />{" "}
                     User
@@ -325,7 +320,7 @@ class AddRole extends Component {
                           </HtmlTooltip>
                         </Box>
                       </TableCell>
-                      <TableCell>{row.emailAddress}</TableCell>
+                      <TableCell>{row.email}</TableCell>
                       <TableCell align="center">{row.roles?.length}</TableCell>
                       <TableCell align="center">
                         {getFormattedDate(row.createdAt)}
