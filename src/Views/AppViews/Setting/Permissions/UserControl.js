@@ -159,10 +159,17 @@ class UserControl extends Component {
               </TableCell>
               <TableCell>{row.email}</TableCell>
               <TableCell>
-                {row.loginCount ? `Count : ${row.loginCount} ` : "Never Login "}
-                {row.lastLoginAt
-                  ? `Last : ${getFormattedDate(row.lastLoginAt)}`
-                  : ""}
+                <Box className="d-block">
+                  {row.loginCount
+                  
+                    ?<strong>Count : {row.loginCount} </strong>  
+                    : "Never Login "}
+                </Box>
+                <Box className="d-block">
+                  {row.lastLoginAt
+                    ? <strong>Last : ${getFormattedDate(row.lastLoginAt)}</strong> 
+                    : ""}
+                </Box>
               </TableCell>
               <TableCell align="center">{row.roles?.length}</TableCell>
               <TableCell align="center">
