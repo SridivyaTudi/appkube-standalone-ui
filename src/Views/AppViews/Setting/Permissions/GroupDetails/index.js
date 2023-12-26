@@ -7,11 +7,7 @@ import Allowed from "./Components/Allowed";
 import Disallowed from "./Components/Disallowed";
 import Roles from "./Components/Roles";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-import {
-  setActiveTab,
-  getActiveTab,
-  deleteActiveTab,
-} from "Utils";
+import { setActiveTab, getActiveTab, deleteActiveTab } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import { getRoleById, deleteGroup } from "Redux/Settings/SettingsThunk";
 import Loader from "Components/Loader";
@@ -49,6 +45,7 @@ class GroupDetails extends Component {
       activeTab: 0,
       actionButton: null,
       groupDetails: {},
+      removeDataDetails: null,
     };
   }
 
@@ -88,7 +85,7 @@ class GroupDetails extends Component {
   };
 
   setActiveTab = (activeTab) => {
-    this.setState({ activeTab });
+    this.setState({ activeTab,removeDataDetails:null });
   };
 
   setPreviousTab = () => {
@@ -106,19 +103,24 @@ class GroupDetails extends Component {
   };
 
   renderBtns = () => {
-    let { activeTab } = this.state;
+    let { activeTab, removeDataDetails } = this.state;
     return (
       <List>
         {[0, 1].includes(activeTab) ? (
           <Fragment>
-            <ListItem>
-              <Button
-                className="danger-btn min-width-inherit"
-                variant="contained"
-              >
-                Remove
-              </Button>
-            </ListItem>
+            {removeDataDetails ? (
+              <ListItem>
+                <Button
+                  className="danger-btn min-width-inherit"
+                  variant="contained"
+                >
+                  Remove
+                </Button>
+              </ListItem>
+            ) : (
+              <></>
+            )}
+
             <ListItem>
               <Link
                 to={`${APP_PREFIX_PATH}/setting/group-details/${this.getGroupId()}/${
@@ -128,7 +130,6 @@ class GroupDetails extends Component {
                 <Button
                   className="primary-btn min-width-inherit"
                   variant="contained"
-              
                 >
                   {activeTab === 0 ? "Add Users" : "Add Role"}
                 </Button>
@@ -259,9 +260,17 @@ class GroupDetails extends Component {
               </List>
               <Box className="tabs-content">
                 {activeTab === 0 ? (
-                  <Users />
+                  <Users
+                    setRemoveDetails={(removeDataDetails) => {
+                      this.setState({ removeDataDetails });
+                    }}
+                  />
                 ) : activeTab === 1 ? (
-                  <Roles />
+                  <Roles
+                    setRemoveDetails={(removeDataDetails) => {
+                      this.setState({ removeDataDetails });
+                    }}
+                  />
                 ) : activeTab === 2 ? (
                   <Allowed />
                 ) : activeTab === 3 ? (

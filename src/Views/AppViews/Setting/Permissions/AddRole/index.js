@@ -16,12 +16,7 @@ import {
 } from "@mui/material";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import {
-  getUrlDetailsOfPage,
-  setActiveTab,
-  getCurrentUser,
-  getFormattedDate,
-} from "Utils";
+import { getUrlDetailsOfPage, setActiveTab, getCurrentUser } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import CancelGroupControlModal from "../Components/CancelGroupControlModal";
 import status from "Redux/Constants/CommonDS";
@@ -70,8 +65,8 @@ class AddRole extends Component {
       if (this.props.userPermissionData.status === status.SUCCESS) {
         let userPermissionData = this.props.userPermissionData.data;
         if (userPermissionData) {
-          let { users } = userPermissionData;
-          this.setState({ rows: users });
+          let { roles } = userPermissionData;
+          this.setState({ rows: roles });
         }
       }
     }
@@ -208,7 +203,10 @@ class AddRole extends Component {
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li>
-                <Link to={`/app/setting/group-details/${this.getGroupId()}`}>
+                <Link
+                  to={`/app/setting/group-details/${this.getGroupId()}`}
+                  onClick={() => setActiveTab("roles")}
+                >
                   Super Admin Group
                 </Link>
               </li>
@@ -280,14 +278,16 @@ class AddRole extends Component {
                       className="check-box"
                       size="small"
                       disabled={rows?.length ? false : true}
-                      checked={rows?.length >0 && rows.length === selectedUsers?.length}
+                      checked={
+                        rows?.length > 0 &&
+                        rows.length === selectedUsers?.length
+                      }
                       onChange={(e) => this.handleSelectAllCheckBox(e)}
                     />{" "}
-                    User
+                    Roles
                   </TableCell>
-                  <TableCell>Email Address</TableCell>
-                  <TableCell align="center">Groups</TableCell>
-                  <TableCell align="center">User Creation Date</TableCell>
+
+                  <TableCell>Role Description</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -302,29 +302,34 @@ class AddRole extends Component {
                           checked={selectedUsers.includes(row.id)}
                           onChange={this.handleCheckBox}
                         />
-                        {row.username}
-                        <Box className="d-flex roles-box">
-                          <HtmlTooltip
-                            className="table-tooltip-dark"
-                            title={
-                              <React.Fragment>
-                                <span>
-                                  This role created by default by the system
-                                </span>
-                              </React.Fragment>
-                            }
-                          >
-                            <span className=" m-r-0">
-                              <img src={DefaultIcon} alt="" /> Default
-                            </span>
-                          </HtmlTooltip>
-                        </Box>
+                        {row?.name}
+                        {row.default ? (
+                          <Box className="d-flex roles-box">
+                            <HtmlTooltip
+                              className="table-tooltip-dark"
+                              title={
+                                <React.Fragment>
+                                  <span>
+                                    This role created by default by the system
+                                  </span>
+                                </React.Fragment>
+                              }
+                            >
+                              <span className=" m-r-0">
+                                <img
+                                  src={DefaultIcon}
+                                  alt=""
+                                  className="p-r-5"
+                                />{" "}
+                                Default
+                              </span>
+                            </HtmlTooltip>
+                          </Box>
+                        ) : (
+                          <></>
+                        )}
                       </TableCell>
-                      <TableCell>{row.email}</TableCell>
-                      <TableCell align="center">{row.roles?.length}</TableCell>
-                      <TableCell align="center">
-                        {getFormattedDate(row.createdAt)}
-                      </TableCell>
+                      <TableCell>{row.description}</TableCell>
                     </TableRow>
                   ))
                 ) : (

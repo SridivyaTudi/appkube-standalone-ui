@@ -29,56 +29,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     fontSize: theme.typography.pxToRem(11),
   },
 }));
-let data = [
-  {
-    user: "Senior Leadership",
-    Description:
-      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-    id: 1,
-  },
-  {
-    user: "Administrator",
-    Description:
-      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-    id: 2,
-  },
-  {
-    user: "Tech user",
-    Description:
-      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-    id: 3,
-  },
-  {
-    user: "DevSecOps",
-    Description:
-      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-    id: 3,
-  },
-  {
-    user: "System Engineer",
-    Description:
-      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-    id: 4,
-  },
-  {
-    user: "Architect Designer",
-    Description:
-      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-    id: 5,
-  },
-  {
-    user: "Product Manager",
-    Description:
-      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-    id: 6,
-  },
-  {
-    user: "Tester",
-    Description:
-      "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ",
-    id: 6,
-  },
-];
+
 class Roles extends Component {
   constructor(props) {
     super(props);
@@ -264,7 +215,9 @@ class Roles extends Component {
     } else {
       selectedRoles = selectedRoles.filter((value) => value !== +id);
     }
-
+    this.props.setRemoveDetails(
+      selectedRoles.length ? { tab: "roles", data: selectedRoles } : null
+    );
     this.setState({ selectedRoles });
   };
 
@@ -273,12 +226,15 @@ class Roles extends Component {
     let { selectedRoles } = this.state;
 
     let { checked } = event.target;
-
+    let data = this.setRowsStateOrReturn(0)
     if (checked) {
       selectedRoles = data.map((value) => value.id);
     } else {
       selectedRoles = [];
     }
+    this.props.setRemoveDetails(
+      selectedRoles.length ? { tab: "roles", data: selectedRoles } : null
+    );
     this.setState({ selectedRoles });
   };
 

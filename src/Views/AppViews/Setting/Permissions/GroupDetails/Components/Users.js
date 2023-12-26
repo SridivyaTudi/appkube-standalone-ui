@@ -108,7 +108,6 @@ class Users extends Component {
       <TableHead>
         <TableRow>
           <TableCell>
-            {" "}
             <Checkbox
               size="small"
               className="check-box"
@@ -209,7 +208,9 @@ class Users extends Component {
     } else {
       selectedUsers = selectedUsers.filter((value) => value !== +id);
     }
-
+    this.props.setRemoveDetails(
+      selectedUsers.length ? { tab: "users", data: selectedUsers } : null
+    );
     this.setState({ selectedUsers });
   };
 
@@ -224,6 +225,9 @@ class Users extends Component {
     } else {
       selectedUsers = [];
     }
+    this.props.setRemoveDetails(
+      selectedUsers.length ? { tab: "users", data: selectedUsers } : null
+    );
     this.setState({ selectedUsers });
   };
   render() {
