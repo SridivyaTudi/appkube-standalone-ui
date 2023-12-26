@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import { getUrlDetailsOfPage, setActiveTab, getCurrentUser } from "Utils";
+import { setActiveTab, getCurrentUser } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import CancelGroupControlModal from "../Components/CancelGroupControlModal";
 import status from "Redux/Constants/CommonDS";
@@ -364,7 +364,7 @@ class AddRole extends Component {
           <CancelGroupControlModal
             showModal={showCancelRoleControlModal}
             handleCancelGroupControlModal={this.handleCancelRoleControlModal}
-            redirectUrl={`/app/setting/group-details/${getUrlDetailsOfPage()}`}
+            redirectUrl={`/app/setting/group-details/${this.getGroupId()}`}
             previousTab={"roles"}
           />
         ) : (
