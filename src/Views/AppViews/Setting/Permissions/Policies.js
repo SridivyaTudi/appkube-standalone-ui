@@ -48,9 +48,7 @@ class Policies extends Component {
       if (this.props.removePolicy.data === "OK") {
         this.togglePopup();
         ToastMessage.success("Policy removed successfully.");
-        this.props.getUserPermissionData(
-          "admin" || this.getCurrentUserInfo().username
-        );
+        this.props.getUserPermissionData(this.getCurrentUserInfo().username);
       } else {
         ToastMessage.error("Policy is not removed.");
       }

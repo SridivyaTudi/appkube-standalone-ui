@@ -82,9 +82,7 @@ class RoleControl extends Component {
         let removeRoleRes = this.props.removeRole.data;
         if (removeRoleRes) {
           this.togglePopup();
-          this.props.getUserPermissionData(
-            "admin" || getCurrentUserInfo().username
-          );
+          this.props.getUserPermissionData(getCurrentUserInfo().username);
           ToastMessage.success("Role Removed Successfully");
         } else {
           ToastMessage.error("Role Deletion Failed!");

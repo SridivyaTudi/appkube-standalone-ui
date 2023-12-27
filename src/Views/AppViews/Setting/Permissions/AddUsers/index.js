@@ -45,7 +45,7 @@ class AddUsers extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getUserPermissionData("admin" || getCurrentUserInfo().username);
+    this.props.getUserPermissionData(getCurrentUserInfo().username);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -105,7 +105,9 @@ class AddUsers extends Component {
               className="check-box"
               size="small"
               disabled={rows?.length ? false : true}
-              checked={rows?.length > 0 && rows.length === selectedUsers?.length}
+              checked={
+                rows?.length > 0 && rows.length === selectedUsers?.length
+              }
               onChange={(e) => this.handleSelectAllCheckBox(e)}
             />
             User

@@ -33,7 +33,7 @@ class CreateAddPolicyControlModal extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getUserPermissionData("admin" || getCurrentUserInfo().username);
+    this.props.getUserPermissionData(getCurrentUserInfo().username);
     this.getSelectedPoliciesFromProps();
   };
 

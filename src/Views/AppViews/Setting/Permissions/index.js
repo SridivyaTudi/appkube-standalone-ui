@@ -54,9 +54,7 @@ export class Permissions extends Component {
 
   componentDidMount = () => {
     this.setPreviousTab();
-    this.props.getUserPermissionData(
-      "admin" || this.getCurrentUserInfo().username
-    );
+    this.props.getUserPermissionData(this.getCurrentUserInfo().username);
   };
 
   componentDidUpdate = (prevProps, prevState) => {

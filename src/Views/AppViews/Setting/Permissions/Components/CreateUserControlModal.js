@@ -87,9 +87,7 @@ class CreateUserControlModal extends Component {
       if (this.props.userCreation.status === status.SUCCESS) {
         if (this.props.userCreation.data) {
           ToastMessage.success(`User Created Successfully`);
-          this.props.getUserPermissionData(
-            "admin" || getCurrentUserInfo().username
-          );
+          this.props.getUserPermissionData(getCurrentUserInfo().username);
           this.handleCancel();
         } else {
           ToastMessage.error(`User Creation Failed!`);
