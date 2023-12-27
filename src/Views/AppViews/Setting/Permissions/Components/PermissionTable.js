@@ -32,17 +32,17 @@ class PermissionTable extends Component {
     return (
       <TableHead>
         <TableRow>
-          <TableCell >
+          <TableCell>
             <Checkbox
               size="small"
               className="check-box"
               disabled={rows?.length ? false : true}
-              checked={selectedData.length === rows?.length}
+              checked={rows?.length > 0 && selectedData.length === rows.length}
               onChange={(e) => this.handleSelectAllCheckBox(e)}
-            />{" "}
-            Permission name 
+            />
+            Permission name
           </TableCell>
-          <TableCell >Status</TableCell>
+          <TableCell>Status</TableCell>
         </TableRow>
       </TableHead>
     );
