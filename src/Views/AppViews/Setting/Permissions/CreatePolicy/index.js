@@ -59,7 +59,7 @@ export class CreatePolicy extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getUserPermissionData("admin" || getCurrentUserInfo().username);
+    this.props.getUserPermissionData(getCurrentUserInfo().username);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -326,7 +326,8 @@ export class CreatePolicy extends Component {
 
   // Set state of permission
   setPermissionStateOrReturnData = (isStateSet = 1) => {
-    let permissions = this.props.userPermissionData.data.permissionCategories || [];
+    let permissions =
+      this.props.userPermissionData.data.permissionCategories || [];
     if (permissions?.length) {
       permissions = this.setPermissionAccordingToFormat(
         JSON.parse(JSON.stringify(permissions))

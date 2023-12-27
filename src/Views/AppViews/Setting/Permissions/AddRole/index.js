@@ -52,9 +52,7 @@ class AddRole extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getUserPermissionData(
-      "admin" || this.getCurrentUserInfo().username
-    );
+    this.props.getUserPermissionData(this.getCurrentUserInfo().username);
   };
 
   componentDidUpdate = (prevProps, prevState) => {

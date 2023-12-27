@@ -167,7 +167,7 @@ class UserControl extends Component {
                 </Box>
                 <Box className="d-block">
                   {row.lastLoginAt
-                    ? <strong>Last : ${getFormattedDate(row.lastLoginAt)}</strong> 
+                    ? <strong>Last : {getFormattedDate(row.lastLoginAt)}</strong> 
                     : ""}
                 </Box>
               </TableCell>

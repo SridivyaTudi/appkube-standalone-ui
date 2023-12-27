@@ -44,9 +44,7 @@ class CreateRoleControlModal extends Component {
       if (this.props.roleCreation.status === status.SUCCESS) {
         if (this.props.roleCreation.data) {
           ToastMessage.success(` Role Created Successfully`);
-          this.props.getUserPermissionData(
-            "admin" || getCurrentUserInfo().username
-          );
+          this.props.getUserPermissionData(getCurrentUserInfo().username);
           this.handleCloseModal();
         } else {
           ToastMessage.error(`Role Creation Failed!`);
@@ -71,9 +69,7 @@ class CreateRoleControlModal extends Component {
       if (this.props.roleUpdation.status === status.SUCCESS) {
         if (this.props.roleUpdation.data) {
           ToastMessage.success(` Role Updated Successfully`);
-          this.props.getUserPermissionData(
-            "admin" || getCurrentUserInfo().username
-          );
+          this.props.getUserPermissionData(getCurrentUserInfo().username);
           this.handleCloseModal();
         } else {
           ToastMessage.error(`Role Updation Failed!`);

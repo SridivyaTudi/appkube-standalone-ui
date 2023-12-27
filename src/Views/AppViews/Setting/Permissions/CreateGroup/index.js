@@ -79,7 +79,7 @@ export class CreateGroup extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getUserPermissionData("admin" || getCurrentUserInfo().username);
+    this.props.getUserPermissionData(getCurrentUserInfo().username);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -165,7 +165,9 @@ export class CreateGroup extends Component {
                   size="small"
                   className="check-box"
                   disabled={roles?.length ? false : true}
-                  checked={roles?.length>0 && formData.roles.length === roles.length}
+                  checked={
+                    roles?.length > 0 && formData.roles.length === roles.length
+                  }
                   onChange={(e) => this.handleSelectAllCheckBox(e, 1)}
                 />
                 Role Name
