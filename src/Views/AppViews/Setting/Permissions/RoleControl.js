@@ -44,15 +44,9 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     fontSize: theme.typography.pxToRem(11),
   },
 }));
-//CurrentUser details
-const getCurrentUserInfo = () => {
-  return getCurrentUser()
-    ? getCurrentUser()?.info?.user
-      ? getCurrentUser().info.user
-      : { id: "", username: "" }
-    : { id: "", username: "" };
-};
+
 class RoleControl extends Component {
+  user = { username: "", email: "", profileImage: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -66,6 +60,10 @@ class RoleControl extends Component {
       editRoleId: 0,
       searchedKey: "",
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
@@ -82,7 +80,7 @@ class RoleControl extends Component {
         let removeRoleRes = this.props.removeRole.data;
         if (removeRoleRes) {
           this.togglePopup();
-          this.props.getUserPermissionData(getCurrentUserInfo().username);
+          this.props.getUserPermissionData(this.user.username);
           ToastMessage.success("Role Removed Successfully");
         } else {
           ToastMessage.error("Role Deletion Failed!");
@@ -203,7 +201,7 @@ class RoleControl extends Component {
                   }
                 >
                   <span className=" m-r-0">
-                    <img src={DefaultIcon} alt=""/> Default
+                    <img src={DefaultIcon} alt="" /> Default
                   </span>
                 </HtmlTooltip>
               </Box>

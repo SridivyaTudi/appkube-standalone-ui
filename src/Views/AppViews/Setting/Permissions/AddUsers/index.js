@@ -21,15 +21,8 @@ import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import CancelGroupControlModal from "../Components/CancelGroupControlModal";
 
-const getCurrentUserInfo = () => {
-  return getCurrentUser()
-    ? getCurrentUser()?.info?.user
-      ? getCurrentUser().info.user
-      : { id: "", username: "", email: "", profileImage: "" }
-    : { id: "", username: "", email: "", profileImage: "" };
-};
-
 class AddUsers extends Component {
+  user = { id: "", username: "", email: "", profileImage: "" }
   constructor(props) {
     super(props);
     this.state = {
@@ -42,10 +35,14 @@ class AddUsers extends Component {
       searchedKey: "",
       showCancelUserControlModal: false,
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
-    this.props.getUserPermissionData(getCurrentUserInfo().username);
+    this.props.getUserPermissionData(this.user.username);
   };
 
   componentDidUpdate = (prevProps, prevState) => {

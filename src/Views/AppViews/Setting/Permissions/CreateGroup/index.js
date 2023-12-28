@@ -45,16 +45,8 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     fontSize: theme.typography.pxToRem(11),
   },
 }));
-
-const getCurrentUserInfo = () => {
-  return getCurrentUser()
-    ? getCurrentUser()?.info?.user
-      ? getCurrentUser().info.user
-      : { id: "", username: "", email: "", profileImage: "" }
-    : { id: "", username: "", email: "", profileImage: "" };
-};
-
 export class CreateGroup extends Component {
+  user = { id: "", username: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -76,10 +68,14 @@ export class CreateGroup extends Component {
       searchedUser: "",
       searchedRole: "",
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
-    this.props.getUserPermissionData(getCurrentUserInfo().username);
+    this.props.getUserPermissionData(this.user.username);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -88,7 +84,6 @@ export class CreateGroup extends Component {
       prevProps.userPermissionData.status
     ) {
       if (this.props.userPermissionData.status === status.SUCCESS) {
-      
         if (this.props.userPermissionData?.data) {
           let { roles, users } = this.props.userPermissionData?.data;
           this.setState({ roles, users });
@@ -203,20 +198,24 @@ export class CreateGroup extends Component {
               onChange={(e) => this.handleCheckBox(e, 1)}
             />
             {row.name}
-            <Box className="d-flex roles-box">
-              <HtmlTooltip
-                className="table-tooltip-dark d-flex"
-                title={
-                  <React.Fragment>
-                    <span>This role created by default by the system</span>
-                  </React.Fragment>
-                }
-              >
-                <span className=" m-r-0">
-                  <img src={DefaultIcon} alt="" /> Default
-                </span>
-              </HtmlTooltip>
-            </Box>
+            {row.default ? (
+              <Box className="d-flex roles-box">
+                <HtmlTooltip
+                  className="table-tooltip-dark d-flex"
+                  title={
+                    <React.Fragment>
+                      <span>This role created by default by the system</span>
+                    </React.Fragment>
+                  }
+                >
+                  <span className=" m-r-0">
+                    <img src={DefaultIcon} alt="" /> Default
+                  </span>
+                </HtmlTooltip>
+              </Box>
+            ) : (
+              <></>
+            )}
           </TableCell>
           <TableCell>{row.description}</TableCell>
           <TableCell></TableCell>
@@ -298,7 +297,7 @@ export class CreateGroup extends Component {
         name,
         description,
         grp: true,
-        createdBy: getCurrentUserInfo().username,
+        createdBy: this.user.username,
         roles: roles.map((value) => ({ id: value })),
         users: users.map((value) => ({ id: value })),
       };

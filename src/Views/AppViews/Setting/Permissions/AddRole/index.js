@@ -37,6 +37,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 class AddRole extends Component {
+  user = { username: ""};
   constructor(props) {
     super(props);
     this.state = {
@@ -49,10 +50,14 @@ class AddRole extends Component {
       searchedKey: "",
       selectedUsers: [],
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
-    this.props.getUserPermissionData(this.getCurrentUserInfo().username);
+    this.props.getUserPermissionData(this.user.username);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -106,15 +111,6 @@ class AddRole extends Component {
     this.setState({
       showCancelRoleControlModal: !this.state.showCancelRoleControlModal,
     });
-  };
-
-  //CurrentUser details
-  getCurrentUserInfo = () => {
-    return getCurrentUser()
-      ? getCurrentUser()?.info?.user
-        ? getCurrentUser().info.user
-        : { id: "", username: "" }
-      : { id: "", username: "" };
   };
 
   // Render Loder

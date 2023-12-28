@@ -16,24 +16,23 @@ import { ToastMessage } from "Toast/ToastMessage";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { getCurrentUser } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
-const getCurrentUserInfo = () => {
-  return getCurrentUser()
-    ? getCurrentUser()?.info?.user
-      ? getCurrentUser().info.user
-      : { id: "", username: "", email: "", profileImage: "" }
-    : { id: "", username: "", email: "", profileImage: "" };
-};
+
 class CreateAddPolicyControlModal extends Component {
+  user = { id: "", username: "", email: "", profileImage: "" };
   constructor(props) {
     super(props);
     this.state = {
       policies: [],
       selectedPolicy: [],
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
-    this.props.getUserPermissionData(getCurrentUserInfo().username);
+    this.props.getUserPermissionData(this.user.username);
     this.getSelectedPoliciesFromProps();
   };
 

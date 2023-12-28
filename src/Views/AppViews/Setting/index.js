@@ -37,16 +37,20 @@ export class Setting extends Component {
       index: 4,
     },
   ];
-
+  user = { username: "", email: "", profileImage: "" };
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 0,
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
-    this.setPreviousTab(); 
+    this.setPreviousTab();
   };
 
   setPreviousTab = () => {
@@ -70,26 +74,11 @@ export class Setting extends Component {
     this.setState({ activeTab });
   };
 
-  getCurrentUserInfo = () => {
-    let userInfo = getCurrentUser()
-      ? getCurrentUser()?.info?.user
-        ? getCurrentUser().info.user
-        : { username: "" }
-      : { username: "" };
-
-    let { type, username } = userInfo;
-   
-    if (type) {
-      type = type.charAt(0)?.toUpperCase() + type?.slice(1).toLowerCase();
-    }
-    return { username, type };
-  };
-
   // Render page header
   renderHeader = () => {
     return (
       <Box className="page-header">
-        <h3>{this.getCurrentUserInfo().username}</h3>
+        <h3>{this.user.username}</h3>
         <Button
           className="primary-outline-btn min-width-inherit"
           variant="outlined"
@@ -99,7 +88,7 @@ export class Setting extends Component {
             alt=""
             style={{ maxWidth: "10px", marginRight: "5px" }}
           />
-          {this.getCurrentUserInfo().type}
+          {this.user.type}
         </Button>
       </Box>
     );

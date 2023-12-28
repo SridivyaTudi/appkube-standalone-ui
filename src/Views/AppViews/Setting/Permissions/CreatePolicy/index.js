@@ -30,15 +30,10 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     fontSize: theme.typography.pxToRem(11),
   },
 }));
-const getCurrentUserInfo = () => {
-  return getCurrentUser()
-    ? getCurrentUser()?.info?.user
-      ? getCurrentUser().info.user
-      : { id: "", username: "", email: "", profileImage: "" }
-    : { id: "", username: "", email: "", profileImage: "" };
-};
+
 let searchedData = [];
 export class CreatePolicy extends Component {
+  user = { id: "", username: "", email: "", profileImage: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -56,10 +51,14 @@ export class CreatePolicy extends Component {
       selectedActiveData: [],
       selectedCheckBoxData: { permissionsParams: [], viewData: [] },
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
-    this.props.getUserPermissionData(getCurrentUserInfo().username);
+    this.props.getUserPermissionData(this.user.username);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -222,7 +221,7 @@ export class CreatePolicy extends Component {
           name,
           description,
           permissions: permissionsParams,
-          createdBy: getCurrentUserInfo().username
+          createdBy: this.user.username,
         };
         this.props.createPolicy(params);
       }

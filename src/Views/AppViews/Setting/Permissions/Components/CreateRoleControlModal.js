@@ -15,15 +15,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import { getCurrentUser } from "Utils";
 import { v4 } from "uuid";
 import Loader from "Components/Loader";
-//CurrentUser details
-const getCurrentUserInfo = () => {
-  return getCurrentUser()
-    ? getCurrentUser()?.info?.user
-      ? getCurrentUser().info.user
-      : { id: "", username: "" }
-    : { id: "", username: "" };
-};
+
 class CreateRoleControlModal extends Component {
+  user = { id: "", username: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -33,6 +27,10 @@ class CreateRoleControlModal extends Component {
       policyList: [],
       selectedPolicy: [],
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
@@ -44,7 +42,7 @@ class CreateRoleControlModal extends Component {
       if (this.props.roleCreation.status === status.SUCCESS) {
         if (this.props.roleCreation.data) {
           ToastMessage.success(` Role Created Successfully`);
-          this.props.getUserPermissionData(getCurrentUserInfo().username);
+          this.props.getUserPermissionData(this.user.username);
           this.handleCloseModal();
         } else {
           ToastMessage.error(`Role Creation Failed!`);
@@ -69,7 +67,7 @@ class CreateRoleControlModal extends Component {
       if (this.props.roleUpdation.status === status.SUCCESS) {
         if (this.props.roleUpdation.data) {
           ToastMessage.success(` Role Updated Successfully`);
-          this.props.getUserPermissionData(getCurrentUserInfo().username);
+          this.props.getUserPermissionData(this.user.username);
           this.handleCloseModal();
         } else {
           ToastMessage.error(`Role Updation Failed!`);
@@ -138,7 +136,7 @@ class CreateRoleControlModal extends Component {
         description,
         grp: false,
         policies: selectedPolicy.map((policy) => ({ id: policy })),
-        createdBy: getCurrentUserInfo().username,
+        createdBy: this.user.username,
       };
 
       if (this.props.roleId > 0) {

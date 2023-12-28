@@ -43,18 +43,22 @@ export class Permissions extends Component {
       dataKey: "permissions",
     },
   ];
-
+  user = { id: "", username: "" };
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 0,
       tabMapping: this.controlMapping,
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
     this.setPreviousTab();
-    this.props.getUserPermissionData(this.getCurrentUserInfo().username);
+    this.props.getUserPermissionData(this.user.username);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -172,14 +176,6 @@ export class Permissions extends Component {
       });
     }
     return count;
-  };
-  //CurrentUser details
-  getCurrentUserInfo = () => {
-    return getCurrentUser()
-      ? getCurrentUser()?.info?.user
-        ? getCurrentUser().info.user
-        : { id: "", username: "" }
-      : { id: "", username: "" };
   };
 
   // Render loder

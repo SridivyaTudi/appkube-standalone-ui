@@ -18,7 +18,7 @@ import {
 } from "Utils";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-
+let user = { username: "", email: "", profileImage: "" };
 function TopBar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -41,6 +41,10 @@ function TopBar() {
       dispatch(organizationsAsyncThunk());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      user = userDetails;
+    }
   }, []);
 
   useEffect(() => {
@@ -49,13 +53,6 @@ function TopBar() {
     }
   }, [orgs]);
 
-  const getCurrentUserInfo = () => {
-    return getCurrentUser()
-      ? getCurrentUser()?.info?.user
-        ? getCurrentUser().info.user
-        : { username: "", email: "", profileImage: "" }
-      : { username: "", email: "", profileImage: "" };
-  };
   const HtmlTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} arrow classes={{ popper: className }} />
   ))(({ theme }) => ({
@@ -70,7 +67,7 @@ function TopBar() {
       border: "1px solid #dadde9",
     },
   }));
-  let { username, email, profileImage = {} } = getCurrentUserInfo();
+
   return (
     <Box className="top-bar">
       <Box sx={{ width: "100%" }}>
@@ -164,8 +161,8 @@ function TopBar() {
                 <Box className="profile" onClick={onClickProfile}>
                   <img
                     src={
-                      profileImage
-                        ? `data:image/png;base64,${profileImage}`
+                      user.profileImage
+                        ? `data:image/png;base64,${user.profileImage}`
                         : avatar
                     }
                     alt=""
@@ -180,8 +177,8 @@ function TopBar() {
                     <Box className="user-img">
                       <img
                         src={
-                          profileImage
-                            ? `data:image/png;base64,${profileImage}`
+                          user.profileImage
+                            ? `data:image/png;base64,${user.profileImage}`
                             : avatar
                         }
                         alt=""
@@ -193,28 +190,25 @@ function TopBar() {
                         title={
                           <React.Fragment>
                             <Box className="details">
-                              <div className="name">{username}</div>
+                              <div className="name">{user.username}</div>
                             </Box>
                           </React.Fragment>
                         }
                       >
-                        <div className="name">{username}</div>
+                        <div className="name">{user.username}</div>
                       </HtmlTooltip>
                       <HtmlTooltip
                         className="table-tooltip"
                         title={
                           <React.Fragment>
                             <Box className="details">
-                              <div className="email">{email}</div>
+                              <div className="email">{user.email}</div>
                             </Box>
                           </React.Fragment>
                         }
                       >
-                        <div className="email">{email}</div>
+                        <div className="email">{user.email}</div>
                       </HtmlTooltip>
-                      {/* <div className="name">
-                          {getCurrentUserInfo().username}
-                        </div> */}
                     </Box>
                   </Box>
                   <List>

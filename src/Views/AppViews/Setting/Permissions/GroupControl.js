@@ -35,6 +35,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 }));
 
 class GroupControl extends Component {
+  user = { id: "", username: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -43,6 +44,10 @@ class GroupControl extends Component {
       groupId: 0,
       showConfirmPopup: false,
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
@@ -59,7 +64,7 @@ class GroupControl extends Component {
         let removeGroupRes = this.props.removeGroup.data;
         if (removeGroupRes) {
           this.togglePopup();
-          this.props.getUserPermissionData(this.getCurrentUserInfo().username);
+          this.props.getUserPermissionData(this.user.username);
           ToastMessage.success("Group Removed Successfully");
         } else {
           ToastMessage.error("Group Deletion Failed!");
@@ -274,13 +279,6 @@ class GroupControl extends Component {
     });
   };
 
-  getCurrentUserInfo = () => {
-    return getCurrentUser()
-      ? getCurrentUser()?.info?.user
-        ? getCurrentUser().info.user
-        : { id: "", username: "" }
-      : { id: "", username: "" };
-  };
   render() {
     let { showConfirmPopup } = this.state;
     let deleteGroupStatus =

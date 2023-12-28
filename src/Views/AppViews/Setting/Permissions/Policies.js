@@ -16,6 +16,7 @@ import { getCurrentUser } from "Utils";
 
 let searchedData = [];
 class Policies extends Component {
+  user = { id: "", username: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -25,6 +26,10 @@ class Policies extends Component {
       selectedCheckBox: [],
       showConfirmPopup: false,
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
@@ -48,7 +53,7 @@ class Policies extends Component {
       if (this.props.removePolicy.data === "OK") {
         this.togglePopup();
         ToastMessage.success("Policy removed successfully.");
-        this.props.getUserPermissionData(this.getCurrentUserInfo().username);
+        this.props.getUserPermissionData(this.user.username);
       } else {
         ToastMessage.error("Policy is not removed.");
       }
@@ -207,14 +212,6 @@ class Policies extends Component {
     }
   };
 
-  //CurrentUser details
-  getCurrentUserInfo = () => {
-    return getCurrentUser()
-      ? getCurrentUser()?.info?.user
-        ? getCurrentUser().info.user
-        : { id: "", username: "" }
-      : { id: "", username: "" };
-  };
   render() {
     let {
       searchedKey,

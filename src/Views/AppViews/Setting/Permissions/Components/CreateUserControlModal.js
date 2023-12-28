@@ -61,15 +61,8 @@ let groupData = [
   },
 ];
 
-//CurrentUser details
-const getCurrentUserInfo = () => {
-  return getCurrentUser()
-    ? getCurrentUser()?.info?.user
-      ? getCurrentUser().info.user
-      : { id: "", username: "" }
-    : { id: "", username: "" };
-};
 class CreateUserControlModal extends Component {
+  user = { id: "", username: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -80,6 +73,10 @@ class CreateUserControlModal extends Component {
       formData: [Object.assign({}, initialFormData)],
       isSubmit: false,
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -87,7 +84,7 @@ class CreateUserControlModal extends Component {
       if (this.props.userCreation.status === status.SUCCESS) {
         if (this.props.userCreation.data) {
           ToastMessage.success(`User Created Successfully`);
-          this.props.getUserPermissionData(getCurrentUserInfo().username);
+          this.props.getUserPermissionData(this.user.username);
           this.handleCancel();
         } else {
           ToastMessage.error(`User Creation Failed!`);
@@ -172,7 +169,7 @@ class CreateUserControlModal extends Component {
       form.append("username", formData[0].name);
       form.append("organization", getCurrentOrgName());
       form.append("email", formData[0].email);
-      form.append("ownerId", getCurrentUserInfo().id);
+      form.append("ownerId", this.user.id);
       form.append("type", "user");
       form.append("errorOnOrgFound", false);
 
