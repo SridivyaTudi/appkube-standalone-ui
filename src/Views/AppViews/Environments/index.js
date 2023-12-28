@@ -653,15 +653,23 @@ class Environments extends Component {
                     </Grid>
                     <Grid item lg={4} md={5} xs={12}>
                       <Box className="search-box">
-                        <Box className="form-group search-control-group m-b-0">
+                        <Box
+                          className="form-group search-control-group m-b-0"
+                          key="search_box"
+                        >
                           <input
+                            id={`search_envs`}
                             type="text"
                             className="input-group-text"
                             placeholder="Search"
                             name="searchedKey"
                             value={searchedKey}
                             onChange={this.handleSearchChange}
-                            autoFocus="autoFocus"
+                            autoFocus={
+                              document.activeElement.id === `search_envs`
+                                ? "autofocus"
+                                : null
+                            }
                           />
                           <button className="search-btn">
                             <i className="fa fa-search" />

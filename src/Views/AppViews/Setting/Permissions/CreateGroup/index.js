@@ -88,8 +88,9 @@ export class CreateGroup extends Component {
       prevProps.userPermissionData.status
     ) {
       if (this.props.userPermissionData.status === status.SUCCESS) {
-        let { roles, users } = this.props.userPermissionData.data;
-        if (roles || users) {
+      
+        if (this.props.userPermissionData?.data) {
+          let { roles, users } = this.props.userPermissionData?.data;
           this.setState({ roles, users });
         }
       }

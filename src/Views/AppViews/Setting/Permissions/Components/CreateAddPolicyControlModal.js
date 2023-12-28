@@ -58,7 +58,7 @@ class CreateAddPolicyControlModal extends Component {
       if (this.props.roleUpdation.status === status.SUCCESS) {
         if (this.props.roleUpdation.data) {
           ToastMessage.success(`Policies Updated Successfully`);
-          let  roleId  = this.getRoleId();
+          let roleId = this.getRoleId();
           this.props.getRoleById(roleId);
         } else {
           ToastMessage.error(`Policies Updation Failed!`);
@@ -121,21 +121,25 @@ class CreateAddPolicyControlModal extends Component {
                 List of Policies ({policies.length})
               </h5>
             </Grid>
-            <Grid item xs={6}>
-              <List>
-                <ListItem>
-                  <LoadingButton
-                    className="primary-btn min-width-inherit"
-                    variant="contained"
-                    onClick={this.onClickUpdatePolicies}
-                    disabled={updatePoliciesStatus}
-                    loading={updatePoliciesStatus}
-                  >
-                    Update Policies
-                  </LoadingButton>
-                </ListItem>
-              </List>
-            </Grid>
+            {policies.length ? (
+              <Grid item xs={6}>
+                <List>
+                  <ListItem>
+                    <LoadingButton
+                      className="primary-btn min-width-inherit"
+                      variant="contained"
+                      onClick={this.onClickUpdatePolicies}
+                      disabled={updatePoliciesStatus}
+                      loading={updatePoliciesStatus}
+                    >
+                      Update Policies
+                    </LoadingButton>
+                  </ListItem>
+                </List>
+              </Grid>
+            ) : (
+              <></>
+            )}
           </Grid>
         </Box>
         <Box className="policy-boxs">
@@ -221,7 +225,9 @@ class CreateAddPolicyControlModal extends Component {
                     <Box className="title">list of permissons</Box>
                     <List>
                       {policy.permissions.map((permisson) => (
-                        <ListItem key={v4()}>{permisson.permissionName}</ListItem>
+                        <ListItem key={v4()}>
+                          {permisson.permissionName}
+                        </ListItem>
                       ))}
                     </List>
                   </>
