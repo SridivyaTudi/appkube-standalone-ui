@@ -46,8 +46,7 @@ export class Setting extends Component {
   }
 
   componentDidMount = () => {
-    this.setPreviousTab();
-    
+    this.setPreviousTab(); 
   };
 
   setPreviousTab = () => {
@@ -78,12 +77,12 @@ export class Setting extends Component {
         : { username: "" }
       : { username: "" };
 
-    let { organization, username } = userInfo;
-    let role = organization?.updatedBy || "";
-    if (role) {
-      role = role.charAt(0)?.toUpperCase() + role?.slice(1);
+    let { type, username } = userInfo;
+   
+    if (type) {
+      type = type.charAt(0)?.toUpperCase() + type?.slice(1).toLowerCase();
     }
-    return { username, role };
+    return { username, type };
   };
 
   // Render page header
@@ -100,7 +99,7 @@ export class Setting extends Component {
             alt=""
             style={{ maxWidth: "10px", marginRight: "5px" }}
           />
-          Admin
+          {this.getCurrentUserInfo().type}
         </Button>
       </Box>
     );
