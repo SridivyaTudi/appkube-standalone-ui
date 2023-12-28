@@ -222,6 +222,7 @@ export class CreatePolicy extends Component {
           name,
           description,
           permissions: permissionsParams,
+          createdBy: getCurrentUserInfo().username
         };
         this.props.createPolicy(params);
       }
