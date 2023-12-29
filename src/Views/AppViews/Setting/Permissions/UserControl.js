@@ -88,7 +88,7 @@ class UserControl extends Component {
     if (value) {
       rows = users.filter((userData) => {
         if (
-          userData?.username.toLowerCase().includes(value.toLowerCase()) ||
+          userData?.username?.toLowerCase().includes(value.toLowerCase()) ||
           userData?.email?.toLowerCase().includes(value.toLowerCase())
         ) {
           return userData;
