@@ -40,11 +40,12 @@ function TopBar() {
     if (!getCurrentOrgId()) {
       dispatch(organizationsAsyncThunk());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     let userDetails = getCurrentUser()?.info?.user;
     if (userDetails) {
       user = userDetails;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
