@@ -34,6 +34,9 @@ class CreateRoleControlModal extends Component {
   }
 
   componentDidMount = () => {
+    if (this.props.roleId > 0) {
+      this.props.getRoleById(this.props.roleId);
+    }
     this.setStatePolicies();
   };
 
