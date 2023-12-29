@@ -267,7 +267,7 @@ export class CreatePolicy extends Component {
       policy["name"] = policy.name || policy.permissionId;
       policy["isCheckBoxShow"] = true;
 
-      if (policy["status"]) {
+      if (policy["permissions"]) {
         policy["subName"] = this.getStatusHtml(policy["status"]);
       }
 
@@ -537,7 +537,7 @@ export class CreatePolicy extends Component {
           </Grid>
         </Box>
         <Box className="setting-common-searchbar">
-          <h5>Add Permissions to the Policy(68)</h5>
+          <h5>Add Permissions to the Policy({selectedActiveData.length})</h5>
           {this.renderSearchInput()}
         </Box>
         <Box className="permission-table">
