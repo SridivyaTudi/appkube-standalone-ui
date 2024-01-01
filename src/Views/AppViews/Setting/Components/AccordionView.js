@@ -89,7 +89,7 @@ class AccordionView extends Component {
                 e.stopPropagation();
                 isChildExist ? this.onClickNode(currentNode) : <></>;
               }}
-              className={`${isActive ? "active" : ""}`}
+              className={`${isActive ? "active" : ""} ${ isChildExist ? 'cursor' : ''}`}
             >
               {subchild.isCheckBoxShow ? (
                 <Box className="d-inline-block check-box ">
@@ -122,7 +122,7 @@ class AccordionView extends Component {
                     isActive ? "active" : ""
                   }`}
                 >
-                {subchild.subName ? subchild.subName : <></>}
+                  {subchild.subName ? subchild.subName : <></>}
                 </TableCell>
               </TableRow>
             ) : null}

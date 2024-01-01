@@ -19,11 +19,12 @@ class PermissionTable extends Component {
     };
   }
 
+  
+
   componentDidUpdate = (prevProps, prevState) => {
     let rows = this.props.data || [];
-
     if (this.props.data !== prevProps.data) {
-      this.setState({ rows });
+      this.setState({ rows,selectedData:[] });
     }
   };
   // Render head of table
@@ -56,7 +57,16 @@ class PermissionTable extends Component {
         {rows?.length ? (
           rows.map((row, index) => (
             <TableRow key={index}>
-              <TableCell>
+              <TableCell
+                onClick={() =>
+                  this.handleCheckBox({
+                    target: {
+                      id: row.id,
+                      checked: !selectedData.includes(row.id),
+                    },
+                  })
+                }
+              >
                 <Checkbox
                   size="small"
                   className="check-box"

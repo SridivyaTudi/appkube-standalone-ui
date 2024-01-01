@@ -439,6 +439,8 @@
           border-bottom-color: #b3b3b3;
           border-bottom-style: dotted;
 
+          
+
           strong {
             display: inline-block;
             color: #383874;
@@ -462,6 +464,7 @@
         display: table;
         width: 100%;
         td {
+         
           padding: 8px 15px;
           font-size: 13px;
           font-weight: 500;
@@ -470,7 +473,9 @@
           font-family: "Poppins", sans-serif;
           position: relative;
           border-bottom: 1px solid #eaecf0;
-          // cursor: pointer;
+          .cursor{
+            cursor: pointer!important;
+           }
           &::before {
             content: "";
             position: absolute;
