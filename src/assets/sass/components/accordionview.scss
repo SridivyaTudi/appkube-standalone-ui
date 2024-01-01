@@ -27,7 +27,10 @@
           font-family: "Poppins", sans-serif;
           position: relative;
           border-bottom: 1px solid #eaecf0;
-          cursor: pointer;
+          &.cursor{
+            cursor: pointer;
+          }
+         
           span {
             padding: 0;
             margin-right: 10px;
@@ -230,7 +233,9 @@
           border-bottom: none;
           position: relative;
           text-align: center;
-          cursor: pointer;
+          &.cursor{
+            cursor: pointer;
+          }
           &::before {
             content: "";
             position: absolute;
@@ -439,8 +444,6 @@
           border-bottom-color: #b3b3b3;
           border-bottom-style: dotted;
 
-          
-
           strong {
             display: inline-block;
             color: #383874;
@@ -464,7 +467,6 @@
         display: table;
         width: 100%;
         td {
-         
           padding: 8px 15px;
           font-size: 13px;
           font-weight: 500;
@@ -473,9 +475,9 @@
           font-family: "Poppins", sans-serif;
           position: relative;
           border-bottom: 1px solid #eaecf0;
-          .cursor{
-            cursor: pointer!important;
-           }
+          &.cursor{
+            cursor: pointer;
+          }
           &::before {
             content: "";
             position: absolute;
@@ -695,7 +697,10 @@
           border-bottom: none;
           position: relative;
           text-align: center;
-          cursor: pointer;
+          &.cursor{
+            cursor: pointer;
+          }
+         
           &::before {
             content: "";
             position: absolute;
