@@ -313,13 +313,7 @@ class CreateUserControlModal extends Component {
         activeStep = activeStep + 1;
       }
     } else if (activeStep === 1) {
-      let isValid = this.validateStep2(isSubmit);
-      if (isValid) {
-        activeStep = activeStep + 1;
-      } else {
-        ToastMessage.error("Please select any group.");
-        return;
-      }
+      activeStep = activeStep + 1;
       groups = groupData;
     }
 
@@ -459,11 +453,11 @@ class CreateUserControlModal extends Component {
           <label className="form-label">Email Address</label>
         </Box>
         <Box className="d-block step-frist">{this.renderInputs(errors)}</Box>
-        <Box className="add-user" onClick={this.onClickAnotherPerson}>
+        {/* <Box className="add-user" onClick={this.onClickAnotherPerson}>
           <Button className="compliance-btn min-width" variant="contained">
             Add Another person
           </Button>
-        </Box>
+        </Box> */}
       </Box>
     );
   };
@@ -474,14 +468,14 @@ class CreateUserControlModal extends Component {
     return (
       <Box className="d-block">
         <Box className="setting-common-searchbar p-t-0">
-          <h5>Add users to the group(324)</h5>
+          <h5>Add users to the group(0)</h5>
           <Grid container className="h-100" alignItems={"center"}>
             <Grid item xs={8}>
               <Box className="top-search">
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Search policy"
+                  placeholder="Search Group"
                   value={searchedGroup}
                   onChange={(e) => this.handleSearchChange(e)}
                 />
@@ -498,7 +492,10 @@ class CreateUserControlModal extends Component {
                       className="primary-btn min-width-inherit"
                       variant="contained"
                     >
-                      <Link to={``}> Create Group</Link>
+                      <Link to={`/app/setting/create-group`}>
+                        {" "}
+                        Create Group
+                      </Link>
                     </Button>
                   </ListItem>
                 </List>
@@ -619,7 +616,7 @@ class CreateUserControlModal extends Component {
 
   // Render group table
   renderGroupTable = (isDisable = 0) => {
-    let { groups, selectedGroups } = this.state;
+    let { groups, selectedGroups, searchedGroup } = this.state;
     return (
       <TableContainer component={Paper} className="table">
         <Table
@@ -634,34 +631,55 @@ class CreateUserControlModal extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {groups.map((row, index) => {
-              if (isDisable && !selectedGroups.includes(row.id)) {
-                return null;
-              } else {
-                return (
-                  <TableRow key={index}>
-                    <TableCell>
-                      <Checkbox
-                        size="small"
-                        className="check-box"
-                        id={`${row.id}`}
-                        checked={selectedGroups.includes(row.id)}
-                        onChange={this.handleCheckBox}
-                        disabled={isDisable ? true : false}
-                      />
-                      {row.name}
-                    </TableCell>
-                    <TableCell>{row.policiesname}</TableCell>
-                  </TableRow>
-                );
-              }
-            })}
+            {groups?.length
+              ? groups.map((row, index) => {
+                  if (isDisable && !selectedGroups.includes(row.id)) {
+                    return null;
+                  } else {
+                    return (
+                      <TableRow key={index}>
+                        <TableCell>
+                          <Checkbox
+                            size="small"
+                            className="check-box"
+                            id={`${row.id}`}
+                            checked={selectedGroups.includes(row.id)}
+                            onChange={this.handleCheckBox}
+                            disabled={isDisable ? true : false}
+                          />
+                          {row.name}
+                        </TableCell>
+                        <TableCell>{row.policiesname}</TableCell>
+                      </TableRow>
+                    );
+                  }
+                })
+              : this.renderNoGroupFound()}
+
+            {isDisable && !selectedGroups.length ? (
+              this.renderNoGroupFound()
+            ) : (
+              <></>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
     );
   };
 
+  renderNoGroupFound = () => {
+    return (
+      <TableRow>
+        <TableCell colSpan={12}>
+          <Box className="d-blck text-center w-100 h-100 ">
+            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+              <h5 className="m-t-0 m-b-0">There are no group.</h5>
+            </Box>
+          </Box>
+        </TableCell>
+      </TableRow>
+    );
+  };
   render() {
     const { isSubmit } = this.state;
     let { errors } = this.validateStep1(isSubmit);

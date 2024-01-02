@@ -107,7 +107,6 @@ class PermissionTable extends Component {
     } else {
       selectedData = selectedData.filter((value) => value !== +id);
     }
-    console.log(selectedData, "data");
     this.setState({ selectedData });
   };
 
