@@ -117,7 +117,7 @@ class CreateUserControlModal extends Component {
       <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
         <Box sx={{ flex: "1 1 auto" }} />
         <Button
-          className="info-btn min-width-inherit"
+          className="danger-btn min-width-inherit"
           sx={{ mr: 1 }}
           onClick={() => this.handleCancel()}
         >
@@ -125,7 +125,7 @@ class CreateUserControlModal extends Component {
         </Button>
         {activeStep > 0 ? (
           <Button
-            className="info-btn min-width-inherit"
+            className="primary-outline-btn min-width-inherit" variant="outlined"
             sx={{ mr: 1 }}
             onClick={() => this.handlePreviousSteps()}
           >
