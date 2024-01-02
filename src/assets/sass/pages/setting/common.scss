@@ -72,21 +72,21 @@
       font-size: 14px;
       line-height: 20px;
       font-weight: 500;
-      color: #8676ff;
+      color: #000000;
       padding: 10px 50px 10px 20px;
       border: none;
       background-color: #eef0fa;
       border-radius: 8px;
     }
-    ::placeholder {
-      color: #8676ff;
-      opacity: 1; /* Firefox */
-    }
+    // ::placeholder {
+    //   color: #8676ff;
+    //   opacity: 1; /* Firefox */
+    // }
 
-    ::-ms-input-placeholder {
-      /* Edge 12-18 */
-      color: #8676ff;
-    }
+    // ::-ms-input-placeholder {
+    //   /* Edge 12-18 */
+    //   color: #8676ff;
+    // }
     button {
       position: absolute;
       top: 8px;
