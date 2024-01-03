@@ -341,7 +341,7 @@ class CreateRoleControlModal extends Component {
             <ModalFooter className="footer-top-br">
               <Box className="d-block text-right">
                 <LoadingButton
-                  className="primary-outline-btn min-width m-r-2"
+                  className="danger-btn min-width-inherit m-r-2"
                   variant="outlined"
                   onClick={this.handleCloseModal}
                 >

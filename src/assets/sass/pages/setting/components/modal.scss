@@ -96,6 +96,8 @@
             line-height: 40px;
 
             .MuiSelect-select {
+              width: 100%;
+              display: block;
               font-size: 13px;
               line-height: 40px;
               height: 36px;
@@ -103,6 +105,10 @@
               border-color: #d0d5dd;
               padding: 0 15px;
               font-style: normal;
+              .MuiSelect-nativeInput{
+                height: 36px;
+              }
+
               em {
                 font-style: normal;
               }
