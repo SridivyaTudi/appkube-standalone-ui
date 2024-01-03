@@ -7,9 +7,14 @@ import Allowed from "./Components/Allowed";
 import Disallowed from "./Components/Disallowed";
 import Roles from "./Components/Roles";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-import { setActiveTab, getActiveTab, deleteActiveTab } from "Utils";
+import {
+  setActiveTab,
+  getActiveTab,
+  deleteActiveTab,
+  getCurrentUser,
+} from "Utils";
 import status from "Redux/Constants/CommonDS";
-import { getRoleById, deleteGroup } from "Redux/Settings/SettingsThunk";
+import { getGroupById, deleteGroup } from "Redux/Settings/SettingsThunk";
 import Loader from "Components/Loader";
 import { connect } from "react-redux";
 import ConfirmationPopup from "Components/ConfirmationPopup";
@@ -38,7 +43,7 @@ class GroupDetails extends Component {
       index: 3,
     },
   ];
-
+  user = { username: "", email: "", profileImage: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -47,22 +52,26 @@ class GroupDetails extends Component {
       groupDetails: {},
       removeDataDetails: null,
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
     this.setPreviousTab();
     let groupId = this.getGroupId();
     if (groupId) {
-      this.props.getRoleById(groupId);
+      this.props.getGroupById({ id: groupId, userName: this.user.username });
     }
   };
 
   componentDidUpdate = (prevProps, prevState) => {
     if (
-      this.props.roleDetailsById.status !== prevProps.roleDetailsById.status
+      this.props.groupDetailsById.status !== prevProps.groupDetailsById.status
     ) {
-      if (this.props.roleDetailsById.status === status.SUCCESS) {
-        let groupDetails = this.props.roleDetailsById.data;
+      if (this.props.groupDetailsById.status === status.SUCCESS) {
+        let groupDetails = this.props.groupDetailsById.data;
         if (groupDetails) {
           this.setState({ groupDetails });
         }
@@ -85,7 +94,7 @@ class GroupDetails extends Component {
   };
 
   setActiveTab = (activeTab) => {
-    this.setState({ activeTab,removeDataDetails:null });
+    this.setState({ activeTab, removeDataDetails: null });
   };
 
   setPreviousTab = () => {
@@ -196,7 +205,7 @@ class GroupDetails extends Component {
   };
   render() {
     const { activeTab, groupDetails, showConfirmPopup } = this.state;
-    let { roleDetailsById: groupDetailsById } = this.props;
+    let { groupDetailsById: groupDetailsById } = this.props;
     let deleteGroupStatus =
       this.props.removeGroup?.status === status.IN_PROGRESS;
     return (
@@ -303,11 +312,11 @@ class GroupDetails extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { roleDetailsById, removeGroup } = state.settings;
-  return { roleDetailsById, removeGroup };
+  const { groupDetailsById, removeGroup } = state.settings;
+  return { groupDetailsById, removeGroup };
 };
 
-const mapDispatchToProps = { getRoleById, deleteGroup };
+const mapDispatchToProps = { getGroupById, deleteGroup };
 
 export default connect(
   mapStateToProps,

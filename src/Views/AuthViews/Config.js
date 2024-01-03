@@ -19,6 +19,7 @@ const config = {
   UPDATE_ROLE: `${baseSecurityUrl}/roles/update`,
   CREATE_GROUP: `${baseSecurityUrl}/roles/create`,
   GET_ROLE_BY_ID: `${baseSecurityUrl}/roles/#role-id#`,
+  GET_GROUP_BY_ID: `${baseSecurityUrl}/roles/get-role-group-details?userName=#user-name#&roleId=#role-id#`,
   DELETE_ROLE: `${baseSecurityUrl}/roles/delete/#role-id#`,
   CREATE_POLICY: `${baseSecurityUrl}/policy/create`,
   DELETE_POLICY: `${baseSecurityUrl}/policy/delete/#policy-id#`,

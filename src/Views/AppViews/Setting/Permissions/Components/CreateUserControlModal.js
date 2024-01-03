@@ -69,7 +69,7 @@ class CreateUserControlModal extends Component {
       activeStep: 0,
       completed: {},
       selectedGroups: [],
-      groups: groupData,
+      groups: [],
       formData: [Object.assign({}, initialFormData)],
       isSubmit: false,
     };
@@ -78,6 +78,10 @@ class CreateUserControlModal extends Component {
       this.user = userDetails;
     }
   }
+
+  componentDidMount = () => {
+    this.setGroupStateOrReturnData();
+  };
 
   componentDidUpdate = (prevProps, prevState) => {
     if (this.props.userCreation.status !== prevProps.userCreation.status) {
@@ -125,7 +129,8 @@ class CreateUserControlModal extends Component {
         </Button>
         {activeStep > 0 ? (
           <Button
-            className="primary-outline-btn min-width-inherit" variant="outlined"
+            className="primary-outline-btn min-width-inherit"
+            variant="outlined"
             sx={{ mr: 1 }}
             onClick={() => this.handlePreviousSteps()}
           >
@@ -368,12 +373,12 @@ class CreateUserControlModal extends Component {
     let value = e.target.value;
 
     let { groups, searchedGroup } = this.state;
-
-    if (groupData?.length) {
+    let data = this.props.userPermissionData.data?.roleGroups || [];
+    if (data?.length) {
       searchedGroup = value;
 
       if (value) {
-        groups = groupData.filter((row) => {
+        groups = data.filter((row) => {
           if (row?.name.toLowerCase().includes(value.toLowerCase())) {
             return row;
           } else {
@@ -381,7 +386,7 @@ class CreateUserControlModal extends Component {
           }
         });
       } else {
-        groups = groupData;
+        groups = data;
       }
 
       this.setState({ groups, searchedGroup });
@@ -616,7 +621,7 @@ class CreateUserControlModal extends Component {
 
   // Render group table
   renderGroupTable = (isDisable = 0) => {
-    let { groups, selectedGroups, searchedGroup } = this.state;
+    let { groups, selectedGroups } = this.state;
     return (
       <TableContainer component={Paper} className="table">
         <Table
@@ -680,6 +685,17 @@ class CreateUserControlModal extends Component {
       </TableRow>
     );
   };
+
+  // Set state or return data
+  setGroupStateOrReturnData = (isStateSet = 1) => {
+    let groups = this.props.userPermissionData.data?.roleGroups || [];
+
+    if (isStateSet) {
+      this.setState({ groups });
+    } else {
+      return groups;
+    }
+  };
   render() {
     const { isSubmit } = this.state;
     let { errors } = this.validateStep1(isSubmit);
@@ -698,9 +714,10 @@ class CreateUserControlModal extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { userCreation } = state.settings;
+  const { userCreation, userPermissionData } = state.settings;
   return {
     userCreation,
+    userPermissionData,
   };
 };
 

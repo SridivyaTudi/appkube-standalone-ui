@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import { setActiveTab } from "Utils";
+import { setActiveTab, getCurrentUser } from "Utils";
 import CreateAddPolicyControlModal from "../Components/CreateAddPolicyControlModal";
 import AccordionView from "../../Components/AccordionView";
 import ConfirmationPopup from "Components/ConfirmationPopup";
@@ -20,6 +20,7 @@ import Loader from "Components/Loader";
 import { ToastMessage } from "Toast/ToastMessage";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 class RoleDetails extends Component {
+  user = { username: "", email: "", profileImage: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -29,6 +30,10 @@ class RoleDetails extends Component {
       roleDetails: {},
       policyList: [],
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {

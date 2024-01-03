@@ -11,6 +11,8 @@ import {
   Box,
 } from "@mui/material";
 import { Component } from "react";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
 let data = [
   {
     user: "Milena Kahles",
@@ -65,7 +67,7 @@ class Users extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: data,
+      rows: [],
       pg: 0,
       rpg: 5,
       showCreateUserControlModal: false,
@@ -73,7 +75,29 @@ class Users extends Component {
       selectedUsers: [],
     };
   }
+  componentDidMount = () => {
+    this.setRowsStateOrReturn();
+  };
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      this.props.groupDetailsById.status !== prevProps.groupDetailsById.status
+    ) {
+      if (this.props.groupDetailsById.status === status.SUCCESS) {
+        this.setRowsStateOrReturn();
+      }
+    }
+  };
 
+  setRowsStateOrReturn = (isStateSet = 1) => {
+    let groupDetails = this.props.groupDetailsById.data || {};
+    if (groupDetails.users) {
+      if (isStateSet) {
+        this.setState({ rows: groupDetails.users });
+      } else {
+        return groupDetails.users;
+      }
+    }
+  };
   handleChangePage = (event, newpage) => {
     this.setState({ pg: newpage });
   };
@@ -142,10 +166,10 @@ class Users extends Component {
                   checked={selectedUsers.includes(row.id)}
                   onChange={this.handleCheckBox}
                 />
-                {row.user}
+                {row.userName}
               </TableCell>
-              <TableCell>{row.emailAddress}</TableCell>
-              <TableCell align="center">{row.groups}</TableCell>
+              <TableCell>{row.eMail}</TableCell>
+              <TableCell align="center">{row.numberOfGroups}</TableCell>
             </TableRow>
           ))
         ) : (
@@ -219,9 +243,9 @@ class Users extends Component {
     let { selectedUsers } = this.state;
 
     let { checked } = event.target;
-
+    let users = this.setRowsStateOrReturn(0);
     if (checked) {
-      selectedUsers = data.map((value) => value.id);
+      selectedUsers = users.map((value) => value.id);
     } else {
       selectedUsers = [];
     }
@@ -239,5 +263,11 @@ class Users extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  const { groupDetailsById } = state.settings;
+  return { groupDetailsById };
+};
 
-export default Users;
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

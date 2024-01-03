@@ -17,6 +17,8 @@ import DefaultIcon from "assets/img/setting/default-icon.png";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
+import { getCurrentUser } from "Utils";
+
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -41,6 +43,10 @@ class Roles extends Component {
       actionButton: null,
       selectedRoles: [],
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
@@ -48,9 +54,9 @@ class Roles extends Component {
   };
   componentDidUpdate = (prevProps, prevState) => {
     if (
-      this.props.roleDetailsById.status !== prevProps.roleDetailsById.status
+      this.props.groupDetailsById.status !== prevProps.groupDetailsById.status
     ) {
-      if (this.props.roleDetailsById.status === status.SUCCESS) {
+      if (this.props.groupDetailsById.status === status.SUCCESS) {
         this.setRowsStateOrReturn();
       }
     }
@@ -184,7 +190,7 @@ class Roles extends Component {
 
   // Render table container
   renderTableContainer = () => {
-    const { status: groupStatus } = this.props.roleDetailsById;
+    const { status: groupStatus } = this.props.groupDetailsById;
 
     if (groupStatus === status.IN_PROGRESS) {
       return this.renderLoder();
@@ -226,7 +232,7 @@ class Roles extends Component {
     let { selectedRoles } = this.state;
 
     let { checked } = event.target;
-    let data = this.setRowsStateOrReturn(0)
+    let data = this.setRowsStateOrReturn(0);
     if (checked) {
       selectedRoles = data.map((value) => value.id);
     } else {
@@ -248,7 +254,7 @@ class Roles extends Component {
   }
 
   setRowsStateOrReturn = (isStateSet = 1) => {
-    let groupDetails = this.props.roleDetailsById.data || {};
+    let groupDetails = this.props.groupDetailsById.data || {};
     if (groupDetails.roles) {
       if (isStateSet) {
         this.setState({ rows: groupDetails.roles });
@@ -267,8 +273,8 @@ class Roles extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { roleDetailsById } = state.settings;
-  return { roleDetailsById };
+  const { groupDetailsById } = state.settings;
+  return { groupDetailsById };
 };
 
 const mapDispatchToProps = {};
