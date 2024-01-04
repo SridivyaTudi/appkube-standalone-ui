@@ -14,7 +14,8 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import DefaultIcon from "../../../../../../assets/img/setting/default-icon.png";
 import { v4 } from "uuid";
-
+import status from "Redux/Constants/CommonDS";
+import { connect } from "react-redux";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -38,11 +39,35 @@ class Group extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: data,
+      rows: [],
       selectedGroup: [],
     };
   }
 
+  componentDidMount = () => {
+    this.setRowsStateOrReturn();
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      this.props.userDetailsById.status !== prevProps.userDetailsById.status
+    ) {
+      if (this.props.userDetailsById.status === status.SUCCESS) {
+        this.setRowsStateOrReturn();
+      }
+    }
+  };
+
+  setRowsStateOrReturn = (isStateSet = 1) => {
+    let userDetails = this.props.userDetailsById.data || {};
+    if (userDetails.roles) {
+      if (isStateSet) {
+        this.setState({ rows: userDetails.roles });
+      } else {
+        return userDetails.roles;
+      }
+    }
+  };
   // Render table header
   renderTableHeader = () => {
     const { rows, selectedGroup } = this.state;
@@ -54,7 +79,9 @@ class Group extends Component {
               size="small"
               className="check-box"
               disabled={rows?.length ? false : true}
-              checked={rows?.length === selectedGroup?.length}
+              checked={
+                rows?.length > 0 && rows?.length === selectedGroup?.length
+              }
               onChange={(e) => this.handleSelectAllCheckBox(e)}
             />{" "}
             Group Name
@@ -70,36 +97,68 @@ class Group extends Component {
     const { rows, selectedGroup } = this.state;
     return (
       <TableBody>
-        {rows.map((row, index) => (
-          <TableRow key={v4()}>
-            <TableCell>
-              <Checkbox
-                size="small"
-                className="check-box"
-                id={`${row.id}`}
-                checked={selectedGroup.includes(row.id)}
-                onChange={this.handleCheckBox}
-              />
-              {row.permissionName}
-              <Box className="d-flex roles-box">
-                <HtmlTooltip
-                  className="table-tooltip-dark"
-                  title={
-                    <React.Fragment>
-                      <span>This role created by default by the system</span>
-                    </React.Fragment>
-                  }
-                >
-                  <Box className="d-inline-block default-Icon">
-                    <img src={DefaultIcon} alt=""  /> Default
-                  </Box>
-                  
-                </HtmlTooltip>
-              </Box>
-            </TableCell>
-            <TableCell>{row.policiesname}</TableCell>
-          </TableRow>
-        ))}
+        {rows.length ? rows.map((row, index) => {
+          if (row.grp) {
+            return (
+              <TableRow key={v4()}>
+                <TableCell>
+                  <Checkbox
+                    size="small"
+                    className="check-box"
+                    id={`${row.id}`}
+                    checked={selectedGroup.includes(row.id)}
+                    onChange={this.handleCheckBox}
+                  />
+                  <span
+                    onClick={() =>
+                      this.handleCheckBox({
+                        target: {
+                          id: row.id,
+                          checked: !selectedGroup.includes(row.id),
+                        },
+                      })
+                    }
+                  >
+                    {row.name}
+                  </span>
+                  {row.default ? (
+                    <Box className="d-flex roles-box">
+                      <HtmlTooltip
+                        className="table-tooltip-dark"
+                        title={
+                          <React.Fragment>
+                            <span>
+                              This role created by default by the system
+                            </span>
+                          </React.Fragment>
+                        }
+                      >
+                        <Box className="d-inline-block default-Icon">
+                          <img src={DefaultIcon} alt="" /> Default
+                        </Box>
+                      </HtmlTooltip>
+                    </Box>
+                  ) : (
+                    <></>
+                  )}
+                </TableCell>
+                <TableCell>
+                  {this.calculateAttachedPolicies(row.roles)}
+                </TableCell>
+              </TableRow>
+            );
+          } else {
+            return null;
+          }
+        }) : <TableRow>
+        <TableCell colSpan={12}>
+          <Box className="d-blck text-center w-100 h-100 ">
+            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+              <h5 className="m-t-0 m-b-0">There are no group.</h5>
+            </Box>
+          </Box>
+        </TableCell>
+      </TableRow> }
       </TableBody>
     );
   };
@@ -115,22 +174,46 @@ class Group extends Component {
     } else {
       selectedGroup = selectedGroup.filter((value) => value !== +id);
     }
+    try {
+      this.props.setGroup(selectedGroup);
+    } catch (error) {
+      console.log(error);
+    }
 
     this.setState({ selectedGroup });
   };
 
   // Handle select all checkbox
   handleSelectAllCheckBox = (event, isRole = 0) => {
-    let { selectedGroup } = this.state;
+    let { selectedGroup, rows } = this.state;
 
     let { checked } = event.target;
 
     if (checked) {
-      selectedGroup = data.map((value) => value.id);
+      selectedGroup = rows.map((value) => value.id);
     } else {
       selectedGroup = [];
     }
+    try {
+      this.props.setGroup(selectedGroup);
+    } catch (error) {
+      console.log(error);
+    }
     this.setState({ selectedGroup });
+  };
+
+  calculateAttachedPolicies = (data) => {
+    if (data.length) {
+      let policies = [];
+      data.forEach((policy) => {
+        policies = policies.concat(policy.policies);
+      });
+      return policies.length
+        ? policies.length > 1
+          ? "Multiple"
+          : "Single"
+        : "None";
+    }
   };
   render() {
     return (
@@ -149,5 +232,11 @@ class Group extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  const { userDetailsById } = state.settings;
+  return { userDetailsById };
+};
 
-export default Group;
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Group);

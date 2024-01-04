@@ -175,7 +175,7 @@ export const Views = (props) => {
             element={<CreateGroup />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/setting/user-profile`}
+            path={`${APP_PREFIX_PATH}/setting/user-profile/:id`}
             element={<UserProfile />}
           />
           <Route

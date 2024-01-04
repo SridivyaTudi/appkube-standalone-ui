@@ -14,22 +14,52 @@ import {
 } from "@mui/material";
 import NoteIcon from "assets/img/setting/note-icon.png";
 import AuthenticationModal from "Views/AppViews/Setting/Account/Components/AuthenticationModal";
+import status from "Redux/Constants/CommonDS";
+import { getFormattedDate } from "Utils";
+import { connect } from "react-redux";
 
 export class SecurityCredentials extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showAuthenticationModal: false,
+      userDetails: {},
     };
   }
+
+  componentDidMount = () => {
+    this.setRowsStateOrReturn();
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      this.props.userDetailsById.status !== prevProps.userDetailsById.status
+    ) {
+      if (this.props.userDetailsById.status === status.SUCCESS) {
+        this.setRowsStateOrReturn();
+      }
+    }
+  };
+
+  setRowsStateOrReturn = (isStateSet = 1) => {
+    let userDetails = this.props.userDetailsById.data || {};
+    if (userDetails) {
+      if (isStateSet) {
+        this.setState({ userDetails });
+      } else {
+        return userDetails;
+      }
+    }
+  };
   handleAuthenticationModal = () => {
     this.setState({
       showAuthenticationModal: !this.state.showAuthenticationModal,
     });
   };
-  render() {
-    const { showAuthenticationModal } = this.state;
 
+  render() {
+    const { showAuthenticationModal, userDetails } = this.state;
+  
     return (
       <Box className="credentials-content">
         <Box className="credentials-box">
@@ -38,9 +68,18 @@ export class SecurityCredentials extends Component {
           </Box>
           <Box className="credentials-details">
             <label>Password Update</label>
-            <span>Update 26days ago (18:20 PM 11-12-2023)</span>
+            <span>
+              {" "}
+              {userDetails.updatedAt
+                ? getFormattedDate(userDetails.updatedAt)
+                : "-"}{" "}
+            </span>
             <label>Last Sign in</label>
-            <p>Sign in 5 days ago (18:20 PM 11-12-2023)</p>
+            <p>
+              {userDetails.lastLoginAt
+                ? getFormattedDate(userDetails.lastLoginAt)
+                : "-"}
+            </p>
           </Box>
         </Box>
         <Box className="multi-authentication-section">
@@ -74,7 +113,7 @@ export class SecurityCredentials extends Component {
           </Box>
           <Box className="environment-table-section">
             <TableContainer className="table">
-              <Table className="overview">
+              <TableCell className="overview">
                 <TableHead>
                   <TableRow>
                     <TableCell align="left">MFA</TableCell>
@@ -99,10 +138,11 @@ export class SecurityCredentials extends Component {
                     </TableCell>
                   </TableRow>
                 </TableBody>
-              </Table>
+              </TableCell>
             </TableContainer>
           </Box>
         </Box>
+
         {showAuthenticationModal ? (
           <AuthenticationModal
             showModal={showAuthenticationModal}
@@ -115,5 +155,14 @@ export class SecurityCredentials extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  const { userDetailsById } = state.settings;
+  return { userDetailsById };
+};
 
-export default SecurityCredentials;
+const mapDispatchToProps = {};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SecurityCredentials);

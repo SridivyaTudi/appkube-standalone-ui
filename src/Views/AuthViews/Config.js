@@ -26,6 +26,8 @@ const config = {
   CREATE_USER: `${baseSecurityUrl}/users/create`,
   DELETE_GROUP: `${baseSecurityUrl}/roles/delete/#group-id#`,
   GET_USER_PERMISSION_DATA_URL: `${baseSecurityUrl}/users/get-user-hierarchy?userName=#user-name#`,
+  GET_USER_BY_ID: `${baseSecurityUrl}/users/#user-id#`,
+  DELETE_USER:`${baseSecurityUrl}/users/delete/#user-id#`,
 };
 
 export default config;

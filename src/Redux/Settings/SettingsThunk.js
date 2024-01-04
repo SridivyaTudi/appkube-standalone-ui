@@ -181,3 +181,29 @@ export const getGroupById = createAsyncThunk(
     }
   }
 );
+
+export const getUserById = createAsyncThunk(
+  "settings/getUserById",
+  async (id) => {
+    try {
+      let url = config.GET_USER_BY_ID.replace("#user-id#", id);
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const deleteUser = createAsyncThunk(
+  "settings/deleteUser",
+  async (id) => {
+    try {
+      let url = config.DELETE_USER.replace("#user-id#", id);
+      const response = await postLoginService.post(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

@@ -38,28 +38,6 @@ const initialFormData = {
   name: "",
   email: "",
 };
-let groupData = [
-  {
-    name: "Super Admin",
-    policiesname: "Multiple",
-    id: 1,
-  },
-  {
-    name: "Defaulta User",
-    policiesname: "Single",
-    id: 2,
-  },
-  {
-    name: "Infra Team",
-    policiesname: "Multiple",
-    id: 3,
-  },
-  {
-    name: "Design Architect",
-    policiesname: "Multiple",
-    id: 4,
-  },
-];
 
 class CreateUserControlModal extends Component {
   user = { id: "", username: "" };
@@ -319,7 +297,7 @@ class CreateUserControlModal extends Component {
       }
     } else if (activeStep === 1) {
       activeStep = activeStep + 1;
-      groups = groupData;
+      groups = this.setGroupStateOrReturnData(0);
     }
 
     this.setState({ activeStep, isSubmit, groups });

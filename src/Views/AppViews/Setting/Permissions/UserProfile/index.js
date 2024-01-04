@@ -1,15 +1,27 @@
 import { Box, Grid, List, ListItem, Button } from "@mui/material";
 import { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import UserImage from "assets/img/setting/user-image.png";
+// import UserImage from "assets/img/setting/user-image.png";
 import Permission from "./Components/Permission";
 import Group from "./Components/Group";
 import SecurityCredentials from "./Components/SecurityCredentials";
 import TabsMenu from "Views/AppViews/Environments/EnvironmentList/TabsMenu";
 import ChangePasswordModal from "Views/AppViews/Setting/Account/Components/ChangePasswordModal";
 import { v4 } from "uuid";
-import { getActiveTab, deleteActiveTab, setActiveTab } from "Utils";
+import avatar from "assets/img/avatar.png";
+import {
+  getActiveTab,
+  deleteActiveTab,
+  setActiveTab,
+  getFormattedDate,
+} from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { getUserById, deleteUser } from "Redux/Settings/SettingsThunk";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import Loader from "Components/Loader";
+import ConfirmationPopup from "Components/ConfirmationPopup";
+import { ToastMessage } from "Toast/ToastMessage";
 let HEADER = {
   0: "Assign Permission",
   1: "Assign Groups",
@@ -22,6 +34,8 @@ export class UserProfile extends Component {
     this.state = {
       activeTab: 0,
       showChangePasswordModal: false,
+      userDetails: {},
+      selectedGroup: [],
     };
   }
   tabMapping = [
@@ -41,6 +55,37 @@ export class UserProfile extends Component {
 
   componentDidMount = () => {
     this.setPreviousTab();
+    let id = this.getUserId();
+    if (id) {
+      this.props.getUserById(id);
+    }
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      this.props.userDetailsById.status !== prevProps.userDetailsById.status
+    ) {
+      if (this.props.userDetailsById.status === status.SUCCESS) {
+        let userDetails = this.props.userDetailsById.data;
+        if (userDetails) {
+          this.setState({ userDetails });
+        }
+      }
+    }
+
+    if (this.props.removeUser.status !== prevProps.removeUser.status) {
+      if (this.props.removeUser.status === status.SUCCESS) {
+        let removeUserRes = this.props.removeUser.data;
+        if (removeUserRes) {
+          this.togglePopup();
+          setActiveTab("permissions/user");
+          this.props.navigate("/app/setting");
+          ToastMessage.success("User Removed Successfully");
+        } else {
+          ToastMessage.error("User Deletion Failed!");
+        }
+      }
+    }
   };
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
@@ -72,151 +117,225 @@ export class UserProfile extends Component {
     this.props.navigate(url);
   };
 
+  getUserId = () => this.props.params.id;
+
+  // toggle confirmation popup
+  togglePopup = () => {
+    let { showConfirmPopup } = this.state;
+    this.setState({
+      showConfirmPopup: !showConfirmPopup,
+    });
+  };
+  // Render Loder
+  renderLoder() {
+    return (
+      <Box
+        sx={{ height: "100%" }}
+        display={"flex"}
+        alignItems={"center"}
+        justifyContent={"center"}
+        className="width-100"
+      >
+        <Loader sx={{ height: "100%" }} />
+      </Box>
+    );
+  }
+  // Delete user API
+  handleDeleteUser = () => {
+    let id = this.getUserId();
+    if (id) {
+      this.props.deleteUser(id);
+    }
+  };
   render() {
-    const { activeTab, showChangePasswordModal } = this.state;
+    const {
+      activeTab,
+      showChangePasswordModal,
+      userDetails,
+      selectedGroup,
+      showConfirmPopup,
+    } = this.state;
+    let userStatus = this.props.userDetailsById?.status === status.IN_PROGRESS;
+    let deleteGroupStatus =
+      this.props.removeGroup?.status === status.IN_PROGRESS;
     return (
       <Box className="user-profile-container">
-        <Box className="list-heading">
-          <h3>Milena kahles</h3>
-          <Box className="breadcrumbs">
-            <ul>
-              <li
-                onClick={() =>
-                  this.handlePreviousPage("permissions/user", "/app/setting")
-                }
-              >
-                <Link>Users and Permissions</Link>
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li className="active">User Profile</li>
-            </ul>
-          </Box>
-        </Box>
-        <Box className="setting-common-searchbar">
-          <Grid container alignItems={"center"}>
-            <Grid item xs={6}>
-              <h4>Milena kahles</h4>
-            </Grid>
-            <Grid item xs={6}>
-              <List>
-                <ListItem>
-                  <Button
-                    className="danger-btn min-width-inherit"
-                    variant="contained"
+        {userStatus ? (
+          <Box sx={{ height: 550 }}>{this.renderLoder()}</Box>
+        ) : (
+          <>
+            <Box className="list-heading">
+              <h3>{userDetails.username}</h3>
+              <Box className="breadcrumbs">
+                <ul>
+                  <li
+                    onClick={() =>
+                      this.handlePreviousPage(
+                        "permissions/user",
+                        "/app/setting"
+                      )
+                    }
                   >
-                    Delete user
-                  </Button>
-                </ListItem>
-              </List>
-            </Grid>
-          </Grid>
-        </Box>
-        <Box className="user-profile-details">
-          <Box className="d-flex align-items-center">
-            <Box className="user-image m-r-2">
-              <img src={UserImage} alt="" />
+                    <Link>Users and Permissions</Link>
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-chevron-right"></i>
+                  </li>
+                  <li className="active">User Profile</li>
+                </ul>
+              </Box>
             </Box>
-            <label>Milena kahles</label>
-          </Box>
-          <Box className="d-block">
-            <List>
-              <ListItem>
-                <span>Created Date and Time</span>
-                <strong>Dec 01,2023 14:30</strong>
-              </ListItem>
-              <ListItem>
-                <span>Last Activity</span>
-                <strong>
-                  <Box className="green d-block">1 hour Ago</Box>
-                </strong>
-              </ListItem>
-              <ListItem>
-                <span>Application Access</span>
-                <strong>Enabled with MFA</strong>
-              </ListItem>
-            </List>
-          </Box>
-        </Box>
-        <Box className="services-panel-tabs ">
-          <Box className="tabs-head ">
-            <Grid container alignItems={"center"} rowSpacing={0}>
-              <Grid item xl={3} lg={3} md={2} sm={4} xs={4}>
-                <h4>{HEADER[activeTab]}</h4>
-              </Grid>
-              <Grid
-                item
-                xl={6}
-                lg={6}
-                md={6}
-                sm={4}
-                xs={4}
-                className="text-center"
-              >
-                <TabsMenu
-                  tabs={this.tabMapping}
-                  setActiveTab={this.setActiveTab}
-                  activeTab={activeTab}
-                  breakWidth={992}
-                  key={v4()}
-                />
-              </Grid>
-              <Grid item xl={3} lg={3} md={4} sm={4} xs={4}>
-                <Box className="overview-buttons">
+            <Box className="setting-common-searchbar">
+              <Grid container alignItems={"center"}>
+                <Grid item xs={6}>
+                  <h4>{userDetails.username}</h4>
+                </Grid>
+                <Grid item xs={6}>
                   <List>
-                    {activeTab === 1 ? (
-                      <Fragment>
-                        <ListItem>
-                          <Button
-                            className="danger-btn min-width-inherit"
-                            variant="contained"
-                          >
-                            Remove
-                          </Button>
-                        </ListItem>
-                        <ListItem>
-                          <Link to={`/app/setting/user-profile/add-user-group`}>
+                    <ListItem>
+                      <Button
+                        className="danger-btn min-width-inherit"
+                        variant="contained"
+                        onClick={() => {
+                          this.setState({ showConfirmPopup: true });
+                        }}
+                      >
+                        Delete user
+                      </Button>
+                    </ListItem>
+                  </List>
+                </Grid>
+              </Grid>
+            </Box>
+            <Box className="user-profile-details">
+              <Box className="d-flex align-items-center">
+                <Box className="user-image m-r-2">
+                  <img
+                    src={
+                      userDetails.profileImage
+                        ? `data:image/png;base64,${userDetails.profileImage}`
+                        : avatar
+                    }
+                    alt=""
+                  />
+                </Box>
+                <label>{userDetails.username}</label>
+              </Box>
+              <Box className="d-block">
+                <List>
+                  <ListItem>
+                    <span>Created Date and Time</span>
+                    <strong> {getFormattedDate(userDetails.createdAt)}</strong>
+                  </ListItem>
+                  <ListItem>
+                    <span>Last Activity</span>
+                    <strong>
+                      <Box className="green d-block">
+                        {getFormattedDate(userDetails.lastLoginAt)}
+                      </Box>
+                    </strong>
+                  </ListItem>
+                  <ListItem>
+                    <span>Application Access</span>
+                    <strong>
+                      {" "}
+                      {userDetails.isMfaEnable ? "Enabled with MFA" : "-"}
+                    </strong>
+                  </ListItem>
+                </List>
+              </Box>
+            </Box>
+            <Box className="services-panel-tabs ">
+              <Box className="tabs-head ">
+                <Grid container alignItems={"center"} rowSpacing={0}>
+                  <Grid item xl={3} lg={3} md={2} sm={4} xs={4}>
+                    <h4>{HEADER[activeTab]}</h4>
+                  </Grid>
+                  <Grid
+                    item
+                    xl={6}
+                    lg={6}
+                    md={6}
+                    sm={4}
+                    xs={4}
+                    className="text-center"
+                  >
+                    <TabsMenu
+                      tabs={this.tabMapping}
+                      setActiveTab={this.setActiveTab}
+                      activeTab={activeTab}
+                      breakWidth={992}
+                      key={v4()}
+                    />
+                  </Grid>
+                  <Grid item xl={3} lg={3} md={4} sm={4} xs={4}>
+                    <Box className="overview-buttons">
+                      <List>
+                        {activeTab === 1 ? (
+                          <Fragment>
+                            {selectedGroup.length ? (
+                              <ListItem>
+                                <Button
+                                  className="danger-btn min-width-inherit"
+                                  variant="contained"
+                                >
+                                  Remove
+                                </Button>
+                              </ListItem>
+                            ) : (
+                              <></>
+                            )}
+
+                            <ListItem>
+                              <Link
+                                to={`/app/setting/user-profile/add-user-group`}
+                              >
+                                <Button
+                                  className="primary-btn min-width-inherit"
+                                  variant="contained"
+                                >
+                                  Add user to Groups
+                                </Button>
+                              </Link>
+                            </ListItem>
+                          </Fragment>
+                        ) : activeTab === 2 ? (
+                          <ListItem>
                             <Button
                               className="primary-btn min-width-inherit"
                               variant="contained"
+                              onClick={this.handleChangePasswordModal}
                             >
-                              Add user to Groups
+                              Reset Password
                             </Button>
-                          </Link>
-                        </ListItem>
-                      </Fragment>
-                    ) : activeTab === 2 ? (
-                      <ListItem>
-                        <Button
-                          className="primary-btn min-width-inherit"
-                          variant="contained"
-                          onClick={this.handleChangePasswordModal}
-                        >
-                          Reset Password
-                        </Button>
-                      </ListItem>
-                    ) : (
-                      <></>
-                    )}
-                  </List>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
+                          </ListItem>
+                        ) : (
+                          <></>
+                        )}
+                      </List>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
 
-          <Box className="permission-tabs-content">
-            {activeTab === 0 ? (
-              <Permission />
-            ) : activeTab === 1 ? (
-              <Group />
-            ) : activeTab === 2 ? (
-              <SecurityCredentials />
-            ) : (
-              <></>
-            )}
-          </Box>
-        </Box>
+              <Box className="permission-tabs-content">
+                {activeTab === 0 ? (
+                  <Permission />
+                ) : activeTab === 1 ? (
+                  <Group
+                    setGroup={(selectedGroup) => {
+                      this.setState({ selectedGroup });
+                    }}
+                  />
+                ) : activeTab === 2 ? (
+                  <SecurityCredentials />
+                ) : (
+                  <></>
+                )}
+              </Box>
+            </Box>{" "}
+          </>
+        )}
         {showChangePasswordModal ? (
           <ChangePasswordModal
             showModal={showChangePasswordModal}
@@ -225,9 +344,34 @@ export class UserProfile extends Component {
         ) : (
           <></>
         )}
+        {showConfirmPopup ? (
+          <ConfirmationPopup
+            showModal={showConfirmPopup}
+            togglePopup={this.togglePopup}
+            labels={{
+              btnYes: "Delete",
+              header: "Do you want to delete this User ? ",
+              btnNo: "Cancel",
+            }}
+            icon={<i className="fas fa-trash-alt"></i>}
+            handleCallBack={this.handleDeleteUser}
+            showLoader={deleteGroupStatus}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }
 }
+const mapStateToProps = (state) => {
+  const { userDetailsById, removeUser } = state.settings;
+  return { userDetailsById, removeUser };
+};
 
-export default navigateRouter(UserProfile);
+const mapDispatchToProps = { getUserById, deleteUser };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(UserProfile));

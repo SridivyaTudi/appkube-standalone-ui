@@ -14,6 +14,8 @@ import {
   deleteGroup,
   getUserPermissionData,
   getGroupById,
+  getUserById,
+  deleteUser,
 } from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
@@ -94,6 +96,14 @@ export const settingsSlice = createSlice({
     groupDetailsById: {
       status: null,
       data: {},
+    },
+    userDetailsById: {
+      status: null,
+      data: {},
+    },
+    removeUser: {
+      status: null,
+      data: "",
     },
   },
   reducers: {},
@@ -431,6 +441,58 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         groupDetailsById: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getUserById.pending]: (state) => {
+      return {
+        ...state,
+        userDetailsById: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getUserById.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        userDetailsById: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getUserById.rejected]: (state) => {
+      return {
+        ...state,
+        userDetailsById: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [deleteUser.pending]: (state) => {
+      return {
+        ...state,
+        removeUser: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [deleteUser.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        removeUser: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [deleteUser.rejected]: (state) => {
+      return {
+        ...state,
+        removeUser: {
           status: status.FAILURE,
         },
       };

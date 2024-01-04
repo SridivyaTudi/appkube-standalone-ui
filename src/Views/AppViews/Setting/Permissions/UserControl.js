@@ -155,7 +155,7 @@ class UserControl extends Component {
           rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
             <TableRow key={v4()}>
               <TableCell>
-                <Link to={`/app/setting/user-profile`}>{row.username}</Link>
+                <Link to={`/app/setting/user-profile/${row.id}`}>{row.username}</Link>
               </TableCell>
               <TableCell>{row.email}</TableCell>
               <TableCell>
