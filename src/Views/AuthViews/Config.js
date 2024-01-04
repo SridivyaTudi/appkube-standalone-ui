@@ -27,7 +27,11 @@ const config = {
   DELETE_GROUP: `${baseSecurityUrl}/roles/delete/#group-id#`,
   GET_USER_PERMISSION_DATA_URL: `${baseSecurityUrl}/users/get-user-hierarchy?userName=#user-name#`,
   GET_USER_BY_ID: `${baseSecurityUrl}/users/#user-id#`,
-  DELETE_USER:`${baseSecurityUrl}/users/delete/#user-id#`,
+  DELETE_USER: `${baseSecurityUrl}/users/delete/#user-id#`,
+
+  /* CHANGE PASSWORD SERVICES */
+  ACCOUNT_CHANGE_PASSWORD: `${baseSecurityUrl}/reset/reset-password`,
+  USER_RESET_PASSWORD: `${baseSecurityUrl}/users/reset-password-by-admin`,
 };
 
 export default config;

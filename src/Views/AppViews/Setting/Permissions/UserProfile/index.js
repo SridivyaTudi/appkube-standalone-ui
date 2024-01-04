@@ -212,7 +212,7 @@ export class UserProfile extends Component {
                   <img
                     src={
                       userDetails.profileImage
-                        ? `data:image/png;base64,${userDetails.profileImage}`
+                        ? userDetails.profileImage
                         : avatar
                     }
                     alt=""
@@ -224,13 +224,20 @@ export class UserProfile extends Component {
                 <List>
                   <ListItem>
                     <span>Created Date and Time</span>
-                    <strong> {getFormattedDate(userDetails.createdAt)}</strong>
+                    <strong>
+                      {" "}
+                      {userDetails.createdAt
+                        ? getFormattedDate(userDetails.createdAt)
+                        : ""}
+                    </strong>
                   </ListItem>
                   <ListItem>
                     <span>Last Activity</span>
                     <strong>
                       <Box className="green d-block">
-                        {getFormattedDate(userDetails.lastLoginAt)}
+                        {userDetails.lastLoginAt
+                          ? getFormattedDate(userDetails.lastLoginAt)
+                          : ""}
                       </Box>
                     </strong>
                   </ListItem>
@@ -339,6 +346,7 @@ export class UserProfile extends Component {
           <ChangePasswordModal
             showModal={showChangePasswordModal}
             handleChangePasswordModal={this.handleChangePasswordModal}
+            isCurrentPasswordHide={1}
           />
         ) : (
           <></>

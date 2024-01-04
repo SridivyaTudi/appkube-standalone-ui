@@ -207,3 +207,29 @@ export const deleteUser = createAsyncThunk(
     }
   }
 );
+
+export const changePasswordOfAccount = createAsyncThunk(
+  "settings/changePasswordOfAccount",
+  async (data) => {
+    try {
+      let url = config.ACCOUNT_CHANGE_PASSWORD;
+      const response = await postLoginService.post(url, data);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const resetPasswordOfUser = createAsyncThunk(
+  "settings/resetPasswordOfUser",
+  async (data) => {
+    try {
+      let url = config.USER_RESET_PASSWORD;
+      const response = await postLoginService.post(url, data);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

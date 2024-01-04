@@ -16,6 +16,8 @@ import {
   getGroupById,
   getUserById,
   deleteUser,
+  changePasswordOfAccount,
+  resetPasswordOfUser,
 } from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
@@ -102,6 +104,14 @@ export const settingsSlice = createSlice({
       data: {},
     },
     removeUser: {
+      status: null,
+      data: "",
+    },
+    accountChangePassword: {
+      status: null,
+      data: "",
+    },
+    userResetPassword: {
       status: null,
       data: "",
     },
@@ -493,6 +503,58 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         removeUser: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [changePasswordOfAccount.pending]: (state) => {
+      return {
+        ...state,
+        accountChangePassword: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [changePasswordOfAccount.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        accountChangePassword: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [changePasswordOfAccount.rejected]: (state) => {
+      return {
+        ...state,
+        accountChangePassword: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [resetPasswordOfUser.pending]: (state) => {
+      return {
+        ...state,
+        userResetPassword: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [resetPasswordOfUser.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        userResetPassword: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [resetPasswordOfUser.rejected]: (state) => {
+      return {
+        ...state,
+        userResetPassword: {
           status: status.FAILURE,
         },
       };

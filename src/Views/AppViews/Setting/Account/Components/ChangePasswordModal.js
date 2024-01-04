@@ -5,8 +5,17 @@ import React, { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import {
+  changePasswordOfAccount,
+  resetPasswordOfUser,
+} from "Redux/Settings/SettingsThunk";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import { getCurrentUser } from "Utils";
+import { ToastMessage } from "Toast/ToastMessage";
 
 class ChangePasswordModal extends Component {
+  user = { id: "", username: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -19,9 +28,42 @@ class ChangePasswordModal extends Component {
         confirmPassword: "",
       },
       pwdStrength: 0,
-      isValidPassword:false
+      isSubmit: false,
+      isValidPassword: false,
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
+
+  componentDidUpdate = (prevProps) => {
+    if (
+      prevProps.accountChangePassword.status !==
+        this.props.accountChangePassword.status &&
+      this.props.accountChangePassword.status === status.SUCCESS
+    ) {
+      if (this.props.accountChangePassword.data) {
+        this.props.handleChangePasswordModal();
+        ToastMessage.error("Changed password successfully!");
+      } else {
+        ToastMessage.error("Change password action failed!");
+      }
+    }
+
+    if (
+      prevProps.userResetPassword.status !==
+        this.props.userResetPassword.status &&
+      this.props.userResetPassword.status === status.SUCCESS
+    ) {
+      if (this.props.userResetPassword.data) {
+        this.props.handleChangePasswordModal();
+        ToastMessage.error("Password reset successfully!");
+      } else {
+        ToastMessage.error("Reset password action failed!");
+      }
+    }
+  };
 
   /**
    * @param {string} field - Field name on which user clicked toggle switch
@@ -55,6 +97,77 @@ class ChangePasswordModal extends Component {
     this.setState({ formData });
   };
 
+  validate = (isSubmit) => {
+    const { formData, isValidPassword } = this.state;
+    let isValid;
+    let errors;
+    if (isSubmit) {
+      isValid = true;
+      if (!formData.currentPassword && !this.props.isCurrentPasswordHide) {
+        errors = {
+          ...errors,
+          currentPassword: "Current password is required!",
+        };
+        isValid = false;
+      } else {
+        errors = { ...errors, currentPassword: "" };
+      }
+
+      if (!formData.newPassword) {
+        errors = { ...errors, newPassword: "New Password is required!" };
+        isValid = false;
+      } else if (!isValidPassword) {
+        errors = {
+          ...errors,
+          newPassword: "Please enter strong password.",
+        };
+        isValid = false;
+      } else {
+        errors = { ...errors, newPassword: "" };
+      }
+
+      if (!formData.confirmPassword) {
+        errors = {
+          ...errors,
+          confirmPassword: "Confirm Password is required!",
+        };
+        isValid = false;
+      } else if (formData.confirmPassword !== formData.newPassword) {
+        errors = {
+          ...errors,
+          confirmPassword:
+            "New password and confirm password should be matched !",
+        };
+        isValid = false;
+      }
+    }
+    return { isValid, errors };
+  };
+
+  handleSubmitPassword = () => {
+    this.setState({ isSubmit: true }, () => {
+      let { isValid } = this.validate(this.state.isSubmit);
+      let {
+        formData: { currentPassword, newPassword },
+      } = this.state;
+
+      if (isValid) {
+        if (this.props.isCurrentPasswordHide) {
+          this.props.resetPasswordOfUser({
+            userName: this.user.username,
+            ownerId: this.user.id,
+            newPassword,
+          });
+        } else {
+          this.props.changePasswordOfAccount({
+            userName: this.user.username,
+            oldPassword: currentPassword,
+            newPassword,
+          });
+        }
+      }
+    });
+  };
   render() {
     const HtmlTooltip = styled(({ className, ...props }) => (
       <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -70,8 +183,19 @@ class ChangePasswordModal extends Component {
         border: "1px solid #16161E",
       },
     }));
-    const { currentPasswordHidden, newPassword, confirmPassword, formData } =
-      this.state;
+    const {
+      currentPasswordHidden,
+      newPassword,
+      confirmPassword,
+      formData,
+      isSubmit,
+    } = this.state;
+    const { errors } = this.validate(isSubmit);
+    let { userResetPassword, accountChangePassword, isCurrentPasswordHide } =
+      this.props;
+    let passwordStatus = isCurrentPasswordHide
+      ? userResetPassword?.status === status.IN_PROGRESS
+      : accountChangePassword?.status === status.IN_PROGRESS;
     return (
       <Modal
         isOpen={this.props.showModal}
@@ -87,32 +211,47 @@ class ChangePasswordModal extends Component {
         </ModalHeader>
         <ModalBody>
           <form>
-            <Box className="form-group">
-              <label htmlFor="CurrentPassword" className="form-label">
-                Current Password
-              </label>
-              <input
-                type={currentPasswordHidden ? "password" : "text"}
-                className="form-control"
-                id="currentPassword"
-                name="currentPassword"
-                value={formData.currentPassword}
-                onChange={this.handleInputChange}
-                autoComplete="off"
-              />
-              <span
-                className="input-group-text"
-                onClick={() => this.togglePasswordView("currentPasswordHidden")}
-              >
-                <i
-                  className={
-                    currentPasswordHidden
-                      ? "fa-regular fa-eye-slash"
-                      : "fa-sharp fa-regular fa-eye"
+            {this.props.isCurrentPasswordHide ? (
+              <></>
+            ) : (
+              <Box className="form-group">
+                <label htmlFor="CurrentPassword" className="form-label">
+                  Current Password
+                </label>
+                <input
+                  type={currentPasswordHidden ? "password" : "text"}
+                  className="form-control"
+                  id="currentPassword"
+                  name="currentPassword"
+                  value={formData.currentPassword}
+                  onChange={this.handleInputChange}
+                  autoComplete="off"
+                />
+                <span
+                  className="input-group-text"
+                  onClick={() =>
+                    this.togglePasswordView("currentPasswordHidden")
                   }
-                ></i>
-              </span>
-            </Box>
+                >
+                  <i
+                    className={
+                      currentPasswordHidden
+                        ? "fa-regular fa-eye-slash"
+                        : "fa-sharp fa-regular fa-eye"
+                    }
+                  ></i>
+                </span>
+                <span
+                  className="red"
+                  style={{ fontSize: "12px", marginTop: "5px" }}
+                >
+                  {isSubmit && errors && errors.currentPassword
+                    ? errors.currentPassword
+                    : ""}
+                </span>
+              </Box>
+            )}
+
             <Box className="form-group">
               <label htmlFor="NewPassword" className="form-label">
                 New Password
@@ -157,6 +296,14 @@ class ChangePasswordModal extends Component {
                   }
                 ></i>
               </span>
+              <span
+                className="red"
+                style={{ fontSize: "12px", marginTop: "5px" }}
+              >
+                {isSubmit && errors && errors.newPassword
+                  ? errors.newPassword
+                  : ""}
+              </span>
             </Box>
             <Box className="form-group">
               <label htmlFor="Confirm Password" className="form-label">
@@ -183,6 +330,14 @@ class ChangePasswordModal extends Component {
                   }
                 ></i>
               </span>
+              <span
+                className="red"
+                style={{ fontSize: "12px", marginTop: "5px" }}
+              >
+                {isSubmit && errors && errors.confirmPassword
+                  ? errors.confirmPassword
+                  : ""}
+              </span>
             </Box>
             <PasswordStrength
               password={formData.newPassword}
@@ -197,7 +352,9 @@ class ChangePasswordModal extends Component {
             <LoadingButton
               className="primary-btn min-width"
               variant="contained"
-              onClick={this.props.handleChangePasswordModal}
+              disabled={passwordStatus}
+              loading={passwordStatus}
+              onClick={this.handleSubmitPassword}
             >
               Submit New Password
             </LoadingButton>
@@ -207,5 +364,20 @@ class ChangePasswordModal extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  const { accountChangePassword, userResetPassword } = state.settings;
+  return {
+    accountChangePassword,
+    userResetPassword,
+  };
+};
 
-export default ChangePasswordModal;
+const mapDispatchToProps = {
+  changePasswordOfAccount,
+  resetPasswordOfUser,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ChangePasswordModal);
