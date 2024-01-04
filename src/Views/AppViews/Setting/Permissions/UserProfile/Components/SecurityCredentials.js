@@ -6,7 +6,6 @@ import {
   ListItem,
   Button,
   TableContainer,
-  Table,
   TableBody,
   TableCell,
   TableHead,
@@ -59,7 +58,7 @@ export class SecurityCredentials extends Component {
 
   render() {
     const { showAuthenticationModal, userDetails } = this.state;
-  
+
     return (
       <Box className="credentials-content">
         <Box className="credentials-box">

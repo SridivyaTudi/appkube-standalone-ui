@@ -29,12 +29,6 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-let data = [
-  { id: 1, permissionName: "Super Admin", policiesname: "Single" },
-  { id: 2, permissionName: "Defaulta User", policiesname: "Single" },
-  { id: 3, permissionName: "System Engineer", policiesname: "Multiple" },
-  { id: 4, permissionName: "Design Architect", policiesname: "Multiple" },
-];
 class Group extends Component {
   constructor(props) {
     super(props);
@@ -97,68 +91,72 @@ class Group extends Component {
     const { rows, selectedGroup } = this.state;
     return (
       <TableBody>
-        {rows.length ? rows.map((row, index) => {
-          if (row.grp) {
-            return (
-              <TableRow key={v4()}>
-                <TableCell>
-                  <Checkbox
-                    size="small"
-                    className="check-box"
-                    id={`${row.id}`}
-                    checked={selectedGroup.includes(row.id)}
-                    onChange={this.handleCheckBox}
-                  />
-                  <span
-                    onClick={() =>
-                      this.handleCheckBox({
-                        target: {
-                          id: row.id,
-                          checked: !selectedGroup.includes(row.id),
-                        },
-                      })
-                    }
-                  >
-                    {row.name}
-                  </span>
-                  {row.default ? (
-                    <Box className="d-flex roles-box">
-                      <HtmlTooltip
-                        className="table-tooltip-dark"
-                        title={
-                          <React.Fragment>
-                            <span>
-                              This role created by default by the system
-                            </span>
-                          </React.Fragment>
-                        }
-                      >
-                        <Box className="d-inline-block default-Icon">
-                          <img src={DefaultIcon} alt="" /> Default
-                        </Box>
-                      </HtmlTooltip>
-                    </Box>
-                  ) : (
-                    <></>
-                  )}
-                </TableCell>
-                <TableCell>
-                  {this.calculateAttachedPolicies(row.roles)}
-                </TableCell>
-              </TableRow>
-            );
-          } else {
-            return null;
-          }
-        }) : <TableRow>
-        <TableCell colSpan={12}>
-          <Box className="d-blck text-center w-100 h-100 ">
-            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-              <h5 className="m-t-0 m-b-0">There are no group.</h5>
-            </Box>
-          </Box>
-        </TableCell>
-      </TableRow> }
+        {rows.length ? (
+          rows.map((row, index) => {
+            if (row.grp) {
+              return (
+                <TableRow key={v4()}>
+                  <TableCell>
+                    <Checkbox
+                      size="small"
+                      className="check-box"
+                      id={`${row.id}`}
+                      checked={selectedGroup.includes(row.id)}
+                      onChange={this.handleCheckBox}
+                    />
+                    <span
+                      onClick={() =>
+                        this.handleCheckBox({
+                          target: {
+                            id: row.id,
+                            checked: !selectedGroup.includes(row.id),
+                          },
+                        })
+                      }
+                    >
+                      {row.name}
+                    </span>
+                    {row.default ? (
+                      <Box className="d-flex roles-box">
+                        <HtmlTooltip
+                          className="table-tooltip-dark"
+                          title={
+                            <React.Fragment>
+                              <span>
+                                This role created by default by the system
+                              </span>
+                            </React.Fragment>
+                          }
+                        >
+                          <Box className="d-inline-block default-Icon">
+                            <img src={DefaultIcon} alt="" /> Default
+                          </Box>
+                        </HtmlTooltip>
+                      </Box>
+                    ) : (
+                      <></>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {this.calculateAttachedPolicies(row.roles)}
+                  </TableCell>
+                </TableRow>
+              );
+            } else {
+              return null;
+            }
+          })
+        ) : (
+          <TableRow>
+            <TableCell colSpan={12}>
+              <Box className="d-blck text-center w-100 h-100 ">
+                <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+                  <h5 className="m-t-0 m-b-0">There are no group.</h5>
+                </Box>
+              </Box>
+            </TableCell>
+          </TableRow>
+        )}
       </TableBody>
     );
   };

@@ -1,15 +1,11 @@
 import Box from "@mui/material/Box";
-import CheckIcon from "@mui/icons-material/Check";
-import IconButton from "@mui/material/IconButton";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import React, { Component } from "react";
-import AccordionView from "../../../Components/AccordionView";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import {
-  Checkbox,
   Paper,
   Table,
   TableBody,
@@ -97,7 +93,6 @@ class Allowed extends Component {
   };
   // Render header of table
   renderTableHead = () => {
-    const { rows, selectedRoles } = this.state;
     return (
       <TableHead>
         <TableRow>
@@ -172,23 +167,8 @@ class Allowed extends Component {
     );
   };
   render() {
-    const { status: groupStatus } = this.props.groupDetailsById;
     return (
       <>
-        {/* <Box className="allowed-disallowed-permission-table">
-          {groupStatus === status.IN_PROGRESS ? (
-            this.renderLoder()
-          ) : (
-            <>
-              {this.renderTableContainer()}{" "}
-              {this.renderComponentTablePagination()}
-            </>
-          )}
-          <AccordionView
-              data={accessPolicyData}
-              headers={[{ name: "Permission set" }, { name: "Status" }]}
-            /> 
-        </Box> */}
         {this.renderTableContainer()}
         {this.renderComponentTablePagination()}
       </>

@@ -156,8 +156,7 @@ export class UserProfile extends Component {
       showConfirmPopup,
     } = this.state;
     let userStatus = this.props.userDetailsById?.status === status.IN_PROGRESS;
-    let deleteGroupStatus =
-      this.props.removeGroup?.status === status.IN_PROGRESS;
+    let userDeleteStatus = this.props.removeUser?.status === status.IN_PROGRESS;
     return (
       <Box className="user-profile-container">
         {userStatus ? (
@@ -355,7 +354,7 @@ export class UserProfile extends Component {
             }}
             icon={<i className="fas fa-trash-alt"></i>}
             handleCallBack={this.handleDeleteUser}
-            showLoader={deleteGroupStatus}
+            showLoader={userDeleteStatus}
           />
         ) : (
           <></>

@@ -23,9 +23,11 @@ import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
 import ConfirmationPopup from "Components/ConfirmationPopup";
-import { getFormattedDate } from "Utils";
-
+import { getFormattedDate, getCurrentUser } from "Utils";
+import { deleteUser } from "Redux/Settings/SettingsThunk";
+import { ToastMessage } from "Toast/ToastMessage";
 class UserControl extends Component {
+  user = { id: "", username: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -36,6 +38,10 @@ class UserControl extends Component {
       actionButton: null,
       searchedKey: "",
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
@@ -49,6 +55,19 @@ class UserControl extends Component {
     ) {
       if (this.props.userPermissionData.status === status.SUCCESS) {
         this.setUsersStateOrReturnData();
+      }
+    }
+
+    if (this.props.removeUser.status !== prevProps.removeUser.status) {
+      if (this.props.removeUser.status === status.SUCCESS) {
+        let removeUserRes = this.props.removeUser.data;
+        if (removeUserRes) {
+          this.togglePopup();
+          this.props.getUserPermissionData(this.user.username);
+          ToastMessage.success("User Removed Successfully");
+        } else {
+          ToastMessage.error("User Deletion Failed!");
+        }
       }
     }
   };
@@ -155,20 +174,25 @@ class UserControl extends Component {
           rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
             <TableRow key={v4()}>
               <TableCell>
-                <Link to={`/app/setting/user-profile/${row.id}`}>{row.username}</Link>
+                <Link to={`/app/setting/user-profile/${row.id}`}>
+                  {row.username}
+                </Link>
               </TableCell>
               <TableCell>{row.email}</TableCell>
               <TableCell>
                 <Box className="d-block">
-                  {row.loginCount
-                  
-                    ?<strong>Count : {row.loginCount} </strong>  
-                    : "Never Login "}
+                  {row.loginCount ? (
+                    <strong>Count : {row.loginCount} </strong>
+                  ) : (
+                    "Never Login "
+                  )}
                 </Box>
                 <Box className="d-block">
-                  {row.lastLoginAt
-                    ? <strong>Last : {getFormattedDate(row.lastLoginAt)}</strong> 
-                    : ""}
+                  {row.lastLoginAt ? (
+                    <strong>Last : {getFormattedDate(row.lastLoginAt)}</strong>
+                  ) : (
+                    ""
+                  )}
                 </Box>
               </TableCell>
               <TableCell align="center">{row.roles?.length}</TableCell>
@@ -195,7 +219,7 @@ class UserControl extends Component {
                         onClick={() => {
                           this.setState({
                             showConfirmPopup: true,
-                            roleId: row.id,
+                            userId: row.id,
                           });
                         }}
                       >
@@ -289,6 +313,7 @@ class UserControl extends Component {
   // Render component of Create User Modal
   renderComponentConfirmationModal = () => {
     const { showConfirmPopup } = this.state;
+    let userStatus = this.props.removeUser?.status === status.IN_PROGRESS;
     return showConfirmPopup ? (
       <ConfirmationPopup
         showModal={showConfirmPopup}
@@ -300,7 +325,7 @@ class UserControl extends Component {
         }}
         icon={<i class="fas fa-trash-alt"></i>}
         handleCallBack={this.handleDeleteUser}
-        showLoader={false}
+        showLoader={userStatus}
       />
     ) : (
       <></>
@@ -328,7 +353,7 @@ class UserControl extends Component {
 
   // Delete user API
   handleDeleteUser = () => {
-    this.togglePopup();
+    this.props.deleteUser(this.state.userId);
   };
 
   // toggle confirmation popup
@@ -336,7 +361,7 @@ class UserControl extends Component {
     let { showConfirmPopup, userId } = this.state;
     this.setState({
       showConfirmPopup: !showConfirmPopup,
-      roleId: showConfirmPopup ? 0 : userId,
+      userId: showConfirmPopup ? 0 : userId,
       actionButton: false,
     });
   };
@@ -354,13 +379,14 @@ class UserControl extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { allUsers, userPermissionData } = state.settings;
+  const { allUsers, userPermissionData, removeUser } = state.settings;
   return {
     allUsers,
     userPermissionData,
+    removeUser,
   };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { deleteUser };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserControl);

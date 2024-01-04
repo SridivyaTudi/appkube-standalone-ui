@@ -37,7 +37,8 @@ class SignUp extends Component {
     this.state = {
       activeStep: this.steps.STEP1,
       step1: {
-        fullName: "",
+        firstName: "",
+        lastName: "",
         userName: "",
         email: "",
         password: "",
@@ -106,7 +107,8 @@ class SignUp extends Component {
     const { step1, step2, isValidPassword } = this.state;
     let isValid = true;
     let errors = {
-      fullName: "",
+      firstName: "",
+      lastName: "",
       userName: "",
       email: "",
       password: "",
@@ -116,11 +118,18 @@ class SignUp extends Component {
 
     let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
     if (activeStep === this.steps.STEP1 && submittedSteps[this.steps.STEP1]) {
-      if (!step1.fullName.trim()) {
-        errors.fullName = "Full name is required!";
+      if (!step1.firstName.trim()) {
+        errors.firstName = "First name is required!";
         isValid = false;
       } else {
-        errors.fullName = "";
+        errors.firstName = "";
+      }
+
+      if (!step1.lastName.trim()) {
+        errors.lastName = "Fast name is required!";
+        isValid = false;
+      } else {
+        errors.lastName = "";
       }
 
       if (!step1.userName.trim()) {
@@ -211,9 +220,9 @@ class SignUp extends Component {
     const { isValid } = this.validateForm(activeStep, submittedSteps);
     if (isValid) {
       let { ADMIN, CMDB } = this.apiConstants;
-      let params = `username=${step1.userName}&organization=${
-        step2.companyName
-      }&email=${
+      let params = `firstName=${step1.firstName}&lastName=${
+        step1.lastName
+      }&username=${step1.userName}&organization=${step2.companyName}&email=${
         step1.email
       }&type=${ADMIN}&targetService=${CMDB}&password=${encodeURIComponent(
         step1.password
@@ -367,21 +376,21 @@ class SignUp extends Component {
                       >
                         <Grid item xs={6}>
                           <Box className="input-group">
-                            <label className="d-block" htmlFor="fullName">
+                            <label className="d-block" htmlFor="firstName">
                               First Name
                             </label>
                             <input
-                              id="fullName"
+                              id="firstName"
                               type="text"
                               className="form-control"
                               placeholder="Input your first name here"
-                              name="fullName"
-                              value={step1.fullName}
+                              name="firstName"
+                              value={step1.firstName}
                               onChange={this.handleStep1Changes}
                             />
                             {submittedSteps[this.steps.STEP1] &&
-                            errors.fullName ? (
-                              <p className="m-b-0">{errors.fullName}</p>
+                            errors.firstName ? (
+                              <p className="m-b-0">{errors.firstName}</p>
                             ) : (
                               <></>
                             )}
@@ -389,21 +398,21 @@ class SignUp extends Component {
                         </Grid>
                         <Grid item xs={6}>
                           <Box className="input-group">
-                            <label className="d-block" htmlFor="userName">
+                            <label className="d-block" htmlFor="lastName">
                               Last Name
                             </label>
                             <input
-                              id="userName"
+                              id="lastName"
                               type="text"
                               className="form-control"
                               placeholder="Input your last name here"
-                              name="userName"
-                              value={step1.userName}
+                              name="lastName"
+                              value={step1.lastName}
                               onChange={this.handleStep1Changes}
                             />
                             {submittedSteps[this.steps.STEP1] &&
-                            errors.userName ? (
-                              <p className="m-b-0">{errors.userName}</p>
+                            errors.lastName ? (
+                              <p className="m-b-0">{errors.lastName}</p>
                             ) : (
                               <></>
                             )}
@@ -417,15 +426,24 @@ class SignUp extends Component {
                       >
                         <Grid item xs={12}>
                           <Box className="input-group">
-                            <label className="d-block" htmlFor="login">
+                            <label className="d-block" htmlFor="userName">
                               Username/LoginID
                             </label>
                             <input
-                              id="login"
+                              id="userName"
                               type="text"
                               className="form-control"
                               placeholder="Username/LoginID"
+                              name="userName"
+                              value={step1.userName}
+                              onChange={this.handleStep1Changes}
                             />
+                            {submittedSteps[this.steps.STEP1] &&
+                            errors.userName ? (
+                              <p className="m-b-0">{errors.userName}</p>
+                            ) : (
+                              <></>
+                            )}
                           </Box>
                         </Grid>
                       </Grid>
