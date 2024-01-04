@@ -114,7 +114,18 @@ class Disallowed extends Component {
             <TableRow key={index}>
               <TableCell className="p-t-10 p-b-10">{row.name}</TableCell>
               <TableCell className="p-t-10 p-b-10">
-                <button className="status-btn dark">{row.status}</button>
+                <button className="status-btn dark">
+                  <HtmlTooltip
+                    className="table-tooltip-dark d-flex"
+                    title={
+                      <React.Fragment>
+                        <span>This role created by default by the system</span>
+                      </React.Fragment>
+                    }
+                  >
+                    <span>{row.status}</span>
+                  </HtmlTooltip>
+                </button>
               </TableCell>
             </TableRow>
           ))
