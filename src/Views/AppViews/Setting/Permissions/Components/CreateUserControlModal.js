@@ -170,17 +170,18 @@ class CreateUserControlModal extends Component {
       formData.map((user, index) => {
         return (
           <Box
-            className="d-flex align-items-center form-row "
+            className="d-flex  align-items-center form-row "
             key={`name_${index}`}
           >
             <Box className="form-group">
+              <label className="form-label">First Name</label>
               <Box className="d-inline-block">
                 <input
                   id={`name_${index}`}
                   type="text"
                   className="form-control"
                   name="name"
-                  placeholder="Write Request Title"
+                  placeholder="First Name"
                   value={user.name}
                   onChange={(e) => {
                     this.handleInputChange(e, index);
@@ -197,13 +198,65 @@ class CreateUserControlModal extends Component {
               </Box>
             </Box>
             <Box className="form-group">
+              <label className="form-label">Last Name</label>
               <Box className="d-inline-block">
                 <input
                   id={`email_${index}`}
                   type="text"
                   className="form-control"
                   name="email"
-                  placeholder="Write Request Title"
+                  placeholder="Last Name"
+                  value={user.email}
+                  onChange={(e) => this.handleInputChange(e, index)}
+                  autoFocus={
+                    document.activeElement.id === `email_${index}`
+                      ? "autofocus"
+                      : null
+                  }
+                  onKeyDown={(e) =>
+                    e.key === "Enter" ? this.setActiveStep(e) : <></>
+                  }
+                />
+                {errors?.includes(index) ? (
+                  <span className="red">Please provide valid email</span>
+                ) : (
+                  <></>
+                )}
+              </Box>
+            </Box>
+            <Box className="form-group">
+              <label className="form-label">Username / Login ID</label>
+              <Box className="d-inline-block">
+                <input
+                  id={`name_${index}`}
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  placeholder="Username / Login ID"
+                  value={user.name}
+                  onChange={(e) => {
+                    this.handleInputChange(e, index);
+                  }}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" ? this.setActiveStep(e) : <></>
+                  }
+                />
+                {errors?.includes(index) ? (
+                  <span className="red"></span>
+                ) : (
+                  <></>
+                )}
+              </Box>
+            </Box>
+            <Box className="form-group">
+              <label className="form-label">Email</label>
+              <Box className="d-inline-block">
+                <input
+                  id={`email_${index}`}
+                  type="text"
+                  className="form-control"
+                  name="email"
+                  placeholder="Email"
                   value={user.email}
                   onChange={(e) => this.handleInputChange(e, index)}
                   autoFocus={
@@ -431,11 +484,8 @@ class CreateUserControlModal extends Component {
   renderStep1 = (errors) => {
     return (
       <Box className="d-block">
-        <Box className="title">
-          <label className="form-label">Name (Optional)</label>
-          <label className="form-label">Email Address</label>
-        </Box>
         <Box className="d-block step-frist">{this.renderInputs(errors)}</Box>
+       
         {/* <Box className="add-user" onClick={this.onClickAnotherPerson}>
           <Button className="compliance-btn min-width" variant="contained">
             Add Another person

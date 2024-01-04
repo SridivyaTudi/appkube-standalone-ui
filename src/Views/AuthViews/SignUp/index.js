@@ -427,13 +427,13 @@ class SignUp extends Component {
                         <Grid item xs={12}>
                           <Box className="input-group">
                             <label className="d-block" htmlFor="userName">
-                              Username/LoginID
+                              Username / Login ID
                             </label>
                             <input
                               id="userName"
                               type="text"
                               className="form-control"
-                              placeholder="Username/LoginID"
+                              placeholder="Username / Login ID"
                               name="userName"
                               value={step1.userName}
                               onChange={this.handleStep1Changes}

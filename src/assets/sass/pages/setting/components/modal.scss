@@ -474,24 +474,28 @@
       }
 
       .users-content {
-        .title {
-          display: flex;
-          margin-bottom: 5px;
+        // .title {
+        //   display: flex;
+        //   margin-bottom: 5px;
 
-          .form-label {
-            width: 47.2%;
-            font-size: 14px;
-            color: #344054;
-            line-height: 20px;
-            font-weight: 500;
-            margin-bottom: 5px;
-            padding-left: 0;
-          }
-        }
+        //   .form-label {
+        //     width: 47.2%;
+        //     font-size: 14px;
+        //     color: #344054;
+        //     line-height: 20px;
+        //     font-weight: 500;
+        //     margin-bottom: 5px;
+        //     padding-left: 0;
+        //   }
+        // }
         .step-frist {
           max-height: 365px;
           overflow: hidden;
           overflow-y: auto;
+          .form-row{
+            display: flex;
+            flex-wrap: wrap;
+          }
         }
         .step-third {
           .step-third-form {
@@ -510,6 +514,15 @@
         .form-group {
           margin-bottom: 15px;
           position: relative;
+          .form-label {
+            display: block;
+            font-size: 14px;
+            color: #344054;
+            line-height: 20px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            padding-left: 0;
+          }
           .form-control {
             width: 240px;
             height: 36px;
