@@ -112,8 +112,10 @@ class Disallowed extends Component {
         {rows?.length ? (
           rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
             <TableRow key={index}>
-              <TableCell>{row.name}</TableCell>
-              <TableCell> {row.status}</TableCell>
+              <TableCell className="p-t-10 p-b-10">{row.name}</TableCell>
+              <TableCell className="p-t-10 p-b-10">
+                <button className="status-btn dark">{row.status}</button>
+              </TableCell>
             </TableRow>
           ))
         ) : (

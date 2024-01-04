@@ -1162,6 +1162,25 @@ a {
               }
             }
           }
+          .status-btn{
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: 500;
+           
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 3px;
+            color: #ffffff;
+            background: #00b929;
+            text-transform: lowercase;
+            border: none;
+            &.dark{
+              background: #656575;
+            }
+            &::first-letter{
+              text-transform: capitalize;
+            }
+          }
         }
       }
     }
