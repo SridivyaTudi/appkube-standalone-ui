@@ -368,13 +368,13 @@ class SignUp extends Component {
                         <Grid item xs={6}>
                           <Box className="input-group">
                             <label className="d-block" htmlFor="fullName">
-                              Full Name
+                              First Name
                             </label>
                             <input
                               id="fullName"
                               type="text"
                               className="form-control"
-                              placeholder="Input your full name here"
+                              placeholder="Input your first name here"
                               name="fullName"
                               value={step1.fullName}
                               onChange={this.handleStep1Changes}
@@ -390,13 +390,13 @@ class SignUp extends Component {
                         <Grid item xs={6}>
                           <Box className="input-group">
                             <label className="d-block" htmlFor="userName">
-                              Username
+                              Last Name
                             </label>
                             <input
                               id="userName"
                               type="text"
                               className="form-control"
-                              placeholder="Input your username here"
+                              placeholder="Input your last name here"
                               name="userName"
                               value={step1.userName}
                               onChange={this.handleStep1Changes}
@@ -407,6 +407,25 @@ class SignUp extends Component {
                             ) : (
                               <></>
                             )}
+                          </Box>
+                        </Grid>
+                      </Grid>
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                      >
+                        <Grid item xs={12}>
+                          <Box className="input-group">
+                            <label className="d-block" htmlFor="login">
+                              Username/LoginID
+                            </label>
+                            <input
+                              id="login"
+                              type="text"
+                              className="form-control"
+                              placeholder="Username/LoginID"
+                            />
                           </Box>
                         </Grid>
                       </Grid>
