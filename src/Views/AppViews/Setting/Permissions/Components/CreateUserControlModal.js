@@ -277,15 +277,15 @@ class CreateUserControlModal extends Component {
             </Box>
             {index !== 0 ? (
               <Box
-                className="form-group"
+                className="form-group m-b-0"
                 onClick={() => this.onClickRemoveRow(index)}
               >
-                <IconButton
+                <IconButton 
                   variant="outlined"
                   color="error"
                   aria-label="delete"
                   size="small"
-                  className="close-icon"
+                  className="close-icon m-t-2"
                 >
                   <CloseIcon fontSize="inherit" />
                 </IconButton>
@@ -486,11 +486,11 @@ class CreateUserControlModal extends Component {
       <Box className="d-block">
         <Box className="d-block step-frist">{this.renderInputs(errors)}</Box>
        
-        {/* <Box className="add-user" onClick={this.onClickAnotherPerson}>
+        <Box className="add-user" onClick={this.onClickAnotherPerson}>
           <Button className="compliance-btn min-width" variant="contained">
             Add Another person
           </Button>
-        </Box> */}
+        </Box>
       </Box>
     );
   };
