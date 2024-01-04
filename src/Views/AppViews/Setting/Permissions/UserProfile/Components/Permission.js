@@ -129,7 +129,7 @@ class Permission extends Component {
         {rows.length ? (
           <AccordionView data={rows} />
         ) : (
-          <Box className="group-loader h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
+          <Box className="group-loader h-100  text-center  p-t-20 p-b-20">
             <h5 className="m-t-0 m-b-0">There are no permission available.</h5>
           </Box>
         )}

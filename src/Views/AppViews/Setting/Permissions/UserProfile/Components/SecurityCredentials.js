@@ -10,6 +10,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Table,
 } from "@mui/material";
 import NoteIcon from "assets/img/setting/note-icon.png";
 import AuthenticationModal from "Views/AppViews/Setting/Account/Components/AuthenticationModal";
@@ -112,7 +113,7 @@ export class SecurityCredentials extends Component {
           </Box>
           <Box className="environment-table-section">
             <TableContainer className="table">
-              <TableCell className="overview">
+              <Table className="overview">
                 <TableHead>
                   <TableRow>
                     <TableCell align="left">MFA</TableCell>
@@ -137,7 +138,7 @@ export class SecurityCredentials extends Component {
                     </TableCell>
                   </TableRow>
                 </TableBody>
-              </TableCell>
+              </Table>
             </TableContainer>
           </Box>
         </Box>
