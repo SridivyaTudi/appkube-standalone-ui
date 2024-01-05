@@ -30,7 +30,7 @@ const config = {
   DELETE_USER: `${baseSecurityUrl}/users/delete/#user-id#`,
 
   /* CHANGE PASSWORD SERVICES */
-  ACCOUNT_CHANGE_PASSWORD: `${baseSecurityUrl}/reset/reset-password`,
+  ACCOUNT_CHANGE_PASSWORD: `${baseSecurityUrl}/users/reset-password`,
   USER_RESET_PASSWORD: `${baseSecurityUrl}/users/reset-password-by-admin`,
 };
 
