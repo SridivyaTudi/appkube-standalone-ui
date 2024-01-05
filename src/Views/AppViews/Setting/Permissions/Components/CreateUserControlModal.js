@@ -35,8 +35,10 @@ import { getCurrentUser, getCurrentOrgName } from "Utils";
 import LoadingButton from "@mui/lab/LoadingButton";
 const steps = ["User details ", "Add  user to group ", "Review and Create"];
 const initialFormData = {
-  name: "",
+  firstName: "",
+  lastName: "",
   email: "",
+  username: "",
 };
 
 class CreateUserControlModal extends Component {
@@ -71,6 +73,15 @@ class CreateUserControlModal extends Component {
         } else {
           ToastMessage.error(`User Creation Failed!`);
         }
+      }
+    }
+
+    if (
+      this.props.userPermissionData?.status !==
+      prevProps.userPermissionData?.status
+    ) {
+      if (this.props.userPermissionData.status === status.SUCCESS) {
+        this.setGroupStateOrReturnData();
       }
     }
   };
@@ -149,7 +160,9 @@ class CreateUserControlModal extends Component {
     let { formData } = this.state;
     let form = new FormData();
     try {
-      form.append("username", formData[0].name);
+      form.append("firstName", formData[0].firstName);
+      form.append("lastName", formData[0].lastName);
+      form.append("username", formData[0].username);
       form.append("organization", getCurrentOrgName());
       form.append("email", formData[0].email);
       form.append("ownerId", this.user.id);
@@ -177,12 +190,12 @@ class CreateUserControlModal extends Component {
               <label className="form-label">First Name</label>
               <Box className="d-inline-block">
                 <input
-                  id={`name_${index}`}
+                  id={`firstName_${index}`}
                   type="text"
                   className="form-control"
-                  name="name"
+                  name="firstName"
                   placeholder="First Name"
-                  value={user.name}
+                  value={user.firstName}
                   onChange={(e) => {
                     this.handleInputChange(e, index);
                   }}
@@ -190,8 +203,8 @@ class CreateUserControlModal extends Component {
                     e.key === "Enter" ? this.setActiveStep(e) : <></>
                   }
                 />
-                {errors?.includes(index) ? (
-                  <span className="red"></span>
+                {errors[index]?.firstName ? (
+                  <span className="red">{errors[index].firstName}</span>
                 ) : (
                   <></>
                 )}
@@ -201,15 +214,15 @@ class CreateUserControlModal extends Component {
               <label className="form-label">Last Name</label>
               <Box className="d-inline-block">
                 <input
-                  id={`email_${index}`}
+                  id={`lastName_${index}`}
                   type="text"
                   className="form-control"
-                  name="email"
+                  name="lastName"
                   placeholder="Last Name"
-                  value={user.email}
+                  value={user.lastName}
                   onChange={(e) => this.handleInputChange(e, index)}
                   autoFocus={
-                    document.activeElement.id === `email_${index}`
+                    document.activeElement.id === `lastName_${index}`
                       ? "autofocus"
                       : null
                   }
@@ -217,8 +230,8 @@ class CreateUserControlModal extends Component {
                     e.key === "Enter" ? this.setActiveStep(e) : <></>
                   }
                 />
-                {errors?.includes(index) ? (
-                  <span className="red">Please provide valid email</span>
+                {errors[index]?.lastName ? (
+                  <span className="red">{errors[index].lastName}</span>
                 ) : (
                   <></>
                 )}
@@ -228,12 +241,12 @@ class CreateUserControlModal extends Component {
               <label className="form-label">Username / Login ID</label>
               <Box className="d-inline-block">
                 <input
-                  id={`name_${index}`}
+                  id={`username_${index}`}
                   type="text"
                   className="form-control"
-                  name="name"
+                  name="username"
                   placeholder="Username / Login ID"
-                  value={user.name}
+                  value={user.username}
                   onChange={(e) => {
                     this.handleInputChange(e, index);
                   }}
@@ -241,8 +254,8 @@ class CreateUserControlModal extends Component {
                     e.key === "Enter" ? this.setActiveStep(e) : <></>
                   }
                 />
-                {errors?.includes(index) ? (
-                  <span className="red"></span>
+                {errors[index]?.username ? (
+                  <span className="red">{errors[index].username}</span>
                 ) : (
                   <></>
                 )}
@@ -268,8 +281,8 @@ class CreateUserControlModal extends Component {
                     e.key === "Enter" ? this.setActiveStep(e) : <></>
                   }
                 />
-                {errors?.includes(index) ? (
-                  <span className="red">Please provide valid email</span>
+                {errors[index]?.email ? (
+                  <span className="red">{errors[index].email}</span>
                 ) : (
                   <></>
                 )}
@@ -280,7 +293,7 @@ class CreateUserControlModal extends Component {
                 className="form-group m-b-0"
                 onClick={() => this.onClickRemoveRow(index)}
               >
-                <IconButton 
+                <IconButton
                   variant="outlined"
                   color="error"
                   aria-label="delete"
@@ -302,18 +315,27 @@ class CreateUserControlModal extends Component {
   //Click on Add Another Person button
   onClickAnotherPerson = () => {
     let { formData } = this.state;
-    let isEmailValidate = true;
+    let isValidate = true;
     let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
 
     if (formData?.length) {
       for (let index = 0; index < formData.length; index++) {
         const element = formData[index];
+        if (!element.firstName) {
+          isValidate = false;
+        }
+        if (!element.lastName) {
+          isValidate = false;
+        }
+        if (!element.username) {
+          isValidate = false;
+        }
         if (!emailRegex.test(element.email)) {
-          isEmailValidate = false;
+          isValidate = false;
         }
       }
 
-      if (isEmailValidate) {
+      if (isValidate) {
         formData.push(Object.assign({}, initialFormData));
       }
       this.setState({ formData, isSubmit: false });
@@ -361,13 +383,28 @@ class CreateUserControlModal extends Component {
     let { formData } = this.state;
     let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
     let isStepValid = true;
-    let errors = [];
+    let errors = {};
     if (isSubmit) {
       formData.forEach((user, index) => {
-        if (!emailRegex.test(user.email)) {
-          errors.push(index);
+        if (!user.firstName) {
+          errors[index] = { firstName: "" };
+          errors[index]["firstName"] = "Please enter first name!";
           isStepValid = false;
-          return user;
+        }
+        if (!user.lastName) {
+          errors[index] = { ...errors[index], lastName: "" };
+          errors[index]["lastName"] = "Please enter last name!";
+          isStepValid = false;
+        }
+        if (!emailRegex.test(user.email)) {
+          errors[index] = { ...errors[index], email: "" };
+          errors[index]["email"] = "Please enter valid email!";
+          isStepValid = false;
+        }
+        if (!user.username) {
+          errors[index] = { ...errors[index], username: "" };
+          errors[index]["username"] = "Please enter username/loginId!";
+          isStepValid = false;
         }
 
         return user;
@@ -432,13 +469,41 @@ class CreateUserControlModal extends Component {
           <React.Fragment key={v4()}>
             <Grid item xs={6}>
               <Box className="form-group m-b-0">
-                {index === 0 ? (
-                  <label htmlFor="username" className="form-label">
-                    Username (optional)
-                  </label>
-                ) : (
-                  <></>
-                )}
+                <label htmlFor="firstName" className="form-label">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="firstName"
+                  name="firstName"
+                  placeholder="James"
+                  disabled
+                  value={row.firstName}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box className="form-group m-b-0">
+                <label htmlFor="lastName" className="form-label">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="lastName"
+                  name="lastName"
+                  placeholder="James@synectiks.com"
+                  disabled
+                  value={row.lastName}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box className="form-group m-b-0">
+                <label htmlFor="username" className="form-label">
+                  Username / Login ID
+                </label>
 
                 <input
                   type="text"
@@ -447,19 +512,15 @@ class CreateUserControlModal extends Component {
                   name="username"
                   placeholder="James"
                   disabled
-                  value={row.name}
+                  value={row.username}
                 />
               </Box>
             </Grid>
             <Grid item xs={6}>
               <Box className="form-group m-b-0">
-                {index === 0 ? (
-                  <label htmlFor="email" className="form-label">
-                    Email Address
-                  </label>
-                ) : (
-                  <></>
-                )}
+                <label htmlFor="email" className="form-label">
+                  Email Address
+                </label>
 
                 <input
                   type="text"
@@ -485,7 +546,6 @@ class CreateUserControlModal extends Component {
     return (
       <Box className="d-block">
         <Box className="d-block step-frist">{this.renderInputs(errors)}</Box>
-       
         {/* <Box className="add-user" onClick={this.onClickAnotherPerson}>
           <Button className="compliance-btn min-width" variant="contained">
             Add Another person
@@ -682,7 +742,9 @@ class CreateUserControlModal extends Component {
                           />
                           {row.name}
                         </TableCell>
-                        <TableCell>{row.policiesname}</TableCell>
+                        <TableCell>
+                          {this.calculateAttachedPolicies(row.roles)}
+                        </TableCell>
                       </TableRow>
                     );
                   }
@@ -722,6 +784,20 @@ class CreateUserControlModal extends Component {
       this.setState({ groups });
     } else {
       return groups;
+    }
+  };
+
+  calculateAttachedPolicies = (data) => {
+    if (data.length) {
+      let policies = [];
+      data.forEach((policy) => {
+        policies = policies.concat(policy.policies);
+      });
+      return policies.length
+        ? policies.length > 1
+          ? "Multiple"
+          : "Single"
+        : "None";
     }
   };
   render() {

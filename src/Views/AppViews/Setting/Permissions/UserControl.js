@@ -24,8 +24,9 @@ import Loader from "Components/Loader";
 import { v4 } from "uuid";
 import ConfirmationPopup from "Components/ConfirmationPopup";
 import { getFormattedDate, getCurrentUser } from "Utils";
-import { deleteUser } from "Redux/Settings/SettingsThunk";
+import { deleteUser, getUserPermissionData } from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
+
 class UserControl extends Component {
   user = { id: "", username: "" };
   constructor(props) {
@@ -323,7 +324,7 @@ class UserControl extends Component {
           header: "Do you want to delete this User ? ",
           btnNo: "Cancel",
         }}
-        icon={<i class="fas fa-trash-alt"></i>}
+        icon={<i className="fas fa-trash-alt"></i>}
         handleCallBack={this.handleDeleteUser}
         showLoader={userStatus}
       />
@@ -387,6 +388,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { deleteUser };
+const mapDispatchToProps = { deleteUser,getUserPermissionData  };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserControl);
