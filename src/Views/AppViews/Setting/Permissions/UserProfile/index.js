@@ -294,7 +294,7 @@ export class UserProfile extends Component {
 
                             <ListItem>
                               <Link
-                                to={`/app/setting/user-profile/add-user-group`}
+                                to={`/app/setting/user-profile/${this.getUserId()}/add-user-group`}
                               >
                                 <Button
                                   className="primary-btn min-width-inherit"

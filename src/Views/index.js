@@ -183,7 +183,7 @@ export const Views = (props) => {
             element={<CreatePolicy />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/setting/user-profile/add-user-group`}
+            path={`${APP_PREFIX_PATH}/setting/user-profile/:id/add-user-group`}
             element={<AddUserGroup />}
           />
           <Route

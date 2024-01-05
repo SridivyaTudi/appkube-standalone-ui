@@ -28,7 +28,7 @@ const config = {
   GET_USER_PERMISSION_DATA_URL: `${baseSecurityUrl}/users/get-user-hierarchy?userName=#user-name#`,
   GET_USER_BY_ID: `${baseSecurityUrl}/users/#user-id#`,
   DELETE_USER: `${baseSecurityUrl}/users/delete/#user-id#`,
-
+  ADD_USER_TO_GROUPS: `${baseSecurityUrl}/users/updateUserRoles?userName=#user-name#&roleId=#role-id#`,
   /* CHANGE PASSWORD SERVICES */
   ACCOUNT_CHANGE_PASSWORD: `${baseSecurityUrl}/users/reset-password`,
   USER_RESET_PASSWORD: `${baseSecurityUrl}/users/reset-password-by-admin`,

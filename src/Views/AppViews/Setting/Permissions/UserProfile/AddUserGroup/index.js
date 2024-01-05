@@ -20,8 +20,18 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import DefaultIcon from "assets/img/setting/default-icon.png";
 import { v4 } from "uuid";
-import { setActiveTab } from "Utils";
+import { getCurrentUser, setActiveTab } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import {
+  getUserPermissionData,
+  addUserToGroups,
+} from "Redux/Settings/SettingsThunk";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import Loader from "Components/Loader";
+import { ToastMessage } from "Toast/ToastMessage";
+import LoadingButton from "@mui/lab/LoadingButton";
+import CancelGroupControlModal from "../../Components/CancelGroupControlModal";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -35,29 +45,56 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-let data = [
-  { id: 1, groupName: "Super Admin", attachedPolicies: "Single " },
-  { id: 2, groupName: "Defaults Users", attachedPolicies: "Single " },
-  { id: 3, groupName: "System Engineer", attachedPolicies: "Multiple " },
-  { id: 4, groupName: "Design Architect", attachedPolicies: "Multiple " },
-  { id: 5, groupName: "Design Architect", attachedPolicies: "Multiple " },
-  { id: 6, groupName: "Design Architect", attachedPolicies: "Multiple " },
-  { id: 7, groupName: "Design Architect", attachedPolicies: "Multiple " },
-  { id: 8, groupName: "Design Architect", attachedPolicies: "Multiple " },
-];
 class AddUserGroup extends Component {
+  user = { id: "", username: "" };
   constructor(props) {
     super(props);
     this.state = {
-      rows: data,
+      rows: [],
       pg: 0,
       rpg: 5,
       showCreateUserControlModal: false,
       actionButton: null,
       selectedGroup: [],
       searchedKey: "",
+      showCancelUserControlModal: false,
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
+
+  componentDidMount = () => {
+    this.props.getUserPermissionData(this.user.username);
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      this.props.userPermissionData.status !==
+      prevProps.userPermissionData.status
+    ) {
+      if (this.props.userPermissionData.status === status.SUCCESS) {
+        this.setStateOrReturnData();
+      }
+    }
+
+    if (
+      this.props.userToGroupsCreation.status !==
+      prevProps.userToGroupsCreation.status
+    ) {
+      if (this.props.userToGroupsCreation.status === status.SUCCESS) {
+        let data = this.props.userToGroupsCreation.data;
+        if (data) {
+          setActiveTab("group");
+          this.props.navigate(`/app/setting/user-profile/${this.getUserId()}`);
+          ToastMessage.success("Added user to group successfully.");
+        } else {
+          ToastMessage.error("User to group creation failed!");
+        }
+      }
+    }
+  };
 
   // Render table header
   renderTableHeader = () => {
@@ -67,9 +104,12 @@ class AddUserGroup extends Component {
         <TableRow>
           <TableCell width={100}>
             <Checkbox
-              size="small" className="check-box"
+              size="small"
+              className="check-box"
               disabled={rows?.length ? false : true}
-              checked={rows?.length === selectedGroup?.length}
+              checked={
+                rows?.length > 0 && rows?.length === selectedGroup?.length
+              }
               onChange={(e) => this.handleSelectAllCheckBox(e)}
             />
             Group Name
@@ -88,31 +128,51 @@ class AddUserGroup extends Component {
         {rows?.length ? (
           rows.map((row, index) => (
             <TableRow key={v4()}>
-              <TableCell>
+              <TableCell
+                onClick={(e) => {
+                  this.handleCheckBox({
+                    target: {
+                      id: row.id,
+                      checked: !selectedGroup.includes(row.id),
+                    },
+                  });
+                }}
+              >
                 <Checkbox
-                  size="small" className="check-box"
-                  id={row.id}
+                  size="small"
+                  className="check-box"
+                  id={`${row.id}`}
                   checked={selectedGroup.includes(row.id)}
-                  onChange={this.handleCheckBox}
+                  // onChange={(e) => {
+                  //   this.handleCheckBox(e);
+                  //   e.stopPropagation();
+                  // }}
                 />
-                {row.groupName}
-                <Box className="d-flex roles-box">
-                  <HtmlTooltip
-                    className="table-tooltip-dark"
-                    title={
-                      <React.Fragment>
-                        <span>This role created by default by the system</span>
-                      </React.Fragment>
-                    }
-                  >
-                   <Box className="d-inline-block default-Icon">
-                    <img src={DefaultIcon} alt=""   /> Default 
+                {row.name}
+                {row.default ? (
+                  <Box className="d-flex roles-box">
+                    <HtmlTooltip
+                      className="table-tooltip-dark"
+                      title={
+                        <React.Fragment>
+                          <span>
+                            This role created by default by the system
+                          </span>
+                        </React.Fragment>
+                      }
+                    >
+                      <Box className="d-inline-block default-Icon">
+                        <img src={DefaultIcon} alt="" /> Default
+                      </Box>
+                    </HtmlTooltip>
                   </Box>
-                  
-                  </HtmlTooltip>
-                </Box>
+                ) : (
+                  <></>
+                )}
               </TableCell>
-              <TableCell>{row.attachedPolicies}</TableCell>
+              <TableCell>
+                {row.roles ? this.calculateAttachedPolicies(row.roles) : ""}
+              </TableCell>
             </TableRow>
           ))
         ) : (
@@ -141,7 +201,6 @@ class AddUserGroup extends Component {
     } else {
       selectedGroup = selectedGroup.filter((value) => value !== +id);
     }
-
     this.setState({ selectedGroup });
   };
 
@@ -150,7 +209,7 @@ class AddUserGroup extends Component {
     let { selectedGroup } = this.state;
 
     let { checked } = event.target;
-
+    let data = this.setStateOrReturnData(0);
     if (checked) {
       selectedGroup = data.map((value) => value.id);
     } else {
@@ -163,11 +222,11 @@ class AddUserGroup extends Component {
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { rows } = this.state;
-
+    let data = this.setStateOrReturnData(0);
     if (data?.length) {
       if (value) {
         rows = data.filter((group) => {
-          if (group?.groupName.toLowerCase().includes(value.toLowerCase())) {
+          if (group?.name.toLowerCase().includes(value.toLowerCase())) {
             return group;
           } else {
             return null;
@@ -186,114 +245,221 @@ class AddUserGroup extends Component {
     this.props.navigate(url);
   };
 
+  getUserId = () => this.props.params.id;
+
+  calculateAttachedPolicies = (data) => {
+    if (data.length) {
+      let policies = [];
+      data.forEach((policy) => {
+        policies = policies.concat(policy.policies);
+      });
+      return policies.length
+        ? policies.length > 1
+          ? "Multiple"
+          : "Single"
+        : "None";
+    }
+  };
+
+  // Render Loder
+  renderLoder() {
+    return (
+      <Box
+        sx={{ height: "100%" }}
+        display={"flex"}
+        alignItems={"center"}
+        justifyContent={"center"}
+        className="width-100"
+      >
+        <Loader sx={{ height: "100%" }} />
+      </Box>
+    );
+  }
+
+  setStateOrReturnData = (isSetState = 1) => {
+    let userPermissionData = this.props.userPermissionData.data || [];
+    if (userPermissionData) {
+      if (isSetState) {
+        this.setState({ rows: userPermissionData.roleGroups });
+      } else {
+        return userPermissionData.roleGroups;
+      }
+    }
+  };
+
+  onClickAddUserGroups = () => {
+    let { selectedGroup } = this.state;
+
+    if (selectedGroup?.length) {
+      this.props.addUserToGroups({
+        userName: this.user.username,
+        roleIds: selectedGroup.toString(),
+      });
+    } else {
+      ToastMessage.error("Please select groups!");
+    }
+  };
+
+  handleCancelUserControlModal = () => {
+    this.setState({
+      showCancelUserControlModal: !this.state.showCancelUserControlModal,
+    });
+  };
   render() {
-    let { searchedKey } = this.state;
+    let { searchedKey,showCancelUserControlModal } = this.state;
+    let { userPermissionData, userToGroupsCreation } = this.props;
+    let userStatus = userPermissionData.status === status.IN_PROGRESS;
+    let userToGroupsCreationStatus =
+      userToGroupsCreation.status === status.IN_PROGRESS;
     return (
       <Box className="create-group-container">
-        <Box className="list-heading">
-          <h3>Add user to groups</h3>
-          <Box className="breadcrumbs">
-            <ul>
-              <li
-                onClick={() =>
-                  this.handlePreviousPage("permissions/user", "/app/setting")
-                }
-              >
-                <Link>Users</Link>
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li
-                onClick={() =>
-                  this.handlePreviousPage("group", "/app/setting/user-profile")
-                }
-              >
-                <Link>Milena</Link>
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li className="active">Add user to groups</li>
-            </ul>
-          </Box>
-        </Box>
-        <Box className="group-name">
-          <Grid container alignItems={"center"}>
-            <Grid item xs={6}>
-              <h4 className="m-t-0 m-b-0">Add user to groups</h4>
-            </Grid>
-            <Grid item xs={6} display={"flex"} justifyContent={"flex-end"}>
-              <Box className="overview-buttons">
-                <List>
-                  <ListItem>
-                    <Link to={`/app/setting/create-group`}>
-                      <Button
-                        className="primary-btn min-width-inherit"
-                        variant="contained"
-                      >
-                        Create Group
-                      </Button>
-                    </Link>
-                  </ListItem>
-                </List>
+        {userStatus ? (
+          <Box sx={{ height: 550 }}>{this.renderLoder()}</Box>
+        ) : (
+          <>
+            {" "}
+            <Box className="list-heading">
+              <h3>Add user to groups</h3>
+              <Box className="breadcrumbs">
+                <ul>
+                  <li
+                    onClick={() =>
+                      this.handlePreviousPage(
+                        "permissions/user",
+                        "/app/setting"
+                      )
+                    }
+                  >
+                    <Link>Users</Link>
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-chevron-right"></i>
+                  </li>
+                  <li
+                    onClick={() =>
+                      this.handlePreviousPage(
+                        "group",
+                        `/app/setting/user-profile/${this.getUserId()}`
+                      )
+                    }
+                  >
+                    <Link>User Profile</Link>
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-chevron-right"></i>
+                  </li>
+                  <li className="active">Add user to groups</li>
+                </ul>
               </Box>
-            </Grid>
-          </Grid>
-        </Box>
-        <Box className="setting-common-searchbar p-b-20">
-          <Grid container className="h-100" alignItems={"center"}>
-            <Grid item xs={6}>
-              <Box className="top-search">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search groups here"
-                  value={searchedKey}
-                  onChange={this.handleSearchChange}
-                  autoFocus="autoFocus"
-                />
-                <button className="button">
-                  <SearchOutlinedIcon />
-                </button>
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-        <TableContainer component={Paper} className="access-control-table">
-          <Table
-            sx={{ minWidth: 800 }}
-            aria-label="custom pagination table"
-            className="table"
-          >
-            {this.renderTableHeader()}
-            {this.renderTableBody()}
-          </Table>
-        </TableContainer>
+            </Box>
+            <Box className="group-name">
+              <Grid container alignItems={"center"}>
+                <Grid item xs={6}>
+                  <h4 className="m-t-0 m-b-0">Add user to groups</h4>
+                </Grid>
+                <Grid item xs={6} display={"flex"} justifyContent={"flex-end"}>
+                  <Box className="overview-buttons">
+                    <List>
+                      <ListItem>
+                        <Link to={`/app/setting/create-group`}>
+                          <Button
+                            className="primary-btn min-width-inherit"
+                            variant="contained"
+                          >
+                            Create Group
+                          </Button>
+                        </Link>
+                      </ListItem>
+                    </List>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+            <Box className="setting-common-searchbar p-b-20">
+              <Grid container className="h-100" alignItems={"center"}>
+                <Grid item xs={6}>
+                  <Box className="top-search">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Search groups here"
+                      value={searchedKey}
+                      onChange={this.handleSearchChange}
+                      autoFocus="autoFocus"
+                    />
+                    <button className="button">
+                      <SearchOutlinedIcon />
+                    </button>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+            <TableContainer component={Paper} className="access-control-table">
+              <Table
+                sx={{ minWidth: 800 }}
+                aria-label="custom pagination table"
+                className="table"
+              >
+                {this.renderTableHeader()}
+                {this.renderTableBody()}
+              </Table>
+            </TableContainer>
+            <Box className="overview-buttons d-flex justify-content-end  m-t-4">
+              <List>
+                <ListItem>
+                  <Button
+                   onClick={()=> {
+                    this.handleCancelUserControlModal()
+                    setActiveTab('group');
+                   }}
+                    className="danger-outline-btn min-width-inherit m-r-2"
+                    variant="outlined"
+                  >
+                    Cancel
+                  </Button>
 
-        <Box className="overview-buttons d-flex justify-content-end  m-t-4">
-          <List>
-            <ListItem>
-              <Button
-                onClick={this.handleCancelGroupControlModal}
-                className="danger-outline-btn min-width-inherit m-r-2"
-                variant="outlined"
-              >
-                Cancel
-              </Button>
-              <Link to={`/app/setting/create-group`}>
-                <Button
-                  className="primary-btn min-width-inherit"
-                  variant="contained"
-                >
-                  Add user to groups
-                </Button>
-              </Link>
-            </ListItem>
-          </List>
-        </Box>
+                  <LoadingButton
+                    className="primary-btn min-width-inherit"
+                    variant="contained"
+                    onClick={this.onClickAddUserGroups}
+                    disabled={userToGroupsCreationStatus}
+                    loading={userToGroupsCreationStatus}
+                  >
+                    Add user to groups
+                  </LoadingButton>
+                </ListItem>
+              </List>
+            </Box>
+          </>
+        )}
+        {showCancelUserControlModal ? (
+          <CancelGroupControlModal
+            showModal={showCancelUserControlModal}
+            handleCancelGroupControlModal={this.handleCancelUserControlModal}
+            redirectUrl={`/app/setting/user-profile/${this.getUserId()}`}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }
 }
-export default navigateRouter(AddUserGroup);
+
+const mapStateToProps = (state) => {
+  const { userPermissionData, userToGroupsCreation } = state.settings;
+  return {
+    userPermissionData,
+    userToGroupsCreation,
+  };
+};
+
+const mapDispatchToProps = {
+  getUserPermissionData,
+  addUserToGroups,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(AddUserGroup));

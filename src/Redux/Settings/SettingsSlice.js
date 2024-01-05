@@ -18,6 +18,7 @@ import {
   deleteUser,
   changePasswordOfAccount,
   resetPasswordOfUser,
+  addUserToGroups,
 } from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
@@ -112,6 +113,10 @@ export const settingsSlice = createSlice({
       data: "",
     },
     userResetPassword: {
+      status: null,
+      data: "",
+    },
+    userToGroupsCreation: {
       status: null,
       data: "",
     },
@@ -555,6 +560,32 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         userResetPassword: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [addUserToGroups.pending]: (state) => {
+      return {
+        ...state,
+        userToGroupsCreation: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [addUserToGroups.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        userToGroupsCreation: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [addUserToGroups.rejected]: (state) => {
+      return {
+        ...state,
+        userToGroupsCreation: {
           status: status.FAILURE,
         },
       };

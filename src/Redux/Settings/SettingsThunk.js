@@ -233,3 +233,19 @@ export const resetPasswordOfUser = createAsyncThunk(
     }
   }
 );
+
+export const addUserToGroups = createAsyncThunk(
+  "settings/addUserToGroups",
+  async (data) => {
+    try {
+      let url = config.ADD_USER_TO_GROUPS.replace(
+        "#user-name#",
+        data.userName
+      ).replace("#role-id#", data.roleIds);
+      const response = await postLoginService.post(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
