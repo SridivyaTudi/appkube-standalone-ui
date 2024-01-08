@@ -59,6 +59,10 @@
             font-size: 10px;
             line-height: 18px;
             color: #464f60;
+            &.disabled{
+              border: 1px solid #464f603a;
+              color: #464f603a;
+            } 
           }
 
           &.child-table-section {
@@ -281,6 +285,10 @@
             font-size: 10px;
             line-height: 18px;
             color: #464f60;
+            &.disabled{
+              border: 1px solid #464f603a;
+              color: #464f603a;
+            } 
           }
           &.child-table-section {
             padding: 0;
@@ -517,6 +525,10 @@
             font-size: 10px;
             line-height: 18px;
             color: #464f60;
+            &.disabled{
+              border: 1px solid #464f603a;
+              color: #464f603a;
+            }  
           }
 
           &.child-table-section {
@@ -746,6 +758,10 @@
             font-size: 10px;
             line-height: 18px;
             color: #464f60;
+            &.disabled{
+              border: 1px solid #464f603a;
+              color: #464f603a;
+            } 
           }
           &.child-table-section {
             padding: 0;
