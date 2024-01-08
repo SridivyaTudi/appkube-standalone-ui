@@ -22,13 +22,16 @@ class CancelGroupControlModal extends Component {
       >
         <ModalBody>
           <Box className="delete-policy-content text-center">
-            <h5 className="m-b-2 leave-heading">Leave Page ?</h5>
+            <h5 className="m-b-2 leave-heading">
+              {this.props.label ? this.props.label : "Leave Page"} ?
+            </h5>
             <Box className="cancel-icon">
               <img src={NoteIcon} alt="" />
             </Box>
             <p>
-              are you sure you want to leave the current page?. The change that
-              you made won’t be saved
+              are you sure you want to{" "}
+              {this.props.label ? this.props.label : "leave the current page"}{" "}
+              ?. The change that you made won’t be saved
             </p>
           </Box>
         </ModalBody>
@@ -44,16 +47,21 @@ class CancelGroupControlModal extends Component {
             <LoadingButton
               className="primary-btn min-width-inherit "
               variant="contained"
-              onClick={() => {
-                this.props.handleCancelGroupControlModal();
+              onClick={(event) => {
+                this.props.handleCancelGroupControlModal(
+                  event,
+                  this.props.isHandleCallBackOnContinueBtn
+                );
+
                 let { redirectUrl, previousTab } = this.props;
                 if (previousTab) {
                   setActiveTab(this.props.previousTab);
                 }
-
-                this.props.navigate(
-                  redirectUrl || `${APP_PREFIX_PATH}/setting`
-                );
+                if (!this.props.isHandleCallBackOnContinueBtn) {
+                  this.props.navigate(
+                    redirectUrl || `${APP_PREFIX_PATH}/setting`
+                  );
+                }
               }}
             >
               Continue

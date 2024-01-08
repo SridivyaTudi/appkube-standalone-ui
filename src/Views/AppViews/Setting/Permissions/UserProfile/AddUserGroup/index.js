@@ -25,6 +25,7 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import {
   getUserPermissionData,
   addUserToGroups,
+  getUserById,
 } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
@@ -86,12 +87,25 @@ class AddUserGroup extends Component {
       if (this.props.userToGroupsCreation.status === status.SUCCESS) {
         let data = this.props.userToGroupsCreation.data;
         if (data) {
-          setActiveTab("group");
-          this.props.navigate(`/app/setting/user-profile/${this.getUserId()}`);
+          this.props.hideComponent();
+          let id = this.getUserId();
+          if (id) {
+            this.props.getUserById(id);
+          }
           ToastMessage.success("Added user to group successfully.");
         } else {
           ToastMessage.error("User to group creation failed!");
         }
+      }
+    }
+
+    if (this.props.selectedGroup !== prevProps.selectedGroup) {
+      let selectedGroup = this.props.selectedGroup;
+
+      if (selectedGroup.length) {
+        this.setState({
+          selectedGroup: selectedGroup.map((group) => group.id),
+        });
       }
     }
   };
@@ -278,9 +292,13 @@ class AddUserGroup extends Component {
 
   setStateOrReturnData = (isSetState = 1) => {
     let userPermissionData = this.props.userPermissionData.data || [];
+
     if (userPermissionData) {
       if (isSetState) {
-        this.setState({ rows: userPermissionData.roleGroups });
+        this.setState({
+          rows: userPermissionData.roleGroups,
+          selectedGroup: this.props.selectedGroup.map((group) => group.id),
+        });
       } else {
         return userPermissionData.roleGroups;
       }
@@ -301,12 +319,14 @@ class AddUserGroup extends Component {
   };
 
   handleCancelUserControlModal = () => {
+    let { showCancelUserControlModal } = this.state;
+
     this.setState({
-      showCancelUserControlModal: !this.state.showCancelUserControlModal,
+      showCancelUserControlModal: !showCancelUserControlModal,
     });
   };
   render() {
-    let { searchedKey,showCancelUserControlModal } = this.state;
+    let { searchedKey, showCancelUserControlModal } = this.state;
     let { userPermissionData, userToGroupsCreation } = this.props;
     let userStatus = userPermissionData.status === status.IN_PROGRESS;
     let userToGroupsCreationStatus =
@@ -314,67 +334,9 @@ class AddUserGroup extends Component {
     return (
       <Box className="create-group-container">
         {userStatus ? (
-          <Box sx={{ height: 550 }}>{this.renderLoder()}</Box>
+          this.renderLoder()
         ) : (
           <>
-            {" "}
-            <Box className="list-heading">
-              <h3>Add user to groups</h3>
-              <Box className="breadcrumbs">
-                <ul>
-                  <li
-                    onClick={() =>
-                      this.handlePreviousPage(
-                        "permissions/user",
-                        "/app/setting"
-                      )
-                    }
-                  >
-                    <Link>Users</Link>
-                  </li>
-                  <li>
-                    <i className="fa-solid fa-chevron-right"></i>
-                  </li>
-                  <li
-                    onClick={() =>
-                      this.handlePreviousPage(
-                        "group",
-                        `/app/setting/user-profile/${this.getUserId()}`
-                      )
-                    }
-                  >
-                    <Link>User Profile</Link>
-                  </li>
-                  <li>
-                    <i className="fa-solid fa-chevron-right"></i>
-                  </li>
-                  <li className="active">Add user to groups</li>
-                </ul>
-              </Box>
-            </Box>
-            <Box className="group-name">
-              <Grid container alignItems={"center"}>
-                <Grid item xs={6}>
-                  <h4 className="m-t-0 m-b-0">Add user to groups</h4>
-                </Grid>
-                <Grid item xs={6} display={"flex"} justifyContent={"flex-end"}>
-                  <Box className="overview-buttons">
-                    <List>
-                      <ListItem>
-                        <Link to={`/app/setting/create-group`}>
-                          <Button
-                            className="primary-btn min-width-inherit"
-                            variant="contained"
-                          >
-                            Create Group
-                          </Button>
-                        </Link>
-                      </ListItem>
-                    </List>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Box>
             <Box className="setting-common-searchbar p-b-20">
               <Grid container className="h-100" alignItems={"center"}>
                 <Grid item xs={6}>
@@ -408,10 +370,9 @@ class AddUserGroup extends Component {
               <List>
                 <ListItem>
                   <Button
-                   onClick={()=> {
-                    this.handleCancelUserControlModal()
-                    setActiveTab('group');
-                   }}
+                    onClick={() => {
+                      this.handleCancelUserControlModal();
+                    }}
                     className="danger-outline-btn min-width-inherit m-r-2"
                     variant="outlined"
                   >
@@ -435,8 +396,18 @@ class AddUserGroup extends Component {
         {showCancelUserControlModal ? (
           <CancelGroupControlModal
             showModal={showCancelUserControlModal}
-            handleCancelGroupControlModal={this.handleCancelUserControlModal}
-            redirectUrl={`/app/setting/user-profile/${this.getUserId()}`}
+            handleCancelGroupControlModal={(event, isClickOnContinueBtn) => {
+              if (isClickOnContinueBtn) {
+                try {
+                  this.props.hideComponent();
+                } catch (e) {
+                  console.log(e);
+                }
+              }
+              this.handleCancelUserControlModal();
+            }}
+            label={"Cancel the action now"}
+            isHandleCallBackOnContinueBtn={1}
           />
         ) : (
           <></>
@@ -457,6 +428,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   getUserPermissionData,
   addUserToGroups,
+  getUserById,
 };
 
 export default connect(

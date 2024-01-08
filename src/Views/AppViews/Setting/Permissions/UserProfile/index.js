@@ -22,6 +22,8 @@ import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import ConfirmationPopup from "Components/ConfirmationPopup";
 import { ToastMessage } from "Toast/ToastMessage";
+import AddUserGroup from "./AddUserGroup";
+
 let HEADER = {
   0: "Assign Permission",
   1: "Assign Groups",
@@ -36,6 +38,7 @@ export class UserProfile extends Component {
       showChangePasswordModal: false,
       userDetails: {},
       selectedGroup: [],
+      showAddUserToGroupComponent: false,
     };
   }
   tabMapping = [
@@ -88,7 +91,7 @@ export class UserProfile extends Component {
     }
   };
   setActiveTab = (activeTab) => {
-    this.setState({ activeTab });
+    this.setState({ activeTab, selectedGroup: [] });
   };
 
   handleChangePasswordModal = () => {
@@ -154,6 +157,7 @@ export class UserProfile extends Component {
       userDetails,
       selectedGroup,
       showConfirmPopup,
+      showAddUserToGroupComponent,
     } = this.state;
     let userStatus = this.props.userDetailsById?.status === status.IN_PROGRESS;
     let userDeleteStatus = this.props.removeUser?.status === status.IN_PROGRESS;
@@ -251,95 +255,107 @@ export class UserProfile extends Component {
                 </List>
               </Box>
             </Box>
-            <Box className="services-panel-tabs ">
-              <Box className="tabs-head ">
-                <Grid container alignItems={"center"} rowSpacing={0}>
-                  <Grid item xl={3} lg={3} md={2} sm={4} xs={4}>
-                    <h4>{HEADER[activeTab]}</h4>
-                  </Grid>
-                  <Grid
-                    item
-                    xl={6}
-                    lg={6}
-                    md={6}
-                    sm={4}
-                    xs={4}
-                    className="text-center"
-                  >
-                    <TabsMenu
-                      tabs={this.tabMapping}
-                      setActiveTab={this.setActiveTab}
-                      activeTab={activeTab}
-                      breakWidth={992}
-                      key={v4()}
-                    />
-                  </Grid>
-                  <Grid item xl={3} lg={3} md={4} sm={4} xs={4}>
-                    <Box className="overview-buttons">
-                      <List>
-                        {activeTab === 1 ? (
-                          <Fragment>
-                            {selectedGroup.length ? (
+            {showAddUserToGroupComponent ? (
+              <AddUserGroup
+                hideComponent={() =>
+                  this.setState({ showAddUserToGroupComponent: false })
+                }
+                selectedGroup={userDetails.roles || []}
+              />
+            ) : (
+              <Box className="services-panel-tabs ">
+                <Box className="tabs-head ">
+                  <Grid container alignItems={"center"} rowSpacing={0}>
+                    <Grid item xl={3} lg={3} md={2} sm={4} xs={4}>
+                      <h4>{HEADER[activeTab]}</h4>
+                    </Grid>
+                    <Grid
+                      item
+                      xl={6}
+                      lg={6}
+                      md={6}
+                      sm={4}
+                      xs={4}
+                      className="text-center"
+                    >
+                      <TabsMenu
+                        tabs={this.tabMapping}
+                        setActiveTab={this.setActiveTab}
+                        activeTab={activeTab}
+                        breakWidth={992}
+                        key={v4()}
+                      />
+                    </Grid>
+                    <Grid item xl={3} lg={3} md={4} sm={4} xs={4}>
+                      <Box className="overview-buttons">
+                        <List>
+                          {activeTab === 1 ? (
+                            <Fragment>
+                              {selectedGroup.length ? (
+                                <ListItem>
+                                  <Button
+                                    className="danger-btn min-width-inherit"
+                                    variant="contained"
+                                  >
+                                    Remove
+                                  </Button>
+                                </ListItem>
+                              ) : (
+                                <></>
+                              )}
+
                               <ListItem>
-                                <Button
-                                  className="danger-btn min-width-inherit"
-                                  variant="contained"
-                                >
-                                  Remove
-                                </Button>
+                                <Link>
+                                  <Button
+                                    className="primary-btn min-width-inherit"
+                                    variant="contained"
+                                    onClick={() => {
+                                      this.setState({
+                                        showAddUserToGroupComponent: true,
+                                      });
+                                    }}
+                                  >
+                                    Add user to Groups
+                                  </Button>
+                                </Link>
                               </ListItem>
-                            ) : (
-                              <></>
-                            )}
-
+                            </Fragment>
+                          ) : activeTab === 2 ? (
                             <ListItem>
-                              <Link
-                                to={`/app/setting/user-profile/${this.getUserId()}/add-user-group`}
+                              <Button
+                                className="primary-btn min-width-inherit"
+                                variant="contained"
+                                onClick={this.handleChangePasswordModal}
                               >
-                                <Button
-                                  className="primary-btn min-width-inherit"
-                                  variant="contained"
-                                >
-                                  Add user to Groups
-                                </Button>
-                              </Link>
+                                Reset Password
+                              </Button>
                             </ListItem>
-                          </Fragment>
-                        ) : activeTab === 2 ? (
-                          <ListItem>
-                            <Button
-                              className="primary-btn min-width-inherit"
-                              variant="contained"
-                              onClick={this.handleChangePasswordModal}
-                            >
-                              Reset Password
-                            </Button>
-                          </ListItem>
-                        ) : (
-                          <></>
-                        )}
-                      </List>
-                    </Box>
+                          ) : (
+                            <></>
+                          )}
+                        </List>
+                      </Box>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Box>
+                </Box>
 
-              <Box className="permission-tabs-content">
-                {activeTab === 0 ? (
-                  <Permission />
-                ) : activeTab === 1 ? (
-                  <Group
-                    setGroup={(selectedGroup) => {
-                      this.setState({ selectedGroup });
-                    }}
-                  />
-                ) : activeTab === 2 ? (
-                  <SecurityCredentials />
-                ) : (
-                  <></>
-                )}
+                <Box className="permission-tabs-content">
+                  {activeTab === 0 ? (
+                    <Permission />
+                  ) : activeTab === 1 ? (
+                    <Group
+                      setGroup={(selectedGroup) => {
+                        this.setState({ selectedGroup });
+                      }}
+                    />
+                  ) : activeTab === 2 ? (
+                    <SecurityCredentials />
+                  ) : (
+                    <></>
+                  )}
+                </Box>
               </Box>
-            </Box>{" "}
+            )}
           </>
         )}
         {showChangePasswordModal ? (
