@@ -69,10 +69,9 @@ export class SecurityCredentials extends Component {
           <Box className="credentials-details">
             <label>Password Update</label>
             <span>
-              {" "}
               {userDetails.updatedAt
                 ? getFormattedDate(userDetails.updatedAt)
-                : "-"}{" "}
+                : "-"}
             </span>
             <label>Last Sign in</label>
             <p>

@@ -164,7 +164,7 @@ export class UserProfile extends Component {
         ) : (
           <>
             <Box className="list-heading">
-              <h3>{userDetails.username}</h3>
+              <h3>{userDetails.username || "-"}</h3>
               <Box className="breadcrumbs">
                 <ul>
                   <li
@@ -187,7 +187,7 @@ export class UserProfile extends Component {
             <Box className="setting-common-searchbar">
               <Grid container alignItems={"center"}>
                 <Grid item xs={6}>
-                  <h4>{userDetails.username}</h4>
+                  <h4>{userDetails.username || "-"}</h4>
                 </Grid>
                 <Grid item xs={6}>
                   <List>
@@ -218,7 +218,7 @@ export class UserProfile extends Component {
                     alt=""
                   />
                 </Box>
-                <label>{userDetails.username}</label>
+                <label>{userDetails.username || "-"}</label>
               </Box>
               <Box className="d-block">
                 <List>
@@ -228,7 +228,7 @@ export class UserProfile extends Component {
                       {" "}
                       {userDetails.createdAt
                         ? getFormattedDate(userDetails.createdAt)
-                        : ""}
+                        : "-"}
                     </strong>
                   </ListItem>
                   <ListItem>
@@ -237,7 +237,7 @@ export class UserProfile extends Component {
                       <Box className="green d-block">
                         {userDetails.lastLoginAt
                           ? getFormattedDate(userDetails.lastLoginAt)
-                          : ""}
+                          : "-"}
                       </Box>
                     </strong>
                   </ListItem>
