@@ -45,7 +45,7 @@ class ChangePasswordModal extends Component {
     ) {
       if (this.props.accountChangePassword.data) {
         this.props.handleChangePasswordModal();
-        ToastMessage.error("Changed password successfully!");
+        ToastMessage.success("Changed password successfully!");
       } else {
         ToastMessage.error("Change password action failed!");
       }
@@ -58,7 +58,7 @@ class ChangePasswordModal extends Component {
     ) {
       if (this.props.userResetPassword.data) {
         this.props.handleChangePasswordModal();
-        ToastMessage.error("Password reset successfully!");
+        ToastMessage.success("Password reset successfully!");
       } else {
         ToastMessage.error("Reset password action failed!");
       }
