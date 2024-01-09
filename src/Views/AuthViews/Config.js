@@ -9,8 +9,8 @@ const config = {
   SENT_EMAIL_TO_COMPANY_ADMIN: `${baseSecurityUrl}/users/create/new-org-user`,
 
   /* FORGET PASSWORD SERVICES */
-  FORGET_PWD: `${baseSecurityUrl}/users/forgot-password`,
-  RESET_PWD: `${baseSecurityUrl}/users/reset-password`,
+  FORGET_PWD: `${baseSecurityUrl}/public/forgot-password`,
+  RESET_PWD: `${baseSecurityUrl}/users/reset-password-by-otp`,
 
   /* SETTINGS PAGE SECURITY URL */
   GET_MFA_CODE: `${baseSecurityUrl}/users/mfaCode`,
