@@ -45,9 +45,10 @@ class ForgetPassword extends Component {
     ) {
       if (this.props.forgotPwd.data.code === 200) {
         this.setState({ toggleScreen: !this.state.toggleScreen });
-      }
-      if (this.props.forgotPwd.data.code === 417) {
+      }else if (this.props.forgotPwd.data.code === 417) {
         ToastMessage.error("User not found!");
+      } else if (this.props.forgotPwd.data.code === 418) {
+        ToastMessage.error("Mail not found!");
       }
     }
   };
