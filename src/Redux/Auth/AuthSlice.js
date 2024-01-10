@@ -19,6 +19,7 @@ const authSlice = createSlice({
     },
     forgotPwd: {
       status: null,
+      data: {},
     },
     resetPwd: {
       status: null,
@@ -104,6 +105,7 @@ const authSlice = createSlice({
         ...state,
         forgotPwd: {
           status: status.FAILURE,
+          data: payload,
         },
       };
     },

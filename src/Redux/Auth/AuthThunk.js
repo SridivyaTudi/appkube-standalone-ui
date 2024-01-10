@@ -26,11 +26,16 @@ export const login = createAsyncThunk("auth/signIn", async (data) => {
 export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
   async (params) => {
-    const response = await preLoginService.get(`${config.FORGET_PWD}`, {
-      headers: { "public-request": "true" },
-      params: { userName: params },
-    });
-    return response;
+    try {
+      const response = await preLoginService.get(`${config.FORGET_PWD}`, {
+        headers: { "public-request": "true" },
+        params: { userName: params },
+      });
+      return response;
+    } catch (error) {
+      console.log(error)
+      return error;
+    }
   }
 );
 
@@ -45,7 +50,7 @@ export const resetPassword = createAsyncThunk(
       return response;
     } catch (error) {
       console.log(error);
-      return error;
+      return error.response?.data;
     }
   }
 );

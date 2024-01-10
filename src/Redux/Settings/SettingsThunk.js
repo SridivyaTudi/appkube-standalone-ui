@@ -12,7 +12,7 @@ export const getMFACode = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.log(error);
+      return error.response?.data;
     }
   }
 );
