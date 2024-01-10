@@ -201,7 +201,7 @@ class AuthenticationModal extends Component {
               <ModalBody>
                 <Box className="form-group m-b-15">
                   <label htmlFor="userName" className="form-label">
-                    Email
+                    Username
                   </label>
                   <input
                     type="text"
@@ -223,7 +223,7 @@ class AuthenticationModal extends Component {
                 </Box>
                 <Box className="form-group m-b-15">
                   <label htmlFor="password" className="form-label">
-                    New Password
+                    Password
                   </label>
                   <input
                     type={hidePassword ? "password" : "text"}
