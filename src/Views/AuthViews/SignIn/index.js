@@ -20,6 +20,7 @@ import { login } from "Redux/Auth/AuthThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { ToastMessage } from "Toast/ToastMessage";
+import AuthenticationImg from "assets/img/login/authentication-img.png";
 
 class Signin extends Component {
   constructor(props) {
@@ -266,6 +267,52 @@ class Signin extends Component {
                       Doesn't have on account?
                       <Link to={`${AUTH_PREFIX_PATH}/signup`}>Sign up Now</Link>
                     </p>
+                  </Box>
+                  <Box className="authentication-section">
+                    <Box className="authentication-image text-center ">
+                      <img src={AuthenticationImg} alt="AuthenticationImg" />
+                    </Box>
+                    <Box sx={{ width: "100%" }}>
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                      >
+                        <Grid item xs={12}>
+                          <Box className="input-group">
+                            <label className="d-block" htmlFor="password">
+                              Enter Your 2FA Authentication Code
+                            </label>
+                            <input
+                              type={showPassword ? "text" : "password"}
+                              className="form-control"
+                              name="password"
+                              placeholder="6-digit verification code"
+                              autoComplete="on"
+                              id="password"
+                            />
+                          </Box>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <LoadingButton
+                            className="primary-btn width-100"
+                            variant="contained"
+                            type="submit"
+                            // loadingPosition={"start"}
+                          >
+                            Sign In
+                          </LoadingButton>
+                        </Grid>
+                        <Grid item xs={12} >
+                          <Box className="next-step ">
+                            <p className="m-l-0 d-block text-center">
+                              Doesn't have on account?
+                              <Link to={`#`}>Sign up Now</Link>
+                            </p>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
                   </Box>
                 </form>
               </Box>
