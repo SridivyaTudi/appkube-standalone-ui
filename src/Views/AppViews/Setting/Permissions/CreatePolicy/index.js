@@ -289,8 +289,7 @@ export class CreatePolicy extends Component {
   getStatusHtml = (status) => {
     return (
       <Box className="status-btn">
-        <Box className="d-flex status green">
-          <HtmlTooltip
+        <HtmlTooltip
             className="table-tooltip-dark d-flex"
             title={
               <React.Fragment>
@@ -300,7 +299,6 @@ export class CreatePolicy extends Component {
           >
             <span>{status}</span>
           </HtmlTooltip>
-        </Box>
       </Box>
     );
   };
