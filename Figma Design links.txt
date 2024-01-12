@@ -38,7 +38,7 @@ ELB/NLB explorer:
 https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?type=design&amp%3Bnode-id=12252-62320&amp%3Bt=pwdkxRU4L3feUy5a-1&amp%3Bscaling=min-zoom&amp%3Bpage-id=12227%3A62325&amp%3Bstarting-point-node-id=12252%3A62320&amp%3Bmode=design&utm_source=link-unfurl&utm_medium=msft&utm_content=mSwpmnkmrqHXX6AkzXzbtC&utm_product_type=design&node-id=10061-64679&starting-point-node-id=10061%3A64679
 
 EC2 explorer:
-https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?type=design&amp%3Bnode-id=12252-62320&amp%3Bt=pwdkxRU4L3feUy5a-1&amp%3Bscaling=min-zoom&amp%3Bpage-id=12227%3A62325&amp%3Bstarting-point-node-id=12252%3A62320&amp%3Bmode=design&utm_source=link-unfurl&utm_medium=msft&utm_content=mSwpmnkmrqHXX6AkzXzbtC&utm_product_type=design&node-id=10061-64679&starting-point-node-id=10061%3A64679
+https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?type=design&node-id=28831-20374&t=Uee7nRyPOKUmYw3X-1&scaling=scale-down-width&page-id=28831%3A14248&starting-point-node-id=28831%3A20374
 
 s3 explorer:
 https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?type=design&node-id=8288-34673&t=dqlwHSI7g2LowKt4-1&scaling=scale-down-width&page-id=7794%3A35100&starting-point-node-id=8288%3A34673
