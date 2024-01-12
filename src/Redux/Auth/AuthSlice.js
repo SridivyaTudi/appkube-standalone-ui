@@ -5,6 +5,7 @@ import {
   forgotPassword,
   resetPassword,
   sentEmailToCompanyAdmin,
+  authMFACode,
 } from "Redux/Auth/AuthThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -27,6 +28,10 @@ const authSlice = createSlice({
     sentEmailToAdmin: {
       status: null,
       data: {},
+    },
+    mfaAuth: {
+      status: null,
+      data: "",
     },
   },
   reducers: {},
@@ -160,6 +165,32 @@ const authSlice = createSlice({
         sentEmailToAdmin: {
           status: status.FAILURE,
           data: payload,
+        },
+      };
+    },
+
+    [authMFACode.pending]: (state) => {
+      return {
+        ...state,
+        mfaAuth: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [authMFACode.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        mfaAuth: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [authMFACode.rejected]: (state) => {
+      return {
+        ...state,
+        mfaAuth: {
+          status: status.FAILURE,
         },
       };
     },

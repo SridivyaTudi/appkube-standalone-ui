@@ -33,7 +33,7 @@ export const forgotPassword = createAsyncThunk(
       });
       return response;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return error;
     }
   }
@@ -63,6 +63,19 @@ export const sentEmailToCompanyAdmin = createAsyncThunk(
         config.SENT_EMAIL_TO_COMPANY_ADMIN,
         formData
       );
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+);
+
+export const authMFACode = createAsyncThunk(
+  "auth/authMFACode",
+  async (params) => {
+    try {
+      const response = await preLoginService.post(config.AUTH_MFA, params);
       return response;
     } catch (error) {
       console.log(error);
