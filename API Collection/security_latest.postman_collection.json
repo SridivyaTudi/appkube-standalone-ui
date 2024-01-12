@@ -19,11 +19,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseSecurityUrl}}/users/listAll",
+							"raw": "https://api.synectiks.net/security/users/listAll",
+							"protocol": "https",
 							"host": [
-								"{{baseSecurityUrl}}"
+								"api",
+								"synectiks",
+								"net"
 							],
 							"path": [
+								"security",
 								"users",
 								"listAll"
 							]
@@ -220,18 +224,21 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseSecurityUrl}}/users/get-user-hierarchy?userName=admin",
+							"raw": "http://localhost:8094/security/users/get-user-hierarchy?userName=jasmin",
+							"protocol": "http",
 							"host": [
-								"{{baseSecurityUrl}}"
+								"localhost"
 							],
+							"port": "8094",
 							"path": [
+								"security",
 								"users",
 								"get-user-hierarchy"
 							],
 							"query": [
 								{
 									"key": "userName",
-									"value": "admin"
+									"value": "jasmin"
 								}
 							]
 						}
@@ -800,15 +807,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://34.199.12.114:8094/security/organization/getAllOrganizations",
-							"protocol": "http",
+							"raw": "https://api.synectiks.net/security/organization/getAllOrganizations",
+							"protocol": "https",
 							"host": [
-								"34",
-								"199",
-								"12",
-								"114"
+								"api",
+								"synectiks",
+								"net"
 							],
-							"port": "8094",
 							"path": [
 								"security",
 								"organization",
@@ -824,20 +829,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://34.199.12.114:8094/security/organization/id/78",
-							"protocol": "http",
+							"raw": "https://api.synectiks.net/security/organization/id/1058",
+							"protocol": "https",
 							"host": [
-								"34",
-								"199",
-								"12",
-								"114"
+								"api",
+								"synectiks",
+								"net"
 							],
-							"port": "8094",
 							"path": [
 								"security",
 								"organization",
 								"id",
-								"78"
+								"1058"
 							]
 						}
 					},
@@ -1201,11 +1204,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseSecurityUrl}}/roles/listAll",
+							"raw": "https://api.synectiks.net/security/roles/listAll",
+							"protocol": "https",
 							"host": [
-								"{{baseSecurityUrl}}"
+								"api",
+								"synectiks",
+								"net"
 							],
 							"path": [
+								"security",
 								"roles",
 								"listAll"
 							]
@@ -1248,7 +1255,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"TT\",\r\n    \"description\": \"TT\",\r\n    \"grp\":false,\r\n    \"createdBy\":\"jasmin\",\r\n    \"policies\":[\r\n    ]\r\n}",
+							"raw": "{\r\n    \"name\": \"new group\",\r\n    \"description\": \"description\",\r\n    \"grp\": true,\r\n    \"createdBy\": \"manoj\",\r\n    \"roles\": [\r\n        {\r\n            \"id\": 2064\r\n        }\r\n    ],\r\n    \"users\": [\r\n        {\r\n            \"id\": 2063\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1416,6 +1423,34 @@
 							"path": [
 								"roles",
 								"116"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-role-group-details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseSecurityUrl}}/roles/get-role-group-details?userName=jasmin&roleId=5870",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"roles",
+								"get-role-group-details"
+							],
+							"query": [
+								{
+									"key": "userName",
+									"value": "jasmin"
+								},
+								{
+									"key": "roleId",
+									"value": "5870"
+								}
 							]
 						}
 					},
