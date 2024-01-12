@@ -1,21 +1,24 @@
 import React, { Component } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
-
-import { Box, Grid, Button, Card, List, ListItem } from "@mui/material";
+import { Box, Grid, Button, List, ListItem } from "@mui/material";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import PasswordStrength from "Components/PasswordStrength";
-import ChangePasswordImg from "assets/img/setting/change-password.png";
 import TwoFactorImg from "assets/img/setting/two-factor.svg";
-import ChangePasswordModal from "./Components/ChangePasswordModal";
 import AuthenticationModal from "./Components/AuthenticationModal";
 import { styled } from "@mui/material/styles";
 import status from "Redux/Constants/CommonDS";
-
+import { getCurrentUser } from "Utils";
+import { changePasswordOfAccount } from "Redux/Settings/SettingsThunk";
+import { connect } from "react-redux";
+import { ToastMessage } from "Toast/ToastMessage";
 export class Account extends Component {
+  user = { username: "", email: "", profileImage: "" };
   constructor(props) {
     super(props);
     this.state = {
       currentPasswordHidden: true,
+      newPasswordHidden: true,
+      confirmPasswordHidden: true,
       formData: {
         currentPassword: "",
         newPassword: "",
@@ -25,8 +28,33 @@ export class Account extends Component {
       showChangePasswordModal: false,
       showAuthenticationModal: false,
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
+  componentDidUpdate = (prevProps) => {
+    if (
+      prevProps.accountChangePassword.status !==
+        this.props.accountChangePassword.status &&
+      this.props.accountChangePassword.status === status.SUCCESS
+    ) {
+      if (this.props.accountChangePassword.data) {
+        this.setState({
+          formData: {
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+          },
+          isSubmit: false,
+        });
+        ToastMessage.success("Changed password successfully!");
+      } else {
+        ToastMessage.error("Change password action failed!");
+      }
+    }
+  };
   handleChangePasswordModal = () => {
     this.setState({
       showChangePasswordModal: !this.state.showChangePasswordModal,
@@ -85,6 +113,54 @@ export class Account extends Component {
     return { isValid, errors };
   };
 
+  /** Handles input change
+   * @param {event} e - Input event on user input
+   */
+  handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const { formData } = this.state;
+    formData[name] = value;
+    this.setState({ formData });
+  };
+
+  /** Generates random password on user click */
+  generateRandomPassword = () => {
+    const { formData } = this.state;
+    const chars =
+      "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const passwordLength = 12;
+    let pwd = "";
+    for (var i = 0; i <= passwordLength; i++) {
+      var randomNumber = Math.floor(Math.random() * chars.length);
+      pwd += chars.substring(randomNumber, randomNumber + 1);
+    }
+    formData["newPassword"] = pwd;
+    this.setState({ formData });
+  };
+
+  handleSubmitPassword = () => {
+    this.setState({ isSubmit: true }, () => {
+      let { isValid } = this.validate(this.state.isSubmit);
+      let {
+        formData: { currentPassword, newPassword },
+      } = this.state;
+
+      if (isValid) {
+        this.props.changePasswordOfAccount({
+          userName: this.user.username,
+          oldPassword: currentPassword,
+          newPassword,
+        });
+      }
+    });
+  };
+
+  /**
+   * @param {string} field - Field name on which user clicked toggle switch
+   */
+  togglePasswordView = (field) => {
+    this.setState({ [field]: !this.state[field] });
+  };
   render() {
     const HtmlTooltip = styled(({ className, ...props }) => (
       <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -102,10 +178,11 @@ export class Account extends Component {
     }));
     const {
       currentPasswordHidden,
-      newPassword,
-      confirmPassword,
+      confirmPasswordHidden,
+      newPasswordHidden,
       formData,
       isSubmit,
+      showAuthenticationModal,
     } = this.state;
     let { userResetPassword, accountChangePassword, isCurrentPasswordHide } =
       this.props;
@@ -131,56 +208,49 @@ export class Account extends Component {
                       symbol. Minimum length is 12 characters.
                     </p>
                     <form>
-                      {this.props.isCurrentPasswordHide ? (
-                        <></>
-                      ) : (
-                        <Box className="form-group">
-                          <label
-                            htmlFor="CurrentPassword"
-                            className="form-label"
-                          >
-                            Current Password
-                          </label>
-                          <input
-                            type={currentPasswordHidden ? "password" : "text"}
-                            className="form-control"
-                            id="currentPassword"
-                            name="currentPassword"
-                            value={formData.currentPassword}
-                            onChange={this.handleInputChange}
-                            autoComplete="off"
-                          />
-                          <span
-                            className="input-group-text"
-                            onClick={() =>
-                              this.togglePasswordView("currentPasswordHidden")
+                      <Box className="form-group">
+                        <label htmlFor="CurrentPassword" className="form-label">
+                          Current Password
+                        </label>
+                        <input
+                          type={currentPasswordHidden ? "password" : "text"}
+                          className="form-control"
+                          id="currentPassword"
+                          name="currentPassword"
+                          value={formData.currentPassword}
+                          onChange={this.handleInputChange}
+                          autoComplete="off"
+                        />
+                        <span
+                          className="input-group-text"
+                          onClick={() =>
+                            this.togglePasswordView("currentPasswordHidden")
+                          }
+                        >
+                          <i
+                            className={
+                              currentPasswordHidden
+                                ? "fa-regular fa-eye-slash"
+                                : "fa-sharp fa-regular fa-eye"
                             }
-                          >
-                            <i
-                              className={
-                                currentPasswordHidden
-                                  ? "fa-regular fa-eye-slash"
-                                  : "fa-sharp fa-regular fa-eye"
-                              }
-                            ></i>
-                          </span>
-                          <span
-                            className="red"
-                            style={{ fontSize: "12px", marginTop: "5px" }}
-                          >
-                            {isSubmit && errors && errors.currentPassword
-                              ? errors.currentPassword
-                              : ""}
-                          </span>
-                        </Box>
-                      )}
+                          ></i>
+                        </span>
+                        <span
+                          className="red"
+                          style={{ fontSize: "12px", marginTop: "5px" }}
+                        >
+                          {isSubmit && errors && errors.currentPassword
+                            ? errors.currentPassword
+                            : ""}
+                        </span>
+                      </Box>
 
                       <Box className="form-group">
                         <label htmlFor="NewPassword" className="form-label">
                           New Password
                         </label>
                         <input
-                          type={newPassword ? "password" : "text"}
+                          type={newPasswordHidden ? "password" : "text"}
                           className="form-control"
                           id="newPassword"
                           name="newPassword"
@@ -209,11 +279,13 @@ export class Account extends Component {
                         </span>
                         <span
                           className="input-group-text"
-                          onClick={() => this.togglePasswordView("newPassword")}
+                          onClick={() =>
+                            this.togglePasswordView("newPasswordHidden")
+                          }
                         >
                           <i
                             className={
-                              newPassword
+                              newPasswordHidden
                                 ? "fa-regular fa-eye-slash"
                                 : "fa-sharp fa-regular fa-eye"
                             }
@@ -236,7 +308,7 @@ export class Account extends Component {
                           Confirm Password
                         </label>
                         <input
-                          type={confirmPassword ? "password" : "text"}
+                          type={confirmPasswordHidden ? "password" : "text"}
                           className="form-control"
                           id="confirmPassword"
                           name="confirmPassword"
@@ -247,12 +319,12 @@ export class Account extends Component {
                         <span
                           className="input-group-text"
                           onClick={() =>
-                            this.togglePasswordView("confirmPassword")
+                            this.togglePasswordView("confirmPasswordHidden")
                           }
                         >
                           <i
                             className={
-                              confirmPassword
+                              confirmPasswordHidden
                                 ? "fa-regular fa-eye-slash"
                                 : "fa-sharp fa-regular fa-eye"
                             }
@@ -301,11 +373,17 @@ export class Account extends Component {
                       <img src={TwoFactorImg} alt="Two-Factor Authentication" />
                     </Box>
                     <Box className="card-title">Secure your account</Box>
-                  <p className="card-text">
-                  Enable two factor authentication to add an extra layer of security
-                  </p>
-                  <Box className="card-btn">
-                    <Button className="primary-btn width-25">T2F Auth</Button>
+                    <p className="card-text">
+                      Enable two factor authentication to add an extra layer of
+                      security
+                    </p>
+                    <Box className="card-btn">
+                      <Button
+                        className="primary-btn width-25"
+                        onClick={this.handleAuthenticationModal}
+                      >
+                        T2F Auth
+                      </Button>
                     </Box>
                   </Box>
                 </Box>
@@ -313,100 +391,28 @@ export class Account extends Component {
             </Grid>
           </Box>
         </Box>
+        {showAuthenticationModal ? (
+          <AuthenticationModal
+            showModal={showAuthenticationModal}
+            handleAuthenticationModal={this.handleAuthenticationModal}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
-      // <Box className="account-container">
-      //   <Box className="head">
-      //     <h4>Keep your Account Secure</h4>
-      //     <p>
-      //       Use our pre-existing template or you can create your own code or
-      //       migrate your project to get started
-      //     </p>
-      //   </Box>
-      //   <Box className="cards">
-      //     <Box sx={{ width: "100%" }}>
-      //       <Grid
-      //         container
-      //         rowSpacing={1}
-      //         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-      //         alignItems={"center"}
-      //         justifyContent={"flex-start"}
-      //       >
-      //         <Grid item xs={6}>
-      //           <Box
-      //             className={`card ${service === "read_mode" ? "active" : ""}`}
-      //             onClick={() => {
-      //               this.setState({ service: "read_mode" });
-      //             }}
-      //           >
-      //             <Box className="card-image">
-      //               <img src={ChangePasswordImg} alt="Change Password" />
-      //             </Box>
-      //             <h5 className="card-title">Change Password</h5>
-      //             <p className="card-text">
-      //               After a successful account password update, you will need to
-      //               log in with the new account password.
-      //             </p>
-      //           </Box>
-      //         </Grid>
-      //         <Grid item xs={6}>
-      //           <Box
-      //             className={`card ${
-      //               service === "automation_mode" ? "active" : ""
-      //             }`}
-      //             onClick={() => {
-      //               this.setState({ service: "automation_mode" });
-      //             }}
-      //           >
-      //             <Box className="card-image">
-      //               <img src={TwoFactorImg} alt="Two-Factor Authentication" />
-      //             </Box>
-      //             <Box className="card-title">Two-Factor Authentication</Box>
-      //             <p className="card-text">
-      //               Two-factor authentication (2FA) adds an extra layer of
-      //               security to your account. In addition to username and
-      //               password
-      //             </p>
-      //           </Box>
-      //         </Grid>
-      //       </Grid>
-      //     </Box>
-      //   </Box>
-      //   <Box className="d-block bottom-button">
-      //     {service === "read_mode" && (
-      //       <Button
-      //         className="primary-btn width-25"
-      //         onClick={this.handleChangePasswordModal}
-      //       >
-      //         Change Password
-      //       </Button>
-      //     )}
-      //     {service === "automation_mode" && (
-      //       <Button
-      //         className="primary-btn width-25"
-      //         onClick={this.handleAuthenticationModal}
-      //       >
-      //         T2F Auth
-      //       </Button>
-      //     )}
-      //   </Box>
-      //   {showChangePasswordModal ? (
-      //     <ChangePasswordModal
-      //       showModal={showChangePasswordModal}
-      //       handleChangePasswordModal={this.handleChangePasswordModal}
-      //     />
-      //   ) : (
-      //     <></>
-      //   )}
-      //   {showAuthenticationModal ? (
-      //     <AuthenticationModal
-      //       showModal={showAuthenticationModal}
-      //       handleAuthenticationModal={this.handleAuthenticationModal}
-      //     />
-      //   ) : (
-      //     <></>
-      //   )}
-      // </Box>;
     );
   }
 }
-export default Account;
+
+const mapStateToProps = (state) => {
+  const { accountChangePassword } = state.settings;
+  return {
+    accountChangePassword,
+  };
+};
+
+const mapDispatchToProps = {
+  changePasswordOfAccount,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Account);

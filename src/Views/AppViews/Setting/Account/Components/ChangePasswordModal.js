@@ -5,10 +5,7 @@ import React, { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import {
-  changePasswordOfAccount,
-  resetPasswordOfUser,
-} from "Redux/Settings/SettingsThunk";
+import { resetPasswordOfUser } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { getCurrentUser } from "Utils";
@@ -38,19 +35,6 @@ class ChangePasswordModal extends Component {
   }
 
   componentDidUpdate = (prevProps) => {
-    if (
-      prevProps.accountChangePassword.status !==
-        this.props.accountChangePassword.status &&
-      this.props.accountChangePassword.status === status.SUCCESS
-    ) {
-      if (this.props.accountChangePassword.data) {
-        this.props.handleChangePasswordModal();
-        ToastMessage.success("Changed password successfully!");
-      } else {
-        ToastMessage.error("Change password action failed!");
-      }
-    }
-
     if (
       prevProps.userResetPassword.status !==
         this.props.userResetPassword.status &&
@@ -156,12 +140,6 @@ class ChangePasswordModal extends Component {
           this.props.resetPasswordOfUser({
             userName: this.user.username,
             ownerId: this.user.id,
-            newPassword,
-          });
-        } else {
-          this.props.changePasswordOfAccount({
-            userName: this.user.username,
-            oldPassword: currentPassword,
             newPassword,
           });
         }
@@ -365,15 +343,13 @@ class ChangePasswordModal extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { accountChangePassword, userResetPassword } = state.settings;
+  const { userResetPassword } = state.settings;
   return {
-    accountChangePassword,
     userResetPassword,
   };
 };
 
 const mapDispatchToProps = {
-  changePasswordOfAccount,
   resetPasswordOfUser,
 };
 
