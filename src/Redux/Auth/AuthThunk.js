@@ -4,7 +4,7 @@ import { preLoginService } from "Services";
 
 export const signUp = createAsyncThunk("auth/signUp", async (params) => {
   try {
-    const response = await preLoginService.post(`${config.SIGN_UP}?${params}`);
+    const response = await preLoginService.post(config.SIGN_UP, params);
     return response;
   } catch (error) {
     console.log(error);

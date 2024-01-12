@@ -173,6 +173,13 @@ class SignUp extends Component {
       } else {
         errors.companyName = "";
       }
+
+      if (!step2.file) {
+        errors.companyProfile = "Company profile is required!";
+        isValid = false;
+      } else {
+        errors.companyProfile = "";
+      }
     }
 
     return { isValid, errors };
@@ -220,15 +227,18 @@ class SignUp extends Component {
     const { isValid } = this.validateForm(activeStep, submittedSteps);
     if (isValid) {
       let { ADMIN, CMDB } = this.apiConstants;
-      let params = `firstName=${step1.firstName}&lastName=${
-        step1.lastName
-      }&username=${step1.userName}&organization=${step2.companyName}&email=${
-        step1.email
-      }&type=${ADMIN}&targetService=${CMDB}&password=${encodeURIComponent(
-        step1.password
-      )}&errorOnOrgFound=true`;
-
-      this.props.signUp(params);
+      let form = new FormData();
+      form.append("firstName", step1.firstName);
+      form.append("lastName", step1.lastName);
+      form.append("username", step1.userName);
+      form.append("organization", step2.companyName);
+      form.append("email", step1.email);
+      form.append("type", ADMIN);
+      form.append("targetService", CMDB);
+      form.append("password", step1.password);
+      form.append("errorOnOrgFound", true);
+      form.append("file", step2.file);
+      this.props.signUp(form);
     }
   };
 
@@ -579,6 +589,14 @@ class SignUp extends Component {
                             <span className="width-25 blue-button">Browse</span>
                           </label>
                         </Box>
+                        {submittedSteps[this.steps.STEP2] &&
+                        errors.companyProfile ? (
+                          <p className="m-b-0 " style={{ color: "red" }}>
+                            {errors.companyProfile}
+                          </p>
+                        ) : (
+                          <></>
+                        )}
                       </Box>
                     </Box>
                     <Box sx={{ width: "100%" }}>
