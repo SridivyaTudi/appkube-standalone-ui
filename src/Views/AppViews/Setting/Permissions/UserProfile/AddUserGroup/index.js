@@ -310,7 +310,7 @@ class AddUserGroup extends Component {
 
     if (selectedGroup?.length) {
       this.props.addUserToGroups({
-        userName: this.user.username,
+        userName: this.props.username,
         roleIds: selectedGroup.toString(),
       });
     } else {
