@@ -79,17 +79,10 @@ export class Setting extends Component {
     return (
       <Box className="page-header">
         <h3>{this.user.username}</h3>
-        <Button
-          className="primary-outline-btn min-width-inherit"
-          variant="outlined"
-        >
-          <img
-            src={AccountIcon}
-            alt=""
-            style={{ maxWidth: "10px", marginRight: "5px" }}
-          />
-          {this.user.type}
-        </Button>
+        <div className="header-title" variant="outlined">
+          <img src={AccountIcon} alt="" style={{ marginRight: "5px" }} />
+          <span className="name">{this.user.type}</span>
+        </div>
       </Box>
     );
   };

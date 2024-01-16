@@ -18,6 +18,21 @@
       margin-bottom: 0px;
       margin-right: 30px;
     }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      padding: 8px 18px;
+      border: 1px solid #6418C3;
+      border-radius: 4px;
+
+      .name {
+        font-weight: 600;
+        color: #6418C3;
+        line-height: 18px;
+        font-size: 14px;
+      }
+    }
   }
 
   .tabs {
