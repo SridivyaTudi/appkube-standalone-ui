@@ -261,6 +261,7 @@ export class UserProfile extends Component {
                   this.setState({ showAddUserToGroupComponent: false })
                 }
                 selectedGroup={userDetails.roles || []}
+                username={userDetails.username}
               />
             ) : (
               <Box className="services-panel-tabs ">
