@@ -546,8 +546,7 @@ class SignUp extends Component {
                                 });
                               }}
                             ></i>
-                          </Box>
-                          <span
+                               <span
                             className="input-group-text rotate"
                             onClick={this.generatePassword}
                           >
@@ -566,6 +565,8 @@ class SignUp extends Component {
                               <i className="fa-solid fa-arrows-rotate"></i>
                             </HtmlTooltip>
                           </span>
+                          </Box>
+                       
                         </Grid>
                         <PasswordStrength
                           password={step1.password}

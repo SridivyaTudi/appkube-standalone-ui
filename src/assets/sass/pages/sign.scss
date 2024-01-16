@@ -246,11 +246,24 @@
             outline: none;
           }
         }
+
         p {
           font-size: 12px;
           line-height: 16px;
           margin-top: 3px;
           color: red;
+        }
+
+        .input-group-text {
+          position: absolute;
+          right: 32px;
+          top: 0;
+
+          &.rotate {
+            i {
+              color: #8676ff;
+            }
+          }
         }
       }
 
@@ -273,6 +286,7 @@
             font-family: "Poppins", sans-serif;
           }
         }
+
         p {
           font-size: 12px;
           line-height: 20px;
@@ -325,12 +339,15 @@
           }
         }
       }
-      .authentication-section{
+
+      .authentication-section {
         display: block;
-        .authentication-image{
+
+        .authentication-image {
           margin: 30px 0;
         }
-        .next-step{
+
+        .next-step {
           display: block;
           text-align: center;
         }
