@@ -30,12 +30,17 @@ export class Account extends Component {
       showChangePasswordModal: false,
       showAuthenticationModal: false,
       showDisabledAuthenticationModal: false,
+      isMfaEnable: "",
     };
     let userDetails = getCurrentUser()?.info?.user;
     if (userDetails) {
       this.user = userDetails;
     }
   }
+
+  componentDidMount = () => {
+    this.setState({ isMfaEnable: this.user.isMfaEnable });
+  };
 
   componentDidUpdate = (prevProps) => {
     if (
@@ -198,6 +203,7 @@ export class Account extends Component {
       isSubmit,
       showAuthenticationModal,
       showDisabledAuthenticationModal,
+      isMfaEnable,
     } = this.state;
     let { userResetPassword, accountChangePassword, isCurrentPasswordHide } =
       this.props;
@@ -395,20 +401,24 @@ export class Account extends Component {
                     <Box className="card-btn">
                       <Button
                         className="primary-btn width-25"
-                        onClick={this.handleAuthenticationModal}
+                        // disabled={this.user.isMfaEnable === "YES"}
+                        onClick={() =>
+                          isMfaEnable === "YES"
+                            ? this.handleDisabledAuthenticationModal()
+                            : this.handleAuthenticationModal()
+                        }
                       >
-                        {this.user.isMfaEnable === "YES" ? "Disable " : ""} T2F
-                        Auth
+                        {isMfaEnable === "YES" ? "Disable " : ""} 2FA Auth
                       </Button>
                     </Box>
-                    <Box className="card-btn">
+                    {/* <Box className="card-btn">
                       <Button
                         className="primary-btn width-25"
                         onClick={this.handleDisabledAuthenticationModal}
                       >
-                        T2F Auth
+                        2FA Auth
                       </Button>
-                    </Box>
+                    </Box> */}
                   </Box>
                 </Box>
               </Grid>
@@ -419,6 +429,11 @@ export class Account extends Component {
           <AuthenticationModal
             showModal={showAuthenticationModal}
             handleAuthenticationModal={this.handleAuthenticationModal}
+            setMFAEnable={(isMfaEnable) => {
+              if (isMfaEnable) {
+                this.setState({ isMfaEnable });
+              }
+            }}
           />
         ) : (
           <></>
@@ -426,7 +441,12 @@ export class Account extends Component {
         {showDisabledAuthenticationModal ? (
           <DisabledAuthenticationModal
             showModal={showDisabledAuthenticationModal}
-            handleAuthenticationModal={this.handleDisabledAuthenticationModal}
+            handleDisabledAuthenticationModal={(e, isMfaEnable) => {
+              if (isMfaEnable) {
+                this.setState({ isMfaEnable });
+              }
+              this.handleDisabledAuthenticationModal(e);
+            }}
           />
         ) : (
           <></>
