@@ -48,6 +48,9 @@ export class Account extends Component {
             confirmPassword: "",
           },
           isSubmit: false,
+          currentPasswordHidden: true,
+          newPasswordHidden: true,
+          confirmPasswordHidden: true,
         });
         ToastMessage.success("Changed password successfully!");
       } else {

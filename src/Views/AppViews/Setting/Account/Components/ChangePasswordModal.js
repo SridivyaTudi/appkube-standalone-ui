@@ -132,7 +132,7 @@ class ChangePasswordModal extends Component {
     this.setState({ isSubmit: true }, () => {
       let { isValid } = this.validate(this.state.isSubmit);
       let {
-        formData: { currentPassword, newPassword },
+        formData: { newPassword },
       } = this.state;
 
       if (isValid) {

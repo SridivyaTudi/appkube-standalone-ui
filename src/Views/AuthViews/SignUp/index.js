@@ -20,7 +20,24 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import RequestPopup from "./Components/RequestPopup";
 import PasswordStrength from "Components/PasswordStrength";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+import { generateRandomPassword } from "Utils";
 
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#16161E",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#16161E",
+    color: "#FFFFFF",
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #16161E",
+  },
+}));
 class SignUp extends Component {
   steps = {
     STEP1: 0,
@@ -242,6 +259,12 @@ class SignUp extends Component {
     }
   };
 
+  generatePassword = () => {
+    const { step1 } = this.state;
+    let pwd = generateRandomPassword();
+    step1["password"] = pwd;
+    this.setState({ step1 });
+  };
   render() {
     const {
       activeStep,
@@ -504,12 +527,14 @@ class SignUp extends Component {
                               value={step1.password}
                               onChange={this.handleStep1Changes}
                             />
+
                             {submittedSteps[this.steps.STEP1] &&
                             errors.password ? (
                               <p className="m-b-0">{errors.password}</p>
                             ) : (
                               <></>
                             )}
+
                             <i
                               className={`fa-sharp fa-regular fa-eye${
                                 passwordView ? "-slash" : ""
@@ -522,6 +547,25 @@ class SignUp extends Component {
                               }}
                             ></i>
                           </Box>
+                          <span
+                            className="input-group-text rotate"
+                            onClick={this.generatePassword}
+                          >
+                            <HtmlTooltip
+                              className="popup-tooltip"
+                              title={
+                                <React.Fragment>
+                                  <List>
+                                    <ListItem>
+                                      Generate a new secure 12-digit password
+                                    </ListItem>
+                                  </List>
+                                </React.Fragment>
+                              }
+                            >
+                              <i className="fa-solid fa-arrows-rotate"></i>
+                            </HtmlTooltip>
+                          </span>
                         </Grid>
                         <PasswordStrength
                           password={step1.password}

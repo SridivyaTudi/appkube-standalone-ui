@@ -164,7 +164,7 @@ export const getFormattedDate = (dateString) => {
 
       return `${day}/${month}/${year} ${hours}:${minutes} ${amPm}`;
     }
-    throw new Error()
+    throw new Error();
   } catch (error) {
     console.log(error);
     return null;
@@ -191,4 +191,17 @@ export const getUrlDetailsOfPage = (isConvertToObj = 0) => {
 
 export const deleteUrlDetailsOfPage = () => {
   localStorage.removeItem(LOCAL_STORAGE_CONSTANTS.URL_DETAILS_OF_PAGE);
+};
+
+export const generateRandomPassword = () => {
+  const chars =
+    "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const passwordLength = 12;
+  let pwd = "";
+  for (var i = 0; i <= passwordLength; i++) {
+    var randomNumber = Math.floor(Math.random() * chars.length);
+    pwd += chars.substring(randomNumber, randomNumber + 1);
+  }
+
+  return pwd;
 };
