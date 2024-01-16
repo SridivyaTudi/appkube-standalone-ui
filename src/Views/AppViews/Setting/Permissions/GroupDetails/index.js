@@ -19,6 +19,8 @@ import Loader from "Components/Loader";
 import { connect } from "react-redux";
 import ConfirmationPopup from "Components/ConfirmationPopup";
 import { ToastMessage } from "Toast/ToastMessage";
+import AddUsers from "../AddUsers";
+import AddRole from "../AddRole";
 
 class GroupDetails extends Component {
   tabMapping = [
@@ -51,6 +53,8 @@ class GroupDetails extends Component {
       actionButton: null,
       groupDetails: {},
       removeDataDetails: null,
+      showAddUserPopup: false,
+      showAddRolePopup: false,
     };
     let userDetails = getCurrentUser()?.info?.user;
     if (userDetails) {
@@ -111,6 +115,14 @@ class GroupDetails extends Component {
     }
   };
 
+  toggleAddRoleandUserPopup = () => {
+    let { activeTab, showAddUserPopup, showAddRolePopup } = this.state;
+    if (activeTab === 0) {
+      this.setState({ showAddUserPopup: !showAddUserPopup });
+    } else if (activeTab === 1) {
+      this.setState({ showAddRolePopup: !showAddRolePopup });
+    }
+  };
   renderBtns = () => {
     let { activeTab, removeDataDetails } = this.state;
     return (
@@ -132,9 +144,10 @@ class GroupDetails extends Component {
 
             <ListItem>
               <Link
-                to={`${APP_PREFIX_PATH}/setting/group-details/${this.getGroupId()}/${
-                  activeTab === 0 ? "add-users" : "add-role"
-                }`}
+                // to={`${APP_PREFIX_PATH}/setting/group-details/${this.getGroupId()}/${
+                //   activeTab === 0 ? "add-users" : "add-role"
+                // }`}
+                onClick={this.toggleAddRoleandUserPopup}
               >
                 <Button
                   className="primary-btn min-width-inherit"
@@ -204,7 +217,13 @@ class GroupDetails extends Component {
     });
   };
   render() {
-    const { activeTab, groupDetails, showConfirmPopup } = this.state;
+    const {
+      activeTab,
+      groupDetails,
+      showConfirmPopup,
+      showAddRolePopup,
+      showAddUserPopup,
+    } = this.state;
     let { groupDetailsById: groupDetailsById } = this.props;
     let deleteGroupStatus =
       this.props.removeGroup?.status === status.IN_PROGRESS;
@@ -249,53 +268,69 @@ class GroupDetails extends Component {
                   </Box>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Box className="overview-buttons">{this.renderBtns()}</Box>
+                  <Box className="overview-buttons">
+                    {[0, 1].includes(activeTab) &&
+                    (showAddRolePopup || showAddUserPopup)
+                      ? ""
+                      : this.renderBtns()}
+                  </Box>
                 </Grid>
               </Grid>
             </Box>
-            <Box className="tabs">
-              <List className="tabs-menu">
-                {this.tabMapping.map((tabData, index) => {
-                  return (
-                    <ListItem
-                      key={`ops-tab-${index}`}
-                      className={index === activeTab ? "active" : ""}
-                      onClick={() => this.setActiveTab(index)}
-                    >
-                      {tabData.name}
-                    </ListItem>
-                  );
-                })}
-              </List>
-              <Box className="tabs-content">
-                {activeTab === 0 ? (
-                  <Users
-                    setRemoveDetails={(removeDataDetails) => {
-                      this.setState({ removeDataDetails });
-                    }}
-                  />
-                ) : activeTab === 1 ? (
-                  <Roles
-                    setRemoveDetails={(removeDataDetails) => {
-                      this.setState({ removeDataDetails });
-                    }}
-                  />
-                ) : activeTab === 2 ? (
-                  <Allowed />
-                ) : activeTab === 3 ? (
-                  <Disallowed />
-                ) : (
-                  <></>
-                )}
+            {showAddUserPopup ? (
+              <AddUsers
+                hideComponent={() => this.setState({ showAddUserPopup: false })}
+              />
+            ) : showAddRolePopup ? (
+              <AddRole
+                hideComponent={() => this.setState({ showAddRolePopup: false })}
+              />
+            ) : (
+              <Box className="tabs">
+                <List className="tabs-menu">
+                  {this.tabMapping.map((tabData, index) => {
+                    return (
+                      <ListItem
+                        key={`ops-tab-${index}`}
+                        className={index === activeTab ? "active" : ""}
+                        onClick={() => this.setActiveTab(index)}
+                      >
+                        {tabData.name}
+                      </ListItem>
+                    );
+                  })}
+                </List>
+                <Box className="tabs-content">
+                  {activeTab === 0 ? (
+                    <Users
+                      setRemoveDetails={(removeDataDetails) => {
+                        this.setState({ removeDataDetails });
+                      }}
+                    />
+                  ) : activeTab === 1 ? (
+                    <Roles
+                      setRemoveDetails={(removeDataDetails) => {
+                        this.setState({ removeDataDetails });
+                      }}
+                    />
+                  ) : activeTab === 2 ? (
+                    <Allowed />
+                  ) : activeTab === 3 ? (
+                    <Disallowed />
+                  ) : (
+                    <></>
+                  )}
+                </Box>
               </Box>
-            </Box>
+            )}
+
             {showConfirmPopup ? (
               <ConfirmationPopup
                 showModal={showConfirmPopup}
                 togglePopup={this.togglePopup}
                 labels={{
                   btnYes: "Delete",
-                  header: "Do you want to delete this Group ? ",
+                  header: "Do you want to delete this Group ?",
                   btnNo: "Cancel",
                 }}
                 icon={<i className="fas fa-trash-alt"></i>}

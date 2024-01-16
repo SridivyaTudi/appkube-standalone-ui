@@ -37,7 +37,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 class AddRole extends Component {
-  user = { username: ""};
+  user = { username: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -141,12 +141,12 @@ class AddRole extends Component {
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { rows } = this.state;
-    let data = this.props.userPermissionData.data?.users || [];
+    let data = this.props.userPermissionData.data?.roles || [];
 
     if (data?.length) {
       if (value) {
         rows = data.filter((user) => {
-          if (user?.username.toLowerCase().includes(value.toLowerCase())) {
+          if (user?.name?.toLowerCase().includes(value.toLowerCase())) {
             return user;
           } else {
             return null;
@@ -186,33 +186,8 @@ class AddRole extends Component {
       this.props.userPermissionData.status === status.IN_PROGRESS;
     return (
       <Box className="add-users-container">
-        <Box className="list-heading">
-          <h3>Group Infra team Add Role</h3>
-          <Box className="breadcrumbs">
-            <ul>
-              <li onClick={() => this.handlePreviousPage()}>
-                <Link>Users and Permissions</Link>
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li>
-                <Link
-                  to={`/app/setting/group-details/${this.getGroupId()}`}
-                  onClick={() => setActiveTab("roles")}
-                >
-                  Super Admin Group
-                </Link>
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li className="active">Add Role</li>
-            </ul>
-          </Box>
-        </Box>
         <Box className="setting-common-searchbar">
-          <h5>Add users to infra team</h5>
+          {/* <h5>Add users to infra team</h5> */}
           <Grid container className="h-100" alignItems={"center"}>
             <Grid item xs={6}>
               <Box className="top-search">
@@ -242,7 +217,7 @@ class AddRole extends Component {
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link to={`/app/setting/group-details/${this.getGroupId()}`}>
+                  <Link onClick={this.props.hideComponent}>
                     <Button
                       className="primary-btn min-width-inherit"
                       variant="contained"
@@ -357,9 +332,17 @@ class AddRole extends Component {
         {showCancelRoleControlModal ? (
           <CancelGroupControlModal
             showModal={showCancelRoleControlModal}
-            handleCancelGroupControlModal={this.handleCancelRoleControlModal}
-            redirectUrl={`/app/setting/group-details/${this.getGroupId()}`}
-            previousTab={"roles"}
+            handleCancelGroupControlModal={(event, isClickOnContinueBtn) => {
+              if (isClickOnContinueBtn) {
+                try {
+                  this.props.hideComponent();
+                } catch (e) {
+                  console.log(e);
+                }
+              }
+              this.handleCancelRoleControlModal();
+            }}
+            isHandleCallBackOnContinueBtn={1}
           />
         ) : (
           <></>

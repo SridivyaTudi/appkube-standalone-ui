@@ -22,7 +22,7 @@ import Loader from "Components/Loader";
 import CancelGroupControlModal from "../Components/CancelGroupControlModal";
 
 class AddUsers extends Component {
-  user = { id: "", username: "", email: "", profileImage: "" }
+  user = { id: "", username: "", email: "", profileImage: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -234,7 +234,7 @@ class AddUsers extends Component {
     if (data?.length) {
       if (value) {
         rows = data.filter((user) => {
-          if (user?.username.toLowerCase().includes(value.toLowerCase())) {
+          if (user?.username?.toLowerCase().includes(value.toLowerCase())) {
             return user;
           } else {
             return null;
@@ -267,7 +267,7 @@ class AddUsers extends Component {
     let { searchedKey, showCancelUserControlModal } = this.state;
     return (
       <Box className="add-users-container">
-        <Box className="list-heading">
+        {/* <Box className="list-heading">
           <h3>Group Infra team Add users</h3>
           <Box className="breadcrumbs">
             <ul>
@@ -292,9 +292,9 @@ class AddUsers extends Component {
               <li className="active">Add users</li>
             </ul>
           </Box>
-        </Box>
+        </Box> */}
         <Box className="setting-common-searchbar">
-          <h5>Add users to infra team</h5>
+          {/* <h5>Add users to infra team</h5> */}
           <Grid container className="h-100" alignItems={"center"}>
             <Grid item xs={6}>
               <Box className="top-search">
@@ -324,7 +324,7 @@ class AddUsers extends Component {
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link to={`/app/setting/group-details/${this.getGroupId()}`}>
+                  <Link onClick={this.props.hideComponent}>
                     <Button
                       className="primary-btn min-width-inherit"
                       variant="contained"
@@ -342,8 +342,17 @@ class AddUsers extends Component {
         {showCancelUserControlModal ? (
           <CancelGroupControlModal
             showModal={showCancelUserControlModal}
-            handleCancelGroupControlModal={this.handleCancelUserControlModal}
-            redirectUrl={`/app/setting/group-details/${this.getGroupId()}`}
+            handleCancelGroupControlModal={(event, isClickOnContinueBtn) => {
+              if (isClickOnContinueBtn) {
+                try {
+                  this.props.hideComponent();
+                } catch (e) {
+                  console.log(e);
+                }
+              }
+              this.handleCancelUserControlModal();
+            }}
+            isHandleCallBackOnContinueBtn={1}
           />
         ) : (
           <></>
