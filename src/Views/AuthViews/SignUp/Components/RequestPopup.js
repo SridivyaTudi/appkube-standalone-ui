@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalBody, ModalFooter } from "reactstrap";
-import {  Box, Grid } from "@mui/material";
+import { Box, Grid,Button } from "@mui/material";
 import RequestPopupImg from "../../../../assets/img/login/request-popup-img.png";
 import { connect } from "react-redux";
 import { sentEmailToCompanyAdmin } from "Redux/Auth/AuthThunk";
@@ -47,7 +47,7 @@ class RequestPopup extends Component {
   validateForm = () => {
     const { email, isSubmit } = this.state;
     let isValid = true;
-    let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ // eslint-disable-line
+    let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
     let errors = {
       email: "",
     };
@@ -94,7 +94,7 @@ class RequestPopup extends Component {
     return (
       <Modal
         isOpen={showModal}
-        toggle={this.toggle}
+        toggle={this.props.togglePopup}
         className="select-account-modal-container"
       >
         <ModalBody
@@ -137,7 +137,9 @@ class RequestPopup extends Component {
                       value={email}
                     />
                     {errors.email ? (
-                      <p className="red m-b-0 m-t-0 p-l-0 p-r-0 text-left">{errors.email}</p>
+                      <p className="red m-b-0 m-t-0 p-l-0 p-r-0 text-left">
+                        {errors.email}
+                      </p>
                     ) : (
                       <></>
                     )}
@@ -148,7 +150,12 @@ class RequestPopup extends Component {
           </Box>
         </ModalBody>
         <ModalFooter className="footer-top-br p-b-10">
+         
+
           <Box className="d-block text-center">
+          <Button className="danger-btn min-width-inherit" variant="contained" onClick={this.props.togglePopup}>
+            Cancel
+          </Button>
             <LoadingButton
               type="submit"
               onClick={this.onClickSentRequest}
