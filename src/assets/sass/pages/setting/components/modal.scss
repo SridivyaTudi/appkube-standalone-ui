@@ -90,6 +90,7 @@
 
         .select-policy {
           width: 100%;
+
           .MuiOutlinedInput-root {
             width: 100%;
             height: 40px;
@@ -105,24 +106,28 @@
               border-color: #d0d5dd;
               padding: 0 15px;
               font-style: normal;
-              .MuiSelect-nativeInput{
+
+              .MuiSelect-nativeInput {
                 height: 36px;
               }
 
               em {
                 font-style: normal;
               }
+
               &:focus-visible {
                 outline-color: transparent;
               }
+
               &:hover {
                 border-color: #d0d5dd;
               }
             }
+
             .css-hfutr2-MuiSvgIcon-root-MuiSelect-icon {
               top: calc(54% - 0.5em);
             }
-           
+
           }
         }
 
@@ -216,14 +221,9 @@
           font-size: 11px;
           font-weight: 400;
           align-items: flex-start;
-          position: relative;
           color: rgba(102, 112, 133, 1);
 
-          span {
-            position: absolute;
-            left: 0;
-            top: 2px;
-          }
+
 
           strong {
             font-weight: 600;
@@ -421,10 +421,12 @@
     .modal-body {
       width: 100%;
       height: 100%;
+
       .stepar-content {
         width: 100%;
         height: 90%;
         display: block;
+
         .steper-label {
           font-size: 12px;
           line-height: 18px;
@@ -492,17 +494,20 @@
           max-height: 365px;
           overflow: hidden;
           overflow-y: auto;
-          .form-row{
+
+          .form-row {
             display: flex;
             flex-wrap: wrap;
           }
         }
+
         .step-third {
           .step-third-form {
             max-height: 140px;
             overflow: hidden;
             overflow-y: auto;
           }
+
           .create-user-control-table {
             .table {
               tbody {
@@ -511,9 +516,11 @@
             }
           }
         }
+
         .form-group {
           margin-bottom: 15px;
           position: relative;
+
           .form-label {
             display: block;
             font-size: 14px;
@@ -523,6 +530,7 @@
             margin-bottom: 5px;
             padding-left: 0;
           }
+
           .form-control {
             width: 240px;
             height: 36px;
@@ -538,6 +546,7 @@
             color: #344054;
             font-family: "Poppins", sans-serif;
           }
+
           span {
             position: absolute;
             bottom: -18px;
@@ -547,6 +556,7 @@
             font-weight: 400;
             color: #ff2d2e;
           }
+
           .close-icon {
             color: #ff2d2e;
             border: 1px solid #ff2d2e;
@@ -567,6 +577,7 @@
             border-radius: 5px;
           }
         }
+
         .user-review {
           .form-group {
             margin-bottom: 15px;
@@ -907,6 +918,7 @@
           justify-content: space-between;
           width: 100%;
           color: #344054;
+
           .close-btn {
             margin-left: auto;
             cursor: pointer;
@@ -914,6 +926,7 @@
         }
       }
     }
+
     .policy-boxs {
       display: block;
       width: 100%;
@@ -946,7 +959,8 @@
             font-weight: 400;
             color: #383874;
           }
-          span{
+
+          span {
             padding: 5px;
           }
         }
@@ -962,12 +976,14 @@
             font-weight: 400;
             color: #383874;
           }
-          .group-loader{
+
+          .group-loader {
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            h5{
+
+            h5 {
               font-size: 14px;
             }
           }
@@ -997,5 +1013,98 @@
         }
       }
     }
+  }
+}
+
+.authDisabled-modal-container {
+  width: 380px !important;
+  box-shadow: 0px 0px 16px rgba(59, 72, 89, 0.2392156863);
+  border-radius: 10px;
+  background: white;
+  margin: 0 auto;
+
+  .modal-content {
+    padding: 30px;
+
+    .modal-header {
+      width: 100%;
+      display: block;
+      border-bottom: none;
+
+
+      .autodisabled-info {
+        display: flex;
+        justify-content: center;
+
+        .icon {
+          width: 58px;
+          height: 58px;
+          border-radius: 100%;
+          background-color: #FFEBEB;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          img {
+            width: 30px;
+            height: 30px;
+          }
+        }
+
+
+      }
+
+      .heading {
+        color: #344054;
+        font-weight: 500;
+        font-size: 17px;
+        line-height: 26px;
+        margin-top: 12px;
+        text-align: center;
+      }
+    }
+
+    .modal-body {
+      .form-group {
+        position: relative;
+        margin: 12px 0px;
+
+        .form-label {
+          display: flex;
+          width: 100%;
+          font-size: 14px;
+          color: #344054;
+          line-height: 20px;
+          font-weight: 500;
+          margin-bottom: 5px;
+          padding-left: 0;
+        }
+
+        .form-control {
+          display: flex;
+          width: 100%;
+          height: 36px;
+          padding: 5px 15px 5px 15px;
+          border: 1px solid #d0d5dd;
+          background: linear-gradient(0deg, #ffffff, #ffffff);
+          box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+          border-radius: 5px;
+          font-size: 12px;
+          line-height: 26px;
+          font-weight: 400;
+          color: #344054;
+          font-family: "Poppins", sans-serif
+        }
+
+        .input-group-text {
+          position: absolute;
+          top: 30px;
+          right: 15px;
+          cursor: pointer;
+        }
+      }
+    }
+
+
   }
 }

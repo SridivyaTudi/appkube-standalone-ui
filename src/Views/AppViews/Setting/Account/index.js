@@ -11,6 +11,8 @@ import { getCurrentUser } from "Utils";
 import { changePasswordOfAccount } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import { ToastMessage } from "Toast/ToastMessage";
+import DisabledAuthenticationModal from "./Components/DisabledAuthenticationModal";
+
 export class Account extends Component {
   user = { username: "", email: "", profileImage: "", isMfaEnable: null };
   constructor(props) {
@@ -27,6 +29,7 @@ export class Account extends Component {
       service: "read_mode",
       showChangePasswordModal: false,
       showAuthenticationModal: false,
+      showDisabledAuthenticationModal: false,
     };
     let userDetails = getCurrentUser()?.info?.user;
     if (userDetails) {
@@ -69,6 +72,14 @@ export class Account extends Component {
       showAuthenticationModal: !this.state.showAuthenticationModal,
     });
   };
+
+  handleDisabledAuthenticationModal = () => {
+    this.setState({
+      showDisabledAuthenticationModal:
+        !this.state.showDisabledAuthenticationModal,
+    });
+  };
+
   validate = (isSubmit) => {
     const { formData, isValidPassword } = this.state;
     let isValid;
@@ -186,6 +197,7 @@ export class Account extends Component {
       formData,
       isSubmit,
       showAuthenticationModal,
+      showDisabledAuthenticationModal,
     } = this.state;
     let { userResetPassword, accountChangePassword, isCurrentPasswordHide } =
       this.props;
@@ -385,7 +397,16 @@ export class Account extends Component {
                         className="primary-btn width-25"
                         onClick={this.handleAuthenticationModal}
                       >
-                       {this.user.isMfaEnable === 'YES' ? 'Disable ' : ''} T2F Auth
+                        {this.user.isMfaEnable === "YES" ? "Disable " : ""} T2F
+                        Auth
+                      </Button>
+                    </Box>
+                    <Box className="card-btn">
+                      <Button
+                        className="primary-btn width-25"
+                        onClick={this.handleDisabledAuthenticationModal}
+                      >
+                        T2F Auth
                       </Button>
                     </Box>
                   </Box>
@@ -398,6 +419,14 @@ export class Account extends Component {
           <AuthenticationModal
             showModal={showAuthenticationModal}
             handleAuthenticationModal={this.handleAuthenticationModal}
+          />
+        ) : (
+          <></>
+        )}
+        {showDisabledAuthenticationModal ? (
+          <DisabledAuthenticationModal
+            showModal={showDisabledAuthenticationModal}
+            handleAuthenticationModal={this.handleDisabledAuthenticationModal}
           />
         ) : (
           <></>
