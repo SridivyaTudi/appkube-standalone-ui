@@ -19,6 +19,7 @@ import {
   changePasswordOfAccount,
   resetPasswordOfUser,
   addUserToGroups,
+  disableAuthMFACode,
 } from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
@@ -119,6 +120,10 @@ export const settingsSlice = createSlice({
     userToGroupsCreation: {
       status: null,
       data: "",
+    },
+    disableMfaAuth: {
+      status: null,
+      data: null,
     },
   },
   reducers: {},
@@ -586,6 +591,32 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         userToGroupsCreation: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [disableAuthMFACode.pending]: (state) => {
+      return {
+        ...state,
+        disableMfaAuth: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [disableAuthMFACode.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        disableMfaAuth: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [disableAuthMFACode.rejected]: (state) => {
+      return {
+        ...state,
+        disableMfaAuth: {
           status: status.FAILURE,
         },
       };

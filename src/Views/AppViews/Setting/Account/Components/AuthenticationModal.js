@@ -7,10 +7,15 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Carrier from "assets/img/setting/carrier.png";
 import OTPInput from "react-otp-input";
-import { getMFACode, authMFACode } from "Redux/Settings/SettingsThunk";
+import {
+  getMFACode,
+  authMFACode,
+  disableAuthMFACode,
+} from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { ToastMessage } from "Toast/ToastMessage";
+import { getCurrentUser, setCurrentUser } from "Utils";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 32,
@@ -60,7 +65,7 @@ class AuthenticationModal extends Component {
     STEP3: 2,
     STEP4: 3,
   };
-
+  user = { username: "", email: "", profileImage: "", isMfaEnable: null };
   constructor(props) {
     super(props);
     this.state = {
@@ -76,6 +81,10 @@ class AuthenticationModal extends Component {
       mfaKey: "",
       twoFASwitch: false,
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidUpdate = (prevProps) => {
@@ -101,6 +110,19 @@ class AuthenticationModal extends Component {
       this.props.mfaAuth.status === status.SUCCESS
     ) {
       if (this.props.mfaAuth.data.object === true) {
+        this.updateMfaStatus();
+        this.setActiveStep(this.steps.STEP4);
+      } else {
+        ToastMessage.error("OTP validation failed!");
+      }
+    }
+
+    if (
+      prevProps.disableMfaAuth.status !== this.props.disableMfaAuth.status &&
+      this.props.disableMfaAuth.status === status.SUCCESS
+    ) {
+      if (this.props.disableMfaAuth.data.object === true) {
+        this.updateMfaStatus();
         this.setActiveStep(this.steps.STEP4);
       } else {
         ToastMessage.error("OTP validation failed!");
@@ -164,12 +186,28 @@ class AuthenticationModal extends Component {
       token: this.state.otp,
       mfaKey: this.state.mfaKey,
     };
-
-    this.props.authMFACode(params);
+    if (this.user.isMfaEnable === "YES") {
+      delete params.mfaKey;
+      this.props.disableAuthMFACode(params);
+    } else {
+      this.props.authMFACode(params);
+    }
   };
 
   toggle2FASwitch = (e) => {
     this.setState({ twoFASwitch: e.target.checked });
+  };
+
+  updateMfaStatus = () => {
+    let { authz, info } = getCurrentUser();
+    if (info) {
+      if (info.user.isMfaEnable) {
+        info.user.isMfaEnable = this.user.isMfaEnable === "YES" ? "NO" : "YES";
+        let userDetails = { authz, info };
+        this.user = userDetails;
+        setCurrentUser(userDetails);
+      }
+    }
   };
 
   render() {
@@ -411,13 +449,14 @@ class AuthenticationModal extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { MFACode, mfaAuth } = state.settings;
-  return { MFACode, mfaAuth };
+  const { MFACode, mfaAuth, disableMfaAuth } = state.settings;
+  return { MFACode, mfaAuth, disableMfaAuth };
 };
 
 const mapDispatchToProps = {
   getMFACode,
   authMFACode,
+  disableAuthMFACode,
 };
 
 export default connect(

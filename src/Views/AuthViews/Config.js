@@ -15,6 +15,7 @@ const config = {
   /* SETTINGS PAGE SECURITY URL */
   GET_MFA_CODE: `${baseSecurityUrl}/users/mfaCode`,
   AUTH_MFA: `${baseSecurityUrl}/users/authenticateMfa`,
+  DISABLE_AUTH_MFA: `${baseSecurityUrl}/users/disable-mfa`,
   CREATE_ROLE: `${baseSecurityUrl}/roles/create`,
   UPDATE_ROLE: `${baseSecurityUrl}/roles/update`,
   CREATE_GROUP: `${baseSecurityUrl}/roles/create`,

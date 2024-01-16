@@ -12,7 +12,7 @@ import { changePasswordOfAccount } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import { ToastMessage } from "Toast/ToastMessage";
 export class Account extends Component {
-  user = { username: "", email: "", profileImage: "" };
+  user = { username: "", email: "", profileImage: "", isMfaEnable: null };
   constructor(props) {
     super(props);
     this.state = {
@@ -385,7 +385,7 @@ export class Account extends Component {
                         className="primary-btn width-25"
                         onClick={this.handleAuthenticationModal}
                       >
-                        T2F Auth
+                       {this.user.isMfaEnable === 'YES' ? 'Disable ' : ''} T2F Auth
                       </Button>
                     </Box>
                   </Box>
