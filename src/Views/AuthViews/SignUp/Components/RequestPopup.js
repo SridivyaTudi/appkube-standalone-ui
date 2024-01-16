@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalBody, ModalFooter } from "reactstrap";
-import { Box, Grid,Button } from "@mui/material";
+import { Box, Grid, Button } from "@mui/material";
 import RequestPopupImg from "../../../../assets/img/login/request-popup-img.png";
 import { connect } from "react-redux";
 import { sentEmailToCompanyAdmin } from "Redux/Auth/AuthThunk";
@@ -149,13 +149,15 @@ class RequestPopup extends Component {
             </Box>
           </Box>
         </ModalBody>
-        <ModalFooter className="footer-top-br p-b-10">
-         
-
+        <ModalFooter className="footer-top-br">
           <Box className="d-block text-center">
-          <Button className="danger-btn min-width-inherit" variant="contained" onClick={this.props.togglePopup}>
-            Cancel
-          </Button>
+            <Button
+              className="danger-btn min-width-inherit  m-r-2"
+              variant="contained"
+              onClick={this.props.togglePopup}
+            >
+              Cancel
+            </Button>
             <LoadingButton
               type="submit"
               onClick={this.onClickSentRequest}
