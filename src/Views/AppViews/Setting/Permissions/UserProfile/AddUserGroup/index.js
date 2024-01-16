@@ -332,7 +332,7 @@ class AddUserGroup extends Component {
     let userToGroupsCreationStatus =
       userToGroupsCreation.status === status.IN_PROGRESS;
     return (
-      <Box className="create-group-container">
+      <Box className="m-t-2">
         {userStatus ? (
           this.renderLoder()
         ) : (

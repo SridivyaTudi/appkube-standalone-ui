@@ -400,7 +400,9 @@ export class Account extends Component {
                     </p>
                     <Box className="card-btn">
                       <Button
-                        className="primary-btn width-25"
+                        className={
+                          isMfaEnable === "YES" ? "disabled width-25" : "primary-btn width-25"
+                        }
                         // disabled={this.user.isMfaEnable === "YES"}
                         onClick={() =>
                           isMfaEnable === "YES"
@@ -408,17 +410,9 @@ export class Account extends Component {
                             : this.handleAuthenticationModal()
                         }
                       >
-                        {isMfaEnable === "YES" ? "Disable " : ""} 2FA Auth
+                        {isMfaEnable === "YES" ? "Disable " : ""} 2FA
                       </Button>
                     </Box>
-                    {/* <Box className="card-btn">
-                      <Button
-                        className="primary-btn width-25"
-                        onClick={this.handleDisabledAuthenticationModal}
-                      >
-                        2FA Auth
-                      </Button>
-                    </Box> */}
                   </Box>
                 </Box>
               </Grid>
