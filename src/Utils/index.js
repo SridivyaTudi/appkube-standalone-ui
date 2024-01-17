@@ -202,6 +202,72 @@ export const generateRandomPassword = () => {
     var randomNumber = Math.floor(Math.random() * chars.length);
     pwd += chars.substring(randomNumber, randomNumber + 1);
   }
-
   return pwd;
+};
+
+export const getRbacPermissions = () => {
+  let groups = getCurrentUser()?.info?.user.roles;
+
+  if (groups?.length) {
+    return RbacPermissionsDataManipulation.getData(groups);
+  } else {
+    return [];
+  }
+};
+
+export const RbacPermissionsDataManipulation = {
+  permissions: [],
+  getData: (data) => {
+    RbacPermissionsDataManipulation.getGroupList(data);
+    return RbacPermissionsDataManipulation.permissions;
+  },
+  getGroupList: (data) => {
+    data.forEach((userData) => {
+      if (userData.grp) {
+        if (userData.roles?.length) {
+          RbacPermissionsDataManipulation.getRoleList(userData.roles);
+        }
+      }
+    });
+  },
+  getRoleList: (roleList) => {
+    roleList.forEach((role) => {
+      if (role.policies?.length) {
+        RbacPermissionsDataManipulation.getPolicyList(role.policies);
+      }
+    });
+  },
+  getPolicyList: (policyList) => {
+    policyList.forEach((policy) => {
+      if (policy.permissions?.length) {
+        RbacPermissionsDataManipulation.getPermissions(policy.permissions);
+      }
+    });
+  },
+  getPermissions: (permissions) => {
+    permissions.forEach((category) => {
+      let currentPermission = RbacPermissionsDataManipulation.permissions;
+      let isExistPermission =
+        RbacPermissionsDataManipulation.checkDataAlreadyExist(
+          currentPermission,
+          category.id
+        );
+      if (!isExistPermission) {
+        RbacPermissionsDataManipulation.permissions.push(category);
+      }
+    });
+  },
+  checkDataAlreadyExist: (data, id) => {
+    let isExist = false;
+    let dataLength = data.length;
+
+    for (let index = 0; index < dataLength; index++) {
+      const element = data[index];
+      if (element.id === id) {
+        isExist = true;
+        break;
+      }
+    }
+    return isExist;
+  },
 };

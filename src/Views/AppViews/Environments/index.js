@@ -37,6 +37,7 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
+import Rbac from "../Rbac";
 
 class Environments extends Component {
   constructor(props) {
@@ -550,7 +551,7 @@ class Environments extends Component {
       showFilterPopup,
       filters,
     } = this.state;
-
+    let rbcPermission = <Rbac rbacValue={"Create Landing Zone"} />;
     return (
       <div className="environment-container">
         <Box className="list-heading" key={v4()}>
@@ -617,22 +618,31 @@ class Environments extends Component {
                           </Box>
                         )}
                         <Box className="environment-fliter">
-                          <Box
-                            className="fliter-toggel new-environment"
-                            onClick={this.toggleAddNewEnvironmentMenu}
-                          >
-                            Add New Environment
-                            <i className="fa-solid fa-caret-down arrow-icon"></i>
-                          </Box>
-                          <Box
-                            className={
-                              isAddNewEnvironmentShown
-                                ? "fliter-collapse active"
-                                : "fliter-collapse"
-                            }
-                          >
-                            <List>{this.renderAddNewEnvironmentList()}</List>
-                          </Box>
+                          {rbcPermission ? (
+                            <>
+                              <Box
+                                className="fliter-toggel new-environment"
+                                onClick={this.toggleAddNewEnvironmentMenu}
+                              >
+                                Add New Environment
+                                <i className="fa-solid fa-caret-down arrow-icon"></i>
+                              </Box>
+                              <Box
+                                className={
+                                  isAddNewEnvironmentShown
+                                    ? "fliter-collapse active"
+                                    : "fliter-collapse"
+                                }
+                              >
+                                <List>
+                                  {this.renderAddNewEnvironmentList()}
+                                </List>
+                              </Box>
+                            </>
+                          ) : (
+                            <></>
+                          )}
+
                           <div
                             className={
                               isAddNewEnvironmentShown
