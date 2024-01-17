@@ -29,6 +29,7 @@ class DisabledAuthenticationModal extends Component {
       if (this.props.disableMfaAuth.data.type === "SUCCESS") {
         this.updateMfaStatus();
         this.props.handleDisabledAuthenticationModal("", "NO");
+        ToastMessage.success("2FA Disabled Successfully");
       } else {
         ToastMessage.error("OTP validation failed!");
       }

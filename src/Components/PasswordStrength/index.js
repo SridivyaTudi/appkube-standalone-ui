@@ -118,7 +118,7 @@ class PasswordStrength extends Component {
                 <span>
                   <i className="fa-solid fa-check"></i>
                 </span>{" "}
-                {"1 uppercase letter(S)"}
+                {"1 uppercase letter(s)"}
               </li>
               <li
                 className={`${
