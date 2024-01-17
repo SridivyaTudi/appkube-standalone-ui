@@ -50,10 +50,16 @@ class BIMapping extends Component {
               >
                 <List>
                   <ListItem>
+                    <Link to={`/app/bim/create-department`}>
                     <i className="fa-solid fa-circle-dot"></i>Create Department
+                    </Link>
+                   
                   </ListItem>
                   <ListItem>
-                    <i className="fa-solid fa-circle-dot"></i>Add Products
+                  <Link to={""}>
+                  <i className="fa-solid fa-circle-dot"></i>Add Products
+                  </Link>
+                    
                   </ListItem>
                 </List>
               </div>
@@ -99,8 +105,8 @@ class BIMapping extends Component {
                   </TableCell>
                   <TableCell align="center">01</TableCell>
                   <TableCell align="center">01</TableCell>
-                  <TableCell align="center">01</TableCell>
-                  <TableCell align="center">01</TableCell>
+                  <TableCell align="center">02</TableCell>
+                  <TableCell align="center">00</TableCell>
                 </TableRow>
               </TableBody>
             </Table>

@@ -18,93 +18,16 @@ class CreateDepartment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSelectDepartmentOpen: false,
+      
     };
   }
-  toggleSelectDepartment = () => {
-    this.setState({
-      isSelectDepartmentOpen: !this.state.isSelectDepartmentOpen,
-    });
-  };
+ 
   render() {
-    const { isSelectDepartmentOpen } = this.state;
+    const {  } = this.state;
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
-          <h3>Organization Unit</h3>
-          <Box className="mapping-fliter">
-            <Button
-              onClick={this.toggleSelectDepartment}
-              className="primary-outline-btn min-width"
-              variant="outlined"
-            >
-              Create
-            </Button>
-            {this.state.isSelectDepartmentOpen == true && (
-              <div
-                className={
-                  isSelectDepartmentOpen
-                    ? "fliter-collapse active"
-                    : "fliter-collapse"
-                }
-              >
-                <List>
-                  <ListItem>
-                    <i className="fa-solid fa-circle-dot"></i>Create Department
-                  </ListItem>
-                  <ListItem>
-                    <i className="fa-solid fa-circle-dot"></i>Add Products
-                  </ListItem>
-                </List>
-              </div>
-            )}
-          </Box>
-        </Box>
-        <Box className="environment-table">
-          <TableContainer className="table">
-            <Table>
-              <TableHead className="active">
-                <TableRow>
-                  <TableCell align="left">Organization Name</TableCell>
-                  <TableCell align="center">
-                    <Box className="environment-image">
-                      <img src={Aws} alt="" />
-                    </Box>
-                    AWS
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="environment-image">
-                      <img src={Microsoftazure} alt="" />
-                    </Box>
-                    Azure
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="environment-image">
-                      <img src={GoogleCloud} alt="" />
-                    </Box>
-                    GCP
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="environment-image">
-                      <img src={Kubernetes} alt="" />
-                    </Box>
-                    Kubernetes
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell align="left">
-                    <Link to={""}>Synectiks</Link>
-                  </TableCell>
-                  <TableCell align="center">01</TableCell>
-                  <TableCell align="center">01</TableCell>
-                  <TableCell align="center">01</TableCell>
-                  <TableCell align="center">01</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <h3>Create Department</h3>
         </Box>
       </Box>
     );
