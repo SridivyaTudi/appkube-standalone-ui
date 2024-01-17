@@ -44,6 +44,7 @@ import CreateGroup from "./AppViews/Setting/Permissions/CreateGroup";
 import UserProfile from "./AppViews/Setting/Permissions/UserProfile";
 import CreatePolicy from "./AppViews/Setting/Permissions/CreatePolicy";
 import BIMapping from "./AppViews/BIMapping";
+import CreateDepartment from "./AppViews/BIMapping/CreateDepartment";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -208,7 +209,9 @@ export const Views = (props) => {
             element={<ApplicationStatusDashboard />}
           />
           <Route path={`${APP_PREFIX_PATH}/reports`} element={<Reports />} />
-          <Route path={`${APP_PREFIX_PATH}/bimapping`} element={<BIMapping/>}/>
+          <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping/>}/>
+          <Route path={`${APP_PREFIX_PATH}/bim/create-department`} element={<CreateDepartment/>}/>
+
           <Route path={`/error`} element={<Error />} />
         </Routes>
         <ToastContainer

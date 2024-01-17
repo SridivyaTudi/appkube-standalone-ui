@@ -13,56 +13,7 @@ import {
 import { Component } from "react";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
-let data = [
-  {
-    user: "Milena Kahles",
-    emailAddress: "Carolina.Patzwahl81@gmal.cm",
-    groups: "02",
-    id: 0,
-  },
-  {
-    user: "Natalie Clark",
-    emailAddress: "mia.johnson@example.com",
-    groups: "03",
-    id: 1,
-  },
-  {
-    user: "David Garcia",
-    emailAddress: "sophia.brown@example.com",
-    groups: "08",
-    id: 2,
-  },
-  {
-    user: "Olivia Martin",
-    emailAddress: "sarah.lee@example.com",
-    groups: "03",
-    id: 3,
-  },
-  {
-    user: "William Davis",
-    emailAddress: "noah.thompson@example.com",
-    groups: "02",
-    id: 4,
-  },
-  {
-    user: "Ella Lewis",
-    emailAddress: "bob.johnson@example.com",
-    groups: "00",
-    id: 5,
-  },
-  {
-    user: "David Garcia",
-    emailAddress: "emma.davis@example.com",
-    groups: "04",
-    id: 6,
-  },
-  {
-    user: "William Davis",
-    emailAddress: "lucas.martinez@example.com",
-    groups: "06",
-    id: 7,
-  },
-];
+
 class Users extends Component {
   constructor(props) {
     super(props);
@@ -75,6 +26,7 @@ class Users extends Component {
       selectedUsers: [],
     };
   }
+
   componentDidMount = () => {
     this.setRowsStateOrReturn();
   };
