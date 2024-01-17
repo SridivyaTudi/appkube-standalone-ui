@@ -369,6 +369,10 @@
           border-radius: 5px;
           background: #e2e2ea;
           padding: 10px;
+
+          img {
+            max-height: 100%;
+          }
         }
 
         .company-content {
@@ -387,6 +391,20 @@
             text-transform: inherit;
             min-width: 120px;
           }
+         .label{
+          .image-upload{
+            padding:8px;
+            cursor: pointer;
+            background: #384cff;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 13px;
+            line-height: 24px;
+            border-radius: 5px;
+            font-family: "Open Sans", sans-serif;
+        
+          }
+         }
         }
       }
 

@@ -1,5 +1,5 @@
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { Box, Grid, List, ListItem, Button } from "@mui/material";
+import { Box, Grid, Button } from "@mui/material";
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -22,7 +22,7 @@ import Loader from "Components/Loader";
 import CancelGroupControlModal from "../Components/CancelGroupControlModal";
 
 class AddUsers extends Component {
-  user = { id: "", username: "", email: "", profileImage: "" }
+  user = { id: "", username: "", email: "", profileImage: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -64,7 +64,7 @@ class AddUsers extends Component {
   };
 
   handleChangeRowsPerPage = (event) => {
-    this.setState({ rpg: parseInt(event.target.value, 10) });
+    this.setState({ rpg: parseInt(event.target.value, 10), pg: 0 });
   };
 
   handleCreateUserControlModal = () => {
@@ -234,7 +234,7 @@ class AddUsers extends Component {
     if (data?.length) {
       if (value) {
         rows = data.filter((user) => {
-          if (user?.username.toLowerCase().includes(value.toLowerCase())) {
+          if (user?.username?.toLowerCase().includes(value.toLowerCase())) {
             return user;
           } else {
             return null;
@@ -264,37 +264,10 @@ class AddUsers extends Component {
 
   getGroupId = () => this.props.params.id;
   render() {
-    let { searchedKey, showCancelUserControlModal } = this.state;
+    let { searchedKey, showCancelUserControlModal, rows } = this.state;
     return (
       <Box className="add-users-container">
-        <Box className="list-heading">
-          <h3>Group Infra team Add users</h3>
-          <Box className="breadcrumbs">
-            <ul>
-              <li
-                onClick={() =>
-                  this.handlePreviousPage("permissions/group", "/app/setting")
-                }
-              >
-                <Link>Users and Permissions</Link>
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li>
-                <Link to={`/app/setting/group-details/${this.getGroupId()}`}>
-                  Super Admin Group
-                </Link>
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li className="active">Add users</li>
-            </ul>
-          </Box>
-        </Box>
         <Box className="setting-common-searchbar">
-          <h5>Add users to infra team</h5>
           <Grid container className="h-100" alignItems={"center"}>
             <Grid item xs={6}>
               <Box className="top-search">
@@ -311,39 +284,47 @@ class AddUsers extends Component {
                 </button>
               </Box>
             </Grid>
-            <Grid item xs={6}>
-              <List>
-                <ListItem>
-                  <Link onClick={this.handleCancelUserControlModal}>
-                    <Button
-                      className="danger-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Cancel
-                    </Button>
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link to={`/app/setting/group-details/${this.getGroupId()}`}>
-                    <Button
-                      className="primary-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Add users
-                    </Button>
-                  </Link>
-                </ListItem>
-              </List>
-            </Grid>
           </Grid>
         </Box>
         {this.renderTableContainer()}
         {this.renderComponentTablePagination()}
+        {rows.length ? (
+          <Box className="d-flex justify-content-end m-t-1">
+            <Link onClick={this.handleCancelUserControlModal}>
+              <Button
+                className="danger-btn min-width-inherit m-r-2"
+                variant="contained"
+              >
+                Cancel
+              </Button>
+            </Link>
+
+            <Link onClick={this.props.hideComponent}>
+              <Button
+                className="primary-btn min-width-inherit"
+                variant="contained"
+              >
+                Add users
+              </Button>
+            </Link>
+          </Box>
+        ) : (
+          <></>
+        )}
         {showCancelUserControlModal ? (
           <CancelGroupControlModal
             showModal={showCancelUserControlModal}
-            handleCancelGroupControlModal={this.handleCancelUserControlModal}
-            redirectUrl={`/app/setting/group-details/${this.getGroupId()}`}
+            handleCancelGroupControlModal={(event, isClickOnContinueBtn) => {
+              if (isClickOnContinueBtn) {
+                try {
+                  this.props.hideComponent();
+                } catch (e) {
+                  console.log(e);
+                }
+              }
+              this.handleCancelUserControlModal();
+            }}
+            isHandleCallBackOnContinueBtn={1}
           />
         ) : (
           <></>

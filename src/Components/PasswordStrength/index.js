@@ -32,7 +32,7 @@ class PasswordStrength extends Component {
     let { password } = this.props;
     let { pwdStrength } = this.state;
 
-    if (password.length >= 12 && password.length <= 22) {
+    if (password.length >= 8 && password.length <= 20) {
       if (pwdStrength.indexOf(steps.STEP_1) === -1) {
         pwdStrength.push(steps.STEP_1);
       }
@@ -40,7 +40,7 @@ class PasswordStrength extends Component {
       pwdStrength = this.removePasswordStrength(steps.STEP_1, pwdStrength);
     }
 
-    if (lowerCaseLengthInStr(password) >= 2) {
+    if (lowerCaseLengthInStr(password) >= 1) {
       if (pwdStrength.indexOf(steps.STEP_2) === -1) {
         pwdStrength.push(steps.STEP_2);
       }
@@ -48,7 +48,7 @@ class PasswordStrength extends Component {
       pwdStrength = this.removePasswordStrength(steps.STEP_2, pwdStrength);
     }
 
-    if (upperCaseLengthInStr(password) >= 2) {
+    if (upperCaseLengthInStr(password) >= 1) {
       if (pwdStrength.indexOf(steps.STEP_3) === -1) {
         pwdStrength.push(steps.STEP_3);
       }
@@ -98,7 +98,7 @@ class PasswordStrength extends Component {
                 <span>
                   <i className="fa-solid fa-check"></i>
                 </span>{" "}
-                {"between 12 and 22 charaters"}
+                {"between 8 and 20 charaters"}
               </li>
               <li
                 className={`${
@@ -108,7 +108,7 @@ class PasswordStrength extends Component {
                 <span>
                   <i className="fa-solid fa-check"></i>
                 </span>{" "}
-                {"2 lowercase letter (s)"}
+                {"1 lowercase letter(s)"}
               </li>
               <li
                 className={`${
@@ -118,7 +118,7 @@ class PasswordStrength extends Component {
                 <span>
                   <i className="fa-solid fa-check"></i>
                 </span>{" "}
-                {"2 uppercase letter (s)"}
+                {"1 uppercase letter(s)"}
               </li>
               <li
                 className={`${

@@ -67,7 +67,7 @@ class Roles extends Component {
   };
 
   handleChangeRowsPerPage = (event) => {
-    this.setState({ rpg: parseInt(event.target.value, 10) });
+    this.setState({ rpg: parseInt(event.target.value, 10),pg:0 });
   };
 
   handleCreateUserControlModal = () => {
