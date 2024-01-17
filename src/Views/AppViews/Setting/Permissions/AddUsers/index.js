@@ -264,7 +264,7 @@ class AddUsers extends Component {
 
   getGroupId = () => this.props.params.id;
   render() {
-    let { searchedKey, showCancelUserControlModal } = this.state;
+    let { searchedKey, showCancelUserControlModal , rows } = this.state;
     return (
       <Box className="add-users-container">
         {/* <Box className="list-heading">
@@ -311,34 +311,33 @@ class AddUsers extends Component {
                 </button>
               </Box>
             </Grid>
-            <Grid item xs={6}>
-              <List>
-                <ListItem>
-                  <Link onClick={this.handleCancelUserControlModal}>
-                    <Button
-                      className="danger-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Cancel
-                    </Button>
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link onClick={this.props.hideComponent}>
-                    <Button
-                      className="primary-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Add users
-                    </Button>
-                  </Link>
-                </ListItem>
-              </List>
-            </Grid>
           </Grid>
         </Box>
         {this.renderTableContainer()}
         {this.renderComponentTablePagination()}
+        {rows.length ? (
+          <Box className="d-flex justify-content-end m-t-1">
+            <Link onClick={this.handleCancelUserControlModal}>
+              <Button
+                className="danger-btn min-width-inherit m-r-2"
+                variant="contained"
+              >
+                Cancel
+              </Button>
+            </Link>
+
+            <Link onClick={this.props.hideComponent}>
+              <Button
+                className="primary-btn min-width-inherit"
+                variant="contained"
+              >
+                Add users
+              </Button>
+            </Link>
+          </Box>
+        ) : (
+          <></>
+        )}
         {showCancelUserControlModal ? (
           <CancelGroupControlModal
             showModal={showCancelUserControlModal}

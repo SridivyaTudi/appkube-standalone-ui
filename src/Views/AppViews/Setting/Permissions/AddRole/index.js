@@ -204,31 +204,6 @@ class AddRole extends Component {
                 </button>
               </Box>
             </Grid>
-            <Grid item xs={6}>
-              <List>
-                <ListItem>
-                  <Link onClick={this.handleCancelRoleControlModal}>
-                    <Button
-                      className="danger-btn min-width-inherit"
-                      variant="contained"
-                    >
-                      Cancel
-                    </Button>
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link onClick={this.props.hideComponent}>
-                    <Button
-                      className="primary-btn min-width-inherit"
-                      variant="contained"
-                      onClick={() => setActiveTab("roles")}
-                    >
-                      Add role
-                    </Button>
-                  </Link>
-                </ListItem>
-              </List>
-            </Grid>
           </Grid>
         </Box>
         {userStatus ? (
@@ -318,17 +293,42 @@ class AddRole extends Component {
             </Table>
           </TableContainer>
         )}
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 20]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rpg}
-          page={pg}
-          className="access-control-pagination"
-          onPageChange={this.handleChangePage}
-          onRowsPerPageChange={this.handleChangeRowsPerPage}
-        />
 
+        {rows.length ? (
+          <>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 20]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rpg}
+              page={pg}
+              className="access-control-pagination"
+              onPageChange={this.handleChangePage}
+              onRowsPerPageChange={this.handleChangeRowsPerPage}
+            />
+            <Box className="d-flex justify-content-end m-t-1">
+              <Link onClick={this.handleCancelRoleControlModal}>
+                <Button
+                  className="danger-btn min-width-inherit m-r-2"
+                  variant="contained"
+                >
+                  Cancel
+                </Button>
+              </Link>
+              <Link onClick={this.props.hideComponent}>
+                <Button
+                  className="primary-btn min-width-inherit"
+                  variant="contained"
+                  onClick={() => setActiveTab("roles")}
+                >
+                  Add role
+                </Button>
+              </Link>
+            </Box>
+          </>
+        ) : (
+          <></>
+        )}
         {showCancelRoleControlModal ? (
           <CancelGroupControlModal
             showModal={showCancelRoleControlModal}
