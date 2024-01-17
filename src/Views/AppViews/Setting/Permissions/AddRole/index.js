@@ -1,6 +1,6 @@
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { Box, Grid, List, ListItem, Button } from "@mui/material";
-import DefaultIcon from "../../../../../assets/img/setting/default-icon.png";
+import { Box, Grid, Button } from "@mui/material";
+import DefaultIcon from "assets/img/setting/default-icon.png";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -80,7 +80,7 @@ class AddRole extends Component {
   };
 
   handleChangeRowsPerPage = (event) => {
-    this.setState({ rpg: parseInt(event.target.value, 10) });
+    this.setState({ rpg: parseInt(event.target.value, 10),pg:0 });
   };
 
   handleCreateUserControlModal = () => {

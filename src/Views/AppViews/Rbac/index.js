@@ -3,10 +3,6 @@ import { getRbacPermissions } from "Utils";
 import RBAC_MAPPING from "Utils/RbacMapping";
 
 export class Rbac extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   getPermission = () => {
     let userPermission = getRbacPermissions();
 

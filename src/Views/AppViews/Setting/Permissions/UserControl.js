@@ -24,7 +24,10 @@ import Loader from "Components/Loader";
 import { v4 } from "uuid";
 import ConfirmationPopup from "Components/ConfirmationPopup";
 import { getFormattedDate, getCurrentUser } from "Utils";
-import { deleteUser, getUserPermissionData } from "Redux/Settings/SettingsThunk";
+import {
+  deleteUser,
+  getUserPermissionData,
+} from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
 
 class UserControl extends Component {
@@ -78,7 +81,10 @@ class UserControl extends Component {
   };
 
   handleChangeRowsPerPage = (event) => {
-    this.setState({ rpg: parseInt(event.target.value, 10) });
+    this.setState({
+      rpg: parseInt(event.target.value, 10),
+      pg: 0,
+    });
   };
 
   handleCreateUserControlModal = () => {
@@ -388,6 +394,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { deleteUser,getUserPermissionData  };
+const mapDispatchToProps = { deleteUser, getUserPermissionData };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserControl);

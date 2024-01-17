@@ -110,6 +110,7 @@ export class CreateGroup extends Component {
   handleChangeRowsPerPage = (event, isRole) => {
     this.setState({
       [`${isRole ? "roleRPG" : "rpg"}`]: parseInt(event.target.value, 10),
+      [`${isRole ? "rolePG" : "pg"}`]: 0,
     });
   };
 

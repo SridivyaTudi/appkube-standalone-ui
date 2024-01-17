@@ -44,7 +44,7 @@ class DisabledAuthenticationModal extends Component {
   };
 
   validate = (isSubmit) => {
-    const { formData, isValidPassword } = this.state;
+    const { formData } = this.state;
     let isValid;
     let errors;
     if (isSubmit) {
