@@ -48,7 +48,7 @@ class AddRole extends Component {
       actionButton: null,
       showCancelRoleControlModal: false,
       searchedKey: "",
-      selectedUsers: [],
+      selectedRoles: [],
     };
     let userDetails = getCurrentUser()?.info?.user;
     if (userDetails) {
@@ -80,7 +80,7 @@ class AddRole extends Component {
   };
 
   handleChangeRowsPerPage = (event) => {
-    this.setState({ rpg: parseInt(event.target.value, 10),pg:0 });
+    this.setState({ rpg: parseInt(event.target.value, 10), pg: 0 });
   };
 
   handleCreateUserControlModal = () => {
@@ -124,17 +124,17 @@ class AddRole extends Component {
 
   // Handle check box
   handleCheckBox = (event) => {
-    let { selectedUsers } = this.state;
+    let { selectedRoles } = this.state;
 
     let { id, checked } = event.target;
 
     if (checked) {
-      selectedUsers.push(+id);
+      selectedRoles.push(+id);
     } else {
-      selectedUsers = selectedUsers.filter((value) => value !== +id);
+      selectedRoles = selectedRoles.filter((value) => value !== +id);
     }
 
-    this.setState({ selectedUsers });
+    this.setState({ selectedRoles });
   };
 
   //  Serach Groups
@@ -160,16 +160,16 @@ class AddRole extends Component {
   };
   // Handle select all checkbox
   handleSelectAllCheckBox = (event, isRole = 0) => {
-    let { selectedUsers, rows } = this.state;
+    let { selectedRoles, rows } = this.state;
 
     let { checked } = event.target;
 
     if (checked) {
-      selectedUsers = rows.map((value) => value.id);
+      selectedRoles = rows.map((value) => value.id);
     } else {
-      selectedUsers = [];
+      selectedRoles = [];
     }
-    this.setState({ selectedUsers });
+    this.setState({ selectedRoles });
   };
   getGroupId = () => this.props.params.id;
 
@@ -180,7 +180,7 @@ class AddRole extends Component {
       rpg,
       showCancelRoleControlModal,
       searchedKey,
-      selectedUsers,
+      selectedRoles,
     } = this.state;
     let userStatus =
       this.props.userPermissionData.status === status.IN_PROGRESS;
@@ -194,7 +194,7 @@ class AddRole extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Search users"
+                  placeholder="Search roles"
                   value={searchedKey}
                   onChange={this.handleSearchChange}
                   autoFocus="autoFocus"
@@ -224,7 +224,7 @@ class AddRole extends Component {
                       disabled={rows?.length ? false : true}
                       checked={
                         rows?.length > 0 &&
-                        rows.length === selectedUsers?.length
+                        rows.length === selectedRoles?.length
                       }
                       onChange={(e) => this.handleSelectAllCheckBox(e)}
                     />{" "}
@@ -238,13 +238,21 @@ class AddRole extends Component {
                 {rows.length ? (
                   rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
                     <TableRow key={index}>
-                      <TableCell>
+                      <TableCell
+                        onClick={(e) => {
+                          this.handleCheckBox({
+                            target: {
+                              id: row.id,
+                              checked: !selectedRoles.includes(row.id),
+                            },
+                          });
+                        }}
+                      >
                         <Checkbox
                           className="check-box"
                           size="small"
                           id={`${row.id}`}
-                          checked={selectedUsers.includes(row.id)}
-                          onChange={this.handleCheckBox}
+                          checked={selectedRoles.includes(row.id)}
                         />
                         {row?.name}
                         {row.default ? (

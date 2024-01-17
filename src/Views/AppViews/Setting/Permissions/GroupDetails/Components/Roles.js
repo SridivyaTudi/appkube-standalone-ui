@@ -67,7 +67,7 @@ class Roles extends Component {
   };
 
   handleChangeRowsPerPage = (event) => {
-    this.setState({ rpg: parseInt(event.target.value, 10),pg:0 });
+    this.setState({ rpg: parseInt(event.target.value, 10), pg: 0 });
   };
 
   handleCreateUserControlModal = () => {
@@ -122,13 +122,21 @@ class Roles extends Component {
         {rows?.length ? (
           rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
             <TableRow key={index}>
-              <TableCell>
+              <TableCell
+                onClick={(e) => {
+                  this.handleCheckBox({
+                    target: {
+                      id: row.id,
+                      checked: !selectedRoles.includes(row.id),
+                    },
+                  });
+                }}
+              >
                 <Checkbox
                   size="small"
                   className="check-box"
                   id={`${row.id}`}
                   checked={selectedRoles.includes(row.id)}
-                  onChange={this.handleCheckBox}
                 />{" "}
                 {row.name}
                 {row.default ? (
