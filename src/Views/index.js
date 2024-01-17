@@ -43,6 +43,7 @@ import AddRole from "./AppViews/Setting/Permissions/AddRole";
 import CreateGroup from "./AppViews/Setting/Permissions/CreateGroup";
 import UserProfile from "./AppViews/Setting/Permissions/UserProfile";
 import CreatePolicy from "./AppViews/Setting/Permissions/CreatePolicy";
+import BIMapping from "./AppViews/BIMapping";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -206,8 +207,9 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/application-status-dashboard`}
             element={<ApplicationStatusDashboard />}
           />
-          <Route path={`/error`} element={<Error />} />
           <Route path={`${APP_PREFIX_PATH}/reports`} element={<Reports />} />
+          <Route path={`${APP_PREFIX_PATH}/bimapping`} element={<BIMapping/>}/>
+          <Route path={`/error`} element={<Error />} />
         </Routes>
         <ToastContainer
           position="top-right"

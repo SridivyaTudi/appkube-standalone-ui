@@ -6,6 +6,11 @@
       "name": "Dashboard"
     },
     {
+      "link": "/bimapping",
+      "icon": "dashboard",
+      "name": "BIMapping"
+    },
+    {
       "link": "/environments",
       "icon": "asset",
       "name": "Asset",
