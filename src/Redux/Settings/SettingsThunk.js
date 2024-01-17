@@ -254,7 +254,27 @@ export const disableAuthMFACode = createAsyncThunk(
   "settings/disableAuthMFACode",
   async (params) => {
     try {
-      const response = await postLoginService.post(config.DISABLE_AUTH_MFA, params);
+      const response = await postLoginService.post(
+        config.DISABLE_AUTH_MFA,
+        params
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+);
+
+export const addUsersFromGroupDetails = createAsyncThunk(
+  "settings/addUsersFromGroupDetails",
+  async (params) => {
+    try {
+      let url = config.ADD_USERS_FROM_GROUP_DETAILS.replace(
+        "#role-id#",
+        params.roleId
+      ).replace("#user-ids#", params.userIds);
+      const response = await postLoginService.post(url);
       return response;
     } catch (error) {
       console.log(error);

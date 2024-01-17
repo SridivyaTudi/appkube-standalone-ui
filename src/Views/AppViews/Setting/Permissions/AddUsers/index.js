@@ -15,12 +15,16 @@ import {
 } from "@mui/material";
 import { setActiveTab, getCurrentUser, getFormattedDate } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
-import { getUserPermissionData } from "Redux/Settings/SettingsThunk";
+import {
+  getUserPermissionData,
+  addUsersFromGroupDetails,
+} from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import CancelGroupControlModal from "../Components/CancelGroupControlModal";
-
+import { ToastMessage } from "Toast/ToastMessage";
+import LoadingButton from "@mui/lab/LoadingButton";
 class AddUsers extends Component {
   user = { id: "", username: "", email: "", profileImage: "" };
   constructor(props) {
@@ -54,6 +58,25 @@ class AddUsers extends Component {
         let rows = this.props.userPermissionData.data?.users || [];
         if (rows) {
           this.setState({ rows });
+        }
+      }
+    }
+
+    if (
+      this.props.userCreationFromGroupDetails.status !==
+      prevProps.userCreationFromGroupDetails.status
+    ) {
+      if (this.props.userCreationFromGroupDetails.status === status.SUCCESS) {
+        let response = this.props.userCreationFromGroupDetails.data;
+        if (response.type === "SUCCESS") {
+          ToastMessage.success(
+            response.message || "User's added to role group successfully."
+          );
+          this.props.hideComponent();
+        } else {
+          ToastMessage.error(
+            response.message || "User can't add to role group."
+          );
         }
       }
     }
@@ -263,8 +286,25 @@ class AddUsers extends Component {
   };
 
   getGroupId = () => this.props.params.id;
+
+  onClickAddUsers = () => {
+    let { selectedUsers } = this.state;
+
+    if (selectedUsers?.length) {
+      this.props.addUsersFromGroupDetails({
+        roleId: this.getGroupId(),
+        userIds: selectedUsers.toString(),
+      });
+    } else {
+      ToastMessage.error("Please select users!");
+    }
+  };
+
   render() {
     let { searchedKey, showCancelUserControlModal, rows } = this.state;
+    let { userCreationFromGroupDetails } = this.props;
+    let userToGroupsCreationStatus =
+      userCreationFromGroupDetails.status === status.IN_PROGRESS;
     return (
       <Box className="add-users-container">
         <Box className="setting-common-searchbar">
@@ -299,14 +339,15 @@ class AddUsers extends Component {
               </Button>
             </Link>
 
-            <Link onClick={this.props.hideComponent}>
-              <Button
-                className="primary-btn min-width-inherit"
-                variant="contained"
-              >
-                Add users
-              </Button>
-            </Link>
+            <LoadingButton
+              className="primary-btn min-width-inherit"
+              variant="contained"
+              onClick={this.onClickAddUsers}
+              disabled={userToGroupsCreationStatus}
+              loading={userToGroupsCreationStatus}
+            >
+              Add users
+            </LoadingButton>
           </Box>
         ) : (
           <></>
@@ -334,14 +375,16 @@ class AddUsers extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { userPermissionData } = state.settings;
+  const { userPermissionData, userCreationFromGroupDetails } = state.settings;
   return {
     userPermissionData,
+    userCreationFromGroupDetails,
   };
 };
 
 const mapDispatchToProps = {
   getUserPermissionData,
+  addUsersFromGroupDetails,
 };
 
 export default connect(

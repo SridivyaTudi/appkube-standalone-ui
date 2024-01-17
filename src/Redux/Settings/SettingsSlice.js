@@ -20,6 +20,7 @@ import {
   resetPasswordOfUser,
   addUserToGroups,
   disableAuthMFACode,
+  addUsersFromGroupDetails,
 } from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
@@ -122,6 +123,10 @@ export const settingsSlice = createSlice({
       data: "",
     },
     disableMfaAuth: {
+      status: null,
+      data: null,
+    },
+    userCreationFromGroupDetails: {
       status: null,
       data: null,
     },
@@ -617,6 +622,32 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         disableMfaAuth: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [addUsersFromGroupDetails.pending]: (state) => {
+      return {
+        ...state,
+        userCreationFromGroupDetails: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [addUsersFromGroupDetails.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        userCreationFromGroupDetails: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [addUsersFromGroupDetails.rejected]: (state) => {
+      return {
+        ...state,
+        userCreationFromGroupDetails: {
           status: status.FAILURE,
         },
       };
