@@ -124,22 +124,37 @@ class CreateDepartment extends Component {
                       <Box className="associate-boxs">
                         <List>
                           <ListItem>
-                            <Box className="image-box">
-                              <img src={Aws} alt="" />
-                            </Box>
-                            <span>AWS</span>
+                            <Button
+                              className="secondary-btn min-width"
+                              variant="contained"
+                            >
+                              <Box className="image-box">
+                                <img src={Aws} alt="" />
+                              </Box>
+                              AWS
+                            </Button>
                           </ListItem>
                           <ListItem>
-                            <Box className="image-box">
-                              <img src={Microsoftazure} alt="" />
-                            </Box>
-                            <span> Microsoft azure</span>
+                            <Button
+                              className="secondary-btn min-width"
+                              variant="contained"
+                            >
+                              <Box className="image-box">
+                                <img src={Microsoftazure} alt="" />
+                              </Box>
+                              Microsoft azure
+                            </Button>
                           </ListItem>
                           <ListItem>
-                            <Box className="image-box">
-                              <img src={GoogleCloud} alt="" />
-                            </Box>
-                            <span> GCP</span>
+                            <Button
+                              className="secondary-btn min-width"
+                              variant="contained"
+                            >
+                              <Box className="image-box">
+                                <img src={GoogleCloud} alt="" />
+                              </Box>
+                              GCP
+                            </Button>
                           </ListItem>
                         </List>
                       </Box>
