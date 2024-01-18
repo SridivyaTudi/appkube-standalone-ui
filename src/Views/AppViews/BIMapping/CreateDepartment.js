@@ -12,6 +12,7 @@ class CreateDepartment extends Component {
     super(props);
     this.state = {
       status: false,
+      selectedLandingZone: "",
     };
   }
 
@@ -20,8 +21,12 @@ class CreateDepartment extends Component {
       status: true,
     });
   }
+
+  onClickLandingZone() {
+    this.setState({ selectedLandingZone: "AWS" });
+  }
   render() {
-    const { status } = this.state;
+    const { status, selectedLandingZone } = this.state;
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -127,6 +132,7 @@ class CreateDepartment extends Component {
                             <Button
                               className="secondary-btn min-width"
                               variant="contained"
+                              onClick={() => this.onClickLandingZone("AWS")}
                             >
                               <Box className="image-box">
                                 <img src={Aws} alt="" />
@@ -138,6 +144,9 @@ class CreateDepartment extends Component {
                             <Button
                               className="secondary-btn min-width"
                               variant="contained"
+                              onClick={() =>
+                                this.onClickLandingZone("MICROSOFT_AZURE")
+                              }
                             >
                               <Box className="image-box">
                                 <img src={Microsoftazure} alt="" />
@@ -149,6 +158,9 @@ class CreateDepartment extends Component {
                             <Button
                               className="secondary-btn min-width"
                               variant="contained"
+                              onClick={() =>
+                                this.onClickLandingZone("MICROSOFT_AZURE")
+                              }
                             >
                               <Box className="image-box">
                                 <img src={GoogleCloud} alt="" />
@@ -158,440 +170,446 @@ class CreateDepartment extends Component {
                           </ListItem>
                         </List>
                       </Box>
-                      <Box className="select-landing-section">
-                        <Box className="landing-head">
-                          <span>Select Landing zone</span>
-                          <span>
-                            <Checkbox disabled className="check-box" />
-                            Include associated LZ
-                          </span>
+                      {["MICROSOFT_AZURE", "AWS"].includes(
+                        selectedLandingZone
+                      ) ? (
+                        <Box className="select-landing-section">
+                          <Box className="landing-head">
+                            <span>Select Landing zone</span>
+                            <span>
+                              <Checkbox disabled className="check-box" />
+                              Include associated LZ
+                            </span>
+                          </Box>
+                          <Box className="select-landing-cards m-t-3">
+                            <Grid
+                              container
+                              rowSpacing={1.5}
+                              columnSpacing={{ xs: 1.5 }}
+                              alignItems={"center"}
+                            >
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Card className="select-landing-card">
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img src={Aws} alt="" />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Account no 123456
+                                    </Box>
+                                  </Box>
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        Associated LOB
+                                      </span>
+                                      <label className="d-block">002</label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        150
+                                      </label>
+                                    </Box>
+                                  </Box>
+                                </Card>
+                              </Grid>
+                            </Grid>
+                          </Box>
                         </Box>
-                        <Box className="select-landing-cards m-t-3">
-                          <Grid
-                            container
-                            rowSpacing={1.5}
-                            columnSpacing={{ xs: 1.5 }}
-                            alignItems={"center"}
-                          >
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card className="select-landing-card">
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img src={Aws} alt="" />
-                                  </Box>
-                                  <Box className="card-title">
-                                    Account no 123456
-                                  </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      Associated LOB
-                                    </span>
-                                    <label className="d-block">002</label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      150
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                          </Grid>
-                        </Box>
-                      </Box>
+                      ) : (
+                        <></>
+                      )}
                     </Box>
                   </Box>
                 </>
