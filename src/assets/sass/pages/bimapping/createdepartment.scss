@@ -2,17 +2,16 @@
   width: 100%;
   background: #ffffff;
   border-radius: 10px;
-  //   height: 650px;
+  min-height: 575px;
   margin-top: 20px;
   padding: 50px 15px 15px 15px;
   .create-department-content {
     width: 50%;
     margin: 0 auto;
-    height: 100%;
     .create-department-inner-content {
       width: 100%;
       display: block;
-      height: 90%;
+      min-height: 450px;
       .add-department {
         width: 100%;
         .icon-box {
@@ -152,6 +151,12 @@
                 &:last-child {
                   margin-right: 0;
                 }
+                &.active{
+                    .secondary-btn {
+                        background-color: #384CFF;
+                        color: #ffffff;
+                      }
+                }
               }
             }
           }
@@ -236,6 +241,34 @@
                   }
                 }
               }
+            }
+          }
+          .select-category-section {
+            width: 100%;
+            margin-top: 15px;
+            .category-title {
+              font-size: 16px;
+              line-height: 22px;
+              font-weight: 500;
+              color: #363333;
+            }
+            .select-categorys {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              margin-top: 10px;
+              .radio-btn{
+                margin: 0 5px 0 0;
+                color: #384cff;
+              }
+              label{
+                font-size: 14px;
+                line-height: 20px;
+                font-weight: 500;
+                color: #000000;
+              }
+              
             }
           }
         }

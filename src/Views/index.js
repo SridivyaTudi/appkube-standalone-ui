@@ -46,6 +46,7 @@ import CreatePolicy from "./AppViews/Setting/Permissions/CreatePolicy";
 import BIMapping from "./AppViews/BIMapping";
 import CreateDepartment from "./AppViews/BIMapping/CreateDepartment";
 import ProductCategory from "./AppViews/BIMapping/ProductCategory";
+import AddingProduct from "./AppViews/BIMapping/AddingProduct";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -218,6 +219,10 @@ export const Views = (props) => {
           <Route
             path={`${APP_PREFIX_PATH}/bim/product-category`}
             element={<ProductCategory />}
+          />
+           <Route
+            path={`${APP_PREFIX_PATH}/bim/adding-product`}
+            element={<AddingProduct />}
           />
           <Route path={`/error`} element={<Error />} />
         </Routes>
