@@ -23,5 +23,7 @@
   "create-group": "Create Group",
   "create-policy": "Create Policy",
   "add-user-group": "Add User Group",
-  "add-users": "Add Users"
+  "add-users": "Add Users",
+  "bim": "BI Mapping",
+  "create-department": "Create Department"
 }

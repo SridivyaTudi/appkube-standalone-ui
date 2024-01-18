@@ -40,7 +40,7 @@ class BIMapping extends Component {
             >
               Create
             </Button>
-            {this.state.isSelectDepartmentOpen == true && (
+            {this.state.isSelectDepartmentOpen === true && (
               <div
                 className={
                   isSelectDepartmentOpen
@@ -51,15 +51,14 @@ class BIMapping extends Component {
                 <List>
                   <ListItem>
                     <Link to={`/app/bim/create-department`}>
-                    <i className="fa-solid fa-circle-dot"></i>Create Department
+                      <i className="fa-solid fa-circle-dot"></i>Create
+                      Department
                     </Link>
-                   
                   </ListItem>
                   <ListItem>
-                  <Link to={""}>
-                  <i className="fa-solid fa-circle-dot"></i>Add Products
-                  </Link>
-                    
+                    <Link to={""}>
+                      <i className="fa-solid fa-circle-dot"></i>Add Products
+                    </Link>
                   </ListItem>
                 </List>
               </div>
