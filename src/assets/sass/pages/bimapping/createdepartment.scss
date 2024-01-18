@@ -1,13 +1,107 @@
 .create-department-container {
+  width: 100%;
   background: #ffffff;
   border-radius: 10px;
-  height: 550px;
+  height: 650px;
   margin-top: 20px;
   padding: 50px 15px 15px 15px;
   .create-department-content {
-    width: 100%;
-    display: block;
-    height: 90%;
-    
+    width: 40%;
+    margin: 0 auto;
+    height: 100%;
+    .create-department-inner-content {
+      width: 100%;
+      display: block;
+      height: 90%;
+      .add-department {
+        width: 100%;
+        .icon-box {
+          width: 50px;
+          min-width: 50px;
+          height: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #dde1f8;
+          border-radius: 5px;
+        }
+        .department-text {
+          width: 100%;
+          label {
+            font-size: 16px;
+            line-height: 22px;
+            font-weight: 500;
+            color: #363333;
+          }
+          span {
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: 400;
+            color: #7e7e8f;
+          }
+        }
+      }
+      .basic-information {
+        width: 100%;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #f6f7fb;
+        padding: 10px 15px;
+        border-radius: 5px;
+        .check-box {
+          width: 25px;
+          min-width: 25px;
+          height: 25px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          background: #53ca43;
+          text-align: center;
+          margin-right: 10px;
+          i {
+            color: #ffffff;
+          }
+        }
+        .information-text {
+          width: 100%;
+          label {
+            font-size: 16px;
+            line-height: 22px;
+            font-weight: 500;
+            color: #363333;
+          }
+          span {
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: 400;
+            color: #7e7e8f;
+          }
+        }
+        .arrow-icon {
+          color: #383874;
+        }
+      }
+      .information-form {
+        padding: 20px 30px 50px 30px;
+        border-radius: 5px;
+        border: 2px solid #f6f7fb;
+        .form-group {
+          width: 100%;
+          .form-label {
+            display: flex;
+            width: 100%;
+            font-size: 14px;
+            color: #344054;
+            line-height: 20px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            padding-left: 0;
+          }
+        }
+      }
+    }
   }
 }
