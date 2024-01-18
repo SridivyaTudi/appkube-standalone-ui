@@ -23,15 +23,45 @@
         box-shadow: none;
         min-height: 156px;
         display: flex;
-        justify-content: center;
-        align-items: center;
+
+        padding: 11px 15px;
 
         .content {
+            margin: auto;
+
             p {
                 font-size: 11px;
                 line-height: 16px;
                 color: #667085;
 
+            }
+        }
+
+        .service-container {
+            display: flex;
+            align-items: center;
+            .service-card {
+                min-width: 105px;
+                min-height: 100px;
+                box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px #6C49AC0D;
+                margin-right: 15px;
+
+                &:last-child{
+                    margin-right: 0;
+                }
+            }
+
+            .service-details {
+                text-align: center;
+                padding: 16px 18px;
+
+                .name {
+                    margin-top: 8px;
+                    font-size: 15px;
+                    line-height: 28px;
+                    color: #344054;
+                    font-weight: 500;
+                }
             }
         }
     }
