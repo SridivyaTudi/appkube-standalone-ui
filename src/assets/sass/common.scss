@@ -89,6 +89,10 @@ input:focus-visible {
   overflow: inherit !important;
 }
 
+.justify-content-between {
+  justify-content: space-between;
+}
+
 .justify-content-end {
   justify-content: flex-end;
 }
@@ -104,12 +108,15 @@ input:focus-visible {
 .border-bottom {
   border-bottom: 1px solid #d2cbcb;
 }
+
 .border-top {
   border-top: 1px solid #d2cbcb;
 }
+
 .border-right {
   border-right: 1px solid #d2cbcb;
 }
+
 .border-left {
   border-left: 1px solid #d2cbcb;
 }
@@ -182,6 +189,7 @@ p {
     display: block;
     width: 100%;
     list-style: none;
+
     li {
       display: flex;
       color: #959595;
@@ -189,6 +197,7 @@ p {
       font-weight: 400;
       line-height: 16px;
       margin-bottom: 10px;
+
       span {
         display: inline-block;
         vertical-align: top;
@@ -201,8 +210,10 @@ p {
         border-radius: 50%;
         background-color: rgba(150, 150, 150, 0.5);
       }
+
       &.green {
         color: #00b929;
+
         span {
           background-color: rgba(0, 185, 41, 0.3);
         }
@@ -434,6 +445,7 @@ button.light-btn {
     box-shadow: none;
   }
 }
+
 button.danger-btn {
   background-color: #ff2d2e;
   border-color: #ff2d2e;
@@ -446,6 +458,7 @@ button.danger-btn {
   letter-spacing: 0px;
   border-radius: 5px;
   font-family: "Open Sans", sans-serif;
+
   &:hover {
     background: #ff2d2db6;
     color: #ffffff;
@@ -453,6 +466,7 @@ button.danger-btn {
     border-color: #ff2d2e;
   }
 }
+
 button.danger-outline-btn {
   border-color: #ff2d2e;
   color: #ff2d2e;
@@ -465,6 +479,7 @@ button.danger-outline-btn {
   letter-spacing: 0px;
   border-radius: 5px;
   font-family: "Open Sans", sans-serif;
+
   &:hover {
     background: #ff2d2db6;
     color: #ffffff;
@@ -472,6 +487,7 @@ button.danger-outline-btn {
     border-color: #ff2d2e;
   }
 }
+
 button.info-btn {
   background: #8676ff;
   color: #ffffff;
@@ -484,6 +500,7 @@ button.info-btn {
   letter-spacing: 0px;
   border-radius: 5px;
   font-family: "Open Sans", sans-serif;
+
   &:hover {
     background: #8676ffb7;
     color: #ffffff;
@@ -567,9 +584,11 @@ a {
 //*******************************************Loader****************************************//
 .loader {
   font-size: 14px;
+
   span {
     margin-left: 5px;
   }
+
   &.small-loader {
     font-size: 12px;
   }
@@ -1041,6 +1060,7 @@ a {
       border-bottom-color: #b3b3b3;
       border-bottom-style: dotted;
     }
+
     tbody {
       tr {
         &:last-child {
@@ -1052,6 +1072,7 @@ a {
             }
           }
         }
+
         td {
           font-weight: 400;
           color: #383874;
@@ -1065,10 +1086,12 @@ a {
           border-bottom-color: #eaecf0;
           border-bottom-style: solid;
           position: relative;
-          strong{
+
+          strong {
             font-weight: 500;
           }
-          .roles-box{
+
+          .roles-box {
             font-size: 12px;
             line-height: 16px;
             font-weight: 400;
@@ -1078,7 +1101,8 @@ a {
             border-radius: 4px;
             margin-left: 10px;
             color: #ffffff;
-            span{
+
+            span {
               margin-right: 5px;
             }
           }
@@ -1093,6 +1117,7 @@ a {
             font-weight: 600;
             position: relative;
             padding: 5px 10px 5px 20px;
+
             &::before {
               position: absolute;
               left: 10px;
@@ -1114,6 +1139,7 @@ a {
             padding: 10px 10px;
             border-radius: 5px;
             color: #384cff;
+
             &:hover {
               background-color: #d1d5ff;
             }
@@ -1138,8 +1164,8 @@ a {
             overflow: hidden;
             border-radius: 10px;
             background-color: #ffffff;
-            box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px
-              #6c49ac0d;
+            box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px #6c49ac0d;
+
             .secondary-text-btn {
               font-size: 12px;
               padding: 5px 10px;
@@ -1148,6 +1174,7 @@ a {
               border-radius: 0;
               color: #383874;
               border-bottom: 1px solid #dbdff1;
+
               &:last-child {
                 border-bottom: none;
               }
@@ -1162,11 +1189,12 @@ a {
               }
             }
           }
-          .status-btn{
+
+          .status-btn {
             font-size: 12px;
             line-height: 16px;
             font-weight: 500;
-           
+
             display: inline-block;
             padding: 4px 10px;
             border-radius: 3px;
@@ -1174,10 +1202,12 @@ a {
             background: #00b929;
             text-transform: lowercase;
             border: none;
-            &.dark{
+
+            &.dark {
               background: #656575;
             }
-            &::first-letter{
+
+            &::first-letter {
               text-transform: capitalize;
             }
           }
@@ -1192,6 +1222,7 @@ a {
     color: #000000;
   }
 }
+
 .Toastify__close-button {
   position: absolute;
   top: 23px;
@@ -1199,9 +1230,9 @@ a {
 }
 
 
-.accordion-table{
-  .table{
-    th{
+.accordion-table {
+  .table {
+    th {
       font-weight: 500;
       color: #000000;
       padding-left: 15px;
