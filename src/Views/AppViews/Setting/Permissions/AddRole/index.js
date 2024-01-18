@@ -238,23 +238,26 @@ class AddRole extends Component {
                 {rows.length ? (
                   rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
                     <TableRow key={index}>
-                      <TableCell
-                        onClick={(e) => {
-                          this.handleCheckBox({
-                            target: {
-                              id: row.id,
-                              checked: !selectedRoles.includes(row.id),
-                            },
-                          });
-                        }}
-                      >
+                      <TableCell>
                         <Checkbox
                           className="check-box"
                           size="small"
                           id={`${row.id}`}
                           checked={selectedRoles.includes(row.id)}
+                          onChange={this.handleCheckBox}
                         />
-                        {row?.name}
+                        <span
+                          onClick={(e) => {
+                            this.handleCheckBox({
+                              target: {
+                                id: row.id,
+                                checked: !selectedRoles.includes(row.id),
+                              },
+                            });
+                          }}
+                        >
+                          {row?.name}
+                        </span>
                         {row.default ? (
                           <Box className="d-flex roles-box">
                             <HtmlTooltip

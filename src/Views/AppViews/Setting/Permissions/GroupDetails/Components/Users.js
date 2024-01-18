@@ -110,23 +110,26 @@ class Users extends Component {
         {rows?.length ? (
           rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
             <TableRow key={index}>
-              <TableCell
-                onClick={(e) => {
-                  this.handleCheckBox({
-                    target: {
-                      id: row.id,
-                      checked: !selectedUsers.includes(row.id),
-                    },
-                  });
-                }}
-              >
+              <TableCell>
                 <Checkbox
                   size="small"
                   className="check-box"
                   id={`${row.id}`}
                   checked={selectedUsers.includes(row.id)}
+                  onChange={this.handleCheckBox}
                 />
-                {row.userName}
+                <span
+                  onClick={(e) => {
+                    this.handleCheckBox({
+                      target: {
+                        id: row.id,
+                        checked: !selectedUsers.includes(row.id),
+                      },
+                    });
+                  }}
+                >
+                  {row.userName}
+                </span>
               </TableCell>
               <TableCell>{row.eMail}</TableCell>
               <TableCell align="center">{row.numberOfGroups}</TableCell>
