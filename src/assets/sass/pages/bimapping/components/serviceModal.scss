@@ -1,0 +1,100 @@
+.service-modal-container {
+    width: 500px !important;
+    border-radius: 10px;
+    background: white;
+    margin: 0 auto;
+
+
+    box-shadow: 0px 100px 80px 0px #6C49AC12;
+
+    .modal-content {
+        padding: 0;
+
+        .service-header {
+            padding: 9px 12px;
+            border-bottom: 1px solid #ECECEC;
+
+            .icon {
+                width: 24px;
+                height: 24px;
+                background-color: #F6F7FB;
+                border-radius: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 8px;
+            }
+
+            .name {
+                font-weight: 600;
+                font-size: 13px;
+                line-height: 19px;
+                color: #383874;
+            }
+        }
+
+        .tabs-container {
+            .MuiTabs-scroller {
+                display: flex;
+                justify-content: center;
+
+                .css-heg063-MuiTabs-flexContainer {
+                    border-bottom: 1px solid #C6CBD9;
+
+                    .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+                        padding: 0px 14px 10px;
+                        min-width: auto;
+                        font-size: 12px;
+                        font-weight: 600;
+                        line-height: 16px;
+                        color: #383874;
+                        text-transform: capitalize;
+                    }
+
+                }
+
+                .css-1aquho2-MuiTabs-indicator {
+                    height: 5px;
+                    background-color: #8676FF;
+                    border-radius: 5px 5px 0px 0px;
+                }
+            }
+
+            .tabs-content {
+                padding: 18px 24px;
+
+                .service-info-container {
+                    margin-bottom: 10px;
+                    .icon {
+                        width: 24px;
+                        height: 24px;
+                        background-color: #FAFBF6;
+                        border-radius: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-right: 26px;
+                    }
+
+                    .name {
+                        font-size: 16px;
+                        line-height: 26px;
+                        color: #383874;
+                        font-weight: 400;
+                    }
+
+                    .number {
+                        font-size: 17px;
+                        line-height: 26px;
+                        color: #383874;
+                        font-weight: 500;
+                    }
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+                }
+
+            }
+        }
+    }
+}

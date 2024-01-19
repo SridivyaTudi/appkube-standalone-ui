@@ -4,9 +4,22 @@ import admissionIcon from "../../../assets/img/bimapping/admission.png";
 import searchIcon from "../../../assets/img/bimapping/search.png";
 import filterIcon from "../../../assets/img/bimapping/filter.png";
 import rbacIcon from "../../../assets/img/bimapping/rbac.png";
-
+import ServiceModal from "./Components/ServiceModal";
 class ProductCategory extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showServiceModal: false,
+    };
+  }
+  handleServiceModal = () => {
+    this.setState({
+      showServiceModal: !this.state.showServiceModal,
+    });
+  };
+
   render() {
+    const { showServiceModal } = this.state;
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -23,7 +36,10 @@ class ProductCategory extends Component {
             <Card className="product-info-card">
               <Box className="service-container">
                 <Card className="service-card">
-                  <Box className="service-details">
+                  <Box
+                    className="service-details"
+                    onClick={() => this.handleServiceModal()}
+                  >
                     <img src={admissionIcon} alt="" />
                     <span className="d-block name">Admission</span>
                   </Box>
@@ -68,6 +84,14 @@ class ProductCategory extends Component {
             </Card>
           </Box>
         </Box>
+        {showServiceModal ? (
+          <ServiceModal
+            showModal={showServiceModal}
+            handleServiceModal={this.handleServiceModal}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }
