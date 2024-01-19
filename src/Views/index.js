@@ -47,6 +47,7 @@ import BIMapping from "./AppViews/BIMapping";
 import CreateDepartment from "./AppViews/BIMapping/CreateDepartment";
 import ProductCategory from "./AppViews/BIMapping/ProductCategory";
 import AddingProduct from "./AppViews/BIMapping/AddingProduct";
+import Tier from "./AppViews/BIMapping/Tier";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -223,6 +224,10 @@ export const Views = (props) => {
            <Route
             path={`${APP_PREFIX_PATH}/bim/adding-product`}
             element={<AddingProduct />}
+          />
+           <Route
+            path={`${APP_PREFIX_PATH}/bim/tier`}
+            element={<Tier/>}
           />
           <Route path={`/error`} element={<Error />} />
         </Routes>

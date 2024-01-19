@@ -174,12 +174,14 @@ class AddingProduct extends Component {
                       <Box className="category-title">Select Category</Box>
                       <Box className="select-categorys">
                         <Box className="d-flex align-items-center m-r-3">
+                        <Link to={`/app/bim/tier`}>
                           <input
                             type="radio"
                             name="product"
                             className="radio-btn"
                           />
                           <label>3 Tier</label>
+                          </Link>
                         </Box>
                         <Box className="d-flex align-items-center">
                           <Link to={`/app/bim/product-category`}>
