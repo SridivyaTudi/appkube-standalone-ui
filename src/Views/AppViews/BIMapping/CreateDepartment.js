@@ -18,12 +18,33 @@ class CreateDepartment extends Component {
     super(props);
     this.state = {
       activeTab: 0,
-      selectedLandingZone: "",
-      selectedChildLandingZone: "",
+      step1FormData: {
+        name: "",
+        description: "",
+      },
+      step2FormData: {
+        selectedLandingZone: "",
+        selectedChildLandingZone: "",
+      },
     };
   }
 
+  handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const { step1FormData, step2FormData, activeTab } = this.state;
+
+    if (activeTab === 0) {
+      step1FormData[name] = value;
+    } else if (activeTab === 1) {
+      step2FormData[name] = value;
+    }
+
+    this.setState({ step1FormData, step2FormData });
+  };
+
   renderStep1Form = () => {
+    let { isSubmit,step1FormData } = this.state;
+    let { errors } = this.validateSteps();
     return (
       <Box className="basic-information-section">
         <Box className="basic-information">
@@ -53,7 +74,14 @@ class CreateDepartment extends Component {
               id="name"
               name="name"
               placeholder="HR"
+              value={step1FormData.name}
+              onChange={this.handleInputChange}
             />
+            {isSubmit && errors?.name ? (
+              <span className="red">{errors.name}</span>
+            ) : (
+              ""
+            )}
           </Box>
           <Box className="form-group m-t-3">
             <label htmlFor="description" className="form-label">
@@ -70,7 +98,14 @@ class CreateDepartment extends Component {
                 paddingRight: "15px",
               }}
               placeholder="Enter Description"
+              value={step1FormData.description}
+              onChange={this.handleInputChange}
             />
+            {isSubmit && errors?.description ? (
+              <span className="red">{errors.description}</span>
+            ) : (
+              ""
+            )}
           </Box>
         </Box>
       </Box>
@@ -78,7 +113,9 @@ class CreateDepartment extends Component {
   };
 
   renderStep2Form = () => {
-    const { selectedLandingZone } = this.state;
+    const {
+      step2FormData: { selectedLandingZone },
+    } = this.state;
     return (
       <Box className="basic-information-section">
         <Box className="basic-information">
@@ -171,7 +208,12 @@ class CreateDepartment extends Component {
                         item
                         xs={4}
                         onClick={() =>
-                          this.setState({ selectedChildLandingZone: true })
+                          this.setState({
+                            step2FormData: {
+                              ...this.state.step2FormData,
+                              selectedChildLandingZone: true,
+                            },
+                          })
                         }
                         key={v4()}
                       >
@@ -216,7 +258,10 @@ class CreateDepartment extends Component {
   };
 
   renderBtns = () => {
-    let { activeTab, selectedChildLandingZone } = this.state;
+    let {
+      activeTab,
+      step2FormData: { selectedChildLandingZone },
+    } = this.state;
 
     return (
       <Box
@@ -233,7 +278,14 @@ class CreateDepartment extends Component {
         <Button
           className="primary-btn"
           variant="contained"
-          onClick={() => this.setActiveTab(1)}
+          onClick={() => {
+            this.setState({ isSubmit: true }, () => {
+              let { isValid } = this.validateSteps();
+              if (isValid) {
+                this.setActiveTab(1);
+              }
+            });
+          }}
           disabled={activeTab === 1 && !selectedChildLandingZone}
         >
           Next
@@ -244,8 +296,9 @@ class CreateDepartment extends Component {
 
   setActiveTab = (isNextStep = 0) => {
     let { activeTab } = this.state;
-
-    if ((activeTab === 1 && isNextStep) || (activeTab === 0 && !isNextStep)) {
+    let isRedirectPage =
+      (activeTab === 1 && isNextStep) || (activeTab === 0 && !isNextStep);
+    if (isRedirectPage) {
       this.redirectPage(`${APP_PREFIX_PATH}/bim`);
     }
 
@@ -258,19 +311,52 @@ class CreateDepartment extends Component {
     this.setState({ activeTab });
   };
 
-  handleNext() {
-    this.setState({
-      status: true,
-    });
-  }
-
   onClickLandingZone(selectedAccount) {
-    this.setState({ selectedLandingZone: selectedAccount });
+    let { step2FormData } = this.state;
+    step2FormData.selectedLandingZone = selectedAccount;
+    this.setState({ step2FormData });
   }
 
   redirectPage = (redirectUrl) => {
     this.props.navigate(redirectUrl);
   };
+
+  validateStep1 = () => {
+    let { step1FormData, isSubmit } = this.state;
+    let isValid = true;
+    let errors = {
+      name: "",
+      description: "",
+    };
+
+    if (isSubmit) {
+      if (!step1FormData.name) {
+        errors.name = "Please enter the department name.";
+        isValid = false;
+      } else {
+        errors.name = "";
+      }
+
+      if (!step1FormData.description) {
+        errors.description = "Please enter the description.";
+        isValid = false;
+      } else {
+        errors.description = "";
+      }
+    }
+    return { isValid, errors };
+  };
+
+  validateSteps = () => {
+    let { activeTab } = this.state;
+
+    if (activeTab === 0) {
+      return this.validateStep1();
+    } else if (activeTab === 1) {
+      return { isValid: true };
+    }
+  };
+
   render() {
     return (
       <Box className="bimapping-container">
