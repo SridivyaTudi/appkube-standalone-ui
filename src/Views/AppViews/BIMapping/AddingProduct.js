@@ -4,7 +4,9 @@ import AddIcon from "../../../assets/img/bimapping/add-icon.png";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { Link } from "react-router-dom";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 class AddingProduct extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +15,9 @@ class AddingProduct extends Component {
       status: false,
       selectedLandingZone: "",
       developmentStatus: false,
+      formData: {
+        name: "",
+      },
     };
   }
 
@@ -25,9 +30,50 @@ class AddingProduct extends Component {
   onClickLandingZone() {
     this.setState({ selectedLandingZone: "AWS" });
   }
+
+  renderBtns = () => {
+    return (
+      <Box
+        justifyContent={"center"}
+        className="d-flex align-items-center wizard-step-button m-t-4"
+      >
+        <Button
+          className="primary-outline-btn m-r-2"
+          variant="outlined"
+          onClick={this.handlePrevious}
+        >
+          Previous
+        </Button>
+        <Button
+          className="primary-btn"
+          variant="contained"
+          onClick={() => this.handleNext()}
+        >
+          Next
+        </Button>
+      </Box>
+    );
+  };
+
+  handlePrevious = () => {
+    let { developmentStatus } = this.state;
+    if (developmentStatus) {
+      this.setState({ developmentStatus: false });
+    } else {
+      this.props.navigate(`${APP_PREFIX_PATH}/bim`);
+    }
+  };
+
+  handleInputChange = (e) => {
+    const { name, value } = e.target;
+    let { formData } = this.state;
+    formData[name] = value;
+
+    this.setState({ formData });
+  };
+
   render() {
-    const { status, selectedLandingZone, developmentStatus, activeTab } =
-      this.state;
+    const { developmentStatus,formData } = this.state;
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -75,6 +121,8 @@ class AddingProduct extends Component {
                       id="name"
                       name="name"
                       placeholder="HRMS"
+                      value={formData.name}
+                      onChange={this.handleInputChange}
                     />
                   </Box>
                   <Box className="associate-title m-t-3">
@@ -151,26 +199,11 @@ class AddingProduct extends Component {
                 </Box>
               </Box>
             </Box>
-            <Box
-              justifyContent={"center"}
-              className="d-flex align-items-center wizard-step-button m-t-4"
-            >
-              <Button className="primary-outline-btn m-r-2" variant="outlined">
-                Previous
-              </Button>
-              <Button
-                className="primary-btn"
-                variant="contained"
-                onClick={() => this.handleNext()}
-              >
-                Next
-              </Button>
-            </Box>
+            {this.renderBtns()}
           </Box>
         </Box>
       </Box>
     );
   }
 }
-
-export default AddingProduct;
+export default navigateRouter(AddingProduct);
