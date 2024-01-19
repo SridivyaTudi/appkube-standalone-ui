@@ -4,7 +4,7 @@ import AddIcon from "../../../assets/img/bimapping/add-icon.png";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-
+import { Link } from "react-router-dom";
 class AddingProduct extends Component {
   constructor(props) {
     super(props);
@@ -12,11 +12,9 @@ class AddingProduct extends Component {
       activeTab: 0,
       status: false,
       selectedLandingZone: "",
-      developmentStatus:false
+      developmentStatus: false,
     };
   }
-
-  
 
   handleNext() {
     this.setState({
@@ -28,7 +26,8 @@ class AddingProduct extends Component {
     this.setState({ selectedLandingZone: "AWS" });
   }
   render() {
-    const { status, selectedLandingZone ,developmentStatus, activeTab} = this.state;
+    const { status, selectedLandingZone, developmentStatus, activeTab } =
+      this.state;
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -83,61 +82,72 @@ class AddingProduct extends Component {
                   </Box>
                   <Box className="associate-boxs">
                     <List>
-                      <ListItem className={`${developmentStatus  ? "active" : ""}`}>
+                      <ListItem
+                        className={`${developmentStatus ? "active" : ""}`}
+                      >
                         <Button
-                          className= "secondary-btn min-width"
+                          className="secondary-btn min-width"
                           variant="contained"
-                          onClick={() => this.setState({developmentStatus:true})}
+                          onClick={() =>
+                            this.setState({ developmentStatus: true })
+                          }
                         >
                           Development
                         </Button>
                       </ListItem>
-                      <ListItem >
+                      <ListItem>
                         <Button
                           className="secondary-btn min-width"
                           variant="contained"
-                          
                         >
                           Test
                         </Button>
                       </ListItem>
-                      <ListItem >
+                      <ListItem>
                         <Button
                           className="secondary-btn min-width"
                           variant="contained"
-                          
                         >
                           Stage
                         </Button>
                       </ListItem>
-                      <ListItem >
+                      <ListItem>
                         <Button
                           className="secondary-btn min-width"
                           variant="contained"
-                          
                         >
                           Production
                         </Button>
                       </ListItem>
                     </List>
                   </Box>
-                  {
-                    developmentStatus?
+                  {developmentStatus ? (
                     <Box className="select-category-section">
-                    <Box className="category-title">Select Category</Box>
-                    <Box className="select-categorys">
-                      <Box className="d-flex align-items-center m-r-3">
-                        <input   type="radio" name="product" className="radio-btn" />
-                        <label >3 Tier</label>
-                      </Box>
-                      <Box className="d-flex align-items-center">
-                        <input  type="radio" name="product" className="radio-btn" />
-                        <label>SOA</label>
+                      <Box className="category-title">Select Category</Box>
+                      <Box className="select-categorys">
+                        <Box className="d-flex align-items-center m-r-3">
+                          <input
+                            type="radio"
+                            name="product"
+                            className="radio-btn"
+                          />
+                          <label>3 Tier</label>
+                        </Box>
+                        <Box className="d-flex align-items-center">
+                          <Link to={`/app/bim/product-category`}>
+                            <input
+                              type="radio"
+                              name="product"
+                              className="radio-btn"
+                            />
+                            <label>SOA</label>
+                          </Link>
+                        </Box>
                       </Box>
                     </Box>
-                  </Box>:<></>
-                  }
-                  
+                  ) : (
+                    <></>
+                  )}
                 </Box>
               </Box>
             </Box>

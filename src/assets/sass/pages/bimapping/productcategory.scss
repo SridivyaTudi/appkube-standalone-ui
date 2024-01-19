@@ -22,31 +22,28 @@
         margin-top: 4px;
         box-shadow: none;
         min-height: 156px;
-        display: flex;
-
         padding: 11px 15px;
 
         .content {
-            margin: auto;
 
-            p {
+            
                 font-size: 11px;
                 line-height: 16px;
                 color: #667085;
 
-            }
         }
 
         .service-container {
             display: flex;
-            align-items: center;
+
             .service-card {
                 min-width: 105px;
                 min-height: 100px;
-                box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px #6C49AC0D;
+                box-shadow: 0px 100px 80px 0px #6C49AC12;
                 margin-right: 15px;
+                border-radius: 6px;
 
-                &:last-child{
+                &:last-child {
                     margin-right: 0;
                 }
             }
