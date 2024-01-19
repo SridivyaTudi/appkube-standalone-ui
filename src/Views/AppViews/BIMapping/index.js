@@ -100,7 +100,15 @@ class BIMapping extends Component {
               <TableBody>
                 <TableRow>
                   <TableCell align="left">
-                    <Link to={""}>Synectiks</Link>
+                    <Link to={""}>
+                      Synectiks{" "}
+                      <i className="fa-solid fa-caret-down arrow-icon"></i>
+                    </Link>
+                    <span className="add-synectiks d-block"> 
+                    {/* <img src="" alt="" /> */}
+                     HR
+                      <i class="fa-solid fa-circle-plus"></i>{" "}
+                    </span>
                   </TableCell>
                   <TableCell align="center">01</TableCell>
                   <TableCell align="center">01</TableCell>
