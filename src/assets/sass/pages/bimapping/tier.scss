@@ -277,12 +277,12 @@
                   color: #ffffff;
                   background: #3247e5;
                 }
-                // .mapping-fliter {
-                //   .fliter-toggel {
-                //     color: #ffffff;
-                //     background: #3247e5;
-                //   }
-                // }
+                .mapping-fliter {
+                  .fliter-toggel {
+                    color: #ffffff;
+                    background: #3247e5;
+                  }
+                }
               }
             }
           }
@@ -453,6 +453,9 @@
             line-height: 22px;
             color: #383874;
             margin-top: 15px;
+          }
+          &.active{
+            border: 1px solid #384CFF;
           }
         }
         .environment-box {
