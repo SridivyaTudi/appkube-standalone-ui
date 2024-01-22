@@ -441,7 +441,7 @@ export class CreateGroup extends Component {
       if (value) {
         data = data.filter((row) => {
           let name = isRole ? row.name : row.username;
-          if (name.toLowerCase().includes(value.toLowerCase())) {
+          if (name?.toLowerCase().includes(value.toLowerCase())) {
             return row;
           } else {
             return null;
