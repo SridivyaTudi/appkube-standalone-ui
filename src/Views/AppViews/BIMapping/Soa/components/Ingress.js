@@ -1,11 +1,75 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import {
+  Box,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Checkbox
+} from "@mui/material";
 
-export class Ingress extends Component {
+class Ingress extends Component {
   render() {
     return (
-      <div>Ingress</div>
-    )
+      <Box className="nginx-table-section">
+        <TableContainer className="table">
+          <Table className="overview">
+            <TableHead>
+              <TableRow>
+                <TableCell align="left" component="th" scope="row">
+                  Id
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell align="left">
+                  <Checkbox
+                    className="check-box"
+                    size="small"
+                    onChange={this.handleCheckBox}
+                  />
+                 sg-ingress-12345678
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">
+                  <Checkbox
+                    className="check-box"
+                    size="small"
+                    onChange={this.handleCheckBox}
+                  />
+                 sg-ingress-12345678
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">
+                  <Checkbox
+                    className="check-box"
+                    size="small"
+                    onChange={this.handleCheckBox}
+                  />
+                 sg-ingress-12345678
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">
+                  <Checkbox
+                    className="check-box"
+                    size="small"
+                    onChange={this.handleCheckBox}
+                  />
+                 sg-ingress-12345678
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    );
   }
 }
 
-export default Ingress
+export default Ingress;

@@ -46,7 +46,7 @@ class Soa extends Component {
       type: ["service"],
     },
     {
-      name: "AppTopology",
+      name: "App Topology",
       dataKey: "apptopology",
       type: ["apptopology"],
     },
@@ -736,7 +736,7 @@ class Soa extends Component {
               <Box className="tabs">
                 <List className="tabs-menu">
                   {this.tabMapping.map((tabData, index) => {
-                    if (tabData.type.includes(activeLayer)) {
+                    // if (tabData.type.includes(activeLayer)) {
                       return (
                         <ListItem
                           key={`ops-tab-${index}`}
@@ -746,9 +746,9 @@ class Soa extends Component {
                           {tabData.name}
                         </ListItem>
                       );
-                    } else {
-                      return null;
-                    }
+                    // } else {
+                    //   return null;
+                    // }
                   })}
                 </List>
                 <Box className="tabs-content">

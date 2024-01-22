@@ -1,11 +1,75 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import {
+  Box,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Checkbox
+} from "@mui/material";
 
-export class LoadBalancer extends Component {
+class LoadBalancer extends Component {
   render() {
     return (
-      <div>LoadBalancer</div>
-    )
+      <Box className="nginx-table-section">
+        <TableContainer className="table">
+          <Table className="overview">
+            <TableHead>
+              <TableRow>
+                <TableCell align="left" component="th" scope="row">
+                  Id
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell align="left">
+                  <Checkbox
+                    className="check-box"
+                    size="small"
+                    onChange={this.handleCheckBox}
+                  />
+                  dummy-lb-12345
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">
+                  <Checkbox
+                    className="check-box"
+                    size="small"
+                    onChange={this.handleCheckBox}
+                  />
+                  dummy-lb-12345
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">
+                  <Checkbox
+                    className="check-box"
+                    size="small"
+                    onChange={this.handleCheckBox}
+                  />
+                  dummy-lb-12345
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">
+                  <Checkbox
+                    className="check-box"
+                    size="small"
+                    onChange={this.handleCheckBox}
+                  />
+                  dummy-lb-12345
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    );
   }
 }
 
-export default LoadBalancer
+export default LoadBalancer;
