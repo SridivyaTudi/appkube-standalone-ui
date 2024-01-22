@@ -563,6 +563,9 @@
               }
             }
           }
+          &.active{
+            border: 1px solid #2B59FF;
+          }
         }
       }
     }

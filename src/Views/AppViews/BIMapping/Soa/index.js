@@ -27,25 +27,33 @@ import LoadBalancer from "./components/LoadBalancer";
 import Ingress from "./components/Ingress";
 import Service from "./components/Service";
 import AppTopology from "./components/AppTopology";
+import LoadBalancerIcon from "../../../../assets/img/bimapping/load-balancer-icon.png";
+import IngressIcon from "../../../../assets/img/bimapping/ingress-icon.png";
+import ServiceIcon from "../../../../assets/img/bimapping/service-icon.png";
+import StarIcon from "../../../../assets/img/bimapping/star-icon.png";
 
 class Soa extends Component {
   tabMapping = [
     {
+      image: LoadBalancerIcon,
       name: "Load Balancer",
       dataKey: "loadbalancer",
       type: ["loadbalancer"],
     },
     {
+      image: IngressIcon,
       name: "Ingress",
       dataKey: "ingress",
       type: ["ingress"],
     },
     {
+      image: ServiceIcon,
       name: "Service",
       dataKey: "service",
       type: ["service"],
     },
     {
+      image: StarIcon,
       name: "App Topology",
       dataKey: "apptopology",
       type: ["apptopology"],
@@ -733,39 +741,42 @@ class Soa extends Component {
             </TableContainer>
           </Box>
           <Box className="nginx-section">
-              <Box className="tabs">
-                <List className="tabs-menu">
-                  {this.tabMapping.map((tabData, index) => {
-                    // if (tabData.type.includes(activeLayer)) {
-                      return (
-                        <ListItem
-                          key={`ops-tab-${index}`}
-                          className={index === activeTab ? "active" : ""}
-                          onClick={() => this.setActiveTab(index)}
-                        >
-                          {tabData.name}
-                        </ListItem>
-                      );
-                    // } else {
-                    //   return null;
-                    // }
-                  })}
-                </List>
-                <Box className="tabs-content">
-                  {activeTab === 0 ? (
-                    <LoadBalancer />
-                  ) : activeTab === 1 ? (
-                    <Ingress />
-                  ) : activeTab === 2 ? (
-                    <Service />
-                  ) : activeTab === 3 ? (
-                    <AppTopology />
-                  ) : (
-                    <></>
-                  )}
-                </Box>
+            <Box className="tabs">
+              <List className="tabs-menu">
+                {this.tabMapping.map((tabData, index) => {
+                  // if (tabData.type.includes(activeLayer)) {
+                  return (
+                    <ListItem
+                      key={`ops-tab-${index}`}
+                      className={index === activeTab ? "active" : ""}
+                      onClick={() => this.setActiveTab(index)}
+                    >
+                      <Box className="m-r-2">
+                        <img src={tabData.image} alt="" />
+                      </Box>
+                      {tabData.name}
+                    </ListItem>
+                  );
+                  // } else {
+                  //   return null;
+                  // }
+                })}
+              </List>
+              <Box className="tabs-content">
+                {activeTab === 0 ? (
+                  <LoadBalancer />
+                ) : activeTab === 1 ? (
+                  <Ingress />
+                ) : activeTab === 2 ? (
+                  <Service />
+                ) : activeTab === 3 ? (
+                  <AppTopology />
+                ) : (
+                  <></>
+                )}
               </Box>
             </Box>
+          </Box>
           <Box justifyContent={"center"} className="text-center m-t-4">
             <Button
               className="info-btn primary-btn min-width-inherit"
