@@ -5,6 +5,7 @@ import searchIcon from "../../../assets/img/bimapping/search.png";
 import filterIcon from "../../../assets/img/bimapping/filter.png";
 import rbacIcon from "../../../assets/img/bimapping/rbac.png";
 import ServiceModal from "./Components/ServiceModal";
+import { Link } from "react-router-dom";
 class ProductCategory extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +31,9 @@ class ProductCategory extends Component {
             <Card className="product-title-card">
               <Box className="d-flex justify-content-between align-items-center">
                 <h3>Service type : Business Services</h3>
-                <Button className="primary-btn">Add</Button>
+                <Link to={`/app/bim/soa`}>
+                  <Button className="primary-btn">Add</Button>
+                </Link>
               </Box>
             </Card>
             <Card className="product-info-card">

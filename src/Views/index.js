@@ -48,6 +48,7 @@ import CreateDepartment from "./AppViews/BIMapping/CreateDepartment";
 import ProductCategory from "./AppViews/BIMapping/ProductCategory";
 import AddingProduct from "./AppViews/BIMapping/AddingProduct";
 import Tier from "./AppViews/BIMapping/Tier";
+import Soa from "./AppViews/BIMapping/Soa";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -221,14 +222,12 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/bim/product-category`}
             element={<ProductCategory />}
           />
-           <Route
+          <Route
             path={`${APP_PREFIX_PATH}/bim/adding-product`}
             element={<AddingProduct />}
           />
-           <Route
-            path={`${APP_PREFIX_PATH}/bim/tier`}
-            element={<Tier/>}
-          />
+          <Route path={`${APP_PREFIX_PATH}/bim/tier`} element={<Tier />} />
+          <Route path={`${APP_PREFIX_PATH}/bim/soa`} element={<Soa />} />
           <Route path={`/error`} element={<Error />} />
         </Routes>
         <ToastContainer
