@@ -199,7 +199,7 @@ class AppTopology extends Component {
                       APIs, acting as a front door for various services
                     </ListItem>
                     <ListItem>
-                      <strong>Type :</strong>
+                      <strong>Type : </strong>
                       HTTP API Gateway
                     </ListItem>
                     <ListItem>
@@ -207,7 +207,7 @@ class AppTopology extends Component {
                       Seamless integration with serverless functions
                     </ListItem>
                     <ListItem>
-                      <strong>Managed Service :</strong>
+                      <strong>Managed Service : </strong>
                       API Gateway Service.
                     </ListItem>
                   </List>
@@ -215,7 +215,7 @@ class AppTopology extends Component {
                 <Box className="following-ports load-balancer">
                   <List>
                     <ListItem>
-                      <strong>Name :</strong> Load Balancer
+                      <strong>Name : </strong> Load Balancer
                     </ListItem>
                     <ListItem>
                       <strong>Purpose : </strong>
@@ -224,7 +224,7 @@ class AppTopology extends Component {
                       availability.
                     </ListItem>
                     <ListItem>
-                      <strong>Type :</strong>
+                      <strong>Type : </strong>
                       Network Load Balancer (NLB)
                     </ListItem>
                     <ListItem>
@@ -232,7 +232,7 @@ class AppTopology extends Component {
                       Efficiently handles TCP/UDP traffic with low latency.
                     </ListItem>
                     <ListItem>
-                      <strong>Managed Service :</strong>
+                      <strong>Managed Service : </strong>
                       Cloud Load Balancer Service
                     </ListItem>
                   </List>
@@ -240,7 +240,7 @@ class AppTopology extends Component {
                 <Box className="following-ports alpha-cluster">
                   <List>
                     <ListItem>
-                      <strong>Name :</strong> Alpha Cluster
+                      <strong>Name : </strong> Alpha Cluster
                     </ListItem>
                     <ListItem>
                       <strong>Purpose : </strong>
@@ -248,7 +248,7 @@ class AppTopology extends Component {
                       by distributing workloads across multiple nodes.
                     </ListItem>
                     <ListItem>
-                      <strong>Type :</strong>
+                      <strong>Type : </strong>
                       Compute Cluster
                     </ListItem>
                     <ListItem>
@@ -257,7 +257,7 @@ class AppTopology extends Component {
                       simultaneously.
                     </ListItem>
                     <ListItem>
-                      <strong>Managed Service :</strong>
+                      <strong>Managed Service : </strong>
                       Beta Cloud Cluster Management
                     </ListItem>
                   </List>
@@ -266,7 +266,7 @@ class AppTopology extends Component {
                 <Box className="following-ports omega-ingress">
                   <List>
                     <ListItem>
-                      <strong>Name :</strong> Omega Ingress
+                      <strong>Name : </strong> Omega Ingress
                     </ListItem>
                     <ListItem>
                       <strong>Purpose : </strong>
@@ -274,7 +274,7 @@ class AppTopology extends Component {
                       cluster, acting as an entry point for incoming traffic.
                     </ListItem>
                     <ListItem>
-                      <strong>Type :</strong>
+                      <strong>Type : </strong>
                       Layer 7 Ingress Controller
                     </ListItem>
                     <ListItem>
@@ -282,7 +282,7 @@ class AppTopology extends Component {
                       Path-based routing and SSL termination for secure communication.
                     </ListItem>
                     <ListItem>
-                      <strong>Managed Service :</strong>
+                      <strong>Managed Service : </strong>
                       Epsilon Cloud Ingress Service
                     </ListItem>
                   </List>
