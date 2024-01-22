@@ -303,7 +303,7 @@ class AddUsers extends Component {
 
     if (selectedUsers?.length) {
       this.props.addUsersFromGroupDetails({
-        roleId: this.getGroupId(),
+        roleId: +this.getGroupId(),
         userIds: selectedUsers.toString(),
       });
     } else {

@@ -270,11 +270,8 @@ export const addUsersFromGroupDetails = createAsyncThunk(
   "settings/addUsersFromGroupDetails",
   async (params) => {
     try {
-      let url = config.ADD_USERS_FROM_GROUP_DETAILS.replace(
-        "#role-id#",
-        params.roleId
-      ).replace("#user-ids#", params.userIds);
-      const response = await postLoginService.post(url);
+      let url = config.ADD_USERS_FROM_GROUP_DETAILS;
+      const response = await postLoginService.post(url,params);
       return response;
     } catch (error) {
       console.log(error);
