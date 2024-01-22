@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import { Box, Tabs, Tab, TabPanel } from "@mui/material";
-import adminIcon from "../../../../assets/img/bimapping/setting.png"
+import adminIcon from "../../../../assets/img/bimapping/setting.png";
 import deployedIcon from "../../../../assets/img/bimapping/depolyed.png";
 import clusterIcon from "../../../../assets/img/bimapping/cluster.png";
 import loadIcon from "../../../../assets/img/bimapping/load.png";
@@ -97,101 +97,101 @@ class ServiceModal extends Component {
             )}
             {value === 1 && (
               <Box className="d-block">
-              <Box className="d-flex justify-content-between service-info-container">
-                <Box className="d-flex align-items-center">
-                  <Box className="icon">
-                    <img src={deployedIcon} alt="" />
+                <Box className="d-flex justify-content-between service-info-container">
+                  <Box className="d-flex align-items-center">
+                    <Box className="icon">
+                      <img src={deployedIcon} alt="" />
+                    </Box>
+                    <span className="name">Deployed To</span>
                   </Box>
-                  <span className="name">Deployed To</span>
+                  <span className="number">EKS</span>
                 </Box>
-                <span className="number">EKS</span>
-              </Box>
-              <Box className="d-flex justify-content-between service-info-container">
-                <Box className="d-flex align-items-center">
-                  <Box className="icon">
-                    <img src={clusterIcon} alt="" />
+                <Box className="d-flex justify-content-between service-info-container">
+                  <Box className="d-flex align-items-center">
+                    <Box className="icon">
+                      <img src={clusterIcon} alt="" />
+                    </Box>
+                    <span className="name">Cluster Id</span>
                   </Box>
-                  <span className="name">Cluster Id</span>
+                  <span className="number">3759</span>
                 </Box>
-                <span className="number">1243</span>
-              </Box>
-              <Box className="d-flex justify-content-between service-info-container">
-                <Box className="d-flex align-items-center">
-                  <Box className="icon">
-                    <img src={loadIcon} alt="" />
+                <Box className="d-flex justify-content-between service-info-container">
+                  <Box className="d-flex align-items-center">
+                    <Box className="icon">
+                      <img src={loadIcon} alt="" />
+                    </Box>
+                    <span className="name">Load Balancer ID</span>
                   </Box>
-                  <span className="name">Load Balancer ID</span>
+                  <span className="number">6766</span>
                 </Box>
-                <span className="number">4434</span>
-              </Box>
-              <Box className="d-flex justify-content-between service-info-container">
-                <Box className="d-flex align-items-center">
-                  <Box className="icon">
-                    <img src={ingressIcon} alt="" />
+                <Box className="d-flex justify-content-between service-info-container">
+                  <Box className="d-flex align-items-center">
+                    <Box className="icon">
+                      <img src={ingressIcon} alt="" />
+                    </Box>
+                    <span className="name">Ingress ID</span>
                   </Box>
-                  <span className="name">Ingress ID</span>
+                  <span className="number">9002</span>
                 </Box>
-                <span className="number">5133</span>
-              </Box>
-              <Box className="d-flex justify-content-between service-info-container">
-                <Box className="d-flex align-items-center">
-                  <Box className="icon">
-                    <img src={serviceIcon} alt="" />
+                <Box className="d-flex justify-content-between service-info-container">
+                  <Box className="d-flex align-items-center">
+                    <Box className="icon">
+                      <img src={serviceIcon} alt="" />
+                    </Box>
+                    <span className="name">Service ID</span>
                   </Box>
-                  <span className="name">Service ID</span>
+                  <span className="number">1726</span>
                 </Box>
-                <span className="number">8788</span>
               </Box>
-            </Box>
             )}
             {value === 2 && (
-         <Box className="d-block">
-         <Box className="d-flex justify-content-between service-info-container">
-           <Box className="d-flex align-items-center">
-             <Box className="icon">
-               <img src={deployedIcon} alt="" />
-             </Box>
-             <span className="name">Deployed To</span>
-           </Box>
-           <span className="number">EKS</span>
-         </Box>
-         <Box className="d-flex justify-content-between service-info-container">
-           <Box className="d-flex align-items-center">
-             <Box className="icon">
-               <img src={clusterIcon} alt="" />
-             </Box>
-             <span className="name">Cluster Id</span>
-           </Box>
-           <span className="number">1243</span>
-         </Box>
-         <Box className="d-flex justify-content-between service-info-container">
-           <Box className="d-flex align-items-center">
-             <Box className="icon">
-               <img src={loadIcon} alt="" />
-             </Box>
-             <span className="name">Load Balancer ID</span>
-           </Box>
-           <span className="number">4434</span>
-         </Box>
-         <Box className="d-flex justify-content-between service-info-container">
-           <Box className="d-flex align-items-center">
-             <Box className="icon">
-               <img src={ingressIcon} alt="" />
-             </Box>
-             <span className="name">Ingress ID</span>
-           </Box>
-           <span className="number">5133</span>
-         </Box>
-         <Box className="d-flex justify-content-between service-info-container">
-           <Box className="d-flex align-items-center">
-             <Box className="icon">
-               <img src={serviceIcon} alt="" />
-             </Box>
-             <span className="name">Service ID</span>
-           </Box>
-           <span className="number">8788</span>
-         </Box>
-       </Box>
+              <Box className="d-block">
+                <Box className="d-flex justify-content-between service-info-container">
+                  <Box className="d-flex align-items-center">
+                    <Box className="icon">
+                      <img src={deployedIcon} alt="" />
+                    </Box>
+                    <span className="name">Deployed To</span>
+                  </Box>
+                  <span className="number">EKS</span>
+                </Box>
+                <Box className="d-flex justify-content-between service-info-container">
+                  <Box className="d-flex align-items-center">
+                    <Box className="icon">
+                      <img src={clusterIcon} alt="" />
+                    </Box>
+                    <span className="name">Cluster Id</span>
+                  </Box>
+                  <span className="number">0987</span>
+                </Box>
+                <Box className="d-flex justify-content-between service-info-container">
+                  <Box className="d-flex align-items-center">
+                    <Box className="icon">
+                      <img src={loadIcon} alt="" />
+                    </Box>
+                    <span className="name">Load Balancer ID</span>
+                  </Box>
+                  <span className="number">1100</span>
+                </Box>
+                <Box className="d-flex justify-content-between service-info-container">
+                  <Box className="d-flex align-items-center">
+                    <Box className="icon">
+                      <img src={ingressIcon} alt="" />
+                    </Box>
+                    <span className="name">Ingress ID</span>
+                  </Box>
+                  <span className="number">9789</span>
+                </Box>
+                <Box className="d-flex justify-content-between service-info-container">
+                  <Box className="d-flex align-items-center">
+                    <Box className="icon">
+                      <img src={serviceIcon} alt="" />
+                    </Box>
+                    <span className="name">Service ID</span>
+                  </Box>
+                  <span className="number">5464</span>
+                </Box>
+              </Box>
             )}
           </Box>
         </Box>
