@@ -63,19 +63,28 @@ class ProductCategory extends Component {
               </Box> */}
               <Box className="service-container">
                 <Card className="service-card">
-                  <Box className="service-details">
+                  <Box
+                    className="service-details"
+                    onClick={() => this.handleServiceModal()}
+                  >
                     <img src={searchIcon} alt="" />
                     <span className="d-block name">Search</span>
                   </Box>
                 </Card>
                 <Card className="service-card">
-                  <Box className="service-details">
+                  <Box
+                    className="service-details"
+                    onClick={() => this.handleServiceModal()}
+                  >
                     <img src={filterIcon} alt="" />
                     <span className="d-block name">Filter</span>
                   </Box>
                 </Card>
                 <Card className="service-card">
-                  <Box className="service-details">
+                  <Box
+                    className="service-details"
+                    onClick={() => this.handleServiceModal()}
+                  >
                     <img src={rbacIcon} alt="" />
                     <span className="d-block name">RBAC</span>
                   </Box>
