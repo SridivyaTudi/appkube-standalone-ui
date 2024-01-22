@@ -181,8 +181,9 @@ class Tier extends Component {
             instance.name === selectedDeployedInstance ? "active" : ""
           }`}
           key={v4()}
-          onClick={() => {
+          onClick={(e) => {
             this.setState({ selectedDeployedInstance: instance.name });
+            e.stopPropagation();
           }}
         >
           <Box className="d-block text-center">
@@ -197,14 +198,16 @@ class Tier extends Component {
   };
 
   renderSelectedInstance = () => {
-    let { selectedDeployedInstance } = this.state;
-    return [...Array(10)].map((instance) => {
+    let { selectedDeployedInstance, selectedInstance } = this.state;
+    return [...Array(10)].map((instance, index) => {
       return (
         <Box
-          className="environment-box"
+          className={`environment-box ${
+            selectedInstance === index ? "active" : ""
+          }`}
           key={v4()}
           onClick={(e) => {
-            this.setState({ selectedInstance: selectedDeployedInstance });
+            this.setState({ selectedInstance: index });
             e.stopPropagation();
           }}
         >
@@ -534,7 +537,6 @@ class Tier extends Component {
                                     : "fliters-collapse-bg"
                                 }
                                 onClick={(e) => {
-                                  e.stopPropagation();
                                   this.toggleWebLayer();
                                 }}
                               />
@@ -597,7 +599,6 @@ class Tier extends Component {
                                     : "fliters-collapse-bg"
                                 }
                                 onClick={(e) => {
-                                  e.stopPropagation();
                                   this.toggleAppLayer();
                                 }}
                               />
@@ -660,7 +661,6 @@ class Tier extends Component {
                                     : "fliters-collapse-bg"
                                 }
                                 onClick={(e) => {
-                                  e.stopPropagation();
                                   this.toggleDataLayer();
                                 }}
                               />
@@ -722,7 +722,6 @@ class Tier extends Component {
                                   : "fliters-collapse-bg"
                               }
                               onClick={(e) => {
-                                e.stopPropagation();
                                 this.toggleAuxLayer();
                               }}
                             />
