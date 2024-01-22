@@ -23,25 +23,51 @@ import deployed1 from "../../../../assets/img/bimapping/deployed1.png";
 import deployed4 from "../../../../assets/img/bimapping/deployed4.png";
 import deployed5 from "../../../../assets/img/bimapping/deployed5.png";
 import Aws from "../../../../assets/img/aws.png";
+import LoadBalancer from "./components/LoadBalancer";
+import Ingress from "./components/Ingress";
+import Service from "./components/Service";
+import AppTopology from "./components/AppTopology";
 
 class Soa extends Component {
+  tabMapping = [
+    {
+      name: "Load Balancer",
+      dataKey: "loadbalancer",
+      type: ["loadbalancer"],
+    },
+    {
+      name: "Ingress",
+      dataKey: "ingress",
+      type: ["ingress"],
+    },
+    {
+      name: "Service",
+      dataKey: "service",
+      type: ["service"],
+    },
+    {
+      name: "AppTopology",
+      dataKey: "apptopology",
+      type: ["apptopology"],
+    },
+  ];
   constructor(props) {
     super(props);
     this.state = {
       currentActiveNode: "",
       activeLayer: "",
-      isSelectNginxOpen: false,
+
       isSelectSpringBootOpen: false,
       isSelectMySQLOpen: false,
       isSelectRedisOpen: false,
+      activeTab: 0,
     };
   }
 
-  toggleSelectNginx = () => {
-    this.setState({
-      isSelectNginxOpen: !this.state.isSelectNginxOpen,
-    });
+  setActiveTab = (activeTab) => {
+    this.setState({ activeTab });
   };
+
   toggleSelectSpringBoot = () => {
     this.setState({
       isSelectSpringBootOpen: !this.state.isSelectSpringBootOpen,
@@ -60,10 +86,10 @@ class Soa extends Component {
   render() {
     let {
       activeLayer,
-      isSelectNginxOpen,
       isSelectSpringBootOpen,
       isSelectMySQLOpen,
       isSelectRedisOpen,
+      activeTab,
     } = this.state;
     return (
       <Box className="bimapping-container">
@@ -706,6 +732,40 @@ class Soa extends Component {
               </Table>
             </TableContainer>
           </Box>
+          <Box className="nginx-section">
+              <Box className="tabs">
+                <List className="tabs-menu">
+                  {this.tabMapping.map((tabData, index) => {
+                    if (tabData.type.includes(activeLayer)) {
+                      return (
+                        <ListItem
+                          key={`ops-tab-${index}`}
+                          className={index === activeTab ? "active" : ""}
+                          onClick={() => this.setActiveTab(index)}
+                        >
+                          {tabData.name}
+                        </ListItem>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
+                </List>
+                <Box className="tabs-content">
+                  {activeTab === 0 ? (
+                    <LoadBalancer />
+                  ) : activeTab === 1 ? (
+                    <Ingress />
+                  ) : activeTab === 2 ? (
+                    <Service />
+                  ) : activeTab === 3 ? (
+                    <AppTopology />
+                  ) : (
+                    <></>
+                  )}
+                </Box>
+              </Box>
+            </Box>
           <Box justifyContent={"center"} className="text-center m-t-4">
             <Button
               className="info-btn primary-btn min-width-inherit"

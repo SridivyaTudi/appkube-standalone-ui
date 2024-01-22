@@ -609,4 +609,113 @@
       }
     }
   }
+  .nginx-section {
+    background: #ffffff;
+    border-radius: 10px;
+    display: block;
+    overflow: hidden;
+    overflow-x: auto;
+    margin-top: 30px;
+    width: 100%;
+    box-shadow: 0px 41.7776px 33.4221px rgba(108, 73, 172, 0.0503198);
+
+    .tabs {
+      display: block;
+      width: 100%;
+
+      .tabs-menu {
+        width: 100%;
+        // padding-left: 60px;
+        // padding-right: 60px;
+        padding-bottom: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        background-color: #ffffff;
+        border-bottom: 1px solid #b3b3b3;
+
+        li {
+          padding-bottom: 16px;
+          // margin-right: 10px;
+          // margin-left: 10px;
+          font-size: 13px;
+          font-weight: 600;
+          color: #383874;
+          cursor: pointer;
+          width: auto;
+          display: inline-flex;
+          position: relative;
+
+          &::after {
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 4px;
+            content: "";
+            opacity: 0;
+            position: absolute;
+            background-color: #8676ff;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+            box-shadow: rgba(134, 118, 255, 0.15) 0px 2px 1px,
+              rgba(134, 118, 255, 0.15) 0px 4px 2px,
+              rgba(134, 118, 255, 0.15) 0px 8px 4px,
+              rgba(134, 118, 255, 0.15) 0px 16px 8px,
+              rgba(134, 118, 255, 0.15) 0px 32px 16px;
+
+            //box-shadow: 0px 100px 80px 0px #0f59ff5c;
+          }
+
+          &.active {
+            &::after {
+              opacity: 1;
+            }
+          }
+        }
+      }
+
+      .tabs-content {
+        padding: 0 10px;
+        margin: 0;
+        .nginx-table-section {
+          display: block;
+          width: 100%;
+          .table {
+            overflow: hidden;
+            background-color: #ffffff;
+            .overview {
+              thead {
+                tr {
+                  th {
+                    border-right: 1px solid #dbdff1;
+                    background-color: #f0f3ff;
+                    font-size: 13px;
+                    font-weight: 600;
+                    padding: 10px;
+                    &:last-child {
+                      border-right: none;
+                    }
+                  }
+                }
+              }
+              tbody {
+                tr {
+                  td {
+                    padding-left: 12px;
+                    padding-right: 12px;
+                    font-size: 13px;
+                    line-height: 16px;
+                    font-weight: 400;
+                    width: auto;
+                    white-space: nowrap;
+                    color: #383874;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
