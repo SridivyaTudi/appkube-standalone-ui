@@ -100,13 +100,14 @@
 
               .application-balancer {
                 display: flex;
-                width: 80%;
+                width: 100%;
                 justify-content: center;
                 flex-wrap: wrap;
                 // margin-top: 10px;
                 .secondary-btn {
                   background-color: #dde1f8;
                   color: #383874;
+                  border: 1px solid #3247e5;
                   i {
                     margin-left: 15px;
                   }
@@ -171,7 +172,7 @@
               }
               .mapping-fliter {
                 display: flex;
-                width: 80%;
+                width: 100%;
                 justify-content: center;
                 flex-wrap: wrap;
                 position: relative;

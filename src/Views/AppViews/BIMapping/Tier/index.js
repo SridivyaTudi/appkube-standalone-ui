@@ -458,7 +458,7 @@ class Tier extends Component {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <Box className="topology-panel">
                 <Box className="topology-panel-body">
                   <Box className="topology-inner-content">
@@ -788,7 +788,7 @@ class Tier extends Component {
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={6}>
               <Box className="nginx-cards">
                 {this.renderDeployedInstanceWrapper()}
                 {this.renderSelectedInstanceWrapper()}
