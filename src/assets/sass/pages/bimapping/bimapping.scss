@@ -320,16 +320,26 @@
           a {
             font-weight: 600;
             color: #384cff;
-            .arrow-icon{
+            .arrow-icon {
               color: #00b929;
               margin-left: 8px;
             }
-
           }
-          .add-synectiks{
+          .add-synectiks {
             color: #101828;
-            i{
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            font-size: 12px;
+            line-height: 5px;
+            .arrow-image{
+              width: 20px;
+              min-width: 20px;
+              height: 20px;
+            }
+            i {
               margin-left: 5px;
+              line-height: 5px;
               color: #00b929;
             }
           }
