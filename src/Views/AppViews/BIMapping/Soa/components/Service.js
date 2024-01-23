@@ -31,7 +31,10 @@ export class Service extends Component {
                   <Checkbox
                     className="check-box"
                     size="small"
-                    onChange={this.handleCheckBox}
+                    onChange={(e) => {
+                      // this.handleCheckBox(e);
+                      this.props.setNextTab(3);
+                    }}
                   />{" "}
                   MockDB
                 </TableCell>

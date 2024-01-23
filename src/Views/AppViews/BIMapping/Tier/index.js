@@ -24,7 +24,14 @@ import deployed4 from "../../../../assets/img/bimapping/deployed4.png";
 import deployed5 from "../../../../assets/img/bimapping/deployed5.png";
 import Aws from "../../../../assets/img/aws.png";
 import { v4 } from "uuid";
-
+import LoadBalancer from "../Soa/components/LoadBalancer";
+import Ingress from "../Soa/components/Ingress";
+import Service from "../Soa/components/Service";
+import AppTopology from "../Soa/components/AppTopology";
+import LoadBalancerIcon from "assets/img/bimapping/load-balancer-icon.png";
+import IngressIcon from "assets/img/bimapping/ingress-icon.png";
+import ServiceIcon from "assets/img/bimapping/service-icon.png";
+import StarIcon from "assets/img/bimapping/star-icon.png";
 let dropDownLayersData = {
   webLayer: [
     "NGINX",
@@ -78,6 +85,32 @@ let serviceTableData = [
 ];
 
 class Tier extends Component {
+  tabMapping = [
+    {
+      image: LoadBalancerIcon,
+      name: "Load Balancer",
+      dataKey: "loadbalancer",
+      type: ["loadbalancer"],
+    },
+    {
+      image: IngressIcon,
+      name: "Ingress",
+      dataKey: "ingress",
+      type: ["ingress"],
+    },
+    {
+      image: ServiceIcon,
+      name: "Service",
+      dataKey: "service",
+      type: ["service"],
+    },
+    {
+      image: StarIcon,
+      name: "App Topology",
+      dataKey: "apptopology",
+      type: ["apptopology"],
+    },
+  ];
   constructor(props) {
     super(props);
     this.state = {
@@ -122,7 +155,7 @@ class Tier extends Component {
         aux: "",
       },
       isShowDepolyedSection: false,
-      selectedInstance: "",
+      selectedInstance: -1,
       selectedDeployedInstance: "",
       selectedService: [],
       savedLayer: {
@@ -131,6 +164,7 @@ class Tier extends Component {
         data: false,
         aux: false,
       },
+      activeTabEks: 0,
     };
   }
 
@@ -182,7 +216,10 @@ class Tier extends Component {
           }`}
           key={v4()}
           onClick={(e) => {
-            this.setState({ selectedDeployedInstance: instance.name });
+            this.setState({
+              selectedDeployedInstance: instance.name,
+              selectedInstance: -1,
+            });
             e.stopPropagation();
           }}
         >
@@ -372,7 +409,7 @@ class Tier extends Component {
       selectedService,
     });
 
-    selectedInstance = "";
+    selectedInstance = -1;
     selectedDeployedInstance = "";
     selectedService = [];
     isShowDepolyedSection = false;
@@ -387,6 +424,9 @@ class Tier extends Component {
     });
   };
 
+  setActiveTab = (activeTabEks) => {
+    this.setState({ activeTabEks });
+  };
   render() {
     let {
       isSelectNginxOpen,
@@ -396,8 +436,9 @@ class Tier extends Component {
       selectedLayer,
       selectedInstance,
       selectedService,
+      selectedDeployedInstance,
+      activeTabEks,
     } = this.state;
-    console.log(this.state.savedData);
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -754,30 +795,87 @@ class Tier extends Component {
               </Box>
             </Grid>
           </Grid>
-          {selectedInstance ? (
-            <>
-              <Box className="nginx-table-section">
-                <TableContainer className="table">
-                  <Table className="overview">
-                    {this.renderTableHead()}
-                    {this.renderTableBody()}
-                  </Table>
-                </TableContainer>
+          {selectedInstance >= 0 ? (
+            selectedDeployedInstance === "EkS" ? (
+              <Box className="nginx-section">
+                <Box className="tabs">
+                  <List className="tabs-menu">
+                    {this.tabMapping.map((tabData, index) => {
+                      return (
+                        <ListItem
+                          key={`ops-tab-${index}`}
+                          className={index === activeTabEks ? "active" : ""}
+                          onClick={() => this.setActiveTab(index)}
+                        >
+                          <Box className="m-r-2">
+                            <img src={tabData.image} alt="" />
+                          </Box>
+                          {tabData.name}
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                  <Box className="tabs-content">
+                    {activeTabEks === 0 ? (
+                      <LoadBalancer
+                        setNextTab={(activeTabEks) => {
+                          this.setState({ activeTabEks });
+                        }}
+                      />
+                    ) : activeTabEks === 1 ? (
+                      <Ingress
+                        setNextTab={(activeTabEks) => {
+                          this.setState({ activeTabEks });
+                        }}
+                      />
+                    ) : activeTabEks === 2 ? (
+                      <Service
+                        setNextTab={(activeTabEks) => {
+                          this.setState({ activeTabEks });
+                        }}
+                      />
+                    ) : activeTabEks === 3 ? (
+                      <AppTopology />
+                    ) : (
+                      <></>
+                    )}
+                  </Box>
+                </Box>
               </Box>
-              <Box justifyContent={"center"} className="text-center m-t-4">
-                <Button
-                  className={` ${
-                    selectedService.length ? "" : "info-btn"
-                  } primary-btn min-width-inherit`}
-                  variant="contained"
-                  onClick={() =>
-                    selectedService.length ? this.onClickSave() : <></>
-                  }
-                >
-                  Save
-                </Button>
-              </Box>
-            </>
+            ) : (
+              <>
+                <Box className="nginx-table-section">
+                  <TableContainer className="table">
+                    <Table className="overview">
+                      {this.renderTableHead()}
+                      {this.renderTableBody()}
+                    </Table>
+                  </TableContainer>
+                </Box>
+              </>
+            )
+          ) : (
+            <></>
+          )}
+
+          {selectedInstance >= 0 ? (
+            <Box justifyContent={"center"} className="text-center m-t-4">
+              <Button
+                className={` ${
+                  selectedService.length || activeTabEks === 3 ? "" : "info-btn"
+                } primary-btn min-width-inherit`}
+                variant="contained"
+                onClick={() =>
+                  selectedService.length || activeTabEks === 3 ? (
+                    this.onClickSave()
+                  ) : (
+                    <></>
+                  )
+                }
+              >
+                Save
+              </Button>
+            </Box>
           ) : (
             <></>
           )}

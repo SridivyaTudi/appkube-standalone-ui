@@ -7,7 +7,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Checkbox
+  Checkbox,
 } from "@mui/material";
 
 class LoadBalancer extends Component {
@@ -29,7 +29,10 @@ class LoadBalancer extends Component {
                   <Checkbox
                     className="check-box"
                     size="small"
-                    onChange={this.handleCheckBox}
+                    onChange={(e) => {
+                      // this.handleCheckBox(e);
+                      this.props.setNextTab(1);
+                    }}
                   />
                   dummy-lb-12345
                 </TableCell>
