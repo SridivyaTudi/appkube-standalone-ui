@@ -104,6 +104,9 @@
                 &.preferences {
                   background-image: url("../../img/sidebar/preferences-h.png");
                 }
+                &.bimapping{
+                  background-image: url("../../img//sidebar/bimapping-h.png");
+                }
               }
               .name {
                 display: inline-flex;
@@ -213,6 +216,9 @@
             &.preferences {
               background-image: url("../../img/sidebar/preferences.png");
             }
+            &.bimapping{
+              background-image: url("../../img//sidebar/bimapping.png");
+            }
           }
 
           .name {
@@ -255,6 +261,9 @@
               &.preferences {
                 background-image: url("../../img/sidebar/preferences-h.png");
               }
+              &.bimapping{
+                background-image: url("../../img//sidebar/bimapping-h.png");
+              }
             }
           }
         }
@@ -282,6 +291,9 @@
             }
             &.preferences {
               background-image: url("../../img/sidebar/preferences-h.png");
+            }
+            &.bimapping{
+              background-image: url("../../img//sidebar/bimapping-h.png");
             }
           }
 
