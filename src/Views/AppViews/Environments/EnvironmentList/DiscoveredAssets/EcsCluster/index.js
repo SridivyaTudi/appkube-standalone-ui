@@ -220,7 +220,7 @@ class EcsCluster extends React.Component {
         },
       ],
       pg: 0,
-      rpg: 5,
+      rpg: 10,
       actionButton: null,
       activeTierTab: "3Tier",
     };

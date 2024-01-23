@@ -54,9 +54,9 @@ export class CreateGroup extends Component {
       users: [],
       roles: [],
       pg: 0,
-      rpg: 5,
+      rpg: 10,
       rolePG: 0,
-      roleRPG: 5,
+      roleRPG: 10,
       showCreateUserControlModal: false,
       actionButton: null,
       formData: {
