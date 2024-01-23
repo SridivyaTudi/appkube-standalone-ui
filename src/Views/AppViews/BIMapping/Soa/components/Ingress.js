@@ -29,7 +29,10 @@ class Ingress extends Component {
                   <Checkbox
                     className="check-box"
                     size="small"
-                    onChange={this.handleCheckBox}
+                    onChange={(e) => {
+                      // this.handleCheckBox(e);
+                      this.props.setNextTab(2);
+                    }}
                   />
                  sg-ingress-12345678
                 </TableCell>
