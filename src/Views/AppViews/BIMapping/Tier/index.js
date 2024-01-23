@@ -671,7 +671,7 @@ class Tier extends Component {
                                   this.toggleDataLayer();
                                 }}
                               >
-                                {selectedLayer.data || "Select"}
+                                {selectedService.data || "Select"}
                                 <i className="fa-solid fa-caret-down arrow-icon"></i>
                               </Box>
                               <Box
