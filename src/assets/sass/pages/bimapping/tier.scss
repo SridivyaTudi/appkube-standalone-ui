@@ -738,9 +738,8 @@
             }
           }
           .ports-inner-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+           display: block;
+           width: 100%;
             .ports-public-section {
               width: 100%;
               display: inline-flex;
@@ -968,3 +967,26 @@
     }
   }
 }
+@media (max-width: 1280px){
+  .tier-container {
+    .nginx-section {
+      .tabs {
+        .tabs-content {
+          .ports-content {
+            width: 100%;
+            display: block;
+            margin-top: 20px;
+            overflow: hidden;
+            overflow-x: auto;
+            .ports-inner-content {
+              width: 1200px;
+              overflow: hidden;
+              overflow-x: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
