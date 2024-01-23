@@ -13,6 +13,7 @@ import {
   TableBody,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import DownRightArrow from "../../../assets/img/bimapping/down-right-arrow.png";
 
 class BIMapping extends Component {
   constructor(props) {
@@ -101,14 +102,18 @@ class BIMapping extends Component {
                 <TableRow>
                   <TableCell align="left">
                     <Link to={""}>
-                      Synectiks{" "}
+                      Synectiks
                       <i className="fa-solid fa-caret-down arrow-icon"></i>
                     </Link>
-                    <span className="add-synectiks d-block"> 
-                    {/* <img src="" alt="" /> */}
-                     HR
-                      <i class="fa-solid fa-circle-plus"></i>{" "}
-                    </span>
+                    <Box className="add-synectiks">
+                      <Box className="arrow-image m-r-1">
+                        <img src={DownRightArrow} alt="DownRightArrow" />
+                      </Box>
+                      HR
+                      <Link to={"/app/bim/adding-product"}>
+                        <i class="fa-solid fa-circle-plus"></i>
+                      </Link>
+                    </Box>
                   </TableCell>
                   <TableCell align="center">01</TableCell>
                   <TableCell align="center">01</TableCell>
