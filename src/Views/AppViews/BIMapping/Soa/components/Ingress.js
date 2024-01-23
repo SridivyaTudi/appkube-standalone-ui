@@ -7,7 +7,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Checkbox
+  Checkbox,
 } from "@mui/material";
 
 class Ingress extends Component {
@@ -34,7 +34,7 @@ class Ingress extends Component {
                       this.props.setNextTab(2);
                     }}
                   />
-                 sg-ingress-12345678
+                  sg-ingress-12345678
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -44,7 +44,7 @@ class Ingress extends Component {
                     size="small"
                     onChange={this.handleCheckBox}
                   />
-                 sg-ingress-12345678
+                  sg-ingress-12345678
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -54,7 +54,7 @@ class Ingress extends Component {
                     size="small"
                     onChange={this.handleCheckBox}
                   />
-                 sg-ingress-12345678
+                  sg-ingress-12345678
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -64,7 +64,7 @@ class Ingress extends Component {
                     size="small"
                     onChange={this.handleCheckBox}
                   />
-                 sg-ingress-12345678
+                  sg-ingress-12345678
                 </TableCell>
               </TableRow>
             </TableBody>

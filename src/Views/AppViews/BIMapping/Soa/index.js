@@ -30,7 +30,52 @@ import LoadBalancerIcon from "../../../../assets/img/bimapping/load-balancer-ico
 import IngressIcon from "../../../../assets/img/bimapping/ingress-icon.png";
 import ServiceIcon from "../../../../assets/img/bimapping/service-icon.png";
 import StarIcon from "../../../../assets/img/bimapping/star-icon.png";
+import { v4 } from "uuid";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+let dropDownServiceData = {
+  appService: [
+    "Java Spring Boot API",
+    "NodeJs API Service",
+    "Golang API Service",
+    "Python API Service",
+    "Laravel API Service",
+    "Ruby API Service",
+  ],
+  dataService: [
+    "MySQL",
+    "Postgresql",
+    "Oracle",
+    "Dynamo",
+    "MongoDB",
+    "IndexDB",
+    "Casandra",
+  ],
+  otherService: ["Redis", "MemCache", "Elasticsearch", "Open search"],
+};
 
+let serviceTableData = [
+  {
+    name: "MockDB",
+    port: 80,
+  },
+  {
+    name: "DummyWebServer",
+    port: 443,
+  },
+  {
+    name: "SimulatedQueue",
+    port: 443,
+  },
+  {
+    name: "PseudoAnalytics",
+    port: 21,
+  },
+  {
+    name: "PhantomCache",
+    port: 53,
+  },
+];
 class Soa extends Component {
   tabMapping = [
     {
@@ -63,40 +108,309 @@ class Soa extends Component {
     this.state = {
       currentActiveNode: "",
       activeLayer: "",
-
       isSelectSpringBootOpen: false,
       isSelectMySQLOpen: false,
       isSelectRedisOpen: false,
-      activeTab: 0,
+      activeTabEks: 0,
+      deployedInstances: [
+        {
+          key: "EC2",
+          name: "EC2",
+          image: deployed1,
+        },
+        {
+          key: "ECS",
+          name: "ECS",
+          image: deployed1,
+        },
+        {
+          key: "EkS",
+          name: "EkS",
+          image: deployed1,
+        },
+        {
+          key: "Lambda",
+          name: "Lambda",
+          image: deployed4,
+        },
+        {
+          key: "CM",
+          name: "CM",
+          image: deployed5,
+        },
+      ],
+      selectedServiceData: {
+        app: "",
+        data: "",
+        other: "",
+      },
+      selectedInstance: -1,
+      selectedDeployedInstance: "",
+      selectedService: [],
+      savedData: [],
+      savedService: {
+        app: false,
+        data: false,
+        other: false,
+      },
     };
   }
 
-  setActiveTab = (activeTab) => {
-    this.setState({ activeTab });
+  setActiveTab = (activeTabEks) => {
+    this.setState({ activeTabEks });
   };
 
-  toggleSelectSpringBoot = () => {
-    this.setState({
-      isSelectSpringBootOpen: !this.state.isSelectSpringBootOpen,
+  toggleAppService = () => {
+    let { savedService } = this.state;
+    if (!savedService.app) {
+      this.setState({
+        isSelectSpringBootOpen: !this.state.isSelectSpringBootOpen,
+      });
+    }
+  };
+  toggleDataLayer = () => {
+    let { savedService } = this.state;
+    if (savedService.app && !savedService.data) {
+      this.setState({
+        isSelectMySQLOpen: !this.state.isSelectMySQLOpen,
+      });
+    }
+  };
+  toggleOtherServices = () => {
+    let { savedService } = this.state;
+    if (savedService.data && !savedService.other) {
+      this.setState({
+        isSelectRedisOpen: !this.state.isSelectRedisOpen,
+      });
+    }
+  };
+
+  renderDeployedInstances = () => {
+    let { deployedInstances, selectedDeployedInstance } = this.state;
+    return deployedInstances.map((instance) => {
+      return (
+        <Box
+          className={`deployed-card ${
+            instance.name === selectedDeployedInstance ? "active" : ""
+          }`}
+          key={v4()}
+          onClick={(e) => {
+            this.setState({
+              selectedDeployedInstance: instance.name,
+              selectedInstance: -1,
+              activeTabEks:0
+            });
+            e.stopPropagation();
+          }}
+        >
+          <Box className="d-block text-center">
+            <Box className="deployed-image">
+              <img src={instance.image} alt="" />
+            </Box>
+            <Box className="deployed-title">{instance.name}</Box>
+          </Box>
+        </Box>
+      );
     });
   };
-  toggleSelectMySQL = () => {
-    this.setState({
-      isSelectMySQLOpen: !this.state.isSelectMySQLOpen,
+
+  renderDeployedInstanceWrapper = () => {
+    let { isShowDepolyedSection } = this.state;
+    if (isShowDepolyedSection) {
+      return (
+        <Box className="deployed-section">
+          <Box className="deployed-head">
+            <h4 className="m-t-0">Deployed to</h4>
+          </Box>
+          <Box className="deployed-content">
+            <Box className="deployed-cards">
+              {this.renderDeployedInstances()}
+            </Box>
+          </Box>
+        </Box>
+      );
+    }
+  };
+
+  renderSelectedInstance = () => {
+    let { selectedDeployedInstance, selectedInstance } = this.state;
+    return [...Array(10)].map((instance, index) => {
+      return (
+        <Box
+          className={`environment-box ${
+            selectedInstance === index ? "active" : ""
+          }`}
+          key={v4()}
+          onClick={(e) => {
+            this.setState({ selectedInstance: index });
+            e.stopPropagation();
+          }}
+        >
+          <Box className="environment-title">
+            <Box className="environment-image">
+              <img src={Aws} alt="aws" />
+            </Box>
+            <Box className="title-name"> {selectedDeployedInstance} </Box>
+          </Box>
+          <Box className="data-contant">
+            <List>
+              <ListItem>
+                <Box className="data-text">
+                  <span style={{ backgroundColor: "#FFBA69" }}></span>
+                  <p>ID</p>
+                </Box>
+                <label>123456</label>
+              </ListItem>
+              <ListItem>
+                <Box className="data-text">
+                  <span style={{ backgroundColor: "#8676FF" }}></span>
+                  <p>Key</p>
+                </Box>
+                <label>Name</label>
+              </ListItem>
+              <ListItem>
+                <Box className="data-text">
+                  <span style={{ backgroundColor: "#FF2D2E" }}></span>
+                  <p>Value</p>
+                </Box>
+                <label>Kick</label>
+              </ListItem>
+            </List>
+          </Box>
+        </Box>
+      );
     });
   };
-  toggleSelectRedis = () => {
+
+  renderSelectedInstanceWrapper = () => {
+    let { selectedDeployedInstance } = this.state;
+    return selectedDeployedInstance ? (
+      <Box className="deployed-section m-t-4">
+        <Box className="deployed-head">
+          <h4 className="m-t-0">Select Instance</h4>
+        </Box>
+        <Box className="deployed-content">
+          <Box className="deployed-cards">{this.renderSelectedInstance()}</Box>
+        </Box>
+      </Box>
+    ) : (
+      <></>
+    );
+  };
+
+  onClickServiceDropDown = (key, value) => {
+    let { selectedServiceData } = this.state;
+    selectedServiceData[key] = value;
+    this.setState({ selectedServiceData, isShowDepolyedSection: true });
+  };
+
+  renderTableHead = () => {
+    return (
+      <TableHead>
+        <TableRow>
+          <TableCell align="center" component="th" scope="row">
+            Servicename
+          </TableCell>
+          <TableCell align="center">Port Details</TableCell>
+          <TableCell align="center">Department URL</TableCell>
+        </TableRow>
+      </TableHead>
+    );
+  };
+
+  renderTableBody = () => {
+    return (
+      <TableBody>
+        {serviceTableData.map((service, index) => {
+          return (
+            <TableRow>
+              <TableCell align="left">
+                <Checkbox
+                  className="check-box"
+                  size="small"
+                  id={index}
+                  onChange={this.handleCheckBox}
+                />
+                {service.name}
+              </TableCell>
+              <TableCell align="center">{service.port}</TableCell>
+              <TableCell align="center"></TableCell>
+            </TableRow>
+          );
+        })}
+      </TableBody>
+    );
+  };
+
+  // Handle check box
+  handleCheckBox = (event) => {
+    let { selectedService } = this.state;
+
+    let { id, checked } = event.target;
+
+    if (checked) {
+      selectedService.push(+id);
+    } else {
+      selectedService = selectedService.filter((value) => value !== +id);
+    }
+
+    this.setState({ selectedService });
+  };
+
+  onClickSave = () => {
+    let {
+      savedService,
+      savedData,
+      selectedInstance,
+      selectedDeployedInstance,
+      selectedService,
+      isShowDepolyedSection,
+    } = this.state;
+    let serviceName = "";
+
+    if (!savedService.app) {
+      savedService.app = true;
+      serviceName = "app";
+    } else if (!savedService.data) {
+      savedService.data = true;
+      serviceName = "data";
+    } else if (!savedService.other) {
+      savedService.other = true;
+      serviceName = "other";
+      this.props.navigate(`${APP_PREFIX_PATH}/bim/product-category`);
+    }
+
+    savedData.push({
+      serviceName,
+      selectedInstance,
+      selectedDeployedInstance,
+      selectedService,
+    });
+
+    selectedInstance = -1;
+    selectedDeployedInstance = "";
+    selectedService = [];
+    isShowDepolyedSection = false;
+
     this.setState({
-      isSelectRedisOpen: !this.state.isSelectRedisOpen,
+      savedService,
+      savedData,
+      selectedInstance,
+      selectedDeployedInstance,
+      selectedService,
+      isShowDepolyedSection,
     });
   };
   render() {
     let {
-      activeLayer,
       isSelectSpringBootOpen,
       isSelectMySQLOpen,
       isSelectRedisOpen,
-      activeTab,
+      selectedServiceData,
+      activeTabEks,
+      selectedInstance,
+      selectedDeployedInstance,
+      selectedService,
     } = this.state;
     return (
       <Box className="bimapping-container">
@@ -178,11 +492,7 @@ class Soa extends Component {
                             </Box>
                           </Box>
                         </ListItem>
-                        <ListItem
-                          className={`  ${
-                            activeLayer === "NGINX" ? "active" : ""
-                          }`}
-                        >
+                        <ListItem className={`active`}>
                           <Box className="application-balancer">
                             <Button
                               className="secondary-btn min-width"
@@ -201,16 +511,23 @@ class Soa extends Component {
                         </ListItem>
                         <ListItem
                           className={`  ${
-                            activeLayer === "NGINX" ? "active" : ""
+                            dropDownServiceData.appService.includes(
+                              selectedServiceData.app
+                            )
+                              ? "active"
+                              : ""
                           }`}
                         >
                           <Box className="application-balancer">
                             <Box className="mapping-fliter">
                               <Box
                                 className="fliter-toggel"
-                                onClick={this.toggleSelectSpringBoot}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  this.toggleAppService();
+                                }}
                               >
-                                Select
+                                {selectedServiceData.app || "Select"}
                                 <i className="fa-solid fa-caret-down arrow-icon"></i>
                               </Box>
                               <Box
@@ -221,30 +538,22 @@ class Soa extends Component {
                                 }
                               >
                                 <List>
-                                  <ListItem>
-                                    <i className="fa-solid fa-circle-dot"></i>{" "}
-                                    Java Spring Boot API
-                                  </ListItem>
-                                  <ListItem>
-                                    <i className="fa-solid fa-circle-dot"></i>{" "}
-                                    NodeJs API Service
-                                  </ListItem>
-                                  <ListItem>
-                                    <i className="fa-solid fa-circle-dot"></i>{" "}
-                                    Golang API Service
-                                  </ListItem>
-                                  <ListItem>
-                                    <i className="fa-solid fa-circle-dot"></i>{" "}
-                                    Python API Service
-                                  </ListItem>
-                                  <ListItem>
-                                    <i className="fa-solid fa-circle-dot"></i>{" "}
-                                    Laravel API Service
-                                  </ListItem>
-                                  <ListItem>
-                                    <i className="fa-solid fa-circle-dot"></i>{" "}
-                                    Ruby API Service
-                                  </ListItem>
+                                  {dropDownServiceData.appService.map(
+                                    (name) => (
+                                      <ListItem
+                                        key={v4()}
+                                        onClick={() =>
+                                          this.onClickServiceDropDown(
+                                            "app",
+                                            name
+                                          )
+                                        }
+                                      >
+                                        <i className="fa-solid fa-circle-dot"></i>
+                                        {name}
+                                      </ListItem>
+                                    )
+                                  )}
                                 </List>
                               </Box>
                               <div
@@ -253,7 +562,75 @@ class Soa extends Component {
                                     ? "fliters-collapse-bg active"
                                     : "fliters-collapse-bg"
                                 }
-                                onClick={this.toggleSelectSpringBoot}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  this.toggleAppService();
+                                }}
+                              />
+                            </Box>
+                            <Box className="balancer-boxs">
+                              <Box className="balancer-box">
+                                <span>
+                                  <img src={bottomArrow} alt="" />
+                                </span>
+                              </Box>
+                            </Box>
+                          </Box>
+                        </ListItem>
+                        <ListItem
+                          className={`${
+                            dropDownServiceData.dataService.includes(
+                              selectedServiceData.data
+                            )
+                              ? "active"
+                              : ""
+                          }`}
+                        >
+                          <Box className="application-balancer">
+                            <Box className="mapping-fliter">
+                              <Box
+                                className="fliter-toggel"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  this.toggleDataLayer();
+                                }}
+                              >
+                                {selectedServiceData.data || "Select"}
+                                <i className="fa-solid fa-caret-down arrow-icon"></i>
+                              </Box>
+                              <Box
+                                className={
+                                  isSelectMySQLOpen
+                                    ? "fliter-collapse active"
+                                    : "fliter-collapse"
+                                }
+                              >
+                                <List>
+                                  {dropDownServiceData.dataService.map(
+                                    (name) => (
+                                      <ListItem
+                                        key={v4()}
+                                        onClick={() =>
+                                          this.onClickServiceDropDown(
+                                            "data",
+                                            name
+                                          )
+                                        }
+                                      >
+                                        <i className="fa-solid fa-circle-dot"></i>
+                                        {name}
+                                      </ListItem>
+                                    )
+                                  )}
+                                </List>
+                              </Box>
+                              <div
+                                className={
+                                  isSelectMySQLOpen
+                                    ? "fliters-collapse-bg active"
+                                    : "fliters-collapse-bg"
+                                }
+                                onClick={this.toggleDataLayer}
                               />
                             </Box>
                             <Box className="balancer-boxs">
@@ -267,85 +644,23 @@ class Soa extends Component {
                         </ListItem>
                         <ListItem
                           className={`  ${
-                            activeLayer === "NGINX" ? "active" : ""
-                          }`}
-                        >
-                          <Box className="application-balancer">
-                            <Box className="mapping-fliter">
-                              <Box
-                                className="fliter-toggel"
-                                onClick={this.toggleSelectMySQL}
-                              >
-                                Select
-                                <i className="fa-solid fa-caret-down arrow-icon"></i>
-                              </Box>
-                              <Box
-                                className={
-                                  isSelectMySQLOpen
-                                    ? "fliter-collapse active"
-                                    : "fliter-collapse"
-                                }
-                              >
-                                <List>
-                                  <ListItem>
-                                    <i className="fa-solid fa-circle-dot"></i>{" "}
-                                    MySQL
-                                  </ListItem>
-                                  <ListItem>
-                                    <i className="fa-solid fa-circle-dot"></i>{" "}
-                                    Postgresql
-                                  </ListItem>
-                                  <ListItem>
-                                    <i className="fa-solid fa-circle-dot"></i>{" "}
-                                    Oracle
-                                  </ListItem>
-                                  <ListItem>
-                                    <i className="fa-solid fa-circle-dot"></i>{" "}
-                                    Dynamo
-                                  </ListItem>
-                                  <ListItem>
-                                    <i className="fa-solid fa-circle-dot"></i>{" "}
-                                    MongoDB
-                                  </ListItem>
-                                  <ListItem>
-                                    <i className="fa-solid fa-circle-dot"></i>{" "}
-                                    InfluxDB
-                                  </ListItem>
-                                  <ListItem>
-                                    <i className="fa-solid fa-circle-dot"></i>{" "}
-                                    Casandra
-                                  </ListItem>
-                                </List>
-                              </Box>
-                              <div
-                                className={
-                                  isSelectMySQLOpen
-                                    ? "fliters-collapse-bg active"
-                                    : "fliters-collapse-bg"
-                                }
-                                onClick={this.toggleSelectMySQL}
-                              />
-                            </Box>
-                            <Box className="balancer-boxs">
-                              <Box className="balancer-box">
-                                <span>
-                                  <img src={bottomArrow} alt="" />
-                                </span>
-                              </Box>
-                            </Box>
-                          </Box>
-                        </ListItem>
-                        <ListItem
-                          className={`  ${
-                            activeLayer === "Springboot" ? "active" : ""
+                            dropDownServiceData.otherService.includes(
+                              selectedServiceData.other
+                            )
+                              ? "active"
+                              : ""
+                          }
                           }`}
                         >
                           <Box className="mapping-fliter">
                             <Box
                               className="fliter-toggel"
-                              onClick={this.toggleSelectRedis}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                this.toggleOtherServices();
+                              }}
                             >
-                              Select
+                              {selectedServiceData.other || "Select"}
                               <i className="fa-solid fa-caret-down arrow-icon"></i>
                             </Box>
                             <Box
@@ -356,22 +671,22 @@ class Soa extends Component {
                               }
                             >
                               <List>
-                                <ListItem>
-                                  <i className="fa-solid fa-circle-dot"></i>{" "}
-                                  Redis
-                                </ListItem>
-                                <ListItem>
-                                  <i className="fa-solid fa-circle-dot"></i>{" "}
-                                  MemCache
-                                </ListItem>
-                                <ListItem>
-                                  <i className="fa-solid fa-circle-dot"></i>{" "}
-                                  Elasticsearch
-                                </ListItem>
-                                <ListItem>
-                                  <i className="fa-solid fa-circle-dot"></i>{" "}
-                                  Open search
-                                </ListItem>
+                                {dropDownServiceData.otherService.map(
+                                  (name) => (
+                                    <ListItem
+                                      key={v4()}
+                                      onClick={() =>
+                                        this.onClickServiceDropDown(
+                                          "other",
+                                          name
+                                        )
+                                      }
+                                    >
+                                      <i className="fa-solid fa-circle-dot"></i>
+                                      {name}
+                                    </ListItem>
+                                  )
+                                )}
                               </List>
                             </Box>
                             <div
@@ -380,7 +695,7 @@ class Soa extends Component {
                                   ? "fliters-collapse-bg active"
                                   : "fliters-collapse-bg"
                               }
-                              onClick={this.toggleSelectRedis}
+                              onClick={this.toggleOtherServices}
                             />
                           </Box>
                         </ListItem>
@@ -406,388 +721,99 @@ class Soa extends Component {
             </Grid>
             <Grid item xs={6}>
               <Box className="nginx-cards">
-                <Box className="deployed-section">
-                  <Box className="deployed-head">
-                    <h4 className="m-t-0">Deployed to</h4>
-                  </Box>
-                  <Box className="deployed-content">
-                    <Box className="deployed-cards">
-                      <Box className="deployed-card">
-                        <Box className="d-block text-center">
-                          <Box className="deployed-image">
-                            <img src={deployed1} alt="" />
-                          </Box>
-                          <Box className="deployed-title">EC2</Box>
-                        </Box>
-                      </Box>
-                      <Box className="deployed-card">
-                        <Box className="d-block text-center">
-                          <Box className="deployed-image">
-                            <img src={deployed1} alt="" />
-                          </Box>
-                          <Box className="deployed-title">ECS</Box>
-                        </Box>
-                      </Box>
-                      <Box className="deployed-card">
-                        <Box className="d-block text-center">
-                          <Box className="deployed-image">
-                            <img src={deployed1} alt="" />
-                          </Box>
-                          <Box className="deployed-title">EkS</Box>
-                        </Box>
-                      </Box>
-                      <Box className="deployed-card">
-                        <Box className="d-block text-center">
-                          <Box className="deployed-image">
-                            <img src={deployed4} alt="" />
-                          </Box>
-                          <Box className="deployed-title">Lambda</Box>
-                        </Box>
-                      </Box>
-                      <Box className="deployed-card">
-                        <Box className="d-block text-center">
-                          <Box className="deployed-image">
-                            <img src={deployed5} alt="" />
-                          </Box>
-                          <Box className="deployed-title">CM</Box>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box className="deployed-section m-t-4">
-                  <Box className="deployed-head">
-                    <h4 className="m-t-0">Select Instance</h4>
-                  </Box>
-                  <Box className="deployed-content">
-                    <Box className="deployed-cards">
-                      <Box className="environment-box">
-                        <Box className="environment-title">
-                          <Box className="environment-image">
-                            <img src={Aws} alt="aws" />
-                          </Box>
-                          <Box className="title-name">EC2</Box>
-                        </Box>
-                        <Box className="data-contant">
-                          <List>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#FFBA69" }}
-                                ></span>
-                                <p>ID</p>
-                              </Box>
-                              <label>123456</label>
-                            </ListItem>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#8676FF" }}
-                                ></span>
-                                <p>Key</p>
-                              </Box>
-                              <label>Name</label>
-                            </ListItem>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#FF2D2E" }}
-                                ></span>
-                                <p>Value</p>
-                              </Box>
-                              <label>Kick</label>
-                            </ListItem>
-                          </List>
-                        </Box>
-                      </Box>
-                      <Box className="environment-box">
-                        <Box className="environment-title">
-                          <Box className="environment-image">
-                            <img src={Aws} alt="aws" />
-                          </Box>
-                          <Box className="title-name">EC2</Box>
-                        </Box>
-                        <Box className="data-contant">
-                          <List>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#FFBA69" }}
-                                ></span>
-                                <p>ID</p>
-                              </Box>
-                              <label>123456</label>
-                            </ListItem>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#8676FF" }}
-                                ></span>
-                                <p>Key</p>
-                              </Box>
-                              <label>Name</label>
-                            </ListItem>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#FF2D2E" }}
-                                ></span>
-                                <p>Value</p>
-                              </Box>
-                              <label>Kick</label>
-                            </ListItem>
-                          </List>
-                        </Box>
-                      </Box>
-                      <Box className="environment-box">
-                        <Box className="environment-title">
-                          <Box className="environment-image">
-                            <img src={Aws} alt="aws" />
-                          </Box>
-                          <Box className="title-name">EC2</Box>
-                        </Box>
-                        <Box className="data-contant">
-                          <List>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#FFBA69" }}
-                                ></span>
-                                <p>ID</p>
-                              </Box>
-                              <label>123456</label>
-                            </ListItem>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#8676FF" }}
-                                ></span>
-                                <p>Key</p>
-                              </Box>
-                              <label>Name</label>
-                            </ListItem>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#FF2D2E" }}
-                                ></span>
-                                <p>Value</p>
-                              </Box>
-                              <label>Kick</label>
-                            </ListItem>
-                          </List>
-                        </Box>
-                      </Box>
-                      <Box className="environment-box">
-                        <Box className="environment-title">
-                          <Box className="environment-image">
-                            <img src={Aws} alt="aws" />
-                          </Box>
-                          <Box className="title-name">EC2</Box>
-                        </Box>
-                        <Box className="data-contant">
-                          <List>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#FFBA69" }}
-                                ></span>
-                                <p>ID</p>
-                              </Box>
-                              <label>123456</label>
-                            </ListItem>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#8676FF" }}
-                                ></span>
-                                <p>Key</p>
-                              </Box>
-                              <label>Name</label>
-                            </ListItem>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#FF2D2E" }}
-                                ></span>
-                                <p>Value</p>
-                              </Box>
-                              <label>Kick</label>
-                            </ListItem>
-                          </List>
-                        </Box>
-                      </Box>
-                      <Box className="environment-box">
-                        <Box className="environment-title">
-                          <Box className="environment-image">
-                            <img src={Aws} alt="aws" />
-                          </Box>
-                          <Box className="title-name">EC2</Box>
-                        </Box>
-                        <Box className="data-contant">
-                          <List>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#FFBA69" }}
-                                ></span>
-                                <p>ID</p>
-                              </Box>
-                              <label>123456</label>
-                            </ListItem>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#8676FF" }}
-                                ></span>
-                                <p>Key</p>
-                              </Box>
-                              <label>Name</label>
-                            </ListItem>
-                            <ListItem>
-                              <Box className="data-text">
-                                <span
-                                  style={{ backgroundColor: "#FF2D2E" }}
-                                ></span>
-                                <p>Value</p>
-                              </Box>
-                              <label>Kick</label>
-                            </ListItem>
-                          </List>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
+                {this.renderDeployedInstanceWrapper()}
+                {this.renderSelectedInstanceWrapper()}
               </Box>
             </Grid>
           </Grid>
-          <Box className="nginx-table-section">
-            <TableContainer className="table">
-              <Table className="overview">
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="center" component="th" scope="row">
-                      Servicename
-                    </TableCell>
-                    <TableCell align="center">Port Details</TableCell>
-                    <TableCell align="center">Department URL</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Checkbox
-                        className="check-box"
-                        size="small"
-                        onChange={this.handleCheckBox}
+          {selectedInstance >= 0 ? (
+            selectedDeployedInstance === "EkS" ? (
+              <Box className="nginx-section">
+                <Box className="tabs">
+                  <List className="tabs-menu">
+                    {this.tabMapping.map((tabData, index) => {
+                      return (
+                        <ListItem
+                          key={`ops-tab-${index}`}
+                          className={index === activeTabEks ? "active" : ""}
+                          onClick={() => this.setActiveTab(index)}
+                        >
+                          <Box className="m-r-2">
+                            <img src={tabData.image} alt="" />
+                          </Box>
+                          {tabData.name}
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                  <Box className="tabs-content">
+                    {activeTabEks === 0 ? (
+                      <LoadBalancer
+                        setNextTab={(activeTabEks) => {
+                          this.setState({ activeTabEks });
+                        }}
                       />
-                      MockDB
-                    </TableCell>
-                    <TableCell align="center">80</TableCell>
-                    <TableCell align="center"></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Checkbox
-                        className="check-box"
-                        size="small"
-                        onChange={this.handleCheckBox}
+                    ) : activeTabEks === 1 ? (
+                      <Ingress
+                        setNextTab={(activeTabEks) => {
+                          this.setState({ activeTabEks });
+                        }}
                       />
-                      DummyWebServer
-                    </TableCell>
-                    <TableCell align="center">443</TableCell>
-                    <TableCell align="center"></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Checkbox
-                        className="check-box"
-                        size="small"
-                        onChange={this.handleCheckBox}
+                    ) : activeTabEks === 2 ? (
+                      <Service
+                        setNextTab={(activeTabEks) => {
+                          this.setState({ activeTabEks });
+                        }}
                       />
-                      SimulatedQueue
-                    </TableCell>
-                    <TableCell align="center">443</TableCell>
-                    <TableCell align="center"></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Checkbox
-                        className="check-box"
-                        size="small"
-                        onChange={this.handleCheckBox}
-                      />
-                      PseudoAnalytics
-                    </TableCell>
-                    <TableCell align="center">21</TableCell>
-                    <TableCell align="center"></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Checkbox
-                        className="check-box"
-                        size="small"
-                        onChange={this.handleCheckBox}
-                      />
-                      PhantomCache
-                    </TableCell>
-                    <TableCell align="center">53</TableCell>
-                    <TableCell align="center"></TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-          <Box className="nginx-section">
-            <Box className="tabs">
-              <List className="tabs-menu">
-                {this.tabMapping.map((tabData, index) => {
-                  // if (tabData.type.includes(activeLayer)) {
-                  return (
-                    <ListItem
-                      key={`ops-tab-${index}`}
-                      className={index === activeTab ? "active" : ""}
-                      onClick={() => this.setActiveTab(index)}
-                    >
-                      <Box className="m-r-2">
-                        <img src={tabData.image} alt="" />
-                      </Box>
-                      {tabData.name}
-                    </ListItem>
-                  );
-                  // } else {
-                  //   return null;
-                  // }
-                })}
-              </List>
-              <Box className="tabs-content">
-                {activeTab === 0 ? (
-                  <LoadBalancer />
-                ) : activeTab === 1 ? (
-                  <Ingress />
-                ) : activeTab === 2 ? (
-                  <Service />
-                ) : activeTab === 3 ? (
-                  <AppTopology />
-                ) : (
-                  <></>
-                )}
+                    ) : activeTabEks === 3 ? (
+                      <AppTopology />
+                    ) : (
+                      <></>
+                    )}
+                  </Box>
+                </Box>
               </Box>
+            ) : (
+              <>
+                <Box className="nginx-table-section">
+                  <TableContainer className="table">
+                    <Table className="overview">
+                      {this.renderTableHead()}
+                      {this.renderTableBody()}
+                    </Table>
+                  </TableContainer>
+                </Box>
+              </>
+            )
+          ) : (
+            <></>
+          )}
+
+          {selectedInstance >= 0 ? (
+            <Box justifyContent={"center"} className="text-center m-t-4">
+              <Button
+                className={` ${
+                  selectedService.length || activeTabEks === 3 ? "" : "info-btn"
+                } primary-btn min-width-inherit`}
+                variant="contained"
+                onClick={() =>
+                  selectedService.length || activeTabEks === 3 ? (
+                    this.onClickSave()
+                  ) : (
+                    <></>
+                  )
+                }
+              >
+                Save
+              </Button>
             </Box>
-          </Box>
-          <Box justifyContent={"center"} className="text-center m-t-4">
-            <Button
-              className="info-btn primary-btn min-width-inherit"
-              variant="contained"
-            >
-              Save
-            </Button>
-          </Box>
+          ) : (
+            <></>
+          )}
         </Box>
       </Box>
     );
   }
 }
 
-export default Soa;
+export default navigateRouter(Soa);
