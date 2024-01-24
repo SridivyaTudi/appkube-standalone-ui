@@ -10,6 +10,7 @@ import status from "Redux/Constants/CommonDS";
 import { getActiveTab, deleteActiveTab, getCurrentUser } from "Utils";
 import { getUserPermissionData } from "Redux/Settings/SettingsThunk";
 import Loader from "Components/Loader";
+import TitleIconAndCountOfCard from "Components/TitleIconAndCountOfCard";
 export class Permissions extends Component {
   controlMapping = [
     {
@@ -103,6 +104,31 @@ export class Permissions extends Component {
   };
 
   // Render tabs
+  // renderTabMenu = () => {
+  //   const { activeTab, tabMapping } = this.state;
+  //   let {
+  //     userPermissionData: { status: userStatus },
+  //   } = this.props;
+  //   let isLoding = userStatus === status.IN_PROGRESS;
+  //   return tabMapping.map((tabData, index) => {
+  //     return (
+  //       <Box
+  //         key={`control-${index}`}
+  //         className={index === activeTab ? "control-box active" : "control-box"}
+  //         onClick={() => this.setActiveTab(index)}
+  //       >
+  //         <Box className="icon">
+  //           <i className={`fa-solid ${tabData.icon}`}></i>
+  //         </Box>
+  //         <Box className="content">
+  //           <label>{tabData.label}</label>
+  //           {isLoding ? this.renderLoder() : <strong>{tabData.value}</strong>}
+  //         </Box>
+  //       </Box>
+  //     );
+  //   });
+  // };
+
   renderTabMenu = () => {
     const { activeTab, tabMapping } = this.state;
     let {
@@ -110,20 +136,21 @@ export class Permissions extends Component {
     } = this.props;
     let isLoding = userStatus === status.IN_PROGRESS;
     return tabMapping.map((tabData, index) => {
+      let cuttentItem = {
+        active: index === activeTab ? "active" : "",
+        image: <i className={`fa-solid ${tabData.icon}`}></i>,
+        title: tabData.label,
+        count: tabData.value,
+        isLoding,
+        isIcon: true,
+      };
       return (
-        <Box
-          key={`control-${index}`}
-          className={index === activeTab ? "control-box active" : "control-box"}
-          onClick={() => this.setActiveTab(index)}
-        >
-          <Box className="icon">
-            <i className={`fa-solid ${tabData.icon}`}></i>
-          </Box>
-          <Box className="content">
-            <label>{tabData.label}</label>
-            {isLoding ? this.renderLoder() : <strong>{tabData.value}</strong>}
-          </Box>
-        </Box>
+        <TitleIconAndCountOfCard
+          data={cuttentItem}
+          onClickCard={(data) => {
+            this.setActiveTab(index);
+          }}
+        />
       );
     });
   };
