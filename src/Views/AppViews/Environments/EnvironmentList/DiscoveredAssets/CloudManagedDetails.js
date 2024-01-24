@@ -13,29 +13,13 @@ import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
 import { connect } from "react-redux";
 import { Grid } from "@mui/material";
 import status from "Redux/Constants/CommonDS";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import { styled } from "@mui/material/styles";
 import TabsMenu from "../TabsMenu";
 import { v4 } from "uuid";
 import {
   getSelectedInfraTopologyView,
   setSelectedInfraTopologyView,
 } from "Utils";
-
-const HtmlTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} arrow classes={{ popper: className }} />
-))(({ theme }) => ({
-  [`& .${tooltipClasses.arrow}`]: {
-    color: "#ffffffff",
-  },
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: "#ffffffff",
-    color: "rgba(0, 0, 0, 0.87)",
-    maxWidth: 200,
-    fontSize: theme.typography.pxToRem(12),
-    border: "1px solid #dadde9",
-  },
-}));
+import TitleIconAndCountOfCard from "Components/TitleIconAndCountOfCard";
 
 const filterTabs = {
   1: "app",
@@ -92,12 +76,11 @@ class CloudManagedDetails extends React.Component {
 
   componentDidMount = () => {
     if (this.props.infraTopologyDbCategories.data) {
-     
       const data = this.props.infraTopologyDbCategories.data;
       data.forEach((item) => {
         this.dbMapping.push({ name: item.name, dataKey: item.id });
       });
-      this.setPreviousCategory()
+      this.setPreviousCategory();
     }
   };
 
@@ -177,6 +160,152 @@ class CloudManagedDetails extends React.Component {
     return data.filter((item) => item.dbCategoryId === activeDbTabId);
   };
 
+  // renderTable = (data) => {
+  //   const { activeCategory, activeTab, activeDbTab } = this.state;
+  //   let cloudData = this.filterCloudManagedData(data, filterTabs[activeTab]);
+  //   if (activeDbTab) {
+  //     cloudData = this.filterCloudDatabyDB(cloudData);
+  //   }
+  //   const JSX = [];
+  //   const childJSX = [];
+  //   if (activeTab === 2) {
+  //     JSX.push(
+  //       <Box sx={{ width: "100%" }} className="data-cloud-managed" key={v4()}>
+  //         <Grid
+  //           container
+  //           rowSpacing={1}
+  //           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+  //         >
+  //           <Grid item xs={3}>
+  //             <Box className="cloud-managed-tab">
+  //               <Box>
+  //                 <List>
+  //                   {this.dbMapping.map((tabData, index) => {
+  //                     return (
+  //                       <ListItem
+  //                         key={v4()}
+  //                         className={index === activeDbTab ? "active" : ""}
+  //                         onClick={() => this.setActiveDbTab(tabData, index)}
+  //                       >
+  //                         {tabData.name}
+  //                       </ListItem>
+  //                     );
+  //                   })}
+  //                 </List>
+  //               </Box>
+  //             </Box>
+  //           </Grid>
+  //           <Grid item xs={9}>
+  //             <Box className="tabs-content m-t-0">
+  //               <Box className="cloud-managed-cards">
+  //                 <Box className="cloud-managed-cards-scroll">
+  //                   {cloudData?.forEach((item, index) => {
+  //                     childJSX.push(
+  //                       <Box
+  //                         className={`service-card ${
+  //                           activeCategory === index ? "active" : ""
+  //                         }`}
+  //                         onClick={() => {
+  //                           this.setState({ activeCategory: index });
+  //                           this.props.setCurrentTopologyCategory(
+  //                             item.elementType
+  //                           );
+  //                         }}
+  //                         key={v4()}
+  //                       >
+  //                         <Box className="service-icon">
+  //                           <img
+  //                             src={this.state.serivceImages[index]}
+  //                             alt="serviceicon"
+  //                           />
+  //                         </Box>
+  //                         <Box className="service-contant">
+  //                           <HtmlTooltip
+  //                             className="table-tooltip"
+  //                             title={item.elementType}
+  //                           >
+  //                             <label>{item.elementType}</label>
+  //                           </HtmlTooltip>
+
+  //                           <strong>{item.totalRecord}</strong>
+  //                         </Box>
+  //                       </Box>
+  //                     );
+  //                   })}
+  //                   {childJSX.length ? (
+  //                     childJSX
+  //                   ) : (
+  //                     <p
+  //                       style={{
+  //                         fontSize: "16px",
+  //                         margin: "30% auto",
+  //                         color: "#000",
+  //                       }}
+  //                     >
+  //                       No Data Available!
+  //                     </p>
+  //                   )}
+  //                 </Box>
+  //               </Box>
+  //             </Box>
+  //           </Grid>
+  //         </Grid>
+  //       </Box>
+  //     );
+  //   } else {
+  //     cloudData.forEach((item, index) => {
+  //       childJSX.push(
+  //         <Box
+  //           className={`service-card ${
+  //             activeCategory === index ? "active" : ""
+  //           }`}
+  //           onClick={() => {
+  //             this.setState({ activeCategory: index });
+  //             this.props.setCurrentTopologyCategory(item.elementType);
+  //             let infraViewDetails = getSelectedInfraTopologyView();
+  //             setSelectedInfraTopologyView({
+  //               ...infraViewDetails,
+  //               activeCategory: index,
+  //               elementType: item.elementType,
+  //             });
+  //           }}
+  //           key={v4()}
+  //         >
+  //           <Box className="service-icon">
+  //             <img src={this.state.serivceImages[index]} alt="serviceicon" />
+  //           </Box>
+  //           <Box className="service-contant">
+  //             <HtmlTooltip className="table-tooltip" title={item.elementType}>
+  //               <label>{item.elementType}</label>
+  //             </HtmlTooltip>
+  //             <strong>{item.totalRecord}1</strong>
+  //           </Box>
+  //         </Box>
+  //       );
+  //     });
+  //     if (cloudData.length) {
+  //       JSX.push(
+  //         <Box className="cloud-managed-cards" key={v4()}>
+  //           <Box className="cloud-managed-cards-scroll">{childJSX}</Box>
+  //         </Box>
+  //       );
+  //     }
+  //   }
+  //   if (JSX.length) {
+  //     return JSX;
+  //   } else {
+  //     return [
+  //       <Box className="cloud-managed-cards" key={v4()}>
+  //         <Box className="cloud-managed-cards-scroll">
+  //           <p style={{ fontSize: "16px", margin: "22% auto", color: "#000" }}>
+  //             No Data Available!
+  //           </p>
+  //         </Box>
+  //       </Box>,
+  //     ];
+  //   }
+  // };
+
   renderTable = (data) => {
     const { activeCategory, activeTab, activeDbTab } = this.state;
     let cloudData = this.filterCloudManagedData(data, filterTabs[activeTab]);
@@ -185,6 +314,7 @@ class CloudManagedDetails extends React.Component {
     }
     const JSX = [];
     const childJSX = [];
+
     if (activeTab === 2) {
       JSX.push(
         <Box sx={{ width: "100%" }} className="data-cloud-managed" key={v4()}>
@@ -217,36 +347,22 @@ class CloudManagedDetails extends React.Component {
                 <Box className="cloud-managed-cards">
                   <Box className="cloud-managed-cards-scroll">
                     {cloudData?.forEach((item, index) => {
+                      let cuttentItem = {
+                        active: activeCategory === index ? "active" : "",
+                        image: this.state.serivceImages[index],
+                        title: item.elementType,
+                        count: item.totalRecord,
+                      };
                       childJSX.push(
-                        <Box
-                          className={`service-card ${
-                            activeCategory === index ? "active" : ""
-                          }`}
-                          onClick={() => {
-                            this.setState({ activeCategory: index });
-                            this.props.setCurrentTopologyCategory(
+                        <TitleIconAndCountOfCard
+                          data={cuttentItem}
+                          onClickCard={(data) => {
+                            this.onClickCurrentCategory(
+                              index,
                               item.elementType
                             );
                           }}
-                          key={v4()}
-                        >
-                          <Box className="service-icon">
-                            <img
-                              src={this.state.serivceImages[index]}
-                              alt="serviceicon"
-                            />
-                          </Box>
-                          <Box className="service-contant">
-                            <HtmlTooltip
-                              className="table-tooltip"
-                              title={item.elementType}
-                            >
-                              <label>{item.elementType}</label>
-                            </HtmlTooltip>
-
-                            <strong>{item.totalRecord}</strong>
-                          </Box>
-                        </Box>
+                        />
                       );
                     })}
                     {childJSX.length ? (
@@ -271,33 +387,19 @@ class CloudManagedDetails extends React.Component {
       );
     } else {
       cloudData.forEach((item, index) => {
+        let cuttentItem = {
+          active: activeCategory === index ? "active" : "",
+          image: this.state.serivceImages[index],
+          title: item.elementType,
+          count: item.totalRecord,
+        };
         childJSX.push(
-          <Box
-            className={`service-card ${
-              activeCategory === index ? "active" : ""
-            }`}
-            onClick={() => {
-              this.setState({ activeCategory: index });
-              this.props.setCurrentTopologyCategory(item.elementType);
-              let infraViewDetails = getSelectedInfraTopologyView();
-              setSelectedInfraTopologyView({
-                ...infraViewDetails,
-                activeCategory: index,
-                elementType: item.elementType,
-              });
+          <TitleIconAndCountOfCard
+            data={cuttentItem}
+            onClickCard={(data) => {
+              this.onClickCurrentCategory(index, item.elementType);
             }}
-            key={v4()}
-          >
-            <Box className="service-icon">
-              <img src={this.state.serivceImages[index]} alt="serviceicon" />
-            </Box>
-            <Box className="service-contant">
-              <HtmlTooltip className="table-tooltip" title={item.elementType}>
-                <label>{item.elementType}</label>
-              </HtmlTooltip>
-              <strong>{item.totalRecord}</strong>
-            </Box>
-          </Box>
+          />
         );
       });
       if (cloudData.length) {
@@ -323,6 +425,16 @@ class CloudManagedDetails extends React.Component {
     }
   };
 
+  onClickCurrentCategory = (activeCategory, elementType) => {
+    this.setState({ activeCategory });
+    this.props.setCurrentTopologyCategory(elementType);
+    let infraViewDetails = getSelectedInfraTopologyView();
+    setSelectedInfraTopologyView({
+      ...infraViewDetails,
+      activeCategory,
+      elementType,
+    });
+  };
   setPreviousCategory = () => {
     let viewDetails = getSelectedInfraTopologyView();
 
