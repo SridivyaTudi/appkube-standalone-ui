@@ -32,6 +32,8 @@ import LoadBalancerIcon from "assets/img/bimapping/load-balancer-icon.png";
 import IngressIcon from "assets/img/bimapping/ingress-icon.png";
 import ServiceIcon from "assets/img/bimapping/service-icon.png";
 import StarIcon from "assets/img/bimapping/star-icon.png";
+import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
+
 let dropDownLayersData = {
   webLayer: [
     "NGINX",
@@ -234,52 +236,88 @@ class Tier extends Component {
     });
   };
 
+  // renderSelectedInstance = () => {
+  //   let { selectedDeployedInstance, selectedInstance } = this.state;
+  //   return [...Array(10)].map((instance, index) => {
+  //     return (
+  //       <Box
+  //         className={`environment-box ${
+  //           selectedInstance === index ? "active" : ""
+  //         }`}
+  //         key={v4()}
+  //         onClick={(e) => {
+  //           this.setState({ selectedInstance: index });
+  //           e.stopPropagation();
+  //         }}
+  //       >
+  //         <Box className="environment-title">
+  //           <Box className="environment-image">
+  //             <img src={Aws} alt="aws" />
+  //           </Box>
+  //           <Box className="title-name"> {selectedDeployedInstance} </Box>
+  //         </Box>
+  //         <Box className="data-contant">
+  //           <List>
+  //             <ListItem>
+  //               <Box className="data-text">
+  //                 <span style={{ backgroundColor: "#FFBA69" }}></span>
+  //                 <p>ID</p>
+  //               </Box>
+  //               <label>123456</label>
+  //             </ListItem>
+  //             <ListItem>
+  //               <Box className="data-text">
+  //                 <span style={{ backgroundColor: "#8676FF" }}></span>
+  //                 <p>Key</p>
+  //               </Box>
+  //               <label>Name</label>
+  //             </ListItem>
+  //             <ListItem>
+  //               <Box className="data-text">
+  //                 <span style={{ backgroundColor: "#FF2D2E" }}></span>
+  //                 <p>Value</p>
+  //               </Box>
+  //               <label>Kick</label>
+  //             </ListItem>
+  //           </List>
+  //         </Box>
+  //       </Box>
+  //     );
+  //   });
+  // };
+
   renderSelectedInstance = () => {
     let { selectedDeployedInstance, selectedInstance } = this.state;
+    const data = [
+      {
+        backgroundColor: "#FFBA69",
+        label: "ID",
+        value: "123456",
+      },
+      {
+        backgroundColor: "#8676FF",
+        label: "Key",
+        value: "Name",
+      },
+      {
+        backgroundColor: "#FF2D2E",
+        label: "Value",
+        value: "Kick",
+      },
+    ];
     return [...Array(10)].map((instance, index) => {
+      let instanceData = {
+        image: Aws,
+        title: selectedDeployedInstance,
+        data,
+        active: selectedInstance === index ? "active" : "",
+        rowSeperatedByline: false,
+      };
       return (
-        <Box
-          className={`environment-box ${
-            selectedInstance === index ? "active" : ""
-          }`}
-          key={v4()}
-          onClick={(e) => {
-            this.setState({ selectedInstance: index });
-            e.stopPropagation();
-          }}
-        >
-          <Box className="environment-title">
-            <Box className="environment-image">
-              <img src={Aws} alt="aws" />
-            </Box>
-            <Box className="title-name"> {selectedDeployedInstance} </Box>
-          </Box>
-          <Box className="data-contant">
-            <List>
-              <ListItem>
-                <Box className="data-text">
-                  <span style={{ backgroundColor: "#FFBA69" }}></span>
-                  <p>ID</p>
-                </Box>
-                <label>123456</label>
-              </ListItem>
-              <ListItem>
-                <Box className="data-text">
-                  <span style={{ backgroundColor: "#8676FF" }}></span>
-                  <p>Key</p>
-                </Box>
-                <label>Name</label>
-              </ListItem>
-              <ListItem>
-                <Box className="data-text">
-                  <span style={{ backgroundColor: "#FF2D2E" }}></span>
-                  <p>Value</p>
-                </Box>
-                <label>Kick</label>
-              </ListItem>
-            </List>
-          </Box>
-        </Box>
+        <TitleIconWithInfoOfCard
+          cardDetails={instanceData}
+          onClickCard={(details) => this.onClickInstance(index)}
+        />
       );
     });
   };
@@ -440,6 +478,11 @@ class Tier extends Component {
   setActiveTab = (activeTabEks) => {
     this.setState({ activeTabEks });
   };
+
+  onClickInstance = (selectedInstance) => {
+    this.setState({ selectedInstance });
+  };
+
   render() {
     let {
       isSelectNginxOpen,
