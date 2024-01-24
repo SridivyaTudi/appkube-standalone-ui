@@ -278,7 +278,7 @@ class Tier extends Component {
           <h4 className="m-t-0">Select Instance</h4>
         </Box>
         <Box className="deployed-content">
-          <Box className="deployed-cards">{this.renderSelectedInstance()}</Box>
+          <Box className="environment-boxs">{this.renderSelectedInstance()}</Box>
         </Box>
       </Box>
     ) : (
