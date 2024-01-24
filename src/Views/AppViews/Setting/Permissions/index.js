@@ -11,6 +11,7 @@ import { getActiveTab, deleteActiveTab, getCurrentUser } from "Utils";
 import { getUserPermissionData } from "Redux/Settings/SettingsThunk";
 import Loader from "Components/Loader";
 import TitleIconAndCountOfCard from "Components/TitleIconAndCountOfCard";
+import { style } from "d3";
 export class Permissions extends Component {
   controlMapping = [
     {
@@ -136,8 +137,8 @@ export class Permissions extends Component {
     } = this.props;
     let isLoding = userStatus === status.IN_PROGRESS;
     return tabMapping.map((tabData, index) => {
-      let cuttentItem = {
-        active: index === activeTab ? "active" : "",
+      let cuttentItem = { 
+        active: index === activeTab ? "active" : "", 
         image: <i className={`fa-solid ${tabData.icon}`}></i>,
         title: tabData.label,
         count: tabData.value,
@@ -238,3 +239,7 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Permissions);
+
+
+
+
