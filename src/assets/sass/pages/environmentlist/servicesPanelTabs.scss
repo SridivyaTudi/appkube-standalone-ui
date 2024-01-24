@@ -298,69 +298,6 @@
                   flex-wrap: wrap;
                   width: 696px;
                   margin: 10px;
-
-                  .service-card {
-                    margin: 0 5px 10px;
-                    width: 164px;
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
-                    justify-content: flex-start;
-                    background: #ffffff;
-                    border-radius: 5px;
-                    padding: 26px 10px;
-                    border: 1px solid #f4f4f4;
-                    outline: 1px solid transparent;
-
-                    .service-icon {
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      width: 40px;
-                      height: 40px;
-                      border-radius: 50%;
-                      background: #f6f7fb;
-                      padding: 10px;
-                    }
-
-                    .service-contant {
-                      margin-left: 10px;
-
-                      label {
-                        width: 90px;
-                        font-size: 14px;
-                        line-height: 18px;
-                        font-weight: 600;
-                        display: block;
-                        color: #383874;
-                        margin-bottom: 8px;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                      }
-
-                      strong {
-                        font-size: 16px;
-                        line-height: 20px;
-                        font-weight: 700;
-                        display: block;
-                        color: #383874;
-                      }
-                    }
-
-                    &.active {
-                      border-color: #384cff;
-                      outline-color: #384cff;
-                      .service-icon {
-                        box-shadow: 0px 100px 80px rgba(108, 73, 172, 0.07),
-                          0px 41.7776px 33.4221px rgba(108, 73, 172, 0.0503198),
-                          0px 22.3363px 17.869px rgba(108, 73, 172, 0.0417275),
-                          0px 12.5216px 10.0172px rgba(108, 73, 172, 0.035),
-                          0px 6.6501px 5.32008px rgba(108, 73, 172, 0.0282725),
-                          0px 2.76726px 2.21381px rgba(108, 73, 172, 0.0196802);
-                      }
-                    }
-                  }
                 }
               }
 
@@ -368,9 +305,6 @@
                 .cloud-managed-cards {
                   .cloud-managed-cards-scroll {
                     width: 510px;
-                    .service-card {
-                      width: 160px;
-                    }
                   }
                 }
               }
@@ -384,60 +318,7 @@
               margin-top: 20px;
               padding-bottom: 10px;
 
-              .service-card {
-                margin-right: 10px;
-                width: 165px;
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                background: #ffffff;
-                border-radius: 5px;
-                padding: 20px 10px;
-                cursor: pointer;
-
-                &:last-child {
-                  margin-right: 0;
-                }
-
-                .service-icon {
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  width: 40px;
-                  height: 40px;
-                  border-radius: 50%;
-                  background: #f6f7fb;
-                }
-
-                .service-contant {
-                  margin-left: 10px;
-
-                  label {
-                    width: 95px;
-                    font-size: 14px;
-                    line-height: 18px;
-                    font-weight: 700;
-                    display: block;
-                    color: #383874;
-                    margin-bottom: 8px;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                  }
-
-                  strong {
-                    font-size: 16px;
-                    line-height: 20px;
-                    font-weight: 700;
-                    display: block;
-                    color: #383874;
-                  }
-                }
-
-                &.active {
-                  border: 1px solid #384cff;
-                }
-              }
+              
             }
 
             .resources-section {
