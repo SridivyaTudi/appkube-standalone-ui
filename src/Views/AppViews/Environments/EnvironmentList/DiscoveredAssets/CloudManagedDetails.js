@@ -321,7 +321,7 @@ class CloudManagedDetails extends React.Component {
           <Grid
             container
             rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            columnSpacing={{ xs: 1, sm: 2, md: 2 }}
           >
             <Grid item xs={3}>
               <Box className="cloud-managed-tab">
