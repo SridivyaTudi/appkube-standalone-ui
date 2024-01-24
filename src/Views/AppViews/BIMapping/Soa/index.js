@@ -34,6 +34,7 @@ import { v4 } from "uuid";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
+import VerticalTitleAndIconOfCard from "Components/VerticalTitleAndIconOfCard";
 let dropDownServiceData = {
   appService: [
     "Java Spring Boot API",
@@ -189,28 +190,16 @@ class Soa extends Component {
   renderDeployedInstances = () => {
     let { deployedInstances, selectedDeployedInstance } = this.state;
     return deployedInstances.map((instance) => {
+      let deployInstances = {
+        label: instance.name,
+        image: instance.image,
+        active: instance.name === selectedDeployedInstance ? "active" : "",
+      };
       return (
-        <Box
-          className={`deployed-card ${
-            instance.name === selectedDeployedInstance ? "active" : ""
-          }`}
-          key={v4()}
-          onClick={(e) => {
-            this.setState({
-              selectedDeployedInstance: instance.name,
-              selectedInstance: -1,
-              activeTabEks: 0,
-            });
-            e.stopPropagation();
-          }}
-        >
-          <Box className="d-block text-center">
-            <Box className="deployed-image">
-              <img src={instance.image} alt="" />
-            </Box>
-            <Box className="deployed-title">{instance.name}</Box>
-          </Box>
-        </Box>
+        <VerticalTitleAndIconOfCard
+          data={deployInstances}
+          onClickCard={(title) => this.onClickDeployedCard(title)}
+        />
       );
     });
   };
@@ -232,56 +221,6 @@ class Soa extends Component {
       );
     }
   };
-
-  // renderSelectedInstance = () => {
-  //   let { selectedDeployedInstance, selectedInstance } = this.state;
-  //   return [...Array(10)].map((instance, index) => {
-  //     return (
-  //       <Box
-  //         className={`environment-box ${
-  //           selectedInstance === index ? "active" : ""
-  //         }`}
-  //         key={v4()}
-  //         onClick={(e) => {
-  //           this.setState({ selectedInstance: index });
-  //           e.stopPropagation();
-  //         }}
-  //       >
-  //         <Box className="environment-title">
-  //           <Box className="environment-image">
-  //             <img src={Aws} alt="aws" />
-  //           </Box>
-  //           <Box className="title-name"> {selectedDeployedInstance} </Box>
-  //         </Box>
-  //         <Box className="data-contant">
-  //           <List>
-  //             <ListItem>
-  //               <Box className="data-text">
-  //                 <span style={{ backgroundColor: "#FFBA69" }}></span>
-  //                 <p>ID</p>
-  //               </Box>
-  //               <label>123456</label>
-  //             </ListItem>
-  //             <ListItem>
-  //               <Box className="data-text">
-  //                 <span style={{ backgroundColor: "#8676FF" }}></span>
-  //                 <p>Key</p>
-  //               </Box>
-  //               <label>Name</label>
-  //             </ListItem>
-  //             <ListItem>
-  //               <Box className="data-text">
-  //                 <span style={{ backgroundColor: "#FF2D2E" }}></span>
-  //                 <p>Value</p>
-  //               </Box>
-  //               <label>Kick</label>
-  //             </ListItem>
-  //           </List>
-  //         </Box>
-  //       </Box>
-  //     );
-  //   });
-  // };
 
   renderSelectedInstance = () => {
     let { selectedDeployedInstance, selectedInstance } = this.state;
@@ -453,6 +392,14 @@ class Soa extends Component {
 
   onClickInstance = (selectedInstance) => {
     this.setState({ selectedInstance });
+  };
+
+  onClickDeployedCard = (selectedDeployedInstance) => {
+    this.setState({
+      selectedDeployedInstance,
+      selectedInstance: -1,
+      activeTabEks: 0,
+    });
   };
   render() {
     let {
