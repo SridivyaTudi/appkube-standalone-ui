@@ -19,10 +19,10 @@ import ChartAppLayerIcon from "assets/img/assetmanager/chart-app-layer-icon.png"
 import DataServiceSvgrepo from "assets/img/assetmanager/data-service-svgrepo.png";
 import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
 import RightArrow from "assets/img/assetmanager/right-arrow.png";
-import deployed1 from "../../../../assets/img/bimapping/deployed1.png";
-import deployed4 from "../../../../assets/img/bimapping/deployed4.png";
-import deployed5 from "../../../../assets/img/bimapping/deployed5.png";
-import Aws from "../../../../assets/img/aws.png";
+import deployed1 from "assets/img/bimapping/deployed1.png";
+import deployed4 from "assets/img/bimapping/deployed4.png";
+import deployed5 from "assets/img/bimapping/deployed5.png";
+import Aws from "assets/img/aws.png";
 import { v4 } from "uuid";
 import LoadBalancer from "../Soa/components/LoadBalancer";
 import Ingress from "../Soa/components/Ingress";
@@ -354,6 +354,7 @@ class Tier extends Component {
   };
 
   renderTableBody = () => {
+    let { selectedService } = this.state;
     return (
       <TableBody>
         {serviceTableData.map((service, index) => {
@@ -365,8 +366,20 @@ class Tier extends Component {
                   size="small"
                   id={index}
                   onChange={this.handleCheckBox}
+                  checked={selectedService.includes(index)}
                 />
-                {service.name}
+                <span
+                  onClick={() =>
+                    this.handleCheckBox({
+                      target: {
+                        id: index,
+                        checked: !selectedService.includes(index),
+                      },
+                    })
+                  }
+                >
+                  {service.name}
+                </span>
               </TableCell>
               <TableCell align="center">{service.port}</TableCell>
               <TableCell align="center"></TableCell>
@@ -561,6 +574,11 @@ class Tier extends Component {
                                   {dropDownLayersData.webLayer.map((name) => (
                                     <ListItem
                                       key={v4()}
+                                      className={`${
+                                        selectedLayer.web === name
+                                          ? "active"
+                                          : ""
+                                      }`}
                                       onClick={() =>
                                         this.onClickLayerDropDown("web", name)
                                       }
@@ -626,6 +644,11 @@ class Tier extends Component {
                                       onClick={() =>
                                         this.onClickLayerDropDown("app", name)
                                       }
+                                      className={`${
+                                        selectedLayer.app === name
+                                          ? "active"
+                                          : ""
+                                      }`}
                                     >
                                       <i className="fa-solid fa-circle-dot"></i>
                                       {name}
@@ -688,6 +711,11 @@ class Tier extends Component {
                                       onClick={() =>
                                         this.onClickLayerDropDown("data", name)
                                       }
+                                      className={`${
+                                        selectedLayer.data === name
+                                          ? "active"
+                                          : ""
+                                      }`}
                                     >
                                       <i className="fa-solid fa-circle-dot"></i>
                                       {name}
@@ -749,6 +777,9 @@ class Tier extends Component {
                                     onClick={() =>
                                       this.onClickLayerDropDown("aux", name)
                                     }
+                                    className={`${
+                                      selectedLayer.aux === name ? "active" : ""
+                                    }`}
                                   >
                                     <i className="fa-solid fa-circle-dot"></i>
                                     {name}

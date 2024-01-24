@@ -198,7 +198,7 @@ class Soa extends Component {
             this.setState({
               selectedDeployedInstance: instance.name,
               selectedInstance: -1,
-              activeTabEks:0
+              activeTabEks: 0,
             });
             e.stopPropagation();
           }}
@@ -319,6 +319,7 @@ class Soa extends Component {
   };
 
   renderTableBody = () => {
+    let { selectedService } = this.state;
     return (
       <TableBody>
         {serviceTableData.map((service, index) => {
@@ -330,8 +331,20 @@ class Soa extends Component {
                   size="small"
                   id={index}
                   onChange={this.handleCheckBox}
+                  checked={selectedService.includes(index)}
                 />
-                {service.name}
+                <span
+                  onClick={() =>
+                    this.handleCheckBox({
+                      target: {
+                        id: index,
+                        checked: !selectedService.includes(index),
+                      },
+                    })
+                  }
+                >
+                  {service.name}
+                </span>
               </TableCell>
               <TableCell align="center">{service.port}</TableCell>
               <TableCell align="center"></TableCell>
@@ -541,6 +554,11 @@ class Soa extends Component {
                                   {dropDownServiceData.appService.map(
                                     (name) => (
                                       <ListItem
+                                        className={`${
+                                          selectedServiceData.app === name
+                                            ? "active"
+                                            : ""
+                                        }`}
                                         key={v4()}
                                         onClick={() =>
                                           this.onClickServiceDropDown(
@@ -609,6 +627,11 @@ class Soa extends Component {
                                   {dropDownServiceData.dataService.map(
                                     (name) => (
                                       <ListItem
+                                        className={`${
+                                          selectedServiceData.data === name
+                                            ? "active"
+                                            : ""
+                                        }`}
                                         key={v4()}
                                         onClick={() =>
                                           this.onClickServiceDropDown(
@@ -674,6 +697,11 @@ class Soa extends Component {
                                 {dropDownServiceData.otherService.map(
                                   (name) => (
                                     <ListItem
+                                      className={`${
+                                        selectedServiceData.other === name
+                                          ? "active"
+                                          : ""
+                                      }`}
                                       key={v4()}
                                       onClick={() =>
                                         this.onClickServiceDropDown(
