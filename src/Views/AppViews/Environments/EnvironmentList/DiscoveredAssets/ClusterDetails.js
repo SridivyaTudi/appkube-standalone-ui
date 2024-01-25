@@ -86,6 +86,8 @@ class ClusterDetails extends React.Component {
                 currentActiveCluster === cluster.type
                   ? "2px solid #416bff"
                   : "2px solid #fff",
+              with: "296px",
+              minHeight: "365px",
             };
             let keys = Object.keys(cluster.type === "EKS" ? eksData : ecsData);
             const data = keys.map((key, innerIndex) => {
