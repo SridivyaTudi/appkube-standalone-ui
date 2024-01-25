@@ -352,6 +352,7 @@ class CloudManagedDetails extends React.Component {
                         image: this.state.serivceImages[index],
                         title: item.elementType,
                         count: item.totalRecord,
+                        style:{width:'160px'}
                       };
                       childJSX.push(
                         <TitleIconAndCountOfCard

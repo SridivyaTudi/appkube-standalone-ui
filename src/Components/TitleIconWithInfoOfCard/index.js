@@ -16,12 +16,12 @@ export class TitleIconWithInfoOfCard extends Component {
   };
 
   render() {
-    let { image, title, data, active } = this.props.cardDetails;
+    let { image, title, data, active, style=null } = this.props.cardDetails;
     return (
       <Box
         className={`environment-box ${active}`}
         key={v4()}
-        onClick={this.onClickCard}
+        onClick={this.onClickCard} style={style ? style : {}}
       >
         <Box className="environment-title">
           <Box className="environment-image">

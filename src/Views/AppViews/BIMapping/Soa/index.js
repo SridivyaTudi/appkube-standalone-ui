@@ -35,6 +35,7 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
 import VerticalTitleAndIconOfCard from "Components/VerticalTitleAndIconOfCard";
+import { style } from "d3";
 let dropDownServiceData = {
   appService: [
     "Java Spring Boot API",
@@ -247,6 +248,7 @@ class Soa extends Component {
         title: selectedDeployedInstance,
         data,
         active: selectedInstance === index ? "active" : "",
+        style:{width:'150px'}
       };
       return (
         <TitleIconWithInfoOfCard
