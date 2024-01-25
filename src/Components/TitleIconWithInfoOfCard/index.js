@@ -33,9 +33,9 @@ export class TitleIconWithInfoOfCard extends Component {
           <List>
             {data?.length ? (
               data.map((subInfo) => {
-                let { backgroundColor, label, value } = subInfo;
+                let { backgroundColor, label, value, style=null } = subInfo;
                 return (
-                  <ListItem key={v4()}>
+                  <ListItem key={v4()} style={style ? style : {}} >
                     <Box className="data-text">
                       <span style={{ backgroundColor }}></span>
                       <p>{label}</p>

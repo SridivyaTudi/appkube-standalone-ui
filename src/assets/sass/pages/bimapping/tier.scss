@@ -418,22 +418,17 @@
     .deployed-content {
       display: block;
       width: 100%;
-      .environment-boxs {
-        .environment-box {
-          width: 150px;
-          min-height: 150px;
-          .data-contant {
-            ul {
-              li {
-                border-bottom: none;
-              }
-            }
-          }
-          &:first-child {
-            margin-left: 8px;
-          }
-        }
-      }
+      // .environment-boxs {
+      //   .environment-box {
+      //     .data-contant {
+      //       ul {
+      //         li {
+      //           border-bottom: none;
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
     }
   }
   .nginx-table-section {

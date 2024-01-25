@@ -241,16 +241,19 @@ class Tier extends Component {
         backgroundColor: "#FFBA69",
         label: "ID",
         value: "123456",
+        style:{borderBottom: 'none'}
       },
       {
         backgroundColor: "#8676FF",
         label: "Key",
         value: "Name",
+        style:{borderBottom: 'none'}
       },
       {
         backgroundColor: "#FF2D2E",
         label: "Value",
         value: "Kick",
+        style:{borderBottom: 'none'}
       },
     ];
     return [...Array(10)].map((instance, index) => {
@@ -260,6 +263,7 @@ class Tier extends Component {
         data,
         active: selectedInstance === index ? "active" : "",
         rowSeperatedByline: false,
+        style:{width:'150px', minHeight: '150px'}
       };
       return (
         <TitleIconWithInfoOfCard
