@@ -38,7 +38,7 @@ import { styled } from "@mui/material/styles";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
 import Rbac from "../Rbac";
-import TitleWithIconCard from "Components/TitleIconWithInfoOfCard";
+import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
 class Environments extends Component {
   constructor(props) {
     super(props);
@@ -198,7 +198,7 @@ class Environments extends Component {
             data,
             active: "",
           };
-          retData.push(<TitleWithIconCard cardDetails={envCountInfo} />);
+          retData.push(<TitleIconWithInfoOfCard cardDetails={envCountInfo} />);
         });
       } else {
         retData = (

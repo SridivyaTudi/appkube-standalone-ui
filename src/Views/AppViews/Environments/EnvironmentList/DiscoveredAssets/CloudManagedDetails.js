@@ -352,7 +352,7 @@ class CloudManagedDetails extends React.Component {
                         image: this.state.serivceImages[index],
                         title: item.elementType,
                         count: item.totalRecord,
-                        style:{width:'160px'}
+                        style: { width: "160px" },
                       };
                       childJSX.push(
                         <TitleIconAndCountOfCard
@@ -363,6 +363,7 @@ class CloudManagedDetails extends React.Component {
                               item.elementType
                             );
                           }}
+                          key={v4()}
                         />
                       );
                     })}
@@ -399,7 +400,7 @@ class CloudManagedDetails extends React.Component {
             data={cuttentItem}
             onClickCard={(data) => {
               this.onClickCurrentCategory(index, item.elementType);
-            }}
+            }} key={v4()}
           />
         );
       });
