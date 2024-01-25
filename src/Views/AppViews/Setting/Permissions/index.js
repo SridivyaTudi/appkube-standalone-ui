@@ -144,6 +144,7 @@ export class Permissions extends Component {
         count: tabData.value,
         isLoding,
         isIcon: true,
+        style:{width:'200px'}
       };
       return (
         <TitleIconAndCountOfCard

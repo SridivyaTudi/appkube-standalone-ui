@@ -35,11 +35,11 @@ export class TitleIconAndCountOfCard extends Component {
   };
 
   render() {
-    let { image, title, count, active, isLoding, isIcon } = this.props.data;
+    let { image, title, count, active, isLoding, isIcon,style=null } = this.props.data;
     return (
       <Box
         className={`service-card ${active}`}
-        onClick={() => this.onClickCard()}
+        onClick={() => this.onClickCard()} style={style ? style : {}}
       >
         <Box className="service-icon">
           {isIcon ? image : <img src={image} alt="serviceicon" />}
