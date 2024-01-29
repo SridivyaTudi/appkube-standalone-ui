@@ -12,6 +12,7 @@ import {
   TableCell,
   TableBody,
 } from "@mui/material";
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { Link } from "react-router-dom";
 import DownRightArrow from "../../../assets/img/bimapping/down-right-arrow.png";
 
@@ -39,7 +40,9 @@ class BIMapping extends Component {
               className="primary-outline-btn min-width"
               variant="outlined"
             >
-              Create
+             
+             <ControlPointIcon className="m-r-1" />
+              Department
             </Button>
             {this.state.isSelectDepartmentOpen === true && (
               <div
