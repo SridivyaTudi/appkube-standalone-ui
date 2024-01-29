@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, List, ListItem } from "@mui/material";
+import { Box, ListItem } from "@mui/material";
 import GlobalIcon4 from "assets/img/assetmanager/global-icon4.png";
 import GlobalIcon5 from "assets/img/assetmanager/global-icon5.png";
 import { v4 } from "uuid";

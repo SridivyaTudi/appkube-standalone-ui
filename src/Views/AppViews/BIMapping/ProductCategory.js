@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Box, Button, Card } from "@mui/material";
-import admissionIcon from "../../../assets/img/bimapping/admission.png";
-import searchIcon from "../../../assets/img/bimapping/search.png";
-import filterIcon from "../../../assets/img/bimapping/filter.png";
-import rbacIcon from "../../../assets/img/bimapping/rbac.png";
+import { Box, Button } from "@mui/material";
+import admissionIcon from "assets/img/bimapping/admission.png";
+import searchIcon from "assets/img/bimapping/search.png";
+import filterIcon from "assets/img/bimapping/filter.png";
+import rbacIcon from "assets/img/bimapping/rbac.png";
 import ServiceModal from "./Components/ServiceModal";
 import { Link } from "react-router-dom";
 class ProductCategory extends Component {

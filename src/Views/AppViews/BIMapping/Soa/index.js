@@ -35,7 +35,6 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
 import VerticalTitleAndIconOfCard from "Components/VerticalTitleAndIconOfCard";
-import { style } from "d3";
 let dropDownServiceData = {
   appService: [
     "Java Spring Boot API",
@@ -230,19 +229,19 @@ class Soa extends Component {
         backgroundColor: "#FFBA69",
         label: "ID",
         value: "123456",
-        style:{borderBottom: 'none'}
+        style: { borderBottom: "none" },
       },
       {
         backgroundColor: "#8676FF",
         label: "Key",
         value: "Name",
-        style:{borderBottom: 'none'}
+        style: { borderBottom: "none" },
       },
       {
         backgroundColor: "#FF2D2E",
         label: "Value",
         value: "Kick",
-        style:{borderBottom: 'none'}
+        style: { borderBottom: "none" },
       },
     ];
     return [...Array(10)].map((instance, index) => {
@@ -251,7 +250,7 @@ class Soa extends Component {
         title: selectedDeployedInstance,
         data,
         active: selectedInstance === index ? "active" : "",
-        style:{width:'150px', minHeight: '150px'}
+        style: { width: "150px", minHeight: "150px" },
       };
       return (
         <TitleIconWithInfoOfCard
@@ -270,7 +269,9 @@ class Soa extends Component {
           <h4 className="m-t-0">Select Instance</h4>
         </Box>
         <Box className="deployed-content">
-          <Box className="environment-boxs">{this.renderSelectedInstance()}</Box>
+          <Box className="environment-boxs">
+            {this.renderSelectedInstance()}
+          </Box>
         </Box>
       </Box>
     ) : (
