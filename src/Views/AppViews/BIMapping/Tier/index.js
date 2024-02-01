@@ -311,7 +311,7 @@ class Tier extends Component {
   onClickLayerDropDown = (key, value) => {
     let { selectedLayer } = this.state;
     selectedLayer[key] = value;
-    this.setState({ selectedLayer, isShowDepolyedSection: true });
+    this.setState({ selectedLayer, isShowDepolyedSection: true,isSelectNginxOpen:false,isSelectSpringBootOpen:false,isSelectMySQLOpen:false,isSelectRedisOpen:false });
   };
 
   // Handle check box

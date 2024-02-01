@@ -282,7 +282,7 @@ class Soa extends Component {
   onClickServiceDropDown = (key, value) => {
     let { selectedServiceData } = this.state;
     selectedServiceData[key] = value;
-    this.setState({ selectedServiceData, isShowDepolyedSection: true });
+    this.setState({ selectedServiceData, isShowDepolyedSection: true,isSelectSpringBootOpen:false,isSelectMySQLOpen:false,isSelectRedisOpen:false });
   };
 
   renderTableHead = () => {
