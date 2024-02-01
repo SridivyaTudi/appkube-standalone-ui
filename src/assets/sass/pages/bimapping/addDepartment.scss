@@ -400,6 +400,9 @@
                           }
                         }
                       }
+                      &.active{
+                        border: 2px solid #384cff;
+                      }
                     }
                   }
                 }

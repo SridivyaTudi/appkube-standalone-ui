@@ -210,7 +210,7 @@ class BIMapping extends Component {
             )}
           </Box>
         </Box>
-        <Box className="environment-table">
+        <Box className="bimapping-table">
           <AccordionView data={data} headers={headers} />
           {/* <TableContainer className="table">
             <Table>
