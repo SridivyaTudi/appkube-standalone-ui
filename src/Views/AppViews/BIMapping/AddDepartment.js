@@ -13,6 +13,11 @@ import { v4 } from "uuid";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 class AddDepartment extends Component {
+  ACCOUNTS_ICON = {
+    MICROSOFT_AZURE: Microsoftazure,
+    AWS: Aws,
+    GOOGLE_CLOUD: GoogleCloud,
+  };
   steps = {
     STEP1: 0,
     STEP2: 1,
@@ -33,17 +38,103 @@ class AddDepartment extends Component {
         selectedLandingZone: "",
         selectedChildLandingZone: "",
       },
+      step1FormData: {
+        name: "",
+        description: "",
+      },
     };
   }
 
   renderForm = () => {
-    let { activeTab } = this.state;
-    return activeTab === 0 ? this.renderStep1Form() : this.renderStep2Form();
+    let { activeStep } = this.state;
+    return activeStep === 0 ? this.renderStep1Form() : this.renderStep2Form();
+  };
+
+  handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const { step1FormData, step2FormData, activeStep } = this.state;
+
+    if (activeStep === 0) {
+      step1FormData[name] = value;
+    } else if (activeStep === 1) {
+      step2FormData[name] = value;
+    }
+
+    this.setState({ step1FormData, step2FormData });
+  };
+  renderStep1Form = () => {
+    let { isSubmit, step1FormData } = this.state;
+    let { errors } = this.validateSteps();
+    return (
+      <Box className="basic-information-section">
+        <Box className="basic-information">
+          <Box className="d-flex align-items-center">
+            <Box className="check-box">
+              <i className="fa-solid fa-check"></i>
+            </Box>
+            <Box className="information-text">
+              <label className="d-block">Basic Information</label>
+              <span className="d-block">
+                Choose a department name and product assign environment
+              </span>
+            </Box>
+          </Box>
+          <Box className="arrow-icon">
+            <i className="fa-solid fa-caret-down "></i>
+          </Box>
+        </Box>
+        <Box className="information-form">
+          <Box className="form-group ">
+            <label htmlFor="roleName" className="form-label">
+              Department Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              name="name"
+              placeholder="HR"
+              value={step1FormData.name}
+              onChange={this.handleInputChange}
+            />
+            {isSubmit && errors?.name ? (
+              <span className="red">{errors.name}</span>
+            ) : (
+              ""
+            )}
+          </Box>
+          <Box className="form-group m-t-3">
+            <label htmlFor="description" className="form-label">
+              Description
+            </label>
+            <textarea
+              type="text"
+              className="form-control "
+              id="description"
+              name="description"
+              style={{
+                height: "120px",
+                lineHeight: "18px",
+                paddingRight: "15px",
+              }}
+              placeholder="Enter Description"
+              value={step1FormData.description}
+              onChange={this.handleInputChange}
+            />
+            {isSubmit && errors?.description ? (
+              <span className="red">{errors.description}</span>
+            ) : (
+              ""
+            )}
+          </Box>
+        </Box>
+      </Box>
+    );
   };
 
   renderBtns = () => {
     let {
-      activeTab,
+      activeStep,
       step2FormData: { selectedChildLandingZone },
     } = this.state;
 
@@ -70,7 +161,7 @@ class AddDepartment extends Component {
               }
             });
           }}
-          disabled={activeTab === 1 && !selectedChildLandingZone}
+          disabled={activeStep === 1 && !selectedChildLandingZone}
         >
           Next
         </Button>
@@ -79,26 +170,26 @@ class AddDepartment extends Component {
   };
 
   setActiveTab = (isNextStep = 0) => {
-    let { activeTab } = this.state;
+    let { activeStep } = this.state;
     let isRedirectPage =
-      (activeTab === 1 && isNextStep) || (activeTab === 0 && !isNextStep);
+      (activeStep === 2 && isNextStep) || (activeStep === 0 && !isNextStep);
     if (isRedirectPage) {
       this.redirectPage(`${APP_PREFIX_PATH}/bim`);
     }
 
     if (isNextStep) {
-      activeTab++;
+      activeStep++;
     } else {
-      activeTab--;
+      activeStep--;
     }
 
-    this.setState({ activeTab });
+    this.setState({ activeStep });
   };
 
   onClickLandingZone(selectedAccount) {
     let { step2FormData } = this.state;
     step2FormData.selectedLandingZone = selectedAccount;
-    this.setState({ step2FormData });
+    this.setState({ step2FormData, activeStep: 2 });
   }
 
   redirectPage = (redirectUrl) => {
@@ -132,11 +223,14 @@ class AddDepartment extends Component {
   };
 
   validateSteps = () => {
-    let { activeTab } = this.state;
+    let { activeStep, step2FormData } = this.state;
 
-    if (activeTab === 0) {
+    if (activeStep === 0) {
       return this.validateStep1();
-    } else if (activeTab === 1) {
+    } else if (
+      (activeStep === 1 && step2FormData.selectedLandingZone) ||
+      activeStep === 2
+    ) {
       return { isValid: true };
     }
   };
@@ -144,6 +238,7 @@ class AddDepartment extends Component {
   renderStep2Form = () => {
     const {
       step2FormData: { selectedLandingZone },
+      activeStep,
     } = this.state;
     return (
       <Box className="basic-information-section">
@@ -215,7 +310,7 @@ class AddDepartment extends Component {
               </ListItem>
             </List>
           </Box>
-          {this.ACCOUNTS_ICON[selectedLandingZone] ? (
+          {activeStep === 2 ? (
             <Box className="select-landing-section">
               <Box className="landing-head">
                 <span>Select Landing zone</span>
@@ -282,7 +377,8 @@ class AddDepartment extends Component {
   };
 
   render() {
-    const { activeStep, submittedSteps } = this.state;
+    const { activeStep, submittedSteps, step2FormData } = this.state;
+    const { STEP1, STEP2, STEP3 } = this.steps;
     return (
       <Box className="department-container">
         <Box className="department-step">
@@ -295,9 +391,9 @@ class AddDepartment extends Component {
               <Box className="d-flex width-100 banner-image">
                 <img
                   src={
-                    (activeStep === this.steps.STEP1 && DepartmentBanner) ||
-                    (activeStep === this.steps.STEP2 && DepartmentBanner1) ||
-                    (activeStep === this.steps.STEP3 && DepartmentBanner1)
+                    (activeStep === STEP1 && DepartmentBanner) ||
+                    (activeStep === STEP2 && DepartmentBanner1) ||
+                    (activeStep === STEP3 && DepartmentBanner1)
                   }
                   alt="DepartmentBanner"
                   style={{
@@ -312,68 +408,44 @@ class AddDepartment extends Component {
               <List className="steps-container">
                 <ListItem
                   className={
-                    activeStep === this.steps.STEP1
-                      ? "active"
-                      : "" || (activeStep === this.steps.STEP2) === true
-                      ? "active"
-                      : "" || (activeStep === this.steps.STEP3) === true
-                      ? "active"
-                      : ""
+                    [STEP1, STEP2, STEP3].includes(activeStep) ? "active" : ""
                   }
                 >
                   <span>step 1</span>
                 </ListItem>
                 <ListItem
                   className={
-                    activeStep === this.steps.STEP2
-                      ? "active"
-                      : "" || (activeStep === this.steps.STEP3) === true
-                      ? "active"
-                      : ""
+                    [STEP2, STEP3].includes(activeStep) ? "active" : ""
                   }
                 >
                   <span>step 2</span>
                 </ListItem>
                 <ListItem
-                  className={activeStep === this.steps.STEP3 ? "active" : ""}
+                  className={[STEP3].includes(activeStep) ? "active" : ""}
                 >
                   <span>step 3</span>
                 </ListItem>
               </List>
 
-              <form onSubmit={this.setActiveStep}>
-                {activeStep === this.steps.STEP1 && (
-                  <>
-                    <Box className="create-department-content">
-                      <Box className="create-department-inner-content">
-                        <Box className="add-department d-flex align-items-center">
-                          <Box className="icon-box m-r-2">
-                            <img src={AddIcon} alt="" />
-                          </Box>
-                          <Box className="department-text d-inline-block">
-                            <label className="d-block">Create Department</label>
-                            <span className="d-block">
-                              A new department will be created
-                            </span>
-                          </Box>
-                        </Box>
-                        {this.renderForm()}
-                      </Box>
-                      {this.renderBtns()}
+              {/* <form onSubmit={this.setActiveStep}> */}
+              <Box className="create-department-content">
+                <Box className="create-department-inner-content">
+                  <Box className="add-department d-flex align-items-center">
+                    <Box className="icon-box m-r-2">
+                      <img src={AddIcon} alt="" />
                     </Box>
-                  </>
-                )}
-                {activeStep === this.steps.STEP2 && (
-                  <>
-                    <h1>Step2</h1>
-                  </>
-                )}
-                {activeStep === this.steps.STEP3 && (
-                  <>
-                    <h1>Step3</h1>
-                  </>
-                )}
-              </form>
+                    <Box className="department-text d-inline-block">
+                      <label className="d-block">Create Department</label>
+                      <span className="d-block">
+                        A new department will be created
+                      </span>
+                    </Box>
+                  </Box>
+                  {this.renderForm()}
+                </Box>
+                {this.renderBtns()}
+              </Box>
+              {/* </form> */}
             </Box>
           </Box>
         </Box>
@@ -381,5 +453,4 @@ class AddDepartment extends Component {
     );
   }
 }
-
-export default AddDepartment;
+export default navigateRouter(AddDepartment);
