@@ -206,6 +206,20 @@ class AddProduct extends Component {
                               </Link>
                             </Box>
                           </Box>
+                          <Box className="form-group m-t-2">
+                            <label htmlFor="roleName" className="form-label">
+                              Module Name
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="name"
+                              name="name"
+                              placeholder=""
+                              value={formData.name}
+                              onChange={this.handleInputChange}
+                            />
+                          </Box>
                         </Box>
                       ) : (
                         <></>
