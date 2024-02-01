@@ -311,7 +311,7 @@ class Tier extends Component {
   onClickLayerDropDown = (key, value) => {
     let { selectedLayer } = this.state;
     selectedLayer[key] = value;
-    this.setState({ selectedLayer, isShowDepolyedSection: true });
+    this.setState({ selectedLayer, isShowDepolyedSection: true,isSelectNginxOpen:false,isSelectSpringBootOpen:false,isSelectMySQLOpen:false,isSelectRedisOpen:false });
   };
 
   // Handle check box
@@ -451,7 +451,7 @@ class Tier extends Component {
       <Box className="bimapping-container">
         <Box className="list-heading">
           <h3>3 Tier</h3>
-          <Link to={`/app/bim/adding-product`}>
+          <Link to={`/app/bim/add-product`}>
             <Button
               className="primary-btn min-width-inherit"
               variant="contained"

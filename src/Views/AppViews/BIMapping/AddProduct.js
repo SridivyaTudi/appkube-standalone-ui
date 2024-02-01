@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Box, Button, List, ListItem, Grid, Card } from "@mui/material";
+import { Box, Button, List, ListItem } from "@mui/material";
 import ProductBanner from "assets/img/bimapping/product-banner.png";
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import AddIcon from "assets/img/bimapping/add-icon.png";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 class AddProduct extends Component {
   constructor(props) {
@@ -236,5 +237,4 @@ class AddProduct extends Component {
     );
   }
 }
-
-export default AddProduct;
+export default navigateRouter(AddProduct);

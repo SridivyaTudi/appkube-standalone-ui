@@ -282,7 +282,7 @@ class Soa extends Component {
   onClickServiceDropDown = (key, value) => {
     let { selectedServiceData } = this.state;
     selectedServiceData[key] = value;
-    this.setState({ selectedServiceData, isShowDepolyedSection: true });
+    this.setState({ selectedServiceData, isShowDepolyedSection: true,isSelectSpringBootOpen:false,isSelectMySQLOpen:false,isSelectRedisOpen:false });
   };
 
   renderTableHead = () => {
@@ -422,7 +422,7 @@ class Soa extends Component {
       <Box className="bimapping-container">
         <Box className="list-heading">
           <h3>SOA</h3>
-          <Link to={`/app/bim/adding-product`}>
+          <Link to={`/app/bim/add-product`}>
             <Button
               className="primary-btn min-width-inherit"
               variant="contained"
