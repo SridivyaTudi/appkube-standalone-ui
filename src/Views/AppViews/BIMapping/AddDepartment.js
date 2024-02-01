@@ -315,7 +315,7 @@ class AddDepartment extends Component {
               <Box className="landing-head">
                 <span>Select Landing zone</span>
                 <span>
-                  <Checkbox disabled className="check-box" />
+                  <Checkbox disabled className="check-box" size="small" />
                   Include associated LZ
                 </span>
               </Box>
