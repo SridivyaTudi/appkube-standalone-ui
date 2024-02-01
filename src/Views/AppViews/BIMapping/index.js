@@ -4,18 +4,160 @@ import Aws from "../../../assets/img/aws.png";
 import Microsoftazure from "../../../assets/img/microsoftazure.png";
 import GoogleCloud from "../../../assets/img/google-cloud.png";
 import Kubernetes from "../../../assets/img/kubernetes.png";
-import {
-  Table,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-} from "@mui/material";
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { Link } from "react-router-dom";
-import DownRightArrow from "../../../assets/img/bimapping/down-right-arrow.png";
+import AccordionView from "Views/AppViews/Setting/Components/AccordionView";
 
+let data = [
+  {
+    name: "Synectiks",
+    chlidren: [
+      {
+        name: "HR",
+        chlidren: [
+          {
+            name: "Payroll",
+            chlidren: [
+              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+            ],
+          },
+          {
+            name: "Accounts",
+            chlidren: [
+              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+            ],
+          },
+          {
+            name: "IT",
+            chlidren: [
+              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+            ],
+          },
+          {
+            name: "Leave Management",
+            chlidren: [
+              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+            ],
+          },
+          {
+            name: "Maintenance",
+            chlidren: [
+              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Digital auction",
+        chlidren: [
+          { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+          { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+          { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+          { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+          { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+        ],
+      },
+      {
+        name: "We Desk",
+        chlidren: [
+          { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+          { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+          { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+          { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+          { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+        ],
+      },
+      {
+        name: "Procurement",
+        chlidren: [
+          { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+          { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+          { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+          { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+          { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+        ],
+      },
+      {
+        name: "Product 5",
+        chlidren: [
+          { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+          { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+          { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+          { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+          { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+        ],
+      },
+    ],
+  },
+];
+
+let headers = [
+  { name: "Organization Name", styled: {} },
+  {
+    name: (
+      <>
+        <Box className="environment-image">
+          <img src={Aws} alt="" />
+        </Box>
+        AWS
+      </>
+    ),
+    styled: {},
+  },
+  {
+    name: (
+      <>
+        <Box className="environment-image">
+          <img src={Microsoftazure} alt="" />
+        </Box>
+        Azure
+      </>
+    ),
+    styled: {},
+  },
+  {
+    name: (
+      <>
+        <Box className="environment-image">
+          <img src={GoogleCloud} alt="" />
+        </Box>
+        GCP
+      </>
+    ),
+    styled: {},
+  },
+  {
+    name: (
+      <>
+        <Box className="environment-image">
+          <img src={Kubernetes} alt="" />
+        </Box>
+        Kubernetes
+      </>
+    ),
+    styled: {},
+  },
+];
 class BIMapping extends Component {
   constructor(props) {
     super(props);
@@ -40,8 +182,7 @@ class BIMapping extends Component {
               className="primary-outline-btn min-width"
               variant="outlined"
             >
-             
-             <ControlPointIcon className="m-r-1" />
+              <ControlPointIcon className="m-r-1" />
               Department
             </Button>
             {this.state.isSelectDepartmentOpen === true && (
@@ -70,7 +211,8 @@ class BIMapping extends Component {
           </Box>
         </Box>
         <Box className="environment-table">
-          <TableContainer className="table">
+          <AccordionView data={data} headers={headers} />
+          {/* <TableContainer className="table">
             <Table>
               <TableHead className="active">
                 <TableRow>
@@ -125,7 +267,7 @@ class BIMapping extends Component {
                 </TableRow>
               </TableBody>
             </Table>
-          </TableContainer>
+          </TableContainer> */}
         </Box>
       </Box>
     );
