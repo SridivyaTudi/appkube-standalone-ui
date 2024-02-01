@@ -634,6 +634,7 @@
             }
           }
         }
+        
       }
     }
   }
@@ -669,6 +670,8 @@
         table-layout: fixed;
 
         th {
+          width: auto;
+          text-align: center;
           padding-top: 15px;
           padding-bottom: 15px;
           padding-left: 15px;
@@ -729,7 +732,7 @@
         width: 100%;
         border-bottom: 1px solid #eaecf0;
         td {
-          width: 50%;
+          width: auto;
           padding: 12px 30px;
           font-size: 13px;
           line-height: 18px;
@@ -742,15 +745,7 @@
           &.cursor {
             cursor: pointer;
           }
-          &::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 15px;
-            width: 1px;
-            height: 90%;
-            background: #d5dbe5;
-          }
+          
 
           .check-box {
             span {
@@ -762,6 +757,16 @@
 
           &:first-child {
             text-align: left;
+            width: 200px;
+            &::before {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: 15px;
+              width: 1px;
+              height: 90%;
+              background: #d5dbe5;
+            }
           }
           &.active {
             font-weight: 600;
