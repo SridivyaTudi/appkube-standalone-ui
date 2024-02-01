@@ -143,7 +143,7 @@ class SignUp extends Component {
       }
 
       if (!step1.lastName.trim()) {
-        errors.lastName = "Fast name is required!";
+        errors.lastName = "Last name is required!";
         isValid = false;
       } else {
         errors.lastName = "";

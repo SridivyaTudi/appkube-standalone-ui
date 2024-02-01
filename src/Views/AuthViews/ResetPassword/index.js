@@ -42,11 +42,11 @@ class ResetPassword extends Component {
       prevProps.resetPwd.status !== this.props.resetPwd.status &&
       this.props.resetPwd.status === status.SUCCESS
     ) {
-      if (this.props.resetPwd.data.code === 200) {
+      if (this.props.resetPwd.data?.code === 200) {
         this.setState({ toggleScreen: true, imageVisibility: true });
       }
-      if (this.props.resetPwd.data.code === 417) {
-        ToastMessage.error("Invalid OTP!");
+      if (this.props.resetPwd.data?.code === 417) {
+        ToastMessage.error(this.props.resetPwd.data?.message || "Invalid OTP!");
       }
     }
   };
