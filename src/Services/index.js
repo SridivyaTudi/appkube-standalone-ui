@@ -74,7 +74,7 @@ service.interceptors.response.use(
       if (error.response.status === 508) {
         // message = "Time Out";
       }
-      ToastMessage.error("Error");
+      // ToastMessage.error("Error");
     }
 
     return Promise.reject(error);
@@ -113,7 +113,7 @@ authService.interceptors.response.use(
       if (error.response.status === 508) {
         // message = "Time Out";
       }
-      ToastMessage.error("Error");
+      // ToastMessage.error("Error");
     }
 
     return Promise.reject(error.response?.data);
