@@ -1,0 +1,385 @@
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { Box, Button, List, ListItem, Grid, Card } from "@mui/material";
+import DepartmentBanner from "assets/img/bimapping/department-banner.png";
+import DepartmentBanner1 from "assets/img/bimapping/department-banner1.png";
+import AddIcon from "../../../assets/img/bimapping/add-icon.png";
+import Aws from "../../../assets/img/aws.png";
+import Microsoftazure from "../../../assets/img/microsoftazure.png";
+import GoogleCloud from "../../../assets/img/google-cloud.png";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import Checkbox from "@mui/material/Checkbox";
+import { v4 } from "uuid";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+
+class AddDepartment extends Component {
+  steps = {
+    STEP1: 0,
+    STEP2: 1,
+    STEP3: 2,
+  };
+  apiConstants = {
+    ADMIN: "ADMIN",
+    CMDB: "CMDB",
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeStep: this.steps.STEP1,
+      step1: {},
+      step2: {},
+      step2FormData: {
+        selectedLandingZone: "",
+        selectedChildLandingZone: "",
+      },
+    };
+  }
+
+  renderForm = () => {
+    let { activeTab } = this.state;
+    return activeTab === 0 ? this.renderStep1Form() : this.renderStep2Form();
+  };
+
+  renderBtns = () => {
+    let {
+      activeTab,
+      step2FormData: { selectedChildLandingZone },
+    } = this.state;
+
+    return (
+      <Box
+        justifyContent={"center"}
+        className="d-flex align-items-center wizard-step-button m-t-4"
+      >
+        <Button
+          className="primary-outline-btn m-r-2"
+          variant="outlined"
+          onClick={() => this.setActiveTab()}
+        >
+          Previous
+        </Button>
+        <Button
+          className="primary-btn"
+          variant="contained"
+          onClick={() => {
+            this.setState({ isSubmit: true }, () => {
+              let { isValid } = this.validateSteps();
+              if (isValid) {
+                this.setActiveTab(1);
+              }
+            });
+          }}
+          disabled={activeTab === 1 && !selectedChildLandingZone}
+        >
+          Next
+        </Button>
+      </Box>
+    );
+  };
+
+  setActiveTab = (isNextStep = 0) => {
+    let { activeTab } = this.state;
+    let isRedirectPage =
+      (activeTab === 1 && isNextStep) || (activeTab === 0 && !isNextStep);
+    if (isRedirectPage) {
+      this.redirectPage(`${APP_PREFIX_PATH}/bim`);
+    }
+
+    if (isNextStep) {
+      activeTab++;
+    } else {
+      activeTab--;
+    }
+
+    this.setState({ activeTab });
+  };
+
+  onClickLandingZone(selectedAccount) {
+    let { step2FormData } = this.state;
+    step2FormData.selectedLandingZone = selectedAccount;
+    this.setState({ step2FormData });
+  }
+
+  redirectPage = (redirectUrl) => {
+    this.props.navigate(redirectUrl);
+  };
+
+  validateStep1 = () => {
+    let { step1FormData, isSubmit } = this.state;
+    let isValid = true;
+    let errors = {
+      name: "",
+      description: "",
+    };
+
+    if (isSubmit) {
+      if (!step1FormData.name) {
+        errors.name = "Please enter the department name.";
+        isValid = false;
+      } else {
+        errors.name = "";
+      }
+
+      if (!step1FormData.description) {
+        errors.description = "Please enter the description.";
+        isValid = false;
+      } else {
+        errors.description = "";
+      }
+    }
+    return { isValid, errors };
+  };
+
+  validateSteps = () => {
+    let { activeTab } = this.state;
+
+    if (activeTab === 0) {
+      return this.validateStep1();
+    } else if (activeTab === 1) {
+      return { isValid: true };
+    }
+  };
+
+  renderStep2Form = () => {
+    const {
+      step2FormData: { selectedLandingZone },
+    } = this.state;
+    return (
+      <Box className="basic-information-section">
+        <Box className="basic-information">
+          <Box className="d-flex align-items-center">
+            <Box className="check-box">
+              <i className="fa-solid fa-check"></i>
+            </Box>
+            <Box className="information-text">
+              <label className="d-block">Landing zone</label>
+              <span className="d-block">
+                Choose a associate landing zone and select landing zone
+              </span>
+            </Box>
+          </Box>
+          <Box className="arrow-icon">
+            <i className="fa-solid fa-caret-down "></i>
+          </Box>
+        </Box>
+        <Box className="information-form">
+          <Box className="associate-title">Associate landing zone</Box>
+          <Box className="associate-boxs">
+            <List>
+              <ListItem
+                className={`${selectedLandingZone === "AWS" ? "active" : ""}`}
+              >
+                <Button
+                  className="secondary-btn min-width"
+                  variant="contained"
+                  onClick={() => this.onClickLandingZone("AWS")}
+                >
+                  <Box className="image-box">
+                    <img src={Aws} alt="" />
+                  </Box>
+                  AWS
+                </Button>
+              </ListItem>
+              <ListItem
+                className={`${
+                  selectedLandingZone === "MICROSOFT_AZURE" ? "active" : ""
+                }`}
+              >
+                <Button
+                  className="secondary-btn min-width"
+                  variant="contained"
+                  onClick={() => this.onClickLandingZone("MICROSOFT_AZURE")}
+                >
+                  <Box className="image-box">
+                    <img src={Microsoftazure} alt="" />
+                  </Box>
+                  Microsoft azure
+                </Button>
+              </ListItem>
+              <ListItem
+                className={`${
+                  selectedLandingZone === "GOOGLE_CLOUD" ? "active" : ""
+                }`}
+              >
+                <Button
+                  className="secondary-btn min-width"
+                  variant="contained"
+                  onClick={() => this.onClickLandingZone("GOOGLE_CLOUD")}
+                >
+                  <Box className="image-box">
+                    <img src={GoogleCloud} alt="" />
+                  </Box>
+                  GCP
+                </Button>
+              </ListItem>
+            </List>
+          </Box>
+          {this.ACCOUNTS_ICON[selectedLandingZone] ? (
+            <Box className="select-landing-section">
+              <Box className="landing-head">
+                <span>Select Landing zone</span>
+                <span>
+                  <Checkbox disabled className="check-box" />
+                  Include associated LZ
+                </span>
+              </Box>
+              <Box className="select-landing-cards m-t-3">
+                <Grid
+                  container
+                  rowSpacing={1.5}
+                  columnSpacing={{ xs: 1.5 }}
+                  alignItems={"center"}
+                >
+                  {[...Array(13)].map((val, index) => {
+                    return (
+                      <Grid
+                        item
+                        xs={4}
+                        onClick={() =>
+                          this.setState({
+                            step2FormData: {
+                              ...this.state.step2FormData,
+                              selectedChildLandingZone: true,
+                            },
+                          })
+                        }
+                        key={v4()}
+                      >
+                        <Card className="select-landing-card">
+                          <Box className="card-content text-center">
+                            <Box className="card-image">
+                              <img
+                                src={this.ACCOUNTS_ICON[selectedLandingZone]}
+                                alt=""
+                              />
+                            </Box>
+                            <Box className="card-title">Account no 123456</Box>
+                          </Box>
+                          <Box className="card-footer">
+                            <Box className="footer-left-content">
+                              <span className="d-block">Associated LOB</span>
+                              <label className="d-block">002</label>
+                            </Box>
+                            <Box className="footer-right-content">
+                              <span className="d-block">Assets</span>
+                              <label className="d-block text-right">150</label>
+                            </Box>
+                          </Box>
+                        </Card>
+                      </Grid>
+                    );
+                  })}
+                </Grid>
+              </Box>
+            </Box>
+          ) : (
+            <></>
+          )}
+        </Box>
+      </Box>
+    );
+  };
+
+  render() {
+    const { activeStep, submittedSteps } = this.state;
+    return (
+      <Box className="department-container">
+        <Box className="department-step">
+          <Box className="department-left">
+            <Box className="department-left-content">
+              <span className="d-flex width-100">Appkube</span>
+              <h2 className="d-flex width-100 m-t-0 m-b-0">
+                Create department to map your business
+              </h2>
+              <Box className="d-flex width-100 banner-image">
+                <img
+                  src={
+                    (activeStep === this.steps.STEP1 && DepartmentBanner) ||
+                    (activeStep === this.steps.STEP2 && DepartmentBanner1) ||
+                    (activeStep === this.steps.STEP3 && DepartmentBanner1)
+                  }
+                  alt="DepartmentBanner"
+                  style={{
+                    maxHeight: `${activeStep === this.steps.STEP3 && "450px"}`,
+                  }}
+                />
+              </Box>
+            </Box>
+          </Box>
+          <Box className="department-right">
+            <Box className="department-right-content">
+              <List className="steps-container">
+                <ListItem
+                  className={
+                    activeStep === this.steps.STEP1
+                      ? "active"
+                      : "" || (activeStep === this.steps.STEP2) === true
+                      ? "active"
+                      : "" || (activeStep === this.steps.STEP3) === true
+                      ? "active"
+                      : ""
+                  }
+                >
+                  <span>step 1</span>
+                </ListItem>
+                <ListItem
+                  className={
+                    activeStep === this.steps.STEP2
+                      ? "active"
+                      : "" || (activeStep === this.steps.STEP3) === true
+                      ? "active"
+                      : ""
+                  }
+                >
+                  <span>step 2</span>
+                </ListItem>
+                <ListItem
+                  className={activeStep === this.steps.STEP3 ? "active" : ""}
+                >
+                  <span>step 3</span>
+                </ListItem>
+              </List>
+
+              <form onSubmit={this.setActiveStep}>
+                {activeStep === this.steps.STEP1 && (
+                  <>
+                    <Box className="create-department-content">
+                      <Box className="create-department-inner-content">
+                        <Box className="add-department d-flex align-items-center">
+                          <Box className="icon-box m-r-2">
+                            <img src={AddIcon} alt="" />
+                          </Box>
+                          <Box className="department-text d-inline-block">
+                            <label className="d-block">Create Department</label>
+                            <span className="d-block">
+                              A new department will be created
+                            </span>
+                          </Box>
+                        </Box>
+                        {this.renderForm()}
+                      </Box>
+                      {this.renderBtns()}
+                    </Box>
+                  </>
+                )}
+                {activeStep === this.steps.STEP2 && (
+                  <>
+                    <h1>Step2</h1>
+                  </>
+                )}
+                {activeStep === this.steps.STEP3 && (
+                  <>
+                    <h1>Step3</h1>
+                  </>
+                )}
+              </form>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    );
+  }
+}
+
+export default AddDepartment;
