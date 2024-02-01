@@ -422,7 +422,7 @@ class Soa extends Component {
       <Box className="bimapping-container">
         <Box className="list-heading">
           <h3>SOA</h3>
-          <Link to={`/app/bim/adding-product`}>
+          <Link to={`/app/bim/add-product`}>
             <Button
               className="primary-btn min-width-inherit"
               variant="contained"

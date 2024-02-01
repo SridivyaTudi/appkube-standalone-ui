@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { Box, Button, List, ListItem, Grid, Card } from "@mui/material";
 import DepartmentBanner from "assets/img/bimapping/department-banner.png";
 import DepartmentBanner1 from "assets/img/bimapping/department-banner1.png";
@@ -383,7 +382,7 @@ class AddDepartment extends Component {
   };
 
   render() {
-    const { activeStep, submittedSteps, step2FormData } = this.state;
+    const { activeStep } = this.state;
     const { STEP1, STEP2, STEP3 } = this.steps;
     return (
       <Box className="department-container">
