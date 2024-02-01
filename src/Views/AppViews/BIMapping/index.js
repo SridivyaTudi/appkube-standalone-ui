@@ -108,6 +108,13 @@ let data = [
         ],
       },
     ],
+    isMutipleCell: true,
+    multipeCellData: [
+      { name: "01" },
+      { name: "01" },
+      { name: "02" },
+      { name: "03" },
+    ],
   },
 ];
 
