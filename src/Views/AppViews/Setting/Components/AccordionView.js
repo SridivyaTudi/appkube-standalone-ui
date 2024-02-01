@@ -58,7 +58,7 @@ class AccordionView extends Component {
       return (
         <TableRow>
           {headers.map((header) => (
-            <TableCell key={v4()} style={header.styled} >
+            <TableCell key={v4()} style={header.styled}>
               {header.name}
             </TableCell>
           ))}
@@ -133,7 +133,13 @@ class AccordionView extends Component {
             {subchild.isMutipleCell ? (
               subchild.multipeCellData?.length ? (
                 subchild.multipeCellData.map((cell) => (
-                  <TableCell className="subchild-table-section active">{cell.name}</TableCell>
+                  <TableCell
+                    className={`subchild-table-section ${
+                      isActive ? "active" : ""
+                    }`} 
+                  >
+                    {cell.name}
+                  </TableCell>
                 ))
               ) : (
                 <></>
