@@ -113,7 +113,7 @@ class AddDepartment extends Component {
               id="description"
               name="description"
               style={{
-                height: "120px",
+                height: "100px",
                 lineHeight: "18px",
                 paddingRight: "15px",
               }}
@@ -319,53 +319,59 @@ class AddDepartment extends Component {
                   Include associated LZ
                 </span>
               </Box>
-              <Box className="select-landing-cards m-t-3">
-                <Grid
-                  container
-                  rowSpacing={1.5}
-                  columnSpacing={{ xs: 1.5 }}
-                  alignItems={"center"}
-                >
-                  {[...Array(13)].map((val, index) => {
-                    return (
-                      <Grid
-                        item
-                        xs={4}
-                        onClick={() =>
-                          this.setState({
-                            step2FormData: {
-                              ...this.state.step2FormData,
-                              selectedChildLandingZone: true,
-                            },
-                          })
-                        }
-                        key={v4()}
-                      >
-                        <Card className="select-landing-card">
-                          <Box className="card-content text-center">
-                            <Box className="card-image">
-                              <img
-                                src={this.ACCOUNTS_ICON[selectedLandingZone]}
-                                alt=""
-                              />
+              <Box className="select-card-section">
+                <Box className="select-landing-cards m-t-2">
+                  <Grid
+                    container
+                    rowSpacing={1.5}
+                    columnSpacing={{ xs: 1.5 }}
+                    alignItems={"center"}
+                  >
+                    {[...Array(13)].map((val, index) => {
+                      return (
+                        <Grid
+                          item
+                          xs={6}
+                          onClick={() =>
+                            this.setState({
+                              step2FormData: {
+                                ...this.state.step2FormData,
+                                selectedChildLandingZone: true,
+                              },
+                            })
+                          }
+                          key={v4()}
+                        >
+                          <Card className="select-landing-card">
+                            <Box className="card-content text-center">
+                              <Box className="card-image">
+                                <img
+                                  src={this.ACCOUNTS_ICON[selectedLandingZone]}
+                                  alt=""
+                                />
+                              </Box>
+                              <Box className="card-title">
+                                Account no 123456
+                              </Box>
                             </Box>
-                            <Box className="card-title">Account no 123456</Box>
-                          </Box>
-                          <Box className="card-footer">
-                            <Box className="footer-left-content">
-                              <span className="d-block">Associated LOB</span>
-                              <label className="d-block">002</label>
+                            <Box className="card-footer">
+                              <Box className="footer-left-content">
+                                <span className="d-block">Associated LOB</span>
+                                <label className="d-block">002</label>
+                              </Box>
+                              <Box className="footer-right-content">
+                                <span className="d-block">Assets</span>
+                                <label className="d-block text-right">
+                                  150
+                                </label>
+                              </Box>
                             </Box>
-                            <Box className="footer-right-content">
-                              <span className="d-block">Assets</span>
-                              <label className="d-block text-right">150</label>
-                            </Box>
-                          </Box>
-                        </Card>
-                      </Grid>
-                    );
-                  })}
-                </Grid>
+                          </Card>
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                </Box>
               </Box>
             </Box>
           ) : (

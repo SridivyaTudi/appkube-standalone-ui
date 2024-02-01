@@ -52,7 +52,7 @@
     flex-wrap: wrap;
     overflow: hidden;
     overflow-y: auto;
-    padding-top: 20px;
+    // padding-top: 20px;
     padding-bottom: 20px;
     width: 50%;
     height: 100%;
@@ -64,7 +64,7 @@
       //display: inline-flex;
 
       .steps-container {
-        display: flex;
+        text-align: center;
         width: 100%;
         padding: 0;
         margin: 0 0 30px 0;
@@ -154,12 +154,12 @@
       }
 
       .create-department-content {
-        width: 50%;
+        width: 100%;
         margin: 0 auto;
         .create-department-inner-content {
           width: 100%;
           display: block;
-          min-height: 450px;
+          min-height: 430px;
           .add-department {
             width: 100%;
             .icon-box {
@@ -198,7 +198,7 @@
               align-items: center;
               justify-content: space-between;
               background: #f6f7fb;
-              padding: 10px 15px;
+              padding: 8px 15px;
               border-radius: 5px;
               .check-box {
                 width: 25px;
@@ -224,7 +224,7 @@
                   color: #363333;
                 }
                 span {
-                  font-size: 12px;
+                  font-size: 10px;
                   line-height: 16px;
                   font-weight: 400;
                   color: #7e7e8f;
@@ -235,7 +235,7 @@
               }
             }
             .information-form {
-              padding: 20px 30px 50px 30px;
+              padding: 15px 30px 40px 30px;
               border-radius: 5px;
               border: 2px solid #f6f7fb;
               .form-group {
@@ -246,7 +246,7 @@
                   font-size: 14px;
                   color: #344054;
                   line-height: 20px;
-                  font-weight: 500;
+                  font-weight: 400;
                   margin-bottom: 10px;
                   padding-left: 0;
                 }
@@ -265,16 +265,22 @@
                   color: #344054;
                   font-family: "Poppins", sans-serif;
                 }
+                span {
+                  font-size: 12px;
+                  font-weight: 400;
+                  line-height: 16px;
+                  color: "red";
+                }
               }
               .associate-title {
-                font-size: 16px;
-                line-height: 22px;
-                font-weight: 500;
+                font-size: 14px;
+                line-height: 20px;
+                font-weight: 400;
                 color: #363333;
               }
               .associate-boxs {
                 width: 100%;
-                margin-top: 15px;
+                margin-top: 10px;
                 ul {
                   padding: 0;
                   margin: 0;
@@ -313,11 +319,11 @@
                   display: flex;
                   align-items: center;
                   justify-content: space-between;
-                  margin-top: 15px;
+                  margin-top: 10px;
                   span {
-                    font-size: 16px;
-                    line-height: 20px;
-                    font-weight: 500;
+                    font-size: 12px;
+                    line-height: 16px;
+                    font-weight: 400;
                     color: #000000;
                     .check-box {
                       padding: 0;
@@ -326,67 +332,72 @@
                     }
                   }
                 }
-                .select-landing-cards {
-                  width: 100%;
-                  display: block;
-                  .select-landing-card {
+                .select-card-section {
                     width: 100%;
-                    padding: 10px 5px;
-                    border-radius: 5px;
-                    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-                      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-                    .card-content {
+                    overflow: hidden;
+                    overflow-y: auto;
+                  .select-landing-cards {
+                    max-height: 175px;
+                    padding: 0 5px;
+                    .select-landing-card {
                       width: 100%;
-                      .card-image {
-                        padding: 6px;
-                        margin: 0 auto;
-                        width: 40px;
-                        height: 40px;
+                      padding: 10px 5px;
+                      border-radius: 5px;
+                      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+                        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                      .card-content {
+                        width: 100%;
+                        .card-image {
+                          padding: 6px;
+                          margin: 0 auto;
+                          width: 40px;
+                          height: 40px;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          border-radius: 50%;
+                          border: 1px solid #efefef;
+                        }
+                        .card-title {
+                          font-size: 10px;
+                          line-height: 14px;
+                          font-weight: 400;
+                          color: #000000;
+                          margin: 8px 0;
+                        }
+                      }
+                      .card-footer {
+                        padding: 5px 8px;
+                        border-radius: 5px;
+                        background: #f6f6f6;
                         display: flex;
                         align-items: center;
-                        justify-content: center;
-                        border-radius: 5px;
-                        border: 1px solid #efefef;
-                      }
-                      .card-title {
-                        font-size: 10px;
-                        line-height: 14px;
-                        font-weight: 400;
-                        color: #000000;
-                        margin: 8px 0;
-                      }
-                    }
-                    .card-footer {
-                      padding: 5px 8px;
-                      border-radius: 5px;
-                      background: #dbdff1;
-                      display: flex;
-                      align-items: center;
-                      justify-content: space-between;
-                      .footer-left-content {
-                        span {
-                          font-size: 10px;
-                          line-height: 14px;
-                          color: #535362;
+                        justify-content: space-between;
+                        .footer-left-content {
+                          span {
+                            font-size: 10px;
+                            line-height: 14px;
+                            color: #535362;
+                          }
+                          label {
+                            font-size: 10px;
+                            line-height: 14px;
+                            font-weight: 500;
+                            color: #00b929;
+                          }
                         }
-                        label {
-                          font-size: 10px;
-                          line-height: 14px;
-                          font-weight: 500;
-                          color: #00b929;
-                        }
-                      }
-                      .footer-right-content {
-                        span {
-                          font-size: 10px;
-                          line-height: 14px;
-                          color: #535362;
-                        }
-                        label {
-                          font-size: 10px;
-                          line-height: 14px;
-                          font-weight: 500;
-                          color: #000000;
+                        .footer-right-content {
+                          span {
+                            font-size: 10px;
+                            line-height: 14px;
+                            color: #535362;
+                          }
+                          label {
+                            font-size: 10px;
+                            line-height: 14px;
+                            font-weight: 500;
+                            color: #000000;
+                          }
                         }
                       }
                     }
