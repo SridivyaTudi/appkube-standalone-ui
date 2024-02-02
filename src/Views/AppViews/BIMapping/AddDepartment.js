@@ -134,7 +134,7 @@ class AddDepartment extends Component {
   renderBtns = () => {
     let {
       activeStep,
-      step2FormData: { selectedChildLandingZone },
+      step2FormData: { selectedChildLandingZone, selectedLandingZone },
     } = this.state;
 
     return (
@@ -160,7 +160,7 @@ class AddDepartment extends Component {
               }
             });
           }}
-          disabled={activeStep === 1 && !selectedChildLandingZone}
+          disabled={activeStep === 1 && !selectedChildLandingZone && !selectedLandingZone}
         >
           Next
         </Button>
@@ -236,7 +236,7 @@ class AddDepartment extends Component {
 
   renderStep2Form = () => {
     const {
-      step2FormData: { selectedLandingZone,selectedChildLandingZone },
+      step2FormData: { selectedLandingZone, selectedChildLandingZone },
       activeStep,
     } = this.state;
     return (
@@ -330,7 +330,10 @@ class AddDepartment extends Component {
                       return (
                         <Grid
                           item
-                           xl={6} lg={6} md={12}  xs={12}  
+                          xl={6}
+                          lg={6}
+                          md={12}
+                          xs={12}
                           onClick={() =>
                             this.setState({
                               step2FormData: {
@@ -392,7 +395,9 @@ class AddDepartment extends Component {
       <Box className="department-container">
         <Box className="department-step">
           <Box className="department-left">
-          <Box className="d-flex width-100 p-l-20"><h3>Department Landing Zone</h3></Box>
+            <Box className="d-flex width-100 p-l-20">
+              <h3>{activeStep === STEP1 ? "Department" : ""} Landing Zone</h3>
+            </Box>
             <Box className="department-left-content">
               <span className="d-flex width-100">Appkube</span>
               <h2 className="d-flex width-100 m-t-0 m-b-0">
