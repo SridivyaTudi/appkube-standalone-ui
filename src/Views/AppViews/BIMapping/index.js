@@ -13,7 +13,11 @@ let data = [
     name: "Synectiks",
     chlidren: [
       {
-        name: "HR",
+        name: (
+          <>
+            HR <Link to={`/app/bim/add-product`}>+</Link>
+          </>
+        ),
         chlidren: [
           {
             name: "Payroll",
@@ -68,7 +72,11 @@ let data = [
         ],
       },
       {
-        name: "Digital auction",
+        name: (
+          <>
+            Digital auction <Link to={`/app/bim/add-product`}>+</Link>
+          </>
+        ),
         chlidren: [
           { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
           { name: "EC2", chlidren: [{ name: "SIP 1" }] },
@@ -78,7 +86,11 @@ let data = [
         ],
       },
       {
-        name: "We Desk",
+        name: (
+          <>
+            We Desk <Link to={`/app/bim/add-product`}>+</Link>
+          </>
+        ),
         chlidren: [
           { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
           { name: "EC2", chlidren: [{ name: "SIP 1" }] },
@@ -88,7 +100,11 @@ let data = [
         ],
       },
       {
-        name: "Procurement",
+        name: (
+          <>
+            Procurement <Link to={`/app/bim/add-product`}>+</Link>
+          </>
+        ),
         chlidren: [
           { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
           { name: "EC2", chlidren: [{ name: "SIP 1" }] },
@@ -98,7 +114,11 @@ let data = [
         ],
       },
       {
-        name: "Product 5",
+        name: (
+          <>
+            Product 5 <Link to={`/app/bim/add-product`}>+</Link>
+          </>
+        ),
         chlidren: [
           { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
           { name: "EC2", chlidren: [{ name: "SIP 1" }] },
@@ -108,6 +128,7 @@ let data = [
         ],
       },
     ],
+
     isMutipleCell: true,
     multipeCellData: [
       { name: "01" },
