@@ -210,7 +210,7 @@ class BIMapping extends Component {
               className="primary-outline-btn min-width"
               variant="outlined"
             >
-              <ControlPointIcon className="m-r-1" />
+              <ControlPointIcon className="m-r-1 plus-icon" />
               Department
             </Button>
             {this.state.isSelectDepartmentOpen === true && (

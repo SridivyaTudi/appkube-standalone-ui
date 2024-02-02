@@ -1,5 +1,21 @@
 .mapping-fliter {
   position: relative;
+
+  button {
+    border: 2px solid #384CFF;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 18px;
+    color: #023AFF;
+
+    &:hover {
+      border: 2px solid #384CFF;
+    }
+    svg {
+      color: #3A4DFE;
+    }
+  }
+
   .fliter-toggel {
     display: flex;
     align-items: center;
@@ -21,6 +37,7 @@
       margin-left: 20px;
     }
   }
+
   .fliter-collapse {
     background-color: #ffffff;
     border-radius: 5px;
@@ -60,15 +77,18 @@
         padding: 7px 10px;
         border-radius: 3px;
         cursor: pointer;
+
         span {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
         }
+
         &:hover {
           color: #383874;
           background-color: #dde1f8;
         }
+
         &.active {
           color: #383874;
           background-color: #dde1f8;
@@ -80,6 +100,7 @@
       }
     }
   }
+
   .fliters-collapse-bg {
     position: fixed;
     width: 100%;
@@ -94,6 +115,7 @@
     }
   }
 }
+
 .environment-table {
   display: block;
   background-color: #ffffff;
@@ -111,7 +133,8 @@
       padding-bottom: 0px;
       display: table;
       width: calc(100% - 0.1em)
-        /* scrollbar is average 1em/16px width, remove it from thead width */;
+        /* scrollbar is average 1em/16px width, remove it from thead width */
+      ;
 
       &.active {
         th {
@@ -320,11 +343,13 @@
           a {
             font-weight: 600;
             color: #384cff;
+
             .arrow-icon {
               color: #00b929;
               margin-left: 8px;
             }
           }
+
           .add-synectiks {
             color: #101828;
             display: flex;
@@ -332,11 +357,13 @@
             justify-content: flex-start;
             font-size: 12px;
             line-height: 5px;
-            .arrow-image{
+
+            .arrow-image {
               width: 20px;
               min-width: 20px;
               height: 20px;
             }
+
             i {
               margin-left: 5px;
               line-height: 5px;
