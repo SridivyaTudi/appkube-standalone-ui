@@ -330,7 +330,7 @@ class AddDepartment extends Component {
                       return (
                         <Grid
                           item
-                          xs={6}
+                           xl={6} lg={6} md={12}  xs={12}  
                           onClick={() =>
                             this.setState({
                               step2FormData: {
