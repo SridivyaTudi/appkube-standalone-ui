@@ -721,6 +721,22 @@ class Soa extends Component {
                           </Box>
                         </ListItem>
                       </List>
+                      <Box className="check-icons-box">
+                        <List>
+                          <ListItem>
+                            <i className="fa-sharp fa-solid fa-circle-check"></i>
+                          </ListItem>
+                          <ListItem>
+                            <i className="fa-sharp fa-solid fa-circle-check"></i>
+                          </ListItem>
+                          <ListItem>
+                            <i className="fa-sharp fa-solid fa-circle-check"></i>
+                          </ListItem>
+                          <ListItem>
+                            <i className="fa-sharp fa-solid fa-circle-check"></i>
+                          </ListItem>
+                        </List>
+                      </Box>
                     </Box>
                     <Box className="content-right">
                       <List>
