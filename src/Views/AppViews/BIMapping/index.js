@@ -15,7 +15,7 @@ let data = [
       {
         name: (
           <>
-            HR <Link to={`/app/bim/add-product`}>+</Link>
+            HR <Link to={`/app/bim/add-product`}><i className="add-icon fa-solid fa-circle-plus"></i></Link>
           </>
         ),
         chlidren: [
@@ -74,7 +74,7 @@ let data = [
       {
         name: (
           <>
-            Digital auction <Link to={`/app/bim/add-product`}>+</Link>
+            Digital auction <Link to={`/app/bim/add-product`}><i className="add-icon fa-solid fa-circle-plus"></i></Link>
           </>
         ),
         chlidren: [
@@ -88,7 +88,7 @@ let data = [
       {
         name: (
           <>
-            We Desk <Link to={`/app/bim/add-product`}>+</Link>
+            We Desk <Link to={`/app/bim/add-product`}><i className="add-icon fa-solid fa-circle-plus"></i></Link>
           </>
         ),
         chlidren: [
@@ -102,7 +102,7 @@ let data = [
       {
         name: (
           <>
-            Procurement <Link to={`/app/bim/add-product`}>+</Link>
+            Procurement <Link to={`/app/bim/add-product`}><i className="add-icon fa-solid fa-circle-plus"></i></Link>
           </>
         ),
         chlidren: [
@@ -116,7 +116,7 @@ let data = [
       {
         name: (
           <>
-            Product 5 <Link to={`/app/bim/add-product`}>+</Link>
+            Product 5 <Link to={`/app/bim/add-product`}><i className="add-icon fa-solid fa-circle-plus"></i></Link>
           </>
         ),
         chlidren: [
