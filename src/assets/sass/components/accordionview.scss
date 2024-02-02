@@ -634,7 +634,6 @@
             }
           }
         }
-        
       }
     }
   }
@@ -658,11 +657,11 @@
       width: calc(100% - 0.1em)
         /* scrollbar is average 1em/16px width, remove it from thead width */;
 
-      &.active {
-        th {
-          border-bottom: 1px dashed #b3b3b3;
-        }
-      }
+      // &.active {
+      //   th {
+      //     border-bottom: 1px dashed #b3b3b3;
+      //   }
+      // }
 
       tr {
         display: inline-table;
@@ -681,7 +680,7 @@
           color: #000000;
           border: none;
           font-family: "Poppins", sans-serif;
-         border-bottom: 1px dotted #b3b3b3;
+          border-bottom: 1px dotted #b3b3b3;
 
           strong {
             color: #383874;
@@ -734,7 +733,7 @@
         td {
           width: auto;
           padding: 12px 30px;
-          font-size: 13px;
+          font-size: 12px;
           line-height: 18px;
           font-weight: 500;
           color: #101828;
@@ -745,7 +744,6 @@
           &.cursor {
             cursor: pointer;
           }
-          
 
           .check-box {
             span {
@@ -797,6 +795,15 @@
               color: #464f603a;
             }
           }
+          a {
+            .add-icon {
+              font-size: 14px;
+              border: none;
+              color: #384cff;
+              vertical-align: text-top;
+            }
+          }
+
           &.child-table-section {
             padding: 0;
             background: #ffffff;
@@ -812,20 +819,9 @@
                   border-bottom: 1px solid #eaecf0;
                   td {
                     padding: 12px 15px 12px 55px;
-                    font-size: 13px;
-                    font-weight: 500;
-                    color: #101828;
-                    position: relative;
-                    font-family: "Poppins", sans-serif;
-                    position: relative;
                     &::before {
                       content: "";
-                      position: absolute;
-                      top: 0;
                       left: 40px;
-                      width: 1px;
-                      height: 100%;
-                      background: #d5dbe5;
                     }
                     &:hover {
                       background-color: #f7f9fc;
@@ -856,20 +852,9 @@
                             border-bottom: 1px solid #eaecf0;
                             td {
                               padding: 12px 15px 12px 80px;
-                              font-size: 13px;
-                              font-weight: 500;
-                              color: #101828;
-                              position: relative;
-                              font-family: "Poppins", sans-serif;
-                              position: relative;
                               &::before {
                                 content: "";
-                                position: absolute;
-                                top: 0;
                                 left: 65px;
-                                width: 1px;
-                                height: 100%;
-                                background: #d5dbe5;
                               }
                               &:hover {
                                 background-color: #f7f9fc;
@@ -900,20 +885,9 @@
                                       border-bottom: 1px solid #eaecf0;
                                       td {
                                         padding: 12px 15px 12px 105px;
-                                        font-size: 13px;
-                                        font-weight: 500;
-                                        color: #101828;
-                                        position: relative;
-                                        font-family: "Poppins", sans-serif;
-                                        position: relative;
                                         &::before {
                                           content: "";
-                                          position: absolute;
-                                          top: 0;
                                           left: 90px;
-                                          width: 1px;
-                                          height: 100%;
-                                          background: #d5dbe5;
                                         }
                                         &:hover {
                                           background-color: #f7f9fc;
@@ -944,20 +918,9 @@
                                                 border-bottom: 1px solid #eaecf0;
                                                 td {
                                                   padding: 12px 15px 12px 130px;
-                                                  font-size: 13px;
-                                                  font-weight: 500;
-                                                  color: #101828;
-                                                  position: relative;
-                                                  font-family: "Poppins", sans-serif;
-                                                  position: relative;
                                                   &::before {
                                                     content: "";
-                                                    position: absolute;
-                                                    top: 0;
                                                     left: 115px;
-                                                    width: 1px;
-                                                    height: 100%;
-                                                    background: #d5dbe5;
                                                   }
                                                   &:hover {
                                                     background-color: #f7f9fc;
@@ -1065,38 +1028,7 @@
               }
             }
           }
-          // .status-btn {
-          //   text-align: center;
-          //   .status {
-          //     font-size: 12px;
-          //     line-height: 16px;
-          //     font-weight: 500;
-          //     background: #656575;
-          //     display: inline-block;
-          //     padding: 4px 10px;
-          //     border-radius: 3px;
-          //     color: #ffffff;
-          //     text-transform: lowercase;
-          //     &::first-letter{
-          //       text-transform: capitalize;
-          //     }
-          //     &.green {
-          //       background: #00b929;
-          //     }
-          //   }
-          //   .check-icon {
-          //     width: 20px;
-          //     height: 20px;
-          //     color: #ffffff;
-          //     background: #00b929;
-          //   }
-          //   .close-icon {
-          //     width: 20px;
-          //     height: 20px;
-          //     color: #ffffff;
-          //     background: #656575;
-          //   }
-          // }
+
           &:last-child {
             border-bottom: 0;
           }
