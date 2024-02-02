@@ -449,7 +449,7 @@ class Soa extends Component {
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
                 <li className="active">
-                  <p>3Tier</p>
+                  <p>SOA</p>
                 </li>
               </ul>
             </Box>
@@ -761,15 +761,15 @@ class Soa extends Component {
                           <ListItem>
                             <i className="fa-sharp fa-solid fa-circle-check"></i>
                           </ListItem>
-                          <ListItem>
-                            <i className="fa-sharp fa-solid fa-circle-check"></i>
-                          </ListItem>
-                          <ListItem>
-                            <i className="fa-sharp fa-solid fa-circle-check"></i>
-                          </ListItem>
-                          <ListItem>
-                            <i className="fa-sharp fa-solid fa-circle-check"></i>
-                          </ListItem>
+                          {Object.keys(selectedServiceData).map((key) => {
+                            return selectedServiceData[key] !== "" ? (
+                              <ListItem>
+                                <i className="fa-sharp fa-solid fa-circle-check"></i>
+                              </ListItem>
+                            ) : (
+                              <></>
+                            );
+                          })}
                         </List>
                       </Box>
                     </Box>

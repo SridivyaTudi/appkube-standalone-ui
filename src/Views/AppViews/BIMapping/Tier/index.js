@@ -835,18 +835,15 @@ class Tier extends Component {
                       </List>
                       <Box className="check-icons-box">
                         <List>
-                          <ListItem>
-                            <i className="fa-sharp fa-solid fa-circle-check"></i>
-                          </ListItem>
-                          <ListItem>
-                            <i className="fa-sharp fa-solid fa-circle-check"></i>
-                          </ListItem>
-                          <ListItem>
-                            <i className="fa-sharp fa-solid fa-circle-check"></i>
-                          </ListItem>
-                          <ListItem>
-                            <i className="fa-sharp fa-solid fa-circle-check"></i>
-                          </ListItem>
+                          {Object.keys(selectedLayer).map((key) => {
+                            return selectedLayer[key] !== "" ? (
+                              <ListItem>
+                                <i className="fa-sharp fa-solid fa-circle-check"></i>
+                              </ListItem>
+                            ) : (
+                              <></>
+                            );
+                          })}
                         </List>
                       </Box>
                     </Box>
