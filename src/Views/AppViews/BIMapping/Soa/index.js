@@ -282,7 +282,13 @@ class Soa extends Component {
   onClickServiceDropDown = (key, value) => {
     let { selectedServiceData } = this.state;
     selectedServiceData[key] = value;
-    this.setState({ selectedServiceData, isShowDepolyedSection: true,isSelectSpringBootOpen:false,isSelectMySQLOpen:false,isSelectRedisOpen:false });
+    this.setState({
+      selectedServiceData,
+      isShowDepolyedSection: true,
+      isSelectSpringBootOpen: false,
+      isSelectMySQLOpen: false,
+      isSelectRedisOpen: false,
+    });
   };
 
   renderTableHead = () => {
@@ -420,7 +426,36 @@ class Soa extends Component {
     } = this.state;
     return (
       <Box className="bimapping-container">
-        <Box className="list-heading">
+        <Box className="global-services-fliter">
+          <Box className="heading">
+            <Box className="breadcrumbs">
+              <ul>
+                <li>
+                  <p>Synectiks</p>
+                </li>
+                <li>
+                  <i className="fa-solid fa-chevron-right"></i>
+                </li>
+                <li>
+                  <p>HR</p>
+                </li>
+                <li>
+                  <i className="fa-solid fa-chevron-right"></i>
+                </li>
+                <li>
+                  <p>HRMS</p>
+                </li>
+                <li>
+                  <i className="fa-solid fa-chevron-right"></i>
+                </li>
+                <li className="active">
+                  <p>3Tier</p>
+                </li>
+              </ul>
+            </Box>
+          </Box>
+        </Box>
+        {/* <Box className="list-heading">
           <h3>SOA</h3>
           <Link to={`/app/bim/add-product`}>
             <Button
@@ -430,7 +465,7 @@ class Soa extends Component {
               Back
             </Button>
           </Link>
-        </Box>
+        </Box> */}
         <Box className="tier-container">
           <Grid
             container
