@@ -15,7 +15,10 @@ let data = [
       {
         name: (
           <>
-            HR <Link to={`/app/bim/add-product`}><i className="add-icon fa-solid fa-circle-plus"></i></Link>
+            HR{" "}
+            <Link to={`/app/bim/add-product`}>
+              <i className="add-icon fa-solid fa-circle-plus"></i>
+            </Link>
           </>
         ),
         chlidren: [
@@ -74,7 +77,10 @@ let data = [
       {
         name: (
           <>
-            Digital auction <Link to={`/app/bim/add-product`}><i className="add-icon fa-solid fa-circle-plus"></i></Link>
+            Digital auction{" "}
+            <Link to={`/app/bim/add-product`}>
+              <i className="add-icon fa-solid fa-circle-plus"></i>
+            </Link>
           </>
         ),
         chlidren: [
@@ -88,7 +94,10 @@ let data = [
       {
         name: (
           <>
-            We Desk <Link to={`/app/bim/add-product`}><i className="add-icon fa-solid fa-circle-plus"></i></Link>
+            We Desk{" "}
+            <Link to={`/app/bim/add-product`}>
+              <i className="add-icon fa-solid fa-circle-plus"></i>
+            </Link>
           </>
         ),
         chlidren: [
@@ -102,7 +111,10 @@ let data = [
       {
         name: (
           <>
-            Procurement <Link to={`/app/bim/add-product`}><i className="add-icon fa-solid fa-circle-plus"></i></Link>
+            Procurement{" "}
+            <Link to={`/app/bim/add-product`}>
+              <i className="add-icon fa-solid fa-circle-plus"></i>
+            </Link>
           </>
         ),
         chlidren: [
@@ -116,7 +128,10 @@ let data = [
       {
         name: (
           <>
-            Product 5 <Link to={`/app/bim/add-product`}><i className="add-icon fa-solid fa-circle-plus"></i></Link>
+            Product 5{" "}
+            <Link to={`/app/bim/add-product`}>
+              <i className="add-icon fa-solid fa-circle-plus"></i>
+            </Link>
           </>
         ),
         chlidren: [
@@ -222,17 +237,17 @@ class BIMapping extends Component {
                 }
               >
                 <List>
-                  <ListItem>
-                    <Link to={`/app/bim/create-department`}>
+                  <Link to={`/app/bim/create-department`}>
+                    <ListItem>
                       <i className="fa-solid fa-circle-dot"></i>Create
                       Department
-                    </Link>
-                  </ListItem>
-                  <ListItem>
-                    <Link to={`/app/bim/add-product`}>
+                    </ListItem>
+                  </Link>
+                  <Link to={`/app/bim/add-product`}>
+                    <ListItem>
                       <i className="fa-solid fa-circle-dot"></i>Add Products
-                    </Link>
-                  </ListItem>
+                    </ListItem>
+                  </Link>
                 </List>
               </div>
             )}
