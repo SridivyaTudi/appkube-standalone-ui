@@ -241,19 +241,19 @@ class Tier extends Component {
         backgroundColor: "#FFBA69",
         label: "ID",
         value: "123456",
-        style:{borderBottom: 'none'}
+        style: { borderBottom: "none" },
       },
       {
         backgroundColor: "#8676FF",
         label: "Key",
         value: "Name",
-        style:{borderBottom: 'none'}
+        style: { borderBottom: "none" },
       },
       {
         backgroundColor: "#FF2D2E",
         label: "Value",
         value: "Kick",
-        style:{borderBottom: 'none'}
+        style: { borderBottom: "none" },
       },
     ];
     return [...Array(10)].map((instance, index) => {
@@ -263,7 +263,7 @@ class Tier extends Component {
         data,
         active: selectedInstance === index ? "active" : "",
         rowSeperatedByline: false,
-        style:{width:'150px', minHeight: '150px'}
+        style: { width: "150px", minHeight: "150px" },
       };
       return (
         <TitleIconWithInfoOfCard
@@ -282,7 +282,9 @@ class Tier extends Component {
           <h4 className="m-t-0">Select Instance</h4>
         </Box>
         <Box className="deployed-content">
-          <Box className="environment-boxs">{this.renderSelectedInstance()}</Box>
+          <Box className="environment-boxs">
+            {this.renderSelectedInstance()}
+          </Box>
         </Box>
       </Box>
     ) : (
@@ -311,7 +313,14 @@ class Tier extends Component {
   onClickLayerDropDown = (key, value) => {
     let { selectedLayer } = this.state;
     selectedLayer[key] = value;
-    this.setState({ selectedLayer, isShowDepolyedSection: true,isSelectNginxOpen:false,isSelectSpringBootOpen:false,isSelectMySQLOpen:false,isSelectRedisOpen:false });
+    this.setState({
+      selectedLayer,
+      isShowDepolyedSection: true,
+      isSelectNginxOpen: false,
+      isSelectSpringBootOpen: false,
+      isSelectMySQLOpen: false,
+      isSelectRedisOpen: false,
+    });
   };
 
   // Handle check box
@@ -795,6 +804,22 @@ class Tier extends Component {
                           </Box>
                         </ListItem>
                       </List>
+                      <Box className="check-icons-box">
+                        <List>
+                          <ListItem>
+                            <i className="fa-sharp fa-solid fa-circle-check"></i>
+                          </ListItem>
+                          <ListItem>
+                            <i className="fa-sharp fa-solid fa-circle-check"></i>
+                          </ListItem>
+                          <ListItem>
+                            <i className="fa-sharp fa-solid fa-circle-check"></i>
+                          </ListItem>
+                          <ListItem>
+                            <i className="fa-sharp fa-solid fa-circle-check"></i>
+                          </ListItem>
+                        </List>
+                      </Box>
                     </Box>
                     <Box className="content-right">
                       <List>
