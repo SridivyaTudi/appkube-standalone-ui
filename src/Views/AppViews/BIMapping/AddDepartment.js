@@ -236,7 +236,7 @@ class AddDepartment extends Component {
 
   renderStep2Form = () => {
     const {
-      step2FormData: { selectedLandingZone },
+      step2FormData: { selectedLandingZone,selectedChildLandingZone },
       activeStep,
     } = this.state;
     return (
@@ -335,13 +335,17 @@ class AddDepartment extends Component {
                             this.setState({
                               step2FormData: {
                                 ...this.state.step2FormData,
-                                selectedChildLandingZone: true,
+                                selectedChildLandingZone: index,
                               },
                             })
                           }
                           key={v4()}
                         >
-                          <Card className="select-landing-card">
+                          <Card
+                            className={`select-landing-card ${
+                              selectedChildLandingZone === index ? "active" : ""
+                            }`}
+                          >
                             <Box className="card-content text-center">
                               <Box className="card-image">
                                 <img
