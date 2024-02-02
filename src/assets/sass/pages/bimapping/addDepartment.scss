@@ -25,17 +25,17 @@
       width: 80%;
 
       span {
-        font-size: 24px;
-        line-height: 28px;
+        font-size: 18px;
+        line-height: 22px;
         font-weight: 500;
         color: #92929d;
         margin-bottom: 15px;
       }
 
       h2 {
-        font-size: 36px;
-        line-height: 40px;
-        font-weight: 600;
+        font-size: 26px;
+        line-height: 30px;
+        font-weight: 500;
         color: #11142d;
         margin-top: 0;
         margin-bottom: 0;
@@ -450,7 +450,7 @@
                       }
 
                       &.active {
-                        border: 2px solid #384cff;
+                        border: 1px solid #384cff;
                       }
                     }
                   }
