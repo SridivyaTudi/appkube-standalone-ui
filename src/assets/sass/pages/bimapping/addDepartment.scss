@@ -279,15 +279,19 @@
                 color: #363333;
               }
               .associate-boxs {
+                display: -webkit-box;
                 width: 100%;
+                overflow: hidden;
+                overflow-x: auto;
                 margin-top: 10px;
+                padding-bottom: 5px;
                 ul {
                   padding: 0;
                   margin: 0;
                   display: flex;
                   li {
                     width: auto;
-                    margin-right: 15px;
+                    margin-right: 10px;
                     padding: 0;
                     .secondary-btn {
                       background-color: #dde1f8;
@@ -333,9 +337,9 @@
                   }
                 }
                 .select-card-section {
-                    width: 100%;
-                    overflow: hidden;
-                    overflow-y: auto;
+                  width: 100%;
+                  overflow: hidden;
+                  overflow-y: auto;
                   .select-landing-cards {
                     max-height: 175px;
                     padding: 0 5px;
@@ -400,7 +404,7 @@
                           }
                         }
                       }
-                      &.active{
+                      &.active {
                         border: 2px solid #384cff;
                       }
                     }
