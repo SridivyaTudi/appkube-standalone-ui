@@ -457,51 +457,6 @@
       // }
     }
   }
-  .nginx-table-section {
-    display: block;
-    width: 100%;
-    margin-top: 25px;
-    .table {
-      overflow: hidden;
-      background-color: #ffffff;
-      padding: 5px;
-      border-radius: 5px;
-      .overview {
-        thead {
-          tr {
-            th {
-              border-right: 1px solid #dbdff1;
-              background-color: #f0f3ff;
-              font-size: 13px;
-              font-weight: 600;
-              padding: 10px;
-              color: #383874;
-              &:last-child {
-                border-right: none;
-              }
-            }
-          }
-        }
-        tbody {
-          tr {
-            td {
-              padding: 10px 12px;
-              font-size: 13px;
-              line-height: 17px;
-              font-weight: 400;
-              width: auto;
-              white-space: nowrap;
-              color: #383874;
-              .check-box {
-                padding: 0;
-                margin-right: 8px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
   .nginx-section {
     background: #ffffff;
     border-radius: 10px;
@@ -570,59 +525,10 @@
       .tabs-content {
         padding: 0 10px;
         margin: 0;
-        .nginx-table-section {
-          display: block;
-          width: 100%;
-          .table {
-            overflow: hidden;
-            background-color: #ffffff;
-            .overview {
-              thead {
-                tr {
-                  th {
-                    border-right: 1px solid #dbdff1;
-                    background-color: #f0f3ff;
-                    font-size: 13px;
-                    font-weight: 600;
-                    padding: 10px;
-                    &:last-child {
-                      border-right: none;
-                    }
-                  }
-                }
-              }
-              tbody {
-                tr {
-                  td {
-                    padding-left: 12px;
-                    padding-right: 12px;
-                    font-size: 13px;
-                    line-height: 16px;
-                    font-weight: 400;
-                    width: auto;
-                    white-space: nowrap;
-                    color: #383874;
-                  }
-                }
-              }
-            }
-          }
-        }
         .ports-content {
           width: 100%;
           display: block;
           margin-top: 20px;
-          .ports-number {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            font-size: 12px;
-            line-height: 16px;
-            font-weight: 400;
-            color: #383874;
-            span {
-              color: #00b929;
-            }
-          }
           .ports-inner-content {
             display: block;
             width: 100%;

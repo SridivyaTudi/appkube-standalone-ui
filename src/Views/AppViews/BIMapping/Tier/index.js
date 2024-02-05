@@ -921,7 +921,7 @@ class Tier extends Component {
               </Box>
             ) : (
               <>
-                <Box className="nginx-table-section">
+                <Box className="tier-table-section">
                   <TableContainer className="table">
                     <Table className="overview">
                       {this.renderTableHead()}
