@@ -23,12 +23,12 @@
       display: flex;
       align-items: center;
       padding: 8px 18px;
-      border: 1px solid #6418C3;
+      border: 1px solid #6418c3;
       border-radius: 4px;
 
       .name {
         font-weight: 600;
-        color: #6418C3;
+        color: #6418c3;
         line-height: 18px;
         font-size: 14px;
       }
@@ -132,7 +132,6 @@
         border: 2px solid transparent;
         min-height: 530px;
 
-
         .card-image {
           margin: 30px 0px 15px 0px;
         }
@@ -156,11 +155,10 @@
         .card-btn {
           margin-top: 40px;
 
-
           button {
             &.disabled {
-              background-color: #F2F3F7;
-              color: #2E2E3A;
+              background-color: #f2f3f7;
+              color: #2e2e3a;
               font-weight: 700;
               line-height: 18px;
               font-size: 13px;
@@ -271,7 +269,6 @@
                 .css-hfutr2-MuiSvgIcon-root-MuiSelect-icon {
                   top: calc(54% - 0.5em);
                 }
-
               }
             }
 
@@ -357,66 +354,7 @@
       display: flex;
       flex-wrap: wrap;
       width: 100%;
-      padding: 20px 0 0 0;
-
-      // .control-box {
-      //   width: 200px;
-      //   max-width: 200px;
-      //   display: inline-flex;
-      //   align-items: center;
-      //   justify-content: flex-start;
-      //   border-radius: 7px;
-      //   margin-right: 20px;
-      //   margin-bottom: 20px;
-      //   padding: 20px 10px;
-      //   cursor: pointer;
-      //   border-width: 2px;
-      //   border-style: solid;
-      //   border-color: transparent;
-      //   background-color: #ffffff;
-
-      //   &.active {
-      //     border-color: #384cff;
-      //   }
-
-      //   .icon {
-      //     display: inline-flex;
-      //     align-items: center;
-      //     justify-content: center;
-      //     width: 48px;
-      //     height: 48px;
-      //     min-width: 48px;
-      //     margin-right: 10px;
-      //     border-radius: 50%;
-      //     background-color: #f6f7fb;
-      //     color: #383874;
-      //   }
-
-      //   .content {
-      //     display: flex;
-      //     flex-wrap: wrap;
-
-      //     label {
-      //       cursor: pointer;
-      //       display: block;
-      //       width: 100%;
-      //       font-size: 14px;
-      //       font-weight: 600;
-      //       line-height: 18px;
-      //       color: #383874;
-      //       margin-bottom: 5px;
-      //     }
-
-      //     strong {
-      //       display: block;
-      //       width: 100%;
-      //       font-size: 18px;
-      //       font-weight: 600;
-      //       line-height: 24px;
-      //       color: #383874;
-      //     }
-      //   }
-      // }
+      padding: 20px 0 10px 0;
     }
 
     .access-control-container {
@@ -462,6 +400,29 @@
 
           a {
             color: #ffffff;
+          }
+        }
+        .new-user {
+          position: relative;
+          .light-btn {
+            padding-left: 15px;
+            padding-right: 15px;
+            font-weight: 700;
+          }
+          .noti {
+            padding: 5px;
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: red;
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
           }
         }
       }
@@ -533,7 +494,8 @@
               overflow: hidden;
               border-radius: 10px;
               background-color: #ffffff;
-              box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px #6c49ac0d;
+              box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px
+                #6c49ac0d;
 
               .secondary-text-btn {
                 font-size: 12px;
@@ -697,8 +659,6 @@
   .services-panel-tabs {
     display: block;
     width: 100%;
-    //margin-top: 0;
-
     .tabs-head {
       display: block;
       width: 100%;

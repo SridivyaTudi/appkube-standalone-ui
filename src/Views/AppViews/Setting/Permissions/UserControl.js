@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CreateUserControlModal from "./Components/CreateUserControlModal";
+import CreateNewUserRequestControlModal from "./Components/CreateNewUserRequestControlModal";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { connect } from "react-redux";
@@ -39,6 +40,7 @@ class UserControl extends Component {
       pg: 0,
       rpg: 10,
       showCreateUserControlModal: false,
+      showCreateNewUserRequestControlModal: false,
       actionButton: null,
       searchedKey: "",
     };
@@ -90,6 +92,12 @@ class UserControl extends Component {
   handleCreateUserControlModal = () => {
     this.setState({
       showCreateUserControlModal: !this.state.showCreateUserControlModal,
+    });
+  };
+
+  handleCreateNewUserRequestControlModal = () => {
+    this.setState({
+      showCreateNewUserRequestControlModal: !this.state.showCreateNewUserRequestControlModal,
     });
   };
 
@@ -147,11 +155,20 @@ class UserControl extends Component {
           </button>
         </Box>
         <Button
-          className="primary-btn min-width"
+          className="primary-btn min-width  m-r-3"
           onClick={this.handleCreateUserControlModal}
         >
           Create User
         </Button>
+        <Box className="d-inline-block new-user">
+          <Button
+            className="light-btn min-width"
+            onClick={this.handleCreateNewUserRequestControlModal}
+          >
+            New User Request
+          </Button>
+        <span className="noti">02</span>
+        </Box>
       </Box>
     );
   };
@@ -317,6 +334,21 @@ class UserControl extends Component {
     );
   };
 
+  // Render component of Create New Use Request Modal
+  renderComponentCreateNewUserRequestModal = () => {
+    const { showCreateNewUserRequestControlModal } = this.state;
+    return showCreateNewUserRequestControlModal ? (
+      <CreateNewUserRequestControlModal
+        showModal={showCreateNewUserRequestControlModal}
+        handleCreateNewUserRequestControlModal={this.handleCreateNewUserRequestControlModal}
+      />
+    ) : (
+      <></>
+    );
+  };
+
+  
+
   // Render component of Create User Modal
   renderComponentConfirmationModal = () => {
     const { showConfirmPopup } = this.state;
@@ -380,6 +412,7 @@ class UserControl extends Component {
         {this.renderComponentTablePagination()}
         {this.renderComponentCreateUserModal()}
         {this.renderComponentConfirmationModal()}
+        {this.renderComponentCreateNewUserRequestModal()}
       </>
     );
   }
