@@ -1164,9 +1164,13 @@
                 color: #ffffff;
               }
               .user-mail {
-                font-size: 14px;
+                font-size: 13px;
                 line-height: 20px;
+                font-weight: 400;
                 color: #383874;
+                strong{
+                  font-weight: 600;
+                }
               }
             }
           }
