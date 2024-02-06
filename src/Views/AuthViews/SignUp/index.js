@@ -190,13 +190,6 @@ class SignUp extends Component {
       } else {
         errors.companyName = "";
       }
-
-      if (!step2.file) {
-        errors.companyProfile = "Company profile is required!";
-        isValid = false;
-      } else {
-        errors.companyProfile = "";
-      }
     }
 
     return { isValid, errors };
@@ -254,7 +247,9 @@ class SignUp extends Component {
       form.append("targetService", CMDB);
       form.append("password", step1.password);
       form.append("errorOnOrgFound", true);
-      form.append("file", step2.file);
+      if (step2.file) {
+        form.append("orgProfileFile", step2.file);
+      }
       this.props.signUp(form);
     }
   };
@@ -546,27 +541,26 @@ class SignUp extends Component {
                                 });
                               }}
                             ></i>
-                               <span
-                            className="input-group-text rotate"
-                            onClick={this.generatePassword}
-                          >
-                            <HtmlTooltip
-                              className="popup-tooltip"
-                              title={
-                                <React.Fragment>
-                                  <List>
-                                    <ListItem>
-                                      Generate a new secure 12-digit password
-                                    </ListItem>
-                                  </List>
-                                </React.Fragment>
-                              }
+                            <span
+                              className="input-group-text rotate"
+                              onClick={this.generatePassword}
                             >
-                              <i className="fa-solid fa-arrows-rotate"></i>
-                            </HtmlTooltip>
-                          </span>
+                              <HtmlTooltip
+                                className="popup-tooltip"
+                                title={
+                                  <React.Fragment>
+                                    <List>
+                                      <ListItem>
+                                        Generate a new secure 12-digit password
+                                      </ListItem>
+                                    </List>
+                                  </React.Fragment>
+                                }
+                              >
+                                <i className="fa-solid fa-arrows-rotate"></i>
+                              </HtmlTooltip>
+                            </span>
                           </Box>
-                       
                         </Grid>
                         <PasswordStrength
                           password={step1.password}
@@ -634,14 +628,6 @@ class SignUp extends Component {
                             <span className="width-25 blue-button">Browse</span>
                           </label>
                         </Box>
-                        {submittedSteps[this.steps.STEP2] &&
-                        errors.companyProfile ? (
-                          <p className="m-b-0 " style={{ color: "red" }}>
-                            {errors.companyProfile}
-                          </p>
-                        ) : (
-                          <></>
-                        )}
                       </Box>
                     </Box>
                     <Box sx={{ width: "100%" }}>
