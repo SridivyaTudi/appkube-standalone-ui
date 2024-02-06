@@ -25,7 +25,7 @@ class RequestPopup extends Component {
       if (this.props.sentEmailToAdmin.status === status.SUCCESS) {
         let sentEmailToAdminResponse = this.props.sentEmailToAdmin.data;
 
-        if (sentEmailToAdminResponse?.id) {
+        if (sentEmailToAdminResponse?.code === 201) {
           this.props.navigate(`${AUTH_PREFIX_PATH}/signin`);
           ToastMessage.success("An email has been sent to the company admin.");
         } else {

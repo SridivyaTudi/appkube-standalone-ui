@@ -194,44 +194,6 @@
           .tabs-content {
             padding: 0 10px;
             margin: 0;
-            .nginx-table-section {
-              display: block;
-              width: 100%;
-              .table {
-                overflow: hidden;
-                background-color: #ffffff;
-                .overview {
-                  thead {
-                    tr {
-                      th {
-                        border-right: 1px solid #dbdff1;
-                        background-color: #f0f3ff;
-                        font-size: 13px;
-                        font-weight: 600;
-                        padding: 10px;
-                        &:last-child {
-                          border-right: none;
-                        }
-                      }
-                    }
-                  }
-                  tbody {
-                    tr {
-                      td {
-                        padding-left: 12px;
-                        padding-right: 12px;
-                        font-size: 13px;
-                        line-height: 16px;
-                        font-weight: 400;
-                        width: auto;
-                        white-space: nowrap;
-                        color: #383874;
-                      }
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }

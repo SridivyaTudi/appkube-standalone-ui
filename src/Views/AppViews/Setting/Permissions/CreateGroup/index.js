@@ -54,9 +54,9 @@ export class CreateGroup extends Component {
       users: [],
       roles: [],
       pg: 0,
-      rpg: 5,
+      rpg: 10,
       rolePG: 0,
-      roleRPG: 5,
+      roleRPG: 10,
       showCreateUserControlModal: false,
       actionButton: null,
       formData: {
@@ -441,7 +441,7 @@ export class CreateGroup extends Component {
       if (value) {
         data = data.filter((row) => {
           let name = isRole ? row.name : row.username;
-          if (name.toLowerCase().includes(value.toLowerCase())) {
+          if (name?.toLowerCase().includes(value.toLowerCase())) {
             return row;
           } else {
             return null;

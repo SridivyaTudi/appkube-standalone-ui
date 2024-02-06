@@ -38,7 +38,7 @@ import { styled } from "@mui/material/styles";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
 import Rbac from "../Rbac";
-
+import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
 class Environments extends Component {
   constructor(props) {
     super(props);
@@ -100,6 +100,77 @@ class Environments extends Component {
     }
   }
 
+  // renderEnvironmentCountData = () => {
+  //   const environmentCount = this.props.environmentCountData;
+  //   if (environmentCount.status === status.IN_PROGRESS) {
+  //     return <Loader className={"environment-loader w-100"} />;
+  //   } else if (environmentCount.status === status.SUCCESS) {
+  //     const { environmentCountData } = this.state;
+  //     let retData = [];
+  //     if (environmentCountData?.length > 0) {
+  //       environmentCountData.forEach((env) => {
+  //         retData.push(
+  //           <Box className="environment-box" key={v4()}>
+  //             <Box className="environment-title">
+  //               <Box className="environment-image">
+  //                 <img src={LOGOS[env?.cloud?.toUpperCase()]} alt={env.cloud} />
+  //               </Box>
+  //               <Box className="title-name">{env?.cloud?.toUpperCase()}</Box>
+  //             </Box>
+  //             <Box className="data-contant">
+  //               <List>
+  //                 <ListItem>
+  //                   <Box className="data-text">
+  //                     <span style={{ backgroundColor: "#ff9900" }}></span>
+  //                     <p>Environments</p>
+  //                   </Box>
+  //                   <label>{env.environments}</label>
+  //                 </ListItem>
+  //                 <ListItem>
+  //                   <Box className="data-text">
+  //                     <span style={{ backgroundColor: "#0089d6" }}></span>
+  //                     <p>Assets</p>
+  //                   </Box>
+  //                   <label>{env.assets}</label>
+  //                 </ListItem>
+  //                 <ListItem>
+  //                   <Box className="data-text">
+  //                     <span style={{ backgroundColor: "#da4f44" }}></span>
+  //                     <p>Alerts</p>
+  //                   </Box>
+  //                   <label>{env.alerts}</label>
+  //                 </ListItem>
+  //                 <ListItem>
+  //                   <Box className="data-text">
+  //                     <span style={{ backgroundColor: "#00b929" }}></span>
+  //                     <p>Total Billing</p>
+  //                   </Box>
+  //                   <label>
+  //                     {env.totalBilling ? `&#65284;${env.totalBilling}` : ""}
+  //                   </label>
+  //                 </ListItem>
+  //               </List>
+  //             </Box>
+  //           </Box>
+  //         );
+  //       });
+  //     } else {
+  //       retData = (
+  //         <Box className="environment-loader w-100">
+  //           There are no data available.
+  //         </Box>
+  //       );
+  //     }
+  //     return retData;
+  //   } else {
+  //     return (
+  //       <Box className="environment-loader w-100">
+  //         There is some issue. Try again later.
+  //       </Box>
+  //     );
+  //   }
+  // };
+
   renderEnvironmentCountData = () => {
     const environmentCount = this.props.environmentCountData;
     if (environmentCount.status === status.IN_PROGRESS) {
@@ -108,51 +179,26 @@ class Environments extends Component {
       const { environmentCountData } = this.state;
       let retData = [];
       if (environmentCountData?.length > 0) {
-        environmentCountData.forEach((env) => {
-          retData.push(
-            <Box className="environment-box" key={v4()}>
-              <Box className="environment-title">
-                <Box className="environment-image">
-                  <img src={LOGOS[env?.cloud?.toUpperCase()]} alt={env.cloud} />
-                </Box>
-                <Box className="title-name">{env?.cloud?.toUpperCase()}</Box>
-              </Box>
-              <Box className="data-contant">
-                <List>
-                  <ListItem>
-                    <Box className="data-text">
-                      <span style={{ backgroundColor: "#ff9900" }}></span>
-                      <p>Environments</p>
-                    </Box>
-                    <label>{env.environments}</label>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="data-text">
-                      <span style={{ backgroundColor: "#0089d6" }}></span>
-                      <p>Assets</p>
-                    </Box>
-                    <label>{env.assets}</label>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="data-text">
-                      <span style={{ backgroundColor: "#da4f44" }}></span>
-                      <p>Alerts</p>
-                    </Box>
-                    <label>{env.alerts}</label>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="data-text">
-                      <span style={{ backgroundColor: "#00b929" }}></span>
-                      <p>Total Billing</p>
-                    </Box>
-                    <label>
-                      {env.totalBilling ? `&#65284;${env.totalBilling}` : ""}
-                    </label>
-                  </ListItem>
-                </List>
-              </Box>
-            </Box>
-          );
+        environmentCountData.forEach((env, index) => {
+          const backgroundColors = ["#ff9900", "#0089d6", "#da4f44", "#00b929"];
+          const labels = ["Environments", "Assets", "Alerts", "Total Billing"];
+          const keys = ["environments", "assets", "alerts", "totalBilling"];
+
+          const data = keys.map((key, innerIndex) => {
+            return {
+              backgroundColor: backgroundColors[innerIndex],
+              label: labels[innerIndex],
+              value: env[key],
+            };
+          });
+
+          let envCountInfo = {
+            image: LOGOS[env?.cloud?.toUpperCase()],
+            title: env?.cloud?.toUpperCase(),
+            data,
+            active: "",
+          };
+          retData.push(<TitleIconWithInfoOfCard cardDetails={envCountInfo} />);
         });
       } else {
         retData = (
@@ -170,7 +216,6 @@ class Environments extends Component {
       );
     }
   };
-
   handleMenuToggle = (envKey, accountIndex) => {
     const { menuSummaryShowMenu } = this.state;
     if (menuSummaryShowMenu[0] !== null && menuSummaryShowMenu[1] !== null) {

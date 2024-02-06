@@ -44,10 +44,11 @@ import CreateGroup from "./AppViews/Setting/Permissions/CreateGroup";
 import UserProfile from "./AppViews/Setting/Permissions/UserProfile";
 import CreatePolicy from "./AppViews/Setting/Permissions/CreatePolicy";
 import BIMapping from "./AppViews/BIMapping";
-import CreateDepartment from "./AppViews/BIMapping/CreateDepartment";
 import ProductCategory from "./AppViews/BIMapping/ProductCategory";
-import AddingProduct from "./AppViews/BIMapping/AddingProduct";
 import Tier from "./AppViews/BIMapping/Tier";
+import Soa from "./AppViews/BIMapping/Soa";
+import AddDepartment from "./AppViews/BIMapping/AddDepartment";
+import AddProduct from "./AppViews/BIMapping/AddProduct";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -214,20 +215,18 @@ export const Views = (props) => {
           <Route path={`${APP_PREFIX_PATH}/reports`} element={<Reports />} />
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/create-department`}
-            element={<CreateDepartment />}
-          />
-          <Route
             path={`${APP_PREFIX_PATH}/bim/product-category`}
             element={<ProductCategory />}
           />
-           <Route
-            path={`${APP_PREFIX_PATH}/bim/adding-product`}
-            element={<AddingProduct />}
+          <Route path={`${APP_PREFIX_PATH}/bim/tier`} element={<Tier />} />
+          <Route path={`${APP_PREFIX_PATH}/bim/soa`} element={<Soa />} />
+          <Route
+            path={`${APP_PREFIX_PATH}/bim/create-department`}
+            element={<AddDepartment />}
           />
-           <Route
-            path={`${APP_PREFIX_PATH}/bim/tier`}
-            element={<Tier/>}
+          <Route
+            path={`${APP_PREFIX_PATH}/bim/add-product`}
+            element={<AddProduct />}
           />
           <Route path={`/error`} element={<Error />} />
         </Routes>

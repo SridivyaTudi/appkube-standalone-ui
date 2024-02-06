@@ -34,7 +34,7 @@ class Disallowed extends Component {
     this.state = {
       rows: [],
       pg: 0,
-      rpg: 5,
+      rpg: 10,
     };
   }
 

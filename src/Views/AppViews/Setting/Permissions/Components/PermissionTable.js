@@ -10,6 +10,8 @@ import {
   Box,
 } from "@mui/material";
 import { Component } from "react";
+import { v4 } from "uuid";
+
 class PermissionTable extends Component {
   constructor(props) {
     super(props);
@@ -19,12 +21,10 @@ class PermissionTable extends Component {
     };
   }
 
-  
-
   componentDidUpdate = (prevProps, prevState) => {
     let rows = this.props.data || [];
     if (this.props.data !== prevProps.data) {
-      this.setState({ rows,selectedData:[] });
+      this.setState({ rows, selectedData: [] });
     }
   };
   // Render head of table
@@ -82,7 +82,7 @@ class PermissionTable extends Component {
             </TableRow>
           ))
         ) : (
-          <TableRow>
+          <TableRow key={v4()}>
             <TableCell colSpan={12}>
               <Box className="d-blck text-center w-100 h-100 ">
                 <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">

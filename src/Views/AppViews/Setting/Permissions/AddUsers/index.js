@@ -32,7 +32,7 @@ class AddUsers extends Component {
     this.state = {
       rows: [],
       pg: 0,
-      rpg: 5,
+      rpg: 10,
       showCreateUserControlModal: false,
       actionButton: null,
       selectedUsers: [],
@@ -303,7 +303,7 @@ class AddUsers extends Component {
 
     if (selectedUsers?.length) {
       this.props.addUsersFromGroupDetails({
-        roleId: this.getGroupId(),
+        roleId: +this.getGroupId(),
         userIds: selectedUsers.toString(),
       });
     } else {

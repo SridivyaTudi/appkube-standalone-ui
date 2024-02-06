@@ -27,10 +27,10 @@
           font-family: "Poppins", sans-serif;
           position: relative;
           border-bottom: 1px solid #eaecf0;
-          &.cursor{
+          &.cursor {
             cursor: pointer;
           }
-         
+
           span {
             padding: 0;
             margin-right: 10px;
@@ -59,10 +59,10 @@
             font-size: 10px;
             line-height: 18px;
             color: #464f60;
-            &.disabled{
+            &.disabled {
               border: 1px solid #464f603a;
               color: #464f603a;
-            } 
+            }
           }
 
           &.child-table-section {
@@ -237,7 +237,7 @@
           border-bottom: none;
           position: relative;
           text-align: center;
-          &.cursor{
+          &.cursor {
             cursor: pointer;
           }
           &::before {
@@ -285,10 +285,10 @@
             font-size: 10px;
             line-height: 18px;
             color: #464f60;
-            &.disabled{
+            &.disabled {
               border: 1px solid #464f603a;
               color: #464f603a;
-            } 
+            }
           }
           &.child-table-section {
             padding: 0;
@@ -483,7 +483,7 @@
           font-family: "Poppins", sans-serif;
           position: relative;
           border-bottom: 1px solid #eaecf0;
-          &.cursor{
+          &.cursor {
             cursor: pointer;
           }
           &::before {
@@ -525,10 +525,10 @@
             font-size: 10px;
             line-height: 18px;
             color: #464f60;
-            &.disabled{
+            &.disabled {
               border: 1px solid #464f603a;
               color: #464f603a;
-            }  
+            }
           }
 
           &.child-table-section {
@@ -639,6 +639,425 @@
   }
 }
 
+.bimapping-table {
+  margin-top: 20px;
+  display: block;
+  background-color: #ffffff;
+  padding: 0;
+  overflow: auto;
+  border-radius: 10px;
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+  table {
+    width: 100%;
+    display: block;
+    thead {
+      padding-top: 0px;
+      padding-bottom: 0px;
+      display: table;
+      width: calc(100% - 0.1em)
+        /* scrollbar is average 1em/16px width, remove it from thead width */;
+
+      // &.active {
+      //   th {
+      //     border-bottom: 1px dashed #b3b3b3;
+      //   }
+      // }
+
+      tr {
+        display: inline-table;
+        width: 100%;
+        table-layout: fixed;
+
+        th {
+          width: auto;
+          text-align: center;
+         padding: 12px 15px; 
+          font-size: 14px;
+          font-weight: 400;
+          color: #000000;
+          border: none;
+          font-family: "Poppins", sans-serif;
+          border-bottom: 1px dotted #b3b3b3;
+
+          strong {
+            color: #383874;
+            font-weight: 600;
+            font-size: 15px;
+            text-transform: uppercase;
+          }
+
+          i {
+            cursor: pointer;
+            color: #383874;
+          }
+
+          &.ou {
+            text-align: left;
+          }
+
+          .environment-image {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #ffffff;
+            padding: 5px;
+            margin: 0 15px;
+            border-radius: 5px;
+            box-shadow: 0px 100px 80px rgba(108, 73, 172, 0.07),
+              0px 41.7776px 33.4221px rgba(108, 73, 172, 0.0503198),
+              0px 22.3363px 17.869px rgba(108, 73, 172, 0.0417275),
+              0px 12.5216px 10.0172px rgba(108, 73, 172, 0.035),
+              0px 6.6501px 5.32008px rgba(108, 73, 172, 0.0282725),
+              0px 2.76726px 2.21381px rgba(108, 73, 172, 0.0196802);
+          }
+
+          &:first-child {
+            width: 200px;
+          }
+        }
+      }
+    }
+    .body {
+      width: 100%;
+      display: block;
+      max-height: 400px;
+      overflow: auto;
+      width: calc(100% - 0.05em);
+      tr {
+        display: table;
+        width: 100%;
+        border-bottom: 1px solid #eaecf0;
+        td {
+          width: auto;
+          padding: 12px 30px;
+          font-size: 12px;
+          line-height: 18px;
+          font-weight: 500;
+          color: #101828;
+          font-family: "Poppins", sans-serif;
+          border-bottom: none;
+          position: relative;
+          text-align: center;
+          &.cursor {
+            cursor: pointer;
+          }
+
+          .check-box {
+            span {
+              padding: 0;
+              margin-left: 10px;
+              margin-right: 10px;
+            }
+          }
+
+          &:first-child {
+            text-align: left;
+            width: 200px;
+            &::before {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: 15px;
+              width: 1px;
+              height: 100%;
+              background: #d5dbe5;
+            }
+          }
+          &.active {
+            font-weight: 600;
+            background-color: #f2f5fa;
+          }
+
+          Button {
+            background-color: transparent;
+            border: none;
+          }
+
+          i {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            max-height: 20px;
+            display: inline-block;
+            border-radius: 50%;
+            border: 1px solid #464f60;
+            margin-right: 10px;
+            //margin-left: 10px;
+            text-align: center;
+            font-size: 10px;
+            line-height: 18px;
+            color: #464f60;
+            &.disabled {
+              border: 1px solid #464f603a;
+              color: #464f603a;
+            }
+          }
+          a {
+            .add-icon {
+              font-size: 14px;
+              border: none;
+              color: #384cff;
+              vertical-align: text-top;
+            }
+          }
+
+          &.child-table-section {
+            padding: 0;
+            background: #ffffff;
+            &::before {
+              content: "";
+              width: 0px;
+            }
+            table {
+              tbody {
+                width: 100%;
+                display: block;
+                tr {
+                  border-bottom: 1px solid #eaecf0;
+                  td {
+                    padding: 12px 15px 12px 55px;
+                    &::before {
+                      content: "";
+                      left: 40px;
+                    }
+                    &:hover {
+                      background-color: #f7f9fc;
+                      border-bottom: 0;
+                    }
+                    &.active {
+                      font-weight: 600;
+                      background-color: #f2f5fa;
+                      td {
+                        &::before {
+                          content: "";
+                          width: 0px;
+                        }
+                      }
+                    }
+                    &.child-table-section {
+                      padding: 0;
+                      background: #ffffff;
+                      &::before {
+                        content: "";
+                        width: 0px;
+                      }
+                      table {
+                        tbody {
+                          width: 100%;
+                          display: block;
+                          tr {
+                            border-bottom: 1px solid #eaecf0;
+                            td {
+                              padding: 12px 15px 12px 80px;
+                              &::before {
+                                content: "";
+                                left: 65px;
+                              }
+                              &:hover {
+                                background-color: #f7f9fc;
+                                border-bottom: 0;
+                              }
+                              &.active {
+                                font-weight: 600;
+                                background-color: #f2f5fa;
+                                td {
+                                  &::before {
+                                    content: "";
+                                    width: 0px;
+                                  }
+                                }
+                              }
+                              &.child-table-section {
+                                padding: 0;
+                                background: #ffffff;
+                                &::before {
+                                  content: "";
+                                  width: 0px;
+                                }
+                                table {
+                                  tbody {
+                                    width: 100%;
+                                    display: block;
+                                    tr {
+                                      border-bottom: 1px solid #eaecf0;
+                                      td {
+                                        padding: 12px 15px 12px 105px;
+                                        &::before {
+                                          content: "";
+                                          left: 90px;
+                                        }
+                                        &:hover {
+                                          background-color: #f7f9fc;
+                                          border-bottom: 0;
+                                        }
+                                        &.active {
+                                          font-weight: 600;
+                                          background-color: #f2f5fa;
+                                          td {
+                                            &::before {
+                                              content: "";
+                                              width: 0px;
+                                            }
+                                          }
+                                        }
+                                        &.child-table-section {
+                                          padding: 0;
+                                          background: #ffffff;
+                                          &::before {
+                                            content: "";
+                                            width: 0px;
+                                          }
+                                          table {
+                                            tbody {
+                                              width: 100%;
+                                              display: block;
+                                              tr {
+                                                border-bottom: 1px solid #eaecf0;
+                                                td {
+                                                  padding: 12px 15px 12px 130px;
+                                                  &::before {
+                                                    content: "";
+                                                    left: 115px;
+                                                  }
+                                                  &:hover {
+                                                    background-color: #f7f9fc;
+                                                    border-bottom: 0;
+                                                  }
+                                                  &.active {
+                                                    font-weight: 600;
+                                                    background-color: #f2f5fa;
+                                                    td {
+                                                      &::before {
+                                                        content: "";
+                                                        width: 0px;
+                                                      }
+                                                    }
+                                                  }
+                                                  &.subchild-table-section {
+                                                    padding: 12px 15px 12px 15px;
+                                                    text-align: center;
+                                                    border-bottom: 0;
+                                                    &::before {
+                                                      content: "";
+                                                      width: 0px;
+                                                    }
+                                                    &:hover {
+                                                      padding-left: 15px;
+                                                    }
+                                                  }
+                                                  &:last-child {
+                                                    border-bottom: 0;
+                                                  }
+                                                }
+                                                &:last-child {
+                                                  border-bottom: none;
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                        &.subchild-table-section {
+                                          padding: 12px 15px 12px 15px;
+                                          text-align: center;
+                                          border-bottom: 0;
+                                          &::before {
+                                            content: "";
+                                            width: 0px;
+                                          }
+                                          &:hover {
+                                            padding-left: 15px;
+                                          }
+                                        }
+                                        &:last-child {
+                                          border-bottom: 0;
+                                        }
+                                      }
+                                      &:last-child {
+                                        border-bottom: none;
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                              &.subchild-table-section {
+                                padding: 12px 15px 12px 15px;
+                                text-align: center;
+                                border-bottom: 0;
+                                &::before {
+                                  content: "";
+                                  width: 0px;
+                                }
+                                &:hover {
+                                  padding-left: 15px;
+                                }
+                              }
+                              &:last-child {
+                                border-bottom: 0;
+                              }
+                            }
+                            &:last-child {
+                              border-bottom: none;
+                            }
+                          }
+                        }
+                      }
+                    }
+                    &.subchild-table-section {
+                      padding: 12px 15px 12px 15px;
+                      text-align: center;
+                      border-bottom: 0;
+                      &::before {
+                        content: "";
+                        width: 0px;
+                      }
+                      &:hover {
+                        padding-left: 15px;
+                      }
+                    }
+                    &:last-child {
+                      border-bottom: 0;
+                    }
+                  }
+                  &:last-child {
+                    border-bottom: none;
+                  }
+                }
+              }
+            }
+          }
+
+          &:last-child {
+            border-bottom: 0;
+          }
+          &.subchild-table-section {
+            padding: 12px 15px 12px 15px;
+            text-align: center;
+            border-bottom: 0;
+            &::before {
+              content: "";
+              width: 0px;
+            }
+            &:hover {
+              padding-left: 15px;
+            }
+          }
+        }
+
+        &.active {
+          font-weight: 600;
+          background-color: #f2f5fa;
+        }
+        &:hover {
+          background-color: #f7f9fc;
+        }
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
+
 // .allowed-disallowed-permission-table {
 //   display: block;
 //   background-color: #ffffff;
@@ -712,7 +1131,7 @@
 //           &.cursor{
 //             cursor: pointer;
 //           }
-         
+
 //           &::before {
 //             content: "";
 //             position: absolute;
@@ -761,7 +1180,7 @@
 //             &.disabled{
 //               border: 1px solid #464f603a;
 //               color: #464f603a;
-//             } 
+//             }
 //           }
 //           &.child-table-section {
 //             padding: 0;

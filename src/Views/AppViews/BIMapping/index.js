@@ -4,16 +4,203 @@ import Aws from "../../../assets/img/aws.png";
 import Microsoftazure from "../../../assets/img/microsoftazure.png";
 import GoogleCloud from "../../../assets/img/google-cloud.png";
 import Kubernetes from "../../../assets/img/kubernetes.png";
-import {
-  Table,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-} from "@mui/material";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { Link } from "react-router-dom";
+import AccordionView from "Views/AppViews/Setting/Components/AccordionView";
 
+let data = [
+  {
+    name: "Synectiks",
+    chlidren: [
+      {
+        name: (
+          <>
+            HR{" "}
+            <Link to={`/app/bim/add-product`}>
+              <i className="add-icon fa-solid fa-circle-plus"></i>
+            </Link>
+          </>
+        ),
+        chlidren: [
+          {
+            name: "Payroll",
+            chlidren: [
+              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+            ],
+          },
+          {
+            name: "Accounts",
+            chlidren: [
+              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+            ],
+          },
+          {
+            name: "IT",
+            chlidren: [
+              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+            ],
+          },
+          {
+            name: "Leave Management",
+            chlidren: [
+              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+            ],
+          },
+          {
+            name: "Maintenance",
+            chlidren: [
+              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+            ],
+          },
+        ],
+      },
+      {
+        name: (
+          <>
+            Digital auction{" "}
+            <Link to={`/app/bim/add-product`}>
+              <i className="add-icon fa-solid fa-circle-plus"></i>
+            </Link>
+          </>
+        ),
+        chlidren: [
+          { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+          { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+          { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+          { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+          { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+        ],
+      },
+      {
+        name: (
+          <>
+            We Desk{" "}
+            <Link to={`/app/bim/add-product`}>
+              <i className="add-icon fa-solid fa-circle-plus"></i>
+            </Link>
+          </>
+        ),
+        chlidren: [
+          { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+          { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+          { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+          { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+          { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+        ],
+      },
+      {
+        name: (
+          <>
+            Procurement{" "}
+            <Link to={`/app/bim/add-product`}>
+              <i className="add-icon fa-solid fa-circle-plus"></i>
+            </Link>
+          </>
+        ),
+        chlidren: [
+          { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+          { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+          { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+          { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+          { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+        ],
+      },
+      {
+        name: (
+          <>
+            Product 5{" "}
+            <Link to={`/app/bim/add-product`}>
+              <i className="add-icon fa-solid fa-circle-plus"></i>
+            </Link>
+          </>
+        ),
+        chlidren: [
+          { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
+          { name: "EC2", chlidren: [{ name: "SIP 1" }] },
+          { name: "ECS", chlidren: [{ name: "SIP 1" }] },
+          { name: "WAF", chlidren: [{ name: "SIP 1" }] },
+          { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
+        ],
+      },
+    ],
+
+    isMutipleCell: true,
+    multipeCellData: [
+      { name: "01" },
+      { name: "01" },
+      { name: "02" },
+      { name: "03" },
+    ],
+  },
+];
+
+let headers = [
+  { name: "Organization Name", styled: {} },
+  {
+    name: (
+      <>
+        <Box className="environment-image">
+          <img src={Aws} alt="" />
+        </Box>
+        AWS
+      </>
+    ),
+    styled: {},
+  },
+  {
+    name: (
+      <>
+        <Box className="environment-image">
+          <img src={Microsoftazure} alt="" />
+        </Box>
+        Azure
+      </>
+    ),
+    styled: {},
+  },
+  {
+    name: (
+      <>
+        <Box className="environment-image">
+          <img src={GoogleCloud} alt="" />
+        </Box>
+        GCP
+      </>
+    ),
+    styled: {},
+  },
+  {
+    name: (
+      <>
+        <Box className="environment-image">
+          <img src={Kubernetes} alt="" />
+        </Box>
+        Kubernetes
+      </>
+    ),
+    styled: {},
+  },
+];
 class BIMapping extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +225,8 @@ class BIMapping extends Component {
               className="primary-outline-btn min-width"
               variant="outlined"
             >
-              Create
+              <ControlPointIcon className="m-r-1 plus-icon" />
+              Department
             </Button>
             {this.state.isSelectDepartmentOpen === true && (
               <div
@@ -49,24 +237,25 @@ class BIMapping extends Component {
                 }
               >
                 <List>
-                  <ListItem>
-                    <Link to={`/app/bim/create-department`}>
+                  <Link to={`/app/bim/create-department`}>
+                    <ListItem>
                       <i className="fa-solid fa-circle-dot"></i>Create
                       Department
-                    </Link>
-                  </ListItem>
-                  <ListItem>
-                    <Link to={`/app/bim/adding-product`}>
+                    </ListItem>
+                  </Link>
+                  <Link to={`/app/bim/add-product`}>
+                    <ListItem>
                       <i className="fa-solid fa-circle-dot"></i>Add Products
-                    </Link>
-                  </ListItem>
+                    </ListItem>
+                  </Link>
                 </List>
               </div>
             )}
           </Box>
         </Box>
-        <Box className="environment-table">
-          <TableContainer className="table">
+        <Box className="bimapping-table">
+          <AccordionView data={data} headers={headers} />
+          {/* <TableContainer className="table">
             <Table>
               <TableHead className="active">
                 <TableRow>
@@ -100,7 +289,19 @@ class BIMapping extends Component {
               <TableBody>
                 <TableRow>
                   <TableCell align="left">
-                    <Link to={""}>Synectiks</Link>
+                    <Link to={""}>
+                      Synectiks
+                      <i className="fa-solid fa-caret-down arrow-icon"></i>
+                    </Link>
+                    <Box className="add-synectiks">
+                      <Box className="arrow-image m-r-1">
+                        <img src={DownRightArrow} alt="DownRightArrow" />
+                      </Box>
+                      HR
+                      <Link to={"/app/bim/adding-product"}>
+                        <i class="fa-solid fa-circle-plus"></i>
+                      </Link>
+                    </Box>
                   </TableCell>
                   <TableCell align="center">01</TableCell>
                   <TableCell align="center">01</TableCell>
@@ -109,7 +310,7 @@ class BIMapping extends Component {
                 </TableRow>
               </TableBody>
             </Table>
-          </TableContainer>
+          </TableContainer> */}
         </Box>
       </Box>
     );

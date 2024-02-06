@@ -52,7 +52,7 @@ class RoleControl extends Component {
     this.state = {
       roles: [],
       pg: 0,
-      rpg: 5,
+      rpg: 10,
       showCreateRoleControlModal: false,
       actionButton: null,
       showConfirmPopup: false,

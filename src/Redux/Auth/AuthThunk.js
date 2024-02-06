@@ -50,7 +50,7 @@ export const resetPassword = createAsyncThunk(
       return response;
     } catch (error) {
       console.log(error);
-      return error.response?.data;
+      return error;
     }
   }
 );

@@ -1,9 +1,9 @@
 import React from "react";
-import { Box, List, ListItem } from "@mui/material";
+import { Box, ListItem } from "@mui/material";
 import GlobalIcon4 from "assets/img/assetmanager/global-icon4.png";
 import GlobalIcon5 from "assets/img/assetmanager/global-icon5.png";
 import { v4 } from "uuid";
-
+import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
 const backgroundColor = [
   "#ff9900",
   "#0089d6",
@@ -12,6 +12,24 @@ const backgroundColor = [
   "#ff708b",
   "#416bff",
   "#006bb9",
+];
+let clusterInfo = [
+  {
+    image: GlobalIcon4,
+    title: "EKS-Cluster",
+    type: "EKS",
+    data: [],
+    active: "",
+    style: {},
+  },
+  {
+    image: GlobalIcon5,
+    title: "ECS-Cluster",
+    type: "ECS",
+    data: [],
+    active: "",
+    style: {},
+  },
 ];
 
 class ClusterDetails extends React.Component {
@@ -62,46 +80,34 @@ class ClusterDetails extends React.Component {
       <>
         <Box className="cluster-heading m-t-4">Cluster</Box>
         <Box className="environment-boxs m-t-4">
-          <Box
-            className="environment-box"
-            onClick={() => this.changeActiveCluster("EKS")}
-            style={{
+          {clusterInfo.map((cluster) => {
+            cluster["style"] = {
               border:
-                currentActiveCluster === "EKS"
+                currentActiveCluster === cluster.type
                   ? "2px solid #416bff"
                   : "2px solid #fff",
-            }}
-          >
-            <Box className="environment-title">
-              <Box className="environment-image">
-                <img src={GlobalIcon4} alt="" />
-              </Box>
-              <Box className="title-name">EKS-Cluster</Box>
-            </Box>
-            <Box className="data-contant">
-              <List>{this.renderClusterData(eksData)}</List>
-            </Box>
-          </Box>
-          <Box
-            className="environment-box"
-            onClick={() => this.changeActiveCluster("ECS")}
-            style={{
-              border:
-                currentActiveCluster === "ECS"
-                  ? "2px solid #416bff"
-                  : "2px solid #fff",
-            }}
-          >
-            <Box className="environment-title">
-              <Box className="environment-image">
-                <img src={GlobalIcon5} alt="" />
-              </Box>
-              <Box className="title-name">ECS-Cluster</Box>
-            </Box>
-            <Box className="data-contant">
-              <List>{this.renderClusterData(ecsData)}</List>
-            </Box>
-          </Box>
+              with: "296px",
+              minHeight: "365px",
+            };
+            let keys = Object.keys(cluster.type === "EKS" ? eksData : ecsData);
+            const data = keys.map((key, innerIndex) => {
+              return {
+                backgroundColor: backgroundColor[innerIndex],
+                label: this.convertToCapitalCase(key),
+                value: cluster.type === "EKS" ? eksData[key] : ecsData[key],
+              };
+            });
+            cluster["data"] = data;
+            return (
+              <TitleIconWithInfoOfCard
+                cardDetails={cluster}
+                key={v4()}
+                onClickCard={(details) =>
+                  this.changeActiveCluster(cluster.type)
+                }
+              />
+            );
+          })}
         </Box>
         {/* {currentActiveCluster === "EKS" && <EksCluster />} */}
         {/* {currentActiveCluster === "ECS" && <EcsCluster />} */}

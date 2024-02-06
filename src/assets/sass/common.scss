@@ -20,11 +20,13 @@ body,
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
+
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
+
 }
 
 /* Handle */
@@ -35,6 +37,7 @@ body,
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #c1c2c2;
+
 }
 
 ul,

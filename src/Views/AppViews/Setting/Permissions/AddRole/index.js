@@ -43,7 +43,7 @@ class AddRole extends Component {
     this.state = {
       rows: [],
       pg: 0,
-      rpg: 5,
+      rpg: 10,
       showCreateUserControlModal: false,
       actionButton: null,
       showCancelRoleControlModal: false,

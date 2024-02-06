@@ -6,7 +6,7 @@ const config = {
   /* SIGN UP AND SIGN IN SERVICES */
   LOGIN: `${baseSecurityUrl}/public/login`,
   SIGN_UP: `${baseSecurityUrl}/users/create`,
-  SENT_EMAIL_TO_COMPANY_ADMIN: `${baseSecurityUrl}/users/create/new-org-user`,
+  SENT_EMAIL_TO_COMPANY_ADMIN: `${baseSecurityUrl}/users/new-org-user`,
 
   /* FORGET PASSWORD SERVICES */
   FORGET_PWD: `${baseSecurityUrl}/public/forgot-password`,
@@ -30,7 +30,7 @@ const config = {
   GET_USER_BY_ID: `${baseSecurityUrl}/users/#user-id#`,
   DELETE_USER: `${baseSecurityUrl}/users/delete/#user-id#`,
   ADD_USER_TO_GROUPS: `${baseSecurityUrl}/users/updateUserRoles?userName=#user-name#&roleId=#role-id#`,
-  ADD_USERS_FROM_GROUP_DETAILS: `${baseSecurityUrl}/users/addUsersToRoleGroup?roleId=#role-id#&userIds=#user-ids#`,
+  ADD_USERS_FROM_GROUP_DETAILS: `${baseSecurityUrl}/users/assingRoleGroupToUsers`,
   /* CHANGE PASSWORD SERVICES */
   ACCOUNT_CHANGE_PASSWORD: `${baseSecurityUrl}/users/reset-password`,
   USER_RESET_PASSWORD: `${baseSecurityUrl}/users/reset-password-by-admin`,

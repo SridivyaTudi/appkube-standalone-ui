@@ -12,7 +12,7 @@ import {
 class Variable extends Component {
   render() {
     return (
-      <Box className="nginx-table-section">
+      <Box className="tier-table-section">
         <TableContainer className="table">
           <Table className="overview">
             <TableHead>

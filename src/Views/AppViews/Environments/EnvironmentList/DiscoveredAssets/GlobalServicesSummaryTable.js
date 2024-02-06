@@ -1,7 +1,5 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import Lambda from "assets/img/assetmanager/cloud-managed-icon1.png";
 import S3 from "assets/img/assetmanager/cloud-managed-icon2.png";
 import SQS from "assets/img/assetmanager/cloud-managed-icon3.png";
@@ -13,21 +11,7 @@ import Kinesis from "assets/img/assetmanager/cloud-managed-icon8.png";
 import TimeSeries from "assets/img/assetmanager/cloud-managed-icon9.png";
 import Athena from "assets/img/assetmanager/cloud-managed-icon10.png";
 import { v4 } from "uuid";
-
-const HtmlTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} arrow classes={{ popper: className }} />
-))(({ theme }) => ({
-  [`& .${tooltipClasses.arrow}`]: {
-    color: "#ffffffff",
-  },
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: "#ffffffff",
-    color: "rgba(0, 0, 0, 0.87)",
-    maxWidth: 200,
-    fontSize: theme.typography.pxToRem(12),
-    border: "1px solid #dadde9",
-  },
-}));
+import TitleIconAndCountOfCard from "Components/TitleIconAndCountOfCard";
 
 class GlobalServicesSummaryTable extends React.Component {
   constructor(props) {
@@ -56,27 +40,22 @@ class GlobalServicesSummaryTable extends React.Component {
   renderTable = (data) => {
     const { activeCategory } = this.state;
     const JSX = [];
-    const childJSX = []
+    const childJSX = [];
     data.forEach((item, index) => {
+      let cuttentItem = {
+        active: activeCategory === index ? "active" : "",
+        image: this.state.serivceImages[index],
+        title: item.elementType,
+        count: item.totalRecord,
+      };
       childJSX.push(
-        <Box
-          className={`service-card ${activeCategory === index ? "active" : ""}`}
-          onClick={() => {
-            this.setState({ activeCategory: index });
-            this.props.setCurrentGlobalDataCategory(item.elementType);
+        <TitleIconAndCountOfCard
+          data={cuttentItem}
+          onClickCard={(data) => {
+            this.onClickCurrentGlobalDataCategory(index, item.elementType);
           }}
           key={v4()}
-        >
-          <Box className="service-icon">
-            <img src={this.state.serivceImages[index]} alt="serviceicon" />
-          </Box>
-          <Box className="service-contant">
-            <HtmlTooltip className="table-tooltip" title={item.elementType}>
-              <label>{item.elementType}</label>
-            </HtmlTooltip>
-            <strong>{item.totalRecord}</strong>
-          </Box>
-        </Box>
+        />
       );
     });
     if (data.length) {
@@ -101,6 +80,10 @@ class GlobalServicesSummaryTable extends React.Component {
     }
   };
 
+  onClickCurrentGlobalDataCategory = (activeCategory, elementType) => {
+    this.setState({ activeCategory });
+    this.props.setCurrentGlobalDataCategory(elementType);
+  };
   render() {
     return (
       <Box className="global-service-penal">

@@ -130,6 +130,23 @@ class AccordionView extends Component {
                 </TableCell>
               </TableRow>
             ) : null}
+            {subchild.isMutipleCell ? (
+              subchild.multipeCellData?.length ? (
+                subchild.multipeCellData.map((cell) => (
+                  <TableCell
+                    className={`subchild-table-section ${
+                      isActive ? "active" : ""
+                    }`} 
+                  >
+                    {cell.name}
+                  </TableCell>
+                ))
+              ) : (
+                <></>
+              )
+            ) : (
+              <></>
+            )}
           </TableRow>
           {childDataShow ? (
             <TableRow>
