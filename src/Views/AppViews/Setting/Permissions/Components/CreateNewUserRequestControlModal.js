@@ -169,7 +169,7 @@ class CreateNewUserRequestControlModal extends Component {
               );
             })
           ) : (
-            <Box className="d-block text-center w-100 h-100 m-r-auto m-l-auto ">
+            <Box className="d-block text-center w-100 h-100 m-r-auto m-l-auto p-t-15 p-b-15 ">
               There are no data available.
             </Box>
           )}

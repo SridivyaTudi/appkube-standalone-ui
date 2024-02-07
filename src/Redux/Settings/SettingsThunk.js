@@ -292,3 +292,16 @@ export const getPendingUserRequests = createAsyncThunk(
     }
   }
 );
+
+export const getPendingUserCount = createAsyncThunk(
+  "settings/getPendingUserCount",
+  async (orgId) => {
+    try {
+      let url = config.GET_PENDING_USER_COUNT.replace("#org-id#", orgId);
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

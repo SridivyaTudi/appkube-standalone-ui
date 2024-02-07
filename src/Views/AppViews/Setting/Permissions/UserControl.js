@@ -27,7 +27,7 @@ import ConfirmationPopup from "Components/ConfirmationPopup";
 import { getFormattedDate, getCurrentUser } from "Utils";
 import {
   deleteUser,
-  getUserPermissionData,
+  getUserPermissionData,getPendingUserCount
 } from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
 
@@ -52,6 +52,7 @@ class UserControl extends Component {
 
   componentDidMount = () => {
     this.setUsersStateOrReturnData();
+    // this.props.
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -419,11 +420,13 @@ class UserControl extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { allUsers, userPermissionData, removeUser } = state.settings;
+  const { allUsers, userPermissionData, removeUser,pendingUserCount
+     } = state.settings;
   return {
     allUsers,
     userPermissionData,
-    removeUser,
+    removeUser,pendingUserCount
+    
   };
 };
 
