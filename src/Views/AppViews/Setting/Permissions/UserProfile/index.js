@@ -203,7 +203,7 @@ export class UserProfile extends Component {
                           this.setState({ showConfirmPopup: true });
                         }}
                       >
-                        Delete user
+                        Disable user
                       </Button>
                     </ListItem>
                   </List>
@@ -373,8 +373,8 @@ export class UserProfile extends Component {
             showModal={showConfirmPopup}
             togglePopup={this.togglePopup}
             labels={{
-              btnYes: "Delete",
-              header: "Do you want to delete this User ? ",
+              btnYes: "Disable",
+              header: "Do you want to disable this User ? ",
               btnNo: "Cancel",
             }}
             icon={<i className="fas fa-trash-alt"></i>}
