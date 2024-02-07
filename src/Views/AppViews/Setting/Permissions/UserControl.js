@@ -24,10 +24,11 @@ import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
 import ConfirmationPopup from "Components/ConfirmationPopup";
-import { getFormattedDate, getCurrentUser } from "Utils";
+import { getFormattedDate, getCurrentUser, getCurrentOrgId } from "Utils";
 import {
   deleteUser,
-  getUserPermissionData,getPendingUserCount
+  getUserPermissionData,
+  getPendingUserCount,
 } from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
 
@@ -43,6 +44,7 @@ class UserControl extends Component {
       showCreateNewUserRequestControlModal: false,
       actionButton: null,
       searchedKey: "",
+      pendingUsersCount:0
     };
     let userDetails = getCurrentUser()?.info?.user;
     if (userDetails) {
@@ -52,7 +54,7 @@ class UserControl extends Component {
 
   componentDidMount = () => {
     this.setUsersStateOrReturnData();
-    // this.props.
+    this.props.getPendingUserCount(getCurrentOrgId());
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -77,6 +79,19 @@ class UserControl extends Component {
         }
       }
     }
+
+    if (
+      this.props.pendingUserCount.status !== prevProps.pendingUserCount.status
+    ) {
+      if (this.props.pendingUserCount.status === status.SUCCESS) {
+        if (this.props.pendingUserCount?.data) {
+          let pendingUsersCount =
+            this.props.pendingUserCount?.data?.pendingUsersCount || "0";
+
+          this.setState({ pendingUsersCount });
+        }
+      }
+    }
   };
 
   handleChangePage = (event, newpage) => {
@@ -98,7 +113,8 @@ class UserControl extends Component {
 
   handleCreateNewUserRequestControlModal = () => {
     this.setState({
-      showCreateNewUserRequestControlModal: !this.state.showCreateNewUserRequestControlModal,
+      showCreateNewUserRequestControlModal:
+        !this.state.showCreateNewUserRequestControlModal,
     });
   };
 
@@ -140,7 +156,7 @@ class UserControl extends Component {
 
   // Render user search input and btn
   renderSearchInputAndBtn = () => {
-    let { searchedKey } = this.state;
+    let { searchedKey,pendingUsersCount } = this.state;
     return (
       <Box className="d-flex width-100 search-box">
         <Box className="search">
@@ -168,7 +184,7 @@ class UserControl extends Component {
           >
             New User Request
           </Button>
-        <span className="noti">02</span>
+          <span className="noti">{pendingUsersCount}</span>
         </Box>
       </Box>
     );
@@ -341,14 +357,14 @@ class UserControl extends Component {
     return showCreateNewUserRequestControlModal ? (
       <CreateNewUserRequestControlModal
         showModal={showCreateNewUserRequestControlModal}
-        handleCreateNewUserRequestControlModal={this.handleCreateNewUserRequestControlModal}
+        handleCreateNewUserRequestControlModal={
+          this.handleCreateNewUserRequestControlModal
+        }
       />
     ) : (
       <></>
     );
   };
-
-  
 
   // Render component of Create User Modal
   renderComponentConfirmationModal = () => {
@@ -420,16 +436,20 @@ class UserControl extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { allUsers, userPermissionData, removeUser,pendingUserCount
-     } = state.settings;
+  const { allUsers, userPermissionData, removeUser, pendingUserCount } =
+    state.settings;
   return {
     allUsers,
     userPermissionData,
-    removeUser,pendingUserCount
-    
+    removeUser,
+    pendingUserCount,
   };
 };
 
-const mapDispatchToProps = { deleteUser, getUserPermissionData };
+const mapDispatchToProps = {
+  deleteUser,
+  getUserPermissionData,
+  getPendingUserCount,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserControl);
