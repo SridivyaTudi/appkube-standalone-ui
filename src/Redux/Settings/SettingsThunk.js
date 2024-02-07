@@ -271,11 +271,24 @@ export const addUsersFromGroupDetails = createAsyncThunk(
   async (params) => {
     try {
       let url = config.ADD_USERS_FROM_GROUP_DETAILS;
-      const response = await postLoginService.post(url,params);
+      const response = await postLoginService.post(url, params);
       return response;
     } catch (error) {
       console.log(error);
       return error;
+    }
+  }
+);
+
+export const getPendingUserRequests = createAsyncThunk(
+  "settings/getPendingUserRequests",
+  async (orgId) => {
+    try {
+      let url = config.GET_PENDING_USER_REQUESTS.replace("#org-id#", orgId);
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
     }
   }
 );

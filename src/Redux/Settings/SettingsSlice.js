@@ -21,6 +21,7 @@ import {
   addUserToGroups,
   disableAuthMFACode,
   addUsersFromGroupDetails,
+  getPendingUserRequests,
 } from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
@@ -129,6 +130,10 @@ export const settingsSlice = createSlice({
     userCreationFromGroupDetails: {
       status: null,
       data: null,
+    },
+    pendingUserRequests: {
+      status: null,
+      data: [],
     },
   },
   reducers: {},
@@ -648,6 +653,32 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         userCreationFromGroupDetails: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getPendingUserRequests.pending]: (state) => {
+      return {
+        ...state,
+        pendingUserRequests: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getPendingUserRequests.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        pendingUserRequests: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getPendingUserRequests.rejected]: (state) => {
+      return {
+        ...state,
+        pendingUserRequests: {
           status: status.FAILURE,
         },
       };

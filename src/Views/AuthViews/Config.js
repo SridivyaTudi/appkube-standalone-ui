@@ -31,6 +31,7 @@ const config = {
   DELETE_USER: `${baseSecurityUrl}/users/delete/#user-id#`,
   ADD_USER_TO_GROUPS: `${baseSecurityUrl}/users/updateUserRoles?userName=#user-name#&roleId=#role-id#`,
   ADD_USERS_FROM_GROUP_DETAILS: `${baseSecurityUrl}/users/assingRoleGroupToUsers`,
+  GET_PENDING_USER_REQUESTS: `${baseSecurityUrl}/users/get-pending-user-requests?organizationId=#org-id#`,
   /* CHANGE PASSWORD SERVICES */
   ACCOUNT_CHANGE_PASSWORD: `${baseSecurityUrl}/users/reset-password`,
   USER_RESET_PASSWORD: `${baseSecurityUrl}/users/reset-password-by-admin`,

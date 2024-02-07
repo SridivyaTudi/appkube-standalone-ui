@@ -16,7 +16,11 @@ import {
 } from "@mui/material/";
 import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
-
+import { getPendingUserRequests } from "Redux/Settings/SettingsThunk";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import Loader from "Components/Loader";
+import { getCurrentOrgId } from "Utils";
 let users = [
   {
     email: "Yahiyaalikhan@synectiks.com",
@@ -53,25 +57,35 @@ let users = [
   },
 ];
 
-let requestUsersData = [
-  {
-    email: "Satyapatak@gmail.com",
-    role: "DevSecOps",
-  },
-  {
-    email: "Ahmed@gmail.com",
-    role: "DevSecOps",
-  },
-];
-
 class CreateNewUserRequestControlModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      requestUsers: requestUsersData,
+      requestUsers: [],
       addedUser: users,
     };
   }
+
+  componentDidMount = () => {
+    this.props.getPendingUserRequests(getCurrentOrgId());
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      this.props.pendingUserRequests.status !==
+      prevProps.pendingUserRequests.status
+    ) {
+      if (this.props.pendingUserRequests.status === status.SUCCESS) {
+        if (this.props.pendingUserRequests?.data) {
+          let requestUsers =
+            this.props.pendingUserRequests?.data?.pendingUsers || [];
+
+          this.setState({ requestUsers });
+        }
+      }
+    }
+  };
+
   handleCloseModal = () => {
     this.setState({
       name: "",
@@ -129,34 +143,49 @@ class CreateNewUserRequestControlModal extends Component {
   // Request user list
   renderRequestUsers = () => {
     const { requestUsers } = this.state;
-    return (
-      <List>
-        {requestUsers.length ? (
-          requestUsers.map((user) => {
-            return (
-              <ListItem key={v4()}>
-                <Box className="d-flex align-items-center  user-details">
-                  <span>{user.email?.charAt(0).toUpperCase()}</span>
-                  <Box className="user-mail">
-                    <strong>{user.email} </strong> Want to access
+    let userListStatus = this.props.pendingUserRequests.status;
+    if (userListStatus === status.IN_PROGRESS) {
+      return this.renderLoder();
+    } else {
+      return (
+        <List>
+          {requestUsers.length ? (
+            requestUsers.map((user) => {
+              return (
+                <ListItem key={v4()}>
+                  <Box className="d-flex align-items-center  user-details">
+                    <span>{user.email?.charAt(0).toUpperCase()}</span>
+                    <Box className="user-mail">
+                      <strong>{user.email} </strong> Want to access
+                    </Box>
                   </Box>
-                </Box>
-                <Box className="user-buttons">
-                  <Button className="danger-outline-btn  min-width m-r-3">
-                    Deny
-                  </Button>
-                  <Button className="primary-btn min-width">Approve</Button>
-                </Box>
-              </ListItem>
-            );
-          })
-        ) : (
-          <></>
-        )}
-      </List>
-    );
+                  <Box className="user-buttons">
+                    <Button className="danger-outline-btn  min-width m-r-3">
+                      Deny
+                    </Button>
+                    <Button className="primary-btn min-width">Approve</Button>
+                  </Box>
+                </ListItem>
+              );
+            })
+          ) : (
+            <Box className="d-block text-center w-100 h-100 m-r-auto m-l-auto ">
+              There are no data available.
+            </Box>
+          )}
+        </List>
+      );
+    }
   };
 
+  // Render Loder
+  renderLoder() {
+    return (
+      <Box className="d-block text-center w-100 h-100 m-r-auto m-l-auto ">
+        <Loader className="align-item-center justify-center w-100 h-100 p-t-20 p-b-20" />
+      </Box>
+    );
+  }
   render() {
     return (
       <Modal
@@ -190,5 +219,18 @@ class CreateNewUserRequestControlModal extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  const { pendingUserRequests } = state.settings;
+  return {
+    pendingUserRequests,
+  };
+};
 
-export default CreateNewUserRequestControlModal;
+const mapDispatchToProps = {
+  getPendingUserRequests,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateNewUserRequestControlModal);
