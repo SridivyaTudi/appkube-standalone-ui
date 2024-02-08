@@ -847,7 +847,7 @@ class Soa extends Component {
               </Box>
             ) : (
               <>
-                <Box className="tier-table-section">
+                <Box className="tier-table-section m-t-4">
                   <TableContainer className="table">
                     <Table className="overview">
                       {this.renderTableHead()}

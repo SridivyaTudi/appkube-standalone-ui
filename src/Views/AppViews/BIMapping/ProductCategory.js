@@ -23,9 +23,32 @@ class ProductCategory extends Component {
     const { showServiceModal } = this.state;
     return (
       <Box className="bimapping-container">
-        <Box className="list-heading">
-          <h3>Product category : SOA</h3>
+        <Box className="global-services-fliter">
+          <Box className="heading">
+            <Box className="breadcrumbs">
+              <ul>
+                <li>
+                  <p>Synectiks</p>
+                </li>
+                <li>
+                  <i className="fa-solid fa-chevron-right"></i>
+                </li>
+                <li>
+                  <p>HR</p>
+                </li>
+                <li>
+                  <i className="fa-solid fa-chevron-right"></i>
+                </li>
+                <li className="active">
+                  <p>HRMS</p>
+                </li>
+              </ul>
+            </Box>
+          </Box>
         </Box>
+        {/* <Box className="list-heading">
+          <h3>Product category : SOA</h3>
+        </Box> */}
         <Box className="product-category-container">
           <Box className="d-block">
             <Box className="product-title-card">
