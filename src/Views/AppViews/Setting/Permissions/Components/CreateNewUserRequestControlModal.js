@@ -30,7 +30,7 @@ class CreateNewUserRequestControlModal extends Component {
   user = { username: "", email: "", profileImage: "", organization: {} };
   ACTION_STATUS = {
     APPROVE: "approve",
-    DENY: "deny",
+    DENY: "reject",
   };
   constructor(props) {
     super(props);
