@@ -30,7 +30,7 @@ class CreateNewUserRequestControlModal extends Component {
   user = { username: "", email: "", profileImage: "", organization: {} };
   ACTION_STATUS = {
     APPROVE: "approve",
-    DENY: "reject",
+    DENY: "deny",
   };
   constructor(props) {
     super(props);
@@ -270,9 +270,9 @@ class CreateNewUserRequestControlModal extends Component {
     let currentStatus = P_U_R_A?.status === status.IN_PROGRESS;
 
     let isApprove =
-      currentStatus && U_A_S.status === APPROVE && U_A_S.id === currentId;
+      currentStatus && U_A_S.status === APPROVE && U_A_S.ownerId === currentId;
     let isDeny =
-      currentStatus && U_A_S.status === DENY && U_A_S.id === currentId;
+      currentStatus && U_A_S.status === DENY && U_A_S.ownerId === currentId;
 
     return {
       isApprove,
