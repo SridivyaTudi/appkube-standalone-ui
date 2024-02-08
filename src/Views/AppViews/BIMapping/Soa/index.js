@@ -13,7 +13,6 @@ import {
   TableRow,
   Checkbox,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import ChartAppLayerIcon from "assets/img/assetmanager/chart-app-layer-icon.png";
 import DataServiceSvgrepo from "assets/img/assetmanager/data-service-svgrepo.png";
 import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";

@@ -6,7 +6,6 @@ import {
   IconButton,
   List,
   ListItem,
-  Button,
   TableContainer,
   Table,
   TableHead,
@@ -184,10 +183,10 @@ class CreateNewUserRequestControlModal extends Component {
 
   // Request user list
   renderRequestUsers = () => {
-    const { requestUsers, userActionStatus } = this.state;
+    const { requestUsers } = this.state;
     let { pendingUserRequests } = this.props;
     let userListStatus = pendingUserRequests.status;
-
+    const { APPROVE, DENY } = this.ACTION_STATUS;
     if (userListStatus === status.IN_PROGRESS) {
       return this.renderLoder();
     } else {
@@ -195,7 +194,7 @@ class CreateNewUserRequestControlModal extends Component {
         <List>
           {requestUsers.length ? (
             requestUsers.map((user, index) => {
-              const { isApprove, isDeny } = this.isLoadingAction(user.id);
+              let { isApprove, isDeny } = this.isLoadingAction(user.id);
               return (
                 <ListItem key={v4()}>
                   <Box className="d-flex align-items-center  user-details">
@@ -212,7 +211,7 @@ class CreateNewUserRequestControlModal extends Component {
                       onClick={(e) => {
                         this.onClickApproveOrRejectBtn(e, {
                           ownerId: user.id,
-                          status: "deny",
+                          status: DENY,
                           userName: user.username,
                         });
                       }}
@@ -227,7 +226,7 @@ class CreateNewUserRequestControlModal extends Component {
                       onClick={(e) =>
                         this.onClickApproveOrRejectBtn(e, {
                           ownerId: user.id,
-                          status: "approve",
+                          status: APPROVE,
                           userName: user.username,
                         })
                       }

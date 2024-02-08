@@ -328,7 +328,7 @@ export class CreateGroup extends Component {
                   id="all"
                   disabled={users?.length ? false : true}
                   checked={
-                    users.length > 0 && formData.users.length === users?.length
+                    users?.length > 0 && formData.users.length === users?.length
                   }
                   onChange={(e) => this.handleSelectAllCheckBox(e)}
                 />
@@ -340,7 +340,7 @@ export class CreateGroup extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.length ? (
+            {users?.length ? (
               users.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
                 <TableRow key={index}>
                   <TableCell>
@@ -634,7 +634,7 @@ export class CreateGroup extends Component {
           </Grid>
         </Box>
         <Box className="setting-common-searchbar">
-          <h5>Add users to the group({formData?.users.length})</h5>
+          <h5>Add users to the group({formData?.users?.length})</h5>
           {this.renderSearchInput()}
         </Box>
         <TableContainer component={Paper} className="access-control-table">
@@ -645,15 +645,15 @@ export class CreateGroup extends Component {
           )}
           {this.renderUserTable()}
         </TableContainer>
-        {this.renderPaginationComponent(users.length, rpg, pg)}
+        {this.renderPaginationComponent(users?.length, rpg, pg)}
         <Box className="setting-common-searchbar">
-          <h5>Add Role ({formData?.roles.length})</h5>
+          <h5>Add Role ({formData?.roles?.length})</h5>
           {this.renderSearchInput(1)}
         </Box>
         <TableContainer component={Paper} className="access-control-table">
           {this.renderRoleTable()}
         </TableContainer>
-        {this.renderPaginationComponent(roles.length, roleRPG, rolePG, 1)}
+        {this.renderPaginationComponent(roles?.length || [], roleRPG, rolePG, 1)}
         {showCancelGroupControlModal ? (
           <CancelGroupControlModal
             showModal={showCancelGroupControlModal}
