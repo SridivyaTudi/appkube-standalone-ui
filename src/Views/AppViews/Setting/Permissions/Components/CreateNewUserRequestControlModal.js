@@ -26,6 +26,7 @@ import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { getCurrentUser } from "Utils";
 import { ToastMessage } from "Toast/ToastMessage";
+
 class CreateNewUserRequestControlModal extends Component {
   user = { username: "", email: "", profileImage: "", organization: {} };
   ACTION_STATUS = {
