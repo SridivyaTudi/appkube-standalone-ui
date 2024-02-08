@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
-
+import LoadingButton from "@mui/lab/LoadingButton";
 import {
   Box,
   IconButton,
@@ -16,58 +16,42 @@ import {
 } from "@mui/material/";
 import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
-import { getPendingUserRequests } from "Redux/Settings/SettingsThunk";
+import {
+  getPendingUserRequests,
+  pendingUserRequestAction,
+  getConfirmedUserRequest,
+  getPendingUserCount,
+} from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
-import { getCurrentOrgId } from "Utils";
-let users = [
-  {
-    email: "Yahiyaalikhan@synectiks.com",
-    role: "DevSecOps",
-  },
-  {
-    email: "Ghousemohammed@synectiks.com",
-    role: "DevSecOps",
-  },
-  {
-    email: "Uttam@synectiks.com",
-    role: "DevSecOps",
-  },
-  {
-    email: "Amarnath@synectiks.com",
-    role: "DevSecOps",
-  },
-
-  {
-    email: "Masoodkhan@synectiks.com",
-    role: "DevSecOps",
-  },
-  {
-    email: "Ahmed@gmail.com",
-    role: "DevSecOps",
-  },
-  {
-    email: "Jamesherry@synectiks.com",
-    role: "DevSecOps",
-  },
-  {
-    email: "Yahiyaalikhan@synectiks.com",
-    role: "DevSecOps",
-  },
-];
-
+import { getCurrentUser } from "Utils";
+import { ToastMessage } from "Toast/ToastMessage";
 class CreateNewUserRequestControlModal extends Component {
+  user = { username: "", email: "", profileImage: "", organization: {} };
+  ACTION_STATUS = {
+    APPROVE: "approve",
+    DENY: "deny",
+  };
   constructor(props) {
     super(props);
     this.state = {
       requestUsers: [],
-      addedUser: users,
+      confirmedUsers: [],
+      userActionStatus: {
+        ownerId: 0,
+        status: "",
+        userName: "",
+      },
     };
+    let userDetails = getCurrentUser()?.info?.user;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidMount = () => {
-    this.props.getPendingUserRequests(getCurrentOrgId());
+    this.getUsersData();
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -84,7 +68,57 @@ class CreateNewUserRequestControlModal extends Component {
         }
       }
     }
+
+    if (
+      this.props.confirmedUserRequest.status !==
+      prevProps.confirmedUserRequest.status
+    ) {
+      if (this.props.confirmedUserRequest.status === status.SUCCESS) {
+        if (this.props.confirmedUserRequest?.data) {
+          let confirmedUsers =
+            this.props.confirmedUserRequest?.data?.confirmedUsers || [];
+          this.setState({ confirmedUsers });
+        }
+      }
+    }
+
+    if (
+      this.props.pendingUserReqAction.status !==
+      prevProps.pendingUserReqAction.status
+    ) {
+      if (this.props.pendingUserReqAction.status === status.SUCCESS) {
+        let response = this.props.pendingUserReqAction?.data;
+        if (response?.code === 200) {
+          this.getUsersData();
+          const orgId = this.getCurrentOrgId();
+          if (orgId) {
+            this.props.getPendingUserCount(orgId);
+          }
+
+          this.setState({
+            userActionStatus: {
+              ownerId: 0,
+              status: "",
+              userName: "",
+            },
+          });
+          ToastMessage.success(response?.message);
+        } else {
+          ToastMessage.error(response?.message || "User request action failed");
+        }
+      }
+    }
   };
+
+  getUsersData = () => {
+    const orgId = this.getCurrentOrgId();
+    if (orgId) {
+      this.props.getPendingUserRequests(orgId);
+      this.props.getConfirmedUserRequest(orgId);
+    }
+  };
+
+  getCurrentOrgId = () => this.user.organization?.id;
 
   handleCloseModal = () => {
     this.setState({
@@ -110,67 +144,103 @@ class CreateNewUserRequestControlModal extends Component {
 
   // Render body of table
   renderTableBody = () => {
-    const { addedUser } = this.state;
-    return (
-      <TableBody>
-        {addedUser?.length ? (
-          addedUser.map((row, index) => (
+    const { confirmedUsers } = this.state;
+    const confirmedUserStatus =
+      this.props.confirmedUserRequest?.status === status.IN_PROGRESS;
+    if (confirmedUserStatus) {
+      return this.renderLoder();
+    } else {
+      return (
+        <TableBody>
+          {confirmedUsers?.length ? (
+            confirmedUsers.map((row, index) => (
+              <TableRow key={v4()}>
+                <TableCell>
+                  <span className="d-inline-block">
+                    {row.email?.charAt(0).toUpperCase()}
+                  </span>
+                  {row.email}
+                </TableCell>
+                <TableCell>{row.role}</TableCell>
+              </TableRow>
+            ))
+          ) : (
             <TableRow key={v4()}>
-              <TableCell>
-                <span className="d-inline-block">
-                  {row.email?.charAt(0).toUpperCase()}
-                </span>
-                {row.email}
-              </TableCell>
-              <TableCell>{row.role}</TableCell>
-            </TableRow>
-          ))
-        ) : (
-          <TableRow key={v4()}>
-            <TableCell colSpan={12}>
-              <Box className="d-blck text-center w-100 h-100 ">
-                <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-                  <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+              <TableCell colSpan={12}>
+                <Box className="d-blck text-center w-100 h-100 ">
+                  <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+                    <h5 className="m-t-0 m-b-0">
+                      There are no data available.
+                    </h5>
+                  </Box>
                 </Box>
-              </Box>
-            </TableCell>
-          </TableRow>
-        )}
-      </TableBody>
-    );
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      );
+    }
   };
 
   // Request user list
   renderRequestUsers = () => {
-    const { requestUsers } = this.state;
-    let userListStatus = this.props.pendingUserRequests.status;
+    const { requestUsers, userActionStatus } = this.state;
+    let { pendingUserRequests } = this.props;
+    let userListStatus = pendingUserRequests.status;
+
     if (userListStatus === status.IN_PROGRESS) {
       return this.renderLoder();
     } else {
       return (
         <List>
           {requestUsers.length ? (
-            requestUsers.map((user) => {
+            requestUsers.map((user, index) => {
+              const { isApprove, isDeny } = this.isLoadingAction(user.id);
               return (
                 <ListItem key={v4()}>
                   <Box className="d-flex align-items-center  user-details">
-                    <span>{user.email?.charAt(0).toUpperCase()}</span>
+                    <span>{user.username?.charAt(0).toUpperCase()}</span>
                     <Box className="user-mail">
-                      <strong>{user.email} </strong> Want to access
+                      <strong>{user.username} </strong> want to access
                     </Box>
                   </Box>
                   <Box className="user-buttons">
-                    <Button className="danger-outline-btn  min-width m-r-3">
+                    <LoadingButton
+                      className="danger-outline-btn  min-width m-r-3"
+                      disabled={isDeny}
+                      loading={isDeny}
+                      onClick={(e) => {
+                        this.onClickApproveOrRejectBtn(e, {
+                          ownerId: user.id,
+                          status: "deny",
+                          userName: user.username,
+                        });
+                      }}
+                    >
                       Deny
-                    </Button>
-                    <Button className="primary-btn min-width">Approve</Button>
+                    </LoadingButton>
+
+                    <LoadingButton
+                      className="primary-btn min-width"
+                      disabled={isApprove}
+                      loading={isApprove}
+                      onClick={(e) =>
+                        this.onClickApproveOrRejectBtn(e, {
+                          ownerId: user.id,
+                          status: "approve",
+                          userName: user.username,
+                        })
+                      }
+                    >
+                      Approve
+                    </LoadingButton>
                   </Box>
                 </ListItem>
               );
             })
           ) : (
             <Box className="d-block text-center w-100 h-100 m-r-auto m-l-auto p-t-20 p-b-20 ">
-             <h5>There are no data available.</h5> 
+              <h5>There are no data available.</h5>
             </Box>
           )}
         </List>
@@ -186,7 +256,32 @@ class CreateNewUserRequestControlModal extends Component {
       </Box>
     );
   }
+
+  onClickApproveOrRejectBtn = (e, userActionStatus) => {
+    e.preventDefault();
+    this.setState({ userActionStatus }, () => {
+      this.props.pendingUserRequestAction(userActionStatus);
+    });
+  };
+
+  isLoadingAction = (currentId) => {
+    let { userActionStatus: U_A_S } = this.state;
+    const { APPROVE, DENY } = this.ACTION_STATUS;
+    let { pendingUserReqAction: P_U_R_A } = this.props;
+    let currentStatus = P_U_R_A?.status === status.IN_PROGRESS;
+
+    let isApprove =
+      currentStatus && U_A_S.status === APPROVE && U_A_S.id === currentId;
+    let isDeny =
+      currentStatus && U_A_S.status === DENY && U_A_S.id === currentId;
+
+    return {
+      isApprove,
+      isDeny,
+    };
+  };
   render() {
+    let { requestUsers } = this.state;
     return (
       <Modal
         isOpen={this.props.showModal}
@@ -194,7 +289,7 @@ class CreateNewUserRequestControlModal extends Component {
         className="new-user-request-modal-container"
       >
         <ModalHeader tag="div">
-          <h5 className="d-block">User Request (02)</h5>
+          <h5 className="d-block">User Request ({requestUsers.length})</h5>
           <IconButton
             onClick={this.handleCloseModal}
             variant="outlined"
@@ -220,14 +315,20 @@ class CreateNewUserRequestControlModal extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { pendingUserRequests } = state.settings;
+  const { pendingUserRequests, pendingUserReqAction, confirmedUserRequest } =
+    state.settings;
   return {
     pendingUserRequests,
+    pendingUserReqAction,
+    confirmedUserRequest,
   };
 };
 
 const mapDispatchToProps = {
   getPendingUserRequests,
+  pendingUserRequestAction,
+  getConfirmedUserRequest,
+  getPendingUserCount,
 };
 
 export default connect(

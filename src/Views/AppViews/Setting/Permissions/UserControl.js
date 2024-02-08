@@ -24,7 +24,7 @@ import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
 import ConfirmationPopup from "Components/ConfirmationPopup";
-import { getFormattedDate, getCurrentUser, getCurrentOrgId } from "Utils";
+import { getFormattedDate, getCurrentUser } from "Utils";
 import {
   deleteUser,
   getUserPermissionData,
@@ -33,7 +33,7 @@ import {
 import { ToastMessage } from "Toast/ToastMessage";
 
 class UserControl extends Component {
-  user = { id: "", username: "" };
+  user = { id: "", username: "", organization: {} };
   constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +44,7 @@ class UserControl extends Component {
       showCreateNewUserRequestControlModal: false,
       actionButton: null,
       searchedKey: "",
-      pendingUsersCount:0
+      pendingUsersCount: 0,
     };
     let userDetails = getCurrentUser()?.info?.user;
     if (userDetails) {
@@ -54,7 +54,10 @@ class UserControl extends Component {
 
   componentDidMount = () => {
     this.setUsersStateOrReturnData();
-    this.props.getPendingUserCount(getCurrentOrgId());
+    const orgId = this.user.organization?.id;
+    if (orgId) {
+      this.props.getPendingUserCount(orgId);
+    }
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -156,7 +159,7 @@ class UserControl extends Component {
 
   // Render user search input and btn
   renderSearchInputAndBtn = () => {
-    let { searchedKey,pendingUsersCount } = this.state;
+    let { searchedKey, pendingUsersCount } = this.state;
     return (
       <Box className="d-flex width-100 search-box">
         <Box className="search">

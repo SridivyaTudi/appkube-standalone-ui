@@ -305,3 +305,31 @@ export const getPendingUserCount = createAsyncThunk(
     }
   }
 );
+
+export const pendingUserRequestAction = createAsyncThunk(
+  "settings/pendingUserRequestAction",
+  async (params) => {
+    try {
+      let url = config.PENDING_USER_REQUEST_ACTION;
+      const response = await postLoginService.post(url, params);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+);
+
+export const getConfirmedUserRequest = createAsyncThunk(
+  "settings/getConfirmedUserRequest",
+  async (orgId) => {
+    try {
+      let url = config.GET_CONFIRMED_USER_REQUESTS.replace("#org-id#", orgId);;
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+);

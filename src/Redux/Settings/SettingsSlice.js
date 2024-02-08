@@ -23,6 +23,8 @@ import {
   addUsersFromGroupDetails,
   getPendingUserRequests,
   getPendingUserCount,
+  pendingUserRequestAction,
+  getConfirmedUserRequest,
 } from "./SettingsThunk";
 
 export const settingsSlice = createSlice({
@@ -139,6 +141,14 @@ export const settingsSlice = createSlice({
     pendingUserCount: {
       status: null,
       data: null,
+    },
+    pendingUserReqAction: {
+      status: null,
+      data: {},
+    },
+    confirmedUserRequest: {
+      status: null,
+      data: {},
     },
   },
   reducers: {},
@@ -710,6 +720,58 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         pendingUserCount: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getConfirmedUserRequest.pending]: (state) => {
+      return {
+        ...state,
+        confirmedUserRequest: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getConfirmedUserRequest.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        confirmedUserRequest: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getConfirmedUserRequest.rejected]: (state) => {
+      return {
+        ...state,
+        confirmedUserRequest: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [pendingUserRequestAction.pending]: (state) => {
+      return {
+        ...state,
+        pendingUserReqAction: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [pendingUserRequestAction.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        pendingUserReqAction: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [pendingUserRequestAction.rejected]: (state) => {
+      return {
+        ...state,
+        pendingUserReqAction: {
           status: status.FAILURE,
         },
       };

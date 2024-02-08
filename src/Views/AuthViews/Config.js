@@ -32,7 +32,9 @@ const config = {
   ADD_USER_TO_GROUPS: `${baseSecurityUrl}/users/updateUserRoles?userName=#user-name#&roleId=#role-id#`,
   ADD_USERS_FROM_GROUP_DETAILS: `${baseSecurityUrl}/users/assingRoleGroupToUsers`,
   GET_PENDING_USER_REQUESTS: `${baseSecurityUrl}/users/get-pending-user-requests?organizationId=#org-id#`,
-  GET_PENDING_USER_COUNT:`${baseSecurityUrl}/users/get-pending-user-request-count?organizationId=#org-id#`,
+  GET_CONFIRMED_USER_REQUESTS: `${baseSecurityUrl}/users/get-confirmed-user-requests?organizationId=#org-id#`,
+  GET_PENDING_USER_COUNT: `${baseSecurityUrl}/users/get-pending-user-request-count?organizationId=#org-id#`,
+  PENDING_USER_REQUEST_ACTION: `${baseSecurityUrl}/users/pending-user-request-action`,
   /* CHANGE PASSWORD SERVICES */
   ACCOUNT_CHANGE_PASSWORD: `${baseSecurityUrl}/users/reset-password`,
   USER_RESET_PASSWORD: `${baseSecurityUrl}/users/reset-password-by-admin`,
