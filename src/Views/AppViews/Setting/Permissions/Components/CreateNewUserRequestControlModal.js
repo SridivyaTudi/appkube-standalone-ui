@@ -165,13 +165,9 @@ class CreateNewUserRequestControlModal extends Component {
               </TableRow>
             ))
           ) : (
-            <TableRow key={v4()}>
-              <TableCell colSpan={12}>
-                <Box className="d-block text-center w-100 h-100 m-r-auto m-l-auto p-t-20 p-b-20 ">
-                  <h5>There are no data available.</h5>
-                </Box>
-              </TableCell>
-            </TableRow>
+            <Box className="d-block text-center w-100 h-100 m-r-auto m-l-auto p-t-20 p-b-20 ">
+              <h5>There are no data available.</h5>
+            </Box>
           )}
         </TableBody>
       );
