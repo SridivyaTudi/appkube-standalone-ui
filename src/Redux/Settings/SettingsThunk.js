@@ -28,6 +28,7 @@ export const authMFACode = createAsyncThunk(
       return response;
     } catch (error) {
       console.log(error);
+      return error;
     }
   }
 );

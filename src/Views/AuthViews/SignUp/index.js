@@ -643,7 +643,7 @@ class SignUp extends Component {
                             </label>
                             <input
                               id="companyName"
-                              type="email"
+                              type="text"
                               className="form-control"
                               placeholder="Input your name here"
                               name="companyName"

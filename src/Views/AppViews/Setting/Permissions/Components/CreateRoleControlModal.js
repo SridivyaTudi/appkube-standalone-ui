@@ -354,7 +354,7 @@ class CreateRoleControlModal extends Component {
                   loading={createOrUpdateStatus}
                   onClick={this.handleRoleSubmit}
                 >
-                  {this.props.roleId > 0 ? "Edit" : "Create"}
+                  {this.props.roleId > 0 ? "Update" : "Create"}
                 </LoadingButton>
               </Box>
             </ModalFooter>

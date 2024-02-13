@@ -476,7 +476,7 @@ export class CreatePolicy extends Component {
             <Grid item xs={6}>
               <Box className="form-group">
                 <label htmlFor="roleName" className="form-label d-block">
-                  policy Name
+                  Policy Name
                 </label>
                 <span className="D-block">
                   Enter a meaningful name to identify this policy.
@@ -504,7 +504,7 @@ export class CreatePolicy extends Component {
             <Grid item xs={6}>
               <Box className="form-group">
                 <label htmlFor="roleDescription" className="form-label d-block">
-                  policy Description
+                  Policy Description
                 </label>
 
                 <textarea
