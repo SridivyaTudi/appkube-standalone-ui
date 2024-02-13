@@ -724,7 +724,17 @@
   }
 }
 
-@media only screen and (max-width: 1280px) {
+@media only screen and (max-width: 1024px) {
+  .setting-container {
+    .account-container {
+      .cards {
+        .card {
+          min-height: 560px;
+        }
+      }
+    }
+  }
+
   // .setting-container {
   //   .permissions-container {
   //     .access-control-container {
