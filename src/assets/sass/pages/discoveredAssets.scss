@@ -1,0 +1,129 @@
+.discovered-assets-container {
+  width: 100%;
+  display: block;
+  padding: 30px 40px;
+  background-color: #f6f7fb;
+  .assets-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .global-services-fliter {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    background-color: #ffffff;
+    margin-top: 20px;
+    padding: 15px 15px;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04);
+    .heading {
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 500;
+      color: #383874;
+    }
+  }
+  .services-panel-tabs {
+    display: block;
+    width: 100%;
+    .tabs-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+
+      h3 {
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 36px;
+        color: #383874;
+        margin-bottom: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 20%;
+        text-align: left;
+      }
+      ul {
+        display: inline-flex;
+        width: auto;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        padding-left: 8px;
+        padding-right: 8px;
+        border-radius: 30px;
+        background-color: #dbdff1;
+        li {
+          width: auto;
+          display: inline-block;
+          vertical-align: top;
+          font-size: 11px;
+          line-height: 20px;
+          font-weight: 500;
+          color: #000000;
+          padding-top: 4px;
+          padding-bottom: 4px;
+          padding-left: 25px;
+          padding-right: 25px;
+          border-radius: 30px;
+          cursor: pointer;
+          &.active {
+            color: #ffffff;
+            background-color: #3247e5;
+          }
+        }
+      }
+      .breadcrumbs-content {
+        display: inline-flex;
+        width: auto;
+        ul {
+          display: inline-flex;
+          background: none;
+          padding: 0;
+
+          li {
+            display: inline-flex;
+            padding-left: 3px;
+            padding-right: 3px;
+            line-height: 32px;
+            align-items: center;
+            font-size: 12px;
+            color: #8676ff;
+            font-weight: 400;
+
+            &.active {
+              font-weight: 600;
+              cursor: auto;
+              color: #414d55;
+              background: transparent;
+              span {
+                max-width: 140px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            }
+
+            a {
+              color: #8676ff;
+              width: 75px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            i {
+              font-size: 10px;
+              color: #414d55;
+            }
+          }
+        }
+      }
+    }
+    .tabs-content {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+    }
+  }
+}
