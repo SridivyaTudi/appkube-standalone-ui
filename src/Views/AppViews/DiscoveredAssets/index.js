@@ -4,7 +4,7 @@ import DiscoveredAssetsComponent from "./Components/DiscoveredAssetsComponent";
 import NonLTEAssets from "./Components/NonLTEAssets";
 import TaggedAssets from "./Components/TaggedAssets";
 import UntaggedAssets from "./Components/UntaggedAssets";
-import TabsMenu from "./TabsMenu";
+import TabsMenu from "Views/AppViews/Environments/EnvironmentList/TabsMenu";
 import { v4 } from "uuid";
 
 
