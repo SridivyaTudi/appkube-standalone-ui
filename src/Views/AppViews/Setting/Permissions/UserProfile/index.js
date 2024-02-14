@@ -83,9 +83,9 @@ export class UserProfile extends Component {
           this.togglePopup();
           setActiveTab("permissions/user");
           this.props.navigate("/app/setting");
-          ToastMessage.success("User Removed Successfully");
+          ToastMessage.success("User being successfully disabled.");
         } else {
-          ToastMessage.error("User Deletion Failed!");
+          ToastMessage.error(removeUserRes?.message || "User Deletion Failed!");
         }
       }
     }

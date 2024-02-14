@@ -13,7 +13,6 @@ import {
   TableRow,
   Checkbox,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import ChartWebLayerIcon from "assets/img/assetmanager/chart-web-layer-icon.png";
 import ChartAppLayerIcon from "assets/img/assetmanager/chart-app-layer-icon.png";
 import DataServiceSvgrepo from "assets/img/assetmanager/data-service-svgrepo.png";
@@ -921,7 +920,7 @@ class Tier extends Component {
               </Box>
             ) : (
               <>
-                <Box className="tier-table-section">
+                <Box className="tier-table-section m-t-4">
                   <TableContainer className="table">
                     <Table className="overview">
                       {this.renderTableHead()}

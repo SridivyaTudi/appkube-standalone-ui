@@ -59,7 +59,8 @@ class Signin extends Component {
             this.setLoginDetails();
           }
         } else {
-          ToastMessage.error("User login failed!");
+          let message = this.props.loggedInUser.data?.message
+          ToastMessage.error(message || "User login failed!");
         }
       }
     }

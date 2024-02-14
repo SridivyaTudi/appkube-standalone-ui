@@ -72,12 +72,13 @@ export class Permissions extends Component {
         if (userPermissionData) {
           let { permissionCategories, roles, policies, roleGroups, users } =
             userPermissionData;
+
           let data = {
-            role: roles.length,
+            role: roles?.length,
             permissions: this.getPermissionLength(permissionCategories),
-            policies: policies.length,
-            user: users.length,
-            group: roleGroups.length,
+            policies: policies?.length,
+            user: users?.length,
+            group: roleGroups?.length,
           };
           this.getTabCount(data);
         }

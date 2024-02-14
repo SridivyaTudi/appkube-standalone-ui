@@ -1107,7 +1107,7 @@
   border-radius: 10px;
   background: white;
   margin: 0 auto;
-  height: 650px;
+  max-height: 600px;
 
   .modal-content {
     padding: 25px;
@@ -1140,6 +1140,11 @@
       .user-list {
         width: 100%;
         display: block;
+        max-height: 150px;
+        overflow: hidden;
+        overflow-y: auto;
+        padding-right: 8px;
+       margin-bottom: 10px;
         ul {
           padding: 0;
           margin: 0;
@@ -1209,7 +1214,7 @@
           }
           tbody {
             display: block;
-            max-height: 330px;
+            max-height: 250px;
             overflow: auto;
             width: calc(100% - 0.05em);
             tr {
