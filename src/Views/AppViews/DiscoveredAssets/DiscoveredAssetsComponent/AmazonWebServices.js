@@ -11,14 +11,32 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import AssetsMainFilterModal from "../Components/AssetsMainFilterModal";
 import { v4 } from "uuid";
 
 class AmazonWebServices extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showAssetsMainFilterModal: false,
+    };
+  }
+
+  togglePopup = () => {
+    this.setState({
+      showAssetsMainFilterModal: !this.state.showAssetsMainFilterModal,
+    });
+  };
   render() {
+    const { showAssetsMainFilterModal } = this.state;
     return (
       <>
         <Box className="head-top-section">
-          <Button className="primary-outline-btn min-width" variant="outlined">
+          <Button
+            onClick={this.togglePopup}
+            className="primary-outline-btn min-width"
+            variant="outlined"
+          >
             Filters
           </Button>
           <Box className="add-filters">
@@ -53,7 +71,7 @@ class AmazonWebServices extends Component {
             <Box className="filter-box">
               <Box className="d-flex  align-items-center m-r-3">
                 <label>App / Data &#58; </label>
-                <span>  </span>
+                <span> </span>
               </Box>
               <CloseIcon fontSize="inherit" className="close-btn" />
             </Box>
@@ -85,10 +103,26 @@ class AmazonWebServices extends Component {
                   <TableCell align="left">EKS</TableCell>
                   <TableCell align="left">AWS (657907747554)</TableCell>
                   <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center"><Box className="tag"><i class="fas fa-tag"></i></Box></TableCell>
-                  <TableCell align="center"><Box className="log-eye-icon"><i class="fas fa-eye"></i></Box></TableCell>
-                  <TableCell align="center"><span className="green"><i class="fas fa-check"></i></span></TableCell>
-                  <TableCell align="center"><span className="green"><i class="fas fa-check"></i></span></TableCell>
+                  <TableCell align="center">
+                    <Box className="tag">
+                      <i class="fas fa-tag"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box className="log-eye-icon">
+                      <i class="fas fa-eye"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="green">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="green">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </TableCell>
                   <TableCell align="center">
                     <button type="button" className="list-icon">
                       <i className="fas fa-ellipsis-v"></i>
@@ -100,10 +134,26 @@ class AmazonWebServices extends Component {
                   <TableCell align="left">EKS</TableCell>
                   <TableCell align="left">AWS (657907747554)</TableCell>
                   <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center"><Box className="tag"><i class="fas fa-tag"></i></Box></TableCell>
-                  <TableCell align="center"><Box className="log-eye-icon"><i class="fas fa-eye"></i></Box></TableCell>
-                  <TableCell align="center"><span className="green"><i class="fas fa-check"></i></span></TableCell>
-                  <TableCell align="center"><span className="green"><i class="fas fa-check"></i></span></TableCell>
+                  <TableCell align="center">
+                    <Box className="tag">
+                      <i class="fas fa-tag"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box className="log-eye-icon">
+                      <i class="fas fa-eye"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="green">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="green">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </TableCell>
                   <TableCell align="center">
                     <button type="button" className="list-icon">
                       <i className="fas fa-ellipsis-v"></i>
@@ -115,10 +165,26 @@ class AmazonWebServices extends Component {
                   <TableCell align="left">EKS</TableCell>
                   <TableCell align="left">AWS (657907747554)</TableCell>
                   <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center"><Box className="tag"><i class="fas fa-tag"></i></Box></TableCell>
-                  <TableCell align="center"><Box className="log-eye-icon"><i class="fas fa-eye"></i></Box></TableCell>
-                  <TableCell align="center"><span className="green"><i class="fas fa-check"></i></span></TableCell>
-                  <TableCell align="center"><span className="green"><i class="fas fa-check"></i></span></TableCell>
+                  <TableCell align="center">
+                    <Box className="tag">
+                      <i class="fas fa-tag"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box className="log-eye-icon">
+                      <i class="fas fa-eye"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="green">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="green">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </TableCell>
                   <TableCell align="center">
                     <button type="button" className="list-icon">
                       <i className="fas fa-ellipsis-v"></i>
@@ -130,10 +196,26 @@ class AmazonWebServices extends Component {
                   <TableCell align="left">EKS</TableCell>
                   <TableCell align="left">AWS (657907747554)</TableCell>
                   <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center"><Box className="tag"><i class="fas fa-tag"></i></Box></TableCell>
-                  <TableCell align="center"><Box className="log-eye-icon"><i class="fas fa-eye"></i></Box></TableCell>
-                  <TableCell align="center"><span className="green"><i class="fas fa-check"></i></span></TableCell>
-                  <TableCell align="center"><span className="green"><i class="fas fa-check"></i></span></TableCell>
+                  <TableCell align="center">
+                    <Box className="tag">
+                      <i class="fas fa-tag"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box className="log-eye-icon">
+                      <i class="fas fa-eye"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="green">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="green">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </TableCell>
                   <TableCell align="center">
                     <button type="button" className="list-icon">
                       <i className="fas fa-ellipsis-v"></i>
@@ -145,10 +227,26 @@ class AmazonWebServices extends Component {
                   <TableCell align="left">EKS</TableCell>
                   <TableCell align="left">AWS (657907747554)</TableCell>
                   <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center"><Box className="tag"><i class="fas fa-tag"></i></Box></TableCell>
-                  <TableCell align="center"><Box className="log-eye-icon"><i class="fas fa-eye"></i></Box></TableCell>
-                  <TableCell align="center"><span className="green"><i class="fas fa-check"></i></span></TableCell>
-                  <TableCell align="center"><span className="green"><i class="fas fa-check"></i></span></TableCell>
+                  <TableCell align="center">
+                    <Box className="tag">
+                      <i class="fas fa-tag"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box className="log-eye-icon">
+                      <i class="fas fa-eye"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="green">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="green">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </TableCell>
                   <TableCell align="center">
                     <button type="button" className="list-icon">
                       <i className="fas fa-ellipsis-v"></i>
@@ -160,10 +258,26 @@ class AmazonWebServices extends Component {
                   <TableCell align="left">EKS</TableCell>
                   <TableCell align="left">AWS (657907747554)</TableCell>
                   <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center"><Box className="tag"><i class="fas fa-tag"></i></Box></TableCell>
-                  <TableCell align="center"><Box className="log-eye-icon"><i class="fas fa-eye"></i></Box></TableCell>
-                  <TableCell align="center"><span className="orange"><i class="fas fa-times"></i></span></TableCell>
-                  <TableCell align="center"><span className="orange"><i class="fas fa-times"></i></span></TableCell>
+                  <TableCell align="center">
+                    <Box className="tag">
+                      <i class="fas fa-tag"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box className="log-eye-icon">
+                      <i class="fas fa-eye"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="orange">
+                      <i class="fas fa-times"></i>
+                    </span>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="orange">
+                      <i class="fas fa-times"></i>
+                    </span>
+                  </TableCell>
                   <TableCell align="center">
                     <button type="button" className="list-icon">
                       <i className="fas fa-ellipsis-v"></i>
@@ -175,10 +289,26 @@ class AmazonWebServices extends Component {
                   <TableCell align="left">EKS</TableCell>
                   <TableCell align="left">AWS (657907747554)</TableCell>
                   <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center"><Box className="setting-icon"><i class="fas fa-cog"></i></Box></TableCell>
-                  <TableCell align="center"><Box className="log-eye-icon"><i class="fas fa-eye"></i></Box></TableCell>
-                  <TableCell align="center"><span className="green"><i class="fas fa-check"></i></span></TableCell>
-                  <TableCell align="center"><span className="green"><i class="fas fa-check"></i></span></TableCell>
+                  <TableCell align="center">
+                    <Box className="setting-icon">
+                      <i class="fas fa-cog"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box className="log-eye-icon">
+                      <i class="fas fa-eye"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="green">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="green">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </TableCell>
                   <TableCell align="center">
                     <button type="button" className="list-icon">
                       <i className="fas fa-ellipsis-v"></i>
@@ -190,10 +320,26 @@ class AmazonWebServices extends Component {
                   <TableCell align="left">EKS</TableCell>
                   <TableCell align="left">AWS (657907747554)</TableCell>
                   <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center"><Box className="setting-icon"><i class="fas fa-cog"></i></Box></TableCell>
-                  <TableCell align="center"><Box className="log-eye-icon"><i class="fas fa-eye"></i></Box></TableCell>
-                  <TableCell align="center"><span className="green"><i class="fas fa-check"></i></span></TableCell>
-                  <TableCell align="center"><span className="green"><i class="fas fa-check"></i></span></TableCell>
+                  <TableCell align="center">
+                    <Box className="setting-icon">
+                      <i class="fas fa-cog"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box className="log-eye-icon">
+                      <i class="fas fa-eye"></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="green">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className="green">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </TableCell>
                   <TableCell align="center">
                     <button type="button" className="list-icon">
                       <i className="fas fa-ellipsis-v"></i>
@@ -204,6 +350,16 @@ class AmazonWebServices extends Component {
             </Table>
           </TableContainer>
         </Box>
+        {showAssetsMainFilterModal ? (
+          <AssetsMainFilterModal
+            showModal={showAssetsMainFilterModal}
+            togglePopup={this.togglePopup}
+            
+          
+          />
+        ) : (
+          <></>
+        )}
       </>
     );
   }
