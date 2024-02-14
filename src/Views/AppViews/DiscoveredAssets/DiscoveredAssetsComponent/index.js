@@ -1,31 +1,33 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Box, Button, List, ListItem } from "@mui/material";
-import AmazonWebServices from './AmazonWebServices';
-import AzureCloud from './AzureCloud';
-import GoogleCloudPlatform from './GoogleCloudPlatform';
+import AmazonWebServices from "./AmazonWebServices";
+import AzureCloud from "./AzureCloud";
+import GoogleCloudPlatform from "./GoogleCloudPlatform";
 import { v4 } from "uuid";
-
+import Aws from "assets/img/aws.png";
+import GoogleCloud from "assets/img/google-cloud.png";
+import Microsoftazure from "assets/img/microsoftazure.png";
+import { tab } from "@testing-library/user-event/dist/tab";
 
 class DiscoveredAssetsComponent extends Component {
   controlMapping = [
     {
-      icon: "fa-user-gear",
+      image: Aws,
       label: "Amazon Web Services",
       dataKey: "amazonWebServices",
     },
     {
-      icon: "fa-users",
+      image: GoogleCloud,
       label: "Google Cloud Platform",
       dataKey: "googleCloudPlatform",
     },
     {
-      icon: "fa-user",
+      image: Microsoftazure,
       label: "Azure Cloud",
       dataKey: "azureCloud",
     },
-   
   ];
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -38,37 +40,38 @@ class DiscoveredAssetsComponent extends Component {
   render() {
     const { activeTab } = this.state;
     return (
-      <Box className="services-panel-tabs">
-      <Box className="tabs-head">
-        <Box className="access-control-boxs">
+      <Box className="discovered-assets-inner-tabs">
+        <Box className="assets-sevices-tabs">
           {this.controlMapping.map((tabData, index) => {
             return (
               <Box
                 key={v4()}
-                className={index === activeTab ? "active service-card" : ""}
+                className={`assets-sevice-tab ${
+                  index === activeTab ? "active" : ""
+                }`}
                 onClick={() => this.setActiveTab(index)}
               >
-                <Box className="service-icon">
-                <i >{tabData.icon}</i>
+                <Box className="service-image">
+                  <img src={tabData.image} alt="" />
                 </Box>
+                <label>{tabData.label}</label>
               </Box>
             );
           })}
+          <Box className="tabs-content">
+          {activeTab === 0 ? (
+              <AmazonWebServices />
+            ) : activeTab === 1 ? (
+              <GoogleCloudPlatform />
+            ) : activeTab === 2 ? (
+              <AzureCloud />
+            ) : (
+              <></>
+            )}
+          </Box>
         </Box>
       </Box>
-      <Box className="tabs-content">
-        <div style={{ display: activeTab === 0 ? "block" : "none" }}>
-          <AmazonWebServices />
-        </div>
-        <div style={{ display: activeTab === 1 ? "block" : "none" }}>
-          <AzureCloud />
-        </div>
-        <div style={{ display: activeTab === 2 ? "block" : "none" }}>
-          <GoogleCloudPlatform />
-        </div>
-      </Box>
-    </Box>
-    )
+    );
   }
 }
 
