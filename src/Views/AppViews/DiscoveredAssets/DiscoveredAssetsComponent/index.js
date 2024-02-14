@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button, List, ListItem } from "@mui/material";
+import { Box } from "@mui/material";
 import AmazonWebServices from "./AmazonWebServices";
 import AzureCloud from "./AzureCloud";
 import GoogleCloudPlatform from "./GoogleCloudPlatform";
@@ -7,8 +7,6 @@ import { v4 } from "uuid";
 import Aws from "assets/img/aws.png";
 import GoogleCloud from "assets/img/google-cloud.png";
 import Microsoftazure from "assets/img/microsoftazure.png";
-import { tab } from "@testing-library/user-event/dist/tab";
-
 class DiscoveredAssetsComponent extends Component {
   controlMapping = [
     {
@@ -59,7 +57,7 @@ class DiscoveredAssetsComponent extends Component {
             );
           })}
           <Box className="tabs-content">
-          {activeTab === 0 ? (
+            {activeTab === 0 ? (
               <AmazonWebServices />
             ) : activeTab === 1 ? (
               <GoogleCloudPlatform />

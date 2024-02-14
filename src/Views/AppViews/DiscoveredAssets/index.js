@@ -7,9 +7,6 @@ import UntaggedAssets from "./UntaggedAssets";
 import TabsMenu from "Views/AppViews/Environments/EnvironmentList/TabsMenu";
 import { v4 } from "uuid";
 
-
-
-
 class DiscoveredAssets extends Component {
   tabMapping = [
     {
@@ -29,17 +26,31 @@ class DiscoveredAssets extends Component {
     super(props);
     this.state = {
       activeTab: 0,
-      
     };
   }
 
-  
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
-  
+
+  // Render active component
+  renderActiveTabComponent = () => {
+    const { activeTab } = this.state;
+    return activeTab === 0 ? (
+      <DiscoveredAssetsComponent />
+    ) : activeTab === 1 ? (
+      <TaggedAssets />
+    ) : activeTab === 2 ? (
+      <UntaggedAssets />
+    ) : activeTab === 3 ? (
+      <NonLTEAssets />
+    ) : (
+      <></>
+    );
+  };
+
   render() {
-    const { activeTab,  } = this.state;
+    const { activeTab } = this.state;
     return (
       <Box className="discovered-assets-container">
         <Box className="assets-heading">
@@ -61,19 +72,7 @@ class DiscoveredAssets extends Component {
               key={v4()}
             />
           </Box>
-          <Box className="tabs-content">
-            {activeTab === 0 ? (
-              <DiscoveredAssetsComponent />
-            ) : activeTab === 1 ? (
-              <TaggedAssets />
-            ) : activeTab === 2 ? (
-              <UntaggedAssets />
-            ) : activeTab === 3 ? (
-              <NonLTEAssets />
-            ) : (
-              <></>
-            )}
-          </Box>
+          <Box className="tabs-content">{this.renderActiveTabComponent()}</Box>
         </Box>
       </Box>
     );

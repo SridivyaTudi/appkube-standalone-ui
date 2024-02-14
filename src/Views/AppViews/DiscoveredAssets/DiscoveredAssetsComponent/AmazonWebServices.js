@@ -13,12 +13,92 @@ import CloseIcon from "@mui/icons-material/Close";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AssetsMainFilterModal from "../Components/AssetsMainFilterModal";
 import { v4 } from "uuid";
+let data = [
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+];
 
+let filterData = [
+  {
+    name: "Region",
+    value: "US East 2",
+  },
+  {
+    name: "AWS Account",
+    value: "AWS (657",
+  },
+  {
+    name: "Product Enclave ",
+    value: "8 VPC",
+  },
+  {
+    name: "Element Type",
+    value: "EC2",
+  },
+  {
+    name: "App",
+    value: "Data",
+  },
+];
 class AmazonWebServices extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showAssetsMainFilterModal: false,
+      environmentList: data,
+      selectedFilters: filterData,
     };
   }
 
@@ -26,6 +106,129 @@ class AmazonWebServices extends Component {
     this.setState({
       showAssetsMainFilterModal: !this.state.showAssetsMainFilterModal,
     });
+  };
+
+  //  Render table
+  renderTable = () => {
+    return (
+      <TableContainer className="table">
+        <Table>
+          {this.renderTableHead()}
+          {this.renderTableBody()}
+        </Table>
+      </TableContainer>
+    );
+  };
+
+  //  Render table head
+  renderTableHead = () => {
+    return (
+      <TableHead>
+        <TableRow>
+          <TableCell align="left">Resource Name</TableCell>
+          <TableCell align="left">Element Type</TableCell>
+          <TableCell align="left">Landing Zone</TableCell>
+          <TableCell align="left">Product Enclave</TableCell>
+          <TableCell align="center">Tag Status</TableCell>
+          <TableCell align="center">Log</TableCell>
+          <TableCell align="center">Trace</TableCell>
+          <TableCell align="center">Event</TableCell>
+          <TableCell align="center">Actions</TableCell>
+        </TableRow>
+      </TableHead>
+    );
+  };
+
+  //  Render table body
+  renderTableBody = () => {
+    let { environmentList } = this.state;
+    return (
+      <TableBody>
+        {environmentList.length ? (
+          environmentList.map((environment) => {
+            let { name, elementType, landingZone, productEnclaves } =
+              environment;
+            return (
+              <TableRow key={v4()}>
+                <TableCell align="left">{name}</TableCell>
+                <TableCell align="left">{elementType}</TableCell>
+                <TableCell align="left">{landingZone}</TableCell>
+                <TableCell align="left">{productEnclaves}</TableCell>
+                <TableCell align="center">
+                  <Box className="tag">
+                    <i className="fas fa-tag"></i>
+                  </Box>
+                </TableCell>
+                <TableCell align="center">
+                  <Box className="log-eye-icon">
+                    <i className="fas fa-eye"></i>
+                  </Box>
+                </TableCell>
+                <TableCell align="center">
+                  <span className="green">
+                    <i className="fas fa-check"></i>
+                  </span>
+                </TableCell>
+                <TableCell align="center">
+                  <span className="green">
+                    <i className="fas fa-check"></i>
+                  </span>
+                </TableCell>
+                <TableCell align="center">
+                  <button type="button" className="list-icon">
+                    <i className="fas fa-ellipsis-v"></i>
+                  </button>
+                </TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <TableRow>
+            <TableCell colSpan={12}>
+              <Box className="d-blck text-center w-100 h-100 ">
+                <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+                  <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+                </Box>
+              </Box>
+            </TableCell>
+          </TableRow>
+        )}
+      </TableBody>
+    );
+  };
+
+  //  Render applied filters
+  renderAppliedFilters = () => {
+    let { selectedFilters } = this.state;
+    return (
+      <Box className="add-filters">
+        {selectedFilters?.length ? (
+          selectedFilters.map((filter, index) => {
+            return (
+              <Box className="filter-box" key={v4()}>
+                <Box className="d-flex  align-items-center m-r-3">
+                  <label>{filter.name} &#58; </label>
+                  <span> {filter.value} </span>
+                </Box>
+                <CloseIcon
+                  fontSize="inherit"
+                  className="close-btn"
+                  onClick={() => this.onClickCloseIcon(index)}
+                />
+              </Box>
+            );
+          })
+        ) : (
+          <></>
+        )}
+      </Box>
+    );
+  };
+
+  onClickCloseIcon = (id) => {
+    let { selectedFilters } = this.state;
+    selectedFilters = selectedFilters.filter((filter, index) => index !== id);
+    this.setState({ selectedFilters });
   };
   render() {
     const { showAssetsMainFilterModal } = this.state;
@@ -39,323 +242,20 @@ class AmazonWebServices extends Component {
           >
             Filters
           </Button>
-          <Box className="add-filters">
-            <Box className="filter-box">
-              <Box className="d-flex  align-items-center m-r-3">
-                <label>Region &#58; </label>
-                <span> US East 2 </span>
-              </Box>
-              <CloseIcon fontSize="inherit" className="close-btn" />
-            </Box>
-            <Box className="filter-box">
-              <Box className="d-flex  align-items-center m-r-3">
-                <label>AWS Account: &#58; </label>
-                <span>AWS (657) </span>
-              </Box>
-              <CloseIcon fontSize="inherit" className="close-btn" />
-            </Box>
-            <Box className="filter-box">
-              <Box className="d-flex  align-items-center m-r-3">
-                <label>Product Enclave : &#58; </label>
-                <span> 8 VPC </span>
-              </Box>
-              <CloseIcon fontSize="inherit" className="close-btn" />
-            </Box>
-            <Box className="filter-box">
-              <Box className="d-flex  align-items-center m-r-3">
-                <label>Element Type : &#58; </label>
-                <span> EC2 </span>
-              </Box>
-              <CloseIcon fontSize="inherit" className="close-btn" />
-            </Box>
-            <Box className="filter-box">
-              <Box className="d-flex  align-items-center m-r-3">
-                <label>App / Data &#58; </label>
-                <span> </span>
-              </Box>
-              <CloseIcon fontSize="inherit" className="close-btn" />
-            </Box>
-          </Box>
-          <Box className="clear-filter-box">
+          {this.renderAppliedFilters()}
+          <Box
+            className="clear-filter-box"
+            onClick={() => this.setState({ selectedFilters: [] })}
+          >
             <label>Clear Filter</label>
             <DeleteForeverIcon fontSize="inherit" className="delete-btn" />
           </Box>
         </Box>
-        <Box className="environment-table">
-          <TableContainer className="table">
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell align="left">Resource Name</TableCell>
-                  <TableCell align="left">Element Type</TableCell>
-                  <TableCell align="left">Landing Zone</TableCell>
-                  <TableCell align="left">Product Enclave</TableCell>
-                  <TableCell align="center">Tag Status</TableCell>
-                  <TableCell align="center">Log</TableCell>
-                  <TableCell align="center">Trace</TableCell>
-                  <TableCell align="center">Event</TableCell>
-                  <TableCell align="center">Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell align="left">45sdf28d</TableCell>
-                  <TableCell align="left">EKS</TableCell>
-                  <TableCell align="left">AWS (657907747554)</TableCell>
-                  <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center">
-                    <Box className="tag">
-                      <i class="fas fa-tag"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="log-eye-icon">
-                      <i class="fas fa-eye"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="green">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="green">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <button type="button" className="list-icon">
-                      <i className="fas fa-ellipsis-v"></i>
-                    </button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">45sdf28d</TableCell>
-                  <TableCell align="left">EKS</TableCell>
-                  <TableCell align="left">AWS (657907747554)</TableCell>
-                  <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center">
-                    <Box className="tag">
-                      <i class="fas fa-tag"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="log-eye-icon">
-                      <i class="fas fa-eye"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="green">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="green">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <button type="button" className="list-icon">
-                      <i className="fas fa-ellipsis-v"></i>
-                    </button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">45sdf28d</TableCell>
-                  <TableCell align="left">EKS</TableCell>
-                  <TableCell align="left">AWS (657907747554)</TableCell>
-                  <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center">
-                    <Box className="tag">
-                      <i class="fas fa-tag"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="log-eye-icon">
-                      <i class="fas fa-eye"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="green">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="green">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <button type="button" className="list-icon">
-                      <i className="fas fa-ellipsis-v"></i>
-                    </button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">45sdf28d</TableCell>
-                  <TableCell align="left">EKS</TableCell>
-                  <TableCell align="left">AWS (657907747554)</TableCell>
-                  <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center">
-                    <Box className="tag">
-                      <i class="fas fa-tag"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="log-eye-icon">
-                      <i class="fas fa-eye"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="green">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="green">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <button type="button" className="list-icon">
-                      <i className="fas fa-ellipsis-v"></i>
-                    </button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">45sdf28d</TableCell>
-                  <TableCell align="left">EKS</TableCell>
-                  <TableCell align="left">AWS (657907747554)</TableCell>
-                  <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center">
-                    <Box className="tag">
-                      <i class="fas fa-tag"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="log-eye-icon">
-                      <i class="fas fa-eye"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="green">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="green">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <button type="button" className="list-icon">
-                      <i className="fas fa-ellipsis-v"></i>
-                    </button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">45sdf28d</TableCell>
-                  <TableCell align="left">EKS</TableCell>
-                  <TableCell align="left">AWS (657907747554)</TableCell>
-                  <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center">
-                    <Box className="tag">
-                      <i class="fas fa-tag"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="log-eye-icon">
-                      <i class="fas fa-eye"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="orange">
-                      <i class="fas fa-times"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="orange">
-                      <i class="fas fa-times"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <button type="button" className="list-icon">
-                      <i className="fas fa-ellipsis-v"></i>
-                    </button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">45sdf28d</TableCell>
-                  <TableCell align="left">EKS</TableCell>
-                  <TableCell align="left">AWS (657907747554)</TableCell>
-                  <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center">
-                    <Box className="setting-icon">
-                      <i class="fas fa-cog"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="log-eye-icon">
-                      <i class="fas fa-eye"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="green">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="green">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <button type="button" className="list-icon">
-                      <i className="fas fa-ellipsis-v"></i>
-                    </button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">45sdf28d</TableCell>
-                  <TableCell align="left">EKS</TableCell>
-                  <TableCell align="left">AWS (657907747554)</TableCell>
-                  <TableCell align="left">VPC-ds42es114</TableCell>
-                  <TableCell align="center">
-                    <Box className="setting-icon">
-                      <i class="fas fa-cog"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="log-eye-icon">
-                      <i class="fas fa-eye"></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="green">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className="green">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <button type="button" className="list-icon">
-                      <i className="fas fa-ellipsis-v"></i>
-                    </button>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
+        <Box className="environment-table">{this.renderTable()}</Box>
         {showAssetsMainFilterModal ? (
           <AssetsMainFilterModal
             showModal={showAssetsMainFilterModal}
             togglePopup={this.togglePopup}
-            
-          
           />
         ) : (
           <></>
