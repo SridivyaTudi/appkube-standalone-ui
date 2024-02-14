@@ -76,9 +76,9 @@ class UserControl extends Component {
         if (removeUserRes) {
           this.togglePopup();
           this.props.getUserPermissionData(this.user.username);
-          ToastMessage.success("User Removed Successfully");
+          ToastMessage.success("User Disabled Successfully");
         } else {
-          ToastMessage.error("User Deletion Failed!");
+          ToastMessage.error("User Disabled action Failed!");
         }
       }
     }
@@ -267,7 +267,7 @@ class UserControl extends Component {
                           });
                         }}
                       >
-                        Delete User
+                        Disable User
                       </Button>
                       <Button
                         startIcon={<EditCalendarIcon className="icon" />}
@@ -378,8 +378,8 @@ class UserControl extends Component {
         showModal={showConfirmPopup}
         togglePopup={this.togglePopup}
         labels={{
-          btnYes: "Delete",
-          header: "Do you want to delete this User ? ",
+          btnYes: "Disable",
+          header: "Do you want to disable this User ? ",
           btnNo: "Cancel",
         }}
         icon={<i className="fas fa-trash-alt"></i>}

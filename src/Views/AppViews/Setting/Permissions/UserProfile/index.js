@@ -85,7 +85,7 @@ export class UserProfile extends Component {
           this.props.navigate("/app/setting");
           ToastMessage.success("User being successfully disabled.");
         } else {
-          ToastMessage.error(removeUserRes?.message || "User Deletion Failed!");
+          ToastMessage.error(removeUserRes?.message || "User Disable action Failed!");
         }
       }
     }
