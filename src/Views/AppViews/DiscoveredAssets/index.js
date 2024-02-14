@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
-import DiscoveredAssetsComponent from "./Components/DiscoveredAssetsComponent";
-import NonLTEAssets from "./Components/NonLTEAssets";
-import TaggedAssets from "./Components/TaggedAssets";
-import UntaggedAssets from "./Components/UntaggedAssets";
+import DiscoveredAssetsComponent from "./DiscoveredAssetsComponent";
+import NonLTEAssets from "./NonLTEAssets";
+import TaggedAssets from "./TaggedAssets";
+import UntaggedAssets from "./UntaggedAssets";
 import TabsMenu from "Views/AppViews/Environments/EnvironmentList/TabsMenu";
 import { v4 } from "uuid";
 
@@ -52,7 +52,7 @@ class DiscoveredAssets extends Component {
           <Box className="heading">Discovered Assets</Box>
         </Box>
         <Box className="services-panel-tabs">
-          <Box className="tabs-head">
+          <Box className="tabs-head width-100 d-block text-center">
             <TabsMenu
               tabs={this.tabMapping}
               setActiveTab={this.setActiveTab}
