@@ -25,73 +25,66 @@ class AssetsMainFilterModal extends Component {
             size="small"
             onChange={(e) => {
               // this.handleCheckBox(e);
-              
             }}
           />
           <p>China (Hong Kong)</p>
         </ListItem>
         <ListItem>
-        <Checkbox
+          <Checkbox
             className="check-box"
             size="small"
             onChange={(e) => {
               // this.handleCheckBox(e);
-              
             }}
           />
           <p>East US</p>
         </ListItem>
         <ListItem>
-        <Checkbox
+          <Checkbox
             className="check-box"
             size="small"
             onChange={(e) => {
               // this.handleCheckBox(e);
-              
             }}
           />
           <p>East US 2</p>
         </ListItem>
         <ListItem>
-        <Checkbox
+          <Checkbox
             className="check-box"
             size="small"
             onChange={(e) => {
               // this.handleCheckBox(e);
-              
             }}
           />
           <p>France Central</p>
         </ListItem>
         <ListItem>
-        <Checkbox
+          <Checkbox
             className="check-box"
             size="small"
             onChange={(e) => {
               // this.handleCheckBox(e);
-              
             }}
           />
           <p>Germany West Central</p>
         </ListItem>
         <ListItem>
-        <Checkbox
+          <Checkbox
             className="check-box"
             size="small"
             onChange={(e) => {
               // this.handleCheckBox(e);
-              
             }}
           />
           <p>India (Mumbai)</p>
         </ListItem>
         <ListItem>
-        <Checkbox
+          <Checkbox
             className="check-box"
             size="small"
             onChange={(e) => {
               // this.handleCheckBox(e);
-              
             }}
           />
           <p>Indonesia ( Jakarta)</p>
@@ -100,17 +93,11 @@ class AssetsMainFilterModal extends Component {
     );
   };
   render() {
-    const {
-      isRecentVisitedEnvMenuOpen,
-      isAddNewEnvironmentShown,
-      searchedKey,
-      showFilterPopup,
-      filters,
-    } = this.state;
+    const { isAddNewEnvironmentShown } = this.state;
     return (
       <Modal
         isOpen={this.props.showModal}
-        toggle={this.props.handleAssetsMainFilterModal}
+        toggle={this.props.togglePopup}
         className="assets-fillter-modal-container"
       >
         <ModalBody>
@@ -131,7 +118,6 @@ class AssetsMainFilterModal extends Component {
                     >
                       Region
                       <i class="fas fa-angle-down arrow-icon"></i>
-                     
                     </Box>
                     <Box
                       className={
@@ -510,6 +496,7 @@ class AssetsMainFilterModal extends Component {
             <LoadingButton
               className="primary-btn min-width-inherit "
               variant="contained"
+              onClick={this.props.togglePopup}
             >
               Submit
             </LoadingButton>
