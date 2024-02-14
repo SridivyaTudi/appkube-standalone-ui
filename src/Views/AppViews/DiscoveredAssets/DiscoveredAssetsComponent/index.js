@@ -58,7 +58,7 @@ class DiscoveredAssetsComponent extends Component {
           })}
           <Box className="tabs-content">
             {activeTab === 0 ? (
-              <AmazonWebServices />
+              <AmazonWebServices  />
             ) : activeTab === 1 ? (
               <GoogleCloudPlatform />
             ) : activeTab === 2 ? (

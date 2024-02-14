@@ -1,18 +1,6 @@
 import React, { Component } from "react";
-import {
-  Box,
-  Button,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import AssetsMainFilterModal from "../Components/AssetsMainFilterModal";
-import { v4 } from "uuid";
+import AssetsTable from "Views/AppViews/DiscoveredAssets/Components/AssetsTable";
+import AssetsFilterSection from "Views/AppViews/DiscoveredAssets/Components/AssetsFilterSection";
 let data = [
   {
     name: "45sdf28d",
@@ -96,134 +84,10 @@ class AmazonWebServices extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAssetsMainFilterModal: false,
       environmentList: data,
       selectedFilters: filterData,
     };
   }
-
-  togglePopup = () => {
-    this.setState({
-      showAssetsMainFilterModal: !this.state.showAssetsMainFilterModal,
-    });
-  };
-
-  //  Render table
-  renderTable = () => {
-    return (
-      <TableContainer className="table">
-        <Table>
-          {this.renderTableHead()}
-          {this.renderTableBody()}
-        </Table>
-      </TableContainer>
-    );
-  };
-
-  //  Render table head
-  renderTableHead = () => {
-    return (
-      <TableHead>
-        <TableRow>
-          <TableCell align="left">Resource Name</TableCell>
-          <TableCell align="left">Element Type</TableCell>
-          <TableCell align="left">Landing Zone</TableCell>
-          <TableCell align="left">Product Enclave</TableCell>
-          <TableCell align="center">Tag Status</TableCell>
-          <TableCell align="center">Log</TableCell>
-          <TableCell align="center">Trace</TableCell>
-          <TableCell align="center">Event</TableCell>
-          <TableCell align="center">Actions</TableCell>
-        </TableRow>
-      </TableHead>
-    );
-  };
-
-  //  Render table body
-  renderTableBody = () => {
-    let { environmentList } = this.state;
-    return (
-      <TableBody>
-        {environmentList.length ? (
-          environmentList.map((environment) => {
-            let { name, elementType, landingZone, productEnclaves } =
-              environment;
-            return (
-              <TableRow key={v4()}>
-                <TableCell align="left">{name}</TableCell>
-                <TableCell align="left">{elementType}</TableCell>
-                <TableCell align="left">{landingZone}</TableCell>
-                <TableCell align="left">{productEnclaves}</TableCell>
-                <TableCell align="center">
-                  <Box className="tag">
-                    <i className="fas fa-tag"></i>
-                  </Box>
-                </TableCell>
-                <TableCell align="center">
-                  <Box className="log-eye-icon">
-                    <i className="fas fa-eye"></i>
-                  </Box>
-                </TableCell>
-                <TableCell align="center">
-                  <span className="green">
-                    <i className="fas fa-check"></i>
-                  </span>
-                </TableCell>
-                <TableCell align="center">
-                  <span className="green">
-                    <i className="fas fa-check"></i>
-                  </span>
-                </TableCell>
-                <TableCell align="center">
-                  <button type="button" className="list-icon">
-                    <i className="fas fa-ellipsis-v"></i>
-                  </button>
-                </TableCell>
-              </TableRow>
-            );
-          })
-        ) : (
-          <TableRow>
-            <TableCell colSpan={12}>
-              <Box className="d-blck text-center w-100 h-100 ">
-                <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-                  <h5 className="m-t-0 m-b-0">There are no data available.</h5>
-                </Box>
-              </Box>
-            </TableCell>
-          </TableRow>
-        )}
-      </TableBody>
-    );
-  };
-
-  //  Render applied filters
-  renderAppliedFilters = () => {
-    let { selectedFilters } = this.state;
-    return (
-      <Box className="add-filters">
-        {selectedFilters?.length ? (
-          selectedFilters.map((filter, index) => {
-            return (
-              <Box className="filter-box" key={v4()}>
-                <Box className="d-flex  align-items-center m-r-3">
-                  <label>{filter.name} &#58; </label>
-                  <span> {filter.value} </span>
-                </Box>
-                <CloseIcon
-                  fontSize="inherit"
-                  className="close-btn"
-                  onClick={() => this.onClickCloseIcon(index)}
-                />
-              </Box>
-            );
-          })
-        ) : (
-          <></>
-        )}
-      </Box>
-    );
-  };
 
   onClickCloseIcon = (id) => {
     let { selectedFilters } = this.state;
@@ -231,35 +95,15 @@ class AmazonWebServices extends Component {
     this.setState({ selectedFilters });
   };
   render() {
-    const { showAssetsMainFilterModal } = this.state;
+    let { selectedFilters, environmentList } = this.state;
     return (
       <>
-        <Box className="head-top-section">
-          <Button
-            onClick={this.togglePopup}
-            className="primary-outline-btn min-width"
-            variant="outlined"
-          >
-            Filters
-          </Button>
-          {this.renderAppliedFilters()}
-          <Box
-            className="clear-filter-box"
-            onClick={() => this.setState({ selectedFilters: [] })}
-          >
-            <label>Clear Filter</label>
-            <DeleteForeverIcon fontSize="inherit" className="delete-btn" />
-          </Box>
-        </Box>
-        <Box className="environment-table">{this.renderTable()}</Box>
-        {showAssetsMainFilterModal ? (
-          <AssetsMainFilterModal
-            showModal={showAssetsMainFilterModal}
-            togglePopup={this.togglePopup}
-          />
-        ) : (
-          <></>
-        )}
+        <AssetsFilterSection
+          data={selectedFilters}
+          onClickCloseIcon={(id) => this.onClickCloseIcon(id)}
+          onClickClearFilter={() => this.setState({ selectedFilters: [] })}
+        />
+        <AssetsTable data={environmentList} />
       </>
     );
   }
