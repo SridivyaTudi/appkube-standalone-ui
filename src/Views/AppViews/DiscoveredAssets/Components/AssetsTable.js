@@ -9,11 +9,22 @@ import {
   TableBody,
 } from "@mui/material";
 import { v4 } from "uuid";
+import AssetsSetUpModal from "./AssetsSetUpModal";
 class AssetsTable extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      showAssetsSetUpModal: false,
+    };
   }
+
+
+  toggleAssetsSetUp = () => {
+    this.setState({
+      showAssetsSetUpModal: !this.state.showAssetsSetUpModal,
+      
+    });
+  };
   //  Render table
   renderTable = () => {
     return (
@@ -66,7 +77,7 @@ class AssetsTable extends Component {
                   </Box>
                 </TableCell>
                 <TableCell align="center">
-                  <Box className="log-eye-icon">
+                  <Box className="log-eye-icon" onClick={this.toggleAssetsSetUp}>
                     <i className="fas fa-eye"></i>
                   </Box>
                 </TableCell>
@@ -103,7 +114,20 @@ class AssetsTable extends Component {
     );
   };
   render() {
-    return <Box className="environment-table">{this.renderTable()}</Box>;
+    const {  showAssetsSetUpModal } = this.state;
+    return (
+      <>
+        <Box className="environment-table">{this.renderTable()}</Box>;
+        {showAssetsSetUpModal ? (
+          <AssetsSetUpModal
+            showModal={showAssetsSetUpModal}
+            toggleAssetsSetUp={this.toggleAssetsSetUp}
+          />
+        ) : (
+          <></>
+        )}
+      </>
+    );
   }
 }
 
