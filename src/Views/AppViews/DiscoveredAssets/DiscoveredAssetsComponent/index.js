@@ -80,9 +80,14 @@ let filterData = [
     name: "Element Type",
     value: "EC2",
   },
+
   {
     name: "App",
     value: "Data",
+  },
+  {
+    name: "Element Type",
+    value: "EKS",
   },
 ];
 class DiscoveredAssetsComponent extends Component {
@@ -114,7 +119,7 @@ class DiscoveredAssetsComponent extends Component {
   }
 
   setActiveTab = (activeTab) => {
-    this.setState({ activeTab,  selectedFilters: filterData, });
+    this.setState({ activeTab, selectedFilters: filterData });
   };
 
   onClickCloseIcon = (id) => {

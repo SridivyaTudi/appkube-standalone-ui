@@ -5,6 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
 import AssetsMainFilterModal from "../Components/AssetsMainFilterModal";
 import FilterPopup from "Views/AppViews/DiscoveredAssets/Components/FilterPopup";
+import { count } from "d3";
 
 class AssetsFilterSection extends Component {
   constructor(props) {
@@ -65,25 +66,33 @@ class AssetsFilterSection extends Component {
     return (
       <Box className="add-filters">
         {filterData?.length ? (
-          filterData.slice(0, noOfRow).map((filter, index) => {
-            return (
-              <Box className="filter-box" key={v4()}>
-                <Box className="d-flex  align-items-center m-r-3">
-                  <label>{filter.name} &#58; </label>
-                  <span> {filter.value} </span>
+          <>
+            {filterData.slice(0, noOfRow).map((filter, index) => {
+              return (
+                <Box className="filter-box" key={v4()}>
+                  <Box className="d-flex  align-items-center m-r-3">
+                    <label>{filter.name} &#58; </label>
+                    <span> {filter.value} </span>
+                  </Box>
+                  <CloseIcon
+                    fontSize="inherit"
+                    className="close-btn"
+                    onClick={() => this.onClickCloseIcon(index)}
+                  />
                 </Box>
-                <CloseIcon
-                  fontSize="inherit"
-                  className="close-btn"
-                  onClick={() => this.onClickCloseIcon(index)}
-                />
-              </Box>
-            );
-          })
+              );
+            })}
+            {filterData.length > noOfRow ? (
+              this.renderNextCountForRemainingfilter(
+                filterData.length - noOfRow
+              )
+            ) : (
+              <></>
+            )}
+          </>
         ) : (
           <></>
         )}
-        {this.renderNextCountForRemainingfilter()}
       </Box>
     );
   };
@@ -104,7 +113,7 @@ class AssetsFilterSection extends Component {
     }
   };
 
-  renderNextCountForRemainingfilter = () => {
+  renderNextCountForRemainingfilter = (count) => {
     return (
       <Box
         className="filter-box"
@@ -115,17 +124,18 @@ class AssetsFilterSection extends Component {
         }}
       >
         <Box className="d-flex  align-items-center m-r-3">
-          <label>More &#58; </label> <span> +1 </span>
+          <label>More &#58; </label> <span> +{count} </span>
         </Box>
       </Box>
     );
   };
 
   render() {
-    const { showAssetsMainFilterModal, showFilterPopup } = this.state;
+    const { showAssetsMainFilterModal, showFilterPopup, noOfRow } = this.state;
+    let filterData = this.props.data;
     return (
       <Box className="head-top-section">
-        <Button 
+        <Button
           onClick={this.togglePopup}
           className="primary-outline-btn min-width m-r-3"
           variant="outlined"
@@ -154,6 +164,8 @@ class AssetsFilterSection extends Component {
           <FilterPopup
             showModal={showFilterPopup}
             togglePopup={this.toggleFilterPopup}
+            data={filterData.slice(noOfRow)}
+            onClickCloseIcon={(id) => this.props.onClickCloseIcon(id)}
           />
         ) : (
           <></>

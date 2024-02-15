@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Box, Grid } from "@mui/material";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Box } from "@mui/material";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import { v4 } from "uuid";
-import LoadingButton from "@mui/lab/LoadingButton";
 import CloseIcon from "@mui/icons-material/Close";
 let filterData = [
   {
@@ -56,21 +55,27 @@ export class Notification extends Component {
           style={{ overflowY: "auto", overflowX: "hidden", maxHeight: "300px" }}
         >
           <Box sx={{ width: "100%" }} className="modal-filters">
-            {filterData.map((filter, index) => {
-              return (
-                <Box className="filter-box" key={v4()}>
-                  <Box className="d-flex  align-items-center m-r-3">
-                    <label>{filter.name} &#58; </label>
-                    <span> {filter.value} </span>
+            {this.props.data?.length ? (
+              this.props.data.map((filter, index) => {
+                return (
+                  <Box className="filter-box" key={v4()}>
+                    <Box className="d-flex  align-items-center m-r-3">
+                      <label>{filter.name} &#58; </label>
+                      <span> {filter.value} </span>
+                    </Box>
+                    <CloseIcon
+                      fontSize="inherit"
+                      className="close-btn"
+                      onClick={() => this.props.onClickCloseIcon(index)}
+                    />
                   </Box>
-                  <CloseIcon
-                    fontSize="inherit"
-                    className="close-btn"
-                    //   onClick={() => this.onClickCloseIcon(index)}
-                  />
-                </Box>
-              );
-            })}
+                );
+              })
+            ) : (
+              <Box className="d-block text-center w-100 h-100 m-r-auto m-l-auto p-t-20 p-b-20 ">
+                <h5>There are no data available.</h5>
+              </Box>
+            )}
           </Box>
         </ModalBody>
       </Modal>
