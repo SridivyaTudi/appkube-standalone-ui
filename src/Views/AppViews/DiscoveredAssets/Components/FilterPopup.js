@@ -39,7 +39,7 @@ export class Notification extends Component {
         toggle={this.props.togglePopup}
         className="select-account-modal-container"
       >
-        <ModalHeader className="m-b-1 border-bottom">
+        <ModalHeader className="border-bottom">
           Filter
           <button
             type="button"
@@ -55,30 +55,22 @@ export class Notification extends Component {
         <ModalBody
           style={{ overflowY: "auto", overflowX: "hidden", maxHeight: "300px" }}
         >
-          <Box sx={{ width: "100%" }} className="p-b-10">
-            <Grid
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              alignItems={"center"}
-              justifyContent={"flex-start"}
-            >
-              {filterData.map((filter, index) => {
-                return (
-                  <Box className="filter-box" key={v4()}>
-                    <Box className="d-flex  align-items-center m-r-3">
-                      <label>{filter.name} &#58; </label>
-                      <span> {filter.value} </span>
-                    </Box>
-                    <CloseIcon
-                      fontSize="inherit"
-                      className="close-btn"
-                    //   onClick={() => this.onClickCloseIcon(index)}
-                    />
+          <Box sx={{ width: "100%" }} className="modal-filters">
+            {filterData.map((filter, index) => {
+              return (
+                <Box className="filter-box" key={v4()}>
+                  <Box className="d-flex  align-items-center m-r-3">
+                    <label>{filter.name} &#58; </label>
+                    <span> {filter.value} </span>
                   </Box>
-                );
-              })}
-            </Grid>
+                  <CloseIcon
+                    fontSize="inherit"
+                    className="close-btn"
+                    //   onClick={() => this.onClickCloseIcon(index)}
+                  />
+                </Box>
+              );
+            })}
           </Box>
         </ModalBody>
       </Modal>

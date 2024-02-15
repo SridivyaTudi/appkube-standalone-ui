@@ -115,8 +115,7 @@ class AssetsFilterSection extends Component {
         }}
       >
         <Box className="d-flex  align-items-center m-r-3">
-          <label>More &#58; </label>
-          <span> +1 </span>
+          <label>More &#58; </label> <span> +1 </span>
         </Box>
       </Box>
     );
@@ -126,9 +125,9 @@ class AssetsFilterSection extends Component {
     const { showAssetsMainFilterModal, showFilterPopup } = this.state;
     return (
       <Box className="head-top-section">
-        <Button
+        <Button 
           onClick={this.togglePopup}
-          className="primary-outline-btn min-width"
+          className="primary-outline-btn min-width m-r-3"
           variant="outlined"
         >
           Filters

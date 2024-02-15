@@ -29,7 +29,7 @@ class AssetsTable extends Component {
   renderTable = () => {
     return (
       <TableContainer className="table">
-        <Table>
+        <Table style={{ width: 1380}}>
           {this.renderTableHead()}
           {this.renderTableBody()}
         </Table>
