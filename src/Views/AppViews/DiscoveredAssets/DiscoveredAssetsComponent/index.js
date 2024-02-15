@@ -1,12 +1,90 @@
 import React, { Component } from "react";
 import { Box } from "@mui/material";
-import AmazonWebServices from "./AmazonWebServices";
-import AzureCloud from "./AzureCloud";
-import GoogleCloudPlatform from "./GoogleCloudPlatform";
-import { v4 } from "uuid";
 import Aws from "assets/img/aws.png";
 import GoogleCloud from "assets/img/google-cloud.png";
 import Microsoftazure from "assets/img/microsoftazure.png";
+import AssetsEnvironmentTab from "../Components/AssetsEnvironmentTab";
+import AssetsTable from "Views/AppViews/DiscoveredAssets/Components/AssetsTable";
+import AssetsFilterSection from "Views/AppViews/DiscoveredAssets/Components/AssetsFilterSection";
+let data = [
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+  {
+    name: "45sdf28d",
+    elementType: "EKS",
+    landingZone: "AWS (657907747554)",
+    productEnclave: "VPC-ds42es114",
+  },
+];
+
+let filterData = [
+  {
+    name: "Region",
+    value: "US East 2",
+  },
+  {
+    name: "AWS Account",
+    value: "AWS (657",
+  },
+  {
+    name: "Product Enclave ",
+    value: "8 VPC",
+  },
+  {
+    name: "Element Type",
+    value: "EC2",
+  },
+  {
+    name: "App",
+    value: "Data",
+  },
+];
 class DiscoveredAssetsComponent extends Component {
   controlMapping = [
     {
@@ -30,42 +108,36 @@ class DiscoveredAssetsComponent extends Component {
     super(props);
     this.state = {
       activeTab: 0,
+      environmentList: data,
+      selectedFilters: filterData,
     };
   }
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
+
+  onClickCloseIcon = (id) => {
+    let { selectedFilters } = this.state;
+    selectedFilters = selectedFilters.filter((filter, index) => index !== id);
+    this.setState({ selectedFilters });
+  };
   render() {
-    const { activeTab } = this.state;
+    const { activeTab, selectedFilters, environmentList } = this.state;
     return (
       <Box className="discovered-assets-inner-tabs">
         <Box className="assets-sevices-tabs">
-          {this.controlMapping.map((tabData, index) => {
-            return (
-              <Box
-                key={v4()}
-                className={`assets-sevice-tab ${
-                  index === activeTab ? "active" : ""
-                }`}
-                onClick={() => this.setActiveTab(index)}
-              >
-                <Box className="service-image">
-                  <img src={tabData.image} alt="" />
-                </Box>
-                <label>{tabData.label}</label>
-              </Box>
-            );
-          })}
+          <AssetsEnvironmentTab
+            data={this.controlMapping}
+            activeTab={activeTab}
+            setActiveTab={(id) => this.setActiveTab(id)}
+          />
           <Box className="tabs-content">
-            {activeTab === 0 ? (
-              <AmazonWebServices  />
-            ) : activeTab === 1 ? (
-              <GoogleCloudPlatform />
-            ) : activeTab === 2 ? (
-              <AzureCloud />
-            ) : (
-              <></>
-            )}
+            <AssetsFilterSection
+              data={selectedFilters}
+              onClickCloseIcon={(id) => this.onClickCloseIcon(id)}
+              onClickClearFilter={() => this.setState({ selectedFilters: [] })}
+            />
+            <AssetsTable data={environmentList} />
           </Box>
         </Box>
       </Box>
