@@ -77,15 +77,11 @@ class Eventhistory extends Component {
             );
           })
         ) : (
-          <TableRow>
-            <TableCell colSpan={12}>
-              <Box className="d-blck text-center w-100 h-100 ">
-                <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-                  <h5 className="m-t-0 m-b-0">There are no data available.</h5>
-                </Box>
-              </Box>
-            </TableCell>
-          </TableRow>
+          <Box className="d-blck text-center w-100 h-100 ">
+          <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+            <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+          </Box>
+        </Box>
         )}
       </TableBody>
     );

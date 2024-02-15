@@ -64,10 +64,18 @@ class AssetsTable extends Component {
       this.setState({ tagShowMenu: envKey });
     }
   };
+  handleMenuListToggle = (envKey) => {
+    const { tagShowMenuList } = this.state;
+    if (tagShowMenuList) {
+      this.setState({ tagShowMenuList: null });
+    } else {
+      this.setState({ tagShowMenuList: envKey });
+    }
+  };
 
   //  Render table body
   renderTableBody = () => {
-    const { tagShowMenu } = this.state;
+    const { tagShowMenu, tagShowMenuList } = this.state;
     let environmentList = this.props.data || [];
     return (
       <TableBody>
@@ -107,7 +115,7 @@ class AssetsTable extends Component {
                         ></div>
                         <Box className="menu-list">
                           <List>
-                            <ListItem>Add New datasource</ListItem>
+                            <ListItem><span></span>Tag</ListItem>
                           </List>
                         </Box>
                       </>
@@ -139,9 +147,32 @@ class AssetsTable extends Component {
                   </span>
                 </TableCell>
                 <TableCell align="center">
-                  <button type="button" className="list-icon">
+                  <button
+                    type="button"
+                    className="list-icon"
+                    onClick={(e) => {
+                      this.handleMenuListToggle(index); 
+                    }}
+                  >
                     <i className="fas fa-ellipsis-v"></i>
                   </button>
+                  {tagShowMenuList === index ? (
+                    <>
+                      <div
+                        className="open-create-menu-close"
+                        onClick={(e) => {
+                          this.handleMenuListToggle(index);
+                        }}
+                      ></div>
+                      <Box className="menu-list">
+                        <List>
+                          <ListItem>Set Up</ListItem>
+                        </List>
+                      </Box>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </TableCell>
               </TableRow>
             );
@@ -164,7 +195,7 @@ class AssetsTable extends Component {
     const { showAssetsSetUpModal } = this.state;
     return (
       <>
-        <Box className="assets-table">{this.renderTable()}</Box>;
+        <Box className="assets-table">{this.renderTable()}</Box>
         {showAssetsSetUpModal ? (
           <AssetsSetUpModal
             showModal={showAssetsSetUpModal}
