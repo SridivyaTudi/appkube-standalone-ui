@@ -117,7 +117,7 @@ class AssetsTable extends Component {
     const {  showAssetsSetUpModal } = this.state;
     return (
       <>
-        <Box className="environment-table">{this.renderTable()}</Box>;
+        <Box className="assets-table">{this.renderTable()}</Box>;
         {showAssetsSetUpModal ? (
           <AssetsSetUpModal
             showModal={showAssetsSetUpModal}

@@ -50,6 +50,7 @@ import Soa from "./AppViews/BIMapping/Soa";
 import AddDepartment from "./AppViews/BIMapping/AddDepartment";
 import AddProduct from "./AppViews/BIMapping/AddProduct";
 import DiscoveredAssets from "./AppViews/DiscoveredAssets";
+import LoginEvents from "./AppViews/DiscoveredAssets/LoginEvents";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -230,6 +231,7 @@ export const Views = (props) => {
             element={<AddProduct />}
           />
           <Route path={`${APP_PREFIX_PATH}/discovered-assets`} element={<DiscoveredAssets/>}/>
+          <Route path={`${APP_PREFIX_PATH}/discovered-assets/login-events`} element={<LoginEvents/>}/>
           <Route path={`/error`} element={<Error />} />
         </Routes>
         <ToastContainer
