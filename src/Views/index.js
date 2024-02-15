@@ -35,7 +35,7 @@ import { getCurrentUser } from "Utils";
 import titles from "./PathTitles.json";
 import Error from "./AppViews/Error";
 import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
-import Reports from "./AppViews/Reports";
+import ReportsOld from "./AppViews/Reports";
 import RoleDetails from "./AppViews/Setting/Permissions/RoleDetails";
 import GroupDetails from "Views/AppViews/Setting/Permissions/GroupDetails";
 import AddUsers from "./AppViews/Setting/Permissions/AddUsers";
@@ -50,6 +50,8 @@ import Soa from "./AppViews/BIMapping/Soa";
 import AddDepartment from "./AppViews/BIMapping/AddDepartment";
 import AddProduct from "./AppViews/BIMapping/AddProduct";
 import DiscoveredAssets from "./AppViews/DiscoveredAssets";
+import LoginEvents from "./AppViews/DiscoveredAssets/LoginEvents";
+import Eventhistory from "./AppViews/DiscoveredAssets/Eventhistory";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -213,7 +215,7 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/application-status-dashboard`}
             element={<ApplicationStatusDashboard />}
           />
-          <Route path={`${APP_PREFIX_PATH}/reports`} element={<Reports />} />
+          <Route path={`${APP_PREFIX_PATH}/reports-old`} element={<ReportsOld />} />
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route
             path={`${APP_PREFIX_PATH}/bim/product-category`}
@@ -230,6 +232,8 @@ export const Views = (props) => {
             element={<AddProduct />}
           />
           <Route path={`${APP_PREFIX_PATH}/discovered-assets`} element={<DiscoveredAssets/>}/>
+          <Route path={`${APP_PREFIX_PATH}/discovered-assets/login-events`} element={<LoginEvents/>}/>
+          <Route path={`${APP_PREFIX_PATH}/discovered-assets/events-history`} element={<Eventhistory/>} />
           <Route path={`/error`} element={<Error />} />
         </Routes>
         <ToastContainer

@@ -1,33 +1,9 @@
 .discovered-assets-container {
-  width: 100%;
-  display: block;
-  padding: 30px 40px;
-  background-color: #f6f7fb;
-  .assets-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .global-services-fliter {
-    display: block;
-    width: 100%;
-    border-radius: 8px;
-    background-color: #ffffff;
-    margin-top: 20px;
-    padding: 15px 15px;
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04);
-    .heading {
-      font-size: 16px;
-      line-height: 20px;
-      font-weight: 500;
-      color: #383874;
-    }
-  }
   .services-panel-tabs {
     display: block;
     width: 100%;
     .tabs-head {
-        margin-top: 20px;
+      margin-top: 20px;
       ul {
         display: inline-flex;
         width: auto;
@@ -57,12 +33,25 @@
           }
         }
       }
-     
     }
     .tabs-content {
       display: block;
       width: 100%;
       margin-top: 20px;
+      .discovered-assets-inner-tabs {
+        width: 100%;
+        display: block;
+        .assets-sevices-tabs {
+          display: flex;
+          flex-wrap: wrap;
+          width: 100%;
+          padding: 20px 0 10px 0;
+          .tabs-content {
+            width: 100%;
+            display: block; 
+          }
+        }
+      }
     }
   }
 }
