@@ -54,3 +54,19 @@ https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?page-id=31293%3A
 
 Discovered assets:
 https://www.figma.com/proto/T1v5T4vk20KfW4rASjo3uM/Appkube-Main-Evn?page-id=12432%3A71156&type=design&node-id=31262-49736&viewport=-3051%2C6757%2C0.27&t=8cU2h36ABFdu0icb-1&scaling=scale-down-width&starting-point-node-id=21976%3A124846&mode=design
+
+
+
+Reporting:
+
+Overview Dashboard
+https://www.figma.com/proto/dlkcEDolt9QlU3E7qxB4sC/Reporting-Module-Prototype?page-id=29478%3A37045&type=design&node-id=29478-43993&viewport=-169%2C334%2C0.06&t=x8uHPQRdBl8Ypzbw-1&scaling=scale-down-width&mode=design
+ 
+Cost Central
+https://www.figma.com/proto/dlkcEDolt9QlU3E7qxB4sC/Reporting-Module-Prototype?page-id=29465%3A20833&type=design&node-id=29494-29102&viewport=-290%2C420%2C0.06&t=NxhUIhudjEOjVDfM-1&scaling=scale-down-width&starting-point-node-id=29494%3A29102&mode=design
+ 
+Chargeback
+https://www.figma.com/proto/dlkcEDolt9QlU3E7qxB4sC/Reporting-Module-Prototype?page-id=29560%3A30876&type=design&node-id=29560-31252&viewport=536%2C-178%2C0.03&t=fgGUMxK7xoVggdhU-1&scaling=scale-down-width&starting-point-node-id=29560%3A31252&mode=design
+ 
+Budget
+https://www.figma.com/proto/dlkcEDolt9QlU3E7qxB4sC/Reporting-Module-Prototype?page-id=29494%3A50138&type=design&node-id=29494-50186&viewport=-324%2C-39%2C0.05&t=FxrI6KhwyMDY1zNo-1&scaling=scale-down-width&starting-point-node-id=29494%3A50186&mode=design
