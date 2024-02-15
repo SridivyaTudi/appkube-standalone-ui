@@ -7,6 +7,8 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  List,
+  ListItem,
 } from "@mui/material";
 import { v4 } from "uuid";
 import AssetsSetUpModal from "./AssetsSetUpModal";
@@ -18,18 +20,16 @@ class AssetsTable extends Component {
     };
   }
 
-
   toggleAssetsSetUp = () => {
     this.setState({
       showAssetsSetUpModal: !this.state.showAssetsSetUpModal,
-      
     });
   };
   //  Render table
   renderTable = () => {
     return (
       <TableContainer className="table">
-        <Table style={{ width: 1380}}>
+        <Table style={{ width: 1380 }}>
           {this.renderTableHead()}
           {this.renderTableBody()}
         </Table>
@@ -56,15 +56,33 @@ class AssetsTable extends Component {
     );
   };
 
+  handleMenuToggle = (envKey) => {
+    const { tagShowMenu } = this.state;
+    if (tagShowMenu) {
+      this.setState({ tagShowMenu: null });
+    } else {
+      this.setState({ tagShowMenu: envKey });
+    }
+  };
+
   //  Render table body
   renderTableBody = () => {
+    const { tagShowMenu } = this.state;
     let environmentList = this.props.data || [];
     return (
       <TableBody>
         {environmentList.length ? (
-          environmentList.map((environment) => {
-            let { name, elementType, landingZone, productEnclave } =
-              environment;
+          environmentList.map((environment, index) => {
+            let {
+              name,
+              elementType,
+              landingZone,
+              productEnclave,
+              tagStatusClass,
+              logClass,
+              traceClass,
+              eventClass,
+            } = environment;
             return (
               <TableRow key={v4()}>
                 <TableCell align="left">{name}</TableCell>
@@ -72,23 +90,52 @@ class AssetsTable extends Component {
                 <TableCell align="left">{landingZone}</TableCell>
                 <TableCell align="left">{productEnclave}</TableCell>
                 <TableCell align="center">
-                  <Box className="tag">
-                    <i className="fas fa-tag"></i>
+                  <Box className={tagStatusClass || "tag"}>
+                    <i
+                      className={tagStatusClass ? "fas fa-cog" : "fas fa-tag"}
+                      onClick={(e) => {
+                        this.handleMenuToggle(index);
+                      }}
+                    ></i>
+                    {tagShowMenu === index? (
+                      <>
+                        <div
+                          className="open-create-menu-close"
+                          onClick={(e) => {
+                            this.handleMenuToggle(index);
+                          }}
+                        ></div>
+                        <Box className="menu-list">
+                          <List>
+                            <ListItem>Add New datasource</ListItem>
+                          </List>
+                        </Box>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </Box>
                 </TableCell>
                 <TableCell align="center">
-                  <Box className="log-eye-icon" onClick={this.toggleAssetsSetUp}>
-                    <i className="fas fa-eye"></i>
+                  <Box
+                    className={logClass || "log-eye-icon"}
+                    onClick={this.toggleAssetsSetUp}
+                  >
+                    <i className={logClass ? "fas fa-cog" : "fas fa-eye"}></i>
                   </Box>
                 </TableCell>
                 <TableCell align="center">
-                  <span className="green">
-                    <i className="fas fa-check"></i>
+                  <span className={traceClass || "green"}>
+                    <i
+                      className={logClass ? "fas fa-times" : "fas fa-check"}
+                    ></i>
                   </span>
                 </TableCell>
                 <TableCell align="center">
-                  <span className="green">
-                    <i className="fas fa-check"></i>
+                  <span className={eventClass || "green"}>
+                    <i
+                      className={eventClass ? "fas fa-times" : "fas fa-check"}
+                    ></i>
                   </span>
                 </TableCell>
                 <TableCell align="center">
@@ -114,7 +161,7 @@ class AssetsTable extends Component {
     );
   };
   render() {
-    const {  showAssetsSetUpModal } = this.state;
+    const { showAssetsSetUpModal } = this.state;
     return (
       <>
         <Box className="assets-table">{this.renderTable()}</Box>;

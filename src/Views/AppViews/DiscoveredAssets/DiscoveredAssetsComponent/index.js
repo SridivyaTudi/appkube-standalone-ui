@@ -48,18 +48,23 @@ let data = [
     elementType: "EKS",
     landingZone: "AWS (657907747554)",
     productEnclave: "VPC-ds42es114",
+    logClass: "setting-icon",
+    traceClass:'orange',
+    eventClass:'orange'
   },
   {
     name: "45sdf28d",
     elementType: "EKS",
     landingZone: "AWS (657907747554)",
     productEnclave: "VPC-ds42es114",
+    tagStatusClass: "setting-icon",
   },
   {
     name: "45sdf28d",
     elementType: "EKS",
     landingZone: "AWS (657907747554)",
     productEnclave: "VPC-ds42es114",
+    tagStatusClass: "setting-icon",
   },
 ];
 

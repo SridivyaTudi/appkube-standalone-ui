@@ -13,6 +13,8 @@ let data = [
     elementType: "Batch",
     landingZone: "AWS (657907747554)",
     productEnclave: "VPC-ds42es114",
+    traceClass: "orange",
+    eventClass: "orange",
   },
 ];
 

@@ -12,13 +12,13 @@ let data = [
     name: "45sdf28d",
     elementType: "Lambda",
     landingZone: "AWS (657907747554)",
-    productEnclave: "VPC-ds42es114",
+    productEnclave: "VPC-ds42es114",  tagStatusClass: "setting-icon",
   },
   {
     name: "45sdf28d",
     elementType: "Batch",
     landingZone: "AWS (657907747554)",
-    productEnclave: "VPC-ds42es114",
+    productEnclave: "VPC-ds42es114",  tagStatusClass: "setting-icon",
   },
 ];
 
