@@ -97,7 +97,7 @@ class AssetsTable extends Component {
                         this.handleMenuToggle(index);
                       }}
                     ></i>
-                    {tagShowMenu === index? (
+                    {tagShowMenu === index ? (
                       <>
                         <div
                           className="open-create-menu-close"
