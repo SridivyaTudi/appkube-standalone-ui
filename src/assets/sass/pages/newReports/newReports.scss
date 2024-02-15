@@ -1,0 +1,56 @@
+.reports-tab-section {
+  width: 100%;
+  display: block;
+  .tabs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #b3b3b3;
+    .tabs-menu {
+      padding-bottom: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      li {
+        padding-bottom: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #383874;
+        cursor: pointer;
+        width: 150px;
+        display: inline-block;
+        text-align: center;
+        position: relative;
+
+        &::after {
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 4px;
+          content: "";
+          opacity: 0;
+          position: absolute;
+          background-color: #8676ff;
+          border-top-left-radius: 50px;
+          border-top-right-radius: 50px;
+          box-shadow: rgba(134, 118, 255, 0.15) 0px 2px 1px,
+            rgba(134, 118, 255, 0.15) 0px 4px 2px,
+            rgba(134, 118, 255, 0.15) 0px 8px 4px,
+            rgba(134, 118, 255, 0.15) 0px 16px 8px,
+            rgba(134, 118, 255, 0.15) 0px 32px 16px;
+        }
+
+        &.active {
+          &::after {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+  .tabs-content{
+    width: 100%;
+    display: block;
+  }
+}
