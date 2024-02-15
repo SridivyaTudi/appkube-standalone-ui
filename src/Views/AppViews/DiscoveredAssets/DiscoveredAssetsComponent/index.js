@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import Aws from "assets/img/aws.png";
 import GoogleCloud from "assets/img/google-cloud.png";
 import Microsoftazure from "assets/img/microsoftazure.png";
-import AssetsEnvironmentTab from "../Components/AssetsEnvironmentTab";
+import AssetsEnvironmentTab from "Views/AppViews/DiscoveredAssets/Components/AssetsEnvironmentTab";
 import AssetsTable from "Views/AppViews/DiscoveredAssets/Components/AssetsTable";
 import AssetsFilterSection from "Views/AppViews/DiscoveredAssets/Components/AssetsFilterSection";
 let data = [
@@ -112,8 +112,9 @@ class DiscoveredAssetsComponent extends Component {
       selectedFilters: filterData,
     };
   }
+
   setActiveTab = (activeTab) => {
-    this.setState({ activeTab });
+    this.setState({ activeTab,  selectedFilters: filterData, });
   };
 
   onClickCloseIcon = (id) => {
@@ -121,6 +122,7 @@ class DiscoveredAssetsComponent extends Component {
     selectedFilters = selectedFilters.filter((filter, index) => index !== id);
     this.setState({ selectedFilters });
   };
+
   render() {
     const { activeTab, selectedFilters, environmentList } = this.state;
     return (
