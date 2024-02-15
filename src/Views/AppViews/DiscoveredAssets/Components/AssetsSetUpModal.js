@@ -24,13 +24,13 @@ class AssetsSetUpModal extends Component {
      <>
       <Modal
         isOpen={this.props.showModal}
-        toggle={this.props.handleAssetsSetUpModal}
+        toggle={this.props.toggleAssetsSetUp}
         className="assets-setup-modal-container"
       >
         <ModalHeader tag="div">
           <h5> <i class="fas fa-cog m-r-1"></i> Log Setup for 95dse45ss</h5>
           <IconButton
-            onClick={this.handleCloseModal}
+            onClick={this.props.toggleAssetsSetUp}
             variant="outlined"
             aria-label="delete"
             size="small"

@@ -17,13 +17,14 @@ class AssetsSetUpSuccessModal extends Component {
     return (
       <Modal
         isOpen={this.props.showModal}
-        toggle={this.props.handleAssetsSetUpSuccessModal}
+        toggle={this.props.toggleAssetsSetUpSuccess}
         className="assets-setup-modal-container"
       >
         <ModalHeader tag="div">
           <h5> Success</h5>
           <IconButton
-            onClick={this.handleAssetsSetUpSuccessModal}
+           
+            onClick={this.props.toggleAssetsSetUpSuccess}
             variant="outlined"
             aria-label="delete"
             size="small"
