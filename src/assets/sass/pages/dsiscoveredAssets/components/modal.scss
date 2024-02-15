@@ -8,8 +8,28 @@
 
   .modal-content {
     padding: 30px 30px;
+    .modal-header {
+      margin-bottom: 20px;
+      border: none;
+      .modal-title {
+        text-align: left !important;
+       
+        width: 100%;
+        h5 {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          color: #344054;
+          .close-btn {
+            margin-left: auto;
+            cursor: pointer;
+        }
+      }
+    }
+  }
     .modal-body {
-      height: 370px;
+      height: 320px;
       .environment-fliter {
         margin-right: 15px;
         display: inline-block;

@@ -1,7 +1,15 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box, Grid, List, ListItem, Checkbox } from "@mui/material/";
+import {
+  Box,
+  Grid,
+  List,
+  ListItem,
+  Checkbox,
+  IconButton,
+} from "@mui/material/";
 import { Component } from "react";
-import { Modal, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import CloseIcon from "@mui/icons-material/Close";
 class AssetsMainFilterModal extends Component {
   constructor(props) {
     super(props);
@@ -100,6 +108,20 @@ class AssetsMainFilterModal extends Component {
         toggle={this.props.togglePopup}
         className="assets-fillter-modal-container"
       >
+        <ModalHeader tag="div">
+          <h5>
+            Log Setup for 95dse45ss{" "}
+            <IconButton
+              onClick={this.props.togglePopup}
+              variant="outlined"
+              aria-label="delete"
+              size="small"
+              className="close-btn"
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </h5>
+        </ModalHeader>
         <ModalBody>
           <Box sx={{ width: "100%" }}>
             <Grid
