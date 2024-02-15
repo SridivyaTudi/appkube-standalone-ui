@@ -52,6 +52,7 @@ import AddProduct from "./AppViews/BIMapping/AddProduct";
 import DiscoveredAssets from "./AppViews/DiscoveredAssets";
 import LoginEvents from "./AppViews/DiscoveredAssets/LoginEvents";
 import Eventhistory from "./AppViews/DiscoveredAssets/Eventhistory";
+import NewReports from "./AppViews/NewReports";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -216,6 +217,7 @@ export const Views = (props) => {
             element={<ApplicationStatusDashboard />}
           />
           <Route path={`${APP_PREFIX_PATH}/reports-old`} element={<ReportsOld />} />
+          <Route path={`${APP_PREFIX_PATH}/new-reports`} element={<NewReports/>}/>
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route
             path={`${APP_PREFIX_PATH}/bim/product-category`}
