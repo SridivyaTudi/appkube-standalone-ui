@@ -10,8 +10,26 @@ import {
   List,
   ListItem,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import AssetsSetUpModal from "./AssetsSetUpModal";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 class AssetsTable extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +37,9 @@ class AssetsTable extends Component {
       showAssetsSetUpModal: false,
     };
   }
+
+
+  
 
   toggleAssetsSetUp = () => {
     this.setState({
@@ -95,7 +116,14 @@ class AssetsTable extends Component {
               <TableRow key={v4()}>
                 <TableCell align="left">{name}</TableCell>
                 <TableCell align="left">{elementType}</TableCell>
-                <TableCell align="left">{landingZone}</TableCell>
+                <TableCell align="left">
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={landingZone}
+                  >
+                    <Link to={``}>{landingZone}</Link>
+                  </HtmlTooltip>
+                </TableCell>
                 <TableCell align="left">{productEnclave}</TableCell>
                 <TableCell align="center">
                   <Box className={tagStatusClass || "tag"}>
@@ -115,7 +143,9 @@ class AssetsTable extends Component {
                         ></div>
                         <Box className="menu-list">
                           <List>
-                            <ListItem><span></span>Tag</ListItem>
+                            <ListItem>
+                              <span></span>Tag
+                            </ListItem>
                           </List>
                         </Box>
                       </>
@@ -151,7 +181,7 @@ class AssetsTable extends Component {
                     type="button"
                     className="list-icon"
                     onClick={(e) => {
-                      this.handleMenuListToggle(index); 
+                      this.handleMenuListToggle(index);
                     }}
                   >
                     <i className="fas fa-ellipsis-v"></i>
