@@ -8,12 +8,12 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  IconButton,
+  Checkbox,
 } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { v4 } from "uuid";
 
-class LoginEvents extends Component {
+class Eventhistory extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -35,10 +35,22 @@ class LoginEvents extends Component {
     return (
       <TableHead>
         <TableRow>
-          <TableCell align="left">Timestamp</TableCell>
-          <TableCell align="left">Ingestion Time</TableCell>
-          <TableCell align="left">Message</TableCell>
-          <TableCell align="left">Event ID</TableCell>
+          <TableCell align="left">
+            {" "}
+            <Checkbox
+              className="check-box"
+              size="small"
+              //id={index}
+              onChange={this.handleCheckBox}
+              //checked={selectedService.includes(index)}
+            />
+            Event name
+          </TableCell>
+          <TableCell align="left">Event time</TableCell>
+          <TableCell align="left">User name</TableCell>
+          <TableCell align="left">Event source</TableCell>
+          <TableCell align="left">Resources</TableCell>
+          <TableCell align="left">Resource name</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -57,6 +69,8 @@ class LoginEvents extends Component {
               <TableRow key={v4()}>
                 <TableCell align="left">{name}</TableCell>
                 <TableCell align="left">{elementType}</TableCell>
+                <TableCell align="left">{landingZone}</TableCell>
+                <TableCell align="left">{productEnclave}</TableCell>
                 <TableCell align="left">{landingZone}</TableCell>
                 <TableCell align="left">{productEnclave}</TableCell>
               </TableRow>
@@ -86,7 +100,9 @@ class LoginEvents extends Component {
           </Button>
         </Box>
         <Box className="global-services-fliter">
-          <Box className="heading">Log Events</Box>
+          <Box className="heading">
+            Event history <span>(50+)</span>
+          </Box>
         </Box>
         <Box className="d-flex width-100 search-box">
           <Box className="search">
@@ -102,7 +118,7 @@ class LoginEvents extends Component {
               <SearchOutlinedIcon />
             </button>
           </Box>
-          <IconButton className="undo-icon"><i className="fas fa-undo"></i></IconButton>
+          <Button className="primary-btn min-width">Filter</Button>
         </Box>
         <Box className="assets-table">{this.renderTable()}</Box>
       </Box>
@@ -110,4 +126,4 @@ class LoginEvents extends Component {
   }
 }
 
-export default LoginEvents;
+export default Eventhistory;

@@ -51,6 +51,7 @@ import AddDepartment from "./AppViews/BIMapping/AddDepartment";
 import AddProduct from "./AppViews/BIMapping/AddProduct";
 import DiscoveredAssets from "./AppViews/DiscoveredAssets";
 import LoginEvents from "./AppViews/DiscoveredAssets/LoginEvents";
+import Eventhistory from "./AppViews/DiscoveredAssets/Eventhistory";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -232,6 +233,7 @@ export const Views = (props) => {
           />
           <Route path={`${APP_PREFIX_PATH}/discovered-assets`} element={<DiscoveredAssets/>}/>
           <Route path={`${APP_PREFIX_PATH}/discovered-assets/login-events`} element={<LoginEvents/>}/>
+          <Route path={`${APP_PREFIX_PATH}/discovered-assets/events-history`} element={<Eventhistory/>} />
           <Route path={`/error`} element={<Error />} />
         </Routes>
         <ToastContainer

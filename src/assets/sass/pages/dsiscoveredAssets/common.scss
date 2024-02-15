@@ -21,6 +21,56 @@
       line-height: 20px;
       font-weight: 500;
       color: #383874;
+      span {
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 500;
+        color: #1b4dff;
+      }
+    }
+  }
+  .search-box {
+    margin-top: 20px;
+    .search {
+      display: inline-flex;
+      width: 60%;
+      height: 36px;
+      background-color: #eef0fa;
+      border-radius: 7px;
+      margin-right: 15px;
+
+      input {
+        display: inline-flex;
+        width: 100%;
+        border: none;
+        background-color: transparent;
+        padding-left: 15px;
+        padding-right: 15px;
+        color: #000000;
+        font-size: 13px;
+        line-height: 36px;
+      }
+
+      button {
+        display: inline-flex;
+        border: none;
+        cursor: pointer;
+        background-color: transparent;
+        color: rgb(171, 173, 216);
+        padding: 6px 7px 0;
+      }
+    }
+    .undo-icon {
+      color: #a1a3d4;
+    }
+
+    .primary-btn {
+      padding-left: 15px;
+      padding-right: 15px;
+
+      a {
+        color: #ffffff;
+      }
     }
   }
 }
