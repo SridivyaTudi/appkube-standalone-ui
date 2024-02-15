@@ -12,11 +12,98 @@ import {
 } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { v4 } from "uuid";
-
+let logs = [
+  {
+    timeStamp: "2024-02-12T 09:48:12.342+05:30 ",
+    ingestionTime: "2024-02-12T 09:48:12.342+05:30 ",
+    message: "util.py[DEBUG] : Reading from /usr/lib/python3.9/site-package",
+    id: 38082895194,
+  },
+  {
+    timeStamp: "2024-02-12T 09:48:12.342+05:30 ",
+    ingestionTime: "2024-02-12T 09:48:12.342+05:30 ",
+    message: "util.py[DEBUG] : Reading from /usr/lib/python3.9/site-package",
+    id: 38082895194,
+  },
+  {
+    timeStamp: "2024-02-12T 09:48:12.342+05:30 ",
+    ingestionTime: "2024-02-12T 09:48:12.342+05:30 ",
+    message: "util.py[DEBUG] : Reading from /usr/lib/python3.9/site-package",
+    id: 38082895194,
+  },
+  {
+    timeStamp: "2024-02-12T 09:48:12.342+05:30 ",
+    ingestionTime: "2024-02-12T 09:48:12.342+05:30 ",
+    message: "util.py[DEBUG] : Reading from /usr/lib/python3.9/site-package",
+    id: 38082895194,
+  },
+  {
+    timeStamp: "2024-02-12T 09:48:12.342+05:30 ",
+    ingestionTime: "2024-02-12T 09:48:12.342+05:30 ",
+    message: "util.py[DEBUG] : Reading from /usr/lib/python3.9/site-package",
+    id: 38082895194,
+  },
+  {
+    timeStamp: "2024-02-12T 09:48:12.342+05:30 ",
+    ingestionTime: "2024-02-12T 09:48:12.342+05:30 ",
+    message: "util.py[DEBUG] : Reading from /usr/lib/python3.9/site-package",
+    id: 38082895194,
+  },
+  {
+    timeStamp: "2024-02-12T 09:48:12.342+05:30 ",
+    ingestionTime: "2024-02-12T 09:48:12.342+05:30 ",
+    message: "util.py[DEBUG] : Reading from /usr/lib/python3.9/site-package",
+    id: 38082895194,
+  },
+  {
+    timeStamp: "2024-02-12T 09:48:12.342+05:30 ",
+    ingestionTime: "2024-02-12T 09:48:12.342+05:30 ",
+    message: "util.py[DEBUG] : Reading from /usr/lib/python3.9/site-package",
+    id: 38082895194,
+  },
+  {
+    timeStamp: "2024-02-12T 09:48:12.342+05:30 ",
+    ingestionTime: "2024-02-12T 09:48:12.342+05:30 ",
+    message: "util.py[DEBUG] : Reading from /usr/lib/python3.9/site-package",
+    id: 38082895194,
+  },
+  {
+    timeStamp: "2024-02-12T 09:48:12.342+05:30 ",
+    ingestionTime: "2024-02-12T 09:48:12.342+05:30 ",
+    message: "util.py[DEBUG] : Reading from /usr/lib/python3.9/site-package",
+    id: 38082895194,
+  },
+  {
+    timeStamp: "2024-02-12T 09:48:12.342+05:30 ",
+    ingestionTime: "2024-02-12T 09:48:12.342+05:30 ",
+    message: "util.py[DEBUG] : Reading from /usr/lib/python3.9/site-package",
+    id: 38082895194,
+  },
+  {
+    timeStamp: "2024-02-12T 09:48:12.342+05:30 ",
+    ingestionTime: "2024-02-12T 09:48:12.342+05:30 ",
+    message: "util.py[DEBUG] : Reading from /usr/lib/python3.9/site-package",
+    id: 38082895194,
+  },
+  {
+    timeStamp: "2024-02-12T 09:48:12.342+05:30 ",
+    ingestionTime: "2024-02-12T 09:48:12.342+05:30 ",
+    message: "util.py[DEBUG] : Reading from /usr/lib/python3.9/site-package",
+    id: 38082895194,
+  },
+  {
+    timeStamp: "2024-02-12T 09:48:12.342+05:30 ",
+    ingestionTime: "2024-02-12T 09:48:12.342+05:30 ",
+    message: "util.py[DEBUG] : Reading from /usr/lib/python3.9/site-package",
+    id: 38082895194,
+  },
+];
 class LoginEvents extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      logEvents:logs
+    };
   }
   //  Render table
   renderTable = () => {
@@ -46,19 +133,18 @@ class LoginEvents extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    let environmentList = this.props.data || [];
+    let environmentList =  this.state.logEvents;
     return (
       <TableBody>
         {environmentList.length ? (
           environmentList.map((environment) => {
-            let { name, elementType, landingZone, productEnclave } =
-              environment;
+            let { timeStamp, ingestionTime, message, id } = environment;
             return (
               <TableRow key={v4()}>
-                <TableCell align="left">{name}</TableCell>
-                <TableCell align="left">{elementType}</TableCell>
-                <TableCell align="left">{landingZone}</TableCell>
-                <TableCell align="left">{productEnclave}</TableCell>
+                <TableCell align="left">{timeStamp}</TableCell>
+                <TableCell align="left">{ ingestionTime}</TableCell>
+                <TableCell align="left">{ message}</TableCell>
+                <TableCell align="left">{id}</TableCell>
               </TableRow>
             );
           })
@@ -71,6 +157,28 @@ class LoginEvents extends Component {
         )}
       </TableBody>
     );
+  };
+
+   //  Serach Groups
+   handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { logEvents } = this.state;
+    let data = logs;
+
+    if (data?.length) {
+      if (value) {
+        logEvents = data.filter((user) => {
+          if (user?.timeStamp?.toLowerCase().includes(value.toLowerCase())) {
+            return user;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        logEvents = data;
+      }
+      this.setState({ logEvents, searchedKey: value });
+    }
   };
   render() {
     return (

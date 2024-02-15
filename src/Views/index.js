@@ -35,7 +35,7 @@ import { getCurrentUser } from "Utils";
 import titles from "./PathTitles.json";
 import Error from "./AppViews/Error";
 import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
-import Reports from "./AppViews/Reports";
+import ReportsOld from "./AppViews/Reports";
 import RoleDetails from "./AppViews/Setting/Permissions/RoleDetails";
 import GroupDetails from "Views/AppViews/Setting/Permissions/GroupDetails";
 import AddUsers from "./AppViews/Setting/Permissions/AddUsers";
@@ -215,7 +215,7 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/application-status-dashboard`}
             element={<ApplicationStatusDashboard />}
           />
-          <Route path={`${APP_PREFIX_PATH}/reports`} element={<Reports />} />
+          <Route path={`${APP_PREFIX_PATH}/reports-old`} element={<ReportsOld />} />
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route
             path={`${APP_PREFIX_PATH}/bim/product-category`}
