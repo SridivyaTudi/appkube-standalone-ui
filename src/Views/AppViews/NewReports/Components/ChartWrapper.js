@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Box, Grid, Button } from "@mui/material";
+import {Link} from "react-router-dom";
 class ChartWrapper extends Component {
   constructor(props) {
     super(props);
@@ -18,12 +19,14 @@ class ChartWrapper extends Component {
           <Box className="chart-box">
             <Box className="heading m-b-10">
               <h4>{title}</h4>
-              <Button
-                className="primary-outline-btn min-width"
-                variant="outlined"
-              >
-                {labelOfBtn}
-              </Button>
+              <Link to={`/app/new-reports/spend-overview`}>
+                <Button
+                  className="primary-outline-btn min-width"
+                  variant="outlined"
+                >
+                  {labelOfBtn}
+                </Button>
+              </Link>
             </Box>
             {ChartComponent}
           </Box>
