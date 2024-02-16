@@ -295,15 +295,28 @@ class BIMapping extends Component {
         );
       }
       let cloudWiseLandingZoneCount = getCloudWiseLandingZoneCount();
+      if (cloudWiseLandingZoneCount.length) {
+        let environments = ["AWS", "AZURE", "GCP", "KUBEENETES"];
+        cloudWiseLandingZoneCount = cloudWiseLandingZoneCount.map((count) => {
+          if (environments.includes(count.cloud)) {
+            environments.splice(environments.indexOf(environments), 1);
+          }
+          return { name: "" + count.totalAccounts };
+        });
+        if (environments.length) {
+          cloudWiseLandingZoneCount = [
+            ...cloudWiseLandingZoneCount,
+            { name: 0 },
+          ];
+        }
+      }
+      
       organizationTableData = [
         {
           name,
           id,
           isMutipleCell: true,
-          multipeCellData:
-            cloudWiseLandingZoneCount.map((count) => {
-              return { name: "" + count.totalAccounts };
-            }) || [],
+          multipeCellData: cloudWiseLandingZoneCount,
           type: this.TYPE.ORGANIZATION,
           chlidren,
         },
