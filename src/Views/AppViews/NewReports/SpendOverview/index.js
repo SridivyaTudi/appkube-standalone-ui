@@ -86,7 +86,7 @@ class SpendOverview extends Component {
   };
   render() {
     return (
-      <Box className="new-reports-container">
+      <Box className="new-reports-container spend-overview-container">
         <Box className="list-heading">
           <h3>Spend Overview</h3>
         </Box>

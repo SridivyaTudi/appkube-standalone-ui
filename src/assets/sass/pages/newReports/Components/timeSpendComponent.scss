@@ -1,0 +1,58 @@
+.spend-control-cards {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 20px;
+  .time-spend-card {
+    width: 250px;
+    margin: 0 5px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: #ffffff;
+    border-radius: 5px;
+    padding:  15px;
+    .spend-icon {
+      width: 60px;
+      height: 60px;
+      min-width: 60px;
+      background: #8676ff;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .time-spend-content {
+      margin-left: 10px;
+      label {
+        font-size: 14px;
+        line-height: 18px;
+        display: block;
+        font-weight: 500;
+        color: #383874;
+        margin-bottom: 5px;
+      }
+      strong{
+        font-size: 16px;
+        line-height: 18px;
+        display: block;
+        color: #383874;
+        margin-bottom: 5px;
+      }
+      span{
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 500;
+        color: #047857;
+        margin-right: 8px;
+      }
+      p{
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 400;
+        color: #A2A2A2;
+      }
+    }
+  }
+}
