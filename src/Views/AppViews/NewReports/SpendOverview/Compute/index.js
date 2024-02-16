@@ -11,7 +11,7 @@ import {
   List,
   ListItem,
 } from "@mui/material";
-import TimeSpendComponent from "../Components/TimeSpendComponent";
+import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import ServiceIcon1 from "assets/img/report/service-icon1.png";
 import ServiceIcon2 from "assets/img/report/service-icon2.png";
 import ServiceIcon3 from "assets/img/report/service-icon3.png";

@@ -130,7 +130,7 @@ class AccordionView extends Component {
                 {subchild?.name}
                 {this.props.isLoding &&
                 selectedNodes[selectedNodes?.length - 1] === currentNode ? (
-                  <Loader className={"small-loader"} />
+                  <Loader className={"small-loader d-inline-block p-l-15"} />
                 ) : (
                   <></>
                 )}
