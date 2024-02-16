@@ -35,6 +35,7 @@ const config = {
   INFRA_TOPOLOGY_GLOBAL_SERVICES_DATA: `${baseURL}/query/organization/#org-id#/infra-topology/landing-zone-id/#landing-zone-id#/global-service-category-wise-summary`,
   INFRA_TOPOLOGY_GLOBAL_SERVICES_CLOUD_ELEMENT_SEARCH: `${baseURL}/cloud-element/search?elementType=#element-type#`,
   ENVIRONMENTS_APPLICATIONS_TABLE_DATA: `${baseURL}/query/organization/#org-id#/application-topology/landing-zone-id/#landing-zone-id#`,
+  CLOUD_WISE_LANDINGZONE_COUNT: `${baseURL}/query/organization/#org-id#/cloud-wise-landingzone/count`,
 
   /* AssociateApp  */
   GET_ASSOCIATE_PRODUCT_LIST: `${baseURL}/product/search?departmentId=#department-id#`,

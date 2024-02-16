@@ -8,6 +8,7 @@ import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import { v4 } from "uuid";
 import { Box, Checkbox } from "@mui/material";
+import Loader from "Components/Loader";
 class AccordionView extends Component {
   constructor(props) {
     super(props);
@@ -87,13 +88,24 @@ class AccordionView extends Component {
               width={80}
               onClick={(e) => {
                 e.stopPropagation();
-                isChildExist ? this.onClickNode(currentNode) : <></>;
+                if (
+                  !(
+                    this.props.isLoding &&
+                    selectedNodes[selectedNodes?.length - 1]
+                  )
+                ) {
+                  [isChildExist, subchild.isLastClickEnable].includes(true) ? (
+                    this.onClickNode(currentNode, subchild)
+                  ) : (
+                    <></>
+                  );
+                }
               }}
               className={`${isActive ? "active" : ""} ${
                 isChildExist ? "cursor" : ""
               }`}
             >
-              {subchild.isCheckBoxShow ? (
+              {subchild?.isCheckBoxShow ? (
                 <Box className="d-inline-block check-box ">
                   <Checkbox
                     size="small"
@@ -115,10 +127,16 @@ class AccordionView extends Component {
                     isChildExist ? "" : "disabled"
                   }  `}
                 />
-                {subchild.name}
+                {subchild?.name}
+                {this.props.isLoding &&
+                selectedNodes[selectedNodes?.length - 1] === currentNode ? (
+                  <Loader className={"small-loader"} />
+                ) : (
+                  <></>
+                )}
               </Box>
             </TableCell>
-            {subchild.subName ? (
+            {subchild?.subName ? (
               <TableRow className={`${isActive ? "active" : ""}`}>
                 <TableCell
                   width={120}
@@ -130,13 +148,13 @@ class AccordionView extends Component {
                 </TableCell>
               </TableRow>
             ) : null}
-            {subchild.isMutipleCell ? (
+            {subchild?.isMutipleCell ? (
               subchild.multipeCellData?.length ? (
                 subchild.multipeCellData.map((cell) => (
                   <TableCell
                     className={`subchild-table-section ${
                       isActive ? "active" : ""
-                    }`} 
+                    }`}
                   >
                     {cell.name}
                   </TableCell>
@@ -168,7 +186,7 @@ class AccordionView extends Component {
    * Fire click event on node
    *  @param {String} currentNode - selected index
    */
-  onClickNode = (currentNode) => {
+  onClickNode = (currentNode, details) => {
     let { selectedNodes } = this.state;
     let isExistNode = selectedNodes.filter((policy) => policy === currentNode);
 
@@ -176,6 +194,11 @@ class AccordionView extends Component {
       selectedNodes = selectedNodes.filter((policy) => policy !== currentNode);
     } else {
       selectedNodes.push(currentNode);
+      try {
+        this.props.onClickNode(details);
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     this.setState({ selectedNodes });

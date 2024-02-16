@@ -61,3 +61,16 @@ export const getProductsByDepId = createAsyncThunk(
     }
   }
 );
+
+export const getCloudWiseLandingZoneCount = createAsyncThunk(
+  "environments/getCloudWiseLandingZoneCount",
+  async (depId) => {
+    const url = config.CLOUD_WISE_LANDINGZONE_COUNT;
+    try {
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

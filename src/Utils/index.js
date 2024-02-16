@@ -1,4 +1,4 @@
-const LOCAL_STORAGE_CONSTANTS = {
+export const LOCAL_STORAGE_CONSTANTS = {
   CURRENT_USER: "currentUser",
   CURRENT_ORG_ID: "currentOrgId",
   REMEMBER_USER_NAME: "rememberUserName",
@@ -7,6 +7,7 @@ const LOCAL_STORAGE_CONSTANTS = {
   ACTIVE_TAB: "activeTab",
   INFRAVIEW_DETAILS: "infraViewDetails",
   URL_DETAILS_OF_PAGE: "urlDetailsOfPage",
+  CLOUD_WISE_LANDINGZONE_COUNT: "cloudWiseLandingZoneCount",
 };
 
 export const getCurrentUser = () => {
@@ -270,4 +271,22 @@ export const RbacPermissionsDataManipulation = {
     }
     return isExist;
   },
+};
+
+export const setCloudWiseLandingZoneCount = (data) => {
+  if (data) {
+    localStorage.setItem(
+      LOCAL_STORAGE_CONSTANTS.CLOUD_WISE_LANDINGZONE_COUNT,
+      JSON.stringify(data)
+    );
+  }
+};
+
+export const getCloudWiseLandingZoneCount = () => {
+  const counts = JSON.parse(
+    localStorage.getItem(
+      LOCAL_STORAGE_CONSTANTS.CLOUD_WISE_LANDINGZONE_COUNT
+    ) || null
+  );
+  return counts;
 };

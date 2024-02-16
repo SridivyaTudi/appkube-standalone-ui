@@ -7,7 +7,19 @@ import Kubernetes from "../../../assets/img/kubernetes.png";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { Link } from "react-router-dom";
 import AccordionView from "Views/AppViews/Setting/Components/AccordionView";
-
+import { getCurrentOrgId, getCloudWiseLandingZoneCount } from "Utils";
+import status from "Redux/Constants/CommonDS";
+import { connect } from "react-redux";
+import {
+  getProductList,
+  getProductEnv,
+  getModules,
+  getModuleElements,
+  getModulesOf3Tier,
+} from "Redux/AssociateApp/AssociateAppThunk";
+import { getOrgWiseDepartments } from "Redux/Environments/EnvironmentsThunk";
+import Loader from "Components/Loader";
+const orgId = getCurrentOrgId();
 let data = [
   {
     name: "Synectiks",
@@ -202,19 +214,198 @@ let headers = [
   },
 ];
 class BIMapping extends Component {
+  TYPE = {
+    ORGANIZATION: "organization",
+    DEPARTMENT: "department",
+    PRODUCT: "product",
+    PRODUCT_ENVS: "productEnvs",
+  };
   constructor(props) {
     super(props);
     this.state = {
       isSelectDepartmentOpen: false,
+      organizationTableData: [],
+      clickTableData: {},
     };
+  }
+
+  componentDidMount = () => {
+    this.props.getOrgWiseDepartments(orgId);
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.organizationWiseDepartments.status !==
+        this.props.organizationWiseDepartments.status &&
+      this.props.organizationWiseDepartments.status === status.SUCCESS &&
+      this.props.organizationWiseDepartments?.data
+    ) {
+      const organization = this.props.organizationWiseDepartments.data;
+      this.manipulateDepartMentData(organization);
+    }
+
+    if (
+      prevProps.products.status !== this.props.products.status &&
+      this.props.products.status === status.SUCCESS &&
+      this.props.products?.data
+    ) {
+      let products = this.props.products?.data;
+      this.manipulateProductData(products);
+    }
+
+    if (
+      prevProps.productEnv.status !== this.props.productEnv.status &&
+      this.props.productEnv.status === status.SUCCESS &&
+      this.props.productEnv?.data
+    ) {
+      let productEnvs = this.props.productEnv.data;
+      this.manipulateProductEnvsData(productEnvs);
+    }
   }
   toggleSelectDepartment = () => {
     this.setState({
       isSelectDepartmentOpen: !this.state.isSelectDepartmentOpen,
     });
   };
+
+  manipulateChildrenData = (data, type) => {
+    return data.map((dataDetails) => {
+      let { name, id, departmentId } = dataDetails;
+      return {
+        name,
+        id,
+        chlidren: [],
+        type,
+        departmentId,
+        isLastClickEnable: true,
+      };
+    });
+  };
+
+  // Manipulation of department data
+  manipulateDepartMentData = (organization) => {
+    if (organization) {
+      let { name, id, departments } = organization;
+      let { organizationTableData } = this.state;
+      let chlidren = [];
+      if (departments?.length) {
+        chlidren = this.manipulateChildrenData(
+          departments,
+          this.TYPE.DEPARTMENT
+        );
+      }
+      let cloudWiseLandingZoneCount = getCloudWiseLandingZoneCount();
+      organizationTableData = [
+        {
+          name,
+          id,
+          isMutipleCell: true,
+          multipeCellData:
+            cloudWiseLandingZoneCount.map((count) => {
+              return { name: "" + count.totalAccounts };
+            }) || [],
+          type: this.TYPE.ORGANIZATION,
+          chlidren,
+        },
+      ];
+
+      this.setState({
+        organizationTableData,
+      });
+    }
+  };
+  // Manipulation of Product data
+  manipulateProductData = (products) => {
+    if (products) {
+      let { organizationTableData, clickTableData } = this.state;
+
+      organizationTableData =
+        organizationTableData.map((organization) => {
+          if (organization.chlidren?.length) {
+            organization.chlidren = organization.chlidren.map((department) => {
+              if (department.id === clickTableData.id) {
+                department.chlidren = this.manipulateChildrenData(
+                  products,
+                  this.TYPE.PRODUCT
+                );
+              }
+              return department;
+            });
+          }
+          return organization;
+        }) || [];
+
+      this.setState({
+        organizationTableData,
+      });
+    }
+  };
+
+  // Manipulation of ProductEnvs data
+  manipulateProductEnvsData = (productEnvs) => {
+    if (productEnvs) {
+      let { organizationTableData, clickTableData } = this.state;
+
+      organizationTableData =
+        organizationTableData.map((organization) => {
+          let organizationChlidren = organization.chlidren;
+
+          if (organizationChlidren?.length) {
+            organization.chlidren = organizationChlidren.map((department) => {
+              if (department.id === clickTableData.departmentId) {
+                department.chlidren = department.chlidren.map((product) => {
+                  if (product.id === clickTableData.id) {
+                    product.chlidren = this.manipulateChildrenData(
+                      productEnvs,
+                      this.TYPE.PRODUCT_ENVS
+                    );
+                  }
+                  return product;
+                });
+              }
+              return department;
+            });
+          }
+          return organization;
+        }) || [];
+
+      this.setState({
+        organizationTableData,
+      });
+    }
+  };
+
+  // Render Loder
+  renderLoder(widthClass) {
+    return (
+      <Box className="d-blck text-center w-100 h-100 ">
+        <Loader className="align-item-center justify-center w-100 h-100" />
+      </Box>
+    );
+  }
+
+  onClickNode(data) {
+    let { type } = data;
+    let { clickTableData } = this.state;
+
+    if (type === this.TYPE.DEPARTMENT) {
+      this.props.getProductList(data.id);
+    } else if (type === this.TYPE.PRODUCT) {
+      this.props.getProductEnv(data.id);
+    }
+    this.setState({ clickTableData: data });
+  }
   render() {
-    const { isSelectDepartmentOpen } = this.state;
+    const { isSelectDepartmentOpen, organizationTableData } = this.state;
+    const {
+      organizationWiseDepartments: organization,
+      products,
+      productEnv,
+    } = this.props;
+    const inprogressStatus = status.IN_PROGRESS;
+    let loderStatus = [products.status, productEnv.status].includes(
+      inprogressStatus
+    );
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -254,67 +445,37 @@ class BIMapping extends Component {
           </Box>
         </Box>
         <Box className="bimapping-table">
-          <AccordionView data={data} headers={headers} />
-          {/* <TableContainer className="table">
-            <Table>
-              <TableHead className="active">
-                <TableRow>
-                  <TableCell align="left">Organization Name</TableCell>
-                  <TableCell align="center">
-                    <Box className="environment-image">
-                      <img src={Aws} alt="" />
-                    </Box>
-                    AWS
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="environment-image">
-                      <img src={Microsoftazure} alt="" />
-                    </Box>
-                    Azure
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="environment-image">
-                      <img src={GoogleCloud} alt="" />
-                    </Box>
-                    GCP
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="environment-image">
-                      <img src={Kubernetes} alt="" />
-                    </Box>
-                    Kubernetes
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell align="left">
-                    <Link to={""}>
-                      Synectiks
-                      <i className="fa-solid fa-caret-down arrow-icon"></i>
-                    </Link>
-                    <Box className="add-synectiks">
-                      <Box className="arrow-image m-r-1">
-                        <img src={DownRightArrow} alt="DownRightArrow" />
-                      </Box>
-                      HR
-                      <Link to={"/app/bim/adding-product"}>
-                        <i class="fa-solid fa-circle-plus"></i>
-                      </Link>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">01</TableCell>
-                  <TableCell align="center">01</TableCell>
-                  <TableCell align="center">02</TableCell>
-                  <TableCell align="center">00</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer> */}
+          {organization.status === inprogressStatus ? (
+            this.renderLoder()
+          ) : (
+            <AccordionView
+              data={organizationTableData}
+              headers={headers}
+              onClickNode={(data) => this.onClickNode(data)}
+              isLoding={loderStatus}
+            />
+          )}
         </Box>
       </Box>
     );
   }
 }
 
-export default BIMapping;
+function mapStateToProps(state) {
+  const { products, productEnv, modules, moduleElements, threeTierModules } =
+    state.associateApp;
+  const { organizationWiseDepartments } = state.environments;
+  return {
+    organizationWiseDepartments,
+    products,
+    productEnv,
+  };
+}
+
+const mapDispatchToProps = {
+  getOrgWiseDepartments,
+  getProductList,
+  getProductEnv,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BIMapping);

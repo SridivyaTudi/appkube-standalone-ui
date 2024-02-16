@@ -31,7 +31,11 @@ import ThreeTierTopology from "./AppViews/Environments/EnvironmentList/ThreeTier
 import ApplicationStatusDashboard from "./AppViews/Dashboard/ApplicationStatusDashboard";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { getCurrentUser } from "Utils";
+import {
+  getCurrentUser,
+  setCloudWiseLandingZoneCount,
+  LOCAL_STORAGE_CONSTANTS,
+} from "Utils";
 import titles from "./PathTitles.json";
 import Error from "./AppViews/Error";
 import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
@@ -54,6 +58,9 @@ import LoginEvents from "./AppViews/DiscoveredAssets/LoginEvents";
 import Eventhistory from "./AppViews/DiscoveredAssets/Eventhistory";
 import NewReports from "./AppViews/NewReports";
 import SpendOverview from "./AppViews/NewReports/SpendOverview";
+import { getCloudWiseLandingZoneCount } from "Redux/Environments/EnvironmentsThunk";
+import status from "Redux/Constants/CommonDS";
+import { useDispatch, useSelector } from "react-redux";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -68,11 +75,36 @@ export function withRouter(Component) {
 
 export const Views = (props) => {
   const location = useLocation();
+  let disptch = useDispatch();
+  let cloudWiseLandingZoneCount = useSelector(
+    (state) => state.environments.cloudWiseLandingZoneCount
+  );
+
   useEffect(() => {
     setTitle();
   });
 
   const user = getCurrentUser();
+
+  useEffect(() => {
+    let isExistLandingZoneCounts = localStorage.getItem(
+      LOCAL_STORAGE_CONSTANTS.CLOUD_WISE_LANDINGZONE_COUNT
+    );
+    if (user && !isExistLandingZoneCounts) {
+      disptch(getCloudWiseLandingZoneCount());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      if (cloudWiseLandingZoneCount.status === status.SUCCESS) {
+        let landingZoneCounts = cloudWiseLandingZoneCount.data;
+        if (landingZoneCounts?.length) {
+          setCloudWiseLandingZoneCount(landingZoneCounts);
+        }
+      }
+    }
+  }, [cloudWiseLandingZoneCount]);
 
   const setTitle = () => {
     if (location) {
@@ -217,9 +249,18 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/application-status-dashboard`}
             element={<ApplicationStatusDashboard />}
           />
-          <Route path={`${APP_PREFIX_PATH}/reports-old`} element={<ReportsOld />} />
-          <Route path={`${APP_PREFIX_PATH}/new-reports`} element={<NewReports/>}/>
-          <Route path={`${APP_PREFIX_PATH}/new-reports/spend-overview`} element={<SpendOverview/>}/>
+          <Route
+            path={`${APP_PREFIX_PATH}/reports-old`}
+            element={<ReportsOld />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports`}
+            element={<NewReports />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/spend-overview`}
+            element={<SpendOverview />}
+          />
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route
             path={`${APP_PREFIX_PATH}/bim/product-category`}
@@ -235,9 +276,18 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/bim/add-product`}
             element={<AddProduct />}
           />
-          <Route path={`${APP_PREFIX_PATH}/discovered-assets`} element={<DiscoveredAssets/>}/>
-          <Route path={`${APP_PREFIX_PATH}/discovered-assets/login-events`} element={<LoginEvents/>}/>
-          <Route path={`${APP_PREFIX_PATH}/discovered-assets/events-history`} element={<Eventhistory/>} />
+          <Route
+            path={`${APP_PREFIX_PATH}/discovered-assets`}
+            element={<DiscoveredAssets />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/discovered-assets/login-events`}
+            element={<LoginEvents />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/discovered-assets/events-history`}
+            element={<Eventhistory />}
+          />
           <Route path={`/error`} element={<Error />} />
         </Routes>
         <ToastContainer
