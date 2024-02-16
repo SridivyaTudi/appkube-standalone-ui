@@ -81,6 +81,9 @@ class AccordionView extends Component {
       let arrowDownOrRight = isActive ? "down" : "right";
       let isChildExist = subchild?.chlidren?.length ? true : false;
       let childDataShow = selectedNodes.includes(currentNode) && isChildExist;
+      let isLodingData =
+        this.props.isLoding &&
+        selectedNodes[selectedNodes?.length - 1] === currentNode;
       return (
         <Fragment key={v4()}>
           <TableRow>
@@ -128,8 +131,7 @@ class AccordionView extends Component {
                   }  `}
                 />
                 {subchild?.name}
-                {this.props.isLoding &&
-                selectedNodes[selectedNodes?.length - 1] === currentNode ? (
+                {isLodingData ? (
                   <Loader className={"small-loader d-inline-block p-l-15"} />
                 ) : (
                   <></>
@@ -166,7 +168,7 @@ class AccordionView extends Component {
               <></>
             )}
           </TableRow>
-          {childDataShow ? (
+          {childDataShow && !isLodingData ? (
             <TableRow>
               <TableCell colSpan={2} className="child-table-section">
                 <Table>

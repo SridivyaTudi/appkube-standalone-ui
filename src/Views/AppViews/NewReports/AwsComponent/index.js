@@ -15,12 +15,17 @@ class AwsComponent extends Component {
       <>
         <Box className="reports-charts">
           <ChartWrapper
-            ChartComponent={<HorizontalBarChart data={totalUsedServiceData} />}
+            ChartComponent={
+              <HorizontalBarChart
+                data={totalUsedServiceData}
+                style={{ height: 250, width: 300 }}
+              />
+            }
             data={{
               title: "Spend Overview",
               labelOfBtn: " View Details",
             }}
-            
+            style={{ height: '450px', width: '840px' }}
           />
         </Box>
       </>
