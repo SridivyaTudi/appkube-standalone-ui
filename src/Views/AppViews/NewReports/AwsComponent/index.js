@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Box, Grid, Button } from "@mui/material";
 import ChartWrapper from "../Components/ChartWrapper";
 import HorizontalBarChart from "Views/AppViews/NewReports/Components/HorizontalBarChart";
+import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
 const totalUsedServiceData = [
   { label: "EC2", value: 4700, color: "#A145FF" },
   { label: "RDS", value: 4500, color: "#FA6298" },
@@ -9,24 +10,81 @@ const totalUsedServiceData = [
   { label: "EKS", value: 4000, color: "#F9D33D" },
   { label: "Lambda", value: 3800, color: "#F9D33D" },
 ];
+let donutData = [
+  {
+    age_group: "Others",
+    population: 20201362,
+  },
+  {
+    age_group: "Initial Miscellaneous Code ",
+    population: 40267984,
+  },
+  {
+    age_group: "Liability Limits ",
+    population: 30672088,
+  },
+  {
+    age_group: "Payments on the file",
+    population: 53980105,
+  },
+  {
+    age_group: "Vehicle Make ",
+    population: 81489445,
+  },
+];
+
 class AwsComponent extends Component {
   render() {
     return (
       <>
         <Box className="reports-charts">
-          <ChartWrapper
-            ChartComponent={
-              <HorizontalBarChart
-                data={totalUsedServiceData}
-                style={{ height: 250, width: 300 }}
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid item xs={3}>
+              <ChartWrapper
+                data={{
+                  title: "Spend Overview",
+                  labelOfBtn: " View Details",
+                }}
+                ChartComponent={
+                  <DonutChart data={donutData} width={300} height={250}  />
+                }
               />
-            }
-            data={{
-              title: "Spend Overview",
-              labelOfBtn: " View Details",
-            }}
-            style={{ height: '450px', width: '840px' }}
-          />
+            </Grid>
+            <Grid item xs={6}>
+              <ChartWrapper
+                ChartComponent={
+                  <HorizontalBarChart
+                    data={totalUsedServiceData}
+                    // style={{ height: 250, width: 300 }}
+                  />
+                }
+                data={{
+                  title: "Spend Overview",
+                  labelOfBtn: " View Details",
+                }}
+                // style={{ height: '450px', width: '840px' }}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <ChartWrapper
+                ChartComponent={
+                  <HorizontalBarChart
+                    data={totalUsedServiceData}
+                    // style={{ height: 250, width: 300 }}
+                  />
+                }
+                data={{
+                  title: "Spend Overview",
+                  labelOfBtn: " View Details",
+                }}
+                // style={{ height: '450px', width: '840px' }}
+              />
+            </Grid>
+          </Grid>
         </Box>
       </>
     );

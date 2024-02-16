@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from "react";
+import { Box, Grid, Button } from "@mui/material";
 import * as d3 from "d3";
 const thickness = 25;
-const DonutChart = ({ data, width, height }) => {
+const DonutChart = ({ data, width, height, style }) => {
   const svgRef = useRef();
   var pieGenerator = d3.pie().value(([key, value]) => {
     return value;
@@ -19,7 +20,7 @@ const DonutChart = ({ data, width, height }) => {
     const arc = d3
       .arc()
       .innerRadius(innerRadius - thickness)
-      .outerRadius(radius * 0.6);
+      .outerRadius(radius * 0.54);
     const arcs = svg
       .selectAll(".arc")
       .data(pie(data))
@@ -52,7 +53,7 @@ const DonutChart = ({ data, width, height }) => {
       .append("text")
       .attr("text-anchor", "middle")
       .attr("dominant-baseline", "middle")
-      .attr("font-size", "40px")
+      .attr("font-size", "25px")
       .attr("fill", "black")
       .text("$1000")
       .attr("transform", `translate(${width / 1.7},${height / 2})`);
@@ -68,12 +69,12 @@ const DonutChart = ({ data, width, height }) => {
       .data(arcData)
       .enter()
       .append("g")
-      .attr("class", "legendGroup")
-      .attr("transform", (d, i) => {
-        xOff = (i % 2) * 130;
-        yOff = Math.floor(i / 2) * 25;
-        return "translate(" + xOff + "," + yOff + ")";
-      });
+      .attr("class", "legendGroup");
+    // .attr("transform", (d, i) => {
+    //   xOff = (i % 2) * 130;
+    //   yOff = Math.floor(i / 2) * 25;
+    //   return "translate(" + xOff + "," + yOff + ")";
+    // });
 
     lg.append("rect")
       .attr("fill", (d) => {
@@ -97,7 +98,11 @@ const DonutChart = ({ data, width, height }) => {
       .text((d) => d.data[1].age_group)
       .append("title");
   }, [data, height, width]);
-  return <svg ref={svgRef} width={width} height={height}></svg>;
+  return (
+    <Box className="spend-overview-chart">
+      <svg ref={svgRef} width={width} height={height} style={style}></svg>
+    </Box>
+  );
 };
 export default DonutChart;
 
