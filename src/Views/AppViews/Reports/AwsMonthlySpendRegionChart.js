@@ -53,7 +53,8 @@ class AwsMonthlySpendRegionChart extends Component {
     var tooltip = d3
       .select("#root")
       .data(data)
-      .append("div").attr('class','chart-tooltip')
+      .append("div")
+      .attr("class", "chart-tooltip")
       .style("position", "absolute")
       .style("z-index", "10")
       .style("visibility", "hidden");
@@ -101,32 +102,7 @@ class AwsMonthlySpendRegionChart extends Component {
     svg.append("g").attr("class", "x-axis").call(xAxis);
 
     svg.append("g").attr("class", "y-axis").call(yAxis);
-
-    function zoom() {
-      function zoomed(event) {
-        yScale.range(
-          [height - margin.bottom, margin.top].map((d) =>
-            event.transform.applyY(d)
-          )
-        );
-        svg
-          .selectAll(".bars rect")
-          .attr("y", (d) => yScale(d.value))
-          .attr("height", (d) => yScale(0) - yScale(d.value));
-        svg.selectAll(".y-axis").call(yAxis);
-      }
-
-      svg.call(
-        d3
-          .zoom()
-          .scaleExtent([1, 8])
-          .translateExtent(extent)
-          .extent(extent)
-          .on("zoom", zoomed)
-      );
-    }
-
-    d3.select(this.ref.current).call(zoom);
+    d3.select(this.ref.current);
   };
 
   render() {
