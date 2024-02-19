@@ -84,6 +84,37 @@ class AwsComponent extends Component {
                 // style={{ height: '450px', width: '840px' }}
               />
             </Grid>
+            <Grid item xs={6}>
+              <ChartWrapper
+                ChartComponent={
+                  <HorizontalBarChart
+                    data={totalUsedServiceData}
+                    // style={{ height: 250, width: 300 }}
+                  />
+                }
+                data={{
+                  title: "Top Used Service ",
+                  labelOfBtn: " View Details",
+                }}
+                // style={{ height: '450px', width: '840px' }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <ChartWrapper
+                ChartComponent={
+                  <HorizontalBarChart
+                    data={totalUsedServiceData}
+                    // style={{ height: 250, width: 300 }}
+                  />
+                }
+                data={{
+                  title: "Top Used Service ",
+                  labelOfBtn: " View Details",
+                }}
+                // style={{ height: '450px', width: '840px' }}
+              />
+            </Grid>
+            
           </Grid>
         </Box>
       </>
