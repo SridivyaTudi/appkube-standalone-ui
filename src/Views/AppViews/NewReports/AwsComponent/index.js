@@ -50,7 +50,7 @@ class AwsComponent extends Component {
                   labelOfBtn: " View Details",
                 }}
                 ChartComponent={
-                  <DonutChart data={donutData} width={500} height={330} />
+                  <DonutChart data={donutData} width={250} height={250} />
                 }
               />
             </Grid>

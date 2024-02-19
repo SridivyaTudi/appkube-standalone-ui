@@ -27,7 +27,7 @@ const DonutChart = ({ data, width, height, style }) => {
       .enter()
       .append("g")
       .attr("class", "donut-arc")
-      .attr("transform", `translate(${width / 1.7},${height / 2})`);
+      .attr("transform", `translate(${width / 2},${height / 2})`);
 
     // Apply clip-path attribute to each arc
 
@@ -56,13 +56,13 @@ const DonutChart = ({ data, width, height, style }) => {
       .attr("font-size", "25px")
       .attr("fill", "black")
       .text("$1000")
-      .attr("transform", `translate(${width / 1.7},${height / 2})`);
+      .attr("transform", `translate(${width / 2},${height / 2})`);
 
     //   legend area
     const legend = svg
       .append("g")
       .attr("class", "legend")
-      .attr("transform", `translate(${width / 2.5},${height - height / 4})`);
+      .attr("transform", `translate(${width / 2.8},${height - height / 4})`);
 
     const lg = legend
       .selectAll("g")
@@ -71,7 +71,7 @@ const DonutChart = ({ data, width, height, style }) => {
       .append("g")
       .attr("class", "legendGroup")
       .attr("transform", (d, i) => {
-        let xOff = (i % 2) * 170;
+        let xOff = (i % 2) * 120;
         let yOff = Math.floor(i / 2) * 25;
         return "translate(" + xOff + "," + yOff + ")";
       });
@@ -81,7 +81,7 @@ const DonutChart = ({ data, width, height, style }) => {
         return color(d.data[1]);
       })
       //   legend circles
-      .attr("x", 0)
+      .attr("x", -70)
       .attr("y", 31 - 10)
       .attr("width", 7)
       .attr("height", 7)
@@ -93,7 +93,7 @@ const DonutChart = ({ data, width, height, style }) => {
     lg.append("text")
       .style("font-family", "Georgia")
       .style("font-size", "12px")
-      .attr("x", 110)
+      .attr("x", -60)
       .attr("y", 30)
       .text(
         (d) =>
@@ -115,7 +115,7 @@ const DonutChart = ({ data, width, height, style }) => {
     return percentage || 0;
   }
   return (
-    <Box className="spend-overview-chart">
+    <Box className="spend-overview-chart" flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>
       <svg ref={svgRef} width={width} height={height} style={style}></svg>
     </Box>
   );

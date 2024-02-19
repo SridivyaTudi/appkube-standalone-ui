@@ -15,8 +15,7 @@ class ChartWrapper extends Component {
           <Link to={`/app/new-reports/spend-overview`}>
             <Button
               className="primary-outline-btn min-width"
-              variant="outlined"
-            >
+              variant="outlined">
               {labelOfBtn}
             </Button>
           </Link>

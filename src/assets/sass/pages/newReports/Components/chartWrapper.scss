@@ -33,10 +33,11 @@
     display: block;
     width: 100%;
     .spend-overview-chart {
-       width: 100%;
-       display: flex;
-       align-items: center;
-       justify-content: center;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }
