@@ -1,6 +1,22 @@
 import React, { Component } from "react";
-let width = 460;
-let height = 450;
+import * as d3 from "d3";
+import { convertDigitToThousand } from "Utils";
+
+let data = [
+  { name: "IT Infra", value: 1300 },
+  { name: "IT Security", value: 1100 },
+  { name: "IT Ops", value: 900 },
+  { name: "IT Dev", value: 900 },
+  { name: "Analytics", value: 700 },
+  { name: "HR", value: 750 },
+  { name: "Marketing", value: 650 },
+  { name: "Finance", value: 550 },
+  { name: "Sales", value: 550 },
+  { name: "R&D", value: 400 },
+];
+
+const width = 550,
+  height = 250;
 class VerticalBarchart extends Component {
   constructor(props) {
     super(props);
@@ -11,73 +27,101 @@ class VerticalBarchart extends Component {
   componentDidMount = () => this.renderChart();
 
   renderChart = () => {
-    var x = d3
-      .scaleBand()
-      .range([0, width])
-      .domain(
-        data.map(function (d) {
-          return d.Country;
-        })
-      )
-      .padding(0.2);
-    svg
-      .append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x))
-      .selectAll("text")
-      .attr("transform", "translate(-10,0)rotate(-45)")
-      .style("text-anchor", "end");
+    const margin = { top: 20, right: 0, bottom: 30, left: 40 };
+    const extent = [
+      [margin.left, margin.top],
+      [width - margin.right, height - margin.top],
+    ];
 
-    // Add Y axis
-    var y = d3.scaleLinear().domain([0, 13000]).range([height, 0]);
-    svg.append("g").call(d3.axisLeft(y));
-
-    // Bars
-    svg
-      .selectAll("mybar")
-      .data(data)
-      .enter()
-      .append("rect")
-      .attr("x", function (d) {
-        return x(d.Country);
-      })
-      .attr("width", x.bandwidth())
-      .attr("fill", "#69b3a2")
-      // no bar at the beginning thus:
-      .attr("height", function (d) {
-        return height - y(0);
-      }) // always equal to 0
-      .attr("y", function (d) {
-        return y(0);
-      });
-
-    // Animation
-    svg
-      .selectAll("rect")
-      .transition()
-      .duration(800)
-      .attr("y", function (d) {
-        return y(d.Value);
-      })
-      .attr("height", function (d) {
-        return height - y(d.Value);
-      })
-      .delay(function (d, i) {
-        console.log(i);
-        return i * 100;
-      });
     const svg = d3.select(this.ref.current);
 
-    d3.select(this.ref.current);
-  };
+    const xScale = d3
+      .scaleBand()
+      .range([margin.left, width - margin.right])
+      .domain(data.map((d) => d.name))
+      .padding(0.6);
+      
 
+    const yScale = d3
+      .scaleLinear()
+      .range([height - margin.bottom, margin.top])
+      .domain([0, d3.max(data, (d) => d.value)])
+      .nice();
+
+    const xAxis = (g) =>
+      g
+        .attr("transform", `translate(0,${height - margin.bottom})`)
+        .call(d3.axisBottom(xScale).tickSizeOuter(0));
+
+    const yAxis = (g) =>
+      g
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(d3.axisLeft(yScale).tickFormat((d) => "$" + d))
+        .call((g_local) => g_local.select(".domain").remove());
+
+    var tooltip = d3
+      .select("#root")
+      .data(data)
+      .append("div").attr('class','chart-tooltip')
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden");
+
+    const barGroups = svg
+      .append("g")
+      .attr("class", "bars")
+      .selectAll("rect")
+      .attr("fill", "#B399FF")
+      .data(data)
+      .enter();
+
+    barGroups
+      .append("rect")
+      .attr("x", (d) => xScale(d.name))
+      .attr("y", (d) => yScale(d.value))
+      .attr("width", xScale.bandwidth())
+      .attr("height", (d) => yScale(0) - yScale(d.value))
+      .style("fill", "#FA6298")
+      .attr("rx", 5)
+      .attr("ry", 3)
+      // .on("mouseover", function (d, data) {
+      //   tooltip.html(
+      //     `<div class="chart-tooltip-contents"><div class="cost-text">Cost</div><div class="value">$${data.value}</div><div class="previous-month-data"><span>+16.67%</span> vs previous month</div><div class="name">${data.name}</div></div>`
+      //   );
+      //   return tooltip.style("visibility", "visible");
+      // })
+      // .on("mousemove", function (d) {
+      //   return tooltip
+      //     .style("top", d.pageY - 10 + "px")
+      //     .style("left", d.pageX + 10 + "px");
+      // })
+      // .on("mouseout", function () {
+      //   return tooltip.style("visibility", "hidden");
+      // });
+
+    barGroups
+      .append("text")
+      .attr("class", "value")
+      .attr("x", (a) => xScale(a.name) + xScale.bandwidth() / 2)
+      .attr("y", (a) => yScale(a.value) + 30)
+      .attr("text-anchor", "middle")
+      // .text((a) => `$${convertDigitToThousand(a.value)}`);
+
+    svg.append("g").attr("class", "x-axis").call(xAxis);
+
+    svg.append("g").attr("class", "y-axis").call(yAxis);
+
+   
+
+    d3.select(this.ref.current)
+  };
   render() {
     return (
       <svg
         ref={this.ref}
         width={width}
         height={height}
-        // viewBox={`0 0 ${width - 600} ${height}`}
+        viewBox={`0 0 ${width - 600} ${height}`}
       ></svg>
     );
   }
