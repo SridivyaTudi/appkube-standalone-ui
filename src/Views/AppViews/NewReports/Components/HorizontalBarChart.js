@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
-import {Box} from "@mui/material"
+import { Box } from "@mui/material";
 
 class HorizontalBarChart extends Component {
   constructor(props) {
@@ -15,12 +15,12 @@ class HorizontalBarChart extends Component {
 
   renderChart = () => {
     let { data } = this.props;
-    const barHeight = 50;
+    const barHeight = 60;
     const marginTop = 20;
-    const marginRight = 0;
+    const marginRight = 10;
     const marginBottom = 10;
-    const marginLeft = 60;
-    const width = 1200;
+    const marginLeft = 100;
+    const width = 800;
     const height =
       Math.ceil(data.length * barHeight) + marginTop + marginBottom;
 
@@ -33,8 +33,11 @@ class HorizontalBarChart extends Component {
     const y = d3
       .scaleBand()
       .domain(d3.sort(data, (d) => -d.value).map((d) => d.label))
-      .rangeRound([marginTop, height - marginBottom])
+      .rangeRound([marginTop - 20, height - marginBottom])
       .padding(0.3);
+
+      // const yAxisGrid = d3.axisLeft(y).tickSize(-width).tickFormat('').ticks(10);
+
 
     // Create the SVG container.
     const svg = d3
@@ -53,7 +56,7 @@ class HorizontalBarChart extends Component {
       .attr("x", x(0))
       .attr("y", (d) => y(d.label))
       .attr("width", (d) => x(d.value) - x(0))
-      .attr("height", y.bandwidth())
+      .attr("height", y.bandwidth() - 20)
       .attr("fill", (d) => (d?.color ? d.color : "steelblue"));
 
     // Append a label for each label.
