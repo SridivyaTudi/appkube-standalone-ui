@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
+import {Box} from "@mui/material"
 
 class HorizontalBarChart extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class HorizontalBarChart extends Component {
 
   renderChart = () => {
     let { data } = this.props;
-    const barHeight = 25;
+    const barHeight = 50;
     const marginTop = 20;
     const marginRight = 0;
     const marginBottom = 10;
@@ -41,7 +42,7 @@ class HorizontalBarChart extends Component {
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", [0, 0, width, height])
-      .attr("style", "max-width: 100%; height: auto; font: 12px sans-serif;");
+      .attr("style", "max-width: 100%;  font: 12px sans-serif;");
 
     // Append a rect for each label.
     svg
@@ -78,18 +79,24 @@ class HorizontalBarChart extends Component {
     // Create the axes.
     svg
       .append("g")
-      .attr("transform", `translate(0,${height + 9})`)
+      .attr("style", "font-size: 25px", "sans-serif")
+      .attr("transform", `translate(0,${height + 30})`)
       .call(d3.axisTop(x).tickFormat((d, index) => `$${d}`))
       .call((g) => g.select(".domain").remove());
 
     svg
       .append("g")
+      .attr("style", "font-size: 25px", "sans-serif")
       .attr("transform", `translate(${marginLeft},0)`)
       .call(d3.axisLeft(y).tickSizeOuter(0));
     d3.select(this.ref.current);
   };
   render() {
-    return <svg ref={this.ref}></svg>;
+    return (
+      <Box className="top-used-service ">
+        <svg ref={this.ref}></svg>
+      </Box>
+    );
   }
 }
 
