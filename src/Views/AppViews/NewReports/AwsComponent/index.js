@@ -63,7 +63,7 @@ class AwsComponent extends Component {
                   />
                 }
                 data={{
-                  title: "Spend Overview",
+                  title: "Top Used Service ",
                   labelOfBtn: " View Details",
                 }}
                 // style={{ height: '450px', width: '840px' }}
@@ -78,7 +78,7 @@ class AwsComponent extends Component {
                   />
                 }
                 data={{
-                  title: "Spend Overview",
+                  title: "Potential Savings",
                   labelOfBtn: " View Details",
                 }}
                 // style={{ height: '450px', width: '840px' }}

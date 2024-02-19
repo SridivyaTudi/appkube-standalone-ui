@@ -15,8 +15,8 @@ class HorizontalBarChart extends Component {
 
   renderChart = () => {
     let { data } = this.props;
-    const barHeight = 60;
-    const marginTop = 20;
+    const barHeight = 45;
+    const marginTop = 10;
     const marginRight = 10;
     const marginBottom = 10;
     const marginLeft = 100;
@@ -44,7 +44,7 @@ class HorizontalBarChart extends Component {
       .select(this.ref.current)
       .attr("width", width)
       .attr("height", height)
-      .attr("viewBox", [0, 0, width, height])
+      .attr("viewBox", [0, 10, width, height])
       .attr("style", "max-width: 100%;  font: 12px sans-serif;");
 
     // Append a rect for each label.
@@ -82,21 +82,25 @@ class HorizontalBarChart extends Component {
     // Create the axes.
     svg
       .append("g")
-      .attr("style", "font-size: 25px", "sans-serif")
+      .attr("style", "font-size: 16px", "sans-serif")
       .attr("transform", `translate(0,${height + 30})`)
       .call(d3.axisTop(x).tickFormat((d, index) => `$${d}`))
       .call((g) => g.select(".domain").remove());
 
     svg
       .append("g")
-      .attr("style", "font-size: 25px", "sans-serif")
+      .attr("style", "font-size: 16px", "sans-serif")
       .attr("transform", `translate(${marginLeft},0)`)
       .call(d3.axisLeft(y).tickSizeOuter(0));
     d3.select(this.ref.current);
   };
   render() {
     return (
-      <Box className="top-used-service ">
+      <Box className="top-used-service-chrt">
+        <Box className="total-cost-incurred">
+          <label>Total Cost Incurred</label>
+         <p> 90,579 <span> <i class="fas fa-sort-up p-l-5"></i>  10 &#37;</span></p>
+        </Box>
         <svg ref={this.ref}></svg>
       </Box>
     );
