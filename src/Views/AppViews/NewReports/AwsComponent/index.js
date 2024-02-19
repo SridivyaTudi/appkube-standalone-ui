@@ -59,6 +59,19 @@ class AwsComponent extends Component {
                 ChartComponent={
                   <HorizontalBarChart
                     data={totalUsedServiceData}
+                    chardBeforeRenderHTML={
+                      <Box className="total-cost-incurred">
+                        <label>Total Cost Incurred</label>
+                        <p>
+                          {" "}
+                          90,579{" "}
+                          <span>
+                            {" "}
+                            <i class="fas fa-sort-up p-l-5"></i> 10 &#37;
+                          </span>
+                        </p>
+                      </Box>
+                    }
                     // style={{ height: 250, width: 300 }}
                   />
                 }
@@ -87,10 +100,7 @@ class AwsComponent extends Component {
             <Grid item xs={6}>
               <ChartWrapper
                 ChartComponent={
-                  <HorizontalBarChart
-                    data={totalUsedServiceData}
-                    // style={{ height: 250, width: 300 }}
-                  />
+                  <HorizontalBarChart data={totalUsedServiceData} />
                 }
                 data={{
                   title: "Top Used Service ",
@@ -114,7 +124,6 @@ class AwsComponent extends Component {
                 // style={{ height: '450px', width: '840px' }}
               />
             </Grid>
-            
           </Grid>
         </Box>
       </>

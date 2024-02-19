@@ -107,17 +107,7 @@ class HorizontalBarChart extends Component {
   render() {
     return (
       <Box className="top-used-service-chrt">
-        <Box className="total-cost-incurred">
-          <label>Total Cost Incurred</label>
-          <p>
-            {" "}
-            90,579{" "}
-            <span>
-              {" "}
-              <i class="fas fa-sort-up p-l-5"></i> 10 &#37;
-            </span>
-          </p>
-        </Box>
+      {this.props.chardBeforeRenderHTML}
         <svg ref={this.ref}></svg>
       </Box>
     );
