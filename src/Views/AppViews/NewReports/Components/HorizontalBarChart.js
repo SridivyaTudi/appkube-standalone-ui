@@ -45,12 +45,13 @@ class HorizontalBarChart extends Component {
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", [0, 10, width, height])
-      .attr("style", "max-width: 100%;  font: 12px sans-serif;");
+      .attr("style", "max-width: 100%;  font: 12px sans-serif; ");
     svg
       .append("g")
       .attr("class", "x grid")
       .attr("transform", `translate(0,${height})`)
-      .attr("fill", "gray")
+      .attr("color", "lightgray")
+      
       .call(
         make_x_gridlines()
           .tickSize(-height + 4)
@@ -81,6 +82,7 @@ class HorizontalBarChart extends Component {
       .attr("y", (d) => y(d.label) + y.bandwidth() / 2)
       .attr("dy", "0.35em")
       .attr("dx", -4)
+      
       .call((text) =>
         text
           .filter((d) => x(d.value) - x(0) < 20) // short bars
