@@ -12,23 +12,23 @@ const totalUsedServiceData = [
 ];
 let donutData = [
   {
-    age_group: "Others",
-    population: 20201362,
+    age_group: "Compute Cost",
+    population: 110011100,
   },
   {
-    age_group: "Initial Miscellaneous Code ",
+    age_group: "Network ",
     population: 40267984,
   },
   {
-    age_group: "Liability Limits ",
+    age_group: "Storage",
     population: 30672088,
   },
   {
-    age_group: "Payments on the file",
+    age_group: "Database",
     population: 53980105,
   },
   {
-    age_group: "Vehicle Make ",
+    age_group: "Others",
     population: 81489445,
   },
 ];
@@ -50,7 +50,7 @@ class AwsComponent extends Component {
                   labelOfBtn: " View Details",
                 }}
                 ChartComponent={
-                  <DonutChart data={donutData} width={300} height={250}  />
+                  <DonutChart data={donutData} width={500} height={330} />
                 }
               />
             </Grid>

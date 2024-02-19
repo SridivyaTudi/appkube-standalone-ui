@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { Box, Grid, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import * as d3 from "d3";
 const thickness = 25;
 const DonutChart = ({ data, width, height, style }) => {
@@ -14,7 +14,7 @@ const DonutChart = ({ data, width, height, style }) => {
     svg.selectAll("*").remove(); // Clear previous elements
     const radius = Math.min(width, height) / 2;
     const innerRadius = radius * 0.6;
-    var colors = ["#8676FF", "#FFBA69", "#F9D33D", "#00B929", "#FF708B"];
+    var colors = ["#FF708B", "#00B929", "#8676FF", "#FFBA69", "#F9D33D"];
     const color = d3.scaleOrdinal(colors).domain(data.map((d) => d.age_group));
     const pie = d3.pie().value((d) => d.population);
     const arc = d3
@@ -62,30 +62,30 @@ const DonutChart = ({ data, width, height, style }) => {
     const legend = svg
       .append("g")
       .attr("class", "legend")
-      .attr("transform", `translate(${width / 2 - 150},${height / -2 + 520})`);
+      .attr("transform", `translate(${width / 2.5},${height - height / 4})`);
 
     const lg = legend
       .selectAll("g")
       .data(arcData)
       .enter()
       .append("g")
-      .attr("class", "legendGroup");
-    // .attr("transform", (d, i) => {
-    //   xOff = (i % 2) * 130;
-    //   yOff = Math.floor(i / 2) * 25;
-    //   return "translate(" + xOff + "," + yOff + ")";
-    // });
+      .attr("class", "legendGroup")
+      .attr("transform", (d, i) => {
+        let xOff = (i % 2) * 170;
+        let yOff = Math.floor(i / 2) * 25;
+        return "translate(" + xOff + "," + yOff + ")";
+      });
 
     lg.append("rect")
       .attr("fill", (d) => {
         return color(d.data[1]);
       })
       //   legend circles
-      .attr("x", 30 - 10)
+      .attr("x", 0)
       .attr("y", 31 - 10)
       .attr("width", 7)
       .attr("height", 7)
-      .attr("rx", 3)
+      .attr("rx", 4)
       .append("title")
       .html((d) => d.data[1]);
 
@@ -93,11 +93,27 @@ const DonutChart = ({ data, width, height, style }) => {
     lg.append("text")
       .style("font-family", "Georgia")
       .style("font-size", "12px")
-      .attr("x", 20 + 15)
+      .attr("x", 110)
       .attr("y", 30)
-      .text((d) => d.data[1].age_group)
+      .text(
+        (d) =>
+          `${d.data[1].age_group} ${calculatePercentage(d.data[1].population)}%`
+      )
       .append("title");
   }, [data, height, width]);
+
+  function getTotalValues() {
+    return data?.length
+      ? data.reduce((accumulator, item) => {
+          return (accumulator += item.population);
+        }, 0)
+      : 0;
+  }
+  function calculatePercentage(value) {
+    let total = getTotalValues();
+    let percentage = parseInt((value / total) * 100);
+    return percentage || 0;
+  }
   return (
     <Box className="spend-overview-chart">
       <svg ref={svgRef} width={width} height={height} style={style}></svg>
