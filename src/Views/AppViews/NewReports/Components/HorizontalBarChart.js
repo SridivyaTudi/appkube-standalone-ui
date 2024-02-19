@@ -24,6 +24,9 @@ class HorizontalBarChart extends Component {
     const height =
       Math.ceil(data.length * barHeight) + marginTop + marginBottom;
 
+    function make_x_gridlines() {
+      return d3.axisBottom(x);
+    }
     // Create the scales.
     const x = d3
       .scaleLinear()
@@ -36,9 +39,6 @@ class HorizontalBarChart extends Component {
       .rangeRound([marginTop - 20, height - marginBottom])
       .padding(0.3);
 
-      // const yAxisGrid = d3.axisLeft(y).tickSize(-width).tickFormat('').ticks(10);
-
-
     // Create the SVG container.
     const svg = d3
       .select(this.ref.current)
@@ -46,7 +46,17 @@ class HorizontalBarChart extends Component {
       .attr("height", height)
       .attr("viewBox", [0, 10, width, height])
       .attr("style", "max-width: 100%;  font: 12px sans-serif;");
-
+    svg
+      .append("g")
+      .attr("class", "x grid")
+      .attr("transform", `translate(0,${height})`)
+      .attr("fill", "gray")
+      .call(
+        make_x_gridlines()
+          .tickSize(-height + 4)
+          .tickFormat("")
+          .tickSizeOuter(0)
+      );
     // Append a rect for each label.
     svg
       .append("g")
@@ -99,7 +109,14 @@ class HorizontalBarChart extends Component {
       <Box className="top-used-service-chrt">
         <Box className="total-cost-incurred">
           <label>Total Cost Incurred</label>
-         <p> 90,579 <span> <i class="fas fa-sort-up p-l-5"></i>  10 &#37;</span></p>
+          <p>
+            {" "}
+            90,579{" "}
+            <span>
+              {" "}
+              <i class="fas fa-sort-up p-l-5"></i> 10 &#37;
+            </span>
+          </p>
         </Box>
         <svg ref={this.ref}></svg>
       </Box>
