@@ -87,7 +87,7 @@ class VerticalBarchart extends Component {
       .attr("width", xScale.bandwidth())
       .attr("height", (d) => yScale(30) - yScale(d.value))
       .style("fill", "#FA6298")
-      .attr("rx", 5)
+      .attr("rx", 3)
       .attr("ry", 3)
       // .on("mouseover", function (d, data) {
       //   tooltip.html(

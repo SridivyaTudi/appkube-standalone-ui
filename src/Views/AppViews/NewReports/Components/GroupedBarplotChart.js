@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
 import { convertDigitToThousand } from "Utils";
+import { Box } from "@mui/material";
 
 let data = [
   { name: "Jan", value1: 2000, value2: 1200 },
@@ -31,7 +32,7 @@ class GroupedBarplotChart extends Component {
   renderChart = () => {
     const margin = { top: 20, right: 0, bottom: 20, left: 40 };
     const width = 1150;
-    const height = 220;
+    const height = 250;
     const barPadding = 0.5;
     const axisTicks = { qty: 5, outerSize: 0, dateFormat: "%m-%d" };
 
@@ -41,13 +42,13 @@ class GroupedBarplotChart extends Component {
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
-      
+
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var xScale0 = d3
       .scaleBand()
       .range([0, width - margin.left - margin.right])
-      .padding(barPadding );
+      .padding(barPadding);
     var xScale1 = d3.scaleBand();
     var yScale = d3
       .scaleLinear()
@@ -85,6 +86,8 @@ class GroupedBarplotChart extends Component {
       .attr("x", (d) => xScale1("value1"))
       .attr("y", (d) => yScale(d.value1))
       .attr("width", xScale1.bandwidth())
+      .attr("rx", 3)
+      .attr("ry", 3)
       .attr("height", (d) => {
         return height - margin.top - margin.bottom - yScale(d.value1);
       });
@@ -97,9 +100,11 @@ class GroupedBarplotChart extends Component {
       .append("rect")
       .attr("class", "bar value2")
       .style("fill", "#FF2D2E")
-      .attr("x", (d) => xScale1("value2")+4)
+      .attr("x", (d) => xScale1("value2") + 4)
       .attr("y", (d) => yScale(d.value2))
       .attr("width", xScale1.bandwidth())
+      .attr("rx", 3)
+      .attr("ry", 3)
       .attr("height", (d) => {
         return height - margin.top - margin.bottom - yScale(d.value2);
       });
@@ -108,6 +113,7 @@ class GroupedBarplotChart extends Component {
     svg
       .append("g")
       .attr("class", "x axis")
+      
       .attr("transform", `translate(0,${height - margin.top - margin.bottom})`)
       .call(xAxis);
 
@@ -116,12 +122,15 @@ class GroupedBarplotChart extends Component {
   };
   render() {
     return (
-      <svg
-        ref={this.ref}
-        width={width}
-        height={height}
-        viewBox={`0 0 ${width - 1000} ${height}`}
-      ></svg>
+      <Box className="grouped-barplot-chart">
+        {this.props.chardBeforeRenderHTML}
+        <svg
+          ref={this.ref}
+          width={width}
+          height={height}
+          viewBox={`0 0 ${width - 1000} ${height}`}
+        ></svg>
+      </Box>
     );
   }
 }

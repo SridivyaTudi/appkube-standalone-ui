@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import {
-  Box,
-  Button,
-  IconButton, Grid
-} from "@mui/material";
+import { Box, Button, IconButton, Grid } from "@mui/material";
 import ChartWrapper from "../Components/ChartWrapper";
 import GroupedBarplotChart from "../Components/GroupedBarplotChart";
 import { Link } from "react-router-dom";
@@ -29,7 +25,6 @@ let verticalBarChartData = [
     label: "Others",
     value: 81489445,
   },
-  
 ];
 
 class SpendingTrend extends Component {
@@ -55,27 +50,33 @@ class SpendingTrend extends Component {
           </Box>
         </Box>
         <Box className="reports-tab-section m-t-3">
-        <Box className="reports-charts">
-          <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-           
-            <Grid item xs={12}>
-              <ChartWrapper
-                ChartComponent={
-                  <GroupedBarplotChart data={verticalBarChartData} />
-                }
-                data={{
-                  title: "Previous Year Spending VS Present Year Spending",
-                  labelOfBtn: " View Details",
-                }}
-                // style={{ height: '450px', width: '840px' }}
-              />
+          <Box className="reports-charts">
+            <Grid
+              container
+              rowSpacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            >
+              <Grid item xs={12}>
+                <ChartWrapper
+                  ChartComponent={
+                    <GroupedBarplotChart
+                      data={verticalBarChartData}
+                      chardBeforeRenderHTML={
+                        <Box className="spending-present">
+                          <label>See how much you have spent previous year vs present year</label>
+                        </Box>
+                      }
+                    />
+                  }
+                  data={{
+                    title: "Previous Year Spending VS Present Year Spending",
+                    labelOfBtn: " View Details",
+                  }}
+                  // style={{ height: '450px', width: '840px' }}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
+          </Box>
         </Box>
       </Box>
     );

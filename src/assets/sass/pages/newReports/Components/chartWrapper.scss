@@ -69,5 +69,18 @@
         }
       }
     }
+    .grouped-barplot-chart{
+      width: 100%;
+      display: block;
+      .spending-present{
+        display: inline-block;
+        label{
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 16px;
+          color: #383874;
+        }
+      }
+    }
   }
 }
