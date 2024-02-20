@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
 import { convertDigitToThousand, getFormattedDate } from "Utils";
+import { Box } from "@mui/material";
 class MultiLineChart extends Component {
   constructor(props) {
     super(props);
@@ -169,7 +170,11 @@ class MultiLineChart extends Component {
     d3.select(this.ref.current);
   };
   render() {
-    return <svg ref={this.ref}></svg>;
+    return (
+      <Box classname="multi-line-chart">
+        <svg ref={this.ref}></svg>
+      </Box>
+    );
   }
 }
 

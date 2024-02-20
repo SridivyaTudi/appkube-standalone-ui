@@ -155,7 +155,7 @@ class AwsComponent extends Component {
                   link: "/app/new-reports/spend-overview",
                 }}
                 ChartComponent={
-                  <DonutChart data={donutData} width={250} height={250} />
+                  <DonutChart data={donutData} width={250} height={300} />
                 }
               />
             </Grid>
