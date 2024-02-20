@@ -212,7 +212,17 @@ class AwsComponent extends Component {
             </Grid>
             <Grid item xs={6}>
               <ChartWrapper
-                ChartComponent={<MultiLineChart data={spendTrendData} />}
+                ChartComponent={
+                  <MultiLineChart
+                    data={spendTrendData}
+                    labels={[
+                      { name: "Last Quarter", color: "orange" },
+                      { name: "Current Quarter", color: "bule" },
+                      { name: "Forecasted Spend", color: "pink" },
+                      
+                    ]}
+                  />
+                }
                 data={{
                   title: "Speding Trend",
                   labelOfBtn: " View Details",

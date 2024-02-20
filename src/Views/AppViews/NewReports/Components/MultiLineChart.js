@@ -13,7 +13,7 @@ class MultiLineChart extends Component {
   };
 
   renderChart = () => {
-    let { data } = this.props;
+    let { data, labels } = this.props;
 
     var margin = { top: 20, right: 20, bottom: 50, left: 50 },
       width = 524 - margin.left - margin.right,
@@ -129,6 +129,35 @@ class MultiLineChart extends Component {
     svg
       .append("g")
       .call(d3.axisLeft(y).tickFormat((d) => "$" + convertDigitToThousand(d)));
+
+    var legend = svg
+      .selectAll(".legend")
+      .data(labels)
+      .enter()
+      .append("g")
+      .attr("class", "legend")
+      .attr("style", "margin-top:20px; ");
+
+    legend
+      .append("rect")
+      .attr("width", 20)
+      .attr("height", 5)
+      .style("fill", (d) => d.color)
+      .attr(
+        "transform",
+        (d, i) => `translate(${i * 80}, ${height + (margin.bottom - 25)})`
+      )
+      .attr("style", "padding:20px; ");
+
+    legend
+      .append("text")
+      .text((d) => d.name)
+      .attr(
+        "transform",
+        (d, i) =>
+          `translate(${i * 80 + 25},  ${height + (margin.bottom - 25) + 7})`
+      )
+      .attr("style", "padding:20px; ");
     d3.select(this.ref.current);
   };
   render() {
