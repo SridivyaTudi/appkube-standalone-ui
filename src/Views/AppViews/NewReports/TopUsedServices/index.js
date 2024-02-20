@@ -8,7 +8,9 @@ import {
   TableRow,
   TableBody,
   TableCell,
+  IconButton
 } from "@mui/material";
+import {Link} from "react-router-dom";
 import TimeSpendComponent from "../Components/TimeSpendComponent";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import ServiceIcon7 from "assets/img/report/service-icon7.png";
@@ -52,7 +54,14 @@ class TopUsedServices extends Component {
     return (
       <Box className="new-reports-container spend-overview-container">
         <Box className="list-heading">
-          <h3>Top Used Services</h3>
+          <h3>
+            <Link to={`/app/new-reports`}>
+              <IconButton className="m-r-2">
+                <i class="fas fa-long-arrow-left"></i>
+              </IconButton>
+            </Link>
+            Top Used Services
+          </h3>
           <Box className="d-flex ">
             <Button className="light-btn p-l-15 p-r-15 m-r-3">
               <i className="fas fa-filter m-r-2"></i> Filter

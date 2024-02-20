@@ -1,35 +1,36 @@
 import React, { Component } from "react";
-import { Box, Button, List, ListItem } from "@mui/material";
+import { Box, Button, List, ListItem, IconButton } from "@mui/material";
 import Compute from "./Compute";
 import Storage from "./Storage";
 import Database from "./Database";
 import Network from "./Network";
 import Other from "./Other";
+import {Link} from "react-router-dom";
 
 class SpendOverview extends Component {
   tabMapping = [
     {
-      name: "COMPUTE",
+      name: "Compute",
       dataKey: "compute",
       index: 0,
     },
     {
-      name: "STORAGE",
+      name: "Storage",
       dataKey: "storage",
       index: 1,
     },
     {
-      name: "DATABASE",
+      name: "Database",
       dataKey: "database",
       index: 2,
     },
     {
-      name: "NETWORK",
+      name: "Network",
       dataKey: "network",
       index: 3,
     },
     {
-      name: "OTHER",
+      name: "Other",
       dataKey: "other",
       index: 4,
     },
@@ -88,20 +89,22 @@ class SpendOverview extends Component {
     return (
       <Box className="new-reports-container spend-overview-container">
         <Box className="list-heading">
-          <h3>Spend Overview</h3>
+          <h3><Link to={`/app/new-reports`}>
+              <IconButton className="m-r-2">
+                <i class="fas fa-long-arrow-left"></i>
+              </IconButton>
+            </Link> Spend Overview</h3>
+          <Box className="d-flex ">
+            <Button className="light-btn p-l-15 p-r-15 m-r-3">
+              <i className="fas fa-filter m-r-2"></i> Filter
+            </Button>
+            <Button className="light-btn p-l-15 p-r-15">
+              <i className="fas fa-calendar-minus m-r-2"></i> Last Month
+            </Button>
+          </Box>
         </Box>
         <Box className="reports-tab-section">
-          <Box className="tabs">
-            {this.renderTabMenu()}
-            <Box className="d-flex ">
-              <Button className="light-btn p-l-15 p-r-15 m-r-3">
-                <i className="fas fa-filter m-r-2"></i> Filter
-              </Button>
-              <Button className="light-btn p-l-15 p-r-15">
-                <i className="fas fa-calendar-minus m-r-2"></i> Last Month
-              </Button>
-            </Box>
-          </Box>
+          <Box className="tabs">{this.renderTabMenu()}</Box>
           {this.renderActiveTabOfComponent()}
         </Box>
       </Box>

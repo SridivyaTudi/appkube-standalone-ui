@@ -77,14 +77,12 @@ export class NewReports extends Component {
       <Box className="new-reports-container">
         <Box className="list-heading">
           <h3>AWS Overview Dashboard</h3>
+          <Button className="light-btn p-l-15 p-r-15">
+            <i class="fas fa-calendar-minus m-r-2"></i> Last Quarter
+          </Button>
         </Box>
         <Box className="reports-tab-section">
-          <Box className="tabs">
-            {this.renderTabMenu()}
-            <Button className="light-btn p-l-15 p-r-15">
-              <i class="fas fa-calendar-minus m-r-2"></i> Last Quarter
-            </Button>
-          </Box>
+          <Box className="tabs">{this.renderTabMenu()}</Box>
           {this.renderActiveTabOfComponent()}
         </Box>
       </Box>
