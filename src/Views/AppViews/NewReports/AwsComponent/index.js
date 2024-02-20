@@ -219,7 +219,6 @@ class AwsComponent extends Component {
                       { name: "Last Quarter", color: "orange" },
                       { name: "Current Quarter", color: "bule" },
                       { name: "Forecasted Spend", color: "pink" },
-                      
                     ]}
                   />
                 }

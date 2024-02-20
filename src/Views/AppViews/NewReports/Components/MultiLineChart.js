@@ -12,28 +12,36 @@ class MultiLineChart extends Component {
     this.renderChart();
   };
 
-  renderChart = () => {
-    let { data, labels } = this.props;
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.data !== this.props.data) {
+      this.renderChart();
+    }
+  }
 
-    var margin = { top: 20, right: 20, bottom: 50, left: 50 },
+  renderChart = async () => {
+    let { data, labels } = this.props;
+    debugger;
+    let margin = { top: 20, right: 20, bottom: 50, left: 50 },
       width = 524 - margin.left - margin.right,
       height = 293 - margin.top - margin.bottom;
 
     // parse the date / time
-    var parseTime = d3.timeParse("%d-%m-%y");
-    data = data.map(function (d) {
-      d.date = parseTime(d.date);
-      d.last_quarter = +d.last_quarter;
-      d.current_quarter = +d.current_quarter;
-      d.forecasted_spend = +d.forecasted_spend;
+    const parseTime = d3.timeParse("%d-%m-%y");
+    data = data.map((d) => {
+      if (typeof d.date === "string") {
+        d.date = parseTime(d.date);
+        d.last_quarter = +d.last_quarter;
+        d.current_quarter = +d.current_quarter;
+        d.forecasted_spend = +d.forecasted_spend;
+      }
       return d;
     });
     // set the ranges
-    var x = d3.scaleTime().range([0, width]);
-    var y = d3.scaleLinear().range([height, 0]);
+    let x = d3.scaleTime().range([0, width]);
+    let y = d3.scaleLinear().range([height, 0]);
 
     // define the 1st line
-    var valueline = d3
+    let valueline = d3
       .line()
       .curve(d3.curveCardinal)
       .x(function (d) {
@@ -44,7 +52,7 @@ class MultiLineChart extends Component {
       });
 
     // define the 2nd line
-    var valueline2 = d3
+    let valueline2 = d3
       .line()
       .curve(d3.curveCardinal)
       .x(function (d) {
@@ -54,7 +62,7 @@ class MultiLineChart extends Component {
         return y(d.current_quarter);
       });
 
-    var valueline3 = d3
+    let valueline3 = d3
       .line()
       .curve(d3.curveCardinal)
       .x(function (d) {
@@ -64,7 +72,7 @@ class MultiLineChart extends Component {
         return y(d.forecasted_spend);
       });
 
-    var svg = d3
+    let svg = d3
       .select(this.ref.current)
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
@@ -130,7 +138,7 @@ class MultiLineChart extends Component {
       .append("g")
       .call(d3.axisLeft(y).tickFormat((d) => "$" + convertDigitToThousand(d)));
 
-    var legend = svg
+    let legend = svg
       .selectAll(".legend")
       .data(labels)
       .enter()
