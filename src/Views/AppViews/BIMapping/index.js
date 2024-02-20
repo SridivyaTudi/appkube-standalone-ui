@@ -391,7 +391,7 @@ class BIMapping extends Component {
   // Render Loder
   renderLoder(widthClass) {
     return (
-      <Box className="d-blck text-center w-100 h-100 ">
+      <Box className="d-blck text-center w-100 h-100 p-t-20 p-b-20 ">
         <Loader className="align-item-center justify-center w-100 h-100" />
       </Box>
     );
