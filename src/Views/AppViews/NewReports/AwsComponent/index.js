@@ -152,6 +152,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Spend Overview",
                   labelOfBtn: " View Details",
+                  link: "/app/new-reports/spend-overview",
                 }}
                 ChartComponent={
                   <DonutChart data={donutData} width={250} height={250} />
@@ -160,6 +161,11 @@ class AwsComponent extends Component {
             </Grid>
             <Grid item xs={6}>
               <ChartWrapper
+                data={{
+                  title: "Top Used Service ",
+                  labelOfBtn: " View Details",
+                  link: "/app/new-reports/top-use-services",
+                }}
                 ChartComponent={
                   <HorizontalBarChart
                     data={totalUsedServiceData}
@@ -176,56 +182,42 @@ class AwsComponent extends Component {
                         </p>
                       </Box>
                     }
-                    // style={{ height: 250, width: 300 }}
                   />
                 }
-                data={{
-                  title: "Top Used Service ",
-                  labelOfBtn: " View Details",
-                }}
-                // style={{ height: '450px', width: '840px' }}
               />
             </Grid>
             <Grid item xs={3}>
               <ChartWrapper
-                ChartComponent={
-                  <HorizontalBarChart
-                    data={totalUsedServiceData}
-                    // style={{ height: 250, width: 300 }}
-                  />
-                }
                 data={{
                   title: "Potential Savings",
                   labelOfBtn: " View Details",
+                  link: "/app/new-reports/potential-sevings",
                 }}
-                // style={{ height: '450px', width: '840px' }}
+                ChartComponent={
+                  <HorizontalBarChart data={totalUsedServiceData} />
+                }
               />
             </Grid>
             <Grid item xs={6}>
               <ChartWrapper
+                data={{
+                  title: "Cost of Top Accounts",
+                  labelOfBtn: "View Details",
+                  link: "/app/new-reports/cost-top-accounts",
+                }}
                 ChartComponent={
                   <VerticalBarchart data={verticalBarChartData} />
                 }
-                data={{
-                  title: "Top Used Service ",
-                  labelOfBtn: " View Details",
-                }}
-                // style={{ height: '450px', width: '840px' }}
               />
             </Grid>
             <Grid item xs={6}>
               <ChartWrapper
-                ChartComponent={
-                  <MultiLineChart
-                    data={spendTrendData}
-                    // style={{ height: 250, width: 300 }}
-                  />
-                }
+                ChartComponent={<MultiLineChart data={spendTrendData} />}
                 data={{
                   title: "Speding Trend",
                   labelOfBtn: " View Details",
+                  link: "/app/new-reports/spending-trend",
                 }}
-                // style={{ height: '450px', width: '840px' }}
               />
             </Grid>
           </Grid>

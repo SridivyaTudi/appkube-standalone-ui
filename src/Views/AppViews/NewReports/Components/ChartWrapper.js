@@ -7,15 +7,16 @@ class ChartWrapper extends Component {
   }
   render() {
     let { style, ChartComponent, data } = this.props;
-    let { title, labelOfBtn } = data;
+    let { title, labelOfBtn, link } = data;
     return (
       <Box className="chart-box">
         <Box className="heading m-b-10">
           <h4>{title}</h4>
-          <Link to={`/app/new-reports/spend-overview`}>
+          <Link to={`${link ? link : "#"} `}>
             <Button
               className="primary-outline-btn min-width"
-              variant="outlined">
+              variant="outlined"
+            >
               {labelOfBtn}
             </Button>
           </Link>
