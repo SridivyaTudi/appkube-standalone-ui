@@ -5,6 +5,7 @@ import HorizontalBarChart from "Views/AppViews/NewReports/Components/HorizontalB
 import VerticalBarchart from "Views/AppViews/NewReports/Components/VerticalBarchart";
 import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
 import MultiLineChart from "Views/AppViews/NewReports/Components/MultiLineChart";
+import GaugeChart from "Views/AppViews/NewReports/Components/GaugeChart";
 const totalUsedServiceData = [
   { label: "EC2", value: 4700, color: "#A145FF" },
   { label: "RDS", value: 4500, color: "#FA6298" },
@@ -137,6 +138,7 @@ const spendTrendData = [
     forecasted_spend: 22000,
   },
 ];
+var potentialSavingData = [45, 33, 66, 50, 90];
 class AwsComponent extends Component {
   render() {
     return (
@@ -194,7 +196,7 @@ class AwsComponent extends Component {
                   link: "/app/new-reports/potential-sevings",
                 }}
                 ChartComponent={
-                  <HorizontalBarChart data={totalUsedServiceData} />
+                  <GaugeChart data={potentialSavingData} />
                 }
               />
             </Grid>
