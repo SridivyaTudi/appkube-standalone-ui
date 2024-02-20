@@ -27,10 +27,11 @@ class VerticalBarchart extends Component {
   componentDidMount = () => this.renderChart();
 
   renderChart = () => {
-    const margin = { top: 20, right: 0, bottom: 30, left: 40 };
+    const margin = { top: 20, right: 0, bottom: 20, left: 40 };
     const extent = [
       [margin.left, margin.top],
       [width - margin.right, height - margin.top],
+      
     ];
 
     const svg = d3.select(this.ref.current);
@@ -41,31 +42,35 @@ class VerticalBarchart extends Component {
       .domain(data.map((d) => d.name))
       .padding(0.6);
       
+      
 
     const yScale = d3
       .scaleLinear()
       .range([height - margin.bottom, margin.top])
       .domain([0, d3.max(data, (d) => d.value)])
       .nice();
+    
 
     const xAxis = (g) =>
       g
         .attr("transform", `translate(0,${height - margin.bottom})`)
-        .call(d3.axisBottom(xScale).tickSizeOuter(0));
+        .call(d3.axisBottom(xScale).tickSize(0))
+        .call((g_local) => g_local.select(".domain").remove());
 
     const yAxis = (g) =>
       g
         .attr("transform", `translate(${margin.left},0)`)
         .call(d3.axisLeft(yScale).tickFormat((d) => "$" + d))
         .call((g_local) => g_local.select(".domain").remove());
+        
 
-    var tooltip = d3
-      .select("#root")
-      .data(data)
-      .append("div").attr('class','chart-tooltip')
-      .style("position", "absolute")
-      .style("z-index", "10")
-      .style("visibility", "hidden");
+    // var tooltip = d3
+    //   .select("#root")
+    //   .data(data)
+    //   .append("div").attr('class','chart-tooltip')
+    //   .style("position", "absolute")
+    //   .style("z-index", "10")
+    //   .style("visibility", "hidden");
 
     const barGroups = svg
       .append("g")
@@ -80,7 +85,7 @@ class VerticalBarchart extends Component {
       .attr("x", (d) => xScale(d.name))
       .attr("y", (d) => yScale(d.value))
       .attr("width", xScale.bandwidth())
-      .attr("height", (d) => yScale(0) - yScale(d.value))
+      .attr("height", (d) => yScale(30) - yScale(d.value))
       .style("fill", "#FA6298")
       .attr("rx", 5)
       .attr("ry", 3)
@@ -105,6 +110,7 @@ class VerticalBarchart extends Component {
       .attr("x", (a) => xScale(a.name) + xScale.bandwidth() / 2)
       .attr("y", (a) => yScale(a.value) + 30)
       .attr("text-anchor", "middle")
+      
       // .text((a) => `$${convertDigitToThousand(a.value)}`);
 
     svg.append("g").attr("class", "x-axis").call(xAxis);
