@@ -62,6 +62,9 @@ import { getCloudWiseLandingZoneCount } from "Redux/Environments/EnvironmentsThu
 import status from "Redux/Constants/CommonDS";
 import { useDispatch, useSelector } from "react-redux";
 import TopUsedServices from "./AppViews/NewReports/TopUsedServices";
+import SpendingTrend from "./AppViews/NewReports/SpendingTrend";
+import CostTopAccounts from "./AppViews/NewReports/CostTopAccounts";
+import PotentialSavings from "./AppViews/NewReports/PotentialSavings";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -263,6 +266,9 @@ export const Views = (props) => {
             element={<SpendOverview />}
           />
           <Route path={`${APP_PREFIX_PATH}/new-reports/top-use-services`} element={<TopUsedServices/>}/>
+          <Route path={`${APP_PREFIX_PATH}/new-reports/spending-trend`} element={<SpendingTrend/>} />
+          <Route path={`${APP_PREFIX_PATH}/new-reports/cost-top-accounts`} element={<CostTopAccounts/>}/>
+          <Route path={`${APP_PREFIX_PATH}/new-reports/potential-sevings`} element={<PotentialSavings/>} />
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route
             path={`${APP_PREFIX_PATH}/bim/product-category`}
