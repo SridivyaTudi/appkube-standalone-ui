@@ -15,7 +15,7 @@ class MultiLineChart extends Component {
   renderChart = () => {
     let { data } = this.props;
 
-    var margin = { top: 20, right: 20, bottom: 30, left: 50 },
+    var margin = { top: 20, right: 20, bottom: 50, left: 50 },
       width = 524 - margin.left - margin.right,
       height = 293 - margin.top - margin.bottom;
 
@@ -112,6 +112,7 @@ class MultiLineChart extends Component {
     svg
       .append("g")
       .attr("transform", "translate(0," + height + ") ")
+
       .call(
         d3.axisBottom(x).tickFormat((d) => {
           let date = getFormattedDate(d);
@@ -122,7 +123,7 @@ class MultiLineChart extends Component {
         })
       )
       .selectAll("text")
-      .attr("transform", "translate(0,10)rotate(15)");
+      .attr("transform", "translate(0,10)rotate(20)");
 
     // Add the Y Axis
     svg
