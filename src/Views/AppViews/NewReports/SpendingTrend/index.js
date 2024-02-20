@@ -5,7 +5,7 @@ import {
   IconButton, Grid
 } from "@mui/material";
 import ChartWrapper from "../Components/ChartWrapper";
-import VerticalBarchart from "../Components/VerticalBarchart";
+import GroupedBarplotChart from "../Components/GroupedBarplotChart";
 import { Link } from "react-router-dom";
 
 let verticalBarChartData = [
@@ -65,10 +65,10 @@ class SpendingTrend extends Component {
             <Grid item xs={12}>
               <ChartWrapper
                 ChartComponent={
-                  <VerticalBarchart data={verticalBarChartData} />
+                  <GroupedBarplotChart data={verticalBarChartData} />
                 }
                 data={{
-                  title: "Monthly Savings",
+                  title: "Previous Year Spending VS Present Year Spending",
                   labelOfBtn: " View Details",
                 }}
                 // style={{ height: '450px', width: '840px' }}
