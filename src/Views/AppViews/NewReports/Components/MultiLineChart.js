@@ -22,7 +22,7 @@ class MultiLineChart extends Component {
   renderChart = async () => {
     let { data, labels } = this.props;
 
-    let margin = { top: 20, right: 20, bottom: 50, left: 50 },
+    let margin = { top: 20, right: 20, bottom: 80, left: 50 },
       width = 524 - margin.left - margin.right,
       height = 293 - margin.top - margin.bottom;
 
@@ -77,7 +77,7 @@ class MultiLineChart extends Component {
       .select(this.ref.current)
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
-      .append("g")
+      .append("g").attr('class','multiline-content')
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     x.domain(
       d3.extent(data, function (d) {
@@ -144,19 +144,19 @@ class MultiLineChart extends Component {
       .data(labels)
       .enter()
       .append("g")
-      .attr("class", "legend")
-      .attr("style", "margin-top:20px; ");
+      .attr("class", "legend ")
+      .attr("style", "margin-top:20px;  ");
 
     legend
       .append("rect")
       .attr("width", 20)
-      .attr("height", 5)
+      .attr("height", 8)
       .style("fill", (d) => d.color)
       .attr(
         "transform",
-        (d, i) => `translate(${i * 80}, ${height + (margin.bottom - 25)})`
+        (d, i) => `translate(${i * 80 + 30*i-25}, ${height + (margin.bottom - 25)})`
       )
-      .attr("style", "padding:20px; ");
+      // .attr("style", "padding:20px; ");
 
     legend
       .append("text")
@@ -164,9 +164,9 @@ class MultiLineChart extends Component {
       .attr(
         "transform",
         (d, i) =>
-          `translate(${i * 80 + 25},  ${height + (margin.bottom - 25) + 7})`
+          `translate(${i * 80 + 30*i},  ${height + (margin.bottom - 25) + 7})`
       )
-      .attr("style", "padding:20px; ");
+      .attr("font-size", "12px ");
     d3.select(this.ref.current);
   };
   render() {

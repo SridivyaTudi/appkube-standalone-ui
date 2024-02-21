@@ -26,8 +26,8 @@ class GaugeChart extends Component {
 
   renderChart = async () => {
     let { data } = this.props;
-    let width = 284;
-    let height = 298;
+    let width = 245;
+    let height = 210;
     var svg = d3
       .select(this.ref.current)
       .attr("width", width)
@@ -36,8 +36,8 @@ class GaugeChart extends Component {
     var arcs = data.map((v, i) => {
       return d3
         .arc()
-        .innerRadius(i * 20 + 40)
-        .outerRadius(i * 20 - 5 + 40);
+        .innerRadius(i * 20 + 30)
+        .outerRadius(i * 20 - 5 + 30);
     });
 
     var pieData = data.map((v, i) => {
@@ -57,10 +57,10 @@ class GaugeChart extends Component {
       .append("text")
       .attr("text-anchor", "middle")
       .attr("dominant-baseline", "middle")
-      .attr("font-size", "15px")
+      .attr("font-size", "12px")
       .attr("fill", "black")
       .text("64.3%")
-      .attr("transform", `translate(${width / 2.4},${height / 2.4})`);
+      .attr("transform", `translate(${width / 2},${height / 1.9})`);
     var pie = d3
       .pie()
       .sort(null)
@@ -71,7 +71,7 @@ class GaugeChart extends Component {
       .data(pieData)
       .enter()
       .append("g")
-      .attr("transform", "translate(120,120) rotate(180)")
+      .attr("transform", "translate(120,110) rotate(180)")
       .attr("fill-opacity", (d, i) => 2 / (i + 1));
 
     g.selectAll("path")
@@ -109,9 +109,9 @@ class GaugeChart extends Component {
             .attr(
               "transform",
               "translate(" +
-                (centroidText[0] - (1 * width) / 100) +
+                (centroidText[0] - (7 * width) / 100) +
                 "," +
-                (centroidText[1] + 30 + ") rotate(" + 180 + ")")
+                (centroidText[1] + 15 + ") rotate(" + 180 + ")")
             )
             .attr("dominant-baseline", "central");
           gText
@@ -128,9 +128,9 @@ class GaugeChart extends Component {
             .attr(
               "transform",
               "translate(" +
-                (centroidText[0] - (1 * width) / 100) +
+                (centroidText[0] - (8 * width) / 100) +
                 "," +
-                (centroidText[1] + 30 + ") rotate(" + 180 + ")")
+                (centroidText[1] + 15 + ") rotate(" + 180 + ")")
             );
         }
       });
