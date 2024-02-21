@@ -3,8 +3,8 @@ import { Box, Grid, Button } from "@mui/material";
 import ChartWrapper from "../../Components/ChartWrapper";
 import VerticalBarchart from "Views/AppViews/NewReports/Components/VerticalBarchart";
 import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
-import GroupedBarplotChart from "Views/AppViews/NewReports/Components/GroupedBarplotChart";
 import TimeSpendComponent from "Views/AppViews/NewReports/Components/TimeSpendComponent";
+import GroupedBarplotChart from "Views/AppViews/NewReports/Components/GroupedBarplotChart";
 const totalUsedServiceData = [
   { label: "EC2", value: 4700, color: "#A145FF" },
   { label: "RDS", value: 4500, color: "#FA6298" },
@@ -137,30 +137,6 @@ const spendTrendData = [
     forecasted_spend: 22000,
   },
 ];
-
-let data = [
-  {
-    label: "R & D",
-    value: 110011100,
-  },
-  {
-    label: "Sales and marketing ",
-    value: 40267984,
-  },
-  {
-    label: "Customer support ",
-    value: 30672088,
-  },
-  {
-    label: "Finance admin",
-    value: 53980105,
-  },
-  {
-    label: "Data Analytics",
-    value: 81489445,
-  },
-];
-
 let timeSpendData = [
   {
     name: "This Month Savings ",
@@ -180,38 +156,20 @@ let timeSpendData = [
     percentage: "5",
     subName: "vs Previous Month",
   },
-  {
-    name: "Total Savings ",
-    value: "$110,000",
-    percentage: "5",
-    subName: " vs Last Month",
-  },
+  
 ];
-
 var potentialSavingData = [45, 33, 66, 50, 90];
 class AwsComponent extends Component {
   render() {
     return (
       <>
-      <TimeSpendComponent data={timeSpendData} />
+       <TimeSpendComponent data={timeSpendData} />
         <Box className="reports-charts">
           <Grid
             container
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid item xs={7}>
-              <ChartWrapper
-                data={{
-                  title: "Cost of Top Accounts",
-                  labelOfBtn: "View Details",
-                  link: "",
-                }}
-                ChartComponent={
-                  <VerticalBarchart data={verticalBarChartData} />
-                }
-              />
-            </Grid>
             <Grid item xs={5}>
               <ChartWrapper
                 data={{
@@ -226,59 +184,14 @@ class AwsComponent extends Component {
             </Grid>
             <Grid item xs={7}>
               <ChartWrapper
-                ChartComponent={
-                  <GroupedBarplotChart
-                    data={verticalBarChartData}
-                    chardBeforeRenderHTML={
-                      <Box className="spending-present">
-                        <label>
-                          See how much you have spent previous year vs present
-                          year
-                        </label>
-                      </Box>
-                    }
-                  />
-                }
                 data={{
-                  title: "Previous Year Spending VS Present Year Spending",
-                  labelOfBtn: " View Details",
-                }}
-              // style={{ height: '450px', width: '840px' }}
-              />
-            </Grid>
-            <Grid item xs={5}>
-              <ChartWrapper
-                data={{
-                  title: "Top Department Exceeding Budget",
-                  labelOfBtn: "View Details",
-                  description: "Base line is your allocated budget and the bar showing is your overspend budget",
-                  link: "",
-                }}
-                ChartComponent={
-                  <VerticalBarchart data={[
-                    { name: "R & D", value: 180 },
-                    { name: "Sales and marketing", value: 170 },
-                    { name: "Customer support", value: 150 },
-                    { name: "Finance admin", value: 900 },
-                    { name: "Data and Analytics", value: 700 },
-
-                  ]}  color={"yellow"}/>
-                }
-              />
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            <Grid item xs={12}>
-              <ChartWrapper
-                data={{
-                  title: "Available  Budgets",
+                  title: "Cost of Top Accounts",
                   labelOfBtn: "View Details",
                   link: "",
                 }}
+                ChartComponent={
+                  <VerticalBarchart data={verticalBarChartData} />
+                }
               />
             </Grid>
           </Grid>
