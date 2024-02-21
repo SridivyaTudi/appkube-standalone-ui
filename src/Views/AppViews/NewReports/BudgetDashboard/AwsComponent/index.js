@@ -136,6 +136,30 @@ const spendTrendData = [
     forecasted_spend: 22000,
   },
 ];
+
+let data = [
+  {
+    label: "R & D",
+    value: 110011100,
+  },
+  {
+    label: "Sales and marketing ",
+    value: 40267984,
+  },
+  {
+    label: "Customer support ",
+    value: 30672088,
+  },
+  {
+    label: "Finance admin",
+    value: 53980105,
+  },
+  {
+    label: "Data Analytics",
+    value: 81489445,
+  },
+];
+
 var potentialSavingData = [45, 33, 66, 50, 90];
 class AwsComponent extends Component {
   render() {
@@ -190,18 +214,26 @@ class AwsComponent extends Component {
                   title: "Previous Year Spending VS Present Year Spending",
                   labelOfBtn: " View Details",
                 }}
-                // style={{ height: '450px', width: '840px' }}
+              // style={{ height: '450px', width: '840px' }}
               />
             </Grid>
             <Grid item xs={5}>
               <ChartWrapper
                 data={{
-                  title: "Cost of Top Accounts",
+                  title: "Top Department Exceeding Budget",
                   labelOfBtn: "View Details",
+                  description: "Base line is your allocated budget and the bar showing is your overspend budget",
                   link: "",
                 }}
                 ChartComponent={
-                  <VerticalBarchart data={verticalBarChartData} />
+                  <VerticalBarchart data={[
+                    { name: "R & D", value: 180 },
+                    { name: "Sales and marketing", value: 170 },
+                    { name: "Customer support", value: 150 },
+                    { name: "Finance admin", value: 900 },
+                    { name: "Data and Analytics", value: 700 },
+
+                  ]}  color={"yellow"}/>
                 }
               />
             </Grid>
@@ -212,7 +244,7 @@ class AwsComponent extends Component {
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
             <Grid item xs={12}>
-            <ChartWrapper
+              <ChartWrapper
                 data={{
                   title: "Available  Budgets",
                   labelOfBtn: "View Details",

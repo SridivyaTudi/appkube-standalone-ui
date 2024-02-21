@@ -15,6 +15,16 @@ let data = [
   { name: "R&D", value: 400 },
 ];
 
+let data1 = [
+  { name: "R & D", value: 180 },
+  { name: "Sales and marketing", value: 170 },
+  { name: "Customer support", value: 150 },
+  { name: "Finance admin", value: 900 },
+  { name: "Data and Analytics", value: 700 },
+ 
+];
+
+
 const width = 550,
   height = 250;
 class VerticalBarchart extends Component {
@@ -39,7 +49,7 @@ class VerticalBarchart extends Component {
     const xScale = d3
       .scaleBand()
       .range([margin.left, width - margin.right])
-      .domain(data.map((d) => d.name))
+      .domain(this.props.color? data1.map((d) => d.name) :  data.map((d) => d.name))
       .padding(0.6);
       
       
@@ -47,7 +57,7 @@ class VerticalBarchart extends Component {
     const yScale = d3
       .scaleLinear()
       .range([height - margin.bottom, margin.top])
-      .domain([0, d3.max(data, (d) => d.value)])
+      .domain([0, d3.max( this.props.color?data1:  data, (d) => d.value)])
       .nice();
     
 
@@ -77,7 +87,7 @@ class VerticalBarchart extends Component {
       .attr("class", "bars")
       .selectAll("rect")
       .attr("fill", "#B399FF")
-      .data(data)
+      .data(this.props.color?data1:data)
       .enter();
 
     barGroups
@@ -86,7 +96,7 @@ class VerticalBarchart extends Component {
       .attr("y", (d) => yScale(d.value))
       .attr("width", xScale.bandwidth())
       .attr("height", (d) => yScale(30) - yScale(d.value))
-      .style("fill", "#FA6298")
+      .style("fill", this.props?.color?"yellow":"#FA6298")
       .attr("rx", 3)
       .attr("ry", 3)
       // .on("mouseover", function (d, data) {

@@ -11,7 +11,13 @@ class ChartWrapper extends Component {
     return (
       <Box className="chart-box">
         <Box className="heading m-b-10">
-          <h4>{title}</h4>
+          <h4>{title}
+          </h4>
+          <p></p>
+          {data?.description ?
+            <h6>{data?.description}</h6>
+            : <></>}
+
           <Link to={`${link ? link : "#"} `}>
             <Button
               className="primary-outline-btn min-width"
