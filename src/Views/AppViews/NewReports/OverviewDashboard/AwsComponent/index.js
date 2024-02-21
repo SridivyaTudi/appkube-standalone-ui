@@ -139,10 +139,10 @@ const spendTrendData = [
   },
 ];
 var potentialSavingData = [
-  { color: "#e91e63", value: 45 },
-  { color: "orange", value: 33 },
-  { color: "skyblue", value: 66 },
-  { color: "blue", value: 100 },
+  { color: "#FF708B", percentage: 65,name:'Spot Instace', value:'532'},
+  { color: "#FFBA69", percentage: 70,name:'Reserved Ins.',value:539 },
+  { color: "#01F1E3", percentage: 60,name:'Others',value: 4532},
+  { color: "#8676FF", percentage: 50 ,name:'Rightsizing',value:786},
 ];
 class AwsComponent extends Component {
   render() {
