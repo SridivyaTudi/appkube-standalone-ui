@@ -14,38 +14,52 @@ class GaugeChart extends Component {
 
   renderChart = async () => {
     let { data } = this.props;
-    let labels = ["pink", "orange", "sky", "blue"];
+    let width = 284;
+    let height = 298;
     var svg = d3
       .select(this.ref.current)
-      .attr("width", 284)
-      .attr("height", 300);
+      .attr("width", width)
+      .attr("height", height);
 
     var arcs = data.map((v, i) => {
       return d3
         .arc()
-        .innerRadius(i * 20 + 60)
-        .outerRadius((i + 1) * 20 - 5 + 60);
+        .innerRadius(i * 20 + 40)
+        .outerRadius(i * 20 - 5 + 40);
     });
 
     var pieData = data.map((v, i) => {
       return [
-        { value: v.value * 0.75, arc: arcs[i], color: v.color },
-        { value: (100 - v.value) * 0.75, arc: arcs[i] },
-        { value: 100 * 0.25, arc: arcs[i] },
+        {
+          percentage: v.percentage * 0.75,
+          arc: arcs[i],
+          name: v.name,
+          color: v.color,
+          value: v.value,
+        },
+        { percentage: (100 - v.percentage) * 0.75, arc: arcs[i] },
+        { percentage: 0.25, arc: arcs[i] },
       ];
     });
-
+    svg
+      .append("text")
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "middle")
+      .attr("font-size", "15px")
+      .attr("fill", "black")
+      .text("64.3%")
+      .attr("transform", `translate(${width / 2.4},${height / 2.4})`);
     var pie = d3
       .pie()
       .sort(null)
-      .value((d) => d.value);
+      .value((d) => d.percentage);
 
     var g = svg
       .selectAll("g")
       .data(pieData)
       .enter()
       .append("g")
-      .attr("transform", "translate(142,250) rotate(180)")
+      .attr("transform", "translate(120,120) rotate(180)")
       .attr("fill-opacity", (d, i) => 2 / (i + 1));
 
     g.selectAll("path")
@@ -54,30 +68,43 @@ class GaugeChart extends Component {
       .append("path")
       .attr("d", (d) => d.data.arc(d))
       .attr("fill", (d, i) => {
-        return i == 0 ? d.data.color : "gray";
+        return i == 0 ? d.data.color : "#DBDFF1";
       });
+    var gText = svg
+      .selectAll("g.textClass")
+      .data(data)
+      .enter()
+      .append("g")
+      .classed("textClass", true)
+      .attr(
+        "transform",
+        "translate(" + width / 2 + "," + width / 2 + ") rotate(180)"
+      );
 
-    // svg.selectAll("g").each(function (d) {
-    //   var el = d3.select(this);
-    //   el.selectAll("path").each((r, i) => {
-    //     if (i == 1) {
-    //       var centroid = r.data.arc.centroid({
-    //         startAngle: r.startAngle + 0.05,
-    //         endAngle: r.startAngle + 0.001 + 0.05,
-    //       });
-    //       g.append("text")
-    //         .text(100 - Math.floor(r.value) + "%")
-    //         .attr(
-    //           "transform",
-    //           `translate(${centroid[0]},${centroid[1]}) rotate(${
-    //             (180 / Math.PI) * r.startAngle + 5
-    //           })`
-    //         )
-    //         .attr("alignment-baseline", "middle");
-    //     }
-    //   });
-    // });
-
+    svg.selectAll("g").each(function (d, index) {
+      var el = d3.select(this);
+      var path = el.selectAll("path").each(function (r, i) {
+        if (i === 0) {
+          var centroidText = r.data.arc.centroid({
+            startAngle: r.startAngle,
+            endAngle: r.startAngle,
+          });
+          var lableObj = r.data;
+          gText
+            .append("text")
+            .attr("font-size", 12)
+            .text(`${lableObj.name} $${lableObj.value}`)
+            .attr(
+              "transform",
+              "translate(" +
+                (centroidText[0] - (1 * width) / 100) +
+                "," +
+                (centroidText[1] + 30 + ") rotate(" + 180 + ")")
+            )
+            .attr("dominant-baseline", "central");
+        }
+      });
+    });
     d3.select(this.ref.current);
   };
   render() {
