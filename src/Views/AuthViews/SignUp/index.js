@@ -22,7 +22,7 @@ import RequestPopup from "./Components/RequestPopup";
 import PasswordStrength from "Components/PasswordStrength";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import { generateRandomPassword } from "Utils";
+import { generateRandomPassword, isAlphaNumeric, isAlphabet } from "Utils";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -135,22 +135,49 @@ class SignUp extends Component {
 
     let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
     if (activeStep === this.steps.STEP1 && submittedSteps[this.steps.STEP1]) {
+      let firstNameNotMatchPolicy = [
+        !isAlphabet(step1.firstName),
+        step1.firstName.trim().length > 50,
+      ].includes(true);
+
       if (!step1.firstName.trim()) {
-        errors.firstName = "First name is required!";
+        errors.firstName = "The first name is required!";
+        isValid = false;
+      } else if (firstNameNotMatchPolicy) {
+        errors.firstName =
+          "The first name should be a maximum of 50 alphabets characters.";
         isValid = false;
       } else {
         errors.firstName = "";
       }
 
+      let lastNameNotMatchPolicy = [
+        !isAlphabet(step1.lastName),
+        step1.lastName.trim().length > 50,
+      ].includes(true);
+
       if (!step1.lastName.trim()) {
-        errors.lastName = "Last name is required!";
+        errors.lastName = "The last name is required!";
+        isValid = false;
+      } else if (lastNameNotMatchPolicy) {
+        errors.lastName =
+          "The last name should be a maximum of 50 alphabets characters.";
         isValid = false;
       } else {
         errors.lastName = "";
       }
+      let userNameNotMatchPolicy = [
+        !isAlphaNumeric(step1.userName),
+        step1.userName.length < 8,
+        step1.userName.length > 50,
+      ].includes(true);
 
       if (!step1.userName.trim()) {
         errors.userName = "Username is required!";
+        isValid = false;
+      } else if (userNameNotMatchPolicy) {
+        errors.userName =
+          "Username should be between 8 and 50 alphanumeric characters.";
         isValid = false;
       } else {
         errors.userName = "";
@@ -184,8 +211,17 @@ class SignUp extends Component {
       }
     }
     if (activeStep === this.steps.STEP2 && submittedSteps[this.steps.STEP2]) {
+      let companyNameNotMatchPolicy = [
+        !isAlphaNumeric(step2.companyName),
+        step2.companyName.length > 50,
+      ].includes(true);
+
       if (!step2.companyName) {
         errors.companyName = "Company name is required!";
+        isValid = false;
+      } else if (companyNameNotMatchPolicy) {
+        errors.companyName =
+          "Company Name should be a maximum of 50 characters.";
         isValid = false;
       } else {
         errors.companyName = "";

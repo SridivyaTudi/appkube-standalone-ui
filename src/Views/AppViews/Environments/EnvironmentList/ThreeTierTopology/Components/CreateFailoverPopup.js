@@ -75,6 +75,10 @@ class CreateFailoverPopup extends Component {
       if (!formData.description) {
         errors = { ...errors, description: "Description is required!" };
         isValid = false;
+      } else if (formData.description.length > 255) {
+        errors.description =
+          "Description should be a maximum of 255 characters.";
+        isValid = false;
       } else {
         errors = { ...errors, description: "" };
       }
@@ -162,13 +166,12 @@ class CreateFailoverPopup extends Component {
                 <textarea
                   className="form-control textarea"
                   name="description"
+                  maxLength={255}
                   placeholder="Write Description"
                   id="description"
                   onChange={this.handleChange}
                   value={description}
-                >
-                  
-                </textarea>
+                ></textarea>
                 <span
                   className="red"
                   style={{ fontSize: "12px", marginTop: "5px" }}

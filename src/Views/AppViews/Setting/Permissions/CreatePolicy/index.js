@@ -194,6 +194,10 @@ export class CreatePolicy extends Component {
       if (!description) {
         errors.description = "Policy Description is required!";
         isValid = false;
+      } else if (description.length > 255) {
+        errors.description =
+          "Policy Description should be a maximum of 255 characters.";
+        isValid = false;
       } else {
         errors.description = "";
       }
@@ -290,15 +294,15 @@ export class CreatePolicy extends Component {
     return (
       <Box className="status-btn">
         <HtmlTooltip
-            className="table-tooltip-dark d-flex"
-            title={
-              <React.Fragment>
-                <span>This role created by default by the system</span>
-              </React.Fragment>
-            }
-          >
-            <span>{status}</span>
-          </HtmlTooltip>
+          className="table-tooltip-dark d-flex"
+          title={
+            <React.Fragment>
+              <span>This role created by default by the system</span>
+            </React.Fragment>
+          }
+        >
+          <span>{status}</span>
+        </HtmlTooltip>
       </Box>
     );
   };
@@ -511,7 +515,7 @@ export class CreatePolicy extends Component {
                   type="text"
                   className="form-control"
                   id="roleDescription"
-                  name="description"
+                  name="description"  maxlength="255"
                   style={{
                     maxWidth: "100%",
                     height: "60px",

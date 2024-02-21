@@ -262,6 +262,10 @@ export class CreateGroup extends Component {
       if (!description) {
         errors.description = "Group Description is required!";
         isValid = false;
+      } else if (description.length > 255) {
+        errors.description =
+          "Group Description should be a maximum of 255 characters.";
+        isValid = false;
       } else {
         errors.description = "";
       }
@@ -617,6 +621,7 @@ export class CreateGroup extends Component {
                     lineHeight: "18px",
                     paddingRight: "15px",
                   }}
+                  maxlength="255"
                   placeholder="pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia "
                   value={description}
                   onChange={this.handleInputChange}
@@ -653,7 +658,12 @@ export class CreateGroup extends Component {
         <TableContainer component={Paper} className="access-control-table">
           {this.renderRoleTable()}
         </TableContainer>
-        {this.renderPaginationComponent(roles?.length || [], roleRPG, rolePG, 1)}
+        {this.renderPaginationComponent(
+          roles?.length || [],
+          roleRPG,
+          rolePG,
+          1
+        )}
         {showCancelGroupControlModal ? (
           <CancelGroupControlModal
             showModal={showCancelGroupControlModal}
