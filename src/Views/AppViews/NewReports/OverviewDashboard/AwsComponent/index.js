@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Box, Grid, Button } from "@mui/material";
-import ChartWrapper from "../Components/ChartWrapper";
+import ChartWrapper from "../../Components/ChartWrapper";
 import HorizontalBarChart from "Views/AppViews/NewReports/Components/HorizontalBarChart";
 import VerticalBarchart from "Views/AppViews/NewReports/Components/VerticalBarchart";
 import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";

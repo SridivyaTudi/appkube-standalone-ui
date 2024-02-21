@@ -56,15 +56,16 @@ import AddProduct from "./AppViews/BIMapping/AddProduct";
 import DiscoveredAssets from "./AppViews/DiscoveredAssets";
 import LoginEvents from "./AppViews/DiscoveredAssets/LoginEvents";
 import Eventhistory from "./AppViews/DiscoveredAssets/Eventhistory";
-import NewReports from "./AppViews/NewReports";
-import SpendOverview from "./AppViews/NewReports/SpendOverview";
+import  OverviewDashboard  from "./AppViews/NewReports/OverviewDashboard";
+import SpendOverview from "./AppViews/NewReports/OverviewDashboard/SpendOverview";
 import { getCloudWiseLandingZoneCount } from "Redux/Environments/EnvironmentsThunk";
 import status from "Redux/Constants/CommonDS";
 import { useDispatch, useSelector } from "react-redux";
-import TopUsedServices from "./AppViews/NewReports/TopUsedServices";
-import SpendingTrend from "./AppViews/NewReports/SpendingTrend";
-import CostTopAccounts from "./AppViews/NewReports/CostTopAccounts";
-import PotentialSavings from "./AppViews/NewReports/PotentialSavings";
+import TopUsedServices from "./AppViews/NewReports/OverviewDashboard/TopUsedServices";
+import SpendingTrend from "./AppViews/NewReports/OverviewDashboard/SpendingTrend";
+import CostTopAccounts from "./AppViews/NewReports/OverviewDashboard/CostTopAccounts";
+import PotentialSavings from "./AppViews/NewReports/OverviewDashboard/PotentialSavings";
+import BudgetDashboard from "./AppViews/NewReports/BudgetDashboard";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -258,8 +259,8 @@ export const Views = (props) => {
             element={<ReportsOld />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/new-reports`}
-            element={<NewReports />}
+            path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard`}
+            element={<OverviewDashboard />}
           />
           <Route
             path={`${APP_PREFIX_PATH}/new-reports/spend-overview`}
@@ -269,6 +270,7 @@ export const Views = (props) => {
           <Route path={`${APP_PREFIX_PATH}/new-reports/spending-trend`} element={<SpendingTrend/>} />
           <Route path={`${APP_PREFIX_PATH}/new-reports/cost-top-accounts`} element={<CostTopAccounts/>}/>
           <Route path={`${APP_PREFIX_PATH}/new-reports/potential-sevings`} element={<PotentialSavings/>} />
+          <Route path={`${APP_PREFIX_PATH}/new-reports/budget-dashboard`} element={<BudgetDashboard/>} />
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route
             path={`${APP_PREFIX_PATH}/bim/product-category`}

@@ -11,7 +11,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import TimeSpendComponent from "../Components/TimeSpendComponent";
+import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import ServiceIcon7 from "assets/img/report/service-icon7.png";
 import ServiceIcon8 from "assets/img/report/service-icon8.png";
@@ -55,7 +55,7 @@ class CostTopAccounts extends Component {
       <Box className="new-reports-container spend-overview-container">
         <Box className="list-heading">
           <h3>
-            <Link to={`/app/new-reports`}>
+            <Link to={`/app/new-reports/over-view-dashboard`}>
               <IconButton className="m-r-2">
                 <i class="fas fa-long-arrow-left"></i>
               </IconButton>

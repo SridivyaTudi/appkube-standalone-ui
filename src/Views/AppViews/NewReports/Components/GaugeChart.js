@@ -18,7 +18,7 @@ class GaugeChart extends Component {
     var svg = d3
       .select(this.ref.current)
       .attr("width", 284)
-      .attr("height", 587);
+      .attr("height", 300);
 
     var arcs = data.map((v, i) => {
       return d3

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Box, Button, IconButton, Grid } from "@mui/material";
-import ChartWrapper from "../Components/ChartWrapper";
-import GroupedBarplotChart from "../Components/GroupedBarplotChart";
+import ChartWrapper from "../../Components/ChartWrapper";
+import GroupedBarplotChart from "../../Components/GroupedBarplotChart";
 import { Link } from "react-router-dom";
 
 let verticalBarChartData = [
@@ -33,7 +33,7 @@ class SpendingTrend extends Component {
       <Box className="new-reports-container spend-overview-container">
         <Box className="list-heading">
           <h3>
-            <Link to={`/app/new-reports`}>
+            <Link to={`/app/new-reports/over-view-dashboard`}>
               <IconButton className="m-r-2">
                 <i class="fas fa-long-arrow-left"></i>
               </IconButton>

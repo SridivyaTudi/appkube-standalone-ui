@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { Box, Button, IconButton, List, ListItem } from "@mui/material";
+import { Box, Button, List, ListItem, IconButton } from "@mui/material";
 import Compute from "./Compute";
 import Storage from "./Storage";
+import Database from "./Database";
 import Network from "./Network";
+import Other from "./Other";
 import {Link} from "react-router-dom";
 
-class PotentialSavings extends Component {
+class SpendOverview extends Component {
   tabMapping = [
     {
       name: "Compute",
@@ -17,11 +19,20 @@ class PotentialSavings extends Component {
       dataKey: "storage",
       index: 1,
     },
-
+    {
+      name: "Database",
+      dataKey: "database",
+      index: 2,
+    },
     {
       name: "Network",
       dataKey: "network",
-      index: 2,
+      index: 3,
+    },
+    {
+      name: "Other",
+      dataKey: "other",
+      index: 4,
     },
   ];
   constructor(props) {
@@ -63,7 +74,11 @@ class PotentialSavings extends Component {
         ) : activeTab === 1 ? (
           <Storage />
         ) : activeTab === 2 ? (
+          <Database />
+        ) : activeTab === 3 ? (
           <Network />
+        ) : activeTab === 4 ? (
+          <Other />
         ) : (
           <></>
         )}
@@ -74,14 +89,11 @@ class PotentialSavings extends Component {
     return (
       <Box className="new-reports-container spend-overview-container">
         <Box className="list-heading">
-          <h3>
-            <Link to={`/app/new-reports`}>
+          <h3><Link to={`/app/new-reports/over-view-dashboard`}>
               <IconButton className="m-r-2">
                 <i class="fas fa-long-arrow-left"></i>
               </IconButton>
-            </Link>
-            Potential savings{" "}
-          </h3>
+            </Link> Spend Overview</h3>
           <Box className="d-flex ">
             <Button className="light-btn p-l-15 p-r-15 m-r-3">
               <i className="fas fa-filter m-r-2"></i> Filter
@@ -100,4 +112,4 @@ class PotentialSavings extends Component {
   }
 }
 
-export default PotentialSavings;
+export default SpendOverview;

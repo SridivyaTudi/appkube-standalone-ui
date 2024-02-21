@@ -12,10 +12,10 @@ import {
   ListItem,
   Grid,
 } from "@mui/material";
-import ChartWrapper from "../../Components/ChartWrapper";
-import DonutChart from "../../Components/DonutChart";
-import TimeSpendComponent from "../../Components/TimeSpendComponent";
-import VerticalBarchart from "../../Components/VerticalBarchart";
+import ChartWrapper from "../../../Components/ChartWrapper";
+import DonutChart from "../../../Components/DonutChart";
+import TimeSpendComponent from "../../../Components/TimeSpendComponent";
+import VerticalBarchart from "../../../Components/VerticalBarchart";
 
 let donutData = [
   {
