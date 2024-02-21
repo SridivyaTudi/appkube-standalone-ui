@@ -1,6 +1,18 @@
 import React, { Component } from "react";
+import { Box, List, ListItem } from "@mui/material";
 import * as d3 from "d3";
-
+import { v4 } from "uuid";
+const colorPallate = [
+  "#8676FF",
+  "#42CD7E",
+  "#FF9066",
+  "#FFCC41",
+  "#FF97AA",
+  "#34A2C2",
+  "#FB4B93",
+  "#A04D4D",
+  "#608E7D",
+];
 class GaugeChart extends Component {
   constructor(props) {
     super(props);
@@ -107,8 +119,41 @@ class GaugeChart extends Component {
     });
     d3.select(this.ref.current);
   };
+
+  renderBarsData = (data) => {
+    const JSX = [];
+    data?.length &&
+      data.forEach((item, index) => {
+        if (index !== data.length - 1) {
+          JSX.push(
+            <ListItem key={v4()}>
+              <p>{item.name}</p>
+              <Box className="d-block right-contant">
+                <span>
+                  <span
+                    style={{
+                      width: `${item.percentage || 0}%`,
+                      background: `${colorPallate[index]}`,
+                    }}
+                  ></span>
+                </span>
+              </Box>
+              <label>${item.value?.toLocaleString() || 0}</label>
+            </ListItem>
+          );
+        }
+      });
+    return JSX;
+  };
   render() {
-    return <svg ref={this.ref}></svg>;
+    return (
+      <Box className="gauge-chart">
+        <svg ref={this.ref}></svg>
+        <Box className="d-block chart-details">
+          <List>{this.renderBarsData(this.props.data)}</List>
+        </Box>
+      </Box>
+    );
   }
 }
 
