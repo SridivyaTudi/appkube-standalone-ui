@@ -114,6 +114,22 @@ class GaugeChart extends Component {
                 (centroidText[1] + 30 + ") rotate(" + 180 + ")")
             )
             .attr("dominant-baseline", "central");
+          gText
+            .append("circle")
+            .attr("fill", (d) => {
+              return lableObj.color;
+            })
+            .attr("cx", -10)
+            .attr("cy", 1)
+            .attr("r", 4)
+            .attr("stroke-width", -12)
+            .attr(
+              "transform",
+              "translate(" +
+                (centroidText[0] - (1 * width) / 100) +
+                "," +
+                (centroidText[1] + 30 + ") rotate(" + 180 + ")")
+            );
         }
       });
     });
@@ -124,24 +140,22 @@ class GaugeChart extends Component {
     const JSX = [];
     data?.length &&
       data.forEach((item, index) => {
-        if (index !== data.length - 1) {
-          JSX.push(
-            <ListItem key={v4()}>
-              <p>{item.name}</p>
-              <Box className="d-block right-contant">
-                <span>
-                  <span
-                    style={{
-                      width: `${item.percentage || 0}%`,
-                      background: `${colorPallate[index]}`,
-                    }}
-                  ></span>
-                </span>
-              </Box>
-              <label>${item.value?.toLocaleString() || 0}</label>
-            </ListItem>
-          );
-        }
+        JSX.push(
+          <ListItem key={v4()}>
+            <p>{item.name}</p>
+            <Box className="d-block right-contant">
+              <span>
+                <span
+                  style={{
+                    width: `${item.percentage || 0}%`,
+                    background: `${colorPallate[index]}`,
+                  }}
+                ></span>
+              </span>
+            </Box>
+            <label>${item.value?.toLocaleString() || 0}</label>
+          </ListItem>
+        );
       });
     return JSX;
   };
