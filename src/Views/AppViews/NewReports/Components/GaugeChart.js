@@ -104,7 +104,7 @@ class GaugeChart extends Component {
           var lableObj = r.data;
           gText
             .append("text")
-            .attr("font-size", 12)
+            .attr("font-size", 10).attr('fill','#383874')
             .text(`${lableObj.name} $${lableObj.value}`)
             .attr(
               "transform",
@@ -117,6 +117,8 @@ class GaugeChart extends Component {
           gText
             .append("circle")
             .attr("fill", (d) => {
+              return 'none';
+            }).attr( "stroke",(d) => {
               return lableObj.color;
             })
             .attr("cx", -10)
