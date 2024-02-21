@@ -34,6 +34,8 @@ import status from "Redux/Constants/CommonDS";
 import { getCurrentUser, getCurrentOrgName } from "Utils";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { isAlphaNumeric, isAlphabet } from "Utils";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 const steps = ["User details ", "Add  user to group ", "Review and Create"];
 const initialFormData = {
   firstName: "",
@@ -41,6 +43,21 @@ const initialFormData = {
   email: "",
   username: "",
 };
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "red",
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 class CreateUserControlModal extends Component {
   user = { id: "", username: "" };
@@ -205,7 +222,12 @@ class CreateUserControlModal extends Component {
                   }
                 />
                 {errors[index]?.firstName ? (
-                  <span className="red">{errors[index].firstName}</span>
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={errors[index].firstName}
+                  >
+                    {errors[index].firstName}
+                  </HtmlTooltip>
                 ) : (
                   <></>
                 )}
@@ -232,7 +254,12 @@ class CreateUserControlModal extends Component {
                   }
                 />
                 {errors[index]?.lastName ? (
-                  <span className="red">{errors[index].lastName}</span>
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={errors[index].lastName}
+                  >
+                    {errors[index].lastName}
+                  </HtmlTooltip>
                 ) : (
                   <></>
                 )}
@@ -256,7 +283,12 @@ class CreateUserControlModal extends Component {
                   }
                 />
                 {errors[index]?.username ? (
-                  <span className="red">{errors[index].username}</span>
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={errors[index].username}
+                  >
+                    {errors[index].username}
+                  </HtmlTooltip>
                 ) : (
                   <></>
                 )}
@@ -283,7 +315,12 @@ class CreateUserControlModal extends Component {
                   }
                 />
                 {errors[index]?.email ? (
-                  <span className="red">{errors[index].email}</span>
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={errors[index].email}
+                  >
+                    {errors[index].email}
+                  </HtmlTooltip>
                 ) : (
                   <></>
                 )}
