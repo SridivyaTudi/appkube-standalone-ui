@@ -5,6 +5,7 @@ import VerticalBarchart from "Views/AppViews/NewReports/Components/VerticalBarch
 import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
 import GroupedBarplotChart from "Views/AppViews/NewReports/Components/GroupedBarplotChart";
 import TimeSpendComponent from "Views/AppViews/NewReports/Components/TimeSpendComponent";
+import ProgressBarChart from "../../Components/ProgressBarChart";
 const totalUsedServiceData = [
   { label: "EC2", value: 4700, color: "#A145FF" },
   { label: "RDS", value: 4500, color: "#FA6298" },
@@ -163,28 +164,28 @@ let data = [
 
 let timeSpendData = [
   {
-    name: "This Month Savings ",
-    value: "$85,000",
+    name: "Budget Allocated",
+    value: "$70,000",
     percentage: "15",
-    subName: "vs Last Month",
+    subName: "",
   },
   {
-    name: "Forecasting Savings",
-    value: "$90,000",
+    name: "Remaining Budget",
+    value: "$15,000",
     percentage: "5",
-    subName: " vs Last Month",
+    subName: " ",
   },
   {
-    name: "Last Month savings ",
-    value: "$80,000",
+    name: "Total Spend",
+    value: "$55,000",
     percentage: "5",
-    subName: "vs Previous Month",
+    subName: " Till date",
   },
   {
-    name: "Total Savings ",
-    value: "$110,000",
+    name: "Forecasted Spend",
+    value: "$68,000",
     percentage: "5",
-    subName: " vs Last Month",
+    subName: "Next Month",
   },
 ];
 
@@ -193,7 +194,7 @@ class AwsComponent extends Component {
   render() {
     return (
       <>
-      <TimeSpendComponent data={timeSpendData} />
+        <TimeSpendComponent data={timeSpendData} />
         <Box className="reports-charts">
           <Grid
             container
@@ -203,7 +204,7 @@ class AwsComponent extends Component {
             <Grid item xs={7}>
               <ChartWrapper
                 data={{
-                  title: "Cost of Top Accounts",
+                  title: "Accounts With High Spending",
                   labelOfBtn: "View Details",
                   link: "",
                 }}
@@ -215,7 +216,7 @@ class AwsComponent extends Component {
             <Grid item xs={5}>
               <ChartWrapper
                 data={{
-                  title: "Spend Overview",
+                  title: "Transaction Type Cost",
                   labelOfBtn: " View Details",
                   link: "",
                 }}
@@ -232,18 +233,18 @@ class AwsComponent extends Component {
                     chardBeforeRenderHTML={
                       <Box className="spending-present">
                         <label>
-                          See how much you have spent previous year vs present
-                          year
+                          See how your products is spending this Month vs last
+                          month
                         </label>
                       </Box>
                     }
                   />
                 }
                 data={{
-                  title: "Previous Year Spending VS Present Year Spending",
+                  title: "Top Products with High Spending",
                   labelOfBtn: " View Details",
                 }}
-              // style={{ height: '450px', width: '840px' }}
+                // style={{ height: '450px', width: '840px' }}
               />
             </Grid>
             <Grid item xs={5}>
@@ -251,18 +252,27 @@ class AwsComponent extends Component {
                 data={{
                   title: "Top Department Exceeding Budget",
                   labelOfBtn: "View Details",
-                  description: "Base line is your allocated budget and the bar showing is your overspend budget",
                   link: "",
                 }}
                 ChartComponent={
-                  <VerticalBarchart data={[
-                    { name: "R & D", value: 180 },
-                    { name: "Sales and marketing", value: 170 },
-                    { name: "Customer support", value: 150 },
-                    { name: "Finance admin", value: 900 },
-                    { name: "Data and Analytics", value: 700 },
-
-                  ]}  color={"yellow"}/>
+                  <VerticalBarchart
+                    data={[
+                      { name: "R & D", value: 180 },
+                      { name: "Sales and marketing", value: 170 },
+                      { name: "Customer support", value: 150 },
+                      { name: "Finance admin", value: 900 },
+                      { name: "Data and Analytics", value: 700 },
+                    ]}
+                    color={"#FAA24B"}
+                    chardBeforeRenderHTML={
+                      <Box className="spending-present">
+                        <label>
+                          See how your products is spending this Month vs last
+                          month
+                        </label>
+                      </Box>
+                    }
+                  />
                 }
               />
             </Grid>
@@ -279,6 +289,7 @@ class AwsComponent extends Component {
                   labelOfBtn: "View Details",
                   link: "",
                 }}
+                ChartComponent={<ProgressBarChart />}
               />
             </Grid>
           </Grid>

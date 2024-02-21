@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
 import { convertDigitToThousand } from "Utils";
+import { Box } from "@mui/material";
 
 let data = [
   { name: "IT Infra", value: 1300 },
@@ -21,9 +22,7 @@ let data1 = [
   { name: "Customer support", value: 150 },
   { name: "Finance admin", value: 900 },
   { name: "Data and Analytics", value: 700 },
- 
 ];
-
 
 const width = 550,
   height = 250;
@@ -41,7 +40,6 @@ class VerticalBarchart extends Component {
     const extent = [
       [margin.left, margin.top],
       [width - margin.right, height - margin.top],
-      
     ];
 
     const svg = d3.select(this.ref.current);
@@ -49,17 +47,16 @@ class VerticalBarchart extends Component {
     const xScale = d3
       .scaleBand()
       .range([margin.left, width - margin.right])
-      .domain(this.props.color? data1.map((d) => d.name) :  data.map((d) => d.name))
+      .domain(
+        this.props.color ? data1.map((d) => d.name) : data.map((d) => d.name)
+      )
       .padding(0.6);
-      
-      
 
     const yScale = d3
       .scaleLinear()
       .range([height - margin.bottom, margin.top])
-      .domain([0, d3.max( this.props.color?data1:  data, (d) => d.value)])
+      .domain([0, d3.max(this.props.color ? data1 : data, (d) => d.value)])
       .nice();
-    
 
     const xAxis = (g) =>
       g
@@ -72,22 +69,12 @@ class VerticalBarchart extends Component {
         .attr("transform", `translate(${margin.left},0)`)
         .call(d3.axisLeft(yScale).tickFormat((d) => "$" + d))
         .call((g_local) => g_local.select(".domain").remove());
-        
-
-    // var tooltip = d3
-    //   .select("#root")
-    //   .data(data)
-    //   .append("div").attr('class','chart-tooltip')
-    //   .style("position", "absolute")
-    //   .style("z-index", "10")
-    //   .style("visibility", "hidden");
-
     const barGroups = svg
       .append("g")
       .attr("class", "bars")
       .selectAll("rect")
       .attr("fill", "#B399FF")
-      .data(this.props.color?data1:data)
+      .data(this.props.color ? data1 : data)
       .enter();
 
     barGroups
@@ -96,49 +83,34 @@ class VerticalBarchart extends Component {
       .attr("y", (d) => yScale(d.value))
       .attr("width", xScale.bandwidth())
       .attr("height", (d) => yScale(30) - yScale(d.value))
-      .style("fill", this.props?.color?"yellow":"#FA6298")
+      .style("fill", this.props?.color ? "#FAA24B" : "#FA6298")
       .attr("rx", 3)
-      .attr("ry", 3)
-      // .on("mouseover", function (d, data) {
-      //   tooltip.html(
-      //     `<div class="chart-tooltip-contents"><div class="cost-text">Cost</div><div class="value">$${data.value}</div><div class="previous-month-data"><span>+16.67%</span> vs previous month</div><div class="name">${data.name}</div></div>`
-      //   );
-      //   return tooltip.style("visibility", "visible");
-      // })
-      // .on("mousemove", function (d) {
-      //   return tooltip
-      //     .style("top", d.pageY - 10 + "px")
-      //     .style("left", d.pageX + 10 + "px");
-      // })
-      // .on("mouseout", function () {
-      //   return tooltip.style("visibility", "hidden");
-      // });
+      .attr("ry", 3);
 
     barGroups
       .append("text")
       .attr("class", "value")
       .attr("x", (a) => xScale(a.name) + xScale.bandwidth() / 2)
       .attr("y", (a) => yScale(a.value) + 30)
-      .attr("text-anchor", "middle")
-      
-      // .text((a) => `$${convertDigitToThousand(a.value)}`);
+      .attr("text-anchor", "middle");
 
     svg.append("g").attr("class", "x-axis").call(xAxis);
 
     svg.append("g").attr("class", "y-axis").call(yAxis);
 
-   
-
-    d3.select(this.ref.current)
+    d3.select(this.ref.current);
   };
   render() {
     return (
-      <svg
-        ref={this.ref}
-        width={width}
-        height={height}
-        viewBox={`0 0 ${width - 600} ${height}`}
-      ></svg>
+      <Box className="vertical-bar-chart">
+         {this.props.chardBeforeRenderHTML}
+        <svg
+          ref={this.ref}
+          width={width}
+          height={height}
+          viewBox={`0 0 ${width - 600} ${height}`}
+        ></svg>
+      </Box>
     );
   }
 }
