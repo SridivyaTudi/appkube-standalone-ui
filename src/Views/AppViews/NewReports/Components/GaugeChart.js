@@ -14,7 +14,7 @@ class GaugeChart extends Component {
 
   renderChart = async () => {
     let { data } = this.props;
-
+    let labels = ["pink", "orange", "sky", "blue"];
     var svg = d3
       .select(this.ref.current)
       .attr("width", 284)
@@ -29,8 +29,8 @@ class GaugeChart extends Component {
 
     var pieData = data.map((v, i) => {
       return [
-        { value: v * 0.75, arc: arcs[i] },
-        { value: (100 - v) * 0.75, arc: arcs[i] },
+        { value: v.value * 0.75, arc: arcs[i], color: v.color },
+        { value: (100 - v.value) * 0.75, arc: arcs[i] },
         { value: 100 * 0.25, arc: arcs[i] },
       ];
     });
@@ -53,28 +53,30 @@ class GaugeChart extends Component {
       .enter()
       .append("path")
       .attr("d", (d) => d.data.arc(d))
-      .attr("fill", (d, i) => (i == 0 ? "blue" : "none"));
-
-    svg.selectAll("g").each(function (d) {
-      var el = d3.select(this);
-      el.selectAll("path").each((r, i) => {
-        if (i == 1) {
-          var centroid = r.data.arc.centroid({
-            startAngle: r.startAngle + 0.05,
-            endAngle: r.startAngle + 0.001 + 0.05,
-          });
-          g.append("text")
-            .text(100 - Math.floor(r.value) + "%")
-            .attr(
-              "transform",
-              `translate(${centroid[0]},${centroid[1]}) rotate(${
-                (180 / Math.PI) * r.startAngle + 7
-              })`
-            )
-            .attr("alignment-baseline", "middle");
-        }
+      .attr("fill", (d, i) => {
+        return i == 0 ? d.data.color : "gray";
       });
-    });
+
+    // svg.selectAll("g").each(function (d) {
+    //   var el = d3.select(this);
+    //   el.selectAll("path").each((r, i) => {
+    //     if (i == 1) {
+    //       var centroid = r.data.arc.centroid({
+    //         startAngle: r.startAngle + 0.05,
+    //         endAngle: r.startAngle + 0.001 + 0.05,
+    //       });
+    //       g.append("text")
+    //         .text(100 - Math.floor(r.value) + "%")
+    //         .attr(
+    //           "transform",
+    //           `translate(${centroid[0]},${centroid[1]}) rotate(${
+    //             (180 / Math.PI) * r.startAngle + 5
+    //           })`
+    //         )
+    //         .attr("alignment-baseline", "middle");
+    //     }
+    //   });
+    // });
 
     d3.select(this.ref.current);
   };
