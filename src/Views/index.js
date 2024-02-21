@@ -263,13 +263,13 @@ export const Views = (props) => {
             element={<OverviewDashboard />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/new-reports/spend-overview`}
+            path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview`}
             element={<SpendOverview />}
           />
-          <Route path={`${APP_PREFIX_PATH}/new-reports/top-use-services`} element={<TopUsedServices/>}/>
-          <Route path={`${APP_PREFIX_PATH}/new-reports/spending-trend`} element={<SpendingTrend/>} />
-          <Route path={`${APP_PREFIX_PATH}/new-reports/cost-top-accounts`} element={<CostTopAccounts/>}/>
-          <Route path={`${APP_PREFIX_PATH}/new-reports/potential-sevings`} element={<PotentialSavings/>} />
+          <Route path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services`} element={<TopUsedServices/>}/>
+          <Route path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spending-trend`} element={<SpendingTrend/>} />
+          <Route path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/cost-top-accounts`} element={<CostTopAccounts/>}/>
+          <Route path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/potential-sevings`} element={<PotentialSavings/>} />
           <Route path={`${APP_PREFIX_PATH}/new-reports/budget-dashboard`} element={<BudgetDashboard/>} />
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route

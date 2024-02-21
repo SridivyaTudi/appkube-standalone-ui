@@ -159,7 +159,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Spend Overview",
                   labelOfBtn: " View Details",
-                  link: "/app/new-reports/spend-overview",
+                  link: "/app/new-reports/over-view-dashboard/spend-overview",
                 }}
                 ChartComponent={
                   <DonutChart data={donutData} width={250} height={300} />
@@ -171,7 +171,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Top Used Service ",
                   labelOfBtn: " View Details",
-                  link: "/app/new-reports/top-use-services",
+                  link: "/app/new-reports/over-view-dashboard/top-use-services",
                 }}
                 ChartComponent={
                   <HorizontalBarChart
@@ -198,7 +198,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Potential Savings",
                   labelOfBtn: " View Details",
-                  link: "/app/new-reports/potential-sevings",
+                  link: "/app/new-reports/over-view-dashboard/potential-sevings",
                 }}
                 ChartComponent={<GaugeChart data={potentialSavingData} />}
               />
@@ -208,7 +208,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Cost of Top Accounts",
                   labelOfBtn: "View Details",
-                  link: "/app/new-reports/cost-top-accounts",
+                  link: "/app/new-reports/over-view-dashboard/cost-top-accounts",
                 }}
                 ChartComponent={
                   <VerticalBarchart data={verticalBarChartData} />
@@ -230,7 +230,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Speding Trend",
                   labelOfBtn: " View Details",
-                  link: "/app/new-reports/spending-trend",
+                  link: "/app/new-reports/over-view-dashboard/spending-trend",
                 }}
               />
             </Grid>
