@@ -138,7 +138,12 @@ const spendTrendData = [
     forecasted_spend: 22000,
   },
 ];
-var potentialSavingData = [45, 33, 66, 50, 90];
+var potentialSavingData = [
+  { color: "#e91e63", value: 45 },
+  { color: "orange", value: 33 },
+  { color: "skyblue", value: 66 },
+  { color: "blue", value: 100 },
+];
 class AwsComponent extends Component {
   render() {
     return (
@@ -195,9 +200,7 @@ class AwsComponent extends Component {
                   labelOfBtn: " View Details",
                   link: "/app/new-reports/potential-sevings",
                 }}
-                ChartComponent={
-                  <GaugeChart data={potentialSavingData} />
-                }
+                ChartComponent={<GaugeChart data={potentialSavingData} />}
               />
             </Grid>
             <Grid item xs={6}>
