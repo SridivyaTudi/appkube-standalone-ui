@@ -13,158 +13,14 @@ import { connect } from "react-redux";
 import {
   getProductList,
   getProductEnv,
-  getModules,
-  getModuleElements,
-  getModulesOf3Tier,
 } from "Redux/AssociateApp/AssociateAppThunk";
 import { getOrgWiseDepartments } from "Redux/Environments/EnvironmentsThunk";
+import {
+  getElementType,
+  getElementInstancesOfGivenType,
+} from "Redux/BIMapping/BIMappingThunk";
 import Loader from "Components/Loader";
 const orgId = getCurrentOrgId();
-let data = [
-  {
-    name: "Synectiks",
-    chlidren: [
-      {
-        name: (
-          <>
-            HR{" "}
-            <Link to={`/app/bim/add-product`}>
-              <i className="add-icon fa-solid fa-circle-plus"></i>
-            </Link>
-          </>
-        ),
-        chlidren: [
-          {
-            name: "Payroll",
-            chlidren: [
-              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
-              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
-              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
-              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
-              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
-            ],
-          },
-          {
-            name: "Accounts",
-            chlidren: [
-              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
-              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
-              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
-              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
-              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
-            ],
-          },
-          {
-            name: "IT",
-            chlidren: [
-              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
-              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
-              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
-              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
-              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
-            ],
-          },
-          {
-            name: "Leave Management",
-            chlidren: [
-              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
-              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
-              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
-              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
-              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
-            ],
-          },
-          {
-            name: "Maintenance",
-            chlidren: [
-              { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
-              { name: "EC2", chlidren: [{ name: "SIP 1" }] },
-              { name: "ECS", chlidren: [{ name: "SIP 1" }] },
-              { name: "WAF", chlidren: [{ name: "SIP 1" }] },
-              { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
-            ],
-          },
-        ],
-      },
-      {
-        name: (
-          <>
-            Digital auction{" "}
-            <Link to={`/app/bim/add-product`}>
-              <i className="add-icon fa-solid fa-circle-plus"></i>
-            </Link>
-          </>
-        ),
-        chlidren: [
-          { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
-          { name: "EC2", chlidren: [{ name: "SIP 1" }] },
-          { name: "ECS", chlidren: [{ name: "SIP 1" }] },
-          { name: "WAF", chlidren: [{ name: "SIP 1" }] },
-          { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
-        ],
-      },
-      {
-        name: (
-          <>
-            We Desk{" "}
-            <Link to={`/app/bim/add-product`}>
-              <i className="add-icon fa-solid fa-circle-plus"></i>
-            </Link>
-          </>
-        ),
-        chlidren: [
-          { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
-          { name: "EC2", chlidren: [{ name: "SIP 1" }] },
-          { name: "ECS", chlidren: [{ name: "SIP 1" }] },
-          { name: "WAF", chlidren: [{ name: "SIP 1" }] },
-          { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
-        ],
-      },
-      {
-        name: (
-          <>
-            Procurement{" "}
-            <Link to={`/app/bim/add-product`}>
-              <i className="add-icon fa-solid fa-circle-plus"></i>
-            </Link>
-          </>
-        ),
-        chlidren: [
-          { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
-          { name: "EC2", chlidren: [{ name: "SIP 1" }] },
-          { name: "ECS", chlidren: [{ name: "SIP 1" }] },
-          { name: "WAF", chlidren: [{ name: "SIP 1" }] },
-          { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
-        ],
-      },
-      {
-        name: (
-          <>
-            Product 5{" "}
-            <Link to={`/app/bim/add-product`}>
-              <i className="add-icon fa-solid fa-circle-plus"></i>
-            </Link>
-          </>
-        ),
-        chlidren: [
-          { name: "Lambda", chlidren: [{ name: "SIP 1" }] },
-          { name: "EC2", chlidren: [{ name: "SIP 1" }] },
-          { name: "ECS", chlidren: [{ name: "SIP 1" }] },
-          { name: "WAF", chlidren: [{ name: "SIP 1" }] },
-          { name: "Anthena", chlidren: [{ name: "SIP 1" }] },
-        ],
-      },
-    ],
-
-    isMutipleCell: true,
-    multipeCellData: [
-      { name: "01" },
-      { name: "01" },
-      { name: "02" },
-      { name: "03" },
-    ],
-  },
-];
 
 let headers = [
   { name: "Organization Name", styled: {} },
@@ -219,6 +75,8 @@ class BIMapping extends Component {
     DEPARTMENT: "department",
     PRODUCT: "product",
     PRODUCT_ENVS: "productEnvs",
+    ELEMENT_TYPE: "elementType",
+    ELEMENT_INSTANCE_TYPE: "elementInstanceType",
   };
   constructor(props) {
     super(props);
@@ -261,6 +119,28 @@ class BIMapping extends Component {
       let productEnvs = this.props.productEnv.data;
       this.manipulateProductEnvsData(productEnvs);
     }
+
+    if (
+      prevProps.elementTypeData.status !== this.props.elementTypeData.status &&
+      this.props.elementTypeData.status === status.SUCCESS &&
+      this.props.elementTypeData?.data
+    ) {
+      let elementTypes = this.props.elementTypeData.data;
+      this.manipulateElementTypeData(elementTypes);
+    }
+
+    if (
+      prevProps.elementInstancesOfGivenType.status !==
+        this.props.elementInstancesOfGivenType.status &&
+      this.props.elementInstancesOfGivenType.status === status.SUCCESS &&
+      this.props.elementInstancesOfGivenType?.data
+    ) {
+      let elementInstancesOfGivenTypeData =
+        this.props.elementInstancesOfGivenType.data;
+      this.manipulateElementInstancesOfGivenTypeData(
+        elementInstancesOfGivenTypeData
+      );
+    }
   }
   toggleSelectDepartment = () => {
     this.setState({
@@ -268,16 +148,21 @@ class BIMapping extends Component {
     });
   };
 
-  manipulateChildrenData = (data, type) => {
-    return data.map((dataDetails) => {
-      let { name, id, departmentId } = dataDetails;
+  manipulateChildrenData = (data, type, exptraIds, isArrOfObj = 0) => {
+    return data.map((dataDetails, index) => {
+      let { name, id, instanceName } = dataDetails;
+      name = isArrOfObj ? dataDetails : instanceName || name;
+      id = isArrOfObj ? `${dataDetails}_${exptraIds?.productId}_${index}` : id;
       return {
         name,
         id,
         chlidren: [],
         type,
-        departmentId,
+        departmentId: exptraIds?.departmentId,
         isLastClickEnable: true,
+        productId: exptraIds?.productId,
+        productEnvId: exptraIds?.productEnvId,
+        elementTypeId: exptraIds?.elementTypeId,
       };
     });
   };
@@ -310,7 +195,7 @@ class BIMapping extends Component {
           ];
         }
       }
-      
+
       organizationTableData = [
         {
           name,
@@ -339,7 +224,10 @@ class BIMapping extends Component {
               if (department.id === clickTableData.id) {
                 department.chlidren = this.manipulateChildrenData(
                   products,
-                  this.TYPE.PRODUCT
+                  this.TYPE.PRODUCT,
+                  {
+                    departmentId: department.id,
+                  }
                 );
               }
               return department;
@@ -356,7 +244,7 @@ class BIMapping extends Component {
 
   // Manipulation of ProductEnvs data
   manipulateProductEnvsData = (productEnvs) => {
-    if (productEnvs) {
+    if (productEnvs?.length) {
       let { organizationTableData, clickTableData } = this.state;
 
       organizationTableData =
@@ -370,7 +258,11 @@ class BIMapping extends Component {
                   if (product.id === clickTableData.id) {
                     product.chlidren = this.manipulateChildrenData(
                       productEnvs,
-                      this.TYPE.PRODUCT_ENVS
+                      this.TYPE.PRODUCT_ENVS,
+                      {
+                        departmentId: clickTableData.departmentId,
+                        productId: product.id,
+                      }
                     );
                   }
                   return product;
@@ -388,6 +280,102 @@ class BIMapping extends Component {
     }
   };
 
+  // Manipulation of Element type data
+  manipulateElementTypeData = (elemntTypes) => {
+    if (elemntTypes?.length) {
+      let { organizationTableData, clickTableData } = this.state;
+
+      organizationTableData =
+        organizationTableData.map((organization) => {
+          let organizationChlidren = organization.chlidren;
+
+          if (organizationChlidren?.length) {
+            organization.chlidren = organizationChlidren.map((department) => {
+              if (department.id === clickTableData.departmentId) {
+                department.chlidren = department.chlidren.map((product) => {
+                  if (product.id === clickTableData.productId) {
+                    product.chlidren = product.chlidren.map((productEnv) => {
+                      if (productEnv.id === clickTableData.id) {
+                        productEnv.chlidren = this.manipulateChildrenData(
+                          elemntTypes,
+                          this.TYPE.ELEMENT_TYPE,
+                          {
+                            departmentId: clickTableData.departmentId,
+                            productId: clickTableData.productId,
+                            productEnvId: productEnv.id,
+                          },
+                          1
+                        );
+                      }
+                      return productEnv;
+                    });
+                  }
+                  return product;
+                });
+              }
+              return department;
+            });
+          }
+          return organization;
+        }) || [];
+
+      this.setState({
+        organizationTableData,
+      });
+    }
+  };
+
+  manipulateElementInstancesOfGivenTypeData = (elemntInstanceTypes) => {
+    if (elemntInstanceTypes?.length) {
+      let { organizationTableData, clickTableData } = this.state;
+
+      organizationTableData =
+        organizationTableData.map((organization) => {
+          let organizationChlidren = organization.chlidren;
+
+          if (organizationChlidren?.length) {
+            organization.chlidren = organizationChlidren.map((department) => {
+              if (department.id === clickTableData.departmentId) {
+                department.chlidren = department.chlidren.map((product) => {
+                  if (product.id === clickTableData.productId) {
+                    product.chlidren = product.chlidren.map((productEnv) => {
+                      if (productEnv.id === clickTableData.productEnvId) {
+                        productEnv.chlidren = productEnv.chlidren.map(
+                          (elementType) => {
+                            if (elementType.id === clickTableData.id) {
+                              elementType.chlidren =
+                                this.manipulateChildrenData(
+                                  elemntInstanceTypes,
+                                  this.TYPE.ELEMENT_INSTANCE_TYPE,
+                                  {
+                                    departmentId: clickTableData.departmentId,
+                                    productId: clickTableData.productId,
+                                    productEnvId: clickTableData.productEnvId,
+                                    elementTypeId: elementType.id,
+                                  }
+                                );
+                            }
+                            return elementType;
+                          }
+                        );
+                      }
+                      return productEnv;
+                    });
+                  }
+                  return product;
+                });
+              }
+              return department;
+            });
+          }
+          return organization;
+        }) || [];
+
+      this.setState({
+        organizationTableData,
+      });
+    }
+  };
   // Render Loder
   renderLoder(widthClass) {
     return (
@@ -398,13 +386,21 @@ class BIMapping extends Component {
   }
 
   onClickNode(data) {
-    let { type } = data;
-    let { clickTableData } = this.state;
-
+    let { type, departmentId, productId, productEnvId, id, name } = data;
+    console.log(data);
     if (type === this.TYPE.DEPARTMENT) {
-      this.props.getProductList(data.id);
+      this.props.getProductList(id);
     } else if (type === this.TYPE.PRODUCT) {
-      this.props.getProductEnv(data.id);
+      this.props.getProductEnv(id);
+    } else if (type === this.TYPE.PRODUCT_ENVS) {
+      this.props.getElementType({ productId, departmentId, productEnvId: id });
+    } else if (type === this.TYPE.ELEMENT_TYPE) {
+      this.props.getElementInstancesOfGivenType({
+        productId,
+        departmentId,
+        productEnvId,
+        elementType: name,
+      });
     }
     this.setState({ clickTableData: data });
   }
@@ -414,11 +410,16 @@ class BIMapping extends Component {
       organizationWiseDepartments: organization,
       products,
       productEnv,
+      elementTypeData,
+      elementInstancesOfGivenType,
     } = this.props;
     const inprogressStatus = status.IN_PROGRESS;
-    let loderStatus = [products.status, productEnv.status].includes(
-      inprogressStatus
-    );
+    let loderStatus = [
+      products.status,
+      productEnv.status,
+      elementTypeData.status,
+      elementInstancesOfGivenType.status,
+    ].includes(inprogressStatus);
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -475,13 +476,15 @@ class BIMapping extends Component {
 }
 
 function mapStateToProps(state) {
-  const { products, productEnv, modules, moduleElements, threeTierModules } =
-    state.associateApp;
+  const { products, productEnv } = state.associateApp;
   const { organizationWiseDepartments } = state.environments;
+  const { elementTypeData, elementInstancesOfGivenType } = state.biMapping;
   return {
     organizationWiseDepartments,
     products,
     productEnv,
+    elementTypeData,
+    elementInstancesOfGivenType,
   };
 }
 
@@ -489,6 +492,8 @@ const mapDispatchToProps = {
   getOrgWiseDepartments,
   getProductList,
   getProductEnv,
+  getElementType,
+  getElementInstancesOfGivenType,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BIMapping);

@@ -49,6 +49,10 @@ const config = {
 
   /* Service View Topology  */
   GET_SERVICE_VIEW: `/query/organization/#org-id#/application-topology/service-view?`,
+
+  /* BI-Mapping  */
+  GET_ELEMENT_TYPE: `/query/organization/#org-id#/bi-mapping/cloud-element?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#`,
+  GET_ELEMENT_INSTANCES_TYPE: `/query/organization/#org-id#/bi-mapping/cloud-element-instance?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&elementType=#element-type#`,
 };
 
 export default config;

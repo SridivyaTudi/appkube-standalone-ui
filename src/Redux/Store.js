@@ -8,6 +8,7 @@ import dashboardReducer from "Redux/Dashboard/DashboardSlice";
 import settingsReducer from "Redux/Settings/SettingsSlice";
 import associateAppReducer from "Redux/AssociateApp/AssociateAppSlice";
 import ServiceViewTopologyReducer from "Redux/ServiceViewTopology/ServiceViewTopologySlice";
+import BIMapping from "Redux/BIMapping/BIMappingSlice";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     settings: settingsReducer,
     associateApp: associateAppReducer,
     serviceTopology: ServiceViewTopologyReducer,
+    biMapping: BIMapping,
   },
 });
 
