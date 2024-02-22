@@ -26,7 +26,7 @@ let data1 = [
 
 const width = 550,
   height = 250;
- 
+  
 class VerticalBarchart extends Component {
   constructor(props) {
     super(props);
@@ -42,7 +42,6 @@ class VerticalBarchart extends Component {
     const extent = [
       [margin.left, margin.top],
       [width - margin.right, height - margin.top],
-      
     ];
 
     const svg = d3.select(this.ref.current);
@@ -63,7 +62,6 @@ class VerticalBarchart extends Component {
 
     const xAxis = (g) =>
       g
-      
         .attr("transform", `translate(0,${height - margin.bottom})`)
         .call(d3.axisBottom(xScale).tickSize(0))
         .call((g_local) => g_local.select(".domain").remove());
@@ -74,7 +72,6 @@ class VerticalBarchart extends Component {
         .call(d3.axisLeft(yScale).tickFormat((d) => "$" + d))
         .call((g_local) => g_local.select(".domain").remove());
     const barGroups = svg
-    .attr("style", "max-width: 100%;  font: 12px sans-serif; ")
       .append("g")
       
       .attr("class", "bars")
