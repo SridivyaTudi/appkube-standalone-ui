@@ -14,24 +14,44 @@ const totalUsedServiceData = [
 ];
 let verticalBarChartData = [
   {
-    label: "Compute Cost",
-    value: 110011100,
+    name: "Jun 23",
+    value: 4500,
   },
   {
-    label: "Network ",
-    value: 40267984,
+    name: "July 23",
+    value: 4000,
   },
   {
-    label: "Storage",
-    value: 30672088,
+    name: "August 23",
+    value: 4000,
   },
   {
-    label: "Database",
-    value: 53980105,
+    name: "Sept 23",
+    value: 3800,
   },
   {
-    label: "Others",
-    value: 81489445,
+    name: "Oct 23",
+    value: 3700,
+  },
+  {
+    name: "Nov 23",
+    value: 3700,
+  },
+  {
+    name: "Dec 23",
+    value: 3700,
+  },
+  {
+    name: "Jan 24",
+    value: 3700,
+  },
+  {
+    name: "Feb 24",
+    value: 3700,
+  },
+  {
+    name: "March 24",
+    value: 3700,
   },
 ];
 let donutData = [
@@ -47,10 +67,7 @@ let donutData = [
     age_group: "Storage",
     population: 30672088,
   },
-  {
-    age_group: "Database",
-    population: 53980105,
-  },
+
   {
     age_group: "Others",
     population: 81489445,
@@ -172,7 +189,7 @@ class AwsComponent extends Component {
             <Grid item xs={5}>
               <ChartWrapper
                 data={{
-                  title: "Spend Overview",
+                  title: "Usage By  IT Department",
                   labelOfBtn: " View Details",
                   link: "",
                 }}
@@ -182,7 +199,7 @@ class AwsComponent extends Component {
                     width={250}
                     height={300}
                     otherData={{
-                      centerValue: "$10,000",
+                      centerValue: "$43,000",
                     }}
                   />
                 }
@@ -191,12 +208,17 @@ class AwsComponent extends Component {
             <Grid item xs={7}>
               <ChartWrapper
                 data={{
-                  title: "Cost of Top Accounts",
+                  title: "Monthly Usage by IT Department",
                   labelOfBtn: "View Details",
                   link: "",
                 }}
                 ChartComponent={
-                  <VerticalBarchart data={verticalBarChartData} />
+                  <VerticalBarchart
+                    data={verticalBarChartData}
+                    styleProp={{
+                      color: "#53CA43",
+                    }}
+                  />
                 }
               />
             </Grid>
