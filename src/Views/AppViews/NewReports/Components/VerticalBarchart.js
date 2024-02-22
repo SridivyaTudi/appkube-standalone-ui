@@ -107,7 +107,7 @@ class VerticalBarchart extends Component {
     return (
       <Box className="vertical-bar-chart">
          {this.props.chardBeforeRenderHTML}
-        <svg
+        <svg style={{maxWidth: "100%"}}
           ref={this.ref}
           width={width}
           height={height}

@@ -64,10 +64,11 @@ class GaugeChart extends Component {
       .append("text")
       .attr("text-anchor", "middle")
       .attr("dominant-baseline", "middle")
-      .attr("font-size", "12px")
-      .attr("fill", "black")
+      .attr("font-size", "14px")
+      .attr("font-weight", "600")
+      .attr("fill", "#383874")
       .text("64.3%")
-      .attr("transform", `translate(${width / 2},${height / 1.9})`);
+      .attr("transform", `translate(${width / 2.05},${height / 1.89})`);
     var pie = d3
       .pie()
       .sort(null)

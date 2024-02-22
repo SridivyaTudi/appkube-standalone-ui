@@ -205,7 +205,7 @@ class MultiLineChart extends Component {
   render() {
     return (
       <Box classname="multi-line-chart">
-        <svg ref={this.ref} style={{maxWidth: "100%", width: "auto"}}></svg>
+        <svg ref={this.ref} style={{maxWidth: "100%"}}></svg>
       </Box>
     );
   }

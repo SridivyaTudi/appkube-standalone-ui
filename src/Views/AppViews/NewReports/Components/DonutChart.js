@@ -53,9 +53,10 @@ const DonutChart = ({ data, width, height, style }) => {
       .append("text")
       .attr("text-anchor", "middle")
       .attr("dominant-baseline", "middle")
-      .attr("font-size", "25px")
-      .attr("fill", "black")
-      .text("$1000")
+      .attr("font-size", "20px")
+      .attr("font-weight", "600")
+      .attr("fill", "#383874")
+      .text("$10,000")
       .attr("transform", `translate(${width / 2},${height / 2.4})`);
 
     //   legend area
