@@ -18,8 +18,6 @@ let data = [
   { name: "Dec", value1: 2000, value2: 900 },
 ];
 
-const width = "100%",
-  height = 250;
 class GroupedBarplotChart extends Component {
   constructor(props) {
     super(props);
@@ -29,9 +27,16 @@ class GroupedBarplotChart extends Component {
 
   componentDidMount = () => this.renderChart();
 
+  componentDidUpdate = () => {
+    d3.select(this.ref.current)
+      .selectAll("*")
+      .remove(); // Remove existing chart before rendering new one
+    this.renderChart();
+  };
+
   renderChart = () => {
     const margin = { top: 20, right: 0, bottom: 20, left: 40 };
-    const width = 1150;
+    const width = this.ref.current.parentElement.clientWidth; // Dynamically get parent container width
     const height = 250;
     const barPadding = 0.5;
     const axisTicks = { qty: 5, outerSize: 0, dateFormat: "%m-%d" };
@@ -39,10 +44,10 @@ class GroupedBarplotChart extends Component {
     const svg = d3
       .select(this.ref.current)
       .append("svg")
-      .attr("width", width + margin.left + margin.right)
+      .attr("width", "100%")
       .attr("height", height + margin.top + margin.bottom)
+      .attr("viewBox", `0 0 ${width} ${height + margin.top + margin.bottom}`)
       .append("g")
-
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var xScale0 = d3
@@ -113,23 +118,17 @@ class GroupedBarplotChart extends Component {
     svg
       .append("g")
       .attr("class", "x axis")
-      
       .attr("transform", `translate(0,${height - margin.top - margin.bottom})`)
       .call(xAxis);
 
     // Add the Y Axis
     svg.append("g").attr("class", "y axis").call(yAxis);
   };
+
   render() {
     return (
-      <Box className="grouped-barplot-chart">
+      <Box className="grouped-barplot-chart" ref={this.ref}>
         {this.props.chardBeforeRenderHTML}
-        <svg
-          ref={this.ref}
-          width={width}
-          height={height}
-          viewBox={`0 0 ${width - 1000} ${height}`}
-        ></svg>
       </Box>
     );
   }
