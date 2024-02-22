@@ -14,24 +14,40 @@ const totalUsedServiceData = [
 ];
 let verticalBarChartData = [
   {
-    label: "Compute Cost",
-    value: 110011100,
+    name: "EC2",
+    value: 11100,
   },
   {
-    label: "Network ",
-    value: 40267984,
+    name: "EBS ",
+    value: 7984,
   },
   {
-    label: "Storage",
-    value: 30672088,
+    name: "DynamoDB",
+    value: 6088,
   },
   {
-    label: "Database",
-    value: 53980105,
+    name: "Redshift",
+    value: 6105,
   },
   {
-    label: "Others",
-    value: 81489445,
+    name: "AWS Lambda",
+    value: 5445,
+  },
+  {
+    name: "AWS S3",
+    value:5245,
+  },
+  {
+    name: "Cloud Front",
+    value: 5145,
+  },
+  {
+    name: "API Gateways",
+    value:4445,
+  },
+  {
+    name: "AWS SNS",
+    value: 3445,
   },
 ];
 let donutData = [
@@ -156,14 +172,13 @@ let timeSpendData = [
     percentage: "5",
     subName: "vs Previous Month",
   },
-  
 ];
 var potentialSavingData = [45, 33, 66, 50, 90];
 class AwsComponent extends Component {
   render() {
     return (
       <>
-       <TimeSpendComponent data={timeSpendData} />
+        <TimeSpendComponent data={timeSpendData} />
         <Box className="reports-charts">
           <Grid
             container
@@ -185,7 +200,7 @@ class AwsComponent extends Component {
             <Grid item xs={7}>
               <ChartWrapper
                 data={{
-                  title: "Cost of Top Accounts",
+                  title: "Most used services",
                   labelOfBtn: "View Details",
                   link: "",
                 }}

@@ -144,6 +144,19 @@ var potentialSavingData = [
   { color: "#01F1E3", percentage: 60,name:'Others',value: 4532},
   { color: "#8676FF", percentage: 50 ,name:'Rightsizing',value:786},
 ];
+
+let costOfTopAccounts = [
+  { name: "IT Infra", value: 55000 },
+  { name: "IT Security", value: 45000 },
+  { name: "IT Ops", value: 40000 },
+  { name: "IT Dev", value: 35000 },
+  { name: "Analytics", value: 30000 },
+  { name: "HR", value: 25050 },
+  { name: "Marketing", value: 20050 },
+  { name: "Finance", value: 15550 },
+  { name: "Sales", value: 10550 },
+  { name: "R&D", value: 10400 },
+];
 class AwsComponent extends Component {
   render() {
     return (
@@ -210,7 +223,7 @@ class AwsComponent extends Component {
                   link: "/app/new-reports/over-view-dashboard/cost-top-accounts",
                 }}
                 ChartComponent={
-                  <VerticalBarchart data={verticalBarChartData} />
+                  <VerticalBarchart data={costOfTopAccounts} />
                 }
               />
             </Grid>
