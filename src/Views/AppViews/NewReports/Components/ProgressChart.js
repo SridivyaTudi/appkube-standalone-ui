@@ -6,7 +6,7 @@ function ProgressBar(props) {
 
   useEffect(() => {
     const progressBarWidth = ref.current.parentElement.clientWidth; // Get the width of the parent container
-    const progress = 0.2;
+    const progress = 0.5;
     const svgElement = d3
       .select(ref.current)
       .append("svg")
@@ -15,7 +15,7 @@ function ProgressBar(props) {
     svgElement
       .append("rect")
       .attr("rx", 0)
-      .attr("ry", 3)
+      .attr("ry", 1)
       .attr("fill", "#E0E0E0")
       .attr("height", 14)
       .attr("width", progressBarWidth)
@@ -40,11 +40,11 @@ function ProgressBar(props) {
       .attr("y1", 0)
       .attr("x2", lineX)
       .attr("y2", 14)
-      .attr("stroke", "black")
+      .attr("stroke", "#383874")
       .attr("stroke-width", 1);
   }, []);
 
-  return <svg ref={ref} style={{ width: "100%", height: "20px" }} />;
+  return <svg ref={ref} style={{ width: "100%", height: "10px" }} />;
 }
 
 export default ProgressBar;

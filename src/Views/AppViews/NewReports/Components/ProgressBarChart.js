@@ -1,22 +1,6 @@
 import React, { Component } from "react";
 import { Box, Grid, Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import LinearProgress, {
-  linearProgressClasses,
-} from "@mui/material/LinearProgress";
 import ProgressChart from "./ProgressChart";
-// const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-//   height: 10,
-//   borderRadius: 5,
-//   [`&.${linearProgressClasses.colorPrimary}`]: {
-//     backgroundColor:
-//       theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
-//   },
-//   [`& .${linearProgressClasses.bar}`]: {
-//     borderRadius: 5,
-//     backgroundColor: theme.palette.mode === "light" ? "#FF2D2E" : "#FF2D2E",
-//   },
-// }));
 
 class ProgressBarChart extends Component {
   render() {
@@ -49,7 +33,6 @@ class ProgressBarChart extends Component {
                     <label>Spendings $2500</label>
                 </Box>
                 <ProgressChart color={"#FF708B"} />
-                {/* <BorderLinearProgress variant="determinate" value={50} /> */}
                 <Box className="progress-bottom-content">
                    <span> <i class="fas fa-exclamation-triangle m-r-1"></i> $500 Unbudgeted spend detected</span>
                 </Box>
@@ -82,7 +65,6 @@ class ProgressBarChart extends Component {
                     <label>Spendings $2500</label>
                 </Box>
                 <ProgressChart color={"#53CA43"} />
-                {/* <BorderLinearProgress variant="determinate" value={50} /> */}
                 <Box className="progress-bottom-content">
                    <span> <i class="fas fa-exclamation-triangle m-r-1"></i> $500 Unbudgeted spend detected</span>
                 </Box>
@@ -115,7 +97,6 @@ class ProgressBarChart extends Component {
                     <label>Spendings $2500</label>
                 </Box>
                 <ProgressChart color={"#FF708B"}  />
-                {/* <BorderLinearProgress variant="determinate" value={50} /> */}
                 <Box className="progress-bottom-content">
                    <span> <i class="fas fa-exclamation-triangle m-r-1"></i> $500 Unbudgeted spend detected</span>
                 </Box>
