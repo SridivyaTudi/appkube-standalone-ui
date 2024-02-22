@@ -111,6 +111,7 @@ class AddDepartment extends Component {
               className="form-control "
               id="description"
               name="description"
+              maxLength={255}
               style={{
                 height: "100px",
                 lineHeight: "18px",
@@ -160,7 +161,11 @@ class AddDepartment extends Component {
               }
             });
           }}
-          disabled={activeStep === 1 && !selectedChildLandingZone && !selectedLandingZone}
+          disabled={
+            activeStep === 1 &&
+            !selectedChildLandingZone &&
+            !selectedLandingZone
+          }
         >
           Next
         </Button>
@@ -213,6 +218,10 @@ class AddDepartment extends Component {
 
       if (!step1FormData.description) {
         errors.description = "Please enter the description.";
+        isValid = false;
+      } else if (step1FormData.description.length > 255) {
+        errors.description =
+          "Description should be a maximum of 255 characters.";
         isValid = false;
       } else {
         errors.description = "";

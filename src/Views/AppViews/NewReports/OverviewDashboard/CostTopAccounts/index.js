@@ -8,8 +8,10 @@ import {
   TableRow,
   TableBody,
   TableCell,
+  IconButton,
 } from "@mui/material";
-import TimeSpendComponent from "../Components/TimeSpendComponent";
+import { Link } from "react-router-dom";
+import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import ServiceIcon7 from "assets/img/report/service-icon7.png";
 import ServiceIcon8 from "assets/img/report/service-icon8.png";
@@ -47,12 +49,19 @@ let timeSpendData = [
   },
 ];
 
-class TopUsedServices extends Component {
+class CostTopAccounts extends Component {
   render() {
     return (
       <Box className="new-reports-container spend-overview-container">
         <Box className="list-heading">
-          <h3>Top Used Services</h3>
+          <h3>
+            <Link to={`/app/new-reports/over-view-dashboard`}>
+              <IconButton className="m-r-2">
+                <i class="fas fa-long-arrow-left"></i>
+              </IconButton>
+            </Link>
+            Cost Of Top Accounts
+          </h3>
           <Box className="d-flex ">
             <Button className="light-btn p-l-15 p-r-15 m-r-3">
               <i className="fas fa-filter m-r-2"></i> Filter
@@ -64,8 +73,204 @@ class TopUsedServices extends Component {
         </Box>
         <Box className="reports-tab-section m-t-3">
           <TimeSpendComponent data={timeSpendData} />
-          <h3>Spendings Of Top Used Services</h3>
-          <h4>Overview of Top 10 Services</h4>
+          <h4>Overview of Top 5 Accounts</h4>
+          <Box className="spend-overview-table">
+            <TableContainer className="table">
+              <Table style={{ width: 1500 }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Account ID</TableCell>
+                    <TableCell>Department </TableCell>
+                    <TableCell>Vpc</TableCell>
+                    <TableCell align="center">Service count</TableCell>
+                    <TableCell>High spending region</TableCell>
+                    <TableCell align="center">Spending</TableCell>
+                    <TableCell align="center">Variance</TableCell>
+                    <TableCell align="center">Budget</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>
+                      <Link to={``}>160079380622</Link>
+                    </TableCell>
+                    <TableCell>Central Operations</TableCell>
+                    <TableCell>vpc-d24664bb</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell>US-East (N.virginia)</TableCell>
+                    <TableCell align="center">$20,000</TableCell>
+                    <TableCell align="center">
+                      <Box className="variance-count">
+                        15% <i class="fas fa-sort-down p-l-5"></i>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">$30,000</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Link to={``}>160079380622</Link>
+                    </TableCell>
+                    <TableCell>Central Operations</TableCell>
+                    <TableCell>vpc-d24664bb</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell>US-East (N.virginia)</TableCell>
+                    <TableCell align="center">$20,000</TableCell>
+                    <TableCell align="center">
+                      <Box className="variance-count red">
+                        20% <i class="fas fa-sort-down p-l-5"></i>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">$30,000</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Link to={``}>160079380622</Link>
+                    </TableCell>
+                    <TableCell>Central Operations</TableCell>
+                    <TableCell>vpc-d24664bb</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell>US-East (N.virginia)</TableCell>
+                    <TableCell align="center">$20,000</TableCell>
+                    <TableCell align="center">
+                      <Box className="variance-count">
+                        15% <i class="fas fa-sort-down p-l-5"></i>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">$30,000</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Link to={``}>160079380622</Link>
+                    </TableCell>
+                    <TableCell>Central Operations</TableCell>
+                    <TableCell>vpc-d24664bb</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell>US-East (N.virginia)</TableCell>
+                    <TableCell align="center">$20,000</TableCell>
+                    <TableCell align="center">
+                      <Box className="variance-count">
+                        15% <i class="fas fa-sort-down p-l-5"></i>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">$30,000</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Link to={``}>160079380622</Link>
+                    </TableCell>
+                    <TableCell>Central Operations</TableCell>
+                    <TableCell>vpc-d24664bb</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell>US-East (N.virginia)</TableCell>
+                    <TableCell align="center">$20,000</TableCell>
+                    <TableCell align="center">
+                      <Box className="variance-count">
+                        15% <i class="fas fa-sort-down p-l-5"></i>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">$30,000</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Link to={``}>160079380622</Link>
+                    </TableCell>
+                    <TableCell>Central Operations</TableCell>
+                    <TableCell>vpc-d24664bb</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell>US-East (N.virginia)</TableCell>
+                    <TableCell align="center">$20,000</TableCell>
+                    <TableCell align="center">
+                      <Box className="variance-count">
+                        15% <i class="fas fa-sort-down p-l-5"></i>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">$30,000</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Link to={``}>160079380622</Link>
+                    </TableCell>
+                    <TableCell>Central Operations</TableCell>
+                    <TableCell>vpc-d24664bb</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell>US-East (N.virginia)</TableCell>
+                    <TableCell align="center">$20,000</TableCell>
+                    <TableCell align="center">
+                      <Box className="variance-count">
+                        15% <i class="fas fa-sort-down p-l-5"></i>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">$30,000</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Link to={``}>160079380622</Link>
+                    </TableCell>
+                    <TableCell>Central Operations</TableCell>
+                    <TableCell>vpc-d24664bb</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell>US-East (N.virginia)</TableCell>
+                    <TableCell align="center">$20,000</TableCell>
+                    <TableCell align="center">
+                      <Box className="variance-count">
+                        15% <i class="fas fa-sort-down p-l-5"></i>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">$30,000</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Link to={``}>160079380622</Link>
+                    </TableCell>
+                    <TableCell>Central Operations</TableCell>
+                    <TableCell>vpc-d24664bb</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell>US-East (N.virginia)</TableCell>
+                    <TableCell align="center">$20,000</TableCell>
+                    <TableCell align="center">
+                      <Box className="variance-count">
+                        15% <i class="fas fa-sort-down p-l-5"></i>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">$30,000</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Link to={``}>160079380622</Link>
+                    </TableCell>
+                    <TableCell>Central Operations</TableCell>
+                    <TableCell>vpc-d24664bb</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell>US-East (N.virginia)</TableCell>
+                    <TableCell align="center">$20,000</TableCell>
+                    <TableCell align="center">
+                      <Box className="variance-count">
+                        15% <i class="fas fa-sort-down p-l-5"></i>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">$30,000</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Link to={``}>160079380622</Link>
+                    </TableCell>
+                    <TableCell>Central Operations</TableCell>
+                    <TableCell>vpc-d24664bb</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell>US-East (N.virginia)</TableCell>
+                    <TableCell align="center">$20,000</TableCell>
+                    <TableCell align="center">
+                      <Box className="variance-count">
+                        15% <i class="fas fa-sort-down p-l-5"></i>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">$30,000</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+          <h3 className="m-t-3">Spendings Of Top Used Services</h3>
           <Box className="spend-overview-table">
             <TableContainer className="table">
               <Table>
@@ -273,165 +478,10 @@ class TopUsedServices extends Component {
               </Table>
             </TableContainer>
           </Box>
-          <h3 className="m-t-3">EC2 SPENDINGS</h3>
-          <h4>Cost consumption of EC2</h4>
-          <Box className="spend-overview-table">
-            <TableContainer className="table">
-              <Table style={{ width: 2000 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Tags</TableCell>
-                    <TableCell>Instance ID </TableCell>
-                    <TableCell>Instance Type</TableCell>
-                    <TableCell>Instance Status</TableCell>
-                    <TableCell>Pricing model</TableCell>
-                    <TableCell>Availability zone</TableCell>
-                    <TableCell>Ondemand cost / hr</TableCell>
-                    <TableCell>RI cost / hr</TableCell>
-                    <TableCell>Usage Hours</TableCell>
-                    <TableCell>Add-ons</TableCell>
-                    <TableCell>Total Spend</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
         </Box>
       </Box>
     );
   }
 }
 
-export default TopUsedServices;
+export default CostTopAccounts;

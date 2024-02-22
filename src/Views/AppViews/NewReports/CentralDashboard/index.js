@@ -4,7 +4,7 @@ import AwsComponent from "./AwsComponent";
 import AzureComponent from "./AzureComponent";
 import GcpComponent from "./GcpComponent";
 
-export class NewReports extends Component {
+class CentralDashboard extends Component {
   tabMapping = [
     {
       name: "AWS",
@@ -76,15 +76,13 @@ export class NewReports extends Component {
     return (
       <Box className="new-reports-container">
         <Box className="list-heading">
-          <h3>AWS Overview Dashboard</h3>
+          <h3>Cost Central Dashboard</h3>
+          <Button className="light-btn p-l-15 p-r-15">
+            <i class="fas fa-calendar-minus m-r-2"></i> Last Quarter
+          </Button>
         </Box>
         <Box className="reports-tab-section">
-          <Box className="tabs">
-            {this.renderTabMenu()}
-            <Button className="light-btn p-l-15 p-r-15">
-              <i class="fas fa-calendar-minus m-r-2"></i> Last Quarter
-            </Button>
-          </Box>
+          <Box className="tabs">{this.renderTabMenu()}</Box>
           {this.renderActiveTabOfComponent()}
         </Box>
       </Box>
@@ -92,4 +90,4 @@ export class NewReports extends Component {
   }
 }
 
-export default NewReports;
+export default CentralDashboard;

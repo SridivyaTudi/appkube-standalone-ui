@@ -33,6 +33,9 @@ import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { getCurrentUser, getCurrentOrgName } from "Utils";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { isAlphaNumeric, isAlphabet } from "Utils";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 const steps = ["User details ", "Add  user to group ", "Review and Create"];
 const initialFormData = {
   firstName: "",
@@ -40,6 +43,21 @@ const initialFormData = {
   email: "",
   username: "",
 };
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "red",
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 class CreateUserControlModal extends Component {
   user = { id: "", username: "" };
@@ -204,7 +222,12 @@ class CreateUserControlModal extends Component {
                   }
                 />
                 {errors[index]?.firstName ? (
-                  <span className="red">{errors[index].firstName}</span>
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={errors[index].firstName}
+                  >
+                    {errors[index].firstName}
+                  </HtmlTooltip>
                 ) : (
                   <></>
                 )}
@@ -231,7 +254,12 @@ class CreateUserControlModal extends Component {
                   }
                 />
                 {errors[index]?.lastName ? (
-                  <span className="red">{errors[index].lastName}</span>
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={errors[index].lastName}
+                  >
+                    {errors[index].lastName}
+                  </HtmlTooltip>
                 ) : (
                   <></>
                 )}
@@ -255,7 +283,12 @@ class CreateUserControlModal extends Component {
                   }
                 />
                 {errors[index]?.username ? (
-                  <span className="red">{errors[index].username}</span>
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={errors[index].username}
+                  >
+                    {errors[index].username}
+                  </HtmlTooltip>
                 ) : (
                   <></>
                 )}
@@ -282,7 +315,12 @@ class CreateUserControlModal extends Component {
                   }
                 />
                 {errors[index]?.email ? (
-                  <span className="red">{errors[index].email}</span>
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={errors[index].email}
+                  >
+                    {errors[index].email}
+                  </HtmlTooltip>
                 ) : (
                   <></>
                 )}
@@ -390,20 +428,39 @@ class CreateUserControlModal extends Component {
           errors[index] = { firstName: "" };
           errors[index]["firstName"] = "Please enter first name!";
           isStepValid = false;
+        } else if (this.isFirstOrLastNameInValid(user.firstName)) {
+          errors[index] = { firstName: "" };
+          errors[index]["firstName"] =
+            "The first name should be a maximum of 50 alphabets characters.";
+          isStepValid = false;
         }
+
         if (!user.lastName) {
           errors[index] = { ...errors[index], lastName: "" };
           errors[index]["lastName"] = "Please enter last name!";
+
+          isStepValid = false;
+        } else if (this.isFirstOrLastNameInValid(user.lastName)) {
+          errors[index] = { ...errors[index], lastName: "" };
+          errors[index]["lastName"] =
+            "The last name should be a maximum of 50 alphabets characters.";
           isStepValid = false;
         }
+
         if (!emailRegex.test(user.email)) {
           errors[index] = { ...errors[index], email: "" };
           errors[index]["email"] = "Please enter valid email!";
           isStepValid = false;
         }
+
         if (!user.username) {
           errors[index] = { ...errors[index], username: "" };
           errors[index]["username"] = "Please enter username/loginId!";
+          isStepValid = false;
+        } else if (this.isUserNameInValid(user.username)) {
+          errors[index] = { ...errors[index], username: "" };
+          errors[index]["username"] =
+            "Username should be between 8 and 50 alphanumeric characters.";
           isStepValid = false;
         }
 
@@ -412,6 +469,17 @@ class CreateUserControlModal extends Component {
     }
 
     return { errors, isStepValid };
+  };
+
+  isUserNameInValid = (userName) => {
+    return [
+      !isAlphaNumeric(userName),
+      userName.length < 8,
+      userName.length > 50,
+    ].includes(true);
+  };
+  isFirstOrLastNameInValid = (name) => {
+    return [!isAlphabet(name), name.length > 50].includes(true);
   };
 
   //  Validate step 2

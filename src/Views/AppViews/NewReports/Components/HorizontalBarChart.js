@@ -27,6 +27,7 @@ class HorizontalBarChart extends Component {
     function make_x_gridlines() {
       return d3.axisBottom(x);
     }
+
     // Create the scales.
     const x = d3
       .scaleLinear()
@@ -38,6 +39,9 @@ class HorizontalBarChart extends Component {
       .domain(d3.sort(data, (d) => -d.value).map((d) => d.label))
       .rangeRound([marginTop - 20, height - marginBottom])
       .padding(0.3);
+
+    const yAxis = (g) =>
+      g.call((g_local) => g_local.select(".domain").remove());
 
     // Create the SVG container.
     const svg = d3
@@ -51,7 +55,7 @@ class HorizontalBarChart extends Component {
       .attr("class", "x grid")
       .attr("transform", `translate(0,${height})`)
       .attr("color", "lightgray")
-      
+
       .call(
         make_x_gridlines()
           .tickSize(-height + 4)
@@ -82,7 +86,7 @@ class HorizontalBarChart extends Component {
       .attr("y", (d) => y(d.label) + y.bandwidth() / 2)
       .attr("dy", "0.35em")
       .attr("dx", -4)
-      
+
       .call((text) =>
         text
           .filter((d) => x(d.value) - x(0) < 20) // short bars
@@ -96,20 +100,27 @@ class HorizontalBarChart extends Component {
       .append("g")
       .attr("style", "font-size: 16px", "sans-serif")
       .attr("transform", `translate(0,${height + 30})`)
-      .call(d3.axisTop(x).tickFormat((d, index) => `$${d}`))
+      .call(
+        d3
+          .axisTop(x)
+          .tickFormat((d, index) => `$${d}`)
+          .tickSize(0)
+      )
       .call((g) => g.select(".domain").remove());
 
     svg
       .append("g")
       .attr("style", "font-size: 16px", "sans-serif")
       .attr("transform", `translate(${marginLeft},0)`)
-      .call(d3.axisLeft(y).tickSizeOuter(0));
+      .call(d3.axisLeft(y).tickSize(0))
+      .attr("class", "y-axis")
+      .call(yAxis);
     d3.select(this.ref.current);
   };
   render() {
     return (
       <Box className="top-used-service-chrt">
-      {this.props.chardBeforeRenderHTML}
+        {this.props.chardBeforeRenderHTML}
         <svg ref={this.ref}></svg>
       </Box>
     );

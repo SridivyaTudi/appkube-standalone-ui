@@ -552,6 +552,10 @@
             line-height: 16px;
             font-weight: 400;
             color: #ff2d2e;
+            width: 95%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
 
           .close-icon {
@@ -1144,7 +1148,7 @@
         overflow: hidden;
         overflow-y: auto;
         padding-right: 8px;
-       margin-bottom: 10px;
+        margin-bottom: 10px;
         ul {
           padding: 0;
           margin: 0;
@@ -1173,7 +1177,7 @@
                 line-height: 20px;
                 font-weight: 400;
                 color: #383874;
-                strong{
+                strong {
                   font-weight: 600;
                 }
               }
@@ -1181,7 +1185,7 @@
           }
         }
       }
-      h4{
+      h4 {
         color: #383874;
       }
       .new-user-request-table {
@@ -1206,7 +1210,7 @@
                 color: #383874;
                 border: none;
                 padding: 12px 0;
-                &:first-child{
+                &:first-child {
                   width: 400px;
                 }
               }
@@ -1242,7 +1246,7 @@
                   font-size: 14px;
                   color: #ffffff;
                 }
-                &:first-child{
+                &:first-child {
                   width: 400px;
                 }
               }

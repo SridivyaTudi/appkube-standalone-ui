@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { Box } from "@mui/material";
 import * as d3 from "d3";
-const thickness = 25;
+const thickness = 30;
 const DonutChart = ({ data, width, height, style }) => {
   const svgRef = useRef();
   var pieGenerator = d3.pie().value(([key, value]) => {
@@ -12,7 +12,7 @@ const DonutChart = ({ data, width, height, style }) => {
   useEffect(() => {
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove(); // Clear previous elements
-    const radius = Math.min(width, height) / 2;
+    const radius = Math.min(width, height) / 1.6;
     const innerRadius = radius * 0.6;
     var colors = ["#FF708B", "#00B929", "#8676FF", "#FFBA69", "#F9D33D"];
     const color = d3.scaleOrdinal(colors).domain(data.map((d) => d.age_group));
@@ -27,7 +27,7 @@ const DonutChart = ({ data, width, height, style }) => {
       .enter()
       .append("g")
       .attr("class", "donut-arc")
-      .attr("transform", `translate(${width / 2},${height / 2})`);
+      .attr("transform", `translate(${width / 2},${height / 2.5})`);
 
     // Apply clip-path attribute to each arc
 
@@ -56,13 +56,13 @@ const DonutChart = ({ data, width, height, style }) => {
       .attr("font-size", "25px")
       .attr("fill", "black")
       .text("$1000")
-      .attr("transform", `translate(${width / 2},${height / 2})`);
+      .attr("transform", `translate(${width / 2},${height / 2.4})`);
 
     //   legend area
     const legend = svg
       .append("g")
       .attr("class", "legend")
-      .attr("transform", `translate(${width / 2.8},${height - height / 4})`);
+      .attr("transform", `translate(${width / 2.8},${height - height / 3})`);
 
     const lg = legend
       .selectAll("g")

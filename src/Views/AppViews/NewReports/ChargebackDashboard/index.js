@@ -1,48 +1,39 @@
 import React, { Component } from "react";
 import { Box, Button, List, ListItem } from "@mui/material";
-import Compute from "./Compute";
-import Storage from "./Storage";
-import Database from "./Database";
-import Network from "./Network";
-import Other from "./Other";
+import AwsComponent from "./AwsComponent";
+import AzureComponent from "./AzureComponent";
+import GcpComponent from "./GcpComponent";
 
-class SpendOverview extends Component {
+class ChargebackDashboard extends Component {
   tabMapping = [
     {
-      name: "COMPUTE",
-      dataKey: "compute",
+      name: "AWS",
+      dataKey: "aws",
       index: 0,
     },
     {
-      name: "STORAGE",
-      dataKey: "storage",
+      name: "AZURE",
+      dataKey: "azure",
       index: 1,
     },
     {
-      name: "DATABASE",
-      dataKey: "database",
+      name: "GCP",
+      dataKey: "gcp",
       index: 2,
     },
-    {
-      name: "NETWORK",
-      dataKey: "network",
-      index: 3,
-    },
-    {
-      name: "OTHER",
-      dataKey: "other",
-      index: 4,
-    },
   ];
+
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 0,
     };
   }
+
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
+
   // Render tabs
   renderTabMenu = () => {
     const { activeTab } = this.state;
@@ -69,39 +60,29 @@ class SpendOverview extends Component {
     return (
       <Box className="tabs-content">
         {activeTab === 0 ? (
-          <Compute />
+          <AwsComponent />
         ) : activeTab === 1 ? (
-          <Storage />
+          <AzureComponent />
         ) : activeTab === 2 ? (
-          <Database />
-        ) : activeTab === 3 ? (
-          <Network />
-        ) : activeTab === 4 ? (
-          <Other />
+          <GcpComponent />
         ) : (
           <></>
         )}
       </Box>
     );
   };
+
   render() {
     return (
-      <Box className="new-reports-container spend-overview-container">
+      <Box className="new-reports-container">
         <Box className="list-heading">
-          <h3>Spend Overview</h3>
+          <h3>Chargeback Dashboard</h3>
+          <Button className="light-btn p-l-15 p-r-15">
+            <i class="fas fa-calendar-minus m-r-2"></i> Last Quarter
+          </Button>
         </Box>
         <Box className="reports-tab-section">
-          <Box className="tabs">
-            {this.renderTabMenu()}
-            <Box className="d-flex ">
-              <Button className="light-btn p-l-15 p-r-15 m-r-3">
-                <i className="fas fa-filter m-r-2"></i> Filter
-              </Button>
-              <Button className="light-btn p-l-15 p-r-15">
-                <i className="fas fa-calendar-minus m-r-2"></i> Last Month
-              </Button>
-            </Box>
-          </Box>
+          <Box className="tabs">{this.renderTabMenu()}</Box>
           {this.renderActiveTabOfComponent()}
         </Box>
       </Box>
@@ -109,4 +90,4 @@ class SpendOverview extends Component {
   }
 }
 
-export default SpendOverview;
+export default ChargebackDashboard;

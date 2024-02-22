@@ -224,7 +224,7 @@ class AddRole extends Component {
                       disabled={rows?.length ? false : true}
                       checked={
                         rows?.length > 0 &&
-                        rows.length === selectedRoles?.length
+                        rows?.length === selectedRoles?.length
                       }
                       onChange={(e) => this.handleSelectAllCheckBox(e)}
                     />{" "}
@@ -235,7 +235,7 @@ class AddRole extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.length ? (
+                {rows?.length ? (
                   rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
                     <TableRow key={index}>
                       <TableCell>
@@ -305,7 +305,7 @@ class AddRole extends Component {
           </TableContainer>
         )}
 
-        {rows.length ? (
+        {rows?.length ? (
           <>
             <TablePagination
               rowsPerPageOptions={[5, 10, 20]}

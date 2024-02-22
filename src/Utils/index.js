@@ -290,3 +290,13 @@ export const getCloudWiseLandingZoneCount = () => {
   );
   return counts;
 };
+
+export const isAlphaNumeric = (str) => {
+  var alphaNumericRegex = /^[a-zA-Z0-9]+$/;
+  return alphaNumericRegex.test(str);
+};
+
+export const isAlphabet = (str) => {
+  var alphabetRegex = /^[A-Za-z]+$/;
+  return alphabetRegex.test(str);
+};

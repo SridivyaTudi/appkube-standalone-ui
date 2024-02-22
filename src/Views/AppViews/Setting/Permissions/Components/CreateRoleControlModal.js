@@ -111,6 +111,10 @@ class CreateRoleControlModal extends Component {
       if (!description) {
         errors.description = "Role Description is required!";
         isValid = false;
+      } else if (description.length > 255) {
+        errors.description =
+          "Role Description should be a maximum of 255 characters.";
+        isValid = false;
       } else {
         errors.description = "";
       }
