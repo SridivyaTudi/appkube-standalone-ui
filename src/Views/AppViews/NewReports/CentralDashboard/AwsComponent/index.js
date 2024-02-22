@@ -35,7 +35,7 @@ let verticalBarChartData = [
   },
   {
     name: "AWS S3",
-    value:5245,
+    value: 5245,
   },
   {
     name: "Cloud Front",
@@ -43,7 +43,7 @@ let verticalBarChartData = [
   },
   {
     name: "API Gateways",
-    value:4445,
+    value: 4445,
   },
   {
     name: "AWS SNS",
@@ -193,7 +193,14 @@ class AwsComponent extends Component {
                   link: "",
                 }}
                 ChartComponent={
-                  <DonutChart data={donutData} width={250} height={300} />
+                  <DonutChart
+                    data={donutData}
+                    width={250}
+                    height={300}
+                    otherData={{
+                      centerValue: "$10,000",
+                    }}
+                  />
                 }
               />
             </Grid>

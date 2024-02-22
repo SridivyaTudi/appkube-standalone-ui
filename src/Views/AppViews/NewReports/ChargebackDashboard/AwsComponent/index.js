@@ -156,14 +156,13 @@ let timeSpendData = [
     percentage: "5",
     subName: "vs Previous Month",
   },
-  
 ];
 var potentialSavingData = [45, 33, 66, 50, 90];
 class AwsComponent extends Component {
   render() {
     return (
       <>
-       <TimeSpendComponent data={timeSpendData} />
+        <TimeSpendComponent data={timeSpendData} />
         <Box className="reports-charts">
           <Grid
             container
@@ -178,7 +177,14 @@ class AwsComponent extends Component {
                   link: "",
                 }}
                 ChartComponent={
-                  <DonutChart data={donutData} width={250} height={300} />
+                  <DonutChart
+                    data={donutData}
+                    width={250}
+                    height={300}
+                    otherData={{
+                      centerValue: "$10,000",
+                    }}
+                  />
                 }
               />
             </Grid>

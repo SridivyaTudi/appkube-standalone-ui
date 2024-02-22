@@ -19,19 +19,19 @@ import VerticalBarchart from "../../../Components/VerticalBarchart";
 
 let donutData = [
   {
-    age_group: "Compute Cost",
+    age_group: "Reserved Instance",
     population: 110011100,
   },
   {
-    age_group: "Network ",
+    age_group: "Savings Plan",
     population: 40267984,
   },
   {
-    age_group: "Storage",
+    age_group: "RightSizing",
     population: 30672088,
   },
   {
-    age_group: "Database",
+    age_group: "Spot Instances",
     population: 53980105,
   },
   {
@@ -41,27 +41,47 @@ let donutData = [
 ];
 let verticalBarChartData = [
   {
-    label: "Compute Cost",
-    value: 110011100,
+    name: "Jun 23",
+    value: 4500,
   },
   {
-    label: "Network ",
-    value: 40267984,
+    name: "July 23",
+    value: 4000,
   },
   {
-    label: "Storage",
-    value: 30672088,
+    name: "August 23",
+    value: 4000,
   },
   {
-    label: "Database",
-    value: 53980105,
+    name: "Sept 23",
+    value: 3800,
   },
   {
-    label: "Others",
-    value: 81489445,
+    name: "Oct 23",
+    value: 3700,
   },
-  
+  {
+    name: "Nov 23",
+    value: 3700,
+  },
+  {
+    name: "Dec 23",
+    value: 3700,
+  },
+  {
+    name: "Jan 24",
+    value: 3700,
+  },
+  {
+    name: "Feb 24",
+    value: 3700,
+  },
+  {
+    name: "March 24",
+    value: 3700,
+  },
 ];
+
 let timeSpendData = [
   {
     name: "This Month Savings ",
@@ -106,14 +126,26 @@ class Compute extends Component {
                   labelOfBtn: " View Details",
                 }}
                 ChartComponent={
-                  <DonutChart data={donutData} width={270} height={270} />
+                  <DonutChart
+                    data={donutData}
+                    width={270}
+                    height={270}
+                    otherData={{
+                      centerValue: "$65,690",
+                    }}
+                  />
                 }
               />
             </Grid>
             <Grid item xs={8}>
               <ChartWrapper
                 ChartComponent={
-                  <VerticalBarchart data={verticalBarChartData} />
+                  <VerticalBarchart
+                    data={verticalBarChartData}
+                    styleProp={{
+                      color: "#53CA43",
+                    }}
+                  />
                 }
                 data={{
                   title: "Monthly Savings",
