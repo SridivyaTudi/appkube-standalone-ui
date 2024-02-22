@@ -27,7 +27,7 @@
       font-size: 12px;
       line-height: 18px;
       padding: 5px 10px;
-  }
+    }
   }
   .chart-content {
     display: block;
@@ -39,42 +39,42 @@
       align-items: center;
       justify-content: center;
     }
-    .top-used-service-chrt{
+    .top-used-service-chrt {
       width: 100%;
       display: block;
-      .total-cost-incurred{
-        label{
+      .total-cost-incurred {
+        label {
           font-size: 16px;
           font-weight: 400;
           line-height: 20px;
           color: #383874;
         }
-       
-         p{
+
+        p {
           font-size: 18px;
           font-weight: 600;
           line-height: 22px;
           color: #383874;
           margin: 0;
-          span{
+          span {
             font-size: 14px;
             font-weight: 400;
             line-height: 18px;
-            color: #FF2D2E;
+            color: #ff2d2e;
             margin: 0;
-            i{
+            i {
               vertical-align: -webkit-baseline-middle;
             }
           }
         }
       }
     }
-    .grouped-barplot-chart{
+    .grouped-barplot-chart {
       width: 100%;
       display: block;
-      .spending-present{
+      .spending-present {
         display: inline-block;
-        label{
+        label {
           font-size: 12px;
           font-weight: 500;
           line-height: 16px;
@@ -82,12 +82,12 @@
         }
       }
     }
-    .vertical-bar-chart{
+    .vertical-bar-chart {
       width: 100%;
       display: block;
-      .spending-present{
+      .spending-present {
         display: inline-block;
-        label{
+        label {
           font-size: 12px;
           font-weight: 500;
           line-height: 16px;
@@ -95,7 +95,11 @@
         }
       }
     }
-    .gauge-chart{
+    .gauge-chart {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
       .chart-details {
         width: 100%;
         display: block;
@@ -105,7 +109,6 @@
 
         ul {
           padding: 0;
-         
 
           li {
             list-style: none;
@@ -116,7 +119,7 @@
             padding: 0;
 
             p {
-              width: 100px;
+              width: 80px;
               font-size: 12px;
               line-height: 20px;
               font-weight: 400;
@@ -131,10 +134,10 @@
               display: flex;
               align-items: center;
               justify-content: flex-start;
-              width: 100px;
+              width: 50%;
               span {
                 display: inline-block;
-                width: 100px;
+                width: 100%;
                 height: 6px;
                 background-color: #f2f2f2;
                 border-radius: 5px;
@@ -173,7 +176,7 @@
               line-height: 20px;
               font-weight: 400;
               color: #383874;
-             text-align: right;
+              text-align: right;
             }
           }
         }

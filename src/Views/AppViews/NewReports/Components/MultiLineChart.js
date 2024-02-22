@@ -87,6 +87,7 @@ class MultiLineChart extends Component {
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("class", "multiline-content")
+      
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     x.domain(
       d3.extent(data, function (d) {
@@ -116,6 +117,7 @@ class MultiLineChart extends Component {
       .attr("class", "line")
       .attr("fill", "none")
       .style("stroke", "orange")
+      
       .attr("d", valueline2);
     svg
       .append("path")
@@ -124,13 +126,14 @@ class MultiLineChart extends Component {
       .style("stroke-dasharray", "3, 3")
       .attr("fill", "none")
       .style("stroke", "pink")
+      
       .attr("d", valueline3);
 
     // Add the X Axis
     svg
       .append("g")
+      
       .attr("transform", "translate(0," + height + ") ")
-
       .call(
         d3.axisBottom(x).tickFormat((d) => {
           let date = getFormattedDate(d);
@@ -146,6 +149,8 @@ class MultiLineChart extends Component {
     // Add the Y Axis
     svg
       .append("g")
+      
+      
       .call(d3.axisLeft(y).tickFormat((d) => "$" + convertDigitToThousand(d)));
 
     let legend = svg
@@ -155,6 +160,7 @@ class MultiLineChart extends Component {
       .append("g")
       .attr("class", "legend ")
       .attr("style", "margin-top:20px;  ");
+      
 
     legend
       .append("rect")
@@ -199,7 +205,7 @@ class MultiLineChart extends Component {
   render() {
     return (
       <Box classname="multi-line-chart">
-        <svg ref={this.ref}></svg>
+        <svg ref={this.ref} style={{maxWidth: "100%", width: "auto"}}></svg>
       </Box>
     );
   }
