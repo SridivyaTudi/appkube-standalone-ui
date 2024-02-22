@@ -5,12 +5,25 @@ import VerticalBarchart from "Views/AppViews/NewReports/Components/VerticalBarch
 import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
 import TimeSpendComponent from "Views/AppViews/NewReports/Components/TimeSpendComponent";
 import GroupedBarplotChart from "Views/AppViews/NewReports/Components/GroupedBarplotChart";
+import HorizontalBarChart from "Views/AppViews/NewReports/Components/HorizontalBarChart";
 const totalUsedServiceData = [
-  { label: "EC2", value: 4700, color: "#A145FF" },
+  { label: "EC2", value: 4700, color: "#FA6298" },
   { label: "RDS", value: 4500, color: "#FA6298" },
-  { label: "S3", value: 4300, color: "#FAA24B" },
-  { label: "EKS", value: 4000, color: "#F9D33D" },
-  { label: "Lambda", value: 3800, color: "#F9D33D" },
+  { label: "S3", value: 4300, color: "#FA6298" },
+  { label: "EKS", value: 4000, color: "#FA6298" },
+  { label: "Lambda", value: 3800, color: "#FA6298" },
+];
+let costOfTopAccounts = [
+  { name: "IT Infra", value: 55000 },
+  { name: "IT Security", value: 45000 },
+  { name: "IT Ops", value: 40000 },
+  { name: "IT Dev", value: 35000 },
+  { name: "Analytics", value: 30000 },
+  { name: "HR", value: 25050 },
+  { name: "Marketing", value: 20050 },
+  { name: "Finance", value: 15550 },
+  { name: "Sales", value: 10550 },
+  { name: "R&D", value: 10400 },
 ];
 let verticalBarChartData = [
   {
@@ -172,6 +185,12 @@ let timeSpendData = [
     percentage: "5",
     subName: "vs Previous Month",
   },
+  {
+    name: "Year to Date Spend ",
+    value: "$3,00,000",
+    percentage: "5",
+    subName: "vs Previous Month",
+  },
 ];
 var potentialSavingData = [45, 33, 66, 50, 90];
 class AwsComponent extends Component {
@@ -185,7 +204,29 @@ class AwsComponent extends Component {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
+             <Grid item xs={7}>
+             <ChartWrapper
+                data={{
+                  title: "Most used services",
+                  labelOfBtn: "View Details",
+                  link: "",
+                }}
+                ChartComponent={
+                  <HorizontalBarChart data={totalUsedServiceData} />
+                }
+              />
+            </Grid>
             <Grid item xs={5}>
+            <ChartWrapper
+                data={{
+                  title: "Cost of Top Accounts",
+                  labelOfBtn: "View Details",
+                  link: "",
+                }}
+                ChartComponent={<VerticalBarchart data={costOfTopAccounts} />}
+              />
+            </Grid>
+            <Grid item xs={4}>
               <ChartWrapper
                 data={{
                   title: "Spend Overview",
@@ -204,18 +245,45 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={4}>
               <ChartWrapper
                 data={{
-                  title: "Most used services",
-                  labelOfBtn: "View Details",
+                  title: "Spend Overview",
+                  labelOfBtn: " View Details",
                   link: "",
                 }}
                 ChartComponent={
-                  <VerticalBarchart data={verticalBarChartData} />
+                  <DonutChart
+                    data={donutData}
+                    width={250}
+                    height={300}
+                    otherData={{
+                      centerValue: "$10,000",
+                    }}
+                  />
                 }
               />
             </Grid>
+            <Grid item xs={4}>
+              <ChartWrapper
+                data={{
+                  title: "Spend Overview",
+                  labelOfBtn: " View Details",
+                  link: "",
+                }}
+                ChartComponent={
+                  <DonutChart
+                    data={donutData}
+                    width={250}
+                    height={300}
+                    otherData={{
+                      centerValue: "$10,000",
+                    }}
+                  />
+                }
+              />
+            </Grid>
+           
           </Grid>
         </Box>
       </>
