@@ -131,8 +131,8 @@ class GaugeChart extends Component {
             })
             .on("mousemove", function (d) {
               return tooltip
-                .style("top", d.pageY - 10 + "px")
-                .style("left", d.pageX - 250+ "px");
+                .style("top", d.pageY - 30 + "px")
+                .style("left", d.pageX - 60+ "px");
             })
             .on("mouseout", function () {
               return tooltip.style("visibility", "hidden");

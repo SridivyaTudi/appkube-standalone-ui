@@ -151,10 +151,9 @@ class AwsComponent extends Component {
         <Box className="reports-charts">
           <Grid
             container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            spacing={2}
           >
-            <Grid item xs={3}>
+            <Grid item xs={12} md={5} lg={3}>
               <ChartWrapper
                 data={{
                   title: "Spend Overview",
@@ -166,7 +165,7 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={7} lg={6}>
               <ChartWrapper
                 data={{
                   title: "Top Used Service ",
@@ -193,7 +192,7 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={5} lg={3}>
               <ChartWrapper
                 data={{
                   title: "Potential Savings",
@@ -203,7 +202,7 @@ class AwsComponent extends Component {
                 ChartComponent={<GaugeChart data={potentialSavingData} />}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={7} lg={6}>
               <ChartWrapper
                 data={{
                   title: "Cost of Top Accounts",
@@ -215,7 +214,7 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={12} lg={6}>
               <ChartWrapper
                 ChartComponent={
                   <MultiLineChart

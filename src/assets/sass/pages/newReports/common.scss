@@ -23,3 +23,17 @@
     }
   }
 }
+.chart-tooltip-contents {
+  display: block;
+  width: auto;
+  background-color: #1e2129;
+  border-radius: 5px;
+   .value {
+    display: block;
+    padding: 7px 10px 7px 10px;
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+}
+}
