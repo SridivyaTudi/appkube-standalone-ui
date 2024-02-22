@@ -32,7 +32,14 @@ class GaugeChart extends Component {
       .select(this.ref.current)
       .attr("width", width)
       .attr("height", height);
-
+    let tooltip = d3
+      .select("#root")
+      .data(data)
+      .append("div")
+      .attr("class", "chart-tooltip")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden");
     var arcs = data.map((v, i) => {
       return d3
         .arc()
@@ -102,10 +109,12 @@ class GaugeChart extends Component {
             endAngle: r.startAngle,
           });
           var lableObj = r.data;
+          let label = `${lableObj.name} $${lableObj.value}`;
           gText
             .append("text")
-            .attr("font-size", 10).attr('fill','#383874')
-            .text(`${lableObj.name} $${lableObj.value}`)
+            .attr("font-size", 10)
+            .attr("fill", "#383874")
+            .text(label.length > 17 ? `${label?.slice(0, 14)}...` : label)
             .attr(
               "transform",
               "translate(" +
@@ -113,12 +122,27 @@ class GaugeChart extends Component {
                 "," +
                 (centroidText[1] + 15 + ") rotate(" + 180 + ")")
             )
-            .attr("dominant-baseline", "central");
+            .attr("dominant-baseline", "central")
+            .on("mouseover", function (d, data) {
+              tooltip.html(
+                `<div class="chart-tooltip-contents"><div class="value">${label}</div></div>`
+              );
+              return tooltip.style("visibility", "visible");
+            })
+            .on("mousemove", function (d) {
+              return tooltip
+                .style("top", d.pageY - 10 + "px")
+                .style("left", d.pageX - 250+ "px");
+            })
+            .on("mouseout", function () {
+              return tooltip.style("visibility", "hidden");
+            });
           gText
             .append("circle")
             .attr("fill", (d) => {
-              return 'none';
-            }).attr( "stroke",(d) => {
+              return "none";
+            })
+            .attr("stroke", (d) => {
               return lableObj.color;
             })
             .attr("cx", -10)

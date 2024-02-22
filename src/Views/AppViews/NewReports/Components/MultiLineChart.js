@@ -26,6 +26,14 @@ class MultiLineChart extends Component {
       width = 524 - margin.left - margin.right,
       height = 293 - margin.top - margin.bottom;
 
+    let tooltip = d3
+      .select("#root")
+      .data(data)
+      .append("div")
+      .attr("class", "chart-tooltip")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden");
     // parse the date / time
     const parseTime = d3.timeParse("%d-%m-%y");
     data = data.map((d) => {
@@ -77,7 +85,8 @@ class MultiLineChart extends Component {
       .select(this.ref.current)
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
-      .append("g").attr('class','multiline-content')
+      .append("g")
+      .attr("class", "multiline-content")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     x.domain(
       d3.extent(data, function (d) {
@@ -154,19 +163,37 @@ class MultiLineChart extends Component {
       .style("fill", (d) => d.color)
       .attr(
         "transform",
-        (d, i) => `translate(${i * 80 + 30*i-25}, ${height + (margin.bottom - 25)})`
-      )
-      // .attr("style", "padding:20px; ");
+        (d, i) =>
+          `translate(${i * 80 + 30 * i - 25}, ${height + (margin.bottom - 25)})`
+      );
+    // .attr("style", "padding:20px; ");
 
     legend
       .append("text")
-      .text((d) => d.name)
+      .text((d) => (d.name.length > 9 ? `${d.name.slice(0, 9)}... ` : d.name))
       .attr(
         "transform",
         (d, i) =>
-          `translate(${i * 80 + 30*i},  ${height + (margin.bottom - 25) + 7})`
+          `translate(${i * 80 + 30 * i + 1},  ${
+            height + (margin.bottom - 25) + 7
+          })`
       )
-      .attr("font-size", "12px ");
+      .attr("font-size", "12px ")
+      .on("mouseover", function (d, data) {
+        console.log(data);
+        tooltip.html(
+          `<div class="chart-tooltip-contents"><div class="value">${data.name}</div></div>`
+        );
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function (d) {
+        return tooltip
+          .style("top", d.pageY - 10 + "px")
+          .style("left", d.pageX + 10 + "px");
+      })
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      });
     d3.select(this.ref.current);
   };
   render() {
