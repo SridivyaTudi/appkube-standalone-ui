@@ -75,7 +75,7 @@ class TopUsedServices extends Component {
           <TimeSpendComponent data={timeSpendData} />
           <h3>Spendings Of Top Used Services</h3>
           <h4>Overview of Top 10 Services</h4>
-          <Box className="spend-overview-table">
+          <Box className="new-reports-table">
             <TableContainer className="table">
               <Table>
                 <TableHead>
@@ -284,7 +284,7 @@ class TopUsedServices extends Component {
           </Box>
           <h3 className="m-t-3">EC2 SPENDINGS</h3>
           <h4>Cost consumption of EC2</h4>
-          <Box className="spend-overview-table">
+          <Box className="new-reports-table">
             <TableContainer className="table">
               <Table style={{ width: 2000 }}>
                 <TableHead>

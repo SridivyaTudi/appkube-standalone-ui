@@ -74,7 +74,7 @@ class CostTopAccounts extends Component {
         <Box className="reports-tab-section m-t-3">
           <TimeSpendComponent data={timeSpendData} />
           <h4>Overview of Top 5 Accounts</h4>
-          <Box className="spend-overview-table">
+          <Box className="new-reports-table">
             <TableContainer className="table">
               <Table style={{ width: 1500 }}>
                 <TableHead>
@@ -271,7 +271,7 @@ class CostTopAccounts extends Component {
             </TableContainer>
           </Box>
           <h3 className="m-t-3">Spendings Of Top Used Services</h3>
-          <Box className="spend-overview-table">
+          <Box className="new-reports-table">
             <TableContainer className="table">
               <Table>
                 <TableHead>

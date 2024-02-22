@@ -125,7 +125,7 @@ class Compute extends Component {
           </Grid>
         </Box>
         <h4>Top RI Recommendations</h4>
-        <Box className="spend-overview-table">
+        <Box className="new-reports-table">
           <TableContainer className="table">
             <Table style={{ width: 2300 }}>
               <TableHead>
