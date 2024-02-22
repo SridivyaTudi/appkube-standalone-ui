@@ -6,6 +6,7 @@ import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
 import GroupedBarplotChart from "Views/AppViews/NewReports/Components/GroupedBarplotChart";
 import TimeSpendComponent from "Views/AppViews/NewReports/Components/TimeSpendComponent";
 import ProgressBarChart from "../../Components/ProgressBarChart";
+import VerticalBarChart_NarrowBar from "../../Components/VerticalBarChart_NarrowBar";
 const totalUsedServiceData = [
   { label: "EC2", value: 4700, color: "#A145FF" },
   { label: "RDS", value: 4500, color: "#FA6298" },
@@ -209,7 +210,8 @@ class AwsComponent extends Component {
                   link: "",
                 }}
                 ChartComponent={
-                  <VerticalBarchart data={verticalBarChartData} />
+                  <VerticalBarChart_NarrowBar/>
+                  // <VerticalBarchart data={verticalBarChartData} />
                 }
               />
             </Grid>
