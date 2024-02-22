@@ -208,15 +208,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://api.synectiks.net/security/users/new-org-user",
-							"protocol": "https",
+							"raw": "{{baseSecurityUrl}}/users/new-org-user",
 							"host": [
-								"api",
-								"synectiks",
-								"net"
+								"{{baseSecurityUrl}}"
 							],
 							"path": [
-								"security",
 								"users",
 								"new-org-user"
 							]
@@ -230,13 +226,13 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{baseSecurityUrl}}/users/2092",
+							"raw": "{{baseSecurityUrl}}/users/2122",
 							"host": [
 								"{{baseSecurityUrl}}"
 							],
 							"path": [
 								"users",
-								"2092"
+								"2122"
 							]
 						}
 					},
@@ -681,6 +677,105 @@
 							"path": [
 								"users",
 								"reset-password-by-admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-pending-user-requests",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/users/get-pending-user-requests?organizationId=2062",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"users",
+								"get-pending-user-requests"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "2062"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-pending-user-request-count",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/users/get-pending-user-request-count?organizationId=2062",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"users",
+								"get-pending-user-request-count"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "2062"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-pending-user-request-count Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"manoj.sharma@synectiks.com\",\r\n    \"ownerId\":2120,\r\n    \"status\":\"approve\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseSecurityUrl}}/users/pending-user-request-action",
+							"host": [
+								"{{baseSecurityUrl}}"
+							],
+							"path": [
+								"users",
+								"pending-user-request-action"
 							]
 						}
 					},
