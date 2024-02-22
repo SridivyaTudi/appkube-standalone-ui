@@ -204,8 +204,8 @@ class AwsComponent extends Component {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-             <Grid item xs={7}>
-             <ChartWrapper
+            <Grid item xs={7}>
+              <ChartWrapper
                 data={{
                   title: "Most used services",
                   labelOfBtn: "View Details",
@@ -217,29 +217,17 @@ class AwsComponent extends Component {
               />
             </Grid>
             <Grid item xs={5}>
-            <ChartWrapper
+              <ChartWrapper
                 data={{
                   title: "Cost of Top Accounts",
                   labelOfBtn: "View Details",
                   link: "",
                 }}
-                ChartComponent={<VerticalBarchart data={costOfTopAccounts} />}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <ChartWrapper
-                data={{
-                  title: "Spend Overview",
-                  labelOfBtn: " View Details",
-                  link: "",
-                }}
                 ChartComponent={
-                  <DonutChart
-                    data={donutData}
-                    width={250}
-                    height={300}
-                    otherData={{
-                      centerValue: "$10,000",
+                  <VerticalBarchart
+                    data={costOfTopAccounts}
+                    styleProp={{
+                      color: "#53CA43",
                     }}
                   />
                 }
@@ -283,7 +271,25 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-           
+            <Grid item xs={4}>
+              <ChartWrapper
+                data={{
+                  title: "Spend Overview",
+                  labelOfBtn: " View Details",
+                  link: "",
+                }}
+                ChartComponent={
+                  <DonutChart
+                    data={donutData}
+                    width={250}
+                    height={300}
+                    otherData={{
+                      centerValue: "$10,000",
+                    }}
+                  />
+                }
+              />
+            </Grid>
           </Grid>
         </Box>
       </>
