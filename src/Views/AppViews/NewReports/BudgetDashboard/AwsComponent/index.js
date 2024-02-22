@@ -202,7 +202,7 @@ class AwsComponent extends Component {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid item xs={7}>
+            <Grid item xs={6} md={7}>
               <ChartWrapper
                 data={{
                   title: "Accounts With High Spending",
@@ -215,7 +215,7 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={6} md={5}>
               <ChartWrapper
                 data={{
                   title: "Transaction Type Cost",
@@ -227,7 +227,7 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={6} md={7}>
               <ChartWrapper
                 ChartComponent={
                   <GroupedBarplotChart
@@ -249,7 +249,7 @@ class AwsComponent extends Component {
                 // style={{ height: '450px', width: '840px' }}
               />
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={6} md={5}>
               <ChartWrapper
                 data={{
                   title: "Top Department Exceeding Budget",
@@ -279,7 +279,7 @@ class AwsComponent extends Component {
               />
             </Grid>
           </Grid>
-          <Grid
+          <Grid className="m-t-1"
             container
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}

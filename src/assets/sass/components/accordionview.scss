@@ -933,6 +933,65 @@
                                                       }
                                                     }
                                                   }
+                                                  &.child-table-section {
+                                                    padding: 0;
+                                                    background: #ffffff;
+                                                    &::before {
+                                                      content: "";
+                                                      width: 0px;
+                                                    }
+                                                    table {
+                                                      tbody {
+                                                        width: 100%;
+                                                        display: block;
+                                                        tr {
+                                                          border-bottom: 1px
+                                                            solid #eaecf0;
+                                                          td {
+                                                            padding: 12px 15px
+                                                              12px 155px;
+                                                            &::before {
+                                                              content: "";
+                                                              left: 140px;
+                                                            }
+                                                            &:hover {
+                                                              background-color: #f7f9fc;
+                                                              border-bottom: 0;
+                                                            }
+                                                            &.active {
+                                                              font-weight: 600;
+                                                              background-color: #f2f5fa;
+                                                              td {
+                                                                &::before {
+                                                                  content: "";
+                                                                  width: 0px;
+                                                                }
+                                                              }
+                                                            }
+                                                            &.subchild-table-section {
+                                                              padding: 12px 15px
+                                                                12px 15px;
+                                                              text-align: center;
+                                                              border-bottom: 0;
+                                                              &::before {
+                                                                content: "";
+                                                                width: 0px;
+                                                              }
+                                                              &:hover {
+                                                                padding-left: 15px;
+                                                              }
+                                                            }
+                                                            &:last-child {
+                                                              border-bottom: 0;
+                                                            }
+                                                          }
+                                                          &:last-child {
+                                                            border-bottom: none;
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
                                                   &.subchild-table-section {
                                                     padding: 12px 15px 12px 15px;
                                                     text-align: center;

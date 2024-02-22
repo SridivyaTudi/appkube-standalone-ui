@@ -49,16 +49,18 @@ class VerticalBarChart_NarrowBar extends Component {
       [width - margin.right, height - margin.top],
     ];
 
-    const svg = d3.select(this.ref.current);
+    const svg = d3.select(this.ref.current)
+    .attr("style", "max-width: 100%;  font: 12px sans-serif; ");
 
     const xScale = d3
       .scaleBand()
-      .range([margin.left, width - margin.right])
+      .range([margin.left*1.5, width - margin.right])
       .domain(
         this.props.color ? data1.map((d) => d.name) : data.map((d) => d.name)
       )
+      
       .paddingInner(0.7) // Adjust the value to increase or decrease the gap between bars
-      .paddingOuter(0.2);
+      .paddingOuter(0.5);
 
     const yScale = d3
       .scaleLinear()
@@ -68,7 +70,8 @@ class VerticalBarChart_NarrowBar extends Component {
 
     const xAxis = (g) =>
       g
-        .attr("transform", `translate(0,${height - margin.bottom})`)
+        .attr("transform", `translate(30,${height - margin.bottom})`)
+        
         .call(d3.axisBottom(xScale).tickSize(0))
         .call((g_local) => g_local.select(".domain").remove());
 
@@ -88,7 +91,7 @@ class VerticalBarChart_NarrowBar extends Component {
       .data(this.props.color ? data1 : data)
       .enter()
       .append("g")
-      .attr("transform", (d) => `translate(${xScale(d.name)},0)`);
+      .attr("transform", (d,i) => `translate(${xScale(d.name)*1.5},0)`);
     barGroups
       .selectAll(".narrow-rect")
       .data((d) => {
@@ -102,19 +105,19 @@ class VerticalBarChart_NarrowBar extends Component {
       .append("rect")
       .attr("class", "narrow-rect")
       .attr("y", (d, i) => yScale(d.value) - narrowBarHeight / 2)
-      .attr("x", (d, i) => xScale.bandwidth() / 2 - 5)
+      .attr("x", (d, i) => xScale.bandwidth() / 2 - 3.5)
       .attr("height", (d, i) => {
         console.log("height", d, i);
         return narrowBarsize - topHighOfArray + 3.5;
       })
-      .attr("width", 8)
-      .style("fill", (d, i, nodes) => {
+      .attr("width", 7)
+      .style("fill",   (d, i, nodes) => {
         // Get the parent group
         const parentGroup = d3.select(nodes[i].parentNode);
-        return "#ececec";
+        return "#e9ebfb";
       })
-      .attr("rx", 2)
-      .attr("ry", 2);
+      .attr("rx", 5)
+      .attr("ry", 5);
 
     barGroups
       .append("rect")
@@ -134,11 +137,11 @@ class VerticalBarChart_NarrowBar extends Component {
 
   render() {
     return (
-        <svg
+        <svg 
         ref={this.ref}
-        width={width + 400} // Increase the width by 400 units
-        height={height + 100} // Increase the height by 100 units
-        viewBox={`0 0 ${width + 400} ${height + 100}`} // Adjust the viewBox accordingly
+        width={width + 100} // Increase the width by 400 units
+        height={height + 40} // Increase the height by 100 units
+        viewBox={`0 0 ${width + 100} ${height + 40}`} // Adjust the viewBox accordingly
       ></svg>
     );
   }
