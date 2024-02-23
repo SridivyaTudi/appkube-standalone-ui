@@ -16,6 +16,22 @@ export const BIMappingSlice = createSlice({
       status: null,
       data: [],
     },
+    createProductFormData: {
+      departmentName: "",
+    },
+  },
+  reducers: {
+    setProductIntoDepartment: (state, action) => {
+      let createProductFormData = {
+        ...state.createProductFormData,
+        ...action.payload,
+      };
+
+      return {
+        ...state,
+        createProductFormData,
+      };
+    },
   },
   extraReducers: {
     [getElementType.pending]: (state) => {
@@ -71,5 +87,5 @@ export const BIMappingSlice = createSlice({
     },
   },
 });
-
+export const { setProductIntoDepartment } = BIMappingSlice.actions;
 export default BIMappingSlice.reducer;

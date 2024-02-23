@@ -20,6 +20,7 @@ import {
   getElementInstancesOfGivenType,
 } from "Redux/BIMapping/BIMappingThunk";
 import Loader from "Components/Loader";
+import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 const orgId = getCurrentOrgId();
 
 let headers = [
@@ -149,13 +150,17 @@ class BIMapping extends Component {
   };
 
   manipulateChildrenData = (data, type, exptraIds, isArrOfObj = 0) => {
+    let isTypeDepartment = type === this.TYPE.DEPARTMENT;
     return data.map((dataDetails, index) => {
       let { name, id, instanceName } = dataDetails;
-      name = isArrOfObj ? dataDetails : instanceName || name;
+      name = <> {isArrOfObj ? dataDetails : instanceName || name} </>;
       id = isArrOfObj ? `${dataDetails}_${exptraIds?.productId}_${index}` : id;
+
       return {
         name,
         id,
+        isLink: type === this.TYPE.DEPARTMENT,
+        url: isTypeDepartment ? "/app/bim/add-product" : "",
         chlidren: [],
         type,
         departmentId: exptraIds?.departmentId,
@@ -387,7 +392,7 @@ class BIMapping extends Component {
 
   onClickNode(data) {
     let { type, departmentId, productId, productEnvId, id, name } = data;
-    console.log(data);
+
     if (type === this.TYPE.DEPARTMENT) {
       this.props.getProductList(id);
     } else if (type === this.TYPE.PRODUCT) {
@@ -404,6 +409,10 @@ class BIMapping extends Component {
     }
     this.setState({ clickTableData: data });
   }
+
+  onLinkClick = (data) => {
+    this.props.setProductIntoDepartment({ departmentName: data.name });
+  };
   render() {
     const { isSelectDepartmentOpen, organizationTableData } = this.state;
     const {
@@ -420,6 +429,7 @@ class BIMapping extends Component {
       elementTypeData.status,
       elementInstancesOfGivenType.status,
     ].includes(inprogressStatus);
+    
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -467,6 +477,7 @@ class BIMapping extends Component {
               headers={headers}
               onClickNode={(data) => this.onClickNode(data)}
               isLoding={loderStatus}
+              onLinkClick={(data) => this.onLinkClick(data)}
             />
           )}
         </Box>
@@ -494,6 +505,7 @@ const mapDispatchToProps = {
   getProductEnv,
   getElementType,
   getElementInstancesOfGivenType,
+  setProductIntoDepartment,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BIMapping);

@@ -9,6 +9,7 @@ import Table from "@mui/material/Table";
 import { v4 } from "uuid";
 import { Box, Checkbox } from "@mui/material";
 import Loader from "Components/Loader";
+import { Link } from "react-router-dom";
 class AccordionView extends Component {
   constructor(props) {
     super(props);
@@ -131,6 +132,23 @@ class AccordionView extends Component {
                   }  `}
                 />
                 {subchild?.name}
+                {subchild.isLink ? (
+                  <Link
+                    to={`${subchild.url ? subchild.url : "#"}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      try {
+                        this.props.onLinkClick(subchild);
+                      } catch (e) {
+                        console.error(e);
+                      }
+                    }}
+                  >
+                    <i className="add-icon fa-solid fa-circle-plus"></i>
+                  </Link>
+                ) : (
+                  <></>
+                )}
                 {isLodingData ? (
                   <Loader className={"small-loader d-inline-block p-l-15"} />
                 ) : (

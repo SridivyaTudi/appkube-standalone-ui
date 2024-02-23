@@ -22,6 +22,7 @@ import ServiceIcon12 from "assets/img/report/service-icon12.png";
 import ServiceIcon13 from "assets/img/report/service-icon13.png";
 import ServiceIcon14 from "assets/img/report/service-icon14.png";
 import ServiceIcon15 from "assets/img/report/service-icon15.png";
+import { v4 } from "uuid";
 let timeSpendData = [
   {
     name: "Last Month Spend",
@@ -49,7 +50,122 @@ let timeSpendData = [
   },
 ];
 
+let topFiveAccounts = [
+  {
+    accountId: "160079380622",
+    deparment: "Central Operations",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$20,000",
+    variance: "15%",
+    budget: "$30,000",
+  },
+  {
+    accountId: "160079380622",
+    deparment: "Central Operations",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$20,000",
+    variance: "15%",
+    budget: "$30,000",
+  },
+  {
+    accountId: "160079380622",
+    deparment: "Central Operations",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$20,000",
+    variance: "15%",
+    budget: "$30,000",
+  },
+  {
+    accountId: "160079380622",
+    deparment: "Central Operations",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$20,000",
+    variance: "15%",
+    budget: "$30,000",
+  },
+  {
+    accountId: "160079380622",
+    deparment: "Central Operations",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$20,000",
+    variance: "15%",
+    budget: "$30,000",
+  },
+];
+
 class CostTopAccounts extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeTab: 0,
+      accounts:topFiveAccounts
+    };
+  }
+
+  //  Render table head
+  renderTableHead = () => {
+    return (
+      <TableHead>
+        <TableRow>
+          <TableCell>Account ID</TableCell>
+          <TableCell>Department </TableCell>
+          <TableCell>Vpc</TableCell>
+          <TableCell align="center">Service count</TableCell>
+          <TableCell>High spending region</TableCell>
+          <TableCell align="center">Spending</TableCell>
+          <TableCell align="center">Variance</TableCell>
+          <TableCell align="center">Budget</TableCell>
+        </TableRow>
+      </TableHead>
+    );
+  };
+
+  //  Render table body
+  renderTableBody = () => {
+    let { accounts } = this.state;
+    return (
+      <TableBody>
+        {accounts?.length ? (
+          accounts.map((details) => {
+            return (
+              <TableRow key={v4()}>
+                <TableCell>
+                  <Link to={``}>{details.accountId}</Link>
+                </TableCell>
+                <TableCell>{details.deparment}</TableCell>
+                <TableCell>{details.vpc}</TableCell>
+                <TableCell align="center">{details.serviceCount}</TableCell>
+                <TableCell>{details.region}</TableCell>
+                <TableCell align="center">{details.spending}</TableCell>
+                <TableCell align="center">
+                  <Box className="variance-count">
+                    {details.variance} <i class="fas fa-sort-down p-l-5"></i>
+                  </Box>
+                </TableCell>
+                <TableCell align="center">{details.budget}</TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <Box className="d-blck text-center w-100 h-100 ">
+            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+              <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+            </Box>
+          </Box>
+        )}
+      </TableBody>
+    );
+  };
   render() {
     return (
       <Box className="new-reports-container spend-overview-container">
@@ -77,196 +193,8 @@ class CostTopAccounts extends Component {
           <Box className="new-reports-table">
             <TableContainer className="table">
               <Table style={{ width: 1500 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Account ID</TableCell>
-                    <TableCell>Department </TableCell>
-                    <TableCell>Vpc</TableCell>
-                    <TableCell align="center">Service count</TableCell>
-                    <TableCell>High spending region</TableCell>
-                    <TableCell align="center">Spending</TableCell>
-                    <TableCell align="center">Variance</TableCell>
-                    <TableCell align="center">Budget</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>
-                      <Link to={``}>160079380622</Link>
-                    </TableCell>
-                    <TableCell>Central Operations</TableCell>
-                    <TableCell>vpc-d24664bb</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell>US-East (N.virginia)</TableCell>
-                    <TableCell align="center">$20,000</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$30,000</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Link to={``}>160079380622</Link>
-                    </TableCell>
-                    <TableCell>Central Operations</TableCell>
-                    <TableCell>vpc-d24664bb</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell>US-East (N.virginia)</TableCell>
-                    <TableCell align="center">$20,000</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count red">
-                        20% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$30,000</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Link to={``}>160079380622</Link>
-                    </TableCell>
-                    <TableCell>Central Operations</TableCell>
-                    <TableCell>vpc-d24664bb</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell>US-East (N.virginia)</TableCell>
-                    <TableCell align="center">$20,000</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$30,000</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Link to={``}>160079380622</Link>
-                    </TableCell>
-                    <TableCell>Central Operations</TableCell>
-                    <TableCell>vpc-d24664bb</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell>US-East (N.virginia)</TableCell>
-                    <TableCell align="center">$20,000</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$30,000</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Link to={``}>160079380622</Link>
-                    </TableCell>
-                    <TableCell>Central Operations</TableCell>
-                    <TableCell>vpc-d24664bb</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell>US-East (N.virginia)</TableCell>
-                    <TableCell align="center">$20,000</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$30,000</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Link to={``}>160079380622</Link>
-                    </TableCell>
-                    <TableCell>Central Operations</TableCell>
-                    <TableCell>vpc-d24664bb</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell>US-East (N.virginia)</TableCell>
-                    <TableCell align="center">$20,000</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$30,000</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Link to={``}>160079380622</Link>
-                    </TableCell>
-                    <TableCell>Central Operations</TableCell>
-                    <TableCell>vpc-d24664bb</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell>US-East (N.virginia)</TableCell>
-                    <TableCell align="center">$20,000</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$30,000</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Link to={``}>160079380622</Link>
-                    </TableCell>
-                    <TableCell>Central Operations</TableCell>
-                    <TableCell>vpc-d24664bb</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell>US-East (N.virginia)</TableCell>
-                    <TableCell align="center">$20,000</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$30,000</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Link to={``}>160079380622</Link>
-                    </TableCell>
-                    <TableCell>Central Operations</TableCell>
-                    <TableCell>vpc-d24664bb</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell>US-East (N.virginia)</TableCell>
-                    <TableCell align="center">$20,000</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$30,000</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Link to={``}>160079380622</Link>
-                    </TableCell>
-                    <TableCell>Central Operations</TableCell>
-                    <TableCell>vpc-d24664bb</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell>US-East (N.virginia)</TableCell>
-                    <TableCell align="center">$20,000</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$30,000</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Link to={``}>160079380622</Link>
-                    </TableCell>
-                    <TableCell>Central Operations</TableCell>
-                    <TableCell>vpc-d24664bb</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell>US-East (N.virginia)</TableCell>
-                    <TableCell align="center">$20,000</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$30,000</TableCell>
-                  </TableRow>
-                </TableBody>
+                {this.renderTableHead()}
+                {this.renderTableBody()}
               </Table>
             </TableContainer>
           </Box>
