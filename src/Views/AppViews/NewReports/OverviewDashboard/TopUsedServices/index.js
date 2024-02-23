@@ -8,9 +8,9 @@ import {
   TableRow,
   TableBody,
   TableCell,
-  IconButton
+  IconButton,
 } from "@mui/material";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import ServiceIcon7 from "assets/img/report/service-icon7.png";
@@ -22,6 +22,10 @@ import ServiceIcon12 from "assets/img/report/service-icon12.png";
 import ServiceIcon13 from "assets/img/report/service-icon13.png";
 import ServiceIcon14 from "assets/img/report/service-icon14.png";
 import ServiceIcon15 from "assets/img/report/service-icon15.png";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import SpendingTable from "../Components/SpendingTable";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+
 let timeSpendData = [
   {
     name: "Last Month Spend",
@@ -49,7 +53,87 @@ let timeSpendData = [
   },
 ];
 
+let computeSpendingTable = [
+  {
+    name: "EC2",
+    icon: ServiceIcon7,
+    last_month_spend: "$2,000",
+    month_spend: "$1,800",
+    variance: "15% ",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+  },
+  {
+    name: "Lambda",
+    icon: ServiceIcon8,
+    last_month_spend: "$1,500",
+    month_spend: "$2,500",
+    variance: "20%",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+  },
+  {
+    name: "Light Sail",
+    icon: ServiceIcon9,
+    last_month_spend: "$2,000",
+    month_spend: "$2,000",
+    variance: "15%",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+  },
+  {
+    name: "ECS",
+    icon: ServiceIcon10,
+    last_month_spend: "$2,000",
+    month_spend: "$2,000",
+    variance: "15%",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+  },
+  {
+    name: "EKS",
+    icon: ServiceIcon11,
+    last_month_spend: "$2,000",
+    month_spend: "$2,000",
+    variance: "15%",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+  },
+  {
+    name: "Fargate",
+    icon: ServiceIcon12,
+    last_month_spend: "$2,000",
+    month_spend: "$2,000",
+    variance: "15%",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+  },
+  {
+    name: "Fargate",
+    icon: ServiceIcon13,
+    last_month_spend: "$2,000",
+    month_spend: "$2,000",
+    variance: "15%",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+  },
+  {
+    name: "Fargate",
+    icon: ServiceIcon14,
+    last_month_spend: "$2,000",
+    month_spend: "$2,000",
+    variance: "15%",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+  },
+  {
+    name: "Fargate",
+    icon: ServiceIcon15,
+    last_month_spend: "$2,000",
+    month_spend: "$2,000",
+    variance: "15%",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+  },
+];
 class TopUsedServices extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeTab: 0,
+    };
+  }
   render() {
     return (
       <Box className="new-reports-container spend-overview-container">
@@ -75,372 +159,10 @@ class TopUsedServices extends Component {
           <TimeSpendComponent data={timeSpendData} />
           <h3>Spendings Of Top Used Services</h3>
           <h4>Overview of Top 10 Services</h4>
-          <Box className="new-reports-table">
-            <TableContainer className="table">
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">Service name</TableCell>
-                    <TableCell align="center">Current month spend</TableCell>
-                    <TableCell align="center">last month spend </TableCell>
-                    <TableCell align="center">variance</TableCell>
-                    <TableCell align="center"> Avg daily spend</TableCell>
-                    <TableCell align="center">Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon7} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon8} alt="" />
-                      </Box>
-                      Lambda
-                    </TableCell>
-                    <TableCell align="center">$1,500</TableCell>
-                    <TableCell align="center">$2,500</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count red">
-                        20% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon9} alt="" />
-                      </Box>
-                      Light Sail
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon10} alt="" />
-                      </Box>
-                      ECS
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon11} alt="" />
-                      </Box>
-                      EKS
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon12} alt="" />
-                      </Box>
-                      Fargate
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon13} alt="" />
-                      </Box>
-                      Fargate
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon14} alt="" />
-                      </Box>
-                      Fargate
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon15} alt="" />
-                      </Box>
-                      Fargate
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-          <h3 className="m-t-3">EC2 SPENDINGS</h3>
-          <h4>Cost consumption of EC2</h4>
-          <Box className="new-reports-table">
-            <TableContainer className="table">
-              <Table style={{ width: 2000 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Tags</TableCell>
-                    <TableCell>Instance ID </TableCell>
-                    <TableCell>Instance Type</TableCell>
-                    <TableCell>Instance Status</TableCell>
-                    <TableCell>Pricing model</TableCell>
-                    <TableCell>Availability zone</TableCell>
-                    <TableCell>Ondemand cost / hr</TableCell>
-                    <TableCell>RI cost / hr</TableCell>
-                    <TableCell>Usage Hours</TableCell>
-                    <TableCell>Add-ons</TableCell>
-                    <TableCell>Total Spend</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>dev-prod</TableCell>
-                    <TableCell>i-0c1234dc</TableCell>
-                    <TableCell>t2.2xlarge </TableCell>
-                    <TableCell>Running</TableCell>
-                    <TableCell>on Demand</TableCell>
-                    <TableCell>us-east-1a</TableCell>
-                    <TableCell>$0.0015</TableCell>
-                    <TableCell>Unavailable</TableCell>
-                    <TableCell>720hrs</TableCell>
-                    <TableCell>NA</TableCell>
-                    <TableCell>$120</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
+          <SpendingTable data={computeSpendingTable} />
         </Box>
       </Box>
     );
   }
 }
-
-export default TopUsedServices;
+export default navigateRouter(TopUsedServices);

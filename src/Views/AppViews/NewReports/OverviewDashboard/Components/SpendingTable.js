@@ -13,6 +13,12 @@ import {
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 export class SpendingTable extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeTab: 0,
+    };
+  }
   renderTable = () => {
     return (
       <TableContainer className="table">

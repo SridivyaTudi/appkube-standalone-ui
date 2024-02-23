@@ -70,7 +70,8 @@ import ChargebackDashboard from "./AppViews/NewReports/ChargebackDashboard";
 import CentralDashboard from "./AppViews/NewReports/CentralDashboard";
 import ItDepartment from "./AppViews/NewReports/ChargebackDashboard/ItDepartment";
 import CreateInvoice from "./AppViews/NewReports/ChargebackDashboard/CreateInvoice";
-import SpendOverviewDetails from "Views/AppViews/NewReports/OverviewDashboard/SpendOverviewDetails"
+import SpendOverviewDetails from "Views/AppViews/NewReports/OverviewDashboard/SpendOverviewDetails";
+import TopUsedServicesDetails from "Views/AppViews/NewReports/OverviewDashboard/TopUsedServicesDetails";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -280,6 +281,11 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services`}
             element={<TopUsedServices />}
           />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/:name`}
+            element={<TopUsedServicesDetails />}
+          />
+
           <Route
             path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spending-trend`}
             element={<SpendingTrend />}

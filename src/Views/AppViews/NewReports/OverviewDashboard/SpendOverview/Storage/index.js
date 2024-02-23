@@ -16,7 +16,7 @@ import ServiceIcon3 from "assets/img/report/service-icon3.png";
 import ServiceIcon4 from "assets/img/report/service-icon4.png";
 import ServiceIcon5 from "assets/img/report/service-icon5.png";
 import ServiceIcon6 from "assets/img/report/service-icon6.png";
-import SpendingTable from "Views/AppViews/NewReports/OverviewDashboard/SpendOverview/Components/SpendingTable";
+import SpendingTable from "Views/AppViews/NewReports/OverviewDashboard/Components/SpendingTable";
 
 let timeSpendData = [
   {
