@@ -56,7 +56,7 @@ import AddProduct from "./AppViews/BIMapping/AddProduct";
 import DiscoveredAssets from "./AppViews/DiscoveredAssets";
 import LoginEvents from "./AppViews/DiscoveredAssets/LoginEvents";
 import Eventhistory from "./AppViews/DiscoveredAssets/Eventhistory";
-import  OverviewDashboard  from "./AppViews/NewReports/OverviewDashboard";
+import OverviewDashboard from "./AppViews/NewReports/OverviewDashboard";
 import SpendOverview from "./AppViews/NewReports/OverviewDashboard/SpendOverview";
 import { getCloudWiseLandingZoneCount } from "Redux/Environments/EnvironmentsThunk";
 import status from "Redux/Constants/CommonDS";
@@ -70,6 +70,7 @@ import ChargebackDashboard from "./AppViews/NewReports/ChargebackDashboard";
 import CentralDashboard from "./AppViews/NewReports/CentralDashboard";
 import ItDepartment from "./AppViews/NewReports/ChargebackDashboard/ItDepartment";
 import CreateInvoice from "./AppViews/NewReports/ChargebackDashboard/CreateInvoice";
+import SpendOverviewDetails from "Views/AppViews/NewReports/OverviewDashboard/SpendOverviewDetails"
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -270,15 +271,47 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview`}
             element={<SpendOverview />}
           />
-          <Route path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services`} element={<TopUsedServices/>}/>
-          <Route path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spending-trend`} element={<SpendingTrend/>} />
-          <Route path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/cost-top-accounts`} element={<CostTopAccounts/>}/>
-          <Route path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/potential-sevings`} element={<PotentialSavings/>} />
-          <Route path={`${APP_PREFIX_PATH}/new-reports/budget-dashboard`} element={<BudgetDashboard/>} />
-          <Route path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard`} element={<ChargebackDashboard/>}/>
-          <Route path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/it-department`} element={<ItDepartment/>}/>
-          <Route path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/create-invoice`} element={<CreateInvoice/>}/>
-          <Route path={`${APP_PREFIX_PATH}/new-reports/central-dashboard`} element={<CentralDashboard/>} />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/:name`}
+            element={<SpendOverviewDetails />}
+          />
+
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services`}
+            element={<TopUsedServices />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spending-trend`}
+            element={<SpendingTrend />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/cost-top-accounts`}
+            element={<CostTopAccounts />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/potential-sevings`}
+            element={<PotentialSavings />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/budget-dashboard`}
+            element={<BudgetDashboard />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard`}
+            element={<ChargebackDashboard />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/it-department`}
+            element={<ItDepartment />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/create-invoice`}
+            element={<CreateInvoice />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/central-dashboard`}
+            element={<CentralDashboard />}
+          />
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route
             path={`${APP_PREFIX_PATH}/bim/product-category`}
