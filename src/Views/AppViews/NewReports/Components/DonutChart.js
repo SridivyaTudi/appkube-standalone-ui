@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { Box } from "@mui/material";
 import * as d3 from "d3";
 const thickness = 30;
-const DonutChart = ({ data, width, height, style }) => {
+const DonutChart = ({ data, width, height, style, otherData }) => {
   const svgRef = useRef();
   var pieGenerator = d3.pie().value(([key, value]) => {
     return value;
@@ -11,7 +11,16 @@ const DonutChart = ({ data, width, height, style }) => {
   const areaWidth = (width - 30) / 2;
   useEffect(() => {
     const svg = d3.select(svgRef.current);
+
     svg.selectAll("*").remove(); // Clear previous elements
+    let tooltip = d3
+      .select("#root")
+      .data(data)
+      .append("div")
+      .attr("class", "chart-tooltip")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden");
     const radius = Math.min(width, height) / 1.6;
     const innerRadius = radius * 0.6;
     var colors = ["#FF708B", "#00B929", "#8676FF", "#FFBA69", "#F9D33D"];
@@ -28,14 +37,6 @@ const DonutChart = ({ data, width, height, style }) => {
       .append("g")
       .attr("class", "donut-arc")
       .attr("transform", `translate(${width / 2},${height / 2.5})`);
-
-    // Apply clip-path attribute to each arc
-
-    //   .append("path")
-    //   .attr("class", "arc")
-    //   .attr("d", arc)
-    //   .style("fill", (d, i) => color(i))
-    //   .attr("clip-path", (d, i) => `url(#clip${i})`);
 
     arcs
       .append("path")
@@ -56,7 +57,7 @@ const DonutChart = ({ data, width, height, style }) => {
       .attr("font-size", "20px")
       .attr("font-weight", "600")
       .attr("fill", "#383874")
-      .text("$10,000")
+      .text(otherData?.centerValue)
       .attr("transform", `translate(${width / 2},${height / 2.4})`);
 
     //   legend area
@@ -96,10 +97,30 @@ const DonutChart = ({ data, width, height, style }) => {
       .style("font-size", "12px")
       .attr("x", -60)
       .attr("y", 30)
-      .text(
-        (d) =>
-          `${d.data[1].age_group} ${calculatePercentage(d.data[1].population)}%`
-      )
+      .text((d) => {
+        let label = `${d.data[1].age_group} ${calculatePercentage(
+          d.data[1].population
+        )}%`;
+        return label.length > 16 ? `${label.slice(0, 14)}...` : label;
+      })
+      .on("mouseover", function (d, data) {
+        let label = `${data.data[1]?.age_group} ${calculatePercentage(
+          data.data[1]?.population
+        )}%`;
+
+        tooltip.html(
+          `<div class="chart-tooltip-contents"><div class="value">${label}</div></div>`
+        );
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function (d) {
+        return tooltip
+          .style("top", d.pageY - 30 + "px")
+          .style("left", d.pageX - 60 + "px");
+      })
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      })
       .append("title");
   }, [data, height, width]);
 
@@ -116,7 +137,12 @@ const DonutChart = ({ data, width, height, style }) => {
     return percentage || 0;
   }
   return (
-    <Box className="spend-overview-chart" flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>
+    <Box
+      className="spend-overview-chart"
+      flexDirection={"column"}
+      alignItems={"center"}
+      justifyContent={"center"}
+    >
       <svg ref={svgRef} width={width} height={height} style={style}></svg>
     </Box>
   );

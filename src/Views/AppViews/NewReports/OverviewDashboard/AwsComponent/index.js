@@ -139,10 +139,10 @@ const spendTrendData = [
   },
 ];
 var potentialSavingData = [
-  { color: "#FF708B", percentage: 65,name:'Spot Instace', value:'532'},
-  { color: "#FFBA69", percentage: 70,name:'Reserved Ins.',value:539 },
-  { color: "#01F1E3", percentage: 60,name:'Others',value: 4532},
-  { color: "#8676FF", percentage: 50 ,name:'Rightsizing',value:786},
+  { color: "#FF708B", percentage: 65, name: "Spot Instace", value: "532" },
+  { color: "#FFBA69", percentage: 70, name: "Reserved Ins.", value: 539 },
+  { color: "#01F1E3", percentage: 60, name: "Others", value: 4532 },
+  { color: "#8676FF", percentage: 50, name: "Rightsizing", value: 786 },
 ];
 
 let costOfTopAccounts = [
@@ -162,10 +162,7 @@ class AwsComponent extends Component {
     return (
       <>
         <Box className="reports-charts">
-          <Grid
-            container
-            spacing={2}
-          >
+          <Grid container spacing={2}>
             <Grid item xs={12} md={5} lg={3}>
               <ChartWrapper
                 data={{
@@ -174,7 +171,14 @@ class AwsComponent extends Component {
                   link: "/app/new-reports/over-view-dashboard/spend-overview",
                 }}
                 ChartComponent={
-                  <DonutChart data={donutData} width={250} height={300} />
+                  <DonutChart
+                    data={donutData}
+                    width={250}
+                    height={300}
+                    otherData={{
+                      centerValue: "$10,000",
+                    }}
+                  />
                 }
               />
             </Grid>
@@ -222,9 +226,7 @@ class AwsComponent extends Component {
                   labelOfBtn: "View Details",
                   link: "/app/new-reports/over-view-dashboard/cost-top-accounts",
                 }}
-                ChartComponent={
-                  <VerticalBarchart data={costOfTopAccounts} />
-                }
+                ChartComponent={<VerticalBarchart data={costOfTopAccounts} />}
               />
             </Grid>
             <Grid item xs={12} md={12} lg={6}>

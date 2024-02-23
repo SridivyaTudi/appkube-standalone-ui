@@ -1,16 +1,17 @@
 import React, { Component } from "react";
-import { Box, Grid, Button,  TableContainer,
+import {
+  Box,
+  Button,
+  TableContainer,
   Table,
   TableHead,
   TableRow,
   TableBody,
   TableCell,
-  IconButton } from "@mui/material";
-import ChartWrapper from "../../Components/ChartWrapper";
-import VerticalBarchart from "Views/AppViews/NewReports/Components/VerticalBarchart";
-import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
-import TimeSpendComponent from "Views/AppViews/NewReports/Components/TimeSpendComponent";
-import GroupedBarplotChart from "Views/AppViews/NewReports/Components/GroupedBarplotChart";
+  IconButton,
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import ServiceIcon7 from "assets/img/report/service-icon7.png";
 import ServiceIcon8 from "assets/img/report/service-icon8.png";
@@ -21,226 +22,64 @@ import ServiceIcon12 from "assets/img/report/service-icon12.png";
 import ServiceIcon13 from "assets/img/report/service-icon13.png";
 import ServiceIcon14 from "assets/img/report/service-icon14.png";
 import ServiceIcon15 from "assets/img/report/service-icon15.png";
-const totalUsedServiceData = [
-  { label: "EC2", value: 4700, color: "#A145FF" },
-  { label: "RDS", value: 4500, color: "#FA6298" },
-  { label: "S3", value: 4300, color: "#FAA24B" },
-  { label: "EKS", value: 4000, color: "#F9D33D" },
-  { label: "Lambda", value: 3800, color: "#F9D33D" },
-];
-let verticalBarChartData = [
-  {
-    name: "Jun 23",
-    value: 4500,
-  },
-  {
-    name: "July 23",
-    value: 4000,
-  },
-  {
-    name: "August 23",
-    value: 4000,
-  },
-  {
-    name: "Sept 23",
-    value: 3800,
-  },
-  {
-    name: "Oct 23",
-    value: 3700,
-  },
-  {
-    name: "Nov 23",
-    value: 3700,
-  },
-  {
-    name: "Dec 23",
-    value: 3700,
-  },
-  {
-    name: "Jan 24",
-    value: 3700,
-  },
-  {
-    name: "Feb 24",
-    value: 3700,
-  },
-  {
-    name: "March 24",
-    value: 3700,
-  },
-];
-let donutData = [
-  {
-    age_group: "Compute Cost",
-    population: 110011100,
-  },
-  {
-    age_group: "Network ",
-    population: 40267984,
-  },
-  {
-    age_group: "Storage",
-    population: 30672088,
-  },
-
-  {
-    age_group: "Others",
-    population: 81489445,
-  },
-];
-
-const spendTrendData = [
-  {
-    date: "1-05-12",
-    last_quarter: 30000,
-    current_quarter: 35000,
-    forecasted_spend: 13000,
-  },
-  {
-    date: "30-04-12",
-    last_quarter: 35000,
-    current_quarter: 40000,
-    forecasted_spend: 23000,
-  },
-  {
-    date: "27-04-12",
-    last_quarter: 60000,
-    current_quarter: 38000,
-    forecasted_spend: 33000,
-  },
-  {
-    date: "26-04-12",
-    last_quarter: 34000,
-    current_quarter: 33000,
-    forecasted_spend: 44000,
-  },
-  {
-    date: "25-04-12",
-    last_quarter: 45000,
-    current_quarter: 20000,
-    forecasted_spend: 27000,
-  },
-  {
-    date: "24-04-12",
-    last_quarter: 33333,
-    current_quarter: 22222,
-    forecasted_spend: 11000,
-  },
-  {
-    date: "23-04-12",
-    last_quarter: 11111,
-    current_quarter: 33333,
-    forecasted_spend: 44000,
-  },
-  {
-    date: "20-04-12",
-    last_quarter: 34000,
-    current_quarter: 44000,
-    forecasted_spend: 40000,
-  },
-  {
-    date: "19-04-12",
-    last_quarter: 44000,
-    current_quarter: 38888,
-    forecasted_spend: 38000,
-  },
-  {
-    date: "18-04-12",
-    last_quarter: 33333,
-    current_quarter: 11111,
-    forecasted_spend: 34000,
-  },
-  {
-    date: "17-04-12",
-    last_quarter: 28000,
-    current_quarter: 38000,
-    forecasted_spend: 32000,
-  },
-  {
-    date: "16-04-12",
-    last_quarter: 29000,
-    current_quarter: 39000,
-    forecasted_spend: 30000,
-  },
-  {
-    date: "13-04-12",
-    last_quarter: 22000,
-    current_quarter: 38000,
-    forecasted_spend: 22000,
-  },
-];
 let timeSpendData = [
   {
-    name: "This Month Savings ",
-    value: "$85,000",
-    percentage: "15",
-    subName: "vs Last Month",
-  },
-  {
-    name: "Forecasting Savings",
+    name: "Last Month Spend",
     value: "$90,000",
-    percentage: "5",
+    percentage: " 5 %",
     subName: " vs Last Month",
   },
   {
-    name: "Last Month savings ",
-    value: "$80,000",
-    percentage: "5",
-    subName: "vs Previous Month",
+    name: "Month to date spend ",
+    value: "$70,000",
+    percentage: " 5 % ",
+    subName: " vs Last Month",
+  },
+  {
+    name: "Forecasted Spend ",
+    value: "$90,000",
+    percentage: " 5 % ",
+    subName: " vs Last Month",
+  },
+  {
+    name: "Avg Daily Spend",
+    value: "$90,000",
+    percentage: " 5 % ",
+    subName: " vs Last Month",
   },
 ];
-var potentialSavingData = [45, 33, 66, 50, 90];
-class AwsComponent extends Component {
+
+class ItDepartment extends Component {
   render() {
     return (
-      <>
-        <TimeSpendComponent data={timeSpendData} />
-        <Box className="reports-charts">
-          <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            <Grid item xs={5}>
-              <ChartWrapper
-                data={{
-                  title: "Usage By  IT Department",
-                  labelOfBtn: " View Details",
-                  link: "",
-                }}
-                ChartComponent={
-                  <DonutChart
-                    data={donutData}
-                    width={250}
-                    height={300}
-                    otherData={{
-                      centerValue: "$43,000",
-                    }}
-                  />
-                }
-              />
-            </Grid>
-            <Grid item xs={7}>
-              <ChartWrapper
-                data={{
-                  title: "Monthly Usage by IT Department",
-                  labelOfBtn: "View Details",
-                  link: "",
-                }}
-                ChartComponent={
-                  <VerticalBarchart
-                    data={verticalBarChartData}
-                    styleProp={{
-                      color: "#53CA43",
-                    }}
-                  />
-                }
-              />
-            </Grid>
-          </Grid>
+      <Box className="new-reports-container spend-overview-container">
+        <Box className="list-heading">
+          <h3>
+            <Link to={`/app/new-reports/over-view-dashboard`}>
+              <IconButton className="m-r-2">
+                <i class="fas fa-long-arrow-left"></i>
+              </IconButton>
+            </Link>
+            IT Department
+          </h3>
+
+          <Box className="d-flex ">
+            <Link to={`app/new-reports/chargeback-dashboard/create-invoice`}>
+              <Button className="light-btn p-l-15 p-r-15 m-r-3">
+                <i class="fas fa-plus-circle m-r-2"></i> Create Invoice
+              </Button>
+            </Link>
+
+            <Button className="light-btn p-l-15 p-r-15">
+              <i className="fas fa-calendar-minus m-r-2"></i> Last Month
+            </Button>
+          </Box>
         </Box>
-        <Box className="new-reports-table">
+        <Box className="reports-tab-section m-t-3">
+          <TimeSpendComponent data={timeSpendData} />
+          <h3>Spendings Of Top Used Services</h3>
+          <h4>Overview of Top 10 Services</h4>
+          <Box className="new-reports-table">
             <TableContainer className="table">
               <Table>
                 <TableHead>
@@ -447,9 +286,165 @@ class AwsComponent extends Component {
               </Table>
             </TableContainer>
           </Box>
-      </>
+          <h3 className="m-t-3">EC2 SPENDINGS</h3>
+          <h4>Cost consumption of EC2</h4>
+          <Box className="new-reports-table">
+            <TableContainer className="table">
+              <Table style={{ width: 2000 }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Tags</TableCell>
+                    <TableCell>Instance ID </TableCell>
+                    <TableCell>Instance Type</TableCell>
+                    <TableCell>Instance Status</TableCell>
+                    <TableCell>Pricing model</TableCell>
+                    <TableCell>Availability zone</TableCell>
+                    <TableCell>Ondemand cost / hr</TableCell>
+                    <TableCell>RI cost / hr</TableCell>
+                    <TableCell>Usage Hours</TableCell>
+                    <TableCell>Add-ons</TableCell>
+                    <TableCell>Total Spend</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>dev-prod</TableCell>
+                    <TableCell>i-0c1234dc</TableCell>
+                    <TableCell>t2.2xlarge </TableCell>
+                    <TableCell>Running</TableCell>
+                    <TableCell>on Demand</TableCell>
+                    <TableCell>us-east-1a</TableCell>
+                    <TableCell>$0.0015</TableCell>
+                    <TableCell>Unavailable</TableCell>
+                    <TableCell>720hrs</TableCell>
+                    <TableCell>NA</TableCell>
+                    <TableCell>$120</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>dev-prod</TableCell>
+                    <TableCell>i-0c1234dc</TableCell>
+                    <TableCell>t2.2xlarge </TableCell>
+                    <TableCell>Running</TableCell>
+                    <TableCell>on Demand</TableCell>
+                    <TableCell>us-east-1a</TableCell>
+                    <TableCell>$0.0015</TableCell>
+                    <TableCell>Unavailable</TableCell>
+                    <TableCell>720hrs</TableCell>
+                    <TableCell>NA</TableCell>
+                    <TableCell>$120</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>dev-prod</TableCell>
+                    <TableCell>i-0c1234dc</TableCell>
+                    <TableCell>t2.2xlarge </TableCell>
+                    <TableCell>Running</TableCell>
+                    <TableCell>on Demand</TableCell>
+                    <TableCell>us-east-1a</TableCell>
+                    <TableCell>$0.0015</TableCell>
+                    <TableCell>Unavailable</TableCell>
+                    <TableCell>720hrs</TableCell>
+                    <TableCell>NA</TableCell>
+                    <TableCell>$120</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>dev-prod</TableCell>
+                    <TableCell>i-0c1234dc</TableCell>
+                    <TableCell>t2.2xlarge </TableCell>
+                    <TableCell>Running</TableCell>
+                    <TableCell>on Demand</TableCell>
+                    <TableCell>us-east-1a</TableCell>
+                    <TableCell>$0.0015</TableCell>
+                    <TableCell>Unavailable</TableCell>
+                    <TableCell>720hrs</TableCell>
+                    <TableCell>NA</TableCell>
+                    <TableCell>$120</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>dev-prod</TableCell>
+                    <TableCell>i-0c1234dc</TableCell>
+                    <TableCell>t2.2xlarge </TableCell>
+                    <TableCell>Running</TableCell>
+                    <TableCell>on Demand</TableCell>
+                    <TableCell>us-east-1a</TableCell>
+                    <TableCell>$0.0015</TableCell>
+                    <TableCell>Unavailable</TableCell>
+                    <TableCell>720hrs</TableCell>
+                    <TableCell>NA</TableCell>
+                    <TableCell>$120</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>dev-prod</TableCell>
+                    <TableCell>i-0c1234dc</TableCell>
+                    <TableCell>t2.2xlarge </TableCell>
+                    <TableCell>Running</TableCell>
+                    <TableCell>on Demand</TableCell>
+                    <TableCell>us-east-1a</TableCell>
+                    <TableCell>$0.0015</TableCell>
+                    <TableCell>Unavailable</TableCell>
+                    <TableCell>720hrs</TableCell>
+                    <TableCell>NA</TableCell>
+                    <TableCell>$120</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>dev-prod</TableCell>
+                    <TableCell>i-0c1234dc</TableCell>
+                    <TableCell>t2.2xlarge </TableCell>
+                    <TableCell>Running</TableCell>
+                    <TableCell>on Demand</TableCell>
+                    <TableCell>us-east-1a</TableCell>
+                    <TableCell>$0.0015</TableCell>
+                    <TableCell>Unavailable</TableCell>
+                    <TableCell>720hrs</TableCell>
+                    <TableCell>NA</TableCell>
+                    <TableCell>$120</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>dev-prod</TableCell>
+                    <TableCell>i-0c1234dc</TableCell>
+                    <TableCell>t2.2xlarge </TableCell>
+                    <TableCell>Running</TableCell>
+                    <TableCell>on Demand</TableCell>
+                    <TableCell>us-east-1a</TableCell>
+                    <TableCell>$0.0015</TableCell>
+                    <TableCell>Unavailable</TableCell>
+                    <TableCell>720hrs</TableCell>
+                    <TableCell>NA</TableCell>
+                    <TableCell>$120</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>dev-prod</TableCell>
+                    <TableCell>i-0c1234dc</TableCell>
+                    <TableCell>t2.2xlarge </TableCell>
+                    <TableCell>Running</TableCell>
+                    <TableCell>on Demand</TableCell>
+                    <TableCell>us-east-1a</TableCell>
+                    <TableCell>$0.0015</TableCell>
+                    <TableCell>Unavailable</TableCell>
+                    <TableCell>720hrs</TableCell>
+                    <TableCell>NA</TableCell>
+                    <TableCell>$120</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>dev-prod</TableCell>
+                    <TableCell>i-0c1234dc</TableCell>
+                    <TableCell>t2.2xlarge </TableCell>
+                    <TableCell>Running</TableCell>
+                    <TableCell>on Demand</TableCell>
+                    <TableCell>us-east-1a</TableCell>
+                    <TableCell>$0.0015</TableCell>
+                    <TableCell>Unavailable</TableCell>
+                    <TableCell>720hrs</TableCell>
+                    <TableCell>NA</TableCell>
+                    <TableCell>$120</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+        </Box>
+      </Box>
     );
   }
 }
 
-export default AwsComponent;
+export default ItDepartment;

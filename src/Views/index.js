@@ -68,6 +68,8 @@ import PotentialSavings from "./AppViews/NewReports/OverviewDashboard/PotentialS
 import BudgetDashboard from "./AppViews/NewReports/BudgetDashboard";
 import ChargebackDashboard from "./AppViews/NewReports/ChargebackDashboard";
 import CentralDashboard from "./AppViews/NewReports/CentralDashboard";
+import ItDepartment from "./AppViews/NewReports/ChargebackDashboard/ItDepartment";
+import CreateInvoice from "./AppViews/NewReports/ChargebackDashboard/CreateInvoice";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -274,6 +276,8 @@ export const Views = (props) => {
           <Route path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/potential-sevings`} element={<PotentialSavings/>} />
           <Route path={`${APP_PREFIX_PATH}/new-reports/budget-dashboard`} element={<BudgetDashboard/>} />
           <Route path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard`} element={<ChargebackDashboard/>}/>
+          <Route path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/it-department`} element={<ItDepartment/>}/>
+          <Route path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/create-invoice`} element={<CreateInvoice/>}/>
           <Route path={`${APP_PREFIX_PATH}/new-reports/central-dashboard`} element={<CentralDashboard/>} />
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route

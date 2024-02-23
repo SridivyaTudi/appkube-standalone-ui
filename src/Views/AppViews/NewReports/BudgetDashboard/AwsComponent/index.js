@@ -223,7 +223,9 @@ class AwsComponent extends Component {
                   link: "",
                 }}
                 ChartComponent={
-                  <DonutChart data={donutData} width={250} height={300} />
+                  <DonutChart data={donutData} width={250} height={300} otherData={{
+                      centerValue: "$10,000",
+                    }} />
                 }
               />
             </Grid>
