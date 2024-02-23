@@ -19,7 +19,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-    //   width: 30%;
+      //   width: 30%;
     }
   }
 }
@@ -28,12 +28,29 @@
   width: auto;
   background-color: #1e2129;
   border-radius: 5px;
-   .value {
+  .value {
     display: block;
-    padding: 7px 10px 7px 10px;
+    padding: 5px 10px 5px 10px;
     color: #ffffff;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 10px;
+    line-height: 14px;
     font-weight: 400;
+  }
 }
+.table-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .check-box-group{
+    display: flex;
+    .check-box{
+      padding: 5px;
+    }
+    label{
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 500;
+      color: #383874;
+    }
+  }
 }
