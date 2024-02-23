@@ -6,6 +6,7 @@ import Database from "./Database";
 import Network from "./Network";
 import Other from "./Other";
 import {Link} from "react-router-dom";
+import FilterModal from "../../Components/FilterModal"
 
 class SpendOverview extends Component {
   tabMapping = [
@@ -39,6 +40,8 @@ class SpendOverview extends Component {
     super(props);
     this.state = {
       activeTab: 0,
+      showConfirmPopup :false
+      
     };
   }
   setActiveTab = (activeTab) => {
@@ -85,8 +88,21 @@ class SpendOverview extends Component {
       </Box>
     );
   };
+
+//  toggle pop up
+  togglePopup = () => {
+    let { showConfirmPopup } = this.state;
+    this.setState({
+      showConfirmPopup: !showConfirmPopup,
+    });
+  };
+
+
   render() {
+    const {showConfirmPopup}=this.state
+    
     return (
+      <>
       <Box className="new-reports-container spend-overview-container">
         <Box className="list-heading">
           <h3><Link to={`/app/new-reports/over-view-dashboard`}>
@@ -95,8 +111,10 @@ class SpendOverview extends Component {
               </IconButton>
             </Link> Spend Overview</h3>
           <Box className="d-flex ">
-            <Button className="light-btn p-l-15 p-r-15 m-r-3">
-              <i className="fas fa-filter m-r-2"></i> Filter
+            <Button className="light-btn p-l-15 p-r-15 m-r-3" onClick={()=> this.setState({
+             showConfirmPopup:!showConfirmPopup
+            })}>
+              <i className="fas fa-filter m-r-2"  ></i> Filter
             </Button>
             <Button className="light-btn p-l-15 p-r-15">
               <i className="fas fa-calendar-minus m-r-2"></i> Last Month
@@ -108,6 +126,16 @@ class SpendOverview extends Component {
           {this.renderActiveTabOfComponent()}
         </Box>
       </Box>
+       {
+        showConfirmPopup?
+        <FilterModal  showModal={showConfirmPopup}
+        togglePopup={this.togglePopup}
+        />
+        :<></>
+       }
+      
+       </>
+      
     );
   }
 }
