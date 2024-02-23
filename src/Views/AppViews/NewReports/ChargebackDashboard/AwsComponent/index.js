@@ -1,26 +1,23 @@
 import React, { Component } from "react";
-import { Box, Grid, Button,  TableContainer,
+import {
+  Box,
+  Grid,
+  Button,
+  TableContainer,
   Table,
   TableHead,
   TableRow,
   TableBody,
   TableCell,
-  IconButton } from "@mui/material";
+  IconButton,
+} from "@mui/material";
 import ChartWrapper from "../../Components/ChartWrapper";
 import VerticalBarchart from "Views/AppViews/NewReports/Components/VerticalBarchart";
 import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
 import TimeSpendComponent from "Views/AppViews/NewReports/Components/TimeSpendComponent";
 import GroupedBarplotChart from "Views/AppViews/NewReports/Components/GroupedBarplotChart";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import ServiceIcon7 from "assets/img/report/service-icon7.png";
-import ServiceIcon8 from "assets/img/report/service-icon8.png";
-import ServiceIcon9 from "assets/img/report/service-icon9.png";
-import ServiceIcon10 from "assets/img/report/service-icon10.png";
-import ServiceIcon11 from "assets/img/report/service-icon11.png";
-import ServiceIcon12 from "assets/img/report/service-icon12.png";
-import ServiceIcon13 from "assets/img/report/service-icon13.png";
-import ServiceIcon14 from "assets/img/report/service-icon14.png";
-import ServiceIcon15 from "assets/img/report/service-icon15.png";
+import {Link} from "react-router-dom"
 const totalUsedServiceData = [
   { label: "EC2", value: 4700, color: "#A145FF" },
   { label: "RDS", value: 4500, color: "#FA6298" },
@@ -240,213 +237,189 @@ class AwsComponent extends Component {
             </Grid>
           </Grid>
         </Box>
+        <h3>Monthly cost and Budget overview</h3>
         <Box className="new-reports-table">
-            <TableContainer className="table">
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">Service name</TableCell>
-                    <TableCell align="center">Current month spend</TableCell>
-                    <TableCell align="center">last month spend </TableCell>
-                    <TableCell align="center">variance</TableCell>
-                    <TableCell align="center"> Avg daily spend</TableCell>
-                    <TableCell align="center">Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon7} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
+          <TableContainer className="table">
+            <Table style={{ width: 1700 }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="left">Month</TableCell>
+                  <TableCell align="center">Account-ID</TableCell>
+                  <TableCell align="left">Department </TableCell>
+                  <TableCell align="center">Budget</TableCell>
+                  <TableCell align="center">Current Month’s Spend</TableCell>
+                  <TableCell align="center">Differenece</TableCell>
+                  <TableCell align="left">Payment Status </TableCell>
+                  <TableCell align="center">Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell align="left">January, 2023</TableCell>
+                  <TableCell align="center">160079380622</TableCell>
+                  <TableCell align="left">Information Technology </TableCell>
+                  <TableCell align="center">$10,000</TableCell>
+                  <TableCell align="center">$12,800</TableCell>
+                  <TableCell align="center">
+                    <Box className="variance-count d-flex">
+                      <i class="fas fa-sort-down p-r-5"></i> $2,800
+                    </Box>
+                  </TableCell>
+                  <TableCell align="left">
+                    <Box className="payment-status pending"></Box>Pending
+                  </TableCell>
+                  <TableCell align="center">
+                    <Link to={`/app/new-reports/chargeback-dashboard/it-department`}>
                       <Button className="light-btn p-l-15 p-r-15 ">
                         view more <OpenInNewIcon className="p-l-5" />
                       </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon8} alt="" />
-                      </Box>
-                      Lambda
-                    </TableCell>
-                    <TableCell align="center">$1,500</TableCell>
-                    <TableCell align="center">$2,500</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count red">
-                        20% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon9} alt="" />
-                      </Box>
-                      Light Sail
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon10} alt="" />
-                      </Box>
-                      ECS
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon11} alt="" />
-                      </Box>
-                      EKS
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon12} alt="" />
-                      </Box>
-                      Fargate
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon13} alt="" />
-                      </Box>
-                      Fargate
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon14} alt="" />
-                      </Box>
-                      Fargate
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon15} alt="" />
-                      </Box>
-                      Fargate
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">January, 2023</TableCell>
+                  <TableCell align="center">160079380622</TableCell>
+                  <TableCell align="left">Information Technology </TableCell>
+                  <TableCell align="center">$10,000</TableCell>
+                  <TableCell align="center">$12,800</TableCell>
+                  <TableCell align="center">
+                    <Box className="variance-count d-flex">
+                      <i class="fas fa-sort-down p-r-5"></i> $2,800
+                    </Box>
+                  </TableCell>
+                  <TableCell align="left">
+                    <Box className="payment-status"></Box>Invoice sent
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button className="light-btn p-l-15 p-r-15 ">
+                      view more <OpenInNewIcon className="p-l-5" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">January, 2023</TableCell>
+                  <TableCell align="center">160079380622</TableCell>
+                  <TableCell align="left">Information Technology </TableCell>
+                  <TableCell align="center">$10,000</TableCell>
+                  <TableCell align="center">$12,800</TableCell>
+                  <TableCell align="center">
+                    <Box className="variance-count d-flex">
+                      <i class="fas fa-sort-down p-r-5"></i> $2,800
+                    </Box>
+                  </TableCell>
+                  <TableCell align="left">
+                    <Box className="payment-status"></Box>Invoice sent
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button className="light-btn p-l-15 p-r-15 ">
+                      view more <OpenInNewIcon className="p-l-5" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">January, 2023</TableCell>
+                  <TableCell align="center">160079380622</TableCell>
+                  <TableCell align="left">Information Technology </TableCell>
+                  <TableCell align="center">$10,000</TableCell>
+                  <TableCell align="center">$12,800</TableCell>
+                  <TableCell align="center">
+                    <Box className="variance-count d-flex">
+                      <i class="fas fa-sort-down p-r-5"></i> $2,800
+                    </Box>
+                  </TableCell>
+                  <TableCell align="left">
+                    <Box className="payment-status"></Box>Invoice sent
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button className="light-btn p-l-15 p-r-15 ">
+                      view more <OpenInNewIcon className="p-l-5" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">January, 2023</TableCell>
+                  <TableCell align="center">160079380622</TableCell>
+                  <TableCell align="left">Information Technology </TableCell>
+                  <TableCell align="center">$10,000</TableCell>
+                  <TableCell align="center">$12,800</TableCell>
+                  <TableCell align="center">
+                    <Box className="variance-count d-flex">
+                      <i class="fas fa-sort-down p-r-5"></i> $2,800
+                    </Box>
+                  </TableCell>
+                  <TableCell align="left">
+                    <Box className="payment-status"></Box>Invoice sent
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button className="light-btn p-l-15 p-r-15 ">
+                      view more <OpenInNewIcon className="p-l-5" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">January, 2023</TableCell>
+                  <TableCell align="center">160079380622</TableCell>
+                  <TableCell align="left">Information Technology </TableCell>
+                  <TableCell align="center">$10,000</TableCell>
+                  <TableCell align="center">$12,800</TableCell>
+                  <TableCell align="center">
+                    <Box className="variance-count d-flex">
+                      <i class="fas fa-sort-down p-r-5"></i> $2,800
+                    </Box>
+                  </TableCell>
+                  <TableCell align="left">
+                    <Box className="payment-status"></Box>Invoice sent
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button className="light-btn p-l-15 p-r-15 ">
+                      view more <OpenInNewIcon className="p-l-5" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">January, 2023</TableCell>
+                  <TableCell align="center">160079380622</TableCell>
+                  <TableCell align="left">Information Technology </TableCell>
+                  <TableCell align="center">$10,000</TableCell>
+                  <TableCell align="center">$12,800</TableCell>
+                  <TableCell align="center">
+                    <Box className="variance-count d-flex">
+                      <i class="fas fa-sort-down p-r-5"></i> $2,800
+                    </Box>
+                  </TableCell>
+                  <TableCell align="left">
+                    <Box className="payment-status"></Box>Invoice sent
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button className="light-btn p-l-15 p-r-15 ">
+                      view more <OpenInNewIcon className="p-l-5" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">January, 2023</TableCell>
+                  <TableCell align="center">160079380622</TableCell>
+                  <TableCell align="left">Information Technology </TableCell>
+                  <TableCell align="center">$10,000</TableCell>
+                  <TableCell align="center">$12,800</TableCell>
+                  <TableCell align="center">
+                    <Box className="variance-count d-flex">
+                      <i class="fas fa-sort-down p-r-5"></i> $2,800
+                    </Box>
+                  </TableCell>
+                  <TableCell align="left">
+                    <Box className="payment-status"></Box>Invoice sent
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button className="light-btn p-l-15 p-r-15 ">
+                      view more <OpenInNewIcon className="p-l-5" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </>
     );
   }
