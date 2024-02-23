@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import * as d3 from "d3";
 import { convertDigitToThousand, getFormattedDate } from "Utils";
 import { Box } from "@mui/material";
+let margin = { top: 20, right: 20, bottom: 80, left: 50 },
+  width = 524 - margin.left - margin.right,
+  height = 293 - margin.top - margin.bottom;
 class MultiLineChart extends Component {
   constructor(props) {
     super(props);
@@ -22,9 +25,7 @@ class MultiLineChart extends Component {
   renderChart = async () => {
     let { data, labels } = this.props;
 
-    let margin = { top: 20, right: 20, bottom: 80, left: 50 },
-      width = 524 - margin.left - margin.right,
-      height = 293 - margin.top - margin.bottom;
+
 
     let tooltip = d3
       .select("#root")
@@ -87,7 +88,7 @@ class MultiLineChart extends Component {
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("class", "multiline-content")
-      
+
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     x.domain(
       d3.extent(data, function (d) {
@@ -117,7 +118,7 @@ class MultiLineChart extends Component {
       .attr("class", "line")
       .attr("fill", "none")
       .style("stroke", "orange")
-      
+
       .attr("d", valueline2);
     svg
       .append("path")
@@ -126,13 +127,13 @@ class MultiLineChart extends Component {
       .style("stroke-dasharray", "3, 3")
       .attr("fill", "none")
       .style("stroke", "pink")
-      
+
       .attr("d", valueline3);
 
     // Add the X Axis
     svg
       .append("g")
-      
+
       .attr("transform", "translate(0," + height + ") ")
       .call(
         d3.axisBottom(x).tickFormat((d) => {
@@ -149,8 +150,8 @@ class MultiLineChart extends Component {
     // Add the Y Axis
     svg
       .append("g")
-      
-      
+
+
       .call(d3.axisLeft(y).tickFormat((d) => "$" + convertDigitToThousand(d)));
 
     let legend = svg
@@ -160,7 +161,7 @@ class MultiLineChart extends Component {
       .append("g")
       .attr("class", "legend ")
       .attr("style", "margin-top:20px;  ");
-      
+
 
     legend
       .append("rect")
@@ -180,8 +181,7 @@ class MultiLineChart extends Component {
       .attr(
         "transform",
         (d, i) =>
-          `translate(${i * 80 + 30 * i + 1},  ${
-            height + (margin.bottom - 25) + 7
+          `translate(${i * 80 + 30 * i + 1},  ${height + (margin.bottom - 25) + 7
           })`
       )
       .attr("font-size", "12px ")
@@ -204,8 +204,18 @@ class MultiLineChart extends Component {
   };
   render() {
     return (
+
+      //   <svg
+      //   style={{ width: "100%", height: "auto" }}
+      //   ref={this.ref}
+      //   viewBox={`0 0 ${width} ${height + margin.top + margin.bottom}`}
+      // />
       <Box classname="multi-line-chart">
-        <svg ref={this.ref} style={{maxWidth: "100%"}}></svg>
+        <svg
+          style={{ width: "100%", height: "auto" }}
+          ref={this.ref}
+          viewBox={`0 0 ${width} ${height + margin.top + margin.bottom +margin.right+40}`}
+        />
       </Box>
     );
   }
