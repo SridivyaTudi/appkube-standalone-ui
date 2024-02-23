@@ -24,11 +24,9 @@ let data1 = [
   { name: "Data and Analytics", value: 700 },
 ];
 
-const margin = { top: 20, right: 20, bottom: 40, left: 40 };
-
-// Increase the width and height as needed
-const width = 800; // Adjust the width
-const height = 400; // Adjust the height
+const width = 550,
+  height = 250;
+  
 class VerticalBarchart extends Component {
   constructor(props) {
     super(props);
@@ -40,65 +38,82 @@ class VerticalBarchart extends Component {
 
   renderChart = () => {
     
+    const margin = { top: 20, right: 0, bottom: 20, left: 40 };
+    const extent = [
+      [margin.left, margin.top],
+      [width - margin.right, height - margin.top],
+    ];
+
     const svg = d3.select(this.ref.current);
-    
+
     const xScale = d3
-    .scaleBand()
-    .range([margin.left, width - margin.right])
-    .domain(data.map((d) => d.name))
-    .padding(0.6);
+      .scaleBand()
+      .range([margin.left, width - margin.right])
+      .domain(
+        this.props.color ? data1.map((d) => d.name) : data.map((d) => d.name)
+      )
+      .padding(0.6);
 
-  const yScale = d3
-    .scaleLinear()
-    .range([height, margin.top])
-    .domain([0, d3.max(data, (d) => d.value)])
-    .nice();
+    const yScale = d3
+      .scaleLinear()
+      .range([height - margin.bottom, margin.top])
+      .domain([0, d3.max(this.props.color ? data1 : data, (d) => d.value)])
+      .nice();
 
-  const xAxis = (g) =>
-    g
-      .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(xScale).tickSize(0))
-      .call((g) => g.select(".domain").remove())
-      .selectAll("text")
-      .style("text-anchor", "end")
-      .attr("dx", "1.4em")
-      .attr("dy", "0.70em")
-      .attr("font-size", "10px");
+    const xAxis = (g) =>
+      g
+        .attr("transform", `translate(0,${height - margin.bottom})`)
+        .call(d3.axisBottom(xScale).tickSize(0))
+        .call((g_local) => g_local.select(".domain").remove());
 
-  // .attr("transform", "rotate(-45)");
+    const yAxis = (g) =>
+      g
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(d3.axisLeft(yScale).tickFormat((d) => "$" + d))
+        .call((g_local) => g_local.select(".domain").remove());
+    const barGroups = svg
+      .append("g")
+      
+      .attr("class", "bars")
+      .selectAll("rect")
+      .attr("fill", "#B399FF")
+      .data(this.props.color ? data1 : data)
+      .enter();
 
-  const yAxis = (g) =>
-    g
-      .attr("transform", `translate(${margin.left},0)`)
-      .call(d3.axisLeft(yScale).tickFormat((d) => "$" + d))
-      .call((g) => g.select(".domain").remove());
+    barGroups
+      .append("rect")
+      .attr("x", (d) => xScale(d.name))
+      .attr("y", (d) => yScale(d.value))
+      .attr("width", xScale.bandwidth())
+      .attr("height", (d) => yScale(30) - yScale(d.value))
+      .style("fill", this.props?.color ? "#FAA24B" : "#FA6298")
+      .attr("rx", 3)
+      .attr("ry", 3);
 
-  svg.selectAll("*").remove();
+    barGroups
+      .append("text")
+      .attr("class", "value")
+      .attr("x", (a) => xScale(a.name) + xScale.bandwidth() / 2)
+      .attr("y", (a) => yScale(a.value) + 30)
+      .attr("text-anchor", "middle");
 
-  svg.append("g").call(xAxis);
+    svg.append("g").attr("class", "x-axis").call(xAxis);
 
-  svg.append("g").call(yAxis);
+    svg.append("g").attr("class", "y-axis").call(yAxis);
 
-  svg
-    .selectAll(".bar")
-    .data(data)
-    .enter()
-    .append("rect")
-    .attr("class", "bar")
-    .attr("x", (d) => xScale(d.name))
-    .attr("y", (d) => yScale(d.value))
-    .attr("width", xScale.bandwidth())
-    .attr("height", (d) => height - yScale(d.value))
-    .attr("fill", this.props?.color?"yellow": "pink");
-    // d3.select(this.ref.current);
+    d3.select(this.ref.current);
   };
   render() {
     return (
-      <svg
-      style={{ width: "100%", height: "auto" }}
-      ref={this.ref}
-      viewBox={`0 0 ${width} ${height + margin.top + margin.bottom}`}
-    />
+      <Box className="vertical-bar-chart">
+         {this.props.chardBeforeRenderHTML}
+        <svg style={{maxWidth: "100%"}}
+          ref={this.ref}
+          width={width}
+          height={height}
+          viewBox={`0 0 ${width - 600} ${height}`}
+        ></svg>
+      </Box>
     );
   }
 }
