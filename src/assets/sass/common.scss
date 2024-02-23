@@ -469,6 +469,46 @@ button.danger-btn {
     border-color: #ff2d2e;
   }
 }
+button.success-btn {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 24px;
+  box-shadow: none;
+  text-transform: none;
+  letter-spacing: 0px;
+  border-radius: 5px;
+  font-family: "Open Sans", sans-serif;
+
+  &:hover {
+    background: #44a147;
+    color: #ffffff;
+    box-shadow: none;
+    border-color: #44a147;
+  }
+}
+button.pending-btn {
+  background-color: #FFC107;
+  border-color: #FFC107;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 24px;
+  box-shadow: none;
+  text-transform: none;
+  letter-spacing: 0px;
+  border-radius: 5px;
+  font-family: "Open Sans", sans-serif;
+
+  &:hover {
+    background: #ebb206;
+    color: #ffffff;
+    box-shadow: none;
+    border-color: #ebb206;
+  }
+}
 
 button.danger-outline-btn {
   border-color: #ff2d2e;

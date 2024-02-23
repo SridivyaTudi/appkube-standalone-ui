@@ -300,6 +300,17 @@ class CreateInvoice extends Component {
             </Link>
             Create Invoice
           </h3>
+          <Box className="d-flex align-items-center">
+            <Button className="danger-btn min-width-inherit m-r-3 p-l-15 p-r-15">
+              Delate <i className="fas fa-trash-alt p-l-5"></i>
+            </Button>
+            <Button className="pending-btn min-width-inherit m-r-3 p-l-15 p-r-15">
+            Edit  <i className="far fa-edit p-l-5"></i>
+            </Button>
+            <Button className="success-btn min-width-inherit  p-l-15 p-r-15">
+              Send <i className="fas fa-paper-plane p-l-5"></i>
+            </Button>
+          </Box>
         </Box>
         <Box className="create-invoice-container m-t-3">
           <h4 className="m-t-0 m-b-0">Create Invoice</h4>
