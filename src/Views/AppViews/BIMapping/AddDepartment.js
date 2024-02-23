@@ -404,11 +404,10 @@ class AddDepartment extends Component {
       <Box className="department-container">
         <Box className="department-step">
           <Box className="department-left">
-            <Box className="d-flex width-100 p-l-20">
-              <h3>{activeStep === STEP1 ? "Department" : "Landing Zone"} </h3>
-            </Box>
             <Box className="department-left-content">
-              <span className="d-flex width-100">Appkube</span>
+              <span className="d-flex width-100">
+                {activeStep === STEP1 ? "Department" : "Landing Zone"} Appkube
+              </span>
               <h2 className="d-flex width-100 m-t-0 m-b-0">
                 Create department to map your business
               </h2>
