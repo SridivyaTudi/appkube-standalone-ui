@@ -73,6 +73,7 @@ import CreateInvoice from "./AppViews/NewReports/ChargebackDashboard/CreateInvoi
 import SpendOverviewDetails from "Views/AppViews/NewReports/OverviewDashboard/SpendOverviewDetails";
 import TopUsedServicesDetails from "Views/AppViews/NewReports/OverviewDashboard/TopUsedServicesDetails";
 import CostCentralTopInternal from "./AppViews/NewReports/CentralDashboard/CostCentralTopInternal";
+import CostCentralServicesInternal from "./AppViews/NewReports/CentralDashboard/CostCentralServicesInternal";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -322,6 +323,10 @@ export const Views = (props) => {
           <Route
             path={`${APP_PREFIX_PATH}/new-reports/central-dashboard/cost-central-top-internal`}
             element={<CostCentralTopInternal />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/central-dashboard/cost-central-services-internal`}
+            element={<CostCentralServicesInternal />}
           />
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route

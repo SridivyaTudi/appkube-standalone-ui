@@ -51,57 +51,6 @@ let timeSpendData = [
   },
 ];
 
-let computeSpendingTable = [
-    {
-      name: "EC2",
-      icon: ServiceIcon1,
-      last_month_spend: "$2,000",
-      month_spend: "$1,800",
-      variance: "15% ",
-      actions: ``,
-    },
-    {
-      name: "Lambda",
-      icon: ServiceIcon2,
-      last_month_spend: "$1,500",
-      month_spend: "$2,500",
-      variance: "20%",
-      actions: ``,
-    },
-    {
-      name: "Light Sail",
-      icon: ServiceIcon3,
-      last_month_spend: "$2,000",
-      month_spend: "$2,000",
-      variance: "15%",
-      actions: ``,
-    },
-    {
-      name: "ECS",
-      icon: ServiceIcon4,
-      last_month_spend: "$2,000",
-      month_spend: "$2,000",
-      variance: "15%",
-      actions: ``,
-    },
-    {
-      name: "EKS",
-      icon: ServiceIcon5,
-      last_month_spend: "$2,000",
-      month_spend: "$2,000",
-      variance: "15%",
-      actions: ``,
-    },
-    {
-      name: "Fargate",
-      icon: ServiceIcon6,
-      last_month_spend: "$2,000",
-      month_spend: "$2,000",
-      variance: "15%",
-      actions: ``,
-    },
-  ];
-
 class CostCentralTopInternal extends Component {
   constructor(props) {
     super(props);
@@ -109,84 +58,6 @@ class CostCentralTopInternal extends Component {
       activeTab: 0,
     };
   }
-  renderTable = () => {
-    return (
-      <TableContainer className="table">
-        <Table>
-          {this.renderTableHead()}
-          {this.renderTableBody()}
-        </Table>
-      </TableContainer>
-    );
-  };
-
-  //  Render table head
-  renderTableHead = () => {
-    return (
-      <TableHead>
-        <TableRow>
-          <TableCell align="left">Region</TableCell>
-          <TableCell align="center">Service Count </TableCell>
-          <TableCell align="center">Current month</TableCell>
-          <TableCell align="center">Last Month</TableCell>
-          <TableCell align="center">Actions</TableCell>
-        </TableRow>
-      </TableHead>
-    );
-  };
-
-  //  Render table body
-  renderTableBody = () => {
-    let { data } = this.props;
-    return (
-      <TableBody>
-        {data?.length ? (
-          data.map((details) => {
-            let {
-              name,
-              icon,
-              last_month_spend,
-              month_spend,
-              variance,
-              actions,
-            } = details;
-            return (
-              <TableRow>
-                <TableCell align="left">
-                  <Box className="service-image d-inline-block">
-                    <img src={icon} alt="" />
-                  </Box>
-                  {name}
-                </TableCell>
-                <TableCell align="center">{last_month_spend}</TableCell>
-                <TableCell align="center">{month_spend}</TableCell>
-                <TableCell align="center">
-                  <Box className="variance-count">
-                    {variance} <i className="fas fa-sort-down p-l-5"></i>{" "}
-                    <i className="fas fa-sort-up red"></i>
-                  </Box>
-                </TableCell>
-                <TableCell align="center">
-                  <Button
-                    onClick={() => this.props.navigate(`${actions}${name}`)}
-                    className="light-btn p-l-15 p-r-15 "
-                  >
-                    view more <OpenInNewIcon className="p-l-5" />
-                  </Button>
-                </TableCell>
-              </TableRow>
-            );
-          })
-        ) : (
-          <Box className="d-blck text-center w-100 h-100 ">
-            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-              <h5 className="m-t-0 m-b-0">There are no data available.</h5>
-            </Box>
-          </Box>
-        )}
-      </TableBody>
-    );
-  };
 
   render() {
     return (
@@ -229,20 +100,180 @@ class CostCentralTopInternal extends Component {
           <Box className="table-head">
             <h4 className="m-t-0 m-b-0">Overview of Top Regions</h4>
             <Box className="search">
-            <input
-              type="text"
-              className="input"
-              placeholder="Search Insatnce "
-              //value={searchedKey}
-              onChange={this.handleSearchChange}
-              autoFocus="autoFocus"
-            />
-            <button className="button">
-              <SearchOutlinedIcon />
-            </button>
+              <input
+                type="text"
+                className="input"
+                placeholder="Search Insatnce "
+                //value={searchedKey}
+                onChange={this.handleSearchChange}
+                autoFocus="autoFocus"
+              />
+              <button className="button">
+                <SearchOutlinedIcon />
+              </button>
+            </Box>
           </Box>
+          <Box className="new-reports-table">
+            <TableContainer className="table">
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="left">Region</TableCell>
+                    <TableCell align="center">Service Count </TableCell>
+                    <TableCell align="center">Current month</TableCell>
+                    <TableCell align="center">Last Month</TableCell>
+                    <TableCell align="center">Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell align="left">US-East (N.virginia)</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell align="center">
+                      <strong> $2120</strong>
+                      <Box className="variance-count">
+                        <i className="fas fa-sort-down p-l-5 m-r-1"></i> 10%
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">
+                      {" "}
+                      <strong> $20,000</strong>
+                    </TableCell>
+
+                    <TableCell align="center">
+                      <Link
+                        to={`/app/new-reports/central-dashboard/cost-central-services-internal`}
+                      >
+                        <Button className="light-btn p-l-15 p-r-15 ">
+                          view more <OpenInNewIcon className="p-l-5" />
+                        </Button>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">US-East (N.virginia)</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell align="center">
+                      <strong> $2120</strong>
+                      <Box className="variance-count">
+                        <i className="fas fa-sort-up red p-l-5 m-r-1"></i> 10%
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">
+                      {" "}
+                      <strong> $20,000</strong>
+                    </TableCell>
+
+                    <TableCell align="center">
+                      <Link
+                        to={`/app/new-reports/central-dashboard/cost-central-services-internal`}
+                      >
+                        <Button className="light-btn p-l-15 p-r-15 ">
+                          view more <OpenInNewIcon className="p-l-5" />
+                        </Button>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">US-East (N.virginia)</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell align="center">
+                      <strong> $2120</strong>
+                      <Box className="variance-count">
+                        <i className="fas fa-sort-down p-l-5 m-r-1"></i> 10%
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">
+                      {" "}
+                      <strong> $20,000</strong>
+                    </TableCell>
+
+                    <TableCell align="center">
+                      <Link
+                        to={`/app/new-reports/central-dashboard/cost-central-services-internal`}
+                      >
+                        <Button className="light-btn p-l-15 p-r-15 ">
+                          view more <OpenInNewIcon className="p-l-5" />
+                        </Button>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">US-East (N.virginia)</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell align="center">
+                      <strong> $2120</strong>
+                      <Box className="variance-count">
+                        <i className="fas fa-sort-down p-l-5 m-r-1"></i> 10%
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">
+                      {" "}
+                      <strong> $20,000</strong>
+                    </TableCell>
+
+                    <TableCell align="center">
+                      <Link
+                        to={`/app/new-reports/central-dashboard/cost-central-services-internal`}
+                      >
+                        <Button className="light-btn p-l-15 p-r-15 ">
+                          view more <OpenInNewIcon className="p-l-5" />
+                        </Button>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">US-East (N.virginia)</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell align="center">
+                      <strong> $2120</strong>
+                      <Box className="variance-count">
+                        <i className="fas fa-sort-up red p-l-5 m-r-1"></i> 10%
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">
+                      {" "}
+                      <strong> $20,000</strong>
+                    </TableCell>
+
+                    <TableCell align="center">
+                      <Link
+                        to={`/app/new-reports/central-dashboard/cost-central-services-internal`}
+                      >
+                        <Button className="light-btn p-l-15 p-r-15 ">
+                          view more <OpenInNewIcon className="p-l-5" />
+                        </Button>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">US-East (N.virginia)</TableCell>
+                    <TableCell align="center">22</TableCell>
+                    <TableCell align="center">
+                      <strong> $2120</strong>
+                      <Box className="variance-count">
+                        <i className="fas fa-sort-up red p-l-5 m-r-1"></i> 10%
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">
+                      {" "}
+                      <strong> $20,000</strong>
+                    </TableCell>
+
+                    <TableCell align="center">
+                      <Link
+                        to={`/app/new-reports/central-dashboard/cost-central-services-internal`}
+                      >
+                        <Button className="light-btn p-l-15 p-r-15 ">
+                          view more <OpenInNewIcon className="p-l-5" />
+                        </Button>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Box>
-          <Box className="new-reports-table">{this.renderTable()}</Box>
         </Box>
       </>
     );
