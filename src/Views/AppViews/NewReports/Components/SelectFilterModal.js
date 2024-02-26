@@ -11,15 +11,25 @@ import { v4 } from "uuid";
 import Loader from "Components/Loader";
 let dropDownData = [
   {
-    name: "1",
+    name: "Select All Regions",
     value: "1",
-  },{
-    name: "2",
+  },
+  {
+    name: "eu-east-1",
     value: "2",
-  },{
-    name: "3",
+  },
+  {
+    name: "eu-west-2",
     value: "3",
-  }
+  },
+  {
+    name: "ap-south-1",
+    value: "3",
+  },
+  {
+    name: "ap-south-2",
+    value: "3",
+  },
 ];
 class SelectFilterModal extends Component {
   user = { id: "", username: "" };
@@ -196,7 +206,7 @@ class SelectFilterModal extends Component {
       >
         <ModalHeader tag="div">
           <h5>
-            {this.props.roleId > 0 ? "Edit" : "Add New"} Role
+            Filter
             <IconButton
               onClick={this.handleCloseModal}
               variant="outlined"
@@ -214,9 +224,6 @@ class SelectFilterModal extends Component {
           <form onSubmit={this.handleRoleSubmit}>
             <ModalBody>
               <Box className="form-group">
-                <label htmlFor="roleDescription" className="form-label">
-                  Add Policy
-                </label>
                 <FormControl className="select-policy">
                   <Select
                     labelId="demo-multiple-name-label"
@@ -224,7 +231,7 @@ class SelectFilterModal extends Component {
                     displayEmpty
                     renderValue={(selected) => {
                       if (selected.length === 0) {
-                        return <em>Select Policy</em>;
+                        return <em>Select Regions</em>;
                       }
                       let labels = [];
                       dropDownData.forEach((policy) => {
@@ -239,7 +246,177 @@ class SelectFilterModal extends Component {
                     inputProps={{ "aria-label": "Without label" }}
                   >
                     <MenuItem disabled value="">
-                      <em>Select Policy</em>
+                      <em>Select Regions</em>
+                    </MenuItem>
+                    {this.renderPolicies()}
+                  </Select>
+                </FormControl>
+                {errors.policy ? (
+                  <span className="red">{errors.policy}</span>
+                ) : (
+                  <></>
+                )}
+              </Box>
+              <Box className="form-group">
+                <FormControl className="select-policy">
+                  <Select
+                    labelId="demo-multiple-name-label"
+                    multiple
+                    displayEmpty
+                    renderValue={(selected) => {
+                      if (selected.length === 0) {
+                        return <em>Select VPCs</em>;
+                      }
+                      let labels = [];
+                      dropDownData.forEach((policy) => {
+                        if (selected.includes(policy.value)) {
+                          labels.push(policy.name);
+                        }
+                      });
+                      return labels.join(", ");
+                    }}
+                    value={selectedPolicy}
+                    onChange={this.handleSelectboxChange}
+                    inputProps={{ "aria-label": "Without label" }}
+                  >
+                    <MenuItem disabled value="">
+                      <em>Select VPCs</em>
+                    </MenuItem>
+                    {this.renderPolicies()}
+                  </Select>
+                </FormControl>
+                {errors.policy ? (
+                  <span className="red">{errors.policy}</span>
+                ) : (
+                  <></>
+                )}
+              </Box>
+              <Box className="form-group">
+                <FormControl className="select-policy">
+                  <Select
+                    labelId="demo-multiple-name-label"
+                    multiple
+                    displayEmpty
+                    renderValue={(selected) => {
+                      if (selected.length === 0) {
+                        return <em>Select Tagname</em>;
+                      }
+                      let labels = [];
+                      dropDownData.forEach((policy) => {
+                        if (selected.includes(policy.value)) {
+                          labels.push(policy.name);
+                        }
+                      });
+                      return labels.join(", ");
+                    }}
+                    value={selectedPolicy}
+                    onChange={this.handleSelectboxChange}
+                    inputProps={{ "aria-label": "Without label" }}
+                  >
+                    <MenuItem disabled value="">
+                      <em>Select Tagname</em>
+                    </MenuItem>
+                    {this.renderPolicies()}
+                  </Select>
+                </FormControl>
+                {errors.policy ? (
+                  <span className="red">{errors.policy}</span>
+                ) : (
+                  <></>
+                )}
+              </Box>
+              <Box className="form-group">
+                <FormControl className="select-policy">
+                  <Select
+                    labelId="demo-multiple-name-label"
+                    multiple
+                    displayEmpty
+                    renderValue={(selected) => {
+                      if (selected.length === 0) {
+                        return <em>Select Accounts</em>;
+                      }
+                      let labels = [];
+                      dropDownData.forEach((policy) => {
+                        if (selected.includes(policy.value)) {
+                          labels.push(policy.name);
+                        }
+                      });
+                      return labels.join(", ");
+                    }}
+                    value={selectedPolicy}
+                    onChange={this.handleSelectboxChange}
+                    inputProps={{ "aria-label": "Without label" }}
+                  >
+                    <MenuItem disabled value="">
+                      <em>Select Accounts</em>
+                    </MenuItem>
+                    {this.renderPolicies()}
+                  </Select>
+                </FormControl>
+                {errors.policy ? (
+                  <span className="red">{errors.policy}</span>
+                ) : (
+                  <></>
+                )}
+              </Box>
+              <Box className="form-group">
+                <FormControl className="select-policy">
+                  <Select
+                    labelId="demo-multiple-name-label"
+                    multiple
+                    displayEmpty
+                    renderValue={(selected) => {
+                      if (selected.length === 0) {
+                        return <em>Select Products</em>;
+                      }
+                      let labels = [];
+                      dropDownData.forEach((policy) => {
+                        if (selected.includes(policy.value)) {
+                          labels.push(policy.name);
+                        }
+                      });
+                      return labels.join(", ");
+                    }}
+                    value={selectedPolicy}
+                    onChange={this.handleSelectboxChange}
+                    inputProps={{ "aria-label": "Without label" }}
+                  >
+                    <MenuItem disabled value="">
+                      <em>Select Products</em>
+                    </MenuItem>
+                    {this.renderPolicies()}
+                  </Select>
+                </FormControl>
+                {errors.policy ? (
+                  <span className="red">{errors.policy}</span>
+                ) : (
+                  <></>
+                )}
+              </Box>
+              <Box className="form-group">
+                <FormControl className="select-policy">
+                  <Select
+                    labelId="demo-multiple-name-label"
+                    multiple
+                    displayEmpty
+                    renderValue={(selected) => {
+                      if (selected.length === 0) {
+                        return <em>Select Regions</em>;
+                      }
+                      let labels = [];
+                      dropDownData.forEach((policy) => {
+                        if (selected.includes(policy.value)) {
+                          labels.push(policy.name);
+                        }
+                      });
+                      return labels.join(", ");
+                    }}
+                    value={selectedPolicy}
+                    onChange={this.handleSelectboxChange}
+                    inputProps={{ "aria-label": "Without label" }}
+                  >
+                    <MenuItem disabled value="">
+                      <em>Select Regions</em>
                     </MenuItem>
                     {this.renderPolicies()}
                   </Select>
@@ -268,7 +445,7 @@ class SelectFilterModal extends Component {
                   loading={createOrUpdateStatus}
                   onClick={this.handleRoleSubmit}
                 >
-                  {this.props.roleId > 0 ? "Update" : "Create"}
+                  Apply
                 </LoadingButton>
               </Box>
             </ModalFooter>
