@@ -1,10 +1,8 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box, FormControl, MenuItem, Select, IconButton } from "@mui/material/";
+import { Box, FormControl, MenuItem, Select, IconButton,  Checkbox, } from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
-import { ToastMessage } from "Toast/ToastMessage";
 import CloseIcon from "@mui/icons-material/Close";
 import { getCurrentUser } from "Utils";
 import { v4 } from "uuid";
@@ -139,7 +137,12 @@ class SelectFilterModal extends Component {
     if (dropDownData.length) {
       return dropDownData.map((policy) => (
         <MenuItem value={policy.value} key={v4()}>
-          {policy.name}
+          <Checkbox
+            className="check-box"
+            size="small"
+            // onChange={this.handleCheckBox}
+          />
+           {policy.name}
         </MenuItem>
       ));
     }

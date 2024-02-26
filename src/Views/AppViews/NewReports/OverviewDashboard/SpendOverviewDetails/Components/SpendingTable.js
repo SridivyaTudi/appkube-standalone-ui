@@ -15,7 +15,7 @@ export class SpendingTable extends Component {
   renderTable = () => {
     return (
       <TableContainer className="table">
-        <Table>
+        <Table style={{width: 2000}}>
           {this.renderTableHead()}
           {this.renderTableBody()}
         </Table>
@@ -34,11 +34,11 @@ export class SpendingTable extends Component {
           <TableCell>Instance Status</TableCell>
           <TableCell>Pricing model</TableCell>
           <TableCell>Availability zone</TableCell>
-          <TableCell>Ondemand cost / hr</TableCell>
+          <TableCell align="center">Ondemand cost / hr</TableCell>
           <TableCell>RI cost / hr</TableCell>
-          <TableCell>Usage Hours</TableCell>
-          <TableCell>Add-ons</TableCell>
-          <TableCell>Total Spend</TableCell>
+          <TableCell align="center">Usage Hours</TableCell>
+          <TableCell align="center">Add-ons</TableCell>
+          <TableCell align="center">Total Spend</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -72,11 +72,11 @@ export class SpendingTable extends Component {
                 <TableCell>{status}</TableCell>
                 <TableCell>{priceModel}</TableCell>
                 <TableCell>{availabilityZone}</TableCell>
-                <TableCell>{onDemandCostHr}</TableCell>
+                <TableCell align="center">{onDemandCostHr}</TableCell>
                 <TableCell>{RICostHr}</TableCell>
-                <TableCell>{usageHrs}</TableCell>
-                <TableCell>{addOns}</TableCell>
-                <TableCell>{totalSpend}</TableCell>
+                <TableCell align="center">{usageHrs}</TableCell>
+                <TableCell align="center">{addOns}</TableCell>
+                <TableCell align="center">{totalSpend}</TableCell>
               </TableRow>
             );
           })

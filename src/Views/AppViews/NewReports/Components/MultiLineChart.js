@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import * as d3 from "d3";
 import { convertDigitToThousand, getFormattedDate } from "Utils";
 import { Box } from "@mui/material";
-let margin = { top: 20, right: 20, bottom: 80, left: 50 },
+let margin = { top: 20, right: 20, bottom: 80, left: 5 },
   width = 524 - margin.left - margin.right,
-  height = 293 - margin.top - margin.bottom;
+  height = 270 - margin.top - margin.bottom;
 class MultiLineChart extends Component {
   constructor(props) {
     super(props);
@@ -88,7 +88,6 @@ class MultiLineChart extends Component {
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("class", "multiline-content")
-
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     x.domain(
       d3.extent(data, function (d) {
@@ -160,7 +159,7 @@ class MultiLineChart extends Component {
       .enter()
       .append("g")
       .attr("class", "legend ")
-      .attr("style", "margin-top:20px;  ");
+      .attr("style", "margin-top:20px;");
 
 
     legend
@@ -214,7 +213,7 @@ class MultiLineChart extends Component {
         <svg
           style={{ width: "100%", height: "auto" }}
           ref={this.ref}
-          viewBox={`0 0 ${width} ${height + margin.top + margin.bottom +margin.right+40}`}
+          viewBox={`0 0 ${width} ${height + margin.top + margin.bottom +margin.right+0}`}
         />
       </Box>
     );

@@ -72,7 +72,8 @@ export class SpendingTable extends Component {
                 <TableCell align="center">{month_spend}</TableCell>
                 <TableCell align="center">
                   <Box className="variance-count">
-                    {variance} <i class="fas fa-sort-down p-l-5"></i>
+                    {variance} <i className="fas fa-sort-down p-l-5"></i>{" "}
+                    <i className="fas fa-sort-up red"></i>
                   </Box>
                 </TableCell>
                 <TableCell align="center">
