@@ -19,7 +19,7 @@ const VerticalBarChart_NarrowBar = () => {
 
   // Increase the width and height as needed
   const width = 800; // Adjust the width
-  const height = 400; // Adjust the height
+  const height = 300; // Adjust the height
 
   const svgRef = useRef();
 
@@ -69,7 +69,7 @@ const VerticalBarChart_NarrowBar = () => {
     barGroups
       .selectAll(".narrow-rect")
       .data((d) => {
-        const numRects = Math.ceil(narrowBarsize / 100);
+        const numRects = Math.ceil(narrowBarsize / 140);
         return Array.from({ length: numRects }, (_, i) => ({
           index: i,
           value: narrowBarsize - i * 60,
@@ -78,7 +78,7 @@ const VerticalBarChart_NarrowBar = () => {
       .enter()
       .append("rect")
       .attr("class", "narrow-rect")
-      .attr("y", (d, i) => yScale(d.value) - narrowBarHeight / 2)
+      .attr("y", (d, i) => yScale(d.value) - narrowBarHeight / 1)
       .attr("x", (d, i) => xScale.bandwidth() / 2 - 3.5)
       .attr("height", (d, i) => {
         console.log("height", d, i);

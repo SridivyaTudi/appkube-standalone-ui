@@ -37,7 +37,7 @@ class GroupedBarplotChart extends Component {
   renderChart = () => {
     const margin = { top: 20, right: 0, bottom: 20, left: 40 };
     const width = this.ref.current.parentElement.clientWidth; // Dynamically get parent container width
-    const height = 250;
+    const height = 220;
     const barPadding = 0.5;
     const axisTicks = { qty: 5, outerSize: 0, dateFormat: "%m-%d" };
 
