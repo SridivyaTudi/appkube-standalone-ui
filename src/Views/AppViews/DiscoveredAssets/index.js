@@ -59,7 +59,7 @@ class DiscoveredAssets extends Component {
             Back
           </Button>
         </Box>
-        <Box className="global-services-fliter">
+        <Box className="global-services-fliter p-0">
           <Box className="heading">Discovered Assets</Box>
         </Box>
         <Box className="services-panel-tabs">
