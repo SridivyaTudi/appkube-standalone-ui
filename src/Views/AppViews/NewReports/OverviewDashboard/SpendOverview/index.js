@@ -6,7 +6,7 @@ import Database from "./Database";
 import Network from "./Network";
 import Other from "./Other";
 import {Link} from "react-router-dom";
-import FilterModal from "../../Components/FilterModal"
+import SelectFilterModal from "../../Components/SelectFilterModal";
 
 class SpendOverview extends Component {
   tabMapping = [
@@ -40,7 +40,7 @@ class SpendOverview extends Component {
     super(props);
     this.state = {
       activeTab: 0,
-      showConfirmPopup :false
+      showSelectFilterModal: false,
       
     };
   }
@@ -89,17 +89,16 @@ class SpendOverview extends Component {
     );
   };
 
-//  toggle pop up
-  togglePopup = () => {
-    let { showConfirmPopup } = this.state;
+  handleSelectFilterModal = () => {
     this.setState({
-      showConfirmPopup: !showConfirmPopup,
+      showSelectFilterModal: !this.state.showSelectFilterModal,
+     
     });
   };
 
 
   render() {
-    const {showConfirmPopup}=this.state
+    const {showSelectFilterModal}=this.state
     
     return (
       <>
@@ -111,9 +110,7 @@ class SpendOverview extends Component {
               </IconButton>
             </Link> Spend Overview</h3>
           <Box className="d-flex ">
-            <Button className="light-btn p-l-15 p-r-15 m-r-3" onClick={()=> this.setState({
-             showConfirmPopup:!showConfirmPopup
-            })}>
+            <Button className="light-btn p-l-15 p-r-15 m-r-3" onClick={this.handleSelectFilterModal} >
               <i className="fas fa-filter m-r-2"  ></i> Filter
             </Button>
             <Button className="light-btn p-l-15 p-r-15">
@@ -126,13 +123,14 @@ class SpendOverview extends Component {
           {this.renderActiveTabOfComponent()}
         </Box>
       </Box>
-       {
-        showConfirmPopup?
-        <FilterModal  showModal={showConfirmPopup}
-        togglePopup={this.togglePopup}
-        />
-        :<></>
-       }
+      {showSelectFilterModal ? (
+          <SelectFilterModal
+            showModal={showSelectFilterModal}
+            handleSelectFilterModal={this.handleSelectFilterModal}
+          />
+        ) : (
+          <></>
+        )}
       
        </>
       

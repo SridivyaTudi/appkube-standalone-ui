@@ -226,7 +226,12 @@ class AwsComponent extends Component {
                   labelOfBtn: "View Details",
                   link: "/app/new-reports/over-view-dashboard/cost-top-accounts",
                 }}
-                ChartComponent={<VerticalBarchart data={costOfTopAccounts} />}
+                ChartComponent={
+                  <VerticalBarchart
+                    data={costOfTopAccounts}
+                    style={{ width: "100%", height: "350" }}
+                  />
+                }
               />
             </Grid>
             <Grid item xs={12} md={12} lg={6}>
