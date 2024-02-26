@@ -300,3 +300,33 @@ export const isAlphabet = (str) => {
   var alphabetRegex = /^[A-Za-z]+$/;
   return alphabetRegex.test(str);
 };
+
+export const PRODUCT_CATEGORY_ENUM = {
+  THREE_TIER: "3 Tier",
+  SOA: "SOA",
+};
+
+export const SERVICES_CATEGORY_OF_THREE_TIER_ENUM = {
+  WEB: "WEB",
+  APP: "APP",
+  DATA: "DATA",
+  AUX: "AUX",
+};
+
+export const SERVICES_CATEGORY_OF_SOA_ENUM = {
+  APP: "APP",
+  DATA: "DATA",
+  OTHER: "OTHER",
+};
+
+export const setSingleValueInLocalStorage = (key, value) => {
+  localStorage.setItem(key, value);
+};
+
+export const getSingleValueFromLocalStorage = (key) => {
+  return localStorage.getItem(key) || null;
+};
+
+export const removeSingleValueFromLocalStorage = (key) => {
+   localStorage.removeItem(key) 
+};

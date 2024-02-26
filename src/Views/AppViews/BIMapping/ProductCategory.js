@@ -6,6 +6,16 @@ import filterIcon from "assets/img/bimapping/filter.png";
 import rbacIcon from "assets/img/bimapping/rbac.png";
 import ServiceModal from "./Components/ServiceModal";
 import { Link } from "react-router-dom";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
+import { connect } from "react-redux";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import {
+  getSingleValueFromLocalStorage,
+  setSingleValueInLocalStorage,
+  removeSingleValueFromLocalStorage,
+} from "Utils";
+
 class ProductCategory extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +23,27 @@ class ProductCategory extends Component {
       showServiceModal: false,
     };
   }
+
+  componentDidMount = () => {
+    window.addEventListener("load", this.redirectPage);
+    window.addEventListener("beforeunload", () => {
+      setSingleValueInLocalStorage(
+        "departmentName",
+        this.props?.createProductFormData?.departmentName
+      );
+    });
+  };
+
+  componentWillUnmount() {
+    window.removeEventListener("load", this.redirectPage);
+  }
+
+  redirectPage = () => {
+    let departMentName = getSingleValueFromLocalStorage("departmentName");
+    removeSingleValueFromLocalStorage("departmentName");
+    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${departMentName}`);
+  };
+
   handleServiceModal = () => {
     this.setState({
       showServiceModal: !this.state.showServiceModal,
@@ -21,6 +52,7 @@ class ProductCategory extends Component {
 
   render() {
     const { showServiceModal } = this.state;
+    let { createProductFormData } = this.props;
     return (
       <Box className="bimapping-container">
         <Box className="global-services-fliter">
@@ -34,27 +66,30 @@ class ProductCategory extends Component {
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
                 <li>
-                  <p>HR</p>
+                  <p>{createProductFormData.departmentName}</p>
                 </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
                 <li className="active">
-                  <p>HRMS</p>
+                  <p>{createProductFormData.productName}</p>
                 </li>
               </ul>
             </Box>
           </Box>
         </Box>
-        {/* <Box className="list-heading">
-          <h3>Product category : SOA</h3>
-        </Box> */}
+
         <Box className="product-category-container">
           <Box className="d-block">
             <Box className="product-title-card">
               <Box className="d-flex justify-content-between align-items-center">
                 <h3>Service type : Business Services</h3>
-                <Link to={`/app/bim/soa`}>
+                <Link
+                  to={`/app/bim/add-product/${createProductFormData?.category?.replace(
+                    " ",
+                    "-"
+                  )}`}
+                >
                   <Button className="primary-btn">Add</Button>
                 </Link>
               </Box>
@@ -135,5 +170,18 @@ class ProductCategory extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  const { createProductFormData } = state.biMapping;
+  return {
+    createProductFormData,
+  };
+}
 
-export default ProductCategory;
+const mapDispatchToProps = {
+  setProductIntoDepartment,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(ProductCategory));

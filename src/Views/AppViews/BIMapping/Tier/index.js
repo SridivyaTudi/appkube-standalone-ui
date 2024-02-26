@@ -19,8 +19,7 @@ import DataServiceSvgrepo from "assets/img/assetmanager/data-service-svgrepo.png
 import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
 import RightArrow from "assets/img/assetmanager/right-arrow.png";
 import deployed1 from "assets/img/bimapping/deployed1.png";
-import deployed4 from "assets/img/bimapping/deployed4.png";
-import deployed5 from "assets/img/bimapping/deployed5.png";
+
 import Aws from "assets/img/aws.png";
 import { v4 } from "uuid";
 import LoadBalancer from "../Soa/components/LoadBalancer";
@@ -33,35 +32,23 @@ import ServiceIcon from "assets/img/bimapping/service-icon.png";
 import StarIcon from "assets/img/bimapping/star-icon.png";
 import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
 import VerticalTitleAndIconOfCard from "Components/VerticalTitleAndIconOfCard";
-
-let dropDownLayersData = {
-  webLayer: [
-    "NGINX",
-    "Varnish",
-    "HA Proxy",
-    "Apache Tomcat",
-    "Microsoft IAS",
-    "Traefik",
-  ],
-  appLayer: [
-    "Java Spring Boot API",
-    "NodeJs API Service",
-    "Golang API Service",
-    "Python API Service",
-    "Laravel API Service",
-    "Ruby API Service",
-  ],
-  dataLayer: [
-    "MySQL",
-    "Postgresql",
-    "Oracle",
-    "Dynamo",
-    "MongoDB",
-    "IndexDB",
-    "Casandra",
-  ],
-  auxLayer: ["Redis", "MemCache", "Elasticsearch", "Open search"],
-};
+import {
+  getBiServicesFromProductCategory,
+  getCloudServices,
+  getInstancesServices,
+} from "Redux/BIMapping/BIMappingThunk";
+import {
+  PRODUCT_CATEGORY_ENUM,
+  SERVICES_CATEGORY_OF_THREE_TIER_ENUM,
+  getSingleValueFromLocalStorage,
+  setSingleValueInLocalStorage,
+  removeSingleValueFromLocalStorage,
+} from "Utils";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
+import Loader from "Components/Loader";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 let serviceTableData = [
   {
@@ -122,33 +109,7 @@ class Tier extends Component {
       isSelectSpringBootOpen: false,
       isSelectMySQLOpen: false,
       isSelectRedisOpen: false,
-      deployedInstances: [
-        {
-          key: "EC2",
-          name: "EC2",
-          image: deployed1,
-        },
-        {
-          key: "ECS",
-          name: "ECS",
-          image: deployed1,
-        },
-        {
-          key: "EkS",
-          name: "EkS",
-          image: deployed1,
-        },
-        {
-          key: "Lambda",
-          name: "Lambda",
-          image: deployed4,
-        },
-        {
-          key: "CM",
-          name: "CM",
-          image: deployed5,
-        },
-      ],
+      cloudServices: [],
       savedData: [],
       selectedLayer: {
         web: "",
@@ -166,9 +127,96 @@ class Tier extends Component {
         data: false,
         aux: false,
       },
+      dropDownLayersData: {
+        webLayer: [],
+        appLayer: [],
+        dataLayer: [],
+        auxLayer: [],
+      },
       activeTabEks: 0,
+      instancesServices: [],
     };
   }
+
+  componentDidMount = () => {
+    window.addEventListener("load", this.redirectPage);
+    window.addEventListener("beforeunload", () => {
+      setSingleValueInLocalStorage(
+        "departmentName",
+        this.props?.createProductFormData?.departmentName
+      );
+    });
+
+    this.props.getBiServicesFromProductCategory({
+      productCategory: PRODUCT_CATEGORY_ENUM.THREE_TIER,
+    });
+  };
+
+  componentWillUnmount() {
+    window.removeEventListener("load", this.redirectPage);
+  }
+
+  redirectPage = () => {
+    let departMentName = getSingleValueFromLocalStorage("departmentName");
+    removeSingleValueFromLocalStorage("departmentName");
+    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${departMentName}`);
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.biServicesFromProductCategory.status !==
+        this.props.biServicesFromProductCategory.status &&
+      this.props.biServicesFromProductCategory.status === status.SUCCESS &&
+      this.props.biServicesFromProductCategory?.data
+    ) {
+      let data = this.props.biServicesFromProductCategory?.data || [];
+      if (data.length) {
+        this.manipulateLayersData(data);
+      }
+    }
+
+    if (
+      prevProps.cloudServices.status !== this.props.cloudServices.status &&
+      this.props.cloudServices.status === status.SUCCESS &&
+      this.props.cloudServices?.data
+    ) {
+      let cloudServices = this.props.cloudServices?.data || [];
+      this.setState({ cloudServices });
+    }
+
+    if (
+      prevProps.instancesServices.status !==
+        this.props.instancesServices.status &&
+      this.props.instancesServices.status === status.SUCCESS &&
+      this.props.instancesServices?.data
+    ) {
+      let instancesServices = this.props.instancesServices?.data || [];
+      this.setState({ instancesServices });
+    }
+  }
+
+  manipulateLayersData = (data) => {
+    let {
+      dropDownLayersData: { webLayer, appLayer, auxLayer, dataLayer },
+    } = this.state;
+    let SERVICES_CATEGORY = SERVICES_CATEGORY_OF_THREE_TIER_ENUM;
+
+    data.forEach((service) => {
+      if (service.serviceCategory === SERVICES_CATEGORY.WEB) {
+        webLayer.push(service);
+      } else if (service.serviceCategory === SERVICES_CATEGORY.APP) {
+        appLayer.push(service);
+      } else if (service.serviceCategory === SERVICES_CATEGORY.DATA) {
+        dataLayer.push(service);
+      } else if (service.serviceCategory === SERVICES_CATEGORY.AUX) {
+        auxLayer.push(service);
+      }
+    });
+
+    this.setState({
+      dropDownLayersData: { webLayer, appLayer, auxLayer, dataLayer },
+    });
+  };
 
   toggleWebLayer = () => {
     let { savedLayer } = this.state;
@@ -209,23 +257,35 @@ class Tier extends Component {
   };
 
   renderDeployedInstances = () => {
-    let { deployedInstances, selectedDeployedInstance } = this.state;
-    return deployedInstances.map((instance) => {
-      let deployInstances = {
-        label: instance.name,
-        image: instance.image,
-        active: instance.name === selectedDeployedInstance ? "active" : "",
-      };
-      return (
-        <VerticalTitleAndIconOfCard
-          data={deployInstances}
-          onClickCard={(title) => this.onClickDeployedCard(title)}
-        />
-      );
-    });
+    let { cloudServices, selectedDeployedInstance } = this.state;
+    let cloudStatus = this.props.cloudServices?.status;
+    if (cloudStatus === status.IN_PROGRESS) {
+      return this.renderLoder();
+    } else {
+      return cloudServices.map((instance) => {
+        let deployInstances = {
+          label: instance.elementType,
+          image: instance.image || deployed1,
+          active: instance.id === selectedDeployedInstance ? "active" : "",
+        };
+        return (
+          <VerticalTitleAndIconOfCard
+            data={deployInstances}
+            onClickCard={(title) =>
+              this.onClickDeployedCard(
+                instance.id,
+                instance.name,
+                instance.elementType
+              )
+            }
+          />
+        );
+      });
+    }
   };
 
-  onClickDeployedCard = (selectedDeployedInstance) => {
+  onClickDeployedCard = (selectedDeployedInstance, cloudName, elementType) => {
+    this.props.getInstancesServices({ cloudName, elementType });
     this.setState({
       selectedDeployedInstance,
       selectedInstance: -1,
@@ -234,43 +294,50 @@ class Tier extends Component {
   };
 
   renderSelectedInstance = () => {
-    let { selectedDeployedInstance, selectedInstance } = this.state;
-    const data = [
-      {
-        backgroundColor: "#FFBA69",
-        label: "ID",
-        value: "123456",
-        style: { borderBottom: "none" },
-      },
-      {
-        backgroundColor: "#8676FF",
-        label: "Key",
-        value: "Name",
-        style: { borderBottom: "none" },
-      },
-      {
-        backgroundColor: "#FF2D2E",
-        label: "Value",
-        value: "Kick",
-        style: { borderBottom: "none" },
-      },
-    ];
-    return [...Array(10)].map((instance, index) => {
-      let instanceData = {
-        image: Aws,
-        title: selectedDeployedInstance,
-        data,
-        active: selectedInstance === index ? "active" : "",
-        rowSeperatedByline: false,
-        style: { width: "150px", minHeight: "150px" },
-      };
-      return (
-        <TitleIconWithInfoOfCard
-          cardDetails={instanceData}
-          onClickCard={(details) => this.onClickInstance(index)}
-        />
-      );
-    });
+    let { selectedInstance, instancesServices } = this.state;
+    let instanceStatus = this.props.instancesServices?.status;
+
+    if (instanceStatus === status.IN_PROGRESS) {
+      return this.renderLoder();
+    } else {
+      return instancesServices.map((instance, index) => {
+        let data = [
+          {
+            backgroundColor: "#FFBA69",
+            label: "ID",
+            value: instance.instanceId,
+            style: { borderBottom: "none" },
+          },
+          {
+            backgroundColor: "#8676FF",
+            label: "Key",
+            value: instance.instanceName,
+            style: { borderBottom: "none" },
+          },
+          {
+            backgroundColor: "#FF2D2E",
+            label: "Value",
+            value: "-",
+            style: { borderBottom: "none" },
+          },
+        ];
+
+        let instanceData = {
+          image: Aws,
+          title: instance.elementType,
+          data,
+          active: selectedInstance === instance.id ? "active" : "",
+          rowSeperatedByline: false,
+          style: { width: "150px", minHeight: "150px" },
+        };
+        return (
+          <TitleIconWithInfoOfCard
+            cardDetails={instanceData}
+            onClickCard={(details) => this.onClickInstance(instance.id)}
+          />
+        );
+      });
+    }
   };
 
   renderSelectedInstanceWrapper = () => {
@@ -312,6 +379,9 @@ class Tier extends Component {
   onClickLayerDropDown = (key, value) => {
     let { selectedLayer } = this.state;
     selectedLayer[key] = value;
+
+    this.props.getCloudServices();
+
     this.setState({
       selectedLayer,
       isShowDepolyedSection: true,
@@ -319,6 +389,9 @@ class Tier extends Component {
       isSelectSpringBootOpen: false,
       isSelectMySQLOpen: false,
       isSelectRedisOpen: false,
+      selectedDeployedInstance: "",
+      selectedInstance: -1,
+      selectedDeployedInstance: "",
     });
   };
 
@@ -443,6 +516,15 @@ class Tier extends Component {
     this.setState({ selectedInstance });
   };
 
+  // Render loder
+  renderLoder = () => {
+    return (
+      <Box className="d-blck text-center w-100 h-100 ">
+        <Loader className="align-item-center justify-center w-100 h-100" />
+      </Box>
+    );
+  };
+
   render() {
     let {
       isSelectNginxOpen,
@@ -454,7 +536,9 @@ class Tier extends Component {
       selectedService,
       selectedDeployedInstance,
       activeTabEks,
+      dropDownLayersData,
     } = this.state;
+    let { biServicesFromProductCategory, createProductFormData } = this.props;
     return (
       <Box className="bimapping-container">
         <Box className="global-services-fliter">
@@ -468,35 +552,24 @@ class Tier extends Component {
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
                 <li>
-                  <p>HR</p>
+                  <p>{createProductFormData?.departmentName}</p>
                 </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
                 <li>
-                  <p>HRMS</p>
+                  <p>{createProductFormData?.productName}</p>
                 </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
                 <li className="active">
-                  <p>3Tier</p>
+                  <p>3 Tier</p>
                 </li>
               </ul>
             </Box>
           </Box>
         </Box>
-        {/* <Box className="list-heading">
-          <h3>3 Tier</h3>
-          <Link to={`/app/bim/add-product`}>
-            <Button
-              className="primary-btn min-width-inherit"
-              variant="contained"
-            >
-              Back
-            </Button>
-          </Link>
-        </Box> */}
         <Box className="tier-container">
           <Grid
             container
@@ -506,364 +579,382 @@ class Tier extends Component {
             <Grid item xs={6}>
               <Box className="topology-panel">
                 <Box className="topology-panel-body">
-                  <Box className="topology-inner-content">
-                    <Box className="content-left">
-                      <List>
-                        <ListItem>
-                          <Box className="button-box">
-                            <span>
-                              <img src={ChartWebLayerIcon} alt="" />
-                            </span>
-                            <p>Web Layer</p>
-                          </Box>
-                          <span>
-                            <img src={RightArrow} alt="" />
-                          </span>
-                        </ListItem>
-                        <ListItem>
-                          <Box className="button-box">
-                            <span>
-                              <img src={ChartAppLayerIcon} alt="" />
-                            </span>
-                            <p>App Layer</p>
-                          </Box>
-                          <span>
-                            <img src={RightArrow} alt="" />
-                          </span>
-                        </ListItem>
-                        <ListItem>
-                          <Box className="button-box">
-                            <span>
-                              <img src={DataServiceSvgrepo} alt="" />
-                            </span>
-                            <p>Data Layer</p>
-                          </Box>
-                          <span>
-                            <img src={RightArrow} alt="" />
-                          </span>
-                        </ListItem>
-                        <ListItem>
-                          <Box className="button-box">
-                            <span>
-                              <img src={DataServiceSvgrepo} alt="" />
-                            </span>
-                            <p>AUX Layer</p>
-                          </Box>
-                          <span>
-                            <img src={RightArrow} alt="" />
-                          </span>
-                        </ListItem>
-                      </List>
-                    </Box>
-                    <Box className="content-middle">
-                      <List>
-                        <ListItem>
-                          <Box className="application-balancer">
-                            <Button
-                              className="secondary-btn min-width"
-                              variant="contained"
-                            >
-                              SSL
-                            </Button>
-                            <Box className="balancer-boxs">
-                              <Box className="balancer-box">
-                                <span>
-                                  <img src={bottomArrow} alt="" />
-                                </span>
-                              </Box>
-                            </Box>
-                          </Box>
-                        </ListItem>
-                        <ListItem
-                          className={`  ${
-                            dropDownLayersData.webLayer.includes(
-                              selectedLayer.web
-                            )
-                              ? "active"
-                              : ""
-                          }`}
-                        >
-                          <Box className="application-balancer">
-                            <Box className="mapping-fliter">
-                              <Box
-                                className="fliter-toggel"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  this.toggleWebLayer();
-                                }}
-                              >
-                                {selectedLayer.web || "Select"}
-                                <i className="fa-solid fa-caret-down arrow-icon"></i>
-                              </Box>
-                              <Box
-                                className={
-                                  isSelectNginxOpen
-                                    ? "fliter-collapse active"
-                                    : "fliter-collapse"
-                                }
-                              >
-                                <List>
-                                  {dropDownLayersData.webLayer.map((name) => (
-                                    <ListItem
-                                      key={v4()}
-                                      className={`${
-                                        selectedLayer.web === name
-                                          ? "active"
-                                          : ""
-                                      }`}
-                                      onClick={() =>
-                                        this.onClickLayerDropDown("web", name)
-                                      }
-                                    >
-                                      <i className="fa-solid fa-circle-dot"></i>{" "}
-                                      {name}
-                                    </ListItem>
-                                  ))}
-                                </List>
-                              </Box>
-                              <div
-                                className={
-                                  isSelectNginxOpen
-                                    ? "fliters-collapse-bg active"
-                                    : "fliters-collapse-bg"
-                                }
-                                onClick={(e) => {
-                                  this.toggleWebLayer();
-                                }}
-                              />
-                            </Box>
-                            <Box className="balancer-boxs">
-                              <Box className="balancer-box">
-                                <span>
-                                  <img src={bottomArrow} alt="" />
-                                </span>
-                              </Box>
-                            </Box>
-                          </Box>
-                        </ListItem>
-                        <ListItem
-                          className={`  ${
-                            dropDownLayersData.appLayer.includes(
-                              selectedLayer.app
-                            )
-                              ? "active"
-                              : ""
-                          }`}
-                        >
-                          <Box className="application-balancer">
-                            <Box className="mapping-fliter">
-                              <Box
-                                className="fliter-toggel"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  this.toggleAppLayer();
-                                }}
-                              >
-                                {selectedLayer.app || "Select"}
-                                <i className="fa-solid fa-caret-down arrow-icon"></i>
-                              </Box>
-                              <Box
-                                className={
-                                  isSelectSpringBootOpen
-                                    ? "fliter-collapse active"
-                                    : "fliter-collapse"
-                                }
-                              >
-                                <List>
-                                  {dropDownLayersData.appLayer.map((name) => (
-                                    <ListItem
-                                      key={v4()}
-                                      onClick={() =>
-                                        this.onClickLayerDropDown("app", name)
-                                      }
-                                      className={`${
-                                        selectedLayer.app === name
-                                          ? "active"
-                                          : ""
-                                      }`}
-                                    >
-                                      <i className="fa-solid fa-circle-dot"></i>
-                                      {name}
-                                    </ListItem>
-                                  ))}
-                                </List>
-                              </Box>
-                              <div
-                                className={
-                                  isSelectSpringBootOpen
-                                    ? "fliters-collapse-bg active"
-                                    : "fliters-collapse-bg"
-                                }
-                                onClick={(e) => {
-                                  this.toggleAppLayer();
-                                }}
-                              />
-                            </Box>
-                            <Box className="balancer-boxs">
-                              <Box className="balancer-box">
-                                <span>
-                                  <img src={bottomArrow} alt="" />
-                                </span>
-                              </Box>
-                            </Box>
-                          </Box>
-                        </ListItem>
-                        <ListItem
-                          className={`  ${
-                            dropDownLayersData.dataLayer.includes(
-                              selectedLayer.data
-                            )
-                              ? "active"
-                              : ""
-                          }`}
-                        >
-                          <Box className="application-balancer">
-                            <Box className="mapping-fliter">
-                              <Box
-                                className="fliter-toggel"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  this.toggleDataLayer();
-                                }}
-                              >
-                                {selectedLayer.data || "Select"}
-                                <i className="fa-solid fa-caret-down arrow-icon"></i>
-                              </Box>
-                              <Box
-                                className={
-                                  isSelectMySQLOpen
-                                    ? "fliter-collapse active"
-                                    : "fliter-collapse"
-                                }
-                              >
-                                <List>
-                                  {dropDownLayersData.dataLayer.map((name) => (
-                                    <ListItem
-                                      key={v4()}
-                                      onClick={() =>
-                                        this.onClickLayerDropDown("data", name)
-                                      }
-                                      className={`${
-                                        selectedLayer.data === name
-                                          ? "active"
-                                          : ""
-                                      }`}
-                                    >
-                                      <i className="fa-solid fa-circle-dot"></i>
-                                      {name}
-                                    </ListItem>
-                                  ))}
-                                </List>
-                              </Box>
-                              <div
-                                className={
-                                  isSelectMySQLOpen
-                                    ? "fliters-collapse-bg active"
-                                    : "fliters-collapse-bg"
-                                }
-                                onClick={(e) => {
-                                  this.toggleDataLayer();
-                                }}
-                              />
-                            </Box>
-                            <Box className="balancer-boxs">
-                              <Box className="balancer-box">
-                                <span>
-                                  <img src={bottomArrow} alt="" />
-                                </span>
-                              </Box>
-                            </Box>
-                          </Box>
-                        </ListItem>
-                        <ListItem
-                          className={`  ${
-                            dropDownLayersData.auxLayer.includes(
-                              selectedLayer.aux
-                            )
-                              ? "active"
-                              : ""
-                          }`}
-                        >
-                          <Box className="mapping-fliter">
-                            <Box
-                              className="fliter-toggel"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                this.toggleAuxLayer();
-                              }}
-                            >
-                              {selectedLayer.aux || "Select"}
-                              <i className="fa-solid fa-caret-down arrow-icon"></i>
-                            </Box>
-                            <Box
-                              className={
-                                isSelectRedisOpen
-                                  ? "fliter-collapse active"
-                                  : "fliter-collapse"
-                              }
-                            >
-                              <List>
-                                {dropDownLayersData.auxLayer.map((name) => (
-                                  <ListItem
-                                    key={v4()}
-                                    onClick={() =>
-                                      this.onClickLayerDropDown("aux", name)
-                                    }
-                                    className={`${
-                                      selectedLayer.aux === name ? "active" : ""
-                                    }`}
-                                  >
-                                    <i className="fa-solid fa-circle-dot"></i>
-                                    {name}
-                                  </ListItem>
-                                ))}
-                              </List>
-                            </Box>
-                            <div
-                              className={
-                                isSelectRedisOpen
-                                  ? "fliters-collapse-bg active"
-                                  : "fliters-collapse-bg"
-                              }
-                              onClick={(e) => {
-                                this.toggleAuxLayer();
-                              }}
-                            />
-                          </Box>
-                        </ListItem>
-                      </List>
-                      <Box className="check-icons-box">
+                  {biServicesFromProductCategory.status ===
+                  status.IN_PROGRESS ? (
+                    this.renderLoder()
+                  ) : (
+                    <Box className="topology-inner-content">
+                      <Box className="content-left">
                         <List>
-                          {Object.keys(selectedLayer).map((key) => {
-                            return selectedLayer[key] !== "" ? (
-                              <ListItem>
-                                <i className="fa-sharp fa-solid fa-circle-check"></i>
-                              </ListItem>
-                            ) : (
-                              <></>
-                            );
-                          })}
+                          <ListItem>
+                            <Box className="button-box">
+                              <span>
+                                <img src={ChartWebLayerIcon} alt="" />
+                              </span>
+                              <p>Web Layer</p>
+                            </Box>
+                            <span>
+                              <img src={RightArrow} alt="" />
+                            </span>
+                          </ListItem>
+                          <ListItem>
+                            <Box className="button-box">
+                              <span>
+                                <img src={ChartAppLayerIcon} alt="" />
+                              </span>
+                              <p>App Layer</p>
+                            </Box>
+                            <span>
+                              <img src={RightArrow} alt="" />
+                            </span>
+                          </ListItem>
+                          <ListItem>
+                            <Box className="button-box">
+                              <span>
+                                <img src={DataServiceSvgrepo} alt="" />
+                              </span>
+                              <p>Data Layer</p>
+                            </Box>
+                            <span>
+                              <img src={RightArrow} alt="" />
+                            </span>
+                          </ListItem>
+                          <ListItem>
+                            <Box className="button-box">
+                              <span>
+                                <img src={DataServiceSvgrepo} alt="" />
+                              </span>
+                              <p>AUX Layer</p>
+                            </Box>
+                            <span>
+                              <img src={RightArrow} alt="" />
+                            </span>
+                          </ListItem>
+                        </List>
+                      </Box>
+                      <Box className="content-middle">
+                        <List>
+                          <ListItem>
+                            <Box className="application-balancer">
+                              <Button
+                                className="secondary-btn min-width"
+                                variant="contained"
+                              >
+                                SSL
+                              </Button>
+                              <Box className="balancer-boxs">
+                                <Box className="balancer-box">
+                                  <span>
+                                    <img src={bottomArrow} alt="" />
+                                  </span>
+                                </Box>
+                              </Box>
+                            </Box>
+                          </ListItem>
+                          <ListItem>
+                            <Box className="application-balancer">
+                              <Box className="mapping-fliter">
+                                <Box
+                                  className="fliter-toggel"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    this.toggleWebLayer();
+                                  }}
+                                >
+                                  {selectedLayer.web || "Select"}
+                                  <i className="fa-solid fa-caret-down arrow-icon"></i>
+                                </Box>
+                                <Box
+                                  className={
+                                    isSelectNginxOpen
+                                      ? "fliter-collapse active"
+                                      : "fliter-collapse"
+                                  }
+                                >
+                                  <List>
+                                    {dropDownLayersData.webLayer.map(
+                                      (layer) => (
+                                        <ListItem
+                                          key={v4()}
+                                          className={`${
+                                            selectedLayer.web === layer.name
+                                              ? "active"
+                                              : ""
+                                          }`}
+                                          onClick={() =>
+                                            this.onClickLayerDropDown(
+                                              "web",
+                                              layer.name
+                                            )
+                                          }
+                                        >
+                                          <i className="fa-solid fa-circle-dot"></i>{" "}
+                                          {layer.name}
+                                        </ListItem>
+                                      )
+                                    )}
+                                  </List>
+                                </Box>
+                                <div
+                                  className={
+                                    isSelectNginxOpen
+                                      ? "fliters-collapse-bg active"
+                                      : "fliters-collapse-bg"
+                                  }
+                                  onClick={(e) => {
+                                    this.toggleWebLayer();
+                                  }}
+                                />
+                              </Box>
+                              <Box className="balancer-boxs">
+                                <Box className="balancer-box">
+                                  <span>
+                                    <img src={bottomArrow} alt="" />
+                                  </span>
+                                </Box>
+                              </Box>
+                            </Box>
+                          </ListItem>
+                          <ListItem
+                            className={`  ${
+                              dropDownLayersData.appLayer.includes(
+                                selectedLayer.app
+                              )
+                                ? "active"
+                                : ""
+                            }`}
+                          >
+                            <Box className="application-balancer">
+                              <Box className="mapping-fliter">
+                                <Box
+                                  className="fliter-toggel"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    this.toggleAppLayer();
+                                  }}
+                                >
+                                  {selectedLayer.app || "Select"}
+                                  <i className="fa-solid fa-caret-down arrow-icon"></i>
+                                </Box>
+                                <Box
+                                  className={
+                                    isSelectSpringBootOpen
+                                      ? "fliter-collapse active"
+                                      : "fliter-collapse"
+                                  }
+                                >
+                                  <List>
+                                    {dropDownLayersData.appLayer.map(
+                                      (layer) => (
+                                        <ListItem
+                                          key={v4()}
+                                          onClick={() =>
+                                            this.onClickLayerDropDown(
+                                              "app",
+                                              layer.name
+                                            )
+                                          }
+                                          className={`${
+                                            selectedLayer.app === layer.name
+                                              ? "active"
+                                              : ""
+                                          }`}
+                                        >
+                                          <i className="fa-solid fa-circle-dot"></i>
+                                          {layer.name}
+                                        </ListItem>
+                                      )
+                                    )}
+                                  </List>
+                                </Box>
+                                <div
+                                  className={
+                                    isSelectSpringBootOpen
+                                      ? "fliters-collapse-bg active"
+                                      : "fliters-collapse-bg"
+                                  }
+                                  onClick={(e) => {
+                                    this.toggleAppLayer();
+                                  }}
+                                />
+                              </Box>
+                              <Box className="balancer-boxs">
+                                <Box className="balancer-box">
+                                  <span>
+                                    <img src={bottomArrow} alt="" />
+                                  </span>
+                                </Box>
+                              </Box>
+                            </Box>
+                          </ListItem>
+                          <ListItem
+                            className={`  ${
+                              dropDownLayersData.dataLayer.includes(
+                                selectedLayer.data
+                              )
+                                ? "active"
+                                : ""
+                            }`}
+                          >
+                            <Box className="application-balancer">
+                              <Box className="mapping-fliter">
+                                <Box
+                                  className="fliter-toggel"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    this.toggleDataLayer();
+                                  }}
+                                >
+                                  {selectedLayer.data || "Select"}
+                                  <i className="fa-solid fa-caret-down arrow-icon"></i>
+                                </Box>
+                                <Box
+                                  className={
+                                    isSelectMySQLOpen
+                                      ? "fliter-collapse active"
+                                      : "fliter-collapse"
+                                  }
+                                >
+                                  <List>
+                                    {dropDownLayersData.dataLayer.map(
+                                      (layer) => (
+                                        <ListItem
+                                          key={v4()}
+                                          onClick={() =>
+                                            this.onClickLayerDropDown(
+                                              "data",
+                                              layer.name
+                                            )
+                                          }
+                                          className={`${
+                                            selectedLayer.data === layer.name
+                                              ? "active"
+                                              : ""
+                                          }`}
+                                        >
+                                          <i className="fa-solid fa-circle-dot"></i>
+                                          {layer.name}
+                                        </ListItem>
+                                      )
+                                    )}
+                                  </List>
+                                </Box>
+                                <div
+                                  className={
+                                    isSelectMySQLOpen
+                                      ? "fliters-collapse-bg active"
+                                      : "fliters-collapse-bg"
+                                  }
+                                  onClick={(e) => {
+                                    this.toggleDataLayer();
+                                  }}
+                                />
+                              </Box>
+                              <Box className="balancer-boxs">
+                                <Box className="balancer-box">
+                                  <span>
+                                    <img src={bottomArrow} alt="" />
+                                  </span>
+                                </Box>
+                              </Box>
+                            </Box>
+                          </ListItem>
+                          <ListItem
+                            className={`  ${
+                              dropDownLayersData.auxLayer.includes(
+                                selectedLayer.aux
+                              )
+                                ? "active"
+                                : ""
+                            }`}
+                          >
+                            <Box className="mapping-fliter">
+                              <Box
+                                className="fliter-toggel"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  this.toggleAuxLayer();
+                                }}
+                              >
+                                {selectedLayer.aux || "Select"}
+                                <i className="fa-solid fa-caret-down arrow-icon"></i>
+                              </Box>
+                              <Box
+                                className={
+                                  isSelectRedisOpen
+                                    ? "fliter-collapse active"
+                                    : "fliter-collapse"
+                                }
+                              >
+                                <List>
+                                  {dropDownLayersData.auxLayer.map((layer) => (
+                                    <ListItem
+                                      key={v4()}
+                                      onClick={() =>
+                                        this.onClickLayerDropDown(
+                                          "aux",
+                                          layer.name
+                                        )
+                                      }
+                                      className={`${
+                                        selectedLayer.aux === layer.name
+                                          ? "active"
+                                          : ""
+                                      }`}
+                                    >
+                                      <i className="fa-solid fa-circle-dot"></i>
+                                      {layer.name}
+                                    </ListItem>
+                                  ))}
+                                </List>
+                              </Box>
+                              <div
+                                className={
+                                  isSelectRedisOpen
+                                    ? "fliters-collapse-bg active"
+                                    : "fliters-collapse-bg"
+                                }
+                                onClick={(e) => {
+                                  this.toggleAuxLayer();
+                                }}
+                              />
+                            </Box>
+                          </ListItem>
+                        </List>
+                        <Box className="check-icons-box">
+                          <List>
+                            {Object.keys(selectedLayer).map((key) => {
+                              return selectedLayer[key] !== "" ? (
+                                <ListItem>
+                                  <i className="fa-sharp fa-solid fa-circle-check"></i>
+                                </ListItem>
+                              ) : (
+                                <></>
+                              );
+                            })}
+                          </List>
+                        </Box>
+                      </Box>
+                      <Box className="content-right">
+                        <List>
+                          <ListItem>
+                            <Box className="add-button">
+                              <i className="fa-solid fa-plus"></i>
+                            </Box>
+                          </ListItem>
+                          <ListItem>
+                            <Box className="add-button">
+                              <i className="fa-solid fa-plus"></i>
+                            </Box>
+                          </ListItem>
                         </List>
                       </Box>
                     </Box>
-                    <Box className="content-right">
-                      <List>
-                        <ListItem>
-                          <Box className="add-button">
-                            <i className="fa-solid fa-plus"></i>
-                          </Box>
-                        </ListItem>
-                        <ListItem>
-                          <Box className="add-button">
-                            <i className="fa-solid fa-plus"></i>
-                          </Box>
-                        </ListItem>
-                      </List>
-                    </Box>
-                  </Box>
+                  )}
                 </Box>
               </Box>
             </Grid>
+
             <Grid item xs={6}>
               <Box className="nginx-cards">
                 {this.renderDeployedInstanceWrapper()}
@@ -960,5 +1051,28 @@ class Tier extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  const {
+    biServicesFromProductCategory,
+    createProductFormData,
+    cloudServices,
+    instancesServices,
+  } = state.biMapping;
+  return {
+    biServicesFromProductCategory,
+    createProductFormData,
+    cloudServices,
+    instancesServices,
+  };
+}
 
-export default Tier;
+const mapDispatchToProps = {
+  getBiServicesFromProductCategory,
+  getCloudServices,
+  getInstancesServices,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(Tier));

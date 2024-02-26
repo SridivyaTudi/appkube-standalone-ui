@@ -6,6 +6,8 @@ import AddIcon from "assets/img/bimapping/add-icon.png";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import { connect } from "react-redux";
+import { PRODUCT_CATEGORY_ENUM } from "Utils";
+
 let environments = ["Development", "Test", "Stage", "Production"];
 class AddProduct extends Component {
   constructor(props) {
@@ -25,11 +27,28 @@ class AddProduct extends Component {
   }
 
   handleNext() {
-    this.setState({ isSubmit: true }, () => {
-      let { isValid } = this.validateForm();
-      if (isValid) {
+    let { developmentStatus, formData } = this.state;
+    this.setState(
+      {
+        isSubmit: true,
+        developmentStatus: formData.environment ? true : developmentStatus,
+      },
+      () => {
+        let { isValid } = this.validateForm();
+
+        if (isValid) {
+          let { name: departmentName } = this.getUrlDetails();
+
+          let productData = { ...formData, departmentName };
+          productData["productName"] = productData.name;
+
+          delete productData.name;
+
+          this.props.setProductIntoDepartment(productData);
+          this.props.navigate("/app/bim/add-product/product-category");
+        }
       }
-    });
+    );
   }
 
   onClickLandingZone() {
@@ -62,12 +81,7 @@ class AddProduct extends Component {
   };
 
   handlePrevious = () => {
-    let { developmentStatus } = this.state;
-    if (developmentStatus) {
-      this.setState({ developmentStatus: false });
-    } else {
-      this.props.navigate(`${APP_PREFIX_PATH}/bim`);
-    }
+    this.props.navigate(`${APP_PREFIX_PATH}/bim`);
   };
 
   handleInputChange = (e) => {
@@ -89,7 +103,13 @@ class AddProduct extends Component {
             className="secondary-btn min-width"
             variant="contained"
             onClick={() =>
-              this.setState({ formData: { ...formData, environment } })
+              this.setState({
+                formData: {
+                  ...formData,
+                  environment,
+                  developmentStatus: true,
+                },
+              })
             }
           >
             {environment}
@@ -100,7 +120,7 @@ class AddProduct extends Component {
   };
 
   validateForm = () => {
-    let { formData, isSubmit } = this.state;
+    let { formData, isSubmit, developmentStatus } = this.state;
     let isValid = true;
     let errors = {
       name: "",
@@ -123,13 +143,15 @@ class AddProduct extends Component {
       } else {
         errors.environment = "";
       }
-      if (formData.environment !== "") {
+
+      if (developmentStatus) {
         if (!formData.category) {
           errors.category = "Please select the category.";
           isValid = false;
         } else {
           errors.category = "";
         }
+
         if (!formData.moduleName) {
           errors.moduleName = "Please enter the module name.";
           isValid = false;
@@ -140,19 +162,26 @@ class AddProduct extends Component {
     }
     return { isValid, errors };
   };
+
+  /** Get url details. */
+  getUrlDetails() {
+    const name = this.props.params.name;
+    return { name };
+  }
   render() {
-    const { developmentStatus, formData, isSubmit } = this.state;
-    let { departmentName } = this.props.createProductFormData;
+    const { formData, isSubmit } = this.state;
     let { errors } = this.validateForm();
+    let { name } = this.getUrlDetails();
     return (
       <Box className="department-container">
         <Box className="department-step">
           <Box className="department-left">
-            
             <Box className="department-left-content">
-              <span className="d-flex width-100"> {departmentName} Department Appkube</span>
+              <span className="d-flex width-100">
+                {name} Department Appkube
+              </span>
               <h2 className="d-flex width-100 m-t-0 m-b-0">
-                Add Product into the {departmentName} deparment
+                Add Product into the {name} deparment
               </h2>
               <Box className="d-flex width-100 banner-image">
                 <img
@@ -174,7 +203,7 @@ class AddProduct extends Component {
                     <Box className="department-text d-inline-block">
                       <label className="d-block">Adding Product</label>
                       <span className="d-block">
-                        A new Product will add in {departmentName} department
+                        A new Product will add in {name} department
                       </span>
                     </Box>
                   </Box>
@@ -236,25 +265,35 @@ class AddProduct extends Component {
                                 type="radio"
                                 name="category"
                                 className="radio-btn"
-                                value="3 Tier"
-                                checked={formData.category === "3 Tier"}
+                                value={PRODUCT_CATEGORY_ENUM.THREE_TIER}
+                                checked={
+                                  formData.category ===
+                                  PRODUCT_CATEGORY_ENUM.THREE_TIER
+                                }
                                 onChange={this.handleInputChange}
-                                id="3 Tier"
+                                id={PRODUCT_CATEGORY_ENUM.THREE_TIER}
                               />
-                              <label htmlFor="3 Tier">3 Tier</label>
+                              <label htmlFor={PRODUCT_CATEGORY_ENUM.THREE_TIER}>
+                                {PRODUCT_CATEGORY_ENUM.THREE_TIER}
+                              </label>
                               {/* </Link> */}
                             </Box>
                             <Box className="d-flex align-items-center">
                               <input
                                 type="radio"
                                 name="category"
-                                id="SOA"
+                                id={PRODUCT_CATEGORY_ENUM.SOA}
                                 className="radio-btn"
-                                value="SOA"
-                                checked={formData.category === "SOA"}
+                                value={PRODUCT_CATEGORY_ENUM.SOA}
+                                checked={
+                                  formData.category ===
+                                  PRODUCT_CATEGORY_ENUM.SOA
+                                }
                                 onChange={this.handleInputChange}
                               />
-                              <label htmlFor="SOA">SOA</label>
+                              <label htmlFor={PRODUCT_CATEGORY_ENUM.SOA}>
+                                {PRODUCT_CATEGORY_ENUM.SOA}
+                              </label>
                             </Box>
                           </Box>
                           {isSubmit && errors?.category ? (
