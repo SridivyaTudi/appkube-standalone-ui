@@ -39,6 +39,7 @@ import Loader from "Components/Loader";
 import {
   getBiServicesFromProductCategory,
   getCloudServices,
+  getInstancesServices,
 } from "Redux/BIMapping/BIMappingThunk";
 import {
   PRODUCT_CATEGORY_ENUM,
@@ -106,33 +107,7 @@ class Soa extends Component {
       isSelectMySQLOpen: false,
       isSelectRedisOpen: false,
       activeTabEks: 0,
-      deployedInstances: [
-        {
-          key: "EC2",
-          name: "EC2",
-          image: deployed1,
-        },
-        {
-          key: "ECS",
-          name: "ECS",
-          image: deployed1,
-        },
-        {
-          key: "EkS",
-          name: "EkS",
-          image: deployed1,
-        },
-        {
-          key: "Lambda",
-          name: "Lambda",
-          image: deployed4,
-        },
-        {
-          key: "CM",
-          name: "CM",
-          image: deployed5,
-        },
-      ],
+      deployedInstances: [],
       selectedServiceData: {
         app: "",
         data: "",
@@ -152,6 +127,7 @@ class Soa extends Component {
         dataService: [],
         otherService: [],
       },
+      instancesServices: [],
     };
   }
 
@@ -187,9 +163,7 @@ class Soa extends Component {
       this.props.biServicesFromProductCategory?.data
     ) {
       let data = this.props.biServicesFromProductCategory?.data || [];
-      if (data.length) {
-        // this.manipulateServiceData(data);
-      }
+      this.manipulateServiceData(data);
     }
 
     if (
@@ -197,10 +171,18 @@ class Soa extends Component {
       this.props.cloudServices.status === status.SUCCESS &&
       this.props.cloudServices?.data
     ) {
-      let cloudServices = this.props.cloudServices?.data || [];
-      if (cloudServices.length) {
-        this.setState({ cloudServices });
-      }
+      let deployedInstances = this.props.cloudServices?.data || [];
+      this.setState({ deployedInstances });
+    }
+
+    if (
+      prevProps.instancesServices.status !==
+        this.props.instancesServices.status &&
+      this.props.instancesServices.status === status.SUCCESS &&
+      this.props.instancesServices?.data
+    ) {
+      let instancesServices = this.props.instancesServices?.data || [];
+      this.setState({ instancesServices });
     }
   }
 
@@ -221,7 +203,7 @@ class Soa extends Component {
     });
 
     this.setState({
-      dropDownLayersData: { appService, dataService, otherService },
+      dropDownServiceData: { appService, dataService, otherService },
     });
   };
   setActiveTab = (activeTabEks) => {
@@ -255,19 +237,30 @@ class Soa extends Component {
 
   renderDeployedInstances = () => {
     let { deployedInstances, selectedDeployedInstance } = this.state;
-    return deployedInstances.map((instance) => {
-      let deployInstances = {
-        label: instance.name,
-        image: instance.image,
-        active: instance.name === selectedDeployedInstance ? "active" : "",
-      };
-      return (
-        <VerticalTitleAndIconOfCard
-          data={deployInstances}
-          onClickCard={(title) => this.onClickDeployedCard(title)}
-        />
-      );
-    });
+    let cloudStatus = this.props.cloudServices?.status;
+    if (cloudStatus === status.IN_PROGRESS) {
+      return this.renderLoder();
+    } else {
+      return deployedInstances.map((instance) => {
+        let deployInstances = {
+          label: instance.elementType,
+          image: instance.image || deployed1,
+          active: instance.id === selectedDeployedInstance ? "active" : "",
+        };
+        return (
+          <VerticalTitleAndIconOfCard
+            data={deployInstances}
+            onClickCard={(title) =>
+              this.onClickDeployedCard(
+                instance.id,
+                instance.name,
+                instance.elementType
+              )
+            }
+          />
+        );
+      });
+    }
   };
 
   renderDeployedInstanceWrapper = () => {
@@ -289,42 +282,48 @@ class Soa extends Component {
   };
 
   renderSelectedInstance = () => {
-    let { selectedDeployedInstance, selectedInstance } = this.state;
-    const data = [
-      {
-        backgroundColor: "#FFBA69",
-        label: "ID",
-        value: "123456",
-        style: { borderBottom: "none" },
-      },
-      {
-        backgroundColor: "#8676FF",
-        label: "Key",
-        value: "Name",
-        style: { borderBottom: "none" },
-      },
-      {
-        backgroundColor: "#FF2D2E",
-        label: "Value",
-        value: "Kick",
-        style: { borderBottom: "none" },
-      },
-    ];
-    return [...Array(10)].map((instance, index) => {
-      let instanceData = {
-        image: Aws,
-        title: selectedDeployedInstance,
-        data,
-        active: selectedInstance === index ? "active" : "",
-        style: { width: "150px", minHeight: "150px" },
-      };
-      return (
-        <TitleIconWithInfoOfCard
-          cardDetails={instanceData}
-          onClickCard={(details) => this.onClickInstance(index)}
-        />
-      );
-    });
+    let { selectedDeployedInstance, selectedInstance, instancesServices } =
+      this.state;
+    let instanceStatus = this.props.instancesServices?.status;
+    if (instanceStatus === status.IN_PROGRESS) {
+      return this.renderLoder();
+    } else {
+      return instancesServices.map((instance, index) => {
+        const data = [
+          {
+            backgroundColor: "#FFBA69",
+            label: "ID",
+            value: instance.instanceId,
+            style: { borderBottom: "none" },
+          },
+          {
+            backgroundColor: "#8676FF",
+            label: "Key",
+            value: instance.instanceName,
+            style: { borderBottom: "none" },
+          },
+          {
+            backgroundColor: "#FF2D2E",
+            label: "Value",
+            value: "-",
+            style: { borderBottom: "none" },
+          },
+        ];
+        let instanceData = {
+          image: Aws,
+          title: instance.elementType,
+          data,
+          active: selectedInstance === instance.id ? "active" : "",
+          style: { width: "150px", minHeight: "150px" },
+        };
+        return (
+          <TitleIconWithInfoOfCard
+            cardDetails={instanceData}
+            onClickCard={(details) => this.onClickInstance(instance.id)}
+          />
+        );
+      });
+    }
   };
 
   renderSelectedInstanceWrapper = () => {
@@ -348,6 +347,7 @@ class Soa extends Component {
   onClickServiceDropDown = (key, value) => {
     let { selectedServiceData } = this.state;
     selectedServiceData[key] = value;
+    this.props.getCloudServices();
     this.setState({
       selectedServiceData,
       isShowDepolyedSection: true,
@@ -443,7 +443,7 @@ class Soa extends Component {
     } else if (!savedService.other) {
       savedService.other = true;
       serviceName = "other";
-      this.props.navigate(`${APP_PREFIX_PATH}/bim/product-category`);
+      this.props.navigate(`${APP_PREFIX_PATH}/bim`);
     }
 
     savedData.push({
@@ -472,7 +472,8 @@ class Soa extends Component {
     this.setState({ selectedInstance });
   };
 
-  onClickDeployedCard = (selectedDeployedInstance) => {
+  onClickDeployedCard = (selectedDeployedInstance, cloudName, elementType) => {
+    this.props.getInstancesServices({ cloudName, elementType });
     this.setState({
       selectedDeployedInstance,
       selectedInstance: -1,
@@ -638,7 +639,7 @@ class Soa extends Component {
                                     this.toggleAppService();
                                   }}
                                 >
-                                  {selectedServiceData.app || "Select"}
+                                  {selectedServiceData.app.name || "Select"}
                                   <i className="fa-solid fa-caret-down arrow-icon"></i>
                                 </Box>
                                 <Box
@@ -650,23 +651,24 @@ class Soa extends Component {
                                 >
                                   <List>
                                     {dropDownServiceData.appService.map(
-                                      (name) => (
+                                      (service) => (
                                         <ListItem
                                           className={`${
-                                            selectedServiceData.app === name
+                                            selectedServiceData.app.id ===
+                                            service.id
                                               ? "active"
                                               : ""
                                           }`}
                                           key={v4()}
                                           onClick={() =>
-                                            this.onClickServiceDropDown(
-                                              "app",
-                                              name
-                                            )
+                                            this.onClickServiceDropDown("app", {
+                                              id: service.id,
+                                              name: service.name,
+                                            })
                                           }
                                         >
                                           <i className="fa-solid fa-circle-dot"></i>
-                                          {name}
+                                          {service.name}
                                         </ListItem>
                                       )
                                     )}
@@ -965,17 +967,20 @@ function mapStateToProps(state) {
     biServicesFromProductCategory,
     createProductFormData,
     cloudServices,
+    instancesServices,
   } = state.biMapping;
   return {
     biServicesFromProductCategory,
     createProductFormData,
     cloudServices,
+    instancesServices,
   };
 }
 
 const mapDispatchToProps = {
   getBiServicesFromProductCategory,
   getCloudServices,
+  getInstancesServices,
 };
 
 export default connect(

@@ -413,6 +413,14 @@ class BIMapping extends Component {
   onLinkClick = (data) => {
     this.props.setProductIntoDepartment({ departmentName: data.name });
   };
+
+  renderNoDataHtml = (text) => {
+    return (
+      <Box className="group-loader  h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
+        <h5 className="m-t-0 m-b-0">{text}</h5>
+      </Box>
+    );
+  };
   render() {
     const { isSelectDepartmentOpen, organizationTableData } = this.state;
     const {
@@ -458,7 +466,10 @@ class BIMapping extends Component {
                       Department
                     </ListItem>
                   </Link>
-                  <Link to={`/app/bim/add-product/HR`}  onClick={() => this.onLinkClick({ name: "HR" })}>
+                  <Link
+                    to={`/app/bim/add-product/HR`}
+                    onClick={() => this.onLinkClick({ name: "HR" })}
+                  >
                     <ListItem>
                       <i className="fa-solid fa-circle-dot"></i>Add Products
                     </ListItem>
@@ -471,7 +482,7 @@ class BIMapping extends Component {
         <Box className="bimapping-table">
           {organization.status === inprogressStatus ? (
             this.renderLoder()
-          ) : (
+          ) : organizationTableData?.length ? (
             <AccordionView
               data={organizationTableData}
               headers={headers}
@@ -479,6 +490,8 @@ class BIMapping extends Component {
               isLoding={loderStatus}
               onLinkClick={(data) => this.onLinkClick(data)}
             />
+          ) : (
+            this.renderNoDataHtml("There are no policy available.")
           )}
         </Box>
       </Box>
