@@ -4,18 +4,23 @@ import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
-import {
-  createRole,
-  getRoleById,
-  updateRole,
-  getUserPermissionData,
-} from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
 import CloseIcon from "@mui/icons-material/Close";
 import { getCurrentUser } from "Utils";
 import { v4 } from "uuid";
 import Loader from "Components/Loader";
-
+let dropDownData = [
+  {
+    name: "1",
+    value: "1",
+  },{
+    name: "2",
+    value: "2",
+  },{
+    name: "3",
+    value: "3",
+  }
+];
 class SelectFilterModal extends Component {
   user = { id: "", username: "" };
   constructor(props) {
@@ -32,52 +37,6 @@ class SelectFilterModal extends Component {
       this.user = userDetails;
     }
   }
-
-  componentDidMount = () => {
-    if (this.props.roleId > 0) {
-      this.props.getRoleById(this.props.roleId);
-    }
-    this.setStatePolicies();
-  };
-
-  componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.roleCreation.status !== prevProps.roleCreation.status) {
-      if (this.props.roleCreation.status === status.SUCCESS) {
-        if (this.props.roleCreation.data) {
-          ToastMessage.success(` Role Created Successfully`);
-          this.props.getUserPermissionData(this.user.username);
-          this.handleCloseModal();
-        } else {
-          ToastMessage.error(`Role Creation Failed!`);
-        }
-      }
-    }
-
-    if (
-      this.props.roleDetailsById.status !== prevProps.roleDetailsById.status
-    ) {
-      if (this.props.roleDetailsById.status === status.SUCCESS) {
-        let roleDetails = this.props.roleDetailsById.data;
-        if (roleDetails) {
-          let { name, description, policies } = roleDetails;
-          let selectedPolicy = this.getSelectedPolicies(policies);
-          this.setState({ name, description, selectedPolicy });
-        }
-      }
-    }
-
-    if (this.props.roleUpdation.status !== prevProps.roleUpdation.status) {
-      if (this.props.roleUpdation.status === status.SUCCESS) {
-        if (this.props.roleUpdation.data) {
-          ToastMessage.success(` Role Updated Successfully`);
-          this.props.getUserPermissionData(this.user.username);
-          this.handleCloseModal();
-        } else {
-          ToastMessage.error(`Role Updation Failed!`);
-        }
-      }
-    }
-  };
 
   //Set state on  input changes
   handleInputChange = (e) => {
@@ -167,10 +126,9 @@ class SelectFilterModal extends Component {
   };
 
   renderPolicies = () => {
-    let { policyList } = this.state;
-    if (policyList.length) {
-      return policyList.map((policy) => (
-        <MenuItem value={policy.id} key={v4()}>
+    if (dropDownData.length) {
+      return dropDownData.map((policy) => (
+        <MenuItem value={policy.value} key={v4()}>
           {policy.name}
         </MenuItem>
       ));
@@ -269,8 +227,8 @@ class SelectFilterModal extends Component {
                         return <em>Select Policy</em>;
                       }
                       let labels = [];
-                      policyList.forEach((policy) => {
-                        if (selected.includes(+policy.id)) {
+                      dropDownData.forEach((policy) => {
+                        if (selected.includes(policy.value)) {
                           labels.push(policy.name);
                         }
                       });
@@ -320,9 +278,5 @@ class SelectFilterModal extends Component {
     );
   }
 }
-
-
-
-
 
 export default SelectFilterModal;

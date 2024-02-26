@@ -13,6 +13,8 @@ const colorPallate = [
   "#A04D4D",
   "#608E7D",
 ];
+let width = 245;
+let height = 210;
 class GaugeChart extends Component {
   constructor(props) {
     super(props);
@@ -26,8 +28,7 @@ class GaugeChart extends Component {
 
   renderChart = async () => {
     let { data } = this.props;
-    let width = 245;
-    let height = 210;
+   
     var svg = d3
       .select(this.ref.current)
       .attr("width", width)
@@ -133,7 +134,7 @@ class GaugeChart extends Component {
             .on("mousemove", function (d) {
               return tooltip
                 .style("top", d.pageY - 30 + "px")
-                .style("left", d.pageX - 60+ "px");
+                .style("left", d.pageX - 60 + "px");
             })
             .on("mouseout", function () {
               return tooltip.style("visibility", "hidden");
@@ -189,7 +190,11 @@ class GaugeChart extends Component {
   render() {
     return (
       <Box className="gauge-chart">
-        <svg ref={this.ref}></svg>
+        <svg
+          style={{ width: "100%", height: "auto" }}
+          ref={this.ref}
+          viewBox={`0 0 ${width} ${height}`}
+        ></svg>
         <Box className="d-block chart-details">
           <List>{this.renderBarsData(this.props.data)}</List>
         </Box>
