@@ -160,7 +160,7 @@ class BIMapping extends Component {
         name,
         id,
         isLink: type === this.TYPE.DEPARTMENT,
-        url: isTypeDepartment ? "/app/bim/add-product" : "",
+        url: isTypeDepartment ? `/app/bim/add-product/${dataDetails.name}` : "",
         chlidren: [],
         type,
         departmentId: exptraIds?.departmentId,
@@ -429,7 +429,7 @@ class BIMapping extends Component {
       elementTypeData.status,
       elementInstancesOfGivenType.status,
     ].includes(inprogressStatus);
-    
+
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -458,7 +458,7 @@ class BIMapping extends Component {
                       Department
                     </ListItem>
                   </Link>
-                  <Link to={`/app/bim/add-product`}>
+                  <Link to={`/app/bim/add-product/HR`}  onClick={() => this.onLinkClick({ name: "HR" })}>
                     <ListItem>
                       <i className="fa-solid fa-circle-dot"></i>Add Products
                     </ListItem>

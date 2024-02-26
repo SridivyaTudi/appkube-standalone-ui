@@ -323,14 +323,20 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/bim/add-product/product-category`}
             element={<ProductCategory />}
           />
-          <Route path={`${APP_PREFIX_PATH}/bim/tier`} element={<Tier />} />
-          <Route path={`${APP_PREFIX_PATH}/bim/soa`} element={<Soa />} />
+          <Route
+            path={`${APP_PREFIX_PATH}/bim/add-product/3-Tier`}
+            element={<Tier />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/bim/add-product/soa`}
+            element={<Soa />}
+          />
           <Route
             path={`${APP_PREFIX_PATH}/bim/create-department`}
             element={<AddDepartment />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?`}
             element={<AddProduct />}
           />
           <Route
