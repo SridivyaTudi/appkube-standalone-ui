@@ -209,7 +209,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Most used services",
                   labelOfBtn: "View Details",
-                  link: "",
+                  link: "/app/new-reports/central-dashboard/cost-central-top-internal",
                 }}
                 ChartComponent={
                   <HorizontalBarChart data={totalUsedServiceData} />
