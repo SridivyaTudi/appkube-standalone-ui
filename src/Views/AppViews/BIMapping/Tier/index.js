@@ -336,10 +336,12 @@ class Tier extends Component {
             style: { width: "150px", minHeight: "150px" },
           };
           return (
-            <TitleIconWithInfoOfCard
+            <Box className="bimapping-instance-cards">
+              <TitleIconWithInfoOfCard
               cardDetails={instanceData}
               onClickCard={(details) => this.onClickInstance(instance.id)}
             />
+            </Box>
           );
         });
       } else {

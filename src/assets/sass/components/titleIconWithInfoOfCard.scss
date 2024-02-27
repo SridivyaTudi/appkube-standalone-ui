@@ -1,4 +1,5 @@
-.environment-container {}
+.environment-container {
+}
 
 .environment-boxs {
   display: -webkit-box;
@@ -124,6 +125,31 @@
 
     &.active {
       border: 1px solid #2b59ff;
+    }
+  }
+  .bimapping-instance-cards {
+    .environment-box {
+      .data-contant {
+        padding: 10px 15px;
+        display: block;
+        ul {
+          li {
+            label {
+              font-size: 14px;
+              line-height: 16px;
+              font-weight: 500;
+              color: #383874;
+              display: inline-block;
+              margin: 0;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              width: 60px;
+              
+            }
+          }
+        }
+      }
     }
   }
 }

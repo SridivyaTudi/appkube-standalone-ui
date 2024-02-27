@@ -1,5 +1,23 @@
 import React, { Component } from "react";
 import { Box } from "@mui/material";
+import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <CommonTooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 200,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 export class VerticalTitleAndIconOfCard extends Component {
   onClickCard = (title) => {
     try {
@@ -20,7 +38,11 @@ export class VerticalTitleAndIconOfCard extends Component {
           <Box className="deployed-image">
             <img src={image} alt="" />
           </Box>
-          <Box className="deployed-title">{label}</Box>
+          <Box className="deployed-title">
+            <HtmlTooltip className="table-tooltip" title={label}>
+              {label}
+            </HtmlTooltip>
+          </Box>
         </Box>
       </Box>
     );
