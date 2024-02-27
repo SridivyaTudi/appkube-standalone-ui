@@ -499,7 +499,7 @@ class Soa extends Component {
   // Render loder
   renderLoder = () => {
     return (
-      <Box className="d-blck text-center w-100 h-100 ">
+      <Box className="d-blck text-center w-100 h-100 m-r-auto m-l-auto ">
         <Loader className="align-item-center justify-center w-100 h-100" />
       </Box>
     );
