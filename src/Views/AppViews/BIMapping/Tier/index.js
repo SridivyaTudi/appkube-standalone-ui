@@ -427,7 +427,6 @@ class Tier extends Component {
       isSelectRedisOpen: false,
       selectedDeployedInstance: "",
       selectedInstance: -1,
-      selectedDeployedInstance: "",
       cloudElementType: "",
     });
   };
@@ -591,14 +590,13 @@ class Tier extends Component {
       selectedLayer,
       selectedInstance,
       selectedService,
-      selectedDeployedInstance,
       activeTabEks,
       dropDownLayersData,
       savedLayer,
       cloudElementType,
       activeTabEcs,
     } = this.state;
-    let { biServicesFromProductCategory, createProductFormData } = this.props;
+    let { biServicesFromProductCategory } = this.props; 
     return (
       <Box className="bimapping-container">
         <Box className="global-services-fliter">

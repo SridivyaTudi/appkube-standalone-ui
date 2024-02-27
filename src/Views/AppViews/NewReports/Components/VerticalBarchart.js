@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
-import { convertDigitToThousand } from "Utils";
-import { Box } from "@mui/material";
 
 let data = [
   { name: "IT Infra", value: 1300 },
@@ -14,14 +12,6 @@ let data = [
   { name: "Finance", value: 550 },
   { name: "Sales", value: 550 },
   { name: "R&D", value: 400 },
-];
-
-let data1 = [
-  { name: "R & D", value: 180 },
-  { name: "Sales and marketing", value: 170 },
-  { name: "Customer support", value: 150 },
-  { name: "Finance admin", value: 900 },
-  { name: "Data and Analytics", value: 700 },
 ];
 
 const margin = { top: 50, right: 20, bottom: 40, left: 40 };

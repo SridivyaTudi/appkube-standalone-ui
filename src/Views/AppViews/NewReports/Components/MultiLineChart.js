@@ -25,8 +25,6 @@ class MultiLineChart extends Component {
   renderChart = async () => {
     let { data, labels } = this.props;
 
-
-
     let tooltip = d3
       .select("#root")
       .data(data)
@@ -150,7 +148,6 @@ class MultiLineChart extends Component {
     svg
       .append("g")
 
-
       .call(d3.axisLeft(y).tickFormat((d) => "$" + convertDigitToThousand(d)));
 
     let legend = svg
@@ -159,9 +156,7 @@ class MultiLineChart extends Component {
       .enter()
       .append("g")
       .attr("class", "legend")
-      .attr("style", "margin-top:20px;");
-      
-
+      .attr("transform", (d, i) => `translate(${90 + (i * 30)},10)`);
 
     legend
       .append("rect")
@@ -173,20 +168,19 @@ class MultiLineChart extends Component {
         (d, i) =>
           `translate(${i * 80 + 30 * i - 25}, ${height + (margin.bottom - 0)})`
       );
-    // .attr("style", "padding:20px; ");
 
     legend
       .append("text")
-      .text((d) => (d.name.length > 9 ? `${d.name.slice(0, 9)}... ` : d.name))
+      .text((d) => d.name)
       .attr(
         "transform",
         (d, i) =>
-          `translate(${i * 80 + 30 * i + 1},  ${height + (margin.bottom - 0) + 7
+          `translate(${i * 80 + 30 * i + 1},  ${
+            height + (margin.bottom - 0) + 7
           })`
       )
       .attr("font-size", "12px ")
       .on("mouseover", function (d, data) {
-        console.log(data);
         tooltip.html(
           `<div class="chart-tooltip-contents"><div class="value">${data.name}</div></div>`
         );
@@ -204,7 +198,6 @@ class MultiLineChart extends Component {
   };
   render() {
     return (
-
       //   <svg
       //   style={{ width: "100%", height: "auto" }}
       //   ref={this.ref}
@@ -214,7 +207,9 @@ class MultiLineChart extends Component {
         <svg
           style={{ width: "100%", height: "auto" }}
           ref={this.ref}
-          viewBox={`0 0 ${width} ${height + margin.top + margin.bottom +margin.right+0}`}
+          viewBox={`0 0 ${width} ${
+            height + margin.top + margin.bottom + margin.right + 0
+          }`}
         />
       </Box>
     );

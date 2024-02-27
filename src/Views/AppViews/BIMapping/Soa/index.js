@@ -307,8 +307,7 @@ class Soa extends Component {
   };
 
   renderSelectedInstance = () => {
-    let { selectedDeployedInstance, selectedInstance, instancesServices } =
-      this.state;
+    let { selectedInstance, instancesServices } = this.state;
     let instanceStatus = this.props.instancesServices?.status;
     if (instanceStatus === status.IN_PROGRESS) {
       return this.renderLoder();
@@ -543,13 +542,12 @@ class Soa extends Component {
       selectedServiceData,
       activeTabEks,
       selectedInstance,
-      selectedDeployedInstance,
       selectedService,
       dropDownServiceData,
       savedService,
       cloudElementType,
     } = this.state;
-    let { biServicesFromProductCategory, createProductFormData } = this.props;
+    let { biServicesFromProductCategory, } = this.props;
     return (
       <Box className="bimapping-container">
         <Box className="global-services-fliter">

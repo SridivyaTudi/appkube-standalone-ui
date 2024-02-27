@@ -174,7 +174,7 @@ class AddProduct extends Component {
     return { name };
   }
   render() {
-    const { formData, isSubmit, createProductFormData } = this.state;
+    const { formData, isSubmit, } = this.state;
     let { errors } = this.validateForm();
     let { name } = this.getUrlDetails();
     name = name?.charAt(0)?.toUpperCase() + name?.slice(1);
@@ -280,7 +280,7 @@ class AddProduct extends Component {
                               />
                               <label htmlFor={PRODUCT_CATEGORY_ENUM.THREE_TIER}>
                                 {PRODUCT_CATEGORY_ENUM.THREE_TIER}
-                              </label>
+                              </label> 
                             </Box>
                             <Box className="d-flex align-items-center">
                               <input
