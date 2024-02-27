@@ -185,7 +185,7 @@ class AddProduct extends Component {
             <Box className="department-left-content">
               <span className="d-flex width-100">{name}</span>
               <h2 className="d-flex width-100 m-t-0 m-b-0">
-                Add Product into the {createProductFormData?.departmentName}{" "}
+                Add Product into the {name}{" "}
                 deparment
               </h2>
               <Box className="d-flex width-100 banner-image">
@@ -209,7 +209,7 @@ class AddProduct extends Component {
                       <label className="d-block">Adding Product</label>
                       <span className="d-block">
                         A new Product will add in{" "}
-                        {createProductFormData?.departmentName} department
+                        {name} department
                       </span>
                     </Box>
                   </Box>
