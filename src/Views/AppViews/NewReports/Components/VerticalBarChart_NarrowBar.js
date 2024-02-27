@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 let data = [
-  { name: "IT Infra", value: 0 },
-  { name: "IT Security", value: 1300 },
+  { name: "IT Infra", value: 800 },
+  { name: "IT Security", value: 1200 },
   { name: "IT Ops", value: 900 },
   { name: "IT Dev", value: 900 },
   { name: "Analytics", value: 700 },
@@ -15,7 +15,7 @@ let data = [
 let topHighOfArray = data.map((d) => d.value).sort((a, b) => b - a)[0];
 let narrowBarsize = topHighOfArray + 100;
 const VerticalBarChart_NarrowBar = () => {
-  const margin = { top: 20, right: 20, bottom: 40, left: 40 };
+  const margin = { top: 50, right: 20, bottom: 0, left: 40 };
 
   // Increase the width and height as needed
   const width = 800; // Adjust the width
@@ -42,11 +42,13 @@ const VerticalBarChart_NarrowBar = () => {
       g
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(xScale).tickSize(0))
+        .attr("style", "font-size: 14px", "sans-serif")
         .call((g) => g.select(".domain").remove());
 
     const yAxis = (g) =>
       g
         .attr("transform", `translate(${margin.left},0)`)
+        .attr("style", "font-size: 14px", "sans-serif")
         .call(d3.axisLeft(yScale).tickFormat((d) => "$" + d))
         .call((g) => g.select(".domain").remove());
 
@@ -62,7 +64,7 @@ const VerticalBarChart_NarrowBar = () => {
       .append("g")
       .attr("class", "bars")
       .selectAll("g")
-      .data( data)
+      .data(data)
       .enter()
       .append("g")
       .attr("transform", (d, i) => `translate(${xScale(d.name) * 1},0)`);
@@ -72,7 +74,7 @@ const VerticalBarChart_NarrowBar = () => {
         const numRects = Math.ceil(narrowBarsize / 140);
         return Array.from({ length: numRects }, (_, i) => ({
           index: i,
-          value: narrowBarsize - i * 60,
+          value: narrowBarsize - i * 50,
         }));
       })
       .enter()
@@ -85,6 +87,8 @@ const VerticalBarChart_NarrowBar = () => {
         return narrowBarsize - topHighOfArray + 80;
       })
       .attr("width", 7)
+      .attr("rx", 5)
+      .attr("ry", 5)
       .style("fill", (d, i, nodes) => {
         // Get the parent group
         const parentGroup = d3.select(nodes[i].parentNode);
@@ -94,8 +98,9 @@ const VerticalBarChart_NarrowBar = () => {
     barGroups
       .append("rect")
       .attr("y", (d) => yScale(d.value))
+      .attr("x", (d, i) => xScale.bandwidth() / 3 - 4.5)
       .attr("height", (d) => height - yScale(d.value))
-      .attr("width", xScale.bandwidth())
+      .attr("width", xScale.bandwidth() - 10)
       .style("fill", this?.props?.color ? "yellow" : "#53CA43")
       .attr("rx", 3)
       .attr("ry", 3);
@@ -105,7 +110,7 @@ const VerticalBarChart_NarrowBar = () => {
     <svg
       style={{ width: "100%", height: "auto" }}
       ref={svgRef}
-      viewBox={`0 0 ${width} ${height + margin.top + margin.bottom}`}
+      viewBox={`-10 0 ${width} ${height + margin.top + margin.bottom}`}
     />
   );
 };
