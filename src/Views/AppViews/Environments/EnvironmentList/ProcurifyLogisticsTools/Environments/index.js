@@ -83,7 +83,7 @@ class Environments extends Component {
           <Box className="discovered-assets-head">
             <CommonFilterViewSearch handleSearch={() => {}} />
           </Box>
-          <Box sx={{ width: "100%" }}>
+          <Box sx={{ width: "100%" }} className="m-t-4">
             <Grid
               container
               rowSpacing={1}
@@ -105,11 +105,11 @@ class Environments extends Component {
                 </Box>
               </Grid>
 
-              <Grid item xs={5}>
+              <Grid item xs={6}>
                 <Box className="fliter-tabs">
                   <Box
-                    className="environment-table-section"
-                    style={{ height: "373px" }}
+                    className="environment-table-section m-t-0"
+                    style={{ minHeight: "445px" }}
                   >
                     <Box className="table discovered-assets-table">
                       <TableContainer>
