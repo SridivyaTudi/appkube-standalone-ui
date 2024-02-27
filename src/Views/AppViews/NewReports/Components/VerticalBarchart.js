@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import * as d3 from "d3";
 
 let data = [
-  { name: "IT Infra", value: 1300 },
-  { name: "IT Security", value: 1100 },
-  { name: "IT Ops", value: 900 },
-  { name: "IT Dev", value: 900 },
-  { name: "Analytics", value: 700 },
-  { name: "HR", value: 750 },
-  { name: "Marketing", value: 650 },
-  { name: "Finance", value: 550 },
-  { name: "Sales", value: 550 },
-  { name: "R&D", value: 400 },
+  { name: "IT Infra", value: 90 },
+  { name: "IT Security", value: 80 },
+  { name: "IT Ops", value: 70 },
+  { name: "IT Dev", value: 60 },
+  { name: "Analytics", value: 50 },
+  { name: "HR", value: 40 },
+  { name: "Marketing", value: 30 },
+  { name: "Finance", value: 20 },
+  { name: "Sales", value: 10 },
+  { name: "R&D", value: 5 },
 ];
 
 const margin = { top: 50, right: 20, bottom: 40, left: 40 };
@@ -63,7 +63,7 @@ class VerticalBarchart extends Component {
     const yAxis = (g) =>
       g
         .attr("transform", `translate(${margin.left},0)`)
-        .call(d3.axisLeft(yScale).tickFormat((d) => "$" + d))
+        .call(d3.axisLeft(yScale).tickFormat((d) => "$"+  d +"k"))
         .attr("font-size", "16px", "sans-serif")
         .call((g) => g.select(".domain").remove());
 
@@ -83,7 +83,7 @@ class VerticalBarchart extends Component {
       .attr("y", (d) => yScale(d.value))
       .attr("width", xScale.bandwidth())
       .attr("height", (d) => height - yScale(d.value))
-      .attr("fill", this.props?.color ? "#FAA24B" : "pink")
+      .attr("fill", this.props?.color ? "#FAA24B" : "#FA6298")
       .attr("rx", 5);
   };
   render() {
