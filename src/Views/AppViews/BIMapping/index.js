@@ -466,10 +466,7 @@ class BIMapping extends Component {
                       Department
                     </ListItem>
                   </Link>
-                  <Link
-                    to={`/app/bim/add-product/HR`}
-                    onClick={() => this.onLinkClick({ name: "HR" })}
-                  >
+                  <Link to={`/app/bim/add-product`}>
                     <ListItem>
                       <i className="fa-solid fa-circle-dot"></i>Add Products
                     </ListItem>
@@ -491,7 +488,7 @@ class BIMapping extends Component {
               onLinkClick={(data) => this.onLinkClick(data)}
             />
           ) : (
-            this.renderNoDataHtml("There are no policy available.")
+            this.renderNoDataHtml("There are no data available.")
           )}
         </Box>
       </Box>

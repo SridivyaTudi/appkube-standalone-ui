@@ -241,25 +241,29 @@ class Soa extends Component {
     if (cloudStatus === status.IN_PROGRESS) {
       return this.renderLoder();
     } else {
-      return deployedInstances.map((instance) => {
-        let deployInstances = {
-          label: instance.elementType,
-          image: instance.image || deployed1,
-          active: instance.id === selectedDeployedInstance ? "active" : "",
-        };
-        return (
-          <VerticalTitleAndIconOfCard
-            data={deployInstances}
-            onClickCard={(title) =>
-              this.onClickDeployedCard(
-                instance.id,
-                instance.name,
-                instance.elementType
-              )
-            }
-          />
-        );
-      });
+      if (deployedInstances?.length) {
+        return deployedInstances.map((instance) => {
+          let deployInstances = {
+            label: instance.elementType,
+            image: instance.image || deployed1,
+            active: instance.id === selectedDeployedInstance ? "active" : "",
+          };
+          return (
+            <VerticalTitleAndIconOfCard
+              data={deployInstances}
+              onClickCard={(title) =>
+                this.onClickDeployedCard(
+                  instance.id,
+                  instance.name,
+                  instance.elementType
+                )
+              }
+            />
+          );
+        });
+      } else {
+        return this.renderNoDataHtml("There are no data available.");
+      }
     }
   };
 
@@ -288,41 +292,45 @@ class Soa extends Component {
     if (instanceStatus === status.IN_PROGRESS) {
       return this.renderLoder();
     } else {
-      return instancesServices.map((instance, index) => {
-        const data = [
-          {
-            backgroundColor: "#FFBA69",
-            label: "ID",
-            value: instance.instanceId,
-            style: { borderBottom: "none" },
-          },
-          {
-            backgroundColor: "#8676FF",
-            label: "Key",
-            value: instance.instanceName,
-            style: { borderBottom: "none" },
-          },
-          {
-            backgroundColor: "#FF2D2E",
-            label: "Value",
-            value: "-",
-            style: { borderBottom: "none" },
-          },
-        ];
-        let instanceData = {
-          image: Aws,
-          title: instance.elementType,
-          data,
-          active: selectedInstance === instance.id ? "active" : "",
-          style: { width: "150px", minHeight: "150px" },
-        };
-        return (
-          <TitleIconWithInfoOfCard
-            cardDetails={instanceData}
-            onClickCard={(details) => this.onClickInstance(instance.id)}
-          />
-        );
-      });
+      if (instancesServices?.length) {
+        return instancesServices.map((instance, index) => {
+          const data = [
+            {
+              backgroundColor: "#FFBA69",
+              label: "ID",
+              value: instance.instanceId,
+              style: { borderBottom: "none" },
+            },
+            {
+              backgroundColor: "#8676FF",
+              label: "Key",
+              value: instance.instanceName,
+              style: { borderBottom: "none" },
+            },
+            {
+              backgroundColor: "#FF2D2E",
+              label: "Value",
+              value: "-",
+              style: { borderBottom: "none" },
+            },
+          ];
+          let instanceData = {
+            image: Aws,
+            title: instance.elementType,
+            data,
+            active: selectedInstance === instance.id ? "active" : "",
+            style: { width: "150px", minHeight: "150px" },
+          };
+          return (
+            <TitleIconWithInfoOfCard
+              cardDetails={instanceData}
+              onClickCard={(details) => this.onClickInstance(instance.id)}
+            />
+          );
+        });
+      } else {
+        return this.renderNoDataHtml("There are no data available.");
+      }
     }
   };
 
@@ -486,6 +494,14 @@ class Soa extends Component {
     return (
       <Box className="d-blck text-center w-100 h-100 ">
         <Loader className="align-item-center justify-center w-100 h-100" />
+      </Box>
+    );
+  };
+
+  renderNoDataHtml = (text) => {
+    return (
+      <Box className="group-loader  h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
+        <h5 className="m-t-0 m-b-0">{text}</h5>
       </Box>
     );
   };
