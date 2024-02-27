@@ -49,6 +49,8 @@ import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import ManagementInfo from "../Soa/components/ManagementInfo";
+import ConfigInfo from "../Soa/components/ConfigInfo";
 
 let serviceTableData = [
   {
@@ -98,6 +100,18 @@ class Tier extends Component {
       name: "App Topology",
       dataKey: "apptopology",
       type: ["apptopology"],
+    },
+  ];
+  tabMapping = [
+    {
+      name: "Management Info",
+      dataKey: "managementinfo",
+      type: ["managementinfo"],
+    },
+    {
+      name: "Config Info",
+      dataKey: "configinfo",
+      type: ["configinfo"],
     },
   ];
   constructor(props) {
@@ -1056,6 +1070,43 @@ class Tier extends Component {
           ) : (
             <></>
           )}
+          <Box className="nginx-section">
+            <Box className="tabs">
+              <List className="tabs-menu">
+                {this.tabMapping.map((tabData, index) => {
+                  return (
+                    <ListItem
+                      key={`ops-tab-${index}`}
+                      className={index === activeTabEks ? "active" : ""}
+                      onClick={() => this.setActiveTab(index)}
+                    >
+                      <Box className="m-r-2">
+                        <img src={tabData.image} alt="" />
+                      </Box>
+                      {tabData.name}
+                    </ListItem>
+                  );
+                })}
+              </List>
+              <Box className="tabs-content">
+                {activeTabEks === 0 ? (
+                  <ManagementInfo
+                    setNextTab={(activeTabEks) => {
+                      this.setState({ activeTabEks });
+                    }}
+                  />
+                ) : activeTabEks === 1 ? (
+                  <ConfigInfo
+                    setNextTab={(activeTabEks) => {
+                      this.setState({ activeTabEks });
+                    }}
+                  />
+                ) : (
+                  <></>
+                )}
+              </Box>
+            </Box>
+          </Box>
         </Box>
       </Box>
     );

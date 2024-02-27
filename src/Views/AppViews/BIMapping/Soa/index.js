@@ -316,10 +316,12 @@ class Soa extends Component {
             style: { width: "150px", minHeight: "150px" },
           };
           return (
-            <TitleIconWithInfoOfCard
-              cardDetails={instanceData}
-              onClickCard={(details) => this.onClickInstance(instance.id)}
-            />
+            <Box className="bimapping-instance-cards">
+              <TitleIconWithInfoOfCard
+                cardDetails={instanceData}
+                onClickCard={(details) => this.onClickInstance(instance.id)}
+              />
+            </Box>
           );
         });
       } else {
@@ -500,8 +502,8 @@ class Soa extends Component {
     );
   };
 
-   /** Get url details. */
-   getUrlDetails() {
+  /** Get url details. */
+  getUrlDetails() {
     let name = this.props.params.name;
     return { name };
   }
