@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import * as d3 from "d3";
 import { convertDigitToThousand, getFormattedDate } from "Utils";
 import { Box } from "@mui/material";
-let margin = { top: 20, right: 20, bottom: 80, left: 5 },
+let margin = { top: 20, right: 20, bottom: 50, left: 5 },
   width = 524 - margin.left - margin.right,
   height = 270 - margin.top - margin.bottom;
 class MultiLineChart extends Component {
@@ -158,8 +158,9 @@ class MultiLineChart extends Component {
       .data(labels)
       .enter()
       .append("g")
-      .attr("class", "legend ")
+      .attr("class", "legend")
       .attr("style", "margin-top:20px;");
+      
 
 
     legend
@@ -170,7 +171,7 @@ class MultiLineChart extends Component {
       .attr(
         "transform",
         (d, i) =>
-          `translate(${i * 80 + 30 * i - 25}, ${height + (margin.bottom - 25)})`
+          `translate(${i * 80 + 30 * i - 25}, ${height + (margin.bottom - 0)})`
       );
     // .attr("style", "padding:20px; ");
 
@@ -180,7 +181,7 @@ class MultiLineChart extends Component {
       .attr(
         "transform",
         (d, i) =>
-          `translate(${i * 80 + 30 * i + 1},  ${height + (margin.bottom - 25) + 7
+          `translate(${i * 80 + 30 * i + 1},  ${height + (margin.bottom - 0) + 7
           })`
       )
       .attr("font-size", "12px ")
