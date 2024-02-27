@@ -860,20 +860,6 @@ class Soa extends Component {
                           </List>
                         </Box>
                       </Box>
-                      <Box className="content-right">
-                        <List>
-                          <ListItem>
-                            <Box className="add-button">
-                              <i className="fa-solid fa-plus"></i>
-                            </Box>
-                          </ListItem>
-                          <ListItem>
-                            <Box className="add-button">
-                              <i className="fa-solid fa-plus"></i>
-                            </Box>
-                          </ListItem>
-                        </List>
-                      </Box>
                     </Box>
                   )}
                 </Box>
