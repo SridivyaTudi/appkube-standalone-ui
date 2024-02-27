@@ -34,10 +34,10 @@ class ManagementInfo extends Component {
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell align="left">dummy-lb-12345</TableCell>
-                <TableCell align="left">dummy-lb-12345</TableCell>
-                <TableCell align="left">dummy-lb-12345</TableCell>
-                <TableCell align="left">dummy-lb-12345</TableCell>
+                <TableCell align="left">Hosted on</TableCell>
+                <TableCell align="center">drop down</TableCell>
+                <TableCell align="center">Instance ID	</TableCell>
+                <TableCell align="center">user input</TableCell>
               </TableRow>
             </TableBody>
           </Table>

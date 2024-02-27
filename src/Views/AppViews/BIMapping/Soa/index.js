@@ -43,6 +43,23 @@ import {
 } from "Redux/BIMapping/BIMappingThunk";
 import { PRODUCT_CATEGORY_ENUM, SERVICES_CATEGORY_OF_SOA_ENUM } from "Utils";
 import { connect } from "react-redux";
+import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <CommonTooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 200,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 let serviceTableData = [
   {
     name: "MockDB",
@@ -511,7 +528,8 @@ class Soa extends Component {
       selectedInstance,
       selectedDeployedInstance,
       selectedService,
-      dropDownServiceData,savedService
+      dropDownServiceData,
+      savedService,
     } = this.state;
     let { biServicesFromProductCategory, createProductFormData } = this.props;
     return (
@@ -675,7 +693,12 @@ class Soa extends Component {
                                           }
                                         >
                                           <i className="fa-solid fa-circle-dot"></i>
-                                          {service.name}
+                                          <HtmlTooltip
+                                            className="table-tooltip"
+                                            title={service.name}
+                                          >
+                                            <p>{service.name}</p>
+                                          </HtmlTooltip>
                                         </ListItem>
                                       )
                                     )}
@@ -749,7 +772,12 @@ class Soa extends Component {
                                           }
                                         >
                                           <i className="fa-solid fa-circle-dot"></i>
-                                          {service.name}
+                                          <HtmlTooltip
+                                            className="table-tooltip"
+                                            title={service.name}
+                                          >
+                                            <p>{service.name}</p>
+                                          </HtmlTooltip>
                                         </ListItem>
                                       )
                                     )}
@@ -820,7 +848,12 @@ class Soa extends Component {
                                         }
                                       >
                                         <i className="fa-solid fa-circle-dot"></i>
-                                        {service.name}
+                                        <HtmlTooltip
+                                          className="table-tooltip"
+                                          title={service.name}
+                                        >
+                                          <p>{service.name}</p>
+                                        </HtmlTooltip>
                                       </ListItem>
                                     )
                                   )}
