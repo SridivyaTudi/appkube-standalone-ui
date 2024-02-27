@@ -156,7 +156,7 @@ class MultiLineChart extends Component {
       .enter()
       .append("g")
       .attr("class", "legend")
-      .attr("transform", (d, i) => `translate(${90 + (i * 30)},10)`);
+      .attr("transform", (d, i) => `translate(${60 + (i * 30)},10)`);
 
     legend
       .append("rect")
