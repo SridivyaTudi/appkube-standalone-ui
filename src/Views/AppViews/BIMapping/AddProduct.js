@@ -45,7 +45,11 @@ class AddProduct extends Component {
           delete productData.name;
 
           this.props.setProductIntoDepartment(productData);
-          this.props.navigate("/app/bim/add-product/product-category");
+          this.props.navigate(
+            `/app/bim/add-product/${departmentName
+              ?.toLowerCase()
+              ?.replaceAll(" ", "-")}/product-category`
+          );
         }
       }
     );
@@ -165,23 +169,24 @@ class AddProduct extends Component {
 
   /** Get url details. */
   getUrlDetails() {
-    const name = this.props.params.name;
+    let name = this.props.params.name;
+    name = name?.replaceAll("-", " ");
     return { name };
   }
   render() {
-    const { formData, isSubmit } = this.state;
+    const { formData, isSubmit, createProductFormData } = this.state;
     let { errors } = this.validateForm();
     let { name } = this.getUrlDetails();
+    name = name?.charAt(0)?.toUpperCase() + name?.slice(1);
     return (
       <Box className="department-container">
         <Box className="department-step">
           <Box className="department-left">
             <Box className="department-left-content">
-              <span className="d-flex width-100">
-                {name} Department Appkube
-              </span>
+              <span className="d-flex width-100">{name}</span>
               <h2 className="d-flex width-100 m-t-0 m-b-0">
-                Add Product into the {name} deparment
+                Add Product into the {createProductFormData?.departmentName}{" "}
+                deparment
               </h2>
               <Box className="d-flex width-100 banner-image">
                 <img
@@ -203,7 +208,8 @@ class AddProduct extends Component {
                     <Box className="department-text d-inline-block">
                       <label className="d-block">Adding Product</label>
                       <span className="d-block">
-                        A new Product will add in {name} department
+                        A new Product will add in{" "}
+                        {createProductFormData?.departmentName} department
                       </span>
                     </Box>
                   </Box>
@@ -260,7 +266,6 @@ class AddProduct extends Component {
                           <Box className="category-title">Select Category</Box>
                           <Box className="select-categorys">
                             <Box className="d-flex align-items-center m-r-3">
-                              {/* <Link to={`/app/bim/tier`}> */}
                               <input
                                 type="radio"
                                 name="category"
@@ -276,7 +281,6 @@ class AddProduct extends Component {
                               <label htmlFor={PRODUCT_CATEGORY_ENUM.THREE_TIER}>
                                 {PRODUCT_CATEGORY_ENUM.THREE_TIER}
                               </label>
-                              {/* </Link> */}
                             </Box>
                             <Box className="d-flex align-items-center">
                               <input

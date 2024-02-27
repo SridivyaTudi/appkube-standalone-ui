@@ -41,7 +41,11 @@ class ProductCategory extends Component {
   redirectPage = () => {
     let departMentName = getSingleValueFromLocalStorage("departmentName");
     removeSingleValueFromLocalStorage("departmentName");
-    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${departMentName}`);
+    this.props.navigate(
+      `${APP_PREFIX_PATH}/bim/add-product/${departMentName
+        ?.toLowerCase()
+        ?.replace(" ", "-")}`
+    );
   };
 
   handleServiceModal = () => {
@@ -49,10 +53,15 @@ class ProductCategory extends Component {
       showServiceModal: !this.state.showServiceModal,
     });
   };
-
+  /** Get url details. */
+  getUrlDetails() {
+    let name = this.props.params.name;
+    return { name };
+  }
   render() {
     const { showServiceModal } = this.state;
     let { createProductFormData } = this.props;
+    let { name: departMentName } = this.getUrlDetails();
     return (
       <Box className="bimapping-container">
         <Box className="global-services-fliter">
@@ -60,19 +69,14 @@ class ProductCategory extends Component {
             <Box className="breadcrumbs">
               <ul>
                 <li>
-                  <p>Synectiks</p>
+                  <p>BI-Mapping</p>
                 </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
-                <li>
-                  <p>{createProductFormData.departmentName}</p>
-                </li>
-                <li>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </li>
+
                 <li className="active">
-                  <p>{createProductFormData.productName}</p>
+                  <p>Add Product</p>
                 </li>
               </ul>
             </Box>
@@ -85,10 +89,9 @@ class ProductCategory extends Component {
               <Box className="d-flex justify-content-between align-items-center">
                 <h3>Service type : Business Services</h3>
                 <Link
-                  to={`/app/bim/add-product/${createProductFormData?.category?.replace(
-                    " ",
-                    "-"
-                  )}`}
+                  to={`/app/bim/add-product/${departMentName}/product-category/${createProductFormData?.category
+                    ?.toLowerCase()
+                    ?.replace(" ", "-")}`}
                 >
                   <Button className="primary-btn">Add</Button>
                 </Link>

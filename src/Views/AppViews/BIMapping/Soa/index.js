@@ -133,12 +133,6 @@ class Soa extends Component {
 
   componentDidMount = () => {
     window.addEventListener("load", this.redirectPage);
-    window.addEventListener("beforeunload", () => {
-      setSingleValueInLocalStorage(
-        "departmentName",
-        this.props?.createProductFormData?.departmentName
-      );
-    });
 
     this.props.getBiServicesFromProductCategory({
       productCategory: PRODUCT_CATEGORY_ENUM.SOA,
@@ -150,9 +144,8 @@ class Soa extends Component {
   }
 
   redirectPage = () => {
-    let departMentName = getSingleValueFromLocalStorage("departmentName");
-    removeSingleValueFromLocalStorage("departmentName");
-    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${departMentName}`);
+    let { name } = this.getUrlDetails();
+    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${name}`);
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -206,6 +199,7 @@ class Soa extends Component {
       dropDownServiceData: { appService, dataService, otherService },
     });
   };
+
   setActiveTab = (activeTabEks) => {
     this.setState({ activeTabEks });
   };
@@ -505,6 +499,12 @@ class Soa extends Component {
       </Box>
     );
   };
+
+   /** Get url details. */
+   getUrlDetails() {
+    let name = this.props.params.name;
+    return { name };
+  }
   render() {
     let {
       isSelectSpringBootOpen,
@@ -525,25 +525,20 @@ class Soa extends Component {
             <Box className="breadcrumbs">
               <ul>
                 <li>
-                  <p>Synectiks</p>
+                  <p>BI-Mapping</p>
                 </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
                 <li>
-                  <p>{createProductFormData.departmentName}</p>
+                  <p>Add Product</p>
                 </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
-                <li>
-                  <p>{createProductFormData.productName}</p>
-                </li>
-                <li>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </li>
+
                 <li className="active">
-                  <p>SOA</p>
+                  <p>Product Category</p>
                 </li>
               </ul>
             </Box>

@@ -330,15 +330,15 @@ export const Views = (props) => {
           />
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/product-category`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/product-category`}
             element={<ProductCategory />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/3-Tier`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/product-category/3-Tier`}
             element={<Tier />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/soa`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/product-category/soa`}
             element={<Soa />}
           />
           <Route

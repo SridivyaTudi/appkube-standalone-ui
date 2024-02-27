@@ -160,7 +160,11 @@ class BIMapping extends Component {
         name,
         id,
         isLink: type === this.TYPE.DEPARTMENT,
-        url: isTypeDepartment ? `/app/bim/add-product/${dataDetails.name}` : "",
+        url: isTypeDepartment
+          ? `/app/bim/add-product/${dataDetails?.name
+              ?.toLowerCase()
+              ?.replaceAll(" ", "-")}`
+          : "",
         chlidren: [],
         type,
         departmentId: exptraIds?.departmentId,

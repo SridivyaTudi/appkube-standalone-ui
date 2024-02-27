@@ -140,13 +140,6 @@ class Tier extends Component {
 
   componentDidMount = () => {
     window.addEventListener("load", this.redirectPage);
-    window.addEventListener("beforeunload", () => {
-      setSingleValueInLocalStorage(
-        "departmentName",
-        this.props?.createProductFormData?.departmentName
-      );
-    });
-
     this.props.getBiServicesFromProductCategory({
       productCategory: PRODUCT_CATEGORY_ENUM.THREE_TIER,
     });
@@ -157,9 +150,8 @@ class Tier extends Component {
   }
 
   redirectPage = () => {
-    let departMentName = getSingleValueFromLocalStorage("departmentName");
-    removeSingleValueFromLocalStorage("departmentName");
-    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${departMentName}`);
+    let { name } = this.getUrlDetails();
+    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${name}`);
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -326,7 +318,7 @@ class Tier extends Component {
               style: { borderBottom: "none" },
             },
           ];
-  
+
           let instanceData = {
             image: Aws,
             title: instance.elementType,
@@ -338,16 +330,15 @@ class Tier extends Component {
           return (
             <Box className="bimapping-instance-cards">
               <TitleIconWithInfoOfCard
-              cardDetails={instanceData}
-              onClickCard={(details) => this.onClickInstance(instance.id)}
-            />
+                cardDetails={instanceData}
+                onClickCard={(details) => this.onClickInstance(instance.id)}
+              />
             </Box>
           );
         });
       } else {
         return this.renderNoDataHtml("There are no data available.");
       }
-     
     }
   };
 
@@ -543,6 +534,12 @@ class Tier extends Component {
       </Box>
     );
   };
+
+  /** Get url details. */
+  getUrlDetails() {
+    let name = this.props.params.name;
+    return { name };
+  }
   render() {
     let {
       isSelectNginxOpen,
@@ -564,25 +561,20 @@ class Tier extends Component {
             <Box className="breadcrumbs">
               <ul>
                 <li>
-                  <p>Synectiks</p>
+                  <p>BI-Mapping</p>
                 </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
                 <li>
-                  <p>{createProductFormData?.departmentName}</p>
+                  <p>Add Product</p>
                 </li>
-                <li>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </li>
-                <li>
-                  <p>{createProductFormData?.productName}</p>
-                </li>
+
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
                 <li className="active">
-                  <p>3 Tier</p>
+                  <p>Product Category</p>
                 </li>
               </ul>
             </Box>
