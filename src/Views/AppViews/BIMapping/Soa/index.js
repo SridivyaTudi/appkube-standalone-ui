@@ -18,8 +18,6 @@ import DataServiceSvgrepo from "assets/img/assetmanager/data-service-svgrepo.png
 import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
 import RightArrow from "assets/img/assetmanager/right-arrow.png";
 import deployed1 from "../../../../assets/img/bimapping/deployed1.png";
-import deployed4 from "../../../../assets/img/bimapping/deployed4.png";
-import deployed5 from "../../../../assets/img/bimapping/deployed5.png";
 import Aws from "../../../../assets/img/aws.png";
 import LoadBalancer from "./components/LoadBalancer";
 import Ingress from "./components/Ingress";
@@ -45,7 +43,8 @@ import { PRODUCT_CATEGORY_ENUM, SERVICES_CATEGORY_OF_SOA_ENUM } from "Utils";
 import { connect } from "react-redux";
 import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-
+import ManagementInfo from "../Soa/components/ManagementInfo";
+import ConfigInfo from "../Soa/components/ConfigInfo";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -109,6 +108,22 @@ class Soa extends Component {
       type: ["apptopology"],
     },
   ];
+  tabMappingECS = [
+    {
+      name: "Management Info",
+      dataKey: "managementinfo",
+      type: ["managementinfo"],
+    },
+    {
+      name: "Config Info",
+      dataKey: "configinfo",
+      type: ["configinfo"],
+    },
+  ];
+  CLOUD_ELEMENT = {
+    ECS: "ECS",
+    EKS: "EKS",
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -139,6 +154,7 @@ class Soa extends Component {
         otherService: [],
       },
       instancesServices: [],
+      cloudElementType: "",
     };
   }
 
@@ -493,6 +509,7 @@ class Soa extends Component {
       selectedDeployedInstance,
       selectedInstance: -1,
       activeTabEks: 0,
+      cloudElementType: elementType,
     });
   };
 
@@ -530,6 +547,7 @@ class Soa extends Component {
       selectedService,
       dropDownServiceData,
       savedService,
+      cloudElementType,
     } = this.state;
     let { biServicesFromProductCategory, createProductFormData } = this.props;
     return (
@@ -901,7 +919,7 @@ class Soa extends Component {
             </Grid>
           </Grid>
           {selectedInstance >= 0 ? (
-            selectedDeployedInstance === "EkS" ? (
+            cloudElementType?.toUpperCase() === this.CLOUD_ELEMENT.EKS ? (
               <Box className="nginx-section">
                 <Box className="tabs">
                   <List className="tabs-menu">
@@ -947,17 +965,53 @@ class Soa extends Component {
                   </Box>
                 </Box>
               </Box>
-            ) : (
-              <>
-                <Box className="tier-table-section m-t-4">
-                  <TableContainer className="table">
-                    <Table className="overview">
-                      {this.renderTableHead()}
-                      {this.renderTableBody()}
-                    </Table>
-                  </TableContainer>
+            ) : cloudElementType?.toUpperCase() === this.CLOUD_ELEMENT.ECS ? (
+              <Box className="nginx-section">
+                <Box className="tabs">
+                  <List className="tabs-menu">
+                    {this.tabMappingECS.map((tabData, index) => {
+                      return (
+                        <ListItem
+                          key={`ops-tab-${index}`}
+                          className={index === activeTabEks ? "active" : ""}
+                          onClick={() => this.setActiveTab(index)}
+                        >
+                          <Box className="m-r-2">
+                            <img src={tabData.image} alt="" />
+                          </Box>
+                          {tabData.name}
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                  <Box className="tabs-content">
+                    {activeTabEks === 0 ? (
+                      <ManagementInfo
+                        setNextTab={(activeTabEks) => {
+                          this.setState({ activeTabEks });
+                        }}
+                      />
+                    ) : activeTabEks === 1 ? (
+                      <ConfigInfo
+                        setNextTab={(activeTabEks) => {
+                          this.setState({ activeTabEks });
+                        }}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </Box>
                 </Box>
-              </>
+              </Box>
+            ) : (
+              <Box className="tier-table-section m-t-4">
+                <TableContainer className="table">
+                  <Table className="overview">
+                    {this.renderTableHead()}
+                    {this.renderTableBody()}
+                  </Table>
+                </TableContainer>
+              </Box>
             )
           ) : (
             <></>

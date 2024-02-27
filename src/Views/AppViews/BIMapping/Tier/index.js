@@ -40,9 +40,6 @@ import {
 import {
   PRODUCT_CATEGORY_ENUM,
   SERVICES_CATEGORY_OF_THREE_TIER_ENUM,
-  getSingleValueFromLocalStorage,
-  setSingleValueInLocalStorage,
-  removeSingleValueFromLocalStorage,
 } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { connect } from "react-redux";
@@ -119,7 +116,7 @@ class Tier extends Component {
       type: ["apptopology"],
     },
   ];
-  tabMapping = [
+  tabMappingECS = [
     {
       name: "Management Info",
       dataKey: "managementinfo",
@@ -131,6 +128,10 @@ class Tier extends Component {
       type: ["configinfo"],
     },
   ];
+  CLOUD_ELEMENT = {
+    ECS: "ECS",
+    EKS: "EKS",
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -166,11 +167,14 @@ class Tier extends Component {
       },
       activeTabEks: 0,
       instancesServices: [],
+      cloudElementType: "",
+      activeTabEcs: 0,
     };
   }
 
   componentDidMount = () => {
     window.addEventListener("load", this.redirectPage);
+    this.props.getCloudServices();
     this.props.getBiServicesFromProductCategory({
       productCategory: PRODUCT_CATEGORY_ENUM.THREE_TIER,
     });
@@ -317,6 +321,7 @@ class Tier extends Component {
       selectedDeployedInstance,
       selectedInstance: -1,
       activeTabEks: 0,
+      cloudElementType: elementType,
     });
   };
 
@@ -338,14 +343,14 @@ class Tier extends Component {
             },
             {
               backgroundColor: "#8676FF",
-              label: "Key",
+              label: "Name : ",
               value: instance.instanceName,
               style: { borderBottom: "none" },
             },
             {
               backgroundColor: "#FF2D2E",
-              label: "Value",
-              value: "-",
+              label: "VPC Id: ",
+              value: instance.productEnclaveInstanceId,
               style: { borderBottom: "none" },
             },
           ];
@@ -413,8 +418,6 @@ class Tier extends Component {
     let { selectedLayer } = this.state;
     selectedLayer[key] = value;
 
-    this.props.getCloudServices();
-
     this.setState({
       selectedLayer,
       isShowDepolyedSection: true,
@@ -425,6 +428,7 @@ class Tier extends Component {
       selectedDeployedInstance: "",
       selectedInstance: -1,
       selectedDeployedInstance: "",
+      cloudElementType: "",
     });
   };
 
@@ -517,6 +521,7 @@ class Tier extends Component {
     } else if (!savedLayer.aux) {
       savedLayer.aux = true;
       layerName = "aux";
+      this.props.navigate(`${APP_PREFIX_PATH}/bim`);
     }
 
     savedData.push({
@@ -541,8 +546,14 @@ class Tier extends Component {
     });
   };
 
-  setActiveTab = (activeTabEks) => {
-    this.setState({ activeTabEks });
+  setActiveTab = (id, isECS = 0) => {
+    let { activeTabEcs, activeTabEks } = this.state;
+    if (isECS) {
+      activeTabEcs = id;
+    } else {
+      activeTabEks = id;
+    }
+    this.setState({ activeTabEcs, activeTabEks });
   };
 
   onClickInstance = (selectedInstance) => {
@@ -583,6 +594,9 @@ class Tier extends Component {
       selectedDeployedInstance,
       activeTabEks,
       dropDownLayersData,
+      savedLayer,
+      cloudElementType,
+      activeTabEcs,
     } = this.state;
     let { biServicesFromProductCategory, createProductFormData } = this.props;
     return (
@@ -985,7 +999,8 @@ class Tier extends Component {
                         <Box className="check-icons-box">
                           <List>
                             {Object.keys(selectedLayer).map((key) => {
-                              return selectedLayer[key] !== "" ? (
+                              return selectedLayer[key] !== "" &&
+                                savedLayer[key] ? (
                                 <ListItem>
                                   <i className="fa-sharp fa-solid fa-circle-check"></i>
                                 </ListItem>
@@ -1010,7 +1025,7 @@ class Tier extends Component {
             </Grid>
           </Grid>
           {selectedInstance >= 0 ? (
-            selectedDeployedInstance === "EkS" ? (
+            cloudElementType?.toUpperCase() === this.CLOUD_ELEMENT.EKS ? (
               <Box className="nginx-section">
                 <Box className="tabs">
                   <List className="tabs-menu">
@@ -1056,6 +1071,44 @@ class Tier extends Component {
                   </Box>
                 </Box>
               </Box>
+            ) : cloudElementType?.toUpperCase() === this.CLOUD_ELEMENT.ECS ? (
+              <Box className="nginx-section">
+                <Box className="tabs">
+                  <List className="tabs-menu">
+                    {this.tabMappingECS.map((tabData, index) => {
+                      return (
+                        <ListItem
+                          key={`ops-tab-${index}`}
+                          className={index === activeTabEcs ? "active" : ""}
+                          onClick={() => this.setActiveTab(index, 1)}
+                        >
+                          <Box className="m-r-2">
+                            <img src={tabData.image} alt="" />
+                          </Box>
+                          {tabData.name}
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                  <Box className="tabs-content">
+                    {activeTabEcs === 0 ? (
+                      <ManagementInfo
+                        setNextTab={(activeTabEcs) => {
+                          this.setState({ activeTabEcs });
+                        }}
+                      />
+                    ) : activeTabEcs === 1 ? (
+                      <ConfigInfo
+                        setNextTab={(activeTabEcs) => {
+                          this.setState({ activeTabEcs });
+                        }}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </Box>
+                </Box>
+              </Box>
             ) : (
               <>
                 <Box className="tier-table-section m-t-4">
@@ -1093,43 +1146,6 @@ class Tier extends Component {
           ) : (
             <></>
           )}
-          <Box className="nginx-section">
-            <Box className="tabs">
-              <List className="tabs-menu">
-                {this.tabMapping.map((tabData, index) => {
-                  return (
-                    <ListItem
-                      key={`ops-tab-${index}`}
-                      className={index === activeTabEks ? "active" : ""}
-                      onClick={() => this.setActiveTab(index)}
-                    >
-                      <Box className="m-r-2">
-                        <img src={tabData.image} alt="" />
-                      </Box>
-                      {tabData.name}
-                    </ListItem>
-                  );
-                })}
-              </List>
-              <Box className="tabs-content">
-                {activeTabEks === 0 ? (
-                  <ManagementInfo
-                    setNextTab={(activeTabEks) => {
-                      this.setState({ activeTabEks });
-                    }}
-                  />
-                ) : activeTabEks === 1 ? (
-                  <ConfigInfo
-                    setNextTab={(activeTabEks) => {
-                      this.setState({ activeTabEks });
-                    }}
-                  />
-                ) : (
-                  <></>
-                )}
-              </Box>
-            </Box>
-          </Box>
         </Box>
       </Box>
     );
