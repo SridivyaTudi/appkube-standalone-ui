@@ -154,6 +154,7 @@ class Tier extends Component {
 
   componentDidMount = () => {
     window.addEventListener("load", this.redirectPage);
+    this.props.getCloudServices();
     this.props.getBiServicesFromProductCategory({
       productCategory: PRODUCT_CATEGORY_ENUM.THREE_TIER,
     });
@@ -315,20 +316,20 @@ class Tier extends Component {
           let data = [
             {
               backgroundColor: "#FFBA69",
-              label: "ID",
+              label: "ID : ",
               value: instance.instanceId,
               style: { borderBottom: "none" },
             },
             {
               backgroundColor: "#8676FF",
-              label: "Key",
+              label: "Name : ",
               value: instance.instanceName,
               style: { borderBottom: "none" },
             },
             {
               backgroundColor: "#FF2D2E",
-              label: "Value",
-              value: "-",
+              label: "VPC Id: ",
+              value: instance.productEnclaveInstanceId,
               style: { borderBottom: "none" },
             },
           ];
@@ -395,9 +396,6 @@ class Tier extends Component {
   onClickLayerDropDown = (key, value) => {
     let { selectedLayer } = this.state;
     selectedLayer[key] = value;
-
-    this.props.getCloudServices();
-
     this.setState({
       selectedLayer,
       isShowDepolyedSection: true,
@@ -500,6 +498,7 @@ class Tier extends Component {
     } else if (!savedLayer.aux) {
       savedLayer.aux = true;
       layerName = "aux";
+      this.props.navigate(`${APP_PREFIX_PATH}/bim`);
     }
 
     savedData.push({
@@ -565,7 +564,7 @@ class Tier extends Component {
       selectedService,
       selectedDeployedInstance,
       activeTabEks,
-      dropDownLayersData,
+      dropDownLayersData,savedLayer
     } = this.state;
     let { biServicesFromProductCategory, createProductFormData } = this.props;
     return (
@@ -948,7 +947,7 @@ class Tier extends Component {
                         <Box className="check-icons-box">
                           <List>
                             {Object.keys(selectedLayer).map((key) => {
-                              return selectedLayer[key] !== "" ? (
+                              return selectedLayer[key] !== "" && savedLayer[key] ? (
                                 <ListItem>
                                   <i className="fa-sharp fa-solid fa-circle-check"></i>
                                 </ListItem>
@@ -959,7 +958,6 @@ class Tier extends Component {
                           </List>
                         </Box>
                       </Box>
-                     
                     </Box>
                   )}
                 </Box>

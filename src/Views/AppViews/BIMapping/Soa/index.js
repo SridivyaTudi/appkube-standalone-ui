@@ -41,13 +41,7 @@ import {
   getCloudServices,
   getInstancesServices,
 } from "Redux/BIMapping/BIMappingThunk";
-import {
-  PRODUCT_CATEGORY_ENUM,
-  SERVICES_CATEGORY_OF_SOA_ENUM,
-  getSingleValueFromLocalStorage,
-  setSingleValueInLocalStorage,
-  removeSingleValueFromLocalStorage,
-} from "Utils";
+import { PRODUCT_CATEGORY_ENUM, SERVICES_CATEGORY_OF_SOA_ENUM } from "Utils";
 import { connect } from "react-redux";
 let serviceTableData = [
   {
@@ -133,7 +127,7 @@ class Soa extends Component {
 
   componentDidMount = () => {
     window.addEventListener("load", this.redirectPage);
-
+    this.props.getCloudServices();
     this.props.getBiServicesFromProductCategory({
       productCategory: PRODUCT_CATEGORY_ENUM.SOA,
     });
@@ -297,14 +291,14 @@ class Soa extends Component {
             },
             {
               backgroundColor: "#8676FF",
-              label: "Key",
+              label: "Name : ",
               value: instance.instanceName,
               style: { borderBottom: "none" },
             },
             {
               backgroundColor: "#FF2D2E",
-              label: "Value",
-              value: "-",
+              label: "VPC Id: ",
+              value: instance.productEnclaveInstanceId,
               style: { borderBottom: "none" },
             },
           ];
@@ -351,7 +345,7 @@ class Soa extends Component {
   onClickServiceDropDown = (key, value) => {
     let { selectedServiceData } = this.state;
     selectedServiceData[key] = value;
-    this.props.getCloudServices();
+
     this.setState({
       selectedServiceData,
       isShowDepolyedSection: true,
@@ -517,7 +511,7 @@ class Soa extends Component {
       selectedInstance,
       selectedDeployedInstance,
       selectedService,
-      dropDownServiceData,
+      dropDownServiceData,savedService
     } = this.state;
     let { biServicesFromProductCategory, createProductFormData } = this.props;
     return (
@@ -849,7 +843,8 @@ class Soa extends Component {
                               <i className="fa-sharp fa-solid fa-circle-check"></i>
                             </ListItem>
                             {Object.keys(selectedServiceData).map((key) => {
-                              return selectedServiceData[key] !== "" ? (
+                              return selectedServiceData[key] !== "" &&
+                                savedService[key] ? (
                                 <ListItem>
                                   <i className="fa-sharp fa-solid fa-circle-check"></i>
                                 </ListItem>

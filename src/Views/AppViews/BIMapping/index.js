@@ -396,7 +396,7 @@ class BIMapping extends Component {
 
   onClickNode(data) {
     let { type, departmentId, productId, productEnvId, id, name } = data;
-
+   
     if (type === this.TYPE.DEPARTMENT) {
       this.props.getProductList(id);
     } else if (type === this.TYPE.PRODUCT) {

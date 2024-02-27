@@ -54,7 +54,7 @@ const config = {
   GET_ELEMENT_TYPE: `/query/organization/#org-id#/bi-mapping/cloud-element?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#`,
   GET_ELEMENT_INSTANCES_TYPE: `/query/organization/#org-id#/bi-mapping/cloud-element-instance?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&elementType=#element-type#`,
   GET_BI_SERVICES_FROM_PRODUCT_CATEGORY: `/bi-service/search?productCategory=#product-category#`,
-  GET_CLOUD_SERVICES: `/cloud-service/search`,
+  GET_CLOUD_SERVICES: `/cloud-service/search?status=active`,
   GET_INSTANCES_SERVICES: `/cloud-element/search?cloud=#cloud-name#&elementType=#element-type#`,
 };
 
