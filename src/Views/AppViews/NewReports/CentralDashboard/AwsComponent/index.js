@@ -207,7 +207,7 @@ class AwsComponent extends Component {
             <Grid item xs={7}>
               <ChartWrapper
                 data={{
-                  title: "Most used services",
+                  title: "Top 5 Accounts",
                   labelOfBtn: "View Details",
                   link: "/app/new-reports/central-dashboard/cost-central-top-internal",
                 }}
@@ -219,16 +219,17 @@ class AwsComponent extends Component {
             <Grid item xs={5}>
               <ChartWrapper
                 data={{
-                  title: "Cost of Top Accounts",
+                  title: "Most used services",
                   labelOfBtn: "View Details",
                   link: "",
                 }}
                 ChartComponent={
                   <VerticalBarchart
+                  color={"#53CA43"}
                     data={costOfTopAccounts}
-                    styleProp={{
-                      color: "#53CA43",
-                    }}
+                    // styleProp={{
+                    //   color: "#53CA43",
+                    // }}
                   />
                 }
               />
@@ -236,7 +237,7 @@ class AwsComponent extends Component {
             <Grid item xs={4}>
               <ChartWrapper
                 data={{
-                  title: "Spend Overview",
+                  title: "Top 5 Region",
                   labelOfBtn: " View Details",
                   link: "",
                 }}
@@ -255,7 +256,7 @@ class AwsComponent extends Component {
             <Grid item xs={4}>
               <ChartWrapper
                 data={{
-                  title: "Spend Overview",
+                  title: "Top 5 Products",
                   labelOfBtn: " View Details",
                   link: "",
                 }}
@@ -274,7 +275,7 @@ class AwsComponent extends Component {
             <Grid item xs={4}>
               <ChartWrapper
                 data={{
-                  title: "Spend Overview",
+                  title: "Tagged Vs Untagged Cost",
                   labelOfBtn: " View Details",
                   link: "",
                 }}

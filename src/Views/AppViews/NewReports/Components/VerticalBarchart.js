@@ -83,7 +83,7 @@ class VerticalBarchart extends Component {
       .attr("y", (d) => yScale(d.value))
       .attr("width", xScale.bandwidth())
       .attr("height", (d) => height - yScale(d.value))
-      .attr("fill", this.props?.color ? "#FAA24B" : "#FA6298")
+      .attr("fill", this.props?.color ? this.props?.color  : "#FA6298")
       .attr("rx", 5);
   };
   render() {

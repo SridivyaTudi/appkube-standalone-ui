@@ -59,7 +59,15 @@ class CostCentralTopInternal extends Component {
     };
   }
 
+  handleSelectFilterModal = () => {
+    this.setState({
+      showSelectFilterModal: !this.state.showSelectFilterModal,
+     
+    });
+  };
+
   render() {
+    const {showSelectFilterModal}=this.state
     return (
       <>
         <Box className="new-reports-container">
@@ -81,7 +89,7 @@ class CostCentralTopInternal extends Component {
             </Box>
           </Box>
           <Box className="list-heading m-t-2 ">
-            <h4>Cost of Top Regions</h4>
+            <h4>Cost of Top 5 Accounts</h4>
             <Box className="d-flex ">
               <Button
                 className="light-btn p-l-15 p-r-15 m-r-3"
@@ -98,7 +106,7 @@ class CostCentralTopInternal extends Component {
             <TimeSpendComponent data={timeSpendData} />
           </Box>
           <Box className="table-head">
-            <h4 className="m-t-0 m-b-0">Overview of Top Regions</h4>
+            <h4 className="m-t-0 m-b-0">Cost of Top 5 Accounts</h4>
             <Box className="search">
               <input
                 type="text"
@@ -115,149 +123,37 @@ class CostCentralTopInternal extends Component {
           </Box>
           <Box className="new-reports-table">
             <TableContainer className="table">
-              <Table>
+              <Table style={{ width: 1500 }}>
                 <TableHead>
                   <TableRow>
-                    <TableCell align="left">Region</TableCell>
-                    <TableCell align="center">Service Count </TableCell>
-                    <TableCell align="center">Current month</TableCell>
-                    <TableCell align="center">Last Month</TableCell>
+                    <TableCell align="left">Account name</TableCell>
+                    <TableCell align="center">Account ID</TableCell>
+                    <TableCell align="left">Organization unit</TableCell>
+                    <TableCell align="center">Current month spend</TableCell>
+                    <TableCell align="center">Last month spend</TableCell>
+                    <TableCell align="center">Variance</TableCell>
+                    <TableCell align="center">Avg daily spend</TableCell>
                     <TableCell align="center">Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell align="left">US-East (N.virginia)</TableCell>
-                    <TableCell align="center">22</TableCell>
+                    <TableCell align="left">IT INFRA</TableCell>
+                    <TableCell align="center">160079380622</TableCell>
+                    <TableCell align="left"> Central Operations</TableCell>
                     <TableCell align="center">
-                      <strong> $2120</strong>
+                      <strong> $20,000</strong>
+                    </TableCell>
+                    <TableCell align="center">
+                      <strong> $30,000</strong>
+                    </TableCell>
+                    <TableCell align="center">
                       <Box className="variance-count">
-                        <i className="fas fa-sort-down p-l-5 m-r-1"></i> 10%
+                        10% <i className="fas fa-sort-down p-l-5 m-r-1"></i>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
-                      {" "}
-                      <strong> $20,000</strong>
-                    </TableCell>
-
-                    <TableCell align="center">
-                      <Link
-                        to={`/app/new-reports/central-dashboard/cost-central-services-internal`}
-                      >
-                        <Button className="light-btn p-l-15 p-r-15 ">
-                          view more <OpenInNewIcon className="p-l-5" />
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">US-East (N.virginia)</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell align="center">
-                      <strong> $2120</strong>
-                      <Box className="variance-count">
-                        <i className="fas fa-sort-up red p-l-5 m-r-1"></i> 10%
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      {" "}
-                      <strong> $20,000</strong>
-                    </TableCell>
-
-                    <TableCell align="center">
-                      <Link
-                        to={`/app/new-reports/central-dashboard/cost-central-services-internal`}
-                      >
-                        <Button className="light-btn p-l-15 p-r-15 ">
-                          view more <OpenInNewIcon className="p-l-5" />
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">US-East (N.virginia)</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell align="center">
-                      <strong> $2120</strong>
-                      <Box className="variance-count">
-                        <i className="fas fa-sort-down p-l-5 m-r-1"></i> 10%
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      {" "}
-                      <strong> $20,000</strong>
-                    </TableCell>
-
-                    <TableCell align="center">
-                      <Link
-                        to={`/app/new-reports/central-dashboard/cost-central-services-internal`}
-                      >
-                        <Button className="light-btn p-l-15 p-r-15 ">
-                          view more <OpenInNewIcon className="p-l-5" />
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">US-East (N.virginia)</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell align="center">
-                      <strong> $2120</strong>
-                      <Box className="variance-count">
-                        <i className="fas fa-sort-down p-l-5 m-r-1"></i> 10%
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      {" "}
-                      <strong> $20,000</strong>
-                    </TableCell>
-
-                    <TableCell align="center">
-                      <Link
-                        to={`/app/new-reports/central-dashboard/cost-central-services-internal`}
-                      >
-                        <Button className="light-btn p-l-15 p-r-15 ">
-                          view more <OpenInNewIcon className="p-l-5" />
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">US-East (N.virginia)</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell align="center">
-                      <strong> $2120</strong>
-                      <Box className="variance-count">
-                        <i className="fas fa-sort-up red p-l-5 m-r-1"></i> 10%
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      {" "}
-                      <strong> $20,000</strong>
-                    </TableCell>
-
-                    <TableCell align="center">
-                      <Link
-                        to={`/app/new-reports/central-dashboard/cost-central-services-internal`}
-                      >
-                        <Button className="light-btn p-l-15 p-r-15 ">
-                          view more <OpenInNewIcon className="p-l-5" />
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">US-East (N.virginia)</TableCell>
-                    <TableCell align="center">22</TableCell>
-                    <TableCell align="center">
-                      <strong> $2120</strong>
-                      <Box className="variance-count">
-                        <i className="fas fa-sort-up red p-l-5 m-r-1"></i> 10%
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      {" "}
-                      <strong> $20,000</strong>
+                      <strong> $1,205</strong>
                     </TableCell>
 
                     <TableCell align="center">
@@ -274,6 +170,14 @@ class CostCentralTopInternal extends Component {
               </Table>
             </TableContainer>
           </Box>
+          {showSelectFilterModal ? (
+          <SelectFilterModal
+            showModal={showSelectFilterModal}
+            handleSelectFilterModal={this.handleSelectFilterModal}
+          />
+        ) : (
+          <></>
+        )}
         </Box>
       </>
     );

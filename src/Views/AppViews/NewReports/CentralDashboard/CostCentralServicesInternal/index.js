@@ -59,7 +59,14 @@ class CostCentralServicesInternal extends Component {
     };
   }
 
+  handleSelectFilterModal = () => {
+    this.setState({
+      showSelectFilterModal: !this.state.showSelectFilterModal,
+    });
+  };
+
   render() {
+    const { showSelectFilterModal } = this.state;
     return (
       <>
         <Box className="new-reports-container">
@@ -158,9 +165,13 @@ class CostCentralServicesInternal extends Component {
                       <strong> $1,205</strong>
                     </TableCell>
                     <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
+                    <Link
+                        to={`/app/new-reports/central-dashboard/cost-central-services-internal-details`}
+                      >
+                        <Button className="light-btn p-l-15 p-r-15 ">
+                          view more <OpenInNewIcon className="p-l-5" />
+                        </Button>
+                      </Link>
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -186,9 +197,13 @@ class CostCentralServicesInternal extends Component {
                       <strong> $1,205</strong>
                     </TableCell>
                     <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
+                      <Link
+                        to={`/app/new-reports/central-dashboard/cost-central-services-internal-details`}
+                      >
+                        <Button className="light-btn p-l-15 p-r-15 ">
+                          view more <OpenInNewIcon className="p-l-5" />
+                        </Button>
+                      </Link>
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -419,6 +434,14 @@ class CostCentralServicesInternal extends Component {
               </Table>
             </TableContainer>
           </Box>
+          {showSelectFilterModal ? (
+            <SelectFilterModal
+              showModal={showSelectFilterModal}
+              handleSelectFilterModal={this.handleSelectFilterModal}
+            />
+          ) : (
+            <></>
+          )}
         </Box>
       </>
     );

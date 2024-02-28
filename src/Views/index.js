@@ -74,6 +74,7 @@ import SpendOverviewDetails from "Views/AppViews/NewReports/OverviewDashboard/Sp
 import TopUsedServicesDetails from "Views/AppViews/NewReports/OverviewDashboard/TopUsedServicesDetails";
 import CostCentralTopInternal from "./AppViews/NewReports/CentralDashboard/CostCentralTopInternal";
 import CostCentralServicesInternal from "./AppViews/NewReports/CentralDashboard/CostCentralServicesInternal";
+import CostCentralServicesInternalDetails from "./AppViews/NewReports/CentralDashboard/CostCentralServicesInternalDetails";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -328,6 +329,11 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/new-reports/central-dashboard/cost-central-services-internal`}
             element={<CostCentralServicesInternal />}
           />
+           <Route
+            path={`${APP_PREFIX_PATH}/new-reports/central-dashboard/cost-central-services-internal-details`}
+            element={<CostCentralServicesInternalDetails />}
+          />
+          
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route
             path={`${APP_PREFIX_PATH}/bim/add-product/:name?/product-category`}
