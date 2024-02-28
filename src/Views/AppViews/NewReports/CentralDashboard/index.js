@@ -30,6 +30,20 @@ class CentralDashboard extends Component {
     };
   }
 
+  componentWillUnmount() {
+    this.removeTooltipElement()
+  }
+
+  removeTooltipElement = () => {
+    try {
+      const elements = document.getElementsByClassName("chart-tooltip");
+      while (elements.length > 0) {
+        elements[0].parentNode.removeChild(elements[0]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
