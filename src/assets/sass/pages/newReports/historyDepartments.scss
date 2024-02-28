@@ -4,4 +4,73 @@
   padding: 22px;
   border: 2px solid transparent;
   min-height: 480px;
+  .status-cards {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 20px 0 10px 0;
+    .status-card {
+      margin: 0 5px 10px;
+      width: 250px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      background: #ffffff;
+      border-radius: 5px;
+      padding: 15px 10px;
+      border: 1px solid #f4f4f4;
+      outline: 1px solid transparent;
+      .status-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        min-width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: #f6f7fb;
+        padding: 10px;
+        &.light-green {
+          background: #E8F8EC;
+        }
+        &.light-blue {
+          background: #F3F3FF;
+        }
+        &.light-orange {
+          background: #FEF2E4;
+        }
+      }
+      .status-content {
+        margin-left: 10px;
+        label {
+          width: 90px;
+          font-size: 14px;
+          line-height: 18px;
+          font-weight: 600;
+          display: block;
+          color: #383874;
+          margin-bottom: 4px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        span {
+          font-size: 12px;
+          line-height: 16px;
+          font-weight: 400;
+          display: block;
+          color: #383874;
+          margin-bottom: 8px;
+        }
+        strong {
+          font-size: 16px;
+          line-height: 20px;
+          font-weight: 700;
+          display: block;
+          color: #383874;
+        }
+      }
+    }
+  }
 }

@@ -271,7 +271,7 @@ class Compute extends Component {
         <h3 className="m-t-3">{name} SPENDINGS</h3>
         <Box className="table-head">
           <h4 className="m-t-0 m-b-0">Cost consumption of {name}</h4>
-          <Box className="search">
+          <Box className="search m-r-0">
             <input
               type="text"
               className="input"
