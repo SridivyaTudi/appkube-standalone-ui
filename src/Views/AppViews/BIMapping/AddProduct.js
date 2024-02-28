@@ -26,8 +26,10 @@ class AddProduct extends Component {
     };
   }
 
-  handleNext() {
+  handleNext = (e) => {
+    e.preventDefault();
     let { developmentStatus, formData } = this.state;
+    console.log("in");
     this.setState(
       {
         isSubmit: true,
@@ -53,7 +55,7 @@ class AddProduct extends Component {
         }
       }
     );
-  }
+  };
 
   onClickLandingZone() {
     this.setState({ selectedLandingZone: "AWS" });
@@ -74,9 +76,10 @@ class AddProduct extends Component {
         </Button>
 
         <Button
+          type="submit"
           className="primary-btn"
           variant="contained"
-          onClick={() => this.handleNext()}
+          onClick={this.handleNext}
         >
           Next
         </Button>
@@ -174,7 +177,7 @@ class AddProduct extends Component {
     return { name };
   }
   render() {
-    const { formData, isSubmit, } = this.state;
+    const { formData, isSubmit } = this.state;
     let { errors } = this.validateForm();
     let { name } = this.getUrlDetails();
     name = name?.charAt(0)?.toUpperCase() + name?.slice(1);
@@ -185,8 +188,7 @@ class AddProduct extends Component {
             <Box className="department-left-content">
               <span className="d-flex width-100">{name}</span>
               <h2 className="d-flex width-100 m-t-0 m-b-0">
-                Add Product into the {name}{" "}
-                deparment
+                Add Product into the {name} deparment
               </h2>
               <Box className="d-flex width-100 banner-image">
                 <img
@@ -208,8 +210,7 @@ class AddProduct extends Component {
                     <Box className="department-text d-inline-block">
                       <label className="d-block">Adding Product</label>
                       <span className="d-block">
-                        A new Product will add in{" "}
-                        {name} department
+                        A new Product will add in {name} department
                       </span>
                     </Box>
                   </Box>
@@ -230,105 +231,122 @@ class AddProduct extends Component {
                         <i className="fa-solid fa-caret-down "></i>
                       </Box>
                     </Box>
-                    <Box className="information-form">
-                      <Box className="form-group ">
-                        <label htmlFor="roleName" className="form-label">
-                          Product Name
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="name"
-                          name="name"
-                          placeholder="HRMS"
-                          value={formData.name}
-                          onChange={this.handleInputChange}
-                        />
-                        {isSubmit && errors?.name ? (
-                          <span className="red">{errors.name}</span>
-                        ) : (
-                          ""
-                        )}
-                      </Box>
-                      <Box className="associate-title m-t-3">
-                        Select Environment
-                      </Box>
-                      <Box className="associate-boxs">
-                        <List>{this.renderEnvironments()}</List>
-                      </Box>
-                      {isSubmit && errors?.environment ? (
-                        <span className="red">{errors.environment}</span>
-                      ) : (
-                        ""
-                      )}
-                      {formData.environment ? (
-                        <Box className="select-category-section">
-                          <Box className="category-title">Select Category</Box>
-                          <Box className="select-categorys">
-                            <Box className="d-flex align-items-center m-r-3">
-                              <input
-                                type="radio"
-                                name="category"
-                                className="radio-btn"
-                                value={PRODUCT_CATEGORY_ENUM.THREE_TIER}
-                                checked={
-                                  formData.category ===
-                                  PRODUCT_CATEGORY_ENUM.THREE_TIER
-                                }
-                                onChange={this.handleInputChange}
-                                id={PRODUCT_CATEGORY_ENUM.THREE_TIER}
-                              />
-                              <label htmlFor={PRODUCT_CATEGORY_ENUM.THREE_TIER}>
-                                {PRODUCT_CATEGORY_ENUM.THREE_TIER}
-                              </label> 
-                            </Box>
-                            <Box className="d-flex align-items-center">
-                              <input
-                                type="radio"
-                                name="category"
-                                id={PRODUCT_CATEGORY_ENUM.SOA}
-                                className="radio-btn"
-                                value={PRODUCT_CATEGORY_ENUM.SOA}
-                                checked={
-                                  formData.category ===
-                                  PRODUCT_CATEGORY_ENUM.SOA
-                                }
-                                onChange={this.handleInputChange}
-                              />
-                              <label htmlFor={PRODUCT_CATEGORY_ENUM.SOA}>
-                                {PRODUCT_CATEGORY_ENUM.SOA}
-                              </label>
-                            </Box>
-                          </Box>
-                          {isSubmit && errors?.category ? (
-                            <span className="red">{errors.category}</span>
+                    <form
+                      onSubmit={(e) => {
+                        console.log(e);
+                        this.handleNext(e);
+                      }}
+                    >
+                      <Box className="information-form">
+                        <Box className="form-group ">
+                          <label htmlFor="roleName" className="form-label">
+                            Product Name
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="name"
+                            name="name"
+                            placeholder="HRMS"
+                            value={formData.name}
+                            onChange={this.handleInputChange}
+                          />
+                          {isSubmit && errors?.name ? (
+                            <span className="red">{errors.name}</span>
                           ) : (
                             ""
                           )}
-                          <Box className="form-group m-t-2">
-                            <label htmlFor="moduleName" className="form-label">
-                              Module Name
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="moduleName"
-                              name="moduleName"
-                              placeholder=""
-                              value={formData.moduleName}
-                              onChange={this.handleInputChange}
-                            />
-                            {isSubmit && errors?.moduleName ? (
-                              <span className="red">{errors.moduleName}</span>
+                        </Box>
+                        <Box className="associate-title m-t-3">
+                          Select Environment
+                        </Box>
+                        <Box className="associate-boxs">
+                          <List>{this.renderEnvironments()}</List>
+                        </Box>
+                        {isSubmit && errors?.environment ? (
+                          <span className="red">{errors.environment}</span>
+                        ) : (
+                          ""
+                        )}
+                        {formData.environment ? (
+                          <Box className="select-category-section">
+                            <Box className="category-title">
+                              Select Category
+                            </Box>
+                            <Box className="select-categorys">
+                              <Box className="d-flex align-items-center m-r-3">
+                                <input
+                                  type="radio"
+                                  name="category"
+                                  className="radio-btn"
+                                  value={PRODUCT_CATEGORY_ENUM.THREE_TIER}
+                                  checked={
+                                    formData.category ===
+                                    PRODUCT_CATEGORY_ENUM.THREE_TIER
+                                  }
+                                  onChange={this.handleInputChange}
+                                  id={PRODUCT_CATEGORY_ENUM.THREE_TIER}
+                                />
+                                <label
+                                  htmlFor={PRODUCT_CATEGORY_ENUM.THREE_TIER}
+                                >
+                                  {PRODUCT_CATEGORY_ENUM.THREE_TIER}
+                                </label>
+                              </Box>
+                              <Box className="d-flex align-items-center">
+                                <input
+                                  type="radio"
+                                  name="category"
+                                  id={PRODUCT_CATEGORY_ENUM.SOA}
+                                  className="radio-btn"
+                                  value={PRODUCT_CATEGORY_ENUM.SOA}
+                                  checked={
+                                    formData.category ===
+                                    PRODUCT_CATEGORY_ENUM.SOA
+                                  }
+                                  onChange={this.handleInputChange}
+                                />
+                                <label htmlFor={PRODUCT_CATEGORY_ENUM.SOA}>
+                                  {PRODUCT_CATEGORY_ENUM.SOA}
+                                </label>
+                              </Box>
+                            </Box>
+                            {isSubmit && errors?.category ? (
+                              <span className="red">{errors.category}</span>
                             ) : (
                               ""
                             )}
+                            <Box className="form-group m-t-2">
+                              <label
+                                htmlFor="moduleName"
+                                className="form-label"
+                              >
+                                Module Name
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="moduleName"
+                                name="moduleName"
+                                placeholder=""
+                                value={formData.moduleName}
+                                onChange={this.handleInputChange}
+                                onKeyPress={(e) =>
+                                  e.key === "Enter" ? this.handleNext(e) : ""
+                                }
+                              />
+                              {isSubmit && errors?.moduleName ? (
+                                <span className="red">{errors.moduleName}</span>
+                              ) : (
+                                ""
+                              )}
+                            </Box>
                           </Box>
-                        </Box>
-                      ) : (
-                        <></>
-                      )}
-                    </Box>
+                        ) : (
+                          <></>
+                        )}
+                      </Box>
+                    </form>
                   </Box>
                 </Box>
                 {this.renderBtns()}
