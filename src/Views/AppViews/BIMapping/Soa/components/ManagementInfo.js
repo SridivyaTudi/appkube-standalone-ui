@@ -12,30 +12,79 @@ import {
   Select,
 } from "@mui/material";
 import { v4 } from "uuid";
+let HOSTED_ON_DROP_DOWN = ["ec2", "eks", "ecs", "lambda", "s3"];
+let MANAGEMENT_ENDPOINT__DROP_DOWN = ["ip/port", "dns"];
+let PROMETHEUS_ENDPOINT_DROP_DOWN = ["ip/port", "dns"];
+let LOG_LOCATION_DROP_DOWN = ["Cloudwatch", "server"];
+
 let data = [
   {
     key: "Hosted on",
-    value: "",
-    subKey: "Instance ID	",
-    subValue: "user input",
+    dropDownValues: HOSTED_ON_DROP_DOWN,
+    subKeyValue: {
+      ec2: {
+        subKey: "Instance ID",
+        subValue: "user input",
+      },
+      eks: {
+        subKey: "cluster id",
+        subValue: "user input",
+      },
+      ecs: {
+        subKey: "cluster id",
+        subValue: "user input",
+      },
+      lambda: {
+        subKey: "function name",
+        subValue: "user input",
+      },
+      s3: {
+        subKey: "bucket name",
+        subValue: "user input",
+      },
+    },
   },
   {
     key: "Management Endpoint	",
-    value: "",
-    subKey: "Instance ID	",
-    subValue: "user input",
+    dropDownValues: MANAGEMENT_ENDPOINT__DROP_DOWN,
+    subKeyValue: {
+      "ip/port": {
+        subKey: "ip/port",
+        subValue: "user input",
+      },
+      dns: {
+        subKey: "dns",
+        subValue: "user input",
+      },
+    },
   },
   {
     key: "Prometheus Endpoint",
-    value: "",
-    subKey: "Instance ID	",
-    subValue: "user input",
+    dropDownValues: PROMETHEUS_ENDPOINT_DROP_DOWN,
+    subKeyValue: {
+      "ip/port": {
+        subKey: "ip/port",
+        subValue: "user input",
+      },
+      dns: {
+        subKey: "dns",
+        subValue: "user input",
+      },
+    },
   },
   {
     key: "Log Location",
-    value: "",
-    subKey: "Instance ID	",
-    subValue: "user input",
+    dropDownValues: LOG_LOCATION_DROP_DOWN,
+    subKeyValue: {
+      Cloudwatch: {
+        subKey: "Log group",
+        subValue: "user input",
+      },
+      server: {
+        subKey: "Promtail",
+        subValue: "user input",
+      },
+    },
   },
 ];
 class ManagementInfo extends Component {
@@ -84,7 +133,7 @@ class ManagementInfo extends Component {
   };
 
   renderTableBody = () => {
-    let { tableData } = this.state;
+    let { tableData,selectedInfo } = this.state;
     return (
       <TableBody>
         {tableData.map((info, index) => {
@@ -99,9 +148,7 @@ class ManagementInfo extends Component {
                   >
                     <Select
                       className="fliter-toggel"
-                      value={`${
-                        this.state.selectedInfo[`${info.key}_${index}`] || ""
-                      }`}
+                      value={`${selectedInfo[`${info.key}_${index}`] || ""}`}
                       onChange={(e) =>
                         this.handleChange(e, `${info.key}_${index}`)
                       }
@@ -109,16 +156,21 @@ class ManagementInfo extends Component {
                       inputProps={{ "aria-label": "Without label" }}
                     >
                       <MenuItem value="">Select </MenuItem>
-                      <MenuItem value={10}>Eks</MenuItem>
-                      <MenuItem value={20}>Ecs</MenuItem>
-                      <MenuItem value={30}>Ec2</MenuItem>
-                      <MenuItem value={40}>S3</MenuItem>
+                      {info.dropDownValues.map((val) => (
+                        <MenuItem value={val}>{val}</MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
                 </Box>
               </TableCell>
-              <TableCell align="center">{info.subKey} </TableCell>
-              <TableCell align="center">{info.subValue}</TableCell>
+              <TableCell align="center">
+                {info.subKeyValue[selectedInfo[`${info.key}_${index}`]]
+                  ?.subKey || "-"}{" "}
+              </TableCell>
+              <TableCell align="center">
+                {info.subKeyValue[selectedInfo[`${info.key}_${index}`]]
+                  ?.subValue || "-"}
+              </TableCell>
             </TableRow>
           );
         })}
