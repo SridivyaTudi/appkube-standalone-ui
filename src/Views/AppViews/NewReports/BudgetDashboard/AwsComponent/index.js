@@ -207,7 +207,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Accounts With High Spending",
                   labelOfBtn: "View Details",
-                  link: "",
+                  link: "/app/new-reports/budget-dashboard/budget-account",
                 }}
                 ChartComponent={
                   <VerticalBarChart_NarrowBar/>
