@@ -15,14 +15,7 @@ import { Link } from "react-router-dom";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import ServiceIcon7 from "assets/img/report/service-icon7.png";
-import ServiceIcon8 from "assets/img/report/service-icon8.png";
-import ServiceIcon9 from "assets/img/report/service-icon9.png";
-import ServiceIcon10 from "assets/img/report/service-icon10.png";
-import ServiceIcon11 from "assets/img/report/service-icon11.png";
-import ServiceIcon12 from "assets/img/report/service-icon12.png";
-import ServiceIcon13 from "assets/img/report/service-icon13.png";
-import ServiceIcon14 from "assets/img/report/service-icon14.png";
-import ServiceIcon15 from "assets/img/report/service-icon15.png";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 let timeSpendData = [
   {
     name: "Last Month Spend",
@@ -43,8 +36,109 @@ let timeSpendData = [
     subName: "",
   },
 ];
-
+let data = [
+  {
+    name: "EC2",
+    lastMonthSpend: "$2,000",
+    monthSpend: "$1,800",
+    variance: "15%",
+  },
+  {
+    name: "EC2",
+    lastMonthSpend: "$2,000",
+    monthSpend: "$1,800",
+    variance: "15%",
+  },
+  {
+    name: "EC2",
+    lastMonthSpend: "$2,000",
+    monthSpend: "$1,800",
+    variance: "15%",
+  },
+  {
+    name: "EC2",
+    lastMonthSpend: "$2,000",
+    monthSpend: "$1,800",
+    variance: "15%",
+  },
+  {
+    name: "EC2",
+    lastMonthSpend: "$2,000",
+    monthSpend: "$1,800",
+    variance: "15%",
+  },
+  {
+    name: "EC2",
+    lastMonthSpend: "$2,000",
+    monthSpend: "$1,800",
+    variance: "15%",
+  },
+  {
+    name: "EC2",
+    lastMonthSpend: "$2,000",
+    monthSpend: "$1,800",
+    variance: "15%",
+  },
+];
 class ItDepartment extends Component {
+  //  Render table head
+  renderTableHead = () => {
+    return (
+      <TableHead>
+        <TableRow>
+          <TableCell align="left">Service name</TableCell>
+          <TableCell align="center">last month spend </TableCell>
+          <TableCell align="center">This month spend </TableCell>
+          <TableCell align="center">variance</TableCell>
+          <TableCell align="center">Actions</TableCell>
+        </TableRow>
+      </TableHead>
+    );
+  };
+
+  //  Render table body
+  renderTableBody = () => {
+    return (
+      <TableBody>
+        {data?.length ? (
+          data.map((details) => {
+            return (
+              <TableRow>
+                <TableCell align="left">
+                  <Box className="service-image d-inline-block">
+                    <img src={ServiceIcon7} alt="" />
+                  </Box>
+                  {details.name}
+                </TableCell>
+                <TableCell align="center"> {details.lastMonthSpend}</TableCell>
+                <TableCell align="center"> {details.monthSpend}</TableCell>
+                <TableCell align="center">
+                  <Box className="variance-count">
+                    {details.variance} <i class="fas fa-sort-down p-l-5"></i>
+                  </Box>
+                </TableCell>
+                <TableCell align="center">
+                  <Link
+                    to={`/app/new-reports/chargeback-dashboard/department/department-details`}
+                  >
+                    <Button className="light-btn p-l-15 p-r-15 ">
+                      view more <OpenInNewIcon className="p-l-5" />
+                    </Button>
+                  </Link>
+                </TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <Box className="d-blck text-center w-100 h-100 ">
+            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+              <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+            </Box>
+          </Box>
+        )}
+      </TableBody>
+    );
+  };
   render() {
     return (
       <Box className="new-reports-container">
@@ -52,7 +146,11 @@ class ItDepartment extends Component {
           <Box className="heading">
             <Box className="breadcrumbs">
               <ul>
-                <li>
+                <li
+                  onClick={() =>
+                    this.props.navigate("/app/new-reports/chargeback-dashboard")
+                  }
+                >
                   <p> Chargeback Dashboard</p>
                 </li>
                 <li>
@@ -67,7 +165,7 @@ class ItDepartment extends Component {
         </Box>
         <Box className="list-heading m-t-3">
           <h3>
-            <Link to={`/app/new-reports/over-view-dashboard`}>
+            <Link to={`/app/new-reports/chargeback-dashboard`}>
               <IconButton className="m-r-2">
                 <i class="fas fa-long-arrow-left"></i>
               </IconButton>
@@ -141,221 +239,8 @@ class ItDepartment extends Component {
           <Box className="new-reports-table">
             <TableContainer className="table">
               <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">Service name</TableCell>
-                    <TableCell align="center">last month spend </TableCell>
-                    <TableCell align="center">This month spend </TableCell>
-                    <TableCell align="center">variance</TableCell>
-                    <TableCell align="center">Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon7} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Link
-                        to={`/app/new-reports/chargeback-dashboard/it-department-details`}
-                      >
-                        <Button className="light-btn p-l-15 p-r-15 ">
-                          view more <OpenInNewIcon className="p-l-5" />
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon9} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon8} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon9} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon10} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon11} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon12} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon13} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon14} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon15} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
+                {this.renderTableHead()}
+                {this.renderTableBody()}
               </Table>
             </TableContainer>
           </Box>
@@ -364,5 +249,4 @@ class ItDepartment extends Component {
     );
   }
 }
-
-export default ItDepartment;
+export default navigateRouter(ItDepartment);

@@ -188,7 +188,191 @@ let timeSpendData = [
   },
 ];
 var potentialSavingData = [45, 33, 66, 50, 90];
+let data = [
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+    actions: "",
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+    actions: "",
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+    actions: "",
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+    actions: "",
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+    actions: "",
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+    actions: "",
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+    actions: "",
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+    actions: "",
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+    actions: "",
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+    actions: "",
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+    actions: "",
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+    actions: "",
+  },
+];
 class AwsComponent extends Component {
+  //  Render table head
+  renderTableHead = () => {
+    return (
+      <TableHead>
+        <TableRow>
+          <TableCell align="left">Month</TableCell>
+          <TableCell align="center">Account-ID</TableCell>
+          <TableCell align="left">Department </TableCell>
+          <TableCell align="center">Budget</TableCell>
+          <TableCell align="center">Current Month’s Spend</TableCell>
+          <TableCell align="center">Differenece</TableCell>
+          <TableCell align="left">Payment Status </TableCell>
+          <TableCell align="center">Actions</TableCell>
+        </TableRow>
+      </TableHead>
+    );
+  };
+
+  //  Render table body
+  renderTableBody = () => {
+    return (
+      <TableBody>
+        {data?.length ? (
+          data.map((details) => {
+            return (
+              <TableRow>
+                <TableCell align="left">{details.month}</TableCell>
+                <TableCell align="center">{details.accountId}</TableCell>
+                <TableCell align="left">{details.department} </TableCell>
+                <TableCell align="center">{details.budget}</TableCell>
+                <TableCell align="center">
+                  {details.currentMonthSpend}
+                </TableCell>
+                <TableCell align="center">
+                  <Box className="variance-count d-flex">
+                    <i class="fas fa-sort-down p-r-5"></i> {details.difference}
+                  </Box>
+                </TableCell>
+                <TableCell align="left">
+                  <Box className="payment-status pending"></Box>
+                  {details.paymentStatus}
+                </TableCell>
+                <TableCell align="center">
+                  <Link to={`/app/new-reports/chargeback-dashboard/department`}>
+                    <Button className="light-btn p-l-15 p-r-15 ">
+                      view more <OpenInNewIcon className="p-l-5" />
+                    </Button>
+                  </Link>
+                </TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <Box className="d-blck text-center w-100 h-100 ">
+            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+              <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+            </Box>
+          </Box>
+        )}
+      </TableBody>
+    );
+  };
   render() {
     return (
       <>
@@ -239,184 +423,8 @@ class AwsComponent extends Component {
         <Box className="new-reports-table">
           <TableContainer className="table">
             <Table style={{ width: 1700 }}>
-              <TableHead>
-                <TableRow>
-                  <TableCell align="left">Month</TableCell>
-                  <TableCell align="center">Account-ID</TableCell>
-                  <TableCell align="left">Department </TableCell>
-                  <TableCell align="center">Budget</TableCell>
-                  <TableCell align="center">Current Month’s Spend</TableCell>
-                  <TableCell align="center">Differenece</TableCell>
-                  <TableCell align="left">Payment Status </TableCell>
-                  <TableCell align="center">Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell align="left">January, 2023</TableCell>
-                  <TableCell align="center">160079380622</TableCell>
-                  <TableCell align="left">Information Technology </TableCell>
-                  <TableCell align="center">$10,000</TableCell>
-                  <TableCell align="center">$12,800</TableCell>
-                  <TableCell align="center">
-                    <Box className="variance-count d-flex">
-                      <i class="fas fa-sort-down p-r-5"></i> $2,800
-                    </Box>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Box className="payment-status pending"></Box>Pending
-                  </TableCell>
-                  <TableCell align="center">
-                    <Link
-                      to={`/app/new-reports/chargeback-dashboard/it-department`}
-                    >
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </Link>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">January, 2023</TableCell>
-                  <TableCell align="center">160079380622</TableCell>
-                  <TableCell align="left">Information Technology </TableCell>
-                  <TableCell align="center">$10,000</TableCell>
-                  <TableCell align="center">$12,800</TableCell>
-                  <TableCell align="center">
-                    <Box className="variance-count d-flex">
-                      <i class="fas fa-sort-down p-r-5"></i> $2,800
-                    </Box>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Box className="payment-status"></Box>Invoice sent
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button className="light-btn p-l-15 p-r-15 ">
-                      view more <OpenInNewIcon className="p-l-5" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">January, 2023</TableCell>
-                  <TableCell align="center">160079380622</TableCell>
-                  <TableCell align="left">Information Technology </TableCell>
-                  <TableCell align="center">$10,000</TableCell>
-                  <TableCell align="center">$12,800</TableCell>
-                  <TableCell align="center">
-                    <Box className="variance-count d-flex">
-                      <i class="fas fa-sort-down p-r-5"></i> $2,800
-                    </Box>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Box className="payment-status"></Box>Invoice sent
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button className="light-btn p-l-15 p-r-15 ">
-                      view more <OpenInNewIcon className="p-l-5" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">January, 2023</TableCell>
-                  <TableCell align="center">160079380622</TableCell>
-                  <TableCell align="left">Information Technology </TableCell>
-                  <TableCell align="center">$10,000</TableCell>
-                  <TableCell align="center">$12,800</TableCell>
-                  <TableCell align="center">
-                    <Box className="variance-count d-flex">
-                      <i class="fas fa-sort-down p-r-5"></i> $2,800
-                    </Box>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Box className="payment-status"></Box>Invoice sent
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button className="light-btn p-l-15 p-r-15 ">
-                      view more <OpenInNewIcon className="p-l-5" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">January, 2023</TableCell>
-                  <TableCell align="center">160079380622</TableCell>
-                  <TableCell align="left">Information Technology </TableCell>
-                  <TableCell align="center">$10,000</TableCell>
-                  <TableCell align="center">$12,800</TableCell>
-                  <TableCell align="center">
-                    <Box className="variance-count d-flex">
-                      <i class="fas fa-sort-down p-r-5"></i> $2,800
-                    </Box>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Box className="payment-status"></Box>Invoice sent
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button className="light-btn p-l-15 p-r-15 ">
-                      view more <OpenInNewIcon className="p-l-5" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">January, 2023</TableCell>
-                  <TableCell align="center">160079380622</TableCell>
-                  <TableCell align="left">Information Technology </TableCell>
-                  <TableCell align="center">$10,000</TableCell>
-                  <TableCell align="center">$12,800</TableCell>
-                  <TableCell align="center">
-                    <Box className="variance-count d-flex">
-                      <i class="fas fa-sort-down p-r-5"></i> $2,800
-                    </Box>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Box className="payment-status"></Box>Invoice sent
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button className="light-btn p-l-15 p-r-15 ">
-                      view more <OpenInNewIcon className="p-l-5" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">January, 2023</TableCell>
-                  <TableCell align="center">160079380622</TableCell>
-                  <TableCell align="left">Information Technology </TableCell>
-                  <TableCell align="center">$10,000</TableCell>
-                  <TableCell align="center">$12,800</TableCell>
-                  <TableCell align="center">
-                    <Box className="variance-count d-flex">
-                      <i class="fas fa-sort-down p-r-5"></i> $2,800
-                    </Box>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Box className="payment-status"></Box>Invoice sent
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button className="light-btn p-l-15 p-r-15 ">
-                      view more <OpenInNewIcon className="p-l-5" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">January, 2023</TableCell>
-                  <TableCell align="center">160079380622</TableCell>
-                  <TableCell align="left">Information Technology </TableCell>
-                  <TableCell align="center">$10,000</TableCell>
-                  <TableCell align="center">$12,800</TableCell>
-                  <TableCell align="center">
-                    <Box className="variance-count d-flex">
-                      <i class="fas fa-sort-down p-r-5"></i> $2,800
-                    </Box>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Box className="payment-status"></Box>Invoice sent
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button className="light-btn p-l-15 p-r-15 ">
-                      view more <OpenInNewIcon className="p-l-5" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
+              {this.renderTableHead()}
+              {this.renderTableBody()}
             </Table>
           </TableContainer>
         </Box>

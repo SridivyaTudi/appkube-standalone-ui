@@ -312,11 +312,11 @@ export const Views = (props) => {
             element={<ChargebackDashboard />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/it-department`}
+            path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/department`}
             element={<ItDepartment />}
           />
            <Route
-            path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/it-department-details`}
+            path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/department/department-details`}
             element={<ItDepartmentDetails />}
           />
           <Route
