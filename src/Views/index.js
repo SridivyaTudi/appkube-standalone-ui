@@ -336,11 +336,11 @@ export const Views = (props) => {
             element={<CostCentralTopInternal />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/new-reports/central-dashboard/cost-central-services-internal`}
+             path={`${APP_PREFIX_PATH}/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal`}
             element={<CostCentralServicesInternal />}
           />
            <Route
-            path={`${APP_PREFIX_PATH}/new-reports/central-dashboard/cost-central-services-internal-details`}
+            path={`${APP_PREFIX_PATH}/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details`}
             element={<CostCentralServicesInternalDetails />}
           />
           

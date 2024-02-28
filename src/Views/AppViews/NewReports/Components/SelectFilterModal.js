@@ -1,5 +1,12 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box, FormControl, MenuItem, Select, IconButton,  Checkbox, } from "@mui/material/";
+import {
+  Box,
+  FormControl,
+  MenuItem,
+  Select,
+  IconButton,
+  Checkbox,
+} from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import status from "Redux/Constants/CommonDS";
@@ -8,10 +15,6 @@ import { getCurrentUser } from "Utils";
 import { v4 } from "uuid";
 import Loader from "Components/Loader";
 let dropDownData = [
-  {
-    name: "Select All Regions",
-    value: "1",
-  },
   {
     name: "eu-east-1",
     value: "2",
@@ -22,12 +25,20 @@ let dropDownData = [
   },
   {
     name: "ap-south-1",
-    value: "3",
+    value: "4",
   },
   {
     name: "ap-south-2",
-    value: "3",
+    value: "5",
   },
+];
+
+let dropDowns = [
+  "Select Regions",
+  "Select VPCs",
+  "Select Tagname",
+  "Select Accounts",
+  "Select Products",
 ];
 class SelectFilterModal extends Component {
   user = { id: "", username: "" };
@@ -38,7 +49,7 @@ class SelectFilterModal extends Component {
       description: "",
       isSubmit: false,
       policyList: [],
-      selectedPolicy: [],
+      selectedPolicy: {},
     };
     let userDetails = getCurrentUser()?.info?.user;
     if (userDetails) {
@@ -52,48 +63,14 @@ class SelectFilterModal extends Component {
     this.setState({ [name]: value });
   };
 
-  handleSelectboxChange = (event) => {
+  handleSelectboxChange = (event, index) => {
     const {
       target: { value },
     } = event;
-    this.setState({ selectedPolicy: value });
-  };
+    let { selectedPolicy } = this.state;
 
-  // Validate form input fields
-  validateForm = (isSubmit) => {
-    const { name, description, selectedPolicy } = this.state;
-    const errors = {
-      name: "",
-      description: "",
-    };
-    let isValid = true;
-    if (isSubmit) {
-      if (!name) {
-        errors.name = "Role Name is required!";
-        isValid = false;
-      } else {
-        errors.name = "";
-      }
-
-      if (!description) {
-        errors.description = "Role Description is required!";
-        isValid = false;
-      } else if (description.length > 255) {
-        errors.description =
-          "Role Description should be a maximum of 255 characters.";
-        isValid = false;
-      } else {
-        errors.description = "";
-      }
-
-      if (!selectedPolicy.length) {
-        errors.policy = "Policy is required!";
-        isValid = false;
-      } else {
-        errors.policy = "";
-      }
-    }
-    return { isValid, errors };
+    selectedPolicy[index] = value;
+    this.setState({ selectedPolicy });
   };
 
   // Call API create role
@@ -140,9 +117,12 @@ class SelectFilterModal extends Component {
           <Checkbox
             className="check-box"
             size="small"
-            // onChange={this.handleCheckBox}
+            onClick={(e) => {
+              e.stopPropagation();
+              
+            }}
           />
-           {policy.name}
+          {policy.name}
         </MenuItem>
       ));
     }
@@ -179,18 +159,9 @@ class SelectFilterModal extends Component {
     );
   };
 
-  setStatePolicies = () => {
-    let policyList = this.props.userPermissionData.data?.policies || [];
-    if (policyList.length) {
-      this.setState({ policyList });
-    } else {
-      this.setState({ policyList: [] });
-    }
-  };
   render() {
-    let { name, description, isSubmit, selectedPolicy, policyList } =
-      this.state;
-    const { errors } = this.validateForm(isSubmit);
+    let { selectedPolicy } = this.state;
+    const errors = {};
     let { roleUpdation, roleCreation, roleDetailsById } = this.props;
     let createOrUpdateStatus = [
       roleCreation?.status,
@@ -226,210 +197,41 @@ class SelectFilterModal extends Component {
         ) : (
           <form onSubmit={this.handleRoleSubmit}>
             <ModalBody>
-              <Box className="form-group">
-                <FormControl className="select-policy">
-                  <Select
-                    labelId="demo-multiple-name-label"
-                    multiple
-                    displayEmpty
-                    renderValue={(selected) => {
-                      if (selected.length === 0) {
-                        return <em>Select Regions</em>;
-                      }
-                      let labels = [];
-                      dropDownData.forEach((policy) => {
-                        if (selected.includes(policy.value)) {
-                          labels.push(policy.name);
-                        }
-                      });
-                      return labels.join(", ");
-                    }}
-                    value={selectedPolicy}
-                    onChange={this.handleSelectboxChange}
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem disabled value="">
-                      <em>Select Regions</em>
-                    </MenuItem>
-                    {this.renderPolicies()}
-                  </Select>
-                </FormControl>
-                {errors.policy ? (
-                  <span className="red">{errors.policy}</span>
-                ) : (
-                  <></>
-                )}
-              </Box>
-              <Box className="form-group">
-                <FormControl className="select-policy">
-                  <Select
-                    labelId="demo-multiple-name-label"
-                    multiple
-                    displayEmpty
-                    renderValue={(selected) => {
-                      if (selected.length === 0) {
-                        return <em>Select VPCs</em>;
-                      }
-                      let labels = [];
-                      dropDownData.forEach((policy) => {
-                        if (selected.includes(policy.value)) {
-                          labels.push(policy.name);
-                        }
-                      });
-                      return labels.join(", ");
-                    }}
-                    value={selectedPolicy}
-                    onChange={this.handleSelectboxChange}
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem disabled value="">
-                      <em>Select VPCs</em>
-                    </MenuItem>
-                    {this.renderPolicies()}
-                  </Select>
-                </FormControl>
-                {errors.policy ? (
-                  <span className="red">{errors.policy}</span>
-                ) : (
-                  <></>
-                )}
-              </Box>
-              <Box className="form-group">
-                <FormControl className="select-policy">
-                  <Select
-                    labelId="demo-multiple-name-label"
-                    multiple
-                    displayEmpty
-                    renderValue={(selected) => {
-                      if (selected.length === 0) {
-                        return <em>Select Tagname</em>;
-                      }
-                      let labels = [];
-                      dropDownData.forEach((policy) => {
-                        if (selected.includes(policy.value)) {
-                          labels.push(policy.name);
-                        }
-                      });
-                      return labels.join(", ");
-                    }}
-                    value={selectedPolicy}
-                    onChange={this.handleSelectboxChange}
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem disabled value="">
-                      <em>Select Tagname</em>
-                    </MenuItem>
-                    {this.renderPolicies()}
-                  </Select>
-                </FormControl>
-                {errors.policy ? (
-                  <span className="red">{errors.policy}</span>
-                ) : (
-                  <></>
-                )}
-              </Box>
-              <Box className="form-group">
-                <FormControl className="select-policy">
-                  <Select
-                    labelId="demo-multiple-name-label"
-                    multiple
-                    displayEmpty
-                    renderValue={(selected) => {
-                      if (selected.length === 0) {
-                        return <em>Select Accounts</em>;
-                      }
-                      let labels = [];
-                      dropDownData.forEach((policy) => {
-                        if (selected.includes(policy.value)) {
-                          labels.push(policy.name);
-                        }
-                      });
-                      return labels.join(", ");
-                    }}
-                    value={selectedPolicy}
-                    onChange={this.handleSelectboxChange}
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem disabled value="">
-                      <em>Select Accounts</em>
-                    </MenuItem>
-                    {this.renderPolicies()}
-                  </Select>
-                </FormControl>
-                {errors.policy ? (
-                  <span className="red">{errors.policy}</span>
-                ) : (
-                  <></>
-                )}
-              </Box>
-              <Box className="form-group">
-                <FormControl className="select-policy">
-                  <Select
-                    labelId="demo-multiple-name-label"
-                    multiple
-                    displayEmpty
-                    renderValue={(selected) => {
-                      if (selected.length === 0) {
-                        return <em>Select Products</em>;
-                      }
-                      let labels = [];
-                      dropDownData.forEach((policy) => {
-                        if (selected.includes(policy.value)) {
-                          labels.push(policy.name);
-                        }
-                      });
-                      return labels.join(", ");
-                    }}
-                    value={selectedPolicy}
-                    onChange={this.handleSelectboxChange}
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem disabled value="">
-                      <em>Select Products</em>
-                    </MenuItem>
-                    {this.renderPolicies()}
-                  </Select>
-                </FormControl>
-                {errors.policy ? (
-                  <span className="red">{errors.policy}</span>
-                ) : (
-                  <></>
-                )}
-              </Box>
-              <Box className="form-group">
-                <FormControl className="select-policy">
-                  <Select
-                    labelId="demo-multiple-name-label"
-                    multiple
-                    displayEmpty
-                    renderValue={(selected) => {
-                      if (selected.length === 0) {
-                        return <em>Select Regions</em>;
-                      }
-                      let labels = [];
-                      dropDownData.forEach((policy) => {
-                        if (selected.includes(policy.value)) {
-                          labels.push(policy.name);
-                        }
-                      });
-                      return labels.join(", ");
-                    }}
-                    value={selectedPolicy}
-                    onChange={this.handleSelectboxChange}
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem disabled value="">
-                      <em>Select Regions</em>
-                    </MenuItem>
-                    {this.renderPolicies()}
-                  </Select>
-                </FormControl>
-                {errors.policy ? (
-                  <span className="red">{errors.policy}</span>
-                ) : (
-                  <></>
-                )}
-              </Box>
+              {dropDowns.map((filter, index) => {
+                return (
+                  <Box className="form-group" key={v4()}>
+                    <FormControl className="select-policy">
+                      <Select
+                        labelId="demo-multiple-name-label"
+                        multiple
+                        displayEmpty
+                        renderValue={(selected) => {
+                          if (selected.length === 0) {
+                            return <em>{filter}</em>;
+                          }
+                          let labels = [];
+                          dropDownData.forEach((policy) => {
+                            if (selected.includes(policy.value)) {
+                              labels.push(policy.name);
+                            }
+                          });
+                          return labels.join(", ");
+                        }}
+                        value={selectedPolicy[index] || []}
+                        onChange={(e) => this.handleSelectboxChange(e, index)}
+                        inputProps={{ "aria-label": "Without label" }}
+                      >
+                        {this.renderPolicies()}
+                      </Select>
+                    </FormControl>
+                    {errors.policy ? (
+                      <span className="red">{errors.policy}</span>
+                    ) : (
+                      <></>
+                    )}
+                  </Box>
+                );
+              })}
             </ModalBody>
 
             <ModalFooter className="footer-top-br">

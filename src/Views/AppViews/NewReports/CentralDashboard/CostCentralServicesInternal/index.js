@@ -1,29 +1,11 @@
 import React, { Component } from "react";
-import {
-  Box,
-  Button,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  List,
-  ListItem,
-  IconButton,
-} from "@mui/material";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { Box, Button } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-
-import { Link } from "react-router-dom";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import ServiceIcon1 from "assets/img/report/service-icon1.png";
-import ServiceIcon2 from "assets/img/report/service-icon2.png";
-import ServiceIcon3 from "assets/img/report/service-icon3.png";
-import ServiceIcon4 from "assets/img/report/service-icon4.png";
-import ServiceIcon5 from "assets/img/report/service-icon5.png";
-import ServiceIcon6 from "assets/img/report/service-icon6.png";
+import AccountTable from "../Components/AccountTable";
 let timeSpendData = [
   {
     name: "Month to date spend",
@@ -50,12 +32,134 @@ let timeSpendData = [
     subName: "",
   },
 ];
-
+let tableHeader = [
+  "Service name	",
+  "Current month spend",
+  "Last month Spend	",
+  "Variance",
+  "Avg daily spend	",
+  "Actions",
+];
+let dummyTableData = [
+  {
+    name: "EC2",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$20,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+  },
+  {
+    name: "EC2",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$20,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+  },
+  {
+    name: "EC2",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$20,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+  },
+  {
+    name: "EC2",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$20,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+  },
+  {
+    name: "EC2",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$20,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+  },
+  {
+    name: "EC2",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$20,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+  },
+  {
+    name: "EC2",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$20,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+  },
+  {
+    name: "EC2",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$20,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+  },
+];
 class CostCentralServicesInternal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 0,
+      services: dummyTableData,
     };
   }
 
@@ -64,9 +168,28 @@ class CostCentralServicesInternal extends Component {
       showSelectFilterModal: !this.state.showSelectFilterModal,
     });
   };
-
+  //  Serach
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { services, searchedKey } = this.state;
+    let data = dummyTableData || [];
+    if (data?.length) {
+      if (value) {
+        services = data.filter((tableData) => {
+          if (tableData?.name.toLowerCase().includes(value.toLowerCase())) {
+            return tableData;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        services = data;
+      }
+      this.setState({ services, searchedKey: value });
+    }
+  };
   render() {
-    const { showSelectFilterModal } = this.state;
+    const { showSelectFilterModal, services, searchedKey } = this.state;
     return (
       <>
         <Box className="new-reports-container">
@@ -74,13 +197,23 @@ class CostCentralServicesInternal extends Component {
             <Box className="heading">
               <Box className="breadcrumbs">
                 <ul>
-                  <li>
+                  <li
+                    onClick={() =>
+                      this.props.navigate("/app/new-reports/central-dashboard")
+                    }
+                  >
                     <p> Central Dashboard</p>
                   </li>
                   <li>
                     <i className="fa-solid fa-chevron-right"></i>
                   </li>
-                  <li>
+                  <li
+                    onClick={() =>
+                      this.props.navigate(
+                        "/app/new-reports/central-dashboard/cost-central-top-internal"
+                      )
+                    }
+                  >
                     <p>Cost Central Top Internal</p>
                   </li>
                   <li>
@@ -119,7 +252,7 @@ class CostCentralServicesInternal extends Component {
                 type="text"
                 className="input"
                 placeholder="Search Insatnce "
-                //value={searchedKey}
+                value={searchedKey}
                 onChange={this.handleSearchChange}
                 autoFocus="autoFocus"
               />
@@ -128,312 +261,12 @@ class CostCentralServicesInternal extends Component {
               </button>
             </Box>
           </Box>
-          <Box className="new-reports-table">
-            <TableContainer className="table">
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">Service name</TableCell>
-                    <TableCell align="center">Current month spend </TableCell>
-                    <TableCell align="center">Last month Spend</TableCell>
-                    <TableCell align="center">Variance</TableCell>
-                    <TableCell align="center">Avg daily spend</TableCell>
-                    <TableCell align="center">Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon1} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        10%
-                        <i className="fas fa-sort-down p-l-5 m-r-1"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $1,205</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                    <Link
-                        to={`/app/new-reports/central-dashboard/cost-central-services-internal-details`}
-                      >
-                        <Button className="light-btn p-l-15 p-r-15 ">
-                          view more <OpenInNewIcon className="p-l-5" />
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon1} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        10%
-                        <i className="fas fa-sort-down p-l-5 m-r-1"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $1,205</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Link
-                        to={`/app/new-reports/central-dashboard/cost-central-services-internal-details`}
-                      >
-                        <Button className="light-btn p-l-15 p-r-15 ">
-                          view more <OpenInNewIcon className="p-l-5" />
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon2} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        10%
-                        <i className="fas fa-sort-down p-l-5 m-r-1"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $1,205</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon3} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        10%
-                        <i className="fas fa-sort-down p-l-5 m-r-1"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $1,205</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon4} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        10%
-                        <i className="fas fa-sort-down p-l-5 m-r-1"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $1,205</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon5} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        10%
-                        <i className="fas fa-sort-down p-l-5 m-r-1"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $1,205</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon6} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        10%
-                        <i className="fas fa-sort-down p-l-5 m-r-1"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $1,205</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon1} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        10%
-                        <i className="fas fa-sort-down p-l-5 m-r-1"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $1,205</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon1} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        10%
-                        <i className="fas fa-sort-down p-l-5 m-r-1"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $1,205</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon1} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        10%
-                        <i className="fas fa-sort-down p-l-5 m-r-1"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $1,205</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
+          <AccountTable
+            headers={tableHeader}
+            data={services}
+            notShowingField={["id", "orgUnit"]}
+          />
+
           {showSelectFilterModal ? (
             <SelectFilterModal
               showModal={showSelectFilterModal}
@@ -447,5 +280,4 @@ class CostCentralServicesInternal extends Component {
     );
   }
 }
-
-export default CostCentralServicesInternal;
+export default navigateRouter(CostCentralServicesInternal);

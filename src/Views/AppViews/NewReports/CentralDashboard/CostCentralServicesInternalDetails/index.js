@@ -8,22 +8,11 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  List,
-  ListItem,
-  IconButton,
 } from "@mui/material";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-
-import { Link } from "react-router-dom";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
-import ServiceIcon1 from "assets/img/report/service-icon1.png";
-import ServiceIcon2 from "assets/img/report/service-icon2.png";
-import ServiceIcon3 from "assets/img/report/service-icon3.png";
-import ServiceIcon4 from "assets/img/report/service-icon4.png";
-import ServiceIcon5 from "assets/img/report/service-icon5.png";
-import ServiceIcon6 from "assets/img/report/service-icon6.png";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 let timeSpendData = [
   {
     name: "Month to date spend",
@@ -50,12 +39,144 @@ let timeSpendData = [
     subName: "",
   },
 ];
-
+let data = [
+  {
+    tags: "dev-prod",
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    instanceStatus: "Running",
+    priceModel: "on Demand",
+    zone: "us-east-1a",
+    onDemandCostHr: "$0.0015",
+    riCostHr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    tags: "dev-prod",
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    instanceStatus: "Running",
+    priceModel: "on Demand",
+    zone: "us-east-1a",
+    onDemandCostHr: "$0.0015",
+    riCostHr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    tags: "dev-prod",
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    instanceStatus: "Running",
+    priceModel: "on Demand",
+    zone: "us-east-1a",
+    onDemandCostHr: "$0.0015",
+    riCostHr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    tags: "dev-prod",
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    instanceStatus: "Running",
+    priceModel: "on Demand",
+    zone: "us-east-1a",
+    onDemandCostHr: "$0.0015",
+    riCostHr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    tags: "dev-prod",
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    instanceStatus: "Running",
+    priceModel: "on Demand",
+    zone: "us-east-1a",
+    onDemandCostHr: "$0.0015",
+    riCostHr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    tags: "dev-prod",
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    instanceStatus: "Running",
+    priceModel: "on Demand",
+    zone: "us-east-1a",
+    onDemandCostHr: "$0.0015",
+    riCostHr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    tags: "dev-prod",
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    instanceStatus: "Running",
+    priceModel: "on Demand",
+    zone: "us-east-1a",
+    onDemandCostHr: "$0.0015",
+    riCostHr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    tags: "dev-prod",
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    instanceStatus: "Running",
+    priceModel: "on Demand",
+    zone: "us-east-1a",
+    onDemandCostHr: "$0.0015",
+    riCostHr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    tags: "dev-prod",
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    instanceStatus: "Running",
+    priceModel: "on Demand",
+    zone: "us-east-1a",
+    onDemandCostHr: "$0.0015",
+    riCostHr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    tags: "dev-prod",
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    instanceStatus: "Running",
+    priceModel: "on Demand",
+    zone: "us-east-1a",
+    onDemandCostHr: "$0.0015",
+    riCostHr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+];
 class CostCentralServicesInternalDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 0,
+      costConsumptionData: data,
     };
   }
 
@@ -65,8 +186,88 @@ class CostCentralServicesInternalDetails extends Component {
     });
   };
 
+  renderTableHead = () => {
+    return (
+      <TableHead>
+        <TableRow>
+          <TableCell align="left">Tags</TableCell>
+          <TableCell align="left">Instance ID </TableCell>
+          <TableCell align="left">Instance Type</TableCell>
+          <TableCell align="left">Instance Status</TableCell>
+          <TableCell align="left">Pricing model</TableCell>
+          <TableCell align="left">Availability zone</TableCell>
+          <TableCell align="left">OnDemand cost/hr</TableCell>
+          <TableCell align="left">RI cost / hr</TableCell>
+          <TableCell align="center">Usage Hours</TableCell>
+          <TableCell align="center">Add-ons</TableCell>
+          <TableCell align="center">Total Spend</TableCell>
+        </TableRow>
+      </TableHead>
+    );
+  };
+
+  //  Render table body
+  renderTableBody = () => {
+    let { costConsumptionData } = this.state;
+    return (
+      <TableBody>
+        {costConsumptionData?.length ? (
+          costConsumptionData.map((details) => {
+            return (
+              <TableRow>
+                <TableCell align="left">{details.tags}</TableCell>
+                <TableCell align="left">{details.instanceId}</TableCell>
+                <TableCell align="left">{details.instanceType} </TableCell>
+                <TableCell align="left">{details.instanceStatus}</TableCell>
+                <TableCell align="left">{details.priceModel}</TableCell>
+                <TableCell align="left">{details.zone}</TableCell>
+                <TableCell align="left">
+                  <strong>{details.onDemandCostHr}</strong>
+                </TableCell>
+                <TableCell align="left">{details.riCostHr}</TableCell>
+                <TableCell align="center">
+                  <strong>{details.usageHrs}</strong>
+                </TableCell>
+                <TableCell align="center">{details.addOns}</TableCell>
+                <TableCell align="center">
+                  <strong>{details.totalSpend}</strong>
+                </TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <Box className="d-blck text-center w-100 h-100 ">
+            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+              <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+            </Box>
+          </Box>
+        )}
+      </TableBody>
+    );
+  };
+
+  //  Serach
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { costConsumptionData, searchedKey } = this.state;
+
+    if (data?.length) {
+      if (value) {
+        costConsumptionData = data.filter((tableData) => {
+          if (tableData?.tags.toLowerCase().includes(value.toLowerCase())) {
+            return tableData;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        costConsumptionData = data;
+      }
+      this.setState({ costConsumptionData, searchedKey: value });
+    }
+  };
   render() {
-    const { showSelectFilterModal } = this.state;
+    const { showSelectFilterModal, searchedKey } = this.state;
     return (
       <>
         <Box className="new-reports-container">
@@ -74,19 +275,35 @@ class CostCentralServicesInternalDetails extends Component {
             <Box className="heading">
               <Box className="breadcrumbs">
                 <ul>
-                  <li>
+                  <li
+                    onClick={() =>
+                      this.props.navigate("/app/new-reports/central-dashboard")
+                    }
+                  >
                     <p> Central Dashboard</p>
                   </li>
                   <li>
                     <i className="fa-solid fa-chevron-right"></i>
                   </li>
-                  <li>
+                  <li
+                    onClick={() =>
+                      this.props.navigate(
+                        "/app/new-reports/central-dashboard/cost-central-top-internal"
+                      )
+                    }
+                  >
                     <p>Cost Central Top Internal</p>
                   </li>
                   <li>
                     <i className="fa-solid fa-chevron-right"></i>
                   </li>
-                  <li>
+                  <li
+                    onClick={() =>
+                      this.props.navigate(
+                        "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal"
+                      )
+                    }
+                  >
                     <p>Cost Central Services Internal</p>
                   </li>
                   <li>
@@ -125,7 +342,7 @@ class CostCentralServicesInternalDetails extends Component {
                 type="text"
                 className="input"
                 placeholder="Search Insatnce "
-                //value={searchedKey}
+                value={searchedKey}
                 onChange={this.handleSearchChange}
                 autoFocus="autoFocus"
               />
@@ -136,141 +353,9 @@ class CostCentralServicesInternalDetails extends Component {
           </Box>
           <Box className="new-reports-table">
             <TableContainer className="table">
-              <Table style={{width: 2000}}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">Tags</TableCell>
-                    <TableCell align="left">Instance ID </TableCell>
-                    <TableCell align="left">Instance Type</TableCell>
-                    <TableCell align="left">Instance Status</TableCell>
-                    <TableCell align="left">Pricing model</TableCell>
-                    <TableCell align="left">Availability zone</TableCell>
-                    <TableCell align="left">OnDemand cost/hr</TableCell>
-                    <TableCell align="left">RI cost / hr</TableCell>
-                    <TableCell align="center">Usage Hours</TableCell>
-                    <TableCell align="center">Add-ons</TableCell>
-                    <TableCell align="center">Total Spend</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="left">dev-prod</TableCell>
-                    <TableCell align="left">i-0c1234dc</TableCell>
-                    <TableCell align="left">t2.2xlarge	</TableCell>
-                    <TableCell align="left">Running</TableCell>
-                    <TableCell align="left">on Demand</TableCell>
-                    <TableCell align="left">us-east-1a</TableCell>
-                    <TableCell align="left"><strong>$0.0015</strong></TableCell>
-                    <TableCell align="left">Unavailable</TableCell>
-                    <TableCell align="center"><strong>720hrs</strong></TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center"><strong>$120</strong></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">dev-prod</TableCell>
-                    <TableCell align="left">i-0c1234dc</TableCell>
-                    <TableCell align="left">t2.2xlarge	</TableCell>
-                    <TableCell align="left">Running</TableCell>
-                    <TableCell align="left">on Demand</TableCell>
-                    <TableCell align="left">us-east-1a</TableCell>
-                    <TableCell align="left"><strong>$0.0015</strong></TableCell>
-                    <TableCell align="left">Unavailable</TableCell>
-                    <TableCell align="center"><strong>720hrs</strong></TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center"><strong>$120</strong></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">dev-prod</TableCell>
-                    <TableCell align="left">i-0c1234dc</TableCell>
-                    <TableCell align="left">t2.2xlarge	</TableCell>
-                    <TableCell align="left">Running</TableCell>
-                    <TableCell align="left">on Demand</TableCell>
-                    <TableCell align="left">us-east-1a</TableCell>
-                    <TableCell align="left"><strong>$0.0015</strong></TableCell>
-                    <TableCell align="left">Unavailable</TableCell>
-                    <TableCell align="center"><strong>720hrs</strong></TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center"><strong>$120</strong></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">dev-prod</TableCell>
-                    <TableCell align="left">i-0c1234dc</TableCell>
-                    <TableCell align="left">t2.2xlarge	</TableCell>
-                    <TableCell align="left">Running</TableCell>
-                    <TableCell align="left">on Demand</TableCell>
-                    <TableCell align="left">us-east-1a</TableCell>
-                    <TableCell align="left"><strong>$0.0015</strong></TableCell>
-                    <TableCell align="left">Unavailable</TableCell>
-                    <TableCell align="center"><strong>720hrs</strong></TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center"><strong>$120</strong></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">dev-prod</TableCell>
-                    <TableCell align="left">i-0c1234dc</TableCell>
-                    <TableCell align="left">t2.2xlarge	</TableCell>
-                    <TableCell align="left">Running</TableCell>
-                    <TableCell align="left">on Demand</TableCell>
-                    <TableCell align="left">us-east-1a</TableCell>
-                    <TableCell align="left"><strong>$0.0015</strong></TableCell>
-                    <TableCell align="left">Unavailable</TableCell>
-                    <TableCell align="center"><strong>720hrs</strong></TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center"><strong>$120</strong></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">dev-prod</TableCell>
-                    <TableCell align="left">i-0c1234dc</TableCell>
-                    <TableCell align="left">t2.2xlarge	</TableCell>
-                    <TableCell align="left">Running</TableCell>
-                    <TableCell align="left">on Demand</TableCell>
-                    <TableCell align="left">us-east-1a</TableCell>
-                    <TableCell align="left"><strong>$0.0015</strong></TableCell>
-                    <TableCell align="left">Unavailable</TableCell>
-                    <TableCell align="center"><strong>720hrs</strong></TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center"><strong>$120</strong></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">dev-prod</TableCell>
-                    <TableCell align="left">i-0c1234dc</TableCell>
-                    <TableCell align="left">t2.2xlarge	</TableCell>
-                    <TableCell align="left">Running</TableCell>
-                    <TableCell align="left">on Demand</TableCell>
-                    <TableCell align="left">us-east-1a</TableCell>
-                    <TableCell align="left"><strong>$0.0015</strong></TableCell>
-                    <TableCell align="left">Unavailable</TableCell>
-                    <TableCell align="center"><strong>720hrs</strong></TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center"><strong>$120</strong></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">dev-prod</TableCell>
-                    <TableCell align="left">i-0c1234dc</TableCell>
-                    <TableCell align="left">t2.2xlarge	</TableCell>
-                    <TableCell align="left">Running</TableCell>
-                    <TableCell align="left">on Demand</TableCell>
-                    <TableCell align="left">us-east-1a</TableCell>
-                    <TableCell align="left"><strong>$0.0015</strong></TableCell>
-                    <TableCell align="left">Unavailable</TableCell>
-                    <TableCell align="center"><strong>720hrs</strong></TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center"><strong>$120</strong></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">dev-prod</TableCell>
-                    <TableCell align="left">i-0c1234dc</TableCell>
-                    <TableCell align="left">t2.2xlarge	</TableCell>
-                    <TableCell align="left">Running</TableCell>
-                    <TableCell align="left">on Demand</TableCell>
-                    <TableCell align="left">us-east-1a</TableCell>
-                    <TableCell align="left"><strong>$0.0015</strong></TableCell>
-                    <TableCell align="left">Unavailable</TableCell>
-                    <TableCell align="center"><strong>720hrs</strong></TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center"><strong>$120</strong></TableCell>
-                  </TableRow>
-                </TableBody>
+              <Table style={{ width: 2000 }}>
+                {this.renderTableHead()}
+                {this.renderTableBody()}
               </Table>
             </TableContainer>
           </Box>
@@ -287,5 +372,4 @@ class CostCentralServicesInternalDetails extends Component {
     );
   }
 }
-
-export default CostCentralServicesInternalDetails;
+export default navigateRouter(CostCentralServicesInternalDetails);

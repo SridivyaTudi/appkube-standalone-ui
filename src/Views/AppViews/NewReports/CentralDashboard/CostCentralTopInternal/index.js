@@ -1,29 +1,10 @@
 import React, { Component } from "react";
-import {
-  Box,
-  Button,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  List,
-  ListItem,
-  IconButton,
-} from "@mui/material";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { Box, Button } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-
-import { Link } from "react-router-dom";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
-import ServiceIcon1 from "assets/img/report/service-icon1.png";
-import ServiceIcon2 from "assets/img/report/service-icon2.png";
-import ServiceIcon3 from "assets/img/report/service-icon3.png";
-import ServiceIcon4 from "assets/img/report/service-icon4.png";
-import ServiceIcon5 from "assets/img/report/service-icon5.png";
-import ServiceIcon6 from "assets/img/report/service-icon6.png";
+import AccountTable from "../Components/AccountTable";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 let timeSpendData = [
   {
     name: "Month to date spend",
@@ -50,24 +31,65 @@ let timeSpendData = [
     subName: "",
   },
 ];
-
+let dummyTableData = [
+  {
+    name: "IT INFRA",
+    id: "160079380622",
+    orgUnit: "Central Operations",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$30,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
+  },
+];
+let tableHeader = [
+  "Account name",
+  "Account ID",
+  "Organization unit",
+  "Current month spend",
+  "Last month spend",
+  "Variance",
+  "Avg daily spend",
+  "Actions",
+];
 class CostCentralTopInternal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 0,
+      accounts: dummyTableData,
     };
   }
 
   handleSelectFilterModal = () => {
     this.setState({
       showSelectFilterModal: !this.state.showSelectFilterModal,
-     
     });
   };
-
+  //  Serach
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { accounts, searchedKey } = this.state;
+    let data = dummyTableData || [];
+    if (data?.length) {
+      if (value) {
+        accounts = data.filter((tableData) => {
+          if (tableData?.name.toLowerCase().includes(value.toLowerCase())) {
+            return tableData;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        accounts = data;
+      }
+      this.setState({ accounts, searchedKey: value });
+    }
+  };
   render() {
-    const {showSelectFilterModal}=this.state
+    let { accounts, searchedKey, showSelectFilterModal } = this.state;
     return (
       <>
         <Box className="new-reports-container">
@@ -75,7 +97,11 @@ class CostCentralTopInternal extends Component {
             <Box className="heading">
               <Box className="breadcrumbs">
                 <ul>
-                  <li>
+                  <li
+                    onClick={() =>
+                      this.props.navigate("/app/new-reports/central-dashboard")
+                    }
+                  >
                     <p> Central Dashboard</p>
                   </li>
                   <li>
@@ -112,7 +138,7 @@ class CostCentralTopInternal extends Component {
                 type="text"
                 className="input"
                 placeholder="Search Insatnce "
-                //value={searchedKey}
+                value={searchedKey}
                 onChange={this.handleSearchChange}
                 autoFocus="autoFocus"
               />
@@ -121,67 +147,19 @@ class CostCentralTopInternal extends Component {
               </button>
             </Box>
           </Box>
-          <Box className="new-reports-table">
-            <TableContainer className="table">
-              <Table style={{ width: 1500 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">Account name</TableCell>
-                    <TableCell align="center">Account ID</TableCell>
-                    <TableCell align="left">Organization unit</TableCell>
-                    <TableCell align="center">Current month spend</TableCell>
-                    <TableCell align="center">Last month spend</TableCell>
-                    <TableCell align="center">Variance</TableCell>
-                    <TableCell align="center">Avg daily spend</TableCell>
-                    <TableCell align="center">Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="left">IT INFRA</TableCell>
-                    <TableCell align="center">160079380622</TableCell>
-                    <TableCell align="left"> Central Operations</TableCell>
-                    <TableCell align="center">
-                      <strong> $20,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $30,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        10% <i className="fas fa-sort-down p-l-5 m-r-1"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong> $1,205</strong>
-                    </TableCell>
-
-                    <TableCell align="center">
-                      <Link
-                        to={`/app/new-reports/central-dashboard/cost-central-services-internal`}
-                      >
-                        <Button className="light-btn p-l-15 p-r-15 ">
-                          view more <OpenInNewIcon className="p-l-5" />
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
+          <AccountTable headers={tableHeader} data={accounts} />
           {showSelectFilterModal ? (
-          <SelectFilterModal
-            showModal={showSelectFilterModal}
-            handleSelectFilterModal={this.handleSelectFilterModal}
-          />
-        ) : (
-          <></>
-        )}
+            <SelectFilterModal
+              showModal={showSelectFilterModal}
+              handleSelectFilterModal={this.handleSelectFilterModal}
+            />
+          ) : (
+            <></>
+          )}
         </Box>
       </>
     );
   }
 }
 
-export default CostCentralTopInternal;
+export default navigateRouter(CostCentralTopInternal);

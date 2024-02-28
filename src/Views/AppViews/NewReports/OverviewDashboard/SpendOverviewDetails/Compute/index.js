@@ -228,13 +228,42 @@ let computeSpendingTable = [
   },
 ];
 class Compute extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      costConsumptionData: computeSpendingTable,
+      searchedKey: "",
+    };
+  }
   /** Get url details. */
   getUrlDetails() {
     const name = this.props.params.name;
     return { name };
   }
+  //  Serach 
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { costConsumptionData, searchedKey } = this.state;
+    let data = computeSpendingTable || [];
+    if (data?.length) {
+      if (value) {
+        costConsumptionData = data.filter((tableData) => {
+          if (tableData?.tags.toLowerCase().includes(value.toLowerCase())) {
+            return tableData;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        costConsumptionData = data;
+      }
+      this.setState({ costConsumptionData, searchedKey: value });
+    }
+  };
+  
   render() {
     const { name } = this.getUrlDetails();
+    let { searchedKey, costConsumptionData } = this.state;
     return (
       <>
         <TimeSpendComponent data={timeSpendData} />
@@ -247,7 +276,7 @@ class Compute extends Component {
               type="text"
               className="input"
               placeholder="Search Insatnce "
-              //value={searchedKey}
+              value={searchedKey}
               onChange={this.handleSearchChange}
               autoFocus="autoFocus"
             />
@@ -257,7 +286,7 @@ class Compute extends Component {
           </Box>
         </Box>
 
-        <SpendingTable data={computeSpendingTable} />
+        <SpendingTable data={costConsumptionData} />
       </>
     );
   }
