@@ -41,6 +41,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  .subheading{
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+    color: #383874;
+  }
   .check-box-group{
     display: flex;
     .check-box{

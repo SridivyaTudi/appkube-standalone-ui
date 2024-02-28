@@ -17,7 +17,7 @@ import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
 import TimeSpendComponent from "Views/AppViews/NewReports/Components/TimeSpendComponent";
 import GroupedBarplotChart from "Views/AppViews/NewReports/Components/GroupedBarplotChart";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 const totalUsedServiceData = [
   { label: "EC2", value: 4700, color: "#A145FF" },
   { label: "RDS", value: 4500, color: "#FA6298" },
@@ -227,10 +227,8 @@ class AwsComponent extends Component {
                 }}
                 ChartComponent={
                   <VerticalBarchart
+                    color={"#53CA43"}
                     data={verticalBarChartData}
-                    styleProp={{
-                      color: "#53CA43",
-                    }}
                   />
                 }
               />
@@ -269,7 +267,9 @@ class AwsComponent extends Component {
                     <Box className="payment-status pending"></Box>Pending
                   </TableCell>
                   <TableCell align="center">
-                    <Link to={`/app/new-reports/chargeback-dashboard/it-department`}>
+                    <Link
+                      to={`/app/new-reports/chargeback-dashboard/it-department`}
+                    >
                       <Button className="light-btn p-l-15 p-r-15 ">
                         view more <OpenInNewIcon className="p-l-5" />
                       </Button>

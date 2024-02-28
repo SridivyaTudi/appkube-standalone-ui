@@ -9,7 +9,7 @@ import {
   TableBody,
   TableCell,
   IconButton,
-  Checkbox
+  Checkbox,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
@@ -47,8 +47,25 @@ let timeSpendData = [
 class ItDepartment extends Component {
   render() {
     return (
-      <Box className="new-reports-container spend-overview-container">
-        <Box className="list-heading">
+      <Box className="new-reports-container">
+        <Box className="global-services-fliter">
+          <Box className="heading">
+            <Box className="breadcrumbs">
+              <ul>
+                <li>
+                  <p> Chargeback Dashboard</p>
+                </li>
+                <li>
+                  <i className="fa-solid fa-chevron-right"></i>
+                </li>
+                <li className="active">
+                  <p>IT Department</p>
+                </li>
+              </ul>
+            </Box>
+          </Box>
+        </Box>
+        <Box className="list-heading m-t-3">
           <h3>
             <Link to={`/app/new-reports/over-view-dashboard`}>
               <IconButton className="m-r-2">
@@ -95,7 +112,7 @@ class ItDepartment extends Component {
                     // this.props.setNextTab(2);
                   }}
                 />
-                <label>Compute  </label>
+                <label>Compute </label>
               </Box>
               <Box className="d-flex align-items-center m-r-3">
                 <Checkbox
@@ -106,7 +123,7 @@ class ItDepartment extends Component {
                     // this.props.setNextTab(2);
                   }}
                 />
-                <label>Storage  </label>
+                <label>Storage </label>
               </Box>
               <Box className="d-flex align-items-center">
                 <Checkbox
@@ -117,7 +134,7 @@ class ItDepartment extends Component {
                     // this.props.setNextTab(2);
                   }}
                 />
-                <label>Network  </label>
+                <label>Network </label>
               </Box>
             </Box>
           </Box>
@@ -149,9 +166,13 @@ class ItDepartment extends Component {
                       </Box>
                     </TableCell>
                     <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
+                      <Link
+                        to={`/app/new-reports/chargeback-dashboard/it-department-details`}
+                      >
+                        <Button className="light-btn p-l-15 p-r-15 ">
+                          view more <OpenInNewIcon className="p-l-5" />
+                        </Button>
+                      </Link>
                     </TableCell>
                   </TableRow>
                   <TableRow>

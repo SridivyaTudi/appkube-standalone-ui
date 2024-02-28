@@ -221,7 +221,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Most used services",
                   labelOfBtn: "View Details",
-                  link: "",
+                  link: "/app/new-reports/central-dashboard/cost-central-top-internal",
                 }}
                 ChartComponent={
                   <VerticalBarchart
@@ -239,7 +239,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Top 5 Region",
                   labelOfBtn: " View Details",
-                  link: "",
+                  link: "/app/new-reports/central-dashboard/cost-central-top-internal",
                 }}
                 ChartComponent={
                   <DonutChart
@@ -258,7 +258,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Top 5 Products",
                   labelOfBtn: " View Details",
-                  link: "",
+                  link: "/app/new-reports/central-dashboard/cost-central-top-internal",
                 }}
                 ChartComponent={
                   <DonutChart
@@ -277,7 +277,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Tagged Vs Untagged Cost",
                   labelOfBtn: " View Details",
-                  link: "",
+                  link: "/app/new-reports/central-dashboard/cost-central-top-internal",
                 }}
                 ChartComponent={
                   <DonutChart

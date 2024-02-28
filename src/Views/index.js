@@ -75,6 +75,8 @@ import TopUsedServicesDetails from "Views/AppViews/NewReports/OverviewDashboard/
 import CostCentralTopInternal from "./AppViews/NewReports/CentralDashboard/CostCentralTopInternal";
 import CostCentralServicesInternal from "./AppViews/NewReports/CentralDashboard/CostCentralServicesInternal";
 import CostCentralServicesInternalDetails from "./AppViews/NewReports/CentralDashboard/CostCentralServicesInternalDetails";
+import ItDepartmentDetails from "./AppViews/NewReports/ChargebackDashboard/ItDepartmentDetails";
+import HistoryDepartments from "./AppViews/NewReports/ChargebackDashboard/HistoryDepartments";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -312,6 +314,14 @@ export const Views = (props) => {
           <Route
             path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/it-department`}
             element={<ItDepartment />}
+          />
+           <Route
+            path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/it-department-details`}
+            element={<ItDepartmentDetails />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/history-departments`}
+            element={<HistoryDepartments />}
           />
           <Route
             path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/create-invoice`}
