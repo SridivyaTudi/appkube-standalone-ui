@@ -64,22 +64,15 @@ class ProductCategory extends Component {
     let { name: departMentName } = this.getUrlDetails();
     return (
       <Box className="bimapping-container">
-        <Box className="global-services-fliter">
-          <Box className="heading">
-            <Box className="breadcrumbs">
-              <ul>
-                <li>
-                  <p>BI-Mapping</p>
-                </li>
-                <li>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </li>
-
-                <li className="active">
-                  <p>Add Product</p>
-                </li>
-              </ul>
-            </Box>
+        <Box className="list-heading">
+          <Box className="breadcrumbs">
+            <ul>
+              <li>BI-Mapping</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active">Add Product</li>
+            </ul>
           </Box>
         </Box>
 
@@ -87,7 +80,7 @@ class ProductCategory extends Component {
           <Box className="d-block">
             <Box className="product-title-card">
               <Box className="d-flex justify-content-between align-items-center">
-                <h3>Service type : Business Services</h3>
+                <h3>Business Services</h3>
                 <Link
                   to={`/app/bim/add-product/${departMentName}/product-category/${createProductFormData?.category
                     ?.toLowerCase()
@@ -98,7 +91,7 @@ class ProductCategory extends Component {
               </Box>
             </Box>
             <Box className="product-category-cards">
-              <Box className="product-category-card">
+              {/* <Box className="product-category-card">
                 <Box
                   className="product-category-details"
                   onClick={() => this.handleServiceModal()}
@@ -108,13 +101,13 @@ class ProductCategory extends Component {
                   </Box>
                   <span className="d-block name">Admission</span>
                 </Box>
-              </Box>
+              </Box> */}
             </Box>
           </Box>
           <Box className="d-block">
             <Box className="product-title-card">
               <Box className="d-flex justify-content-between align-items-center">
-                <h3>Service type : Common Services</h3>
+                <h3>Common Services</h3>
                 <Button className="primary-btn">Add</Button>
               </Box>
             </Box>
@@ -125,7 +118,7 @@ class ProductCategory extends Component {
                   seamless integration of SOA and microservices architecture
                 </p>
               </Box> */}
-              <Box className="product-category-card">
+              {/* <Box className="product-category-card">
                 <Box
                   className="product-category-details"
                   onClick={() => this.handleServiceModal()}
@@ -135,8 +128,8 @@ class ProductCategory extends Component {
                   </Box>
                   <span className="d-block name">Search</span>
                 </Box>
-              </Box>
-              <Box className="product-category-card">
+              </Box> */}
+              {/* <Box className="product-category-card">
                 <Box
                   className="product-category-details"
                   onClick={() => this.handleServiceModal()}
@@ -146,8 +139,8 @@ class ProductCategory extends Component {
                   </Box>
                   <span className="d-block name">Filter</span>
                 </Box>
-              </Box>
-              <Box className="product-category-card">
+              </Box> */}
+              {/* <Box className="product-category-card">
                 <Box
                   className="product-category-details"
                   onClick={() => this.handleServiceModal()}
@@ -157,7 +150,7 @@ class ProductCategory extends Component {
                   </Box>
                   <span className="d-block name">RBAC</span>
                 </Box>
-              </Box>
+              </Box> */}
             </Box>
           </Box>
         </Box>

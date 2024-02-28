@@ -596,31 +596,23 @@ class Tier extends Component {
       cloudElementType,
       activeTabEcs,
     } = this.state;
-    let { biServicesFromProductCategory } = this.props; 
+    let { biServicesFromProductCategory } = this.props;
     return (
       <Box className="bimapping-container">
-        <Box className="global-services-fliter">
-          <Box className="heading">
-            <Box className="breadcrumbs">
-              <ul>
-                <li>
-                  <p>BI-Mapping</p>
-                </li>
-                <li>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </li>
-                <li>
-                  <p>Add Product</p>
-                </li>
+        <Box className="list-heading">
+          <Box className="breadcrumbs">
+            <ul>
+              <li>BI-Mapping</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li>Add Product</li>
 
-                <li>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </li>
-                <li className="active">
-                  <p>Product Category</p>
-                </li>
-              </ul>
-            </Box>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active">Product Category</li>
+            </ul>
           </Box>
         </Box>
         <Box className="tier-container">
