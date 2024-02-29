@@ -223,11 +223,25 @@ class ItDepartmentDetails extends Component {
           <h3>IT Department details</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li>Chargeback Dashboard</li>
+              <li
+                onClick={() =>
+                  this.props.navigate("/app/new-reports/chargeback-dashboard")
+                }
+              >
+                Chargeback Dashboard
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li>IT Department</li>
+              <li
+                onClick={() =>
+                  this.props.navigate(
+                    "/app/new-reports/chargeback-dashboard/department"
+                  )
+                }
+              >
+                IT Department
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
