@@ -328,5 +328,15 @@ export const getSingleValueFromLocalStorage = (key) => {
 };
 
 export const removeSingleValueFromLocalStorage = (key) => {
-   localStorage.removeItem(key) 
+  localStorage.removeItem(key);
+};
+
+export const ADD_PRODUCT_ENUMS = {
+  USER_INPUT: "User input",
+  CLOUD_WATCH: "",
+  EC2: "EC2",
+  EKS: "EKS",
+  ECS: "ECS",
+  LAMBDA: "LAMBDA",
+  S3: "S3",
 };

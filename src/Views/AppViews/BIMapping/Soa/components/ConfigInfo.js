@@ -10,8 +10,10 @@ import {
   FormControl,
   MenuItem,
   Select,
+  IconButton,
 } from "@mui/material";
 import { v4 } from "uuid";
+import CloseIcon from "@mui/icons-material/Close";
 const BUILD_TOOLS_DROP_DOWN = ["maven", "gradle", "gant"];
 let data = [
   {
@@ -49,6 +51,11 @@ class ConfigInfo extends Component {
       tableData: data,
     };
   }
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevProps.onClickAddEntryBtn !== this.props.onClickAddEntryBtn) {
+      this.onClickAddEntry();
+    }
+  };
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
@@ -85,60 +92,167 @@ class ConfigInfo extends Component {
     );
   };
 
+  onClickCloseIcon = (index) => {
+    let { tableData } = this.state;
+    delete tableData[index];
+    this.setState({ tableData });
+  };
+
   renderTableBody = () => {
     let { tableData } = this.state;
     return (
       <TableBody>
         {tableData.map((info, index) => {
           return (
-            <TableRow key={v4()}>
-              <TableCell align="left">{info.key}</TableCell>
+            <TableRow key={index}>
+              <TableCell align="left">
+                {info.isCustomField ? (
+                  <Box className="subvalue">
+                    <input
+                      id={`key_${index}`}
+                      type="text"
+                      className="form-control"
+                      name={`key`}
+                      placeholder="Enter the key"
+                      value={info.key}
+                      onChange={(e) => this.handleCustomInputChange(e, index)}
+                    />
+                  </Box>
+                ) : (
+                  info.key
+                )}
+              </TableCell>
               <TableCell align="center">
-                <Box className="region">
-                  {info.dropDownValues ? (
-                    <FormControl
-                      className="Region-fliter"
-                      sx={{ m: 1, minWidth: 100 }}
-                    >
-                      <Select
-                        className="fliter-toggel"
-                        value={`${
-                          this.state.selectedInfo[`${info.key}_${index}`] || ""
-                        }`}
-                        onChange={(e) =>
-                          this.handleChange(e, `${info.key}_${index}`)
-                        }
-                        displayEmpty
-                        inputProps={{ "aria-label": "Without label" }}
+                {info.isCustomField ? (
+                  <Box className="subvalue">
+                    <input
+                      id={`value_${index}`}
+                      type="text"
+                      className="form-control"
+                      name={`value`}
+                      placeholder="Enter the value"
+                      value={info.value}
+                      onChange={(e) => this.handleCustomInputChange(e, index)}
+                    />
+                  </Box>
+                ) : (
+                  <Box className="region">
+                    {info.dropDownValues ? (
+                      <FormControl
+                        className="Region-fliter"
+                        sx={{ m: 1, minWidth: 100 }}
                       >
-                        <MenuItem value="">Select </MenuItem>
-                        {info.dropDownValues.map((val) => (
-                          <MenuItem value={val}>{val}</MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  ) : (
+                        <Select
+                          className="fliter-toggel"
+                          value={`${
+                            this.state.selectedInfo[`${info.key}_${index}`] ||
+                            ""
+                          }`}
+                          onChange={(e) =>
+                            this.handleChange(e, `${info.key}_${index}`)
+                          }
+                          displayEmpty
+                          inputProps={{ "aria-label": "Without label" }}
+                        >
+                          <MenuItem value="">Select </MenuItem>
+                          {info.dropDownValues.map((val) => (
+                            <MenuItem value={val}>{val}</MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    ) : (
+                      <Box className="subvalue">
+                        <input
+                          id={`organizationName`}
+                          type="text"
+                          className="form-control"
+                          name="organizationName"
+                          placeholder="User input"
+                          // value={formData.organizationName}
+                          // onChange={this.handleInputChange}
+                        />
+                      </Box>
+                    )}
+                  </Box>
+                )}
+              </TableCell>
+              <TableCell align="center">
+                {info.isCustomField ? (
+                  <Box className="subvalue">
+                    <input
+                      id={`subKey_${index}`}
+                      type="text"
+                      className="form-control"
+                      name={`subKey`}
+                      placeholder="Enter the subKey"
+                      value={info.subKey}
+                      onChange={(e) => this.handleCustomInputChange(e, index)}
+                    />
+                  </Box>
+                ) : (
+                  info.subKey
+                )}{" "}
+              </TableCell>
+              <TableCell align="center">
+                {" "}
+                {info.isCustomField ? (
+                  <>
                     <Box className="subvalue">
                       <input
-                        id={`organizationName`}
+                        id={`subvalue${index}`}
                         type="text"
                         className="form-control"
-                        name="organizationName"
-                        placeholder="User inut"
-                        // value={formData.organizationName}
-                        // onChange={this.handleInputChange}
+                        name={`subValue`}
+                        placeholder="Enter the subvalue"
+                        value={info.subValue}
+                        onChange={(e) => this.handleCustomInputChange(e, index)}
                       />
+                      <IconButton
+                        variant="outlined"
+                        color="error"
+                        aria-label="delete"
+                        size="small"
+                        // className="close-icon m-t-2"
+                        onClick={() => this.onClickCloseIcon(index)}
+                      >
+                        <CloseIcon fontSize="inherit" />
+                      </IconButton>
                     </Box>
-                  )}
-                </Box>
+                  </>
+                ) : (
+                  info.subValue
+                )}
               </TableCell>
-              <TableCell align="center">{info.subKey} </TableCell>
-              <TableCell align="center">{info.subValue}</TableCell>
             </TableRow>
           );
         })}
       </TableBody>
     );
+  };
+
+  handleCustomInputChange = (event, Id) => {
+    let { name, value } = event.target;
+    let { tableData } = this.state;
+
+    tableData = tableData.map((info, index) => {
+      if (Id === index) {
+        info[name] = value;
+      }
+      return info;
+    });
+    this.setState({ tableData });
+  };
+
+  onClickAddEntry = () => {
+    let { tableData } = this.state;
+    tableData.push({
+      key: "",
+      subKey: "",
+      subValue: "",
+      value: "",
+      isCustomField: true,
+    });
+    this.setState({ tableData });
   };
   render() {
     return (

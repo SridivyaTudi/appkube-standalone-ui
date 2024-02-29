@@ -156,6 +156,7 @@ class Soa extends Component {
       },
       instancesServices: [],
       cloudElementType: "",
+      clickIdAddEntry: "",
     };
   }
 
@@ -547,8 +548,9 @@ class Soa extends Component {
       dropDownServiceData,
       savedService,
       cloudElementType,
+      clickIdAddEntry,
     } = this.state;
-    let { biServicesFromProductCategory } = this.props;
+    let { biServicesFromProductCategory,createProductFormData } = this.props;
     let { name } = this.getUrlDetails();
     return (
       <Box className="bimapping-container">
@@ -585,7 +587,7 @@ class Soa extends Component {
             <Grid item xs={6}>
               <Box className="topology-panel">
                 <Box className="topology-panel-body">
-                  <h4 className="m-t-0 m-b-0">Module : Admission</h4>
+                  <h4 className="m-t-0 m-b-0">Module : {createProductFormData.moduleName}</h4>
                   {biServicesFromProductCategory.status ===
                   status.IN_PROGRESS ? (
                     this.renderLoder()
@@ -1005,12 +1007,14 @@ class Soa extends Component {
                         setNextTab={(activeTabEks) => {
                           this.setState({ activeTabEks });
                         }}
+                        onClickAddEntryBtn={clickIdAddEntry}
                       />
                     ) : activeTabEks === 1 ? (
                       <ConfigInfo
                         setNextTab={(activeTabEks) => {
                           this.setState({ activeTabEks });
                         }}
+                        onClickAddEntryBtn={clickIdAddEntry}
                       />
                     ) : (
                       <></>
@@ -1033,23 +1037,42 @@ class Soa extends Component {
           )}
 
           {selectedInstance >= 0 ? (
-            <Box justifyContent={"center"} className="text-center m-t-4">
-              <Button
-                className={` ${
-                  selectedService.length || activeTabEks === 3 ? "" : "info-btn"
-                } primary-btn min-width-inherit`}
-                variant="contained"
-                onClick={() =>
-                  selectedService.length || activeTabEks === 3 ? (
-                    this.onClickSave()
-                  ) : (
-                    <></>
-                  )
-                }
-              >
-                Save
-              </Button>
-            </Box>
+            <>
+              <Box justifyContent={"center"} className="text-center m-t-4">
+                <Button
+                  className={` ${
+                    selectedService.length || activeTabEks === 3
+                      ? ""
+                      : "info-btn"
+                  } primary-btn min-width-inherit`}
+                  variant="contained"
+                  onClick={() =>
+                    selectedService.length || activeTabEks === 3 ? (
+                      this.onClickSave()
+                    ) : (
+                      <></>
+                    )
+                  }
+                >
+                  Save
+                </Button>
+              </Box>
+              {cloudElementType?.toUpperCase() === this.CLOUD_ELEMENT.ECS ? (
+                <Box justifyContent={"center"} className=" text-center m-t-4">
+                  <Button
+                    className={` primary-btn min-width-inherit`}
+                    variant="contained"
+                    onClick={() => {
+                      this.setState({ clickIdAddEntry: v4() });
+                    }}
+                  >
+                    Add Entry
+                  </Button>
+                </Box>
+              ) : (
+                <></>
+              )}
+            </>
           ) : (
             <></>
           )}
