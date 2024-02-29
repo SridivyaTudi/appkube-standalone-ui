@@ -93,18 +93,32 @@ class SpendOverviewDetails extends Component {
   };
   render() {
     let { name } = this.getUrlDetails();
-    console.log(name);
+
     return (
       <Box className="new-reports-container spend-overview-container">
         <Box className="list-heading">
           <h3> {name} Spending</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li>Overview Dashboard</li>
+              <li
+                onClick={() =>
+                  this.props.navigate("/app/new-reports/over-view-dashboard")
+                }
+              >
+                Overview Dashboard
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li>Spend Overview</li>
+              <li
+                onClick={() =>
+                  this.props.navigate(
+                    "/app/new-reports/over-view-dashboard/spend-overview"
+                  )
+                }
+              >
+                Spend Overview
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>

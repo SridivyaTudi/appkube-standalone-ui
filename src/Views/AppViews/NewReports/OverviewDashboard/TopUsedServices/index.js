@@ -137,27 +137,33 @@ class TopUsedServices extends Component {
   render() {
     return (
       <Box className="new-reports-container">
-         <Box className="list-heading">
-            <h3>Top Used Services</h3>
-            <Box className="breadcrumbs">
-              <ul>
-                <li>Overview Dashboard</li>
-                <li>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </li>
-                <li className="active">Top Used Services</li>
-              </ul>
-            </Box>
+        <Box className="list-heading">
+          <h3>Top Used Services</h3>
+          <Box className="breadcrumbs">
+            <ul>
+              <li
+                onClick={() =>
+                  this.props.navigate("/app/new-reports/over-view-dashboard")
+                }
+              >
+                Overview Dashboard
+              </li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active">Top Used Services</li>
+            </ul>
           </Box>
-          <Box className="d-flex  align-items-center justify-content-end m-t-2">
-            <Button className="light-btn p-l-15 p-r-15 m-r-3">
-              <i className="fas fa-filter m-r-2"></i> Filter
-            </Button>
-            <Button className="light-btn p-l-15 p-r-15">
-              <i className="fas fa-calendar-minus m-r-2"></i> Last Month
-            </Button>
-          </Box>
-       
+        </Box>
+        <Box className="d-flex  align-items-center justify-content-end m-t-2">
+          <Button className="light-btn p-l-15 p-r-15 m-r-3">
+            <i className="fas fa-filter m-r-2"></i> Filter
+          </Button>
+          <Button className="light-btn p-l-15 p-r-15">
+            <i className="fas fa-calendar-minus m-r-2"></i> Last Month
+          </Button>
+        </Box>
+
         <Box className="reports-tab-section m-t-3">
           <TimeSpendComponent data={timeSpendData} />
           <h3>Spendings Of Top Used Services</h3>

@@ -5,9 +5,8 @@ import Storage from "./Storage";
 import Database from "./Database";
 import Network from "./Network";
 import Other from "./Other";
-import { Link } from "react-router-dom";
 import SelectFilterModal from "../../Components/SelectFilterModal";
-
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 class SpendOverview extends Component {
   tabMapping = [
     {
@@ -104,7 +103,13 @@ class SpendOverview extends Component {
             <h3>Spend Overview</h3>
             <Box className="breadcrumbs">
               <ul>
-                <li>Overview Dashboard</li>
+                <li
+                  onClick={() =>
+                    this.props.navigate("/app/new-reports/over-view-dashboard")
+                  }
+                >
+                  Overview Dashboard
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
@@ -142,5 +147,4 @@ class SpendOverview extends Component {
     );
   }
 }
-
-export default SpendOverview;
+export default navigateRouter(SpendOverview);

@@ -289,7 +289,7 @@ export const Views = (props) => {
             element={<TopUsedServices />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/:name`}
+            path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/:name`}
             element={<TopUsedServicesDetails />}
           />
 
