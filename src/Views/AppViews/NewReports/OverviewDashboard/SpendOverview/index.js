@@ -103,13 +103,7 @@ class SpendOverview extends Component {
             <h3>Spend Overview</h3>
             <Box className="breadcrumbs">
               <ul>
-                <li
-                  onClick={() =>
-                    this.props.navigate("/app/new-reports/over-view-dashboard")
-                  }
-                >
-                  Overview Dashboard
-                </li>
+                <li>Overview Dashboard</li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
