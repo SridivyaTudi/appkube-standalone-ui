@@ -307,14 +307,26 @@
               padding: 0;
               margin: 0;
               li {
-                margin: 65px 0 0 0;
+                margin: 50px 0 0 0;
                 padding: 0;
-                i {
-                  font-size: 20px;
-                  color: #00b929;
+                .check-icon {
+                  background: #00b929;
+                  margin-right: 15px;
+                  i {
+                    font-size: 16px;
+                    color: #ffffff;
+                  }
                 }
+                .edit-icon {
+                  background: #3247e5;
+                  i {
+                    font-size: 16px;
+                    color: #ffffff;
+                  }
+                }
+
                 &:first-child {
-                  margin-top: 95px;
+                  margin-top: 90px;
                 }
               }
             }

@@ -12,6 +12,7 @@ import {
   TableHead,
   TableRow,
   Checkbox,
+  IconButton
 } from "@mui/material";
 import ChartWebLayerIcon from "assets/img/assetmanager/chart-web-layer-icon.png";
 import ChartAppLayerIcon from "assets/img/assetmanager/chart-app-layer-icon.png";
@@ -1001,7 +1002,14 @@ class Tier extends Component {
                               return selectedLayer[key] !== "" &&
                                 savedLayer[key] ? (
                                 <ListItem>
-                                  <i className="fa-sharp fa-solid fa-circle-check"></i>
+                                  <Box className="d-flex align-items-center">
+                                    <IconButton className="check-icon">
+                                      <i class="fas fa-check"></i>
+                                    </IconButton>
+                                    <IconButton className="edit-icon">
+                                      <i class="fas fa-edit"></i>
+                                    </IconButton>
+                                  </Box>
                                 </ListItem>
                               ) : (
                                 <></>

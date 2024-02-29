@@ -18,7 +18,7 @@ import status from "Redux/Constants/CommonDS";
 import SuccessfullyIcon from "assets/img/assetmanager/successfully-icon.png";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 const steps = ["Add OU ", "Add Project & Services ", "Payment and Date"];
-const departments = ["IT", "HR", "PRODUTION", "FINANCE"];
+const departments = ["It", "Hr", "Prodution", "Finance"];
 const services = [
   { id: 1, name: "Business" },
   { id: 2, name: "Common" },
