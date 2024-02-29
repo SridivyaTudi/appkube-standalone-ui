@@ -118,15 +118,17 @@ class ConfigInfo extends Component {
                       </Select>
                     </FormControl>
                   ) : (
-                    <input
-                      id={`organizationName`}
-                      type="text"
-                      className="form-control"
-                      name="organizationName"
-                      placeholder="User inut"
-                      // value={formData.organizationName}
-                      // onChange={this.handleInputChange}
-                    />
+                    <Box className="subvalue">
+                      <input
+                        id={`organizationName`}
+                        type="text"
+                        className="form-control"
+                        name="organizationName"
+                        placeholder="User inut"
+                        // value={formData.organizationName}
+                        // onChange={this.handleInputChange}
+                      />
+                    </Box>
                   )}
                 </Box>
               </TableCell>

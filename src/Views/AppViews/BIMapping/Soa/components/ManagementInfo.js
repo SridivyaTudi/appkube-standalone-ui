@@ -200,18 +200,20 @@ class ManagementInfo extends Component {
                     ?.subKey || "-"
                 )}{" "}
               </TableCell>
-              <TableCell align="center">
+              <TableCell align="center" className="text-center">
                 {info.subKeyValue[selectedInfo[`${info.key}_${index}`]]
                   ?.subValue === "user input" ? (
-                  <input
-                    id={`organizationName`}
-                    type="text"
-                    className="form-control"
-                    name="organizationName"
-                    placeholder="User inut"
-                    // value={formData.organizationName}
-                    // onChange={this.handleInputChange}
-                  />
+                  <Box className="subvalue">
+                    <input
+                      id={`organizationName`}
+                      type="text"
+                      className="form-control"
+                      name="organizationName"
+                      placeholder="User inut"
+                      // value={formData.organizationName}
+                      // onChange={this.handleInputChange}
+                    />
+                  </Box>
                 ) : (
                   "-"
                 )}
