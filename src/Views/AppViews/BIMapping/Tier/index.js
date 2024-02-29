@@ -611,11 +611,7 @@ class Tier extends Component {
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li>Product Category</li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li className="active">3 Tier</li>
+              <li className="active">Product Category</li>
             </ul>
           </Box>
         </Box>

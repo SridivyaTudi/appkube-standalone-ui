@@ -470,11 +470,11 @@ class BIMapping extends Component {
                       Department
                     </ListItem>
                   </Link>
-                  <Link to={`/app/bim/add-product`}>
+                  {/* <Link to={`/app/bim/add-product`}>
                     <ListItem>
                       <i className="fa-solid fa-circle-dot"></i>Add Products
                     </ListItem>
-                  </Link>
+                  </Link> */}
                 </List>
               </div>
             )}

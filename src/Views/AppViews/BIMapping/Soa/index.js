@@ -547,7 +547,7 @@ class Soa extends Component {
       savedService,
       cloudElementType,
     } = this.state;
-    let { biServicesFromProductCategory, } = this.props;
+    let { biServicesFromProductCategory } = this.props;
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -562,11 +562,7 @@ class Soa extends Component {
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li>Product Category</li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li className="active">Soa</li>
+              <li className="active">Product Category</li>
             </ul>
           </Box>
         </Box>

@@ -12,30 +12,32 @@ import {
   Select,
 } from "@mui/material";
 import { v4 } from "uuid";
+const BUILD_TOOLS_DROP_DOWN = ["maven", "gradle", "gant"];
 let data = [
   {
     key: "java version",
-    value: "",
-    subKey: "Instance ID	",
-    subValue: "user input",
+    value: "user input",
+    subKey: "-",
+    subValue: "-",
   },
   {
     key: "min memory (xms) ",
-    value: "",
-    subKey: "Instance ID	",
-    subValue: "user input",
+    value: "user input",
+    subKey: "-",
+    subValue: "-",
   },
   {
     key: "max memory (xmx) ",
-    value: "",
-    subKey: "Instance ID	",
-    subValue: "user input",
+    value: "user input",
+    subKey: "-",
+    subValue: "-",
   },
   {
     key: "build tool",
     value: "",
-    subKey: "Instance ID	",
-    subValue: "user input",
+    subKey: "-",
+    subValue: "-",
+    dropDownValues: BUILD_TOOLS_DROP_DOWN,
   },
 ];
 class ConfigInfo extends Component {
@@ -93,28 +95,39 @@ class ConfigInfo extends Component {
               <TableCell align="left">{info.key}</TableCell>
               <TableCell align="center">
                 <Box className="region">
-                  <FormControl
-                    className="Region-fliter"
-                    sx={{ m: 1, minWidth: 100 }}
-                  >
-                    <Select
-                      className="fliter-toggel"
-                      value={`${
-                        this.state.selectedInfo[`${info.key}_${index}`] || ""
-                      }`}
-                      onChange={(e) =>
-                        this.handleChange(e, `${info.key}_${index}`)
-                      }
-                      displayEmpty
-                      inputProps={{ "aria-label": "Without label" }}
+                  {info.dropDownValues ? (
+                    <FormControl
+                      className="Region-fliter"
+                      sx={{ m: 1, minWidth: 100 }}
                     >
-                      <MenuItem value="">Select </MenuItem>
-                      <MenuItem value={10}>Eks</MenuItem>
-                      <MenuItem value={20}>Ecs</MenuItem>
-                      <MenuItem value={30}>Ec2</MenuItem>
-                      <MenuItem value={40}>S3</MenuItem>
-                    </Select>
-                  </FormControl>
+                      <Select
+                        className="fliter-toggel"
+                        value={`${
+                          this.state.selectedInfo[`${info.key}_${index}`] || ""
+                        }`}
+                        onChange={(e) =>
+                          this.handleChange(e, `${info.key}_${index}`)
+                        }
+                        displayEmpty
+                        inputProps={{ "aria-label": "Without label" }}
+                      >
+                        <MenuItem value="">Select </MenuItem>
+                        {info.dropDownValues.map((val) => (
+                          <MenuItem value={val}>{val}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  ) : (
+                    <input
+                      id={`organizationName`}
+                      type="text"
+                      className="form-control"
+                      name="organizationName"
+                      placeholder="User inut"
+                      // value={formData.organizationName}
+                      // onChange={this.handleInputChange}
+                    />
+                  )}
                 </Box>
               </TableCell>
               <TableCell align="center">{info.subKey} </TableCell>

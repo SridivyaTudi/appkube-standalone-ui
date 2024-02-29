@@ -12,10 +12,11 @@ import {
   Select,
 } from "@mui/material";
 import { v4 } from "uuid";
-let HOSTED_ON_DROP_DOWN = ["ec2", "eks", "ecs", "lambda", "s3"];
-let MANAGEMENT_ENDPOINT__DROP_DOWN = ["ip/port", "dns"];
-let PROMETHEUS_ENDPOINT_DROP_DOWN = ["ip/port", "dns"];
-let LOG_LOCATION_DROP_DOWN = ["Cloudwatch", "server"];
+const HOSTED_ON_DROP_DOWN = ["ec2", "eks", "ecs", "lambda", "s3"];
+const MANAGEMENT_ENDPOINT__DROP_DOWN = ["ip/port", "dns"];
+const PROMETHEUS_ENDPOINT_DROP_DOWN = ["ip/port", "dns"];
+const LOG_LOCATION_DROP_DOWN = ["Cloudwatch", "server"];
+const LOG_LOCATION_SUBKEY_DROP_DOWN = ["Log group", "Promtail"];
 
 let data = [
   {
@@ -85,6 +86,7 @@ let data = [
         subValue: "user input",
       },
     },
+    subKeyDropDownValue: LOG_LOCATION_SUBKEY_DROP_DOWN,
   },
 ];
 class ManagementInfo extends Component {
@@ -94,6 +96,7 @@ class ManagementInfo extends Component {
       activeTab: 0,
       tableData: data,
       selectedInfo: {},
+      selectedSubkeys: {},
       country: "",
     };
   }
@@ -101,14 +104,18 @@ class ManagementInfo extends Component {
     this.setState({ activeTab });
   };
 
-  handleChange = (event, key) => {
+  handleChange = (event, key, isSubkey = 0) => {
     let { value } = event.target;
-    let { selectedInfo } = this.state;
-
-    selectedInfo[`${key}`] = value;
+    let { selectedInfo, selectedSubkeys } = this.state;
+    if (isSubkey) {
+      selectedSubkeys[`${key}`] = value;
+    } else {
+      selectedInfo[`${key}`] = value;
+    }
 
     this.setState({
       selectedInfo,
+      selectedSubkeys,
     });
   };
   renderTableHead = () => {
@@ -133,7 +140,7 @@ class ManagementInfo extends Component {
   };
 
   renderTableBody = () => {
-    let { tableData,selectedInfo } = this.state;
+    let { tableData, selectedInfo, selectedSubkeys } = this.state;
     return (
       <TableBody>
         {tableData.map((info, index) => {
@@ -164,12 +171,50 @@ class ManagementInfo extends Component {
                 </Box>
               </TableCell>
               <TableCell align="center">
-                {info.subKeyValue[selectedInfo[`${info.key}_${index}`]]
-                  ?.subKey || "-"}{" "}
+                {info.subKeyDropDownValue ? (
+                  <Box className="region">
+                    <FormControl
+                      className="Region-fliter"
+                      sx={{ m: 1, minWidth: 100 }}
+                    >
+                      <Select
+                        className="fliter-toggel"
+                        value={`${
+                          selectedSubkeys[`${info.key}_${index}`] || ""
+                        }`}
+                        onChange={(e) =>
+                          this.handleChange(e, `${info.key}_${index}`, 1)
+                        }
+                        displayEmpty
+                        inputProps={{ "aria-label": "Without label" }}
+                      >
+                        <MenuItem value="">Select </MenuItem>
+                        {info.subKeyDropDownValue.map((val) => (
+                          <MenuItem value={val}>{val}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                ) : (
+                  info.subKeyValue[selectedInfo[`${info.key}_${index}`]]
+                    ?.subKey || "-"
+                )}{" "}
               </TableCell>
               <TableCell align="center">
                 {info.subKeyValue[selectedInfo[`${info.key}_${index}`]]
-                  ?.subValue || "-"}
+                  ?.subValue === "user input" ? (
+                  <input
+                    id={`organizationName`}
+                    type="text"
+                    className="form-control"
+                    name="organizationName"
+                    placeholder="User inut"
+                    // value={formData.organizationName}
+                    // onChange={this.handleInputChange}
+                  />
+                ) : (
+                  "-"
+                )}
               </TableCell>
             </TableRow>
           );
