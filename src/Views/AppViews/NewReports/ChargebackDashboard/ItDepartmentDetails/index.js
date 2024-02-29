@@ -9,20 +9,10 @@ import {
   TableBody,
   TableCell,
   IconButton,
-  Checkbox,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import ServiceIcon7 from "assets/img/report/service-icon7.png";
-import ServiceIcon8 from "assets/img/report/service-icon8.png";
-import ServiceIcon9 from "assets/img/report/service-icon9.png";
-import ServiceIcon10 from "assets/img/report/service-icon10.png";
-import ServiceIcon11 from "assets/img/report/service-icon11.png";
-import ServiceIcon12 from "assets/img/report/service-icon12.png";
-import ServiceIcon13 from "assets/img/report/service-icon13.png";
-import ServiceIcon14 from "assets/img/report/service-icon14.png";
-import ServiceIcon15 from "assets/img/report/service-icon15.png";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 let timeSpendData = [
   {
     name: "Last Month Spend",
@@ -44,7 +34,179 @@ let timeSpendData = [
   },
 ];
 
+let data = [
+  {
+    quantity: 10,
+    instanceType: 't4g.2xlarge',
+    instanceStatus: '10/10',
+    instanceMemory: '32.0 GiB',
+    vcpus: '8 vCPUs',
+    instanceStorage: 'EBS only',
+    perHrCost: '$0.2688',
+    usageHrs: '730 hours',
+    addOns: 'NA',
+    totalSpend: '$196.22'
+}, {
+  quantity: 10,
+  instanceType: 't4g.2xlarge',
+  instanceStatus: '10/10',
+  instanceMemory: '32.0 GiB',
+  vcpus: '8 vCPUs',
+  instanceStorage: 'EBS only',
+  perHrCost: '$0.2688',
+  usageHrs: '730 hours',
+  addOns: 'NA',
+  totalSpend: '$196.22'
+}, {
+  quantity: 10,
+  instanceType: 't4g.2xlarge',
+  instanceStatus: '10/10',
+  instanceMemory: '32.0 GiB',
+  vcpus: '8 vCPUs',
+  instanceStorage: 'EBS only',
+  perHrCost: '$0.2688',
+  usageHrs: '730 hours',
+  addOns: 'NA',
+  totalSpend: '$196.22'
+}, {
+  quantity: 10,
+  instanceType: 't4g.2xlarge',
+  instanceStatus: '10/10',
+  instanceMemory: '32.0 GiB',
+  vcpus: '8 vCPUs',
+  instanceStorage: 'EBS only',
+  perHrCost: '$0.2688',
+  usageHrs: '730 hours',
+  addOns: 'NA',
+  totalSpend: '$196.22'
+}, {
+  quantity: 10,
+  instanceType: 't4g.2xlarge',
+  instanceStatus: '10/10',
+  instanceMemory: '32.0 GiB',
+  vcpus: '8 vCPUs',
+  instanceStorage: 'EBS only',
+  perHrCost: '$0.2688',
+  usageHrs: '730 hours',
+  addOns: 'NA',
+  totalSpend: '$196.22'
+}, {
+  quantity: 10,
+  instanceType: 't4g.2xlarge',
+  instanceStatus: '10/10',
+  instanceMemory: '32.0 GiB',
+  vcpus: '8 vCPUs',
+  instanceStorage: 'EBS only',
+  perHrCost: '$0.2688',
+  usageHrs: '730 hours',
+  addOns: 'NA',
+  totalSpend: '$196.22'
+}, {
+  quantity: 10,
+  instanceType: 't4g.2xlarge',
+  instanceStatus: '10/10',
+  instanceMemory: '32.0 GiB',
+  vcpus: '8 vCPUs',
+  instanceStorage: 'EBS only',
+  perHrCost: '$0.2688',
+  usageHrs: '730 hours',
+  addOns: 'NA',
+  totalSpend: '$196.22'
+}, {
+  quantity: 10,
+  instanceType: 't4g.2xlarge',
+  instanceStatus: '10/10',
+  instanceMemory: '32.0 GiB',
+  vcpus: '8 vCPUs',
+  instanceStorage: 'EBS only',
+  perHrCost: '$0.2688',
+  usageHrs: '730 hours',
+  addOns: 'NA',
+  totalSpend: '$196.22'
+}, {
+  quantity: 10,
+  instanceType: 't4g.2xlarge',
+  instanceStatus: '10/10',
+  instanceMemory: '32.0 GiB',
+  vcpus: '8 vCPUs',
+  instanceStorage: 'EBS only',
+  perHrCost: '$0.2688',
+  usageHrs: '730 hours',
+  addOns: 'NA',
+  totalSpend: '$196.22'
+}, {
+  quantity: 10,
+  instanceType: 't4g.2xlarge',
+  instanceStatus: '10/10',
+  instanceMemory: '32.0 GiB',
+  vcpus: '8 vCPUs',
+  instanceStorage: 'EBS only',
+  perHrCost: '$0.2688',
+  usageHrs: '730 hours',
+  addOns: 'NA',
+  totalSpend: '$196.22'
+},
+]
 class ItDepartmentDetails extends Component {
+  //  Render table head
+  renderTableHead = () => {
+    return (
+      <TableHead>
+        <TableRow>
+          <TableCell align="left">quantity</TableCell>
+          <TableCell align="left">Instance type</TableCell>
+          <TableCell align="center">Instance Status </TableCell>
+          <TableCell align="center">Instance Memory</TableCell>
+          <TableCell align="center">vcpus </TableCell>
+          <TableCell align="center">Instance storage </TableCell>
+          <TableCell align="center">per hour cost </TableCell>
+          <TableCell align="center">usage hours </TableCell>
+          <TableCell align="center">Add-ons </TableCell>
+          <TableCell align="center">Total spend </TableCell>
+        </TableRow>
+      </TableHead>
+    );
+  };
+
+  //  Render table body
+  renderTableBody = () => {
+    return (
+      <TableBody>
+        {data?.length ? (
+          data.map((details) => {
+            return (
+              <TableRow>
+                <TableCell align="left">10</TableCell>
+                <TableCell align="left">
+                  <Link to={`#`}>t4g.2xlarge</Link>
+                </TableCell>
+                <TableCell align="center">10/10</TableCell>
+                <TableCell align="center">32.0 GiB</TableCell>
+                <TableCell align="center">8 vCPUs</TableCell>
+                <TableCell align="center">EBS only</TableCell>
+                <TableCell align="center">
+                  <strong>$0.2688</strong>
+                </TableCell>
+                <TableCell align="center">
+                  <strong>730 hours</strong>
+                </TableCell>
+                <TableCell align="center">NA</TableCell>
+                <TableCell align="center">
+                  <strong>$196.22</strong>
+                </TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <Box className="d-blck text-center w-100 h-100 ">
+            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+              <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+            </Box>
+          </Box>
+        )}
+      </TableBody>
+    );
+  };
   render() {
     return (
       <Box className="new-reports-container">
@@ -52,13 +214,23 @@ class ItDepartmentDetails extends Component {
           <Box className="heading">
             <Box className="breadcrumbs">
               <ul>
-                <li>
+                <li
+                  onClick={() =>
+                    this.props.navigate("/app/new-reports/chargeback-dashboard")
+                  }
+                >
                   <p> Chargeback Dashboard</p>
                 </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
-                <li>
+                <li
+                  onClick={() =>
+                    this.props.navigate(
+                      "/app/new-reports/chargeback-dashboard/department"
+                    )
+                  }
+                >
                   <p>IT Department</p>
                 </li>
                 <li>
@@ -73,7 +245,7 @@ class ItDepartmentDetails extends Component {
         </Box>
         <Box className="list-heading m-t-3">
           <h3>
-            <Link to={`/app/new-reports/over-view-dashboard`}>
+            <Link to={`/app/new-reports/chargeback-dashboard`}>
               <IconButton className="m-r-2">
                 <i class="fas fa-long-arrow-left"></i>
               </IconButton>
@@ -104,182 +276,8 @@ class ItDepartmentDetails extends Component {
           <Box className="new-reports-table">
             <TableContainer className="table">
               <Table style={{ width: 2000 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">quantity</TableCell>
-                    <TableCell align="left">Instance type</TableCell>
-                    <TableCell align="center">Instance Status </TableCell>
-                    <TableCell align="center">Instance Memory</TableCell>
-                    <TableCell align="center">vcpus </TableCell>
-                    <TableCell align="center">Instance storage </TableCell>
-                    <TableCell align="center">per hour cost </TableCell>
-                    <TableCell align="center">usage hours </TableCell>
-                    <TableCell align="center">Add-ons </TableCell>
-                    <TableCell align="center">Total spend </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="left">10</TableCell>
-                    <TableCell align="left">
-                      <Link to={``}>t4g.2xlarge</Link>
-                    </TableCell>
-                    <TableCell align="center">10/10</TableCell>
-                    <TableCell align="center">32.0 GiB</TableCell>
-                    <TableCell align="center">8 vCPUs</TableCell>
-                    <TableCell align="center">EBS only</TableCell>
-                    <TableCell align="center">
-                      <strong>$0.2688</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>730 hours</strong>
-                    </TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center">
-                      <strong>$196.22</strong>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">10</TableCell>
-                    <TableCell align="left">
-                      <Link to={``}>t4g.2xlarge</Link>
-                    </TableCell>
-                    <TableCell align="center">10/10</TableCell>
-                    <TableCell align="center">32.0 GiB</TableCell>
-                    <TableCell align="center">8 vCPUs</TableCell>
-                    <TableCell align="center">EBS only</TableCell>
-                    <TableCell align="center">
-                      <strong>$0.2688</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>730 hours</strong>
-                    </TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center">
-                      <strong>$196.22</strong>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">10</TableCell>
-                    <TableCell align="left">
-                      <Link to={``}>t4g.2xlarge</Link>
-                    </TableCell>
-                    <TableCell align="center">10/10</TableCell>
-                    <TableCell align="center">32.0 GiB</TableCell>
-                    <TableCell align="center">8 vCPUs</TableCell>
-                    <TableCell align="center">EBS only</TableCell>
-                    <TableCell align="center">
-                      <strong>$0.2688</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>730 hours</strong>
-                    </TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center">
-                      <strong>$196.22</strong>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">10</TableCell>
-                    <TableCell align="left">
-                      <Link to={``}>t4g.2xlarge</Link>
-                    </TableCell>
-                    <TableCell align="center">10/10</TableCell>
-                    <TableCell align="center">32.0 GiB</TableCell>
-                    <TableCell align="center">8 vCPUs</TableCell>
-                    <TableCell align="center">EBS only</TableCell>
-                    <TableCell align="center">
-                      <strong>$0.2688</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>730 hours</strong>
-                    </TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center">
-                      <strong>$196.22</strong>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">10</TableCell>
-                    <TableCell align="left">
-                      <Link to={``}>t4g.2xlarge</Link>
-                    </TableCell>
-                    <TableCell align="center">10/10</TableCell>
-                    <TableCell align="center">32.0 GiB</TableCell>
-                    <TableCell align="center">8 vCPUs</TableCell>
-                    <TableCell align="center">EBS only</TableCell>
-                    <TableCell align="center">
-                      <strong>$0.2688</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>730 hours</strong>
-                    </TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center">
-                      <strong>$196.22</strong>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">10</TableCell>
-                    <TableCell align="left">
-                      <Link to={``}>t4g.2xlarge</Link>
-                    </TableCell>
-                    <TableCell align="center">10/10</TableCell>
-                    <TableCell align="center">32.0 GiB</TableCell>
-                    <TableCell align="center">8 vCPUs</TableCell>
-                    <TableCell align="center">EBS only</TableCell>
-                    <TableCell align="center">
-                      <strong>$0.2688</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>730 hours</strong>
-                    </TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center">
-                      <strong>$196.22</strong>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">10</TableCell>
-                    <TableCell align="left">
-                      <Link to={``}>t4g.2xlarge</Link>
-                    </TableCell>
-                    <TableCell align="center">10/10</TableCell>
-                    <TableCell align="center">32.0 GiB</TableCell>
-                    <TableCell align="center">8 vCPUs</TableCell>
-                    <TableCell align="center">EBS only</TableCell>
-                    <TableCell align="center">
-                      <strong>$0.2688</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>730 hours</strong>
-                    </TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center">
-                      <strong>$196.22</strong>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">10</TableCell>
-                    <TableCell align="left">
-                      <Link to={``}>t4g.2xlarge</Link>
-                    </TableCell>
-                    <TableCell align="center">10/10</TableCell>
-                    <TableCell align="center">32.0 GiB</TableCell>
-                    <TableCell align="center">8 vCPUs</TableCell>
-                    <TableCell align="center">EBS only</TableCell>
-                    <TableCell align="center">
-                      <strong>$0.2688</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>730 hours</strong>
-                    </TableCell>
-                    <TableCell align="center">NA</TableCell>
-                    <TableCell align="center">
-                      <strong>$196.22</strong>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
+                {this.renderTableHead()}
+                {this.renderTableBody()}
               </Table>
             </TableContainer>
           </Box>
@@ -288,5 +286,4 @@ class ItDepartmentDetails extends Component {
     );
   }
 }
-
-export default ItDepartmentDetails;
+export default navigateRouter(ItDepartmentDetails);
