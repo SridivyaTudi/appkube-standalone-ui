@@ -169,6 +169,7 @@ class Tier extends Component {
       instancesServices: [],
       cloudElementType: "",
       activeTabEcs: 0,
+      clickIdAddEntry: "",
     };
   }
 
@@ -595,6 +596,7 @@ class Tier extends Component {
       savedLayer,
       cloudElementType,
       activeTabEcs,
+      clickIdAddEntry,
     } = this.state;
     let { biServicesFromProductCategory } = this.props;
     let { name } = this.getUrlDetails();
@@ -633,6 +635,7 @@ class Tier extends Component {
             <Grid item xs={6}>
               <Box className="topology-panel">
                 <Box className="topology-panel-body">
+                <h4 className="m-t-0 m-b-0">Module : Admission</h4>
                   {biServicesFromProductCategory.status ===
                   status.IN_PROGRESS ? (
                     this.renderLoder()
@@ -1095,12 +1098,14 @@ class Tier extends Component {
                         setNextTab={(activeTabEcs) => {
                           this.setState({ activeTabEcs });
                         }}
+                        onClickAddEntryBtn={clickIdAddEntry}
                       />
                     ) : activeTabEcs === 1 ? (
                       <ConfigInfo
                         setNextTab={(activeTabEcs) => {
                           this.setState({ activeTabEcs });
                         }}
+                        onClickAddEntryBtn={clickIdAddEntry}
                       />
                     ) : (
                       <></>
@@ -1125,23 +1130,42 @@ class Tier extends Component {
           )}
 
           {selectedInstance >= 0 ? (
-            <Box justifyContent={"center"} className="text-center m-t-4">
-              <Button
-                className={` ${
-                  selectedService.length || activeTabEks === 3 ? "" : "info-btn"
-                } primary-btn min-width-inherit`}
-                variant="contained"
-                onClick={() =>
-                  selectedService.length || activeTabEks === 3 ? (
-                    this.onClickSave()
-                  ) : (
-                    <></>
-                  )
-                }
-              >
-                Save
-              </Button>
-            </Box>
+            <>
+              <Box justifyContent={"center"} className="text-center m-t-4">
+                <Button
+                  className={` ${
+                    selectedService.length || activeTabEks === 3
+                      ? ""
+                      : "info-btn"
+                  } primary-btn min-width-inherit`}
+                  variant="contained"
+                  onClick={() =>
+                    selectedService.length || activeTabEks === 3 ? (
+                      this.onClickSave()
+                    ) : (
+                      <></>
+                    )
+                  }
+                >
+                  Save
+                </Button>
+              </Box>
+              {cloudElementType?.toUpperCase() === this.CLOUD_ELEMENT.ECS ? (
+                <Box justifyContent={"center"} className=" text-center m-t-4">
+                  <Button
+                    className={` primary-btn min-width-inherit`}
+                    variant="contained"
+                    onClick={() => {
+                      this.setState({ clickIdAddEntry: v4() });
+                    }}
+                  >
+                    Add Entry
+                  </Button>
+                </Box>
+              ) : (
+                <></>
+              )}
+            </>
           ) : (
             <></>
           )}
