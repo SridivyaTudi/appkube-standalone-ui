@@ -118,18 +118,8 @@ class Signin extends Component {
     };
     let isValid = true;
     if (isSubmit) {
-      let userNamePolicy = [
-        !isAlphaNumeric(formData.userName),
-        formData.userName.length < 8,
-        formData.userName.length > 50,
-      ].includes(true);
-      
       if (!formData.userName) {
         errors.userName = "Username is required!";
-        isValid = false;
-      } else if (userNamePolicy) {
-        errors.userName =
-          "Username should be between 8 and 50 alphanumeric characters !";
         isValid = false;
       } else {
         errors.userName = "";
