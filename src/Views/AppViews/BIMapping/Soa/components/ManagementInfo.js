@@ -167,6 +167,19 @@ class ManagementInfo extends Component {
     if (prevProps.onClickAddEntryBtn !== this.props.onClickAddEntryBtn) {
       this.onClickAddEntry();
     }
+
+    if (prevProps.selectedCloudElement !== this.props.selectedCloudElement) {
+      let value = this.props.selectedCloudElement;
+      console.log(value);
+      this.handleChange(
+        {
+          target: {
+            value,
+          },
+        },
+        `${value}_0`
+      );
+    }
   };
 
   setActiveTab = (activeTab) => {
@@ -335,7 +348,7 @@ class ManagementInfo extends Component {
                         value={info.subValue}
                         onChange={(e) => this.handleCustomInputChange(e, index)}
                       />
-                      <IconButton 
+                      <IconButton
                         variant="outlined"
                         color="error"
                         aria-label="delete"
@@ -389,9 +402,10 @@ class ManagementInfo extends Component {
     this.setState({ tableData });
   };
   render() {
+    let { style } = this.props;
     return (
       <>
-        <Box className="tier-table-section">
+        <Box className="tier-table-section" style={style}>
           <TableContainer className="table">
             <Table className="overview">
               {this.renderTableHead()}

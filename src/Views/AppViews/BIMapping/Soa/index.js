@@ -40,7 +40,11 @@ import {
   getCloudServices,
   getInstancesServices,
 } from "Redux/BIMapping/BIMappingThunk";
-import { PRODUCT_CATEGORY_ENUM, SERVICES_CATEGORY_OF_SOA_ENUM } from "Utils";
+import {
+  PRODUCT_CATEGORY_ENUM,
+  SERVICES_CATEGORY_OF_SOA_ENUM,
+  ADD_PRODUCT_ENUMS,
+} from "Utils";
 import { connect } from "react-redux";
 import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
@@ -121,10 +125,13 @@ class Soa extends Component {
       type: ["configinfo"],
     },
   ];
-  CLOUD_ELEMENT = {
-    ECS: "ECS",
-    EKS: "EKS",
-  };
+  showManagementInfoTab = [
+    ADD_PRODUCT_ENUMS.EC2,
+    ADD_PRODUCT_ENUMS.EKS,
+    ADD_PRODUCT_ENUMS.ECS,
+    ADD_PRODUCT_ENUMS.LAMBDA,
+    ADD_PRODUCT_ENUMS.S3,
+  ];
   constructor(props) {
     super(props);
     this.state = {
@@ -157,6 +164,7 @@ class Soa extends Component {
       instancesServices: [],
       cloudElementType: "",
       clickIdAddEntry: "",
+      activeTabEcs: 0,
     };
   }
 
@@ -229,8 +237,14 @@ class Soa extends Component {
     });
   };
 
-  setActiveTab = (activeTabEks) => {
-    this.setState({ activeTabEks });
+  setActiveTab = (id, isECS = 0) => {
+    let { activeTabEcs, activeTabEks } = this.state;
+    if (isECS) {
+      activeTabEcs = id;
+    } else {
+      activeTabEks = id;
+    }
+    this.setState({ activeTabEcs, activeTabEks });
   };
 
   toggleAppService = () => {
@@ -549,9 +563,13 @@ class Soa extends Component {
       savedService,
       cloudElementType,
       clickIdAddEntry,
+      activeTabEcs,
     } = this.state;
     let { biServicesFromProductCategory, createProductFormData } = this.props;
     let { name } = this.getUrlDetails();
+    let isShowManagementInfoTab = this.showManagementInfoTab.includes(
+      cloudElementType?.toUpperCase()
+    );
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -588,7 +606,7 @@ class Soa extends Component {
               <Box className="topology-panel">
                 <Box className="topology-panel-body">
                   <h4 className="m-t-0 m-b-0">
-                    Module : {createProductFormData.moduleName}
+                    MODULE : {createProductFormData.moduleName}
                   </h4>
                   {biServicesFromProductCategory.status ===
                   status.IN_PROGRESS ? (
@@ -938,7 +956,7 @@ class Soa extends Component {
             </Grid>
           </Grid>
           {selectedInstance >= 0 ? (
-            cloudElementType?.toUpperCase() === this.CLOUD_ELEMENT.EKS ? (
+            cloudElementType?.toUpperCase() === ADD_PRODUCT_ENUMS.EKS ? (
               <Box className="nginx-section">
                 <Box className="tabs">
                   <List className="tabs-menu">
@@ -984,7 +1002,7 @@ class Soa extends Component {
                   </Box>
                 </Box>
               </Box>
-            ) : cloudElementType?.toUpperCase() === this.CLOUD_ELEMENT.ECS ? (
+            ) : isShowManagementInfoTab ? (
               <Box className="nginx-section">
                 <Box className="tabs">
                   <List className="tabs-menu">
@@ -992,8 +1010,8 @@ class Soa extends Component {
                       return (
                         <ListItem
                           key={`ops-tab-${index}`}
-                          className={index === activeTabEks ? "active" : ""}
-                          onClick={() => this.setActiveTab(index)}
+                          className={index === activeTabEcs ? "active" : ""}
+                          onClick={() => this.setActiveTab(index, 1)}
                         >
                           <Box className="m-r-2">
                             <img src={tabData.image} alt="" />
@@ -1004,23 +1022,21 @@ class Soa extends Component {
                     })}
                   </List>
                   <Box className="tabs-content">
-                    {activeTabEks === 0 ? (
-                      <ManagementInfo
-                        setNextTab={(activeTabEks) => {
-                          this.setState({ activeTabEks });
-                        }}
-                        onClickAddEntryBtn={clickIdAddEntry}
-                      />
-                    ) : activeTabEks === 1 ? (
-                      <ConfigInfo
-                        setNextTab={(activeTabEks) => {
-                          this.setState({ activeTabEks });
-                        }}
-                        onClickAddEntryBtn={clickIdAddEntry}
-                      />
-                    ) : (
-                      <></>
-                    )}
+                    <ManagementInfo
+                      setNextTab={(activeTabEks) => {
+                        this.setState({ activeTabEks });
+                      }}
+                      onClickAddEntryBtn={clickIdAddEntry}
+                      style={{ display: activeTabEcs === 0 ? "" : "none" }}
+                    />
+
+                    <ConfigInfo
+                      setNextTab={(activeTabEks) => {
+                        this.setState({ activeTabEks });
+                      }}
+                      onClickAddEntryBtn={clickIdAddEntry}
+                      style={{ display: activeTabEcs === 1 ? "" : "none" }}
+                    />
                   </Box>
                 </Box>
               </Box>
@@ -1046,8 +1062,7 @@ class Soa extends Component {
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 <Grid item xs={4} alignItems={"flex-start"}>
-                  {cloudElementType?.toUpperCase() ===
-                  this.CLOUD_ELEMENT.ECS ? (
+                  {cloudElementType?.toUpperCase() === ADD_PRODUCT_ENUMS.ECS ? (
                     <Button
                       className={` primary-btn min-width-inherit`}
                       variant="contained"

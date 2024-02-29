@@ -60,13 +60,17 @@ class AddProduct extends Component {
           productData["productName"] = productData.name;
 
           delete productData.name;
-
+          departmentName = departmentName?.toLowerCase()?.replaceAll(" ", "-");
           this.props.setProductIntoDepartment(productData);
-          this.props.navigate(
-            `/app/bim/add-product/${departmentName
-              ?.toLowerCase()
-              ?.replaceAll(" ", "-")}/product-category`
-          );
+          if (formData.category === PRODUCT_CATEGORY_ENUM.THREE_TIER) {
+            this.props.navigate(
+              `/app/bim/add-product/${departmentName}/product-category/3-tier`
+            );
+          } else {
+            this.props.navigate(
+              `/app/bim/add-product/${departmentName}/product-category`
+            );
+          }
         }
       }
     );

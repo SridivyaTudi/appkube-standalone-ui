@@ -12,7 +12,7 @@ import {
   TableHead,
   TableRow,
   Checkbox,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import ChartWebLayerIcon from "assets/img/assetmanager/chart-web-layer-icon.png";
 import ChartAppLayerIcon from "assets/img/assetmanager/chart-app-layer-icon.png";
@@ -41,6 +41,7 @@ import {
 import {
   PRODUCT_CATEGORY_ENUM,
   SERVICES_CATEGORY_OF_THREE_TIER_ENUM,
+  ADD_PRODUCT_ENUMS,
 } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { connect } from "react-redux";
@@ -129,10 +130,13 @@ class Tier extends Component {
       type: ["configinfo"],
     },
   ];
-  CLOUD_ELEMENT = {
-    ECS: "ECS",
-    EKS: "EKS",
-  };
+  showManagementInfoTab = [
+    ADD_PRODUCT_ENUMS.EC2,
+    ADD_PRODUCT_ENUMS.EKS,
+    ADD_PRODUCT_ENUMS.ECS,
+    ADD_PRODUCT_ENUMS.LAMBDA,
+    ADD_PRODUCT_ENUMS.S3,
+  ];
   constructor(props) {
     super(props);
     this.state = {
@@ -170,7 +174,8 @@ class Tier extends Component {
       instancesServices: [],
       cloudElementType: "",
       activeTabEcs: 0,
-      clickIdAddEntry: "",
+      clickConfigInfoIdAddEntry: "",
+      clickManInfoIdAddEntry: "",
     };
   }
 
@@ -598,9 +603,14 @@ class Tier extends Component {
       cloudElementType,
       activeTabEcs,
       clickIdAddEntry,
+      clickConfigInfoIdAddEntry,
+      clickManInfoIdAddEntry,
     } = this.state;
-    let { biServicesFromProductCategory } = this.props;
+    let { biServicesFromProductCategory, createProductFormData } = this.props;
     let { name } = this.getUrlDetails();
+    let isShowManagementInfoTab = this.showManagementInfoTab.includes(
+      cloudElementType?.toUpperCase()
+    );
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -636,7 +646,10 @@ class Tier extends Component {
             <Grid item xs={6}>
               <Box className="topology-panel">
                 <Box className="topology-panel-body">
-                <h4 className="m-t-0 m-b-0">Module : Admission</h4>
+                  <h4 className="m-t-0 m-b-0">
+                    {" "}
+                    MODULE : {createProductFormData.moduleName}
+                  </h4>
                   {biServicesFromProductCategory.status ===
                   status.IN_PROGRESS ? (
                     this.renderLoder()
@@ -1035,7 +1048,7 @@ class Tier extends Component {
             </Grid>
           </Grid>
           {selectedInstance >= 0 ? (
-            cloudElementType?.toUpperCase() === this.CLOUD_ELEMENT.EKS ? (
+            cloudElementType?.toUpperCase() === ADD_PRODUCT_ENUMS.CDN ? (
               <Box className="nginx-section">
                 <Box className="tabs">
                   <List className="tabs-menu">
@@ -1081,7 +1094,7 @@ class Tier extends Component {
                   </Box>
                 </Box>
               </Box>
-            ) : cloudElementType?.toUpperCase() === this.CLOUD_ELEMENT.ECS ? (
+            ) : isShowManagementInfoTab ? (
               <Box className="nginx-section">
                 <Box className="tabs">
                   <List className="tabs-menu">
@@ -1101,23 +1114,22 @@ class Tier extends Component {
                     })}
                   </List>
                   <Box className="tabs-content">
-                    {activeTabEcs === 0 ? (
-                      <ManagementInfo
-                        setNextTab={(activeTabEcs) => {
-                          this.setState({ activeTabEcs });
-                        }}
-                        onClickAddEntryBtn={clickIdAddEntry}
-                      />
-                    ) : activeTabEcs === 1 ? (
-                      <ConfigInfo
-                        setNextTab={(activeTabEcs) => {
-                          this.setState({ activeTabEcs });
-                        }}
-                        onClickAddEntryBtn={clickIdAddEntry}
-                      />
-                    ) : (
-                      <></>
-                    )}
+                    <ManagementInfo
+                      setNextTab={(activeTabEcs) => {
+                        this.setState({ activeTabEcs });
+                      }}
+                      onClickAddEntryBtn={clickManInfoIdAddEntry}
+                      selectedCloudElement={cloudElementType?.toUpperCase()}
+                      style={{ display: activeTabEcs === 0 ? "block" : "none" }}
+                    />
+
+                    <ConfigInfo
+                      setNextTab={(activeTabEcs) => {
+                        this.setState({ activeTabEcs });
+                      }}
+                      onClickAddEntryBtn={clickConfigInfoIdAddEntry}
+                      style={{ display: activeTabEcs === 1 ? "block" : "none" }}
+                    />
                   </Box>
                 </Box>
               </Box>
@@ -1138,53 +1150,65 @@ class Tier extends Component {
           )}
 
           {selectedInstance >= 0 ? (
-           <Box className="width-100 m-t-3">
-           <Grid
-             container
-             rowSpacing={1}
-             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-           >
-             <Grid item xs={4} alignItems={"flex-start"}>
-               {cloudElementType?.toUpperCase() ===
-               this.CLOUD_ELEMENT.ECS ? (
-                 <Button
-                   className={` primary-btn min-width-inherit`}
-                   variant="contained"
-                   onClick={() => {
-                     this.setState({ clickIdAddEntry: v4() });
-                   }}
-                 >
-                   <i className="fa-sharp fa-solid fa-plus m-r-1"></i>
-                   Add Entry
-                 </Button>
-               ) : (
-                 <></>
-               )}
-             </Grid>
-             <Grid item xs={4}>
-               <Box className="d-block text-center">
-                 <Button
-                   className={` ${
-                     selectedService.length || activeTabEks === 3
-                       ? ""
-                       : "info-btn"
-                   } primary-btn min-width-inherit`}
-                   variant="contained"
-                   onClick={() =>
-                     selectedService.length || activeTabEks === 3 ? (
-                       this.onClickSave()
-                     ) : (
-                       <></>
-                     )
-                   }
-                 >
-                   Save
-                 </Button>
-               </Box>
-             </Grid>
-             <Grid item xs={4}></Grid>
-           </Grid>
-         </Box>
+            <Box className="width-100 m-t-3">
+              <Grid
+                container
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={4} alignItems={"flex-start"}>
+                  {isShowManagementInfoTab ? (
+                    <Button
+                      className={` primary-btn min-width-inherit`}
+                      variant="contained"
+                      onClick={() => {
+                        let {
+                          clickConfigInfoIdAddEntry,
+                          clickManInfoIdAddEntry,
+                        } = this.state;
+
+                        if (activeTabEcs === 0) {
+                          clickManInfoIdAddEntry = v4();
+                        } else {
+                          clickConfigInfoIdAddEntry = v4();
+                        }
+                        this.setState({
+                          clickConfigInfoIdAddEntry,
+                          clickManInfoIdAddEntry,
+                        });
+                      }}
+                    >
+                      <i className="fa-sharp fa-solid fa-plus m-r-1"></i>
+                      Add Entry
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
+                </Grid>
+                <Grid item xs={4}>
+                  <Box className="d-block text-center">
+                    <Button
+                      className={` ${
+                        selectedService.length || activeTabEks === 3
+                          ? ""
+                          : "info-btn"
+                      } primary-btn min-width-inherit`}
+                      variant="contained"
+                      onClick={() =>
+                        selectedService.length || activeTabEks === 3 ? (
+                          this.onClickSave()
+                        ) : (
+                          <></>
+                        )
+                      }
+                    >
+                      Save
+                    </Button>
+                  </Box>
+                </Grid>
+                <Grid item xs={4}></Grid>
+              </Grid>
+            </Box>
           ) : (
             <></>
           )}

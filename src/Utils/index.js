@@ -339,4 +339,5 @@ export const ADD_PRODUCT_ENUMS = {
   ECS: "ECS",
   LAMBDA: "LAMBDA",
   S3: "S3",
+  CDN: "CDN",
 };

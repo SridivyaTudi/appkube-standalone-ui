@@ -12,7 +12,7 @@ import {
   Select,
   IconButton,
 } from "@mui/material";
-import { v4 } from "uuid";
+
 import CloseIcon from "@mui/icons-material/Close";
 const BUILD_TOOLS_DROP_DOWN = ["maven", "gradle", "gant"];
 let data = [
@@ -107,7 +107,7 @@ class ConfigInfo extends Component {
             <TableRow key={index}>
               <TableCell align="left">
                 {info.isCustomField ? (
-                  <Box className="subvalue">
+                  <Box className="first-entry-form">
                     <input
                       id={`key_${index}`}
                       type="text"
@@ -197,7 +197,7 @@ class ConfigInfo extends Component {
                 {" "}
                 {info.isCustomField ? (
                   <>
-                    <Box className="subvalue">
+                    <Box className="last-entry-form">
                       <input
                         id={`subvalue${index}`}
                         type="text"
@@ -255,8 +255,9 @@ class ConfigInfo extends Component {
     this.setState({ tableData });
   };
   render() {
+    let { style } = this.props;
     return (
-      <Box className="tier-table-section">
+      <Box className="tier-table-section" style={style}>
         <TableContainer className="table">
           <Table className="overview">
             {this.renderTableHead()}
