@@ -93,29 +93,20 @@ class CostCentralTopInternal extends Component {
     return (
       <>
         <Box className="new-reports-container">
-          <Box className="global-services-fliter">
-            <Box className="heading">
-              <Box className="breadcrumbs">
-                <ul>
-                  <li
-                    onClick={() =>
-                      this.props.navigate("/app/new-reports/central-dashboard")
-                    }
-                  >
-                    <p> Central Dashboard</p>
-                  </li>
-                  <li>
-                    <i className="fa-solid fa-chevron-right"></i>
-                  </li>
-                  <li className="active">
-                    <p>Cost Central Top Internal</p>
-                  </li>
-                </ul>
-              </Box>
+          <Box className="list-heading">
+            <h3>Cost Central Top Internal</h3>
+            <Box className="breadcrumbs">
+              <ul>
+                <li>Cost Central dashboard</li>
+                <li>
+                  <i className="fa-solid fa-chevron-right"></i>
+                </li>
+                <li className="active">Cost Central Top Internal</li>
+              </ul>
             </Box>
           </Box>
           <Box className="list-heading m-t-2 ">
-            <h4>Cost of Top 5 Accounts</h4>
+            <h4 className="m-t-0 m-b-0">Cost of Top 5 Accounts</h4>
             <Box className="d-flex ">
               <Button
                 className="light-btn p-l-15 p-r-15 m-r-3"

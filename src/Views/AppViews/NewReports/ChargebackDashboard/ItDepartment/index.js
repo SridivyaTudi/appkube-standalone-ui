@@ -142,38 +142,20 @@ class ItDepartment extends Component {
   render() {
     return (
       <Box className="new-reports-container">
-        <Box className="global-services-fliter">
-          <Box className="heading">
-            <Box className="breadcrumbs">
-              <ul>
-                <li
-                  onClick={() =>
-                    this.props.navigate("/app/new-reports/chargeback-dashboard")
-                  }
-                >
-                  <p> Chargeback Dashboard</p>
-                </li>
-                <li>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </li>
-                <li className="active">
-                  <p>IT Department</p>
-                </li>
-              </ul>
-            </Box>
+        <Box className="list-heading">
+          <h3>IT Department</h3>
+          <Box className="breadcrumbs">
+            <ul>
+              <li>Chargeback Dashboard</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active">IT Department</li>
+            </ul>
           </Box>
         </Box>
-        <Box className="list-heading m-t-3">
-          <h3>
-            <Link to={`/app/new-reports/chargeback-dashboard`}>
-              <IconButton className="m-r-2">
-                <i class="fas fa-long-arrow-left"></i>
-              </IconButton>
-            </Link>
-            IT Department
-          </h3>
-
-          <Box className="d-flex ">
+        
+        <Box className="d-flex align-items-center justify-content-end m-t-2">
             <Link to={`/app/new-reports/chargeback-dashboard/create-invoice`}>
               <Button className="light-btn p-l-15 p-r-15 m-r-3">
                 <i class="fas fa-plus-circle m-r-2"></i> Create Invoice
@@ -184,7 +166,6 @@ class ItDepartment extends Component {
               <i className="fas fa-calendar-minus m-r-2"></i> Last Month
             </Button>
           </Box>
-        </Box>
         <Box className="reports-tab-section m-t-3">
           <TimeSpendComponent data={timeSpendData} />
           <Box className="table-head">
