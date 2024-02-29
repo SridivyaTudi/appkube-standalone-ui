@@ -65,13 +65,18 @@ class ProductCategory extends Component {
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
+          <h3>Product Category</h3>
           <Box className="breadcrumbs">
             <ul>
               <li>BI-Mapping</li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">Add Product</li>
+              <li>Add Product</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active">Product Category</li>
             </ul>
           </Box>
         </Box>

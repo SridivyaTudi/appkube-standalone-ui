@@ -550,28 +550,24 @@ class Soa extends Component {
     let { biServicesFromProductCategory, } = this.props;
     return (
       <Box className="bimapping-container">
-        <Box className="global-services-fliter">
-          <Box className="heading">
-            <Box className="breadcrumbs">
-              <ul>
-                <li>
-                  <p>BI-Mapping</p>
-                </li>
-                <li>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </li>
-                <li>
-                  <p>Add Product</p>
-                </li>
-                <li>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </li>
-
-                <li className="active">
-                  <p>Product Category</p>
-                </li>
-              </ul>
-            </Box>
+        <Box className="list-heading">
+          <h3>Soa</h3>
+          <Box className="breadcrumbs">
+            <ul>
+              <li>BI-Mapping</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li>Add Product</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li>Product Category</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active">Soa</li>
+            </ul>
           </Box>
         </Box>
         <Box className="tier-container">

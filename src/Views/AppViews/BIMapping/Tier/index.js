@@ -600,6 +600,7 @@ class Tier extends Component {
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
+          <h3>3 Tier</h3>
           <Box className="breadcrumbs">
             <ul>
               <li>BI-Mapping</li>
@@ -607,11 +608,14 @@ class Tier extends Component {
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li>Add Product</li>
-
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">Product Category</li>
+              <li>Product Category</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active">3 Tier</li>
             </ul>
           </Box>
         </Box>
