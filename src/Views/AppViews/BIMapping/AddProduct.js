@@ -26,10 +26,25 @@ class AddProduct extends Component {
     };
   }
 
+  componentDidMount = () => {
+    let { createProductFormData } = this.props;
+    if (createProductFormData) {
+      let { productName, category, moduleName, environment } =
+        createProductFormData;
+      let formData = {
+        name: productName,
+        environment,
+        category,
+        moduleName,
+      };
+      this.setState({ formData });
+    }
+  };
+
   handleNext = (e) => {
     e.preventDefault();
     let { developmentStatus, formData } = this.state;
-    console.log("in");
+
     this.setState(
       {
         isSubmit: true,
@@ -233,7 +248,6 @@ class AddProduct extends Component {
                     </Box>
                     <form
                       onSubmit={(e) => {
-                        console.log(e);
                         this.handleNext(e);
                       }}
                     >

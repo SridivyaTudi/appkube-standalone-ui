@@ -68,11 +68,19 @@ class ProductCategory extends Component {
           <h3>Product Category</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li>BI-Mapping</li>
+              <li onClick={() => this.props.navigate("/app/bim")}>
+                BI-Mapping
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li>Add Product</li>
+              <li
+                onClick={() =>
+                  this.props.navigate(`/app/bim/add-product/${departMentName}`)
+                }
+              >
+                Add Product
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>

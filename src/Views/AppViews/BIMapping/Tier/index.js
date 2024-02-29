@@ -597,17 +597,26 @@ class Tier extends Component {
       activeTabEcs,
     } = this.state;
     let { biServicesFromProductCategory } = this.props;
+    let { name } = this.getUrlDetails();
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
           <h3>3 Tier</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li>BI-Mapping</li>
+              <li onClick={() => this.props.navigate("/app/bim")}>
+                BI-Mapping
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li>Add Product</li>
+              <li
+                onClick={() =>
+                  this.props.navigate(`/app/bim/add-product/${name}`)
+                }
+              >
+                Add Product
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
