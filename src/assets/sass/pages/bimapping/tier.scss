@@ -732,6 +732,15 @@
       }
     }
   }
+  .table-buttom-section{
+    position: relative;
+    .primary-btn{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
 }
 @media (max-width: 1280px) {
   .tier-container {

@@ -550,7 +550,7 @@ class Soa extends Component {
       cloudElementType,
       clickIdAddEntry,
     } = this.state;
-    let { biServicesFromProductCategory,createProductFormData } = this.props;
+    let { biServicesFromProductCategory, createProductFormData } = this.props;
     let { name } = this.getUrlDetails();
     return (
       <Box className="bimapping-container">
@@ -587,7 +587,9 @@ class Soa extends Component {
             <Grid item xs={6}>
               <Box className="topology-panel">
                 <Box className="topology-panel-body">
-                  <h4 className="m-t-0 m-b-0">Module : {createProductFormData.moduleName}</h4>
+                  <h4 className="m-t-0 m-b-0">
+                    Module : {createProductFormData.moduleName}
+                  </h4>
                   {biServicesFromProductCategory.status ===
                   status.IN_PROGRESS ? (
                     this.renderLoder()
@@ -1037,42 +1039,53 @@ class Soa extends Component {
           )}
 
           {selectedInstance >= 0 ? (
-            <>
-              <Box justifyContent={"center"} className="text-center m-t-4">
-                <Button
-                  className={` ${
-                    selectedService.length || activeTabEks === 3
-                      ? ""
-                      : "info-btn"
-                  } primary-btn min-width-inherit`}
-                  variant="contained"
-                  onClick={() =>
-                    selectedService.length || activeTabEks === 3 ? (
-                      this.onClickSave()
-                    ) : (
-                      <></>
-                    )
-                  }
-                >
-                  Save
-                </Button>
-              </Box>
-              {cloudElementType?.toUpperCase() === this.CLOUD_ELEMENT.ECS ? (
-                <Box justifyContent={"center"} className=" text-center m-t-4">
-                  <Button
-                    className={` primary-btn min-width-inherit`}
-                    variant="contained"
-                    onClick={() => {
-                      this.setState({ clickIdAddEntry: v4() });
-                    }}
-                  >
-                    Add Entry
-                  </Button>
-                </Box>
-              ) : (
-                <></>
-              )}
-            </>
+            <Box className="width-100 m-t-3">
+              <Grid
+                container
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={4} alignItems={"flex-start"}>
+                  {cloudElementType?.toUpperCase() ===
+                  this.CLOUD_ELEMENT.ECS ? (
+                    <Button
+                      className={` primary-btn min-width-inherit`}
+                      variant="contained"
+                      onClick={() => {
+                        this.setState({ clickIdAddEntry: v4() });
+                      }}
+                    >
+                      <i className="fa-sharp fa-solid fa-plus m-r-1"></i>
+                      Add Entry
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
+                </Grid>
+                <Grid item xs={4}>
+                  <Box className="d-block text-center">
+                    <Button
+                      className={` ${
+                        selectedService.length || activeTabEks === 3
+                          ? ""
+                          : "info-btn"
+                      } primary-btn min-width-inherit`}
+                      variant="contained"
+                      onClick={() =>
+                        selectedService.length || activeTabEks === 3 ? (
+                          this.onClickSave()
+                        ) : (
+                          <></>
+                        )
+                      }
+                    >
+                      Save
+                    </Button>
+                  </Box>
+                </Grid>
+                <Grid item xs={4}></Grid>
+              </Grid>
+            </Box>
           ) : (
             <></>
           )}

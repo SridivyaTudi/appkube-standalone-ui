@@ -228,7 +228,7 @@ class ManagementInfo extends Component {
             <TableRow key={index}>
               <TableCell align="left">
                 {info.isCustomField ? (
-                  <Box className="subvalue">
+                  <Box className="first-entry-form">
                     <input
                       id={`key_${index}`}
                       type="text"
@@ -325,7 +325,7 @@ class ManagementInfo extends Component {
               <TableCell align="center" className="text-center">
                 {info.isCustomField ? (
                   <>
-                    <Box className="subvalue">
+                    <Box className="last-entry-form">
                       <input
                         id={`subvalue${index}`}
                         type="text"
@@ -335,7 +335,7 @@ class ManagementInfo extends Component {
                         value={info.subValue}
                         onChange={(e) => this.handleCustomInputChange(e, index)}
                       />
-                      <IconButton
+                      <IconButton 
                         variant="outlined"
                         color="error"
                         aria-label="delete"
