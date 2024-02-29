@@ -22,6 +22,7 @@ import ServiceIcon12 from "assets/img/report/service-icon12.png";
 import ServiceIcon13 from "assets/img/report/service-icon13.png";
 import ServiceIcon14 from "assets/img/report/service-icon14.png";
 import ServiceIcon15 from "assets/img/report/service-icon15.png";
+import SelectFilterModal from "../../Components/SelectFilterModal";
 import { v4 } from "uuid";
 let timeSpendData = [
   {
@@ -108,7 +109,8 @@ class CostTopAccounts extends Component {
     super(props);
     this.state = {
       activeTab: 0,
-      accounts:topFiveAccounts
+      accounts: topFiveAccounts,
+      showSelectFilterModal: false,
     };
   }
 
@@ -166,26 +168,37 @@ class CostTopAccounts extends Component {
       </TableBody>
     );
   };
+  handleSelectFilterModal = () => {
+    this.setState({
+      showSelectFilterModal: !this.state.showSelectFilterModal,
+    });
+  };
   render() {
+    const { showSelectFilterModal } = this.state;
     return (
-      <Box className="new-reports-container spend-overview-container">
+      <Box className="new-reports-container">
         <Box className="list-heading">
-          <h3>
-            <Link to={`/app/new-reports/over-view-dashboard`}>
-              <IconButton className="m-r-2">
-                <i class="fas fa-long-arrow-left"></i>
-              </IconButton>
-            </Link>
-            Cost Of Top Accounts
-          </h3>
-          <Box className="d-flex ">
-            <Button className="light-btn p-l-15 p-r-15 m-r-3">
-              <i className="fas fa-filter m-r-2"></i> Filter
-            </Button>
-            <Button className="light-btn p-l-15 p-r-15">
-              <i className="fas fa-calendar-minus m-r-2"></i> Last Month
-            </Button>
+          <h3> Cost Of Top Accounts</h3>
+          <Box className="breadcrumbs">
+            <ul>
+              <li>Overview Dashboard</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active"> Cost Of Top Accounts</li>
+            </ul>
           </Box>
+        </Box>
+        <Box className="d-flex align-items-center justify-content-end m-t-2">
+          <Button
+            className="light-btn p-l-15 p-r-15 m-r-3"
+            onClick={this.handleSelectFilterModal}
+          >
+            <i className="fas fa-filter m-r-2"></i> Filter
+          </Button>
+          <Button className="light-btn p-l-15 p-r-15">
+            <i className="fas fa-calendar-minus m-r-2"></i> Last Month
+          </Button>
         </Box>
         <Box className="reports-tab-section m-t-3">
           <TimeSpendComponent data={timeSpendData} />
@@ -407,6 +420,14 @@ class CostTopAccounts extends Component {
             </TableContainer>
           </Box>
         </Box>
+        {showSelectFilterModal ? (
+          <SelectFilterModal
+            showModal={showSelectFilterModal}
+            handleSelectFilterModal={this.handleSelectFilterModal}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }

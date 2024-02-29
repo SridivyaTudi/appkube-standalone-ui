@@ -3,6 +3,7 @@ import { Box, Button, IconButton, Grid } from "@mui/material";
 import ChartWrapper from "../../Components/ChartWrapper";
 import GroupedBarplotChart from "../../Components/GroupedBarplotChart";
 import { Link } from "react-router-dom";
+import SelectFilterModal from "../../Components/SelectFilterModal";
 
 let verticalBarChartData = [
   {
@@ -28,26 +29,43 @@ let verticalBarChartData = [
 ];
 
 class SpendingTrend extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showSelectFilterModal: false,
+    };
+  }
+  handleSelectFilterModal = () => {
+    this.setState({
+      showSelectFilterModal: !this.state.showSelectFilterModal,
+    });
+  };
   render() {
+    const { showSelectFilterModal } = this.state;
     return (
-      <Box className="new-reports-container spend-overview-container">
+      <Box className="new-reports-container">
         <Box className="list-heading">
-          <h3>
-            <Link to={`/app/new-reports/over-view-dashboard`}>
-              <IconButton className="m-r-2">
-                <i class="fas fa-long-arrow-left"></i>
-              </IconButton>
-            </Link>
-            SPENDING TREND
-          </h3>
-          <Box className="d-flex ">
-            <Button className="light-btn p-l-15 p-r-15 m-r-3">
-              <i className="fas fa-filter m-r-2"></i> Filter
-            </Button>
-            <Button className="light-btn p-l-15 p-r-15">
-              <i className="fas fa-calendar-minus m-r-2"></i> Last Month
-            </Button>
+          <h3>Spending Trend</h3>
+          <Box className="breadcrumbs">
+            <ul>
+              <li>Overview Dashboard</li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active">Spending Trend</li>
+            </ul>
           </Box>
+        </Box>
+        <Box className="d-flex align-items-center justify-content-end m-t-2">
+          <Button
+            className="light-btn p-l-15 p-r-15 m-r-3"
+            onClick={this.handleSelectFilterModal}
+          >
+            <i className="fas fa-filter m-r-2"></i> Filter
+          </Button>
+          <Button className="light-btn p-l-15 p-r-15">
+            <i className="fas fa-calendar-minus m-r-2"></i> Last Month
+          </Button>
         </Box>
         <Box className="reports-tab-section m-t-3">
           <Box className="reports-charts">
@@ -63,7 +81,10 @@ class SpendingTrend extends Component {
                       data={verticalBarChartData}
                       chardBeforeRenderHTML={
                         <Box className="spending-present">
-                          <label>See how much you have spent previous year vs present year</label>
+                          <label>
+                            See how much you have spent previous year vs present
+                            year
+                          </label>
                         </Box>
                       }
                     />
@@ -78,6 +99,14 @@ class SpendingTrend extends Component {
             </Grid>
           </Box>
         </Box>
+        {showSelectFilterModal ? (
+          <SelectFilterModal
+            showModal={showSelectFilterModal}
+            handleSelectFilterModal={this.handleSelectFilterModal}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }

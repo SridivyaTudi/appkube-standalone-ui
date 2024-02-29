@@ -5,7 +5,7 @@ import Storage from "./Storage";
 import Database from "./Database";
 import Network from "./Network";
 import Other from "./Other";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 
 class SpendOverview extends Component {
@@ -41,7 +41,6 @@ class SpendOverview extends Component {
     this.state = {
       activeTab: 0,
       showSelectFilterModal: false,
-      
     };
   }
   setActiveTab = (activeTab) => {
@@ -92,38 +91,46 @@ class SpendOverview extends Component {
   handleSelectFilterModal = () => {
     this.setState({
       showSelectFilterModal: !this.state.showSelectFilterModal,
-     
     });
   };
 
-
   render() {
-    const {showSelectFilterModal}=this.state
-    
+    const { showSelectFilterModal } = this.state;
+
     return (
       <>
-      <Box className="new-reports-container spend-overview-container">
-        <Box className="list-heading">
-          <h3><Link to={`/app/new-reports/over-view-dashboard`}>
-              <IconButton className="m-r-2">
-                <i class="fas fa-long-arrow-left"></i>
-              </IconButton>
-            </Link> Spend Overview</h3>
-          <Box className="d-flex ">
-            <Button className="light-btn p-l-15 p-r-15 m-r-3" onClick={this.handleSelectFilterModal} >
-              <i className="fas fa-filter m-r-2"  ></i> Filter
-            </Button>
-            <Button className="light-btn p-l-15 p-r-15">
-              <i className="fas fa-calendar-minus m-r-2"></i> Last Month
-            </Button>
+        <Box className="new-reports-container">
+          <Box className="list-heading">
+            <h3>Spend Overview</h3>
+            <Box className="breadcrumbs">
+              <ul>
+                <li>Overview Dashboard</li>
+                <li>
+                  <i className="fa-solid fa-chevron-right"></i>
+                </li>
+                <li className="active">spend-overview</li>
+              </ul>
+            </Box>
+          </Box>
+          <Box className="reports-tab-section">
+            <Box className="tabs">
+              {this.renderTabMenu()}
+              <Box className="d-flex ">
+                <Button
+                  className="light-btn p-l-15 p-r-15 m-r-3"
+                  onClick={this.handleSelectFilterModal}
+                >
+                  <i className="fas fa-filter m-r-2"></i> Filter
+                </Button>
+                <Button className="light-btn p-l-15 p-r-15">
+                  <i className="fas fa-calendar-minus m-r-2"></i> Last Month
+                </Button>
+              </Box>
+            </Box>
+            {this.renderActiveTabOfComponent()}
           </Box>
         </Box>
-        <Box className="reports-tab-section">
-          <Box className="tabs">{this.renderTabMenu()}</Box>
-          {this.renderActiveTabOfComponent()}
-        </Box>
-      </Box>
-      {showSelectFilterModal ? (
+        {showSelectFilterModal ? (
           <SelectFilterModal
             showModal={showSelectFilterModal}
             handleSelectFilterModal={this.handleSelectFilterModal}
@@ -131,9 +138,7 @@ class SpendOverview extends Component {
         ) : (
           <></>
         )}
-      
-       </>
-      
+      </>
     );
   }
 }
