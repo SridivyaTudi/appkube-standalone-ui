@@ -600,17 +600,19 @@ class Tier extends Component {
       activeTabEks,
       dropDownLayersData,
       savedLayer,
-      cloudElementType,
       activeTabEcs,
       isShowDepolyedSection,
       clickConfigInfoIdAddEntry,
       clickManInfoIdAddEntry,
+      cloudElementType,
     } = this.state;
     let { biServicesFromProductCategory, createProductFormData } = this.props;
     let { name } = this.getUrlDetails();
     let isShowManagementInfoTab = this.showManagementInfoTab.includes(
       cloudElementType?.toUpperCase()
     );
+    let isSaveEnable =
+      selectedService.length || activeTabEks === 3 || isShowManagementInfoTab;
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -1193,17 +1195,11 @@ class Tier extends Component {
                   <Box className="d-block text-center">
                     <Button
                       className={` ${
-                        selectedService.length || activeTabEks === 3
-                          ? ""
-                          : "info-btn"
+                        isSaveEnable ? "" : "info-btn"
                       } primary-btn min-width-inherit`}
                       variant="contained"
                       onClick={() =>
-                        selectedService.length || activeTabEks === 3 ? (
-                          this.onClickSave()
-                        ) : (
-                          <></>
-                        )
+                        isSaveEnable ? this.onClickSave() : <></>
                       }
                     >
                       Save

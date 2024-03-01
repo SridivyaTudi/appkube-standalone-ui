@@ -163,22 +163,24 @@ class ManagementInfo extends Component {
     };
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-    if (prevProps.onClickAddEntryBtn !== this.props.onClickAddEntryBtn) {
-      this.onClickAddEntry();
-    }
-
-    if (prevProps.selectedCloudElement !== this.props.selectedCloudElement) {
-      let value = this.props.selectedCloudElement;
-      console.log(value);
+  componentDidMount = () => {
+    let value = this.props.selectedCloudElement;
+    if (value) {
       this.handleChange(
         {
           target: {
             value,
           },
         },
-        `${value}_0`
+        `Hosted on_0`
       );
+    }
+    this.setState({tableData: data})
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevProps.onClickAddEntryBtn !== this.props.onClickAddEntryBtn) {
+      this.onClickAddEntry();
     }
   };
 

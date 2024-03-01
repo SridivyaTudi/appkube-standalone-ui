@@ -565,13 +565,16 @@ class Soa extends Component {
       cloudElementType,
       activeTabEcs,
       clickConfigInfoIdAddEntry,
-      clickManInfoIdAddEntry,isShowDepolyedSection
+      clickManInfoIdAddEntry,
+      isShowDepolyedSection,
     } = this.state;
     let { biServicesFromProductCategory, createProductFormData } = this.props;
     let { name } = this.getUrlDetails();
     let isShowManagementInfoTab = this.showManagementInfoTab.includes(
       cloudElementType?.toUpperCase()
     );
+    let isSaveEnable =
+      selectedService.length || activeTabEks === 3 || isShowManagementInfoTab;
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -596,7 +599,9 @@ class Soa extends Component {
               </li>
               <li
                 onClick={() =>
-                  this.props.navigate(`/app/bim/add-product/${name}/product-category`)
+                  this.props.navigate(
+                    `/app/bim/add-product/${name}/product-category`
+                  )
                 }
               >
                 Product Category
@@ -961,13 +966,14 @@ class Soa extends Component {
               </Box>
             </Grid>
             <Grid item xs={6}>
-              {
-                isShowDepolyedSection ?<Box className="nginx-cards">
-                {this.renderDeployedInstanceWrapper()}
-                {this.renderSelectedInstanceWrapper()}
-              </Box> :<></>
-              }
-              
+              {isShowDepolyedSection ? (
+                <Box className="nginx-cards">
+                  {this.renderDeployedInstanceWrapper()}
+                  {this.renderSelectedInstanceWrapper()}
+                </Box>
+              ) : (
+                <></>
+              )}
             </Grid>
           </Grid>
           {selectedInstance >= 0 ? (
@@ -1041,6 +1047,7 @@ class Soa extends Component {
                       setNextTab={(activeTabEcs) => {
                         this.setState({ activeTabEcs });
                       }}
+                      selectedCloudElement={cloudElementType?.toUpperCase()}
                       onClickAddEntryBtn={clickManInfoIdAddEntry}
                       style={{ display: activeTabEcs === 0 ? "" : "none" }}
                     />
@@ -1049,9 +1056,9 @@ class Soa extends Component {
                       setNextTab={(activeTabEcs) => {
                         this.setState({ activeTabEcs });
                       }}
+                      selectedCloudElement={cloudElementType?.toUpperCase()}
                       onClickAddEntryBtn={clickConfigInfoIdAddEntry}
                       style={{ display: activeTabEcs === 1 ? "" : "none" }}
-
                     />
                   </Box>
                 </Box>
@@ -1110,17 +1117,11 @@ class Soa extends Component {
                   <Box className="d-block text-center">
                     <Button
                       className={` ${
-                        selectedService.length || activeTabEks === 3
-                          ? ""
-                          : "info-btn"
+                        isSaveEnable ? "" : "info-btn"
                       } primary-btn min-width-inherit`}
                       variant="contained"
                       onClick={() =>
-                        selectedService.length || activeTabEks === 3 ? (
-                          this.onClickSave()
-                        ) : (
-                          <></>
-                        )
+                        isSaveEnable ? this.onClickSave() : <></>
                       }
                     >
                       Save
