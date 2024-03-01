@@ -163,7 +163,8 @@ class Soa extends Component {
       },
       instancesServices: [],
       cloudElementType: "",
-      clickIdAddEntry: "",
+      clickConfigInfoIdAddEntry: "",
+      clickManInfoIdAddEntry: "",
       activeTabEcs: 0,
     };
   }
@@ -562,8 +563,9 @@ class Soa extends Component {
       dropDownServiceData,
       savedService,
       cloudElementType,
-      clickIdAddEntry,
       activeTabEcs,
+      clickConfigInfoIdAddEntry,
+      clickManInfoIdAddEntry,isShowDepolyedSection
     } = this.state;
     let { biServicesFromProductCategory, createProductFormData } = this.props;
     let { name } = this.getUrlDetails();
@@ -592,7 +594,17 @@ class Soa extends Component {
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active">Product Category</li>
+              <li
+                onClick={() =>
+                  this.props.navigate(`/app/bim/add-product/${name}/product-category`)
+                }
+              >
+                Product Category
+              </li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active">Service-Mapping</li>
             </ul>
           </Box>
         </Box>
@@ -949,14 +961,17 @@ class Soa extends Component {
               </Box>
             </Grid>
             <Grid item xs={6}>
-              <Box className="nginx-cards">
+              {
+                isShowDepolyedSection ?<Box className="nginx-cards">
                 {this.renderDeployedInstanceWrapper()}
                 {this.renderSelectedInstanceWrapper()}
-              </Box>
+              </Box> :<></>
+              }
+              
             </Grid>
           </Grid>
           {selectedInstance >= 0 ? (
-            cloudElementType?.toUpperCase() === ADD_PRODUCT_ENUMS.EKS ? (
+            cloudElementType?.toUpperCase() === ADD_PRODUCT_ENUMS.CDN ? (
               <Box className="nginx-section">
                 <Box className="tabs">
                   <List className="tabs-menu">
@@ -1023,19 +1038,20 @@ class Soa extends Component {
                   </List>
                   <Box className="tabs-content">
                     <ManagementInfo
-                      setNextTab={(activeTabEks) => {
-                        this.setState({ activeTabEks });
+                      setNextTab={(activeTabEcs) => {
+                        this.setState({ activeTabEcs });
                       }}
-                      onClickAddEntryBtn={clickIdAddEntry}
+                      onClickAddEntryBtn={clickManInfoIdAddEntry}
                       style={{ display: activeTabEcs === 0 ? "" : "none" }}
                     />
 
                     <ConfigInfo
-                      setNextTab={(activeTabEks) => {
-                        this.setState({ activeTabEks });
+                      setNextTab={(activeTabEcs) => {
+                        this.setState({ activeTabEcs });
                       }}
-                      onClickAddEntryBtn={clickIdAddEntry}
+                      onClickAddEntryBtn={clickConfigInfoIdAddEntry}
                       style={{ display: activeTabEcs === 1 ? "" : "none" }}
+
                     />
                   </Box>
                 </Box>
@@ -1062,12 +1078,25 @@ class Soa extends Component {
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 <Grid item xs={4} alignItems={"flex-start"}>
-                  {cloudElementType?.toUpperCase() === ADD_PRODUCT_ENUMS.ECS ? (
+                  {isShowManagementInfoTab ? (
                     <Button
                       className={` primary-btn min-width-inherit`}
                       variant="contained"
                       onClick={() => {
-                        this.setState({ clickIdAddEntry: v4() });
+                        let {
+                          clickConfigInfoIdAddEntry,
+                          clickManInfoIdAddEntry,
+                        } = this.state;
+
+                        if (activeTabEcs === 0) {
+                          clickManInfoIdAddEntry = v4();
+                        } else {
+                          clickConfigInfoIdAddEntry = v4();
+                        }
+                        this.setState({
+                          clickConfigInfoIdAddEntry,
+                          clickManInfoIdAddEntry,
+                        });
                       }}
                     >
                       <i className="fa-sharp fa-solid fa-plus m-r-1"></i>

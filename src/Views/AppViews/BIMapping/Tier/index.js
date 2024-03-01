@@ -602,7 +602,7 @@ class Tier extends Component {
       savedLayer,
       cloudElementType,
       activeTabEcs,
-      clickIdAddEntry,
+      isShowDepolyedSection,
       clickConfigInfoIdAddEntry,
       clickManInfoIdAddEntry,
     } = this.state;
@@ -1041,10 +1041,14 @@ class Tier extends Component {
             </Grid>
 
             <Grid item xs={6}>
-              <Box className="nginx-cards">
-                {this.renderDeployedInstanceWrapper()}
-                {this.renderSelectedInstanceWrapper()}
-              </Box>
+              {isShowDepolyedSection ? (
+                <Box className="nginx-cards">
+                  {this.renderDeployedInstanceWrapper()}
+                  {this.renderSelectedInstanceWrapper()}
+                </Box>
+              ) : (
+                <></>
+              )}
             </Grid>
           </Grid>
           {selectedInstance >= 0 ? (
