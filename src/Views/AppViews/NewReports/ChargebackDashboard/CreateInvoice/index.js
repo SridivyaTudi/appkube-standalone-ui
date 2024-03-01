@@ -23,7 +23,7 @@ const services = [
   { id: 1, name: "Business" },
   { id: 2, name: "Common" },
 ];
-let products = ["PROCUMENT", "INVENTORY"];
+let products = ["Procument", "Inventory"];
 class CreateInvoice extends Component {
   constructor(props) {
     super(props);
@@ -229,10 +229,10 @@ class CreateInvoice extends Component {
                 <label className="form-label" htmlFor="departmentName">
                   Select Department
                 </label>
-                <Box className="environment-fliter">
+                <Box className="invoice-select-departmet">
                   <Select
                     id="departmentName"
-                    className="fliter-toggel new-environment"
+                    className="fliter-toggel"
                     name="department"
                     value={formData.department}
                     onChange={this.handleInputChange}
@@ -256,10 +256,10 @@ class CreateInvoice extends Component {
             <>
               <Box className="form-group">
                 <label className="form-label ">Select Services</label>
-                <Box className="environment-fliter">
+                <Box className="invoice-select-departmet">
                   <Select
                     labelId="demo-multiple-name-label"
-                    className="fliter-toggel new-environment"
+                    className="fliter-toggel"
                     multiple
                     displayEmpty
                     renderValue={(selected) => {
@@ -291,9 +291,8 @@ class CreateInvoice extends Component {
               </Box>
               <Box className="form-group">
                 <label className="form-label ">Select Product</label>
-                <Box className="environment-fliter">
+                <Box className="invoice-select-departmet">
                   <Select
-                    className="fliter-toggel new-environment"
                     name="product"
                     value={formData.product}
                     onChange={this.handleInputChange}
