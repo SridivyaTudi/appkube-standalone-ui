@@ -166,6 +166,7 @@ class Soa extends Component {
       clickConfigInfoIdAddEntry: "",
       clickManInfoIdAddEntry: "",
       activeTabEcs: 0,
+      cloudName: "",
     };
   }
 
@@ -478,6 +479,8 @@ class Soa extends Component {
       selectedDeployedInstance,
       selectedService,
       isShowDepolyedSection,
+      cloudElementType,
+      cloudName,
     } = this.state;
     let serviceName = "";
 
@@ -498,6 +501,9 @@ class Soa extends Component {
       selectedInstance,
       selectedDeployedInstance,
       selectedService,
+      cloudElementType,
+      cloudName,
+      serviceName,
     });
 
     selectedInstance = -1;
@@ -516,7 +522,7 @@ class Soa extends Component {
   };
 
   onClickInstance = (selectedInstance) => {
-    this.setState({ selectedInstance });
+    this.setState({ selectedInstance, selectedService: [] });
   };
 
   onClickDeployedCard = (selectedDeployedInstance, cloudName, elementType) => {
@@ -526,7 +532,46 @@ class Soa extends Component {
       selectedInstance: -1,
       activeTabEks: 0,
       cloudElementType: elementType,
+      cloudName,
     });
+  };
+
+  onClickEditBtn = (serviceName) => {
+    let { savedData, savedService, isShowDepolyedSection } = this.state;
+
+    let findSaveData = savedData.find(
+      (data) => data.serviceName === serviceName
+    );
+
+    if (findSaveData) {
+      let {
+        selectedInstance,
+        selectedDeployedInstance,
+        selectedService,
+        cloudElementType: elementType,
+        cloudName,
+      } = findSaveData;
+      this.props.getInstancesServices({ cloudName, elementType });
+
+      Object.keys(savedService).forEach((key) => {
+        if (serviceName === key) {
+          savedService[serviceName] = false;
+        } else {
+          savedService[key] = true;
+        }
+      });
+
+      isShowDepolyedSection = true;
+
+      this.setState({
+        selectedInstance,
+        selectedDeployedInstance,
+        selectedService,
+        savedService,
+        cloudElementType: elementType,
+        isShowDepolyedSection,
+      });
+    }
   };
 
   // Render loder
@@ -941,20 +986,29 @@ class Soa extends Component {
                             </ListItem>
 
                             {Object.keys(selectedServiceData).map((key) => {
-                              return selectedServiceData[key] !== "" &&
-                                savedService[key] ? (
+                              return (
                                 <ListItem>
                                   <Box className="d-flex align-items-center">
-                                    <IconButton className="check-icon">
-                                      <i class="fas fa-check"></i>
-                                    </IconButton>
-                                    <IconButton className="edit-icon">
-                                      <i class="fas fa-edit"></i>
-                                    </IconButton>
+                                    {selectedServiceData[key] !== "" &&
+                                    savedService[key] ? (
+                                      <>
+                                        <IconButton className="check-icon">
+                                          <i class="fas fa-check"></i>
+                                        </IconButton>
+                                        <IconButton
+                                          className="edit-icon"
+                                          onClick={() => {
+                                            this.onClickEditBtn(key);
+                                          }}
+                                        >
+                                          <i class="fas fa-edit"></i>
+                                        </IconButton>
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
                                   </Box>
                                 </ListItem>
-                              ) : (
-                                <></>
                               );
                             })}
                           </List>
