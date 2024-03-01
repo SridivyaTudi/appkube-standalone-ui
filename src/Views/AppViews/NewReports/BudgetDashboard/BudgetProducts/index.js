@@ -8,11 +8,13 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  List,
+  ListItem,
 } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SelectFilterModal from "../../Components/SelectFilterModal";
-import TimeSpendComponent from "../../Components/TimeSpendComponent";
-import { Link } from "react-router-dom";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 class BudgetProducts extends Component {
@@ -60,6 +62,20 @@ class BudgetProducts extends Component {
 
   //  Render table body
   renderTableBody = () => {
+    const HtmlTooltip = styled(({ className, ...props }) => (
+      <Tooltip {...props} arrow classes={{ popper: className }} />
+    ))(({ theme }) => ({
+      [`& .${tooltipClasses.arrow}`]: {
+        color: "#ffffffff",
+      },
+      [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: "#ffffffff",
+        color: "rgba(0, 0, 0, 0.87)",
+        maxWidth: 150,
+        fontSize: theme.typography.pxToRem(12),
+        border: "1px solid #dadde9",
+      },
+    }));
     let { data } = this.props;
     return (
       <TableBody>
@@ -69,8 +85,40 @@ class BudgetProducts extends Component {
           <TableCell>3-Tier</TableCell>
           <TableCell>US-East (N.virginia)</TableCell>
           <TableCell>
-            <Box className="payment-status production"></Box>
-            Production  +3</TableCell>
+            <HtmlTooltip
+              className="table-tooltip"
+              title={
+                <React.Fragment>
+                  <Box className="report-tooltip-list">
+                    <List>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status production"></Box>{" "}
+                        Production
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status testing"></Box> Testing
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status staging"></Box>{" "}
+                        Development
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status development"></Box>{" "}
+                        Staging
+                      </ListItem>
+                    </List>
+                  </Box>
+                </React.Fragment>
+              }
+            >
+              <Box className="payment-status production"></Box>
+              Production +3
+            </HtmlTooltip>
+          </TableCell>
           <TableCell align="center">
             <strong>$20,000</strong>
           </TableCell>
@@ -86,7 +134,40 @@ class BudgetProducts extends Component {
           <TableCell align="center">22/12/2023 </TableCell>
           <TableCell>3-Tier</TableCell>
           <TableCell>US-East (N.virginia)</TableCell>
-          <TableCell> <Box className="payment-status testing"></Box>Production  +3</TableCell>
+          <TableCell>
+            <HtmlTooltip
+              className="table-tooltip"
+              title={
+                <React.Fragment>
+                  <Box className="report-tooltip-list">
+                    <List>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status production"></Box>{" "}
+                        Production
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status testing"></Box> Testing
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status staging"></Box>{" "}
+                        Development
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status development"></Box>{" "}
+                        Staging
+                      </ListItem>
+                    </List>
+                  </Box>
+                </React.Fragment>
+              }
+            >
+              <Box className="payment-status testing"></Box>Production +3
+            </HtmlTooltip>
+          </TableCell>
           <TableCell align="center">
             <strong>$20,000</strong>
           </TableCell>
@@ -102,7 +183,40 @@ class BudgetProducts extends Component {
           <TableCell align="center">22/12/2023 </TableCell>
           <TableCell>3-Tier</TableCell>
           <TableCell>US-East (N.virginia)</TableCell>
-          <TableCell><Box className="payment-status staging"></Box> Production  +3</TableCell>
+          <TableCell>
+            <HtmlTooltip
+              className="table-tooltip"
+              title={
+                <React.Fragment>
+                  <Box className="report-tooltip-list">
+                    <List>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status production"></Box>{" "}
+                        Production
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status testing"></Box> Testing
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status staging"></Box>{" "}
+                        Development
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status development"></Box>{" "}
+                        Staging
+                      </ListItem>
+                    </List>
+                  </Box>
+                </React.Fragment>
+              }
+            >
+              <Box className="payment-status staging"></Box> Production +3
+            </HtmlTooltip>
+          </TableCell>
           <TableCell align="center">
             <strong>$20,000</strong>
           </TableCell>
@@ -118,7 +232,40 @@ class BudgetProducts extends Component {
           <TableCell align="center">22/12/2023 </TableCell>
           <TableCell>3-Tier</TableCell>
           <TableCell>US-East (N.virginia)</TableCell>
-          <TableCell> <Box className="payment-status staging"></Box> Production  +3</TableCell>
+          <TableCell>
+            <HtmlTooltip
+              className="table-tooltip"
+              title={
+                <React.Fragment>
+                  <Box className="report-tooltip-list">
+                    <List>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status production"></Box>{" "}
+                        Production
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status testing"></Box> Testing
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status staging"></Box>{" "}
+                        Development
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status development"></Box>{" "}
+                        Staging
+                      </ListItem>
+                    </List>
+                  </Box>
+                </React.Fragment>
+              }
+            >
+              <Box className="payment-status staging"></Box> Production +3
+            </HtmlTooltip>
+          </TableCell>
           <TableCell align="center">
             <strong>$20,000</strong>
           </TableCell>
@@ -134,7 +281,40 @@ class BudgetProducts extends Component {
           <TableCell align="center">22/12/2023 </TableCell>
           <TableCell>3-Tier</TableCell>
           <TableCell>US-East (N.virginia)</TableCell>
-          <TableCell><Box className="payment-status development"></Box> Production  +3</TableCell>
+          <TableCell>
+            <HtmlTooltip
+              className="table-tooltip"
+              title={
+                <React.Fragment>
+                  <Box className="report-tooltip-list">
+                    <List>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status production"></Box>{" "}
+                        Production
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status testing"></Box> Testing
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status staging"></Box>{" "}
+                        Development
+                      </ListItem>
+                      <ListItem>
+                        {" "}
+                        <Box className="payment-status development"></Box>{" "}
+                        Staging
+                      </ListItem>
+                    </List>
+                  </Box>
+                </React.Fragment>
+              }
+            >
+              <Box className="payment-status development"></Box> Production +3
+            </HtmlTooltip>
+          </TableCell>
           <TableCell align="center">
             <strong>$20,000</strong>
           </TableCell>

@@ -81,6 +81,7 @@ import BudgetAccount from "./AppViews/NewReports/BudgetDashboard/BudgetAccount";
 import BudgetServicesAccount from "./AppViews/NewReports/BudgetDashboard/BudgetServicesAccount";
 import BudgetAccountDetails from "./AppViews/NewReports/BudgetDashboard/BudgetAccountDetails";
 import BudgetProducts from "./AppViews/NewReports/BudgetDashboard/BudgetProducts";
+import BudgetDepartments from "./AppViews/NewReports/BudgetDashboard/BudgetDepartments";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -326,6 +327,10 @@ export const Views = (props) => {
            <Route
             path={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-products`}
             element={<BudgetProducts />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-depanrtments`}
+            element={<BudgetDepartments />}
           />
           <Route
             path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard`}

@@ -215,3 +215,42 @@
     }
   }
 }
+
+.table-tooltip{
+  .report-tooltip-list{
+    ul{
+      display: block;
+      padding: 0;
+      li{
+        padding: 4px 8px;
+        font-size: 12px;
+        line-height: 16px;
+        color: #383874;
+        display: inline-block;
+        .payment-status {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: #1B4DFF;
+          display: inline-block;
+          margin-right: 5px;
+          &.pending{
+            background: #F5C853;
+          }
+          &.production{
+            background: #00b929;
+          } 
+          &.testing{
+            background: #FAA24B;
+          } 
+          &.staging{
+            background: #FA6290;
+          } 
+          &.development{
+            background: #A145FF;
+          } 
+        }
+      }
+    }
+  }
+}

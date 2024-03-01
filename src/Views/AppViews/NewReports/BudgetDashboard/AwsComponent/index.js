@@ -210,7 +210,7 @@ class AwsComponent extends Component {
                   link: "/app/new-reports/budget-dashboard/budget-account",
                 }}
                 ChartComponent={
-                  <VerticalBarChart_NarrowBar/>
+                  <VerticalBarChart_NarrowBar />
                   // <VerticalBarchart data={verticalBarChartData} />
                 }
               />
@@ -223,14 +223,24 @@ class AwsComponent extends Component {
                   link: "",
                 }}
                 ChartComponent={
-                  <DonutChart data={donutData} width={250} height={300} otherData={{
+                  <DonutChart
+                    data={donutData}
+                    width={250}
+                    height={300}
+                    otherData={{
                       centerValue: "$10,000",
-                    }} />
+                    }}
+                  />
                 }
               />
             </Grid>
             <Grid item xs={6} md={7}>
               <ChartWrapper
+                data={{
+                  title: "Top Products with High Spending",
+                  labelOfBtn: " View Details",
+                  link: "/app/new-reports/budget-dashboard/budget-products",
+                }}
                 ChartComponent={
                   <GroupedBarplotChart
                     data={verticalBarChartData}
@@ -244,11 +254,6 @@ class AwsComponent extends Component {
                     }
                   />
                 }
-                data={{
-                  title: "Top Products with High Spending",
-                  labelOfBtn: " View Details",
-                }}
-                // style={{ height: '450px', width: '840px' }}
               />
             </Grid>
             <Grid item xs={6} md={5}>
@@ -256,7 +261,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Top Department Exceeding Budget",
                   labelOfBtn: "View Details",
-                  link: "",
+                  link: "/app/new-reports/budget-dashboard/budget-depanrtments",
                 }}
                 ChartComponent={
                   <VerticalBarchart
@@ -281,7 +286,8 @@ class AwsComponent extends Component {
               />
             </Grid>
           </Grid>
-          <Grid className="m-t-1"
+          <Grid
+            className="m-t-1"
             container
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
