@@ -177,6 +177,7 @@ class Tier extends Component {
       clickConfigInfoIdAddEntry: "",
       clickManInfoIdAddEntry: "",
       cloudName: "",
+      editStatus:false
     };
   }
 
@@ -569,7 +570,7 @@ class Tier extends Component {
   };
 
   onClickInstance = (selectedInstance) => {
-    this.setState({ selectedInstance,selectedService:[] });
+    this.setState({ selectedInstance, selectedService: [] });
   };
 
   // Render loder
@@ -611,7 +612,6 @@ class Tier extends Component {
       this.props.getInstancesServices({ cloudName, elementType });
 
       Object.keys(savedLayer).forEach((key) => {
-        
         if (layerName === key) {
           savedLayer[layerName] = false;
         } else {
@@ -631,6 +631,7 @@ class Tier extends Component {
   };
 
   render() {
+   
     let {
       isSelectNginxOpen,
       isSelectSpringBootOpen,
@@ -1061,7 +1062,13 @@ class Tier extends Component {
                             {Object.keys(selectedLayer).map((key) => {
                               return (
                                 <ListItem>
-                                  <Box className="d-flex align-items-center">
+                                  <Box
+                                    className={`d-flex align-items-center edit-icons  ${
+                                     this.state.editStatus 
+                                        ? "delete-icons"
+                                        : ""
+                                    }`}
+                                  >
                                     {selectedLayer[key] !== "" &&
                                     savedLayer[key] ? (
                                       <>
@@ -1071,7 +1078,11 @@ class Tier extends Component {
                                         <IconButton
                                           className="edit-icon"
                                           onClick={() => {
-                                            this.onClickEditBtn(key);
+                                            this.onClickEditBtn(key)
+                                            this.setState({
+                                              editStatus: true
+                                            })
+                                            ;
                                           }}
                                         >
                                           <i class="fas fa-edit"></i>

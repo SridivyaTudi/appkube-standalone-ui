@@ -167,6 +167,7 @@ class Soa extends Component {
       clickManInfoIdAddEntry: "",
       activeTabEcs: 0,
       cloudName: "",
+      editStatus:false
     };
   }
 
@@ -988,7 +989,11 @@ class Soa extends Component {
                             {Object.keys(selectedServiceData).map((key) => {
                               return (
                                 <ListItem>
-                                  <Box className="d-flex align-items-center">
+                                  <Box className={`d-flex align-items-center edit-icons  ${
+                                     this.state.editStatus 
+                                        ? "delete-icons"
+                                        : ""
+                                    }`}>
                                     {selectedServiceData[key] !== "" &&
                                     savedService[key] ? (
                                       <>
@@ -998,7 +1003,10 @@ class Soa extends Component {
                                         <IconButton
                                           className="edit-icon"
                                           onClick={() => {
-                                            this.onClickEditBtn(key);
+                                            this.onClickEditBtn(key)
+                                            this.setState({
+                                              editStatus: true
+                                            });
                                           }}
                                         >
                                           <i class="fas fa-edit"></i>

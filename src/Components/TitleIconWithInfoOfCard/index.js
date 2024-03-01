@@ -16,7 +16,6 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     maxWidth: 200,
     fontSize: theme.typography.pxToRem(12),
     border: "1px solid #dadde9",
-    
   },
 }));
 
@@ -46,7 +45,11 @@ export class TitleIconWithInfoOfCard extends Component {
           <Box className="environment-image">
             <img src={image} alt=" info" />
           </Box>
-          <Box className="title-name"> {title} </Box>
+          <Box className="title-name">
+            <HtmlTooltip className="table-tooltip" title= {title}>
+            {title}
+            </HtmlTooltip>
+          </Box>
         </Box>
         <Box className="data-contant">
           <List>
