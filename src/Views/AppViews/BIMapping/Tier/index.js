@@ -176,6 +176,7 @@ class Tier extends Component {
       activeTabEcs: 0,
       clickConfigInfoIdAddEntry: "",
       clickManInfoIdAddEntry: "",
+      cloudName: "",
     };
   }
 
@@ -329,6 +330,7 @@ class Tier extends Component {
       selectedInstance: -1,
       activeTabEks: 0,
       cloudElementType: elementType,
+      cloudName,
     });
   };
 
@@ -512,6 +514,8 @@ class Tier extends Component {
       selectedDeployedInstance,
       selectedService,
       isShowDepolyedSection,
+      cloudElementType,
+      cloudName,
     } = this.state;
     let layerName = "";
 
@@ -535,6 +539,8 @@ class Tier extends Component {
       selectedInstance,
       selectedDeployedInstance,
       selectedService,
+      cloudElementType,
+      cloudName,
     });
 
     selectedInstance = -1;
@@ -563,7 +569,7 @@ class Tier extends Component {
   };
 
   onClickInstance = (selectedInstance) => {
-    this.setState({ selectedInstance });
+    this.setState({ selectedInstance,selectedService:[] });
   };
 
   // Render loder
@@ -588,6 +594,42 @@ class Tier extends Component {
     let name = this.props.params.name;
     return { name };
   }
+
+  onClickEditBtn = (layerName) => {
+    let { savedData, savedLayer, isShowDepolyedSection } = this.state;
+
+    let findSaveData = savedData.find((data) => data.layerName === layerName);
+
+    if (findSaveData) {
+      let {
+        selectedInstance,
+        selectedDeployedInstance,
+        selectedService,
+        cloudElementType: elementType,
+        cloudName,
+      } = findSaveData;
+      this.props.getInstancesServices({ cloudName, elementType });
+
+      Object.keys(savedLayer).forEach((key) => {
+        
+        if (layerName === key) {
+          savedLayer[layerName] = false;
+        } else {
+          savedLayer[key] = true;
+        }
+      });
+
+      this.setState({
+        selectedInstance,
+        selectedDeployedInstance,
+        selectedService,
+        savedLayer,
+        cloudElementType: elementType,
+        isShowDepolyedSection: true,
+      });
+    }
+  };
+
   render() {
     let {
       isSelectNginxOpen,
@@ -1017,20 +1059,29 @@ class Tier extends Component {
                         <Box className="check-icons-box">
                           <List>
                             {Object.keys(selectedLayer).map((key) => {
-                              return selectedLayer[key] !== "" &&
-                                savedLayer[key] ? (
+                              return (
                                 <ListItem>
                                   <Box className="d-flex align-items-center">
-                                    <IconButton className="check-icon">
-                                      <i class="fas fa-check"></i>
-                                    </IconButton>
-                                    <IconButton className="edit-icon">
-                                      <i class="fas fa-edit"></i>
-                                    </IconButton>
+                                    {selectedLayer[key] !== "" &&
+                                    savedLayer[key] ? (
+                                      <>
+                                        <IconButton className="check-icon">
+                                          <i class="fas fa-check"></i>
+                                        </IconButton>
+                                        <IconButton
+                                          className="edit-icon"
+                                          onClick={() => {
+                                            this.onClickEditBtn(key);
+                                          }}
+                                        >
+                                          <i class="fas fa-edit"></i>
+                                        </IconButton>
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
                                   </Box>
                                 </ListItem>
-                              ) : (
-                                <></>
                               );
                             })}
                           </List>
