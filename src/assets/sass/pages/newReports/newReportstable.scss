@@ -197,6 +197,18 @@
             &.pending{
               background: #F5C853;
             }
+            &.production{
+              background: #00b929;
+            } 
+            &.testing{
+              background: #FAA24B;
+            } 
+            &.staging{
+              background: #FA6290;
+            } 
+            &.development{
+              background: #A145FF;
+            } 
           }
         }
       }
