@@ -199,12 +199,8 @@ class AwsComponent extends Component {
       <>
         <TimeSpendComponent data={timeSpendData} />
         <Box className="reports-charts">
-          <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            <Grid item xs={7}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6} lg={7}>
               <ChartWrapper
                 data={{
                   title: "Top 5 Accounts",
@@ -216,7 +212,7 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={12} md={6} lg={5}>
               <ChartWrapper
                 data={{
                   title: "Most used services",
@@ -225,7 +221,7 @@ class AwsComponent extends Component {
                 }}
                 ChartComponent={
                   <VerticalBarchart
-                  color={"#53CA43"}
+                    color={"#53CA43"}
                     data={costOfTopAccounts}
                     // styleProp={{
                     //   color: "#53CA43",
@@ -234,7 +230,7 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
               <ChartWrapper
                 data={{
                   title: "Top 5 Region",
@@ -253,7 +249,7 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
               <ChartWrapper
                 data={{
                   title: "Top 5 Products",
@@ -272,7 +268,7 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
               <ChartWrapper
                 data={{
                   title: "Tagged Vs Untagged Cost",

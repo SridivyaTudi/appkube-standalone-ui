@@ -191,7 +191,7 @@ class GaugeChart extends Component {
     return (
       <Box className="gauge-chart">
         <svg
-          style={{ width: "100%", height: "auto" }}
+          // style={{ width: "100%", height: "auto" }}
           ref={this.ref}
           viewBox={`0 0 ${width} ${height}`}
         ></svg>
