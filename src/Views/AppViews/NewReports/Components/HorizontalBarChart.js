@@ -21,7 +21,7 @@ class HorizontalBarChart extends Component {
     const marginBottom = 10;
     const marginLeft = 100;
     const width = 800;
-    const height =
+    const height = 
       Math.ceil(data.length * barHeight) + marginTop + marginBottom;
 
     function make_x_gridlines() {

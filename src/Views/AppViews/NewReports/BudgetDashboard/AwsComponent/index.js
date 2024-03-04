@@ -198,11 +198,9 @@ class AwsComponent extends Component {
         <TimeSpendComponent data={timeSpendData} />
         <Box className="reports-charts">
           <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+           container spacing={2}
           >
-            <Grid item xs={6} md={7}>
+            <Grid item xs={12} md={6} lg={7}>
               <ChartWrapper
                 data={{
                   title: "Accounts With High Spending",
@@ -215,7 +213,7 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={6} md={5}>
+            <Grid item xs={12} md={6} lg={5}>
               <ChartWrapper
                 data={{
                   title: "Transaction Type Cost",
@@ -234,7 +232,7 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={6} md={7}>
+            <Grid item xs={12} md={6} lg={7}>
               <ChartWrapper
                 data={{
                   title: "Top Products with High Spending",
@@ -256,7 +254,7 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={6} md={5}>
+            <Grid item xs={12} md={6} lg={5}>
               <ChartWrapper
                 data={{
                   title: "Top Department Exceeding Budget",
@@ -288,9 +286,7 @@ class AwsComponent extends Component {
           </Grid>
           <Grid
             className="m-t-1"
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            container spacing={2}
           >
             <Grid item xs={12}>
               <ChartWrapper

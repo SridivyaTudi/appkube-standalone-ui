@@ -378,12 +378,8 @@ class AwsComponent extends Component {
       <>
         <TimeSpendComponent data={timeSpendData} />
         <Box className="reports-charts">
-          <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            <Grid item xs={5}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6} lg={5}>
               <ChartWrapper
                 data={{
                   title: "Usage By  IT Department",
@@ -402,7 +398,7 @@ class AwsComponent extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={12} md={6} lg={7}>
               <ChartWrapper
                 data={{
                   title: "Monthly Usage by IT Department",
@@ -419,7 +415,7 @@ class AwsComponent extends Component {
             </Grid>
           </Grid>
         </Box>
-        <h3>Monthly cost and Budget overview</h3>
+        <h3 className="m-t-3">Monthly cost and Budget overview</h3>
         <Box className="new-reports-table">
           <TableContainer className="table">
             <Table style={{ width: 1700 }}>
