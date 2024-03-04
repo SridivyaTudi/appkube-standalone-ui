@@ -50,6 +50,8 @@ import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import ManagementInfo from "../Soa/components/ManagementInfo";
 import ConfigInfo from "../Soa/components/ConfigInfo";
+import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
+
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -167,7 +169,7 @@ class Soa extends Component {
       clickManInfoIdAddEntry: "",
       activeTabEcs: 0,
       cloudName: "",
-      editStatus:false
+      editStatus: false,
     };
   }
 
@@ -177,6 +179,7 @@ class Soa extends Component {
     this.props.getBiServicesFromProductCategory({
       productCategory: PRODUCT_CATEGORY_ENUM.SOA,
     });
+    this.previousDataView();
   };
 
   componentWillUnmount() {
@@ -472,6 +475,25 @@ class Soa extends Component {
     this.setState({ selectedService });
   };
 
+  previousDataView = () => {
+    let { createProductFormData } = this.props;
+    console.log(createProductFormData);
+    if (createProductFormData["soaData"]) {
+      try {
+        let { savedService, savedData, selectedService, selectedServiceData } =
+          createProductFormData["soaData"];
+        this.setState({
+          savedService: JSON.parse(JSON.stringify(savedService)),
+          savedData: JSON.parse(JSON.stringify(savedData)),
+          selectedService: JSON.parse(JSON.stringify(selectedService)),
+          selectedServiceData: JSON.parse(JSON.stringify(selectedServiceData)),
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   onClickSave = () => {
     let {
       savedService,
@@ -481,8 +503,9 @@ class Soa extends Component {
       selectedService,
       isShowDepolyedSection,
       cloudElementType,
-      cloudName,
+      cloudName,selectedServiceData
     } = this.state;
+    let { createProductFormData } = this.props;
     let serviceName = "";
 
     if (!savedService.app) {
@@ -520,6 +543,14 @@ class Soa extends Component {
       selectedService,
       isShowDepolyedSection,
     });
+    let passData = JSON.parse(
+      JSON.stringify({
+        ...createProductFormData,
+        soaData: { savedService, savedData, selectedService,selectedServiceData },
+        "3_tierData": null,
+      })
+    );
+    this.props.setProductIntoDepartment(passData);
   };
 
   onClickInstance = (selectedInstance) => {
@@ -539,7 +570,7 @@ class Soa extends Component {
 
   onClickEditBtn = (serviceName) => {
     let { savedData, savedService, isShowDepolyedSection } = this.state;
-
+    console.log(serviceName, this.state);
     let findSaveData = savedData.find(
       (data) => data.serviceName === serviceName
     );
@@ -558,7 +589,12 @@ class Soa extends Component {
         if (serviceName === key) {
           savedService[serviceName] = false;
         } else {
-          savedService[key] = true;
+          let previousEditData = savedData.find(
+            (data) => data.serviceName === key
+          );
+          if (previousEditData) {
+            savedService[key] = true;
+          }
         }
       });
 
@@ -989,11 +1025,13 @@ class Soa extends Component {
                             {Object.keys(selectedServiceData).map((key) => {
                               return (
                                 <ListItem>
-                                  <Box className={`d-flex align-items-center edit-icons  ${
-                                     this.state.editStatus 
+                                  <Box
+                                    className={`d-flex align-items-center   ${
+                                      this.state.editStatus
                                         ? "delete-icons"
                                         : ""
-                                    }`}>
+                                    }`}
+                                  >
                                     {selectedServiceData[key] !== "" &&
                                     savedService[key] ? (
                                       <>
@@ -1003,9 +1041,9 @@ class Soa extends Component {
                                         <IconButton
                                           className="edit-icon"
                                           onClick={() => {
-                                            this.onClickEditBtn(key)
+                                            this.onClickEditBtn(key);
                                             this.setState({
-                                              editStatus: true
+                                              editStatus: true,
                                             });
                                           }}
                                         >
@@ -1220,6 +1258,7 @@ const mapDispatchToProps = {
   getBiServicesFromProductCategory,
   getCloudServices,
   getInstancesServices,
+  setProductIntoDepartment,
 };
 
 export default connect(

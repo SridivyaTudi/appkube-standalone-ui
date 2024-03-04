@@ -52,6 +52,7 @@ import ManagementInfo from "../Soa/components/ManagementInfo";
 import ConfigInfo from "../Soa/components/ConfigInfo";
 import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -177,7 +178,7 @@ class Tier extends Component {
       clickConfigInfoIdAddEntry: "",
       clickManInfoIdAddEntry: "",
       cloudName: "",
-      editStatus:false
+      editStatus: false,
     };
   }
 
@@ -187,6 +188,25 @@ class Tier extends Component {
     this.props.getBiServicesFromProductCategory({
       productCategory: PRODUCT_CATEGORY_ENUM.THREE_TIER,
     });
+    this.previousDataView();
+  };
+
+  previousDataView = () => {
+    let { createProductFormData } = this.props;
+
+    if (createProductFormData["3_tierData"]) {
+      try {
+        let { savedLayer, savedData, selectedLayer } =
+          createProductFormData["3_tierData"];
+        this.setState({
+          savedLayer: JSON.parse(JSON.stringify(savedLayer)),
+          savedData: JSON.parse(JSON.stringify(savedData)),
+          selectedLayer: JSON.parse(JSON.stringify(selectedLayer)),
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   componentWillUnmount() {
@@ -206,9 +226,7 @@ class Tier extends Component {
       this.props.biServicesFromProductCategory?.data
     ) {
       let data = this.props.biServicesFromProductCategory?.data || [];
-      if (data.length) {
-        this.manipulateLayersData(data);
-      }
+      this.manipulateLayersData(data);
     }
 
     if (
@@ -236,7 +254,10 @@ class Tier extends Component {
       dropDownLayersData: { webLayer, appLayer, auxLayer, dataLayer },
     } = this.state;
     let SERVICES_CATEGORY = SERVICES_CATEGORY_OF_THREE_TIER_ENUM;
-
+    webLayer = [];
+    appLayer = [];
+    auxLayer = [];
+    dataLayer = [];
     data.forEach((service) => {
       if (service.serviceCategory === SERVICES_CATEGORY.WEB) {
         webLayer.push(service);
@@ -517,7 +538,9 @@ class Tier extends Component {
       isShowDepolyedSection,
       cloudElementType,
       cloudName,
+      selectedLayer,
     } = this.state;
+    let { createProductFormData } = this.props;
     let layerName = "";
 
     if (!savedLayer.web) {
@@ -557,6 +580,14 @@ class Tier extends Component {
       selectedService,
       isShowDepolyedSection,
     });
+    let passData = JSON.parse(
+      JSON.stringify({
+        ...createProductFormData,
+        "3_tierData": { savedLayer, savedData, selectedLayer },
+        soaData: null,
+      })
+    );
+    this.props.setProductIntoDepartment(passData);
   };
 
   setActiveTab = (id, isECS = 0) => {
@@ -615,7 +646,12 @@ class Tier extends Component {
         if (layerName === key) {
           savedLayer[layerName] = false;
         } else {
-          savedLayer[key] = true;
+          let previousEditData = savedData.find(
+            (data) => data.layerName === key
+          );
+          if (previousEditData) {
+            savedLayer[key] = true;
+          }
         }
       });
 
@@ -631,7 +667,6 @@ class Tier extends Component {
   };
 
   render() {
-   
     let {
       isSelectNginxOpen,
       isSelectSpringBootOpen,
@@ -656,6 +691,7 @@ class Tier extends Component {
     );
     let isSaveEnable =
       selectedService.length || activeTabEks === 3 || isShowManagementInfoTab;
+    console.log(createProductFormData);
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -1064,7 +1100,7 @@ class Tier extends Component {
                                 <ListItem>
                                   <Box
                                     className={`d-flex align-items-center edit-icons  ${
-                                     this.state.editStatus 
+                                      this.state.editStatus
                                         ? "delete-icons"
                                         : ""
                                     }`}
@@ -1078,11 +1114,10 @@ class Tier extends Component {
                                         <IconButton
                                           className="edit-icon"
                                           onClick={() => {
-                                            this.onClickEditBtn(key)
+                                            this.onClickEditBtn(key);
                                             this.setState({
-                                              editStatus: true
-                                            })
-                                            ;
+                                              editStatus: true,
+                                            });
                                           }}
                                         >
                                           <i class="fas fa-edit"></i>
@@ -1298,6 +1333,7 @@ const mapDispatchToProps = {
   getBiServicesFromProductCategory,
   getCloudServices,
   getInstancesServices,
+  setProductIntoDepartment,
 };
 
 export default connect(

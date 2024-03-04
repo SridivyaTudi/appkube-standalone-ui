@@ -55,8 +55,12 @@ class AddProduct extends Component {
 
         if (isValid) {
           let { name: departmentName } = this.getUrlDetails();
-
-          let productData = { ...formData, departmentName };
+          let { createProductFormData } = this.props;
+          let productData = {
+            ...createProductFormData,
+            ...formData,
+            departmentName,
+          };
           productData["productName"] = productData.name;
 
           delete productData.name;
