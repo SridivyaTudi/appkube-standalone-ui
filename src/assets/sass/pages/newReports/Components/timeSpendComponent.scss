@@ -12,7 +12,7 @@
     justify-content: flex-start;
     background: #ffffff;
     border-radius: 10px;
-    padding:  15px;
+    padding: 15px;
     .spend-icon {
       width: 60px;
       height: 60px;
@@ -33,26 +33,34 @@
         color: #383874;
         margin-bottom: 5px;
       }
-      strong{
+      strong {
         font-size: 16px;
         line-height: 18px;
         display: block;
         color: #383874;
         margin-bottom: 5px;
       }
-      span{
+      span {
         font-size: 12px;
         line-height: 16px;
         font-weight: 500;
         color: #047857;
         margin-right: 8px;
       }
-      p{
+      p {
         font-size: 12px;
         line-height: 16px;
         font-weight: 400;
-        color: #A2A2A2;
+        color: #a2a2a2;
       }
+    }
+  }
+}
+@media only screen and (max-width: 669px) {
+  .spend-control-cards {
+    margin-bottom: 10px;
+    .time-spend-card {
+      width: 100%;
     }
   }
 }

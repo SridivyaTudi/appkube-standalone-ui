@@ -54,7 +54,18 @@
     display: block;
     padding-top: 20px;
     .reports-charts {
-      
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .reports-tab-section {
+    .tabs {
+      .tabs-menu {
+        li {
+          width: auto;
+        }
+      }
     }
   }
 }

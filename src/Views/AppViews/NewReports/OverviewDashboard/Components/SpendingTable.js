@@ -22,7 +22,7 @@ export class SpendingTable extends Component {
   renderTable = () => {
     return (
       <TableContainer className="table">
-        <Table>
+        <Table style={{width: 1210}}>
           {this.renderTableHead()}
           {this.renderTableBody()}
         </Table>
