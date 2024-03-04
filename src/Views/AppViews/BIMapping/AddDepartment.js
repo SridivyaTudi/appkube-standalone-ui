@@ -334,6 +334,7 @@ class AddDepartment extends Component {
                     rowSpacing={1.5}
                     columnSpacing={{ xs: 1.5 }}
                     alignItems={"center"}
+                    className="p-b-10"
                   >
                     {[...Array(13)].map((val, index) => {
                       return (

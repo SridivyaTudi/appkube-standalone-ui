@@ -25,11 +25,11 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
     const innerRadius = radius * 0.6;
     var colors = ["#FF708B", "#00B929", "#8676FF", "#FFBA69", "#F9D33D"];
     const color = d3.scaleOrdinal(colors).domain(data.map((d) => d.age_group));
-    const pie = d3.pie().value((d) => d.population);
+    const pie = d3.pie().value((d) => d.population).padAngle(0.05);
     const arc = d3
       .arc()
       .innerRadius(innerRadius - thickness)
-      .outerRadius(radius * 0.54);
+      .outerRadius(radius * 0.54).cornerRadius(10)
     const arcs = svg
       .selectAll(".arc")
       .data(pie(data))
@@ -42,9 +42,6 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
       .append("path")
       .attr("d", arc)
       .attr("fill", (d, i) => color(i))
-      .attr("stroke", "white")
-      .style("stroke-width", 6)
-      .style("stroke", "#FFFFFF")
       .style("border-radius", "50%")
       .style("fill", (d, i) => color(i))
       .attr("clip-path", (d, i) => `url(#clip${i})`);
