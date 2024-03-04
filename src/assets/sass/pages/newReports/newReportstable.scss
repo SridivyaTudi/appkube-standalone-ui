@@ -87,12 +87,13 @@
           }
           .variance-count {
             color: #00b929;
-            display: inline-flex;
+            // display: inline-flex;
             // display: flex;
             // align-items: flex-start;
             // justify-content: center;
-            &.red {
+            .red {
               color: red;
+              vertical-align: text-bottom!important;
             }
           }
           .list-icon {
