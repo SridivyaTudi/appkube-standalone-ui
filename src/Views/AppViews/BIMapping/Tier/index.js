@@ -53,8 +53,7 @@ import ConfigInfo from "../Soa/components/ConfigInfo";
 import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
-import { List as ListFromVirtualized } from "react-virtualized";
-import InstanceListCards from "../Components/InstanceListCards";
+import InstanceListCards from "Views/AppViews/BIMapping/Components/InstanceListCards";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -399,7 +398,7 @@ class Tier extends Component {
           };
           return instanceData;
         });
-        console.log(preparedData)
+
         return (
           <InstanceListCards
             cards={preparedData}

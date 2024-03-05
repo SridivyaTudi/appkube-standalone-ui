@@ -24,10 +24,6 @@ class CloudCostMonthChart extends Component {
 
   renderChart = () => {
     const margin = { top: 20, right: 0, bottom: 30, left: 40 };
-    const extent = [
-      [margin.left, margin.top],
-      [width - margin.right, height - margin.top],
-    ];
 
     const svg = d3.select(this.ref.current);
 
@@ -57,7 +53,8 @@ class CloudCostMonthChart extends Component {
     var tooltip = d3
       .select("#root")
       .data(data)
-      .append("div").attr('class','chart-tooltip')
+      .append("div")
+      .attr("class", "chart-tooltip")
       .style("position", "absolute")
       .style("z-index", "10")
       .style("visibility", "hidden");
@@ -106,9 +103,7 @@ class CloudCostMonthChart extends Component {
 
     svg.append("g").attr("class", "y-axis").call(yAxis);
 
-   
-
-    d3.select(this.ref.current)
+    d3.select(this.ref.current);
   };
   render() {
     return (

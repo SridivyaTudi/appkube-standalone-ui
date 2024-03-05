@@ -15,7 +15,6 @@ import {
   getSavedUserName,
   setUserName,
   deleteUserName,
-  isAlphaNumeric,
 } from "Utils";
 import { login, authMFACode } from "Redux/Auth/AuthThunk";
 import { connect } from "react-redux";
