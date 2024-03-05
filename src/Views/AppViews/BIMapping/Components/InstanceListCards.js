@@ -83,9 +83,9 @@ export class InstanceListCards extends Component {
   render() {
     let data = this.props.cards || [];
     return data.length ? (
-      <ColumnSizer
-        columnMaxWidth={250}
-        columnMinWidth={250}
+      <ColumnSizer 
+        columnMaxWidth={225}
+        columnMinWidth={225}
        
         columnCount={data.length}
         width={600}
@@ -98,9 +98,11 @@ export class InstanceListCards extends Component {
             columnCount={data.length}
             height={200}
             cellRenderer={this.renderRow}
-            rowHeight={170}
+            rowHeight={150}
             rowCount={1}
             width={600}
+            innerScrollContainerStyle={"fsdfsdfertthertuedgdigteritiyiotioio"}
+
           />
         )}
       </ColumnSizer>
