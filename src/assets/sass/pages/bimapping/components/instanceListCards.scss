@@ -6,17 +6,15 @@
     position: static!important;
 
     .environment-box {
-      margin-left: 15px;
-      margin-bottom: 20px;
       background: #ffffff 0% 0% no-repeat padding-box;
       box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
       border-radius: 10px;
       overflow: hidden;
       cursor: pointer;
 
-      &:first-child {
-        margin-left: 0;
-      }
+      // &:first-child {
+      //   margin-left: 0;
+      // }
 
       .environment-title {
         display: flex;
@@ -60,7 +58,7 @@
       }
 
       .data-contant {
-        padding: 10px 25px;
+        padding: 10px 15px;
         display: block;
 
         ul {
@@ -83,7 +81,8 @@
             }
 
             .data-text {
-              width: 150px;
+              width: 70px;
+              min-width: 70px;
               display: flex;
               align-items: center;
               justify-content: flex-start;

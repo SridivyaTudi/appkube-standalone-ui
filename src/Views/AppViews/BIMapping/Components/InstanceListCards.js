@@ -96,7 +96,7 @@ export class InstanceListCards extends Component {
             columnCount={data.length}
             height={200}
             cellRenderer={this.renderRow}
-            rowHeight={175}
+            rowHeight={170}
             rowCount={1}
             width={600}
           />
