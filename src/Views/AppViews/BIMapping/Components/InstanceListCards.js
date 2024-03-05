@@ -4,6 +4,7 @@ import { Box, List, ListItem } from "@mui/material";
 import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { Grid, ColumnSizer } from "react-virtualized";
+import 'react-virtualized/styles.css';
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -35,12 +36,14 @@ export class InstanceListCards extends Component {
   renderRow = ({ columnIndex, key, index, style }) => {
     let subInfo = this.props.cards[columnIndex];
     let { image, title, data, active } = subInfo;
+    const left = columnIndex * (225 + 15);
+    let newStyle = {...style,left}
     return (
       <Box
         className={`environment-box ${active}`}
         key={v4()}
         onClick={() => this.onClickCard(subInfo)}
-        style={style}
+        style={newStyle}
       >
         <Box className="environment-title">
           <Box className="environment-image">
