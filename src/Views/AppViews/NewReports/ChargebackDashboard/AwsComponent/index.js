@@ -15,7 +15,6 @@ import ChartWrapper from "../../Components/ChartWrapper";
 import VerticalBarchart from "Views/AppViews/NewReports/Components/VerticalBarchart";
 import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
 import TimeSpendComponent from "Views/AppViews/NewReports/Components/TimeSpendComponent";
-import GroupedBarplotChart from "Views/AppViews/NewReports/Components/GroupedBarplotChart";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { Link } from "react-router-dom";
 const totalUsedServiceData = [
@@ -345,9 +344,10 @@ class AwsComponent extends Component {
                   {details.currentMonthSpend}
                 </TableCell>
                 <TableCell align="center">
-                  <Box className="variance-count d-flex">
-                    <i class="fas fa-sort-down p-r-5"></i> {details.difference}
+                  <Box className="variance-count d-inline-block">
+                    <i class="fas fa-sort-down p-r-5"></i> 
                   </Box>
+                  <strong>{details.difference}</strong>
                 </TableCell>
                 <TableCell align="left">
                   <Box className="payment-status pending"></Box>

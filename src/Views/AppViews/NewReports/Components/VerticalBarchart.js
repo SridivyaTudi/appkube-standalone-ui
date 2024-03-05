@@ -18,7 +18,7 @@ const margin = { top: 50, right: 20, bottom: 40, left: 40 };
 
 // Increase the width and height as needed
 const width = 750; // Adjust the width
-const height = 290; // Adjust the height
+const height = 240; // Adjust the height
 
 class VerticalBarchart extends Component {
   constructor(props) {
@@ -56,7 +56,7 @@ class VerticalBarchart extends Component {
         .attr("dx", "0.80em")
         .attr("dy", "0.10em")
         .attr("transform", "translate(0,20)rotate(-90)")
-        .attr("font-size", "16px", "sans-serif");
+        .attr("font-size", "14px", "sans-serif");
 
     // .attr("transform", "rotate(-45)");
 
@@ -64,7 +64,7 @@ class VerticalBarchart extends Component {
       g
         .attr("transform", `translate(${margin.left},0)`)
         .call(d3.axisLeft(yScale).tickFormat((d) => "$"+  d +"k"))
-        .attr("font-size", "16px", "sans-serif")
+        .attr("font-size", "14px", "sans-serif")
         .call((g) => g.select(".domain").remove());
 
     svg.selectAll("*").remove();
