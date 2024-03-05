@@ -39,7 +39,7 @@ export class InstanceListCards extends Component {
       <Box
         className={`environment-box ${active}`}
         key={v4()}
-        onClick={()=>this.onClickCard(subInfo)}
+        onClick={() => this.onClickCard(subInfo)}
         style={style}
       >
         <Box className="environment-title">
@@ -83,26 +83,22 @@ export class InstanceListCards extends Component {
   render() {
     let data = this.props.cards || [];
     return data.length ? (
-      <ColumnSizer 
+      <ColumnSizer
         columnMaxWidth={225}
         columnMinWidth={225}
-       
         columnCount={data.length}
         width={600}
       >
         {({ adjustedWidth, getColumnWidth, registerChild }) => (
           <Grid
-            className="instace-inner-cards"
             ref={registerChild}
             columnWidth={getColumnWidth}
             columnCount={data.length}
             height={200}
             cellRenderer={this.renderRow}
-            rowHeight={150}
+            rowHeight={175}
             rowCount={1}
             width={600}
-            innerScrollContainerStyle={"fsdfsdfertthertuedgdigteritiyiotioio"}
-
           />
         )}
       </ColumnSizer>
