@@ -7,7 +7,11 @@ import Kubernetes from "../../../assets/img/kubernetes.png";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { Link } from "react-router-dom";
 import AccordionView from "Views/AppViews/Setting/Components/AccordionView";
-import { getCurrentOrgId, getCloudWiseLandingZoneCount } from "Utils";
+import {
+  getCurrentOrgId,
+  getCloudWiseLandingZoneCount as getLandingZoneCount,LOCAL_STORAGE_CONSTANTS,
+  setCloudWiseLandingZoneCount,
+} from "Utils";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import {
@@ -21,6 +25,7 @@ import {
 } from "Redux/BIMapping/BIMappingThunk";
 import Loader from "Components/Loader";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
+import { getCloudWiseLandingZoneCount } from "Redux/Environments/EnvironmentsThunk";
 const orgId = getCurrentOrgId();
 
 let headers = [
@@ -89,10 +94,28 @@ class BIMapping extends Component {
   }
 
   componentDidMount = () => {
+    let isExistLandingZoneCounts = localStorage.getItem(
+      LOCAL_STORAGE_CONSTANTS.CLOUD_WISE_LANDINGZONE_COUNT
+    );
+    if (!isExistLandingZoneCounts) {
+      this.props.getCloudWiseLandingZoneCount();
+    }
     this.props.getOrgWiseDepartments(orgId);
   };
 
   componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.cloudWiseLandingZoneCount.status !==
+        this.props.cloudWiseLandingZoneCount.status &&
+      this.props.cloudWiseLandingZoneCount.status === status.SUCCESS &&
+      this.props.cloudWiseLandingZoneCount?.data
+    ) {
+      const landingZoneCounts = this.props.cloudWiseLandingZoneCount.data;
+      if (landingZoneCounts?.length) {
+        setCloudWiseLandingZoneCount(landingZoneCounts);
+      }
+    }
+
     if (
       prevProps.organizationWiseDepartments.status !==
         this.props.organizationWiseDepartments.status &&
@@ -188,8 +211,8 @@ class BIMapping extends Component {
           this.TYPE.DEPARTMENT
         );
       }
-      let cloudWiseLandingZoneCount = getCloudWiseLandingZoneCount();
-      if (cloudWiseLandingZoneCount.length) {
+      let cloudWiseLandingZoneCount = getLandingZoneCount();
+      if (cloudWiseLandingZoneCount?.length) {
         let environments = ["AWS", "AZURE", "GCP", "KUBEENETES"];
         cloudWiseLandingZoneCount = cloudWiseLandingZoneCount.map((count) => {
           if (environments.includes(count.cloud)) {
@@ -396,7 +419,7 @@ class BIMapping extends Component {
 
   onClickNode(data) {
     let { type, departmentId, productId, productEnvId, id, name } = data;
-   
+
     if (type === this.TYPE.DEPARTMENT) {
       this.props.getProductList(id);
     } else if (type === this.TYPE.PRODUCT) {
@@ -502,7 +525,8 @@ class BIMapping extends Component {
 
 function mapStateToProps(state) {
   const { products, productEnv } = state.associateApp;
-  const { organizationWiseDepartments } = state.environments;
+  const { organizationWiseDepartments, cloudWiseLandingZoneCount } =
+    state.environments;
   const { elementTypeData, elementInstancesOfGivenType } = state.biMapping;
   return {
     organizationWiseDepartments,
@@ -510,6 +534,7 @@ function mapStateToProps(state) {
     productEnv,
     elementTypeData,
     elementInstancesOfGivenType,
+    cloudWiseLandingZoneCount,
   };
 }
 
@@ -520,6 +545,7 @@ const mapDispatchToProps = {
   getElementType,
   getElementInstancesOfGivenType,
   setProductIntoDepartment,
+  getCloudWiseLandingZoneCount,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BIMapping);

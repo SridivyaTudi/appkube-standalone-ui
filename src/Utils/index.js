@@ -283,12 +283,16 @@ export const setCloudWiseLandingZoneCount = (data) => {
 };
 
 export const getCloudWiseLandingZoneCount = () => {
-  const counts = JSON.parse(
-    localStorage.getItem(
-      LOCAL_STORAGE_CONSTANTS.CLOUD_WISE_LANDINGZONE_COUNT
-    ) || null
-  );
-  return counts;
+  try {
+    const counts = JSON.parse(
+      localStorage.getItem(
+        LOCAL_STORAGE_CONSTANTS.CLOUD_WISE_LANDINGZONE_COUNT
+      ) || []
+    );
+    return counts;
+  } catch (e) {
+    return [];
+  }
 };
 
 export const isAlphaNumeric = (str) => {
