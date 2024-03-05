@@ -51,6 +51,7 @@ import { styled } from "@mui/material/styles";
 import ManagementInfo from "../Soa/components/ManagementInfo";
 import ConfigInfo from "../Soa/components/ConfigInfo";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
+import InstanceListCards from "Views/AppViews/BIMapping/Components/InstanceListCards";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -335,7 +336,7 @@ class Soa extends Component {
       return this.renderLoder();
     } else {
       if (instancesServices?.length) {
-        return instancesServices.map((instance, index) => {
+        let preparedData = instancesServices.map((instance, index) => {
           const data = [
             {
               backgroundColor: "#FFBA69",
@@ -360,18 +361,17 @@ class Soa extends Component {
             image: Aws,
             title: instance.elementType,
             data,
+            id: instance.id,
             active: selectedInstance === instance.id ? "active" : "",
-            style: { width: "150px", minHeight: "150px" },
           };
-          return (
-            <Box className="bimapping-instance-cards">
-              <TitleIconWithInfoOfCard
-                cardDetails={instanceData}
-                onClickCard={(details) => this.onClickInstance(instance.id)}
-              />
-            </Box>
-          );
+          return instanceData;
         });
+        return (
+          <InstanceListCards
+            cards={preparedData}
+            onClickCard={(details) => this.onClickInstance(details.id)}
+          />
+        );
       } else {
         return this.renderNoDataHtml("There are no data available.");
       }
@@ -503,7 +503,8 @@ class Soa extends Component {
       selectedService,
       isShowDepolyedSection,
       cloudElementType,
-      cloudName,selectedServiceData
+      cloudName,
+      selectedServiceData,
     } = this.state;
     let { createProductFormData } = this.props;
     let serviceName = "";
@@ -546,7 +547,12 @@ class Soa extends Component {
     let passData = JSON.parse(
       JSON.stringify({
         ...createProductFormData,
-        soaData: { savedService, savedData, selectedService,selectedServiceData },
+        soaData: {
+          savedService,
+          savedData,
+          selectedService,
+          selectedServiceData,
+        },
         "3_tierData": null,
       })
     );
