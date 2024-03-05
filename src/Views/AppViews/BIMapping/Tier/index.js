@@ -53,6 +53,8 @@ import ConfigInfo from "../Soa/components/ConfigInfo";
 import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
+import { List as ListFromVirtualized } from "react-virtualized";
+import InstanceListCards from "../Components/InstanceListCards";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -364,7 +366,7 @@ class Tier extends Component {
       return this.renderLoder();
     } else {
       if (instancesServices?.length) {
-        return instancesServices.map((instance, index) => {
+        let preparedData = instancesServices.map((instance, index) => {
           let data = [
             {
               backgroundColor: "#FFBA69",
@@ -390,19 +392,20 @@ class Tier extends Component {
             image: Aws,
             title: instance.elementType,
             data,
+            id: instance.id,
             active: selectedInstance === instance.id ? "active" : "",
             rowSeperatedByline: false,
-            style: { width: "150px", minHeight: "150px" },
+            // style: { width: "150px", minHeight: "150px" },
           };
-          return (
-            <Box className="bimapping-instance-cards">
-              <TitleIconWithInfoOfCard
-                cardDetails={instanceData}
-                onClickCard={(details) => this.onClickInstance(instance.id)}
-              />
-            </Box>
-          );
+          return instanceData;
         });
+        console.log(preparedData)
+        return (
+          <InstanceListCards
+            cards={preparedData}
+            onClickCard={(details) => this.onClickInstance(details.id)}
+          />
+        );
       } else {
         return this.renderNoDataHtml("There are no data available.");
       }
@@ -410,14 +413,15 @@ class Tier extends Component {
   };
 
   renderSelectedInstanceWrapper = () => {
-    let { selectedDeployedInstance } = this.state;
+    let { selectedDeployedInstance, instancesServices } = this.state;
+
     return selectedDeployedInstance ? (
       <Box className="deployed-section m-t-4">
         <Box className="deployed-head">
           <h4 className="m-t-0">Select Instance</h4>
         </Box>
         <Box className="deployed-content">
-          <Box className="environment-boxs">
+          <Box className="instance-list-cards">
             {this.renderSelectedInstance()}
           </Box>
         </Box>
@@ -691,7 +695,7 @@ class Tier extends Component {
     );
     let isSaveEnable =
       selectedService.length || activeTabEks === 3 || isShowManagementInfoTab;
-    console.log(createProductFormData);
+
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
