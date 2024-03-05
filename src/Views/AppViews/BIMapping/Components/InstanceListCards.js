@@ -85,10 +85,10 @@ export class InstanceListCards extends Component {
     return data.length ? (
       <ColumnSizer
         columnMaxWidth={250}
-        columnMinWidth={150}
+        columnMinWidth={250}
        
         columnCount={data.length}
-        width={550}
+        width={600}
       >
         {({ adjustedWidth, getColumnWidth, registerChild }) => (
           <Grid
@@ -96,9 +96,9 @@ export class InstanceListCards extends Component {
             ref={registerChild}
             columnWidth={getColumnWidth}
             columnCount={data.length}
-            height={180}
+            height={200}
             cellRenderer={this.renderRow}
-            rowHeight={180}
+            rowHeight={170}
             rowCount={1}
             width={600}
           />
