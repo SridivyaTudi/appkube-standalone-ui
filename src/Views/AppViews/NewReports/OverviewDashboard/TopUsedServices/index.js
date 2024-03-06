@@ -60,7 +60,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$1,800",
     variance: "15% ",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "Lambda",
@@ -68,7 +68,7 @@ let computeSpendingTable = [
     last_month_spend: "$1,500",
     month_spend: "$2,500",
     variance: "20%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "Light Sail",
@@ -76,7 +76,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "ECS",
@@ -84,7 +84,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "EKS",
@@ -92,7 +92,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "Fargate",
@@ -100,7 +100,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "Fargate",
@@ -108,7 +108,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "Fargate",
@@ -116,7 +116,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "Fargate",
@@ -124,7 +124,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
 ];
 class TopUsedServices extends Component {
