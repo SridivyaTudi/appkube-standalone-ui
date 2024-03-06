@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { Box } from "@mui/material";
 import * as d3 from "d3";
-const thickness = 30;
+const thickness = 25;
 const DonutChart = ({ data, width, height, style, otherData }) => {
   const svgRef = useRef();
   var pieGenerator = d3.pie().value(([key, value]) => {
