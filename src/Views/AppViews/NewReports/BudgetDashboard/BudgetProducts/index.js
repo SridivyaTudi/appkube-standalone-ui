@@ -337,7 +337,13 @@ class BudgetProducts extends Component {
             <h3>Products</h3>
             <Box className="breadcrumbs">
               <ul>
-                <li>Budget Dashboard</li>
+                <li
+                  onClick={() => {
+                    this.props.navigate(`/app/new-reports/budget-dashboard`);
+                  }}
+                >
+                  Budget Dashboard
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>

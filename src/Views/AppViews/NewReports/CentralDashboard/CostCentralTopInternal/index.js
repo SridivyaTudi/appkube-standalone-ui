@@ -42,6 +42,46 @@ let dummyTableData = [
     avgDailySpend: "$1,205",
     actionUrl:
       "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
+  },{
+    name: "IT SECURITY",
+    id: "160079380622",
+    orgUnit: "Central Operations",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$30,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
+  },{
+    name: "PRODUCTION",
+    id: "160079380622",
+    orgUnit: "Central Operations",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$30,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
+  },{
+    name: "DEV OPS",
+    id: "160079380622",
+    orgUnit: "Central Operations",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$30,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
+  },{
+    name: "IT TESTING",
+    id: "160079380622",
+    orgUnit: "Central Operations",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$30,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
   },
 ];
 let tableHeader = [
@@ -97,7 +137,13 @@ class CostCentralTopInternal extends Component {
             <h3>Cost Central Top Internal</h3>
             <Box className="breadcrumbs">
               <ul>
-                <li>Cost Central dashboard</li>
+                <li
+                  onClick={() =>
+                    this.props.navigate("/app/new-reports/central-dashboard")
+                  }
+                >
+                  Cost Central dashboard
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>

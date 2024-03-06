@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SelectFilterModal from "../../Components/SelectFilterModal";
-import {Link} from"react-router-dom";
+import { Link } from "react-router-dom";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
@@ -66,15 +66,16 @@ class BudgetDepartments extends Component {
           <TableCell>vpc-d24664bb</TableCell>
           <TableCell>sales & Marketing </TableCell>
           <TableCell>
-           <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
-           <Box className="d-flex align-items-center">
-              12 <OpenInNewIcon className="p-l-5" />
-            </Box>
-           </Link>
+            <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
+              <Box className="d-flex align-items-center">
+                12 <OpenInNewIcon className="p-l-5" />
+              </Box>
+            </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell >
-            <strong>$2120</strong> <Box className="variance-count red ">
+          <TableCell>
+            <strong>$2120</strong>{" "}
+            <Box className="variance-count red ">
               <i className="fas fa-sort-up red m-r-1"> </i> 10%
             </Box>
           </TableCell>
@@ -82,7 +83,8 @@ class BudgetDepartments extends Component {
             <strong>$1200</strong>
           </TableCell>
           <TableCell>
-          <strong>$2120</strong> <Box className="variance-count red ">
+            <strong>$2120</strong>{" "}
+            <Box className="variance-count red ">
               <i className="fas fa-sort-up red m-r-1"> </i> 10%
             </Box>
           </TableCell>
@@ -91,15 +93,16 @@ class BudgetDepartments extends Component {
           <TableCell>vpc-d24664bb</TableCell>
           <TableCell>sales & Marketing </TableCell>
           <TableCell>
-           <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
-           <Box className="d-flex align-items-center">
-              12 <OpenInNewIcon className="p-l-5" />
-            </Box>
-           </Link>
+            <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
+              <Box className="d-flex align-items-center">
+                12 <OpenInNewIcon className="p-l-5" />
+              </Box>
+            </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell >
-            <strong>$2120</strong> <Box className="variance-count red ">
+          <TableCell>
+            <strong>$2120</strong>{" "}
+            <Box className="variance-count red ">
               <i className="fas fa-sort-up red m-r-1"> </i> 10%
             </Box>
           </TableCell>
@@ -107,7 +110,8 @@ class BudgetDepartments extends Component {
             <strong>$1200</strong>
           </TableCell>
           <TableCell>
-          <strong>$2120</strong> <Box className="variance-count red ">
+            <strong>$2120</strong>{" "}
+            <Box className="variance-count red ">
               <i className="fas fa-sort-up red m-r-1"> </i> 10%
             </Box>
           </TableCell>
@@ -116,15 +120,16 @@ class BudgetDepartments extends Component {
           <TableCell>vpc-d24664bb</TableCell>
           <TableCell>sales & Marketing </TableCell>
           <TableCell>
-           <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
-           <Box className="d-flex align-items-center">
-              12 <OpenInNewIcon className="p-l-5" />
-            </Box>
-           </Link>
+            <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
+              <Box className="d-flex align-items-center">
+                12 <OpenInNewIcon className="p-l-5" />
+              </Box>
+            </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell >
-            <strong>$2120</strong> <Box className="variance-count red ">
+          <TableCell>
+            <strong>$2120</strong>{" "}
+            <Box className="variance-count red ">
               <i className="fas fa-sort-up red m-r-1"> </i> 10%
             </Box>
           </TableCell>
@@ -132,7 +137,8 @@ class BudgetDepartments extends Component {
             <strong>$1200</strong>
           </TableCell>
           <TableCell>
-          <strong>$2120</strong> <Box className="variance-count red ">
+            <strong>$2120</strong>{" "}
+            <Box className="variance-count red ">
               <i className="fas fa-sort-up red m-r-1"> </i> 10%
             </Box>
           </TableCell>
@@ -141,15 +147,16 @@ class BudgetDepartments extends Component {
           <TableCell>vpc-d24664bb</TableCell>
           <TableCell>sales & Marketing </TableCell>
           <TableCell>
-           <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
-           <Box className="d-flex align-items-center">
-              12 <OpenInNewIcon className="p-l-5" />
-            </Box>
-           </Link>
+            <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
+              <Box className="d-flex align-items-center">
+                12 <OpenInNewIcon className="p-l-5" />
+              </Box>
+            </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell >
-            <strong>$2120</strong> <Box className="variance-count red ">
+          <TableCell>
+            <strong>$2120</strong>{" "}
+            <Box className="variance-count red ">
               <i className="fas fa-sort-up red m-r-1"> </i> 10%
             </Box>
           </TableCell>
@@ -157,7 +164,8 @@ class BudgetDepartments extends Component {
             <strong>$1200</strong>
           </TableCell>
           <TableCell>
-          <strong>$2120</strong> <Box className="variance-count red ">
+            <strong>$2120</strong>{" "}
+            <Box className="variance-count red ">
               <i className="fas fa-sort-up red m-r-1"> </i> 10%
             </Box>
           </TableCell>
@@ -166,15 +174,16 @@ class BudgetDepartments extends Component {
           <TableCell>vpc-d24664bb</TableCell>
           <TableCell>sales & Marketing </TableCell>
           <TableCell>
-           <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
-           <Box className="d-flex align-items-center">
-              12 <OpenInNewIcon className="p-l-5" />
-            </Box>
-           </Link>
+            <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
+              <Box className="d-flex align-items-center">
+                12 <OpenInNewIcon className="p-l-5" />
+              </Box>
+            </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell >
-            <strong>$2120</strong> <Box className="variance-count red ">
+          <TableCell>
+            <strong>$2120</strong>{" "}
+            <Box className="variance-count red ">
               <i className="fas fa-sort-up red m-r-1"> </i> 10%
             </Box>
           </TableCell>
@@ -182,7 +191,8 @@ class BudgetDepartments extends Component {
             <strong>$1200</strong>
           </TableCell>
           <TableCell>
-          <strong>$2120</strong> <Box className="variance-count red ">
+            <strong>$2120</strong>{" "}
+            <Box className="variance-count red ">
               <i className="fas fa-sort-up red m-r-1"> </i> 10%
             </Box>
           </TableCell>
@@ -199,7 +209,13 @@ class BudgetDepartments extends Component {
             <h3>Departments</h3>
             <Box className="breadcrumbs">
               <ul>
-                <li>Budget Dashboard</li>
+                <li
+                  onClick={() => {
+                    this.props.navigate(`/app/new-reports/budget-dashboard`);
+                  }}
+                >
+                  Budget Dashboard
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>

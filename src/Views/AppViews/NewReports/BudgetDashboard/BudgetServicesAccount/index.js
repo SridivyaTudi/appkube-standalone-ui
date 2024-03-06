@@ -42,8 +42,9 @@ let tableHeader = [
 ];
 let dummyTableData = [
   {
+    id:"EC2",
     name: "EC2",
-    currentMonthSpend: "$20,000",
+    vpc: "$20,000",
     lastMonthSpend: "$20,000",
     varience: "10%",
     avgDailySpend: "$1,205",
@@ -56,8 +57,9 @@ let dummyTableData = [
       "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
   },
   {
+    id:"SNS",
     name: "EC2",
-    currentMonthSpend: "$20,000",
+    vpc: "$20,000",
     lastMonthSpend: "$20,000",
     varience: "10%",
     avgDailySpend: "$1,205",
@@ -70,8 +72,9 @@ let dummyTableData = [
       "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
   },
   {
-    name: "EC2",
-    currentMonthSpend: "$20,000",
+    id: "DynamoDB",
+    name: "DynamoDB",
+    vpc: "$20,000",
     lastMonthSpend: "$20,000",
     varience: "10%",
     avgDailySpend: "$1,205",
@@ -84,8 +87,9 @@ let dummyTableData = [
       "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
   },
   {
-    name: "EC2",
-    currentMonthSpend: "$20,000",
+    id: "Redshit",
+    name: "Redshit",
+    vpc: "$20,000",
     lastMonthSpend: "$20,000",
     varience: "10%",
     avgDailySpend: "$1,205",
@@ -98,8 +102,9 @@ let dummyTableData = [
       "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
   },
   {
-    name: "EC2",
-    currentMonthSpend: "$20,000",
+    id:'RDS',
+    name: "RDS",
+    vpc: "$20,000",
     lastMonthSpend: "$20,000",
     varience: "10%",
     avgDailySpend: "$1,205",
@@ -112,8 +117,9 @@ let dummyTableData = [
       "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
   },
   {
-    name: "EC2",
-    currentMonthSpend: "$20,000",
+    id: "Cloud Front",
+    name: "Cloud Front",
+    vpc: "$20,000",
     lastMonthSpend: "$20,000",
     varience: "10%",
     avgDailySpend: "$1,205",
@@ -126,8 +132,9 @@ let dummyTableData = [
       "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
   },
   {
-    name: "EC2",
-    currentMonthSpend: "$20,000",
+    id: "Route 53",
+    name: "Route 53",
+    vpc: "$20,000",
     lastMonthSpend: "$20,000",
     varience: "10%",
     avgDailySpend: "$1,205",
@@ -139,20 +146,7 @@ let dummyTableData = [
     actionUrl:
       "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
   },
-  {
-    name: "EC2",
-    currentMonthSpend: "$20,000",
-    lastMonthSpend: "$20,000",
-    varience: "10%",
-    avgDailySpend: "$1,205",
-    nameImageShow: (
-      <Box className="service-image d-inline-block">
-        <img src={ServiceIcon1} alt="" />
-      </Box>
-    ),
-    actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
-  },
+ 
 ];
 class BudgetServicesAccount extends Component {
   constructor(props) {
@@ -197,11 +191,25 @@ class BudgetServicesAccount extends Component {
             <h3>Budget Sevices Account</h3>
             <Box className="breadcrumbs">
               <ul>
-                <li>Budget Dashboard</li>
+                <li
+                  onClick={() =>
+                    this.props.navigate("/app/new-reports/budget-dashboard")
+                  }
+                >
+                  Budget Dashboard
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
-                <li>Budget Account</li>
+                <li
+                  onClick={() =>
+                    this.props.navigate(
+                      "/app/new-reports/budget-dashboard/budget-account"
+                    )
+                  }
+                >
+                  Budget Account
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
@@ -210,7 +218,9 @@ class BudgetServicesAccount extends Component {
             </Box>
           </Box>
           <Box className="list-heading m-t-2 ">
-            <h4 className="m-t-0 m-b-0">Cost of Top Services in US East (N.Virginia) </h4>
+            <h4 className="m-t-0 m-b-0">
+              Cost of Top Services in US East (N.Virginia){" "}
+            </h4>
             <Box className="d-flex ">
               <Button
                 className="light-btn p-l-15 p-r-15 m-r-3"

@@ -217,7 +217,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Most used services",
                   labelOfBtn: "View Details",
-                  link: "/app/new-reports/central-dashboard/cost-central-top-internal",
+                  link: "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
                 }}
                 ChartComponent={
                   <VerticalBarchart

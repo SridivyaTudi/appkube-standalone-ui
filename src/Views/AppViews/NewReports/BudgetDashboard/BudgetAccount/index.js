@@ -42,6 +42,56 @@ let dummyTableData = [
     varience: "$20,000",
     budget: "$30,000",
   },
+  {
+    id: "587170574722",
+    department: "Security Organization",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$1,205",
+    varience: "$20,000",
+    budget: "$30,000",
+  },
+  {
+    id: "160079380622",
+    department: "App Development",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$1,205",
+    varience: "$20,000",
+    budget: "$30,000",
+  },
+  {
+    id: "160079380622",
+    department: "Central Operations",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$1,205",
+    varience: "$20,000",
+    budget: "$30,000",
+  },
+  {
+    id: "587170574722",
+    department: "Production",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$1,205",
+    varience: "$20,000",
+    budget: "$30,000",
+  },
+  {
+    id: "160079380622",
+    department: "HR Department",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$1,205",
+    varience: "$20,000",
+    budget: "$30,000",
+  },
 ];
 let tableHeader = [
   "Account ID",
@@ -96,7 +146,13 @@ class BudgetAccount extends Component {
             <h3>Budget Account</h3>
             <Box className="breadcrumbs">
               <ul>
-                <li>Budget Dashboard</li>
+                <li
+                  onClick={() =>
+                    this.props.navigate("/app/new-reports/budget-dashboard")
+                  }
+                >
+                  Budget Dashboard
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
