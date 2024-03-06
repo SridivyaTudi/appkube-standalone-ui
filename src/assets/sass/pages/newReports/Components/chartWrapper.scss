@@ -190,3 +190,15 @@
     min-height: 0;
   }
 }
+@media only screen and (max-width: 1200px) {
+  .reports-chart-box {
+    .chart-content {
+      .vertical-bar-chart {
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+      }
+    }
+  }
+}

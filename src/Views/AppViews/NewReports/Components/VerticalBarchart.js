@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Box} from "@mui/material";
 import * as d3 from "d3";
 
 let data = [
@@ -63,7 +64,7 @@ class VerticalBarchart extends Component {
     const yAxis = (g) =>
       g
         .attr("transform", `translate(${margin.left},0)`)
-        .call(d3.axisLeft(yScale).tickFormat((d) => "$"+  d +"k"))
+        .call(d3.axisLeft(yScale).tickFormat((d) => "$" + d + "k"))
         .attr("font-size", "14px", "sans-serif")
         .call((g) => g.select(".domain").remove());
 
@@ -83,16 +84,18 @@ class VerticalBarchart extends Component {
       .attr("y", (d) => yScale(d.value))
       .attr("width", xScale.bandwidth())
       .attr("height", (d) => height - yScale(d.value))
-      .attr("fill", this.props?.color ? this.props?.color  : "#FA6298")
+      .attr("fill", this.props?.color ? this.props?.color : "#FA6298")
       .attr("rx", 5);
   };
   render() {
     return (
-      <svg
-        // style={{ width: "100%", height: "290" }}
-        ref={this.ref}
-        viewBox={`-15 0 ${width} ${height + margin.top + margin.bottom}`}
-      />
+      <Box className="vertical-bar-chart">
+        <svg
+          // style={{ width: "100%", height: "290" }}
+          ref={this.ref}
+          viewBox={`-15 0 ${width} ${height + margin.top + margin.bottom}`}
+        />
+      </Box>
     );
   }
 }
