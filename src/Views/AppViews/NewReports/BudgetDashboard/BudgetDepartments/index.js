@@ -75,8 +75,8 @@ class BudgetDepartments extends Component {
           <TableCell>Internal CRM Tool</TableCell>
           <TableCell>
             <strong>$2120</strong>{" "}
-            <Box className="variance-count red ">
-              <i className="fas fa-sort-up red m-r-1"> </i> 10%
+            <Box className="d-inline-block variance-count red ">
+              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
             </Box>
           </TableCell>
           <TableCell>
@@ -84,8 +84,8 @@ class BudgetDepartments extends Component {
           </TableCell>
           <TableCell>
             <strong>$2120</strong>{" "}
-            <Box className="variance-count red ">
-              <i className="fas fa-sort-up red m-r-1"> </i> 10%
+            <Box className="d-inline-block variance-count red ">
+              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
             </Box>
           </TableCell>
         </TableRow>
@@ -102,8 +102,8 @@ class BudgetDepartments extends Component {
           <TableCell>Internal CRM Tool</TableCell>
           <TableCell>
             <strong>$2120</strong>{" "}
-            <Box className="variance-count red ">
-              <i className="fas fa-sort-up red m-r-1"> </i> 10%
+            <Box className="d-inline-block variance-count red ">
+              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
             </Box>
           </TableCell>
           <TableCell>
@@ -111,8 +111,8 @@ class BudgetDepartments extends Component {
           </TableCell>
           <TableCell>
             <strong>$2120</strong>{" "}
-            <Box className="variance-count red ">
-              <i className="fas fa-sort-up red m-r-1"> </i> 10%
+            <Box className="d-inline-block variance-count red ">
+              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
             </Box>
           </TableCell>
         </TableRow>
@@ -129,8 +129,8 @@ class BudgetDepartments extends Component {
           <TableCell>Internal CRM Tool</TableCell>
           <TableCell>
             <strong>$2120</strong>{" "}
-            <Box className="variance-count red ">
-              <i className="fas fa-sort-up red m-r-1"> </i> 10%
+            <Box className="d-inline-block variance-count red ">
+              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
             </Box>
           </TableCell>
           <TableCell>
@@ -138,8 +138,8 @@ class BudgetDepartments extends Component {
           </TableCell>
           <TableCell>
             <strong>$2120</strong>{" "}
-            <Box className="variance-count red ">
-              <i className="fas fa-sort-up red m-r-1"> </i> 10%
+            <Box className="d-inline-block variance-count red ">
+              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
             </Box>
           </TableCell>
         </TableRow>
@@ -156,8 +156,8 @@ class BudgetDepartments extends Component {
           <TableCell>Internal CRM Tool</TableCell>
           <TableCell>
             <strong>$2120</strong>{" "}
-            <Box className="variance-count red ">
-              <i className="fas fa-sort-up red m-r-1"> </i> 10%
+            <Box className="d-inline-block variance-count red ">
+              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
             </Box>
           </TableCell>
           <TableCell>
@@ -165,8 +165,8 @@ class BudgetDepartments extends Component {
           </TableCell>
           <TableCell>
             <strong>$2120</strong>{" "}
-            <Box className="variance-count red ">
-              <i className="fas fa-sort-up red m-r-1"> </i> 10%
+            <Box className="d-inline-block variance-count red ">
+              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
             </Box>
           </TableCell>
         </TableRow>
@@ -183,8 +183,8 @@ class BudgetDepartments extends Component {
           <TableCell>Internal CRM Tool</TableCell>
           <TableCell>
             <strong>$2120</strong>{" "}
-            <Box className="variance-count red ">
-              <i className="fas fa-sort-up red m-r-1"> </i> 10%
+            <Box className="d-inline-block variance-count red ">
+              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
             </Box>
           </TableCell>
           <TableCell>
@@ -192,8 +192,8 @@ class BudgetDepartments extends Component {
           </TableCell>
           <TableCell>
             <strong>$2120</strong>{" "}
-            <Box className="variance-count red ">
-              <i className="fas fa-sort-up red m-r-1"> </i> 10%
+            <Box className="d-inline-block variance-count red ">
+              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
             </Box>
           </TableCell>
         </TableRow>
