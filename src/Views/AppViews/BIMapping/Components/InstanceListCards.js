@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 import { Box, List, ListItem } from "@mui/material";
 import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import { Grid, ColumnSizer } from "react-virtualized";
+import { Collection, ColumnSizer } from "react-virtualized";
 import "react-virtualized/styles.css";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
@@ -28,19 +28,20 @@ export class InstanceListCards extends Component {
   }
   onClickCard = (details) => {
     try {
+      console.log(details);
       this.props.onClickCard(details);
     } catch (error) {
       console.error(error);
     }
   };
   renderRow = ({ columnIndex, key, index, style }) => {
-    let subInfo = this.props.cards[columnIndex];
-    let { image, title, data, active } = subInfo;
+    let subInfo = this.props.cards[index];
+    let { image, title, data, active, id } = subInfo;
 
     return (
       <Box
         className={`environment-box ${active}`}
-        key={v4()}
+        key={key}
         onClick={() => this.onClickCard(subInfo)}
         style={style}
       >
@@ -81,7 +82,18 @@ export class InstanceListCards extends Component {
       </Box>
     );
   };
-
+  cellSizeAndPositionGetter = ({ index }) => {
+    let data = this.props.cards || [];
+    if (data.length) {
+      const datum = data[index];
+      return {
+        height: 150,
+        width: 160,
+        x: index * (160 + 10),
+        y: 0,
+      };
+    }
+  };
   render() {
     let data = this.props.cards || [];
     return data.length ? (
@@ -92,15 +104,14 @@ export class InstanceListCards extends Component {
         width={600}
       >
         {({ adjustedWidth, getColumnWidth, registerChild }) => (
-          <Grid
-            ref={registerChild}
-            columnWidth={getColumnWidth}
-            columnCount={data.length}
-            height={190}
+          <Collection
+            className="instance-list-cards"
+            cellCount={data.length}
             cellRenderer={this.renderRow}
-            rowHeight={150}
-            rowCount={1}
+            cellSizeAndPositionGetter={this.cellSizeAndPositionGetter}
+            height={190}
             width={600}
+            onSectionRendered={(e) => {}}
           />
         )}
       </ColumnSizer>
